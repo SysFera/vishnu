@@ -603,15 +603,12 @@ try {
   BOOST_MESSAGE(" Testing list session base option 1.3.5B" );
   li = ecoreFactory->createListSessions();
   BOOST_CHECK  (connect    (uidu, pwdu, sess2, cop )==0);
-  BOOST_CHECK  (close      (sess2.getSessionKey()                  )==0);
   BOOST_CHECK  (connect    (uid , pwd	, sess , cop )==0);
   BOOST_CHECK  (listSessions(sess.getSessionKey() , *li 	, opt       )==0);
   BOOST_CHECK  (close      (sess.getSessionKey()                   )==0);
+  BOOST_CHECK  (close      (sess2.getSessionKey()                  )==0);
   opt  = *(ecoreFactory->createListSessionOptions());
   BOOST_CHECK (li->getSessions().size() > 0);
-  if ((li->getSessions().size()>0) && (li->getSessions()[0]->getSessionKey()!=key2))
-    BOOST_MESSAGE(" key: " << li->getSessions()[0]->getSessionKey() );
-
 
   // Test list machine
   BOOST_REQUIRE(restore     (sqlScript+"/clean_session.sql" )==0);
@@ -619,11 +616,10 @@ try {
   BOOST_CHECK  (connect     (uid, pwd, sess, cop )==0);
   BOOST_CHECK  (listMachine(sess.getSessionKey(), *lim, liom      )==0);
   BOOST_CHECK  (close       (sess.getSessionKey()                 )==0);
-  if (lim->getMachines().size()==0){
-    BOOST_MESSAGE(" Error empty list returned " );
+  BOOST_CHECK (lim->getMachines().size() > 0);
+  if (lim->getMachines().size()>0) {
+    BOOST_CHECK(lim->getMachines()[0]->getMachineId()=="machine_1");
   }
-  if ((lim->getMachines().size()>0) && (lim->getMachines()[0]->getMachineId()!="machine_1"))
-    BOOST_MESSAGE(" machine: " << lim->getMachines()[0]->getMachineId() );
 
   // Test list machine option mid
   liom.setMachineId(mid);
@@ -633,11 +629,10 @@ try {
   BOOST_CHECK  (connect     (uid, pwd, sess, cop )==0);
   BOOST_CHECK  (listMachine(sess.getSessionKey(), *lim, liom      )==0);
   BOOST_CHECK  (close       (sess.getSessionKey()                 )==0);
-  if (lim->getMachines().size()==0){
-    BOOST_MESSAGE(" Error empty list returned " );
+  BOOST_CHECK (lim->getMachines().size() > 0);
+  if (lim->getMachines().size()>0) {
+    BOOST_CHECK(lim->getMachines()[0]->getMachineId()=="machine_1");
   }
-  if ((lim->getMachines().size()>0) && (lim->getMachines()[0]->getMachineId()!="machine_1"))
-    BOOST_MESSAGE(" machine: " << lim->getMachines()[0]->getMachineId() );
 
   // Test list machine option bad mid
   liom.setMachineId("bad");
@@ -654,11 +649,10 @@ try {
   BOOST_CHECK  (connect         (uid, pwd, sess, cop )==0);
   BOOST_CHECK  (listLocalAccount(sess.getSessionKey(), *lia, lioa      )==0);
   BOOST_CHECK  (close           (sess.getSessionKey()                 )==0);
-  if (lia->getAccounts().size()==0){
-    BOOST_MESSAGE(" Error empty list returned " );
+  BOOST_CHECK (lia->getAccounts().size()>0);
+  if (lia->getAccounts().size()>0) {
+    BOOST_CHECK(lia->getAccounts()[0]->getMachineId()=="machine_1");
   }
-  if ((lia->getAccounts().size()>0) && (lia->getAccounts()[0]->getMachineId()!="machine_1"))
-    BOOST_MESSAGE(" account: " << lia->getAccounts()[0]->getMachineId() );
 
   // Test list local account mid
   lioa.setMachineId(mid);
@@ -668,11 +662,10 @@ try {
   lia  = ecoreFactory->createListLocalAccounts();
   BOOST_CHECK  (listLocalAccount(sess.getSessionKey(), *lia, lioa      )==0);
   BOOST_CHECK  (close           (sess.getSessionKey()                 )==0);
-  if (lia->getAccounts().size()==0){
-    BOOST_MESSAGE(" Error empty list returned " );
+  BOOST_CHECK (lia->getAccounts().size()>0);
+  if (lia->getAccounts().size()>0) {
+    BOOST_CHECK(lia->getAccounts()[0]->getMachineId()=="machine_1");
   }
-  if ((lia->getAccounts().size()>0) && (lia->getAccounts()[0]->getMachineId()!="machine_1"))
-    BOOST_MESSAGE(" account: " << lia->getAccounts()[0]->getMachineId() );
 
   // Test list local account bad mid
   lioa.setMachineId("bad");
@@ -744,11 +737,10 @@ try {
   liov  = ecoreFactory->createListOptionsValues();
   BOOST_CHECK  (listOptions(sess.getSessionKey(), *liov, lioo     )==0);
   BOOST_CHECK  (close      (sess.getSessionKey()                 )==0);
-  if (liov->getOptionValues().size()==0){
-    BOOST_MESSAGE(" Error empty list returned " );
+  BOOST_CHECK (liov->getOptionValues().size() > 0);
+  if (liov->getOptionValues().size()>0) {
+    BOOST_CHECK(liov->getOptionValues()[0]->getOptionName()==ona);
   }
-  if ((liov->getOptionValues().size()>0) && (liov->getOptionValues()[0]->getOptionName()!=ona))
-    BOOST_MESSAGE(" Option val: " << liov->getOptionValues()[0]->getOptionName() );
 
   // Test list option values bad option name
   lioo.setOptionName("bad");
@@ -800,6 +792,7 @@ try {
   BOOST_MESSAGE(" Testing history cmd"    );
   BOOST_REQUIRE(restore               (sqlScript+"/clean_session.sql" )==0);
   BOOST_CHECK	 (connect               (uid, pwd , sess , cop)==0);
+  li   = ecoreFactory->createListSessions();
   BOOST_CHECK  (listSessions(sess.getSessionKey(), *li , opt      )==0);
   // -> and then reconnect normal
   if (li->getSessions().size() &&
