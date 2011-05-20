@@ -44,7 +44,7 @@ makeCopyAsyncOpt(string pgName,
     cpFileOptions.setIsRecursive(true);
   }
 
-  opt->add("trCommand, c",
+  opt->add("trCommand,t",
       "The command to use to perform file transfer.",
       CONFIG,
       ftrCmd);
