@@ -70,7 +70,6 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       sleep (nbResMetric*10);
 
       BOOST_CHECK_EQUAL(getMetricHistory(sessionKey, machineId, list, op),0  );
-      //BOOST_TEST_MESSAGE( "list.getMetric().size()" << list.getMetric().size() << "\n");;
       BOOST_REQUIRE(list.getMetric().size() == nbResMetric);
     }
     catch (VishnuException& e) {
@@ -95,7 +94,6 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     IMS_Data::MetricHistOp op;
 
     BOOST_CHECK_THROW(getMetricHistory(sessionKey, machineId, list, op), VishnuException);
-    //BOOST_TEST_MESSAGE("Testing Use case I2 – E1: Get metric data with bad machine Id" << "\n");
   }
 
   // I2 – E2: Get metric data with bad machine identifier
@@ -107,7 +105,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     VishnuConnexion vc("root","vishnu_user");
     // get the session key and the machine identifier
     string sessionKey=vc.getConnexion();
-    string machineId="unknown_name";
+    string machineId="machine_1";
 
     IMS_Data::ListMetric list;
     IMS_Data::MetricHistOp op;
@@ -194,7 +192,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   // IA2.1 – E1 : Get a system load threshold with bad machine Id
   // Get a system load threshold : with bad machine Id
 
-  BOOST_AUTO_TEST_CASE(get_system_load_threshold_bad_machine_Id) {
+  BOOST_AUTO_TEST_CASE(get_system_load_threshold_bad_machine_Id_call) {
 
     BOOST_TEST_MESSAGE("Use case IA2.1 – E1: Get a system load threshold with bad machine Id");
     VishnuConnexion vc("root","vishnu_user");
@@ -214,7 +212,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   // IA2.1 – E2 : Get a system load threshold with bad metric
   // Get a system load threshold : with bad metric
 
-  BOOST_AUTO_TEST_CASE(get_system_load_threshold_bad_metric) {
+  BOOST_AUTO_TEST_CASE(get_system_load_threshold_bad_metric_call) {
 
     BOOST_TEST_MESSAGE("Use case IA2.1 – E2: Get a system load threshold with bad metric");
     VishnuConnexion vc("root","vishnu_user");
@@ -235,7 +233,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   // IA2.1 – E3 : Get a system load threshold for no admin user
   // Get a system load threshold : for no admin user
 
-  BOOST_AUTO_TEST_CASE(get_system_load_threshold_for_no_admin_user) {
+  BOOST_AUTO_TEST_CASE(get_system_load_threshold_for_no_admin_user_call) {
 
     BOOST_TEST_MESSAGE("Use case IA2.1 – E2: Get a system load threshold with no admin user");
     VishnuConnexion vc("user_1","toto");
@@ -667,12 +665,121 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       //To check if the jobId format is correct
       BOOST_REQUIRE(jobInfo.getJobId().compare("JTEST_1") == 0);
 
+      //TODO: vishnu_ copyFile + check of transfer ID
+
     }
     catch (VishnuException& e) {
       BOOST_MESSAGE("FAILED\n");
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
     }
+  }
+
+  //IA3-E1: Define the identifier with bad format
+  //Define User/Machine/Job/FileTransfer identifier: bad format
+  BOOST_AUTO_TEST_CASE(define_identifier_bad_format_call) {
+
+    BOOST_TEST_MESSAGE("Use case IA3 – E1: Define the identifier with bad format");
+    //bad Format with unknwon $TEST
+    string formatUser = "UTEST_$TEST";
+    string formatMachine = "MTEST_$TEST";
+    string formatJob = "JTEST_$TEST";
+    string formatFileTransfer = "FTTEST_$TEST";
+
+    VishnuConnexion vc("root","vishnu_user");
+    // get the session key and the machine identifier
+    string sessionKey=vc.getConnexion();
+    string machineId="machine_1";
+
+    //To define the user format
+    BOOST_CHECK_THROW(defineUserIdentifier(sessionKey, formatUser), VishnuException);
+    //To define the machine format
+    BOOST_CHECK_THROW(defineMachineIdentifier(sessionKey, formatMachine), VishnuException);
+    //To define the job format
+    BOOST_CHECK_THROW(defineJobIdentifier(sessionKey, formatJob), VishnuException);
+    //To define the file transfer format
+    BOOST_CHECK_THROW(defineTransferIdentifier(sessionKey, formatFileTransfer), VishnuException);
+  }
+
+  //IA3-E2: Define the identifier for no admin user
+  //Define User/Machine/Job/FileTransfer identifier: no admin user
+  BOOST_AUTO_TEST_CASE(define_identifier_no_admin_call) {
+
+    BOOST_TEST_MESSAGE("Use case IA3 – E2: Define the identifier for no admin user");
+    //Format with unknwon $TEST
+    string formatUser = "UTEST_$CPT";
+    string formatMachine = "MTEST_$CPT";
+    string formatJob = "JTEST_$CPT";
+    string formatFileTransfer = "FTTEST_$CPT";
+    //no admin user
+    VishnuConnexion vc("user_1","toto");
+    // get the session key and the machine identifier
+    string sessionKey=vc.getConnexion();
+    string machineId="machine_1";
+
+    //To define the user format
+    BOOST_CHECK_THROW(defineUserIdentifier(sessionKey, formatUser), VishnuException);
+    //To define the machine format
+    BOOST_CHECK_THROW(defineMachineIdentifier(sessionKey, formatMachine), VishnuException);
+    //To define the job format
+    BOOST_CHECK_THROW(defineJobIdentifier(sessionKey, formatJob), VishnuException);
+    //To define the file transfer format
+    BOOST_CHECK_THROW(defineTransferIdentifier(sessionKey, formatFileTransfer), VishnuException);
+  }
+
+   //I5-B: Get system info normal call
+   //Get system info: normal call
+   BOOST_AUTO_TEST_CASE( get_system_info_normal_call) {
+
+    BOOST_TEST_MESSAGE("Use case I5-B: Get system info normal call");
+    string sqlPath = IMSSQLPATH;
+    VishnuConnexion vc("root","vishnu_user");
+    // get the session key and the machine identifier
+    string sessionKey=vc.getConnexion();
+    string machineId="machine_1";
+    IMS_Data::ListSysInfo listSysInfo;
+    IMS_Data::SysInfoOp sysInfoOp;
+    //To set the machineId
+    sysInfoOp.setMachineId(machineId);
+
+    try {
+      //Set the memory and the diskspace of machine_1 respectively to 256 and 1000000
+      if (restore(sqlPath + "/IMSTestSystemInfo.sql") != 0) {
+        BOOST_TEST_MESSAGE("Database update failed for restore(sqlPath + /IMSTestSystemInfo.sql)");
+      }
+
+      BOOST_CHECK_EQUAL(getSystemInfo(sessionKey, listSysInfo, sysInfoOp),0  );
+      //If if the list is not empty
+      BOOST_REQUIRE(listSysInfo.getSysInfo().size() > 0);
+      //To check the memory
+      BOOST_REQUIRE(listSysInfo.getSysInfo().get(0)->getMemory() == 256);
+      //To check the diskspace
+      BOOST_REQUIRE(listSysInfo.getSysInfo().get(0)->getDiskSpace() == 1000000);
+      //BOOST_REQUIRE(listSysInfo.getSysInfo().size() != 0);
+    }
+    catch (VishnuException& e) {
+      BOOST_MESSAGE("FAILED\n");
+      BOOST_MESSAGE(e.what());
+      BOOST_CHECK(false);
+    }
+  }
+   //I5-B: Get system info with bad machine Id call
+   //Get system info: bad machine Id
+  BOOST_AUTO_TEST_CASE(get_system_info_bad_machine_Id_call) {
+
+    BOOST_TEST_MESSAGE("Use case I5-B: Get system info with bad machine Id call");
+    VishnuConnexion vc("root","vishnu_user");
+    // get the session key and the machine identifier
+    string sessionKey=vc.getConnexion();
+    string machineId="unknown_name";
+
+    IMS_Data::ListSysInfo listSysInfo;
+    IMS_Data::SysInfoOp sysInfoOp;
+    //To set the machineId
+    sysInfoOp.setMachineId(machineId);
+
+    //To define the file transfer format
+    BOOST_CHECK_THROW(getSystemInfo(sessionKey, listSysInfo, sysInfoOp), VishnuException);
   }
 
 
