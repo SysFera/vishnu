@@ -97,6 +97,18 @@ ServerFMS::init(int vishnuId,
     return 1;
   }
   diet_profile_desc_free(mprofile);
+  
+  // content of file
+
+  mprofile = getContentProfile();
+
+  if ( diet_service_table_add(mprofile, NULL, contentFile)){
+    return 1;
+
+  }
+
+  diet_profile_desc_free(mprofile);
+
 
   // Head of file
 
