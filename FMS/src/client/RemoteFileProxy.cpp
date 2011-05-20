@@ -233,6 +233,54 @@ string RemoteFileProxy::head(const HeadOfFileOptions& options) {
   return result;
 }
 
+/* Call the file getContent DIET server.
+ * If something goes wrong, throw a runtime_error containing
+ * the error message.
+ */
+string RemoteFileProxy::getContent() {
+  string result;
+  char* fileContent, * errMsg;
+  diet_profile_t* profile;
+  
+  std::string serviceName("FileContent");
+ 
+  std::string sessionKey=this->getSession().getSessionKey();
+  
+  
+  if (!exists()) throw runtime_error(getPath()+" does not exist");
+
+  profile = diet_profile_alloc(serviceName.c_str(), 3, 3, 5);
+ 
+  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
+                  DIET_VOLATILE);
+ 
+  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getPath().c_str()),
+                  DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 2), const_cast<char*>(localUser.c_str()),
+                  DIET_VOLATILE);
+  diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
+                       DIET_VOLATILE);
+
+
+  diet_string_set(diet_parameter(profile, 4), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 5), NULL, DIET_VOLATILE);
+  
+  if (diet_call(profile))
+    throw runtime_error("Error calling DIET service");
+
+  diet_string_get(diet_parameter(profile, 4), &fileContent, NULL);
+  diet_string_get(diet_parameter(profile, 5), &errMsg, NULL);
+
+  if (strlen(errMsg)!=0) {
+    raiseExceptionIfNotEmptyMsg(errMsg);
+  }
+  
+  
+  return fileContent;
+}
+
+
+
 /* Call the mkdir DIET server.
  * If something goes wrong, throw a runtime_error containing
  * the error message.
