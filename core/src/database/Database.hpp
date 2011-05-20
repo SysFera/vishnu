@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 #include "DatabaseResult.hpp"
+#include "DbConfiguration.hpp"
 
 static const int SUCCESS =  0;
 /**
@@ -50,6 +51,12 @@ public :
   */
   virtual DatabaseResult*
   getResult(std::string request) = 0;
+  /**
+   * \brief To get the type of database
+   * \return An enum identifying the type of database
+   */
+  virtual DbConfiguration::db_type_t
+  getDbType() = 0;
 
     /**
    * \fn ~Database()

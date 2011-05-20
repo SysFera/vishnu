@@ -25,7 +25,7 @@ diet_profile_desc_t* getTailProfile() {
   diet_generic_desc_set(diet_param_desc(result, 1), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 2), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 3), DIET_PARAMSTRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 4), DIET_SCALAR, DIET_LONGINT);
+  diet_generic_desc_set(diet_param_desc(result, 4), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 5), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 6), DIET_STRING, DIET_CHAR);
   
@@ -37,14 +37,14 @@ diet_profile_desc_t* getTailProfile() {
 /* Returns the n last lines of a file to the client application. */
 int tailFile(diet_profile_t* profile) {
   string localPath, localUser, userKey, tail, acLogin, machineName;
-  char* path, *user, *host,*sessionKey, *errMsg = NULL, *result = NULL;
+  char* path, *user, *host,*sessionKey, *errMsg = NULL, *result = NULL, *optionsSerialized= NULL;
   unsigned long* nline;
   
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
   diet_string_get(diet_parameter(profile, 1), &path, NULL);
   diet_string_get(diet_parameter(profile, 2), &user, NULL);
   diet_paramstring_get(diet_parameter(profile, 3), &host, NULL);
-  diet_scalar_get(diet_parameter(profile, 4), &nline, NULL);
+  diet_string_get(diet_parameter(profile, 4),&optionsSerialized, NULL);
   
   sysEndianChg<unsigned long>(*nline);
   
@@ -85,9 +85,14 @@ int tailFile(diet_profile_t* profile) {
 
     FileFactory::setSSHServer(machineName);
     
-    File* file = FileFactory::getFileServer(sessionServer,localPath, acLogin, userKey);
+boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,localPath, acLogin, userKey));
 
-      tail = file->tail(*nline);
+    TailOfFileOptions_ptr options_ptr= NULL;
+ if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr )) {
+      throw SystemException(ERRCODE_INVDATA, "solve_Tail: TailOfFileOptions object is not well built");
+    }
+
+      tail = file->tail(*options_ptr);
       result = strdup(tail.c_str());
     
     } catch (exception& err) {
