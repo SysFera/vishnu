@@ -19,6 +19,7 @@ namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
+using namespace FMS_Data;
 
 boost::shared_ptr<Options>
 makeListFileTransferTrOpt(string pgName, 
@@ -71,6 +72,9 @@ int main (int argc, char* argv[]){
    /********** EMF data ************/
   FMS_Data::LsTransferOptions lsFileTransferOptions;
 
+  /***OutPut Values  */
+  FileTransferList fileTransferList;
+  
   /******** Callback functions ******************/
   boost::function1<void, string> ftranferId(boost::bind(&FMS_Data::LsTransferOptions::setTransferId, boost::ref(lsFileTransferOptions),_1));
   boost::function1<void, string> ffromMachineId(boost::bind(&FMS_Data::LsTransferOptions::setFromMachineId, boost::ref(lsFileTransferOptions),_1));
@@ -112,7 +116,7 @@ int main (int argc, char* argv[]){
     // DIET call 
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
-      listFileTransfers(sessionKey, lsFileTransferOptions);
+      listFileTransfers(sessionKey, fileTransferList,lsFileTransferOptions);
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";

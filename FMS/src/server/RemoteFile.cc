@@ -238,6 +238,17 @@ string RemoteFile::head(const HeadOfFileOptions& options) {
   return result;
 }
 
+/* Call the file head DIET server.
+ * If something goes wrong, throw a runtime_error containing
+ * the error message.
+ */
+
+   std::string RemoteFile::getContent(){
+     return string();
+   }
+     
+     
+     
 /* Call the mkdir DIET server.
  * If something goes wrong, throw a runtime_error containing
  * the error message.
