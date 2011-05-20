@@ -626,6 +626,53 @@ solveSetMID(diet_profile_t* pb){
 
 int
 solveLoadShed(diet_profile_t* pb){
+  char *sessionKey   = NULL;
+  char* mid = NULL;
+  char* type = NULL;
+  string error;
+  string retErr = "";
+  int mapperkey;
+  string cmd;
+
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
+  diet_string_get(diet_parameter(pb,1), &mid,NULL);
+  diet_string_get(diet_parameter(pb,2), &type,NULL);
+
+  SessionServer sessionServer = SessionServer(string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+  try {
+    userServer.init();
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_define_user_format");
+    mapper->code(string(mid), mapperkey);
+    mapper->code(string(type), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+
+    // Creating the process server with the options
+    ProcessCtl proc(mid, userServer);
+
+    // Load shedding
+    proc.loadShed(convertToInt(string(type)));
+    // Setting out diet param
+    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+
+    // Finishing the command as a success
+    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+
+  }catch(VishnuException& e){
+    try{
+      // Finishing the command as an error
+      sessionServer.finish(cmd, IMS, CMDFAILED);
+    }catch(VishnuException& fe){
+      error = fe.what();
+    }
+    e.appendMsgComp(error);
+    retErr = e.buildExceptionString();
+    // Setting diet output parameters
+    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+  }
   return 0;
 }
 

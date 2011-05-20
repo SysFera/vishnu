@@ -1,11 +1,13 @@
 
 link_directories(
  ${VISHNU_EXCEPTION_INCLUDE_DIR}
+
  ${Boost_LIBRARY_DIRS}
 )
 
 
 include_directories(
+${LOG_INCLUDE_DIR}
   ${DIET_INCLUDE_DIR}
   ${IMS_EMF_DATA_DIR}
   ${IMS_DATA_DIR}
