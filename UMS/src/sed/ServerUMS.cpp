@@ -411,8 +411,9 @@ ServerUMS::init(int vishnuId,
   diet_profile_desc_free(mprofile);
   /* solveRestore */
 
-  mprofile = diet_profile_desc_alloc(SRV[24], 0, 0, 0);
+  mprofile = diet_profile_desc_alloc(SRV[24], 0, 0, 1);
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   if (diet_service_table_add(mprofile, NULL, solveRestore)) {
     return 1;
   }
