@@ -98,9 +98,7 @@ public:
     } else {
        if (options->getJobId().size() == 0) { 
          sqlRequest.append(" and status < 5 "); 
-       } else {
-         sqlRequest.append(" and status < 6 ");
-       }
+       } 
     }
 
     //To check the job priority
