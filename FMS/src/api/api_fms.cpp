@@ -209,8 +209,23 @@ using namespace std;
    * \param :  a buffer to store the informations
    * \return 0 if everything is OK, another value otherwise
    */
-  int vishnu::getFilesInfo(const string& sessionKey,const string& path, FileStat& filesInfo)
-    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
+  int vishnu::getFilesInfo(const string& sessionKey,const string& path, FileStat& fileInfos)
+    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
+     
+      SessionProxy sessionProxy(sessionKey);
+     
+      FileProxy* f = FileProxyFactory::getFileProxy(sessionProxy,path);
+
+
+       f->getInfos();
+
+      fileInfos=f->getFileStat();
+
+      return 0;
+
+
+   
+    }
 
   /**
    * \brief cancel a file transfer
