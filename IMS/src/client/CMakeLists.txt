@@ -27,7 +27,7 @@ add_library(ims-client-proxy STATIC
   ProcessCtlProxy.cpp
   ExporterProxy.cpp
 )
-
+SET_TARGET_PROPERTIES(ims-client-proxy PROPERTIES COMPILE_FLAGS "-fPIC")
 target_link_libraries(ims-client-proxy
   ${DIET_CLIENT_LIB}
   ${Boost_LIBRARIES}
