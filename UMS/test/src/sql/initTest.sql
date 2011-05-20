@@ -15,6 +15,4 @@ INSERT INTO description(machine_nummachineid, lang, description) values(1, 'ang'
 UPDATE description SET numdescriptionid=1 where description='nutella';
 INSERT INTO description(machine_nummachineid, lang, description) values(2, 'ang', 'chocolate');
 UPDATE description SET numdescriptionid=2 where description='chocolate';
-INSERT INTO account(machine_nummachineid, users_numuserid, aclogin, sshpathkey, home) values(1, 1, 'admin_1', 'key', 'home');
-INSERT INTO account(machine_nummachineid, users_numuserid, aclogin, sshpathkey, home) values(1, 2, 'admin_1', 'key', 'home');
-INSERT INTO account(machine_nummachineid, users_numuserid, aclogin, sshpathkey, home) values(2, 2, 'admin_1', 'key', 'home');
+
