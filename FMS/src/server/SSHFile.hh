@@ -17,6 +17,7 @@
 #define CHGRPCMD "chgrp "
 #define CHMODCMD "chmod "
 #define HEADCMD  "head -"
+#define CATCMD  "cat "
 #define MKDIRCMD "mkdir -m "
 #define RMCMD    "rm -f "
 #define RMDIRCMD "rmdir "
@@ -64,6 +65,7 @@ public:
   virtual int chgrp(const std::string& group);
   virtual int chmod(const mode_t mode);
   virtual std::string head(const HeadOfFileOptions& options);
+  virtual std::string getContent();
   virtual int mkdir(const mode_t mode);
   virtual int rm();
   virtual int rmdir();

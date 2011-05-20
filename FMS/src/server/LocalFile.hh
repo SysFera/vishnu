@@ -22,6 +22,7 @@ public:
   virtual int chgrp(const std::string& group);
   virtual int chmod(const mode_t mode);
   virtual std::string head(const unsigned int nline);
+  virtual std::string getContent();
   virtual int mkdir(const mode_t mode);
   virtual int rm();
   virtual int rmdir();

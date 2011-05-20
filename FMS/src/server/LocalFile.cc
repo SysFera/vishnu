@@ -191,7 +191,11 @@ string LocalFile::head(const unsigned int nline) {
   input.close();
   return result;
 }
+/* Print the content of file*/
+std::string LocalFile::getContent(){
 
+  return string(); 
+}
 /* Create the directory represented by this File object. */
 int LocalFile::mkdir(const mode_t mode) {
   int result;
