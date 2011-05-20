@@ -29,6 +29,20 @@ include_directories(${Boost_INCLUDE_DIRS}
 set(ALLCLI 
   head_of_file
   tail_of_file
+  create_file
+  create_dir
+  remove_file
+  remove_dir
+  ch_grp
+  ch_mod
+  content_of_file
+  list_dir
+  copy_file
+  copy_async_file
+  move_file
+  move_async_file
+  stop_file_transfer
+  list_file_transfers
   )
 
 #set the prefix of command
@@ -39,7 +53,8 @@ set (CMDPREFIX vishnu_)
 macro(genCli NAME )
 
   set(source_files ${NAME}
-    )
+      cmdArgs 
+     )
 
   set(CMDNAME ${CMDPREFIX}${NAME})
 
