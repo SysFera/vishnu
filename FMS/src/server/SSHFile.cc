@@ -198,6 +198,26 @@ string SSHFile::head(const HeadOfFileOptions& options) {
   return headResult.first;
 }
 
+/* Get the file content through ssh. */
+string SSHFile::getContent() {
+  ostringstream os;
+  SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
+              sshPublicKey, sshPrivateKey);
+  pair<string,string> catResult;
+  
+  if (!exists()) throw runtime_error(getPath()+" does not exist");
+  
+  catResult = ssh.exec(CATCMD+getPath());
+
+  if (catResult.second.length()!=0) {
+    throw runtime_error("Error obtaining the content of the file: "+
+                        catResult.second);
+  }
+  return catResult.first;
+}
+
+
+
 /* Create a directory through ssh. */
 int SSHFile::mkdir(const mode_t mode) {
   ostringstream os;

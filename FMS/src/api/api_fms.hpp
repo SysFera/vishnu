@@ -94,6 +94,17 @@ namespace vishnu{
    */
   int headOfFile(const string& sessionKey,const string& path, string& contentOfFile, const HeadOfFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
+  
+  /** 
+   * \brief get the content of a file
+   * \param sessionKey the session key
+   * \param path   the file path using host:path format
+   * \param contentOfFile  the content of specified the file
+   * \return 0 if everything is OK, another value otherwise
+   */
+  int contentOfFile(const string& sessionKey,const string& path, string& contentOfFile)
+    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
+
 
   /**
    * \brief get the list of files and subdirectories of a directory
@@ -194,11 +205,12 @@ namespace vishnu{
   /**
    * \brief List  file transfers
    * \param sessionKey the session key
+   * \param fileTransferList the file transfer list
    * \param options contains the options used to perform the service (like the transfer id obtained after a call to copyAsyncFile or
    moveAsyncFile)
    \return 0 if everything is OK, another value otherwise
    */
-  int listFileTransfers(const string& sessionKey, const LsTransferOptions& options)
+  int listFileTransfers(const string& sessionKey,FileTransferList& fileTransferList, const LsTransferOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
 

@@ -39,6 +39,12 @@ int main (int argc, char* argv[]){
       HIDDEN,
       path,1);
   opt->setPosition("path",1);  
+ 
+  CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
+
+  // Parse the cli and setting the options found
+  ret = cmd.parse(env_name_mapper());
+
 
   if (ret != CLI_SUCCESS){
     helpUsage(*opt,"[options] path");
@@ -69,7 +75,6 @@ int main (int argc, char* argv[]){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
       createDir(sessionKey, path);
     }
-    printSuccessMessage();
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
     errorUsage(argv[0], msg,EXECERROR);
