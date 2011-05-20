@@ -76,7 +76,12 @@ using namespace std;
    * \return 0 if everything is OK, another value otherwise
    */
   int vishnu::copyFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options)
-    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
+    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
+       std::cout << " src=" << src << std::endl;
+       std::cout << " dest="  << dest << std::endl; 
+       std::cout << boolalpha << options.isIsRecursive() << std::endl;
+       std::cout << options.getTrCommand() << std::endl;
+    }
 
   /**
    * \brief copy the file in a asynchronous mode
@@ -90,7 +95,12 @@ using namespace std;
    */
   int vishnu::copyAsyncFile(const string& sessionKey,const string& src, const string& dest,
       FileTransfer& transferInfo, const CpFileOptions& options)
-    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
+    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
+      std::cout << " src=" << src << std::endl;
+       std::cout << " dest="  << dest << std::endl;                    
+       std::cout << boolalpha << options.isIsRecursive() << std::endl;
+       std::cout << options.getTrCommand() << std::endl;
+  }
 
   /** 
    * \brief get the first lines of a file
@@ -146,7 +156,12 @@ using namespace std;
    * \return 0 if everything is OK, another value otherwise
    */
   int vishnu::listDir(const string& sessionKey,const string& path, StringList& dirContent,const LsDirOptions& options)
-    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
+    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
+       std::cout << " src=" << src << std::endl;
+       std::cout << " dest="  << dest << std::endl;
+       std::cout << boolalpha << options.isIsRecursive() << std::endl;
+       std::cout << options.getTrCommand() << std::endl;
+  }
 
   /**
    * \brief create a directory
