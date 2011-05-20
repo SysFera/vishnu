@@ -39,12 +39,12 @@ makeCopyOpt(string pgName,
   opt->add("isRecursive,r",
       "It specifies when the copy is recursive (case of directory) or not.",
       CONFIG);
-
+  
   if(opt->count("isRecursive")){
     cpFileOptions.setIsRecursive(true);
   }
 
-  opt->add("trCommand, c",
+  opt->add("trCommand,t",
       "The command to use to perform file transfer.",
       CONFIG,
       ftrCmd);
