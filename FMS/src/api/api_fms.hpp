@@ -17,7 +17,7 @@
 #include "UMSVishnuException.hpp"
 #include "FMSVishnuException.hpp"
 #include "utilVishnu.hpp"
-
+#include <sys/types.h>
 //FMS data forward declarations
 #include <FMS_Data_forward.hpp>
 
@@ -56,7 +56,7 @@ namespace vishnu{
    * \param options contains the options used to set the new the permission mode  for this file
    * \return 0 if everything is OK, another value otherwise
    */
-  int chMod(const string& sessionKey,const string& path, const ChModOptions& options)
+  int chMod(const string& sessionKey,const string& path, const mode_t& mode)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -81,7 +81,7 @@ namespace vishnu{
    * \return 0 if everything is OK, another value otherwise
    */
   int copyAsyncFile(const string& sessionKey,const string& src, const string& dest,
-      FileTransfer& transferInfo, const MvFileOptions& options)
+      FileTransfer& transferInfo, const CpFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /** 
@@ -131,12 +131,13 @@ namespace vishnu{
    * \param sessionKey the session key
    * \param src:   the "source" file path using host:path format
    * \param dest:  the "destination" file path using host:path format
+   * \param transferInfo contains different information about the submitted file
+   * transfer (like the transfer identifier) 
    * \param options   contains the options used to perform the service (like the transfer command :scp or rsync)
-   * \param transferInfo 
    * \return 0 if everything is OK, another value otherwise
    */
   int moveAsyncFile(const string& sessionKey,const string& src, const string& dest,
-      const MvFileOptions& options)
+      FileTransfer& transferInfo, const MvFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /** remove a file
