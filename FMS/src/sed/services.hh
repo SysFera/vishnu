@@ -11,6 +11,7 @@ using namespace FMS_Data;
 //#include "chgrpSrv.hh"
 //#include "chmodSrv.hh"
 #include "headSrv.hh"
+#include "getContentSrv.hh"
 //#include "mkdirSrv.hh"
 //#include "rmSrv.hh"
 //#include "rmdirSrv.hh"

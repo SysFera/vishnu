@@ -101,6 +101,7 @@ public:
   virtual int chgrp(const std::string& group) = 0;
   virtual int chmod(const mode_t mode) = 0;
   virtual std::string head(const HeadOfFileOptions& options) = 0;
+  virtual std::string getContent() = 0;
   virtual int mkdir(const mode_t mode) = 0;
   virtual int rm() = 0;
   virtual int rmdir() = 0;

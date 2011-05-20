@@ -29,6 +29,7 @@ add_executable(fmssed
   ServerFMS
   services
   getInfosSrv
+  getContentSrv
   headSrv
   tailSrv
   )
