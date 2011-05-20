@@ -40,10 +40,13 @@ macro( ims_test NAME )
       ${EMF_DATA_DIR}
       ${IMS_EMF_DATA_DIR}
       ${UMS_DATA_DIR}
+      ${TMS_DATA_DIR}
       ${IMS_DATA_DIR}
       ${IMS_API_SOURCE_DIR}
+      ${TMS_API_SOURCE_DIR}
       ${API_SOURCE_DIR}
       ${CLIENT_PROXY_SOURCE_DIR}
+      ${TMS_CLIENT_PROXY_SOURCE_DIR}
       ${IMS_CLIENT_PROXY_SOURCE_DIR}
       ${EMF4CPP_INCLUDE_DIR}
       ${VISHNU_EXCEPTION_INCLUDE_DIR}
@@ -62,10 +65,12 @@ macro( ims_test NAME )
       ${LIBPQ_LIB}
       ${Boost_LIBRARIES}
       emf4cpp-UMS_Data
+      emf4cpp-TMS_Data
       emf4cpp-IMS_Data
       database-vishnu
       exception-vishnu
       vishnu-ims-api
+      vishnu-tms-api
       vishnu-ums-api
       test-utils
       ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
