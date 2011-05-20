@@ -108,11 +108,22 @@ int main (int ac, char* av[]){
 
       getFilesInfo(sessionKey,path,fileStat);
       std::cout << "the file properties: \n";
+      std::cout <<" path: " << fileStat.getPath() << "\n";
       std::cout <<" owner: " << fileStat.getOwner() << "\n";
       std::cout <<" group: " <<  fileStat.getGroup() << "\n";
+      std::cout <<" uid: " <<  fileStat.getUid() << "\n";
+      std::cout <<" gid: " <<  fileStat.getGid() << "\n";
       std::cout <<" size: " <<  fileStat.getSize() << "\n";
       std::cout <<" perms: " << oct << fileStat.getPerms() << "\n";
-
+      boost::posix_time::ptime pt;
+      pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(fileStat.getAtime()));
+      //pt =  boost::posix_time::from_time_t(fileStat.getAtime());
+      std::cout <<" atime : " << boost::posix_time::to_simple_string(pt) << "\n";
+      pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(fileStat.getMtime()));
+      std::cout <<" mtime : " << boost::posix_time::to_simple_string(pt) << "\n";
+      time_t time = vishnu::convertUTCtimeINLocaltime(fileStat.getCtime());
+      pt =  boost::posix_time::from_time_t(time);
+      std::cout <<" ctime : " << boost::posix_time::to_simple_string(pt) << "\n";
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
