@@ -193,7 +193,12 @@ string LocalFileProxy::head(const HeadOfFileOptions& options) {
   input.close();
   return result;
 }
+/* Print the content of file  */
 
+string LocalFileProxy::getContent() {
+    
+    return string();
+}
 /* Create the directory represented by this FileProxy object. */
 int LocalFileProxy::mkdir(const mode_t mode) {
   int result;
