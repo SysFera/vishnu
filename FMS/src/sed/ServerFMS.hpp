@@ -12,7 +12,7 @@
 /**
  * \brief Number of service in FMS
  */
-#define NB_SRV 14
+#define NB_SRV 17
 #include "DIET_server.h"
 #include "FMSMapper.hpp"
 #include "MapperRegistry.hpp"
@@ -24,6 +24,7 @@ static const char* SRV[NB_SRV] = {
 "FileGetInfos",
 "FileHead",
 "FileTail"
+"FileContent"
 };
 /**
  * \class ServerFMS

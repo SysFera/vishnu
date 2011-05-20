@@ -16,11 +16,52 @@ MYSQLDatabase::process(string request){
   int reqPos;
   MYSQL* conn = getConnexion(reqPos);
   int res;
-
-  if ((res=mysql_real_query(conn, request.c_str (), request.length())) != 0) {
-    releaseConnexion(reqPos);
-    throw SystemException(ERRCODE_DBERR, "P-Query error with code "+convertToString(res)+"{" + request + "}");
+  //FIXME remove output
+  cout << "@@@@@ PROCESS QUERY: " << request << endl;
+  if (request.empty()) {
+    throw SystemException(ERRCODE_DBERR, "Empty SQL query");
   }
+  // The query must always end with a semicolumn when CLIENT_MULTI_STATEMENTS
+  // option is set
+  if (request.at(request.length()-1) != ';') {
+    request.append(";");
+  }
+
+  res=mysql_real_query(conn, request.c_str (), request.length());
+
+  if (res) {
+    // Could not execute the query
+    releaseConnexion(reqPos);
+    throw SystemException(ERRCODE_DBERR, "P-Query error with code "
+                                         +convertToString(res)+"{" + request + "}");
+  }
+  // Due to CLIENT_MULTI_STATEMENTS option, results must always be retrieved
+  // process each statement result
+  do {
+    // did current statement return data?
+    MYSQL_RES *result = mysql_store_result(conn);
+    if (result) {
+      // yes; process rows and free the result set
+      mysql_free_result(result);
+    } else {
+      // no result set or error
+      if (mysql_field_count(conn) == 0) {
+          //FIXME remove output
+          cout << mysql_affected_rows(conn) << " rows affected" << endl;
+      }
+      else {
+        // some error occurred
+        cout << "Could not retrieve result set" << endl;
+        throw SystemException(ERRCODE_DBERR, "P-Query error with code "
+                                         +convertToString(res)+"{" + request + "}");
+      }
+    }
+    // more results? -1 = no, >0 = error, 0 = yes (keep looping)
+    if ((res = mysql_next_result(conn)) > 0) {
+      cout << "Could not execute statement" << endl;
+    }
+  } while (res == 0);
+
   releaseConnexion(reqPos);
   return SUCCESS;
 }
@@ -39,8 +80,9 @@ MYSQLDatabase::connect(){
                            mconfig.getDbName().c_str(),
                            mconfig.getDbPort(),
                            NULL,
-                           0) ==NULL) {
-      throw SystemException(ERRCODE_DBERR, "Connection problem with message: "+string(mysql_error(&(mpool[i].mmysql))));
+                           CLIENT_MULTI_STATEMENTS) ==NULL) {
+      throw SystemException(ERRCODE_DBERR, "Connection problem with message:"
+                            +string(mysql_error(&(mpool[i].mmysql))));
     }
   }
   return SUCCESS;
@@ -116,7 +158,7 @@ MYSQLDatabase::getResult(string request) {
 
   if ((mysql_real_query(lconn, request.c_str (), request.length())) != 0) {
     releaseConnexion(reqPos);
-    throw SystemException(ERRCODE_DBERR, "S-Query error with code "+convertToString(res));
+    throw SystemException(ERRCODE_DBERR, "S-Query error with code "+convertToString(res)+"{" + request + "}");
   }
   res = mysql_use_result (lconn);
   size = mysql_num_fields(res);
@@ -150,8 +192,8 @@ MYSQLDatabase::getConnexion(int& id){
       locked = pthread_mutex_trylock(&(mpool[i].mmutex));
       // If lock fails-> the mutex was taken before trylock call
       if (locked) {
-	// Try next connexion
-	continue;
+        // Try next connexion
+        continue;
       }
       else {
         mpool[i].mused=true;
