@@ -15,7 +15,7 @@
 #include "FMS_Data.hpp"
 #include "cmdArgs.hpp"
 #include <boost/bind.hpp>
-
+#include <sys/types.h>
 namespace po = boost::program_options;
 
 using namespace std;
@@ -24,15 +24,16 @@ using namespace vishnu;
 int main (int argc, char* argv[]){
   
   int ret; // Return value
-  ChModOptions chOptions;
+ // ChModOptions chOptions;
 
   /******* Parsed value containers ****************/
   string dietConfig;
   string sessionKey;
   string path;
 
+  mode_t  mode;
   /******** Callback functions ******************/
-  boost::function1<void,string> fmode(boost::bind(&FMS_Data::ChModOptions::setMode,boost::ref(chOptions),_1));
+  //boost::function1<void,string> fmode(boost::bind(&FMS_Data::ChModOptions::setMode,boost::ref(chOptions),_1));
 
 
   /**************** Describe options *************/
@@ -47,11 +48,17 @@ int main (int argc, char* argv[]){
   opt->add("mode,m",
       "The acces rights of file/directory in octal sytem",
       HIDDEN,
-      fmode,1);
+      mode,1);
   opt->setPosition("mode",1); 
 
+  CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
+
+  // Parse the cli and setting the options found
+  ret = cmd.parse(env_name_mapper());
+
+
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] path");
+    helpUsage(*opt," path mode");
     return ret;
   }
 
@@ -77,7 +84,8 @@ int main (int argc, char* argv[]){
     // DIET call 
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
-      chMod(sessionKey, path, chOptions);
+      chMod(sessionKey, path, mode);
+     std::cout << "the mode given is: " << mode << "\n"; 
     }
     printSuccessMessage();
   } catch(VishnuException& e){// catch all Vishnu runtime error
