@@ -179,10 +179,12 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
   } else {
     if(!userServer.isAdmin()) {
       sqlCancelRequest = "SELECT owner, status, jobId, batchJobId from job, vsession "
-        "where vsession.numsessionid=job.vsession_numsessionid and status < 5 and owner='"+acLogin+"'"; 
+        "where vsession.numsessionid=job.vsession_numsessionid and status < 5 and owner='"+acLogin+"'";
+        " and submitMachineId='"+mmachineId+"'" ; 
     } else {
       sqlCancelRequest = "SELECT owner, status, jobId, batchJobId from job, vsession "
         "where vsession.numsessionid=job.vsession_numsessionid and status < 5"; 
+        " and submitMachineId='"+mmachineId+"'" ;
     }
   } 
 
@@ -267,7 +269,7 @@ TMS_Data::Job JobServer::getJobInfo() {
                                 "jobQueue,wallClockLimit, groupName, jobDescription, memLimit, nbNodes, "
                                 "nbNodesAndCpuPerNode from job, vsession "
                                 "where vsession.numsessionid=job.vsession_numsessionid "
-                                " and status > 0 and status < 6 and job.submitMachineId='"+mmachineId+"' and jobId='"+mjob.getJobId()+"'";
+                                " and status > 0 and job.submitMachineId='"+mmachineId+"' and jobId='"+mjob.getJobId()+"'";
 
   boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
   
