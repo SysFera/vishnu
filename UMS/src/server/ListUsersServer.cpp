@@ -82,7 +82,7 @@ void ListUsersServer::processOptions(UserServer userServer, const std::string& o
 ListUsers* ListUsersServer::list()
 {
   std::string sqlListofUsers = "SELECT userid, pwd, firstname, lastname, privilege, email, status from users "
-                              "where not userid='"+ ROOTUSERNAME +"'";
+                              "where not userid='"+ ROOTUSERNAME +"' order by userid";
 
   std::vector<std::string>::iterator ii;
   std::vector<std::string> results;
