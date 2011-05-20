@@ -157,10 +157,6 @@ using namespace std;
    */
   int vishnu::listDir(const string& sessionKey,const string& path, StringList& dirContent,const LsDirOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
-       std::cout << " src=" << src << std::endl;
-       std::cout << " dest="  << dest << std::endl;
-       std::cout << boolalpha << options.isIsRecursive() << std::endl;
-       std::cout << options.getTrCommand() << std::endl;
   }
 
   /**
