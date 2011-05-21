@@ -91,7 +91,6 @@ int headFile(diet_profile_t* profile) {
       throw SystemException(ERRCODE_INVDATA, "solve_Head: HeadOfFileOptions object is not well built");
     }
 
-
       head = file->head(*options_ptr);
       result = strdup(head.c_str());
 
