@@ -246,7 +246,11 @@ int LocalFileProxy::mkdir(const mode_t mode) {
   exists(true);
   return result;
 }
-
+/* Create the file represented by this FileProxy object. */
+int LocalFileProxy::mkfile(const mode_t mode) {
+  int result=0;
+  return result;
+}
  
 /* Remove this local file. Uses the C-standard function "unlink". */
 int LocalFileProxy::rm() {
