@@ -19,6 +19,7 @@
 #define HEADCMD  "head -"
 #define CATCMD  "cat "
 #define MKDIRCMD "mkdir -m "
+#define MKFILECMD "touch "
 #define RMCMD    "rm -f "
 #define RMDIRCMD "rmdir "
 #define TAILCMD  "tail -"
@@ -66,6 +67,7 @@ public:
   virtual int chmod(const mode_t mode);
   virtual std::string head(const HeadOfFileOptions& options);
   virtual std::string getContent();
+  virtual int mkfile(const mode_t mode);
   virtual int mkdir(const mode_t mode);
   virtual int rm();
   virtual int rmdir();

@@ -118,8 +118,6 @@ int RemoteFileProxy::chgrp(const string& group) {
   diet_profile_t* profile;
   char* errMsg;
   
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
-  
   profile = diet_profile_alloc(CHGRP_SRV(getHost()), 3, 3, 4);
   
   diet_string_set(diet_parameter(profile, 0), const_cast<char*>(getPath().c_str()),
@@ -154,8 +152,6 @@ int RemoteFileProxy::chmod(const mode_t mode) {
   long m = mode;
   sysEndianChg<long>(m);
   
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
-
   profile = diet_profile_alloc(CHMOD_SRV(getHost()), 3, 3, 4);
   
   diet_string_set(diet_parameter(profile, 0), const_cast<char*>(getPath().c_str()),
@@ -194,8 +190,6 @@ string RemoteFileProxy::head(const HeadOfFileOptions& options) {
  
   std::string sessionKey=this->getSession().getSessionKey();
   
-  
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
 
   profile = diet_profile_alloc(serviceName.c_str(), 4, 4, 6);
  
@@ -247,7 +241,6 @@ string RemoteFileProxy::getContent() {
   std::string sessionKey=this->getSession().getSessionKey();
   
   
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
 
   profile = diet_profile_alloc(serviceName.c_str(), 3, 3, 5);
  
@@ -279,7 +272,47 @@ string RemoteFileProxy::getContent() {
   return fileContent;
 }
 
-
+/* Call the mkfile DIET server.
+ * If something goes wrong, throw a runtime_error containing
+ * the error message.
+ */
+int RemoteFileProxy::mkfile(const mode_t mode) {
+  diet_profile_t* profile;
+  char* errMsg;
+  std::string serviceName("FileCreate");
+  
+  std::string sessionKey=this->getSession().getSessionKey();
+  
+  
+  profile = diet_profile_alloc(serviceName.c_str(), 3, 3, 4);
+  
+      
+  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
+                  DIET_VOLATILE);
+  
+  
+  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getPath().c_str()),
+                  DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 2), const_cast<char*>(localUser.c_str()),
+                  DIET_VOLATILE);
+  diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
+                       DIET_VOLATILE);
+  
+  diet_string_set(diet_parameter(profile, 4), NULL, DIET_VOLATILE);
+  
+  if (diet_call(profile))
+    throw runtime_error("Error calling DIET service");
+  
+    diet_string_get(diet_parameter(profile, 4), &errMsg, NULL);
+  
+  if (strlen(errMsg)!=0) {
+  raiseExceptionIfNotEmptyMsg(errMsg);
+  }  
+  
+  exists(true);
+  
+  return 0;  
+}
 
 /* Call the mkdir DIET server.
  * If something goes wrong, throw a runtime_error containing
@@ -288,34 +321,38 @@ string RemoteFileProxy::getContent() {
 int RemoteFileProxy::mkdir(const mode_t mode) {
   diet_profile_t* profile;
   char* errMsg;
-  long m = mode;
+  std::string serviceName("DirCreate");
   
-  sysEndianChg<long>(m);
+  std::string sessionKey=this->getSession().getSessionKey();
+
+
+ profile = diet_profile_alloc(serviceName.c_str(), 3, 3, 4);
   
-  if (exists())
-    throw runtime_error(getPath()+ " already exists");
-  
-  profile = diet_profile_alloc(MKDIR_SRV(getHost()), 3, 3, 4);
-  
-  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(getPath().c_str()),
+      
+  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
                   DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(localUser.c_str()),
+  
+  
+  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getPath().c_str()),
                   DIET_VOLATILE);
-  diet_paramstring_set(diet_parameter(profile, 2), const_cast<char*>(getHost().c_str()),
+  diet_string_set(diet_parameter(profile, 2), const_cast<char*>(localUser.c_str()),
+                  DIET_VOLATILE);
+  diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
                        DIET_VOLATILE);
-  diet_scalar_set(diet_parameter(profile, 3), &m, DIET_VOLATILE,
-                  DIET_LONGINT);
+  
   diet_string_set(diet_parameter(profile, 4), NULL, DIET_VOLATILE);
+  
   if (diet_call(profile))
     throw runtime_error("Error calling DIET service");
-  diet_string_get(diet_parameter(profile, 4), &errMsg, NULL);
+  
+    diet_string_get(diet_parameter(profile, 4), &errMsg, NULL);
   
   if (strlen(errMsg)!=0) {
-    string err = errMsg;
-    throw runtime_error(err);
+  raiseExceptionIfNotEmptyMsg(errMsg);
   }  
   
   exists(true);
+  
   return 0;  
 }
 
@@ -328,24 +365,33 @@ int RemoteFileProxy::rm() {
   diet_profile_t* profile;
   char* errMsg;
   
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
+  std::string serviceName("FileRemove");
   
-  profile = diet_profile_alloc(RM_SRV(getHost()), 2, 2, 3);
-  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(getPath().c_str()),
+  std::string sessionKey=this->getSession().getSessionKey();
+
+
+ profile = diet_profile_alloc(serviceName.c_str(), 3, 3, 4);
+  
+      
+  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
                   DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(localUser.c_str()),
+  
+  
+  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getPath().c_str()),
                   DIET_VOLATILE);
-  diet_paramstring_set(diet_parameter(profile, 2), const_cast<char*>(getHost().c_str()),
+  diet_string_set(diet_parameter(profile, 2), const_cast<char*>(localUser.c_str()),
+                  DIET_VOLATILE);
+  diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
                        DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 3), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 4), NULL, DIET_VOLATILE);
   
   if (diet_call(profile))
     throw runtime_error("Error calling DIET service");
-  diet_string_get(diet_parameter(profile, 3), &errMsg, NULL);
+  
+  diet_string_get(diet_parameter(profile, 4), &errMsg, NULL);
   
   if (strlen(errMsg)!=0) {
-    string err = errMsg;
-    throw runtime_error(err);
+    raiseExceptionIfNotEmptyMsg(errMsg);
   }  
   
   exists(true);
@@ -360,28 +406,39 @@ int RemoteFileProxy::rmdir() {
   diet_profile_t* profile;
   char* errMsg;
   
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
+  std::string serviceName("DirRemove");
   
-  profile = diet_profile_alloc(RMDIR_SRV(getHost()), 2, 2, 3);
-  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(getPath().c_str()),
+  std::string sessionKey=this->getSession().getSessionKey();
+
+
+ profile = diet_profile_alloc(serviceName.c_str(), 3, 3, 4);
+  
+      
+  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
                   DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(localUser.c_str()),
+  
+  
+  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getPath().c_str()),
                   DIET_VOLATILE);
-  diet_paramstring_set(diet_parameter(profile, 2), const_cast<char*>(getHost().c_str()),
+  diet_string_set(diet_parameter(profile, 2), const_cast<char*>(localUser.c_str()),
+                  DIET_VOLATILE);
+  diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
                        DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 3), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 4), NULL, DIET_VOLATILE);
   
   if (diet_call(profile))
     throw runtime_error("Error calling DIET service");
-  diet_string_get(diet_parameter(profile, 3), &errMsg, NULL);
+  
+  diet_string_get(diet_parameter(profile, 4), &errMsg, NULL);
   
   if (strlen(errMsg)!=0) {
-    string err = errMsg;
-    throw runtime_error(err);
+    raiseExceptionIfNotEmptyMsg(errMsg);
   }  
   
   exists(true);
   return 0;
+ 
+
 }
 
 /* Call the file tail DIET server.
@@ -396,7 +453,6 @@ string RemoteFileProxy::tail(const TailOfFileOptions& options) {
   std::string serviceName("FileTail");
   std::string sessionKey=this->getSession().getSessionKey();
   
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
   
   profile = diet_profile_alloc(serviceName.c_str(), 4, 4, 6);
   
