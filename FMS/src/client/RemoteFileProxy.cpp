@@ -117,22 +117,31 @@ RemoteFileProxy& RemoteFileProxy::operator=(const RemoteFileProxy& file) {
 int RemoteFileProxy::chgrp(const string& group) {
   diet_profile_t* profile;
   char* errMsg;
+ 
+  std::string serviceName("FileChangeGroup");
+ 
+  std::string sessionKey=this->getSession().getSessionKey();
+
+
+  profile = diet_profile_alloc(serviceName.c_str(), 4, 4, 5);
   
-  profile = diet_profile_alloc(CHGRP_SRV(getHost()), 3, 3, 4);
+  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
+                  DIET_VOLATILE);
   
-  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(getPath().c_str()),
+  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getPath().c_str()),
                   DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(localUser.c_str()),
+  diet_string_set(diet_parameter(profile, 2), const_cast<char*>(localUser.c_str()),
                   DIET_VOLATILE);
-  diet_paramstring_set(diet_parameter(profile, 2), const_cast<char*>(getHost().c_str()),
+  diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
                        DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 3), const_cast<char*>(group.c_str()),
+  diet_string_set(diet_parameter(profile, 4), const_cast<char*>(group.c_str()),
                   DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 4), NULL, DIET_VOLATILE);
+  
+  diet_string_set(diet_parameter(profile, 5), NULL, DIET_VOLATILE);
 
   if (diet_call(profile))
     throw runtime_error("Error calling DIET service to change file group");
-  diet_string_get(diet_parameter(profile, 4), &errMsg, NULL);
+  diet_string_get(diet_parameter(profile, 5), &errMsg, NULL);
 
   if (strlen(errMsg)!=0) {
     string err = errMsg;

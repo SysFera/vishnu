@@ -138,7 +138,19 @@ using namespace std;
    */
   int
     vishnu::chGrp(const string& sessionKey,const string& path, const string& group)
-    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
+    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
+   
+       SessionProxy sessionProxy(sessionKey);
+  
+      boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
+
+
+      int result= f->chgrp(group);
+
+      return result;
+    
+   
+    }
 
   /**
    * \brief  change the permissions of a file
