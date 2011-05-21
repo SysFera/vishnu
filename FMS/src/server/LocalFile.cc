@@ -196,6 +196,15 @@ std::string LocalFile::getContent(){
 
   return string(); 
 }
+
+
+/* Create the file represented by this File object. */
+int LocalFile::mkfile(const mode_t mode) {
+  int result=0;
+
+  return result;
+}
+
 /* Create the directory represented by this File object. */
 int LocalFile::mkdir(const mode_t mode) {
   int result;

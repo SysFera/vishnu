@@ -44,7 +44,90 @@ using namespace std;
    */
   int
     vishnu::createFile(const string& sessionKey,const string& path)
-    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
+    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
+   
+      SessionProxy sessionProxy(sessionKey);
+  
+      boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
+
+
+      int result= f->mkfile();
+      
+
+      return result;
+    
+    
+    }
+  /**
+   * \brief create a directory
+   * \param sessionKey the session key
+   * \param path: the directory path using host:path format
+   * \return 0 if everything is OK, another value otherwise
+   */
+  int vishnu::createDir(const string& sessionKey,const string& path)
+    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
+   
+      SessionProxy sessionProxy(sessionKey);
+  
+      boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
+
+
+      int result= f->mkdir();
+      
+
+      return result;
+    
+
+   
+    }
+ /** remove a file
+   * \param sessionKey the session key
+   * \param path    the file path using host:path format
+   \return 0 if everything is OK, another value otherwise
+   */
+  int vishnu::removeFile(const string& sessionKey,const string& path)
+    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
+   
+      SessionProxy sessionProxy(sessionKey);
+  
+      boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
+
+
+      int result= f->rm();
+      
+
+      return result;
+    
+
+   
+    }
+
+  /**
+   * \brief  remove a directory
+   * \param sessionKey the session key
+   * \param path    the directory path using host:path format
+   * \return 0 if everything is OK, another value otherwise
+   */
+  int vishnu::removeDir(const string& sessionKey,const string& path)
+    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
+    
+       
+      SessionProxy sessionProxy(sessionKey);
+  
+      boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
+
+
+      int result= f->rmdir();
+      
+
+      return result;
+    
+
+
+    
+    }
+
+
 
   /**
    * \brief change the group of a file
@@ -136,6 +219,7 @@ using namespace std;
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
    
       SessionProxy sessionProxy(sessionKey);
+
       boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
 
       std::string content= f->getContent();
@@ -158,15 +242,6 @@ using namespace std;
   int vishnu::listDir(const string& sessionKey,const string& path, StringList& dirContent,const LsDirOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
   }
-
-  /**
-   * \brief create a directory
-   * \param sessionKey the session key
-   * \param path: the directory path using host:path format
-   * \return 0 if everything is OK, another value otherwise
-   */
-  int vishnu::createDir(const string& sessionKey,const string& path)
-    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
   /**
    * \brief move a file
@@ -193,24 +268,7 @@ using namespace std;
       FileTransfer& transferInfo, const MvFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
-  /** remove a file
-   * \param sessionKey the session key
-   * \param path    the file path using host:path format
-   \return 0 if everything is OK, another value otherwise
-   */
-  int vishnu::removeFile(const string& sessionKey,const string& path)
-    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
-
-  /**
-   * \brief  remove a directory
-   * \param sessionKey the session key
-   * \param path    the directory path using host:path format
-   * \return 0 if everything is OK, another value otherwise
-   */
-  int vishnu::removeDir(const string& sessionKey,const string& path)
-    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
-
-  /**
+   /**
    * \brief get the last lines of a file
    * \param sessionKey the session key
    * \param path    the file path using host:path format
