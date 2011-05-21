@@ -8,7 +8,7 @@ using namespace FMS_Data;
 /* Include all the services headers. */
 #include "getInfosSrv.hh"
 //#include "cpFileSrv.hh"
-//#include "chgrpSrv.hh"
+#include "chgrpSrv.hh"
 //#include "chmodSrv.hh"
 #include "headSrv.hh"
 #include "getContentSrv.hh"
