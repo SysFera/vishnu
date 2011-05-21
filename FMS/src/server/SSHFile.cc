@@ -17,7 +17,8 @@
 #include "SSHFile.hh"
 #include "RemoteFile.hh"
 #include "File.hh"
-
+#include "FMSVishnuException.hpp"
+#include "utilServer.hpp"
 using namespace std;
 
 /* Default constructor. */
@@ -189,12 +190,15 @@ string SSHFile::head(const HeadOfFileOptions& options) {
               sshPublicKey, sshPrivateKey);
   pair<string,string> headResult;
   
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
+  if (!exists()) {
+    throw FMSVishnuException(ERRCODE_UNKNOWN_PATH,getPath()+" does not exist");
+  }
+
   os << nline;
   headResult = ssh.exec(HEADCMD+os.str()+" "+getPath());
 
   if (headResult.second.length()!=0) {
-    throw runtime_error("Error obtaining the head of the file: "+
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error obtaining the head of the file: "+
                         headResult.second);
   }
   return headResult.first;
