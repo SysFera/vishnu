@@ -247,8 +247,14 @@ string RemoteFile::head(const HeadOfFileOptions& options) {
      return string();
    }
      
-     
-     
+ /* Call the mkdir DIET server.
+ * If something goes wrong, throw a runtime_error containing
+ * the error message.
+ */
+int RemoteFile::mkfile(const mode_t mode) {
+ int result =0;
+return result; 
+}    
 /* Call the mkdir DIET server.
  * If something goes wrong, throw a runtime_error containing
  * the error message.
