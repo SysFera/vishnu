@@ -32,6 +32,10 @@ add_executable(fmssed
   getContentSrv
   headSrv
   tailSrv
+  mkdirSrv
+  mkfileSrv
+  rmdirSrv
+  rmfileSrv
   )
 
 target_link_libraries(fmssed

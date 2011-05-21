@@ -48,7 +48,8 @@ public:
   virtual std::string head(const HeadOfFileOptions& options);
   virtual std::string getContent();
 
-  virtual int mkdir(const mode_t mode);
+  virtual int mkfile(const mode_t mode);
+  virtual int mkdir(const mode_t mode) ;
   virtual int rm();
   virtual int rmdir();
   virtual std::string tail(const TailOfFileOptions& options);

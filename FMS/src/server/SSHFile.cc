@@ -94,7 +94,9 @@ bool SSHFile::isUpToDate() const {
 /* Get the file information through ssh. */
 void SSHFile::getInfos() const {
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
-              sshPublicKey, sshPrivateKey);
+      sshPublicKey, sshPrivateKey);
+
+
   pair<string,string> fileStat;
   string owner, group, fileType;
   mode_t perms;
@@ -102,22 +104,22 @@ void SSHFile::getInfos() const {
   gid_t gid;
   file_size_t size;
   time_t atime, mtime, ctime;
- cout << "Coucou dans getInfos de SSHFile  " << endl; 
+  cout << "Coucou dans getInfos de SSHFile  " << endl; 
   fileStat = ssh.exec(STATCMD+getPath());
-  
+
   if (fileStat.second.length()!=0) {
     exists(false);
- cout << "Mais exist n'est pas mis a jour " << endl;
-    throw runtime_error (fileStat.second.c_str());
+    upToDate=true;
   }
-  
+  else{
+
   istringstream is(fileStat.first);
   is >> owner >> group >> oct >> perms >> dec >> uid >> gid >> size
-     >> atime >> mtime >> ctime >> fileType;
-  
+    >> atime >> mtime >> ctime >> fileType;
+
   transform(fileType.begin(), fileType.end(), fileType.begin(), ::tolower);
 
- std::cout << "fileType in SSH getInfos: " << fileType << "\n";
+  std::cout << "fileType in SSH getInfos: " << fileType << "\n";
   setOwner(owner);
   setGroup(group);
   setPerms(perms);
@@ -144,8 +146,8 @@ void SSHFile::getInfos() const {
   
   exists(true);
   upToDate=true;
+  }
 }
-
 /* Change the file group through ssh. */
 int SSHFile::chgrp(const string& group) {
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
@@ -215,7 +217,22 @@ string SSHFile::getContent() {
   }
   return catResult.first;
 }
-
+/* Create a file through ssh. */
+int SSHFile::mkfile(const mode_t mode) {
+  ostringstream os;
+  SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
+              sshPublicKey, sshPrivateKey);
+  pair<string,string> mkfileResult;
+  
+  if (exists()) throw runtime_error(getPath()+" already exists");
+  
+  mkfileResult = ssh.exec(MKFILECMD+getPath());
+  if (mkfileResult.second.length()!=0) {
+    throw runtime_error("Error creating "+getPath()+": "+mkfileResult.second);
+  }
+  exists(true);
+  return 0;
+}
 
 
 /* Create a directory through ssh. */
