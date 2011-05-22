@@ -176,7 +176,7 @@ int RemoteFileProxy::chmod(const mode_t mode) {
         DIET_VOLATILE);
 
   ostringstream os;
-  os <<oct<< mode;
+  os << mode;
   string modeInString (os.str());
 
   diet_string_set(diet_parameter(profile, 4), const_cast<char*>(modeInString.c_str()),
