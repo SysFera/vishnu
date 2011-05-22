@@ -28,6 +28,8 @@ public:
   virtual int rm();
   virtual int rmdir();
   virtual std::string tail(const unsigned int nline); 
+virtual std::list<std::string> ls(const LsDirOptions& options) const;
+
 };
 
 #endif

@@ -16,8 +16,8 @@ using namespace FMS_Data;
 #include "rmfileSrv.hh"
 #include "rmdirSrv.hh"
 #include "tailSrv.hh"
+#include "lsSrv.hh"
 //#include "cpFileSrv.hh"
-//#include "lsSrv.hh"
 //#include "statusSrv.hh"
 
 uid_t* uiddup(const uid_t& uid);
