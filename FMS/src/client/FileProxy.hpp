@@ -107,7 +107,7 @@ public:
   virtual int rm() = 0;
   virtual int rmdir() = 0;
   virtual std::string tail(const TailOfFileOptions& options) = 0;
- // virtual std::list<std::string> lsDirSimple() const = 0; 
+  virtual std::list<std::string> ls(const LsDirOptions& options) const = 0; 
   
  
  static std::string extHost(const std::string& path);

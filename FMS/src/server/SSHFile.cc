@@ -311,7 +311,39 @@ string SSHFile::tail(const TailOfFileOptions& options) {
 }
 
 
+/* Get the files and subdirectory of this directory through ssh. */
+list<string> SSHFile::ls(const LsDirOptions& options) const {
+  SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
+              sshPublicKey, sshPrivateKey);
+  pair<string,string> lsResult;
+  list<string> result;
+  
+  if (!exists()) throw runtime_error(getPath()+" does not exist");
+ 
+  lsResult = ssh.exec(LSALCMD+getPath());
+  
+  if (lsResult.second.length()!=0)
+    throw runtime_error("Error listing directory: "+lsResult.second);
+  
+  istringstream is(lsResult.first);
+  char buffer[1024];
+  string line;
+  
+  while (!is.eof()) {
+    is.getline(buffer, 1024);
+    line = buffer;
+    result.push_back(line);
+  }
+  return result;
+}
 
+
+
+
+
+
+
+// Defintion of SSHExec Class
 
 SSHExec::SSHExec(const string& sshCommand, const string& scpCommand,
                  const string& server, unsigned int sshPort,

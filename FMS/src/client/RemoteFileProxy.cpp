@@ -513,6 +513,73 @@ string RemoteFileProxy::tail(const TailOfFileOptions& options) {
   return result;
 }
 
+/* Call the ls DIET server.
+ * If something goes wrong, throw a runtime_error containing
+ * the error message.
+ */
+
+list<string> RemoteFileProxy::ls(const LsDirOptions& options) const {
+ 
+ list<string> result;
+  char* errMsg, *ls, *optionsToString = NULL;
+  diet_profile_t* profile;
+
+  std::string serviceName("DirList");
+  std::string sessionKey=this->getSession().getSessionKey();
+  
+  
+  profile = diet_profile_alloc(serviceName.c_str(), 4, 4, 6);
+  
+  diet_string_set(diet_parameter(profile, 0), strdup(sessionKey.c_str()),
+                  DIET_VOLATILE);
+  
+  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getPath().c_str()),
+                  DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 2), const_cast<char*>(localUser.c_str()),
+                  DIET_VOLATILE);
+
+  diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
+                       DIET_VOLATILE);
+ 
+  const char* name = "ls";
+  ::ecorecpp::serializer::serializer _ser(name);
+  //To serialize the options object in to optionsInString
+  optionsToString =  strdup(_ser.serialize(const_cast<FMS_Data::LsDirOptions_ptr>(&options)).c_str()); 
+  
+  diet_string_set(diet_parameter(profile, 4), optionsToString, DIET_VOLATILE);
+  
+  
+  diet_string_set(diet_parameter(profile, 5), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 6), NULL, DIET_VOLATILE);
+  
+  if (diet_call(profile))
+    throw runtime_error("Error calling DIET service");
+  
+  diet_string_get(diet_parameter(profile, 5), &ls, NULL);
+  diet_string_get(diet_parameter(profile, 6), &errMsg, NULL);
+  
+  if (strlen(errMsg)!=0) {
+  raiseExceptionIfNotEmptyMsg(errMsg);
+  }
+ 
+
+// post traitemennt 
+  istringstream is(ls);
+  char buffer[1024];
+  string line;
+
+  while (!is.eof()) {
+    is.getline(buffer, 1024);
+    line = buffer;
+    result.push_back(line);
+  }
+
+  return result;
+}
+
+
+
+
 
 void RemoteFileProxy::printTransferID(const bool printTrID) {
   this->printTrID=printTrID;
