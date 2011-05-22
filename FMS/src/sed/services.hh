@@ -7,9 +7,8 @@
 using namespace FMS_Data;
 /* Include all the services headers. */
 #include "getInfosSrv.hh"
-//#include "cpFileSrv.hh"
 #include "chgrpSrv.hh"
-//#include "chmodSrv.hh"
+#include "chmodSrv.hh"
 #include "headSrv.hh"
 #include "getContentSrv.hh"
 #include "mkfileSrv.hh"
@@ -17,6 +16,7 @@ using namespace FMS_Data;
 #include "rmfileSrv.hh"
 #include "rmdirSrv.hh"
 #include "tailSrv.hh"
+//#include "cpFileSrv.hh"
 //#include "lsSrv.hh"
 //#include "statusSrv.hh"
 
