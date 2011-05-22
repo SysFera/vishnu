@@ -33,6 +33,7 @@ public:
   virtual int rmdir();
   virtual std::string tail(const TailOfFileOptions& options); 
 
+  virtual std::list<std::string> ls(const LsDirOptions& options) const;
 };
 
 #endif
