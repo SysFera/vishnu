@@ -37,6 +37,7 @@ add_executable(fmssed
   rmdirSrv
   rmfileSrv
   chgrpSrv
+  chmodSrv
   )
 
 target_link_libraries(fmssed
