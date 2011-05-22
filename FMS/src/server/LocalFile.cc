@@ -350,4 +350,37 @@ string LocalFile::tail(const unsigned int nline) {
   return result;
 }
 
+/* List the files of this local directory. */
+list<string> LocalFile::ls(const LsDirOptions& options) const {
+  list<string> result;
+  DIR* dir;
+  struct dirent* entry;
 
+  if (!exists()) throw runtime_error(getPath()+" does not exist");
+  if (getType()!=directory)
+    throw runtime_error(getPath()+" is not a directory");
+
+  dir = opendir(getPath().c_str());
+  if (!dir)
+    switch (errno) {
+      case EACCES:
+        throw runtime_error("Permission denied to access "+getPath());
+      case ELOOP:
+        throw runtime_error("Too many symbolic links in the path. There is probably"
+                            "a looping symbolic link in "+getPath());
+      case ENAMETOOLONG:
+        throw runtime_error("File path too long: "+getPath());
+      case ENOENT:
+        throw runtime_error("A component in "+getPath()+" does not exist.");
+      case ENOTDIR:
+        throw runtime_error("A component of the path of "+getPath()+
+                            " is not a directory.");
+      default:
+        throw runtime_error("Error opening "+getPath());
+    }
+
+  while ((entry=readdir(dir))) {
+    result.push_back(entry->d_name);
+  }
+  return result;
+}
