@@ -172,7 +172,7 @@ int SSHFile::chmod(const mode_t mode) {
   pair<string,string> chmodResult;
   
   if (!exists()) throw runtime_error(getPath()+" does not exist");
-  os << oct << mode;
+  os << mode;
   chmodResult = ssh.exec(CHMODCMD+os.str()+" "+getPath());
   
   if (chmodResult.second.length()!=0) {
