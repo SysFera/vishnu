@@ -195,6 +195,17 @@ ServerFMS::init(int vishnuId,
 
   diet_profile_desc_free(mprofile);
 
+// Change mode file
+
+  mprofile = getChangeModeProfile();
+
+  if ( diet_service_table_add(mprofile, NULL, solveChangeMode)){
+
+    return 1;
+
+  }
+
+  diet_profile_desc_free(mprofile);
 
 
 
