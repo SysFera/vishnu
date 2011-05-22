@@ -261,7 +261,25 @@ using namespace std;
    */
   int vishnu::listDir(const string& sessionKey,const string& path, StringList& dirContent,const LsDirOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
-  }
+ 
+   SessionProxy sessionProxy(sessionKey);
+
+   boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
+
+   std::list<string> tmpList(f->ls(options));
+
+   std::list<string>::const_iterator it;
+
+   for (it =tmpList.begin();it!=tmpList.end();++it ){
+
+     dirContent.addStrings(*it);
+
+   }
+
+
+  return 0; 
+   
+    }
 
   /**
    * \brief move a file
