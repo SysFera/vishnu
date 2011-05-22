@@ -139,16 +139,16 @@ using namespace std;
   int
     vishnu::chGrp(const string& sessionKey,const string& path, const string& group)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
-   
-       SessionProxy sessionProxy(sessionKey);
-  
+
+      SessionProxy sessionProxy(sessionKey);
+
       boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
 
 
       int result= f->chgrp(group);
 
       return result;
-    
+
    
     }
 
@@ -160,7 +160,18 @@ using namespace std;
    * \return 0 if everything is OK, another value otherwise
    */
   int vishnu::chMod(const string& sessionKey,const string& path, const mode_t& mode)
-    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
+    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
+   
+      SessionProxy sessionProxy(sessionKey);
+
+      boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
+
+
+      int result= f->chmod(mode);
+
+      return result;
+   
+    }
 
   /**
    * \brief  copy the file
