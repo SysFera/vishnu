@@ -207,6 +207,19 @@ ServerFMS::init(int vishnuId,
 
   diet_profile_desc_free(mprofile);
 
+// List the directory content
+
+  mprofile = getListDirProfile();
+
+  if ( diet_service_table_add(mprofile, NULL, solveListDir)){
+
+    return 1;
+
+  }
+
+  diet_profile_desc_free(mprofile);
+
+
 
 
 
