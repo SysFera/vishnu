@@ -85,7 +85,6 @@ int main (int argc, char* argv[]){
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
       chMod(sessionKey, path, mode);
-     std::cout << "the mode given is: " << mode << "\n"; 
     }
     printSuccessMessage();
   } catch(VishnuException& e){// catch all Vishnu runtime error
