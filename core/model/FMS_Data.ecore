@@ -21,6 +21,7 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Status" instanceTypeName="Status">
+    <eLiterals name="UNDEFINED" value="-1" literal="UNDEFINED"/>
     <eLiterals name="INPROGRESS"/>
     <eLiterals name="COMPLETED" value="1"/>
     <eLiterals name="CANCELLED" value="2"/>
@@ -84,13 +85,15 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CpFileOptions" instanceTypeName="CpFileOptions">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isRecursive" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isRecursive" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false">
       <eAnnotations source="Description">
         <details key="content" value="It specifies when the copy is recursive (case of directory) or not."/>
         <details key="shortOption" value="r"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="trCommand" eType="#//TransferCommand">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="trCommand" eType="#//TransferCommand"
+        defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="the command to use to perform file transfer."/>
         <details key="shortOption" value="c"/>
@@ -99,17 +102,20 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="TransferCommand" instanceTypeName="TransferCommand">
+    <eLiterals name="UNDEFINED" value="-1"/>
     <eLiterals name="SCP"/>
     <eLiterals name="RSYNC" value="1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LsDirOptions" instanceTypeName="LsDirOptions">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="longFormat" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="longFormat" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false">
       <eAnnotations source="Description">
         <details key="content" value="It specifies the long display format (all available file informations)"/>
         <details key="shortOption" value="l"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="allFiles" eType="ecore:EDataType Ecore.ecore#//EBoolean">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="allFiles" eType="ecore:EDataType Ecore.ecore#//EBoolean"
+        defaultValueLiteral="false">
       <eAnnotations source="Description">
         <details key="content" value="Allows to display all files including hidden files"/>
         <details key="shortOption" value="a"/>
@@ -117,7 +123,8 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MvFileOptions" instanceTypeName="MvFileOptions">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="trCommand" eType="#//TransferCommand">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="trCommand" eType="#//TransferCommand"
+        defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="the command to use to perform file transfer."/>
         <details key="shortOption" value="c"/>
@@ -144,7 +151,8 @@
         <details key="shortOption" value="u"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//Status">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//Status"
+        defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="the file transfer status"/>
         <details key="shortOption" value="s"/>
@@ -245,7 +253,8 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="HeadOfFileOptions" instanceTypeName="HeadOfFileOptions">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nline" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nline" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        defaultValueLiteral="10">
       <eAnnotations source="Description">
         <details key="content" value="the number of line to get"/>
         <details key="shortOption" value="n"/>
@@ -253,18 +262,11 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TailOfFileOptions" instanceTypeName="TailOfFileOptions">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nline" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nline" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        defaultValueLiteral="10">
       <eAnnotations source="Description">
         <details key="content" value="the number of line to get"/>
         <details key="shortOption" value="n"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ChModOptions" instanceTypeName="ChModOptions">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="the file permission access in octal system"/>
-        <details key="shortOption" value="m"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>

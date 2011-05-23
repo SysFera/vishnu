@@ -49,84 +49,79 @@ namespace FMS_Data
         // IDs for classifiers
 
         /**
-         * \brief Constant for ChModOptions class
-         */
-        static const int CHMODOPTIONS = 0;
-
-        /**
          * \brief Constant for CpFileOptions class
          */
-        static const int CPFILEOPTIONS = 1;
+        static const int CPFILEOPTIONS = 0;
 
         /**
          * \brief Constant for FileStat class
          */
-        static const int FILESTAT = 2;
+        static const int FILESTAT = 1;
 
         /**
          * \brief Constant for FileStatList class
          */
-        static const int FILESTATLIST = 3;
+        static const int FILESTATLIST = 2;
 
         /**
          * \brief Constant for FileTransfer class
          */
-        static const int FILETRANSFER = 4;
+        static const int FILETRANSFER = 3;
 
         /**
          * \brief Constant for FileTransferList class
          */
-        static const int FILETRANSFERLIST = 5;
+        static const int FILETRANSFERLIST = 4;
 
         /**
          * \brief Constant for FileType class
          */
-        static const int FILETYPE = 6;
+        static const int FILETYPE = 5;
 
         /**
          * \brief Constant for HeadOfFileOptions class
          */
-        static const int HEADOFFILEOPTIONS = 7;
+        static const int HEADOFFILEOPTIONS = 6;
 
         /**
          * \brief Constant for LsDirOptions class
          */
-        static const int LSDIROPTIONS = 8;
+        static const int LSDIROPTIONS = 7;
 
         /**
          * \brief Constant for LsTransferOptions class
          */
-        static const int LSTRANSFEROPTIONS = 9;
+        static const int LSTRANSFEROPTIONS = 8;
 
         /**
          * \brief Constant for MvFileOptions class
          */
-        static const int MVFILEOPTIONS = 10;
+        static const int MVFILEOPTIONS = 9;
 
         /**
          * \brief Constant for Status class
          */
-        static const int STATUS = 11;
+        static const int STATUS = 10;
 
         /**
          * \brief Constant for StopTransferOptions class
          */
-        static const int STOPTRANSFEROPTIONS = 12;
+        static const int STOPTRANSFEROPTIONS = 11;
 
         /**
          * \brief Constant for StringList class
          */
-        static const int STRINGLIST = 13;
+        static const int STRINGLIST = 12;
 
         /**
          * \brief Constant for TailOfFileOptions class
          */
-        static const int TAILOFFILEOPTIONS = 14;
+        static const int TAILOFFILEOPTIONS = 13;
 
         /**
          * \brief Constant for TransferCommand class
          */
-        static const int TRANSFERCOMMAND = 15;
+        static const int TRANSFERCOMMAND = 14;
 
         /**
          * \brief Constant for STRINGLIST__STRINGS feature
@@ -323,11 +318,6 @@ namespace FMS_Data
          */
         static const int TAILOFFILEOPTIONS__NLINE = 38;
 
-        /**
-         * \brief Constant for CHMODOPTIONS__MODE feature
-         */
-        static const int CHMODOPTIONS__MODE = 39;
-
         // EClassifiers methods
 
         /**
@@ -419,12 +409,6 @@ namespace FMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EClass_ptr getTailOfFileOptions();
-
-        /**
-         * \brief Returns the reflective object for class ChModOptions
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EClass_ptr getChModOptions();
 
         // EStructuralFeatures methods
 
@@ -662,12 +646,6 @@ namespace FMS_Data
          */
         virtual ::ecore::EAttribute_ptr getTailOfFileOptions__nline();
 
-        /**
-         * \brief Returns the reflective object for feature mode of class ChModOptions
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EAttribute_ptr getChModOptions__mode();
-
     protected:
 
         /**
@@ -738,11 +716,6 @@ namespace FMS_Data
          * \brief The instance for the class TailOfFileOptions
          */
         ::ecore::EClass_ptr m_TailOfFileOptionsEClass;
-
-        /**
-         * \brief The instance for the class ChModOptions
-         */
-        ::ecore::EClass_ptr m_ChModOptionsEClass;
 
         // EEnuminstances 
 
@@ -960,11 +933,6 @@ namespace FMS_Data
          * \brief The instance for the feature nline of class TailOfFileOptions
          */
         ::ecore::EAttribute_ptr m_TailOfFileOptions__nline;
-
-        /**
-         * \brief The instance for the feature mode of class ChModOptions
-         */
-        ::ecore::EAttribute_ptr m_ChModOptions__mode;
 
     };
 

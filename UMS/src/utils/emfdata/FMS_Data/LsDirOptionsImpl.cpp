@@ -99,11 +99,9 @@ void LsDirOptions::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::FMS_Data::FMS_DataPackage::LSDIROPTIONS__LONGFORMAT:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EBoolean >::is_set(
-                m_longFormat);
+        return m_longFormat != false;
     case ::FMS_Data::FMS_DataPackage::LSDIROPTIONS__ALLFILES:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EBoolean >::is_set(
-                m_allFiles);
+        return m_allFiles != false;
 
     }
     throw "Error";
