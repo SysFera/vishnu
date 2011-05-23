@@ -11,13 +11,16 @@
 using namespace std;
 using namespace vishnu;
 
+string dbErrorMsg(MYSQL *conn) {
+  const char *msg = mysql_error(conn);
+  return msg != '\0' ? " {" + string(msg) + "}" : "";
+}
+
 int
 MYSQLDatabase::process(string request){
   int reqPos;
-  MYSQL* conn = getConnexion(reqPos);
+  MYSQL* conn = getConnection(reqPos);
   int res;
-  //FIXME remove output
-  cout << "@@@@@ PROCESS QUERY: " << request << endl;
   if (request.empty()) {
     throw SystemException(ERRCODE_DBERR, "Empty SQL query");
   }
@@ -31,9 +34,8 @@ MYSQLDatabase::process(string request){
 
   if (res) {
     // Could not execute the query
-    releaseConnexion(reqPos);
-    throw SystemException(ERRCODE_DBERR, "P-Query error with code "
-                                         +convertToString(res)+"{" + request + "}");
+    releaseConnection(reqPos);
+    throw SystemException(ERRCODE_DBERR, "P-Query error" + dbErrorMsg(conn));
   }
   // Due to CLIENT_MULTI_STATEMENTS option, results must always be retrieved
   // process each statement result
@@ -45,24 +47,18 @@ MYSQLDatabase::process(string request){
       mysql_free_result(result);
     } else {
       // no result set or error
-      if (mysql_field_count(conn) == 0) {
-          //FIXME remove output
-          cout << mysql_affected_rows(conn) << " rows affected" << endl;
-      }
-      else {
+      if (mysql_field_count(conn) != 0) {
         // some error occurred
-        cout << "Could not retrieve result set" << endl;
-        throw SystemException(ERRCODE_DBERR, "P-Query error with code "
-                                         +convertToString(res)+"{" + request + "}");
+        throw SystemException(ERRCODE_DBERR, "P-Query error" + dbErrorMsg(conn));
       }
     }
     // more results? -1 = no, >0 = error, 0 = yes (keep looping)
     if ((res = mysql_next_result(conn)) > 0) {
-      cout << "Could not execute statement" << endl;
+      throw SystemException(ERRCODE_DBERR, "P-Query error" + dbErrorMsg(conn));
     }
   } while (res == 0);
 
-  releaseConnexion(reqPos);
+  releaseConnection(reqPos);
   return SUCCESS;
 }
 /**
@@ -81,8 +77,8 @@ MYSQLDatabase::connect(){
                            mconfig.getDbPort(),
                            NULL,
                            CLIENT_MULTI_STATEMENTS) ==NULL) {
-      throw SystemException(ERRCODE_DBERR, "Connection problem with message:"
-                            +string(mysql_error(&(mpool[i].mmysql))));
+      throw SystemException(ERRCODE_DBERR, "Cannot connect to the DB"
+                            + dbErrorMsg(&(mpool[i].mmysql)));
     }
   }
   return SUCCESS;
@@ -146,46 +142,46 @@ MYSQLDatabase::disconnect(){
 DatabaseResult*
 MYSQLDatabase::getResult(string request) {
   int reqPos;
-  MYSQL* lconn = getConnexion(reqPos);
-  MYSQL_RES *res;
-  MYSQL_ROW  row;
-  MYSQL_FIELD *field;
-  vector<vector<string> > results;
-  vector<string> attributesNames;
+  MYSQL* conn = getConnection(reqPos);
+  // Execute the SQL query
+  if ((mysql_real_query(conn, request.c_str (), request.length())) != 0) {
+    releaseConnection(reqPos);
+    throw SystemException(ERRCODE_DBERR, "S-Query error" + dbErrorMsg(conn));
+  }
+  // Get the result handle (does not fetch data from the server)
+  MYSQL_RES *result = mysql_use_result(conn);
+  if (result == 0) {
+    throw SystemException(ERRCODE_DBERR, "Cannot get query results" + dbErrorMsg(conn));
+  }
+  int size = mysql_num_fields(result);
+  // Fetch data rows
+  MYSQL_ROW row;
   vector<string> rowStr;
-  int        size;
-  int        i;
-
-  if ((mysql_real_query(lconn, request.c_str (), request.length())) != 0) {
-    releaseConnexion(reqPos);
-    throw SystemException(ERRCODE_DBERR, "S-Query error with code "+convertToString(res)+"{" + request + "}");
-  }
-  res = mysql_use_result (lconn);
-  size = mysql_num_fields(res);
-  if (res==NULL) {
-    throw SystemException(ERRCODE_DBERR, "Database problem to get the results with message: "+string(mysql_error(lconn)));
-  }
-  while ((row=mysql_fetch_row(res))){
+  vector<vector<string> > results;
+  while ((row = mysql_fetch_row(result))) {
     rowStr.clear();
-    for (i=0;i<size;i++){
+    for (unsigned int i=0;i<size;i++){
       rowStr.push_back(string(row[i] ? row[i] : ""));
     }
     results.push_back(rowStr);
   }
-  while((field = mysql_fetch_field(res))) {
+  // Fetch column names
+  MYSQL_FIELD *field;
+  vector<string> attributesNames;
+  while((field = mysql_fetch_field( result))) {
     attributesNames.push_back(string(field->name));
   }
-  releaseConnexion(reqPos);
-
+  // Finalize
+  releaseConnection(reqPos);
   return new DatabaseResult(results, attributesNames);
 }
 
 
 MYSQL*
-MYSQLDatabase::getConnexion(int& id){
+MYSQLDatabase::getConnection(int& id){
   int i = 0;
   int locked;
-  // Looking for an unused connection
+  // Looking for an unused connection (will block until a connection is free)
   while (true) {
     // If the connection is not used
     if(!mpool[i].mused) {
@@ -207,15 +203,14 @@ MYSQLDatabase::getConnexion(int& id){
       i=0;
     }
   }
-  throw SystemException(ERRCODE_DBCONN, "Unknown error, cannot get connection on database");
+  throw SystemException(ERRCODE_DBCONN, "Cannot get available DB connection");
 }
 
 void
-MYSQLDatabase::releaseConnexion(int pos){
-  int ret;
-  ret = pthread_mutex_unlock(&(mpool[pos].mmutex));
+MYSQLDatabase::releaseConnection(int pos) {
+  int ret = pthread_mutex_unlock(&(mpool[pos].mmutex));
   if (ret) {
-    throw SystemException(ERRCODE_DBCONN, "Failed to release connection lock");
+    throw SystemException(ERRCODE_DBCONN, "Cannot release connection lock");
   }
   mpool[pos].mused = false;
 }
