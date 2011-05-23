@@ -27,13 +27,11 @@ using namespace vishnu;
  * \param pgName : The name of the command
  * \param path : the path of the file to display
  * \param dietConfig: Represents the VISHNU config file
- * \param lsDirOptions: The list directory options structure
  */
 boost::shared_ptr<Options>
 makeListDirOpt(string pgName,
             string& path,
-            string& dietConfig,
-            FMS_Data::LsDirOptions& lsDirOptions){
+            string& dietConfig){
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
@@ -47,17 +45,9 @@ makeListDirOpt(string pgName,
       "It specifies the long display format (all available file information",
       CONFIG);
 
-  if(opt->count("longFormat")){
-    lsDirOptions.setLongFormat(true);
-  }
-
   opt->add("allFiles,a",
       "Allows to display all files including hidden file",
       CONFIG);
-
-  if(opt->count("allFiles")){
-    lsDirOptions.setAllFiles(true);
-  }
 
    opt->add("path,p",
       "The directory to list following the pattern [host:]directory path.",
@@ -83,7 +73,7 @@ int main (int argc, char* argv[]){
   FMS_Data::LsDirOptions lsDirOptions;
   
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeListDirOpt(argv[0], path,dietConfig,lsDirOptions);
+  boost::shared_ptr<Options> opt=makeListDirOpt(argv[0], path,dietConfig);
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
