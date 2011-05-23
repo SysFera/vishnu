@@ -1,6 +1,6 @@
 /**
- * \file create_file.cpp
- * This file defines the VISHNU submit job command 
+ * \file create_dir.cpp
+ * This file defines the VISHNU create directory command 
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
