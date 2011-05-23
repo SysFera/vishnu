@@ -86,7 +86,7 @@ void HeadOfFileOptions::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::FMS_Data::FMS_DataPackage::HEADOFFILEOPTIONS__NLINE:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(m_nline);
+        return m_nline != 10;
 
     }
     throw "Error";

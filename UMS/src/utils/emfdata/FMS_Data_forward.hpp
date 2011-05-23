@@ -102,10 +102,6 @@ namespace FMS_Data
     class TailOfFileOptions;
     typedef TailOfFileOptions* TailOfFileOptions_ptr;
 
-    // ChModOptions
-    class ChModOptions;
-    typedef ChModOptions* ChModOptions_ptr;
-
     // Package & Factory
     class FMS_DataFactory;
     typedef FMS_DataFactory * FMS_DataFactory_ptr;

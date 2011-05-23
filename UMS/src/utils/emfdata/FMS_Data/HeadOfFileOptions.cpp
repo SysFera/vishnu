@@ -30,7 +30,8 @@
 using namespace ::FMS_Data;
 
 // Default constructor
-HeadOfFileOptions::HeadOfFileOptions()
+HeadOfFileOptions::HeadOfFileOptions() :
+    m_nline(10)
 {
 
     /*PROTECTED REGION ID(HeadOfFileOptionsImpl__HeadOfFileOptionsImpl) START*/

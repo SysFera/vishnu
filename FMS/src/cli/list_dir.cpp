@@ -73,7 +73,7 @@ int main (int argc, char* argv[]){
 
    /********** EMF data ************/
   FMS_Data::LsDirOptions lsDirOptions;
-
+  
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt=makeListDirOpt(argv[0], path,dietConfig,lsDirOptions);
 
@@ -94,6 +94,15 @@ int main (int argc, char* argv[]){
     return 0;
   }
 
+ if ( opt->count("allFiles")){
+     lsDirOptions.setAllFiles(true);
+  }
+
+ if ( opt->count("longFormat")){
+     lsDirOptions.setLongFormat(true);
+  }
+
+
   // Process command
   try {
     std::cout << "dietConfig: "  << dietConfig << "\n";
@@ -111,7 +120,7 @@ int main (int argc, char* argv[]){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
       listDir(sessionKey, path, dirContent, lsDirOptions);
 
-      // FIXME by the great Daouda
+      // FIXME by the Grand Daouda
       std::vector<std::string> dirContentvec=dirContent.getStrings();
       std::vector<string>::const_iterator it;
       std::cout << path << ": \n";
