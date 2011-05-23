@@ -10,6 +10,7 @@
 #include "File.hh"
 #include "services.hh"
 #include "UserServer.hpp"
+#include "MachineServer.hpp"
 #include <boost/scoped_ptr.hpp>
 using namespace std;
 using namespace FMS_Data;
@@ -42,7 +43,7 @@ diet_profile_desc_t* getInfosProfile() {
 int get_infos(diet_profile_t* profile) {
  
   char* path, * user, * host, *sessionKey, *fileStatSerialized=NULL;
-  string localPath, localUser, userKey;
+  string localPath, localUser, userKey, machineName;
   char* errMsg = NULL;
 
 
@@ -79,10 +80,24 @@ int get_infos(diet_profile_t* profile) {
         // check the sessionKey
 
         sessionServer.check();
+   // 
+    UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+    machine->setMachineId(host);
+    MachineServer machineServer(machine);
+    
+    // check the machine
+    machineServer.checkMachine();
+
+    // get the machineName
+    machineName = machineServer.getMachineName();
+    delete machine;
+
 
         std::string acLogin = UserServer(sessionServer).getUserAccountLogin(host);
 
         std::cout << "acLogin: " << acLogin << "\n";
+    
+        FileFactory::setSSHServer(machineName);
 
         boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,localPath, acLogin, userKey));
 

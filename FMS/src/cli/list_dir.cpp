@@ -75,7 +75,7 @@ int main (int argc, char* argv[]){
   FMS_Data::LsDirOptions lsDirOptions;
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeListDirOpt(argv[0], dietConfig, path, lsDirOptions);
+  boost::shared_ptr<Options> opt=makeListDirOpt(argv[0], path,dietConfig,lsDirOptions);
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
@@ -96,7 +96,7 @@ int main (int argc, char* argv[]){
 
   // Process command
   try {
-
+    std::cout << "dietConfig: "  << dietConfig << "\n";
     // initializing DIET
     if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
       errorUsage(argv[0],dietErrorMsg,EXECERROR);
@@ -110,6 +110,14 @@ int main (int argc, char* argv[]){
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
       listDir(sessionKey, path, dirContent, lsDirOptions);
+
+      // FIXME by the great Daouda
+      std::vector<std::string> dirContentvec=dirContent.getStrings();
+      std::vector<string>::const_iterator it;
+      std::cout << path << ": \n";
+      for (it=dirContentvec.begin(); it!=dirContentvec.end(); ++it){
+        std::cout << *it << "\n"; 
+      }
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
