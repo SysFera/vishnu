@@ -152,7 +152,7 @@ MYSQLDatabase::getResult(string request) {
   MYSQL_FIELD *field;
   vector<vector<string> > results;
   vector<string> attributesNames;
-  vector<string> tmp;
+  vector<string> rowStr;
   int        size;
   int        i;
 
@@ -166,11 +166,11 @@ MYSQLDatabase::getResult(string request) {
     throw SystemException(ERRCODE_DBERR, "Database problem to get the results with message: "+string(mysql_error(lconn)));
   }
   while ((row=mysql_fetch_row(res))){
-    tmp.clear();
+    rowStr.clear();
     for (i=0;i<size;i++){
-      tmp.push_back(string(row[i]));
+      rowStr.push_back(string(row[i] ? row[i] : ""));
     }
-    results.push_back(tmp);
+    results.push_back(rowStr);
   }
   while((field = mysql_fetch_field(res))) {
     attributesNames.push_back(string(field->name));
