@@ -135,20 +135,20 @@ main(int argc, char* argv[], char* envp[])
       }
 
       //Submits the job
-      batchServer->submit(jobScriptPath, *submitOptions, *job, envp);
+      if(batchServer->submit(jobScriptPath, *submitOptions, *job, envp)==0){;
 
-      //To serialize the user object
-      const char* name = "Job";
-      ::ecorecpp::serializer::serializer _ser(name);
-      std::string slaveJob = strdup(_ser.serialize(job).c_str());
+        //To serialize the job object
+        const char* name = "Job";
+        ::ecorecpp::serializer::serializer _ser(name);
+        std::string slaveJob = strdup(_ser.serialize(job).c_str());
 
-      ::ecorecpp::serializer::serializer _ser2(name);
-      std::string slaveOptions = strdup(_ser2.serialize(submitOptions).c_str());
+        ::ecorecpp::serializer::serializer _ser2(name);
+        std::string slaveOptions = strdup(_ser2.serialize(submitOptions).c_str());
 
-      std::ofstream os_slaveJobFile(slaveJobFile);
-      os_slaveJobFile << slaveJob;
-      os_slaveJobFile.close();
-
+        std::ofstream os_slaveJobFile(slaveJobFile);
+        os_slaveJobFile << slaveJob;
+        os_slaveJobFile.close();
+      }
     } else if(action.compare("CANCEL")==0) {
       //To cancel the job
       batchServer->cancel((*job).getJobId().c_str());
