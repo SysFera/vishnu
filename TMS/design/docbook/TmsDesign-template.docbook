@@ -25,7 +25,15 @@
         <revdescription>
           <para>Deliverable version</para>
         </revdescription>
-        </revision>
+      </revision>
+      <revision>
+        <revnumber>05</revnumber>
+        <date>20/05/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Modified description of section dedicated to Job Owner and Identifier (section 2.3). Added TMS submitJob sequence diagram (three figures added). Modified TMS Client Class Diagram, TMS Server Class Diagram. Modified TMS Client Side Components, TMS Server Side Components. Added TMS Monitor Daemon description in the definitions of components in section 2.1. Added TMS Monitor Daemon component in TMS Server Side Components. Modified exceptions list of all services in internal API specification chapter. Modified jobSubmit, jobOutputGetResult, jobOutputGetCompletedJobs services in internal API specification chapter.</para>
+        </revdescription>
+      </revision>
       </revhistory>
     </info>
   <chapter>
@@ -171,6 +179,12 @@
             </para>
           </listitem>
           <listitem>
+            <para><emphasis role="bold">TMS Monitor Daemon</emphasis>
+             which the only role is to keep an eye on the job state execution time by checking the status parameter of job table 
+in the Vishnu Database.
+            </para>
+          </listitem> 
+          <listitem>
             <para><emphasis role="bold">Sysfera-DS Client API</emphasis> is the C++ client API provided by the SysFera-DS toolbox.</para>
           </listitem>
           <listitem>
@@ -237,42 +251,43 @@
     </section>
     <section>
         <title>Job owner and identifier</title>
-       <para>Each TMS server process runs using a specific local system account dedicated to VISHNU.
-         All VISHNU jobs will be submitted to LoadLeveler or Torque API using this system account and will be identified on these
-         batch schedulers by local identifiers. For example a given job on LL will be visible as a job with identifier "hostname.344.0"
-         and owner "vishnu".
-         From the VISHNU user point of view, these local identifiers and the local job owner will be hidden and replaced by the user's identifier
-         and global job identifiers. For example the previous job will be visible in VISHNU as job "JOB_6767" and userId "jdupond".</para>
+        <para> Each TMS server process runs using a specific local system account dedicated to VISHNU. To allow TMS server to submit job under user local account on the machine on which TMS server runs, TMS server calls an other service et asks the executor of the service to submit the job. We call this service executor  <emphasis>tmsSlave</emphasis>.  <emphasis>tmsSlave</emphasis> uses <emphasis>ssh executable command</emphasis> by switching the local system account dedicated to VISHNU to user local account, and after connexion on the user local account it calls the underlying batch scheduler API (LoadLeveler or Torque API). For example a job submitted by user jdupond on a machine dedicated to LoadLeveler will be visible as a job with identifier "hostname.344.0" and owner "jdupond". 
+         From the VISHNU user point of view, the job owner corresponds of user job owner on the submitted machine and the  job identifier will be hidden and replaced by the generate global job identifier by VISHNU. For example the previous job will be visible in VISHNU as job "JOB_6767" and userId "jdupond".</para>
        <para>This data translation is entirely transparent to the VISHNU user and simplifies job management. </para>
+       <para>This <emphasis>tmsSlave</emphasis> is used only by two services: <emphasis>submitJob</emphasis> service and <emphasis>cancelJob</emphasis> service. </para>
 
-       <section>
-       <title> Use constraints of batch scheduler API </title>
-           <para> 
-             Because the TMS server runs with a specific local system account dedicated to VISHNU, the use of the batch scheduler API causes some problems. We present below these problems.</para>
-             <itemizedlist>
-               <listitem>
-                 <para><emphasis role="bold">Binary execution</emphasis>: 
-                   If the user specifies in his job script  (file containing job characteristics) to execute some local binaries (installed only in the user local account), the execution of this script will be rejected by the underlying batch scheduler if the local account dicated to TMS has not access to the binary. The figure 2.1 illustrates an example case.
-                 </para>
-               </listitem>
-               <listitem>
-                 <para><emphasis role="bold">Access rights for files and directories</emphasis>: 
-                   If the user indicates in his job script to redirect some outputs into files or directories of his home directory, the execution of this job will be rejected by the underlying batch scheduler if the local account dicated to TMS has not access to these files or directories. Sometimes the input data arguments of some commands in the job script can be files or directories, in this case the local account dicated to TMS server must be have read access on these files and directories. The figure 2.1 illustrates an example case
-                 </para>
-               </listitem>
-             </itemizedlist>
+       <para>The figures 2.1, 2.2 and 2.3 shows the diagram sequence of TMS submitJob using <emphasis>tmsSlave</emphasis>. </para>
 
-              <figure>
-          <title>Example of binary execution execution problem by TMS server</title>
+        <figure>
+          <title>TMS submitJob sequence: first sequence</title>
           <mediaobject>
             <imageobject>
-              <imagedata fileref="images/png/binary_example.png" align="center"
+              <imagedata fileref="images/png/submitJobSequence1.png" align="center"
                   scale="40"/>
             </imageobject>
           </mediaobject>
         </figure>
-          
-         </section>
+
+       <figure>
+          <title>TMS submitJob sequence: second sequence</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/submitJobSequence2.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+       <figure>
+          <title>TMS submitJob sequence: last sequence</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/submitJobSequence3.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+ 
 
      </section>
 
@@ -285,18 +300,14 @@
       <itemizedlist>
           <listitem>
             <para><emphasis role="bold">JobProxy</emphasis>
-             provides the services that allow to sumbit and cancel a job.
+             provides the services that allow to sumbit, to cancel a job and to get information on a  job.
             </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">QueryProxy</emphasis> provides a generic service that allow to get job information (list of all submitted jobs, information on a specific given job and jobs progression).</para>
+            <para><emphasis role="bold">QueryProxy</emphasis> provides a generic service that allow to get job information (list of all submitted jobs, information on a specific given job and jobs progression) and to list all availables queues on a given machine.</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">JobOutPutProxy</emphasis> provides the services that allow to get the results of all finished jobs or a specific given job.</para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">TMSMachineProxy </emphasis> provides the services that allow to get information on a given machine (list of all availables queues on this machine, the refreshement delay to get the finished jobs results.
-            </para>
           </listitem>
         </itemizedlist>
 
@@ -318,18 +329,14 @@
         <itemizedlist>
           <listitem>
             <para><emphasis role="bold">JobServer</emphasis>
-             resolves the services that allow to sumbit and cancel a job.
+             resolves the services that allow to sumbit, to cancel a job and to get information on a job.
             </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">QueryServer</emphasis> resolves a generic service that allow to get job information (list of all submitted jobs, information on a specific given job and jobs progression).</para>
+            <para><emphasis role="bold">QueryServer</emphasis> resolves a generic service that allow to get job information (list of all submitted jobs, information on a specific given job and jobs progression) and to list all availables queues on a given machine.</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">JobOutPutServer</emphasis> resolves the services that allow to get the results of all finished jobs or a specific given job.</para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">TMSMachineServer </emphasis> resolves the services that allow to get information on a given machine (list of all availables queues on this machine, the refreshement delay to get the finished jobs results.
-            </para>
           </listitem>
         </itemizedlist>
 
