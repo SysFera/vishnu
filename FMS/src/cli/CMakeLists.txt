@@ -54,7 +54,8 @@ set (CMDPREFIX vishnu_)
 macro(genCli NAME )
 
   set(source_files ${NAME}
-      cmdArgs 
+      cmdArgs
+      displayer 
      )
 
   set(CMDNAME ${CMDPREFIX}${NAME})
