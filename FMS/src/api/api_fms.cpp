@@ -290,7 +290,11 @@ using namespace std;
    * \return 0 if everything is OK, another value otherwise
    */
   int vishnu::moveFile(const string& sessionKey,const string& src, const string& dest, const MvFileOptions& options)
-    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
+    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
+        std::cout << " src=" << src << std::endl;
+       std::cout << " dest="  << dest << std::endl;
+       std::cout << options.getTrCommand() << std::endl;
+  }
 
   /**
    * \brief move a file in a asynchronous mode
@@ -304,7 +308,11 @@ using namespace std;
    */
   int vishnu::moveAsyncFile(const string& sessionKey,const string& src, const string& dest,
       FileTransfer& transferInfo, const MvFileOptions& options)
-    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
+    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
+      std::cout << " src=" << src << std::endl;
+       std::cout << " dest="  << dest << std::endl;
+       std::cout << options.getTrCommand() << std::endl; 
+    }
 
    /**
    * \brief get the last lines of a file
@@ -378,7 +386,64 @@ using namespace std;
    \return 0 if everything is OK, another value otherwise
    */
   int vishnu::listFileTransfers(const string& sessionKey,FileTransferList& fileTransferList, const LsTransferOptions& options)
-    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
+    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
+   
+      std::cout << "option: " << boolalpha << options.getTransferId() << std::endl;
+      std::cout << "option: " << boolalpha << options.getFromMachineId() << std::endl;
+      std::cout << "option: " << boolalpha << options.getUserId() << std::endl;
+      std::cout << "option: " << boolalpha << options.getStatus() << std::endl;
+
+      FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
+      FMS_Data::FileTransfer_ptr fileTransfer1 = ecoreFactory->createFileTransfer();
+
+      fileTransfer1->setTransferId("F_2");
+      fileTransfer1->setStatus(1);
+      fileTransfer1->setUserId("U_1") ;
+      fileTransfer1->setClientMachineId("CLM_1") ;
+      fileTransfer1->setSourceMachineId("MA_2") ;
+      fileTransfer1->setDestinationMachineId("MA_1");
+      fileTransfer1->setSourceFilePath("/home/traore/toto");
+      fileTransfer1->setDestinationFilePath("/home/traore/test/toto2");
+      fileTransfer1->setSize(256);
+      fileTransfer1->setStart_time(1305975557);
+      fileTransfer1->setTrCommand(0);
+
+      FMS_Data::FileTransfer_ptr fileTransfer2 = ecoreFactory->createFileTransfer();
+
+      fileTransfer2->setTransferId("F_3");
+      fileTransfer2->setStatus(1);
+      fileTransfer2->setUserId("U_1") ;
+      fileTransfer2->setClientMachineId("CLM_1") ;
+      fileTransfer2->setSourceMachineId("MA_2") ;
+      fileTransfer2->setDestinationMachineId("MA_1");
+      fileTransfer2->setSourceFilePath("/home/traore/titi");
+      fileTransfer2->setDestinationFilePath("/home/traore/test/titi2");
+      fileTransfer2->setSize(256);
+      fileTransfer2->setStart_time(1305982757);
+      fileTransfer2->setTrCommand(1);
+
+
+      FMS_Data::FileTransfer_ptr fileTransfer3 = ecoreFactory->createFileTransfer();
+
+      fileTransfer3->setTransferId("F_4");
+      fileTransfer3->setStatus(0);
+      fileTransfer3->setUserId("root") ;
+      fileTransfer3->setClientMachineId("CLM_2") ;
+      fileTransfer3->setSourceMachineId("MA_2") ;
+      fileTransfer3->setDestinationMachineId("MA_1");
+      fileTransfer3->setSourceFilePath("/home/dupond/papa");
+      fileTransfer3->setDestinationFilePath("/home/dupond/test/papa2");
+      fileTransfer3->setSize(256);
+      fileTransfer3->setStart_time(1305979157);
+      fileTransfer3->setTrCommand(0);
+
+      fileTransferList.getFileTransfers().push_back(fileTransfer1);
+      fileTransferList.getFileTransfers().push_back(fileTransfer2);
+      fileTransferList.getFileTransfers().push_back(fileTransfer3);
+
+
+   
+    }
 
 
 

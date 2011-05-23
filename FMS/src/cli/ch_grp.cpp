@@ -1,6 +1,6 @@
 /**
- * \file create_file.cpp
- * This file defines the VISHNU submit job command 
+ * \file ch_grp.cpp
+ * This file defines the VISHNU ch_grp command 
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
