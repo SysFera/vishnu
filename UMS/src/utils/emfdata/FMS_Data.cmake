@@ -51,8 +51,6 @@ set(FMS_Data_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/HeadOfFileOptionsImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/TailOfFileOptions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/TailOfFileOptionsImpl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/ChModOptions.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/ChModOptionsImpl.cpp
    )
    
 set(FMS_Data_HEADERS
@@ -72,7 +70,6 @@ set(FMS_Data_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FileTransferList.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/HeadOfFileOptions.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/TailOfFileOptions.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/ChModOptions.hpp
    )
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data.hpp DESTINATION include/emf4cpp/)
@@ -91,7 +88,6 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FileTransfer.hpp DESTINATION 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FileTransferList.hpp DESTINATION include/emf4cpp/FMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/HeadOfFileOptions.hpp DESTINATION include/emf4cpp/FMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/TailOfFileOptions.hpp DESTINATION include/emf4cpp/FMS_Data)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/ChModOptions.hpp DESTINATION include/emf4cpp/FMS_Data)
    
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} /home/ibrahima/Projets/ProjetEDF/Vishnu/core/deps/emf_bin/../include/emf4cpp /home/ibrahima/Projets/ProjetEDF/Vishnu/core/deps/emf_bin/../include/emf4cpp)
 
