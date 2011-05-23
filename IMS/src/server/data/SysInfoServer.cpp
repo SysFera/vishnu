@@ -52,6 +52,9 @@ SysInfoServer::getSysInfo() {
 void
 SysInfoServer::setSysInfo(IMS_Data::SystemInfo_ptr sys) {
   bool added = false;
+  if (!msession.isAdmin()){
+    throw UMSVishnuException(ERRCODE_NO_ADMIN, "set system info is an admin function. A user cannot call it");
+  }
   // No update needed
   if (sys->getMemory()==0 && sys->getDiskSpace()==0) {
     return;
