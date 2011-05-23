@@ -42,6 +42,14 @@
           
         <para>Deliverable version</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>05</revnumber>
+        <date>20/05/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+        <para>Modified description of section dedicated to Job Owner and Identifier (section 2.3). Added TMS submitJob sequence diagram (three figures added). Modified TMS Client Class Diagram, TMS Server Class Diagram. Modified TMS Client Side Components, TMS Server Side Components. Added TMS Monitor Daemon description in the definitions of components in section 2.1. Added TMS Monitor Daemon component in TMS Server Side Components. Modified exceptions list of all services in internal API specification chapter. Modified jobSubmit, jobOutputGetResult, jobOutputGetCompletedJobs services in internal API specification chapter.</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -183,6 +191,12 @@
             </para>
           </listitem>
           <listitem>
+            <para><emphasis role="bold">TMS Monitor Daemon</emphasis>
+             which the only role is to keep an eye on the job state execution time by checking the status parameter of job table 
+in the Vishnu Database.
+            </para>
+          </listitem>
+          <listitem>
             <para><emphasis role="bold">Sysfera-DS Client API</emphasis> is the C++ client API provided by the SysFera-DS toolbox.</para>
           </listitem>
           <listitem>
@@ -207,52 +221,77 @@
       <title>Installation prerequisites</title>
       <section>
         <title>Client side</title>
-        <para>The installation of TMS module on the client needs the following libraries or API</para>
+        <para>The installation of TMS module on the client needs the following libraries: </para>
         <itemizedlist>
           <listitem>
-            <para>VISHNU UMS librarie: the VISHNU User Management Service that allow the session creation and user authentification.
+            <para>VISHNU UMS libraries: the VISHNU User Management Service that allow the session creation and user authentification.
             </para>
           </listitem>
           <listitem>
-            <para>C++ and Boost-C++ libraries and API</para>
+            <para>C++ and Boost-C++ libraries </para>
           </listitem>
           <listitem>
-            <para>Sysfera-DS Client librarie and API</para>
+            <para>Sysfera-DS Client libraries </para>
           </listitem>
         </itemizedlist>
       </section>
       <section>
         <title>Server side</title>
-        <para>The installation of TMS module on the server side needs the following libraries or API</para>
+        <para>The installation of TMS module on the server side needs the following libraries:</para>
         <itemizedlist>
           <listitem>
-            <para>VISHNU UMS librarie and API: the VISHNU User Management Service that allow the session creation and user authentification.
+            <para>VISHNU UMS libraries: the VISHNU User Management Service that allow the session creation and user authentification.
             </para>
           </listitem>
           <listitem>
-            <para>C++ and Boost-C++ libraries and API</para>
+            <para>C++ and Boost-C++ libraries</para>
           </listitem>
           <listitem>
-            <para>Sysfera-DS Server librarie and API</para>
+            <para>Sysfera-DS Server libraries </para>
           </listitem>
           <listitem>
-            <para>IBM LoadLeveler librarie and API</para>
+            <para>IBM LoadLeveler library</para>
           </listitem>
           <listitem>
-            <para>Torque librarie and API</para>
+            <para>Torque library</para>
           </listitem>
         </itemizedlist>
       </section>
     </section>
     <section>
       <title>Job owner and identifier</title>
-      <para>Each TMS server process runs using a specific local system account dedicated to VISHNU.
-         All VISHNU jobs will be submitted to LoadLeveler or Torque API using this system account and will be identified on these
-         batch schedulers by local identifiers. For example a given job on LL will be visible as a job with identifier &quot;hostname.344.0&quot;
-         and owner &quot;vishnu&quot;.
-         From the VISHNU user point of view, these local identifiers and the local job owner will be hidden and replaced by the user's identifier
-         and global job identifiers. For example the previous job will be visible in VISHNU as job &quot;JOB_6767&quot; and userId &quot;jdupond&quot;.</para>
-      <para>This data translation is entirely transparent to the VISHNU user and simplifies job management</para>
+      <para> Each TMS server process runs using a specific local system account dedicated to VISHNU. To allow TMS server to submit job under user local account on the machine on which TMS server runs, TMS server calls an other service et asks the executor of the service to submit the job. We call this service executor  <emphasis>tmsSlave</emphasis>.  <emphasis>tmsSlave</emphasis> uses <emphasis>ssh executable command</emphasis> by switching the local system account dedicated to VISHNU to user local account, and after connexion on the user local account it calls the underlying batch scheduler API (LoadLeveler or Torque API). For example a job submitted by user jdupond on a machine dedicated to LoadLeveler will be visible as a job with identifier &quot;hostname.344.0&quot; and owner &quot;jdupond&quot;. 
+         From the VISHNU user point of view, the job owner corresponds of user job owner on the submitted machine and the  job identifier will be hidden and replaced by the generate global job identifier by VISHNU. For example the previous job will be visible in VISHNU as job &quot;JOB_6767&quot; and userId &quot;jdupond&quot;.</para>
+      <para>This data translation is entirely transparent to the VISHNU user and simplifies job management. </para>
+      <para>This <emphasis>tmsSlave</emphasis> is used only by two services: <emphasis>submitJob</emphasis> service and <emphasis>cancelJob</emphasis> service. </para>
+      <para>The figures 2.1, 2.2 and 2.3 shows the diagram sequence of TMS submitJob using <emphasis>tmsSlave</emphasis>. </para>
+      <figure>
+        <title>TMS submitJob sequence: first sequence</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/png/submitJobSequence1.png" align="center"
+                scale="40"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+      <figure>
+        <title>TMS submitJob sequence: second sequence</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/png/submitJobSequence2.png" align="center"
+                scale="40"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+      <figure>
+        <title>TMS submitJob sequence: last sequence</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/png/submitJobSequence3.png" align="center"
+                scale="40"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
     </section>
     <section>
       <title>Architecture diagrams</title>
@@ -262,18 +301,14 @@
         <itemizedlist>
           <listitem>
             <para><emphasis role="bold">JobProxy</emphasis>
-             provides the services that allow to sumbit and cancel a job.
+             provides the services that allow to sumbit, to cancel a job and to get information on a  job.
             </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">QueryProxy</emphasis> provides a generic service that allow to get job information (list of all submitted jobs, information on a specific given job and jobs progression).</para>
+            <para><emphasis role="bold">QueryProxy</emphasis> provides a generic service that allow to get job information (list of all submitted jobs, information on a specific given job and jobs progression) and to list all availables queues on a given machine.</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">JobOutPutProxy</emphasis> provides the services that allow to get the results of all finished jobs or a specific given job.</para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">TMSMachineProxy </emphasis> provides the services that allow to get information on a given machine (list of all availables queues on this machine, the refreshement delay to get the finished jobs results.
-            </para>
           </listitem>
         </itemizedlist>
         <figure>
@@ -292,18 +327,14 @@
         <itemizedlist>
           <listitem>
             <para><emphasis role="bold">JobServer</emphasis>
-             resolves the services that allow to sumbit and cancel a job.
+             resolves the services that allow to sumbit, to cancel a job and to get information on a job.
             </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">QueryServer</emphasis> resolves a generic service that allow to get job information (list of all submitted jobs, information on a specific given job and jobs progression).</para>
+            <para><emphasis role="bold">QueryServer</emphasis> resolves a generic service that allow to get job information (list of all submitted jobs, information on a specific given job and jobs progression) and to list all availables queues on a given machine.</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">JobOutPutServer</emphasis> resolves the services that allow to get the results of all finished jobs or a specific given job.</para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">TMSMachineServer </emphasis> resolves the services that allow to get information on a given machine (list of all availables queues on this machine, the refreshement delay to get the finished jobs results.
-            </para>
           </listitem>
         </itemizedlist>
         <figure>
@@ -446,6 +477,13 @@
                 <entry><para>IN</para></entry>
               </row>
               <row>
+                <entry><para>scriptContent</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Is the content of the script  to  submit</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para><link linkend="SubmitOptions">SubmitOptions</link></para></entry>
@@ -456,7 +494,7 @@
                 <entry><para>job</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para><link linkend="Job">Job</link></para></entry>
-                <entry><para>The  Job object containing the input information (ex: scriptPath) and output information (ex: jobId) of the job to submit</para></entry>
+                <entry><para>The  Job object containing the input information (ex: jobPath) and output information (ex:  jobId) of the job to submit</para></entry>
                 <entry><para>INOUT</para></entry>
               </row>
               <row>
@@ -470,7 +508,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The jobSubmit_MACHINEID() function submits job on a machine through the use of a script (scriptFilePath).</para>
+        <para>The jobSubmit_MACHINEID() function submits job on a machine of identifier MACHINEID through the use of a script (scriptContent)</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
@@ -491,36 +529,52 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machine  is unknown</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>Error invalid parameters</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_BATCH_SCHEDULER_ERROR</para></entry>
-                <entry><para>Indicates an error caused by the underlying batch scheduler</para></entry>
+                <entry><para>The batch scheduler indicates an error</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>The provided parameter is invalid</para></entry>
+                <entry><para>ERRCODE_SSH</para></entry>
+                <entry><para>Vishnu not available (SSH error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_UNKNOWN_BATCH_SCHEDULER</para></entry>
-                <entry><para>Indicates that the batch scheduler type is unknown</para></entry>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_UNKNOWN_QUEUE</para></entry>
-                <entry><para>Indicates that the specified queue by the user is unknown</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_SESSION_ID</para></entry>
+                <entry><para>The session Id is unknown</para></entry>
               </row>
               <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_UNKNOWN_ERROR</para></entry>
-                <entry><para>The type of error is unknown</para></entry>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -582,7 +636,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The jobCancel_MACHINEID() function cancels a job from its id</para>
+        <para>The jobCancel_MACHINEID() function cancels a job submitted on machine of identifier MACHINEID </para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
@@ -603,40 +657,60 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machine  is unknown</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_BATCH_SCHEDULER_ERROR</para></entry>
-                <entry><para>Indicates an error caused by the underlying batch scheduler</para></entry>
+                <entry><para>The batch scheduler indicates an error</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>The provided parameter is invalid</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CAN_NOT_CANCEL</para></entry>
-                <entry><para>Can not cancel this job</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>Indicates the requested operation is not allowed for provided user</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
+                <entry><para>ERRCODE_ALREADY_CANCELED</para></entry>
+                <entry><para>The job is already canceled</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_JOBID</para></entry>
                 <entry><para>The job id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_SESSION_ID</para></entry>
+                <entry><para>The session Id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
+                <entry><para>Permission denied</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SSH</para></entry>
+                <entry><para>Vishnu not available (SSH error)</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -645,7 +719,7 @@
         <para>TMS::cancelJob</para>
       </section>
       <section>
-        <title>Service getInfoOfJob_MACHINEID</title>
+        <title>Service JobInfo_MACHINEID</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This service can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -698,7 +772,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getInfoOfJob_MACHINEID() function gets information on a job from its id</para>
+        <para>The JobInfo_MACHINEID() function gets information on a job  submitted on machine of identifier MACHINEID</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
@@ -719,36 +793,48 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
+                <entry><para>ERRCODE_JOB_IS_NOT_TERMINATED</para></entry>
+                <entry><para>The job is not terminated</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>The provided parameter is invalid</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machine  is unknown</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_UNKNOWN_BATCH_SCHEDULER</para></entry>
-                <entry><para>Indicates that the batch scheduler type is unknown</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_UNKNOWN_ERROR</para></entry>
-                <entry><para>The type of error is unknown</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_JOBID</para></entry>
                 <entry><para>The job id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_SESSION_ID</para></entry>
+                <entry><para>The session Id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -817,7 +903,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getListOfJobs_MACHINEID() function gets a list of all submitted jobs</para>
+        <para>The getListOfJobs_MACHINEID() function gets a list of all submitted jobs submitted on machine of identifier MACHINEID</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
@@ -838,38 +924,181 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>The provided parameter is invalid</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_SESSION_ID</para></entry>
+                <entry><para>The session Id is unknown</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machine  is unknown</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_UNKNOWN_BATCH_SCHEDULER</para></entry>
-                <entry><para>Indicates that the batch scheduler type is unknown</para></entry>
+                <entry><para>ERRCODE_BATCH_SCHEDULER_ERROR</para></entry>
+                <entry><para>The batch scheduler indicates an error</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_UNKNOWN_ERROR</para></entry>
-                <entry><para>The type of error is unknown</para></entry>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
         <para>TMS::listJobs</para>
+      </section>
+      <section>
+        <title>Service getListOfQueues_MACHINEID</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key  is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Is the id of the machine that the user wants to list queues</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>queueName</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The name of queue to query</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>listofQueues</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ListQueues">ListQueues</link></para></entry>
+                <entry><para>The list of queues</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The getListOfQueues_MACHINEID() function gets queues information of the  machine identified by MACHINEID</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_BATCH_SCHEDULER_ERROR</para></entry>
+                <entry><para>The batch scheduler indicates an error</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>Error invalid parameters</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_SESSION_ID</para></entry>
+                <entry><para>The session Id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>TMS::listQueues</para>
       </section>
       <section>
         <title>Service getJobsProgression_MACHINEID</title>
@@ -932,7 +1161,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getJobsProgression_MACHINEID() function gets the progression status of jobs</para>
+        <para>The getJobsProgression_MACHINEID() function gets the progression status of jobs submitted on machine of identifier MACHINEID</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
@@ -953,36 +1182,44 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machine  is unknown</para></entry>
+                <entry><para>ERRCODE_BATCH_SCHEDULER_ERROR</para></entry>
+                <entry><para>The batch scheduler indicates an error</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>The provided parameter is invalid</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_BATCH_SCHEDULER_ERROR</para></entry>
-                <entry><para>Indicates an error caused by the underlying batch scheduler</para></entry>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_UNKNOWN_ERROR</para></entry>
-                <entry><para>The type of error is unknown</para></entry>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
               </row>
               <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_UNKNOWN_JOBID</para></entry>
-                <entry><para>The job id is unknown</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_SESSION_ID</para></entry>
+                <entry><para>The session Id is unknown</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -991,7 +1228,7 @@
         <para>TMS::getJobProgress</para>
       </section>
       <section>
-        <title>Service jobOutPutGetResult_MACHINEID</title>
+        <title>Service jobOutputGetResult_MACHINEID</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This service can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -1027,11 +1264,11 @@
                 <entry><para>IN</para></entry>
               </row>
               <row>
-                <entry><para>job</para></entry>
+                <entry><para>result</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="Job">Job</link></para></entry>
-                <entry><para>The  Job object containing the input information (ex: jobId) and ouput information (ex: outputPath an errorPath)</para></entry>
-                <entry><para>OUT</para></entry>
+                <entry><para><link linkend="JobResult">JobResult</link></para></entry>
+                <entry><para>The  Job object containing the input information (ex: jobId)</para></entry>
+                <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>errorInfo</para></entry>
@@ -1040,11 +1277,18 @@
                 <entry><para>Additional information provided when an error code is returned</para></entry>
                 <entry><para>OUT</para></entry>
               </row>
+              <row>
+                <entry><para>containerId</para></entry>
+                <entry><para>char*</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Is the identifier of the diet container which contains the job output and error paths</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The jobOutPutGetResult_MACHINEID() function gets outputPath and errorPath of a job from its id</para>
+        <para>The jobOutputGetResult_MACHINEID() function gets outputPath and errorPath of a job submitted on machine of identifer MACHINEID</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
@@ -1065,45 +1309,69 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
+                <entry><para>ERRCODE_ALREADY_CANCELED</para></entry>
+                <entry><para>The job is already canceled</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_ALREADY_DOWNLOADED</para></entry>
+                <entry><para>The job is already downloaded</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_BATCH_SCHEDULER_ERROR</para></entry>
+                <entry><para>The batch scheduler indicates an error</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_JOB_IS_NOT_TERMINATED</para></entry>
+                <entry><para>The job is not terminated</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>The provided parameter is invalid</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SSH</para></entry>
+                <entry><para>Vishnu not available (SSH error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machine  is unknown</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>Indicates the requested operation is not allowed for provided user</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_UNKNOWN_ERROR</para></entry>
-                <entry><para>The type of error is unknown</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_JOBID</para></entry>
                 <entry><para>The job id is unknown</para></entry>
               </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_SESSION_ID</para></entry>
+                <entry><para>The session Id is unknown</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>TMS::getJobOutPut</para>
+        <para>TMS::getJobOutput</para>
       </section>
       <section>
-        <title>Service jobOutPutGetAllResults_MACHINEID</title>
+        <title>Service jobOutputGetCompletedJobs_MACHINEID</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This service can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -1152,11 +1420,18 @@
                 <entry><para>Additional information provided when an error code is returned</para></entry>
                 <entry><para>OUT</para></entry>
               </row>
+              <row>
+                <entry><para>containerId</para></entry>
+                <entry><para>char*</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Is the identifier of the diet container which contains the completed jobs output and error paths</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The jobOutPutGetAllResults_MACHINEID() function dynamically gets outputPath and errorPath of completed jobs</para>
+        <para>The jobOutputGetCompletedJobs_MACHINEID() function dynamically gets outputPath and errorPath of completed jobs of the machine identified by MACHINEID</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
@@ -1177,339 +1452,42 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>The provided parameter is invalid</para></entry>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_UNKNOWN_BATCH_SCHEDULER</para></entry>
-                <entry><para>Indicates that the batch scheduler type is unknown</para></entry>
+                <entry><para>ERRCODE_SSH</para></entry>
+                <entry><para>Vishnu not available (SSH error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_UNKNOWN_ERROR</para></entry>
-                <entry><para>The type of error is unknown</para></entry>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>TMS::getAllJobsOutPut</para>
-      </section>
-      <section>
-        <title>Service TMSMachineGetListOfQueues_MACHINEID</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This service can be used by any VISHNU user</para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="1cm"/>
-            <thead>
-              <row>
-                <entry>Parameter</entry>
-                <entry>Type</entry>
-                <entry>Serialized type</entry>
-                <entry>Description</entry>
-                <entry>Mode</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>n/a</para></entry>
-                <entry><para>The session key  is the encrypted identifier of the session generated by VISHNU</para></entry>
-                <entry><para>IN</para></entry>
-              </row>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>n/a</para></entry>
-                <entry><para>Is the id of the machine that the user wants to list queues</para></entry>
-                <entry><para>IN</para></entry>
-              </row>
-              <row>
-                <entry><para>listofQueues</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para><link linkend="ListQueues">ListQueues</link></para></entry>
-                <entry><para>The list of queues</para></entry>
-                <entry><para>OUT</para></entry>
-              </row>
-              <row>
-                <entry><para>errorInfo</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>n/a</para></entry>
-                <entry><para>Additional information provided when an error code is returned</para></entry>
-                <entry><para>OUT</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The TMSMachineGetListOfQueues_MACHINEID() function gets queues information</para>
-        <para><emphasis role="bold">Return Value </emphasis></para>
-        <para>An error code is returned when an error occurs during the execution of the service</para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="8.5cm"/>
-            <colspec colwidth="9cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Description
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service was performed  successfully</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>The provided parameter is invalid</para></entry>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machine  is unknown</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_BATCH_SCHEDULER_ERROR</para></entry>
-                <entry><para>Indicates an error caused by the underlying batch scheduler</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_UNKNOWN_ERROR</para></entry>
-                <entry><para>The type of error is unknown</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_SESSION_ID</para></entry>
+                <entry><para>The session Id is unknown</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>TMS::listQueues</para>
-      </section>
-      <section>
-        <title>Service TMSMachineRefreshPeriodSet</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This service can be used by ADMIN users only</para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="1cm"/>
-            <thead>
-              <row>
-                <entry>Parameter</entry>
-                <entry>Type</entry>
-                <entry>Serialized type</entry>
-                <entry>Description</entry>
-                <entry>Mode</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>n/a</para></entry>
-                <entry><para>The Session object which contains the session input information (ex: the session key which is the encrypted identifier of the session generated by VISHNU)</para></entry>
-                <entry><para>IN</para></entry>
-              </row>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>n/a</para></entry>
-                <entry><para>Is the id of the machine that the user wants to set refresh period</para></entry>
-                <entry><para>IN</para></entry>
-              </row>
-              <row>
-                <entry><para>value</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>n/a</para></entry>
-                <entry><para>Is the refresh interval value (in seconds)</para></entry>
-                <entry><para>IN</para></entry>
-              </row>
-              <row>
-                <entry><para>errorInfo</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>n/a</para></entry>
-                <entry><para>Additional information provided when an error code is returned</para></entry>
-                <entry><para>OUT</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The TMSMachineRefreshPeriodSet() function sets the refresh period of output and error files contents</para>
-        <para><emphasis role="bold">Return Value </emphasis></para>
-        <para>An error code is returned when an error occurs during the execution of the service</para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="8.5cm"/>
-            <colspec colwidth="9cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Description
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service was performed  successfully</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machine  is unknown</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_UNKNOWN_ERROR</para></entry>
-                <entry><para>The type of error is unknown</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>The provided parameter is invalid</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>TMS::setMachineRefreshPeriod</para>
-      </section>
-      <section>
-        <title>Service TMSMachineRefreshPeriodGet</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This service can be used by any VISHNU user</para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="1cm"/>
-            <thead>
-              <row>
-                <entry>Parameter</entry>
-                <entry>Type</entry>
-                <entry>Serialized type</entry>
-                <entry>Description</entry>
-                <entry>Mode</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>n/a</para></entry>
-                <entry><para>The session key  is the encrypted identifier of the session generated by VISHNU)</para></entry>
-                <entry><para>IN</para></entry>
-              </row>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>n/a</para></entry>
-                <entry><para>Is the id of the machine that the user wants to get refresh period</para></entry>
-                <entry><para>IN</para></entry>
-              </row>
-              <row>
-                <entry><para>errorInfo</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>n/a</para></entry>
-                <entry><para>Additional information provided when an error code is returned</para></entry>
-                <entry><para>OUT</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The TMSMachineRefreshPeriodGet() function gets the refresh period of output and error files contents</para>
-        <para><emphasis role="bold">Return Value </emphasis></para>
-        <para>An error code is returned when an error occurs during the execution of the service</para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="8.5cm"/>
-            <colspec colwidth="9cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Description
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service was performed  successfully</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machine  is unknown</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>The provided parameter is invalid</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_UNKNOWN_ERROR</para></entry>
-                <entry><para>The type of error is unknown</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>TMS::getMachineRefreshPeriod</para>
+        <para>TMS::getCompletedJobsOutput</para>
       </section>
     </section>
   </chapter>
