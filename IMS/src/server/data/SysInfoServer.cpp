@@ -63,6 +63,9 @@ SysInfoServer::setSysInfo(IMS_Data::SystemInfo_ptr sys) {
     throw UserException(ERRCODE_INVALID_PARAM, "Error missing the machine id. ");
   }
   string request = "update \"machine\" * set ";
+  if (sys->getDiskSpace() < 0 || sys->getMemory() < 0) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid negative value");
+  }
   if (sys->getDiskSpace()>0) {
     request += " \"diskspace\"="+convertToString(sys->getDiskSpace());
     added = true;
