@@ -317,14 +317,27 @@ list<string> SSHFile::ls(const LsDirOptions& options) const {
               sshPublicKey, sshPrivateKey);
   pair<string,string> lsResult;
   list<string> result;
-  
+  std::cout <<"coucou dans SSH::ls\n"; 
+  string lsCmd("ls ");
+
   if (!exists()) throw runtime_error(getPath()+" does not exist");
- 
-  lsResult = ssh.exec(LSALCMD+getPath());
-  
+
+  std::cout <<"-l: " <<  boolalpha <<options.isLongFormat()<< "\n";
+  std::cout << "-a: " << boolalpha <<options.isAllFiles() << "\n";
+
+
+  if (options.isLongFormat()){
+    lsCmd.append("-l ");
+  }
+  if (options.isAllFiles()){
+    lsCmd.append("-a ");
+  }
+
+  lsResult = ssh.exec(lsCmd+getPath());
+
   if (lsResult.second.length()!=0)
     throw runtime_error("Error listing directory: "+lsResult.second);
-  
+
   istringstream is(lsResult.first);
   char buffer[1024];
   string line;

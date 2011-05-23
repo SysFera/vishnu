@@ -99,11 +99,9 @@ void CpFileOptions::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::FMS_Data::FMS_DataPackage::CPFILEOPTIONS__ISRECURSIVE:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EBoolean >::is_set(
-                m_isRecursive);
+        return m_isRecursive != false;
     case ::FMS_Data::FMS_DataPackage::CPFILEOPTIONS__TRCOMMAND:
-        return ::ecorecpp::mapping::set_traits< ::FMS_Data::TransferCommand >::is_set(
-                m_trCommand);
+        return m_trCommand != -1;
 
     }
     throw "Error";

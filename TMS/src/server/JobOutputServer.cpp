@@ -62,7 +62,7 @@ JobOutputServer::getJobOutput() {
   std::vector<std::string>::iterator  iter;
   //To get the output and error path of the job
   std::string sqlRequest = "SELECT outputPath, errorPath, owner, status from vsession, job where"
-                           " vsession.numsessionid=job.vsession_numsessionid and jobId='"+mjobResult.getJobId()+"'";
+                           " vsession.numsessionid=job.vsession_numsessionid and jobId='"+mjobResult.getJobId()+"'"
                            " and submitMachineId='"+mmachineId+"'" ; 
   boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
 
@@ -161,7 +161,7 @@ JobOutputServer::getCompletedJobsOutput() {
 
   //To get the output and error path of all jobs
   std::string sqlRequest = "SELECT jobId, outputPath, errorPath, status from vsession, job where"
-                           " vsession.numsessionid=job.vsession_numsessionid and owner='"+acLogin+"'";
+                           " vsession.numsessionid=job.vsession_numsessionid and owner='"+acLogin+"'"
                            " and submitMachineId='"+mmachineId+"'" ;
   boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
 
