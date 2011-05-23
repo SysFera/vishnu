@@ -87,8 +87,7 @@ void MvFileOptions::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::FMS_Data::FMS_DataPackage::MVFILEOPTIONS__TRCOMMAND:
-        return ::ecorecpp::mapping::set_traits< ::FMS_Data::TransferCommand >::is_set(
-                m_trCommand);
+        return m_trCommand != -1;
 
     }
     throw "Error";
