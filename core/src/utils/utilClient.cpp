@@ -41,6 +41,8 @@ void raiseExceptionIfNotEmptyMsg(const std::string& msg) {
           throw UMSVishnuException(code, message);
         } else if ((code >= 100) && (code < 200)) {
           throw TMSVishnuException(code, message);
+        }else if ((code >= 200) && (code < 300)){
+          throw FMSVishnuException(code, message);
         } else if ((code >= 300) && (code < 400)) {
           throw IMSVishnuException(code, message);
         } else {
