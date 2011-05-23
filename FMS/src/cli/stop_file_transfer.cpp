@@ -43,17 +43,17 @@ makeStopFileTrOpt(string pgName,
       ENV,
       dietConfig);
 
-  opt->add("transferId, i",
+  opt->add("transferId,i",
       "A given transfer id",
       CONFIG,
       ftransferId);
 
- opt->add("fromMachineId, m",
+ opt->add("fromMachineId,m",
       "The machine that is the source of the file transfer",
       CONFIG,
       ffromMachineId);
 
- opt->add("userId, u",
+ opt->add("userId,u",
       "Allows an admin to stop file transfers of a specific user",
       CONFIG,
       fuserId);
