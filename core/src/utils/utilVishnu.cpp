@@ -381,13 +381,7 @@ vishnu::checkJobNbNodesAndNbCpuPerNode(const std::string& nbNodesAndCpuPerNode) 
 */
 time_t vishnu::getCurrentTimeInUTC() {
 
-  //the current time
-  boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
-
-  time_t localtime = string_to_time_t(to_simple_string(now));
-
-  return std::time(&localtime);
-
+  return std::time(0);
 }
 
 /**
@@ -418,6 +412,21 @@ time_t vishnu::convertLocaltimeINUTCtime(const time_t& localtime) {
 
   long diff = currentTime-std::time(0);
   return (localtime-diff);
+}
+
+/**
+* \brief Function to return the difference between localtime and UTC time (seconds)
+* \return the difference time (seconds)
+*/
+long vishnu::diffLocaltimeUTCtime() {
+
+  //the current time
+  boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
+
+  time_t currentTime = string_to_time_t(to_simple_string(now));
+
+  long diff = currentTime-std::time(0);
+  return diff;
 }
 
 /**
