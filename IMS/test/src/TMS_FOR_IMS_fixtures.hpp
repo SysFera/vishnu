@@ -17,5 +17,4 @@ char TMSSeD[] = "tmssed";
 char ConfigTMSSeD[] = TMSSEDCONF;
 char BinDirTMSSeD[] = TMSSEDBINDIR;
 
-
 typedef DietSeDFixture<TMSSeD, BinDirTMSSeD, ConfigTMSSeD, UMSAndLogServicefixture> TMSSeDForIMSFixture;
