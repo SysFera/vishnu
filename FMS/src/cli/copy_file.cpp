@@ -27,15 +27,13 @@ using namespace vishnu;
  * \param trCmdStr: The command to use to perform file transfer
  * \param src: The source file to copy following the pattern [host:]file path
  * \param dest: The path of the destination file
- * \param cpFileOptions: The copy file transfer options structure
  */
 boost::shared_ptr<Options>
 makeCopyOpt(string pgName, 
     string& dietConfig,
     string& trCmdStr,
     string& src,
-    string& dest,
-    CpFileOptions& cpFileOptions){
+    string& dest){
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
@@ -49,10 +47,6 @@ makeCopyOpt(string pgName,
       "It specifies when the copy is recursive (case of directory) or not.",
       CONFIG);
   
-  if(opt->count("isRecursive")){
-    cpFileOptions.setIsRecursive(true);
-  }
-
   opt->add("trCommand,t",
       "The command to use to perform file transfer. The different values  are:\n"
       "O or scp: for SCP transfer\n"
@@ -92,7 +86,7 @@ int main (int argc, char* argv[]){
   FMS_Data::CpFileOptions cpFileOptions;
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt= makeCopyOpt(argv[0], dietConfig, trCmdStr, src, dest, cpFileOptions);
+  boost::shared_ptr<Options> opt= makeCopyOpt(argv[0], dietConfig, trCmdStr, src, dest);
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
@@ -115,7 +109,11 @@ int main (int argc, char* argv[]){
     }
     cpFileOptions.setTrCommand(trCmd);
   }
-   
+
+  if(opt->count("isRecursive")){
+    cpFileOptions.setIsRecursive(true);
+  }
+
   if (ret != CLI_SUCCESS){
     helpUsage(*opt,"[options] src dest");
     return ret;

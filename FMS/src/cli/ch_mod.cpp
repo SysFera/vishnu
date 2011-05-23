@@ -39,17 +39,17 @@ int main (int argc, char* argv[]){
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt=processOpt(argv[0], dietConfig);
 
-  opt->add("path,p",
-      "The file/directory following the pattern [host:]file path",
-      HIDDEN,
-      path,1);
-  opt->setPosition("path",1);
-
   opt->add("mode,m",
       "The acces rights of file/directory in octal sytem",
       HIDDEN,
       mode,1);
   opt->setPosition("mode",1); 
+
+ opt->add("path,p",
+      "The file/directory following the pattern [host:]file path",
+      HIDDEN,
+      path,1);
+  opt->setPosition("path",1); 
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
@@ -58,14 +58,14 @@ int main (int argc, char* argv[]){
 
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt," path mode");
+    helpUsage(*opt," mode path");
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);  
   if ( opt->count("help")){
-    helpUsage(*opt,"[options] path mode");
+    helpUsage(*opt,"[options] mode path");
     return 0;
   }
 
@@ -84,7 +84,7 @@ int main (int argc, char* argv[]){
     // DIET call 
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
-      chMod(sessionKey, path, mode);
+      chMod(sessionKey, mode, path);
     }
     printSuccessMessage();
   } catch(VishnuException& e){// catch all Vishnu runtime error
