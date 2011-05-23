@@ -27,6 +27,10 @@ ThresholdServer::setThreshold(IMS_Data::Threshold_ptr tree) {
   string nuid;
   string nmid;
 
+  if (!msession.isAdmin()){
+    throw UMSVishnuException(ERRCODE_NO_ADMIN, "set threshold is an admin function. A user cannot call it");
+  }
+
   // Check if threshold already exist (update or insert)
   try {
     insert = checkExist(tree);
@@ -64,6 +68,10 @@ ThresholdServer::getThreshold() {
   string req = "SELECT * from threshold, machine, users WHERE threshold.machine_nummachineid = machine.nummachineid AND users.numuserid=threshold.users_numuserid ";
   vector<string> results = vector<string>();
   vector<string>::iterator iter;
+
+  if (!msession.isAdmin()){
+    throw UMSVishnuException(ERRCODE_NO_ADMIN, "get threshold is an admin function. A user cannot call it");
+  }
   
   // Adding option to request
   if(mop.getMachineId().compare("")) {
