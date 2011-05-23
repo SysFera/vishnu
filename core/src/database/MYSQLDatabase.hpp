@@ -67,22 +67,18 @@ public :
 private :
   /**
    * \brief To get a valid connexion
-   * \fn MYSQL* getConnexion(int& pos)
-   * \param pos The position of the connexion gotten in the pool
-   * \return A valid and free connexion
+   * \fn MYSQL* getConnection(int& pos)
+   * \param pos The position of the connection gotten in the pool
+   * \return A valid and free connection
    */
-  MYSQL* getConnexion(int& pos);
+  MYSQL* getConnection(int& pos);
 
   /**
    * \brief To release a connexion
-   * \fn void releaseConnexion(int pos)
-   * \param pos The position of the connexion to release
+   * \fn void releaseConnection(int pos)
+   * \param pos The position of the connection to release
    */
-  void releaseConnexion(int pos);
-  /**
-   * \brief Size of the pool
-   */
-  static const int MPOOLSIZE = 20;
+  void releaseConnection(int pos);
 
   /**
    * \brief An element of the pool
@@ -93,7 +89,7 @@ private :
      */
     bool mused;
     /**
-     * \brief The connexion mysql structure
+     * \brief The connection mysql structure
      */
     MYSQL mmysql;
     /**
