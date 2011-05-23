@@ -15,12 +15,20 @@
 #include "FMS_Data.hpp"
 #include "cmdArgs.hpp"
 #include <boost/bind.hpp>
+#include "displayer.hpp"
 
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
 
+/**
+ * \brief To build options for the VISHNU list directory of file command
+ * \param pgName : The name of the command
+ * \param path : the path of the file to display
+ * \param dietConfig: Represents the VISHNU config file
+ * \param lsDirOptions: The list directory options structure
+ */
 boost::shared_ptr<Options>
 makeListDirOpt(string pgName,
             string& path,
@@ -120,13 +128,8 @@ int main (int argc, char* argv[]){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
       listDir(sessionKey, path, dirContent, lsDirOptions);
 
-      // FIXME by the Grand Daouda
-      std::vector<std::string> dirContentvec=dirContent.getStrings();
-      std::vector<string>::const_iterator it;
-      std::cout << path << ": \n";
-      for (it=dirContentvec.begin(); it!=dirContentvec.end(); ++it){
-        std::cout << *it << "\n"; 
-      }
+      // To display the directory content
+      std::cout << dirContent << std::endl;
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
