@@ -45,7 +45,7 @@ namespace vishnu {
             const std::string& machineId,
             const std::string& scriptFilePath,
             Job& jobInfo,
-            const SubmitOptions& options)
+            const SubmitOptions& options=SubmitOptions())
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
@@ -88,7 +88,7 @@ namespace vishnu {
   listJobs(const std::string& sessionKey,
            const std::string& machineId,
            ListJobs& listOfJobs,
-           const ListJobsOptions& options)
+           const ListJobsOptions& options=ListJobsOptions())
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
@@ -103,7 +103,7 @@ namespace vishnu {
   getJobProgress(const std::string& sessionKey,
                  const std::string& machineId,
                  ListProgression& listOfProgress,
-                 const ProgressOptions& options)
+                 const ProgressOptions& options=ProgressOptions())
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
