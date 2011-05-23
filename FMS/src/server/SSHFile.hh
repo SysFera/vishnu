@@ -19,14 +19,16 @@
 #define HEADCMD  "head -"
 #define CATCMD  "cat "
 #define MKDIRCMD "mkdir -m "
+#define MKFILECMD "touch "
 #define RMCMD    "rm -f "
 #define RMDIRCMD "rmdir "
 #define TAILCMD  "tail -"
 #define CPCMD    "install -m 666 "
 #define MVCMD    "mv "
-#define LSCMD    "ls -al "
-#define LSRECCMD  "ls -Ral "
-#define LSSIMPLE "ls -a "
+#define LSCMD    "ls  "
+#define LSACMD  "ls -a "
+#define LSLCMD "ls -l "
+#define LSALCMD  "ls -al "
 
 #include "File.hh"
 
@@ -66,11 +68,12 @@ public:
   virtual int chmod(const mode_t mode);
   virtual std::string head(const HeadOfFileOptions& options);
   virtual std::string getContent();
+  virtual int mkfile(const mode_t mode);
   virtual int mkdir(const mode_t mode);
   virtual int rm();
   virtual int rmdir();
   virtual std::string tail(const TailOfFileOptions& options);
-
+  virtual std::list<std::string> ls(const LsDirOptions& options) const;
 };
 
 /* A class to call command through SSH. */

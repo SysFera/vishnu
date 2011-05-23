@@ -11,7 +11,7 @@ using namespace vishnu;
 
 IMSVishnuTool::IMSVishnuTool(int argc, char** argv):mproc(UserServer(SessionServer(""))){
   try {
-    LogORBMgr::init(argc, argv, false);
+    LogORBMgr::init(argc, argv);
   } catch (...) {
     fprintf (stderr, "ORB initialization failed");
   }
