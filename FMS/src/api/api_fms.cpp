@@ -129,12 +129,12 @@ using namespace std;
   /**
    * \brief change the group of a file
    * \param sessionKey the session key
-   * \param path  the file path using host:path format
    * \param group the name of the new group to use for this file
+   * \param path  the file path using host:path format
    * \return 0 if everything is OK, another value otherwise
    */
   int
-    vishnu::chGrp(const string& sessionKey,const string& path, const string& group)
+    vishnu::chGrp(const string& sessionKey, const string& group, const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
       SessionProxy sessionProxy(sessionKey);
@@ -152,11 +152,12 @@ using namespace std;
   /**
    * \brief  change the permissions of a file
    * \param sessionKey the session key
+   * \param mode the path new mode
    * \param path  the file path using host:path format
    * \param options contains the options used to set the new the permission mode  for this file
    * \return 0 if everything is OK, another value otherwise
    */
-  int vishnu::chMod(const string& sessionKey,const string& path, const mode_t& mode)
+  int vishnu::chMod(const string& sessionKey, const mode_t& mode, const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
    
       SessionProxy sessionProxy(sessionKey);
@@ -203,6 +204,18 @@ using namespace std;
        std::cout << " dest="  << dest << std::endl;                    
        std::cout << boolalpha << options.isIsRecursive() << std::endl;
        std::cout << options.getTrCommand() << std::endl;
+
+       transferInfo.setTransferId("F_4");
+       transferInfo.setStatus(0);
+       transferInfo.setUserId("root") ;
+       transferInfo.setClientMachineId("CLM_2") ;
+       transferInfo.setSourceMachineId("MA_2") ;
+       transferInfo.setDestinationMachineId("MA_1");
+       transferInfo.setSourceFilePath("/home/dupond/papa");
+       transferInfo.setDestinationFilePath("/home/dupond/test/papa2");
+       transferInfo.setSize(256);
+       transferInfo.setStart_time(1305979157);
+       transferInfo.setTrCommand(0);
   }
 
   /** 
@@ -312,6 +325,18 @@ using namespace std;
       std::cout << " src=" << src << std::endl;
        std::cout << " dest="  << dest << std::endl;
        std::cout << options.getTrCommand() << std::endl; 
+
+       transferInfo.setTransferId("F_4");
+       transferInfo.setStatus(0);
+       transferInfo.setUserId("root") ;
+       transferInfo.setClientMachineId("CLM_2") ;
+       transferInfo.setSourceMachineId("MA_2") ;
+       transferInfo.setDestinationMachineId("MA_1");
+       transferInfo.setSourceFilePath("/home/dupond/papa");
+       transferInfo.setDestinationFilePath("/home/dupond/test/papa2");
+       transferInfo.setSize(256);
+       transferInfo.setStart_time(1305979157);
+       transferInfo.setTrCommand(0); 
     }
 
    /**
@@ -374,7 +399,12 @@ using namespace std;
    \return 0 if everything is OK, another value otherwise
    */
   int vishnu::stopFileTransfer(const string& sessionKey,const StopTransferOptions& options)
-    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
+    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
+      std::cout << "option: "  << options.getTransferId() << std::endl;
+      std::cout << "option: "  << options.getFromMachineId() << std::endl;
+      std::cout << "option: " << boolalpha << options.getUserId() << std::endl;
+ 
+    }
 
 
   /**
@@ -388,10 +418,10 @@ using namespace std;
   int vishnu::listFileTransfers(const string& sessionKey,FileTransferList& fileTransferList, const LsTransferOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
    
-      std::cout << "option: " << boolalpha << options.getTransferId() << std::endl;
-      std::cout << "option: " << boolalpha << options.getFromMachineId() << std::endl;
-      std::cout << "option: " << boolalpha << options.getUserId() << std::endl;
-      std::cout << "option: " << boolalpha << options.getStatus() << std::endl;
+      std::cout << "option: " << options.getTransferId() << std::endl;
+      std::cout << "option: " << options.getFromMachineId() << std::endl;
+      std::cout << "option: "  << options.getUserId() << std::endl;
+      std::cout << "option: "  << options.getStatus() << std::endl;
 
       FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
       FMS_Data::FileTransfer_ptr fileTransfer1 = ecoreFactory->createFileTransfer();

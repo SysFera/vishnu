@@ -181,6 +181,7 @@ operator<<(std::ostream& os, FileStat& fileStat) {
   mode_t perms = fileStat.getPerms();
   os << setw(maxSize) << right  << "perms: " << oct << perms;
   os << " (" << ConvertModeToString(perms) << ")" << std::endl;
+  os << setw(maxSize) << right  << "type: " << ConvertFileTypeToString(fileStat.getType()) << std::endl;
   boost::posix_time::ptime pt;
   pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(fileStat.getAtime()));
   //pt =  boost::posix_time::from_time_t(fileStat.getAtime());
