@@ -192,6 +192,12 @@ namespace vishnu {
    time_t convertLocaltimeINUTCtime(const time_t& localtime);
 
    /**
+    * \brief Function to return the difference between localtime and UTC time (seconds)
+    * \return the difference time (seconds)
+    */
+    long diffLocaltimeUTCtime(); 
+  
+   /**
     * \brief Function to create temporary file
     * \param fileName The name of the file to create
     * \param file_content The content of the file
