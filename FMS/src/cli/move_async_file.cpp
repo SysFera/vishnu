@@ -14,6 +14,7 @@
 #include "sessionUtils.hpp"
 #include "FMS_Data.hpp"
 #include <boost/bind.hpp>
+#include "displayer.hpp"
 
 namespace po = boost::program_options;
 
@@ -138,6 +139,8 @@ int main (int argc, char* argv[]){
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
       moveAsyncFile(sessionKey, src, dest, transferInfo, mvFileOptions);
+      
+      std::cout << transferInfo << std::endl;
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
