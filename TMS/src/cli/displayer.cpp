@@ -13,7 +13,7 @@ using namespace vishnu;
  */
 void 
 displayAllJobOutput(TMS_Data::ListJobResults& j){
-  for (unsigned int i = 0 ; i < j.getResults().size() ; i++){
+  for (size_t i = 0 ; i < j.getResults().size() ; i++){
     displayJobOutput(j.getResults().get(i));
   }
   cout << endl;
@@ -88,7 +88,7 @@ displayJob(TMS_Data::Job& j){
  */
 void 
 displayJobProgress(ListProgression& j){
-  for (unsigned int i = 0 ; i < j.getProgress().size() ; i++){
+  for (size_t i = 0 ; i < j.getProgress().size() ; i++){
     displayProgress(*(j.getProgress().get(i)));
   }
 }
@@ -131,7 +131,7 @@ displayProgress(Progression& p){
  */
 void 
 displayListJobs(ListJobs& j){
-  for (unsigned int i = 0 ; i < j.getJobs().size() ; i++){
+  for (size_t i = 0 ; i < j.getJobs().size() ; i++){
     displayJob(*(j.getJobs().get(i)));
   }  
 }
@@ -143,7 +143,7 @@ displayListJobs(ListJobs& j){
  */
 void
 displayQueues(ListQueues& j){
- for (unsigned int i = 0 ; i < j.getQueues().size() ; i++){
+ for (size_t i = 0 ; i < j.getQueues().size() ; i++){
     displayQueue(*(j.getQueues().get(i)));
   }
 };
