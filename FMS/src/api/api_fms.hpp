@@ -18,8 +18,8 @@
 #include "FMSVishnuException.hpp"
 #include "utilVishnu.hpp"
 #include <sys/types.h>
-//FMS data forward declarations
-#include <FMS_Data_forward.hpp>
+//FMS data  declarations
+#include <FMS_Data.hpp>
 
 
 // Namespaces area
@@ -67,7 +67,7 @@ namespace vishnu{
    * \param options contains the options 
    * \return 0 if everything is OK, another value otherwise
    */
-  int copyFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options)
+  int copyFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options= CpFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -81,7 +81,7 @@ namespace vishnu{
    * \return 0 if everything is OK, another value otherwise
    */
   int copyAsyncFile(const string& sessionKey,const string& src, const string& dest,
-      FileTransfer& transferInfo, const CpFileOptions& options)
+      FileTransfer& transferInfo, const CpFileOptions& options = CpFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /** 
@@ -92,7 +92,7 @@ namespace vishnu{
    * \param options   contains the options used to perform the service (like the maximum number of lines to get)
    * \return 0 if everything is OK, another value otherwise
    */
-  int headOfFile(const string& sessionKey,const string& path, string& contentOfFile, const HeadOfFileOptions& options)
+  int headOfFile(const string& sessionKey,const string& path, string& contentOfFile, const HeadOfFileOptions& options = HeadOfFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
   
   /** 
@@ -113,7 +113,7 @@ namespace vishnu{
    * \param dirContent  the directory content
    * \return 0 if everything is OK, another value otherwise
    */
-  int listDir(const string& sessionKey,const string& path, StringList& dirContent,const LsDirOptions& options)
+  int listDir(const string& sessionKey,const string& path, StringList& dirContent,const LsDirOptions& options=LsDirOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -134,7 +134,7 @@ namespace vishnu{
    * \param options   contains the options used to perform the service (like the transfer command :scp or rsync)
    * \return 0 if everything is OK, another value otherwise
    */
-  int moveFile(const string& sessionKey,const string& src, const string& dest, const MvFileOptions& options)
+  int moveFile(const string& sessionKey,const string& src, const string& dest, const MvFileOptions& options= MvFileOptions() )
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -148,7 +148,7 @@ namespace vishnu{
    * \return 0 if everything is OK, another value otherwise
    */
   int moveAsyncFile(const string& sessionKey,const string& src, const string& dest,
-      FileTransfer& transferInfo, const MvFileOptions& options)
+      FileTransfer& transferInfo, const MvFileOptions& options= MvFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /** remove a file
@@ -177,7 +177,7 @@ namespace vishnu{
    * \param contentOfFile  an user-allocated buffer to store the result
    * \return 0 if everything is OK, another value otherwise
    */
-  int tailOfFile(const string& sessionKey,const string& path, string& contentOfFile,const TailOfFileOptions& options)
+  int tailOfFile(const string& sessionKey,const string& path, string& contentOfFile,const TailOfFileOptions& options = TailOfFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -198,7 +198,7 @@ namespace vishnu{
    *          moveAsyncFile )
    \return 0 if everything is OK, another value otherwise
    */
-  int stopFileTransfer(const string& sessionKey,const StopTransferOptions& options)
+  int stopFileTransfer(const string& sessionKey,const StopTransferOptions& options = StopTransferOptions() )
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
 
@@ -210,7 +210,7 @@ namespace vishnu{
    moveAsyncFile)
    \return 0 if everything is OK, another value otherwise
    */
-  int listFileTransfers(const string& sessionKey,FileTransferList& fileTransferList, const LsTransferOptions& options)
+  int listFileTransfers(const string& sessionKey,FileTransferList& fileTransferList, const LsTransferOptions& options = LsTransferOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
 
