@@ -41,22 +41,23 @@ namespace vishnu{
   /**
    * \brief change the group of a file
    * \param sessionKey the session key
-   * \param path  the file path using host:path format
    * \param group the name of the new group to use for this file
+   * \param path  the file path using host:path format
    * \return 0 if everything is OK, another value otherwise
    */
   int
-    chGrp(const string& sessionKey,const string& path, const string& group)
+    chGrp(const string& sessionKey, const string& group, const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
    * \brief  change the permissions of a file
    * \param sessionKey the session key
+   * \param mode the path new mode
    * \param path  the file path using host:path format
    * \param options contains the options used to set the new the permission mode  for this file
    * \return 0 if everything is OK, another value otherwise
    */
-  int chMod(const string& sessionKey,const string& path, const mode_t& mode)
+  int chMod(const string& sessionKey, const mode_t& mode, const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
