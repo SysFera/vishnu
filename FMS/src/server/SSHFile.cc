@@ -17,7 +17,8 @@
 #include "SSHFile.hh"
 #include "RemoteFile.hh"
 #include "File.hh"
-
+#include "FMSVishnuException.hpp"
+#include "utilServer.hpp"
 using namespace std;
 
 /* Default constructor. */
@@ -94,7 +95,9 @@ bool SSHFile::isUpToDate() const {
 /* Get the file information through ssh. */
 void SSHFile::getInfos() const {
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
-              sshPublicKey, sshPrivateKey);
+      sshPublicKey, sshPrivateKey);
+
+
   pair<string,string> fileStat;
   string owner, group, fileType;
   mode_t perms;
@@ -102,22 +105,22 @@ void SSHFile::getInfos() const {
   gid_t gid;
   file_size_t size;
   time_t atime, mtime, ctime;
- cout << "Coucou dans getInfos de SSHFile  " << endl; 
+  cout << "Coucou dans getInfos de SSHFile  " << endl; 
   fileStat = ssh.exec(STATCMD+getPath());
-  
+
   if (fileStat.second.length()!=0) {
     exists(false);
- cout << "Mais exist n'est pas mis a jour " << endl;
-    throw runtime_error (fileStat.second.c_str());
+    upToDate=true;
   }
-  
+  else{
+
   istringstream is(fileStat.first);
   is >> owner >> group >> oct >> perms >> dec >> uid >> gid >> size
-     >> atime >> mtime >> ctime >> fileType;
-  
+    >> atime >> mtime >> ctime >> fileType;
+
   transform(fileType.begin(), fileType.end(), fileType.begin(), ::tolower);
 
- std::cout << "fileType in SSH getInfos: " << fileType << "\n";
+  std::cout << "fileType in SSH getInfos: " << fileType << "\n";
   setOwner(owner);
   setGroup(group);
   setPerms(perms);
@@ -144,8 +147,8 @@ void SSHFile::getInfos() const {
   
   exists(true);
   upToDate=true;
+  }
 }
-
 /* Change the file group through ssh. */
 int SSHFile::chgrp(const string& group) {
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
@@ -169,7 +172,7 @@ int SSHFile::chmod(const mode_t mode) {
   pair<string,string> chmodResult;
   
   if (!exists()) throw runtime_error(getPath()+" does not exist");
-  os << oct << mode;
+  os << mode;
   chmodResult = ssh.exec(CHMODCMD+os.str()+" "+getPath());
   
   if (chmodResult.second.length()!=0) {
@@ -187,12 +190,15 @@ string SSHFile::head(const HeadOfFileOptions& options) {
               sshPublicKey, sshPrivateKey);
   pair<string,string> headResult;
   
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
+  if (!exists()) {
+    throw FMSVishnuException(ERRCODE_UNKNOWN_PATH,getPath()+" does not exist");
+  }
+
   os << nline;
   headResult = ssh.exec(HEADCMD+os.str()+" "+getPath());
 
   if (headResult.second.length()!=0) {
-    throw runtime_error("Error obtaining the head of the file: "+
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error obtaining the head of the file: "+
                         headResult.second);
   }
   return headResult.first;
@@ -215,7 +221,22 @@ string SSHFile::getContent() {
   }
   return catResult.first;
 }
-
+/* Create a file through ssh. */
+int SSHFile::mkfile(const mode_t mode) {
+  ostringstream os;
+  SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
+              sshPublicKey, sshPrivateKey);
+  pair<string,string> mkfileResult;
+  
+  if (exists()) throw runtime_error(getPath()+" already exists");
+  
+  mkfileResult = ssh.exec(MKFILECMD+getPath());
+  if (mkfileResult.second.length()!=0) {
+    throw runtime_error("Error creating "+getPath()+": "+mkfileResult.second);
+  }
+  exists(true);
+  return 0;
+}
 
 
 /* Create a directory through ssh. */
@@ -290,7 +311,39 @@ string SSHFile::tail(const TailOfFileOptions& options) {
 }
 
 
+/* Get the files and subdirectory of this directory through ssh. */
+list<string> SSHFile::ls(const LsDirOptions& options) const {
+  SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
+              sshPublicKey, sshPrivateKey);
+  pair<string,string> lsResult;
+  list<string> result;
+  
+  if (!exists()) throw runtime_error(getPath()+" does not exist");
+ 
+  lsResult = ssh.exec(LSALCMD+getPath());
+  
+  if (lsResult.second.length()!=0)
+    throw runtime_error("Error listing directory: "+lsResult.second);
+  
+  istringstream is(lsResult.first);
+  char buffer[1024];
+  string line;
+  
+  while (!is.eof()) {
+    is.getline(buffer, 1024);
+    line = buffer;
+    result.push_back(line);
+  }
+  return result;
+}
 
+
+
+
+
+
+
+// Defintion of SSHExec Class
 
 SSHExec::SSHExec(const string& sshCommand, const string& scpCommand,
                  const string& server, unsigned int sshPort,
