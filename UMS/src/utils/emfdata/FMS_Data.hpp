@@ -39,7 +39,6 @@
 #include "FMS_Data/FileTransferList.hpp"
 #include "FMS_Data/HeadOfFileOptions.hpp"
 #include "FMS_Data/TailOfFileOptions.hpp"
-#include "FMS_Data/ChModOptions.hpp"
 
 // Package & Factory
 #include "FMS_Data/FMS_DataPackage.hpp"

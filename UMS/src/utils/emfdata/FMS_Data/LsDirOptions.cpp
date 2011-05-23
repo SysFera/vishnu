@@ -30,7 +30,8 @@
 using namespace ::FMS_Data;
 
 // Default constructor
-LsDirOptions::LsDirOptions()
+LsDirOptions::LsDirOptions() :
+    m_longFormat(false), m_allFiles(false)
 {
 
     /*PROTECTED REGION ID(LsDirOptionsImpl__LsDirOptionsImpl) START*/

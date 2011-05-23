@@ -30,7 +30,8 @@
 using namespace ::FMS_Data;
 
 // Default constructor
-TailOfFileOptions::TailOfFileOptions()
+TailOfFileOptions::TailOfFileOptions() :
+    m_nline(10)
 {
 
     /*PROTECTED REGION ID(TailOfFileOptionsImpl__TailOfFileOptionsImpl) START*/
