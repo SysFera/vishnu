@@ -7,16 +7,17 @@
 using namespace FMS_Data;
 /* Include all the services headers. */
 #include "getInfosSrv.hh"
-//#include "cpFileSrv.hh"
-//#include "chgrpSrv.hh"
-//#include "chmodSrv.hh"
+#include "chgrpSrv.hh"
+#include "chmodSrv.hh"
 #include "headSrv.hh"
 #include "getContentSrv.hh"
-//#include "mkdirSrv.hh"
-//#include "rmSrv.hh"
-//#include "rmdirSrv.hh"
+#include "mkfileSrv.hh"
+#include "mkdirSrv.hh"
+#include "rmfileSrv.hh"
+#include "rmdirSrv.hh"
 #include "tailSrv.hh"
-//#include "lsSrv.hh"
+#include "lsSrv.hh"
+//#include "cpFileSrv.hh"
 //#include "statusSrv.hh"
 
 uid_t* uiddup(const uid_t& uid);

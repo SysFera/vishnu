@@ -133,6 +133,98 @@ ServerFMS::init(int vishnuId,
 
   diet_profile_desc_free(mprofile);
 
+
+  // Create file
+
+  mprofile = getCreateFileProfile();
+
+  if ( diet_service_table_add(mprofile, NULL, solveCreateFile)){
+
+    return 1;
+
+  }
+
+  diet_profile_desc_free(mprofile);
+
+// Create dir
+
+  mprofile = getCreateDirProfile();
+
+  if ( diet_service_table_add(mprofile, NULL, solveCreateDir)){
+
+    return 1;
+
+  }
+
+  diet_profile_desc_free(mprofile);
+
+
+  // Remove file
+
+  mprofile = getRemoveFileProfile();
+
+  if ( diet_service_table_add(mprofile, NULL, solveRemoveFile)){
+
+    return 1;
+
+  }
+
+  diet_profile_desc_free(mprofile);
+
+// Remove dir
+
+  mprofile = getRemoveDirProfile();
+
+  if ( diet_service_table_add(mprofile, NULL, solveRemoveDir)){
+
+    return 1;
+
+  }
+
+  diet_profile_desc_free(mprofile);
+
+// Change group file
+
+  mprofile = getChangeGroupProfile();
+
+  if ( diet_service_table_add(mprofile, NULL, solveChangeGroup)){
+
+    return 1;
+
+  }
+
+  diet_profile_desc_free(mprofile);
+
+// Change mode file
+
+  mprofile = getChangeModeProfile();
+
+  if ( diet_service_table_add(mprofile, NULL, solveChangeMode)){
+
+    return 1;
+
+  }
+
+  diet_profile_desc_free(mprofile);
+
+// List the directory content
+
+  mprofile = getListDirProfile();
+
+  if ( diet_service_table_add(mprofile, NULL, solveListDir)){
+
+    return 1;
+
+  }
+
+  diet_profile_desc_free(mprofile);
+
+
+
+
+
+
+
   return 0;
 }
 
