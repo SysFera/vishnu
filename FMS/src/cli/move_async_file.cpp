@@ -1,6 +1,6 @@
 /**
- * \file create_file.cpp
- * This file defines the VISHNU submit job command 
+ * \file move_async_file.cpp
+ * This file defines the VISHNU move async file command 
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -20,10 +20,19 @@ namespace po = boost::program_options;
 using namespace std;
 using namespace vishnu;
 
+/**
+ * \brief To build options for the VISHNU move async of file command
+ * \param pgName: The name of the command
+ * \param dietConfig: Represents the VISHNU config file
+ * \param trCmdStr: The command to use to perform file transfer
+ * \param src: The source file to copy following the pattern [host:]file path
+ * \param dest: The path of the destination file
+ * \param mvFileOptions: The copy file transfer options structure
+ */
 boost::shared_ptr<Options>
 makeMoveAsyncOpt(string pgName, 
     string& dietConfig,
-    boost::function1<void, int>& ftrCmd,
+    string& trCmdStr,
     string& src,
     string& dest){
 
@@ -35,18 +44,20 @@ makeMoveAsyncOpt(string pgName,
       ENV,
       dietConfig);
 
-  opt->add("trCommand, c",
-      "The command to use to perform file transfer.",
+  opt->add("trCommand,t",
+      "The command to use to perform file transfer. The different values  are:\n"
+      "O or scp: for SCP transfer\n"
+      "1 or rsync: for RSYNC transfer\n",
       CONFIG,
-      ftrCmd);
+      trCmdStr);
 
-  opt->add("src, s",
+  opt->add("src,s",
       "The source file to move following the pattern [host:]file path.",
       HIDDEN,
       src,1);
   opt->setPosition("src",1);
 
-  opt->add("dest, d",
+  opt->add("dest,d",
       "The path of the destination file.",
       HIDDEN,
       dest,1);
@@ -65,6 +76,8 @@ int main (int argc, char* argv[]){
   string sessionKey;
   string src;
   string dest;
+  string trCmdStr;
+  int trCmd;
 
   /******* Output value ****************/
   FileTransfer transferInfo;
@@ -72,17 +85,31 @@ int main (int argc, char* argv[]){
    /********** EMF data ************/
   FMS_Data::MvFileOptions mvFileOptions;
 
-  /******** Callback functions ******************/
-  boost::function1<void,int> ftrCmd(boost::bind(&FMS_Data::MvFileOptions::setTrCommand,boost::ref(mvFileOptions),_1));
-
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt= makeMoveAsyncOpt(argv[0], dietConfig, ftrCmd, src, dest);
+  boost::shared_ptr<Options> opt= makeMoveAsyncOpt(argv[0], dietConfig, trCmdStr, src, dest);
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
  // Parse the cli and setting the options found
   ret = cmd.parse(env_name_mapper());
-  
+ 
+  if(trCmdStr.size()!=0) {
+    size_t pos = trCmdStr.find_first_not_of("0123456789");
+    if(pos!=std::string::npos) {
+      if(trCmdStr.compare("scp")==0 || trCmdStr.compare("SCP")==0){
+        trCmd = 0;
+      } else if(trCmdStr.compare("rsync")==0 || trCmdStr.compare("RSYNC")==0){
+        trCmd = 1;
+      } else {
+        std::cerr << "Unknown file transfer command type " << trCmdStr << std::endl;
+        return 0;
+      }
+    } else {
+      trCmd = convertToInt(trCmdStr);
+    }
+    mvFileOptions.setTrCommand(trCmd);
+  }
+ 
   if (ret != CLI_SUCCESS){
     helpUsage(*opt,"[options] src dest");
     return ret;
