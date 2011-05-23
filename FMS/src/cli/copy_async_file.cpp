@@ -14,7 +14,7 @@
 #include "sessionUtils.hpp"
 #include "FMS_Data.hpp"
 #include <boost/bind.hpp>
-
+#include "displayer.hpp"
 namespace po = boost::program_options;
 
 using namespace std;
@@ -27,15 +27,13 @@ using namespace vishnu;
  * \param trCmdStr: The command to use to perform file transfer
  * \param src: The source file to copy following the pattern [host:]file path
  * \param dest: The path of the destination file
- * \param cpFileOptions: The copy file transfer options structure
  */
 boost::shared_ptr<Options>
 makeCopyAsyncOpt(string pgName, 
     string& dietConfig,
     std::string& trCmdStr,
     string& src,
-    string& dest,
-    CpFileOptions& cpFileOptions){
+    string& dest){
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
@@ -48,10 +46,6 @@ makeCopyAsyncOpt(string pgName,
   opt->add("isRecursive,r",
       "It specifies when the copy is recursive (case of directory) or not.",
       CONFIG);
-
-  if(opt->count("isRecursive")){
-    cpFileOptions.setIsRecursive(true);
-  }
 
   opt->add("trCommand,t",
       "The command to use to perform file transfer. The different values  are:\n"
@@ -96,7 +90,7 @@ int main (int argc, char* argv[]){
 
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt= makeCopyAsyncOpt(argv[0], dietConfig, trCmdStr, src, dest, cpFileOptions);
+  boost::shared_ptr<Options> opt= makeCopyAsyncOpt(argv[0], dietConfig, trCmdStr, src, dest);
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
@@ -120,7 +114,10 @@ int main (int argc, char* argv[]){
     cpFileOptions.setTrCommand(trCmd);
   }
 
- 
+  if(opt->count("isRecursive")){
+    cpFileOptions.setIsRecursive(true);
+  }
+
   if (ret != CLI_SUCCESS){
     helpUsage(*opt,"[options] src dest");
     return ret;
@@ -149,6 +146,8 @@ int main (int argc, char* argv[]){
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
       copyAsyncFile(sessionKey, src, dest, transferInfo, cpFileOptions);
+     
+      std::cout << transferInfo << std::endl;
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
