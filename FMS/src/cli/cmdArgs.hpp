@@ -1,6 +1,6 @@
 /**
  * \file cmdArgs.cpp
- * This file defines the VISHNU submit job command 
+ * This file defines the VISHNU FMS cli utility 
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 

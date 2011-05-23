@@ -1,6 +1,6 @@
 /**
- * \file create_file.cpp
- * This file defines the VISHNU submit job command 
+ * \file list_file_transfers.cpp
+ * This file defines the VISHNU list file transfers command 
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -14,6 +14,7 @@
 #include "sessionUtils.hpp"
 #include "FMS_Data.hpp"
 #include <boost/bind.hpp>
+#include "displayer.hpp"
 
 namespace po = boost::program_options;
 
@@ -21,13 +22,22 @@ using namespace std;
 using namespace vishnu;
 using namespace FMS_Data;
 
+/**
+ * \brief To build options for the VISHNU list directory of file command
+ * \param pgName : The name of the command
+ * \param dietConfig: Represents the VISHNU config file
+ * \param ftransferId: The file transfer identifier
+ * \param ffromMachineId: The machine that is the source of the file transfer
+ * \param fuserId: The user identifier
+ * \param fstatus: The file transfer status
+ */
 boost::shared_ptr<Options>
 makeListFileTransferTrOpt(string pgName, 
     string& dietConfig,
     boost::function1<void, string>& ftransferId,
     boost::function1<void, string>& ffromMachineId,
     boost::function1<void, string>& fuserId,
-    boost::function1<void, int>& fstatus){
+    string& statusStr){
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
@@ -37,25 +47,29 @@ makeListFileTransferTrOpt(string pgName,
       ENV,
       dietConfig);
 
-  opt->add("transferId, t",
+  opt->add("transferId,t",
       "A given transfer id",
       CONFIG,
       ftransferId);
 
- opt->add("fromMachineId, m",
+ opt->add("fromMachineId,m",
       "The machine that is the source of the file transfer",
       CONFIG,
       ffromMachineId);
 
- opt->add("userId, u",
+ opt->add("userId,u",
       "Allows an admin to stop file transfers of a specific user",
       CONFIG,
       fuserId);
 
- opt->add("status, s",
-      "The file transfer status",
+ opt->add("status,s",
+      "The file transfer status. The different values of job status are:\n"
+      "0 or I: for INPROGRESS file transfer\n"
+      "1 or T: for COMPLETED file transfer\n"
+      "2 or C: for CANCELLED file transfer\n"
+      "3 or F: for FAILED file transfer\n",
       CONFIG,
-      fstatus);
+      statusStr);
 
   return opt;
 }
@@ -68,6 +82,8 @@ int main (int argc, char* argv[]){
   /******* Parsed value containers ****************/
   string dietConfig;
   string sessionKey;
+  string statusStr;
+  int status;
 
    /********** EMF data ************/
   FMS_Data::LsTransferOptions lsFileTransferOptions;
@@ -79,15 +95,46 @@ int main (int argc, char* argv[]){
   boost::function1<void, string> ftranferId(boost::bind(&FMS_Data::LsTransferOptions::setTransferId, boost::ref(lsFileTransferOptions),_1));
   boost::function1<void, string> ffromMachineId(boost::bind(&FMS_Data::LsTransferOptions::setFromMachineId, boost::ref(lsFileTransferOptions),_1));
   boost::function1<void, string> fuserId(boost::bind(&FMS_Data::LsTransferOptions::setUserId, boost::ref(lsFileTransferOptions),_1));
-  boost::function1<void, int> fstatus(boost::bind(&FMS_Data::LsTransferOptions::setStatus, boost::ref(lsFileTransferOptions),_1));
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt= makeListFileTransferTrOpt(argv[0], dietConfig, ftranferId, ffromMachineId, fuserId, fstatus);
+  boost::shared_ptr<Options> opt= makeListFileTransferTrOpt(argv[0], dietConfig, ftranferId, ffromMachineId, fuserId, statusStr);
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
  // Parse the cli and setting the options found
   ret = cmd.parse(env_name_mapper());
+ 
+  if(statusStr.size()!=0) {
+    size_t pos = statusStr.find_first_not_of("0123456789");
+    if(pos!=std::string::npos) {
+      if(statusStr.size()==1) {
+        switch(statusStr[0]) {
+          case 'I' :
+            status = 0;
+            break;
+          case 'T' :
+            status = 1;
+            break;
+          case 'C' :
+            status = 2;
+            break;
+          case 'F' :
+            status = 3;
+            break;
+          default:
+            std::cerr << "Unknown file transfer status " << statusStr << std::endl;
+            return 0;
+        }
+      }
+      if(statusStr.size() > 1) {
+        std::cerr << "Unknown file transfer status " << statusStr << std::endl;
+        return 0;
+      }
+    } else {
+      status = convertToInt(statusStr);
+    }
+    lsFileTransferOptions.setStatus(status);
+  }
   
   if (ret != CLI_SUCCESS){
     helpUsage(*opt,"[options]");
@@ -117,6 +164,9 @@ int main (int argc, char* argv[]){
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
       listFileTransfers(sessionKey, fileTransferList,lsFileTransferOptions);
+
+      //To display the file transfer list
+      std::cout << fileTransferList << std::endl;
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
