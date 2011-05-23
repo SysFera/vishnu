@@ -105,11 +105,6 @@ namespace FMS_Data
          * \return Pointer to the object
          */
         virtual TailOfFileOptions_ptr createTailOfFileOptions();
-        /**
-         * \brief Creates a new object of class ChModOptions
-         * \return Pointer to the object
-         */
-        virtual ChModOptions_ptr createChModOptions();
 
         /**
          * \brief To create an object of a given class (reflective API)
