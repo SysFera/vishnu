@@ -299,17 +299,6 @@ FMS_DataPackage::FMS_DataPackage()
     m_TailOfFileOptionsEClass->getEStructuralFeatures().push_back(
             m_TailOfFileOptions__nline);
 
-    // ChModOptions
-    m_ChModOptionsEClass = new ::ecore::EClass();
-    m_ChModOptionsEClass->setClassifierID(CHMODOPTIONS);
-    m_ChModOptionsEClass->setEPackage(this);
-    getEClassifiers().push_back(m_ChModOptionsEClass);
-    m_ChModOptions__mode = new ::ecore::EAttribute();
-    m_ChModOptions__mode->setFeatureID(
-            ::FMS_Data::FMS_DataPackage::CHMODOPTIONS__MODE);
-    m_ChModOptionsEClass->getEStructuralFeatures().push_back(
-            m_ChModOptions__mode);
-
     // Create enums
 
     m_FileTypeEEnum = new ::ecore::EEnum();
@@ -523,7 +512,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_CpFileOptions__isRecursive->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEBoolean());
     m_CpFileOptions__isRecursive->setName("isRecursive");
-    m_CpFileOptions__isRecursive->setDefaultValueLiteral("");
+    m_CpFileOptions__isRecursive->setDefaultValueLiteral("false");
     m_CpFileOptions__isRecursive->setLowerBound(0);
     m_CpFileOptions__isRecursive->setUpperBound(1);
     m_CpFileOptions__isRecursive->setTransient(false);
@@ -536,7 +525,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_CpFileOptions__isRecursive->setOrdered(true);
     m_CpFileOptions__trCommand->setEType(m_TransferCommandEEnum);
     m_CpFileOptions__trCommand->setName("trCommand");
-    m_CpFileOptions__trCommand->setDefaultValueLiteral("");
+    m_CpFileOptions__trCommand->setDefaultValueLiteral("-1");
     m_CpFileOptions__trCommand->setLowerBound(0);
     m_CpFileOptions__trCommand->setUpperBound(1);
     m_CpFileOptions__trCommand->setTransient(false);
@@ -554,7 +543,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_LsDirOptions__longFormat->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEBoolean());
     m_LsDirOptions__longFormat->setName("longFormat");
-    m_LsDirOptions__longFormat->setDefaultValueLiteral("");
+    m_LsDirOptions__longFormat->setDefaultValueLiteral("false");
     m_LsDirOptions__longFormat->setLowerBound(0);
     m_LsDirOptions__longFormat->setUpperBound(1);
     m_LsDirOptions__longFormat->setTransient(false);
@@ -568,7 +557,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_LsDirOptions__allFiles->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEBoolean());
     m_LsDirOptions__allFiles->setName("allFiles");
-    m_LsDirOptions__allFiles->setDefaultValueLiteral("");
+    m_LsDirOptions__allFiles->setDefaultValueLiteral("false");
     m_LsDirOptions__allFiles->setLowerBound(0);
     m_LsDirOptions__allFiles->setUpperBound(1);
     m_LsDirOptions__allFiles->setTransient(false);
@@ -585,7 +574,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_MvFileOptionsEClass->setInterface(false);
     m_MvFileOptions__trCommand->setEType(m_TransferCommandEEnum);
     m_MvFileOptions__trCommand->setName("trCommand");
-    m_MvFileOptions__trCommand->setDefaultValueLiteral("");
+    m_MvFileOptions__trCommand->setDefaultValueLiteral("-1");
     m_MvFileOptions__trCommand->setLowerBound(0);
     m_MvFileOptions__trCommand->setUpperBound(1);
     m_MvFileOptions__trCommand->setTransient(false);
@@ -644,7 +633,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_LsTransferOptions__userId->setOrdered(true);
     m_LsTransferOptions__status->setEType(m_StatusEEnum);
     m_LsTransferOptions__status->setName("status");
-    m_LsTransferOptions__status->setDefaultValueLiteral("");
+    m_LsTransferOptions__status->setDefaultValueLiteral("-1");
     m_LsTransferOptions__status->setLowerBound(0);
     m_LsTransferOptions__status->setUpperBound(1);
     m_LsTransferOptions__status->setTransient(false);
@@ -898,7 +887,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_HeadOfFileOptions__nline->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_HeadOfFileOptions__nline->setName("nline");
-    m_HeadOfFileOptions__nline->setDefaultValueLiteral("");
+    m_HeadOfFileOptions__nline->setDefaultValueLiteral("10");
     m_HeadOfFileOptions__nline->setLowerBound(0);
     m_HeadOfFileOptions__nline->setUpperBound(1);
     m_HeadOfFileOptions__nline->setTransient(false);
@@ -916,7 +905,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_TailOfFileOptions__nline->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_TailOfFileOptions__nline->setName("nline");
-    m_TailOfFileOptions__nline->setDefaultValueLiteral("");
+    m_TailOfFileOptions__nline->setDefaultValueLiteral("10");
     m_TailOfFileOptions__nline->setLowerBound(0);
     m_TailOfFileOptions__nline->setUpperBound(1);
     m_TailOfFileOptions__nline->setTransient(false);
@@ -927,24 +916,6 @@ FMS_DataPackage::FMS_DataPackage()
     m_TailOfFileOptions__nline->setUnique(true);
     m_TailOfFileOptions__nline->setDerived(false);
     m_TailOfFileOptions__nline->setOrdered(true);
-    // ChModOptions
-    m_ChModOptionsEClass->setName("ChModOptions");
-    m_ChModOptionsEClass->setAbstract(false);
-    m_ChModOptionsEClass->setInterface(false);
-    m_ChModOptions__mode->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_ChModOptions__mode->setName("mode");
-    m_ChModOptions__mode->setDefaultValueLiteral("");
-    m_ChModOptions__mode->setLowerBound(0);
-    m_ChModOptions__mode->setUpperBound(1);
-    m_ChModOptions__mode->setTransient(false);
-    m_ChModOptions__mode->setVolatile(false);
-    m_ChModOptions__mode->setChangeable(true);
-    m_ChModOptions__mode->setUnsettable(false);
-    m_ChModOptions__mode->setID(false);
-    m_ChModOptions__mode->setUnique(true);
-    m_ChModOptions__mode->setDerived(false);
-    m_ChModOptions__mode->setOrdered(true);
 
     // TODO: Initialize data types
 
@@ -1029,9 +1000,19 @@ FMS_DataPackage::FMS_DataPackage()
 
     {
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // UNDEFINED
+        _el->setName("UNDEFINED");
+        _el->setValue(0);
+        _el->setLiteral("UNDEFINED");
+        _el->setEEnum(m_StatusEEnum);
+        m_StatusEEnum->getELiterals().push_back(_el);
+    }
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // INPROGRESS
         _el->setName("INPROGRESS");
-        _el->setValue(0);
+        _el->setValue(1);
         _el->setLiteral("INPROGRESS");
         _el->setEEnum(m_StatusEEnum);
         m_StatusEEnum->getELiterals().push_back(_el);
@@ -1041,7 +1022,7 @@ FMS_DataPackage::FMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // COMPLETED
         _el->setName("COMPLETED");
-        _el->setValue(1);
+        _el->setValue(2);
         _el->setLiteral("COMPLETED");
         _el->setEEnum(m_StatusEEnum);
         m_StatusEEnum->getELiterals().push_back(_el);
@@ -1051,7 +1032,7 @@ FMS_DataPackage::FMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // CANCELLED
         _el->setName("CANCELLED");
-        _el->setValue(2);
+        _el->setValue(3);
         _el->setLiteral("CANCELLED");
         _el->setEEnum(m_StatusEEnum);
         m_StatusEEnum->getELiterals().push_back(_el);
@@ -1061,7 +1042,7 @@ FMS_DataPackage::FMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // FAILED
         _el->setName("FAILED");
-        _el->setValue(3);
+        _el->setValue(4);
         _el->setLiteral("FAILED");
         _el->setEEnum(m_StatusEEnum);
         m_StatusEEnum->getELiterals().push_back(_el);
@@ -1073,9 +1054,19 @@ FMS_DataPackage::FMS_DataPackage()
 
     {
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // UNDEFINED
+        _el->setName("UNDEFINED");
+        _el->setValue(0);
+        _el->setLiteral("UNDEFINED");
+        _el->setEEnum(m_TransferCommandEEnum);
+        m_TransferCommandEEnum->getELiterals().push_back(_el);
+    }
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // SCP
         _el->setName("SCP");
-        _el->setValue(0);
+        _el->setValue(1);
         _el->setLiteral("SCP");
         _el->setEEnum(m_TransferCommandEEnum);
         m_TransferCommandEEnum->getELiterals().push_back(_el);
@@ -1085,7 +1076,7 @@ FMS_DataPackage::FMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // RSYNC
         _el->setName("RSYNC");
-        _el->setValue(1);
+        _el->setValue(2);
         _el->setLiteral("RSYNC");
         _el->setEEnum(m_TransferCommandEEnum);
         m_TransferCommandEEnum->getELiterals().push_back(_el);
@@ -1153,10 +1144,6 @@ FMS_DataPackage::FMS_DataPackage()
 ::ecore::EClass_ptr FMS_DataPackage::getTailOfFileOptions()
 {
     return m_TailOfFileOptionsEClass;
-}
-::ecore::EClass_ptr FMS_DataPackage::getChModOptions()
-{
-    return m_ChModOptionsEClass;
 }
 
 ::ecore::EAttribute_ptr FMS_DataPackage::getStringList__strings()
@@ -1314,9 +1301,5 @@ FMS_DataPackage::FMS_DataPackage()
 ::ecore::EAttribute_ptr FMS_DataPackage::getTailOfFileOptions__nline()
 {
     return m_TailOfFileOptions__nline;
-}
-::ecore::EAttribute_ptr FMS_DataPackage::getChModOptions__mode()
-{
-    return m_ChModOptions__mode;
 }
 
