@@ -13,7 +13,9 @@ ObjectIdServer::~ObjectIdServer() {
 
 void
 ObjectIdServer::setUID(string fmt) {
-  cout << "Format ->" << fmt << "<-" << endl;
+  if (!msession.isAdmin()){
+    throw UMSVishnuException(ERRCODE_NO_ADMIN, "define user id  format is an admin function. A user cannot call it");
+  }
   if (!containCpt(fmt)) {
     throw UserException(10, "Invalid format, it does not contain any counter. ");
   }
@@ -30,6 +32,9 @@ ObjectIdServer::setUID(string fmt) {
 
 void
 ObjectIdServer::setFID(string fmt) {
+  if (!msession.isAdmin()){
+    throw UMSVishnuException(ERRCODE_NO_ADMIN, "define file transfer id  format is an admin function. A user cannot call it");
+  }
   if (!containCpt(fmt)) {
     throw UserException(10, "Invalid format, it does not contain any counter. ");
   }
@@ -46,6 +51,9 @@ ObjectIdServer::setFID(string fmt) {
 
 void
 ObjectIdServer::setTID(string fmt) {
+  if (!msession.isAdmin()){
+    throw UMSVishnuException(ERRCODE_NO_ADMIN, "define task id  format is an admin function. A user cannot call it");
+  }
   if (!containCpt(fmt)) {
     throw UserException(10, "Invalid format, it does not contain any counter. ");
   }
@@ -62,6 +70,9 @@ ObjectIdServer::setTID(string fmt) {
 
 void
 ObjectIdServer::setMID(string fmt) {
+  if (!msession.isAdmin()){
+    throw UMSVishnuException(ERRCODE_NO_ADMIN, "define machine id  format is an admin function. A user cannot call it");
+  }
   if (!containCpt(fmt)) {
     throw UserException(10, "Invalid format, it does not contain any counter. ");
   }

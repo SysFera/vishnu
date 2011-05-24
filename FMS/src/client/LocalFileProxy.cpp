@@ -384,12 +384,39 @@ list<string> LocalFileProxy::ls(const LsDirOptions& options) const {
 }
 
 
+<<<<<<< HEAD
+/* Print the head of the local file.*/
+string LocalFile::head(const unsigned int nline) {
+  char buffer[10240];
+  ifstream input(getPath().c_str());
+  unsigned int count;
+  string result;
+  
+  if (!exists()) throw runtime_error(getPath()+" does not exist");
+  if (!input.is_open()) throw runtime_error("Cannot open "+getPath());
+
+  for (count=0; count < nline && input.good(); ++count) {
+    input.getline(buffer, 10240);
+    result+=buffer;
+    result+="\n";
+  }
+  input.close();
+  return result;
+}
+
+=======
+>>>>>>> 1ab0f1541d6cb7717e02f9b470d3655507485bf6
 /* Copy the local file to remote destination. */
 /* The function proceed to the file copy by itself if the
  * destination is a local path. Otherwise it calls the DIET service.
  */
+<<<<<<< HEAD
+int LocalFileProxy::cp(const string& dest, const CpFileOptions& options) {
+  string host = File::extHost(dest);
+=======
 /*int LocalFileProxy::cp(const string& dest, const CpFileOptions& options) {
   string path = File::extName(src);
+>>>>>>> 1ab0f1541d6cb7717e02f9b470d3655507485bf6
   string path = File::extName(dest);
   LocalFile* localResult;
   RemoteFile* remoteResult;
@@ -436,4 +463,8 @@ list<string> LocalFileProxy::ls(const LsDirOptions& options) const {
  // remoteResult = new RemoteFile(dest, getOwner());
  // return remoteResult;
   return 0;
+<<<<<<< HEAD
+}
+=======
 }*/
+>>>>>>> 1ab0f1541d6cb7717e02f9b470d3655507485bf6
