@@ -93,8 +93,8 @@ int solveChangeMode (diet_profile_t* profile) {
 
     file->chmod(mode);
 
-  } catch (std::exception& err) {
-    errMsg = strdup(err.what());
+  } catch (VishnuException& err) {
+     errMsg = strdup(err.buildExceptionString().c_str());
   }
   if (errMsg==NULL) {
     errMsg = strdup("");

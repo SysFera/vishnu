@@ -155,10 +155,10 @@ int SSHFile::chgrp(const string& group) {
               sshPublicKey, sshPrivateKey);
   pair<string,string> chgrpResult;
 
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
+  if (!exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
   chgrpResult = ssh.exec(CHGRPCMD+group+" "+getPath());
   if (chgrpResult.second.length()!=0) {
-    throw runtime_error("Error changing file group: "+chgrpResult.second);
+    throw FMSVishnuException(ERRCODE_INVALID_PATH,"Error changing file group: "+chgrpResult.second);
   }
   setGroup(group);
   return 0;
@@ -171,12 +171,12 @@ int SSHFile::chmod(const mode_t mode) {
               sshPublicKey, sshPrivateKey);
   pair<string,string> chmodResult;
   
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
+  if (!exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
   os << mode;
   chmodResult = ssh.exec(CHMODCMD+os.str()+" "+getPath());
   
   if (chmodResult.second.length()!=0) {
-    throw runtime_error("Error changing file mode: "+chmodResult.second);
+    throw FMSVishnuException(ERRCODE_INVALID_PATH,"Error changing file mode: "+chmodResult.second);
   }
   setPerms(mode);
   return 0;
@@ -191,7 +191,7 @@ string SSHFile::head(const HeadOfFileOptions& options) {
   pair<string,string> headResult;
   
   if (!exists()) {
-    throw FMSVishnuException(ERRCODE_UNKNOWN_PATH,getPath()+" does not exist");
+    throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
   }
 
   os << nline;
@@ -211,12 +211,12 @@ string SSHFile::getContent() {
               sshPublicKey, sshPrivateKey);
   pair<string,string> catResult;
   
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
+  if (!exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
   
   catResult = ssh.exec(CATCMD+getPath());
 
   if (catResult.second.length()!=0) {
-    throw runtime_error("Error obtaining the content of the file: "+
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error obtaining the content of the file: "+
                         catResult.second);
   }
   return catResult.first;
@@ -228,11 +228,11 @@ int SSHFile::mkfile(const mode_t mode) {
               sshPublicKey, sshPrivateKey);
   pair<string,string> mkfileResult;
   
-  if (exists()) throw runtime_error(getPath()+" already exists");
+  if (exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" already exists");
   
   mkfileResult = ssh.exec(MKFILECMD+getPath());
   if (mkfileResult.second.length()!=0) {
-    throw runtime_error("Error creating "+getPath()+": "+mkfileResult.second);
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error creating "+getPath()+": "+mkfileResult.second);
   }
   exists(true);
   return 0;
@@ -246,11 +246,11 @@ int SSHFile::mkdir(const mode_t mode) {
               sshPublicKey, sshPrivateKey);
   pair<string,string> mkdirResult;
   
-  if (exists()) throw runtime_error(getPath()+" already exists");
+  if (exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" already exists");
   os << oct << mode;
   mkdirResult = ssh.exec(MKDIRCMD+os.str()+" "+getPath());
   if (mkdirResult.second.length()!=0) {
-    throw runtime_error("Error creating "+getPath()+": "+mkdirResult.second);
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error creating "+getPath()+": "+mkdirResult.second);
   }
   exists(true);
   return 0;
@@ -264,10 +264,10 @@ int SSHFile::rm() {
               sshPublicKey, sshPrivateKey);
   pair<string,string> rmResult;
   
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
+  if (!exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
   rmResult = ssh.exec(RMCMD+getPath());
   if (rmResult.second.length()!=0) {
-    throw runtime_error("Error removing "+getPath()+": "+rmResult.second);
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error removing "+getPath()+": "+rmResult.second);
   }
   exists(false);
   upToDate=false;
@@ -280,10 +280,10 @@ int SSHFile::rmdir() {
               sshPublicKey, sshPrivateKey);
   pair<string,string> rmdirResult;
   
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
+  if (!exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
   rmdirResult = ssh.exec(RMDIRCMD+getPath());
   if (rmdirResult.second.length()!=0) {
-    throw runtime_error("Error removing "+getPath()+": "+rmdirResult.second);
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error removing "+getPath()+": "+rmdirResult.second);
   }
   exists(false);
   upToDate=false;
@@ -299,12 +299,12 @@ string SSHFile::tail(const TailOfFileOptions& options) {
               sshPublicKey, sshPrivateKey);
   pair<string,string> tailResult;
   
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
+  if (!exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
   os << nline;
   tailResult = ssh.exec(TAILCMD+os.str()+" "+getPath());
   
   if (tailResult.second.length()!=0) {
-    throw runtime_error("Error obtaining the head of the file: "+
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error obtaining the head of the file: "+
                         tailResult.second);
   }
   return tailResult.first;
@@ -320,7 +320,7 @@ list<string> SSHFile::ls(const LsDirOptions& options) const {
   std::cout <<"coucou dans SSH::ls\n"; 
   string lsCmd("ls ");
 
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
+  if (!exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
 
   std::cout <<"-l: " <<  boolalpha <<options.isLongFormat()<< "\n";
   std::cout << "-a: " << boolalpha <<options.isAllFiles() << "\n";
@@ -336,7 +336,7 @@ list<string> SSHFile::ls(const LsDirOptions& options) const {
   lsResult = ssh.exec(lsCmd+getPath());
 
   if (lsResult.second.length()!=0)
-    throw runtime_error("Error listing directory: "+lsResult.second);
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error listing directory: "+lsResult.second);
 
   istringstream is(lsResult.first);
   char buffer[1024];
@@ -349,12 +349,6 @@ list<string> SSHFile::ls(const LsDirOptions& options) const {
   }
   return result;
 }
-
-
-
-
-
-
 
 // Defintion of SSHExec Class
 
@@ -404,10 +398,7 @@ cout << endl;
 for (ite=tokens.begin(); ite!=tokens.end();++ite)
 cout << *ite << endl;
 
-
-
 /**********************************************/
-
 
   char* argv[tokens.size()+1];
   argv[tokens.size()]=NULL;
@@ -418,21 +409,21 @@ cout << *ite << endl;
   if (pipe(comPipeOut)==-1) {
     for (unsigned int i=0; i<tokens.size(); ++i)
       free(argv[i]);
-    throw runtime_error("Error creating communication pipe");
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error creating communication pipe");
   }
   if (pipe(comPipeErr)==-1) {
     for (unsigned int i=0; i<tokens.size(); ++i)
       free(argv[i]);
     close(comPipeOut[0]);
     close(comPipeOut[1]);
-    throw runtime_error("Error creating communication pipe");
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error creating communication pipe");
   }
   pid = fork();
   
   if (pid==-1) {
     for (unsigned int i=0; i<tokens.size(); ++i)
       free(argv[i]);
-    throw runtime_error("Error forking process");
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error forking process");
   }
   if (pid==0) {
     close(comPipeOut[0]); /* Close unused read end */
@@ -461,7 +452,7 @@ cout << *ite << endl;
     close(comPipeErr[0]);
     for (unsigned int i=0; i<tokens.size(); ++i)
       free(argv[i]);
-    throw runtime_error("Error executing command "+command.str());
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error executing command "+command.str());
   }
   
   close(comPipeOut[0]);
@@ -503,7 +494,7 @@ void SSHExec::copyFrom(const string& file, const string& src) const {
   if (pid==-1) {
     for (unsigned int i=0; i<tokens.size(); ++i)
       free(argv[i]);
-    throw runtime_error("Error forking process");
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error forking process");
   }
   if (pid==0) {  
     if (execvp(argv[0], argv)) {
@@ -513,7 +504,7 @@ void SSHExec::copyFrom(const string& file, const string& src) const {
   if (waitpid(pid, &status, 0)==-1) {
     for (unsigned int i=0; i<tokens.size(); ++i)
       free(argv[i]);
-    throw runtime_error("Error executing command "+command.str());
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error executing command "+command.str());
   }
   
   for (unsigned int i=0; i<tokens.size(); ++i)
@@ -548,7 +539,7 @@ void SSHExec::copyTo(const string& file, const string& dest) const {
   if (pid==-1) {
     for (unsigned int i=0; i<tokens.size(); ++i)
       free(argv[i]);
-    throw runtime_error("Error forking process");
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error forking process");
   }
   if (pid==0) {  
     if (execvp(argv[0], argv)) {
@@ -558,7 +549,7 @@ void SSHExec::copyTo(const string& file, const string& dest) const {
   if (waitpid(pid, &status, 0)==-1) {
     for (unsigned int i=0; i<tokens.size(); ++i)
       free(argv[i]);
-    throw runtime_error("Error executing command "+command.str());
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error executing command "+command.str());
   }
   
   for (unsigned int i=0; i<tokens.size(); ++i)
