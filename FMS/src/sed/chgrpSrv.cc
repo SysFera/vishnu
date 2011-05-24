@@ -88,15 +88,12 @@ int solveChangeGroup (diet_profile_t* profile) {
 
     file->chgrp(group);
 
-  } catch (std::exception& err) {
-    result = strdup("");
-    errMsg = strdup(err.what());
+  } catch (VishnuException& err) {
+    
+     errMsg = strdup(err.buildExceptionString().c_str());
   }
   if (errMsg==NULL) {
     errMsg = strdup("");
-  }
-  else {
-    result = strdup("");
   }
   diet_string_set(diet_parameter(profile, 5), errMsg, DIET_VOLATILE);
   return 0;

@@ -61,25 +61,31 @@ int solveListDir(diet_profile_t* profile) {
 
 
     try {
-      
 
     SessionServer sessionServer (sessionKey);
 
     // check the sessionKey
     
     sessionServer.check();
-    
-    // get the acLogin
-    acLogin = UserServer(sessionServer).getUserAccountLogin(host);
-    // get the machineName
+   // 
     UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
     machine->setMachineId(host);
     MachineServer machineServer(machine);
+    
+    // check the machine
+    machineServer.checkMachine();
+
+    // get the machineName
     machineName = machineServer.getMachineName();
     delete machine;
 
+    // get the acLogin
+    acLogin = UserServer(sessionServer).getUserAccountLogin(host);
+       
     std::cout << "acLogin: " << acLogin << "\n";
     std::cout << "machineName: " << machineName << "\n";
+
+
 
     FileFactory::setSSHServer(machineName);
     
@@ -99,9 +105,9 @@ int solveListDir(diet_profile_t* profile) {
     result = strdup(lsString.c_str()); 
 
 
-    } catch (exception& err) {
+    } catch (VishnuException& err) {
       result = strdup("");
-      errMsg = strdup(err.what());
+      errMsg = strdup(err.buildExceptionString().c_str()); 
     }
     if (errMsg==NULL) {
       errMsg = strdup("");

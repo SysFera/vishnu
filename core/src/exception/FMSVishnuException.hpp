@@ -9,7 +9,7 @@
 #include "UserException.hpp"
 
 // Definitions of FMS specific error codes
-static const int ERRCODE_UNKNOWN_PATH = 201;
+static const int ERRCODE_INVALID_PATH = 201;
 static const int ERRCODE_RUNTIME_ERROR = 202;
 static const int ERRCODE_UNKNOWN_FILETRANSFERID = 203;
 
