@@ -561,7 +561,6 @@ list<string> RemoteFileProxy::ls(const LsDirOptions& options) const {
   if (strlen(errMsg)!=0) {
   raiseExceptionIfNotEmptyMsg(errMsg);
   }
- 
 
 // post traitemennt 
   istringstream is(ls);

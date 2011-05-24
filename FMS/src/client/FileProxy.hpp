@@ -102,15 +102,19 @@ public:
   virtual int chmod(const mode_t mode) = 0;
   virtual std::string head(const HeadOfFileOptions& options) = 0;
   virtual std::string getContent() = 0;
-  virtual int mkfile(const mode_t mode=420) = 0;
-  virtual int mkdir(const mode_t mode=493) = 0;
+  virtual int mkfile(const mode_t mode=420) = 0; //FIXME use options 
+  virtual int mkdir(const mode_t mode=493) = 0;//FIXME use options
   virtual int rm() = 0;
   virtual int rmdir() = 0;
   virtual std::string tail(const TailOfFileOptions& options) = 0;
   virtual std::list<std::string> ls(const LsDirOptions& options) const = 0; 
   
+  virtual int cp(const std::string& dest, const CpFileOptions& options) = 0;
  
- static std::string extHost(const std::string& path);
+  //virtual int mv(const std::string& dest) = 0;
+
+ 
+  static std::string extHost(const std::string& path);
   static std::string extName(const std::string& path);
 };
 
