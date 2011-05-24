@@ -37,7 +37,7 @@ ThresholdServer::setThreshold(IMS_Data::Threshold_ptr tree) {
   } catch (SystemException& e) {
     throw (e);
   }
-  
+
   // Get the user and machine numerical id
   try {
     getUserAndMachine(tree, nuid, nmid);
@@ -72,7 +72,7 @@ ThresholdServer::getThreshold() {
   if (!msession.isAdmin()){
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "get threshold is an admin function. A user cannot call it");
   }
-  
+
   // Adding option to request
   if(mop.getMachineId().compare("")) {
     req += " AND machineid='"+mop.getMachineId()+"'";
@@ -84,7 +84,7 @@ ThresholdServer::getThreshold() {
   }
   IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
   IMS_Data::ListThreshold_ptr mlistObject = ecoreFactory->createListThreshold();
-  
+
   try {
     // Executing the request and getting the results
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
@@ -123,6 +123,8 @@ void
 ThresholdServer::getUserAndMachine(IMS_Data::Threshold_ptr tree, string &nuid, string &nmid) {
   string req = "SELECT * from machine where machineid='"+tree->getMachineId()+"'";
   vector<string>::iterator iter;
+  std::vector<std::string> tmp;
+
   int privil;
   try {
     // Executing the request and getting the results
@@ -130,8 +132,10 @@ ThresholdServer::getUserAndMachine(IMS_Data::Threshold_ptr tree, string &nuid, s
     if (result->getNbTuples()==0) {
       throw UserException(ERRCODE_INVALID_PARAM, "Invalid machine id for the threshold");
     }
-    iter = result->get(0).begin();
+    tmp = result->get(0);
+    iter = tmp.begin();
     nmid = (*(iter));
+    tmp.clear();
   } catch (SystemException& e) {
     throw (e);
   }
@@ -142,7 +146,8 @@ ThresholdServer::getUserAndMachine(IMS_Data::Threshold_ptr tree, string &nuid, s
     if (result->getNbTuples()==0) {
       throw UserException(ERRCODE_INVALID_PARAM, "Unknown handler for the threshold");
     }
-    iter = result->get(0).begin();
+    tmp = result->get(0);
+    iter = tmp.begin();
     nuid = (*(iter));
     privil = convertToInt((*(iter+6)));
     // If not an admin
