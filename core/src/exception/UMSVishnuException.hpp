@@ -40,6 +40,7 @@ static const int ERRCODE_UNKNOWN_CLOSURE_MODE = 42;
 static const int ERRCODE_INCORRECT_TIMEOUT = 43;
 
 static const int ERRCODE_ROOT_USER_ONLY = 44;
+static const int ERRCODE_LOGIN_ALREADY_USED = 45;
 
 /**
  * \class UMSVishnuException

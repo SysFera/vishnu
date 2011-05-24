@@ -138,7 +138,7 @@
         <ECoreType xsi:type="ecore:EClass" href="FMS_Data.ecore#//LsDirOptions"/>
       </types>
       <types name="CopyFileOptions" description=" stores all  options to perform a file copy.">
-        <ECoreType xsi:type="ecore:EClass" href="FMS_Data.ecore#//CopyFileOptions"/>
+        <ECoreType xsi:type="ecore:EClass" href="FMS_Data.ecore#//CpFileOptions"/>
       </types>
       <types name="MvFileOptions" description="stores all options to perform the move command.">
         <ECoreType xsi:type="ecore:EClass" href="FMS_Data.ecore#//MvFileOptions"/>
