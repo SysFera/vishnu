@@ -384,3 +384,9 @@ list<string> LocalFile::ls(const LsDirOptions& options) const {
   }
   return result;
 }
+
+ int LocalFile::cp(const string& path, const FMS_Data::CpFileOptions& options){
+
+   int result=0;
+   return result;
+ }

@@ -28,8 +28,9 @@ public:
   virtual int rm();
   virtual int rmdir();
   virtual std::string tail(const unsigned int nline); 
-virtual std::list<std::string> ls(const LsDirOptions& options) const;
+  virtual std::list<std::string> ls(const FMS_Data::LsDirOptions& options) const;
 
+  virtual int cp(const std::string& path, const FMS_Data::CpFileOptions& options);
 };
 
 #endif
