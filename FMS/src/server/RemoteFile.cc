@@ -403,6 +403,10 @@ string RemoteFile::tail(const TailOfFileOptions& options) {
 
 
 
+int RemoteFile::cp(const string& path, const FMS_Data::CpFileOptions& options){
+return 0;
+
+}
 
 void RemoteFile::printTransferID(const bool printTrID) {
   this->printTrID=printTrID;
