@@ -20,7 +20,12 @@ using namespace std;
 using namespace vishnu;
 using namespace FMS_Data;
 
-
+/**
+ * \brief To build options for the VISHNU head of file command
+ * \param pgName : The name of the command
+ * \param path : the path of the file to display
+ * \param dietConfig: Represents the VISHNU config file
+ */
 boost::shared_ptr<Options>
 makeFMSCommonOpt(string pgName, string& path,
               string& dietConfig){
