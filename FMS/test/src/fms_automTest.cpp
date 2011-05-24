@@ -36,7 +36,8 @@ static const string adminId = "admin_1";
 static const string adminPwd = "admin";
 static const string userId = "user_1";
 static const string userPwd = "toto";
-
+static const string machineId1 = "machine_1";
+static const string machineId2 = "machine_2";
 
 // The database, UMS and FMS SeD are launched by FMSSedFixture.
 BOOST_GLOBAL_FIXTURE(FMSSeDFixture)
@@ -55,7 +56,8 @@ BOOST_AUTO_TEST_CASE(CreateFile_Base)
 
   try {
     const string localFilePath = "FMS_test_file";
-    const string fullFilePath= FMSHOST1 ":" + localFilePath;
+    string fullFilePath = machineId1;
+    fullFilePath.append(":" + localFilePath);
     BOOST_REQUIRE( createFile(sessionKey, fullFilePath) == 0);
 
     // To check the success of createFile function
