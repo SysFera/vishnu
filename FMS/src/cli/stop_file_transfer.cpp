@@ -1,6 +1,6 @@
 /**
- * \file create_file.cpp
- * This file defines the VISHNU submit job command 
+ * \file stope_file_transfer.cpp
+ * This file defines the VISHNU stop file transfer command 
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -20,6 +20,14 @@ namespace po = boost::program_options;
 using namespace std;
 using namespace vishnu;
 
+/**
+ * \brief To build options for the VISHNU list directory of file command
+ * \param pgName : The name of the command
+ * \param dietConfig: Represents the VISHNU config file
+ * \param ftransferId: The file transfer identifier
+ * \param ffromMachineId: The machine that is the source of the file transfer
+ * \param fuserId: The user identifier
+ */
 boost::shared_ptr<Options>
 makeStopFileTrOpt(string pgName, 
     string& dietConfig,
@@ -35,17 +43,17 @@ makeStopFileTrOpt(string pgName,
       ENV,
       dietConfig);
 
-  opt->add("transferId, i",
+  opt->add("transferId,i",
       "A given transfer id",
       CONFIG,
       ftransferId);
 
- opt->add("fromMachineId, m",
+ opt->add("fromMachineId,m",
       "The machine that is the source of the file transfer",
       CONFIG,
       ffromMachineId);
 
- opt->add("userId, u",
+ opt->add("userId,u",
       "Allows an admin to stop file transfers of a specific user",
       CONFIG,
       fuserId);
