@@ -383,3 +383,76 @@ list<string> LocalFileProxy::ls(const LsDirOptions& options) const {
   return result;  
 }
 
+
+/* Print the head of the local file.*/
+string LocalFile::head(const unsigned int nline) {
+  char buffer[10240];
+  ifstream input(getPath().c_str());
+  unsigned int count;
+  string result;
+  
+  if (!exists()) throw runtime_error(getPath()+" does not exist");
+  if (!input.is_open()) throw runtime_error("Cannot open "+getPath());
+
+  for (count=0; count < nline && input.good(); ++count) {
+    input.getline(buffer, 10240);
+    result+=buffer;
+    result+="\n";
+  }
+  input.close();
+  return result;
+}
+
+/* Copy the local file to remote destination. */
+/* The function proceed to the file copy by itself if the
+ * destination is a local path. Otherwise it calls the DIET service.
+ */
+int LocalFileProxy::cp(const string& dest, const CpFileOptions& options) {
+  string host = File::extHost(dest);
+  string path = File::extName(dest);
+  LocalFile* localResult;
+  RemoteFile* remoteResult;
+ cout << "destination path:"<< dest<<endl;
+ cout <<"host is "<< host <<endl;
+ cout << "and the path is"<< path<<endl;  
+  
+ if (host=="localhost") {
+ throw FMSVishnuException(ERRCODE_INVALID_PATH, "The local to local transfer is not available");
+ } 
+  diet_profile_t* profile;
+  char* errMsg;
+  mode_t mode = getPerms();
+  file_type_t type = getType();
+  transferID = strdup(gen_uuid().c_str());
+
+  
+  
+  profile = diet_profile_alloc(CP_GETFILE_SRV(host), 7, 7, 8);
+  
+  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(path.c_str()),
+                  DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getOwner().c_str()),
+                  DIET_VOLATILE);
+  diet_paramstring_set(diet_parameter(profile, 2), const_cast<char*>(getHost().c_str()),
+                       DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 3), const_cast<char*>(getGroup().c_str()), DIET_VOLATILE);
+  diet_scalar_set(diet_parameter(profile, 4), &mode, DIET_VOLATILE, DIET_LONGINT);
+  diet_scalar_set(diet_parameter(profile, 5), &type, DIET_VOLATILE, DIET_INT);
+  diet_string_set(diet_parameter(profile, 6), dataID, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 7), transferID, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 8), NULL, DIET_VOLATILE);
+
+  if (diet_call(profile))
+    throw runtime_error("Error calling DIET service");
+  diet_string_get(diet_parameter(profile, 8), &errMsg, NULL);
+  
+  
+  if (strlen(errMsg)!=0) {
+    string err = errMsg;
+    throw runtime_error(err);
+  }
+  
+ // remoteResult = new RemoteFile(dest, getOwner());
+ // return remoteResult;
+  return 0;
+}
