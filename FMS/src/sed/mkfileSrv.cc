@@ -79,8 +79,8 @@ int solveCreateFile(diet_profile_t* profile) {
     boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,localPath, acLogin, userKey));
 
     file->mkfile();
-    } catch (std::exception& err) {
-      errMsg = strdup(err.what());
+    } catch (VishnuException& err) {
+       errMsg = strdup(err.buildExceptionString().c_str());
     }
     if (errMsg==NULL){
       errMsg = strdup("");
