@@ -21,6 +21,11 @@ include_directories(
 
 add_library(ims-client-proxy STATIC
   MetricProxy.cpp
+  ObjectIdProxy.cpp
+  SysInfoProxy.cpp
+  ThresholdProxy.cpp
+  ProcessCtlProxy.cpp
+  ExporterProxy.cpp
 )
 
 target_link_libraries(ims-client-proxy
@@ -38,29 +43,6 @@ link_directories(
 )
 
 
-include_directories(
-  .
-  ${DIET_INCLUDE_DIR}
-  ${IMS_EMF_DATA_DIR}
-  ${IMS_DATA_DIR}
-  ${EMF_DATA_DIR}
-  ${UMS_DATA_DIR}
-  ${EMF4CPP_INCLUDE_DIR}
-  ${VISHNU_EXCEPTION_INCLUDE_DIR}
-  ${UTILVISHNU_SOURCE_DIR}
-  ${IMS_UTIL_DIR}
-  ${CLIENT_PROXY_SOURCE_DIR}
-  ${UTILVISHNU_SOURCE_DIR}
-)
-
-add_library(ims-client-proxy STATIC
-  MetricProxy.cpp
-  ObjectIdProxy.cpp
-  SysInfoProxy.cpp
-  ThresholdProxy.cpp
-  ProcessCtlProxy.cpp
-  ExporterProxy.cpp
-)
 SET_TARGET_PROPERTIES(ims-client-proxy PROPERTIES COMPILE_FLAGS "-fPIC")
 target_link_libraries(ims-client-proxy
   ${DIET_CLIENT_LIB}

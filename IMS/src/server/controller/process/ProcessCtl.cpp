@@ -32,7 +32,6 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op) {
     throw SystemException(ERRCODE_SYSTEM, "Unknown component to restart type");
     break;
   }
-<<<<<<< HEAD
   proc.setProcessName(type);
   proc.setMachineId(mmid);
   proc.setScript(mop.getVishnuConf());
@@ -51,27 +50,12 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op) {
 
   //  createFile (dest, &proc);
   dest = proc.getScript();
-=======
-  proc->setProcessName(type);
-  proc->setMachineId(mmid);
-  mp.fillContent(proc);
-  // Make sure the process is really not running on the machine
-  stop(proc);
-
-  createFile (dest, proc);
->>>>>>> 1ab0f1541d6cb7717e02f9b470d3655507485bf6
 
   boost::to_lower(type);
   type += "sed";
   cmd = type + " " + dest;
   // If local
-<<<<<<< HEAD
-  cout << "cmd: " << cmd << endl;
-  cout << "mid: " << proc.getMachineId() << endl;
   if (proc.getMachineId().compare("")==0) {
-=======
-  if (mmid.compare("")==0) {
->>>>>>> 1ab0f1541d6cb7717e02f9b470d3655507485bf6
     int ret = system(cmd.c_str());
     if (ret == -1) {
       throw SystemException(ERRCODE_SYSTEM, "Failed to restart process "+type);
@@ -107,10 +91,6 @@ ProcessCtl::stop(IMS_Data::Process_ptr p) {
     }
   }
   string cmd = "killall -9 "+name;
-<<<<<<< HEAD
-=======
-
->>>>>>> 1ab0f1541d6cb7717e02f9b470d3655507485bf6
   // if no machineid : local, else on the distant machine
   if (p->getMachineId().compare("")==0) {
     int res = system(cmd.c_str());
@@ -138,18 +118,3 @@ ProcessCtl::createFile(string& dest, IMS_Data::Process_ptr p) {
   }
 }
 
-<<<<<<< HEAD
-=======
-
-void 
-ProcessCtl::createFile(string& dest, IMS_Data::Process_ptr p) {
-  dest = "/tmp/vishnu_restart";
-  string cmd = "echo \""+p->getScript()+"\" > "+dest;
-  int res = system(cmd.c_str());
-  if (res == -1) {
-    throw SystemException(ERRCODE_SYSTEM, "Error creating restart file");
-  }
-}
-
-
->>>>>>> 1ab0f1541d6cb7717e02f9b470d3655507485bf6

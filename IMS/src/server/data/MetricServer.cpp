@@ -124,12 +124,8 @@ MetricServer::getCurMet(){
   disk = diet_est_get_system(vec, EST_FREESIZEDISK, -1); 
   met = ecoreFactory->createMetric();
   met->setType(3);
-<<<<<<< HEAD
   met->setValue(static_cast<int>(disk));
   met->setTime(time);
-=======
-  met->setValue(disk);
->>>>>>> 4 services more or less implemented for metric server
   if (mcop->getMetricType() != 1 && mcop->getMetricType() != 5) {
     mlistObject->getMetric().push_back(met);
   }
@@ -138,12 +134,8 @@ MetricServer::getCurMet(){
   mem = diet_est_get_system(vec, EST_FREEMEM, -1); 
   met = ecoreFactory->createMetric();
   met->setType(5);
-<<<<<<< HEAD
   met->setValue(static_cast<int>(mem));
   met->setTime(time);
-=======
-  met->setValue(mem);
->>>>>>> 4 services more or less implemented for metric server
   if (mcop->getMetricType() != 1 && mcop->getMetricType() != 3) {
     mlistObject->getMetric().push_back(met);
   }
@@ -153,12 +145,8 @@ MetricServer::getCurMet(){
   cpu = diet_est_get_system(vec, EST_FREECPU, -1); 
   met = ecoreFactory->createMetric();
   met->setType(1);
-<<<<<<< HEAD
   met->setValue(static_cast<int>(cpu));
   met->setTime(time);
-=======
-  met->setValue(cpu);
->>>>>>> 4 services more or less implemented for metric server
   if (mcop->getMetricType() != 3 && mcop->getMetricType() != 5) {
     mlistObject->getMetric().push_back(met);
   }
@@ -177,7 +165,6 @@ MetricServer::getHistMet(string machineId){
 
   IMS_Data::MetricType type = mhop->getType();
 
-<<<<<<< HEAD
   // TODO BAD COMPARISON CHANGE IT
   if (mhop->getStartTime()>0) {
     request += " AND EXTRACT( epoch FROM  time ) >";
@@ -186,17 +173,6 @@ MetricServer::getHistMet(string machineId){
   if (mhop->getEndTime()>0) {
     request += " AND EXTRACT( epoch FROM  time ) <";
     request += convertToString(mhop->getEndTime());
-=======
-  if (mhop->getStartTime()>0) {
-    request += " AND \"timestamp\">'";
-    request += convertToString(mhop->getStartTime());
-    request += "'";
-  }
-  if (mhop->getEndTime()>0) {
-    request += " AND \"timestamp\"<'";
-    request += convertToString(mhop->getEndTime());
-    request += "'";
->>>>>>> 4 services more or less implemented for metric server
   }
   IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
   IMS_Data::ListMetric_ptr mlistObject = ecoreFactory->createListMetric();
