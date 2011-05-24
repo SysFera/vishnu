@@ -103,6 +103,16 @@
             Added ERRCODE_ALREADY_TERMINATED, ERRCODE_ALREADY_CANCELED, ERRCODE_JOB_IS_NOT_TERMINATED in exception list. Modified values of JobPriority Enum.  Modified values of            QueuePriority and QueueStatus. Added UNDEFINED priority of QueuePriority. Added option queueName in vishnu_list_queues.
           </para></revdescription>
       </revision>
+      <revision>
+        <revnumber>6</revnumber>
+        <date>24/05/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+        <para>Updates of UMS:
+            Added new error code for addLocalAccount and updateLocalAccount.
+          </para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -2103,7 +2113,8 @@
         <para>The vishnu_list_queues command gets queues information</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_list_queues</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>queueName</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-q <replaceable>queueName</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2137,9 +2148,9 @@
               <row>
                 <entry><para>queueName</para></entry>
                 <entry><para>string</para></entry>
-                <entry/>
+                <entry><para>q</para></entry>
                 <entry><para>if it is given, listQueues gives information only of this queue</para></entry>
-                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2877,7 +2888,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The vishnu_set_system_threshold command sets a threshold on a machine of a system</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_set_system_threshold</command><arg choice="opt"><option>-h</option></arg><arg/><arg/><arg/></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_set_system_threshold</command><arg choice="opt"><option>-h</option></arg><arg/><arg/><arg/><arg/></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2903,7 +2914,7 @@
             <tbody>
               <row>
                 <entry><para>value</para></entry>
-                <entry><para>double</para></entry>
+                <entry><para>long</para></entry>
                 <entry/>
                 <entry><para>The value of the threshold</para></entry>
                 <entry><para>NO</para></entry>
@@ -2920,6 +2931,13 @@
                 <entry><para><link linkend="MetricType">MetricType</link></para></entry>
                 <entry/>
                 <entry><para>The type of the threshold</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>handler</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The userId of the admin responsible for handling the threshold problems</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -4740,6 +4758,10 @@
           </thead>
           <tbody>
             <row>
+              <entry><para>UNDEFINED</para></entry>
+              <entry><para>-1</para></entry>
+            </row>
+            <row>
               <entry><para>INPROGRESS</para></entry>
               <entry><para>0</para></entry>
             </row>
@@ -4772,6 +4794,10 @@
             </row>
           </thead>
           <tbody>
+            <row>
+              <entry><para>UNDEFINED</para></entry>
+              <entry><para>-1</para></entry>
+            </row>
             <row>
               <entry><para>SCP</para></entry>
               <entry><para>0</para></entry>
