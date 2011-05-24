@@ -94,9 +94,9 @@ int headFile(diet_profile_t* profile) {
       head = file->head(*options_ptr);
       result = strdup(head.c_str());
 
-    } catch (std::exception& err) {
+    } catch (VishnuException& err) {
       result = strdup("");
-      errMsg = strdup(err.what());
+      errMsg = strdup(err.buildExceptionString().c_str());
     }
     if (errMsg==NULL) {
       errMsg = strdup("");
