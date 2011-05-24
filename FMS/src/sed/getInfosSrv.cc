@@ -12,6 +12,7 @@
 #include "UserServer.hpp"
 #include "MachineServer.hpp"
 #include <boost/scoped_ptr.hpp>
+#include "FMSVishnuException.hpp"
 using namespace std;
 using namespace FMS_Data;
 
@@ -111,14 +112,13 @@ int get_infos(diet_profile_t* profile) {
           fileStatSerialized = strdup(_ser.serialize(const_cast<FMS_Data::FileStat_ptr>(fileStat_ptr.get())).c_str());
 
         } else {
-          throw std::runtime_error("this file does not exist");
+          throw FMSVishnuException(ERRCODE_INVALID_PATH,"this file does not exist");
   }
 
-  } catch (std::exception& err) {
-    errMsg = strdup(err.what());
-    std::cout << " errMsg" << errMsg << "\n";
-  fileStatSerialized=strdup(""); 
- }
+      } catch (VishnuException& err) {
+        errMsg = strdup(err.buildExceptionString().c_str());
+        fileStatSerialized=strdup(""); 
+      }
 
   if (errMsg==NULL) errMsg = strdup("");
   

@@ -88,9 +88,9 @@ int contentFile(diet_profile_t* profile) {
       content = file->getContent();
       result = strdup(content.c_str());
 
-    } catch (std::exception& err) {
+    } catch (VishnuException& err) {
       result = strdup("");
-      errMsg = strdup(err.what());
+      errMsg = strdup(err.buildExceptionString().c_str());
     }
     if (errMsg==NULL) {
       errMsg = strdup("");
