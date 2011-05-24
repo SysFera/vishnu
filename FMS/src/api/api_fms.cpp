@@ -187,9 +187,9 @@ using namespace std;
 
       boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,src));
 
-      int result= f->cp(dest,options);
+      //int result= f->cp(dest,options);
 
-      return result; 
+      return 0 ;//result; 
 
     }
 
