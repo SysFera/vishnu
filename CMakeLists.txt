@@ -276,6 +276,9 @@ endif (COMPILE_IMS)
 
 if(COMPILE_FMS)
   add_subdirectory(FMS/src)
+  if (BUILD_TESTING)
+      add_subdirectory(FMS/test/src)
+  endif (BUILD_TESTING)
 endif (COMPILE_FMS)
 
 
