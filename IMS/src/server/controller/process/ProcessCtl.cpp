@@ -1,4 +1,5 @@
 #include "ProcessCtl.hpp"
+#include <omniORB4/CORBA.h>
 
 ProcessCtl::ProcessCtl(string mid, UserServer user): mmid(mid),
 						     mp(user) {
@@ -118,5 +119,4 @@ ProcessCtl::createFile(string& dest, IMS_Data::Process_ptr p) {
     throw SystemException(ERRCODE_SYSTEM, "Error creating restart file");
   }
 }
-
 
