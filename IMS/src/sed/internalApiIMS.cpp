@@ -86,18 +86,8 @@ solveExport(diet_profile_t* pb){
   return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-int
-=======
 // TODO FAIRE CE SERVICE COMME NOMME
 int 
->>>>>>> e5171d9... Fix conflict
-=======
-// TODO FAIRE CE SERVICE COMME NOMME
-int 
->>>>>>> e5171d9... Fix conflict
 solveCurMetric(diet_profile_t* pb){
   char *sessionKey   = NULL;
   char *curOpSer = NULL;
@@ -911,10 +901,6 @@ solveRestart(diet_profile_t* pb){
       throw UserException(ERRCODE_INVALID_PARAM, "solve_restart: restart option object is not well built");
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 1ab0f1541d6cb7717e02f9b470d3655507485bf6
     // Creating the process server with the options
     ProcessCtl ctl(string(mid), userServer);
 
@@ -973,7 +959,6 @@ solveStop(diet_profile_t* pb){
     // Creating the process server with the options
     ProcessCtl ctl("", userServer);
 
-<<<<<<< HEAD
     char hname[200];
     gethostname(hname, 199);
 
@@ -982,8 +967,6 @@ solveStop(diet_profile_t* pb){
       procObj->setMachineId("");
     }
 
-=======
->>>>>>> 1ab0f1541d6cb7717e02f9b470d3655507485bf6
     // Listing the old metric
     ctl.stop(procObj);
 
