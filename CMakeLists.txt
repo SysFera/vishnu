@@ -26,9 +26,6 @@ option(VISHNU_USE_TORQUE   "Build VISHNU with Torque support..." OFF)
 option(VISHNU_USE_LOADLEVELER   "Build VISHNU with LoadLeveler support..." OFF)
 
 # Options set to ON by default
-option(BUILD_SHARED_LIBS "disable shared libraries usage" ON)
-option(ENABLE_POSTGRESQL "compile with postgresql support" ON)
-option(COMPILE_UMS "compile the module UMS" ON)
 
 # Options set to OFF by default
 option(CLIENT_ONLY "only compile the client side")
@@ -40,7 +37,6 @@ option(COMPILE_FMS "compile the module FMS")
 option(COMPILE_IMS "compile the module IMS")
 option(VISHNU_USE_TORQUE   "Build VISHNU with Torque support...")
 option(VISHNU_USE_LOADLEVELER   "Build VISHNU with LoadLeveler support...")
->>>>>>> COMPILE_UMS fixé par défaut à ON
 
 # FIXME: cache is not updated when CLIENT_ONLY is enabled and BUILD_TESTING previously set to ON
 include(CMakeDependentOption)
