@@ -232,8 +232,8 @@ int
 vishnu::setUpdateFrequency(const string sessionKey,
 		   int freq)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
-  SessionProxy sessionProxy(sessionKey);
-  string name = "int_setUpdateFrequency";
+  SessionProxy sessionProxy(sessionKey);  
+  string name = "int_setUpdateFreq";
 
   MetricProxy met(sessionProxy);
   met.setUpFreq(freq);
@@ -245,8 +245,8 @@ int
 vishnu::getUpdateFrequency(const string sessionKey,
 		   int& freq)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
-  SessionProxy sessionProxy(sessionKey);
-  string name = "int_getUpdateFrequency";
+  SessionProxy sessionProxy(sessionKey);  
+  string name = "int_setUpdateFreq";
 
   MetricProxy met(sessionProxy);
   freq = met.getUpFreq();

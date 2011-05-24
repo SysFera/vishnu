@@ -69,4 +69,3 @@ displaySystemThreshold(IMS_Data::Threshold* systemThreshold);
  */
 void
 displayListSysThreshold(IMS_Data::ListThreshold* li);
-
