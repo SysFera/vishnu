@@ -58,12 +58,18 @@ LocalAccountServer::add() {
         //if the local account does not exist
         if (!exist(numMachine, numUser)) {
 
-          //The sql code to insert the localAccount on the database
-          mdatabaseVishnu->process(sqlInsert + "('"+numMachine+"', '"+numUser+"', '"+mlocalAccount->getAcLogin()+"', "
-          "'"+mlocalAccount->getSshKeyPath()+"', '"+mlocalAccount->getHomeDirectory()+"')");
+          if (!isLoginUsed(numMachine, mlocalAccount->getAcLogin())) {
 
-          msshpublickey = machineServer.getAttribut("where "
-          "machineid='"+mlocalAccount->getMachineId()+"'", "sshpublickey");
+            //The sql code to insert the localAccount on the database
+            mdatabaseVishnu->process(sqlInsert + "('"+numMachine+"', '"+numUser+"', '"+mlocalAccount->getAcLogin()+"', "
+            "'"+mlocalAccount->getSshKeyPath()+"', '"+mlocalAccount->getHomeDirectory()+"')");
+
+            msshpublickey = machineServer.getAttribut("where "
+            "machineid='"+mlocalAccount->getMachineId()+"'", "sshpublickey");
+          }
+          else {
+            throw UMSVishnuException(ERRCODE_LOGIN_ALREADY_USED);
+          }
 
         }//END if the local account does not exist
         else {
@@ -99,7 +105,7 @@ LocalAccountServer::update() {
   std::string numUser;
   std::string sqlCommand = "";
 
-  //Creation of the object user
+  //Creation of the object use
   UserServer userServer = UserServer(msessionServer);
   userServer.init();
 
@@ -125,6 +131,11 @@ LocalAccountServer::update() {
 
         //if the local account exists
         if (exist(numMachine, numUser)) {
+
+          //check if the acLogin is not already used
+          if (isLoginUsed(numMachine, mlocalAccount->getAcLogin())) {
+            throw UMSVishnuException(ERRCODE_LOGIN_ALREADY_USED);
+          }
 
           //if a new acLogin has been defined
           if (mlocalAccount->getAcLogin().size() != 0) {
@@ -279,6 +290,19 @@ LocalAccountServer::exist(std::string idmachine, std::string iduser) {
   else {
     return false;
   }
+}
+
+/**
+ * \brief Function to check if a given login is used on a machine
+ * \param numMachine the internal id of the machine
+ * \param acLogin the account login
+ * \return true if the login is already used
+ */
+bool
+LocalAccountServer::isLoginUsed(std::string numMachine, std::string acLogin) {
+  if (numMachine.empty() || acLogin.empty()) return false;
+  std::string numUser = getAttribut("where machine_nummachineid="+numMachine+" and aclogin='"+acLogin+"'", "users_numuserid");
+  return !numUser.empty();
 }
 
 /**
