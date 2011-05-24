@@ -220,6 +220,18 @@ ServerFMS::init(int vishnuId,
   diet_profile_desc_free(mprofile);
 
 
+// Copy file
+
+  mprofile = getCopyFileProfile();
+
+  if ( diet_service_table_add(mprofile, NULL, solveCopyFile)){
+
+    return 1;
+
+  }
+
+  diet_profile_desc_free(mprofile);
+
 
 
 
