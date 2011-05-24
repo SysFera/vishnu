@@ -15,17 +15,23 @@
 #include "FMS_Data.hpp"
 #include "cmdArgs.hpp"
 #include <boost/bind.hpp>
+#include "displayer.hpp"
 
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
 
+/**
+ * \brief To build options for the VISHNU list directory of file command
+ * \param pgName : The name of the command
+ * \param path : the path of the file to display
+ * \param dietConfig: Represents the VISHNU config file
+ */
 boost::shared_ptr<Options>
 makeListDirOpt(string pgName,
             string& path,
-            string& dietConfig,
-            FMS_Data::LsDirOptions& lsDirOptions){
+            string& dietConfig){
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
@@ -39,17 +45,9 @@ makeListDirOpt(string pgName,
       "It specifies the long display format (all available file information",
       CONFIG);
 
-  if(opt->count("longFormat")){
-    lsDirOptions.setLongFormat(true);
-  }
-
   opt->add("allFiles,a",
       "Allows to display all files including hidden file",
       CONFIG);
-
-  if(opt->count("allFiles")){
-    lsDirOptions.setAllFiles(true);
-  }
 
    opt->add("path,p",
       "The directory to list following the pattern [host:]directory path.",
@@ -75,7 +73,7 @@ int main (int argc, char* argv[]){
   FMS_Data::LsDirOptions lsDirOptions;
   
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeListDirOpt(argv[0], path,dietConfig,lsDirOptions);
+  boost::shared_ptr<Options> opt=makeListDirOpt(argv[0], path,dietConfig);
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
@@ -120,13 +118,8 @@ int main (int argc, char* argv[]){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
       listDir(sessionKey, path, dirContent, lsDirOptions);
 
-      // FIXME by the Grand Daouda
-      std::vector<std::string> dirContentvec=dirContent.getStrings();
-      std::vector<string>::const_iterator it;
-      std::cout << path << ": \n";
-      for (it=dirContentvec.begin(); it!=dirContentvec.end(); ++it){
-        std::cout << *it << "\n"; 
-      }
+      // To display the directory content
+      std::cout << dirContent << std::endl;
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
