@@ -21,10 +21,6 @@ ShellExporter::ShellExporter(UserServer u, IMS_Data::ExportOp_ptr op):ExportServ
   //  mmapperFMS->registerMapper();
   mmapperUMS = new UMSShellMapper(MapperRegistry::getInstance(), UMSSHELLMAPPERNAME);
   mmapperUMS->registerMapper();
-  delete mmapperUMS;
-  delete mmapperTMS;
-  //  delete mmapperFMS;
-  delete mmapperIMS;
 }
 
 ShellExporter::~ShellExporter() {
@@ -34,6 +30,7 @@ int
 ShellExporter::exporte(string oldSession, string &content){
   bool authorized = true;
   vector<string>::iterator iter;
+  vector<string> line;
   string desc;
 
   // Init the script
@@ -51,18 +48,26 @@ ShellExporter::exporte(string oldSession, string &content){
   }
 
   // The request, ordered by starttime (=submission)
-  string req = "SELECT ctype, description, starttime from "
-    " vsession, command, where vsession.numsessionid=command.vsession_numsessionid and "
+  string req = "SELECT command.ctype, command.description, command.starttime from "
+    " command, vsession where vsession.numsessionid=command.vsession_numsessionid and "
     " vsession.vsessionid='"+oldSession+"' order by starttime asc";
 
   boost::scoped_ptr<DatabaseResult> result (mdatabase->getResult(req.c_str()));
 
   // Adding all the results to the content
   for (size_t i = 0 ; i<result->getNbTuples(); i++) {
-    iter = result->get(i).begin();
+    line.clear();
+    line = result->get(i);
+    iter = line.begin();
     //MAPPER CREATION
-    Mapper* mapper = MapperRegistry::getInstance()->getMapper(getMapperName(convertToInt(*iter)));
+    try {
+      CmdType type = static_cast<CmdType>(convertToInt(*iter));
+      Mapper* mapper = MapperRegistry::getInstance()->getMapper(getMapperName(type));
     content += mapper->decode(*(++iter));
+    } catch (SystemException &e) {
+      cout << "iter: " << *iter << endl;
+      throw (e);
+    }
     content += " \n";
   }
 
