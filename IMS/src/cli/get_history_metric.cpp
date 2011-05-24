@@ -22,10 +22,10 @@ using namespace vishnu;
 
 
 boost::shared_ptr<Options>
-makeGHMOp(string pgName, 
-	     boost::function1<void, long>& fstart,
-	     boost::function1<void, long>& fend,
-	  boost::function1<void, IMS_Data::MetricType>& ftype,
+makeGHMOp(string pgName,
+         std::string& startTime,
+         std::string& endTime,
+        boost::function1<void, IMS_Data::MetricType>& ftype,
 	     string& dietConfig){
   boost::shared_ptr<Options> opt(new Options(pgName));
 
@@ -37,14 +37,16 @@ makeGHMOp(string pgName,
 
   // All cli options
   opt->add("start,s",
-	   "The start time to get the history",
+	   "The start time to get the history\n"
+     "(in the format ""YYYY-MM-DD H:mm:ss"")",
 	   CONFIG,
-	   fstart);
+	   startTime);
 
   opt->add("end,e",
-	   "The end time to get the history",
+	   "The end time to get the history\n"
+     "(in the format ""YYYY-MM-DD H:mm:ss"")",
 	   CONFIG,
-	   fend);
+	   endTime);
 
   opt->add("type,t",
 	   "The end time to get the history",
@@ -55,27 +57,29 @@ makeGHMOp(string pgName,
 }
 
 int main (int argc, char* argv[]){
-  
+
   int ret; // Return value
 
   /******* Parsed value containers ****************/
   string dietConfig;
   string sessionKey;
   string mid;
+  string startTime;
+  string endTime;
 
   /********** EMF data ************/
   IMS_Data::MetricHistOp op;
 
   /******** Callback functions ******************/
-  boost::function1<void,long> fstart(boost::bind(&IMS_Data::MetricHistOp::setStartTime,boost::ref(op),_1));
-  boost::function1<void,long> fend(boost::bind(&IMS_Data::MetricHistOp::setEndTime,boost::ref(op),_1));
+  //boost::function1<void,long> fstart(boost::bind(&IMS_Data::MetricHistOp::setStartTime,boost::ref(op),_1));
+  //boost::function1<void,long> fend(boost::bind(&IMS_Data::MetricHistOp::setEndTime,boost::ref(op),_1));
   boost::function1<void,IMS_Data::MetricType> ftype(boost::bind(&IMS_Data::MetricHistOp::setType,boost::ref(op),_1));
 
   /*********** Out parameters *********************/
   IMS_Data::ListMetric met;
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt = makeGHMOp(argv[0], fstart, fend, ftype,  dietConfig);
+  boost::shared_ptr<Options> opt = makeGHMOp(argv[0], startTime, endTime, ftype,  dietConfig);
 
   // All cli obligatory parameters
   opt->add("machineId,m",
@@ -83,26 +87,38 @@ int main (int argc, char* argv[]){
 	   HIDDEN,
 	   mid,1);
   opt->setPosition("machineId",1);
- 
+
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
   // Parse the cli and setting the options found
   ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] machineId");  
+    helpUsage(*opt,"[options] machineId");
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);  
+  checkVishnuConfig(*opt);
   if ( opt->count("help")){
     helpUsage(*opt,"[options] machineId");
     return 0;
   }
 
+
+
   // Process command
   try {
+
+    //convert the date in long format
+    if(opt->count("start")){
+      op.setStartTime(string_to_time_t(startTime));
+    }
+
+    if(opt->count("end")){
+      op.setEndTime(string_to_time_t(endTime));
+    }
+
     // initializing DIET
     if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
       errorUsage(argv[0],dietErrorMsg,EXECERROR);
