@@ -16,6 +16,8 @@
 #include "data/SysInfoServer.hpp"
 #include "data/ThresholdServer.hpp"
 #include "controller/process/ProcessCtl.hpp"
+#include "data/ExportServer.hpp"
+#include "data/ExportFactory.hpp"
 
 using namespace std;
 using namespace vishnu;
@@ -23,32 +25,68 @@ using namespace vishnu;
 int
 solveExport(diet_profile_t* pb){
 
-  //TODO:cli and api done
   char* sessionKey = NULL;
-  char* olSessionId = NULL;
+  char* oldSessionId = NULL;
   char* filename  = NULL;
   char* options  = NULL;
-  char* jobSerialized = NULL;
+  string content;
+  int mapperkey;
+  string cmd;
+  string error;
+  string retErr = "";
 
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  cout << "************sessionKey=" << sessionKey << " ..." << endl;
-  diet_string_get(diet_parameter(pb,1), &olSessionId, NULL);
-  cout << "************olSessionId=" << olSessionId << " ..." << endl;
+  diet_string_get(diet_parameter(pb,1), &oldSessionId, NULL);
   diet_string_get(diet_parameter(pb,2), &filename, NULL);
-  cout << "************filename=" << filename << " ..." << endl;
   diet_string_get(diet_parameter(pb,3), &options, NULL);
-  cout << "************options=" << options << " ..." << endl;
 
-  string  fileContent = "Paco from server";
-  diet_string_set(diet_parameter(pb,4), strdup(fileContent.c_str()), DIET_VOLATILE);
+  SessionServer sessionServer = SessionServer(string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
 
-  string  errorInfo = "";
-  diet_string_set(diet_parameter(pb,5), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  try {
+    userServer.init();
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_export_command");
+    mapper->code(string(oldSessionId), mapperkey);
+    mapper->code(string(filename), mapperkey);
+    mapper->code(string(options), mapperkey);
+    cmd = mapper->finalize(mapperkey);
 
+    // Getting options
+    IMS_Data::ExportOp_ptr expOp = NULL;
+    if(!parseEmfObject(string(options), expOp)) {
+      throw UserException(ERRCODE_INVALID_PARAM, "solve_export: Curent restart option object is not well built");
+    }
+    // Creating the process server with the options
+    ExportServer* exp = ExportFactory::getExporter(userServer, expOp);
+
+    // Exporting and setting the results in content
+    exp->exporte(oldSessionId, content);
+
+    // Setting out diet param
+    diet_string_set(diet_parameter(pb,4), strdup(content.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,5), strdup(retErr.c_str()), DIET_VOLATILE);
+
+    // Finishing the command as a success
+    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+  } catch (VishnuException& e){
+    try{
+      // Finishing the command as an error
+      sessionServer.finish(cmd, IMS, CMDFAILED);
+    }catch(VishnuException& fe){
+      error = fe.what();
+    }
+    e.appendMsgComp(error);
+    retErr = e.buildExceptionString();
+    // Setting diet output parameters
+    diet_string_set(diet_parameter(pb,4), strdup(""), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,5), strdup(retErr.c_str()), DIET_VOLATILE);
+  }
   return 0;
 }
 
-// TODO FAIRE CE SERVICE COMME NOMME
+
 int
 solveCurMetric(diet_profile_t* pb){
   char *sessionKey   = NULL;
@@ -93,7 +131,7 @@ solveCurMetric(diet_profile_t* pb){
     curSer = strdup(_ser.serialize(const_cast<IMS_Data::ListMetric_ptr>(res)).c_str());
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,3), curSer, DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(curSer), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,4), strdup(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
@@ -160,7 +198,7 @@ solveOldMetric(diet_profile_t* pb){
     histSer = strdup(_ser.serialize(const_cast<IMS_Data::ListMetric_ptr>(res)).c_str());
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,3), histSer, DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(histSer), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,4), strdup(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
@@ -226,7 +264,7 @@ solvePS(diet_profile_t* pb){
     processSer = strdup(_ser.serialize(const_cast<IMS_Data::ListProcesses_ptr>(res)).c_str());
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), processSer, DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), strdup(processSer), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
@@ -347,7 +385,7 @@ solveGetThreshold(diet_profile_t* pb){
     treeSer = strdup(_ser.serialize(const_cast<IMS_Data::ListThreshold_ptr>(res)).c_str());
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), treeSer, DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), strdup(treeSer), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
@@ -758,7 +796,7 @@ solveGetUpFreq(diet_profile_t* pb){
     memcpy(freqSer, convertToString(res).c_str(), convertToString(res).size());
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,1), freqSer, DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,1), strdup(freqSer), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
@@ -944,7 +982,7 @@ solveGetSysInfo(diet_profile_t* pb){
     sysSer = strdup(_ser.serialize(const_cast<IMS_Data::ListSysInfo_ptr>(res)).c_str());
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), sysSer, DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), strdup(sysSer), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
