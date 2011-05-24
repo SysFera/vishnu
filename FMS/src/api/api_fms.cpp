@@ -164,7 +164,6 @@ using namespace std;
 
       boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
 
-
       int result= f->chmod(mode);
 
       return result;
@@ -181,10 +180,17 @@ using namespace std;
    */
   int vishnu::copyFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
-       std::cout << " src=" << src << std::endl;
-       std::cout << " dest="  << dest << std::endl; 
-       std::cout << boolalpha << options.isIsRecursive() << std::endl;
-       std::cout << options.getTrCommand() << std::endl;
+   
+      SessionProxy sessionProxy(sessionKey);
+
+      // FIXME use FileTransferProxy class to handle the copy
+
+      boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,src));
+
+      int result= f->cp(dest,options);
+
+      return result; 
+
     }
 
   /**
