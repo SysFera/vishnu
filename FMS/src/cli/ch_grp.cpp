@@ -1,6 +1,6 @@
 /**
- * \file create_file.cpp
- * This file defines the VISHNU submit job command 
+ * \file ch_grp.cpp
+ * This file defines the VISHNU ch_grp command 
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -33,17 +33,17 @@ int main (int argc, char* argv[]){
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt=processOpt(argv[0], dietConfig);
 
+ opt->add("group,g",
+      "The new group owner of file/directory",
+      HIDDEN,
+      group,1);
+  opt->setPosition("group",1);
+
   opt->add("path,p",
       "The file/directory following the pattern [host:]file path",
       HIDDEN,
       path,1);
   opt->setPosition("path",1);
-
-  opt->add("group,g",
-      "The new group owner of file/directory",
-      HIDDEN,
-      group,1);
-  opt->setPosition("group",1);
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
@@ -51,14 +51,14 @@ int main (int argc, char* argv[]){
   ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] path group");
+    helpUsage(*opt,"[options] group path");
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);  
   if ( opt->count("help")){
-    helpUsage(*opt,"[options] path group");
+    helpUsage(*opt,"[options] group path");
     return 0;
   }
 
@@ -77,7 +77,7 @@ int main (int argc, char* argv[]){
     // DIET call 
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
-      chGrp(sessionKey, path, group);
+      chGrp(sessionKey, group, path);
     }
     printSuccessMessage();
   } catch(VishnuException& e){// catch all Vishnu runtime error

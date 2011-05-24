@@ -14,13 +14,20 @@
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
 
+#include "displayer.hpp"
+
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
 using namespace FMS_Data;
 
-
+/**
+ * \brief To build options for the VISHNU info of file command
+ * \param pgName : The name of the command
+ * \param path : the path of the file to display
+ * \param dietConfig: Represents the VISHNU config file
+ */
 boost::shared_ptr<Options>
 makeFMSCommonOpt(string pgName, string& path,
               string& dietConfig){
@@ -107,23 +114,9 @@ int main (int ac, char* av[]){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
 
       getFilesInfo(sessionKey,path,fileStat);
-      std::cout << "the file properties: \n";
-      std::cout <<" path: " << fileStat.getPath() << "\n";
-      std::cout <<" owner: " << fileStat.getOwner() << "\n";
-      std::cout <<" group: " <<  fileStat.getGroup() << "\n";
-      std::cout <<" uid: " <<  fileStat.getUid() << "\n";
-      std::cout <<" gid: " <<  fileStat.getGid() << "\n";
-      std::cout <<" size: " <<  fileStat.getSize() << "\n";
-      std::cout <<" perms: " << oct << fileStat.getPerms() << "\n";
-      boost::posix_time::ptime pt;
-      pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(fileStat.getAtime()));
-      //pt =  boost::posix_time::from_time_t(fileStat.getAtime());
-      std::cout <<" atime : " << boost::posix_time::to_simple_string(pt) << "\n";
-      pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(fileStat.getMtime()));
-      std::cout <<" mtime : " << boost::posix_time::to_simple_string(pt) << "\n";
-      time_t time = vishnu::convertUTCtimeINLocaltime(fileStat.getCtime());
-      pt =  boost::posix_time::from_time_t(time);
-      std::cout <<" ctime : " << boost::posix_time::to_simple_string(pt) << "\n";
+    
+      //To dispaly the file information
+      std::cout << fileStat << std::endl;
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
