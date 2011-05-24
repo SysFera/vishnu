@@ -355,18 +355,18 @@ list<string> SSHFile::ls(const LsDirOptions& options) const {
    /* Copy the file through scp. */
  int SSHFile::cp(const string& dest, const CpFileOptions& options){
 
-     string host = File::extHost(dest);
-     string path = File::extName(dest);
+  //   string host = File::extHost(dest);
+   //  string path = File::extName(dest);
 
      if (!exists()) {
        throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
      }
-     
+
      SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
          sshPublicKey, sshPrivateKey);
      pair<string,string> cpResult;
 
-     cpResult = ssh.exec(CPCMD+getPath()+" "+path);
+     cpResult = ssh.exec(CPCMD+getPath()+" "+dest);
      if (cpResult.second.length()!=0) {
        throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error copying file: "+cpResult.second);
      }
@@ -392,6 +392,8 @@ const int& SSHExec::getLastExecStatus() const {
   return lastExecStatus;
 }
 
+// texec a remote command 
+
 pair<string, string> SSHExec::exec(const string& cmd) const {
   vector<string> tokens;
   ostringstream command;
@@ -406,6 +408,8 @@ pair<string, string> SSHExec::exec(const string& cmd) const {
   command << " -p " << sshPort << " " << server << " " << cmd;*/
 
   command << sshCommand  << " -l " << userName;
+  command << " -C"  << " -o BatchMode=yes " << " -o StrictHostKeyChecking=yes";
+  command  << " -o ControlMaster=yes " << " -o ControlPath=/tmp/ssh-%r@%h:%p";
   command << " -p " << sshPort << " " << server << " " << cmd;
 
   
@@ -486,99 +490,6 @@ cout << *ite << endl;
   lastExecStatus = status;
  cout << "result.second    :" << result.second << endl;
   return result;
-}
-
-void SSHExec::copyFrom(const string& file, const string& src) const {
-  vector<string> tokens;
-  ostringstream command;
-  pid_t pid;
-  int status;
-  
-  command << scpCommand << " -i " << privateKey << " -o User=" << userName;
-  command << " -P " << sshPort << " -p " << server << ":" << src;
-  command << " " << file;
-  
-  istringstream is(command.str());
-  
-  copy(istream_iterator<string>(is),
-       istream_iterator<string>(),
-       back_inserter<vector<string> >(tokens));
-
-
-
-  
-  char* argv[tokens.size()+1];
-  argv[tokens.size()]=NULL;
-  
-  for (unsigned int i=0; i<tokens.size(); ++i)
-    argv[i]=strdup(tokens[i].c_str());
-  
-  pid = fork();
-  
-  if (pid==-1) {
-    for (unsigned int i=0; i<tokens.size(); ++i)
-      free(argv[i]);
-    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error forking process");
-  }
-  if (pid==0) {  
-    if (execvp(argv[0], argv)) {
-      exit(-1);
-    }
-  }
-  if (waitpid(pid, &status, 0)==-1) {
-    for (unsigned int i=0; i<tokens.size(); ++i)
-      free(argv[i]);
-    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error executing command "+command.str());
-  }
-  
-  for (unsigned int i=0; i<tokens.size(); ++i)
-    free(argv[i]);
-  lastExecStatus = status;
-}
-
-void SSHExec::copyTo(const string& file, const string& dest) const {
-  vector<string> tokens;
-  ostringstream command;
-  pid_t pid;
-  int status;
-
-  command << scpCommand << " -i " << privateKey << " -o User=" << userName;
-  command << " -P " << sshPort << " -p " << file << " " << server;
-  command << ":" << dest;
-
-  istringstream is(command.str());
-
-  copy(istream_iterator<string>(is),
-      istream_iterator<string>(),
-      back_inserter<vector<string> >(tokens));
-
-  char* argv[tokens.size()+1];
-  argv[tokens.size()]=NULL;
-
-  for (unsigned int i=0; i<tokens.size(); ++i)
-    argv[i]=strdup(tokens[i].c_str());
-
-  pid = fork();
-
-  if (pid==-1) {
-    for (unsigned int i=0; i<tokens.size(); ++i)
-      free(argv[i]);
-    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error forking process");
-  }
-  if (pid==0) {  
-    if (execvp(argv[0], argv)) {
-      exit(-1);
-    }
-  }
-  if (waitpid(pid, &status, 0)==-1) {
-    for (unsigned int i=0; i<tokens.size(); ++i)
-      free(argv[i]);
-    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error executing command "+command.str());
-  }
-
-  for (unsigned int i=0; i<tokens.size(); ++i)
-    free(argv[i]);
-  lastExecStatus = status;
 }
 
 
