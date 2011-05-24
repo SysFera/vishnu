@@ -17,6 +17,75 @@
 using namespace std;
 
 /**
+ * \brief To export commands
+ */
+const int VISHNU_EXPORT     = 1;
+/**
+ * \brief Get current metric
+ */
+const int VISHNU_GET_CUR    = 2;
+/**
+ * \brief Get history
+ */
+const int VISHNU_GET_HIST   = 3;
+/**
+ * \brief Get processes
+ */
+const int VISHNU_GET_PROC   = 4;
+/**
+ * \brief Set system info
+ */
+const int VISHNU_SET_SYSINF = 5;
+/**
+ * \brief Set threshold
+ */
+const int VISHNU_SET_THRESH = 6;
+/**
+ * \brief Get threshold
+ */
+const int VISHNU_GET_THRESH = 7;
+/**
+ * \brief Define user id format
+ */
+const int VISHNU_DEFINE_UID = 8;
+/**
+ * \brief Define machine id format
+ */
+const int VISHNU_DEFINE_MID = 9;
+/**
+ * \brief Define task id format
+ */
+const int VISHNU_DEFINE_TID = 10;
+/**
+ * \brief Define file transfer id format
+ */
+const int VISHNU_DEFINE_FID = 11;
+/**
+ * \brief Load shedding
+ */
+const int VISHNU_LOADSHED   = 12;
+/**
+ * \brief Set update frequency
+ */
+const int VISHNU_SET_FREQ   = 13;
+/**
+ * \brief Get Update frequency
+ */
+const int VISHNU_GET_FREQ   = 14;
+/**
+ * \brief Stop process
+ */
+const int VISHNU_STOP       = 15;
+/**
+ * \brief Restart a process
+ */
+const int VISHNU_RESTART    = 16;
+/**
+ * \brief Get system info
+ */
+const int VISHNU_GET_SYSINF = 17;
+
+/**
  * \class IMSMapper
  * \brief Mapper implementation for the IMS module
  */
@@ -78,8 +147,153 @@ public :
    */
   virtual int
   code(const string& cmd, unsigned int code = 0);
+  /**
+   * \brief To get, from a coded string, the cli like command that made it
+   * \fn virtual string decode (const string& msg);
+   * \param msg The coded string
+   * \return The cli like command
+   */
+  virtual string
+  decode (const string& msg);
 
 protected:
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual string
+  decodeExp(vector<int> separator, const string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual string
+  decodeCur(vector<int> separator, const string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual string
+  decodeHist(vector<int> separator, const string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual string
+  decodeProc(vector<int> separator, const string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual string
+  decodeSetSys(vector<int> separator, const string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual string
+  decodeGetThre(vector<int> separator, const string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual string
+  decodeSetThre(vector<int> separator, const string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual string
+  decodeFid(vector<int> separator, const string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual string
+  decodeMid(vector<int> separator, const string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual string
+  decodeUid(vector<int> separator, const string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual string
+  decodeTid(vector<int> separator, const string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual string
+  decodeLoad(vector<int> separator, const string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual string
+  decodeGetF(vector<int> separator, const string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual string
+  decodeSetF(vector<int> separator, const string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual string
+  decodeStop(vector<int> separator, const string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual string
+  decodeRestart(vector<int> separator, const string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual string
+  decodeGetSys(vector<int> separator, const string& msg);
+
 private:
 };
 

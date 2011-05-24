@@ -45,11 +45,14 @@ vishnu::getMetricCurrentValue(const string sessionKey,
   IMS_Data::ListMetric_ptr li = query.list();
 
   if(li != NULL) {
-    IMS_Data::Metric_ptr met;
+    IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
     for(unsigned int i = 0; i < li->getMetric().size(); i++) {
-      met = li->getMetric().get(i);
+      IMS_Data::Metric_ptr met = ecoreFactory->createMetric();
+      //To copy the content and not the pointer
+      *met = *li->getMetric().get(i);
       list.getMetric().push_back(met);
     }
+    delete li;
   }
   return IMS_SUCCESS;
 }
@@ -72,13 +75,15 @@ vishnu::getMetricHistory(const string sessionKey,
   IMS_Data::ListMetric_ptr li = query.list();
 
   if(li != NULL) {
-    IMS_Data::Metric_ptr met;
+    IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
     for(unsigned int i = 0; i < li->getMetric().size(); i++) {
-      met = li->getMetric().get(i);
+      IMS_Data::Metric_ptr met = ecoreFactory->createMetric();
+      //To copy the content and not the pointer
+      *met = *li->getMetric().get(i);
       list.getMetric().push_back(met);
     }
+    delete li;
   }
-
   return IMS_SUCCESS;
 }
 
@@ -97,11 +102,13 @@ vishnu::getProcesses(const string sessionKey,
   IMS_Data::ListProcesses_ptr li = query.list();
 
   if(li != NULL) {
-    IMS_Data::Process_ptr proc;
+    IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
     for(unsigned int i = 0; i < li->getProcess().size(); i++) {
-      proc = li->getProcess().get(i);
+      IMS_Data::Process_ptr proc = ecoreFactory->createProcess();
+      *proc = *li->getProcess().get(i);
       list.getProcess().push_back(proc);
     }
+    delete li;
   }
 
   return IMS_SUCCESS;
@@ -225,8 +232,8 @@ int
 vishnu::setUpdateFrequency(const string sessionKey,
 		   int freq)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
-  SessionProxy sessionProxy(sessionKey);
-  string name = "int_setUpdateFrequency";
+  SessionProxy sessionProxy(sessionKey);  
+  string name = "int_setUpdateFreq";
 
   MetricProxy met(sessionProxy);
   met.setUpFreq(freq);
@@ -238,8 +245,8 @@ int
 vishnu::getUpdateFrequency(const string sessionKey,
 		   int& freq)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
-  SessionProxy sessionProxy(sessionKey);
-  string name = "int_getUpdateFrequency";
+  SessionProxy sessionProxy(sessionKey);  
+  string name = "int_setUpdateFreq";
 
   MetricProxy met(sessionProxy);
   freq = met.getUpFreq();

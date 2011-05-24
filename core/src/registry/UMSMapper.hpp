@@ -195,7 +195,6 @@ public :
 
 
 protected:
-private:
 
   /**
    * \brief To decode the close call sequence of the string returned by finalize
@@ -204,7 +203,7 @@ private:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
+  virtual string
   decodeClose(vector<int> separator, const string& msg);
 
   /**
@@ -214,7 +213,7 @@ private:
    * \param msg The message to decode
    * \return The cli like add user command
    */
-  string
+  virtual string
   decodeAddUser(vector<int> separator, const string& msg);
 
   /**
@@ -224,7 +223,7 @@ private:
    * \param msg The message to decode
    * \return The cli like update user command
    */
-  string
+  virtual string
   decodeUpUser(vector<int> separator, const string& msg);
 
   /**
@@ -234,7 +233,7 @@ private:
    * \param msg The message to decode
    * \return The cli like delete user command
    */
-  string
+  virtual string
   decodeDelUser(vector<int> separator, const string& msg);
 
   /**
@@ -244,7 +243,7 @@ private:
    * \param msg The message to decode
    * \return The cli like change password command
    */
-  string
+  virtual string
   decodeChangePwd(vector<int> separator, const string& msg);
 
   /**
@@ -254,7 +253,7 @@ private:
    * \param msg The message to decode
    * \return The cli like reset password command
    */
-  string
+  virtual string
   decodeResetPwd(vector<int> separator, const string& msg);
 
   /**
@@ -264,7 +263,7 @@ private:
    * \param msg The message to decode
    * \return The cli like add account command
    */
-  string
+  virtual string
   decodeAddAcc(vector<int> separator, const string& msg);
 
   /**
@@ -274,7 +273,7 @@ private:
    * \param msg The message to decode
    * \return The cli like update account command
    */
-  string
+  virtual string
   decodeUpAcc(vector<int> separator, const string& msg);
   
   /**
@@ -284,7 +283,7 @@ private:
    * \param msg The message to decode
    * \return The cli like delete account command
    */
-  string
+  virtual string
   decodeDelAcc(vector<int> separator, const string& msg);
   
   /**
@@ -294,7 +293,7 @@ private:
    * \param msg The message to decode
    * \return The cli like save configuration command
    */
-  string
+  virtual string
   decodeSaveConf(vector<int> separator, const string& msg);
 
   /**
@@ -304,7 +303,7 @@ private:
    * \param msg The message to decode
    * \return The cli like crestore configuration command
    */
-  string
+  virtual string
   decodeRestoreConf(vector<int> separator, const string& msg);
 
   /**
@@ -314,7 +313,7 @@ private:
    * \param msg The message to decode
    * \return The cli like add machine command
    */
-  string
+  virtual string
   decodeAddM(vector<int> separator, const string& msg);
 
   /**
@@ -324,7 +323,7 @@ private:
    * \param msg The message to decode
    * \return The cli like update machine command
    */
-  string
+  virtual string
   decodeUpM(vector<int> separator, const string& msg);
 
   /**
@@ -334,7 +333,7 @@ private:
    * \param msg The message to decode
    * \return The cli like delete machine command
    */
-  string
+  virtual string
   decodeDelM(vector<int> separator, const string& msg);
 
   /**
@@ -344,7 +343,7 @@ private:
    * \param msg The message to decode
    * \return The cli like list account command
    */
-  string
+  virtual string
   decodeListAcc(vector<int> separator, const string& msg);
 
   /**
@@ -354,7 +353,7 @@ private:
    * \param msg The message to decode
    * \return The cli like list machine command
    */
-  string
+  virtual string
   decodeListM(vector<int> separator, const string& msg);
 
   /**
@@ -364,7 +363,7 @@ private:
    * \param msg The message to decode
    * \return The cli like list history command
    */
-  string
+  virtual string
   decodeListH(vector<int> separator, const string& msg);
 
   /**
@@ -374,7 +373,7 @@ private:
    * \param msg The message to decode
    * \return The cli like list option command
    */
-  string
+  virtual string
   decodeListOp(vector<int> separator, const string& msg);
 
   /**
@@ -384,7 +383,7 @@ private:
    * \param msg The message to decode
    * \return The cli like list user command
    */
-  string
+  virtual string
   decodeListUser(vector<int> separator, const string& msg);
 
   /**
@@ -394,7 +393,7 @@ private:
    * \param msg The message to decode
    * \return The cli like list session command
    */
-  string
+  virtual string
   decodeListSession(vector<int> separator, const string& msg);
 
   /**
@@ -404,7 +403,7 @@ private:
    * \param msg The message to decode
    * \return The cli like configure default option command
    */
-  string
+  virtual string
   decodeConfDefaultOp(vector<int> separator, const string& msg);
 
   /**
@@ -414,7 +413,7 @@ private:
    * \param msg The message to decode
    * \return The cli like configure option command
    */
-  string
+  virtual string
   decodeConfOp(vector<int> separator, const string& msg);
 
   
@@ -435,6 +434,7 @@ private:
    */
   string
   getUupdate(string serial);
+private:
 };
 
 

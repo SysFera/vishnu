@@ -33,9 +33,10 @@ public:
   stop(IMS_Data::Process_ptr p);
   /**
    * To perform load schedding operations
+   * \param type: The type of loadShedding
    */
   void
-  loadShed();
+  loadShed(int type);
 protected:
 private:
   /**

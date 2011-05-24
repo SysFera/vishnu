@@ -1,11 +1,13 @@
 
 link_directories(
  ${VISHNU_EXCEPTION_INCLUDE_DIR}
+
  ${Boost_LIBRARY_DIRS}
 )
 
 
 include_directories(
+${LOG_INCLUDE_DIR}
   ${DIET_INCLUDE_DIR}
   ${IMS_EMF_DATA_DIR}
   ${IMS_DATA_DIR}
@@ -36,7 +38,12 @@ add_library(ims-server STATIC
   data/ProcessServer.cpp
   data/MetricServer.cpp
   data/ExportServer.cpp
-  data/ShellExporter.cpp
+  data/ExportFactory.cpp
+  data/export/shell/ShellExporter.cpp
+  data/export/shell/UMSShellMapper.cpp
+  data/export/shell/TMSShellMapper.cpp
+#  data/export/shell/FMSShellMapper.cpp
+  data/export/shell/IMSShellMapper.cpp
   data/ObjectIdServer.cpp
   data/SysInfoServer.cpp
   data/ThresholdServer.cpp
