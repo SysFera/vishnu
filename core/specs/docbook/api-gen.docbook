@@ -103,9 +103,11 @@
         <revdescription>
           
         <para>Updates to TMS:
-            Removed functions getMachineRefreshPeriod and setMachineRefreshPeriod. Added UNDEFINED status of JobStatus Enum. Added UNDEFINED priority of JobPriority Enum.
+            Removed functions getMachineRefreshPeriod and setMachineRefreshPeriod. Added UNDEFINED and ALREADY_DOWNLOADED status of JobStatus Enum. 
+            Added UNDEFINED priority of JobPriority Enum.
             Removed of outputPah and errorPath of ListJobsOptions. Removed scriptContent in Job class. 
-            Added ERRCODE_ALREADY_TERMINATED, ERRCODE_ALREADY_CANCELED, ERRCODE_JOB_IS_NOT_TERMINATED in exception list. Modified values of JobPriority Enum.  Modified values of            QueuePriority and QueueStatus. Added UNDEFINED priority of QueuePriority.
+            Added ERRCODE_ALREADY_TERMINATED, ERRCODE_ALREADY_CANCELED, ERRCODE_JOB_IS_NOT_TERMINATED, ERRCODE_ALREADY_DOWNLOADED in exception list. 
+            Modified values of JobPriority Enum.  Modified values of QueuePriority and QueueStatus. Added UNDEFINED priority of QueuePriority.
           </para></revdescription>
       </revision>
       <revision>
@@ -116,6 +118,16 @@
           
         <para>Updates of UMS:
             Added CommandStatusType Enum and an attribute status to the Command Class.
+          </para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>8</revnumber>
+        <date>24/05/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+        <para>Updates of UMS:
+            Added new error code for addLocalAccount and updateLocalAccount.
           </para></revdescription>
       </revision>
     </revhistory>
@@ -1472,6 +1484,10 @@
                 <entry><para>ERRCODE_UNUSABLE_MACHINE</para></entry>
                 <entry><para>The machine does not exist or it is locked</para></entry>
               </row>
+              <row>
+                <entry><para>ERRCODE_LOGIN_ALREADY_USED</para></entry>
+                <entry><para>The system account login is already used by another vishnu user</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -1582,6 +1598,10 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_LOGIN_ALREADY_USED</para></entry>
+                <entry><para>The system account login is already used by another vishnu user</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -4593,7 +4613,7 @@
                 <entry><para>string</para></entry>
                 <entry><para>if it is given, listQueues gives information only of this queue</para></entry>
                 <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
+                <entry><para>no</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -4663,7 +4683,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listQueues</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListQueues&amp; <parameter>listofQueues</parameter></paramdef><paramdef>const string&amp; <parameter>queueName</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listQueues</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListQueues&amp; <parameter>listofQueues</parameter></paramdef><paramdef>const string&amp; <parameter>queueName = string()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function TMS::listJobs</title>
@@ -4923,6 +4943,10 @@
               <row>
                 <entry><para>ERRCODE_SSH</para></entry>
                 <entry><para>Vishnu not available (SSH error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_ALREADY_DOWNLOADED</para></entry>
+                <entry><para>The job is already downloaded</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -7548,12 +7572,12 @@
             </row>
             <row>
               <entry><para>value</para></entry>
-              <entry><para>double</para></entry>
+              <entry><para>long</para></entry>
               <entry><para>The value of the metric</para></entry>
             </row>
             <row>
               <entry><para>time</para></entry>
-              <entry><para>int</para></entry>
+              <entry><para>long</para></entry>
               <entry><para>The timestamp the metric had the value</para></entry>
             </row>
           </tbody>
@@ -7785,7 +7809,7 @@
           <tbody>
             <row>
               <entry><para>value</para></entry>
-              <entry><para>double</para></entry>
+              <entry><para>long</para></entry>
               <entry><para>The value of the threshold</para></entry>
             </row>
             <row>
@@ -7797,6 +7821,11 @@
               <entry><para>type</para></entry>
               <entry><para><link linkend="MetricType">MetricType</link></para></entry>
               <entry><para>The type of the threshold</para></entry>
+            </row>
+            <row>
+              <entry><para>handler</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The userId of the admin responsible for handling the threshold problems</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -9891,7 +9920,7 @@
     </section>
     <section>
       <title>Data types definitions</title>
-      <para xml:id="CopyFileOptions"><emphasis role="bold">Class FMS::CopyFileOptions Content</emphasis></para>
+      <para xml:id="CpFileOptions"><emphasis role="bold">Class FMS::CpFileOptions Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
           <colspec colwidth="4cm"/>
@@ -10017,7 +10046,7 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>listOfFileStat</para></entry>
+              <entry><para>fileStats</para></entry>
               <entry><para>List of <link linkend="FileStat">FileStat</link></para></entry>
               <entry><para>list of inodes.</para></entry>
             </row>
@@ -10119,7 +10148,7 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>listOfFileTransfer</para></entry>
+              <entry><para>fileTransfers</para></entry>
               <entry><para>List of <link linkend="FileTransfer">FileTransfer</link></para></entry>
               <entry><para>list of file transfers.</para></entry>
             </row>
@@ -10222,6 +10251,10 @@
           </thead>
           <tbody>
             <row>
+              <entry><para>UNDEFINED</para></entry>
+              <entry><para>-1</para></entry>
+            </row>
+            <row>
               <entry><para>INPROGRESS</para></entry>
               <entry><para>0</para></entry>
             </row>
@@ -10254,6 +10287,10 @@
             </row>
           </thead>
           <tbody>
+            <row>
+              <entry><para>UNDEFINED</para></entry>
+              <entry><para>-1</para></entry>
+            </row>
             <row>
               <entry><para>SCP</para></entry>
               <entry><para>0</para></entry>
