@@ -65,12 +65,6 @@ int main (int argc, char* argv[]){
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt=makeStopOpt(argv[0], fDietId, dietConfig);
 
-  opt->add( "machineId,i",
-            "represents the id of the machine",
-            HIDDEN,
-            machineId,1);
-
-  opt->setPosition("machineId",1);
 
   opt->add( "processName,p",
             "represents the name of the process",
@@ -78,6 +72,13 @@ int main (int argc, char* argv[]){
             processName,1);
 
   opt->setPosition("processName",1);
+
+  opt->add( "machineId,i",
+            "represents the id of the machine",
+            HIDDEN,
+            machineId,1);
+
+  opt->setPosition("machineId",1);
 
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);

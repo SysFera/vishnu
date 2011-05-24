@@ -47,6 +47,20 @@ public:
 protected:
 private:
   /**
+   * \brief To get the numerical userid and numerical machineid corresponding to a threshold
+   * \param tree: The threshold
+   * \param nuid: The numerical user id (out)
+   * \param nmid: The numerical machine id (out)
+   */
+  void
+  getUserAndMachine(IMS_Data::Threshold_ptr tree, string &nuid, string &nmid);
+  /**
+   * \brief Check if a threshold of this type on this machine is already defined
+   * \param tree: The threshold
+   */
+  bool
+  checkExist(IMS_Data::Threshold_ptr tree);
+  /**
    * \brief The id of vishnu
    */
   int mvishnuId;

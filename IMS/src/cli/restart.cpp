@@ -40,7 +40,11 @@ makeRestartOpt(string pgName,
 
 
   opt->add("sedType,t",
-           "The type of the vishnu Sed",
+           "The type of the vishnu Sed\n"
+           "1 for UMS,\n"
+           "2 for TMS,\n"
+           "3 for FMS,\n"
+           "4 for IMS,",
             CONFIG,
             fSedType);
 
