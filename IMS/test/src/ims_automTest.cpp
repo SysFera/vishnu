@@ -179,7 +179,6 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       //To check if the list is not empty
       BOOST_REQUIRE(list.getThreshold().size() != 0);
       //To check if the threshold is equal to 1000000
-      BOOST_TEST_MESSAGE("list.getThreshold().get(0)->getValue()" << list.getThreshold().get(0)->getValue());
       BOOST_REQUIRE(list.getThreshold().get(0)->getValue() == 1000000);
     }
     catch (VishnuException& e) {
@@ -254,7 +253,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   // IA2 – B1 : Define a system load threshold for CPUUSE Metric
   // Define a system load threshold : normal call
 
-  /*BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_CPU_USE) {
+  BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_CPU_USE) {
 
     BOOST_TEST_MESSAGE("Use case IA2 – B1: Define a system load threshold for CPUUSE metric");
     VishnuConnexion vc("root","vishnu_user");
@@ -498,7 +497,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
 
     BOOST_CHECK_THROW(setSystemThreshold(sessionKey, systemThreshold), VishnuException);
   }
-  */
+
 
   // I1 – B: Get the update frequency normal call
   // Get the update frequency : normal call
@@ -918,7 +917,6 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       BOOST_REQUIRE(imssedFound ==  true);
       BOOST_REQUIRE(umssedFound ==  true);
       BOOST_REQUIRE(tmssedFound ==  true);
-      //TODO: a la fin des tests nettoyer la table processes
     }
     catch (VishnuException& e) {
       BOOST_MESSAGE("FAILED\n");
@@ -927,17 +925,127 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     }
   }
 
+  //IA1-E1:  Get the running processes with bad machine Id
+  // Get the running processes: bad machine Id
+  BOOST_AUTO_TEST_CASE(get_running_processes_bad_machine_Id_call) {
+
+    BOOST_TEST_MESSAGE("Use case IA1-E1: Get the running processes with bad machine Id");
+    VishnuConnexion vc("root","vishnu_user");
+    // get the session key and the machine identifier
+    string sessionKey=vc.getConnexion();
+    string machineId="unknown_name";
+
+    IMS_Data::ListProcesses listProcess;
+    IMS_Data::ProcessOp op;
+    op.setMachineId(machineId);
+
+    BOOST_CHECK_THROW(getProcesses(sessionKey, listProcess, op), VishnuException);
+  }
+
+  //IA1-E2:  Get the running processes for no admin user
+  // Get the running processes: no admin user
+  BOOST_AUTO_TEST_CASE(get_running_processes_no_admin_user_call) {
+
+    BOOST_TEST_MESSAGE("Use case IA1-E2: Get the running processes for no admin user Id");
+    //no admin user
+    VishnuConnexion vc("user_1","toto");
+    // get the session key and the machine identifier
+    string sessionKey=vc.getConnexion();
+    string machineId="machine_1";
+
+    IMS_Data::ListProcesses listProcess;
+    IMS_Data::ProcessOp op;
+    op.setMachineId(machineId);
+
+    BOOST_CHECK_THROW(getProcesses(sessionKey, listProcess, op), VishnuException);
+  }
+
+  //TODO: Kévine ==> Ajouter use case dans Specs Genérales
+  //FIXME: à enlever ce test de stop ou restart car elle empeche une terminaison
+  //correcte des tests en arrete le processus à l'aide de stop
+  //Test category 2
+  //IA9-B:  Restart normal call
+  //Restart: normal call
+  /*BOOST_AUTO_TEST_CASE( restart_normal_call ) {
+
+    BOOST_TEST_MESSAGE("Use case IA9-B: Restart normal call");
+    bool umssedFound = false;
+    string dietSeDConfigPath = CONFIG_DIR + string("/SeD_testing.cfg");
+
+    VishnuConnexion vc("root","vishnu_user");
+    // get the session key and the machine identifier
+    string sessionKey=vc.getConnexion();
+    string machineId="machine_1";
+    IMS_Data::ListProcesses listProcess;
+    IMS_Data::ProcessOp op;
+    op.setMachineId(machineId);
+
+    //The process to stop
+    IMS_Data::Process process;
+    process.setMachineId(machineId);
+    process.setProcessName("UMS");
+
+    IMS_Data::RestartOp restartOp;
+    restartOp.setVishnuConf(dietSeDConfigPath);
+    //To set the UMS type
+    restartOp.setSedType(1);
+
+    try {
+      BOOST_CHECK_EQUAL(getProcesses(sessionKey, listProcess, op),0  );
+      BOOST_REQUIRE(listProcess.getProcess().size() != 0);
+
+      //To check if the process UMS exists
+      for(unsigned int i = 0; i < listProcess.getProcess().size(); i++) {
+        //To check umssed process
+        if (listProcess.getProcess().get(i)->getProcessName().compare("UMS") == 0) {
+          umssedFound = true;
+        }
+      }
+      //To clear the list
+      listProcess.getProcess().clear();
+      //To check if the process ums has been found on the list
+      BOOST_REQUIRE(umssedFound ==  true);
+
+      //To stop the process
+      BOOST_CHECK_EQUAL(stop(sessionKey, process), 0);
+      BOOST_CHECK_EQUAL(getProcesses(sessionKey, listProcess, op),0  );
+      BOOST_REQUIRE(listProcess.getProcess().size() != 0);
+
+      umssedFound = false;
+
+      BOOST_CHECK_EQUAL(restart(sessionKey, machineId, restartOp), 0);
+
+      //To check if the process UMS is stopped and not on the list
+      for(unsigned int i = 0; i < listProcess.getProcess().size(); i++) {
+        //To check umssed process
+        if (listProcess.getProcess().get(i)->getProcessName().compare("UMS") == 0) {
+          umssedFound = true;
+        }
+      }
+      //To check if the process ums has not been found on the list because it is stopped
+      BOOST_REQUIRE(umssedFound ==  true);
+    }
+    catch (VishnuException& e) {
+      BOOST_MESSAGE("FAILED\n");
+      BOOST_MESSAGE(e.what());
+      BOOST_CHECK(false);
+    }
+  }*/
+
+  //To clean the table process
   BOOST_AUTO_TEST_CASE( clean_table_process_call) {
 
     string sqlPath = IMSSQLPATH;
-
     BOOST_TEST_MESSAGE("Clean process table");
     VishnuConnexion vc("root","vishnu_user");
     // get the session key and the machine identifier
     string sessionKey=vc.getConnexion();
 
     try {
+      //TODO:A mettre dans le dernier cas de tests
       //Clean of the table process
+      BOOST_CHECK_EQUAL(restore(sqlPath + "/IMScleanProcesses.sql"), 0);
+
       if (restore(sqlPath + "/IMScleanProcesses.sql") != 0) {
         BOOST_TEST_MESSAGE("Database update failed for restore(sqlPath + /IMScleanProcesses.sql)");
       }
