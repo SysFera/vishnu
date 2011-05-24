@@ -53,8 +53,10 @@ public:
   virtual int rm();
   virtual int rmdir();
   virtual std::string tail(const TailOfFileOptions& options);
-virtual std::list<std::string> ls(const LsDirOptions& options) const; 
+  virtual std::list<std::string> ls(const LsDirOptions& options) const; 
   void printTransferID(const bool printTrID);
+
+  int cp(const std::string& dest, const CpFileOptions& options);
 };
 
 #endif
