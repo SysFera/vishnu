@@ -12,7 +12,7 @@
 using namespace std;
 using namespace vishnu;
 
-char FMSSeD[] = "tmssed";
+char FMSSeD[] = "fmssed";
 char ConfigFMSSeD[] = FMSSEDCONF;
 char BinDirFMSSeD[] = FMSSEDBINDIR;
 
