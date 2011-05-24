@@ -19,6 +19,8 @@
 #include "LocalFileProxy.hpp"
 #include "RemoteFileProxy.hpp"
 #include "FileProxy.hpp"
+#include "utilClient.hpp"
+#include "FMSVishnuException.hpp"
 
 using namespace std;
 using namespace FMS_Data;
@@ -388,53 +390,60 @@ list<string> LocalFileProxy::ls(const LsDirOptions& options) const {
 /* The function proceed to the file copy by itself if the
  * destination is a local path. Otherwise it calls the DIET service.
  */
-/*int LocalFileProxy::cp(const string& dest, const CpFileOptions& options) {
-  string path = File::extName(src);
-  string path = File::extName(dest);
-  LocalFile* localResult;
-  RemoteFile* remoteResult;
- cout << "destination path:"<< dest<<endl;
- cout <<"host is "<< host <<endl;
- cout << "and the path is"<< path<<endl;  
+int LocalFileProxy::cp(const string& dest, const CpFileOptions& options) {
   
- if (host=="localhost") {
- throw FMSVishnuException(ERRCODE_INVALID_PATH, "The local to local transfer is not available");
- } 
+  string host = FileProxy::extHost(dest);
+  string path = FileProxy::extName(dest);
+  
+  uid_t uid = getuid();
+  struct passwd*  pw = getpwuid(uid);
+  char* localUser = pw->pw_name;
+
+  char *optionsToString = NULL; 
+
+  if (host=="localhost") {
+    throw FMSVishnuException(ERRCODE_INVALID_PATH, "The local to local transfer is not available");
+  } 
+
   diet_profile_t* profile;
   char* errMsg;
-  mode_t mode = getPerms();
-  file_type_t type = getType();
-  transferID = strdup(gen_uuid().c_str());
 
-  
-  
-  profile = diet_profile_alloc(CP_GETFILE_SRV(host), 7, 7, 8);
-  
-  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(path.c_str()),
-                  DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getOwner().c_str()),
-                  DIET_VOLATILE);
-  diet_paramstring_set(diet_parameter(profile, 2), const_cast<char*>(getHost().c_str()),
-                       DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 3), const_cast<char*>(getGroup().c_str()), DIET_VOLATILE);
-  diet_scalar_set(diet_parameter(profile, 4), &mode, DIET_VOLATILE, DIET_LONGINT);
-  diet_scalar_set(diet_parameter(profile, 5), &type, DIET_VOLATILE, DIET_INT);
-  diet_string_set(diet_parameter(profile, 6), dataID, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 7), transferID, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 8), NULL, DIET_VOLATILE);
+  std::string serviceName("FileCopy");
 
-  if (diet_call(profile))
-    throw runtime_error("Error calling DIET service");
-  diet_string_get(diet_parameter(profile, 8), &errMsg, NULL);
-  
-  
-  if (strlen(errMsg)!=0) {
-    string err = errMsg;
-    throw runtime_error(err);
+  std::string sessionKey=this->getSession().getSessionKey();
+
+
+  profile = diet_profile_alloc("FileCopy", 6, 6, 7);
+
+  //IN Parameters  
+  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
+        DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getPath().c_str()),
+      DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 2), localUser, DIET_VOLATILE);
+  diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
+      DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 4), const_cast<char*>(path.c_str()),
+      DIET_VOLATILE);
+
+  diet_string_set(diet_parameter(profile, 5), const_cast<char*>(dest.c_str()), DIET_VOLATILE); 
+
+  const char* name = "cp";
+  ::ecorecpp::serializer::serializer _ser(name);
+  //To serialize the options object in to optionsInString
+  optionsToString =  strdup(_ser.serialize(const_cast<FMS_Data::CpFileOptions_ptr>(&options)).c_str());
+
+  diet_string_set(diet_parameter(profile, 6), optionsToString, DIET_VOLATILE);
+
+  diet_string_set(diet_parameter(profile, 7), NULL, DIET_VOLATILE);
+
+  if (diet_call(profile)) {
+    raiseDietMsgException("Error calling DIET service");
   }
+
+  diet_string_get(diet_parameter(profile, 7), &errMsg, NULL);
   
- // remoteResult = new RemoteFile(dest, getOwner());
- // return remoteResult;
+  // remoteResult = new RemoteFile(dest, getOwner());
+  // return remoteResult;
   return 0;
 }
-}*/
