@@ -87,8 +87,13 @@ solveExport(diet_profile_t* pb){
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 int
+=======
+// TODO FAIRE CE SERVICE COMME NOMME
+int 
+>>>>>>> e5171d9... Fix conflict
 =======
 // TODO FAIRE CE SERVICE COMME NOMME
 int 
