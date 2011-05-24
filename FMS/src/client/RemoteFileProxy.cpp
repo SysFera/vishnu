@@ -817,3 +817,7 @@ list<string> RemoteFileProxy::ls(const LsDirOptions& options) const {
 void RemoteFileProxy::printTransferID(const bool printTrID) {
   this->printTrID=printTrID;
 }
+
+int RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options){
+return 0;
+}
