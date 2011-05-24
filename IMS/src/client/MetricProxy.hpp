@@ -1,6 +1,6 @@
 /**
  * \file MetricProxy.hpp
- * \brief This file defines the metrics proxy
+ * \brief This file defines the metrics interaction with the database
  * \author Kevin Coulomb (kevin.coulomb@sysfera.com)
  * \date 19/04/11
  */
