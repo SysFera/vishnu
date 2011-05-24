@@ -199,26 +199,6 @@ protected:
   decodeCancel(vector<int> separator, const string& msg);
 
   /**
-   * \brief To decode the get refresh period call sequence of the string returned by finalize
-   * \fn string decodeGetPeriod(vector<int> separator, const string& msg)
-   * \param separator A vector containing the position of the separator in the message msg
-   * \param msg The message to decode
-   * \return The cli like close command
-   */
-  virtual string
-  decodeGetPeriod(vector<int> separator, const string& msg);
-
-  /**
-   * \brief To decode the set refresh period call sequence of the string returned by finalize
-   * \fn string decodeSetPeriod(vector<int> separator, const string& msg)
-   * \param separator A vector containing the position of the separator in the message msg
-   * \param msg The message to decode
-   * \return The cli like close command
-   */
-  virtual string
-  decodeSetPeriod(vector<int> separator, const string& msg);
-
-  /**
    * \brief To decode the get job info call sequence of the string returned by finalize
    * \fn string decodeJobInfo(vector<int> separator, const string& msg)
    * \param separator A vector containing the position of the separator in the message msg
