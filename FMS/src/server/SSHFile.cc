@@ -320,8 +320,9 @@ list<string> SSHFile::ls(const LsDirOptions& options) const {
   std::cout <<"coucou dans SSH::ls\n"; 
   string lsCmd("ls ");
 
-  if (!exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
-
+  if (!exists()) {
+    throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
+  }
   std::cout <<"-l: " <<  boolalpha <<options.isLongFormat()<< "\n";
   std::cout << "-a: " << boolalpha <<options.isAllFiles() << "\n";
 
@@ -349,6 +350,29 @@ list<string> SSHFile::ls(const LsDirOptions& options) const {
   }
   return result;
 }
+
+
+   /* Copy the file through scp. */
+ int SSHFile::cp(const string& dest, const CpFileOptions& options){
+
+     string host = File::extHost(dest);
+     string path = File::extName(dest);
+
+     if (!exists()) {
+       throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
+     }
+     
+     SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
+         sshPublicKey, sshPrivateKey);
+     pair<string,string> cpResult;
+
+     cpResult = ssh.exec(CPCMD+getPath()+" "+path);
+     if (cpResult.second.length()!=0) {
+       throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error copying file: "+cpResult.second);
+     }
+
+     return 0;
+   }
 
 // Defintion of SSHExec Class
 
@@ -517,25 +541,25 @@ void SSHExec::copyTo(const string& file, const string& dest) const {
   ostringstream command;
   pid_t pid;
   int status;
-  
+
   command << scpCommand << " -i " << privateKey << " -o User=" << userName;
   command << " -P " << sshPort << " -p " << file << " " << server;
   command << ":" << dest;
-  
+
   istringstream is(command.str());
-  
+
   copy(istream_iterator<string>(is),
-       istream_iterator<string>(),
-       back_inserter<vector<string> >(tokens));
-  
+      istream_iterator<string>(),
+      back_inserter<vector<string> >(tokens));
+
   char* argv[tokens.size()+1];
   argv[tokens.size()]=NULL;
-  
+
   for (unsigned int i=0; i<tokens.size(); ++i)
     argv[i]=strdup(tokens[i].c_str());
-  
+
   pid = fork();
-  
+
   if (pid==-1) {
     for (unsigned int i=0; i<tokens.size(); ++i)
       free(argv[i]);
@@ -551,7 +575,7 @@ void SSHExec::copyTo(const string& file, const string& dest) const {
       free(argv[i]);
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error executing command "+command.str());
   }
-  
+
   for (unsigned int i=0; i<tokens.size(); ++i)
     free(argv[i]);
   lastExecStatus = status;

@@ -23,7 +23,7 @@
 #define RMCMD    "rm -f "
 #define RMDIRCMD "rmdir "
 #define TAILCMD  "tail -"
-#define CPCMD    "install -m 666 "
+#define CPCMD    "scp "
 #define MVCMD    "mv "
 #define LSCMD    "ls  "
 #define LSACMD  "ls -a "
@@ -58,12 +58,12 @@ public:
           const std::string& scpCommand="/usr/bin/scp");
   SSHFile(const SSHFile& file);
   virtual ~SSHFile();
-  
+
   SSHFile& operator=(const SSHFile& file);
-  
+
   virtual bool isUpToDate() const;
   virtual void getInfos() const;
-  
+
   virtual int chgrp(const std::string& group);
   virtual int chmod(const mode_t mode);
   virtual std::string head(const HeadOfFileOptions& options);
@@ -74,8 +74,8 @@ public:
   virtual int rmdir();
   virtual std::string tail(const TailOfFileOptions& options);
   virtual std::list<std::string> ls(const LsDirOptions& options) const;
+  virtual int cp(const std::string& path, const CpFileOptions& options);
 };
-
 /* A class to call command through SSH. */
 class SSHExec {
 private:
