@@ -86,8 +86,13 @@ solveExport(diet_profile_t* pb){
   return 0;
 }
 
+<<<<<<< HEAD
 
 int
+=======
+// TODO FAIRE CE SERVICE COMME NOMME
+int 
+>>>>>>> e5171d9... Fix conflict
 solveCurMetric(diet_profile_t* pb){
   char *sessionKey   = NULL;
   char *curOpSer = NULL;
@@ -401,8 +406,60 @@ solveGetThreshold(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), strdup(""), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+  }
+  return 0;
+}
+
+int 
+solveGetUpFreq(diet_profile_t* pb){
+  char *sessionKey   = NULL;
+  string error;
+  string retErr = "";
+  int mapperkey;
+  string cmd;
+  char *freqSer   = NULL;
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
+
+  SessionServer sessionServer = SessionServer(string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+
+  try {
+    userServer.init();
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_get_update_frequency");
+    cmd = mapper->finalize(mapperkey);
+
+    // Creating the process server with the options
+    MetricServer met(userServer);
+
+    // Listing the old metric
+    int res;
+    res = met.checkUpFreq();
+
+    freqSer = new char[convertToString(res).size()+1];
+    memcpy(freqSer, convertToString(res).c_str(), convertToString(res).size());
+
+    // Setting out diet param
+    diet_string_set(diet_parameter(pb,1), freqSer, DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+
+    // Finishing the command as a success
+    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+  } catch (VishnuException& e){
+    try{
+      // Finishing the command as an error
+      sessionServer.finish(cmd, IMS, CMDFAILED);
+    }catch(VishnuException& fe){
+      error = fe.what();
+    }
+    e.appendMsgComp(error);
+    retErr = e.buildExceptionString();
+    // Setting diet output parameters
+    diet_string_set(diet_parameter(pb,1), strdup(""), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
   }
   return 0;
 }
