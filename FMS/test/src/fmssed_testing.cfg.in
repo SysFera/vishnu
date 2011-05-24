@@ -1,0 +1,8 @@
+# Configuration of the VISHNU FMS SeD
+dietConfigFile=@DIETSEDCONF@
+vishnuId=1
+databaseType=@TEST_DB_TYPE@
+databaseHost=@TEST_DB_HOST@
+databaseName=@TEST_DB_NAME@
+databaseUserName=@TEST_DB_LOGIN@
+databaseUserPassword=@TEST_DB_PASSWORD@
