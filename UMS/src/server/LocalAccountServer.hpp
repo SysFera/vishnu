@@ -74,15 +74,6 @@ public:
   std::string
   getAttribut(std::string condition, std::string attrname = "numaccountid");
   /**
-  * \brief Function to check localAccount on database
-  * \fn bool exist(std::string idmachine, std::string iduser)
-  * \param idmachine The id of the machine
-  * \param iduser The id of the user
-  * \return true if the localAccount exists else false
-  */
-  bool
-  exist(std::string idmachine, std::string iduser);
-  /**
   * \brief Function to get the content of the public ssh generated
   * \fn std::string getPublicKey()
   * \return The content of the ssh public key generated
@@ -120,5 +111,22 @@ private:
   */
   std::string
   generateKey();
+  /**
+  * \brief Function to check localAccount on database
+  * \fn bool exist(std::string idmachine, std::string iduser)
+  * \param idmachine The id of the machine
+  * \param iduser The id of the user
+  * \return true if the localAccount exists else false
+  */
+  bool
+  exist(std::string idmachine, std::string iduser);
+  /**
+  * \brief Function to check if a given login is used on a machine
+  * \param numMachine the internal id of the machine
+  * \param acLogin the account login
+  * \return true if the login is already used on the machine
+  */
+  bool
+  isLoginUsed(std::string numMachine, std::string acLogin);
 };
 #endif
