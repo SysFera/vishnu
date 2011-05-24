@@ -38,7 +38,12 @@ add_library(ims-server STATIC
   data/ProcessServer.cpp
   data/MetricServer.cpp
   data/ExportServer.cpp
-  data/ShellExporter.cpp
+  data/ExportFactory.cpp
+  data/export/shell/ShellExporter.cpp
+  data/export/shell/UMSShellMapper.cpp
+  data/export/shell/TMSShellMapper.cpp
+#  data/export/shell/FMSShellMapper.cpp
+  data/export/shell/IMSShellMapper.cpp
   data/ObjectIdServer.cpp
   data/SysInfoServer.cpp
   data/ThresholdServer.cpp

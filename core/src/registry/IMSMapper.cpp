@@ -15,20 +15,23 @@ IMSMapper::IMSMapper(){
 
 IMSMapper::IMSMapper(MapperRegistry* reg, string na):Mapper(reg){
   mname = na;
-  mmap.insert (pair<int, string>(1, "exportCommands"));
-  mmap.insert (pair<int, string>(2, "getMetricCurrentValue"));
-  mmap.insert (pair<int, string>(3, "getMetricHistory"));
-  mmap.insert (pair<int, string>(4, "getProcesses"));
-  mmap.insert (pair<int, string>(5, "setSystemInfo"));
-  mmap.insert (pair<int, string>(6, "setSystemThreshold"));
-  mmap.insert (pair<int, string>(7, "getSystemThreshold"));
-  mmap.insert (pair<int, string>(8, "defineUserIdentifier"));
-  mmap.insert (pair<int, string>(9, "defineMachineIdentifier"));
-  mmap.insert (pair<int, string>(10, "defineJobIdentifier"));
-  mmap.insert (pair<int, string>(11, "defineTransferIdentifier"));
-  mmap.insert (pair<int, string>(12, "loadShed"));
-  mmap.insert (pair<int, string>(13, "setUpdateFrequency"));
-  mmap.insert (pair<int, string>(14, "getUpdateFrequency"));
+  mmap.insert (pair<int, string>(VISHNU_EXPORT, "exportCommands"));
+  mmap.insert (pair<int, string>(VISHNU_GET_CUR, "getMetricCurrentValue"));
+  mmap.insert (pair<int, string>(VISHNU_GET_HIST, "getMetricHistory"));
+  mmap.insert (pair<int, string>(VISHNU_GET_PROC, "getProcesses"));
+  mmap.insert (pair<int, string>(VISHNU_SET_SYSINF, "setSystemInfo"));
+  mmap.insert (pair<int, string>(VISHNU_SET_THRESH, "setSystemThreshold"));
+  mmap.insert (pair<int, string>(VISHNU_GET_THRESH, "getSystemThreshold"));
+  mmap.insert (pair<int, string>(VISHNU_DEFINE_UID, "defineUserIdentifier"));
+  mmap.insert (pair<int, string>(VISHNU_DEFINE_MID, "defineMachineIdentifier"));
+  mmap.insert (pair<int, string>(VISHNU_DEFINE_TID, "defineJobIdentifier"));
+  mmap.insert (pair<int, string>(VISHNU_DEFINE_FID, "defineTransferIdentifier"));
+  mmap.insert (pair<int, string>(VISHNU_LOADSHED, "loadShed"));
+  mmap.insert (pair<int, string>(VISHNU_SET_FREQ, "setUpdateFrequency"));
+  mmap.insert (pair<int, string>(VISHNU_GET_FREQ, "getUpdateFrequency"));
+  mmap.insert (pair<int, string>(VISHNU_STOP, "stop"));
+  mmap.insert (pair<int, string>(VISHNU_RESTART, "restart"));
+  mmap.insert (pair<int, string>(VISHNU_GET_SYSINF, "getSystemInfo"));
 };
 
 int
@@ -102,4 +105,150 @@ IMSMapper::code(const string& cmd, unsigned int code){
   mcmd.insert(pair<int, string>(size, key));
   pthread_mutex_unlock(&mutex);
   return size;
+}
+
+string
+IMSMapper::decode (const string& msg){
+  vector<int> separatorPos;
+  string      func;
+  int         funcCode;
+  string res;
+
+  // Getting separator position
+  findSeparator(msg, separatorPos);
+
+  // Getting function code
+  if(separatorPos.size()>0){
+    func = msg.substr(0, separatorPos.at(0));
+  }else{
+    func = msg;
+  }
+
+  // Convert code to int
+  funcCode = convertToInt(func);
+
+  switch(funcCode){
+  case VISHNU_EXPORT           	    :
+    res = decodeExp(separatorPos, msg);
+    break;
+  case VISHNU_GET_CUR 	  	:
+    res = decodeCur(separatorPos, msg);
+    break;
+  case VISHNU_GET_HIST	          	:
+    res = decodeHist(separatorPos, msg);
+    break;
+  case VISHNU_GET_PROC :
+    res = decodeProc(separatorPos, msg);
+    break;
+  case VISHNU_SET_SYSINF	:
+    res = decodeSetSys(separatorPos, msg);
+    break;
+  case VISHNU_SET_THRESH	:
+    res = decodeSetThre(separatorPos, msg);
+    break;
+  case VISHNU_GET_THRESH   	:
+    res = decodeGetThre(separatorPos, msg);
+    break;
+  case VISHNU_DEFINE_FID    	:
+    res = decodeFid(separatorPos, msg);
+    break;
+  case VISHNU_DEFINE_TID 	:
+    res = decodeTid(separatorPos, msg);
+    break;
+  case VISHNU_DEFINE_MID 	:
+    res = decodeMid(separatorPos, msg);
+    break;
+  case VISHNU_DEFINE_UID 	:
+    res = decodeUid(separatorPos, msg);
+    break;
+  case VISHNU_LOADSHED 	:
+    res = decodeLoad(separatorPos, msg);
+    break;
+  case VISHNU_GET_FREQ 	:
+    res = decodeGetF(separatorPos, msg);
+    break;
+  case VISHNU_SET_FREQ 	:
+    res = decodeSetF(separatorPos, msg);
+    break;
+  case VISHNU_STOP 	:
+    res = decodeStop(separatorPos, msg);
+    break;
+  case VISHNU_RESTART 	:
+    res = decodeRestart(separatorPos, msg);
+    break;
+  case VISHNU_GET_SYSINF 	:
+    res = decodeGetSys(separatorPos, msg);
+    break;
+  }
+  return res;
+}
+
+
+string
+IMSMapper::decodeExp(vector<int> separator, const string& msg) {
+  return "";
+}
+string
+IMSMapper::decodeCur(vector<int> separator, const string& msg) {
+  return "";
+}
+string
+IMSMapper::decodeHist(vector<int> separator, const string& msg) {
+  return "";
+}
+string
+IMSMapper::decodeProc(vector<int> separator, const string& msg) {
+  return "";
+}
+string
+IMSMapper::decodeSetSys(vector<int> separator, const string& msg) {
+  return "";
+}
+string
+IMSMapper::decodeGetThre(vector<int> separator, const string& msg) {
+  return "";
+}
+string
+IMSMapper::decodeSetThre(vector<int> separator, const string& msg) {
+  return "";
+}
+string
+IMSMapper::decodeFid(vector<int> separator, const string& msg) {
+  return "";
+}
+string
+IMSMapper::decodeMid(vector<int> separator, const string& msg) {
+  return "";
+}
+string
+IMSMapper::decodeUid(vector<int> separator, const string& msg) {
+  return "";
+}
+string
+IMSMapper::decodeTid(vector<int> separator, const string& msg) {
+  return "";
+}
+string
+IMSMapper::decodeLoad(vector<int> separator, const string& msg) {
+  return "";
+}
+string
+IMSMapper::decodeGetF(vector<int> separator, const string& msg) {
+  return "";
+}
+string
+IMSMapper::decodeSetF(vector<int> separator, const string& msg) {
+  return "";
+}
+string
+IMSMapper::decodeStop(vector<int> separator, const string& msg) {
+  return "";
+}
+string
+IMSMapper::decodeRestart(vector<int> separator, const string& msg) {
+  return "";
+}
+string
+IMSMapper::decodeGetSys(vector<int> separator, const string& msg) {
+  return "";
 }
