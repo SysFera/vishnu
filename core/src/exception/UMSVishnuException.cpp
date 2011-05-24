@@ -45,4 +45,5 @@ UMSVishnuException::initMsg(){
   mp.insert(std::pair<int, std::string>(ERRCODE_INCORRECT_TIMEOUT, std::string("The value of the timeout is incorrect")));
 
   mp.insert(std::pair<int, std::string>(ERRCODE_ROOT_USER_ONLY, std::string("It can be done by the root user only")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_LOGIN_ALREADY_USED, std::string("The account login is already used by another VISHNU user")));
 }
