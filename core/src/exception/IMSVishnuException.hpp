@@ -11,6 +11,7 @@
 // Definitions of IMS specific error codes
 static const int ERRCODE_INVPROCESS = 301;
 static const int ERRCODE_INVVISHNU = 302;
+static const int ERRCODE_INVEXPORT = 303;
 
 /**
  * \brief This class allows to treat an error specific to IMS Module
