@@ -5,9 +5,10 @@
  */
 
 #include "diet_fixtures.hpp"
-#include "UMSAndLogService_fixtures.hpp"
+#include "TMS_FOR_IMS_fixtures.hpp"
 #include "IMS_testconfig.h"
 #include <boost/test/unit_test.hpp>
+#include "api_tms.hpp"
 #include "api_ums.hpp"
 #include "api_ims.hpp"
 using namespace std;
@@ -17,7 +18,7 @@ char IMSSeD[] = "imssed";
 char ConfigIMSSeD[] = IMSSEDCONF;
 char BinDirIMSSeD[] = IMSSEDBINDIR;
 
-class IMSFixture : public UMSAndLogServicefixture {
+class IMSFixture : public TMSSeDForIMSFixture {
 
 public:
   IMSFixture():mac(2){
@@ -46,7 +47,6 @@ public:
       return;
     }
     BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing database ==" );
-
   }
 
   ~IMSFixture() {

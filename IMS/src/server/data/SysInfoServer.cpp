@@ -52,6 +52,9 @@ SysInfoServer::getSysInfo() {
 void
 SysInfoServer::setSysInfo(IMS_Data::SystemInfo_ptr sys) {
   bool added = false;
+  if (!msession.isAdmin()){
+    throw UMSVishnuException(ERRCODE_NO_ADMIN, "set system info is an admin function. A user cannot call it");
+  }
   // No update needed
   if (sys->getMemory()==0 && sys->getDiskSpace()==0) {
     return;
@@ -60,6 +63,9 @@ SysInfoServer::setSysInfo(IMS_Data::SystemInfo_ptr sys) {
     throw UserException(ERRCODE_INVALID_PARAM, "Error missing the machine id. ");
   }
   string request = "update \"machine\" * set ";
+  if (sys->getDiskSpace() < 0 || sys->getMemory() < 0) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid negative value");
+  }
   if (sys->getDiskSpace()>0) {
     request += " \"diskspace\"="+convertToString(sys->getDiskSpace());
     added = true;

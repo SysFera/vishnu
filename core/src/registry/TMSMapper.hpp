@@ -128,7 +128,6 @@ public :
   decode (const string& msg);
 
 protected:
-private:
   /**
    * \brief To decode the submit call sequence of the string returned by finalize
    * \fn string decodeSubmit(vector<int> separator, const string& msg)
@@ -136,7 +135,7 @@ private:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
+  virtual string
   decodeSubmit(vector<int> separator, const string& msg);
   
   /**
@@ -146,7 +145,7 @@ private:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
+  virtual string
   decodeProg(vector<int> separator, const string& msg);
 
   /**
@@ -156,7 +155,7 @@ private:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
+  virtual string
   decodeQueue(vector<int> separator, const string& msg);
 
   /**
@@ -166,7 +165,7 @@ private:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
+  virtual string
   decodeListJob(vector<int> separator, const string& msg);
 
   /**
@@ -176,7 +175,7 @@ private:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
+  virtual string
   decodeOutput(vector<int> separator, const string& msg);
 
   /**
@@ -186,7 +185,7 @@ private:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
+  virtual string
   decodeCompletedJob(vector<int> separator, const string& msg);
 
   /**
@@ -196,28 +195,8 @@ private:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
+  virtual string
   decodeCancel(vector<int> separator, const string& msg);
-
-  /**
-   * \brief To decode the get refresh period call sequence of the string returned by finalize
-   * \fn string decodeGetPeriod(vector<int> separator, const string& msg)
-   * \param separator A vector containing the position of the separator in the message msg
-   * \param msg The message to decode
-   * \return The cli like close command
-   */
-  string
-  decodeGetPeriod(vector<int> separator, const string& msg);
-
-  /**
-   * \brief To decode the set refresh period call sequence of the string returned by finalize
-   * \fn string decodeSetPeriod(vector<int> separator, const string& msg)
-   * \param separator A vector containing the position of the separator in the message msg
-   * \param msg The message to decode
-   * \return The cli like close command
-   */
-  string
-  decodeSetPeriod(vector<int> separator, const string& msg);
 
   /**
    * \brief To decode the get job info call sequence of the string returned by finalize
@@ -226,9 +205,9 @@ private:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
+  virtual string
   decodeJobInfo(vector<int> separator, const string& msg);
-
+private:
 };
 
 
