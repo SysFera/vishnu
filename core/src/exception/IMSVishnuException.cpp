@@ -20,4 +20,6 @@ IMSVishnuException::IMSVishnuException():UserException(){
 void
 IMSVishnuException::initMsg(){
   mp.insert(pair<int, string>(ERRCODE_INVPROCESS, string("The process is not recognized as a vishnu process")));
+  mp.insert(pair<int, string>(ERRCODE_INVVISHNU, string("The vishnu identificator is invalid")));
+  mp.insert(pair<int, string>(ERRCODE_INVEXPORT, string("The export cannot be done")));
 }
