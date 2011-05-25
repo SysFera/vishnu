@@ -227,7 +227,6 @@ ServerFMS::init(int vishnuId,
   if ( diet_service_table_add(mprofile, NULL, solveCopyFile)){
 
     return 1;
-
   }
 
   diet_profile_desc_free(mprofile);
@@ -239,14 +238,9 @@ ServerFMS::init(int vishnuId,
   if ( diet_service_table_add(mprofile, NULL, solveCopyRemoteFile)){
 
     return 1;
-
   }
 
   diet_profile_desc_free(mprofile);
-
-
-
-
 
 
   return 0;

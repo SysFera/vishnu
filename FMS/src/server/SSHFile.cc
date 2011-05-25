@@ -407,6 +407,7 @@ pair<string, string> SSHExec::exec(const string& cmd) const {
 
   command << sshCommand  << " -l " << userName;
   command << " -C"  << " -o BatchMode=yes " << " -o StrictHostKeyChecking=yes";
+  command << " -o ForwardAgent=yes";
   command  << " -o ControlMaster=yes " << " -o ControlPath=/tmp/ssh-%r@%h:%p";
   command << " -p " << sshPort << " " << server << " " << cmd;
 
