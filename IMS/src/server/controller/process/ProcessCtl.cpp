@@ -73,6 +73,9 @@ void
 ProcessCtl::stop(IMS_Data::Process_ptr p) {
   int res;
   string name;
+  if (!muser.isAdmin()){
+    throw UMSVishnuException(ERRCODE_NO_ADMIN, "stop is an admin function. A user cannot call it");
+  }
   // If deleting a specific process
   if (p->getProcessName().compare("")!=0) {
     name = p->getProcessName();

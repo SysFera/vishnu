@@ -64,10 +64,10 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       if (restore(sqlPath + "/IMSTestGetMetric.sql") != 0) {
         BOOST_TEST_MESSAGE("Database update failed for restore(sqlPath + /IMSTestGetMetric.sql)");
       }
-      sleep (5);
+      //sleep (5);
       //Wait for metric recording in database
       //10 represents the update frequency
-      sleep (nbResMetric*10);
+      sleep ((nbResMetric*10)+5);
 
       BOOST_CHECK_EQUAL(getMetricHistory(sessionKey, machineId, list, op),0  );
       BOOST_REQUIRE(list.getMetric().size() == nbResMetric);
@@ -965,12 +965,11 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   //correcte des tests en arrete le processus à l'aide de stop
   //Test category 2
   //IA9-B:  Stop normal call
-  //Restart: normal call
+  //Stop: normal call
   BOOST_AUTO_TEST_CASE( stop_normal_call ) {
 
     BOOST_TEST_MESSAGE("Use case IA9-B: Stop normal call");
     bool umssedFound = false;
-    string dietSeDConfigPath = CONFIG_DIR + string("/SeD_testing.cfg");
 
     VishnuConnexion vc("root","vishnu_user");
     // get the session key and the machine identifier
@@ -1025,6 +1024,87 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       BOOST_CHECK(false);
     }
   }
+  //IA9-E1:  Stop with bad machineId
+  //Stop: with bad machine Id
+  BOOST_AUTO_TEST_CASE(stop_bad_machine_Id_call) {
+
+    BOOST_TEST_MESSAGE("Use case IA9-E1: Stop with bad machine Id call");
+    VishnuConnexion vc("root","vishnu_user");
+    // get the session key and the machine identifier
+    string sessionKey=vc.getConnexion();
+    string machineId="unknown_name";
+
+    //The process to stop
+    IMS_Data::Process process;
+    process.setMachineId(machineId);
+    process.setProcessName("UMS");
+
+    BOOST_CHECK_THROW(stop(sessionKey, process), VishnuException);
+  }
+
+  //IA9-E1:  Stop for no admin user
+  //Stop: for no admin user
+  BOOST_AUTO_TEST_CASE(stop_no_admin_user_call) {
+    BOOST_TEST_MESSAGE("Use case IA9-E1: Stop for no admin user call");
+    //no admin user
+    VishnuConnexion vc("user_1","toto");
+    // get the session key and the machine identifier
+    string sessionKey=vc.getConnexion();
+    string machineId="machine_1";
+
+    //The process to stop
+    IMS_Data::Process process;
+    process.setMachineId(machineId);
+    process.setProcessName("UMS");
+
+    BOOST_CHECK_THROW(stop(sessionKey, process), VishnuException);
+  }
+
+  //Test category 1
+  //I3-B: export and replay commands
+  /*BOOST_AUTO_TEST_CASE( export_command_normal_call) {
+
+    string sqlPath = IMSSQLPATH;
+
+    BOOST_TEST_MESSAGE("Use case I3 – B: Export and replay commands");
+    VishnuConnexion vc("root","vishnu_user");
+    // get the session key and the machine identifier
+    string sessionKey=vc.getConnexion();
+    string machineId="machine_1";
+    // CREATE DATA MODEL
+    UMS_DataFactory_ptr ecoreFactory = UMS_DataFactory::_instance();
+    // Command history
+    ListCommands_ptr listCmd  = ecoreFactory->createListCommands();
+    ListCmdOptions listCmdOpt ;
+    // List Sessions
+    ListSessions_ptr listSessions   = ecoreFactory->createListSessions();
+    ListSessionOptions listSessionsOpt;
+
+    try {
+      //Options to get inactive sessions
+      listSessionsOpt.setStatus(0);
+      //To get the list of inactive sessions
+      BOOST_CHECK_EQUAL(listSessions(sessionKey, *listSessions, listSessionsOpt), 0);
+      BOOST_REQUIRE(listSessions->getSessions().size() != 0);
+      //To get the sessionId of the first element of the list
+      listCmdOpt.setSessionId(listSessions->getSessions().get(0)->getSessionId());
+      BOOST_CHECK_EQUAL(listHistoryCmd(sessionKey, *listCmd, listCmdOpt), 0);
+      //At least one command registered
+      BOOST_REQUIRE(listCmd->getCommands().size() > 1);
+
+
+
+      delete listSessions;
+      delete listCmd;
+    }
+    catch (VishnuException& e) {
+      BOOST_MESSAGE("FAILED\n");
+      BOOST_MESSAGE(e.what());
+      BOOST_CHECK(false);
+      delete listSessions;
+      delete listCmd;
+    }
+  }*/
 
   //To clean the table process
   BOOST_AUTO_TEST_CASE( clean_table_process_call) {
