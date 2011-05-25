@@ -124,7 +124,7 @@ namespace vishnu {
   * \return raises an exception on error
   */
   int
-  moveFile(std::string src, std::string dest,  const std::string& filename="");
+  boostMoveFile(const std::string& src, const std::string& dest,  const std::string& filename="");
 
   /**
    * \brief Function to check a numerical value
