@@ -9,54 +9,43 @@ using namespace std;
 using namespace UMS_Data;
 using namespace vishnu;
 
-void stress(int cpt,const string& sessionKey, const string& machineId ){
-
-  const std::string scriptFilePath=IMSSCRIPTSPATH "/torque_script";
+void stress(int cpt,const string& sessionKey, const string& machineId, int type){
 
   string dietClientConfigPath = CONFIG_DIR + string("/client_testing.cfg");
-
-  Job jobInfo;
-
-  SubmitOptions subOptions;
+  IMS_Data::CurMetricOp op;
+  IMS_Data::MetricHistOp histOp;
+  IMS_Data::ListMetric list;
 
   vishnuInitialize((char*) dietClientConfigPath.c_str(), 0, NULL);
-
-  for (int i=0;i<5;i++){
-
-    cout << " In loop : " <<  i << endl;
-
-    ListQueues listofQueues;
-
-    listQueues(sessionKey, machineId, listofQueues);
-
+  if (type == 1) {
+    for (int i=0;i<5;i++) {
+      cout << " In loop : " <<  i << endl;
+      getMetricCurrentValue(sessionKey, machineId, list, op);
+    }
+  }
+  else {
+    for (int i=0;i<5;i++) {
+      cout << " In loop : " <<  i << endl;
+      getMetricHistory(sessionKey, machineId, list, histOp);
+    }
   }
   vishnuFinalize();
 }
 
 
-void forker(int cpt,const string& sessionKey, const string& machineId  ){
-
-
- // string dietClientConfigPath = CONFIG_DIR + string("/client_testing.cfg");
-
+void forker(int cpt,const string& sessionKey, const string& machineId, int type){
   cpt--;
 
   switch(fork()){
     case 0 :
-
-      //vishnuInitialize((char*) dietClientConfigPath.c_str(), 0, NULL);
-
-      stress( cpt,sessionKey,machineId) ;
-
-     // vishnuFinalize();
-
+      stress( cpt,sessionKey,machineId, type) ;
       break;
     case -1 :
       cout << " Fork number " << cpt << " failed " << endl;
       break;
     default :
       if(cpt>0)
-        forker(cpt,sessionKey,machineId);
+        forker(cpt,sessionKey,machineId, type);
       break;
   }
   return;
@@ -66,44 +55,49 @@ void forker(int cpt,const string& sessionKey, const string& machineId  ){
 int main(int argc, char** argv){
   int cpt;
   int i;
-  string             	  key  = ""       ;
-  string 	     	  pwd  = "vishnu_user"  ;
-  string 	     	  uid  = "root";
-  ConnectOptions 	  cop  ;
-  Session                 sess ;
+  int type;
+  string key  = ""       ;
+  string pwd  = "vishnu_user"  ;
+  string uid  = "root";
+  ConnectOptions cop  ;
+  Session sess ;
 
   string dietClientConfigPath = CONFIG_DIR + string("/client_testing.cfg");
-
   cop.setClosePolicy(2);
 
   try{
-
     vishnuInitialize((char*) dietClientConfigPath.c_str(), 0, NULL);
     connect    (uid, pwd, sess, cop );
+    vishnuFinalize();
+
+    if (argc != 3) {
+      std::cerr << "Usage: ./ims_stress Nbtests Type "<< std::endl;
+      std::cerr << "[1 for getMetricCurrentValue and 2 for getMetricHistory]" << std::endl;
+      return 1;
+    }
+    cpt = atoi (argv[1]);
+    type = atoi (argv[2]);
+    //To check the cpt value
+    if (cpt < 1) {
+       std::cerr << "The value of the number of test is incorrect" << std::endl;
+       return 1;
+    }
+    //To check the type value
+    if ((type != 1) && (type != 2)) {
+       std::cerr << "The value of the type is incorrect" << std::endl;
+       return 1;
+    }
+    std::cout << "sess.getSessionKey()=" << sess.getSessionKey() << std::endl;
+    forker(cpt, sess.getSessionKey(),"machine_1", type);
   }
   catch(VishnuException& e){
-
     std::cout << e.what() << std::endl;
-
     return 1;
   }
-  vishnuFinalize();
-
-  if (argc>1){
-    cpt = atoi (argv[1]);
+  catch(std::exception& excp){
+    std::cout << excp.what() << std::endl;
+    return 1;
   }
-  else{
-    cpt = 5;
-  }
-
-  std::cout << "sess.getSessionKey()=" << sess.getSessionKey() << std::endl;
-  forker(cpt, sess.getSessionKey(),"machine_1");
-
-  vishnuInitialize((char*) dietClientConfigPath.c_str(), 0, NULL);
-
-  //close(sess.getSessionKey());
-
-  vishnuFinalize();
 
   return 0;
 }
