@@ -48,6 +48,7 @@ target_link_libraries(ims-client-proxy
   ${DIET_CLIENT_LIB}
   ${Boost_LIBRARIES}
   emf4cpp-IMS_Data
+  emf4cpp-TMS_Data
   exception-vishnu
   utils-vishnu
 #  ims-client-proxy
