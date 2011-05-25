@@ -36,9 +36,20 @@ static const string adminId = "admin_1";
 static const string adminPwd = "admin";
 static const string userId = "user_1";
 static const string userPwd = "toto";
-static const string machineId1 = "machine_1";
-static const string machineId2 = "machine_2";
-static const string newFilePath = "FMS_test_file";
+static const string sep = ":";
+static const string slash = "/";
+static const string machineId1 = "machine_1"; // name is TEST_FMS_HOST1 set in cmake
+static const string machineId2 = "machine_2"; // name is TEST_FMS_HOST2 set in cmake
+static const string newFileName = "FMS_test_file";
+// local
+static const string localDir = FMSWORKINGDIR;
+static const string localFilePath = localDir + slash + newFileName;
+// remote
+static const string remoteDir = "/tmp";
+static const string dirFullPath1 = machineId1 + sep + remoteDir;
+static const string dirFullPath2 = machineId2 + sep + remoteDir;
+static const string fileFullPath1 = dirFullPath1 + slash + newFileName;
+static const string fileFullPath2 = dirFullPath2 + slash + newFileName;
 
 // The database, UMS and FMS SeD are launched by FMSSedFixture.
 BOOST_GLOBAL_FIXTURE(FMSSeDFixture)
@@ -56,13 +67,11 @@ BOOST_AUTO_TEST_CASE(CreateFile_Base)
   string sessionKey=vc.getSessionKey();
 
   try {
-    string fullFilePath = machineId1;
-    fullFilePath.append(":" + newFilePath);
-    BOOST_REQUIRE( createFile(sessionKey, fullFilePath) == 0);
+    BOOST_REQUIRE( createFile(sessionKey, fileFullPath1) == 0);
 
     // To check the success of createFile function
     FileStat fileStat;
-    BOOST_REQUIRE( getFilesInfo(sessionKey, fullFilePath, fileStat) ==0  );
+    BOOST_REQUIRE( getFilesInfo(sessionKey, fileFullPath1, fileStat) ==0  );
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
@@ -79,13 +88,11 @@ BOOST_AUTO_TEST_CASE(DeleteFile_Base)
   string sessionKey=vc.getSessionKey();
 
   try {
-    string fullFilePath = machineId1;
-    fullFilePath.append(":" + newFilePath);
-    BOOST_REQUIRE( removeFile(sessionKey, fullFilePath) == 0);
+    BOOST_REQUIRE( removeFile(sessionKey, fileFullPath1) == 0);
 
     // To check the success of removeFile function
     FileStat fileStat;
-    BOOST_CHECK_THROW( getFilesInfo(sessionKey, fullFilePath, fileStat), VishnuException );
+    BOOST_CHECK_THROW( getFilesInfo(sessionKey, fileFullPath1, fileStat), VishnuException );
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
@@ -103,21 +110,20 @@ BOOST_AUTO_TEST_CASE(HeadOfFile_Base)
 
   try {
     // Create a file 1Mb
-    string localFilePath = FMSWORKINGDIR;
-    localFilePath.append("/");
-    localFilePath.append(newFilePath);
     createFile<1000>(localFilePath);
 
-    string fullFilePath = "localhost";
-    fullFilePath.append(":" + localFilePath);
+    // Copy file on remote host
+    BOOST_REQUIRE( copyFile(sessionKey, localFilePath, fileFullPath1) == 0);
+
     string content;
-    BOOST_REQUIRE( headOfFile(sessionKey, fullFilePath, content) == 0);
+    BOOST_REQUIRE( headOfFile(sessionKey, fileFullPath1, content) == 0);
 
     // To check the success of headOfFile function
     BOOST_CHECK( content.substr(0,8) == "abcdefgh" );
 
     // Cleanup
-    BOOST_CHECK( removeFile(sessionKey, fullFilePath) == 0);
+    BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
+    BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
@@ -135,22 +141,21 @@ BOOST_AUTO_TEST_CASE(TailOfFile_Base)
 
   try {
     // Create a file 1Mb
-    string localFilePath = FMSWORKINGDIR;
-    localFilePath.append("/");
-    localFilePath.append(newFilePath);
     createFile<1000>(localFilePath);
 
-    string fullFilePath = "localhost";
-    fullFilePath.append(":" + localFilePath);
+    // Copy file on remote host
+    BOOST_REQUIRE( copyFile(sessionKey, localFilePath, fileFullPath1) == 0);
+
     string content;
-    BOOST_REQUIRE( tailOfFile(sessionKey, fullFilePath, content) == 0);
+    BOOST_REQUIRE( tailOfFile(sessionKey, fileFullPath1, content) == 0);
 
     // To check the success of headOfFile function
     BOOST_MESSAGE("TAIL IS :" + content);
     BOOST_CHECK( content.substr(content.size()-8,8) == "abcdefgh" );
 
     // Cleanup
-    BOOST_CHECK( removeFile(sessionKey, fullFilePath) == 0);
+    BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
+    BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
@@ -168,21 +173,20 @@ BOOST_AUTO_TEST_CASE(ContentOfFile_Base)
 
   try {
     // Create a file 1Mb
-    string localFilePath = FMSWORKINGDIR;
-    localFilePath.append("/");
-    localFilePath.append(newFilePath);
     createFile<1000>(localFilePath);
 
-    string fullFilePath = "localhost";
-    fullFilePath.append(":" + localFilePath);
+    // Copy file on remote host
+    BOOST_REQUIRE( copyFile(sessionKey, localFilePath, fileFullPath1) == 0);
+
     string content;
-    BOOST_REQUIRE( contentOfFile(sessionKey, fullFilePath, content) == 0);
+    BOOST_REQUIRE( contentOfFile(sessionKey, fileFullPath1, content) == 0);
 
     // To check the success of contentOfFile function
     BOOST_CHECK( content.substr(8,8) == "abcdefgh" );
 
     // Cleanup
-    BOOST_CHECK( removeFile(sessionKey, fullFilePath) == 0);
+    BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
+    BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());

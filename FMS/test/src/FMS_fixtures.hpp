@@ -45,6 +45,10 @@ public:
     }
     BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing database ==" );
 
+    if (FMSHOST1 == "localhost" ||  FMSHOST2 == "localhost") {
+      BOOST_TEST_MESSAGE( "== WARNING: TEST_FMS_HOST1/2 should not be 'localhost' ==" );
+    }
+
   }
 
   ~FMSFixture() {
