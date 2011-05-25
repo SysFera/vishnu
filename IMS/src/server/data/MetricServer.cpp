@@ -4,6 +4,7 @@
 #include <vector>
 #include "DIET_data.h"
 #include "DIET_server.h"
+#include "boost/date_time/posix_time/posix_time.hpp"
 
 MetricServer::MetricServer(const UserServer session):msession(session) {
   DbFactory factory;
@@ -49,11 +50,58 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
   double cpu;
   double mem;
   double disk; 
+
+  // The thresholds
+  IMS_Data::Threshold cpu_thre;
+  IMS_Data::Threshold mem_thre;
+  IMS_Data::Threshold disk_thre;
+
+  UMS_Data::User cpu_user;
+  UMS_Data::User mem_user;
+  UMS_Data::User disk_user;
+
+  vector<string> results = vector<string>();
+  vector<string>::iterator iter;
+
+  // Getting the num machine id to insert
+  string reqThre = "SELECT * from threshold, users, machine where machine.machineid='"+mid+"' and threshold.machine_nummachineid=machine.nummachineid and users.numuserid=threshold.users_numuserid";
+  try {
+    boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqThre.c_str()));
+    for (size_t i = 0; i < result->getNbTuples(); i++){
+      results.clear();
+      results = result->get(i);
+      iter = results.begin();
+      switch (convertToInt(*(iter+3))) {
+      case 1://cpu
+	cpu_thre.setType(convertToInt(*(iter+3)));
+	cpu_thre.setValue(convertToInt(*(iter+4)));
+	cpu_user.setUserId(*(iter+7));
+	cpu_user.setEmail(*(iter+12));
+	break;
+      case 3://disk
+	disk_thre.setType(convertToInt(*(iter+3)));
+	disk_thre.setValue(convertToInt(*(iter+4)));
+	disk_user.setUserId(*(iter+7));
+	disk_user.setEmail(*(iter+12));
+	break;
+      case 5://memory
+	mem_thre.setType(convertToInt(*(iter+3)));
+	mem_thre.setValue(convertToInt(*(iter+4)));
+	mem_user.setUserId(*(iter+7));
+	mem_user.setEmail(*(iter+12));
+	break;
+      }	
+    }
+  } catch (SystemException &e) {
+    throw (e);
+  }
+  
+
   // Getting the num machine id to insert
   string reqnmid = "SELECT * from machine where \"machineid\"='"+mid+"'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
   if(result->getNbTuples() == 0) {
-    throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown process");
+    throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
   }
   // numerical index always in position 0 in tables
   nmid = result->get(0).at(0);
@@ -116,7 +164,7 @@ MetricServer::getCurMet(){
   double disk = 0.0;
   double cpu  = 0.0;
   double mem  = 0.0;
-  time_t time;
+  ptime p =  second_clock::local_time();
 
   diet_estimate_cori_add_collector(EST_COLL_EASY,NULL);
 
@@ -125,7 +173,7 @@ MetricServer::getCurMet(){
   met = ecoreFactory->createMetric();
   met->setType(3);
   met->setValue(static_cast<int>(disk));
-  met->setTime(time);
+  met->setTime(string_to_time_t(boost::posix_time::to_simple_string(p)));
   if (mcop->getMetricType() != 1 && mcop->getMetricType() != 5) {
     mlistObject->getMetric().push_back(met);
   }
@@ -135,23 +183,19 @@ MetricServer::getCurMet(){
   met = ecoreFactory->createMetric();
   met->setType(5);
   met->setValue(static_cast<int>(mem));
-  met->setTime(time);
+  met->setTime(string_to_time_t(boost::posix_time::to_simple_string(p)));
   if (mcop->getMetricType() != 1 && mcop->getMetricType() != 3) {
     mlistObject->getMetric().push_back(met);
   }
 
   // TODO CHECK WHY -1 GOTTEN
-  cout << "pres Valuer du cpu :::::::::::::::::" << cpu << endl;
   diet_estimate_cori (vec, EST_FREECPU, EST_COLL_EASY, NULL);
-  cout << "Valuer du cpu :::::::::::::::::" << cpu << endl;
   cpu = diet_est_get_system(vec, EST_FREECPU, -1); 
-  cout << "Valuer du cpu1 :::::::::::::::::" << cpu << endl;
   cpu *= 100; // Set in percentage
-  cout << "Valuer du cpu2 :::::::::::::::::" << cpu << endl;
   met = ecoreFactory->createMetric();
   met->setType(1);
   met->setValue(static_cast<int>(cpu));
-  met->setTime(time);
+  met->setTime(string_to_time_t(boost::posix_time::to_simple_string(p)));
   if (mcop->getMetricType() != 3 && mcop->getMetricType() != 5) {
     mlistObject->getMetric().push_back(met);
   }
@@ -169,6 +213,12 @@ MetricServer::getHistMet(string machineId){
   vector<string> results = vector<string>();
 
   IMS_Data::MetricType type = mhop->getType();
+
+  string reqnmid = "SELECT * from machine where \"machineid\"='"+machineId+"'";
+  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
+  if(result->getNbTuples() == 0) {
+    throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
+  }
 
   // TODO BAD COMPARISON CHANGE IT
   if (mhop->getStartTime()>0) {
