@@ -42,10 +42,6 @@ set (TEST_SENDMAIL_SCRIPT "${UTILVISHNU_SOURCE_DIR}/sendmail.py" CACHE FILEPATH 
 mark_as_advanced(TEST_SENDMAIL_SCRIPT)
 file ( TO_NATIVE_PATH ${TEST_SENDMAIL_SCRIPT} SENDMAILPY)
 
-#set (TEST_IMS_LOG_CONFIG "${PROJECT_BINARY_DIR}/etc/logservice_testing.cfg")
-#file ( TO_NATIVE_PATH ${TEST_IMS_LOG_CONFIG} IMSLOGCONF)
-
-
 # Create header for VISHNU IMS tests
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/IMS_testconfig.h.in
   ${PROJECT_BINARY_DIR}/include/IMS_testconfig.h )
@@ -58,19 +54,19 @@ include(IMSTestingMacros)
 ims_test_setup()
 ims_test(ims_automTest)
 
-#add_executable(ims_stresser
-# ims_stress.cpp)
+add_executable(ims_stresser
+ ims_stress.cpp)
 
-#target_link_libraries( ims_stresser
-# ${DIET_CLIENT_LIB}
-#  ${DIET_SERVER_LIB}
-#  ${LIBPQ_LIB}
-#  ${Boost_LIBRARIES}
-#  emf4cpp-UMS_Data
-#  emf4cpp-IMS_Data
-#  database-vishnu
-#  exception-vishnu
-#  vishnu-ums-api
-#  vishnu-ims-api)
+target_link_libraries( ims_stresser
+  ${DIET_CLIENT_LIB}
+  ${DIET_SERVER_LIB}
+  ${LIBPQ_LIB}
+  ${Boost_LIBRARIES}
+  emf4cpp-UMS_Data
+  emf4cpp-IMS_Data
+  database-vishnu
+  exception-vishnu
+  vishnu-ums-api
+  vishnu-ims-api)
 
 add_subdirectory( sql )
