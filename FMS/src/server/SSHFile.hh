@@ -23,7 +23,7 @@
 #define RMCMD    "rm -f "
 #define RMDIRCMD "rmdir "
 #define TAILCMD  "tail -"
-#define CPCMD    "scp "
+#define CPCMD    "scp -o Compression=yes "
 #define MVCMD    "mv "
 #define LSCMD    "ls  "
 #define LSACMD  "ls -a "
