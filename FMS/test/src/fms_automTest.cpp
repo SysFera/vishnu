@@ -3,7 +3,10 @@
  * \brief Contains FMS API test implementation
  * References: VISHNU_D3_1b_FMS-PlanTests
  */
-
+// Prerequisites for this test suite to work correctly:
+// 1/ check the cmake parameters TEST_*
+// 2/ setup a 'test' unix group on host TEST_FMS_HOST1
+//    and add the user TEST_USER_LOGIN to this group
 
 //UMS forward Headers
 #include "UMS_Data_forward.hpp"
@@ -36,6 +39,8 @@ static const string adminId = "admin_1";
 static const string adminPwd = "admin";
 static const string userId = "user_1";
 static const string userPwd = "toto";
+static const string userLogin = FMSUSERLOGIN;
+static const string groupTest = "test"; // userLogin must belong to groupTest on host 1
 static const string sep = ":";
 static const string slash = "/";
 static const string machineId1 = "machine_1"; // name is TEST_FMS_HOST1 set in cmake
@@ -56,7 +61,6 @@ BOOST_GLOBAL_FIXTURE(FMSSeDFixture)
 
 // All tests of category 1,2,3 for FILES only
 BOOST_AUTO_TEST_SUITE(singleFile)
-
 
 BOOST_AUTO_TEST_CASE(CreateFile_Base)
 {
@@ -150,7 +154,6 @@ BOOST_AUTO_TEST_CASE(TailOfFile_Base)
     BOOST_REQUIRE( tailOfFile(sessionKey, fileFullPath1, content) == 0);
 
     // To check the success of headOfFile function
-    BOOST_MESSAGE("TAIL IS :" + content);
     BOOST_CHECK( content.substr(content.size()-8,8) == "abcdefgh" );
 
     // Cleanup
@@ -193,6 +196,104 @@ BOOST_AUTO_TEST_CASE(ContentOfFile_Base)
     BOOST_CHECK(false);
   }
 }
+
+BOOST_AUTO_TEST_CASE(GetFileInfo_Base)
+{
+
+  BOOST_TEST_MESSAGE("Testing file info display UC F1.DI5-B");
+
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    // Create a file 10Kb
+    createFile<10>(localFilePath);
+
+    // Copy file on remote host
+    BOOST_REQUIRE( copyFile(sessionKey, localFilePath, fileFullPath1) == 0);
+
+    FileStat stat;
+    BOOST_REQUIRE( getFilesInfo(sessionKey, fileFullPath1, stat) == 0);
+
+    // To check the success
+    BOOST_CHECK( stat.getSize() == 10240 );
+    BOOST_CHECK( stat.getOwner() == userLogin);
+    BOOST_CHECK( stat.getPerms() == 0644);
+
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
+    BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+BOOST_AUTO_TEST_CASE(ChangeFileRights_Base)
+{
+
+  BOOST_TEST_MESSAGE("Testing file rights change UC F1.CH1-B");
+
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    // Create a file 10Kb
+    createFile<10>(localFilePath);
+
+    // Copy file on remote host
+    BOOST_REQUIRE( copyFile(sessionKey, localFilePath, fileFullPath1) == 0);
+
+    BOOST_REQUIRE( chMod(sessionKey, 600, fileFullPath1) == 0);
+
+    // To check the success
+    FileStat stat;
+    BOOST_REQUIRE( getFilesInfo(sessionKey, fileFullPath1, stat) == 0);
+    BOOST_CHECK( stat.getPerms() == 0600);
+
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
+    BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+BOOST_AUTO_TEST_CASE(ChangeGroup_Base)
+{
+
+  BOOST_TEST_MESSAGE("Testing file group change UC F1.CH2-B");
+
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    // Create a file 10Kb
+    createFile<10>(localFilePath);
+
+    // Copy file on remote host
+    BOOST_REQUIRE( copyFile(sessionKey, localFilePath, fileFullPath1) == 0);
+
+    BOOST_REQUIRE( chGrp(sessionKey, groupTest, fileFullPath1) == 0);
+
+    // To check the success
+    FileStat stat;
+    BOOST_REQUIRE( getFilesInfo(sessionKey, fileFullPath1, stat) == 0);
+    BOOST_CHECK( stat.getGroup() == groupTest);
+
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
+    BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
 
 
 BOOST_AUTO_TEST_SUITE_END()
