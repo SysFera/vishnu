@@ -64,6 +64,16 @@ class ProcessCtlProxy {
   ~ProcessCtlProxy();
 
   private:
+  /**
+   * \brief Call the FMS sed to cancel all
+   */
+  void
+  cancelFMS();
+  /**
+   * \brief Call the TMS sed to cancel all
+   */
+  void
+  cancelTMS();
 
   /////////////////////////////////
   // Attributes

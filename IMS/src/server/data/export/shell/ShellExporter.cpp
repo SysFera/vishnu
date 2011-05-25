@@ -39,7 +39,7 @@ ShellExporter::exporte(string oldSession, string &content){
 
   // Check the user is alloed to export
   if (!muser.isAdmin() && !isAllowed(oldSession, muser)){
-    throw UserException(ERRCODE_INVEXPORT, "The user is not allowed to export this session");
+    throw IMSVishnuException(ERRCODE_INVEXPORT, "The user is not allowed to export this session");
   }
 
   // Check the session is closed
