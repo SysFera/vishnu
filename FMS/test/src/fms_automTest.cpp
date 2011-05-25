@@ -38,6 +38,7 @@ static const string userId = "user_1";
 static const string userPwd = "toto";
 static const string machineId1 = "machine_1";
 static const string machineId2 = "machine_2";
+static const string newFilePath = "FMS_test_file";
 
 // The database, UMS and FMS SeD are launched by FMSSedFixture.
 BOOST_GLOBAL_FIXTURE(FMSSeDFixture)
@@ -49,15 +50,14 @@ BOOST_AUTO_TEST_SUITE(singleFile)
 BOOST_AUTO_TEST_CASE(CreateFile_Base)
 {
 
-  BOOST_TEST_MESSAGE("Testing file creation UC F1");
+  BOOST_TEST_MESSAGE("Testing file creation UC F1.CR1-B");
 
   VishnuConnection vc(userId, userPwd);
   string sessionKey=vc.getSessionKey();
 
   try {
-    const string localFilePath = "FMS_test_file";
     string fullFilePath = machineId1;
-    fullFilePath.append(":" + localFilePath);
+    fullFilePath.append(":" + newFilePath);
     BOOST_REQUIRE( createFile(sessionKey, fullFilePath) == 0);
 
     // To check the success of createFile function
@@ -69,6 +69,127 @@ BOOST_AUTO_TEST_CASE(CreateFile_Base)
     BOOST_CHECK(false);
   }
 }
+
+BOOST_AUTO_TEST_CASE(DeleteFile_Base)
+{
+
+  BOOST_TEST_MESSAGE("Testing file deletion UC F1.DE1-B");
+
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    string fullFilePath = machineId1;
+    fullFilePath.append(":" + newFilePath);
+    BOOST_REQUIRE( removeFile(sessionKey, fullFilePath) == 0);
+
+    // To check the success of removeFile function
+    FileStat fileStat;
+    BOOST_CHECK_THROW( getFilesInfo(sessionKey, fullFilePath, fileStat), VishnuException );
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+BOOST_AUTO_TEST_CASE(HeadOfFile_Base)
+{
+
+  BOOST_TEST_MESSAGE("Testing file head display UC F1.DI1-B");
+
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    // Create a file 1Mb
+    string localFilePath = FMSWORKINGDIR;
+    localFilePath.append("/");
+    localFilePath.append(newFilePath);
+    createFile<1000>(localFilePath);
+
+    string fullFilePath = "localhost";
+    fullFilePath.append(":" + localFilePath);
+    string content;
+    BOOST_REQUIRE( headOfFile(sessionKey, fullFilePath, content) == 0);
+
+    // To check the success of headOfFile function
+    BOOST_CHECK( content.substr(0,8) == "abcdefgh" );
+
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, fullFilePath) == 0);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+BOOST_AUTO_TEST_CASE(TailOfFile_Base)
+{
+
+  BOOST_TEST_MESSAGE("Testing file tail display UC F1.DI2-B");
+
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    // Create a file 1Mb
+    string localFilePath = FMSWORKINGDIR;
+    localFilePath.append("/");
+    localFilePath.append(newFilePath);
+    createFile<1000>(localFilePath);
+
+    string fullFilePath = "localhost";
+    fullFilePath.append(":" + localFilePath);
+    string content;
+    BOOST_REQUIRE( tailOfFile(sessionKey, fullFilePath, content) == 0);
+
+    // To check the success of headOfFile function
+    BOOST_MESSAGE("TAIL IS :" + content);
+    BOOST_CHECK( content.substr(content.size()-8,8) == "abcdefgh" );
+
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, fullFilePath) == 0);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+BOOST_AUTO_TEST_CASE(ContentOfFile_Base)
+{
+
+  BOOST_TEST_MESSAGE("Testing file content display UC F1.DI3-B");
+
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    // Create a file 1Mb
+    string localFilePath = FMSWORKINGDIR;
+    localFilePath.append("/");
+    localFilePath.append(newFilePath);
+    createFile<1000>(localFilePath);
+
+    string fullFilePath = "localhost";
+    fullFilePath.append(":" + localFilePath);
+    string content;
+    BOOST_REQUIRE( contentOfFile(sessionKey, fullFilePath, content) == 0);
+
+    // To check the success of contentOfFile function
+    BOOST_CHECK( content.substr(8,8) == "abcdefgh" );
+
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, fullFilePath) == 0);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()
 
