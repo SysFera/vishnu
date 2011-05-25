@@ -69,14 +69,14 @@ int main (int argc, char* argv[]){
   ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"machineId loadShedType");
+    helpUsage(*opt,"machineId loadShedType \n\nloadShedType values: 1 for HARD and 2 for SOFT");
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);
   if ( opt->count("help")){
-    helpUsage(*opt,"machineId loadShedType");
+    helpUsage(*opt,"machineId loadShedType \n\nloadShedType values: 1 for HARD and 2 for SOFT");
     return 0;
   }
 
