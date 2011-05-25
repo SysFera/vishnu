@@ -1,5 +1,6 @@
 #include "ProcessCtl.hpp"
 #include <omniORB4/CORBA.h>
+#include "DIET_admin.h"
 
 ProcessCtl::ProcessCtl(string mid, UserServer user): mmid(mid),
 						     mp(user) {
@@ -65,14 +66,14 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op) {
   }
 }
 
+// TODO Fix dirty construction
 void
 ProcessCtl::stop(IMS_Data::Process_ptr p) {
+  int res;
   string name;
   // If deleting a specific process
   if (p->getProcessName().compare("")!=0) {
     name = p->getProcessName();
-    boost::to_lower(name);
-    name += "sed";
     try {
       // Setting to off in DB
       mp.stopProcess(p);
@@ -80,25 +81,13 @@ ProcessCtl::stop(IMS_Data::Process_ptr p) {
       throw (e);
     }
   } 
-  // Else, kill all sed on the machine
-  else { 
-    name = "-r .*sed";
-    try {
-      // Setting to off in DB
-      mp.stopAllProcesses(p);
-    } catch (SystemException& e) {
-      throw (e);
-    }
-  }
-  string cmd = "killall -9 "+name;
-  // if no machineid : local, else on the distant machine
-  if (p->getMachineId().compare("")==0) {
-    int res = system(cmd.c_str());
-    if (res == -1) {
-      throw SystemException(ERRCODE_SYSTEM, "Failed to kill process");
-    }
-  } else { // Distant stop
-  // TODO executer la commande sur la machine distante (ou pas)
+  cout << "process name: " << p->getProcessName() << endl;
+  cout << "process name: " << p->getDietId() << endl;
+  mp.fillContent(p);
+
+  res = diet_remove_from_hierarchy(SED, p->getDietId().c_str(), false);
+  if (res != DIET_NO_ERROR) {
+    throw SystemException(ERRCODE_SYSTEM, "Invalid "+convertToString(res));
   }
 }
 
