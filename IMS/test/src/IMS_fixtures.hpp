@@ -46,6 +46,8 @@ public:
       cout << "Database initialization failed" << endl;
       return;
     }
+
+
     BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing database ==" );
   }
 
