@@ -1,9 +1,9 @@
-
 #include <iostream>
 #include <string>
 #include "ProcessCtlProxy.hpp"
 #include "utilClient.hpp"
 #include "utilVishnu.hpp"
+#include "TMS_Data.hpp"
 
 using namespace vishnu;
 
@@ -22,7 +22,7 @@ ProcessCtlProxy::ProcessCtlProxy( const SessionProxy& session):msessionProxy(ses
 * \brief Constructor
 */
 ProcessCtlProxy::ProcessCtlProxy( const SessionProxy& session,
-                          const std::string& machineId)
+			  const std::string& machineId)
   :msessionProxy(session), mmachineId(machineId) {
 }
 
@@ -151,11 +151,82 @@ ProcessCtlProxy::stop(IMS_Data::Process process) {
 int
 ProcessCtlProxy::loadShed(IMS_Data::LoadShedType loadShedType) {
 
+  // Cancelling TMS jobs
+  cancelTMS();
+  // Cancelling FMS transfer
+  cancelFMS();
+
+  // If hard load shedding
+  if (loadShedType == 1) {
+    diet_profile_t* profile = NULL;
+    std::string sessionKey;
+    char* errorInfo = NULL;
+
+    std::string serviceName = "int_loadShed";
+    profile = diet_profile_alloc(serviceName.c_str(), 2, 2, 3);
+    sessionKey = msessionProxy.getSessionKey();
+
+    std::string msgErrorDiet = "call of function diet_string_set is rejected ";
+    //IN Parameters
+    if (diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+      msgErrorDiet += "with sessionKey parameter "+sessionKey;
+      raiseDietMsgException(msgErrorDiet);
+    }
+
+    if (diet_string_set(diet_parameter(profile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
+      msgErrorDiet += "with machineId parameter "+mmachineId;
+      raiseDietMsgException(msgErrorDiet);
+    }
+
+    if (diet_string_set(diet_parameter(profile,2), strdup(convertToString(loadShedType).c_str()), DIET_VOLATILE)) {
+      msgErrorDiet += "with SystemInfo parameter ";
+      raiseDietMsgException(msgErrorDiet);
+    }
+
+    //OUT Parameters
+    diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+
+    if(!diet_call(profile)) {
+      if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+	msgErrorDiet += " by receiving errorInfo message";
+	raiseDietMsgException(msgErrorDiet);
+      }
+    }
+    else {
+      raiseDietMsgException("DIET call failure");
+    }
+
+    /*To raise a vishnu exception if the receiving message is not empty*/
+    raiseExceptionIfNotEmptyMsg(errorInfo);
+
+    diet_profile_free(profile);
+  }
+  return 0;
+}
+
+/**
+* \brief Destructor
+*/
+ProcessCtlProxy::~ProcessCtlProxy() {
+}
+
+void
+ProcessCtlProxy::cancelFMS() {
+
+}
+
+void
+ProcessCtlProxy::cancelTMS() {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
+  char* jobToString = NULL;
   char* errorInfo = NULL;
+  std::string serviceName = "jobCancel_";
+  TMS_Data::Job job;
+  job.setJobId("all");
 
-  std::string serviceName = "int_loadShed";
+  serviceName.append(mmachineId);
+
   profile = diet_profile_alloc(serviceName.c_str(), 2, 2, 3);
   sessionKey = msessionProxy.getSessionKey();
 
@@ -171,8 +242,13 @@ ProcessCtlProxy::loadShed(IMS_Data::LoadShedType loadShedType) {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(diet_parameter(profile,2), strdup(convertToString(loadShedType).c_str()), DIET_VOLATILE)) {
-    msgErrorDiet += "with SystemInfo parameter ";
+  const char* name = "cancel";
+  ::ecorecpp::serializer::serializer _ser(name);
+  //To serialize the job object in to optionsInString
+  jobToString =  strdup(_ser.serialize(const_cast<TMS_Data::Job_ptr>(&job)).c_str());
+
+  if (diet_string_set(diet_parameter(profile,2), jobToString, DIET_VOLATILE)) {
+    msgErrorDiet += "with jobInString parameter "+std::string(jobToString);
     raiseDietMsgException(msgErrorDiet);
   }
 
@@ -193,11 +269,5 @@ ProcessCtlProxy::loadShed(IMS_Data::LoadShedType loadShedType) {
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
   diet_profile_free(profile);
-  return 0;
 }
 
-/**
-* \brief Destructor
-*/
-ProcessCtlProxy::~ProcessCtlProxy() {
-}
