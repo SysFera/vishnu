@@ -87,7 +87,7 @@ solveExport(diet_profile_t* pb){
 }
 
 // TODO FAIRE CE SERVICE COMME NOMME
-int 
+int
 solveCurMetric(diet_profile_t* pb){
   char *sessionKey   = NULL;
   char *curOpSer = NULL;
@@ -351,6 +351,7 @@ solveGetThreshold(diet_profile_t* pb){
   string retErr = "";
   int mapperkey;
   string cmd;
+  std::string empty("");
 
   diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
   diet_string_get(diet_parameter(pb,1), &treeOpSer,NULL);
@@ -401,12 +402,14 @@ solveGetThreshold(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+
+    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
   }
   return 0;
 }
 
-int 
+int
 solveGetUpFreq(diet_profile_t* pb){
   char *sessionKey   = NULL;
   string error;
@@ -910,7 +913,7 @@ solveStop(diet_profile_t* pb){
     char hname[200];
     gethostname(hname, 199);
 
-    // If have to stop a local process 
+    // If have to stop a local process
     if (procObj->getMachineId().compare(getMidFromHost(string(hname)))==0) {
       procObj->setMachineId("");
     }
