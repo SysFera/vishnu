@@ -113,9 +113,9 @@ diet_profile_desc_t* getCopyRemoteFileProfile() {
 
   diet_generic_desc_set(diet_param_desc(result, 0), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 1), DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 2), DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 3), DIET_PARAMSTRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 4), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(result, 2), DIET_PARAMSTRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(result, 3), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(result, 4), DIET_PARAMSTRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 5), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 6), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 7), DIET_STRING, DIET_CHAR);
@@ -133,7 +133,7 @@ int solveCopyRemoteFile(diet_profile_t* profile) {
   diet_string_get(diet_parameter(profile, 1), &destUser, NULL);
   diet_paramstring_get(diet_parameter(profile, 2), &srcHost, NULL);
   diet_string_get(diet_parameter(profile, 3), &srcPath, NULL);
-  diet_string_get(diet_parameter(profile, 4), &destHost, NULL);
+  diet_paramstring_get(diet_parameter(profile, 4), &destHost, NULL);
   diet_string_get(diet_parameter(profile, 5), &destPath, NULL);
   diet_string_get(diet_parameter(profile, 6), &optionsSerialized, NULL);
 
@@ -193,7 +193,7 @@ int solveCopyRemoteFile(diet_profile_t* profile) {
     std::cout << "source user login: " << srcUserLogin << "\n";
     std::cout << "machineName: " << srcMachineName << "\n";
 
-    FileFactory::setSSHServer(srcHost);
+    FileFactory::setSSHServer(srcMachineName);
     boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,srcPath, srcUserLogin, userKey));
 
     CpFileOptions_ptr options_ptr= NULL;
