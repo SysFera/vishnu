@@ -10,22 +10,12 @@ set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Cmake)
 set (MANDIR /usr/share/man CACHE string "the man path")
 
-set( VISHNU_VERSION "1.1.0" CACHE STRING " the version of the source ")
-
-option(BUILD_SHARED_LIBS ON "disable shared libraries usage")
-option(CLIENT_ONLY OFF "only compile the client side")
-option(ENABLE_PYTHON OFF "compile the python api")
-option(ENABLE_JAVA OFF "compile the java api")
-option(ENABLE_POSTGRESQL ON "compile with postgresql support")
-option(ENABLE_MYSQL OFF "compile with the mysql support.")
-option(COMPILE_UMS OFF "compile the module UMS")
-option(COMPILE_TMS OFF "compile the module TMS")
-option(COMPILE_IMS OFF "compile the module IMS")
-option(COMPILE_FMS OFF "compile the module FMS")
-option(VISHNU_USE_TORQUE   "Build VISHNU with Torque support..." OFF)
-option(VISHNU_USE_LOADLEVELER   "Build VISHNU with LoadLeveler support..." OFF)
+set( VISHNU_VERSION "1.2.0" CACHE STRING " the version of the source ")
 
 # Options set to ON by default
+option(BUILD_SHARED_LIBS "disable shared libraries usage" ON)
+option(ENABLE_POSTGRESQL "compile with postgresql support" ON)
+option(COMPILE_UMS "compile the module UMS" ON)
 
 # Options set to OFF by default
 option(CLIENT_ONLY "only compile the client side")
