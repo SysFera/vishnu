@@ -3,7 +3,8 @@
 #include "DIET_admin.h"
 
 ProcessCtl::ProcessCtl(string mid, UserServer user): mmid(mid),
-						     mp(user) {
+						     mp(user),
+                                                     muser(user){
 }
 
 ProcessCtl::~ProcessCtl() {
@@ -38,6 +39,10 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op) {
   proc.setScript(mop.getVishnuConf());
   //  mp.fillContent(&proc);
 
+  // Make sure the process is really not running on the machine
+  stop(&proc);
+
+
   char hname[200];
   gethostname(hname, 199);
   
@@ -45,9 +50,6 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op) {
   if (proc.getMachineId().compare(getMidFromHost(string(hname)))==0) {
     proc.setMachineId("");
   }
-
-  // Make sure the process is really not running on the machine
-  stop(&proc);
 
   //  createFile (dest, &proc);
   dest = proc.getScript();
@@ -81,8 +83,6 @@ ProcessCtl::stop(IMS_Data::Process_ptr p) {
       throw (e);
     }
   } 
-  cout << "process name: " << p->getProcessName() << endl;
-  cout << "process name: " << p->getDietId() << endl;
   mp.fillContent(p);
 
   res = diet_remove_from_hierarchy(SED, p->getDietId().c_str(), false);
@@ -93,6 +93,40 @@ ProcessCtl::stop(IMS_Data::Process_ptr p) {
 
 void
 ProcessCtl::loadShed(int type) {
+  stopAll();
+}
+
+void
+ProcessCtl::stopAll() {
+  vector<IMS_Data::Process_ptr> ims;
+  if (mmid.compare("")==0) {
+    throw SystemException(ERRCODE_SYSTEM, "Invalid empty machine id");
+  }
+  IMS_Data::ProcessOp processOp;// = ecoreFactory->createProcessOp();
+  processOp.setMachineId(mmid);
+  // Creating the process server with the options
+  ProcessServer proc(&processOp, muser);
+
+  IMS_Data::ListProcesses* res;
+  res = proc.list();
+
+  if (res->getProcess().size() == 0) {
+    throw SystemException(ERRCODE_SYSTEM, "No process found on machine: "+mmid+". ");
+  }
+
+  for (unsigned int i = 0; i < res->getProcess().size(); i++) {
+    IMS_Data::Process_ptr p = res->getProcess().get(i);
+    // If ims, close at the end
+    if (p->getProcessName().compare("IMS")==0) {
+      ims.push_back(p);
+    } else {
+      stop(p);
+    }
+  }
+  // Closing all ims sed
+  for (unsigned int i = 0 ; i < ims.size() ; i++) {
+    stop(ims.at(i));
+  }
 
 }
 
