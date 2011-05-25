@@ -52,6 +52,7 @@ add_library(ims-server STATIC
 target_link_libraries(ims-server
   ${DIET_CLIENT_LIB}
   ${DIET_SERVER_LIB}
+  ${DIET_ADMIN_LIBRARIES}
   ${Boost_LIBRARIES}
   ${LIBCRYPT_LIB}
   ${USED_BATCH_LIB}

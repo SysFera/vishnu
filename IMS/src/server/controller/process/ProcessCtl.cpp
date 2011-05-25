@@ -1,8 +1,10 @@
 #include "ProcessCtl.hpp"
 #include <omniORB4/CORBA.h>
+#include "DIET_admin.h"
 
 ProcessCtl::ProcessCtl(string mid, UserServer user): mmid(mid),
-						     mp(user) {
+						     mp(user),
+                                                     muser(user){
 }
 
 ProcessCtl::~ProcessCtl() {
@@ -37,6 +39,10 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op) {
   proc.setScript(mop.getVishnuConf());
   //  mp.fillContent(&proc);
 
+  // Make sure the process is really not running on the machine
+  stop(&proc);
+
+
   char hname[200];
   gethostname(hname, 199);
   
@@ -44,9 +50,6 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op) {
   if (proc.getMachineId().compare(getMidFromHost(string(hname)))==0) {
     proc.setMachineId("");
   }
-
-  // Make sure the process is really not running on the machine
-  stop(&proc);
 
   //  createFile (dest, &proc);
   dest = proc.getScript();
@@ -65,14 +68,14 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op) {
   }
 }
 
+// TODO Fix dirty construction
 void
 ProcessCtl::stop(IMS_Data::Process_ptr p) {
+  int res;
   string name;
   // If deleting a specific process
   if (p->getProcessName().compare("")!=0) {
     name = p->getProcessName();
-    boost::to_lower(name);
-    name += "sed";
     try {
       // Setting to off in DB
       mp.stopProcess(p);
@@ -80,30 +83,50 @@ ProcessCtl::stop(IMS_Data::Process_ptr p) {
       throw (e);
     }
   } 
-  // Else, kill all sed on the machine
-  else { 
-    name = "-r .*sed";
-    try {
-      // Setting to off in DB
-      mp.stopAllProcesses(p);
-    } catch (SystemException& e) {
-      throw (e);
-    }
-  }
-  string cmd = "killall -9 "+name;
-  // if no machineid : local, else on the distant machine
-  if (p->getMachineId().compare("")==0) {
-    int res = system(cmd.c_str());
-    if (res == -1) {
-      throw SystemException(ERRCODE_SYSTEM, "Failed to kill process");
-    }
-  } else { // Distant stop
-  // TODO executer la commande sur la machine distante (ou pas)
+  mp.fillContent(p);
+
+  res = diet_remove_from_hierarchy(SED, p->getDietId().c_str(), false);
+  if (res != DIET_NO_ERROR) {
+    throw SystemException(ERRCODE_SYSTEM, "Invalid "+convertToString(res));
   }
 }
 
 void
 ProcessCtl::loadShed(int type) {
+  stopAll();
+}
+
+void
+ProcessCtl::stopAll() {
+  vector<IMS_Data::Process_ptr> ims;
+  if (mmid.compare("")==0) {
+    throw SystemException(ERRCODE_SYSTEM, "Invalid empty machine id");
+  }
+  IMS_Data::ProcessOp processOp;// = ecoreFactory->createProcessOp();
+  processOp.setMachineId(mmid);
+  // Creating the process server with the options
+  ProcessServer proc(&processOp, muser);
+
+  IMS_Data::ListProcesses* res;
+  res = proc.list();
+
+  if (res->getProcess().size() == 0) {
+    throw SystemException(ERRCODE_SYSTEM, "No process found on machine: "+mmid+". ");
+  }
+
+  for (unsigned int i = 0; i < res->getProcess().size(); i++) {
+    IMS_Data::Process_ptr p = res->getProcess().get(i);
+    // If ims, close at the end
+    if (p->getProcessName().compare("IMS")==0) {
+      ims.push_back(p);
+    } else {
+      stop(p);
+    }
+  }
+  // Closing all ims sed
+  for (unsigned int i = 0 ; i < ims.size() ; i++) {
+    stop(ims.at(i));
+  }
 
 }
 
