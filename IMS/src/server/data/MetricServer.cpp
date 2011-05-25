@@ -110,12 +110,21 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
     switch (set->getMetric().get(i)->getType()) {
     case 1 : //cpu
       cpu = set->getMetric().get(i)->getValue();
+      if (static_cast<int>(cpu)<cpu_thre.getValue()) {
+	sendMail(static_cast<int>(cpu), cpu_thre.getValue(), 1, cpu_user.getEmail(), cpu_user.getUserId());
+      }
       break;
     case 3 : //disk
       disk = set->getMetric().get(i)->getValue();
+      if (static_cast<int>(disk)<disk_thre.getValue()) {
+	sendMail(static_cast<int>(disk), disk_thre.getValue(), 3, disk_user.getEmail(), disk_user.getUserId());
+      }
       break;
     case 5: //mem
       mem = set->getMetric().get(i)->getValue();
+      if (static_cast<int>(mem)<mem_thre.getValue()) {
+	sendMail(static_cast<int>(mem), mem_thre.getValue(), 5, mem_user.getEmail(), mem_user.getUserId());
+      }
       break;
     default:
       throw SystemException (ERRCODE_SYSTEM, "Unknown metric type");
@@ -298,4 +307,10 @@ MetricServer::getHistMet(string machineId){
     throw (e);
   }
   return mlistObject;
+}
+
+
+void
+MetricServer::sendMail(int val, int threshold, int type, string email, string uid){
+  
 }

@@ -75,6 +75,16 @@ public:
 protected:
 private:
   /**
+   * \brief To send a mail 
+   * \param val: The value of the metric
+   * \param threshold: The value of the threshold
+   * \param type: The type of the threshold
+   * \param email: The email adress
+   * \param uid: The user id of the user target
+   */
+  void
+  sendMail(int val, int threshold, int type, string email, string uid);
+  /**
    * \brief The position of the frequency in the vishnu table
    */
   static const int FREQPOS = 1;
