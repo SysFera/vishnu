@@ -964,18 +964,19 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   //FIXME: à enlever ce test de stop ou restart car elle empeche une terminaison
   //correcte des tests en arrete le processus à l'aide de stop
   //Test category 2
-  //IA9-B:  Restart normal call
+  //IA9-B:  Stop normal call
   //Restart: normal call
-  /*BOOST_AUTO_TEST_CASE( restart_normal_call ) {
+  BOOST_AUTO_TEST_CASE( stop_normal_call ) {
 
-    BOOST_TEST_MESSAGE("Use case IA9-B: Restart normal call");
+    BOOST_TEST_MESSAGE("Use case IA9-B: Stop normal call");
     bool umssedFound = false;
     string dietSeDConfigPath = CONFIG_DIR + string("/SeD_testing.cfg");
 
     VishnuConnexion vc("root","vishnu_user");
     // get the session key and the machine identifier
     string sessionKey=vc.getConnexion();
-    string machineId="machine_1";
+    //The distant machine on which the process UMS will be stopped
+    string machineId="machine_2";
     IMS_Data::ListProcesses listProcess;
     IMS_Data::ProcessOp op;
     op.setMachineId(machineId);
@@ -984,11 +985,6 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     IMS_Data::Process process;
     process.setMachineId(machineId);
     process.setProcessName("UMS");
-
-    IMS_Data::RestartOp restartOp;
-    restartOp.setVishnuConf(dietSeDConfigPath);
-    //To set the UMS type
-    restartOp.setSedType(1);
 
     try {
       BOOST_CHECK_EQUAL(getProcesses(sessionKey, listProcess, op),0  );
@@ -1003,7 +999,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       }
       //To clear the list
       listProcess.getProcess().clear();
-      //To check if the process ums has been found on the list
+      //To check if the process ums has been found on the list of machine_2
       BOOST_REQUIRE(umssedFound ==  true);
 
       //To stop the process
@@ -1013,8 +1009,6 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
 
       umssedFound = false;
 
-      BOOST_CHECK_EQUAL(restart(sessionKey, machineId, restartOp), 0);
-
       //To check if the process UMS is stopped and not on the list
       for(unsigned int i = 0; i < listProcess.getProcess().size(); i++) {
         //To check umssed process
@@ -1023,14 +1017,14 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
         }
       }
       //To check if the process ums has not been found on the list because it is stopped
-      BOOST_REQUIRE(umssedFound ==  true);
+      BOOST_REQUIRE(umssedFound ==  false);
     }
     catch (VishnuException& e) {
       BOOST_MESSAGE("FAILED\n");
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
     }
-  }*/
+  }
 
   //To clean the table process
   BOOST_AUTO_TEST_CASE( clean_table_process_call) {
