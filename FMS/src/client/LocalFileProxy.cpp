@@ -21,9 +21,13 @@
 #include "FileProxy.hpp"
 #include "utilClient.hpp"
 #include "FMSVishnuException.hpp"
+#include "boost/filesystem.hpp"
+#include<boost/algorithm/string.hpp>
 
 using namespace std;
 using namespace FMS_Data;
+namespace bfs=boost::filesystem;
+namespace ba=boost::algorithm;
 
 /* Default constructor. */
 LocalFileProxy::LocalFileProxy() : FileProxy() {
@@ -394,8 +398,12 @@ int LocalFileProxy::cp(const string& dest, const CpFileOptions& options) {
   
   string host = FileProxy::extHost(dest);
   string path = FileProxy::extName(dest);
-  
-  uid_t uid = getuid();
+  bfs::path localFullPath(bfs::current_path().string());
+
+  localFullPath/= getPath(); 
+
+
+ uid_t uid = getuid();
   struct passwd*  pw = getpwuid(uid);
   char* localUser = pw->pw_name;
 
@@ -413,37 +421,47 @@ int LocalFileProxy::cp(const string& dest, const CpFileOptions& options) {
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  profile = diet_profile_alloc("FileCopy", 6, 6, 7);
+  profile = diet_profile_alloc("FileCopy", 5, 5, 6);
 
+
+  if (ba::starts_with(getPath(),"/")  ){
+
+    localFullPath=getPath();
+
+  }
+
+  std::cout << "localFullPath "<<localFullPath << "\n";
   //IN Parameters  
+  
   diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
         DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getPath().c_str()),
-      DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(localFullPath.string().c_str()),
+      DIET_VOLATILE); // local source file
   diet_string_set(diet_parameter(profile, 2), localUser, DIET_VOLATILE);
+ 
   diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
       DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 4), const_cast<char*>(path.c_str()),
-      DIET_VOLATILE);
 
-  diet_string_set(diet_parameter(profile, 5), const_cast<char*>(dest.c_str()), DIET_VOLATILE); 
+
+  diet_string_set(diet_parameter(profile, 4), const_cast<char*>(dest.c_str()), DIET_VOLATILE); 
 
   const char* name = "cp";
   ::ecorecpp::serializer::serializer _ser(name);
   //To serialize the options object in to optionsInString
   optionsToString =  strdup(_ser.serialize(const_cast<FMS_Data::CpFileOptions_ptr>(&options)).c_str());
 
-  diet_string_set(diet_parameter(profile, 6), optionsToString, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile,5 ), optionsToString, DIET_VOLATILE);
 
-  diet_string_set(diet_parameter(profile, 7), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 6), NULL, DIET_VOLATILE);
 
   if (diet_call(profile)) {
     raiseDietMsgException("Error calling DIET service");
   }
 
-  diet_string_get(diet_parameter(profile, 7), &errMsg, NULL);
+  diet_string_get(diet_parameter(profile, 6), &errMsg, NULL);
   
-  // remoteResult = new RemoteFile(dest, getOwner());
-  // return remoteResult;
+  /*To raise a vishnu exception if the received message is not empty*/
+  raiseExceptionIfNotEmptyMsg(errMsg);
+  
   return 0;
 }
