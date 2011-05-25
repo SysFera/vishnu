@@ -64,7 +64,6 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       if (restore(sqlPath + "/IMSTestGetMetric.sql") != 0) {
         BOOST_TEST_MESSAGE("Database update failed for restore(sqlPath + /IMSTestGetMetric.sql)");
       }
-      //sleep (5);
       //Wait for metric recording in database
       //10 represents the update frequency
       sleep ((nbResMetric*10)+5);
@@ -960,10 +959,56 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     BOOST_CHECK_THROW(getProcesses(sessionKey, listProcess, op), VishnuException);
   }
 
-  //TODO: Kévine ==> Ajouter use case dans Specs Genérales
-  //FIXME: à enlever ce test de stop ou restart car elle empeche une terminaison
-  //correcte des tests en arrete le processus à l'aide de stop
   //Test category 2
+  //IA4.1-B : Soft load schedding normal call
+  //Soft load schedding: normal call
+
+  BOOST_AUTO_TEST_CASE( load_schedding_soft_normal_call) {
+
+    BOOST_TEST_MESSAGE("Use case IA4.1-B: Soft load schedding normal call");
+
+    VishnuConnexion vc("root","vishnu_user");
+    // get the session key and the machine identifier
+    string sessionKey=vc.getConnexion();
+    string machineId="machine_1";
+    //Set loadShedType to 1: SOFT
+    IMS_Data::LoadShedType loadShedType = 2;
+    //Job
+    const std::string scriptFilePath= TMSSCRIPTSPATH "/torque_script";
+    Job jobInfo1;
+    Job jobInfo2;
+    SubmitOptions subOptions;
+    //ListJobs
+    ListJobs lsJobs;
+    ListJobsOptions lsOptions;
+
+    try {
+      //To submit 2 jobs
+      BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo1,subOptions),0 );
+      BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo2,subOptions),0 );
+      //To list jobs
+      BOOST_CHECK_EQUAL(listJobs(sessionKey, machineId, lsJobs, lsOptions), 0);
+      BOOST_TEST_MESSAGE("lsJobs.getJobs().size()"<< lsJobs.getJobs().size());
+      //To check that the jobs are submitted
+      BOOST_REQUIRE(lsJobs.getJobs().size() != 0);
+      //Launch load schedding SOFT
+      BOOST_CHECK_EQUAL(loadShed(sessionKey, machineId, loadShedType), 0);
+      lsJobs.getJobs().clear();
+      //To list jobs
+      BOOST_CHECK_EQUAL(listJobs(sessionKey, machineId, lsJobs, lsOptions), 0);
+      BOOST_TEST_MESSAGE("lsJobs.getJobs().size()"<< lsJobs.getJobs().size());
+      //To check that the jobs are canceled
+      BOOST_REQUIRE(lsJobs.getJobs().size() == 0);
+    }
+    catch (VishnuException& e) {
+      BOOST_MESSAGE("FAILED\n");
+      BOOST_MESSAGE(e.what());
+      BOOST_CHECK(false);
+    }
+  }
+
+
+  //TODO: Kévine ==> Ajouter use case dans Specs Genérales
   //IA9-B:  Stop normal call
   //Stop: normal call
   BOOST_AUTO_TEST_CASE( stop_normal_call ) {
