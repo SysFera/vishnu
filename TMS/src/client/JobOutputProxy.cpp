@@ -111,8 +111,8 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
           moutDir = (bfs::path(bfs::current_path().string())).string();
         }
 
-        vishnu::moveFile(std::string(outputPath), moutDir, outFileName);
-        vishnu::moveFile(std::string(errorPath), moutDir, errFileName);
+        vishnu::boostMoveFile(std::string(outputPath), moutDir, outFileName);
+        vishnu::boostMoveFile(std::string(errorPath), moutDir, errFileName);
 
         jobResult.setOutputPath(moutDir+"/"+outFileName);
         jobResult.setErrorPath(moutDir+"/"+errFileName);
@@ -223,7 +223,7 @@ JobOutputProxy::getAllJobsOutPut() {
           dagda_get_file(content.elt_ids[i],&path);
           
           std::string outFileName = "outputOfJob_"+listJobResults_ptr->getResults().get((i/2))->getJobId();
-          vishnu::moveFile(std::string(path), moutDir, outFileName); 
+          vishnu::boostMoveFile(std::string(path), moutDir, outFileName); 
           listJobResults_ptr->getResults().get((i/2))->setOutputPath(moutDir+"/"+outFileName) ;
          
           if(i < content.size-1) {
@@ -232,7 +232,7 @@ JobOutputProxy::getAllJobsOutPut() {
             dagda_get_file(content.elt_ids[i],&errorPath);
             
             std::string errFileName =  "errorsOfJob_"+listJobResults_ptr->getResults().get((i/2))->getJobId();
-            vishnu::moveFile(std::string(errorPath), moutDir, errFileName);
+            vishnu::boostMoveFile(std::string(errorPath), moutDir, errFileName);
             listJobResults_ptr->getResults().get((i/2))->setErrorPath(moutDir+"/"+errFileName);
           }
         }
