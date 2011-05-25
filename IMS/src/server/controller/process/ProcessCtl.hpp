@@ -40,6 +40,11 @@ public:
 protected:
 private:
   /**
+   * \brief To stop all the vishnu processes on a machine
+   */
+  void
+  stopAll();
+  /**
    * \brief To create the file for the restart function
    * \param dest: The destination file (inout)
    * \param p: The process containing the script
@@ -58,6 +63,10 @@ private:
    * \brief The machine id
    */
   string mmid;
+  /**
+   * \brief A user server
+   */
+  UserServer muser;
 };
 
 #endif
