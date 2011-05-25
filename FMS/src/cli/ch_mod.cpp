@@ -16,6 +16,7 @@
 #include "cmdArgs.hpp"
 #include <boost/bind.hpp>
 #include <sys/types.h>
+#include "displayer.hpp"
 namespace po = boost::program_options;
 
 using namespace std;
@@ -30,7 +31,7 @@ int main (int argc, char* argv[]){
   string dietConfig;
   string sessionKey;
   string path;
-
+  string modeStr;
   mode_t  mode;
   /******** Callback functions ******************/
   //boost::function1<void,string> fmode(boost::bind(&FMS_Data::ChModOptions::setMode,boost::ref(chOptions),_1));
@@ -42,7 +43,7 @@ int main (int argc, char* argv[]){
   opt->add("mode,m",
       "The acces rights of file/directory in octal sytem",
       HIDDEN,
-      mode,1);
+      modeStr,1);
   opt->setPosition("mode",1); 
 
  opt->add("path,p",
@@ -55,7 +56,6 @@ int main (int argc, char* argv[]){
 
   // Parse the cli and setting the options found
   ret = cmd.parse(env_name_mapper());
-
 
   if (ret != CLI_SUCCESS){
     helpUsage(*opt," mode path");
@@ -71,6 +71,15 @@ int main (int argc, char* argv[]){
 
   // Process command
   try {
+
+    if(modeStr.size()!=0){
+      size_t pos = modeStr.find_first_not_of("0123456789");
+      if(pos!=std::string::npos) {
+        mode = stringToModType(modeStr);
+      } else {
+        mode = convertToInt(modeStr);
+      }
+    }
 
     // initializing DIET
     if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
