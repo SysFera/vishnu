@@ -113,9 +113,9 @@ MetricServer::getCurMet(){
   IMS_Data::ListMetric_ptr mlistObject = ecoreFactory->createListMetric();
   estVector_t vec = diet_new_estVect();
   IMS_Data::Metric_ptr met;
-  double disk;
-  double cpu;
-  double mem;
+  double disk = 0.0;
+  double cpu  = 0.0;
+  double mem  = 0.0;
   time_t time;
 
   diet_estimate_cori_add_collector(EST_COLL_EASY,NULL);
@@ -141,8 +141,13 @@ MetricServer::getCurMet(){
   }
 
   // TODO CHECK WHY -1 GOTTEN
-  diet_estimate_cori (vec, EST_AVGFREECPU, EST_COLL_EASY, NULL);
+  cout << "pres Valuer du cpu :::::::::::::::::" << cpu << endl;
+  diet_estimate_cori (vec, EST_FREECPU, EST_COLL_EASY, NULL);
+  cout << "Valuer du cpu :::::::::::::::::" << cpu << endl;
   cpu = diet_est_get_system(vec, EST_FREECPU, -1); 
+  cout << "Valuer du cpu1 :::::::::::::::::" << cpu << endl;
+  cpu *= 100; // Set in percentage
+  cout << "Valuer du cpu2 :::::::::::::::::" << cpu << endl;
   met = ecoreFactory->createMetric();
   met->setType(1);
   met->setValue(static_cast<int>(cpu));
