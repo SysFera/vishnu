@@ -323,8 +323,6 @@ list<string> SSHFile::ls(const LsDirOptions& options) const {
   if (!exists()) {
     throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
   }
-  std::cout <<"-l: " <<  boolalpha <<options.isLongFormat()<< "\n";
-  std::cout << "-a: " << boolalpha <<options.isAllFiles() << "\n";
 
 
   if (options.isLongFormat()){
