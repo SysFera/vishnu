@@ -587,7 +587,7 @@ solveSetJID(diet_profile_t* pb){
     userServer.init();
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_define_user_format");
+    mapperkey = mapper->code("vishnu_define_job_format");
     mapper->code(string(fmt), mapperkey);
     cmd = mapper->finalize(mapperkey);
 
@@ -637,7 +637,7 @@ solveSetTID(diet_profile_t* pb){
     userServer.init();
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_define_user_format");
+    mapperkey = mapper->code("vishnu_define_transfer_format");
     mapper->code(string(fmt), mapperkey);
     cmd = mapper->finalize(mapperkey);
 
@@ -687,7 +687,7 @@ solveSetMID(diet_profile_t* pb){
     userServer.init();
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_define_user_format");
+    mapperkey = mapper->code("vishnu_define_machine_format");
     mapper->code(string(fmt), mapperkey);
     cmd = mapper->finalize(mapperkey);
 
@@ -738,7 +738,7 @@ solveLoadShed(diet_profile_t* pb){
     userServer.init();
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_define_user_format");
+    mapperkey = mapper->code("vishnu_loadshed");
     mapper->code(string(mid), mapperkey);
     mapper->code(string(type), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -897,7 +897,7 @@ solveStop(diet_profile_t* pb){
     userServer.init();
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_restart");
+    mapperkey = mapper->code("vishnu_stop");
     mapper->code(string(proc), mapperkey);
     cmd = mapper->finalize(mapperkey);
 
