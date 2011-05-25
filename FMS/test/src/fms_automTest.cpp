@@ -75,7 +75,35 @@ BOOST_AUTO_TEST_CASE(CreateFile_Base)
 
     // To check the success of createFile function
     FileStat fileStat;
-    BOOST_REQUIRE( getFilesInfo(sessionKey, fileFullPath1, fileStat) ==0  );
+    BOOST_CHECK( getFilesInfo(sessionKey, fileFullPath1, fileStat) ==0  );
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+BOOST_AUTO_TEST_CASE(CreateFile_Exceptions)
+{
+
+  BOOST_TEST_MESSAGE("Testing file creation errors UC F1.CR1-E");
+
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    // E1 case
+    string invalidDir = "rkvh";
+    string invalidFullPath = dirFullPath1 + slash + invalidDir + slash + newFileName;
+    BOOST_CHECK_THROW( createFile(sessionKey, invalidFullPath), VishnuException);
+    // E2 case
+    string noAccessDir = "/root";
+    string noAccessFullPath = machineId1 + sep + noAccessDir;
+    BOOST_CHECK_THROW( createFile(sessionKey, noAccessFullPath), VishnuException);
+    // E3 case
+    string invalidMachineId = "tt";
+    string invalidMachineFullPath = invalidMachineId + sep + remoteDir;
+    BOOST_CHECK_THROW( createFile(sessionKey, invalidMachineFullPath), VishnuException);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
@@ -92,11 +120,40 @@ BOOST_AUTO_TEST_CASE(DeleteFile_Base)
   string sessionKey=vc.getSessionKey();
 
   try {
+    // This test requires that previous test works ok (file created)
     BOOST_REQUIRE( removeFile(sessionKey, fileFullPath1) == 0);
 
     // To check the success of removeFile function
     FileStat fileStat;
     BOOST_CHECK_THROW( getFilesInfo(sessionKey, fileFullPath1, fileStat), VishnuException );
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+BOOST_AUTO_TEST_CASE(DeleteFile_Exceptions)
+{
+
+  BOOST_TEST_MESSAGE("Testing file deletion errors UC F1.DE1-E");
+
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    // E1 case
+    string invalidDir = "rkvh";
+    string invalidFullPath = dirFullPath1 + slash + invalidDir + slash + newFileName;
+    BOOST_CHECK_THROW( removeFile(sessionKey, invalidFullPath), VishnuException);
+    // E2 case
+    string noAccessLocalPath = "/root/abc";
+    string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
+    BOOST_CHECK_THROW( removeFile(sessionKey, noAccessFullPath), VishnuException);
+    // E3 case
+    string invalidMachineId = "tt";
+    string invalidMachineFullPath = invalidMachineId + sep + remoteDir;
+    BOOST_CHECK_THROW( removeFile(sessionKey, invalidMachineFullPath), VishnuException);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
@@ -135,6 +192,35 @@ BOOST_AUTO_TEST_CASE(HeadOfFile_Base)
   }
 }
 
+BOOST_AUTO_TEST_CASE(HeadOfFile_Exceptions)
+{
+
+  BOOST_TEST_MESSAGE("Testing file head display errors UC F1.DI1-E");
+
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    string content;
+    // E1 case
+    string invalidDir = "rkvh";
+    string invalidFullPath = dirFullPath1 + slash + invalidDir + slash + newFileName;
+    BOOST_CHECK_THROW( headOfFile(sessionKey, invalidFullPath, content), VishnuException);
+    // E2 case
+    string noAccessLocalPath = "/root/abc";
+    string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
+    BOOST_CHECK_THROW( headOfFile(sessionKey, noAccessFullPath, content), VishnuException);
+    // E3 case
+    string invalidMachineId = "tt";
+    string invalidMachineFullPath = invalidMachineId + sep + remoteDir;
+    BOOST_CHECK_THROW( headOfFile(sessionKey, invalidMachineFullPath, content), VishnuException);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
 BOOST_AUTO_TEST_CASE(TailOfFile_Base)
 {
 
@@ -166,6 +252,35 @@ BOOST_AUTO_TEST_CASE(TailOfFile_Base)
   }
 }
 
+BOOST_AUTO_TEST_CASE(TailOfFile_Exceptions)
+{
+
+  BOOST_TEST_MESSAGE("Testing file tail display errors UC F1.DI2-E");
+
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    string content;
+    // E1 case
+    string invalidDir = "rkvh";
+    string invalidFullPath = dirFullPath1 + slash + invalidDir + slash + newFileName;
+    BOOST_CHECK_THROW( tailOfFile(sessionKey, invalidFullPath, content), VishnuException);
+    // E2 case
+    string noAccessLocalPath = "/root/abc";
+    string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
+    BOOST_CHECK_THROW( tailOfFile(sessionKey, noAccessFullPath, content), VishnuException);
+    // E3 case
+    string invalidMachineId = "tt";
+    string invalidMachineFullPath = invalidMachineId + sep + remoteDir;
+    BOOST_CHECK_THROW( tailOfFile(sessionKey, invalidMachineFullPath, content), VishnuException);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
 BOOST_AUTO_TEST_CASE(ContentOfFile_Base)
 {
 
@@ -190,6 +305,35 @@ BOOST_AUTO_TEST_CASE(ContentOfFile_Base)
     // Cleanup
     BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
     BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+BOOST_AUTO_TEST_CASE(ContentOfFile_Exceptions)
+{
+
+  BOOST_TEST_MESSAGE("Testing file content display errors UC F1.DI3-E");
+
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    string content;
+    // E1 case
+    string invalidDir = "rkvh";
+    string invalidFullPath = dirFullPath1 + slash + invalidDir + slash + newFileName;
+    BOOST_CHECK_THROW( contentOfFile(sessionKey, invalidFullPath, content), VishnuException);
+    // E2 case
+    string noAccessLocalPath = "/root/abc";
+    string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
+    BOOST_CHECK_THROW( contentOfFile(sessionKey, noAccessFullPath, content), VishnuException);
+    // E3 case
+    string invalidMachineId = "tt";
+    string invalidMachineFullPath = invalidMachineId + sep + remoteDir;
+    BOOST_CHECK_THROW( contentOfFile(sessionKey, invalidMachineFullPath, content), VishnuException);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
@@ -230,6 +374,35 @@ BOOST_AUTO_TEST_CASE(GetFileInfo_Base)
   }
 }
 
+BOOST_AUTO_TEST_CASE(GetFileInfo_Exceptions)
+{
+
+  BOOST_TEST_MESSAGE("Testing file info display errors UC F1.DI5-E");
+
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    FileStat stat;
+    // E1 case
+    string invalidDir = "rkvh";
+    string invalidFullPath = dirFullPath1 + slash + invalidDir + slash + newFileName;
+    BOOST_CHECK_THROW( getFilesInfo(sessionKey, invalidFullPath, stat), VishnuException);
+    // E2 case
+    string noAccessLocalPath = "/root/abc";
+    string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
+    BOOST_CHECK_THROW( getFilesInfo(sessionKey, noAccessFullPath, stat), VishnuException);
+    // E3 case
+    string invalidMachineId = "tt";
+    string invalidMachineFullPath = invalidMachineId + sep + remoteDir;
+    BOOST_CHECK_THROW( getFilesInfo(sessionKey, invalidMachineFullPath, stat), VishnuException);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
 BOOST_AUTO_TEST_CASE(ChangeFileRights_Base)
 {
 
@@ -255,6 +428,34 @@ BOOST_AUTO_TEST_CASE(ChangeFileRights_Base)
     // Cleanup
     BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
     BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+BOOST_AUTO_TEST_CASE(ChangeFileRights_Exceptions)
+{
+
+  BOOST_TEST_MESSAGE("Testing file rights change errors UC F1.CH1-E");
+
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    // E1 case
+    string invalidDir = "rkvh";
+    string invalidFullPath = dirFullPath1 + slash + invalidDir + slash + newFileName;
+    BOOST_CHECK_THROW( chMod(sessionKey, 600, invalidFullPath), VishnuException);
+    // E2 case
+    string noAccessLocalPath = "/root/abc";
+    string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
+    BOOST_CHECK_THROW( chMod(sessionKey, 600, noAccessFullPath), VishnuException);
+    // E3 case
+    string invalidMachineId = "tt";
+    string invalidMachineFullPath = invalidMachineId + sep + remoteDir;
+    BOOST_CHECK_THROW( chMod(sessionKey, 600, invalidMachineFullPath), VishnuException);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
@@ -294,7 +495,33 @@ BOOST_AUTO_TEST_CASE(ChangeGroup_Base)
   }
 }
 
+BOOST_AUTO_TEST_CASE(ChangeGroup_Exceptions)
+{
 
+  BOOST_TEST_MESSAGE("Testing file group change errors UC F1.CH2-E");
+
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    // E1 case
+    string invalidDir = "rkvh";
+    string invalidFullPath = dirFullPath1 + slash + invalidDir + slash + newFileName;
+    BOOST_CHECK_THROW( chGrp(sessionKey, groupTest, invalidFullPath), VishnuException);
+    // E2 case
+    string noAccessLocalPath = "/root/abc";
+    string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
+    BOOST_CHECK_THROW( chGrp(sessionKey, groupTest, noAccessFullPath), VishnuException);
+    // E3 case
+    string invalidMachineId = "tt";
+    string invalidMachineFullPath = invalidMachineId + sep + remoteDir;
+    BOOST_CHECK_THROW( chGrp(sessionKey, groupTest, invalidMachineFullPath), VishnuException);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
 
 BOOST_AUTO_TEST_SUITE_END()
 
