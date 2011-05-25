@@ -6,6 +6,7 @@
 #include <sstream>
 
 #include <sys/types.h>
+#include <pwd.h>
 
 #include "DIET_data.h"
 #include "DIET_client.h"
@@ -14,6 +15,13 @@
 #include "utilVishnu.hpp"
 #include "RemoteFileProxy.hpp"
 #include "LocalFileProxy.hpp"
+#include "boost/filesystem.hpp"
+#include<boost/algorithm/string.hpp>
+
+using namespace std;
+using namespace FMS_Data;
+namespace bfs=boost::filesystem;
+namespace ba=boost::algorithm;
 
 using namespace std;
 using namespace FMS_Data;
@@ -819,5 +827,81 @@ void RemoteFileProxy::printTransferID(const bool printTrID) {
 }
 
 int RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options){
+
+  string destHost = FileProxy::extHost(dest);
+  string localUser = "";
+  bfs::path destPath;
+  if(destHost.compare("localhost")==0){
+    char hostName[255];
+    gethostname(hostName, 255);
+    destHost = hostName;
+    uid_t uid = getuid();
+    struct passwd*  pw = getpwuid(uid);
+    localUser = pw->pw_name;
+
+    destPath = bfs::current_path().string();
+
+    destPath/= FileProxy::extName(dest);
+
+    if (ba::starts_with(getPath(),"/")  ){
+      destPath=getPath();
+    }
+
+    std::cout << "destPath "<< destPath << "\n";
+
+  }   
+
+  std::string srcHost = getHost();
+  std::string srcPath = getPath();    
+
+  char *optionsToString = NULL;
+
+  diet_profile_t* profile;
+  char* errMsg;
+
+  std::string serviceName("FileCopy_RL_RR");
+
+  std::string sessionKey=this->getSession().getSessionKey();
+
+
+  profile = diet_profile_alloc("FileCopy_RL_RR", 6, 6, 7);
+
+
+  //IN Parameters  
+
+  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
+      DIET_VOLATILE);
+
+  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(localUser.c_str()), DIET_VOLATILE);
+
+  //to set the hostname of the source machine
+  diet_paramstring_set(diet_parameter(profile, 2), const_cast<char*>(srcHost.c_str()), DIET_VOLATILE);
+  //to set the hostname of the destination machine
+  diet_string_set(diet_parameter(profile, 3), const_cast<char*>(srcPath.c_str()),DIET_VOLATILE); 
+
+  //to set the hostname of the destination machine
+  diet_paramstring_set(diet_parameter(profile, 4), const_cast<char*>(destHost.c_str()), DIET_VOLATILE);
+  //to set the destination path of the destination machine
+  diet_string_set(diet_parameter(profile, 5), const_cast<char*>(destPath.string().c_str()), DIET_VOLATILE);
+
+  const char* name = "cp";
+  ::ecorecpp::serializer::serializer _ser(name);
+  //To serialize the options object in to optionsInString
+  optionsToString =  strdup(_ser.serialize(const_cast<FMS_Data::CpFileOptions_ptr>(&options)).c_str());
+
+  diet_string_set(diet_parameter(profile,6 ), optionsToString, DIET_VOLATILE);
+
+  diet_string_set(diet_parameter(profile, 7), NULL, DIET_VOLATILE);
+
+  if (diet_call(profile)) {
+    raiseDietMsgException("Error calling DIET service");
+  }
+
+  diet_string_get(diet_parameter(profile, 7), &errMsg, NULL);
+
+  /*To raise a vishnu exception if the received message is not empty*/
+  raiseExceptionIfNotEmptyMsg(errMsg);
+
+  
 return 0;
 }
