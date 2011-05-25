@@ -19,23 +19,23 @@ IMSMapper::IMSMapper(){
 
 IMSMapper::IMSMapper(MapperRegistry* reg, string na):Mapper(reg){
   mname = na;
-  mmap.insert (pair<int, string>(VISHNU_EXPORT, "exportCommands"));
-  mmap.insert (pair<int, string>(VISHNU_GET_CUR, "getMetricCurrentValue"));
-  mmap.insert (pair<int, string>(VISHNU_GET_HIST, "getMetricHistory"));
-  mmap.insert (pair<int, string>(VISHNU_GET_PROC, "getProcesses"));
-  mmap.insert (pair<int, string>(VISHNU_SET_SYSINF, "setSystemInfo"));
-  mmap.insert (pair<int, string>(VISHNU_SET_THRESH, "setSystemThreshold"));
-  mmap.insert (pair<int, string>(VISHNU_GET_THRESH, "getSystemThreshold"));
-  mmap.insert (pair<int, string>(VISHNU_DEFINE_UID, "defineUserIdentifier"));
-  mmap.insert (pair<int, string>(VISHNU_DEFINE_MID, "defineMachineIdentifier"));
-  mmap.insert (pair<int, string>(VISHNU_DEFINE_TID, "defineJobIdentifier"));
-  mmap.insert (pair<int, string>(VISHNU_DEFINE_FID, "defineTransferIdentifier"));
-  mmap.insert (pair<int, string>(VISHNU_LOADSHED, "loadShed"));
-  mmap.insert (pair<int, string>(VISHNU_SET_FREQ, "setUpdateFrequency"));
-  mmap.insert (pair<int, string>(VISHNU_GET_FREQ, "getUpdateFrequency"));
-  mmap.insert (pair<int, string>(VISHNU_STOP, "stop"));
-  mmap.insert (pair<int, string>(VISHNU_RESTART, "restart"));
-  mmap.insert (pair<int, string>(VISHNU_GET_SYSINF, "getSystemInfo"));
+  mmap.insert (pair<int, string>(VISHNU_EXPORT, "vishnu_export_command"));
+  mmap.insert (pair<int, string>(VISHNU_GET_CUR, "vishnu_get_current_metric"));
+  mmap.insert (pair<int, string>(VISHNU_GET_HIST, "vishnu_get_history_metric"));
+  mmap.insert (pair<int, string>(VISHNU_GET_PROC, "vishnu_get_processes"));
+  mmap.insert (pair<int, string>(VISHNU_SET_SYSINF, "vishnu_set_system_info"));
+  mmap.insert (pair<int, string>(VISHNU_SET_THRESH, "vishnu_setSystemThreshold"));
+  mmap.insert (pair<int, string>(VISHNU_GET_THRESH, "vishnu_getSystemThreshold"));
+  mmap.insert (pair<int, string>(VISHNU_DEFINE_UID, "vishnu_define_user_format"));
+  mmap.insert (pair<int, string>(VISHNU_DEFINE_MID, "vishnu_define_machine_format"));
+  mmap.insert (pair<int, string>(VISHNU_DEFINE_TID, "vishnu_define_job_format"));
+  mmap.insert (pair<int, string>(VISHNU_DEFINE_FID, "vishnu_define_transfer_format"));
+  mmap.insert (pair<int, string>(VISHNU_LOADSHED, "vishnu_loadShed"));
+  mmap.insert (pair<int, string>(VISHNU_SET_FREQ, "vishnu_set_update_frequency"));
+  mmap.insert (pair<int, string>(VISHNU_GET_FREQ, "vishnu_get_update_frequency"));
+  mmap.insert (pair<int, string>(VISHNU_STOP, "vishnu_stop"));
+  mmap.insert (pair<int, string>(VISHNU_RESTART, "vishnu_restart"));
+  mmap.insert (pair<int, string>(VISHNU_GET_SYSINF, "vishnu_get_system_info"));
 };
 
 int
