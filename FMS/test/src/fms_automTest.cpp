@@ -46,15 +46,18 @@ static const string slash = "/";
 static const string machineId1 = "machine_1"; // name is TEST_FMS_HOST1 set in cmake
 static const string machineId2 = "machine_2"; // name is TEST_FMS_HOST2 set in cmake
 static const string newFileName = "FMS_test_file";
+static const string newDirName = "FMS_test_dir";
 // local
 static const string localDir = FMSWORKINGDIR;
 static const string localFilePath = localDir + slash + newFileName;
 // remote
-static const string remoteDir = "/tmp";
-static const string dirFullPath1 = machineId1 + sep + remoteDir;
-static const string dirFullPath2 = machineId2 + sep + remoteDir;
-static const string fileFullPath1 = dirFullPath1 + slash + newFileName;
-static const string fileFullPath2 = dirFullPath2 + slash + newFileName;
+static const string remoteBaseDir = "/tmp";
+static const string baseDirFullPath1 = machineId1 + sep + remoteBaseDir;
+static const string baseDirFullPath2 = machineId2 + sep + remoteBaseDir;
+static const string fileFullPath1 = baseDirFullPath1 + slash + newFileName;
+static const string fileFullPath2 = baseDirFullPath2 + slash + newFileName;
+static const string dirFullPath1 = baseDirFullPath1 + slash + newDirName;
+static const string dirFullPath2 = baseDirFullPath2 + slash + newDirName;
 
 // The database, UMS and FMS SeD are launched by FMSSedFixture.
 BOOST_GLOBAL_FIXTURE(FMSSeDFixture)
@@ -77,6 +80,9 @@ BOOST_AUTO_TEST_CASE(CreateFile_Base)
     FileStat fileStat;
     BOOST_CHECK( getFilesInfo(sessionKey, fileFullPath1, fileStat) ==0  );
 
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
+
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
     BOOST_CHECK(false);
@@ -94,7 +100,7 @@ BOOST_AUTO_TEST_CASE(CreateFile_Exceptions)
   try {
     // E1 case
     string invalidDir = "rkvh";
-    string invalidFullPath = dirFullPath1 + slash + invalidDir + slash + newFileName;
+    string invalidFullPath = baseDirFullPath1 + slash + invalidDir + slash + newFileName;
     BOOST_CHECK_THROW( createFile(sessionKey, invalidFullPath), VishnuException);
     // E2 case
     string noAccessDir = "/root";
@@ -102,8 +108,46 @@ BOOST_AUTO_TEST_CASE(CreateFile_Exceptions)
     BOOST_CHECK_THROW( createFile(sessionKey, noAccessFullPath), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
-    string invalidMachineFullPath = invalidMachineId + sep + remoteDir;
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir;
     BOOST_CHECK_THROW( createFile(sessionKey, invalidMachineFullPath), VishnuException);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+BOOST_AUTO_TEST_CASE(CreateDir_Base)
+{
+
+  BOOST_TEST_MESSAGE("Testing directory creation UC F1.CR2-B");
+
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    BOOST_REQUIRE( createDir(sessionKey, dirFullPath1) == 0);
+
+    // To check the success of createDir function
+    StringList dirContent;
+    LsDirOptions lsOptions;
+    lsOptions.setLongFormat(true);
+    // Check 1: list content of parent directory
+    BOOST_REQUIRE( listDir(sessionKey, baseDirFullPath1, dirContent) ==0  );
+    bool isNewDirFound = false;
+    vector<string>::const_iterator iter = dirContent.getStrings().begin();
+    do {
+      isNewDirFound = (*iter).find(newDirName);
+      ++iter;
+    } while (!isNewDirFound && !(iter == dirContent.getStrings().end()));
+    BOOST_REQUIRE(isNewDirFound);
+    // Check 2: create new file in new directory
+    string fileFullPath = dirFullPath1 + slash + newFileName;
+    BOOST_REQUIRE( createFile(sessionKey, fileFullPath) == 0 );
+
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, fileFullPath) == 0);
+    BOOST_CHECK( removeDir(sessionKey, dirFullPath1) == 0);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
@@ -120,10 +164,8 @@ BOOST_AUTO_TEST_CASE(DeleteFile_Base)
   string sessionKey=vc.getSessionKey();
 
   try {
-    // This test requires that previous test works ok (file created)
-    BOOST_REQUIRE( removeFile(sessionKey, fileFullPath1) == 0);
-
-    // To check the success of removeFile function
+    BOOST_REQUIRE( createFile(sessionKey, fileFullPath1) == 0); // setup
+    BOOST_REQUIRE( removeFile(sessionKey, fileFullPath1) == 0); // test
     FileStat fileStat;
     BOOST_CHECK_THROW( getFilesInfo(sessionKey, fileFullPath1, fileStat), VishnuException );
 
@@ -144,7 +186,7 @@ BOOST_AUTO_TEST_CASE(DeleteFile_Exceptions)
   try {
     // E1 case
     string invalidDir = "rkvh";
-    string invalidFullPath = dirFullPath1 + slash + invalidDir + slash + newFileName;
+    string invalidFullPath = baseDirFullPath1 + slash + invalidDir + slash + newFileName;
     BOOST_CHECK_THROW( removeFile(sessionKey, invalidFullPath), VishnuException);
     // E2 case
     string noAccessLocalPath = "/root/abc";
@@ -152,7 +194,7 @@ BOOST_AUTO_TEST_CASE(DeleteFile_Exceptions)
     BOOST_CHECK_THROW( removeFile(sessionKey, noAccessFullPath), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
-    string invalidMachineFullPath = invalidMachineId + sep + remoteDir;
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir;
     BOOST_CHECK_THROW( removeFile(sessionKey, invalidMachineFullPath), VishnuException);
 
   } catch (VishnuException& e) {
@@ -204,7 +246,7 @@ BOOST_AUTO_TEST_CASE(HeadOfFile_Exceptions)
     string content;
     // E1 case
     string invalidDir = "rkvh";
-    string invalidFullPath = dirFullPath1 + slash + invalidDir + slash + newFileName;
+    string invalidFullPath = baseDirFullPath1 + slash + invalidDir + slash + newFileName;
     BOOST_CHECK_THROW( headOfFile(sessionKey, invalidFullPath, content), VishnuException);
     // E2 case
     string noAccessLocalPath = "/root/abc";
@@ -212,7 +254,7 @@ BOOST_AUTO_TEST_CASE(HeadOfFile_Exceptions)
     BOOST_CHECK_THROW( headOfFile(sessionKey, noAccessFullPath, content), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
-    string invalidMachineFullPath = invalidMachineId + sep + remoteDir;
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir;
     BOOST_CHECK_THROW( headOfFile(sessionKey, invalidMachineFullPath, content), VishnuException);
 
   } catch (VishnuException& e) {
@@ -264,7 +306,7 @@ BOOST_AUTO_TEST_CASE(TailOfFile_Exceptions)
     string content;
     // E1 case
     string invalidDir = "rkvh";
-    string invalidFullPath = dirFullPath1 + slash + invalidDir + slash + newFileName;
+    string invalidFullPath = baseDirFullPath1 + slash + invalidDir + slash + newFileName;
     BOOST_CHECK_THROW( tailOfFile(sessionKey, invalidFullPath, content), VishnuException);
     // E2 case
     string noAccessLocalPath = "/root/abc";
@@ -272,7 +314,7 @@ BOOST_AUTO_TEST_CASE(TailOfFile_Exceptions)
     BOOST_CHECK_THROW( tailOfFile(sessionKey, noAccessFullPath, content), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
-    string invalidMachineFullPath = invalidMachineId + sep + remoteDir;
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir;
     BOOST_CHECK_THROW( tailOfFile(sessionKey, invalidMachineFullPath, content), VishnuException);
 
   } catch (VishnuException& e) {
@@ -324,7 +366,7 @@ BOOST_AUTO_TEST_CASE(ContentOfFile_Exceptions)
     string content;
     // E1 case
     string invalidDir = "rkvh";
-    string invalidFullPath = dirFullPath1 + slash + invalidDir + slash + newFileName;
+    string invalidFullPath = baseDirFullPath1 + slash + invalidDir + slash + newFileName;
     BOOST_CHECK_THROW( contentOfFile(sessionKey, invalidFullPath, content), VishnuException);
     // E2 case
     string noAccessLocalPath = "/root/abc";
@@ -332,7 +374,7 @@ BOOST_AUTO_TEST_CASE(ContentOfFile_Exceptions)
     BOOST_CHECK_THROW( contentOfFile(sessionKey, noAccessFullPath, content), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
-    string invalidMachineFullPath = invalidMachineId + sep + remoteDir;
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir;
     BOOST_CHECK_THROW( contentOfFile(sessionKey, invalidMachineFullPath, content), VishnuException);
 
   } catch (VishnuException& e) {
@@ -386,7 +428,7 @@ BOOST_AUTO_TEST_CASE(GetFileInfo_Exceptions)
     FileStat stat;
     // E1 case
     string invalidDir = "rkvh";
-    string invalidFullPath = dirFullPath1 + slash + invalidDir + slash + newFileName;
+    string invalidFullPath = baseDirFullPath1 + slash + invalidDir + slash + newFileName;
     BOOST_CHECK_THROW( getFilesInfo(sessionKey, invalidFullPath, stat), VishnuException);
     // E2 case
     string noAccessLocalPath = "/root/abc";
@@ -394,7 +436,7 @@ BOOST_AUTO_TEST_CASE(GetFileInfo_Exceptions)
     BOOST_CHECK_THROW( getFilesInfo(sessionKey, noAccessFullPath, stat), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
-    string invalidMachineFullPath = invalidMachineId + sep + remoteDir;
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir;
     BOOST_CHECK_THROW( getFilesInfo(sessionKey, invalidMachineFullPath, stat), VishnuException);
 
   } catch (VishnuException& e) {
@@ -446,7 +488,7 @@ BOOST_AUTO_TEST_CASE(ChangeFileRights_Exceptions)
   try {
     // E1 case
     string invalidDir = "rkvh";
-    string invalidFullPath = dirFullPath1 + slash + invalidDir + slash + newFileName;
+    string invalidFullPath = baseDirFullPath1 + slash + invalidDir + slash + newFileName;
     BOOST_CHECK_THROW( chMod(sessionKey, 600, invalidFullPath), VishnuException);
     // E2 case
     string noAccessLocalPath = "/root/abc";
@@ -454,7 +496,7 @@ BOOST_AUTO_TEST_CASE(ChangeFileRights_Exceptions)
     BOOST_CHECK_THROW( chMod(sessionKey, 600, noAccessFullPath), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
-    string invalidMachineFullPath = invalidMachineId + sep + remoteDir;
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir;
     BOOST_CHECK_THROW( chMod(sessionKey, 600, invalidMachineFullPath), VishnuException);
 
   } catch (VishnuException& e) {
@@ -506,7 +548,7 @@ BOOST_AUTO_TEST_CASE(ChangeGroup_Exceptions)
   try {
     // E1 case
     string invalidDir = "rkvh";
-    string invalidFullPath = dirFullPath1 + slash + invalidDir + slash + newFileName;
+    string invalidFullPath = baseDirFullPath1 + slash + invalidDir + slash + newFileName;
     BOOST_CHECK_THROW( chGrp(sessionKey, groupTest, invalidFullPath), VishnuException);
     // E2 case
     string noAccessLocalPath = "/root/abc";
@@ -514,7 +556,7 @@ BOOST_AUTO_TEST_CASE(ChangeGroup_Exceptions)
     BOOST_CHECK_THROW( chGrp(sessionKey, groupTest, noAccessFullPath), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
-    string invalidMachineFullPath = invalidMachineId + sep + remoteDir;
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir;
     BOOST_CHECK_THROW( chGrp(sessionKey, groupTest, invalidMachineFullPath), VishnuException);
 
   } catch (VishnuException& e) {
