@@ -146,7 +146,7 @@ vishnu::get_file_content(const std::string& filePath){
 * \return raises an exception on error
 */
 int
-vishnu::moveFile(std::string src, std::string dest, const std::string& filename) {
+vishnu::boostMoveFile(const std::string& src, const std::string& dest, const std::string& filename) {
 
   bfs::path filePath(src);
   bfs::path fileDestPath(dest);
