@@ -13,4 +13,3 @@ DELETE FROM users;
 DELETE FROM vishnu;
 DELETE FROM vsession;
 DELETE FROM clmachine;
--- DELETE FROM process;
