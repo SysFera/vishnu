@@ -386,6 +386,10 @@ list<string> LocalFileProxy::ls(const LsDirOptions& options) const {
   while ((entry=readdir(dir))) {
     result.push_back(entry->d_name);
   }
+
+  free(dir);
+  free(entry);
+
   return result;  
 }
 
