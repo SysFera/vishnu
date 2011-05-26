@@ -787,7 +787,6 @@ solveSetUpFreq(diet_profile_t* pb){
   string retErr = "";
   int mapperkey;
   string cmd;
-  char *freqSer   = NULL;
 
 
   diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
