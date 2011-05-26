@@ -13,10 +13,6 @@ HM::~HM(){
 
 void
 HM::run(){
-  int res;
-  double disk;
-  double mem;
-  double cpu;
   int freq;
   // Hostname limit size of 200
   char hname[200];
