@@ -27,6 +27,7 @@ ThresholdServer::setThreshold(IMS_Data::Threshold_ptr tree) {
   string nuid;
   string nmid;
 
+  // Check if the user is an admin
   if (!msession.isAdmin()){
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "set threshold is an admin function. A user cannot call it");
   }

@@ -1,5 +1,6 @@
 #include "SysInfoServer.hpp"
 #include "DbFactory.hpp"
+#include "IMSVishnuException.hpp"
 
 SysInfoServer::SysInfoServer(const UserServer session):msession(session) {
   DbFactory factory;
@@ -26,6 +27,11 @@ SysInfoServer::getSysInfo() {
   vector<string>::iterator iter;
 
   if(mop.getMachineId().compare("")) {
+    string reqnmid = "SELECT * from machine where \"machineid\"='"+mop.getMachineId()+"'";
+    boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
+    if(result->getNbTuples() == 0) {
+      throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
+    }
     req += " AND \"machineid\"='"+mop.getMachineId()+"'";
   }
   IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
