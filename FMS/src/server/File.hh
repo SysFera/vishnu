@@ -114,10 +114,14 @@ public:
   virtual std::string tail(const TailOfFileOptions& options) = 0;
  virtual std::list<std::string> ls(const LsDirOptions& options) const = 0;
   
+  virtual int transfer(const std::string& path, const std::string& trCmd)=0;
   virtual int cp(const std::string& path, const CpFileOptions& options) = 0;
+  virtual int mv(const std::string& path, const MvFileOptions& options) = 0;
  
  static std::string extHost(const std::string& path);
  static std::string extName(const std::string& path);
+ static std::string extCpCmd(const CpFileOptions& path);
+ static std::string extMvCmd(const MvFileOptions& path);
 
 
 };

@@ -5,7 +5,6 @@
 #include <iostream>
 
 #include "DIET_server.h"
-#include "RemoteFile.hh"
 #include "FileFactory.hh"
 #include "File.hh"
 #include "services.hh"

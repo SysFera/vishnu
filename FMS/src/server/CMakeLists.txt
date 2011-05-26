@@ -24,8 +24,6 @@ include_directories(
 
 add_library(fms-server STATIC
 File
-LocalFile
-RemoteFile
 SSHFile
 FileFactory
   )
