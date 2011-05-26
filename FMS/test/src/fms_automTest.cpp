@@ -7,6 +7,8 @@
 // 1/ check the cmake parameters TEST_*
 // 2/ setup a 'test' unix group on host TEST_FMS_HOST1
 //    and add the user TEST_USER_LOGIN to this group
+// 3/ check that the /root directory is not accessible for
+//    the user that runs the tests (on TEST_FMS_HOST1)
 
 //UMS forward Headers
 #include "UMS_Data_forward.hpp"
@@ -15,6 +17,10 @@
 #include "FMS_Data_forward.hpp"
 #include "FMS_fixtures.hpp"
 #include "FMS_testconfig.h"
+#define STATUS_INPROGRESS 1
+#define STATUS_COMPLETED 2
+#define STATUS_CANCELED 3
+#define STATUS_FAILED 4
 
 // C++ Headers
 #include <iostream>
@@ -54,9 +60,10 @@ static const string newDirName = "FMS_test_dir";
 static const string localDir = FMSWORKINGDIR;
 static const string localFilePath = localDir + slash + newFileName;
 // remote
-static const string remoteBaseDir = "/tmp";
-static const string baseDirFullPath1 = machineId1 + sep + remoteBaseDir;
-static const string baseDirFullPath2 = machineId2 + sep + remoteBaseDir;
+static const string remoteBaseDir1 = FMSDIR1;
+static const string remoteBaseDir2 = FMSDIR2;
+static const string baseDirFullPath1 = machineId1 + sep + remoteBaseDir1;
+static const string baseDirFullPath2 = machineId2 + sep + remoteBaseDir2;
 static const string fileFullPath1 = baseDirFullPath1 + slash + newFileName;
 static const string fileFullPath2 = baseDirFullPath2 + slash + newFileName;
 static const string dirFullPath1 = baseDirFullPath1 + slash + newDirName;
@@ -111,7 +118,7 @@ BOOST_AUTO_TEST_CASE(CreateFile_Exceptions)
     BOOST_CHECK_THROW( createFile(sessionKey, noAccessFullPath), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
-    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir;
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
     BOOST_CHECK_THROW( createFile(sessionKey, invalidMachineFullPath), VishnuException);
 
   } catch (VishnuException& e) {
@@ -155,7 +162,7 @@ BOOST_AUTO_TEST_CASE(DeleteFile_Exceptions)
     BOOST_CHECK_THROW( removeFile(sessionKey, noAccessFullPath), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
-    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir;
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
     BOOST_CHECK_THROW( removeFile(sessionKey, invalidMachineFullPath), VishnuException);
 
   } catch (VishnuException& e) {
@@ -208,7 +215,7 @@ BOOST_AUTO_TEST_CASE(HeadOfFile_Exceptions)
     BOOST_CHECK_THROW( headOfFile(sessionKey, noAccessFullPath, content), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
-    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir;
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
     BOOST_CHECK_THROW( headOfFile(sessionKey, invalidMachineFullPath, content), VishnuException);
 
   } catch (VishnuException& e) {
@@ -260,7 +267,7 @@ BOOST_AUTO_TEST_CASE(TailOfFile_Exceptions)
     BOOST_CHECK_THROW( tailOfFile(sessionKey, noAccessFullPath, content), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
-    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir;
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
     BOOST_CHECK_THROW( tailOfFile(sessionKey, invalidMachineFullPath, content), VishnuException);
 
   } catch (VishnuException& e) {
@@ -314,7 +321,7 @@ BOOST_AUTO_TEST_CASE(ContentOfFile_Exceptions)
     BOOST_CHECK_THROW( contentOfFile(sessionKey, noAccessFullPath, content), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
-    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir;
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
     BOOST_CHECK_THROW( contentOfFile(sessionKey, invalidMachineFullPath, content), VishnuException);
 
   } catch (VishnuException& e) {
@@ -369,7 +376,7 @@ BOOST_AUTO_TEST_CASE(GetFileInfo_Exceptions)
     BOOST_CHECK_THROW( getFilesInfo(sessionKey, noAccessFullPath, stat), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
-    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir;
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
     BOOST_CHECK_THROW( getFilesInfo(sessionKey, invalidMachineFullPath, stat), VishnuException);
 
   } catch (VishnuException& e) {
@@ -421,7 +428,7 @@ BOOST_AUTO_TEST_CASE(ChangeFileRights_Exceptions)
     BOOST_CHECK_THROW( chMod(sessionKey, 600, noAccessFullPath), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
-    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir;
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
     BOOST_CHECK_THROW( chMod(sessionKey, 600, invalidMachineFullPath), VishnuException);
 
   } catch (VishnuException& e) {
@@ -473,7 +480,7 @@ BOOST_AUTO_TEST_CASE(ChangeGroup_Exceptions)
     BOOST_CHECK_THROW( chGrp(sessionKey, groupTest, noAccessFullPath), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
-    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir;
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
     BOOST_CHECK_THROW( chGrp(sessionKey, groupTest, invalidMachineFullPath), VishnuException);
 
   } catch (VishnuException& e) {
@@ -489,7 +496,7 @@ BOOST_AUTO_TEST_SUITE_END()
 /*****************************************************************************/
 
 /**
- * \brief Check if given strings are found in directory contentOfFile
+ * \brief Check if given strings are found in directory
  * \param sessionKey  the session key
  * \param dirFullPath the directory complete path (host:path)
  * \param names       the strings to search for (vector)
@@ -506,11 +513,9 @@ bool areFoundInDir(const string& sessionKey,
   for (vector<string>::const_iterator iterNames = names.begin();
     iterNames != names.end();
     ++iterNames) {
-    BOOST_MESSAGE("@@@@ look for : " + *iterNames);
       bool isFound = false;
       vector<string>::const_iterator iter = dirContent.getStrings().begin();
       while (!isFound && !(iter == dirContent.getStrings().end())) {
-        BOOST_MESSAGE("DIR CONTENT: " + *iter);
         isFound = (*iter).find(*iterNames) != string::npos;
         ++iter;
       }
@@ -521,6 +526,20 @@ bool areFoundInDir(const string& sessionKey,
   }
   return areFound;
 }
+/**
+ * \brief Check if a given string is found in directory
+ * \param sessionKey  the session key
+ * \param dirFullPath the directory complete path (host:path)
+ * \param name        the string to search for
+ * \return true name is found within the directory long content
+ */
+bool isFoundInDir(const string& sessionKey,
+                  const string& dirFullPath,
+                  const string& name) {
+  return areFoundInDir(sessionKey, dirFullPath, ba::list_of(name));
+}
+/**
+ *
 /**
  * \brief Add prefix to a vector of strings
  * \param prefix  the common prefix
@@ -573,7 +592,7 @@ BOOST_AUTO_TEST_CASE(CreateDir_Base)
   try {
     BOOST_REQUIRE( createDir(sessionKey, dirFullPath1) == 0);
     // Check 1: list content of parent directory
-    bool isNewDirFound = areFoundInDir(sessionKey, baseDirFullPath1, ba::list_of(newDirName));
+    bool isNewDirFound = isFoundInDir(sessionKey, baseDirFullPath1, newDirName);
     BOOST_REQUIRE(isNewDirFound);
     // Check 2: create new file in new directory
     string fileFullPath = dirFullPath1 + slash + newFileName;
@@ -581,6 +600,32 @@ BOOST_AUTO_TEST_CASE(CreateDir_Base)
     // Cleanup
     BOOST_CHECK( removeFile(sessionKey, fileFullPath) == 0);
     BOOST_CHECK( removeDir(sessionKey, dirFullPath1) == 0);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+BOOST_AUTO_TEST_CASE(CreateDir_Exceptions)
+{
+  BOOST_TEST_MESSAGE("Testing directory creation errors UC F1.CR2-E");
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    // E1 case
+    string invalidDir = "rkvh";
+    string invalidFullPath = baseDirFullPath1 + slash + invalidDir + slash + newDirName;
+    BOOST_CHECK_THROW( createDir(sessionKey, invalidFullPath), VishnuException);
+    // E2 case
+    string noAccessLocalPath = "/root/abc";
+    string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
+    BOOST_CHECK_THROW( createDir(sessionKey, noAccessFullPath), VishnuException);
+    // E3 case
+    string invalidMachineId = "tt";
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
+    BOOST_CHECK_THROW( createDir(sessionKey, invalidMachineFullPath), VishnuException);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
@@ -598,8 +643,34 @@ BOOST_AUTO_TEST_CASE(DeleteDir_Base)
     BOOST_REQUIRE( createDir(sessionKey, dirFullPath1) == 0); // setup
     BOOST_REQUIRE( removeDir(sessionKey, dirFullPath1) == 0); // test
     // Check: list content of parent directory
-    bool isRemovedDirFound = areFoundInDir(sessionKey, baseDirFullPath1, ba::list_of(newDirName));
+    bool isRemovedDirFound = isFoundInDir(sessionKey, baseDirFullPath1, newDirName);
     BOOST_REQUIRE(!isRemovedDirFound);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+BOOST_AUTO_TEST_CASE(DeleteDir_Exceptions)
+{
+  BOOST_TEST_MESSAGE("Testing directory deletion errors UC F1.DE2-E");
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    // E1 case
+    string invalidDir = "rkvh";
+    string invalidFullPath = baseDirFullPath1 + slash + invalidDir;
+    BOOST_CHECK_THROW( removeDir(sessionKey, invalidFullPath), VishnuException);
+    // E2 case
+    string noAccessLocalPath = "/root/abc";
+    string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
+    BOOST_CHECK_THROW( removeDir(sessionKey, noAccessFullPath), VishnuException);
+    // E3 case
+    string invalidMachineId = "tt";
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
+    BOOST_CHECK_THROW( removeDir(sessionKey, invalidMachineFullPath), VishnuException);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
@@ -641,8 +712,229 @@ BOOST_AUTO_TEST_CASE(ListDirContent_Base)
   }
 }
 
+BOOST_AUTO_TEST_CASE(ListDirContent_Exceptions)
+{
+  BOOST_TEST_MESSAGE("Testing directory deletion errors UC F1.DE2-E");
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    StringList dirContent;
+    // E1 case
+    string invalidDir = "rkvh";
+    string invalidFullPath = baseDirFullPath1 + slash + invalidDir;
+    BOOST_CHECK_THROW( listDir(sessionKey, invalidFullPath, dirContent), VishnuException);
+    // E2 case
+    string noAccessLocalPath = "/root";
+    string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
+    BOOST_CHECK_THROW( listDir(sessionKey, noAccessFullPath, dirContent), VishnuException);
+    // E3 case
+    string invalidMachineId = "tt";
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
+    BOOST_CHECK_THROW( listDir(sessionKey, invalidMachineFullPath, dirContent), VishnuException);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
 
 BOOST_AUTO_TEST_SUITE_END()
 
+/*****************************************************************************/
+/************************** T R A N S F E R S ********************************/
+/*****************************************************************************/
+
+
+/**
+ * \brief Wait until termination of an asynchronous file transfer
+ * \param sessionKey the session Key
+ * \param transferInfo  the file transfer information
+ * \return the final status value of the file transfer (-1 if error)
+ */
+int
+waitAsyncCopy(const string& sessionKey, const FileTransfer& transferInfo) {
+  unsigned int        pollCounter = 10;
+  bool                terminated = false;
+  LsTransferOptions   options;
+  FileTransferList    fileTransferList;
+  options.setTransferId(transferInfo.getTransferId());
+  while (!terminated && pollCounter--) {
+    if (listFileTransfers(sessionKey, fileTransferList, options) != 0) {
+      BOOST_MESSAGE("ERROR: Could not retrieve file transfer information");
+      return -1;
+    }
+    if (fileTransferList.getFileTransfers().size() == 1) {
+      if (fileTransferList.getFileTransfers().get(0)->getStatus() != STATUS_INPROGRESS) {
+        terminated = true;
+      }
+    } else if (fileTransferList.getFileTransfers().size() == 0) {
+      BOOST_MESSAGE("ERROR: File transfer list is empty for a given transferId!");
+      return -1;
+    } else {
+      BOOST_MESSAGE("ERROR: File transfer list contains more than 1 item for a given transferId!");
+      return -1;
+    }
+  }
+  if (!terminated) {
+    BOOST_MESSAGE("ERROR: End of polling for file transfer");
+    return -1;
+  }
+  return fileTransferList.getFileTransfers().get(0)->getStatus();
+}
+
+// All tests of category 4
+BOOST_AUTO_TEST_SUITE(fileAndDirTransfers)
+
+BOOST_AUTO_TEST_CASE(SyncCopyFile_Base)
+{
+  BOOST_TEST_MESSAGE("Testing synchronous copy of files UC F2.CP1-B");
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    createFile<10>(localFilePath);
+
+    // local to local (changing name)
+//     BOOST_MESSAGE("Checking local to local copy");
+//     string backupFileName = newFileName + ".bak";
+//     string backupLocalPath = localDir + backupFileName;
+//     BOOST_REQUIRE( copyFile(sessionKey, localFilePath, backupLocalPath) == 0);
+    // Check
+//     bool isLocalCopyFound = areFoundInDir(sessionKey, localDir, ba::list_of(backupFileName));
+//     BOOST_CHECK(isLocalCopyFound);
+    // Cleanup
+//     BOOST_CHECK( removeFile(sessionKey, backupLocalPath) == 0);
+
+    // local to remote
+    BOOST_MESSAGE("Checking local to remote copy");
+    BOOST_REQUIRE( copyFile(sessionKey, localFilePath, baseDirFullPath1) == 0);
+    // Check
+    bool isRemoteCopyFound = isFoundInDir(sessionKey, baseDirFullPath1, newFileName);
+    BOOST_CHECK(isRemoteCopyFound);
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
+
+    // remote to local
+    BOOST_MESSAGE("Checking remote to local copy");
+    string localCopyName = newFileName + ".bak";
+    string localCopyPath = localDir + localCopyName;
+    BOOST_REQUIRE( copyFile(sessionKey, fileFullPath1, localCopyPath) == 0);
+    // Check
+    bool isLocalCopyFound = isFoundInDir(sessionKey, localDir,localCopyName);
+    BOOST_CHECK(isLocalCopyFound);
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, localCopyPath) == 0);
+
+    // remote to remote
+    BOOST_MESSAGE("Checking remote to remote copy");
+    BOOST_REQUIRE( copyFile(sessionKey, fileFullPath1, baseDirFullPath2) == 0);
+    // Check
+    isRemoteCopyFound = isFoundInDir(sessionKey, baseDirFullPath2, newFileName);
+    BOOST_CHECK(isRemoteCopyFound);
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
+    BOOST_CHECK( removeFile(sessionKey, fileFullPath2) == 0);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+
+BOOST_AUTO_TEST_CASE(AsyncCopyFile_Base)
+{
+  BOOST_TEST_MESSAGE("Testing asynchronous copy of files UC F2.CP2-B");
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    FileTransfer transferInfo;
+    createFile<1000>(localFilePath);
+
+    // local to remote
+    BOOST_MESSAGE("Checking local to remote copy");
+    BOOST_REQUIRE( copyAsyncFile(sessionKey, localFilePath, baseDirFullPath1, transferInfo) == 0);
+    // Check
+    BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_COMPLETED );
+    bool isRemoteCopyFound = isFoundInDir(sessionKey, baseDirFullPath1, newFileName);
+    BOOST_CHECK(isRemoteCopyFound);
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
+
+    // remote to local
+    BOOST_MESSAGE("Checking remote to local copy");
+    string localCopyName = newFileName + ".bak";
+    string localCopyPath = localDir + localCopyName;
+    BOOST_REQUIRE( copyAsyncFile(sessionKey, fileFullPath1, localCopyPath, transferInfo) == 0);
+    // Check
+    BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_COMPLETED );
+    bool isLocalCopyFound = isFoundInDir(sessionKey, localDir, localCopyName);
+    BOOST_CHECK(isLocalCopyFound);
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, localCopyPath) == 0);
+
+    // remote to remote
+    BOOST_MESSAGE("Checking remote to remote copy");
+    BOOST_REQUIRE( copyAsyncFile(sessionKey, fileFullPath1, baseDirFullPath2, transferInfo) == 0);
+    // Check
+    BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_COMPLETED );
+    isRemoteCopyFound = isFoundInDir(sessionKey, baseDirFullPath2, newFileName);
+    BOOST_CHECK(isRemoteCopyFound);
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
+    BOOST_CHECK( removeFile(sessionKey, fileFullPath2) == 0);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+BOOST_AUTO_TEST_CASE(SyncMoveFile_Base)
+{
+  BOOST_TEST_MESSAGE("Testing synchronous move of files UC F2.MV1-B");
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    createFile<10>(localFilePath);
+    // local to remote
+    BOOST_MESSAGE("Checking local to remote move");
+    BOOST_REQUIRE( moveFile(sessionKey, localFilePath, baseDirFullPath1) == 0);
+    // Check
+    bool isLocalSourceFound = isFoundInDir(sessionKey, localDir, newFileName);
+    BOOST_CHECK(!isLocalSourceFound);
+    bool isRemoteCopyFound1 = isFoundInDir(sessionKey, baseDirFullPath1, newFileName);
+    BOOST_CHECK(isRemoteCopyFound1);
+
+    // remote to remote (using file from previous step)
+    BOOST_MESSAGE("Checking remote to remote move");
+    BOOST_REQUIRE( moveFile(sessionKey, fileFullPath1, baseDirFullPath2) == 0);
+    // Check
+    isRemoteCopyFound1 = isFoundInDir(sessionKey, baseDirFullPath1, newFileName);
+    BOOST_CHECK(!isRemoteCopyFound1);
+    bool isRemoteCopyFound2 = isFoundInDir(sessionKey, baseDirFullPath2, newFileName);
+    BOOST_CHECK(isRemoteCopyFound2);
+
+    // remote to local (using file from previous step)
+    BOOST_MESSAGE("Checking remote to local move");
+    BOOST_REQUIRE( moveFile(sessionKey, fileFullPath2, localDir) == 0);
+    // Check
+    isRemoteCopyFound2 = isFoundInDir(sessionKey, baseDirFullPath2, newFileName);
+    BOOST_CHECK(!isRemoteCopyFound2);
+    bool isLocalCopyFound = isFoundInDir(sessionKey, localDir, newFileName);
+    BOOST_CHECK(isLocalCopyFound);
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+BOOST_AUTO_TEST_SUITE_END()
 // THE END
 

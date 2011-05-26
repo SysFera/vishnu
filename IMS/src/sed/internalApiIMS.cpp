@@ -42,6 +42,7 @@ solveExport(diet_profile_t* pb){
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
+  IMS_Data::ExportOp_ptr expOp = NULL;
 
   try {
     userServer.init();
@@ -54,7 +55,6 @@ solveExport(diet_profile_t* pb){
     cmd = mapper->finalize(mapperkey);
 
     // Getting options
-    IMS_Data::ExportOp_ptr expOp = NULL;
     if(!parseEmfObject(string(options), expOp)) {
       throw UserException(ERRCODE_INVALID_PARAM, "solve_export: Curent restart option object is not well built");
     }
@@ -83,16 +83,18 @@ solveExport(diet_profile_t* pb){
     diet_string_set(diet_parameter(pb,4), strdup(""), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,5), strdup(retErr.c_str()), DIET_VOLATILE);
   }
+  if (expOp) {
+    delete expOp;
+  }
   return 0;
 }
 
-// TODO FAIRE CE SERVICE COMME NOMME
 int
 solveCurMetric(diet_profile_t* pb){
   char *sessionKey   = NULL;
   char *curOpSer = NULL;
   char *mid = NULL;
-  char *curSer   = NULL;
+  string curSer;
   string error;
   string retErr = "";
   int mapperkey;
@@ -104,6 +106,7 @@ solveCurMetric(diet_profile_t* pb){
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
+  IMS_Data::CurMetricOp_ptr curOp = NULL;
 
   try {
     userServer.init();
@@ -115,7 +118,6 @@ solveCurMetric(diet_profile_t* pb){
     cmd = mapper->finalize(mapperkey);
 
     // Getting options
-    IMS_Data::CurMetricOp_ptr curOp = NULL;
     if(!parseEmfObject(string(curOpSer), curOp)) {
       throw UserException(ERRCODE_INVALID_PARAM, "solve_getCurentMetricValue: Curent metric option object is not well built");
     }
@@ -128,12 +130,12 @@ solveCurMetric(diet_profile_t* pb){
     // Serializing the results
     const char* name = "solve_getCurMetric";
     ::ecorecpp::serializer::serializer _ser(name);
-    curSer = strdup(_ser.serialize(const_cast<IMS_Data::ListMetric_ptr>(res)).c_str());
+    curSer = _ser.serialize(const_cast<IMS_Data::ListMetric_ptr>(res));
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,3), strdup(curSer), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(curSer.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,4), strdup(retErr.c_str()), DIET_VOLATILE);
-
+    
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
   } catch (VishnuException& e){
@@ -150,6 +152,9 @@ solveCurMetric(diet_profile_t* pb){
     diet_string_set(diet_parameter(pb,4), strdup(retErr.c_str()), DIET_VOLATILE);
 
   }
+  if (curOp) {
+    delete curOp;
+  }
   return 0;
 }
 
@@ -158,7 +163,7 @@ solveOldMetric(diet_profile_t* pb){
   char *sessionKey   = NULL;
   char *histOpSer = NULL;
   char *mid = NULL;
-  char *histSer   = NULL;
+  string histSer;
   string error;
   string retErr = "";
   int mapperkey;
@@ -170,6 +175,7 @@ solveOldMetric(diet_profile_t* pb){
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
+  IMS_Data::MetricHistOp_ptr histOp = NULL;
 
   try {
     userServer.init();
@@ -181,7 +187,6 @@ solveOldMetric(diet_profile_t* pb){
     cmd = mapper->finalize(mapperkey);
 
     // Getting options
-    IMS_Data::MetricHistOp_ptr histOp = NULL;
     if(!parseEmfObject(string(histOpSer), histOp)) {
       throw UserException(ERRCODE_INVALID_PARAM, "solve_getMetricHistory: Metric history option object is not well built");
     }
@@ -195,10 +200,10 @@ solveOldMetric(diet_profile_t* pb){
     // Serializing the results
     const char* name = "solve_getHistMetric";
     ::ecorecpp::serializer::serializer _ser(name);
-    histSer = strdup(_ser.serialize(const_cast<IMS_Data::ListMetric_ptr>(res)).c_str());
+    histSer = _ser.serialize(const_cast<IMS_Data::ListMetric_ptr>(res));
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,3), strdup(histSer), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(histSer.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,4), strdup(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
@@ -218,6 +223,9 @@ solveOldMetric(diet_profile_t* pb){
     diet_string_set(diet_parameter(pb,4), strdup(retErr.c_str()), DIET_VOLATILE);
 
   }
+  if (histOp) {
+    delete histOp;
+  }
   return 0;
 }
 
@@ -225,7 +233,7 @@ int
 solvePS(diet_profile_t* pb){
   char *sessionKey   = NULL;
   char *processOpSer = NULL;
-  char *processSer   = NULL;
+  string processSer;
   string error;
   string retErr = "";
   int mapperkey;
@@ -236,6 +244,7 @@ solvePS(diet_profile_t* pb){
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
+  IMS_Data::ProcessOp_ptr processOp = NULL;
 
   try {
     userServer.init();
@@ -246,7 +255,6 @@ solvePS(diet_profile_t* pb){
     cmd = mapper->finalize(mapperkey);
 
     // Getting options
-    IMS_Data::ProcessOp_ptr processOp = NULL;
     if(!parseEmfObject(string(processOpSer), processOp)) {
       throw UserException(ERRCODE_INVALID_PARAM, "solve_getProcesses: Process option object is not well built");
     }
@@ -261,10 +269,10 @@ solvePS(diet_profile_t* pb){
     // Serializing the results
     const char* name = "solve_getProcesses";
     ::ecorecpp::serializer::serializer _ser(name);
-    processSer = strdup(_ser.serialize(const_cast<IMS_Data::ListProcesses_ptr>(res)).c_str());
+    processSer = _ser.serialize(const_cast<IMS_Data::ListProcesses_ptr>(res));
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), strdup(processSer), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), strdup(processSer.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
@@ -283,7 +291,9 @@ solvePS(diet_profile_t* pb){
     diet_string_set(diet_parameter(pb,2), strdup(""), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
   }
-
+  if (processOp) {
+    delete processOp;
+  }
   return 0;
 }
 
@@ -295,7 +305,6 @@ solveSetSysInfo(diet_profile_t* pb){
   string retErr = "";
   int mapperkey;
   string cmd;
-  char *sysSer   = NULL;
 
 
   diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
@@ -303,9 +312,9 @@ solveSetSysInfo(diet_profile_t* pb){
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
+  IMS_Data::SystemInfo_ptr sysinf = NULL;
   try {
     // Getting options
-    IMS_Data::SystemInfo_ptr sysinf = NULL;
     if(!parseEmfObject(string(sys), sysinf)) {
       throw UserException(ERRCODE_INVALID_PARAM, "solve_setSysInfo: system info object is not well built");
     }
@@ -339,6 +348,9 @@ solveSetSysInfo(diet_profile_t* pb){
     // Setting diet output parameters
     diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
   }
+  if (sysinf) {
+    delete sysinf;
+  }
   return 0;
 }
 
@@ -346,7 +358,7 @@ int
 solveGetThreshold(diet_profile_t* pb){
   char *sessionKey   = NULL;
   char *treeOpSer = NULL;
-  char *treeSer   = NULL;
+  string treeSer;
   string error;
   string retErr = "";
   int mapperkey;
@@ -358,6 +370,7 @@ solveGetThreshold(diet_profile_t* pb){
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
+  IMS_Data::ThresholdOp_ptr treeOp = NULL;
 
   try {
     userServer.init();
@@ -368,7 +381,6 @@ solveGetThreshold(diet_profile_t* pb){
     cmd = mapper->finalize(mapperkey);
 
     // Getting options
-    IMS_Data::ThresholdOp_ptr treeOp = NULL;
     if(!parseEmfObject(string(treeOpSer), treeOp)) {
       throw UserException(ERRCODE_INVALID_PARAM, "solve_getThreshold: threshold option object is not well built");
     }
@@ -383,10 +395,10 @@ solveGetThreshold(diet_profile_t* pb){
     // Serializing the results
     const char* name = "solve_getThreshold";
     ::ecorecpp::serializer::serializer _ser(name);
-    treeSer = strdup(_ser.serialize(const_cast<IMS_Data::ListThreshold_ptr>(res)).c_str());
+    treeSer = _ser.serialize(const_cast<IMS_Data::ListThreshold_ptr>(res));
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), strdup(treeSer), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), strdup(treeSer.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
@@ -405,6 +417,9 @@ solveGetThreshold(diet_profile_t* pb){
 
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+  }
+  if (treeOp) {
+    delete treeOp;
   }
   return 0;
 }
@@ -470,7 +485,6 @@ solveSetThreshold(diet_profile_t* pb){
   string retErr = "";
   int mapperkey;
   string cmd;
-  char *treeSer   = NULL;
 
 
   diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
@@ -478,9 +492,9 @@ solveSetThreshold(diet_profile_t* pb){
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
+  IMS_Data::Threshold_ptr treeinf = NULL;
   try {
     // Getting options
-    IMS_Data::Threshold_ptr treeinf = NULL;
     if(!parseEmfObject(string(tree), treeinf)) {
       throw UserException(ERRCODE_INVALID_PARAM, "solve_setSysInfo: system info object is not well built");
     }
@@ -514,6 +528,9 @@ solveSetThreshold(diet_profile_t* pb){
     // Setting diet output parameters
     diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
   }
+  if (treeinf) {
+    delete treeinf;
+  }
   return 0;
 }
 
@@ -525,8 +542,6 @@ solveSetUID(diet_profile_t* pb){
   string retErr = "";
   int mapperkey;
   string cmd;
-  char *fmtSer   = NULL;
-
 
   diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
   diet_string_get(diet_parameter(pb,1), &fmt,NULL);
@@ -575,8 +590,6 @@ solveSetJID(diet_profile_t* pb){
   string retErr = "";
   int mapperkey;
   string cmd;
-  char *fmtSer   = NULL;
-
 
   diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
   diet_string_get(diet_parameter(pb,1), &fmt,NULL);
@@ -625,8 +638,6 @@ solveSetTID(diet_profile_t* pb){
   string retErr = "";
   int mapperkey;
   string cmd;
-  char *fmtSer   = NULL;
-
 
   diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
   diet_string_get(diet_parameter(pb,1), &fmt,NULL);
@@ -675,8 +686,6 @@ solveSetMID(diet_profile_t* pb){
   string retErr = "";
   int mapperkey;
   string cmd;
-  char *fmtSer   = NULL;
-
 
   diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
   diet_string_get(diet_parameter(pb,1), &fmt,NULL);
@@ -777,7 +786,6 @@ solveSetUpFreq(diet_profile_t* pb){
   string retErr = "";
   int mapperkey;
   string cmd;
-  char *freqSer   = NULL;
 
 
   diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
@@ -836,6 +844,7 @@ solveRestart(diet_profile_t* pb){
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
+  IMS_Data::RestartOp_ptr reOp = NULL;
 
   try {
     userServer.init();
@@ -847,7 +856,6 @@ solveRestart(diet_profile_t* pb){
     cmd = mapper->finalize(mapperkey);
 
     // Getting options
-    IMS_Data::RestartOp_ptr reOp = NULL;
     if(!parseEmfObject(string(op), reOp)) {
       throw UserException(ERRCODE_INVALID_PARAM, "solve_restart: restart option object is not well built");
     }
@@ -875,6 +883,9 @@ solveRestart(diet_profile_t* pb){
     // Setting diet output parameters
     diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
   }
+  if (reOp) {
+    delete reOp;
+  }
   return 0;
 }
 
@@ -892,6 +903,7 @@ solveStop(diet_profile_t* pb){
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
+  IMS_Data::Process_ptr procObj = NULL;
 
   try {
     userServer.init();
@@ -902,7 +914,6 @@ solveStop(diet_profile_t* pb){
     cmd = mapper->finalize(mapperkey);
 
     // Getting options
-    IMS_Data::Process_ptr procObj = NULL;
     if(!parseEmfObject(string(proc), procObj)) {
       throw UserException(ERRCODE_INVALID_PARAM, "solve_restart: restart option object is not well built");
     }
@@ -930,6 +941,9 @@ solveStop(diet_profile_t* pb){
     // Setting diet output parameters
     diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
   }
+  if (procObj) {
+    delete procObj;
+  }
   return 0;
 }
 
@@ -937,7 +951,7 @@ int
 solveGetSysInfo(diet_profile_t* pb){
   char *sessionKey   = NULL;
   char *sysOpSer = NULL;
-  char *sysSer   = NULL;
+  string sysSer;
   string error;
   string retErr = "";
   int mapperkey;
@@ -948,6 +962,7 @@ solveGetSysInfo(diet_profile_t* pb){
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
+  IMS_Data::SysInfoOp_ptr sysOp = NULL;
 
   try {
     userServer.init();
@@ -958,7 +973,6 @@ solveGetSysInfo(diet_profile_t* pb){
     cmd = mapper->finalize(mapperkey);
 
     // Getting options
-    IMS_Data::SysInfoOp_ptr sysOp = NULL;
     if(!parseEmfObject(string(sysOpSer), sysOp)) {
       throw UserException(ERRCODE_INVALID_PARAM, "solve_getSysInfo: sys info option object is not well built");
     }
@@ -973,10 +987,10 @@ solveGetSysInfo(diet_profile_t* pb){
     // Serializing the results
     const char* name = "solve_getSysInfo";
     ::ecorecpp::serializer::serializer _ser(name);
-    sysSer = strdup(_ser.serialize(const_cast<IMS_Data::ListSysInfo_ptr>(res)).c_str());
+    sysSer = _ser.serialize(const_cast<IMS_Data::ListSysInfo_ptr>(res));
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), strdup(sysSer), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), strdup(sysSer.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
@@ -995,7 +1009,9 @@ solveGetSysInfo(diet_profile_t* pb){
     diet_string_set(diet_parameter(pb,2), strdup(""), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
   }
-
+  if (sysOp) {
+    delete sysOp;
+  }
   return 0;
 }
 
