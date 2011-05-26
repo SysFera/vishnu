@@ -828,7 +828,7 @@ void RemoteFileProxy::printTransferID(const bool printTrID) {
   this->printTrID=printTrID;
 }
 
-int RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options){
+int RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options, const std::string& localServiceName){
 
   string destHost = FileProxy::extHost(dest);
   string localUser = "";
@@ -861,7 +861,7 @@ int RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options){
   diet_profile_t* profile;
   char* errMsg;
 
-  std::string serviceName("RemoteFileCopy");
+  std::string serviceName("Remote"+localServiceName);
 
   std::string sessionKey=this->getSession().getSessionKey();
 
@@ -906,4 +906,8 @@ int RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options){
 
   
 return 0;
+}
+
+int RemoteFileProxy::mv(const std::string& dest, const CpFileOptions& options) {
+  return cp(dest, options, "RemoteMoveFile");
 }
