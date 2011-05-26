@@ -398,7 +398,7 @@ list<string> LocalFileProxy::ls(const LsDirOptions& options) const {
 /* The function proceed to the file copy by itself if the
  * destination is a local path. Otherwise it calls the DIET service.
  */
-int LocalFileProxy::cp(const string& dest, const CpFileOptions& options) {
+int LocalFileProxy::cp(const string& dest, const CpFileOptions& options, const std::string& serviceName) {
   
   string host = FileProxy::extHost(dest);
   string path = FileProxy::extName(dest);
@@ -420,12 +420,10 @@ int LocalFileProxy::cp(const string& dest, const CpFileOptions& options) {
   diet_profile_t* profile;
   char* errMsg;
 
-  std::string serviceName("FileCopy");
-
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  profile = diet_profile_alloc("FileCopy", 5, 5, 6);
+  profile = diet_profile_alloc(const_cast<char*>(serviceName.c_str()), 5, 5, 6);
 
 
   if (ba::starts_with(getPath(),"/")  ){
@@ -468,4 +466,10 @@ int LocalFileProxy::cp(const string& dest, const CpFileOptions& options) {
   raiseExceptionIfNotEmptyMsg(errMsg);
   
   return 0;
+}
+
+int LocalFileProxy::mv(const string& dest, const CpFileOptions& options) {
+
+ return  cp(dest, options, "FileMove");
+
 }

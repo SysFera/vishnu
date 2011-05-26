@@ -32,8 +32,9 @@ public:
   virtual int rm();
   virtual int rmdir();
   virtual std::string tail(const TailOfFileOptions& options); 
-  virtual int cp(const std::string& dest, const CpFileOptions& options);
- // virtual int mv(const std::string& dest);
+  virtual int cp(const std::string& dest, const CpFileOptions& options, const std::string& serviceName="FileCopy");
+
+  virtual int mv(const std::string& dest, const CpFileOptions& options);
 
   virtual std::list<std::string> ls(const LsDirOptions& options) const;
 };
