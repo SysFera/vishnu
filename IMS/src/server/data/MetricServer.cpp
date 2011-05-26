@@ -12,25 +12,28 @@ using namespace vishnu;
 MetricServer::MetricServer(const UserServer session):msession(session) {
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
+  mvishnuId = 1;
+  mfreq = 0;
 }
 MetricServer::MetricServer(const UserServer session, IMS_Data::MetricHistOp_ptr op):msession(session){
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
   mhop = op;
+  mvishnuId = 1;
+  mfreq = 0;
 }
 MetricServer::MetricServer(const UserServer session, IMS_Data::CurMetricOp_ptr op):msession(session){
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
   mcop = op;
+  mvishnuId = 1;
+  mfreq = 0;
 }
 MetricServer::~MetricServer(){
 }
 
 void
 MetricServer::setUpFreq(unsigned int freq){
-  // TODO FIX MVISHNU ID
-  mvishnuId  = 1;
-
   if (!msession.isAdmin()){
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "set update frequency is an admin function. A user cannot call it");
   }
@@ -152,8 +155,6 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
 
 unsigned int
 MetricServer::checkUpFreq(){
-  // TODO FIX MVISHNU ID
-  mvishnuId  = 1;
   // Get the corresponding frequency
   string request = "select * from vishnu where vishnuid='";
   request += convertToString(mvishnuId);

@@ -27,7 +27,7 @@ set( TEST_FMS_DIR2 "/tmp" CACHE STRING "directory for file tests on server 2")
 mark_as_advanced( TEST_FMS_HOST1 )
 mark_as_advanced( TEST_FMS_HOST2 )
 mark_as_advanced( TEST_FMS_DIR1 )
-mark_as_advanced( TEST_FMS_DIR1 )
+mark_as_advanced( TEST_FMS_DIR2 )
 file( TO_NATIVE_PATH ${TEST_FMS_DIR1} FMSDIR1)
 file( TO_NATIVE_PATH ${TEST_FMS_DIR2} FMSDIR2)
 
