@@ -38,15 +38,12 @@ diet_profile_desc_t* getTailProfile() {
 int tailFile(diet_profile_t* profile) {
   string localPath, localUser, userKey, tail, acLogin, machineName;
   char* path, *user, *host,*sessionKey, *errMsg = NULL, *result = NULL, *optionsSerialized= NULL;
-  unsigned long* nline;
   
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
   diet_string_get(diet_parameter(profile, 1), &path, NULL);
   diet_string_get(diet_parameter(profile, 2), &user, NULL);
   diet_paramstring_get(diet_parameter(profile, 3), &host, NULL);
   diet_string_get(diet_parameter(profile, 4),&optionsSerialized, NULL);
-  
-  sysEndianChg<unsigned long>(*nline);
   
   std::cout << "Dans tailFile:  " << "\n"; 
   std::cout << "path:  " << path <<"\n"; 
