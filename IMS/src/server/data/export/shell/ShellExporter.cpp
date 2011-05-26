@@ -28,7 +28,6 @@ ShellExporter::~ShellExporter() {
 
 int
 ShellExporter::exporte(string oldSession, string &content){
-  bool authorized = true;
   vector<string>::iterator iter;
   vector<string> line;
   string desc;
