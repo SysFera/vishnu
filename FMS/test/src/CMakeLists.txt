@@ -22,8 +22,14 @@ include_directories(
 
 set( TEST_FMS_HOST1 "localhost" CACHE STRING " hostname of file server 1")
 set( TEST_FMS_HOST2 "localhost" CACHE STRING " hostname of file server 2")
+set( TEST_FMS_DIR1 "/tmp" CACHE STRING "directory for file tests on server 1")
+set( TEST_FMS_DIR2 "/tmp" CACHE STRING "directory for file tests on server 2")
 mark_as_advanced( TEST_FMS_HOST1 )
 mark_as_advanced( TEST_FMS_HOST2 )
+mark_as_advanced( TEST_FMS_DIR1 )
+mark_as_advanced( TEST_FMS_DIR1 )
+file( TO_NATIVE_PATH ${TEST_FMS_DIR1} FMSDIR1)
+file( TO_NATIVE_PATH ${TEST_FMS_DIR2} FMSDIR2)
 
 set (TEST_CONFIG_FMS "${PROJECT_BINARY_DIR}/include")
 file( TO_NATIVE_PATH ${TEST_CONFIG_FMS} TESTCONF )
