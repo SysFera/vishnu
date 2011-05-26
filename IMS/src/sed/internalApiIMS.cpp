@@ -89,7 +89,6 @@ solveExport(diet_profile_t* pb){
   return 0;
 }
 
-// TODO FAIRE CE SERVICE COMME NOMME
 int
 solveCurMetric(diet_profile_t* pb){
   char *sessionKey   = NULL;
