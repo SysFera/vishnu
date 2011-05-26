@@ -68,6 +68,12 @@ SysInfoServer::setSysInfo(IMS_Data::SystemInfo_ptr sys) {
   if (sys->getMachineId().compare("")==0) {
     throw UserException(ERRCODE_INVALID_PARAM, "Error missing the machine id. ");
   }
+  string reqnmid = "SELECT * from machine where \"machineid\"='"+sys->getMachineId()+"'";
+  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
+  if(result->getNbTuples() == 0) {
+    throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
+  }
+
   string request = "update \"machine\" * set ";
   if (sys->getDiskSpace() < 0 || sys->getMemory() < 0) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid negative value");

@@ -5,6 +5,9 @@
 #include "DIET_data.h"
 #include "DIET_server.h"
 #include "boost/date_time/posix_time/posix_time.hpp"
+#include "QueryServer.hpp"
+
+using namespace vishnu;
 
 MetricServer::MetricServer(const UserServer session):msession(session) {
   DbFactory factory;
@@ -27,6 +30,10 @@ void
 MetricServer::setUpFreq(unsigned int freq){
   // TODO FIX MVISHNU ID
   mvishnuId  = 1;
+
+  if (!msession.isAdmin()){
+    throw UMSVishnuException(ERRCODE_NO_ADMIN, "set update frequency is an admin function. A user cannot call it");
+  }
 
   if (freq < 1) {
     throw UserException(ERRCODE_INVALID_PARAM, "Error invalid frequency.");
@@ -217,7 +224,7 @@ MetricServer::getCurMet(){
 // TODO: Remove the constant values if possible !!!!!!!!!!!!
 IMS_Data::ListMetric*
 MetricServer::getHistMet(string machineId){
-  string request = "select * from state, machine where machine.machineid='"+machineId+"' AND machine.nummachineid=state.machine_nummachineid";
+  string request = "select * from state, machine where machine.machineid='"+machineId+"' AND machine.nummachineid=state.machine_nummachineid ";
   vector<string>::iterator iter;
   vector<string> results = vector<string>();
 
@@ -231,12 +238,26 @@ MetricServer::getHistMet(string machineId){
 
   // TODO BAD COMPARISON CHANGE IT
   if (mhop->getStartTime()>0) {
-    request += " AND EXTRACT( epoch FROM  time ) >";
-    request += convertToString(mhop->getStartTime());
+    time_t start = static_cast<time_t>(mhop->getStartTime());
+    if (start != -1) {
+      start = convertUTCtimeINLocaltime(start);
+      string startStr = boost::posix_time::to_simple_string(boost::posix_time::from_time_t(start));
+      std::ostringstream osValue;
+      osValue << startStr;
+      request.append(" and time >= ");
+      request.append("'"+osValue.str()+"'");
+    }
   }
   if (mhop->getEndTime()>0) {
-    request += " AND EXTRACT( epoch FROM  time ) <";
-    request += convertToString(mhop->getEndTime());
+    time_t end = static_cast<time_t>(mhop->getStartTime());
+    if (end != -1) {
+      end = convertUTCtimeINLocaltime(end);
+      string endStr = boost::posix_time::to_simple_string(boost::posix_time::from_time_t(end));
+      std::ostringstream osValue;
+      osValue << endStr;
+      request.append(" and time <= ");
+      request.append("'"+osValue.str()+"'");
+    }
   }
   IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
   IMS_Data::ListMetric_ptr mlistObject = ecoreFactory->createListMetric();
