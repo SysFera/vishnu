@@ -24,6 +24,7 @@ using namespace TMS_Data;
 // Boost Headers
 #include <boost/thread.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/filesystem/fstream.hpp>
 
 // namespaces declaration and  aliases
 using namespace std;
@@ -64,7 +65,6 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       if (restore(sqlPath + "/IMSTestGetMetric.sql") != 0) {
         BOOST_TEST_MESSAGE("Database update failed for restore(sqlPath + /IMSTestGetMetric.sql)");
       }
-      //sleep (5);
       //Wait for metric recording in database
       //10 represents the update frequency
       sleep ((nbResMetric*10)+5);
@@ -960,10 +960,86 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     BOOST_CHECK_THROW(getProcesses(sessionKey, listProcess, op), VishnuException);
   }
 
-  //TODO: Kévine ==> Ajouter use case dans Specs Genérales
-  //FIXME: à enlever ce test de stop ou restart car elle empeche une terminaison
-  //correcte des tests en arrete le processus à l'aide de stop
   //Test category 2
+  //IA4.1-B : Soft load schedding normal call
+  //Soft load schedding: normal call
+
+  BOOST_AUTO_TEST_CASE( load_schedding_soft_normal_call) {
+
+    BOOST_TEST_MESSAGE("Use case IA4.1-B: Soft load schedding normal call");
+
+    VishnuConnexion vc("root","vishnu_user");
+    // get the session key and the machine identifier
+    string sessionKey=vc.getConnexion();
+    string machineId="machine_1";
+    //Set loadShedType to 1: SOFT
+    IMS_Data::LoadShedType loadShedType = 2;
+    //Job
+    const std::string scriptFilePath= TMSSCRIPTSPATH "/torque_script";
+    Job jobInfo1;
+    Job jobInfo2;
+    SubmitOptions subOptions;
+    //ListJobs
+    ListJobs lsJobs;
+    ListJobsOptions lsOptions;
+
+    try {
+      //To submit 2 jobs
+      BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo1,subOptions),0 );
+      BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo2,subOptions),0 );
+      //To list jobs
+      BOOST_CHECK_EQUAL(listJobs(sessionKey, machineId, lsJobs, lsOptions), 0);
+      //To check that the jobs are submitted
+      BOOST_REQUIRE(lsJobs.getJobs().size() != 0);
+      //Launch load schedding SOFT
+      BOOST_CHECK_EQUAL(loadShed(sessionKey, machineId, loadShedType), 0);
+      lsJobs.getJobs().clear();
+      //time to get the correct update of the Batch scheduler
+      sleep(3);
+      //To list jobs
+      BOOST_CHECK_EQUAL(listJobs(sessionKey, machineId, lsJobs, lsOptions), 0);
+      //To check that the jobs are canceled
+      BOOST_REQUIRE(lsJobs.getJobs().size() == 0);
+    }
+    catch (VishnuException& e) {
+      BOOST_MESSAGE("FAILED\n");
+      BOOST_MESSAGE(e.what());
+      BOOST_CHECK(false);
+    }
+  }
+
+  //IA4.1-E1 : Soft load schedding with bad machine Id
+  //Soft load schedding: bad machine Id
+  BOOST_AUTO_TEST_CASE(load_schedding_soft_bad_machine_Id_call) {
+
+    BOOST_TEST_MESSAGE("Use case IA4.1-E1: Soft load schedding with bad machine Id");
+    VishnuConnexion vc("root","vishnu_user");
+    // get the session key and the machine identifier
+    string sessionKey=vc.getConnexion();
+    string machineId="unknown_name";
+    //Set loadShedType to 1: SOFT
+    IMS_Data::LoadShedType loadShedType = 2;
+
+    BOOST_CHECK_THROW(loadShed(sessionKey, machineId, loadShedType), VishnuException);
+  }
+
+  //IA4.1-E2 : Soft load schedding for no admin user
+  //Soft load schedding: no admin user
+  BOOST_AUTO_TEST_CASE(load_schedding_soft_no_admin_user_call) {
+
+    BOOST_TEST_MESSAGE("Use case IA4.1-E2: Soft load schedding for no admin user");
+    //no admin user
+    VishnuConnexion vc("user_1","toto");
+    // get the session key and the machine identifier
+    string sessionKey=vc.getConnexion();
+    string machineId="machine_1";
+    //Set loadShedType to 1: SOFT
+    IMS_Data::LoadShedType loadShedType = 2;
+
+    BOOST_CHECK_THROW(loadShed(sessionKey, machineId, loadShedType), VishnuException);
+  }
+
+  //TODO: Kévine ==> Ajouter use case dans Specs Genérales
   //IA9-B:  Stop normal call
   //Stop: normal call
   BOOST_AUTO_TEST_CASE( stop_normal_call ) {
@@ -1059,12 +1135,10 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
 
     BOOST_CHECK_THROW(stop(sessionKey, process), VishnuException);
   }
-
+  /*
   //Test category 1
   //I3-B: export and replay commands
-  /*BOOST_AUTO_TEST_CASE( export_command_normal_call) {
-
-    string sqlPath = IMSSQLPATH;
+  BOOST_AUTO_TEST_CASE( export_command_normal_call) {
 
     BOOST_TEST_MESSAGE("Use case I3 – B: Export and replay commands");
     VishnuConnexion vc("root","vishnu_user");
@@ -1077,35 +1151,51 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     ListCommands_ptr listCmd  = ecoreFactory->createListCommands();
     ListCmdOptions listCmdOpt ;
     // List Sessions
-    ListSessions_ptr listSessions   = ecoreFactory->createListSessions();
+    ListSessions_ptr listSess   = ecoreFactory->createListSessions();
     ListSessionOptions listSessionsOpt;
-
+    //Options for export
+    IMS_Data::ExportOp exportOp;
+    //1 for Shell export
+    exportOp.setExportType(1);
+    string filename = "tmpTest.txt";
+    string fileContent;
     try {
       //Options to get inactive sessions
       listSessionsOpt.setStatus(0);
       //To get the list of inactive sessions
-      BOOST_CHECK_EQUAL(listSessions(sessionKey, *listSessions, listSessionsOpt), 0);
-      BOOST_REQUIRE(listSessions->getSessions().size() != 0);
+      BOOST_CHECK_EQUAL(listSessions(sessionKey, *listSess, listSessionsOpt), 0);
+      BOOST_REQUIRE(listSess->getSessions().size() != 0);
       //To get the sessionId of the first element of the list
-      listCmdOpt.setSessionId(listSessions->getSessions().get(0)->getSessionId());
+      listCmdOpt.setSessionId(listSess->getSessions().get(0)->getSessionId());
       BOOST_CHECK_EQUAL(listHistoryCmd(sessionKey, *listCmd, listCmdOpt), 0);
       //At least one command registered
       BOOST_REQUIRE(listCmd->getCommands().size() > 1);
 
+      //To create a locate file for the test
+      std::ofstream file(filename.c_str());
 
+      boost::filesystem3::path filePath (boost::filesystem3::current_path().string() +"/"+ filename);
+      BOOST_TEST_MESSAGE("filePath.filename():" << filePath.filename());
+      exportCommands(sessionKey, listCmdOpt.getSessionId(), filePath.filename().string(), exportOp);
 
-      delete listSessions;
+      fileContent = vishnu::get_file_content(filePath.filename().c_str());
+      BOOST_TEST_MESSAGE("FileContent:" << fileContent);
+
+      //To remove the temporary file
+      boost::filesystem3::remove(filePath);
+
+      delete listSess;
       delete listCmd;
     }
     catch (VishnuException& e) {
       BOOST_MESSAGE("FAILED\n");
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
-      delete listSessions;
+      delete listSess;
       delete listCmd;
     }
-  }*/
-
+  }
+  */
   //To clean the table process
   BOOST_AUTO_TEST_CASE( clean_table_process_call) {
 

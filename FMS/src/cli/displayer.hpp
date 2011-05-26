@@ -46,4 +46,18 @@ operator<<(std::ostream& os, FileTransferList& fileTransferlist);
 std::ostream&
 operator<<(std::ostream& os, StringList& stringList);
 
+/**
+ * \brief function to convert string value to mode_t
+ * \param modeStr The mode value to convert
+ * \return converted mode value
+ */
+mode_t stringToModType(const string& modeStr);
+
+/**
+ * \brief function to convert mode value to string
+ * \param mode The mode value to convert
+ * \return converted mode value
+ */
+string ConvertModeToString(const mode_t& mode);
+
 #endif
