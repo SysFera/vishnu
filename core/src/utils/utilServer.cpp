@@ -341,4 +341,32 @@ vishnu::getObjectId(int vishnuId,
   }
   return idGenerated;
 }
+/** 
+ * \brief Function to parse a system error message 
+ * \param errorMsg the error message
+ * \return the parsed message
+ */
+std::string vishnu::parseErrorMessage (const std::string& errorMsg){
+ 
+  size_t commandPos, endOfLinePos;
+ 
+  std::string result(errorMsg);
+ 
+  commandPos=result.find (":");
+
+  if(commandPos!=std::string::npos){
+   
+    result=result.substr(commandPos+1);
+
+    if( (endOfLinePos=result.find_last_of("\n") )!= std::string::npos ){
+
+      result.erase(endOfLinePos);
+    }
+
+    return result;
+  }
+
+
+}
+
 
