@@ -111,19 +111,19 @@ mode_t stringToModType(const string& modeStr) {
     if(*iter=='r') {
       mode |=usrR; 
     }
-    iter++;
+    ++iter;
   }
   if(iter!=end){
     if(*iter=='w') {
       mode |=usrW;
     }
-    iter++;
+    ++iter;
   }
   if(iter!=end){
     if(*iter=='x') {
       mode |=usrX;
     }
-    iter++;
+    ++iter;
   }
 
   //For group permission mode
@@ -131,19 +131,19 @@ mode_t stringToModType(const string& modeStr) {
     if(*iter=='r') {
       mode |=grpR;
     }
-    iter++;
+    ++iter;
   }
   if(iter!=end){
     if(*iter=='w') {
       mode |=grpW;
     }
-    iter++;
+    ++iter;
   }
   if(iter!=end){
     if(*iter=='x') {
       mode |=grpX;
     }
-    iter++;
+    ++iter;
   }
 
   //For other permission mode
@@ -151,19 +151,19 @@ mode_t stringToModType(const string& modeStr) {
     if(*iter=='r') {
       mode |=othR;
     }
-    iter++;
+    ++iter;
   }
   if(iter!=end){
     if(*iter=='w') {
       mode |=othW;
     }
-    iter++;
+    ++iter;
   }
   if(iter!=end){
     if(*iter=='x') {
       mode |=othX;
     }
-    iter++;
+    ++iter;
   }
 
   std::ostringstream os;
