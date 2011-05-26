@@ -1,5 +1,6 @@
 #include "SysInfoServer.hpp"
 #include "DbFactory.hpp"
+#include "IMSVishnuException.hpp"
 
 SysInfoServer::SysInfoServer(const UserServer session):msession(session) {
   DbFactory factory;
@@ -26,6 +27,11 @@ SysInfoServer::getSysInfo() {
   vector<string>::iterator iter;
 
   if(mop.getMachineId().compare("")) {
+    string reqnmid = "SELECT * from machine where \"machineid\"='"+mop.getMachineId()+"'";
+    boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
+    if(result->getNbTuples() == 0) {
+      throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
+    }
     req += " AND \"machineid\"='"+mop.getMachineId()+"'";
   }
   IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
@@ -62,6 +68,12 @@ SysInfoServer::setSysInfo(IMS_Data::SystemInfo_ptr sys) {
   if (sys->getMachineId().compare("")==0) {
     throw UserException(ERRCODE_INVALID_PARAM, "Error missing the machine id. ");
   }
+  string reqnmid = "SELECT * from machine where \"machineid\"='"+sys->getMachineId()+"'";
+  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
+  if(result->getNbTuples() == 0) {
+    throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
+  }
+
   string request = "update \"machine\" * set ";
   if (sys->getDiskSpace() < 0 || sys->getMemory() < 0) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid negative value");

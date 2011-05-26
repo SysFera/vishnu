@@ -37,16 +37,20 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op) {
   proc.setProcessName(type);
   proc.setMachineId(mmid);
   proc.setScript(mop.getVishnuConf());
-  //  mp.fillContent(&proc);
 
-  // Make sure the process is really not running on the machine
-  stop(&proc);
-
+  try {
+    // Filling the necessary data in the process (to stop it, diet id needed)
+    mp.fillContent(&proc);
+    // Make sure the process is really not running on the machine
+    stop(&proc);
+  } catch (VishnuException &e) {
+    // Do nothing, stop just to make sure the process is not running anymore    
+  }
 
   char hname[200];
   gethostname(hname, 199);
   
-  // If have to stop a local process 
+  // If have to restart a local process, ssh will not be used
   if (proc.getMachineId().compare(getMidFromHost(string(hname)))==0) {
     proc.setMachineId("");
   }
@@ -68,7 +72,6 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op) {
   }
 }
 
-// TODO Fix dirty construction
 void
 ProcessCtl::stop(IMS_Data::Process_ptr p) {
   int res;
@@ -82,20 +85,29 @@ ProcessCtl::stop(IMS_Data::Process_ptr p) {
     try {
       // Setting to off in DB
       mp.stopProcess(p);
+      mp.fillContent(p);
     } catch (SystemException& e) {
       throw (e);
     }
   } 
-  mp.fillContent(p);
-
+  // Diet admin api, remove a sed from hierarchy and stop it
   res = diet_remove_from_hierarchy(SED, p->getDietId().c_str(), false);
   if (res != DIET_NO_ERROR) {
-    throw SystemException(ERRCODE_SYSTEM, "Invalid "+convertToString(res));
+    throw SystemException(ERRCODE_SYSTEM, "Invalid remove with error code: "+convertToString(res));
   }
 }
 
 void
 ProcessCtl::loadShed(int type) {
+  // Bad call type, 1 = HARD => STOP ALL
+  if (type != 1) {
+    return;
+  }
+  // Setting processes as stopped in the database
+  IMS_Data::Process_ptr p = new IMS_Data::Process();
+  p->setMachineId(mmid);
+  mp.stopAllProcesses(p);
+  // Physically stopping them
   stopAll();
 }
 
@@ -110,6 +122,7 @@ ProcessCtl::stopAll() {
   // Creating the process server with the options
   ProcessServer proc(&processOp, muser);
 
+  // Listing all the processes on the machine to stop
   IMS_Data::ListProcesses* res;
   res = proc.list();
 
@@ -117,18 +130,27 @@ ProcessCtl::stopAll() {
     throw SystemException(ERRCODE_SYSTEM, "No process found on machine: "+mmid+". ");
   }
 
+  // Closing each process gotten
   for (unsigned int i = 0; i < res->getProcess().size(); i++) {
     IMS_Data::Process_ptr p = res->getProcess().get(i);
     // If ims, close at the end
     if (p->getProcessName().compare("IMS")==0) {
       ims.push_back(p);
     } else {
-      stop(p);
+      try {
+	stop(p);
+      }catch(VishnuException& e) {
+	// Do nothing, keep on removing other sed
+      }
     }
   }
   // Closing all ims sed
   for (unsigned int i = 0 ; i < ims.size() ; i++) {
-    stop(ims.at(i));
+    try {
+      stop(ims.at(i));
+    } catch (VishnuException &e) {
+	// Do nothing, keep on removing other sed
+    }
   }
 
 }
