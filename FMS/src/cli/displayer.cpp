@@ -15,6 +15,167 @@ using namespace vishnu;
 using namespace FMS_Data;
 
 /**
+ * \brief function to convert string value to mode_t
+ * \param modeStr The mode value to convert
+ * \return converted mode value
+ */
+mode_t stringToModType(const string& modeStr) {
+
+  std::string modeToCvt(9,'-');
+  size_t posComma=0;
+
+  size_t pos = modeStr.find_first_not_of("ugo=xwr,");
+  if(pos!=std::string::npos) {
+    throw UserException(ERRCODE_INVALID_PARAM, ("Invalid mode: "+modeStr));
+  }
+
+  do {
+    pos = modeStr.find("=",posComma);
+    string ugo = modeStr.substr(posComma, pos-posComma+1);
+    size_t nextComma = modeStr.find(",",pos+1);
+    string perms;
+    if(nextComma!=std::string::npos) {
+      perms = modeStr.substr(pos+1, nextComma-pos-1);
+    }
+    else {
+      perms = modeStr.substr(pos+1);
+    }
+
+    if((ugo.find_first_not_of("ugo=")!=std::string::npos && ugo.compare("=")!=0) ||
+       perms.find_first_not_of("xwr")!=std::string::npos || perms.size()==0) {
+      throw UserException(ERRCODE_INVALID_PARAM, ("Invalid mode: "+modeStr));
+    } else {
+      //For user permission mode
+      if(ugo.find("u")!=std::string::npos || ugo.compare("=")==0) {
+        modeToCvt.replace(0,3,"---");//re-initializes the user permission
+        if(perms.find("r")!=std::string::npos) {
+          modeToCvt[0]='r';
+        }
+        if(perms.find("w")!=std::string::npos) {
+          modeToCvt[1]='w';
+        } 
+        if(perms.find("x")!=std::string::npos) {
+          modeToCvt[2]='x';
+        }
+      }
+      //For group permission mode
+      if(ugo.find("g")!=std::string::npos) {
+        modeToCvt.replace(3,3,"---");//re-initializes the user permission
+        if(perms.find("r")!=std::string::npos) {
+          modeToCvt[3]='r';
+        } 
+        if(perms.find("w")!=std::string::npos) {
+          modeToCvt[4]='w';
+        } 
+        if(perms.find("x")!=std::string::npos) {
+          modeToCvt[5]='x';
+        }
+      }
+      //For other permission mode
+      if(ugo.find("o")!=std::string::npos) {
+        modeToCvt.replace(6,3,"---");//re-initializes the user permission
+        if(perms.find("r")!=std::string::npos) {
+          modeToCvt[6]='r';
+        }
+        if(perms.find("w")!=std::string::npos) {
+          modeToCvt[7]='w';
+        }
+        if(perms.find("x")!=std::string::npos) {
+          modeToCvt[8]='x';
+        }
+      }
+    }
+
+    posComma = modeStr.find(",", posComma);
+    if(posComma!=std::string::npos) {
+      posComma = posComma +1;
+    }
+  } while(posComma!=std::string::npos);
+
+  mode_t mode = 0;
+  const mode_t usrR = 1 << 8;
+  const mode_t usrW = 1 << 7;
+  const mode_t usrX = 1 << 6;
+  const mode_t grpR = 1 << 5;
+  const mode_t grpW = 1 << 4;
+  const mode_t grpX = 1 << 3;
+  const mode_t othR = 1 << 2;
+  const mode_t othW = 1 << 1;
+  const mode_t othX = 1;
+
+  string::const_iterator iter=modeToCvt.begin();
+  string::const_iterator end=modeToCvt.end();  
+
+  //For user permission mode
+  if(iter!=end){
+    if(*iter=='r') {
+      mode |=usrR; 
+    }
+    iter++;
+  }
+  if(iter!=end){
+    if(*iter=='w') {
+      mode |=usrW;
+    }
+    iter++;
+  }
+  if(iter!=end){
+    if(*iter=='x') {
+      mode |=usrX;
+    }
+    iter++;
+  }
+
+  //For group permission mode
+  if(iter!=end){
+    if(*iter=='r') {
+      mode |=grpR;
+    }
+    iter++;
+  }
+  if(iter!=end){
+    if(*iter=='w') {
+      mode |=grpW;
+    }
+    iter++;
+  }
+  if(iter!=end){
+    if(*iter=='x') {
+      mode |=grpX;
+    }
+    iter++;
+  }
+
+  //For other permission mode
+  if(iter!=end){
+    if(*iter=='r') {
+      mode |=othR;
+    }
+    iter++;
+  }
+  if(iter!=end){
+    if(*iter=='w') {
+      mode |=othW;
+    }
+    iter++;
+  }
+  if(iter!=end){
+    if(*iter=='x') {
+      mode |=othX;
+    }
+    iter++;
+  }
+
+  std::ostringstream os;
+  os << oct << mode;
+
+  std::istringstream is(os.str());
+  is >> mode;
+
+  return mode; 
+}
+
+/**
  * \brief function to convert mode value to string
  * \param mode The mode value to convert
  * \return converted mode value
