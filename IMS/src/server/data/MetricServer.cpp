@@ -4,6 +4,10 @@
 #include <vector>
 #include "DIET_data.h"
 #include "DIET_server.h"
+#include "boost/date_time/posix_time/posix_time.hpp"
+#include "QueryServer.hpp"
+
+using namespace vishnu;
 
 MetricServer::MetricServer(const UserServer session):msession(session) {
   DbFactory factory;
@@ -27,6 +31,10 @@ MetricServer::setUpFreq(unsigned int freq){
   // TODO FIX MVISHNU ID
   mvishnuId  = 1;
 
+  if (!msession.isAdmin()){
+    throw UMSVishnuException(ERRCODE_NO_ADMIN, "set update frequency is an admin function. A user cannot call it");
+  }
+
   if (freq < 1) {
     throw UserException(ERRCODE_INVALID_PARAM, "Error invalid frequency.");
   }
@@ -49,11 +57,58 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
   double cpu;
   double mem;
   double disk; 
+
+  // The thresholds
+  IMS_Data::Threshold cpu_thre;
+  IMS_Data::Threshold mem_thre;
+  IMS_Data::Threshold disk_thre;
+
+  UMS_Data::User cpu_user;
+  UMS_Data::User mem_user;
+  UMS_Data::User disk_user;
+
+  vector<string> results = vector<string>();
+  vector<string>::iterator iter;
+
+  // Getting the num machine id to insert
+  string reqThre = "SELECT * from threshold, users, machine where machine.machineid='"+mid+"' and threshold.machine_nummachineid=machine.nummachineid and users.numuserid=threshold.users_numuserid";
+  try {
+    boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqThre.c_str()));
+    for (size_t i = 0; i < result->getNbTuples(); i++){
+      results.clear();
+      results = result->get(i);
+      iter = results.begin();
+      switch (convertToInt(*(iter+3))) {
+      case 1://cpu
+	cpu_thre.setType(convertToInt(*(iter+3)));
+	cpu_thre.setValue(convertToInt(*(iter+4)));
+	cpu_user.setUserId(*(iter+7));
+	cpu_user.setEmail(*(iter+12));
+	break;
+      case 3://disk
+	disk_thre.setType(convertToInt(*(iter+3)));
+	disk_thre.setValue(convertToInt(*(iter+4)));
+	disk_user.setUserId(*(iter+7));
+	disk_user.setEmail(*(iter+12));
+	break;
+      case 5://memory
+	mem_thre.setType(convertToInt(*(iter+3)));
+	mem_thre.setValue(convertToInt(*(iter+4)));
+	mem_user.setUserId(*(iter+7));
+	mem_user.setEmail(*(iter+12));
+	break;
+      }	
+    }
+  } catch (SystemException &e) {
+    throw (e);
+  }
+  
+
   // Getting the num machine id to insert
   string reqnmid = "SELECT * from machine where \"machineid\"='"+mid+"'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
   if(result->getNbTuples() == 0) {
-    throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown process");
+    throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
   }
   // numerical index always in position 0 in tables
   nmid = result->get(0).at(0);
@@ -62,12 +117,21 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
     switch (set->getMetric().get(i)->getType()) {
     case 1 : //cpu
       cpu = set->getMetric().get(i)->getValue();
+      if (static_cast<int>(cpu)<cpu_thre.getValue()) {
+	sendMail(static_cast<int>(cpu), cpu_thre.getValue(), 1, cpu_user.getEmail(), cpu_user.getUserId());
+      }
       break;
     case 3 : //disk
       disk = set->getMetric().get(i)->getValue();
+      if (static_cast<int>(disk)<disk_thre.getValue()) {
+	sendMail(static_cast<int>(disk), disk_thre.getValue(), 3, disk_user.getEmail(), disk_user.getUserId());
+      }
       break;
     case 5: //mem
       mem = set->getMetric().get(i)->getValue();
+      if (static_cast<int>(mem)<mem_thre.getValue()) {
+	sendMail(static_cast<int>(mem), mem_thre.getValue(), 5, mem_user.getEmail(), mem_user.getUserId());
+      }
       break;
     default:
       throw SystemException (ERRCODE_SYSTEM, "Unknown metric type");
@@ -116,7 +180,7 @@ MetricServer::getCurMet(){
   double disk = 0.0;
   double cpu  = 0.0;
   double mem  = 0.0;
-  time_t time;
+  ptime p =  second_clock::local_time();
 
   diet_estimate_cori_add_collector(EST_COLL_EASY,NULL);
 
@@ -125,7 +189,7 @@ MetricServer::getCurMet(){
   met = ecoreFactory->createMetric();
   met->setType(3);
   met->setValue(static_cast<int>(disk));
-  met->setTime(time);
+  met->setTime(string_to_time_t(boost::posix_time::to_simple_string(p)));
   if (mcop->getMetricType() != 1 && mcop->getMetricType() != 5) {
     mlistObject->getMetric().push_back(met);
   }
@@ -135,23 +199,19 @@ MetricServer::getCurMet(){
   met = ecoreFactory->createMetric();
   met->setType(5);
   met->setValue(static_cast<int>(mem));
-  met->setTime(time);
+  met->setTime(string_to_time_t(boost::posix_time::to_simple_string(p)));
   if (mcop->getMetricType() != 1 && mcop->getMetricType() != 3) {
     mlistObject->getMetric().push_back(met);
   }
 
   // TODO CHECK WHY -1 GOTTEN
-  cout << "pres Valuer du cpu :::::::::::::::::" << cpu << endl;
   diet_estimate_cori (vec, EST_FREECPU, EST_COLL_EASY, NULL);
-  cout << "Valuer du cpu :::::::::::::::::" << cpu << endl;
   cpu = diet_est_get_system(vec, EST_FREECPU, -1); 
-  cout << "Valuer du cpu1 :::::::::::::::::" << cpu << endl;
   cpu *= 100; // Set in percentage
-  cout << "Valuer du cpu2 :::::::::::::::::" << cpu << endl;
   met = ecoreFactory->createMetric();
   met->setType(1);
   met->setValue(static_cast<int>(cpu));
-  met->setTime(time);
+  met->setTime(string_to_time_t(boost::posix_time::to_simple_string(p)));
   if (mcop->getMetricType() != 3 && mcop->getMetricType() != 5) {
     mlistObject->getMetric().push_back(met);
   }
@@ -164,20 +224,40 @@ MetricServer::getCurMet(){
 // TODO: Remove the constant values if possible !!!!!!!!!!!!
 IMS_Data::ListMetric*
 MetricServer::getHistMet(string machineId){
-  string request = "select * from state, machine where machine.machineid='"+machineId+"' AND machine.nummachineid=state.machine_nummachineid";
+  string request = "select * from state, machine where machine.machineid='"+machineId+"' AND machine.nummachineid=state.machine_nummachineid ";
   vector<string>::iterator iter;
   vector<string> results = vector<string>();
 
   IMS_Data::MetricType type = mhop->getType();
 
+  string reqnmid = "SELECT * from machine where \"machineid\"='"+machineId+"'";
+  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
+  if(result->getNbTuples() == 0) {
+    throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
+  }
+
   // TODO BAD COMPARISON CHANGE IT
   if (mhop->getStartTime()>0) {
-    request += " AND EXTRACT( epoch FROM  time ) >";
-    request += convertToString(mhop->getStartTime());
+    time_t start = static_cast<time_t>(mhop->getStartTime());
+    if (start != -1) {
+      start = convertUTCtimeINLocaltime(start);
+      string startStr = boost::posix_time::to_simple_string(boost::posix_time::from_time_t(start));
+      std::ostringstream osValue;
+      osValue << startStr;
+      request.append(" and time >= ");
+      request.append("'"+osValue.str()+"'");
+    }
   }
   if (mhop->getEndTime()>0) {
-    request += " AND EXTRACT( epoch FROM  time ) <";
-    request += convertToString(mhop->getEndTime());
+    time_t end = static_cast<time_t>(mhop->getStartTime());
+    if (end != -1) {
+      end = convertUTCtimeINLocaltime(end);
+      string endStr = boost::posix_time::to_simple_string(boost::posix_time::from_time_t(end));
+      std::ostringstream osValue;
+      osValue << endStr;
+      request.append(" and time <= ");
+      request.append("'"+osValue.str()+"'");
+    }
   }
   IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
   IMS_Data::ListMetric_ptr mlistObject = ecoreFactory->createListMetric();
@@ -248,4 +328,10 @@ MetricServer::getHistMet(string machineId){
     throw (e);
   }
   return mlistObject;
+}
+
+
+void
+MetricServer::sendMail(int val, int threshold, int type, string email, string uid){
+  
 }

@@ -29,22 +29,26 @@ displayListMetric(IMS_Data::ListMetric* li){
 void
 displayMetric(IMS_Data::Metric* m){
   string type;
+  string unity;
   switch(m->getType()){
   case 1 :
-    type = "CPU use ";
+    type = "CPU use";
+    unity = " %";
     break;
   case 3 :
-    type = "Diskspace used ";
+    type = "Free diskspace";
+    unity = " Mb";
     break;
   case 5 :
-    type = "Memory used ";
+    type = "Free memory";
+    unity = " Mb";
     break;
   default:
     type = "unknown ";
   }
   cout << " ------------------------ " << endl;
   cout << " type : " << type << endl;
-  cout << " value: " << m->getValue() << endl;
+  cout << " value: " << m->getValue() << unity << endl;
   string date = boost::posix_time::to_simple_string(boost::posix_time::from_time_t(m->getTime()));
   cout << " time : " << date << endl;
 }
