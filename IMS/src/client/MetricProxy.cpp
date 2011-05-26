@@ -52,7 +52,6 @@ MetricProxy::getUpFreq() {
   string sessionKey;
   char* errorInfo = NULL;
   std::string serviceName = "int_getUpdateFrequency";
-  int res;
   char* str = NULL;
   string msgErrorDiet;
 
