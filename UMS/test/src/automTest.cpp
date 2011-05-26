@@ -414,20 +414,20 @@ try {
   lacc.setMachineId(mid);
 
   // Add local account bad acc login
-  BOOST_MESSAGE(" Testing add local account success U4-E"    );
+  BOOST_MESSAGE(" Testing add local account bad user id U4-E"    );
   BOOST_REQUIRE(restore	 (sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect	 (uid, pwd, sess, cop )==0);
-  lacc.setAcLogin("bad");
+  lacc.setUserId("bad");
   BOOST_CHECK_THROW	 (addLocalAccount(sess.getSessionKey(), lacc, key2    ), VishnuException);
   BOOST_CHECK	 (close          (sess.getSessionKey()      	     )==0);
-  lacc.setAcLogin(accL);
+  lacc.setUserId(uid);
 
   // Update local account
   BOOST_MESSAGE(" Testing update local account success U4.1-B"    );
   BOOST_REQUIRE(restore	  (sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect	  (uid, pwd , sess, cop)==0);
   lacc.setSshKeyPath("/usr/bin");
-  //  BOOST_CHECK(addLocalAccount   (sess.getSessionKey(), lacc, key2      )==0);
+  lacc.setAcLogin("");  // to avoid changing acLogin
   BOOST_CHECK(updateLocalAccount(sess.getSessionKey(), lacc	      )==0);
   BOOST_CHECK(close             (sess.getSessionKey()      	      )==0);
   lacc.setSshKeyPath(ssh);
