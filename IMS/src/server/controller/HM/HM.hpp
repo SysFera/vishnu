@@ -28,10 +28,6 @@ public:
 protected:
 private:
   /**
-   * \brief The update frequency used
-   */
-  int mupFreq;
-  /**
    * \brief The metric server object
    */
   MetricServer mms;
