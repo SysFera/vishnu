@@ -56,7 +56,9 @@ public:
   virtual std::list<std::string> ls(const LsDirOptions& options) const; 
   void printTransferID(const bool printTrID);
 
-  int cp(const std::string& dest, const CpFileOptions& options);
+  int cp(const std::string& dest, const CpFileOptions& options, const std::string& serviceName="FileCopy");
+
+  int mv(const std::string& dest, const CpFileOptions& options);
 };
 
 #endif
