@@ -859,12 +859,12 @@ int RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options){
   diet_profile_t* profile;
   char* errMsg;
 
-  std::string serviceName("FileCopy_RL_RR");
+  std::string serviceName("RemoteFileCopy");
 
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  profile = diet_profile_alloc("FileCopy_RL_RR", 6, 6, 7);
+  profile = diet_profile_alloc(serviceName.c_str(), 6, 6, 7);
 
 
   //IN Parameters  
