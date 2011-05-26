@@ -1,11 +1,11 @@
 #include "ThresholdServer.hpp"
 #include "DbFactory.hpp"
+#include "IMSVishnuException.hpp"
 
 
 ThresholdServer::ThresholdServer(const UserServer session):msession(session) {
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
-  // TODO FIX
   mvishnuId = 1;
 }
 
@@ -13,7 +13,6 @@ ThresholdServer::ThresholdServer(const UserServer session, IMS_Data::ThresholdOp
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
   mop = op;
-  // TODO FIX
   mvishnuId = 1;
 }
 
@@ -31,6 +30,7 @@ ThresholdServer::setThreshold(IMS_Data::Threshold_ptr tree) {
   if (!msession.isAdmin()){
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "set threshold is an admin function. A user cannot call it");
   }
+
 
   // Check if threshold already exist (update or insert)
   try {
@@ -76,6 +76,12 @@ ThresholdServer::getThreshold() {
 
   // Adding option to request
   if(mop.getMachineId().compare("")) {
+    // Check machine mid correct
+    string reqnmid = "SELECT * from machine where \"machineid\"='"+mop.getMachineId()+"'";
+    boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
+    if(result->getNbTuples() == 0) {
+      throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
+    }
     req += " AND machineid='"+mop.getMachineId()+"'";
   }
   if(mop.getMetricType()==1 || // cpuuse

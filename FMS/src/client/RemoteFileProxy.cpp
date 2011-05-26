@@ -29,6 +29,7 @@ using namespace FMS_Data;
 /* Default constructor. */
 RemoteFileProxy::RemoteFileProxy() {
   upToDate = false;
+  printTrID = false;
 }
 
 /* Standard constructor.
@@ -45,6 +46,7 @@ RemoteFileProxy::RemoteFileProxy(const SessionProxy& sessionProxy,const string& 
 RemoteFileProxy::RemoteFileProxy(const RemoteFileProxy& file) : FileProxy(file) {
   upToDate = false;
   this->localUser = file.localUser;
+  this->printTrID = file.printTrID; 
 }
 
 /* Standard destructor. */
