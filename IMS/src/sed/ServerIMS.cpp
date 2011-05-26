@@ -5,8 +5,6 @@
 * \date 12/03/2011
 */
 
-// TODO CORRECT WITH THE NEW APIM
-
 #include <boost/scoped_ptr.hpp>
 
 #include "ServerIMS.hpp"
