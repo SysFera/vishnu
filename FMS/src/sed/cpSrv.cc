@@ -147,7 +147,7 @@ int solveCopyRemoteFile(diet_profile_t* profile) {
 
   string destUserLogin(destUser);
   string destMachineName(destHost);
-
+  
   try {
 
     SessionServer sessionServer (sessionKey);
