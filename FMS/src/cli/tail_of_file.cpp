@@ -59,7 +59,6 @@ int main (int ac, char* av[]){
   string dietConfig;
   string sessionKey;
   string path;
-  int nline;
 
   /********** EMF data ************/
   
