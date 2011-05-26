@@ -117,7 +117,9 @@ public:
   virtual int cp(const std::string& path, const CpFileOptions& options) = 0;
  
  static std::string extHost(const std::string& path);
-  static std::string extName(const std::string& path);
+ static std::string extName(const std::string& path);
+
+
 };
 
 /* Utility fonctions */
