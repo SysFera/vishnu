@@ -200,6 +200,16 @@ string File::extName(const string& path) {
   return path.substr(pos+1);
 }
 
+string File::extCpCmd (const CpFileOptions& options){
+return string ("scp -o Compression=yes -o StrictHostKeyChecking=no ");
+}
+
+string File::extMvCmd (const MvFileOptions& options){
+
+return string ("scp -o Compression=yes -o StrictHostKeyChecking=no ");
+
+}
+
 File::~File() {}
 
 string basename(const string& path) {

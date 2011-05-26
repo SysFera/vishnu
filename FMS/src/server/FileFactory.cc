@@ -5,9 +5,7 @@
 #include <pwd.h>
 
 #include "File.hh"
-#include "LocalFile.hh"
 #include "SSHFile.hh"
-#include "RemoteFile.hh"
 #include "FileFactory.hh"
 
 using namespace std;
