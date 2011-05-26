@@ -33,7 +33,7 @@ diet_profile_desc_t* getCopyFileProfile() {
 
 int solveCopyFile(diet_profile_t* profile) {
   string localPath, localUser, userKey, head, acLogin, machineName;
-  char* path, *user, *host,*sessionKey, *dest, *errMsg = NULL, *result = NULL, *optionsSerialized=NULL;
+  char* path, *user, *host,*sessionKey, *dest, *errMsg = NULL, *optionsSerialized=NULL;
   
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
   diet_string_get(diet_parameter(profile, 1), &path, NULL);
