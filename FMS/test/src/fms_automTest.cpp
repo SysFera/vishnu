@@ -495,7 +495,7 @@ BOOST_AUTO_TEST_SUITE_END()
 /*****************************************************************************/
 
 /**
- * \brief Check if given strings are found in directory contentOfFile
+ * \brief Check if given strings are found in directory
  * \param sessionKey  the session key
  * \param dirFullPath the directory complete path (host:path)
  * \param names       the strings to search for (vector)
@@ -525,6 +525,20 @@ bool areFoundInDir(const string& sessionKey,
   }
   return areFound;
 }
+/**
+ * \brief Check if a given string is found in directory
+ * \param sessionKey  the session key
+ * \param dirFullPath the directory complete path (host:path)
+ * \param name        the string to search for
+ * \return true name is found within the directory long content
+ */
+bool isFoundInDir(const string& sessionKey,
+                  const string& dirFullPath,
+                  const string& name) {
+  return areFoundInDir(sessionKey, dirFullPath, ba::list_of(name));
+}
+/**
+ *
 /**
  * \brief Add prefix to a vector of strings
  * \param prefix  the common prefix
@@ -577,7 +591,7 @@ BOOST_AUTO_TEST_CASE(CreateDir_Base)
   try {
     BOOST_REQUIRE( createDir(sessionKey, dirFullPath1) == 0);
     // Check 1: list content of parent directory
-    bool isNewDirFound = areFoundInDir(sessionKey, baseDirFullPath1, ba::list_of(newDirName));
+    bool isNewDirFound = isFoundInDir(sessionKey, baseDirFullPath1, newDirName);
     BOOST_REQUIRE(isNewDirFound);
     // Check 2: create new file in new directory
     string fileFullPath = dirFullPath1 + slash + newFileName;
@@ -628,7 +642,7 @@ BOOST_AUTO_TEST_CASE(DeleteDir_Base)
     BOOST_REQUIRE( createDir(sessionKey, dirFullPath1) == 0); // setup
     BOOST_REQUIRE( removeDir(sessionKey, dirFullPath1) == 0); // test
     // Check: list content of parent directory
-    bool isRemovedDirFound = areFoundInDir(sessionKey, baseDirFullPath1, ba::list_of(newDirName));
+    bool isRemovedDirFound = isFoundInDir(sessionKey, baseDirFullPath1, newDirName);
     BOOST_REQUIRE(!isRemovedDirFound);
 
   } catch (VishnuException& e) {
@@ -795,7 +809,7 @@ BOOST_AUTO_TEST_CASE(SyncCopyFile_Base)
     BOOST_MESSAGE("Checking local to remote copy");
     BOOST_REQUIRE( copyFile(sessionKey, localFilePath, baseDirFullPath1) == 0);
     // Check
-    bool isRemoteCopyFound = areFoundInDir(sessionKey, baseDirFullPath1, ba::list_of(newFileName));
+    bool isRemoteCopyFound = isFoundInDir(sessionKey, baseDirFullPath1, newFileName);
     BOOST_CHECK(isRemoteCopyFound);
     // Cleanup
     BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
@@ -806,7 +820,7 @@ BOOST_AUTO_TEST_CASE(SyncCopyFile_Base)
     string localCopyPath = localDir + localCopyName;
     BOOST_REQUIRE( copyFile(sessionKey, fileFullPath1, localCopyPath) == 0);
     // Check
-    bool isLocalCopyFound = areFoundInDir(sessionKey, localDir, ba::list_of(localCopyName));
+    bool isLocalCopyFound = isFoundInDir(sessionKey, localDir,localCopyName);
     BOOST_CHECK(isLocalCopyFound);
     // Cleanup
     BOOST_CHECK( removeFile(sessionKey, localCopyPath) == 0);
@@ -815,7 +829,7 @@ BOOST_AUTO_TEST_CASE(SyncCopyFile_Base)
     BOOST_MESSAGE("Checking remote to remote copy");
     BOOST_REQUIRE( copyFile(sessionKey, fileFullPath1, baseDirFullPath2) == 0);
     // Check
-    isRemoteCopyFound = areFoundInDir(sessionKey, baseDirFullPath2, ba::list_of(newFileName));
+    isRemoteCopyFound = isFoundInDir(sessionKey, baseDirFullPath2, newFileName);
     BOOST_CHECK(isRemoteCopyFound);
     // Cleanup
     BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
@@ -843,7 +857,7 @@ BOOST_AUTO_TEST_CASE(AsyncCopyFile_Base)
     BOOST_REQUIRE( copyAsyncFile(sessionKey, localFilePath, baseDirFullPath1, transferInfo) == 0);
     // Check
     BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_COMPLETED );
-    bool isRemoteCopyFound = areFoundInDir(sessionKey, baseDirFullPath1, ba::list_of(newFileName));
+    bool isRemoteCopyFound = isFoundInDir(sessionKey, baseDirFullPath1, newFileName);
     BOOST_CHECK(isRemoteCopyFound);
     // Cleanup
     BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
@@ -855,7 +869,7 @@ BOOST_AUTO_TEST_CASE(AsyncCopyFile_Base)
     BOOST_REQUIRE( copyAsyncFile(sessionKey, fileFullPath1, localCopyPath, transferInfo) == 0);
     // Check
     BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_COMPLETED );
-    bool isLocalCopyFound = areFoundInDir(sessionKey, localDir, ba::list_of(localCopyName));
+    bool isLocalCopyFound = isFoundInDir(sessionKey, localDir, localCopyName);
     BOOST_CHECK(isLocalCopyFound);
     // Cleanup
     BOOST_CHECK( removeFile(sessionKey, localCopyPath) == 0);
@@ -865,11 +879,54 @@ BOOST_AUTO_TEST_CASE(AsyncCopyFile_Base)
     BOOST_REQUIRE( copyAsyncFile(sessionKey, fileFullPath1, baseDirFullPath2, transferInfo) == 0);
     // Check
     BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_COMPLETED );
-    isRemoteCopyFound = areFoundInDir(sessionKey, baseDirFullPath2, ba::list_of(newFileName));
+    isRemoteCopyFound = isFoundInDir(sessionKey, baseDirFullPath2, newFileName);
     BOOST_CHECK(isRemoteCopyFound);
     // Cleanup
     BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
     BOOST_CHECK( removeFile(sessionKey, fileFullPath2) == 0);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+BOOST_AUTO_TEST_CASE(SyncMoveFile_Base)
+{
+  BOOST_TEST_MESSAGE("Testing synchronous move of files UC F2.MV1-B");
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    createFile<10>(localFilePath);
+    // local to remote
+    BOOST_MESSAGE("Checking local to remote move");
+    BOOST_REQUIRE( moveFile(sessionKey, localFilePath, baseDirFullPath1) == 0);
+    // Check
+    bool isLocalSourceFound = isFoundInDir(sessionKey, localDir, newFileName);
+    BOOST_CHECK(!isLocalSourceFound);
+    bool isRemoteCopyFound1 = isFoundInDir(sessionKey, baseDirFullPath1, newFileName);
+    BOOST_CHECK(isRemoteCopyFound1);
+
+    // remote to remote (using file from previous step)
+    BOOST_MESSAGE("Checking remote to remote move");
+    BOOST_REQUIRE( moveFile(sessionKey, fileFullPath1, baseDirFullPath2) == 0);
+    // Check
+    isRemoteCopyFound1 = isFoundInDir(sessionKey, baseDirFullPath1, newFileName);
+    BOOST_CHECK(!isRemoteCopyFound1);
+    bool isRemoteCopyFound2 = isFoundInDir(sessionKey, baseDirFullPath2, newFileName);
+    BOOST_CHECK(isRemoteCopyFound2);
+
+    // remote to local (using file from previous step)
+    BOOST_MESSAGE("Checking remote to local move");
+    BOOST_REQUIRE( moveFile(sessionKey, fileFullPath2, localDir) == 0);
+    // Check
+    isRemoteCopyFound2 = isFoundInDir(sessionKey, baseDirFullPath2, newFileName);
+    BOOST_CHECK(!isRemoteCopyFound2);
+    bool isLocalCopyFound = isFoundInDir(sessionKey, localDir, newFileName);
+    BOOST_CHECK(isLocalCopyFound);
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
