@@ -16,7 +16,6 @@
 #include "DIET_Dagda.h"
 
 #include "SSHFile.hh"
-#include "RemoteFile.hh"
 #include "File.hh"
 #include "FMSVishnuException.hpp"
 #include "utilServer.hpp"
@@ -367,8 +366,28 @@ list<string> SSHFile::ls(const LsDirOptions& options) const {
 }
 
 
-   /* Copy the file through scp. */
+/* Copy the file through scp. */
 int SSHFile::cp(const string& dest, const CpFileOptions& options){
+
+
+int result=transfer(dest,File::extCpCmd(options));
+
+  return result;
+}
+
+/* mv the file through scp. */
+int SSHFile::mv(const string& dest, const MvFileOptions& options){
+
+
+int result=transfer(dest,File::extMvCmd(options));
+
+  return result;
+}
+
+
+
+/* Transfer the file through scp or rsync. */
+ int SSHFile::transfer(const string& dest, const std::string& trCmd ){
 
 
   if (!exists()) {
@@ -377,24 +396,30 @@ int SSHFile::cp(const string& dest, const CpFileOptions& options){
 
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
       sshPublicKey, sshPrivateKey);
-  pair<string,string> cpResult;
+  pair<string,string> trResult;
 
-  cpResult = ssh.exec(CPCMD+getPath()+" "+dest);
+  trResult = ssh.exec(trCmd + " " +getPath()+" "+dest);
 
-  if (cpResult.second.find("Warning")!=std::string::npos){
+  if (trResult.second.find("Warning")!=std::string::npos){
 
     std::cout << "Warning found \n";
 
-    cpResult = ssh.exec(CPCMD+getPath()+" "+dest);
+    trResult = ssh.exec(trCmd + " "+ getPath()+" "+dest);
 
   } 
 
-  if (cpResult.second.length()!=0) {
-    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error copying file: "+cpResult.second);
+  if (trResult.second.length()!=0) {
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error transfering file: "+trResult.second);
   }
 
   return 0;
 }
+
+
+
+
+
+
 
 /**
  * \brief To get A runtime error message
@@ -404,8 +429,6 @@ int SSHFile::cp(const string& dest, const CpFileOptions& options){
   std::string SSHFile::getErrorMsg() const{
     return merror;
   }
-
-
 
 
 // Defintion of SSHExec Class
