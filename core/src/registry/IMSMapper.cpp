@@ -275,10 +275,7 @@ IMSMapper::decodeProc(vector<int> separator, const string& msg) {
   string u;
   res += (mmap.find(VISHNU_GET_PROC))->second;
   res += " ";
-  u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
-  res += u;
-  res += " ";
-  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
+  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
   IMS_Data::ProcessOp_ptr ac = NULL;
   //To parse the object serialized
   if(!parseEmfObject(u, ac)) {
