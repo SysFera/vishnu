@@ -63,7 +63,7 @@ void File::exists(const bool exist) const {
   this->exist = exist;
 }
 
-File::File() {
+File::File():exist("false") {
   srand(time(NULL));
 }
 
