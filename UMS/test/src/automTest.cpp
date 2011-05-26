@@ -825,6 +825,7 @@ try {
   lacc.setHomeDirectory(home);
   BOOST_CHECK	 (addLocalAccount       (sess.getSessionKey(), lacc, key2     )==0);
   BOOST_CHECK	 (updateMachine         (sess.getSessionKey(), ma	     )==0);
+  lacc.setAcLogin("");  // to avoid changing acLogin
   BOOST_CHECK	 (updateLocalAccount    (sess.getSessionKey(), lacc           )==0);
   BOOST_CHECK	 (deleteLocalAccount    (sess.getSessionKey(), uid , ma.getMachineId()      )==0);
   opva.setValue(oval);
