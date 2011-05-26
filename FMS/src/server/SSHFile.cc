@@ -9,6 +9,7 @@
 
 #include <unistd.h>
 #include <sys/wait.h>
+#include <sys/types.h>
 
 #include "DIET_data.h"
 #include "DIET_client.h"
@@ -19,6 +20,7 @@
 #include "File.hh"
 #include "FMSVishnuException.hpp"
 #include "utilServer.hpp"
+
 using namespace std;
 
 /* Default constructor. */
@@ -108,9 +110,21 @@ void SSHFile::getInfos() const {
   cout << "Coucou dans getInfos de SSHFile  " << endl; 
   fileStat = ssh.exec(STATCMD+getPath());
 
+  std::cout << "fileStat.second " <<fileStat.second << "\n";
+
+  if (fileStat.second.find("Warning")!=std::string::npos){   
+    std::cout << "Warning found \n"; 
+    fileStat = ssh.exec(STATCMD+getPath());
+
+  }
+
   if (fileStat.second.length()!=0) {
+
     exists(false);
     upToDate=true;
+
+  merror= vishnu::parseErrorMessage( fileStat.second ) ;
+
   }
   else{
 
@@ -152,10 +166,10 @@ void SSHFile::getInfos() const {
 /* Change the file group through ssh. */
 int SSHFile::chgrp(const string& group) {
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
-              sshPublicKey, sshPrivateKey);
+      sshPublicKey, sshPrivateKey);
   pair<string,string> chgrpResult;
 
-  if (!exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
+  if (!exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
   chgrpResult = ssh.exec(CHGRPCMD+group+" "+getPath());
   if (chgrpResult.second.length()!=0) {
     throw FMSVishnuException(ERRCODE_INVALID_PATH,"Error changing file group: "+chgrpResult.second);
@@ -168,13 +182,13 @@ int SSHFile::chgrp(const string& group) {
 int SSHFile::chmod(const mode_t mode) {
   ostringstream os;
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
-              sshPublicKey, sshPrivateKey);
+      sshPublicKey, sshPrivateKey);
   pair<string,string> chmodResult;
-  
-  if (!exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
+
+  if (!exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
   os << mode;
   chmodResult = ssh.exec(CHMODCMD+os.str()+" "+getPath());
-  
+
   if (chmodResult.second.length()!=0) {
     throw FMSVishnuException(ERRCODE_INVALID_PATH,"Error changing file mode: "+chmodResult.second);
   }
@@ -187,11 +201,11 @@ string SSHFile::head(const HeadOfFileOptions& options) {
   int nline= options.getNline();
   ostringstream os;
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
-              sshPublicKey, sshPrivateKey);
+      sshPublicKey, sshPrivateKey);
   pair<string,string> headResult;
-  
+
   if (!exists()) {
-    throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
+    throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
   }
 
   os << nline;
@@ -199,7 +213,7 @@ string SSHFile::head(const HeadOfFileOptions& options) {
 
   if (headResult.second.length()!=0) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error obtaining the head of the file: "+
-                        headResult.second);
+        headResult.second);
   }
   return headResult.first;
 }
@@ -208,11 +222,11 @@ string SSHFile::head(const HeadOfFileOptions& options) {
 string SSHFile::getContent() {
   ostringstream os;
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
-              sshPublicKey, sshPrivateKey);
+      sshPublicKey, sshPrivateKey);
   pair<string,string> catResult;
-  
-  if (!exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
-  
+
+  if (!exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
+
   catResult = ssh.exec(CATCMD+getPath());
 
   if (catResult.second.length()!=0) {
@@ -264,7 +278,7 @@ int SSHFile::rm() {
               sshPublicKey, sshPrivateKey);
   pair<string,string> rmResult;
   
-  if (!exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
+  if (!exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
   rmResult = ssh.exec(RMCMD+getPath());
   if (rmResult.second.length()!=0) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error removing "+getPath()+": "+rmResult.second);
@@ -280,7 +294,7 @@ int SSHFile::rmdir() {
               sshPublicKey, sshPrivateKey);
   pair<string,string> rmdirResult;
   
-  if (!exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
+  if (!exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
   rmdirResult = ssh.exec(RMDIRCMD+getPath());
   if (rmdirResult.second.length()!=0) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error removing "+getPath()+": "+rmdirResult.second);
@@ -299,7 +313,7 @@ string SSHFile::tail(const TailOfFileOptions& options) {
               sshPublicKey, sshPrivateKey);
   pair<string,string> tailResult;
   
-  if (!exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
+  if (!exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
   os << nline;
   tailResult = ssh.exec(TAILCMD+os.str()+" "+getPath());
   
@@ -321,7 +335,7 @@ list<string> SSHFile::ls(const LsDirOptions& options) const {
   string lsCmd("ls ");
 
   if (!exists()) {
-    throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
+    throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
   }
 
 
@@ -351,26 +365,44 @@ list<string> SSHFile::ls(const LsDirOptions& options) const {
 
 
    /* Copy the file through scp. */
- int SSHFile::cp(const string& dest, const CpFileOptions& options){
+int SSHFile::cp(const string& dest, const CpFileOptions& options){
 
-  //   string host = File::extHost(dest);
-   //  string path = File::extName(dest);
 
-     if (!exists()) {
-       throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
-     }
+  if (!exists()) {
+    throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
+  }
 
-     SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
-         sshPublicKey, sshPrivateKey);
-     pair<string,string> cpResult;
+  SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
+      sshPublicKey, sshPrivateKey);
+  pair<string,string> cpResult;
 
-     cpResult = ssh.exec(CPCMD+getPath()+" "+dest);
-     if (cpResult.second.length()!=0) {
-       throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error copying file: "+cpResult.second);
-     }
+  cpResult = ssh.exec(CPCMD+getPath()+" "+dest);
 
-     return 0;
-   }
+  if (cpResult.second.find("Warning")!=std::string::npos){
+
+std:cout << "Warning found \n"; 
+    cpResult = ssh.exec(CPCMD+getPath()+" "+dest);
+
+  } 
+
+  if (cpResult.second.length()!=0) {
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error copying file: "+cpResult.second);
+  }
+
+  return 0;
+}
+
+/**
+ * \brief To get A runtime error message
+ * \return The error message
+ */
+
+  std::string SSHFile::getErrorMsg() const{
+    return merror;
+  }
+
+
+
 
 // Defintion of SSHExec Class
 
@@ -406,7 +438,7 @@ pair<string, string> SSHExec::exec(const string& cmd) const {
   command << " -p " << sshPort << " " << server << " " << cmd;*/
 
   command << sshCommand  << " -l " << userName;
-  command << " -C"  << " -o BatchMode=yes " << " -o StrictHostKeyChecking=yes";
+  command << " -C"  << " -o BatchMode=yes " << " -o StrictHostKeyChecking=no";
   command << " -o ForwardAgent=yes";
   command  << " -o ControlMaster=yes " << " -o ControlPath=/tmp/ssh-%r@%h:%p";
   command << " -p " << sshPort << " " << server << " " << cmd;
