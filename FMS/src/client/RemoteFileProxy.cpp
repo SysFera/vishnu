@@ -830,7 +830,7 @@ int RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options){
 
   string destHost = FileProxy::extHost(dest);
   string localUser = "";
-  bfs::path destPath;
+  bfs::path destPath(FileProxy::extName(dest));
   if(destHost.compare("localhost")==0){
     char hostName[255];
     gethostname(hostName, 255);
