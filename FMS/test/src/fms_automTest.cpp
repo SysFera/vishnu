@@ -506,11 +506,9 @@ bool areFoundInDir(const string& sessionKey,
   for (vector<string>::const_iterator iterNames = names.begin();
     iterNames != names.end();
     ++iterNames) {
-    BOOST_MESSAGE("@@@@ look for : " + *iterNames);
       bool isFound = false;
       vector<string>::const_iterator iter = dirContent.getStrings().begin();
       while (!isFound && !(iter == dirContent.getStrings().end())) {
-        BOOST_MESSAGE("DIR CONTENT: " + *iter);
         isFound = (*iter).find(*iterNames) != string::npos;
         ++iter;
       }
@@ -588,6 +586,32 @@ BOOST_AUTO_TEST_CASE(CreateDir_Base)
   }
 }
 
+BOOST_AUTO_TEST_CASE(CreateDir_Exceptions)
+{
+  BOOST_TEST_MESSAGE("Testing directory creation errors UC F1.CR2-E");
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    // E1 case
+    string invalidDir = "rkvh";
+    string invalidFullPath = baseDirFullPath1 + slash + invalidDir + slash + newDirName;
+    BOOST_CHECK_THROW( createDir(sessionKey, invalidFullPath), VishnuException);
+    // E2 case
+    string noAccessLocalPath = "/root/abc";
+    string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
+    BOOST_CHECK_THROW( createDir(sessionKey, noAccessFullPath), VishnuException);
+    // E3 case
+    string invalidMachineId = "tt";
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir;
+    BOOST_CHECK_THROW( createDir(sessionKey, invalidMachineFullPath), VishnuException);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
 BOOST_AUTO_TEST_CASE(DeleteDir_Base)
 {
   BOOST_TEST_MESSAGE("Testing directory deletion UC F1.DE2-B");
@@ -600,6 +624,32 @@ BOOST_AUTO_TEST_CASE(DeleteDir_Base)
     // Check: list content of parent directory
     bool isRemovedDirFound = areFoundInDir(sessionKey, baseDirFullPath1, ba::list_of(newDirName));
     BOOST_REQUIRE(!isRemovedDirFound);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+BOOST_AUTO_TEST_CASE(DeleteDir_Exceptions)
+{
+  BOOST_TEST_MESSAGE("Testing directory deletion errors UC F1.DE2-E");
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    // E1 case
+    string invalidDir = "rkvh";
+    string invalidFullPath = baseDirFullPath1 + slash + invalidDir;
+    BOOST_CHECK_THROW( removeDir(sessionKey, invalidFullPath), VishnuException);
+    // E2 case
+    string noAccessLocalPath = "/root/abc";
+    string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
+    BOOST_CHECK_THROW( removeDir(sessionKey, noAccessFullPath), VishnuException);
+    // E3 case
+    string invalidMachineId = "tt";
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir;
+    BOOST_CHECK_THROW( removeDir(sessionKey, invalidMachineFullPath), VishnuException);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
@@ -641,8 +691,43 @@ BOOST_AUTO_TEST_CASE(ListDirContent_Base)
   }
 }
 
+BOOST_AUTO_TEST_CASE(ListDirContent_Exceptions)
+{
+  BOOST_TEST_MESSAGE("Testing directory deletion errors UC F1.DE2-E");
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    StringList dirContent;
+    // E1 case
+    string invalidDir = "rkvh";
+    string invalidFullPath = baseDirFullPath1 + slash + invalidDir;
+    BOOST_CHECK_THROW( listDir(sessionKey, invalidFullPath, dirContent), VishnuException);
+    // E2 case
+    string noAccessLocalPath = "/root";
+    string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
+    BOOST_CHECK_THROW( listDir(sessionKey, noAccessFullPath, dirContent), VishnuException);
+    // E3 case
+    string invalidMachineId = "tt";
+    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir;
+    BOOST_CHECK_THROW( listDir(sessionKey, invalidMachineFullPath, dirContent), VishnuException);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
 
 BOOST_AUTO_TEST_SUITE_END()
 
+/*****************************************************************************/
+/************************** T R A N S F E R S ********************************/
+/*****************************************************************************/
+
+// All tests of category 4
+BOOST_AUTO_TEST_SUITE(fileAndDirTransfers)
+
+
+BOOST_AUTO_TEST_SUITE_END()
 // THE END
 
