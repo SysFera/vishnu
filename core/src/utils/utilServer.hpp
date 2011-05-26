@@ -255,6 +255,13 @@ namespace vishnu {
     }
     return true;
   }
-}
 
+/** 
+ * \brief Function to parse a system error message 
+ * \param errorMsg the error message
+ * \return the parsed message
+ */
+std::string parseErrorMessage (const std::string& errorMsg);
+
+}
 #endif //_UTILSERVER_H_
