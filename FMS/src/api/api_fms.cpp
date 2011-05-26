@@ -269,8 +269,6 @@ using namespace std;
 
     }
 
-
-
   /**
    * \brief get the list of files and subdirectories of a directory
    * \param sessionKey the session key

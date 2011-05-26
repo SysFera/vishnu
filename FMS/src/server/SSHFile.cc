@@ -323,8 +323,6 @@ list<string> SSHFile::ls(const LsDirOptions& options) const {
   if (!exists()) {
     throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" does not exist");
   }
-  std::cout <<"-l: " <<  boolalpha <<options.isLongFormat()<< "\n";
-  std::cout << "-a: " << boolalpha <<options.isAllFiles() << "\n";
 
 
   if (options.isLongFormat()){
@@ -409,6 +407,7 @@ pair<string, string> SSHExec::exec(const string& cmd) const {
 
   command << sshCommand  << " -l " << userName;
   command << " -C"  << " -o BatchMode=yes " << " -o StrictHostKeyChecking=yes";
+  command << " -o ForwardAgent=yes";
   command  << " -o ControlMaster=yes " << " -o ControlPath=/tmp/ssh-%r@%h:%p";
   command << " -p " << sshPort << " " << server << " " << cmd;
 
