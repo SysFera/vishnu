@@ -7,6 +7,8 @@
 // 1/ check the cmake parameters TEST_*
 // 2/ setup a 'test' unix group on host TEST_FMS_HOST1
 //    and add the user TEST_USER_LOGIN to this group
+// 3/ check that the /root directory is not accessible for
+//    the user that runs the tests (on TEST_FMS_HOST1)
 
 //UMS forward Headers
 #include "UMS_Data_forward.hpp"
@@ -15,6 +17,10 @@
 #include "FMS_Data_forward.hpp"
 #include "FMS_fixtures.hpp"
 #include "FMS_testconfig.h"
+#define STATUS_INPROGRESS 1
+#define STATUS_COMPLETED 2
+#define STATUS_CANCELED 3
+#define STATUS_FAILED 4
 
 // C++ Headers
 #include <iostream>
@@ -724,9 +730,152 @@ BOOST_AUTO_TEST_SUITE_END()
 /************************** T R A N S F E R S ********************************/
 /*****************************************************************************/
 
+
+/**
+ * \brief Wait until termination of an asynchronous file transfer
+ * \param sessionKey the session Key
+ * \param transferInfo  the file transfer information
+ * \return the final status value of the file transfer (-1 if error)
+ */
+int
+waitAsyncCopy(const string& sessionKey, const FileTransfer& transferInfo) {
+  unsigned int        pollCounter = 10;
+  bool                terminated = false;
+  LsTransferOptions   options;
+  FileTransferList    fileTransferList;
+  options.setTransferId(transferInfo.getTransferId());
+  while (!terminated && pollCounter--) {
+    if (listFileTransfers(sessionKey, fileTransferList, options) != 0) {
+      BOOST_MESSAGE("ERROR: Could not retrieve file transfer information");
+      return -1;
+    }
+    if (fileTransferList.getFileTransfers().size() == 1) {
+      if (fileTransferList.getFileTransfers().get(0)->getStatus() != STATUS_INPROGRESS) {
+        terminated = true;
+      }
+    } else if (fileTransferList.getFileTransfers().size() == 0) {
+      BOOST_MESSAGE("ERROR: File transfer list is empty for a given transferId!");
+      return -1;
+    } else {
+      BOOST_MESSAGE("ERROR: File transfer list contains more than 1 item for a given transferId!");
+      return -1;
+    }
+  }
+  if (!terminated) {
+    BOOST_MESSAGE("ERROR: End of polling for file transfer");
+    return -1;
+  }
+  return fileTransferList.getFileTransfers().get(0)->getStatus();
+}
+
 // All tests of category 4
 BOOST_AUTO_TEST_SUITE(fileAndDirTransfers)
 
+BOOST_AUTO_TEST_CASE(SyncCopyFile_Base)
+{
+  BOOST_TEST_MESSAGE("Testing synchronous copy of files UC F2.CP1-B");
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    createFile<10>(localFilePath);
+
+    // local to local (changing name)
+//     BOOST_MESSAGE("Checking local to local copy");
+//     string backupFileName = newFileName + ".bak";
+//     string backupLocalPath = localDir + backupFileName;
+//     BOOST_REQUIRE( copyFile(sessionKey, localFilePath, backupLocalPath) == 0);
+    // Check
+//     bool isLocalCopyFound = areFoundInDir(sessionKey, localDir, ba::list_of(backupFileName));
+//     BOOST_CHECK(isLocalCopyFound);
+    // Cleanup
+//     BOOST_CHECK( removeFile(sessionKey, backupLocalPath) == 0);
+
+    // local to remote
+    BOOST_MESSAGE("Checking local to remote copy");
+    BOOST_REQUIRE( copyFile(sessionKey, localFilePath, baseDirFullPath1) == 0);
+    // Check
+    bool isRemoteCopyFound = areFoundInDir(sessionKey, baseDirFullPath1, ba::list_of(newFileName));
+    BOOST_CHECK(isRemoteCopyFound);
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
+
+    // remote to local
+    BOOST_MESSAGE("Checking remote to local copy");
+    string localCopyName = newFileName + ".bak";
+    string localCopyPath = localDir + localCopyName;
+    BOOST_REQUIRE( copyFile(sessionKey, fileFullPath1, localCopyPath) == 0);
+    // Check
+    bool isLocalCopyFound = areFoundInDir(sessionKey, localDir, ba::list_of(localCopyName));
+    BOOST_CHECK(isLocalCopyFound);
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, localCopyPath) == 0);
+
+    // remote to remote
+    BOOST_MESSAGE("Checking remote to remote copy");
+    BOOST_REQUIRE( copyFile(sessionKey, fileFullPath1, baseDirFullPath2) == 0);
+    // Check
+    isRemoteCopyFound = areFoundInDir(sessionKey, baseDirFullPath2, ba::list_of(newFileName));
+    BOOST_CHECK(isRemoteCopyFound);
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
+    BOOST_CHECK( removeFile(sessionKey, fileFullPath2) == 0);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+
+BOOST_AUTO_TEST_CASE(AsyncCopyFile_Base)
+{
+  BOOST_TEST_MESSAGE("Testing asynchronous copy of files UC F2.CP2-B");
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    FileTransfer transferInfo;
+    createFile<1000>(localFilePath);
+
+    // local to remote
+    BOOST_MESSAGE("Checking local to remote copy");
+    BOOST_REQUIRE( copyAsyncFile(sessionKey, localFilePath, baseDirFullPath1, transferInfo) == 0);
+    // Check
+    BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_COMPLETED );
+    bool isRemoteCopyFound = areFoundInDir(sessionKey, baseDirFullPath1, ba::list_of(newFileName));
+    BOOST_CHECK(isRemoteCopyFound);
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
+
+    // remote to local
+    BOOST_MESSAGE("Checking remote to local copy");
+    string localCopyName = newFileName + ".bak";
+    string localCopyPath = localDir + localCopyName;
+    BOOST_REQUIRE( copyAsyncFile(sessionKey, fileFullPath1, localCopyPath, transferInfo) == 0);
+    // Check
+    BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_COMPLETED );
+    bool isLocalCopyFound = areFoundInDir(sessionKey, localDir, ba::list_of(localCopyName));
+    BOOST_CHECK(isLocalCopyFound);
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, localCopyPath) == 0);
+
+    // remote to remote
+    BOOST_MESSAGE("Checking remote to remote copy");
+    BOOST_REQUIRE( copyAsyncFile(sessionKey, fileFullPath1, baseDirFullPath2, transferInfo) == 0);
+    // Check
+    BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_COMPLETED );
+    isRemoteCopyFound = areFoundInDir(sessionKey, baseDirFullPath2, ba::list_of(newFileName));
+    BOOST_CHECK(isRemoteCopyFound);
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
+    BOOST_CHECK( removeFile(sessionKey, fileFullPath2) == 0);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
 
 BOOST_AUTO_TEST_SUITE_END()
 // THE END
