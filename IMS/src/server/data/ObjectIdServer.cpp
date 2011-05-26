@@ -4,7 +4,6 @@
 ObjectIdServer::ObjectIdServer(const UserServer session):msession(session) {
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
-  // TODO FIX MVISHNU ID
   mvishnuId  = 1;
 }
 
