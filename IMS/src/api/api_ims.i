@@ -49,9 +49,6 @@
 %include "IMS_Data/Threshold.hpp"
 %include "IMS_Data/ThresholdOp.hpp"
 
-// TODO make copy of object when using the push_back() method of EList
-// because this causes a segfault due to double free
-
 // Instantiate the template for all lists
 // the templates used within the list template must be instantiated first
 %template(EListPtr) ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList< ::ecore::EObject > >;

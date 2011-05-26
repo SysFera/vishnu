@@ -6,7 +6,6 @@
 ThresholdServer::ThresholdServer(const UserServer session):msession(session) {
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
-  // TODO FIX
   mvishnuId = 1;
 }
 
@@ -14,7 +13,6 @@ ThresholdServer::ThresholdServer(const UserServer session, IMS_Data::ThresholdOp
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
   mop = op;
-  // TODO FIX
   mvishnuId = 1;
 }
 
