@@ -31,6 +31,8 @@ SSHFile::SSHFile() : File() {
   sshUser = "default";
   sshPublicKey = "none";
   sshPrivateKey = "none";
+  sshPort = 22;
+  merror="";
 }
 
 /* Standard constructor.
@@ -75,7 +77,7 @@ SSHFile::SSHFile(const SSHFile& file) : File(file) {
   operator=(file);
 }
 
-/* Copy operator. */
+/* Copy operator.  FIXME use copy and swap method instead*/
 SSHFile& SSHFile::operator=(const SSHFile& file) {
   upToDate = file.isUpToDate();
   this->sshHost = file.sshHost;
@@ -86,6 +88,7 @@ SSHFile& SSHFile::operator=(const SSHFile& file) {
   this->sshPort = file.sshPort;
   this->sshCommand = file.sshCommand;
   this->scpCommand = file.scpCommand;
+  this->merror = file.merror;
   return *this;
 }
 
@@ -380,7 +383,8 @@ int SSHFile::cp(const string& dest, const CpFileOptions& options){
 
   if (cpResult.second.find("Warning")!=std::string::npos){
 
-std:cout << "Warning found \n"; 
+    std::cout << "Warning found \n";
+
     cpResult = ssh.exec(CPCMD+getPath()+" "+dest);
 
   } 
