@@ -42,7 +42,10 @@ using namespace std;
   int
     vishnu::createFile(const string& sessionKey,const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
-   
+  
+      //To check the remote path
+      vishnu::checkRemotePath(path);
+ 
       SessionProxy sessionProxy(sessionKey);
   
       boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
@@ -63,7 +66,10 @@ using namespace std;
    */
   int vishnu::createDir(const string& sessionKey,const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
-   
+
+      //To check the remote path
+      vishnu::checkRemotePath(path);
+
       SessionProxy sessionProxy(sessionKey);
   
       boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
@@ -84,7 +90,10 @@ using namespace std;
    */
   int vishnu::removeFile(const string& sessionKey,const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
-   
+ 
+      //To check the remote path 
+      vishnu::checkRemotePath(path);
+
       SessionProxy sessionProxy(sessionKey);
   
       boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
@@ -107,8 +116,10 @@ using namespace std;
    */
   int vishnu::removeDir(const string& sessionKey,const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
-    
-       
+   
+      //To check the remote path 
+      vishnu::checkRemotePath(path); 
+
       SessionProxy sessionProxy(sessionKey);
   
       boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
@@ -137,6 +148,9 @@ using namespace std;
     vishnu::chGrp(const string& sessionKey, const string& group, const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
+      //To check the remote path
+      vishnu::checkRemotePath(path);
+
       SessionProxy sessionProxy(sessionKey);
 
       boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
@@ -159,7 +173,10 @@ using namespace std;
    */
   int vishnu::chMod(const string& sessionKey, const mode_t& mode, const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
-   
+ 
+      //To check the remote path 
+      vishnu::checkRemotePath(path);
+
       SessionProxy sessionProxy(sessionKey);
 
       boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
@@ -180,7 +197,7 @@ using namespace std;
    */
   int vishnu::copyFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
-   
+  
       SessionProxy sessionProxy(sessionKey);
 
       // FIXME use FileTransferProxy class to handle the copy
@@ -235,6 +252,9 @@ using namespace std;
   int vishnu::headOfFile(const string& sessionKey,const string& path, string& contentOfFile, const HeadOfFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
+      //To check the remote path
+      vishnu::checkRemotePath(path);
+
       SessionProxy sessionProxy(sessionKey);
       boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
 
@@ -256,7 +276,10 @@ using namespace std;
    */
   int vishnu::contentOfFile(const string& sessionKey,const string& path, string& contentOfFile)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
-   
+ 
+      //To check the remote path 
+      vishnu::checkRemotePath(path);
+
       SessionProxy sessionProxy(sessionKey);
 
       boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
@@ -278,7 +301,10 @@ using namespace std;
    */
   int vishnu::listDir(const string& sessionKey,const string& path, StringList& dirContent,const LsDirOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
- 
+
+   //To check the remote path
+   vishnu::checkRemotePath(path);
+
    SessionProxy sessionProxy(sessionKey);
 
    boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
@@ -355,6 +381,8 @@ using namespace std;
   int vishnu::tailOfFile(const string& sessionKey,const string& path, string& contentOfFile,const TailOfFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
 
+      //To check the remote path
+      vishnu::checkRemotePath(path);
 
       SessionProxy sessionProxy(sessionKey);
 
@@ -379,7 +407,10 @@ using namespace std;
    */
   int vishnu::getFilesInfo(const string& sessionKey,const string& path, FileStat& fileInfos)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
-     
+   
+      //To check the remote path 
+      vishnu::checkRemotePath(path);
+
       SessionProxy sessionProxy(sessionKey);
      
       FileProxy* f = FileProxyFactory::getFileProxy(sessionProxy,path);

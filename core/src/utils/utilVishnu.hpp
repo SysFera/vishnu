@@ -16,6 +16,7 @@
 #include <boost/random/variate_generator.hpp>
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include "boost/date_time/gregorian/gregorian.hpp"
+#include "FMSVishnuException.hpp"
 
 using namespace boost::posix_time;
 using namespace boost::gregorian;
@@ -232,5 +233,12 @@ namespace vishnu {
    void
    checkMetricHistoryValue(const int& metric);
 
+   /**
+    * \brief Function to check the remote file path
+    * \param path the remote file path
+    * \return raises an exception on error
+    */ 
+   void
+   checkRemotePath(const std::string& path);
 }
 #endif // _UTILVISHNU_H_
