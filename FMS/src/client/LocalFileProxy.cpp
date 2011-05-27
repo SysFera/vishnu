@@ -143,7 +143,6 @@ int LocalFileProxy::transferFile(const string& dest, const TypeOfOption& options
 
   }
 
-  std::cout << "localFullPath "<<localFullPath << "\n";
   //IN Parameters  
   
   diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
@@ -185,7 +184,7 @@ int LocalFileProxy::cp(const string& dest, const CpFileOptions& options) {
 
 }
 
-int LocalFileProxy::mv(const string& dest, const MvFileOptions& options) {
+int LocalFileProxy::mv(const string& dest, const CpFileOptions& options) {
 
  return  transferFile(dest, options, "FileMove");
 
