@@ -3,14 +3,31 @@
  * \brief Contains IMS API test implementation
  * References: VISHNU_D5_1b_IMS-PlanTests
  */
+/*********************************************************
+#####Tests prerequisites:#######
+- The Cmake variable TEST_LOCAL_HOSTNAME which is the name of the
+local machine, hostname of the machine in which the tests will be launched,
+must be defined.
+
+- The Cmake variable TEST_ROOT_LOGIN which is the name of the user unix
+account of local machine must be defined
+
+- For the test case IA9-B - Stop: the name of the machine,
+in which a UMS sed has been previously launched, must be
+defined using the CMacke variable TEST_DISTANT_NAME
+
+- The Cmake variable TEST_USER_LOGIN which is the name of the user unix
+account on the distant machine whose name is the value of the previous TEST_DISTANT_NAME variable,
+must be defined.
+
+*********************************************************/
 
 //UMS forward Headers
 #include "UMS_Data_forward.hpp"
 //IMS forward Headers
 #include "IMS_Data_forward.hpp"
-
 #include "IMS_fixtures.hpp"
-#include "imsTestUtils.hpp"
+#include "vishnuTestUtils.hpp"
 #include "IMS_testconfig.h"
 
 #include "TMS_Data.hpp"
@@ -36,8 +53,6 @@ namespace bfs= boost::filesystem;
 
 
 // The database, UMS and IMS SeD are launched by IMSSedFixture.
-
-
 BOOST_GLOBAL_FIXTURE(IMSSeDFixture)
 
 BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
@@ -51,9 +66,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
 
     BOOST_TEST_MESSAGE("Use case I2 – B: Get metric  data");
     int nbResMetric = 2;
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
     IMS_Data::ListMetric list;
     IMS_Data::MetricHistOp op;
@@ -85,9 +100,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE( get_metric_data_bad_machine_Id_call) {
 
     BOOST_TEST_MESSAGE("Use case I2 – E1: Get metric data with bad machine Id");
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="unknown_name";
 
     IMS_Data::ListMetric list;
@@ -102,9 +117,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE( get_metric_data_bad_metric_type) {
 
     BOOST_TEST_MESSAGE("Use case I2 – E2: Get metric data with bad metric type");
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
 
     IMS_Data::ListMetric list;
@@ -123,9 +138,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE(get_metric_current_value) {
 
     BOOST_TEST_MESSAGE("Use case I4 – B: Get data on the infrastructure");
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
     IMS_Data::ListMetric list;
     IMS_Data::CurMetricOp op;
@@ -149,11 +164,11 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE(get_system_load_threshold) {
 
     BOOST_TEST_MESSAGE("Use case IA2.1 – B: Get a system load threshold");
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
 
     string sqlPath = IMSSQLPATH;
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
 
     IMS_Data::ListThreshold list;
@@ -194,11 +209,11 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE(get_system_load_threshold_bad_machine_Id_call) {
 
     BOOST_TEST_MESSAGE("Use case IA2.1 – E1: Get a system load threshold with bad machine Id");
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
 
     string sqlPath = IMSSQLPATH;
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="unknown_name";
 
     IMS_Data::ListThreshold list;
@@ -214,11 +229,11 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE(get_system_load_threshold_bad_metric_call) {
 
     BOOST_TEST_MESSAGE("Use case IA2.1 – E2: Get a system load threshold with bad metric");
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
 
     string sqlPath = IMSSQLPATH;
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
 
     IMS_Data::ListThreshold list;
@@ -235,11 +250,11 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE(get_system_load_threshold_for_no_admin_user_call) {
 
     BOOST_TEST_MESSAGE("Use case IA2.1 – E2: Get a system load threshold with no admin user");
-    VishnuConnexion vc("user_1","toto");
+    VishnuConnection vc("user_1","toto");
 
     string sqlPath = IMSSQLPATH;
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
 
     IMS_Data::ListThreshold list;
@@ -256,11 +271,11 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_CPU_USE) {
 
     BOOST_TEST_MESSAGE("Use case IA2 – B1: Define a system load threshold for CPUUSE metric");
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
 
     string sqlPath = IMSSQLPATH;
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
     int currentThreshold;
 
@@ -315,11 +330,11 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_FREE_DISK_SPACE) {
 
     BOOST_TEST_MESSAGE("Use case IA2 – B2: Define a system load threshold for FREE DISK SPACE Metric");
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
 
     string sqlPath = IMSSQLPATH;
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
     int currentThreshold;
 
@@ -373,11 +388,11 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_FREE_MEMORY) {
 
     BOOST_TEST_MESSAGE("Use case IA2 – B3: Define a system load threshold for FREE MEMORY Metric");
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
 
     string sqlPath = IMSSQLPATH;
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
     int currentThreshold;
 
@@ -433,10 +448,10 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE(define_system_load_threshold_bad_machine_Id_call) {
 
     BOOST_TEST_MESSAGE("Use case IA2 – E1: Define a system load threshold with bad machine Id");
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
 
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="unknown_name";
 
     IMS_Data::ListThreshold list;
@@ -456,11 +471,11 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE(define_system_load_threshold_bad_metric_call) {
 
     BOOST_TEST_MESSAGE("Use case IA2 – E2: Define a system load threshold with bad metric");
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
 
     string sqlPath = IMSSQLPATH;
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
 
     IMS_Data::ListThreshold list;
@@ -480,11 +495,11 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE(define_system_load_threshold_no_admin_call) {
 
     BOOST_TEST_MESSAGE("Use case IA2 – E3: Define a system load threshold for no admin user");
-    VishnuConnexion vc("user_1","toto");
+    VishnuConnection vc("user_1","toto");
 
     string sqlPath = IMSSQLPATH;
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
 
     IMS_Data::ListThreshold list;
@@ -506,9 +521,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
 
     BOOST_TEST_MESSAGE("Use case I1 – B: Get the update frequency");
     string sqlPath = IMSSQLPATH;
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
     int frequency;
 
@@ -535,9 +550,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
 
     BOOST_TEST_MESSAGE("Use case IA6 – B: Set the update frequency");
     string sqlPath = IMSSQLPATH;
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
     int frequency;
     int newFrequence;
@@ -569,9 +584,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE(set_update_frequency_zero_call) {
 
     BOOST_TEST_MESSAGE("Use case IA6 – E1: Set the update frequency with frequency equal to zero");
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
     int frequency = 0;
 
@@ -583,9 +598,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE(set_update_frequency_negative_call) {
 
     BOOST_TEST_MESSAGE("Use case IA6 – E2: Set the update frequency with negative value");
-   VishnuConnexion vc("root","vishnu_user");
+   VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
     int frequency = -15;
 
@@ -596,10 +611,10 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   // Get the update frequency : no admin user
   BOOST_AUTO_TEST_CASE(set_update_frequency_no_admin_call) {
 
-    BOOST_TEST_MESSAGE("Use case IA6 – E3: Set the update frequency");
-    VishnuConnexion vc("user_1","toto");
+    BOOST_TEST_MESSAGE("Use case IA6 – E3: Set the update frequency for no admin user");
+    VishnuConnection vc("user_1","toto");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
 
     BOOST_CHECK_THROW(setUpdateFrequency(sessionKey, 15), VishnuException);
@@ -611,9 +626,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
 
     BOOST_TEST_MESSAGE("Use case IA3 – B: Define the identifier");
     string sqlPath = IMSSQLPATH;
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
     string formatUser = "UTEST_$CPT";
     string formatMachine = "MTEST_$CPT";
@@ -685,9 +700,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     string formatJob = "JTEST_$TEST";
     string formatFileTransfer = "FTTEST_$TEST";
 
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
 
     //To define the user format
@@ -711,9 +726,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     string formatJob = "JTEST_$CPT";
     string formatFileTransfer = "FTTEST_$CPT";
     //no admin user
-    VishnuConnexion vc("user_1","toto");
+    VishnuConnection vc("user_1","toto");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
 
     //To define the user format
@@ -732,9 +747,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
 
     BOOST_TEST_MESSAGE("Use case I5-B: Get system info normal call");
     string sqlPath = IMSSQLPATH;
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
     IMS_Data::ListSysInfo listSysInfo;
     IMS_Data::SysInfoOp sysInfoOp;
@@ -767,9 +782,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE(get_system_info_bad_machine_Id_call) {
 
     BOOST_TEST_MESSAGE("Use case I5-B: Get system info with bad machine Id call");
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="unknown_name";
 
     IMS_Data::ListSysInfo listSysInfo;
@@ -786,9 +801,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
 
     BOOST_TEST_MESSAGE("Use case IA-5: Set system info normal call");
     string sqlPath = IMSSQLPATH;
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
     IMS_Data::ListSysInfo listSysInfo;
     IMS_Data::SysInfoOp sysInfoOp;
@@ -825,9 +840,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE(set_system_info_bad_machine_Id_call) {
 
     BOOST_TEST_MESSAGE("Use case IA5-E1: Set system info with bad machine Id call");
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="unknown_name";
 
     //To set the SystemInfo values
@@ -844,9 +859,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE(set_system_info_bad_mertric_value_call) {
 
     BOOST_TEST_MESSAGE("Use case IA5-E2: Set system info with bad metric value call");
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="unknown_name";
 
     //To set the SystemInfo values
@@ -864,9 +879,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
 
     BOOST_TEST_MESSAGE("Use case IA5-E2: Set system info for no admin user");
     //no admin user
-    VishnuConnexion vc("user_1","toto");
+    VishnuConnection vc("user_1","toto");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
 
     //To set the SystemInfo values
@@ -886,9 +901,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     bool imssedFound = false;
     bool tmssedFound = false;
     bool umssedFound = false;
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
     IMS_Data::ListProcesses listProcess;
     IMS_Data::ProcessOp op;
@@ -930,9 +945,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE(get_running_processes_bad_machine_Id_call) {
 
     BOOST_TEST_MESSAGE("Use case IA1-E1: Get the running processes with bad machine Id");
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="unknown_name";
 
     IMS_Data::ListProcesses listProcess;
@@ -948,9 +963,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
 
     BOOST_TEST_MESSAGE("Use case IA1-E2: Get the running processes for no admin user Id");
     //no admin user
-    VishnuConnexion vc("user_1","toto");
+    VishnuConnection vc("user_1","toto");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
 
     IMS_Data::ListProcesses listProcess;
@@ -968,9 +983,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
 
     BOOST_TEST_MESSAGE("Use case IA4.1-B: Soft load schedding normal call");
 
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
     //Set loadShedType to 1: SOFT
     IMS_Data::LoadShedType loadShedType = 2;
@@ -1013,9 +1028,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE(load_schedding_soft_bad_machine_Id_call) {
 
     BOOST_TEST_MESSAGE("Use case IA4.1-E1: Soft load schedding with bad machine Id");
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="unknown_name";
     //Set loadShedType to 1: SOFT
     IMS_Data::LoadShedType loadShedType = 2;
@@ -1025,19 +1040,20 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
 
   //IA4.1-E2 : Soft load schedding for no admin user
   //Soft load schedding: no admin user
-  BOOST_AUTO_TEST_CASE(load_schedding_soft_no_admin_user_call) {
+  //FIXME: To remove admin case from specs
+  /*BOOST_AUTO_TEST_CASE(load_schedding_soft_no_admin_user_call) {
 
     BOOST_TEST_MESSAGE("Use case IA4.1-E2: Soft load schedding for no admin user");
     //no admin user
-    VishnuConnexion vc("user_1","toto");
+    VishnuConnection vc("user_1","toto");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
     //Set loadShedType to 1: SOFT
     IMS_Data::LoadShedType loadShedType = 2;
 
     BOOST_CHECK_THROW(loadShed(sessionKey, machineId, loadShedType), VishnuException);
-  }
+  }*/
 
   //TODO: Kévine ==> Ajouter use case dans Specs Genérales
   //IA9-B:  Stop normal call
@@ -1047,9 +1063,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     BOOST_TEST_MESSAGE("Use case IA9-B: Stop normal call");
     bool umssedFound = false;
 
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     //The distant machine on which the process UMS will be stopped
     string machineId="machine_2";
     IMS_Data::ListProcesses listProcess;
@@ -1105,9 +1121,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE(stop_bad_machine_Id_call) {
 
     BOOST_TEST_MESSAGE("Use case IA9-E1: Stop with bad machine Id call");
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="unknown_name";
 
     //The process to stop
@@ -1123,9 +1139,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   BOOST_AUTO_TEST_CASE(stop_no_admin_user_call) {
     BOOST_TEST_MESSAGE("Use case IA9-E1: Stop for no admin user call");
     //no admin user
-    VishnuConnexion vc("user_1","toto");
+    VishnuConnection vc("user_1","toto");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
 
     //The process to stop
@@ -1135,20 +1151,21 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
 
     BOOST_CHECK_THROW(stop(sessionKey, process), VishnuException);
   }
+
   /*
   //Test category 1
   //I3-B: export and replay commands
   BOOST_AUTO_TEST_CASE( export_command_normal_call) {
 
     BOOST_TEST_MESSAGE("Use case I3 – B: Export and replay commands");
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
     // CREATE DATA MODEL
     UMS_DataFactory_ptr ecoreFactory = UMS_DataFactory::_instance();
     // Command history
-    ListCommands_ptr listCmd  = ecoreFactory->createListCommands();
+    ListCommands_ptr listCmd = ecoreFactory->createListCommands();
     ListCmdOptions listCmdOpt ;
     // List Sessions
     ListSessions_ptr listSess   = ecoreFactory->createListSessions();
@@ -1158,29 +1175,57 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     //1 for Shell export
     exportOp.setExportType(1);
     string filename = "tmpTest.txt";
+    string filePath;
     string fileContent;
+    //Session in which the commands will be exported
+    Session sess ;
+    ConnectOptions connectOpt;
+    //Set close policy : on disconnect
+    connectOpt.setClosePolicy(2);
+    //Job
+    const std::string scriptFilePath= TMSSCRIPTSPATH "/torque_script";
+    Job jobInfo;
+    SubmitOptions subOptions;
+    //To list metric history
+    IMS_Data::ListMetric list;
+    IMS_Data::MetricHistOp op;
+    //Set FREEMOMORY metric
+    op.setType(5);
+
     try {
-      //Options to get inactive sessions
-      listSessionsOpt.setStatus(0);
-      //To get the list of inactive sessions
-      BOOST_CHECK_EQUAL(listSessions(sessionKey, *listSess, listSessionsOpt), 0);
-      BOOST_REQUIRE(listSess->getSessions().size() != 0);
+
+      BOOST_CHECK_EQUAL(connect("root", "vishnu_user", sess, connectOpt), 0);
+      //To list sessions
+      BOOST_CHECK_EQUAL(listSessions(sess.getSessionKey(), *listSess, listSessionsOpt), 0);
+      //To submit a job
+      BOOST_CHECK_EQUAL(submitJob(sess.getSessionKey(), machineId, scriptFilePath, jobInfo,subOptions),0 );
+      //To list metric history
+      BOOST_CHECK_EQUAL(getMetricHistory(sess.getSessionKey(), machineId, list, op),0  );
+      BOOST_TEST_MESSAGE("List history commands:");
+      //To list the commands
+      BOOST_CHECK_EQUAL(listHistoryCmd(sess.getSessionKey(), *listCmd, listCmdOpt), 0);
+      //To close session
+      BOOST_CHECK_EQUAL(close (sess.getSessionKey()), 0);
+
+      BOOST_TEST_MESSAGE("sess.getSessionId():" << sess.getSessionId());
       //To get the sessionId of the first element of the list
-      listCmdOpt.setSessionId(listSess->getSessions().get(0)->getSessionId());
-      BOOST_CHECK_EQUAL(listHistoryCmd(sessionKey, *listCmd, listCmdOpt), 0);
+      //listCmdOpt.setSessionId(listSess->getSessions().get(0)->getSessionId());
+      //BOOST_CHECK_EQUAL(listHistoryCmd(sessionKey, *listCmd, listCmdOpt), 0);
       //At least one command registered
-      BOOST_REQUIRE(listCmd->getCommands().size() > 1);
+      //BOOST_REQUIRE(listCmd->getCommands().size() > 1);
 
       //To create a locate file for the test
       std::ofstream file(filename.c_str());
+      filePath = boost::filesystem3::current_path().string() +"/"+ filename;
 
-      boost::filesystem3::path filePath (boost::filesystem3::current_path().string() +"/"+ filename);
-      BOOST_TEST_MESSAGE("filePath.filename():" << filePath.filename());
-      exportCommands(sessionKey, listCmdOpt.getSessionId(), filePath.filename().string(), exportOp);
-
-      fileContent = vishnu::get_file_content(filePath.filename().c_str());
+      //To create the file in which the command will be saved
+      if (!file.is_open()) {
+        throw UserException(ERRCODE_INVALID_PARAM, "Error opening file: " + filename);
+      }
+      BOOST_CHECK_EQUAL(exportCommands(sessionKey, sess.getSessionId(), filePath, exportOp), 0);
+      fileContent = vishnu::get_file_content(filePath.c_str());
       BOOST_TEST_MESSAGE("FileContent:" << fileContent);
-
+      BOOST_REQUIRE(fileContent.size() != 0);
       //To remove the temporary file
       boost::filesystem3::remove(filePath);
 
@@ -1193,6 +1238,12 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       BOOST_CHECK(false);
       delete listSess;
       delete listCmd;
+      try {
+        //To remove the temporary file
+        boost::filesystem3::remove(filePath);
+      } catch (exception& exp) {
+        BOOST_MESSAGE(exp.what());
+      }
     }
   }
   */
@@ -1201,9 +1252,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
 
     string sqlPath = IMSSQLPATH;
     BOOST_TEST_MESSAGE("Clean process table");
-    VishnuConnexion vc("root","vishnu_user");
+    VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
-    string sessionKey=vc.getConnexion();
+    string sessionKey=vc.getSessionKey();
 
     try {
       //TODO:A mettre dans le dernier cas de tests
