@@ -201,7 +201,19 @@ string File::extName(const string& path) {
 }
 
 string File::extCpCmd (const CpFileOptions& options){
-return string ("scp -o Compression=yes -o StrictHostKeyChecking=no ");
+  
+  std::string command;
+  
+  if (options.getTrCommand()==1){
+    command= "scp -o Compression=yes -o StrictHostKeyChecking=no ";
+  }
+  else {
+
+    command ="script -c \"rsync -Paz --rsh=ssh ";
+
+  }
+
+  return command;
 }
 
 
