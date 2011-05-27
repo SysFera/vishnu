@@ -31,6 +31,12 @@ private:
   mutable bool upToDate;
   std::string localUser;
   bool printTrID;
+
+  template <class TypeOfOption>
+    int transferFile(const std::string& dest,
+                     const TypeOfOption& options,
+                     const std::string& serviceName); 
+
 public:
   RemoteFileProxy();
   RemoteFileProxy(const SessionProxy& sessionProxy,const std::string& path,
@@ -56,9 +62,9 @@ public:
   virtual std::list<std::string> ls(const LsDirOptions& options) const; 
   void printTransferID(const bool printTrID);
 
-  int cp(const std::string& dest, const CpFileOptions& options, const std::string& serviceName="FileCopy");
+  int cp(const std::string& dest, const CpFileOptions& options);
 
-  int mv(const std::string& dest, const CpFileOptions& options);
+  int mv(const std::string& dest, const MvFileOptions& options);
 };
 
 #endif
