@@ -28,7 +28,7 @@ using namespace vishnu;
  * \param trCmdStr: The command to use to perform file transfer
  * \param src: The source file to copy following the pattern [host:]file path
  * \param dest: The path of the destination file
- * \param mvFileOptions: The copy file transfer options structure
+ * \param cpFileOptions: The copy file transfer options structure
  */
 boost::shared_ptr<Options>
 makeMoveAsyncOpt(string pgName, 
@@ -84,7 +84,7 @@ int main (int argc, char* argv[]){
   FileTransfer transferInfo;
 
    /********** EMF data ************/
-  FMS_Data::MvFileOptions mvFileOptions;
+  FMS_Data::CpFileOptions cpFileOptions;
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt= makeMoveAsyncOpt(argv[0], dietConfig, trCmdStr, src, dest);
@@ -108,7 +108,7 @@ int main (int argc, char* argv[]){
     } else {
       trCmd = convertToInt(trCmdStr);
     }
-    mvFileOptions.setTrCommand(trCmd);
+    cpFileOptions.setTrCommand(trCmd);
   }
  
   if (ret != CLI_SUCCESS){
@@ -138,7 +138,7 @@ int main (int argc, char* argv[]){
     // DIET call 
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
-      moveAsyncFile(sessionKey, src, dest, transferInfo, mvFileOptions);
+      moveAsyncFile(sessionKey, src, dest, transferInfo, cpFileOptions);
       
       std::cout << transferInfo << std::endl;
     }
