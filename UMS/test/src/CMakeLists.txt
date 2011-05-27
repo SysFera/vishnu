@@ -38,7 +38,7 @@ configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/UMS_testconfig.h.in
   ${PROJECT_BINARY_DIR}/include/UMS_testconfig.h )
 # Create configuration for VISHNU UMS SeD
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/umssed_testing.cfg.in
-  ${PROJECT_BINARY_DIR}/etc/umssed_testing.cfg
+  ${TEST_CONFIG_PATH}/umssed_testing.cfg
 )
 
 
@@ -58,3 +58,5 @@ target_link_libraries( stresser
   exception-vishnu
   vishnu-ums-api
   ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+
+add_subdirectory( sql )
