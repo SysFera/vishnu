@@ -828,7 +828,10 @@ void RemoteFileProxy::printTransferID(const bool printTrID) {
   this->printTrID=printTrID;
 }
 
-int RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options, const std::string& localServiceName){
+template <class TypeOfOption>
+int RemoteFileProxy::transferFile(const std::string& dest, 
+                                  const TypeOfOption& options, 
+                                  const std::string& serviceName){
 
   string destHost = FileProxy::extHost(dest);
   string localUser = "";
@@ -861,10 +864,7 @@ int RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options, c
   diet_profile_t* profile;
   char* errMsg;
 
-  std::string serviceName("Remote"+localServiceName);
-
   std::string sessionKey=this->getSession().getSessionKey();
-
 
   profile = diet_profile_alloc(serviceName.c_str(), 6, 6, 7);
 
@@ -889,7 +889,7 @@ int RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options, c
   const char* name = "cp";
   ::ecorecpp::serializer::serializer _ser(name);
   //To serialize the options object in to optionsInString
-  optionsToString =  strdup(_ser.serialize(const_cast<FMS_Data::CpFileOptions_ptr>(&options)).c_str());
+  optionsToString =  strdup(_ser.serialize(const_cast<TypeOfOption*>(&options)).c_str());
 
   diet_string_set(diet_parameter(profile,6 ), optionsToString, DIET_VOLATILE);
 
@@ -908,6 +908,10 @@ int RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options, c
 return 0;
 }
 
-int RemoteFileProxy::mv(const std::string& dest, const CpFileOptions& options) {
-  return cp(dest, options, "RemoteMoveFile");
+int RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options) {
+  return transferFile(dest, options, "RemoteFileCopy");
+}
+
+int RemoteFileProxy::mv(const std::string& dest, const MvFileOptions& options) {
+  return transferFile(dest, options, "RemoteFileMove");
 }
