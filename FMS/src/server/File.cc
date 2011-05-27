@@ -63,7 +63,7 @@ void File::exists(const bool exist) const {
   this->exist = exist;
 }
 
-File::File() {
+File::File():exist("false") {
   srand(time(NULL));
 }
 
@@ -198,6 +198,16 @@ string File::extName(const string& path) {
   pos = path.find_first_of(':');
   if (pos == string::npos) return path;
   return path.substr(pos+1);
+}
+
+string File::extCpCmd (const CpFileOptions& options){
+return string ("scp -o Compression=yes -o StrictHostKeyChecking=no ");
+}
+
+string File::extMvCmd (const MvFileOptions& options){
+
+return string ("scp -o Compression=yes -o StrictHostKeyChecking=no ");
+
 }
 
 File::~File() {}

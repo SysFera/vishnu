@@ -178,9 +178,9 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 
 	/*******************************************************************************/
 	// TODO ELECT PROCESS
-
+	
 	// If not stopped voluntarily
-
+	
 	// SSH and reconnect
 	/*******************************************************************************/
 	
@@ -194,7 +194,6 @@ IMSVishnuTool::setFilter(string description_file){
   mfilter.filterName = CORBA::string_dup("allFilter");
   mfilter.tagList.length(1);
   mfilter.tagList[0] = CORBA::string_dup("IN");
-  //  mfilter.tagList[1] = CORBA::string_dup("ADD_SERVICE");
   mfilter.componentList.length(1);
   mfilter.componentList[0] = CORBA::string_dup("*");
 }
