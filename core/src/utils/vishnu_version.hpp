@@ -2,6 +2,6 @@
 #define VISHNU_VERSION_HPP
 
 
-#define VISHNU_VERSION "1.1.0"
+#define VISHNU_VERSION "1.2.0"
 
 #endif
