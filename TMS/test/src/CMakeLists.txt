@@ -20,6 +20,11 @@ include_directories(
   ${UMS_TEST_SOURCE_DIR}
   )
 
+# Standard VISHNU TESTS variables
+file( TO_NATIVE_PATH "${TEST_SQL_PATH}" TESTSQLPATH )
+file( TO_NATIVE_PATH "${TEST_CONFIG_PATH}" TESTCONFIGPATH )
+file( TO_NATIVE_PATH "${TEST_BIN_PATH}" TESTBINPATH)
+
 set (TEST_CONFIG_TMS "${PROJECT_BINARY_DIR}/include")
 file( TO_NATIVE_PATH ${TEST_CONFIG_TMS} TESTCONF )
 set (TEST_TMS_SQL "${PROJECT_BINARY_DIR}/test_files/sql")
@@ -27,10 +32,10 @@ file( TO_NATIVE_PATH ${TEST_TMS_SQL} TMSSQL )
 set (TEST_TMS_SCRIPTS "${CMAKE_CURRENT_SOURCE_DIR}/scripts")
 file( TO_NATIVE_PATH ${TEST_TMS_SCRIPTS} TMSSCRIPTS )
 # Path to the DIET configuration for the SeD (used for umssed_testing.cfg)
-set (TEST_DIET_SED_CONFIG "${PROJECT_BINARY_DIR}/etc/SeD_testing.cfg")
+set (TEST_DIET_SED_CONFIG "${TEST_CONFIG_PATH}/SeD_testing.cfg")
 file( TO_NATIVE_PATH ${TEST_DIET_SED_CONFIG} DIETSEDCONF)
 # Path to the VISHNU UMS SeD configuration
-set (TEST_TMS_SED_CONFIG "${PROJECT_BINARY_DIR}/etc/tmssed_testing.cfg")
+set (TEST_TMS_SED_CONFIG "${TEST_CONFIG_PATH}/tmssed_testing.cfg")
 file ( TO_NATIVE_PATH ${TEST_TMS_SED_CONFIG} TMSSEDCONF)
 # Path to the VISHNU TMS SeD executable
 file( TO_NATIVE_PATH "${PROJECT_BINARY_DIR}/bin" TMSSEDBINDIR)
@@ -40,7 +45,7 @@ configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/TMS_testconfig.h.in
   ${PROJECT_BINARY_DIR}/include/TMS_testconfig.h )
 # Create configuration for VISHNU TMS SeD
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/tmssed_testing.cfg.in
-  ${PROJECT_BINARY_DIR}/etc/tmssed_testing.cfg
+  ${TEST_CONFIG_PATH}/tmssed_testing.cfg
 )
 
 include(TMSTestingMacros)

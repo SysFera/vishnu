@@ -18,8 +18,8 @@ file( TO_NATIVE_PATH "${DIET_DIR}/bin" DIETAGENT_DIR_NATIVE_PATH )
 file( TO_NATIVE_PATH "${CONFIG_DIR}/logservice_testing.cfg" LOGSERVICE_CONFIG_NATIVE_PATH )
 
 #if the module IMS is activated and the log service is used
-if( COMPILE_IMS AND LOGSERVICE_FOUND )
-     file( TO_NATIVE_PATH "${LOG_CENTRAL}"  LOGCENTRAL_NATIVE_PATH )
+if( COMPILE_IMS)
+    file( TO_NATIVE_PATH "${LOG_CENTRAL}"  LOGCENTRAL_NATIVE_PATH )
 endif()
 
 # System dependent environment variables
