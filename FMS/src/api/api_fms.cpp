@@ -334,9 +334,17 @@ using namespace std;
    */
   int vishnu::moveFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
-        std::cout << " src=" << src << std::endl;
-       std::cout << " dest="  << dest << std::endl;
-       std::cout << options.getTrCommand() << std::endl;
+
+      SessionProxy sessionProxy(sessionKey);
+      
+      // FIXME use FileTransferProxy class to handle the copy
+
+      boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,src));
+
+      int result= f->mv(dest,options);
+
+      return result; 
+
   }
 
   /**
