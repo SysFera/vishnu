@@ -5,7 +5,6 @@
 SysInfoServer::SysInfoServer(const UserServer session):msession(session) {
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
-  // TODO FIX
   mvishnuId = 1;
 }
 
@@ -13,7 +12,6 @@ SysInfoServer::SysInfoServer(const UserServer session, IMS_Data::SysInfoOp op):m
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
   mop = op;
-  // TODO FIX
   mvishnuId = 1;
 }
 

@@ -205,7 +205,6 @@ MetricServer::getCurMet(){
     mlistObject->getMetric().push_back(met);
   }
 
-  // TODO CHECK WHY -1 GOTTEN
   diet_estimate_cori (vec, EST_FREECPU, EST_COLL_EASY, NULL);
   cpu = diet_est_get_system(vec, EST_FREECPU, -1); 
   cpu *= 100; // Set in percentage
@@ -222,7 +221,6 @@ MetricServer::getCurMet(){
   return mlistObject;
 }
 
-// TODO: Remove the constant values if possible !!!!!!!!!!!!
 IMS_Data::ListMetric*
 MetricServer::getHistMet(string machineId){
   string request = "select * from state, machine where machine.machineid='"+machineId+"' AND machine.nummachineid=state.machine_nummachineid ";
@@ -237,7 +235,6 @@ MetricServer::getHistMet(string machineId){
     throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
   }
 
-  // TODO BAD COMPARISON CHANGE IT
   if (mhop->getStartTime()>0) {
     time_t start = static_cast<time_t>(mhop->getStartTime());
     if (start != -1) {

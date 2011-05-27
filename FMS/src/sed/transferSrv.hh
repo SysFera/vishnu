@@ -1,3 +1,5 @@
+#ifndef TRANSFERSRV_HH
+#define TRANSFERSRV_HH
 #include <string>
 #include <stdexcept>
 #include <iostream>
@@ -11,27 +13,17 @@
 #include "UserServer.hpp"
 #include "MachineServer.hpp"
 #include <boost/scoped_ptr.hpp>
-
 using namespace std;
 
 
-/// DIET profile construction.
-diet_profile_desc_t* getCopyFileProfile() {
-  diet_profile_desc_t* result = diet_profile_desc_alloc("FileCopy", 5, 5, 6);
-  
-  diet_generic_desc_set(diet_param_desc(result, 0), DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 1), DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 2), DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 3), DIET_PARAMSTRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 4), DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 5), DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 6), DIET_STRING, DIET_CHAR);
-  
-  return result;
-}
-/* copy file DIET callback function. Returns an error message if something gone wrong. */
+diet_profile_desc_t* getTransferFileProfile(const std::string& serviceName);
 
-int solveCopyFile(diet_profile_t* profile) {
+diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName);
+
+
+
+  template <class T, int tr> int solveTransferFile(diet_profile_t* profile){
+
   string localPath, localUser, userKey, head, acLogin, machineName;
   char* path, *user, *host,*sessionKey, *dest, *errMsg = NULL, *optionsSerialized=NULL;
   
@@ -85,7 +77,7 @@ int solveCopyFile(diet_profile_t* profile) {
     FileFactory::setSSHServer(host);
     boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,localPath, localUser, userKey));
 
-    CpFileOptions_ptr options_ptr= NULL;
+    T* options_ptr= NULL;
     if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr) ) {
       throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
     }
@@ -104,30 +96,19 @@ int solveCopyFile(diet_profile_t* profile) {
 
     diet_string_set(diet_parameter(profile, 6), errMsg, DIET_VOLATILE);
     return 0;
+
+
+
+
 }
 
 
-/// DIET profile construction.
-diet_profile_desc_t* getCopyRemoteFileProfile() {
-  diet_profile_desc_t* result = diet_profile_desc_alloc("RemoteFileCopy", 6, 6, 7);
 
-  diet_generic_desc_set(diet_param_desc(result, 0), DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 1), DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 2), DIET_PARAMSTRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 3), DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 4), DIET_PARAMSTRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 5), DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 6), DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 7), DIET_STRING, DIET_CHAR);
-  
-  return result;
-}
 
-/* copy file DIET callback function. Returns an error message if something gone wrong. */
+template <class T,int tr> int solveTransferRemoteFile(diet_profile_t* profile){
 
-int solveCopyRemoteFile(diet_profile_t* profile) {
   string  userKey, srcUserLogin,srcMachineName;
-  char* srcPath, *destUser, *srcHost,*sessionKey, *destHost,*destPath, *errMsg = NULL,  *optionsSerialized=NULL;
+  char* srcPath, *destUser, *srcHost,*sessionKey, *destHost,*destPath, *errMsg = NULL, *result = NULL, *optionsSerialized=NULL;
   
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
   diet_string_get(diet_parameter(profile, 1), &destUser, NULL);
@@ -196,7 +177,7 @@ int solveCopyRemoteFile(diet_profile_t* profile) {
     FileFactory::setSSHServer(srcMachineName);
     boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,srcPath, srcUserLogin, userKey));
 
-    CpFileOptions_ptr options_ptr= NULL;
+    T* options_ptr= NULL;
     if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr) ) {
       throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
     }
@@ -215,6 +196,11 @@ int solveCopyRemoteFile(diet_profile_t* profile) {
 
   diet_string_set(diet_parameter(profile, 7), errMsg, DIET_VOLATILE);
   return 0;
+
+
+
 }
 
 
+
+#endif

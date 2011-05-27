@@ -74,6 +74,7 @@ void FileProxy::exists(const bool exist) const {
 
 FileProxy::FileProxy() {
   srand(time(NULL));
+  this->exist = exist;
 }
 
 FileProxy::FileProxy(const SessionProxy& sessionProxy,
