@@ -226,9 +226,8 @@ ServerFMS::init(int vishnuId,
 
   mprofile = getTransferFileProfile("FileCopy");
 
-   int tr=0;
   
-  if ( diet_service_table_add(mprofile, NULL, solveTransferFile<CpFileOptions, 0>)){
+  if ( diet_service_table_add(mprofile, NULL, solveTransferFile<File::copy>)){
 
     return 1;
   }
@@ -239,7 +238,30 @@ ServerFMS::init(int vishnuId,
 
   mprofile = getTransferRemoteFileProfile("RemoteFileCopy");
 
-  if ( diet_service_table_add(mprofile, NULL, solveTransferRemoteFile<CpFileOptions, 0>)){
+  if ( diet_service_table_add(mprofile, NULL, solveTransferRemoteFile<File::copy>)){
+
+    return 1;
+  }
+
+  diet_profile_desc_free(mprofile);
+
+// Move file
+
+  mprofile = getTransferFileProfile("FileMove");
+
+  
+  if ( diet_service_table_add(mprofile, NULL, solveTransferFile<File::move>)){
+
+    return 1;
+  }
+
+  diet_profile_desc_free(mprofile);
+
+// Move Remote file
+
+  mprofile = getTransferRemoteFileProfile("RemoteFileMove");
+
+  if ( diet_service_table_add(mprofile, NULL, solveTransferRemoteFile<File::move>)){
 
     return 1;
   }

@@ -366,20 +366,13 @@ list<string> SSHFile::ls(const LsDirOptions& options) const {
 }
 
 
-/* Copy the file through scp. */
-int SSHFile::cp(const string& dest, const CpFileOptions& options){
-
-
-int result=transfer(dest,File::extCpCmd(options));
-
-  return result;
-}
 
 /* mv the file through scp. */
-int SSHFile::mv(const string& dest, const MvFileOptions& options){
+int SSHFile::mv(const string& dest, const CpFileOptions& options){
 
+cp(dest,options);
 
-int result=transfer(dest,File::extMvCmd(options));
+int result=rm();
 
   return result;
 }
@@ -387,8 +380,9 @@ int result=transfer(dest,File::extMvCmd(options));
 
 
 /* Transfer the file through scp or rsync. */
- int SSHFile::transfer(const string& dest, const std::string& trCmd ){
+ int SSHFile::cp(const string& dest, const CpFileOptions& options ){
 
+   string trCmd= File::extCpCmd(options);
 
   if (!exists()) {
     throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
