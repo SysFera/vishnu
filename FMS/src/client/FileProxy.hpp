@@ -109,8 +109,9 @@ public:
   virtual std::string tail(const TailOfFileOptions& options) = 0;
   virtual std::list<std::string> ls(const LsDirOptions& options) const = 0; 
   
-  virtual int cp(const std::string& dest, const CpFileOptions& options) = 0;
- 
+  virtual int cp(const std::string& dest, const CpFileOptions& options, const std::string& serviceName="FileCopy") = 0;
+
+  virtual int mv(const std::string& dest, const CpFileOptions& options) = 0; 
   //virtual int mv(const std::string& dest) = 0;
 
  

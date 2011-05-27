@@ -23,7 +23,7 @@
 #define RMCMD    "rm -f "
 #define RMDIRCMD "rmdir "
 #define TAILCMD  "tail -"
-#define CPCMD    "scp -o Compression=yes "
+#define CPCMD    "scp -o Compression=yes -o StrictHostKeyChecking=no "
 #define MVCMD    "mv "
 #define LSCMD    "ls  "
 #define LSACMD  "ls -a "
@@ -44,6 +44,7 @@ private:
   unsigned int sshPort;
   std::string sshCommand;
   std::string scpCommand;
+  mutable std::string merror;
 public:
   SSHFile();
   SSHFile(const SessionServer& sessionServer,
@@ -63,6 +64,7 @@ public:
 
   virtual bool isUpToDate() const;
   virtual void getInfos() const;
+  std::string getErrorMsg() const;
 
   virtual int chgrp(const std::string& group);
   virtual int chmod(const mode_t mode);
@@ -74,7 +76,10 @@ public:
   virtual int rmdir();
   virtual std::string tail(const TailOfFileOptions& options);
   virtual std::list<std::string> ls(const LsDirOptions& options) const;
+  virtual int transfer(const std::string& path, const std::string& trCmd);
   virtual int cp(const std::string& path, const CpFileOptions& options);
+  virtual int mv(const std::string& path, const MvFileOptions& options);
+ 
 };
 /* A class to call command through SSH. */
 class SSHExec {

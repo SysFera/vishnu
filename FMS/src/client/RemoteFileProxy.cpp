@@ -29,6 +29,7 @@ using namespace FMS_Data;
 /* Default constructor. */
 RemoteFileProxy::RemoteFileProxy() {
   upToDate = false;
+  printTrID = false;
 }
 
 /* Standard constructor.
@@ -45,6 +46,7 @@ RemoteFileProxy::RemoteFileProxy(const SessionProxy& sessionProxy,const string& 
 RemoteFileProxy::RemoteFileProxy(const RemoteFileProxy& file) : FileProxy(file) {
   upToDate = false;
   this->localUser = file.localUser;
+  this->printTrID = file.printTrID; 
 }
 
 /* Standard destructor. */
@@ -826,11 +828,11 @@ void RemoteFileProxy::printTransferID(const bool printTrID) {
   this->printTrID=printTrID;
 }
 
-int RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options){
+int RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options, const std::string& localServiceName){
 
   string destHost = FileProxy::extHost(dest);
   string localUser = "";
-  bfs::path destPath;
+  bfs::path destPath(FileProxy::extName(dest));
   if(destHost.compare("localhost")==0){
     char hostName[255];
     gethostname(hostName, 255);
@@ -859,7 +861,7 @@ int RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options){
   diet_profile_t* profile;
   char* errMsg;
 
-  std::string serviceName("RemoteFileCopy");
+  std::string serviceName("Remote"+localServiceName);
 
   std::string sessionKey=this->getSession().getSessionKey();
 
@@ -904,4 +906,8 @@ int RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options){
 
   
 return 0;
+}
+
+int RemoteFileProxy::mv(const std::string& dest, const CpFileOptions& options) {
+  return cp(dest, options, "RemoteMoveFile");
 }

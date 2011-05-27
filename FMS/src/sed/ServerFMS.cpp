@@ -12,8 +12,10 @@
 #include <boost/scoped_ptr.hpp>
 #include "SystemException.hpp"
 #include "services.hh"
+//#include "transferSrv.hh"
 
 using namespace vishnu;
+using namespace FMS_Data;
 Database *ServerFMS::mdatabaseVishnu = NULL;
 ServerFMS* ServerFMS::minstance = NULL;
 //FMSMapper *ServerFMS::mmapperFMS = NULL;
@@ -222,9 +224,11 @@ ServerFMS::init(int vishnuId,
 
 // Copy file
 
-  mprofile = getCopyFileProfile();
+  mprofile = getTransferFileProfile("FileCopy");
 
-  if ( diet_service_table_add(mprofile, NULL, solveCopyFile)){
+   int tr=0;
+  
+  if ( diet_service_table_add(mprofile, NULL, solveTransferFile<CpFileOptions, 0>)){
 
     return 1;
   }
@@ -233,9 +237,9 @@ ServerFMS::init(int vishnuId,
 
 // Copy Remote file
 
-  mprofile = getCopyRemoteFileProfile();
+  mprofile = getTransferRemoteFileProfile("RemoteFileCopy");
 
-  if ( diet_service_table_add(mprofile, NULL, solveCopyRemoteFile)){
+  if ( diet_service_table_add(mprofile, NULL, solveTransferRemoteFile<CpFileOptions, 0>)){
 
     return 1;
   }
