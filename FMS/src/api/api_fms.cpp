@@ -332,11 +332,19 @@ using namespace std;
    * \param options   contains the options used to perform the service (like the transfer command :scp or rsync)
    * \return 0 if everything is OK, another value otherwise
    */
-  int vishnu::moveFile(const string& sessionKey,const string& src, const string& dest, const MvFileOptions& options)
+  int vishnu::moveFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
-        std::cout << " src=" << src << std::endl;
-       std::cout << " dest="  << dest << std::endl;
-       std::cout << options.getTrCommand() << std::endl;
+
+      SessionProxy sessionProxy(sessionKey);
+      
+      // FIXME use FileTransferProxy class to handle the copy
+
+      boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,src));
+
+      int result= f->mv(dest,options);
+
+      return result; 
+
   }
 
   /**
@@ -350,7 +358,7 @@ using namespace std;
    * \return 0 if everything is OK, another value otherwise
    */
   int vishnu::moveAsyncFile(const string& sessionKey,const string& src, const string& dest,
-      FileTransfer& transferInfo, const MvFileOptions& options)
+      FileTransfer& transferInfo, const CpFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
       std::cout << " src=" << src << std::endl;
        std::cout << " dest="  << dest << std::endl;
