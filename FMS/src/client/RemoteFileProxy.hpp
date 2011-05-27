@@ -64,7 +64,7 @@ public:
 
   int cp(const std::string& dest, const CpFileOptions& options);
 
-  int mv(const std::string& dest, const MvFileOptions& options);
+  int mv(const std::string& dest, const CpFileOptions& options);
 };
 
 #endif

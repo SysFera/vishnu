@@ -135,7 +135,7 @@ namespace vishnu{
    * \param options   contains the options used to perform the service (like the transfer command :scp or rsync)
    * \return 0 if everything is OK, another value otherwise
    */
-  int moveFile(const string& sessionKey,const string& src, const string& dest, const MvFileOptions& options= MvFileOptions() )
+  int moveFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options= CpFileOptions() )
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -149,7 +149,7 @@ namespace vishnu{
    * \return 0 if everything is OK, another value otherwise
    */
   int moveAsyncFile(const string& sessionKey,const string& src, const string& dest,
-      FileTransfer& transferInfo, const MvFileOptions& options= MvFileOptions())
+      FileTransfer& transferInfo, const CpFileOptions& options= CpFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /** remove a file
