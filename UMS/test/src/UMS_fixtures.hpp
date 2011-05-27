@@ -5,7 +5,7 @@
  */
 
 #include "diet_fixtures.hpp"
-#include "testconfig.h"
+#include "UMS_testconfig.h"
 
 // must not be static
 // should be a primitive type with an identifier name
