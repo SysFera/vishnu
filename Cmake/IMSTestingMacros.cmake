@@ -33,8 +33,7 @@ macro( ims_test NAME )
     add_executable( ${NAME}
       "${NAME}.cpp"
       #entry point
-    TestRunner.cpp
-    imsTestUtils.cpp)
+    TestRunner.cpp)
     include_directories( ${Boost_INCLUDE_DIRS}
       ${DIET_INCLUDE_DIR}
       ${EMF_DATA_DIR}

@@ -935,6 +935,54 @@ BOOST_AUTO_TEST_CASE(SyncMoveFile_Base)
   }
 }
 
+BOOST_AUTO_TEST_CASE(AsyncMoveFile_Base)
+{
+  BOOST_TEST_MESSAGE("Testing asynchronous move of files UC F2.MV2-B");
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    FileTransfer transferInfo;
+    createFile<10>(localFilePath);
+    // local to remote
+    BOOST_MESSAGE("Checking local to remote move");
+    BOOST_REQUIRE( moveAsyncFile(sessionKey, localFilePath, baseDirFullPath1, transferInfo) == 0);
+    // Check
+    BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_COMPLETED );
+    bool isLocalSourceFound = isFoundInDir(sessionKey, localDir, newFileName);
+    BOOST_CHECK(!isLocalSourceFound);
+    bool isRemoteCopyFound1 = isFoundInDir(sessionKey, baseDirFullPath1, newFileName);
+    BOOST_CHECK(isRemoteCopyFound1);
+
+    // remote to remote (using file from previous step)
+    BOOST_MESSAGE("Checking remote to remote move");
+    BOOST_REQUIRE( moveAsyncFile(sessionKey, fileFullPath1, baseDirFullPath2, transferInfo) == 0);
+    // Check
+    BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_COMPLETED );
+    isRemoteCopyFound1 = isFoundInDir(sessionKey, baseDirFullPath1, newFileName);
+    BOOST_CHECK(!isRemoteCopyFound1);
+    bool isRemoteCopyFound2 = isFoundInDir(sessionKey, baseDirFullPath2, newFileName);
+    BOOST_CHECK(isRemoteCopyFound2);
+
+    // remote to local (using file from previous step)
+    BOOST_MESSAGE("Checking remote to local move");
+    BOOST_REQUIRE( moveAsyncFile(sessionKey, fileFullPath2, localDir, transferInfo) == 0);
+    // Check
+    BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_COMPLETED );
+    isRemoteCopyFound2 = isFoundInDir(sessionKey, baseDirFullPath2, newFileName);
+    BOOST_CHECK(!isRemoteCopyFound2);
+    bool isLocalCopyFound = isFoundInDir(sessionKey, localDir, newFileName);
+    BOOST_CHECK(isLocalCopyFound);
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+
 BOOST_AUTO_TEST_SUITE_END()
 // THE END
 
