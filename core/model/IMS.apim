@@ -91,7 +91,7 @@
       <ports name="options" dataType="//@typeList/@types.21" description="Optional field for system information" optional="true" shortOptionLetter=""/>
       <details key="description" value="This function allows a user to get system information about a machine. A system information describes a machine. The option is  the machine id (if no machine id, the information for all the machines are given)"/>
     </services>
-    <services name="restart" description="To restart a SeD or a MA" resultCodes="VISHNU_OK INVALID_PARAMETER DB_ERROR">
+    <services name="restart" description="To restart a SeD or a MA" adminOnly="true" resultCodes="VISHNU_OK INVALID_PARAMETER DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine where to restart"/>
       <ports name="options" dataType="//@typeList/@types.22" description="The option for the restart" defaultValueLiteral=""/>
