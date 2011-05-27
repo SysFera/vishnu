@@ -20,8 +20,6 @@ file( TO_NATIVE_PATH "${CONFIG_DIR}/logservice_testing.cfg" LOGSERVICE_CONFIG_NA
 #if the module IMS is activated and the log service is used
 if( COMPILE_IMS)
     file( TO_NATIVE_PATH "${LOG_CENTRAL}"  LOGCENTRAL_NATIVE_PATH )
-    message ("TOTO")
-    message (${LOG_CENTRAL})
 endif()
 
 # System dependent environment variables
