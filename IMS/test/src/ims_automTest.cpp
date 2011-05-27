@@ -64,7 +64,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
 
     string sqlPath = IMSSQLPATH;
 
-    BOOST_TEST_MESSAGE("Use case I2 – B: Get metric  data");
+    BOOST_TEST_MESSAGE("Use case I2 – B: Get metric data");
     int nbResMetric = 2;
     VishnuConnection vc("root","vishnu_user");
     // get the session key and the machine identifier
@@ -635,9 +635,6 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     string formatJob = "JTEST_$CPT";
     string formatFileTransfer = "FTTEST_$CPT";
 
-    // CREATE DATA MODEL
-    UMS_DataFactory_ptr ecoreUMSFactory = UMS_DataFactory::_instance();
-
     try {
       //To define the user format
       BOOST_CHECK_EQUAL(defineUserIdentifier(sessionKey, formatUser),0 );
@@ -649,26 +646,26 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       BOOST_CHECK_EQUAL(defineTransferIdentifier(sessionKey, formatFileTransfer),0 );
 
       //user
-      User_ptr user  = ecoreUMSFactory->createUser();
-      user->setFirstname("TestFirstname");
-      user->setLastname ("TestLastname");
-      user->setPrivilege(0) ;
-      user->setEmail    ("Test@test.com");
-      BOOST_CHECK_EQUAL(addUser(sessionKey, *user), 0);
+      User user;//  = ecoreUMSFactory->createUser();
+      user.setFirstname("TestFirstname");
+      user.setLastname ("TestLastname");
+      user.setPrivilege(0) ;
+      user.setEmail    ("Test@test.com");
+      BOOST_CHECK_EQUAL(addUser(sessionKey, user), 0);
       //To check if the userId format is correct
-      BOOST_REQUIRE(user->getUserId().compare("UTEST_1") == 0);
+      BOOST_REQUIRE(user.getUserId().compare("UTEST_1") == 0);
 
       //machine
-      Machine_ptr ma  = ecoreUMSFactory->createMachine();
-      ma->setName              ("mana");
-      ma->setSite              ("site");
-      ma->setMachineDescription("desc");
-      ma->setLanguage          ("lang");
-      ma->setSshPublicKey      ("/id_rsa.pub");
+      Machine ma;//  = ecoreUMSFactory->createMachine();
+      ma.setName              ("mana");
+      ma.setSite              ("site");
+      ma.setMachineDescription("desc");
+      ma.setLanguage          ("lang");
+      ma.setSshPublicKey      ("/id_rsa.pub");
 
-      BOOST_CHECK_EQUAL(addMachine(sessionKey, *ma), 0);
+      BOOST_CHECK_EQUAL(addMachine(sessionKey, ma), 0);
       //To check if the machineId format is correct
-      BOOST_REQUIRE(ma->getMachineId().compare("MTEST_1") == 0);
+      BOOST_REQUIRE(ma.getMachineId().compare("MTEST_1") == 0);
 
       //Job
       const std::string scriptFilePath= TMSSCRIPTSPATH "/torque_script";
@@ -1010,7 +1007,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       BOOST_CHECK_EQUAL(loadShed(sessionKey, machineId, loadShedType), 0);
       lsJobs.getJobs().clear();
       //time to get the correct update of the Batch scheduler
-      sleep(3);
+      sleep(5);
       //To list jobs
       BOOST_CHECK_EQUAL(listJobs(sessionKey, machineId, lsJobs, lsOptions), 0);
       //To check that the jobs are canceled
@@ -1152,9 +1149,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     BOOST_CHECK_THROW(stop(sessionKey, process), VishnuException);
   }
 
-  /*
   //Test category 1
   //I3-B: export and replay commands
+
   BOOST_AUTO_TEST_CASE( export_command_normal_call) {
 
     BOOST_TEST_MESSAGE("Use case I3 – B: Export and replay commands");
@@ -1162,13 +1159,11 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     // get the session key and the machine identifier
     string sessionKey=vc.getSessionKey();
     string machineId="machine_1";
-    // CREATE DATA MODEL
-    UMS_DataFactory_ptr ecoreFactory = UMS_DataFactory::_instance();
     // Command history
-    ListCommands_ptr listCmd = ecoreFactory->createListCommands();
-    ListCmdOptions listCmdOpt ;
+    UMS_Data::ListCommands listCmd;
+    UMS_Data::ListCmdOptions listCmdOpt ;
     // List Sessions
-    ListSessions_ptr listSess   = ecoreFactory->createListSessions();
+    ListSessions listSess;
     ListSessionOptions listSessionsOpt;
     //Options for export
     IMS_Data::ExportOp exportOp;
@@ -1177,42 +1172,36 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     string filename = "tmpTest.txt";
     string filePath;
     string fileContent;
+    string tmp;
     //Session in which the commands will be exported
     Session sess ;
     ConnectOptions connectOpt;
     //Set close policy : on disconnect
     connectOpt.setClosePolicy(2);
-    //Job
-    const std::string scriptFilePath= TMSSCRIPTSPATH "/torque_script";
-    Job jobInfo;
-    SubmitOptions subOptions;
+   //ListJobs
+    ListJobs lsJobs;
+    ListJobsOptions lsOptions;
     //To list metric history
     IMS_Data::ListMetric list;
     IMS_Data::MetricHistOp op;
     //Set FREEMOMORY metric
     op.setType(5);
 
-    try {
-
+   try {
+     //To open a session to launch commands
       BOOST_CHECK_EQUAL(connect("root", "vishnu_user", sess, connectOpt), 0);
       //To list sessions
-      BOOST_CHECK_EQUAL(listSessions(sess.getSessionKey(), *listSess, listSessionsOpt), 0);
-      //To submit a job
-      BOOST_CHECK_EQUAL(submitJob(sess.getSessionKey(), machineId, scriptFilePath, jobInfo,subOptions),0 );
+      BOOST_CHECK_EQUAL(listSessions(sess.getSessionKey(), listSess, listSessionsOpt), 0);
+      //To list jobs
+      BOOST_CHECK_EQUAL(listJobs(sessionKey, machineId, lsJobs, lsOptions), 0);
       //To list metric history
       BOOST_CHECK_EQUAL(getMetricHistory(sess.getSessionKey(), machineId, list, op),0  );
-      BOOST_TEST_MESSAGE("List history commands:");
+      listCmdOpt.setSessionId(sess.getSessionId());
       //To list the commands
-      BOOST_CHECK_EQUAL(listHistoryCmd(sess.getSessionKey(), *listCmd, listCmdOpt), 0);
+      BOOST_CHECK_EQUAL(vishnu::listHistoryCmd(sess.getSessionKey(), listCmd, listCmdOpt), 0);
+      BOOST_REQUIRE(listCmd.getCommands().size() != 0);
       //To close session
       BOOST_CHECK_EQUAL(close (sess.getSessionKey()), 0);
-
-      BOOST_TEST_MESSAGE("sess.getSessionId():" << sess.getSessionId());
-      //To get the sessionId of the first element of the list
-      //listCmdOpt.setSessionId(listSess->getSessions().get(0)->getSessionId());
-      //BOOST_CHECK_EQUAL(listHistoryCmd(sessionKey, *listCmd, listCmdOpt), 0);
-      //At least one command registered
-      //BOOST_REQUIRE(listCmd->getCommands().size() > 1);
 
       //To create a locate file for the test
       std::ofstream file(filename.c_str());
@@ -1224,29 +1213,30 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       }
       BOOST_CHECK_EQUAL(exportCommands(sessionKey, sess.getSessionId(), filePath, exportOp), 0);
       fileContent = vishnu::get_file_content(filePath.c_str());
-      BOOST_TEST_MESSAGE("FileContent:" << fileContent);
+      //To check if the file is not empty
       BOOST_REQUIRE(fileContent.size() != 0);
-      //To remove the temporary file
-      boost::filesystem3::remove(filePath);
 
-      delete listSess;
-      delete listCmd;
+      //To check the mapping between export and listHistoryCmd
+      for(unsigned int i = 0; i < listCmd.getCommands().size(); i++) {
+        tmp = listCmd.getCommands().get(i)->getCmdDescription();
+        BOOST_REQUIRE(fileContent.find(tmp)!=string::npos);
+      }
+      //To remove the temporary file
+      vishnu::deleteFile(filePath.c_str());
     }
     catch (VishnuException& e) {
       BOOST_MESSAGE("FAILED\n");
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
-      delete listSess;
-      delete listCmd;
       try {
         //To remove the temporary file
-        boost::filesystem3::remove(filePath);
+        vishnu::deleteFile(filePath.c_str());
       } catch (exception& exp) {
         BOOST_MESSAGE(exp.what());
       }
     }
   }
-  */
+
   //To clean the table process
   BOOST_AUTO_TEST_CASE( clean_table_process_call) {
 
