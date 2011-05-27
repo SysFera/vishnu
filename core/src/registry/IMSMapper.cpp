@@ -223,7 +223,7 @@ IMSMapper::decodeCur(vector<int> separator, const string& msg) {
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
   res += u;
   res += " ";
-  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(2));
+  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
   IMS_Data::CurMetricOp_ptr ac = NULL;
   //To parse the object serialized
   if(!parseEmfObject(u, ac)) {
@@ -245,7 +245,7 @@ IMSMapper::decodeHist(vector<int> separator, const string& msg) {
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
   res += u;
   res += " ";
-  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(2));
+  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
   IMS_Data::MetricHistOp_ptr ac = NULL;
   //To parse the object serialized
   if(!parseEmfObject(u, ac)) {
@@ -410,7 +410,7 @@ IMSMapper::decodeLoad(vector<int> separator, const string& msg) {
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
   res += u;
   res += " ";
-  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(2));
+  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
   res += convertToString(u);
   return res;
 }
@@ -461,7 +461,7 @@ IMSMapper::decodeGetSys(vector<int> separator, const string& msg) {
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
   res += u;
   res += " ";
-  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(2));
+  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
   IMS_Data::SysInfoOp_ptr ac = NULL;
   //To parse the object serialized
   if(!parseEmfObject(u, ac)) {
