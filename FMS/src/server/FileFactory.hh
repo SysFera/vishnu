@@ -5,8 +5,6 @@
 
 #include "SessionServer.hpp"
 #include "File.hh"
-#include "LocalFile.hh"
-#include "RemoteFile.hh"
 #include "SSHFile.hh"
 
 /* A factory class for the Files classes. */
