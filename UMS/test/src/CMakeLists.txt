@@ -58,3 +58,5 @@ target_link_libraries( stresser
   exception-vishnu
   vishnu-ums-api
   ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+
+add_subdirectory( sql )
