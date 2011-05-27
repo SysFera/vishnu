@@ -108,7 +108,8 @@ void LocalFileProxy::getInfos() const {
 /* The function proceed to the file copy by itself if the
  * destination is a local path. Otherwise it calls the DIET service.
  */
-int LocalFileProxy::cp(const string& dest, const CpFileOptions& options, const std::string& serviceName) {
+template <class TypeOfOption>
+int LocalFileProxy::transferFile(const string& dest, const TypeOfOption& options, const std::string& serviceName) {
   
   string host = FileProxy::extHost(dest);
   string path = FileProxy::extName(dest);
@@ -160,7 +161,7 @@ int LocalFileProxy::cp(const string& dest, const CpFileOptions& options, const s
   const char* name = "cp";
   ::ecorecpp::serializer::serializer _ser(name);
   //To serialize the options object in to optionsInString
-  optionsToString =  strdup(_ser.serialize(const_cast<FMS_Data::CpFileOptions_ptr>(&options)).c_str());
+  optionsToString =  strdup(_ser.serialize(const_cast<TypeOfOption*>(&options)).c_str());
 
   diet_string_set(diet_parameter(profile,5 ), optionsToString, DIET_VOLATILE);
 
@@ -178,8 +179,14 @@ int LocalFileProxy::cp(const string& dest, const CpFileOptions& options, const s
   return 0;
 }
 
-int LocalFileProxy::mv(const string& dest, const CpFileOptions& options) {
+int LocalFileProxy::cp(const string& dest, const CpFileOptions& options) {
 
- return  cp(dest, options, "FileMove");
+ return  transferFile(dest, options, "FileCopy");
+
+}
+
+int LocalFileProxy::mv(const string& dest, const MvFileOptions& options) {
+
+ return  transferFile(dest, options, "FileMove");
 
 }
