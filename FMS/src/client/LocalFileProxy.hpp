@@ -13,6 +13,12 @@
 class LocalFileProxy : public FileProxy {
 private:
   mutable bool upToDate;
+
+  template <class typeofoption>
+    int transferFile(const std::string& dest, 
+                     const typeofoption& options,
+                     const std::string& servicename);
+
 public:
   LocalFileProxy();
   LocalFileProxy(const SessionProxy& sessionProxy,const std::string& path);
@@ -33,9 +39,9 @@ public:
   virtual int rmdir() { }
   virtual std::string tail(const TailOfFileOptions& options) { }
 
-  virtual int cp(const std::string& dest, const CpFileOptions& options, const std::string& serviceName="FileCopy");
+  virtual int cp(const std::string& dest, const CpFileOptions& options);
 
-  virtual int mv(const std::string& dest, const CpFileOptions& options);
+  virtual int mv(const std::string& dest, const MvFileOptions& options);
 
   virtual std::list<std::string> ls(const LsDirOptions& options) const { }
 };
