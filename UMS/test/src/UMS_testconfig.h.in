@@ -1,12 +1,11 @@
-// config.h.in
+// UMS_testconfig.h.in
 
-#ifndef _TESTCONFIG_H_IN_
-#define _TESTCONFIG_H_IN_
+#ifndef _UMS_TESTCONFIG_H_IN_
+#define _UMS_TESTCONFIG_H_IN_
 
-#define TESTCONF "@TEST_CONFIG_UMS@"
-#define TESTF "@TEST_SQL@"
+#define UMSSQLPATH "@TESTSQLPATH@"
 #define UMSSEDCONF "@UMSSEDCONF@"
-#define UMSSEDBINDIR "@UMSSEDBINDIR@"
+#define UMSSEDBINDIR "@TESTBINPATH@"
 
-#endif /* _TESTCONFIG_H_IN_ */
+#endif /* _UMS_TESTCONFIG_H_IN_ */
 
