@@ -84,7 +84,9 @@ diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName
 
     std::ostringstream destCompletePath;
     destCompletePath << acLogin << "@"<<machineName <<":"<<destPath;
+   
     std::cout << "destCompletePath " <<destCompletePath.str() << "\n";
+    
     
     if(transferType==File::copy){
       file->cp(destCompletePath.str(),*options_ptr);
@@ -116,7 +118,7 @@ diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName
 template <File::TransferType transferType> int solveTransferRemoteFile(diet_profile_t* profile){
 
   string  userKey, srcUserLogin,srcMachineName;
-  char* srcPath, *destUser, *srcHost,*sessionKey, *destHost,*destPath, *errMsg = NULL, *result = NULL, *optionsSerialized=NULL;
+  char* srcPath, *destUser, *srcHost,*sessionKey, *destHost,*destPath, *errMsg = NULL, *optionsSerialized=NULL;
   
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
   diet_string_get(diet_parameter(profile, 1), &destUser, NULL);
