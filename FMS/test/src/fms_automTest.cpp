@@ -296,7 +296,8 @@ BOOST_AUTO_TEST_CASE(ContentOfFile_Base)
     BOOST_CHECK( content.substr(8,8) == "abcdefgh" );
     // Cleanup
     BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
-    BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
+    vishnu::deleteFile(localFilePath);
+//     BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
@@ -353,7 +354,8 @@ BOOST_AUTO_TEST_CASE(GetFileInfo_Base)
     BOOST_CHECK( stat.getPerms() == 0644);
     // Cleanup
     BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
-    BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
+    vishnu::deleteFile(localFilePath);
+//     BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
@@ -406,7 +408,8 @@ BOOST_AUTO_TEST_CASE(ChangeFileRights_Base)
     BOOST_CHECK( stat.getPerms() == 0600);
     // Cleanup
     BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
-    BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
+    vishnu::deleteFile(localFilePath);
+//     BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
@@ -458,7 +461,8 @@ BOOST_AUTO_TEST_CASE(ChangeGroup_Base)
     BOOST_CHECK( stat.getGroup() == groupTest);
     // Cleanup
     BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
-    BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
+    vishnu::deleteFile(localFilePath);
+//     BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
@@ -816,7 +820,8 @@ BOOST_AUTO_TEST_CASE(SyncCopyFile_Base)
     bool isRemoteCopyFound = isFoundInDir(sessionKey, baseDirFullPath1, newFileName);
     BOOST_CHECK(isRemoteCopyFound);
     // Cleanup
-    BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
+    vishnu::deleteFile(localFilePath);
+//     BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
 
     // remote to local
     BOOST_MESSAGE("Checking remote to local copy");
@@ -827,7 +832,8 @@ BOOST_AUTO_TEST_CASE(SyncCopyFile_Base)
     bool isLocalCopyFound = isFoundInDir(sessionKey, localDir,localCopyName);
     BOOST_CHECK(isLocalCopyFound);
     // Cleanup
-    BOOST_CHECK( removeFile(sessionKey, localCopyPath) == 0);
+    vishnu::deleteFile(localFilePath);
+//     BOOST_CHECK( removeFile(sessionKey, localCopyPath) == 0);
 
     // remote to remote
     BOOST_MESSAGE("Checking remote to remote copy");
@@ -930,7 +936,8 @@ BOOST_AUTO_TEST_CASE(SyncMoveFile_Base)
     bool isLocalCopyFound = isFoundInDir(sessionKey, localDir, newFileName);
     BOOST_CHECK(isLocalCopyFound);
     // Cleanup
-    BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
+    vishnu::deleteFile(localFilePath);
+//     BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
@@ -977,7 +984,8 @@ BOOST_AUTO_TEST_CASE(AsyncMoveFile_Base)
     bool isLocalCopyFound = isFoundInDir(sessionKey, localDir, newFileName);
     BOOST_CHECK(isLocalCopyFound);
     // Cleanup
-    BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
+    vishnu::deleteFile(localFilePath);
+//     BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
