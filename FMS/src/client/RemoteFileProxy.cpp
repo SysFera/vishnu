@@ -118,7 +118,6 @@ void RemoteFileProxy::getInfos() const {
   }
 
   if (strlen(fileStatInString )!=0){
-    std::cout << "fileStatInString"<< fileStatInString <<"\n";
     FileStat_ptr fileStat_ptr = NULL;
     parseEmfObject(std::string(fileStatInString), fileStat_ptr);
     setFileStat(*fileStat_ptr);
@@ -852,7 +851,6 @@ int RemoteFileProxy::transferFile(const std::string& dest,
       destPath=getPath();
     }
 
-    std::cout << "destPath "<< destPath << "\n";
 
   }   
 
@@ -912,6 +910,6 @@ int RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options) {
   return transferFile(dest, options, "RemoteFileCopy");
 }
 
-int RemoteFileProxy::mv(const std::string& dest, const MvFileOptions& options) {
+int RemoteFileProxy::mv(const std::string& dest, const CpFileOptions& options) {
   return transferFile(dest, options, "RemoteFileMove");
 }
