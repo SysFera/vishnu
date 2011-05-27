@@ -27,7 +27,7 @@ if( BUILD_TESTING )
   # test setup
   # for the moment, we only support in-place testing
   set( BIN_DIR ${PROJECT_BINARY_DIR}/bin )
-  set( CONFIG_DIR ${PROJECT_BINARY_DIR}/etc )
+  set( CONFIG_DIR ${TEST_CONFIG_PATH} )
   set( EXECUTABLE_OUTPUT_PATH ${BIN_DIR} )
   set( GENERATED_LOG_TESTS_DIR ${PROJECT_BINARY_DIR}/generated_test_logs )
 

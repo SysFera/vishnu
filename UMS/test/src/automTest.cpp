@@ -115,7 +115,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   ///////////
   BOOST_REQUIRE(restore    (sqlScript+"/cleanall.sql")==0);
 
-  BOOST_REQUIRE(restore    (sqlScript+"/initTest.sql")==0);
+  BOOST_REQUIRE(restore    (sqlScript+"/UMSinitTest.sql")==0);
 
 try {
 
@@ -841,7 +841,7 @@ try {
   BOOST_CHECK_THROW	 (listHistoryCmd        ("bad", *lic, lico     ), VishnuException);
 
   BOOST_REQUIRE(restore    (sqlScript+"/cleanall.sql")==0);
-  BOOST_REQUIRE(restore    (sqlScript+"/initTest.sql")==0);
+  BOOST_REQUIRE(restore    (sqlScript+"/UMSinitTest.sql")==0);
 
 } catch (VishnuException& e) {
   BOOST_MESSAGE(e.what());
