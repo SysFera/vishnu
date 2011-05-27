@@ -76,9 +76,8 @@ public:
   virtual int rmdir();
   virtual std::string tail(const TailOfFileOptions& options);
   virtual std::list<std::string> ls(const LsDirOptions& options) const;
-  virtual int transfer(const std::string& path, const std::string& trCmd);
   virtual int cp(const std::string& path, const CpFileOptions& options);
-  virtual int mv(const std::string& path, const MvFileOptions& options);
+  virtual int mv(const std::string& path, const CpFileOptions& options);
  
 };
 /* A class to call command through SSH. */
