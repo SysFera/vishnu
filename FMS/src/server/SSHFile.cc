@@ -109,13 +109,16 @@ void SSHFile::getInfos() const {
   gid_t gid;
   file_size_t size;
   time_t atime, mtime, ctime;
-  cout << "Coucou dans getInfos de SSHFile  " << endl; 
+  
+  
   fileStat = ssh.exec(STATCMD+getPath());
 
   std::cout << "fileStat.second " <<fileStat.second << "\n";
 
   if (fileStat.second.find("Warning")!=std::string::npos){   
+ 
     std::cout << "Warning found \n"; 
+ 
     fileStat = ssh.exec(STATCMD+getPath());
 
   }
@@ -383,17 +386,21 @@ int result=rm();
  int SSHFile::cp(const string& dest, const CpFileOptions& options ){
 
    string trCmd= File::extCpCmd(options);
-
-  if (!exists()) {
+  
+   if (!exists()) {
     throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
   }
 
+
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
       sshPublicKey, sshPrivateKey);
+  
+  
   pair<string,string> trResult;
 
-  trResult = ssh.exec(trCmd + " " +getPath()+" "+dest);
+  trResult = ssh.exec(trCmd + " " +getPath()+" "+dest + "\" " + "output.txt");
 
+  
   if (trResult.second.find("Warning")!=std::string::npos){
 
     std::cout << "Warning found \n";
@@ -458,6 +465,7 @@ pair<string, string> SSHExec::exec(const string& cmd) const {
  /* command << sshCommand << " -i " << privateKey << " -l " << userName;
   command << " -p " << sshPort << " " << server << " " << cmd;*/
 
+  
   command << sshCommand  << " -l " << userName;
   command << " -C"  << " -o BatchMode=yes " << " -o StrictHostKeyChecking=no";
   command << " -o ForwardAgent=yes";
