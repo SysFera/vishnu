@@ -111,7 +111,7 @@ public:
   
   virtual int cp(const std::string& dest, const CpFileOptions& options) = 0;
 
-  virtual int mv(const std::string& dest, const MvFileOptions& options) = 0; 
+  virtual int mv(const std::string& dest, const CpFileOptions& options) = 0; 
  
   static std::string extHost(const std::string& path);
   static std::string extName(const std::string& path);
