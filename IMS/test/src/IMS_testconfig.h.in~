@@ -3,11 +3,9 @@
 #ifndef _IMS_TESTCONFIG_H_IN_
 #define _IMS_TESTCONFIG_H_IN_
 
-#define IMSSQLPATH "@IMSSQL@"
+#define IMSSQLPATH "@TESTSQLPATH@"
 #define IMSSEDCONF "@IMSSEDCONF@"
 #define IMSSEDBINDIR "@IMSSEDBINDIR@"
 #define IMSWORKINGDIR "@TEST_WORKING_DIR@"
-#define sendmailScriptPath "@SENDMAILPY@"
-//#define IMSLOGCONF "@IMSLOGCONF@"
 
-#endif /* _TESTCONFIG_H_IN_ */
+#endif /* IMS_TESTCONFIG_H_IN_ */
