@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   UMS_DataFactory_ptr ecoreFactory = UMS_DataFactory::_instance();
   UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
 
-  string sqlScript = TESTF;
+  string sqlScript = UMSSQLPATH;
 
 
   ////
