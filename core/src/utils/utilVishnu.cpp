@@ -483,14 +483,25 @@ int vishnu::deleteFile(const char* fileName) {
 }
 
 /**
-  * \brief Function to check the metric value
-  * \param value the metric value
-  * \return raises an exception on error
-  */
-  void
-  vishnu::checkMetricHistoryValue(const int& metric) {
-    if ((metric < -1) || (metric > 6)) {
-      throw UserException(ERRCODE_INVALID_PARAM, "The metric value is incorrect");
-    }
+ * \brief Function to check the metric value
+ * \param value the metric value
+ * \return raises an exception on error
+ */
+void
+vishnu::checkMetricHistoryValue(const int& metric) {
+  if ((metric < -1) || (metric > 6)) {
+    throw UserException(ERRCODE_INVALID_PARAM, "The metric value is incorrect");
   }
+}
 
+/**
+ * \brief Function to check the remote file path
+ * \param path the remote file path
+ * \return raises an exception on error
+ */
+void
+vishnu::checkRemotePath(const std::string& path){
+  if (path.find(":")==std::string::npos){
+    throw FMSVishnuException(ERRCODE_INVALID_PATH, "The path must be a remote file and in the form machineId:path");
+  }
+}
