@@ -14,11 +14,18 @@ account of local machine must be defined
 
 - For the test case IA9-B - Stop: the name of the machine,
 in which a UMS sed has been previously launched, must be
-defined using the CMacke variable TEST_DISTANT_NAME
+defined using the CMacke variable TEST_DISTANT_HOSTNAME
 
 - The Cmake variable TEST_USER_LOGIN which is the name of the user unix
 account on the distant machine whose name is the value of the previous TEST_DISTANT_NAME variable,
 must be defined.
+
+The Cmake variables TEST_PATH_DISTANT_UMSSED and TEST_PATH_CONFIG_DISTANT_UMSSED which are
+respectively the path to the distant umssed and the path to the distant umssed config fileContent
+must be defined
+
+NB: the ssh connection between TEST_LOCAL_HOSTNAME machine and TEST_DISTANT_HOSTNAME machine must
+be possible.
 
 *********************************************************/
 
@@ -57,6 +64,7 @@ static const string userId = "user_1";
 static const string userPwd = "toto";
 static const string sqlPath = IMSSQLPATH;
 static const string machineId="machine_1";
+static const string machineDistantId="machine_2";
 static const string badMachineId="unknown_name";
 
 // The database, UMS and IMS SeD are launched by IMSSedFixture.
@@ -983,16 +991,22 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     // get the session key and the machine identifier
     string sessionKey=vc.getSessionKey();
     //The distant machine on which the process UMS will be stopped
-    string machineId="machine_2";
     IMS_Data::ListProcesses listProcess;
     IMS_Data::ProcessOp op;
     op.setMachineId(machineId);
     //The process to stop
     IMS_Data::Process process;
-    process.setMachineId(machineId);
+    process.setMachineId(machineDistantId);
     process.setProcessName("UMS");
-
+    int ret =-1;
     try {
+      //To launched UMS sed on distant machine
+       string cmd = " ssh "+ string(IMSDISTANTHOSTNAME) +" \""+  string(IMSPATHDISTANTUMSSED) + " "
+                    + string(IMSPATHCONFIGDISTANTUMSSED)+ "\" 1>/dev/null 2>>test.log &";
+      BOOST_MESSAGE ("cmd:" << cmd);
+      ret = system(cmd.c_str());
+      BOOST_REQUIRE(ret != -1);
+      BOOST_MESSAGE ("ret:" << ret);
       BOOST_CHECK_EQUAL(getProcesses(sessionKey, listProcess, op),0  );
       BOOST_REQUIRE(listProcess.getProcess().size() != 0);
       //To check if the process UMS exists
