@@ -200,7 +200,7 @@ string File::extName(const string& path) {
   return path.substr(pos+1);
 }
 
-string File::extCpCmd (const CpFileOptions& options){
+/*string File::extCpCmd (const CpFileOptions& options){
   
   std::string command;
   
@@ -215,7 +215,7 @@ string File::extCpCmd (const CpFileOptions& options){
 
   return command;
 }
-
+*/
 
 File::~File() {}
 

@@ -19,6 +19,8 @@
 #include "File.hh"
 #include "FMSVishnuException.hpp"
 #include "utilServer.hpp"
+#include <boost/scoped_ptr.hpp>
+#include "FileTransferCommand.hpp"
 
 using namespace std;
 
@@ -385,12 +387,17 @@ int result=rm();
 /* Transfer the file through scp or rsync. */
  int SSHFile::cp(const string& dest, const CpFileOptions& options ){
 
-   string trCmd= File::extCpCmd(options);
-  
-   if (!exists()) {
-    throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
-  }
+   boost::scoped_ptr<FileTransferCommand> tr ( FileTransferCommand::getCopyCommand(options) );
 
+   string trCmd= tr->getCommand();
+  
+   if (!exists()) { //if the file does not exist
+     throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
+   }
+
+   if (false==getErrorMsg().empty()){ // other error occures
+     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,getErrorMsg());
+   }
 
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
       sshPublicKey, sshPrivateKey);
