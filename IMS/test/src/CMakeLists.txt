@@ -59,6 +59,15 @@ set (TEST_SENDMAIL_SCRIPT "${UTILVISHNU_SOURCE_DIR}/sendmail.py" CACHE FILEPATH 
 mark_as_advanced(TEST_SENDMAIL_SCRIPT)
 file ( TO_NATIVE_PATH ${TEST_SENDMAIL_SCRIPT} SENDMAILPY)
 
+# Specific to IMS
+set( TEST_PATH_DISTANT_UMSSED "${TEST_BIN_PATH}/umssed" CACHE FILEPATH "The path to the umssed on the distant machine")
+set( TEST_PATH_CONFIG_DISTANT_UMSSED "${TEST_CONFIG_PATH}/umssed_testing.cfg" CACHE FILEPATH "The path to the umssed config file on a distant machine")
+mark_as_advanced( TEST_PATH_DISTANT_UMSSED )
+mark_as_advanced( TEST_PATH_CONFIG_DISTANT_UMSSED )
+file( TO_NATIVE_PATH "${TEST_PATH_DISTANT_UMSSED}" TESTPATHDISTANTUMSSED)
+file( TO_NATIVE_PATH "${TEST_PATH_CONFIG_DISTANT_UMSSED}" TESTPATHCONFIGDISTANTUMSSED)
+file( TO_NATIVE_PATH "${TEST_DISTANT_HOSTNAME}" TESTDISTANTHOSTNAME)
+
 # Create header for VISHNU IMS tests
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/IMS_testconfig.h.in
   ${PROJECT_BINARY_DIR}/include/IMS_testconfig.h )
