@@ -8,18 +8,22 @@
 #define TRANSFERCOMMAND_HPP
 
 #include <string>
+#include "FMS_Data.hpp"
 
-class TransferCommand{
+class FileTransferCommand{
 
   public:
 
-    TransferCommand ():mname("UNKNOWN"), 
-    mlocation("UNKNOWN"),
-    mrecursive(false),
-    mcompression(false),
-    mcommand("UNKNOWN"){}
-
-     std::string getCommand()const=0;
+    FileTransferCommand ();
+    
+    
+    FileTransferCommand (const std::string& name,
+                 const std::string& location,
+                  bool recursive,
+                  bool compression,
+                 const std::string& command=""
+                 );
+    std::string getCommand()const;
 
     std::string getName()const;
 
@@ -27,7 +31,9 @@ class TransferCommand{
     bool isRecursive() const;
     bool useCompression() const;
 
-  protected:
+    static FileTransferCommand* getCopyCommand(const FMS_Data::CpFileOptions& options);
+  
+        protected:
     void setLocation (const std::string& location);
 
     void setName(const std::string& name);
