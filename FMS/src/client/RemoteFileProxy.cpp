@@ -843,12 +843,15 @@ int RemoteFileProxy::transferFile(const std::string& dest,
     struct passwd*  pw = getpwuid(uid);
     localUser = pw->pw_name;
 
+    
     destPath = bfs::current_path().string();
+  
+    if(dest.compare(".")!=0){
+      destPath/= FileProxy::extName(dest);
+    }
 
-    destPath/= FileProxy::extName(dest);
-
-    if (ba::starts_with(getPath(),"/")  ){
-      destPath=getPath();
+    if (ba::starts_with(dest,"/")  ){
+      destPath=dest;
     }
 
 

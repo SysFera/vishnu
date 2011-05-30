@@ -11,6 +11,7 @@
 #include "UserServer.hpp"
 #include "MachineServer.hpp"
 
+#include "FMSMapper.hpp"
 
 using namespace std;
 
@@ -42,6 +43,10 @@ int solveListDir(diet_profile_t* profile) {
   list<string>::iterator it;
 
   char* path, *user, *host,*sessionKey, *errMsg = NULL, *result = NULL, *optionsSerialized= NULL;
+  std::string finishError ="";
+  int mapperkey;
+  std::string cmd = "";
+
 
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
   diet_string_get(diet_parameter(profile, 1), &path, NULL);
@@ -58,12 +63,16 @@ int solveListDir(diet_profile_t* profile) {
 
   localUser = user;
   localPath = path;
-
+  SessionServer sessionServer (sessionKey);
 
     try {
 
-    SessionServer sessionServer (sessionKey);
-
+      //MAPPER CREATION
+      Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
+      mapperkey = mapper->code("vishnu_list_dir");
+      mapper->code(std::string(host)+":"+std::string(path), mapperkey);
+      mapper->code(optionsSerialized, mapperkey);
+      cmd = mapper->finalize(mapperkey);
     // check the sessionKey
     
     sessionServer.check();
@@ -103,9 +112,18 @@ int solveListDir(diet_profile_t* profile) {
     }
 
     result = strdup(lsString.c_str()); 
-
+ 
+    //To register the command
+    sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
 
     } catch (VishnuException& err) {
+      try {
+        sessionServer.finish(cmd, FMS, vishnu::CMDFAILED);
+      } catch (VishnuException& fe) {
+        finishError =  fe.what();
+        finishError +="\n";
+      }
+      err.appendMsgComp(finishError); 
       result = strdup("");
       errMsg = strdup(err.buildExceptionString().c_str()); 
     }
