@@ -19,6 +19,8 @@
 #include "File.hh"
 #include "FMSVishnuException.hpp"
 #include "utilServer.hpp"
+#include <boost/scoped_ptr.hpp>
+#include "FileTransferCommand.hpp"
 
 using namespace std;
 
@@ -109,13 +111,16 @@ void SSHFile::getInfos() const {
   gid_t gid;
   file_size_t size;
   time_t atime, mtime, ctime;
-  cout << "Coucou dans getInfos de SSHFile  " << endl; 
+  
+  
   fileStat = ssh.exec(STATCMD+getPath());
 
   std::cout << "fileStat.second " <<fileStat.second << "\n";
 
   if (fileStat.second.find("Warning")!=std::string::npos){   
+ 
     std::cout << "Warning found \n"; 
+ 
     fileStat = ssh.exec(STATCMD+getPath());
 
   }
@@ -366,20 +371,13 @@ list<string> SSHFile::ls(const LsDirOptions& options) const {
 }
 
 
-/* Copy the file through scp. */
-int SSHFile::cp(const string& dest, const CpFileOptions& options){
-
-
-int result=transfer(dest,File::extCpCmd(options));
-
-  return result;
-}
 
 /* mv the file through scp. */
-int SSHFile::mv(const string& dest, const MvFileOptions& options){
+int SSHFile::mv(const string& dest, const CpFileOptions& options){
 
+cp(dest,options);
 
-int result=transfer(dest,File::extMvCmd(options));
+int result=rm();
 
   return result;
 }
@@ -387,19 +385,29 @@ int result=transfer(dest,File::extMvCmd(options));
 
 
 /* Transfer the file through scp or rsync. */
- int SSHFile::transfer(const string& dest, const std::string& trCmd ){
+ int SSHFile::cp(const string& dest, const CpFileOptions& options ){
 
+   boost::scoped_ptr<FileTransferCommand> tr ( FileTransferCommand::getCopyCommand(options) );
 
-  if (!exists()) {
-    throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
-  }
+   string trCmd= tr->getCommand();
+  
+   if (!exists()) { //if the file does not exist
+     throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
+   }
+
+   if (false==getErrorMsg().empty()){ // other error occures
+     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,getErrorMsg());
+   }
 
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
       sshPublicKey, sshPrivateKey);
+  
+  
   pair<string,string> trResult;
 
-  trResult = ssh.exec(trCmd + " " +getPath()+" "+dest);
+  trResult = ssh.exec(trCmd + " " +getPath()+" "+dest + "\" " + "output.txt");
 
+  
   if (trResult.second.find("Warning")!=std::string::npos){
 
     std::cout << "Warning found \n";
@@ -464,6 +472,7 @@ pair<string, string> SSHExec::exec(const string& cmd) const {
  /* command << sshCommand << " -i " << privateKey << " -l " << userName;
   command << " -p " << sshPort << " " << server << " " << cmd;*/
 
+  
   command << sshCommand  << " -l " << userName;
   command << " -C"  << " -o BatchMode=yes " << " -o StrictHostKeyChecking=no";
   command << " -o ForwardAgent=yes";
