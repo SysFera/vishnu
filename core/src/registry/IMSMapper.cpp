@@ -240,6 +240,7 @@ string
 IMSMapper::decodeHist(vector<int> separator, const string& msg) {
   string res = string("");
   string u;
+  long l;
   res += (mmap.find(VISHNU_GET_HIST))->second;
   res += " ";
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
@@ -256,15 +257,15 @@ IMSMapper::decodeHist(vector<int> separator, const string& msg) {
     res+=" -t ";
     res += u;
   }
-  u = convertToString(ac->getStartTime());
-  if (u.compare("")) {
+  l = ac->getStartTime();
+  if (l > 0) {
     res+=" -s ";
-    res += u;
+    res += convertToString(l);
   }
-  u = convertToString(ac->getEndTime());
-  if (u.compare("")) {
+  l = ac->getEndTime();
+  if (l > 0) {
     res+=" -e ";
-    res += u;
+    res += convertToString(l);
   }
   return res;
 }
@@ -444,8 +445,9 @@ IMSMapper::decodeStop(vector<int> separator, const string& msg) {
   if(!parseEmfObject(u, ac)) {
     throw IMSVishnuException(ERRCODE_INVALID_PARAM);
   }
-  res += ac->getMachineId();
   res += ac->getProcessName();
+  res += " ";
+  res += ac->getMachineId();
   return res;
 }
 string
