@@ -1001,12 +1001,11 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     int ret =-1;
     try {
       //To launched UMS sed on distant machine
-       string cmd = " ssh "+ string(IMSDISTANTHOSTNAME) +" \""+  string(IMSPATHDISTANTUMSSED) + " "
-                    + string(IMSPATHCONFIGDISTANTUMSSED)+ "\" 1>/dev/null 2>>test.log &";
+      string cmd = " ssh "+ string(IMSDISTANTHOSTNAME) +" \""+  string(IMSPATHDISTANTUMSSED) + " "
+                  + string(IMSPATHCONFIGDISTANTUMSSED)+ "\" 1>/dev/null 2>>test.log &";
       BOOST_MESSAGE ("cmd:" << cmd);
       ret = system(cmd.c_str());
       BOOST_REQUIRE(ret != -1);
-      BOOST_MESSAGE ("ret:" << ret);
       BOOST_CHECK_EQUAL(getProcesses(sessionKey, listProcess, op),0  );
       BOOST_REQUIRE(listProcess.getProcess().size() != 0);
       //To check if the process UMS exists
