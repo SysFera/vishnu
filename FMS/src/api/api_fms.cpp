@@ -197,7 +197,10 @@ using namespace std;
    */
   int vishnu::copyFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
-  
+
+      if((options.getTrCommand() < -1) || options.getTrCommand() > 1) {
+        throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
+      }    
       SessionProxy sessionProxy(sessionKey);
 
       // FIXME use FileTransferProxy class to handle the copy
@@ -223,23 +226,12 @@ using namespace std;
   int vishnu::copyAsyncFile(const string& sessionKey,const string& src, const string& dest,
       FileTransfer& transferInfo, const CpFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
-      std::cout << " src=" << src << std::endl;
-       std::cout << " dest="  << dest << std::endl;                    
-       std::cout << boolalpha << options.isIsRecursive() << std::endl;
-       std::cout << options.getTrCommand() << std::endl;
 
-       transferInfo.setTransferId("F_4");
-       transferInfo.setStatus(0);
-       transferInfo.setUserId("root") ;
-       transferInfo.setClientMachineId("CLM_2") ;
-       transferInfo.setSourceMachineId("MA_2") ;
-       transferInfo.setDestinationMachineId("MA_1");
-       transferInfo.setSourceFilePath("/home/dupond/papa");
-       transferInfo.setDestinationFilePath("/home/dupond/test/papa2");
-       transferInfo.setSize(256);
-       transferInfo.setStart_time(1305979157);
-       transferInfo.setTrCommand(0);
-  }
+       if((options.getTrCommand() < -1) || options.getTrCommand() > 1) {
+         throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
+       }
+
+    }
 
   /** 
    * \brief get the first lines of a file
@@ -335,6 +327,10 @@ using namespace std;
   int vishnu::moveFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
+      if((options.getTrCommand() < -1) || options.getTrCommand() > 1) {
+        throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
+      }
+
       SessionProxy sessionProxy(sessionKey);
       
       // FIXME use FileTransferProxy class to handle the copy
@@ -360,21 +356,11 @@ using namespace std;
   int vishnu::moveAsyncFile(const string& sessionKey,const string& src, const string& dest,
       FileTransfer& transferInfo, const CpFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
-      std::cout << " src=" << src << std::endl;
-       std::cout << " dest="  << dest << std::endl;
-       std::cout << options.getTrCommand() << std::endl; 
-
-       transferInfo.setTransferId("F_4");
-       transferInfo.setStatus(0);
-       transferInfo.setUserId("root") ;
-       transferInfo.setClientMachineId("CLM_2") ;
-       transferInfo.setSourceMachineId("MA_2") ;
-       transferInfo.setDestinationMachineId("MA_1");
-       transferInfo.setSourceFilePath("/home/dupond/papa");
-       transferInfo.setDestinationFilePath("/home/dupond/test/papa2");
-       transferInfo.setSize(256);
-       transferInfo.setStart_time(1305979157);
-       transferInfo.setTrCommand(0); 
+    
+      if((options.getTrCommand() < -1) || options.getTrCommand() > 1) {
+        throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
+      }
+   
     }
 
    /**
