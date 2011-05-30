@@ -18,7 +18,7 @@ find_library(LOG_LIBRARY ${libName}
   DOC "The log service library")
 
 find_program(LOG_CENTRAL LogCentral
-  PATHS ${LOGSERVICE_DIR}
+  PATHS ${LOGSERVICE_DIR}/bin
   DOC "The log service binary")
 
 include(FindPackageHandleStandardArgs)
