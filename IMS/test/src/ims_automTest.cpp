@@ -1234,5 +1234,5 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     }
   }
 BOOST_AUTO_TEST_SUITE_END()
-// THE END
+// THE ENDs
 
