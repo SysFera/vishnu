@@ -200,10 +200,22 @@ string File::extName(const string& path) {
   return path.substr(pos+1);
 }
 
-string File::extCpCmd (const CpFileOptions& options){
-return string ("scp -o Compression=yes -o StrictHostKeyChecking=no ");
-}
+/*string File::extCpCmd (const CpFileOptions& options){
+  
+  std::string command;
+  
+  if (options.getTrCommand()==1){
+    command= "scp -o Compression=yes -o StrictHostKeyChecking=no ";
+  }
+  else {
 
+    command ="script -c \"rsync -Paz --rsh=ssh ";
+
+  }
+
+  return command;
+}
+*/
 
 File::~File() {}
 
