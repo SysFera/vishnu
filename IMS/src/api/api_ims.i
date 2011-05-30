@@ -9,30 +9,15 @@
 %module VISHNU_IMS
 
 %{
-#define SWIG_FILE_WITH_INIT
+#define SWIG_FILE_IMS_WITH_INIT
 #include "IMS_Data.hpp"
 #include "api_ims.hpp"
 %}
 
- // Include for exception handling
-%include "exception.i"
-
-// this includes the typemaps for STL strings
-%include "std_string.i"
-%include "std_except.i"
-
-
-// this includes the required type declarations for EMF4CPP
-// WARNING: some may be missing!
-%include "ecore/EObject.hpp"
-%include "ecorecpp/mapping/type_traits.hpp"
-%include "ecorecpp/mapping/out_ptr.hpp"
-%include "ecorecpp/mapping/EList.hpp"
-%include "ecore_forward.hpp"
+%import "api_ums.i"
 
 // All EMF includes (same as in IMS_Data.hpp)
 %include "IMS_Data_forward.hpp"
-
 %include "IMS_Data/ExportOp.hpp"
 %include "IMS_Data/CurMetricOp.hpp"
 %include "IMS_Data/Metric.hpp"
@@ -51,24 +36,18 @@
 
 // Instantiate the template for all lists
 // the templates used within the list template must be instantiated first
-%template(EListPtr) ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList< ::ecore::EObject > >;
 %template(EMetricList) ::ecorecpp::mapping::EList<::IMS_Data::Metric>;
 %template(EProcessesList) ::ecorecpp::mapping::EList<::IMS_Data::Process>;
 %template(ESysInfoList) ::ecorecpp::mapping::EList<::IMS_Data::SystemInfo>;
 %template(EThresholdList) ::ecorecpp::mapping::EList<::IMS_Data::Threshold>;
 
-#ifdef SWIGPYTHON
-
-// Remove output parameters from the command
-
-// Add the output parameters to the result
-
-#endif
 
 #ifdef SWIGJAVA
 %include "various.i"
 // Use a specific typemap for strings passed by reference
 %include "string.i"
+%apply std::string &INOUT { std::string& tmpPassword };
+%apply std::string &INOUT { std::string& sshPublicKey };
 
 // Exception rule for system exception
 %typemap (throws) SystemException{
@@ -124,9 +103,5 @@
 
 %include "api_ims.hpp"
 #ifdef SWIGPYTHON
-%include "VishnuException.hpp"
-%include "UserException.hpp"
-%include "SystemException.hpp"
-%include "UMSVishnuException.hpp"
 %include "IMSVishnuException.hpp"
 #endif
