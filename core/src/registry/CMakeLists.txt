@@ -30,6 +30,7 @@ target_link_libraries(register-vishnu
   emf4cpp-UMS_Data
   emf4cpp-TMS_Data
   emf4cpp-IMS_Data
+  emf4cpp-FMS_Data
 )
 
 SET_TARGET_PROPERTIES(register-vishnu PROPERTIES COMPILE_FLAGS "-fPIC")
