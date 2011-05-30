@@ -8,9 +8,9 @@
 /* The stat command uses different syntax depending on the system type. */
 /* BSD and Mac OS X command differs from the Linux one. */
 #ifdef BSD_LIKE_SYSTEM
-#define STATCMD "stat -f \"%Su %Sg %Lp %u %g %z %a %m %c %HT\" "
+#define STATCMD "LANG=C stat -f \"%Su %Sg %Lp %u %g %z %a %m %c %HT\" "
 #else
-#define STATCMD "stat --format=\"%U %G %a %u %g %s %X %Y %Z %F\" "
+#define STATCMD " LANG=C stat --format=\"%U %G %a %u %g %s %X %Y %Z %F\" "
 #endif
 
 /* Define the command to use through ssh. */
