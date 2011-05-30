@@ -405,7 +405,8 @@ int result=rm();
   
   pair<string,string> trResult;
 
-  trResult = ssh.exec(trCmd + " " +getPath()+" "+dest + "\" " + "output.txt");
+  //trResult = ssh.exec(trCmd + " " +getPath()+" "+dest + "\" " + "output.txt");
+  trResult = ssh.exec(trCmd + " " +getPath()+" "+dest );
 
   
   if (trResult.second.find("Warning")!=std::string::npos){

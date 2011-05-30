@@ -71,9 +71,9 @@ void FileTransferCommand::addOptions (const std::string& options){
 
 
 FileTransferCommand* FileTransferCommand::getCopyCommand(const FMS_Data::CpFileOptions& options){
-// treat the case options.getTrCommand==0 with the database
+// treat the case options.getTrCommand==-1 with the database
   
-  if (options.getTrCommand()==1) {// scp
+  if (options.getTrCommand()==0) {// scp
 
   return new ScpCommand(options.isIsRecursive());
 }
