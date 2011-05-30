@@ -22,7 +22,7 @@ diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName
 
 
 
-  template <class T, int tr> int solveTransferFile(diet_profile_t* profile){
+  template < File::TransferType transferType> int solveTransferFile(diet_profile_t* profile){
 
   string localPath, localUser, userKey, head, acLogin, machineName;
   char* path, *user, *host,*sessionKey, *dest, *errMsg = NULL, *optionsSerialized=NULL;
@@ -77,15 +77,25 @@ diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName
     FileFactory::setSSHServer(host);
     boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,localPath, localUser, userKey));
 
-    T* options_ptr= NULL;
+    CpFileOptions* options_ptr= NULL;
     if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr) ) {
       throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
     }
 
     std::ostringstream destCompletePath;
     destCompletePath << acLogin << "@"<<machineName <<":"<<destPath;
+   
     std::cout << "destCompletePath " <<destCompletePath.str() << "\n";
-    file->cp(destCompletePath.str(),*options_ptr);
+    
+    
+    if(transferType==File::copy){
+      file->cp(destCompletePath.str(),*options_ptr);
+    }
+
+    if (transferType==File::move){
+      file->mv(destCompletePath.str(),*options_ptr);
+    }
+
 
   } catch (VishnuException& err) {
     errMsg = strdup(err.buildExceptionString().c_str());
@@ -105,10 +115,10 @@ diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName
 
 
 
-template <class T,int tr> int solveTransferRemoteFile(diet_profile_t* profile){
+template <File::TransferType transferType> int solveTransferRemoteFile(diet_profile_t* profile){
 
   string  userKey, srcUserLogin,srcMachineName;
-  char* srcPath, *destUser, *srcHost,*sessionKey, *destHost,*destPath, *errMsg = NULL, *result = NULL, *optionsSerialized=NULL;
+  char* srcPath, *destUser, *srcHost,*sessionKey, *destHost,*destPath, *errMsg = NULL, *optionsSerialized=NULL;
   
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
   diet_string_get(diet_parameter(profile, 1), &destUser, NULL);
@@ -177,7 +187,7 @@ template <class T,int tr> int solveTransferRemoteFile(diet_profile_t* profile){
     FileFactory::setSSHServer(srcMachineName);
     boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,srcPath, srcUserLogin, userKey));
 
-    T* options_ptr= NULL;
+    CpFileOptions_ptr options_ptr= NULL;
     if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr) ) {
       throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
     }
@@ -185,7 +195,15 @@ template <class T,int tr> int solveTransferRemoteFile(diet_profile_t* profile){
     std::ostringstream destCompletePath;
     destCompletePath << destUserLogin << "@"<<destMachineName <<":"<<destPath;
     std::cout << "destCompletePath " <<destCompletePath.str() << "\n";
-    file->cp(destCompletePath.str(),*options_ptr);
+    
+    if(transferType==File::copy){
+      file->cp(destCompletePath.str(),*options_ptr);
+    }
+
+    if (transferType==File::move){
+      file->mv(destCompletePath.str(),*options_ptr);
+    }
+
 
   } catch (VishnuException& err) {
     errMsg = strdup(err.buildExceptionString().c_str());
