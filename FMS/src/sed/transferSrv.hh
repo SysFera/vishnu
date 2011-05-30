@@ -59,7 +59,12 @@ diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName
 
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_copy_file");
+    if(transferType==File::copy){
+      mapperkey = mapper->code("vishnu_copy_file");
+    }
+    if(transferType==File::move){
+      mapperkey = mapper->code("vishnu_move_file");
+    }
     mapper->code(path, mapperkey);
     mapper->code(dest, mapperkey);
     mapper->code(optionsSerialized, mapperkey);
@@ -172,7 +177,12 @@ template <File::TransferType transferType> int solveTransferRemoteFile(diet_prof
       destCpltPath = std::string(destHost)+":"+std::string(destPath);
     }
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_copy_file");
+    if(transferType==File::copy){
+      mapperkey = mapper->code("vishnu_copy_file");
+    }
+    if(transferType==File::move){
+      mapperkey = mapper->code("vishnu_move_file");
+    }
     mapper->code(std::string(srcHost)+":"+std::string(srcPath), mapperkey);
     mapper->code(destCpltPath, mapperkey);
     mapper->code(optionsSerialized, mapperkey);
