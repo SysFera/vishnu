@@ -134,30 +134,5 @@ std::string basename(const std::string& path);
 
 std::string gen_uuid();
 
-/* Return the endianness of the system. */
-int endianness();
-/* Change the endianness of the parameter depending on
- * its type. Generic templated function which works with
- * all scalar data types. */
-template <typename T>
-T& chgEndianness(T& value) {
-  T result;
-  char* ptr1 = (char*) &value;
-  char* ptr2 = (char*) &result + (sizeof(T)-1);
-  for (unsigned short i=0; i<sizeof(T); ++i, ++ptr1, --ptr2) {
-    *ptr2=*ptr1;
-  }
-  value=result;
-  return value;
-}
-/* Change the endianness of the parameter. */
-/* If the system is big endian, the endianness is change.
- * Otherwise, the endianness is preserved. */
-template <typename T>
-T& sysEndianChg(T& value) {
-  if (endianness()==BG_ENDIAN)
-  return chgEndianness(value);
-  return value;
-}
 
 #endif

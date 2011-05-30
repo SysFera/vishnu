@@ -12,9 +12,11 @@
 #include "MachineServer.hpp"
 #include <boost/scoped_ptr.hpp>
 #include "FMSVishnuException.hpp"
+#include <boost/algorithm/string.hpp>
+
 using namespace std;
 using namespace FMS_Data;
-
+namespace ba=boost::algorithm;
 /// DIET profile construction.
 
 diet_profile_desc_t* getInfosProfile() {
@@ -57,21 +59,8 @@ int get_infos(diet_profile_t* profile) {
   std::cout << "user: "  << user << "\n";
   std::cout << "host: "  << host<< "\n";
 
- // if (user!=NULL && path!=NULL) {
-//    try {
- //     if (path[0]!='/'){
-     //   localPath = users->getHome(user) + "/" + path;
-   //   }
-   //   else{
-     //   localPath = path;
- //     localUser = users->getLocalID(user);
-   //   userKey = users->getKey(user);
- //     }
- //   } catch (std::exception& err) {
       localUser = user;
       localPath = path;
-   // }
- // }
 
       try {
 
@@ -111,9 +100,9 @@ int get_infos(diet_profile_t* profile) {
           fileStatSerialized = strdup(_ser.serialize(const_cast<FMS_Data::FileStat_ptr>(fileStat_ptr.get())).c_str());
 
         } else {
-          throw FMSVishnuException(ERRCODE_INVALID_PATH,"this file does not exist");
-  }
-
+        
+          throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, static_cast<SSHFile*>(file.get())->getErrorMsg());
+        }
       } catch (VishnuException& err) {
         errMsg = strdup(err.buildExceptionString().c_str());
         fileStatSerialized=strdup(""); 

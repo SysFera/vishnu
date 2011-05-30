@@ -26,7 +26,11 @@ add_library(fms-server STATIC
 File
 SSHFile
 FileFactory
-  )
+FileTransferCommand
+ScpCommand
+RsyncCommand
+
+)
 
 target_link_libraries(fms-server
   ${DIET_CLIENT_LIB}

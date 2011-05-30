@@ -17,6 +17,8 @@
 #include "FMSMapper.hpp"
 #include "MapperRegistry.hpp"
 #include "DbConfiguration.hpp"
+#include "TMSMapper.hpp"
+#include "MapperRegistry.hpp"
 
 class Database;
 
@@ -97,6 +99,6 @@ private :
   /**
   * \brief Instance of FMSMapper
   */
- // static FMSMapper *mmapper;
+  static FMSMapper *mmapper;
 };
 #endif // SERVERFMS
