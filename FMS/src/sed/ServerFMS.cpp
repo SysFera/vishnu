@@ -18,7 +18,7 @@ using namespace vishnu;
 using namespace FMS_Data;
 Database *ServerFMS::mdatabaseVishnu = NULL;
 ServerFMS* ServerFMS::minstance = NULL;
-//FMSMapper *ServerFMS::mmapperFMS = NULL;
+FMSMapper *ServerFMS::mmapper = NULL;
 
 /**
  * \brief To get the unique instance of the server
@@ -72,8 +72,9 @@ ServerFMS::init(int vishnuId,
 
     /*connection to the database*/
     mdatabaseVishnu->connect();
-//    mmapper = new FMSMapper(MapperRegistry::getInstance(), FMSMAPPERNAME);
-  //  mmapper->registerMapper();
+
+    mmapper = new FMSMapper(MapperRegistry::getInstance(), FMSMAPPERNAME);
+    mmapper->registerMapper();
 
     /* Checking of vishnuid on the database */
     boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
@@ -277,9 +278,9 @@ ServerFMS::init(int vishnuId,
 * \brief Destructor, raises an exception on error
 */
 ServerFMS::~ServerFMS() {
-  /*if (mmapper != NULL) {
+  if (mmapper != NULL) {
     delete mmapper;
-  }*/
+  }
   if (mdatabaseVishnu != NULL) {
     delete mdatabaseVishnu;
   }
