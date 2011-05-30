@@ -49,3 +49,14 @@ diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName
   return result;
 
 }
+
+/**
+ * \brief Function to solve the getListOfJobs service 
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
+int
+solveGetListOfJobs(diet_profile_t* pb) {
+  return solveGenerique<FMS_Data::LsTransferOptions, FMS_Data::FileTransferList, ListFileTransfers >(pb);
+}
+
