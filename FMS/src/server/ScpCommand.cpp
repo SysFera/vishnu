@@ -17,7 +17,8 @@ ScpCommand::ScpCommand (const bool& isRecursive, const bool& useCompression):Fil
 
  void ScpCommand::build(){  
 
-  setCommand("script -c \" scp ");
+  //setCommand("script -c \" scp ");
+  setCommand("scp ");
 
   if (isRecursive()) {
 

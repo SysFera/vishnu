@@ -13,6 +13,9 @@
 #include "UserServer.hpp"
 #include "MachineServer.hpp"
 #include <boost/scoped_ptr.hpp>
+
+#include "FMSMapper.hpp"
+
 using namespace std;
 
 
@@ -26,7 +29,10 @@ diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName
 
   string localPath, localUser, userKey, head, acLogin, machineName;
   char* path, *user, *host,*sessionKey, *dest, *errMsg = NULL, *optionsSerialized=NULL;
-  
+  std::string finishError ="";
+  int mapperkey;
+  std::string cmd = "";
+ 
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
   diet_string_get(diet_parameter(profile, 1), &path, NULL);
   diet_string_get(diet_parameter(profile, 2), &user, NULL);
@@ -47,13 +53,19 @@ diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName
 
   std:: string destPath=File::extName(dest);
   std:: string destHost=File::extHost(dest);
+  SessionServer sessionServer (sessionKey);
 
   try {
 
-    SessionServer sessionServer (sessionKey);
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_copy_file");
+    mapper->code(path, mapperkey);
+    mapper->code(dest, mapperkey);
+    mapper->code(optionsSerialized, mapperkey);
+    cmd = mapper->finalize(mapperkey);
 
     // check the sessionKey
-    
     sessionServer.check();
    
 
@@ -96,8 +108,17 @@ diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName
       file->mv(destCompletePath.str(),*options_ptr);
     }
 
-
+    //To register the command
+    sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& err) {
+    try {
+      sessionServer.finish(cmd, FMS, vishnu::CMDFAILED);
+    } catch (VishnuException& fe) {
+      finishError =  fe.what();
+      finishError +="\n";
+    }
+    err.appendMsgComp(finishError);    
+
     errMsg = strdup(err.buildExceptionString().c_str());
   }
   if (errMsg==NULL) {
@@ -119,7 +140,10 @@ template <File::TransferType transferType> int solveTransferRemoteFile(diet_prof
 
   string  userKey, srcUserLogin,srcMachineName;
   char* srcPath, *destUser, *srcHost,*sessionKey, *destHost,*destPath, *errMsg = NULL, *optionsSerialized=NULL;
-  
+  std::string finishError ="";
+  int mapperkey;
+  std::string cmd = "";
+
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
   diet_string_get(diet_parameter(profile, 1), &destUser, NULL);
   diet_paramstring_get(diet_parameter(profile, 2), &srcHost, NULL);
@@ -138,13 +162,23 @@ template <File::TransferType transferType> int solveTransferRemoteFile(diet_prof
 
   string destUserLogin(destUser);
   string destMachineName(destHost);
+  SessionServer sessionServer (sessionKey);
   
   try {
 
-    SessionServer sessionServer (sessionKey);
+    //MAPPER CREATION
+    string destCpltPath = destPath;
+    if(std::string(destUser).size()==0){
+      destCpltPath = std::string(destHost)+":"+std::string(destPath);
+    }
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_copy_file");
+    mapper->code(std::string(srcHost)+":"+std::string(srcPath), mapperkey);
+    mapper->code(destCpltPath, mapperkey);
+    mapper->code(optionsSerialized, mapperkey);
+    cmd = mapper->finalize(mapperkey);
 
     // check the sessionKey
-
     sessionServer.check();
 
     // get the source Vishnu machine
@@ -204,8 +238,18 @@ template <File::TransferType transferType> int solveTransferRemoteFile(diet_prof
       file->mv(destCompletePath.str(),*options_ptr);
     }
 
-
+    //To register the command
+    sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
+ 
   } catch (VishnuException& err) {
+    try {
+      sessionServer.finish(cmd, FMS, vishnu::CMDFAILED);
+    } catch (VishnuException& fe) {
+      finishError =  fe.what();
+      finishError +="\n";
+    }
+    err.appendMsgComp(finishError);
+
     errMsg = strdup(err.buildExceptionString().c_str());
   }
   if (errMsg==NULL) {

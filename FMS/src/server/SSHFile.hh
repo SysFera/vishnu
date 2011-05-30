@@ -21,6 +21,7 @@
 #define MKDIRCMD "mkdir -m "
 #define MKFILECMD "touch "
 #define RMCMD    "rm -f "
+#define RMRCMD    "rm -rf "
 #define RMDIRCMD "rmdir "
 #define TAILCMD  "tail -"
 #define CPCMD    "scp -o Compression=yes -o StrictHostKeyChecking=no "
@@ -72,7 +73,7 @@ public:
   virtual std::string getContent();
   virtual int mkfile(const mode_t mode);
   virtual int mkdir(const mode_t mode);
-  virtual int rm();
+  virtual int rm(bool isRecursive=false);
   virtual int rmdir();
   virtual std::string tail(const TailOfFileOptions& options);
   virtual std::list<std::string> ls(const LsDirOptions& options) const;
