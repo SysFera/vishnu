@@ -8,9 +8,9 @@
 /* The stat command uses different syntax depending on the system type. */
 /* BSD and Mac OS X command differs from the Linux one. */
 #ifdef BSD_LIKE_SYSTEM
-#define STATCMD "stat -f \"%Su %Sg %Lp %u %g %z %a %m %c %HT\" "
+#define STATCMD "LANG=C stat -f \"%Su %Sg %Lp %u %g %z %a %m %c %HT\" "
 #else
-#define STATCMD "stat --format=\"%U %G %a %u %g %s %X %Y %Z %F\" "
+#define STATCMD " LANG=C stat --format=\"%U %G %a %u %g %s %X %Y %Z %F\" "
 #endif
 
 /* Define the command to use through ssh. */
@@ -76,9 +76,8 @@ public:
   virtual int rmdir();
   virtual std::string tail(const TailOfFileOptions& options);
   virtual std::list<std::string> ls(const LsDirOptions& options) const;
-  virtual int transfer(const std::string& path, const std::string& trCmd);
   virtual int cp(const std::string& path, const CpFileOptions& options);
-  virtual int mv(const std::string& path, const MvFileOptions& options);
+  virtual int mv(const std::string& path, const CpFileOptions& options);
  
 };
 /* A class to call command through SSH. */
