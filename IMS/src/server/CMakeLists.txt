@@ -56,6 +56,7 @@ target_link_libraries(ims-server
   ${Boost_LIBRARIES}
   ${LIBCRYPT_LIB}
   ${USED_BATCH_LIB}
+  ${LOG_LIBRARY}
   emf4cpp-IMS_Data
   database-vishnu
   exception-vishnu

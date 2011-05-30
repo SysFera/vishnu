@@ -12,6 +12,8 @@
 #include "MachineServer.hpp"
 #include <boost/scoped_ptr.hpp>
 
+#include "FMSMapper.hpp"
+
 using namespace std;
 
 
@@ -35,7 +37,11 @@ diet_profile_desc_t* getContentProfile() {
 int contentFile(diet_profile_t* profile) {
   string localPath, localUser, userKey, content, acLogin, machineName;
   char* path, *user, *host,*sessionKey, *errMsg = NULL, *result = NULL;
-  
+  std::string finishError ="";
+  int mapperkey;
+  std::string cmd = "";
+
+
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
   diet_string_get(diet_parameter(profile, 1), &path, NULL);
   diet_string_get(diet_parameter(profile, 2), &user, NULL);
@@ -50,6 +56,7 @@ int contentFile(diet_profile_t* profile) {
 
   localUser = user;
   localPath = path;
+  SessionServer sessionServer (sessionKey);
 
   try {
 
@@ -58,7 +65,12 @@ int contentFile(diet_profile_t* profile) {
     std::cout << "localUser:  " << localUser <<"\n";
     std::cout << "userKey   " << userKey <<"\n";
 
-    SessionServer sessionServer (sessionKey);
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_content_of_file");
+    mapper->code(std::string(host)+":"+std::string(path), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+ 
 
     // check the sessionKey
     
@@ -88,7 +100,16 @@ int contentFile(diet_profile_t* profile) {
       content = file->getContent();
       result = strdup(content.c_str());
 
+      //To register the command
+      sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
     } catch (VishnuException& err) {
+      try {
+        sessionServer.finish(cmd, FMS, vishnu::CMDFAILED);
+      } catch (VishnuException& fe) {
+        finishError =  fe.what();
+        finishError +="\n";
+      }
+      err.appendMsgComp(finishError);
       result = strdup("");
       errMsg = strdup(err.buildExceptionString().c_str());
     }
