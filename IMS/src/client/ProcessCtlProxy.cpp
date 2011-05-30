@@ -152,9 +152,17 @@ int
 ProcessCtlProxy::loadShed(IMS_Data::LoadShedType loadShedType) {
 
   // Cancelling TMS jobs
-  cancelTMS();
+  try {
+    // If no TMS sed, catching exception and do nothing
+    cancelTMS();
+  } catch (VishnuException& e) {
+  }
   // Cancelling FMS transfer
+  try {
+    // If no FMS sed, catching exception and do nothing
   cancelFMS();
+  } catch (VishnuException& e) {
+  }
 
   // If hard load shedding
   if (loadShedType == 1) {

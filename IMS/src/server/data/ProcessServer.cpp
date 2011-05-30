@@ -29,7 +29,7 @@ ProcessServer::list(){
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "get processes is an admin function. A user cannot call it");
   }
 
-  string request = "SELECT * from process WHERE \"pstatus\"='"+convertToString(PRUNNING)+"' ";
+  string request = "SELECT * from process WHERE  pstatus ='"+convertToString(PRUNNING)+"' ";
   vector<string> results;
   vector<string>::iterator iter;
   
@@ -39,7 +39,7 @@ ProcessServer::list(){
     if(res->getNbTuples()==0) {
       throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE,"Unknown machine id to list the processes over");
     }
-    request += "AND \"machineid\"='"+mop->getMachineId()+"'";
+    request += "AND  machineid ='"+mop->getMachineId()+"'";
   }
 
   IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
@@ -74,7 +74,7 @@ ProcessServer::getCommandName(){
 
 int
 ProcessServer::connectProcess(IMS_Data::Process_ptr proc){
-  string request = "UPDATE \"process\" SET \"pstatus\"='"+convertToString(PRUNNING)+"', \"uptime\"=CURRENT_TIMESTAMP WHERE \"vishnuname\"='"+proc->getProcessName()+"' AND \"machineid\"='"+proc->getMachineId()+"'";
+  string request = "UPDATE  process  SET  pstatus ='"+convertToString(PRUNNING)+"',  uptime =CURRENT_TIMESTAMP WHERE  vishnuname ='"+proc->getProcessName()+"' AND  machineid ='"+proc->getMachineId()+"'";
   try{
     mdatabase->process(request.c_str());
   }catch(SystemException& e){
@@ -86,7 +86,7 @@ ProcessServer::connectProcess(IMS_Data::Process_ptr proc){
 
 int
 ProcessServer::disconnectProcess(IMS_Data::Process_ptr proc){
-  string request = "UPDATE \"process\" SET \"pstatus\"='"+convertToString(PDOWN)+"', \"uptime\"=CURRENT_TIMESTAMP WHERE \"dietname\"='"+proc->getDietId()+"'";
+  string request = "UPDATE  process  SET  pstatus ='"+convertToString(PDOWN)+"',  uptime =CURRENT_TIMESTAMP WHERE  dietname ='"+proc->getDietId()+"'";
   try{
     mdatabase->process(request.c_str());
   }catch(SystemException& e){
@@ -97,7 +97,7 @@ ProcessServer::disconnectProcess(IMS_Data::Process_ptr proc){
 }
 int
 ProcessServer::authentifyProcess(IMS_Data::Process_ptr proc){
-  string request = "UPDATE \"process\" SET \"pstatus\"='"+convertToString(PRUNNING)+"', \"dietname\"='"+proc->getDietId()+"', \"uptime\"=CURRENT_TIMESTAMP WHERE \"vishnuname\"='"+proc->getProcessName()+"' AND \"machineid\"='"+proc->getMachineId()+"' AND \"pstatus\"='"+convertToString(PUNDEF)+"'";
+  string request = "UPDATE  process  SET  pstatus ='"+convertToString(PRUNNING)+"',  dietname ='"+proc->getDietId()+"',  uptime =CURRENT_TIMESTAMP WHERE  vishnuname ='"+proc->getProcessName()+"' AND  machineid ='"+proc->getMachineId()+"' AND  pstatus ='"+convertToString(PUNDEF)+"'";
   try{
     mdatabase->process(request.c_str());
   }catch(SystemException& e){
@@ -109,7 +109,7 @@ ProcessServer::authentifyProcess(IMS_Data::Process_ptr proc){
 
 int
 ProcessServer::stopProcess(IMS_Data::Process_ptr proc){
-  string request = "UPDATE \"process\" SET \"pstatus\"='"+convertToString(PDELETED)+"', \"uptime\"=CURRENT_TIMESTAMP WHERE \"dietname\"='"+proc->getDietId()+"'";
+  string request = "UPDATE process SET pstatus='"+convertToString(PDELETED)+"', uptime=CURRENT_TIMESTAMP WHERE vishnuname='"+proc->getProcessName()+"' and machineid='"+proc->getMachineId()+"' and pstatus="+convertToString(PRUNNING);
   try{
     mdatabase->process(request.c_str());
   }catch(SystemException& e){
@@ -121,7 +121,7 @@ ProcessServer::stopProcess(IMS_Data::Process_ptr proc){
 
 int
 ProcessServer::stopAllProcesses(IMS_Data::Process_ptr proc){
-  string request = "UPDATE \"process\" SET \"pstatus\"='"+convertToString(PDELETED)+"', \"uptime\"=CURRENT_TIMESTAMP WHERE \"machineid\"='"+proc->getMachineId()+"' AND \"pstatus\"='"+convertToString(PRUNNING)+"'";
+  string request = "UPDATE  process  SET  pstatus ='"+convertToString(PDELETED)+"',  uptime =CURRENT_TIMESTAMP WHERE  machineid ='"+proc->getMachineId()+"' AND  pstatus ='"+convertToString(PRUNNING)+"'";
   try{
     mdatabase->process(request.c_str());
   }catch(SystemException& e){
