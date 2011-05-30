@@ -109,7 +109,7 @@ public:
   virtual std::string getContent()=0;
   virtual int mkfile(const mode_t mode=420) = 0;
   virtual int mkdir(const mode_t mode=493) = 0;
-  virtual int rm() = 0;
+  virtual int rm(bool isRecursive=false) = 0;
   virtual int rmdir() = 0;
   virtual std::string tail(const TailOfFileOptions& options) = 0;
  virtual std::list<std::string> ls(const LsDirOptions& options) const = 0;

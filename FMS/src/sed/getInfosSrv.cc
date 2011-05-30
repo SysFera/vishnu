@@ -13,6 +13,7 @@
 #include <boost/scoped_ptr.hpp>
 #include "FMSVishnuException.hpp"
 #include <boost/algorithm/string.hpp>
+#include "FMSMapper.hpp"
 
 using namespace std;
 using namespace FMS_Data;
@@ -47,7 +48,9 @@ int get_infos(diet_profile_t* profile) {
   char* path, * user, * host, *sessionKey, *fileStatSerialized=NULL;
   string localPath, localUser, userKey, machineName;
   char* errMsg = NULL;
-
+  std::string finishError ="";
+  int mapperkey;
+  std::string cmd = ""; 
 
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
   diet_string_get(diet_parameter(profile, 1), &path, NULL);
@@ -59,21 +62,24 @@ int get_infos(diet_profile_t* profile) {
   std::cout << "user: "  << user << "\n";
   std::cout << "host: "  << host<< "\n";
 
-      localUser = user;
-      localPath = path;
+  localUser = user;
+  localPath = path;
+  SessionServer sessionServer (sessionKey);
+  try {
 
-      try {
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_get_file_info");
+    mapper->code(std::string(host)+":"+std::string(path), mapperkey);
+    cmd = mapper->finalize(mapperkey);
 
-        SessionServer sessionServer (sessionKey);
+    // check the sessionKey
+    sessionServer.check();
 
-        // check the sessionKey
-
-        sessionServer.check();
-   // 
     UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
     machine->setMachineId(host);
     MachineServer machineServer(machine);
-    
+
     // check the machine
     machineServer.checkMachine();
 
@@ -82,34 +88,46 @@ int get_infos(diet_profile_t* profile) {
     delete machine;
 
 
-        std::string acLogin = UserServer(sessionServer).getUserAccountLogin(host);
+    std::string acLogin = UserServer(sessionServer).getUserAccountLogin(host);
 
-        std::cout << "acLogin: " << acLogin << "\n";
-    
-        FileFactory::setSSHServer(machineName);
+    std::cout << "acLogin: " << acLogin << "\n";
 
-        boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,localPath, acLogin, userKey));
+    FileFactory::setSSHServer(machineName);
 
-        boost::scoped_ptr<FileStat> fileStat_ptr (new FileStat);
+    boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,localPath, acLogin, userKey));
 
-        if ( file->exists()) {
+    boost::scoped_ptr<FileStat> fileStat_ptr (new FileStat);
 
-          *fileStat_ptr=file->getFileStat();
-          const char* name = "solve_getInfos";
-          ::ecorecpp::serializer::serializer _ser(name);
-          fileStatSerialized = strdup(_ser.serialize(const_cast<FMS_Data::FileStat_ptr>(fileStat_ptr.get())).c_str());
+    if ( file->exists()) {
 
-        } else {
-        
-          throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, static_cast<SSHFile*>(file.get())->getErrorMsg());
-        }
-      } catch (VishnuException& err) {
-        errMsg = strdup(err.buildExceptionString().c_str());
-        fileStatSerialized=strdup(""); 
-      }
+      *fileStat_ptr=file->getFileStat();
+      const char* name = "solve_getInfos";
+      ::ecorecpp::serializer::serializer _ser(name);
+      fileStatSerialized = strdup(_ser.serialize(const_cast<FMS_Data::FileStat_ptr>(fileStat_ptr.get())).c_str());
+
+    } else {
+
+      throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, static_cast<SSHFile*>(file.get())->getErrorMsg());
+    }
+
+    //To register the command
+    sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
+
+  } catch (VishnuException& err) {
+    try {
+      sessionServer.finish(cmd, FMS, vishnu::CMDFAILED);
+    } catch (VishnuException& fe) {
+      finishError =  fe.what();
+      finishError +="\n";
+    }
+    err.appendMsgComp(finishError);
+
+    errMsg = strdup(err.buildExceptionString().c_str());
+    fileStatSerialized=strdup(""); 
+  }
 
   if (errMsg==NULL) errMsg = strdup("");
-  
+
 
   diet_string_set(diet_parameter(profile, 4),fileStatSerialized, DIET_VOLATILE);
   diet_string_set(diet_parameter(profile, 5), errMsg, DIET_VOLATILE);
