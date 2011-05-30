@@ -25,12 +25,12 @@ SysInfoServer::getSysInfo() {
   vector<string>::iterator iter;
 
   if(mop.getMachineId().compare("")) {
-    string reqnmid = "SELECT * from machine where \"machineid\"='"+mop.getMachineId()+"'";
+    string reqnmid = "SELECT * from machine where  machineid ='"+mop.getMachineId()+"'";
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
     if(result->getNbTuples() == 0) {
       throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
     }
-    req += " AND \"machineid\"='"+mop.getMachineId()+"'";
+    req += " AND  machineid ='"+mop.getMachineId()+"'";
   }
   IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
   IMS_Data::ListSysInfo_ptr mlistObject = ecoreFactory->createListSysInfo();
@@ -66,27 +66,27 @@ SysInfoServer::setSysInfo(IMS_Data::SystemInfo_ptr sys) {
   if (sys->getMachineId().compare("")==0) {
     throw UserException(ERRCODE_INVALID_PARAM, "Error missing the machine id. ");
   }
-  string reqnmid = "SELECT * from machine where \"machineid\"='"+sys->getMachineId()+"'";
+  string reqnmid = "SELECT * from machine where  machineid ='"+sys->getMachineId()+"'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
   if(result->getNbTuples() == 0) {
     throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
   }
 
-  string request = "update \"machine\" * set ";
+  string request = "update  machine  * set ";
   if (sys->getDiskSpace() < 0 || sys->getMemory() < 0) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid negative value");
   }
   if (sys->getDiskSpace()>0) {
-    request += " \"diskspace\"="+convertToString(sys->getDiskSpace());
+    request += "  diskspace ="+convertToString(sys->getDiskSpace());
     added = true;
   }
   if (sys->getMemory()>0) {
     if (added) {
       request += ",";
     }
-    request += " \"memory\"="+convertToString(sys->getMemory());
+    request += "  memory ="+convertToString(sys->getMemory());
   }
-  request += " where \"machineid\"='"+sys->getMachineId()+"'";
+  request += " where  machineid ='"+sys->getMachineId()+"'";
 
   request += " AND vishnu_vishnuid=";
   request += convertToString(mvishnuId);

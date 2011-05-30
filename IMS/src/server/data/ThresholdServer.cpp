@@ -77,7 +77,7 @@ ThresholdServer::getThreshold() {
   // Adding option to request
   if(mop.getMachineId().compare("")) {
     // Check machine mid correct
-    string reqnmid = "SELECT * from machine where \"machineid\"='"+mop.getMachineId()+"'";
+    string reqnmid = "SELECT * from machine where  machineid='"+mop.getMachineId()+"'";
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
     if(result->getNbTuples() == 0) {
       throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");

@@ -42,7 +42,7 @@ MetricServer::setUpFreq(unsigned int freq){
     throw UserException(ERRCODE_INVALID_PARAM, "Error invalid frequency.");
   }
 
-  string request = "update \"vishnu\" * set \"updatefreq\"='"+convertToString(freq)+"' where \"vishnuid\"='";
+  string request = "update  vishnu  * set  updatefreq ='"+convertToString(freq)+"' where  vishnuid ='";
   request += convertToString(mvishnuId);
   request += "'";
   try {
@@ -108,7 +108,7 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
   
 
   // Getting the num machine id to insert
-  string reqnmid = "SELECT * from machine where \"machineid\"='"+mid+"'";
+  string reqnmid = "SELECT * from machine where  machineid ='"+mid+"'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
   if(result->getNbTuples() == 0) {
     throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
@@ -229,7 +229,7 @@ MetricServer::getHistMet(string machineId){
 
   IMS_Data::MetricType type = mhop->getType();
 
-  string reqnmid = "SELECT * from machine where \"machineid\"='"+machineId+"'";
+  string reqnmid = "SELECT * from machine where  machineid='"+machineId+"'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
   if(result->getNbTuples() == 0) {
     throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
