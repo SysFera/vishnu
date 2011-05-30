@@ -201,6 +201,8 @@ using namespace std;
       if((options.getTrCommand() < -1) || options.getTrCommand() > 1) {
         throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
       }    
+      
+      
       SessionProxy sessionProxy(sessionKey);
 
       // FIXME use FileTransferProxy class to handle the copy
