@@ -280,13 +280,18 @@ int SSHFile::mkdir(const mode_t mode) {
 
 
 /* Remove the file through ssh. */
-int SSHFile::rm() {
+int SSHFile::rm(bool isRecursive) {
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
               sshPublicKey, sshPrivateKey);
   pair<string,string> rmResult;
   
   if (!exists()) throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
-  rmResult = ssh.exec(RMCMD+getPath());
+  if(isRecursive) {
+    rmResult = ssh.exec(RMRCMD+getPath());
+  } else {
+    rmResult = ssh.exec(RMCMD+getPath());
+  }
+
   if (rmResult.second.length()!=0) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error removing "+getPath()+": "+rmResult.second);
   }
@@ -377,7 +382,7 @@ int SSHFile::mv(const string& dest, const CpFileOptions& options){
 
 cp(dest,options);
 
-int result=rm();
+int result=rm(true);
 
   return result;
 }
@@ -477,7 +482,7 @@ pair<string, string> SSHExec::exec(const string& cmd) const {
   command << sshCommand  << " -l " << userName;
   command << " -C"  << " -o BatchMode=yes " << " -o StrictHostKeyChecking=no";
   command << " -o ForwardAgent=yes";
-  command  << " -o ControlMaster=yes " << " -o ControlPath=/tmp/ssh-%r@%h:%p";
+ // command  << " -o ControlMaster=yes " << " -o ControlPath=/tmp/ssh-%r@%h:%p";
   command << " -p " << sshPort << " " << server << " " << cmd;
 
   
