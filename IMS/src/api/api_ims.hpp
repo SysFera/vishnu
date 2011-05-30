@@ -23,6 +23,8 @@
 #include "IMS_Data.hpp"
 #include "IMSVishnuException.hpp"
 #include "utilIMS.hpp"
+// Include added because of swig generation of python, otherwise should not be used
+#include "api_ums.hpp"
 
 using namespace std;
 
