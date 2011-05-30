@@ -115,10 +115,11 @@ int LocalFileProxy::transferFile(const string& dest, const TypeOfOption& options
   string path = FileProxy::extName(dest);
   bfs::path localFullPath(bfs::current_path().string());
 
-  localFullPath/= getPath(); 
+  if(getPath().compare(".")!=0){
+    localFullPath/= getPath(); 
+  }
 
-
- uid_t uid = getuid();
+  uid_t uid = getuid();
   struct passwd*  pw = getpwuid(uid);
   char* localUser = pw->pw_name;
 
@@ -136,6 +137,7 @@ int LocalFileProxy::transferFile(const string& dest, const TypeOfOption& options
 
   profile = diet_profile_alloc(const_cast<char*>(serviceName.c_str()), 5, 5, 6);
 
+  
 
   if (ba::starts_with(getPath(),"/")  ){
 

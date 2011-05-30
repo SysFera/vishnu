@@ -17,7 +17,8 @@ RsyncCommand::RsyncCommand (const bool& isRecursive, const bool& useCompression)
 
  void RsyncCommand::build(){  
 
-  setCommand("script -c \" rsync -aP ");
+  //setCommand("script -c \" rsync -aP ");
+  setCommand("rsync -aP ");
 
   if (isRecursive()) {
 

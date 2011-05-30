@@ -54,6 +54,17 @@
 %template(EFileStatList) ::ecorecpp::mapping::EList<::FMS_Data::FileStat>;
 %template(EStringList) std::vector< ::ecore::EString >;
 
+#ifdef SWIGPYTHON
+
+// Add the output parameters to the result
+%typemap(argout) std::string& info {
+  PyObject *o = PyString_FromString($1);
+  $result = SWIG_Python_AppendOutput($result, o);
+}
+
+#endif
+
+
 #ifdef SWIGJAVA
 %include "various.i"
 // Use a specific typemap for strings passed by reference
@@ -113,8 +124,4 @@
 %include "api_fms.hpp"
 #ifdef SWIGPYTHON
 %include "FMSVishnuException.hpp"
-%include "VishnuException.hpp"
-%include "UserException.hpp"
-%include "SystemException.hpp"
-%include "UMSVishnuException.hpp"
 #endif
