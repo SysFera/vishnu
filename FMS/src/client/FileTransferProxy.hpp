@@ -15,7 +15,10 @@ class FileTransferProxy{
     long addCpThread();
     long addMvThread();
     int stopThread(long thrId);
+  
+  private:
 
+    FMS_Data::FileTransfer mfileTransfer;
 };
 
 #endif
