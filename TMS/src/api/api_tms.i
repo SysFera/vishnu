@@ -14,8 +14,7 @@
 #include "api_tms.hpp"
 %}
 
-%import "api_ums.i"
-
+%import "api_ums_include.i"
 
 // All EMF includes (same as in UMS_Data.hpp)
 %include "TMS_Data_forward.hpp"
