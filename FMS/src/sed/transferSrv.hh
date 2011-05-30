@@ -15,9 +15,18 @@
 #include <boost/scoped_ptr.hpp>
 
 #include "FMSMapper.hpp"
+#include "ListFileTransfers.hh"
 
 using namespace std;
 
+
+/**
+ * \brief Function to solve the getListOfJobs service 
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
+int
+solveGetListOfJobs(diet_profile_t* pb);
 
 diet_profile_desc_t* getTransferFileProfile(const std::string& serviceName);
 
@@ -269,10 +278,76 @@ template <File::TransferType transferType> int solveTransferRemoteFile(diet_prof
   diet_string_set(diet_parameter(profile, 7), errMsg, DIET_VOLATILE);
   return 0;
 
-
-
 }
 
+/**
+ * \brief Function to solve the generic query service 
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
+template <class QueryParameters, class List, class QueryType>
+int
+solveGenerique(diet_profile_t* pb) {
 
+  char* sessionKey = NULL;
+  char* machineId = NULL;
+  char* optionValueSerialized = NULL;
+  std::string listSerialized = "";
+  std::string empty = "";
+  std::string errorInfo;
+  int mapperkey;
+  std::string cmd;
+  std::string finishError ="";
+
+  //IN Parameters
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  diet_string_get(diet_parameter(pb,1), &optionValueSerialized, NULL);
+
+  SessionServer sessionServer  = SessionServer(std::string(sessionKey));
+
+  QueryParameters* options = NULL;
+  List* list = NULL;
+
+  try {
+    //To parse the object serialized
+    if(!parseEmfObject(std::string(optionValueSerialized), options)) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+    }
+    QueryType query(options, sessionServer);
+
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
+    mapperkey = mapper->code(query.getCommandName());
+    mapper->code(std::string(machineId), mapperkey);
+    mapper->code(std::string(optionValueSerialized), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+
+    list = query.list();
+
+    const char* name = "list";
+    ::ecorecpp::serializer::serializer _ser(name);
+    listSerialized =  _ser.serialize(list);
+
+    //OUT Parameter
+    diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
+    sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
+  } catch (VishnuException& e) {
+    try {
+      sessionServer.finish(cmd, FMS, vishnu::CMDFAILED);
+    } catch (VishnuException& fe) {
+      finishError =  fe.what();
+      finishError +="\n";
+    }
+    e.appendMsgComp(finishError);
+    errorInfo =  e.buildExceptionString();
+    //OUT Parameter
+    diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  }
+  delete options;
+  delete list;
+  return 0;
+}
 
 #endif
