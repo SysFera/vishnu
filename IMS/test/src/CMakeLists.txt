@@ -32,6 +32,9 @@ file( TO_NATIVE_PATH "${TEST_BIN_PATH}" TESTBINPATH)
 set (TEST_DIET_SED_CONFIG "${TEST_CONFIG_PATH}/SeD_testing.cfg")
 file( TO_NATIVE_PATH ${TEST_DIET_SED_CONFIG} DIETSEDCONF)
 
+set (TEST_DIET_SED_DISTANT_CONFIG "${TEST_CONFIG_PATH}/SeD_distant_testing.cfg")
+file( TO_NATIVE_PATH ${TEST_DIET_SED_DISTANT_CONFIG} DIETSEDDISTANTCONF)
+
 # Path to the VISHNU IMS SeD configuration
 set (TEST_IMS_SED_CONFIG "${TEST_CONFIG_PATH}/imssed_testing.cfg")
 file ( TO_NATIVE_PATH ${TEST_IMS_SED_CONFIG} IMSSEDCONF)
@@ -61,7 +64,7 @@ file ( TO_NATIVE_PATH ${TEST_SENDMAIL_SCRIPT} SENDMAILPY)
 
 # Specific to IMS
 set( TEST_PATH_DISTANT_UMSSED "${TEST_BIN_PATH}/umssed" CACHE FILEPATH "The path to the umssed on the distant machine")
-set( TEST_PATH_CONFIG_DISTANT_UMSSED "${TEST_CONFIG_PATH}/umssed_testing2.cfg" CACHE FILEPATH "The path to the umssed config file on a distant machine")
+set( TEST_PATH_CONFIG_DISTANT_UMSSED "${TEST_CONFIG_PATH}/umssed_distant_testing.cfg" CACHE FILEPATH "The path to the umssed config file on a distant machine")
 mark_as_advanced( TEST_PATH_DISTANT_UMSSED )
 mark_as_advanced( TEST_PATH_CONFIG_DISTANT_UMSSED )
 file( TO_NATIVE_PATH "${TEST_PATH_DISTANT_UMSSED}" TESTPATHDISTANTUMSSED)
@@ -75,6 +78,15 @@ configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/IMS_testconfig.h.in
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/imssed_testing.cfg.in
   ${TEST_CONFIG_PATH}/imssed_testing.cfg
 )
+
+configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/umssed_distant_testing.cfg.in
+  ${TEST_CONFIG_PATH}/umssed_distant_testing.cfg
+)
+
+configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/SeD_distant_testing.cfg.in
+  ${TEST_CONFIG_PATH}/SeD_distant_testing.cfg
+)
+
 
 include(IMSTestingMacros)
 ims_test_setup()
