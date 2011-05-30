@@ -14,7 +14,6 @@
     <eLiterals name="MEMORY" value="4"/>
     <eLiterals name="FREEMEMORY" value="5"/>
     <eLiterals name="CPUNBR" value="6"/>
-    <eLiterals name="ALL" value="-1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Metric" instanceTypeName="Metric">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//MetricType"
