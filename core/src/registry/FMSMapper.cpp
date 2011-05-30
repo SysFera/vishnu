@@ -388,7 +388,9 @@ FMSMapper::decodeCopyFile(vector<int> separator, const string& msg){
     res += " -r ";
   }
 
-  res += " -t "+vishnu::convertToString(ac->getTrCommand());
+  if(ac->getTrCommand()!=-1){
+    res += " -t "+vishnu::convertToString(ac->getTrCommand());
+  }
 
   return res;
 }
@@ -419,7 +421,9 @@ FMSMapper::decodeCopyAsyncFile(vector<int> separator, const string& msg){
     res += " -r ";
   }               
 
-  res += " -t "+vishnu::convertToString(ac->getTrCommand());
+  if(ac->getTrCommand()!=-1){
+    res += " -t "+vishnu::convertToString(ac->getTrCommand());
+  }
 
   return res;
 }
@@ -434,7 +438,7 @@ FMSMapper::decodeMoveFile(vector<int> separator, const string& msg){
   u    = msg.substr(separator.at(0)+1, separator.at(1)-separator.at(0)-1);
   res += u;
   res+= " ";
-  u    = msg.substr(separator.at(2)+1, separator.at(2)-separator.at(1)-1);
+  u    = msg.substr(separator.at(1)+1, separator.at(2)-separator.at(1)-1);
   res += u;
   res+= " ";
   
@@ -445,8 +449,10 @@ FMSMapper::decodeMoveFile(vector<int> separator, const string& msg){
   if(!vishnu::parseEmfObject(u, ac)) {
     throw SystemException(ERRCODE_INVMAPPER, "option: "+u);
   }
-                  
-  res += " -t "+vishnu::convertToString(ac->getTrCommand());
+
+  if(ac->getTrCommand()!=-1){  
+    res += " -t "+vishnu::convertToString(ac->getTrCommand());
+  }
 
   return res;
 }
@@ -473,7 +479,9 @@ FMSMapper::decodeMoveAsyncFile(vector<int> separator, const string& msg){
     throw SystemException(ERRCODE_INVMAPPER, "option: "+u);
   }
 
-  res += " -t "+vishnu::convertToString(ac->getTrCommand());
+  if(ac->getTrCommand()!=-1){
+    res += " -t "+vishnu::convertToString(ac->getTrCommand());
+  }
 
   return res;
 }
