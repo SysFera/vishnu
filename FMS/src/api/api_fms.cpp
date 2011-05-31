@@ -462,6 +462,7 @@ int vishnu::listFileTransfers(const string& sessionKey,FileTransferList& fileTra
       FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
       for(unsigned int i = 0; i < listFileTransfers_ptr->getFileTransfers().size(); i++) {
         FMS_Data::FileTransfer_ptr fileTransfer = ecoreFactory->createFileTransfer();
+        
         //To copy the content and not the pointer
         *fileTransfer = *listFileTransfers_ptr->getFileTransfers().get(i);
         fileTransferList.getFileTransfers().push_back(fileTransfer);
