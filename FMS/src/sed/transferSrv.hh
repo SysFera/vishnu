@@ -114,7 +114,7 @@ diet_profile_desc_t* getFileTransfersListProfile();
    
     std::cout << "destCompletePath " <<destCompletePath.str() << "\n";
     
-    
+   // create a FileTranferServer and register the transfer in database 
     if(transferType==File::copy){
       file->cp(destCompletePath.str(),*options_ptr);
     }
@@ -142,8 +142,6 @@ diet_profile_desc_t* getFileTransfersListProfile();
 
     diet_string_set(diet_parameter(profile, 6), errMsg, DIET_VOLATILE);
     return 0;
-
-
 
 
 }
@@ -179,7 +177,8 @@ template <File::TransferType transferType> int solveTransferRemoteFile(diet_prof
   string destMachineName(destHost);
   SessionServer sessionServer (sessionKey);
   
-  try {
+  
+     try {
 
     //MAPPER CREATION
     string destCpltPath = destPath;
@@ -249,7 +248,8 @@ template <File::TransferType transferType> int solveTransferRemoteFile(diet_prof
     std::ostringstream destCompletePath;
     destCompletePath << destUserLogin << "@"<<destMachineName <<":"<<destPath;
     std::cout << "destCompletePath " <<destCompletePath.str() << "\n";
-    
+   
+
     if(transferType==File::copy){
       file->cp(destCompletePath.str(),*options_ptr);
     }
