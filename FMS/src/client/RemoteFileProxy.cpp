@@ -830,7 +830,8 @@ void RemoteFileProxy::printTransferID(const bool printTrID) {
 template <class TypeOfOption>
 int RemoteFileProxy::transferFile(const std::string& dest, 
                                   const TypeOfOption& options, 
-                                  const std::string& serviceName){
+                                  const std::string& serviceName,
+                                  FileTransfer& fileTransfer){
 
   string destHost = FileProxy::extHost(dest);
   string localUser = "";
@@ -861,14 +862,18 @@ int RemoteFileProxy::transferFile(const std::string& dest,
   std::string srcPath = getPath();    
 
   char *optionsToString = NULL;
-
+  char *fileTransferInString = NULL;
   diet_profile_t* profile;
   char* errMsg;
 
   std::string sessionKey=this->getSession().getSessionKey();
 
-  profile = diet_profile_alloc(serviceName.c_str(), 6, 6, 7);
-
+  bool isAsyncTransfer = (serviceName.compare("RemoteFileCopyAsync")==0 || serviceName.compare("RemoteFileMoveAsync")==0);
+  if(!isAsyncTransfer) {
+    profile = diet_profile_alloc(serviceName.c_str(), 6, 6, 7);
+  } else {
+    profile = diet_profile_alloc(serviceName.c_str(), 6, 6, 8);
+  }
 
   //IN Parameters  
 
@@ -894,25 +899,57 @@ int RemoteFileProxy::transferFile(const std::string& dest,
 
   diet_string_set(diet_parameter(profile,6 ), optionsToString, DIET_VOLATILE);
 
-  diet_string_set(diet_parameter(profile, 7), NULL, DIET_VOLATILE);
+  if(!isAsyncTransfer) { 
+    diet_string_set(diet_parameter(profile, 7), NULL, DIET_VOLATILE);
+  } else {
+    diet_string_set(diet_parameter(profile, 7), NULL, DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile, 8), NULL, DIET_VOLATILE);
+  }
 
   if (diet_call(profile)) {
     raiseDietMsgException("Error calling DIET service");
   }
 
-  diet_string_get(diet_parameter(profile, 7), &errMsg, NULL);
+  if(!isAsyncTransfer) {
+    diet_string_get(diet_parameter(profile, 7), &errMsg, NULL);
+    /*To raise a vishnu exception if the received message is not empty*/
+    raiseExceptionIfNotEmptyMsg(errMsg);
+  } else {
+    diet_string_get(diet_parameter(profile, 7), &fileTransferInString, NULL);
+    diet_string_get(diet_parameter(profile, 8), &errMsg, NULL);
 
-  /*To raise a vishnu exception if the received message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errMsg);
+    /*To raise a vishnu exception if the received message is not empty*/
+    raiseExceptionIfNotEmptyMsg(errMsg);
+  
+    FMS_Data::FileTransfer_ptr fileTransfer_ptr = NULL;
 
+    parseEmfObject(std::string(fileTransferInString), fileTransfer_ptr);
+
+    fileTransfer = *fileTransfer_ptr;
+
+  }
   
 return 0;
 }
 
 int RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options) {
-  return transferFile(dest, options, "RemoteFileCopy");
+  FileTransfer fileTransfer; //empty fileTransfer info, the cp function not fills this object structure
+  return transferFile(dest, options, "RemoteFileCopy", fileTransfer);
 }
 
 int RemoteFileProxy::mv(const std::string& dest, const CpFileOptions& options) {
-  return transferFile(dest, options, "RemoteFileMove");
+  FileTransfer fileTransfer; //empty fileTransfer info, the cp function not fills this object structure
+  return transferFile(dest, options, "RemoteFileMove", fileTransfer);
+}
+
+int RemoteFileProxy::cpAsync(const std::string& dest, 
+                             const CpFileOptions& options,
+                             FileTransfer& fileTransfer) {
+  return transferFile(dest, options, "RemoteFileCopyAsync", fileTransfer);
+}
+
+int RemoteFileProxy::mvAsync(const std::string& dest, 
+                             const CpFileOptions& options,
+                             FileTransfer& fileTransfer) {
+  return transferFile(dest, options, "RemoteFileMoveAsync", fileTransfer);
 }
