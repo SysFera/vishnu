@@ -93,6 +93,7 @@ private:
   std::string publicKey;
   std::string privateKey;
   mutable int lastExecStatus;
+  mutable int mprocessId;
 public:
   SSHExec(const std::string& sshCommand,
           const std::string& scpCommand,
@@ -102,10 +103,11 @@ public:
           const std::string& privateKey);
   
   const int& getLastExecStatus() const;
-  
+
+  const int& getProcessId() const;
+  void setProcessId(const int& processId)const;
+
   std::pair<std::string, std::string> exec(const std::string& cmd) const;
-  void copyFrom(const std::string& file, const std::string& src) const;
-  void copyTo(const std::string& file, const std::string& dest) const;
 };
 
 #endif
