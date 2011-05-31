@@ -112,7 +112,16 @@ public:
   virtual int cp(const std::string& dest, const CpFileOptions& options) = 0;
 
   virtual int mv(const std::string& dest, const CpFileOptions& options) = 0; 
- 
+
+  virtual int cpAsync(const std::string& dest, 
+                      const CpFileOptions& options, 
+                      FileTransfer& fileTransfer) = 0;
+  
+  virtual int mvAsync(const std::string& dest, 
+                      const CpFileOptions& options, 
+                      FileTransfer& fileTransfer) = 0;
+
+
   static std::string extHost(const std::string& path);
   static std::string extName(const std::string& path);
 };
