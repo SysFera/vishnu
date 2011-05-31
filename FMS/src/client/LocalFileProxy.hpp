@@ -17,7 +17,8 @@ private:
   template <class typeofoption>
     int transferFile(const std::string& dest, 
                      const typeofoption& options,
-                     const std::string& servicename);
+                     const std::string& servicename,
+                     FileTransfer& fileTransfer);
 
 public:
   LocalFileProxy();
@@ -43,6 +44,10 @@ public:
 
   virtual int mv(const std::string& dest, const CpFileOptions& options);
 
+  virtual int cpAsync(const std::string& dest, const CpFileOptions& options, FileTransfer& fileTransfer);
+
+  virtual int mvAsync(const std::string& dest, const CpFileOptions& options, FileTransfer& fileTransfer);
+ 
   virtual std::list<std::string> ls(const LsDirOptions& options) const { }
 };
 
