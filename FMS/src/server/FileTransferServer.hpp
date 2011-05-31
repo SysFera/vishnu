@@ -14,14 +14,15 @@ class FileTransferServer{
 
   public:
 
-    FileTransferServer(const SessionServer& sessionServer,const FMS_Data::FileTransfer& filetranfer);
+    FileTransferServer(const SessionServer& sessionServer,const FMS_Data::FileTransfer& filetranfer, const int& vishnuId);
 
 
     FileTransferServer(const SessionServer& sessionServer,
                     const std::string& srcHost,
                    const std::string& destHost,
                    const std::string& srcFilePath,
-                   const std::string& destFilePath);
+                   const std::string& destFilePath,
+                   const int& vishnuId);
 
 
     int addCpThread();
@@ -40,7 +41,8 @@ class FileTransferServer{
  SessionServer msessionServer;
  void wait ();
 void getUserInfo(std::string& name, std::string& userId); 
- int insertIntoDatabase();
+int mvishnuId;
+int insertIntoDatabase();
 mutable FMS_Data::FileTransfer mfileTransfer;
 Database *mdatabaseVishnu;
 };
