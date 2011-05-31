@@ -26,12 +26,13 @@ using namespace std;
  * \return raises an exception on error
  */
 int
-solveGetListOfJobs(diet_profile_t* pb);
+solveGetListOfFileTransfers(diet_profile_t* pb);
 
 diet_profile_desc_t* getTransferFileProfile(const std::string& serviceName);
 
 diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName);
 
+diet_profile_desc_t* getFileTransfersListProfile();
 
 
   template < File::TransferType transferType> int solveTransferFile(diet_profile_t* profile){
@@ -290,7 +291,6 @@ int
 solveGenerique(diet_profile_t* pb) {
 
   char* sessionKey = NULL;
-  char* machineId = NULL;
   char* optionValueSerialized = NULL;
   std::string listSerialized = "";
   std::string empty = "";
@@ -318,10 +318,10 @@ solveGenerique(diet_profile_t* pb) {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
     mapperkey = mapper->code(query.getCommandName());
-    mapper->code(std::string(machineId), mapperkey);
     mapper->code(std::string(optionValueSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
 
+    //  perform the query
     list = query.list();
 
     const char* name = "list";
