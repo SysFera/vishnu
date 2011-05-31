@@ -50,13 +50,27 @@ diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName
 
 }
 
+diet_profile_desc_t* getFileTransfersListProfile(){
+
+  diet_profile_desc_t* result = diet_profile_desc_alloc("FileTransfersList", 1, 1, 3);
+  
+  diet_generic_desc_set(diet_param_desc(result, 0), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(result, 1), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(result, 2), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(result, 3), DIET_STRING, DIET_CHAR);
+  
+  return result;
+
+}
+
+
 /**
  * \brief Function to solve the getListOfJobs service 
  * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
 int
-solveGetListOfJobs(diet_profile_t* pb) {
+solveGetListOfFileTransfers(diet_profile_t* pb) {
   return solveGenerique<FMS_Data::LsTransferOptions, FMS_Data::FileTransferList, ListFileTransfers >(pb);
 }
 
