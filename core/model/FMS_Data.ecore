@@ -193,7 +193,8 @@
         <details key="content" value="The file  transfer identifier"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//Status">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//Status"
+        defaultValueLiteral="">
       <eAnnotations source="Description">
         <details key="content" value="The file transfer status"/>
       </eAnnotations>
@@ -203,7 +204,7 @@
         <details key="content" value="The user identifier"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="clientMachineId" eType="ecore:EDataType Ecore.ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="clientMachineName" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="The client machine identifier"/>
       </eAnnotations>

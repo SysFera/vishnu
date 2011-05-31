@@ -115,6 +115,9 @@ void SSHFile::getInfos() const {
   
   fileStat = ssh.exec(STATCMD+getPath());
 
+
+  std::cout << "The process id is " <<ssh.getProcessId() << "\n";
+
   std::cout << "fileStat.second " <<fileStat.second << "\n";
 
   if (fileStat.second.find("Warning")!=std::string::npos){   
@@ -473,13 +476,23 @@ sshPort(sshPort), userName(userName), password(password), publicKey(publicKey),
 privateKey(privateKey)
 {
   lastExecStatus=0;
+  mprocessId=-1; //Undefined
 }
 
 const int& SSHExec::getLastExecStatus() const {
   return lastExecStatus;
 }
 
-// texec a remote command 
+
+const int& SSHExec::getProcessId() const {
+  return mprocessId;
+}
+
+void SSHExec::setProcessId(const int& processId) const {
+mprocessId=processId;
+}
+
+// exec a remote command 
 
 pair<string, string> SSHExec::exec(const string& cmd) const {
   vector<string> tokens;
@@ -553,6 +566,10 @@ cout << *ite << endl;
       exit(-1);
     }
   }
+
+  // Store the child process id
+  setProcessId (pid);
+
   close(comPipeOut[1]); /* Close unused write end */
 
   close(comPipeErr[1]);/* Close unused write end */
