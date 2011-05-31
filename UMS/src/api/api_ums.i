@@ -8,7 +8,19 @@
 
 %module VISHNU_UMS
 
+// Keep in separated files and before includes, all module need their own eobject in java
+%include "ecore/EObject.hpp"
+%include "ecorecpp/mapping/type_traits.hpp"
+%include "ecorecpp/mapping/out_ptr.hpp"
+%include "ecorecpp/mapping/EList.hpp"
+%include "ecore_forward.hpp"
+
 %include "api_ums_include.i"
+
+
+// Instantiate the template for all lists
+// the templates used within the list template must be instantiated first
+%template(EListPtr) ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList< ::ecore::EObject > >;
 
 %template(ESessionList) ::ecorecpp::mapping::EList<::UMS_Data::Session>;
 %template(EUserList) ::ecorecpp::mapping::EList<::UMS_Data::User>;

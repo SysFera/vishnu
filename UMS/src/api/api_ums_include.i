@@ -22,13 +22,6 @@
 %include "std_except.i"
 
 
-// this includes the required type declarations for EMF4CPP
-// WARNING: some may be missing!
-%include "ecore/EObject.hpp"
-%include "ecorecpp/mapping/type_traits.hpp"
-%include "ecorecpp/mapping/out_ptr.hpp"
-%include "ecorecpp/mapping/EList.hpp"
-%include "ecore_forward.hpp"
 
 // All EMF includes (same as in UMS_Data.hpp)
 %include "UMS_Data_forward.hpp"
@@ -55,9 +48,6 @@
 // TODO make copy of object when using the push_back() method of EList
 // because this causes a segfault due to double free
 
-// Instantiate the template for all lists
-// the templates used within the list template must be instantiated first
-%template(EListPtr) ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList< ::ecore::EObject > >;
 
 #ifdef SWIGPYTHON
 %include "VishnuException.hpp"
