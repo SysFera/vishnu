@@ -13,10 +13,11 @@
 #include "UserServer.hpp"
 #include "MachineServer.hpp"
 #include <boost/scoped_ptr.hpp>
-
+#include "ServerFMS.hpp"
 #include "FMSMapper.hpp"
 #include "ListFileTransfers.hh"
 
+#include "FileTransferServer.hpp"
 using namespace std;
 
 
@@ -31,6 +32,8 @@ solveGetListOfFileTransfers(diet_profile_t* pb);
 diet_profile_desc_t* getTransferFileProfile(const std::string& serviceName);
 
 diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName);
+
+diet_profile_desc_t* getTransferRemoteFileAsyncProfile(const std::string& serviceName);
 
 diet_profile_desc_t* getFileTransfersListProfile();
 
@@ -350,13 +353,164 @@ solveGenerique(diet_profile_t* pb) {
   return 0;
 }
 
+/****************************************************************************************************/
+
 // Asynchronous command area
 
 
-//template <File::TransferType transferType> int solveTransferAsyncRemoteFile(diet_profile_t* profile){
+template <File::TransferType transferType> int solveTransferRemoteFileAsync(diet_profile_t* profile){
+
+  string  userKey, srcUserLogin,srcMachineName;
+  char* srcPath, *destUser, *srcHost,*sessionKey, *destHost,*destPath, *errMsg = NULL, *optionsSerialized=NULL;
+  std::string finishError ="";
+  std::string fileTransferSerialized="";
+  int mapperkey;
+  std::string cmd = "";
+
+  diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
+  diet_string_get(diet_parameter(profile, 1), &destUser, NULL);
+  diet_paramstring_get(diet_parameter(profile, 2), &srcHost, NULL);
+  diet_string_get(diet_parameter(profile, 3), &srcPath, NULL);
+  diet_paramstring_get(diet_parameter(profile, 4), &destHost, NULL);
+  diet_string_get(diet_parameter(profile, 5), &destPath, NULL);
+  diet_string_get(diet_parameter(profile, 6), &optionsSerialized, NULL);
+
+  SessionServer sessionServer (sessionKey);
+
+  try {
+
+    std::cout << "Dans solveCopyFile:  " << "\n"; 
+    std::cout << "destUser:  " << destUser <<"\n";
+    std::cout << "srcHost:  " << srcHost <<"\n"; 
+    std::cout << "srcPath:  " << srcPath <<"\n"; 
+    std::cout << "destHost:  " << destHost <<"\n"; 
+    std::cout << "destPath:  " << destPath <<"\n"; 
+
+    string destUserLogin(destUser);
+    string destMachineName(destHost);
+    SessionServer sessionServer (sessionKey);
 
 
-//}
+
+    //MAPPER CREATION
+    string destCpltPath = destPath;
+    if(std::string(destUser).size()==0){
+      destCpltPath = std::string(destHost)+":"+std::string(destPath);
+    }
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
+    if(transferType==File::copy){
+      mapperkey = mapper->code("vishnu_copy_async_file");
+    }
+    if(transferType==File::move){
+      mapperkey = mapper->code("vishnu_move_async_file");
+    }
+    mapper->code(std::string(srcHost)+":"+std::string(srcPath), mapperkey);
+    mapper->code(destCpltPath, mapperkey);
+    mapper->code(optionsSerialized, mapperkey);
+    cmd = mapper->finalize(mapperkey);
+
+    // check the sessionKey
+    sessionServer.check();
+
+    // get the source Vishnu machine
+    UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+    machine->setMachineId(srcHost);
+    MachineServer srcMachineServer(machine);
+
+    // check the source machine
+    srcMachineServer.checkMachine();
+
+    // get the source machineName
+    srcMachineName = srcMachineServer.getMachineName();
+    delete machine;
+
+    // get the source machine user login
+    srcUserLogin = UserServer(sessionServer).getUserAccountLogin(srcHost);
+
+    if(strcmp(destUser,"")==0) {
+
+      // get the destination Vishnu machine
+      machine = new UMS_Data::Machine();
+      machine->setMachineId(destHost);
+      MachineServer destMachineServer(machine);
+
+      // check the destination machine
+      destMachineServer.checkMachine();
+
+      // get the destination machineName
+      destMachineName = destMachineServer.getMachineName();
+      delete machine;
+
+      // get the destination  machine user login
+      destUserLogin = UserServer(sessionServer).getUserAccountLogin(destHost);
+
+    }
+
+    std::cout << "source user login: " << srcUserLogin << "\n";
+    std::cout << "machineName: " << srcMachineName << "\n";
+
+    FileFactory::setSSHServer(srcMachineName);
+    boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,srcPath, srcUserLogin, userKey));
+
+    CpFileOptions_ptr options_ptr= NULL;
+    if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr) ) {
+      throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
+    }
+
+    std::ostringstream destCompletePath;
+    destCompletePath << destUserLogin << "@"<<destMachineName <<":"<<destPath;
+    std::cout << "destCompletePath " <<destCompletePath.str() << "\n";
+   
+ int vishnuId=ServerFMS::getInstance()->getVishnuId(); 
+
+    FileTransferServer fileTransferServer(sessionServer, srcHost, destHost, srcPath, destPath,vishnuId);
+
+
+    
+    if(transferType==File::copy){
+      fileTransferServer.addCpThread();
+    }
+
+    if (transferType==File::move){
+      
+     fileTransferServer.addMvThread();
+    }
+
+    FMS_Data::FileTransfer_ptr fileTransfer=new FMS_Data::FileTransfer();
+      *fileTransfer= fileTransferServer.getFileTransfer();
+   
+   const char* name = "fileTransfer";
+    ::ecorecpp::serializer::serializer _ser(name);
+    
+    fileTransferSerialized =  _ser.serialize(const_cast<FMS_Data::FileTransfer_ptr>(fileTransfer));
+
+    delete fileTransfer;
+   
+    //To register the command
+    sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
+ 
+  } catch (VishnuException& err) {
+    try {
+      sessionServer.finish(cmd, FMS, vishnu::CMDFAILED);
+    } catch (VishnuException& fe) {
+      finishError =  fe.what();
+      finishError +="\n";
+    }
+    err.appendMsgComp(finishError);
+
+    errMsg = strdup(err.buildExceptionString().c_str());
+  }
+  if (errMsg==NULL) {
+    errMsg = strdup("");
+  }
+
+  diet_string_set(diet_parameter(profile, 7), strdup(fileTransferSerialized.c_str()),DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 8), errMsg, DIET_VOLATILE);
+  return 0;
+
+
+
+}
 
 
 
