@@ -35,7 +35,7 @@ UMSVishnuException::initMsg(){
   mp.insert(std::pair<int, std::string>(ERRCODE_UNUSABLE_MACHINE, std::string("The machine does not exist or it is locked")));
 
   mp.insert(std::pair<int, std::string>(ERRCODE_LOCAL_ACCOUNT_EXIST, std::string("The local account already exists")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, std::string("The local is unknown")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, std::string("The local account is unknown")));
 
   mp.insert(std::pair<int, std::string>(ERRCODE_SAVE_CONFIG_ERROR, std::string("A problem occurs during the configuration saving ")));
   mp.insert(std::pair<int, std::string>(ERRCODE_RESTORE_CONFIG_ERROR, std::string("A problem occurs during the configuration restoring")));
