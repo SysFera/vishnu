@@ -35,7 +35,8 @@ private:
   template <class TypeOfOption>
     int transferFile(const std::string& dest,
                      const TypeOfOption& options,
-                     const std::string& serviceName); 
+                     const std::string& serviceName,
+                     FileTransfer& fileTransfer); 
 
 public:
   RemoteFileProxy();
@@ -62,9 +63,14 @@ public:
   virtual std::list<std::string> ls(const LsDirOptions& options) const; 
   void printTransferID(const bool printTrID);
 
-  int cp(const std::string& dest, const CpFileOptions& options);
+  virtual int cp(const std::string& dest, const CpFileOptions& options);
 
-  int mv(const std::string& dest, const CpFileOptions& options);
+  virtual int mv(const std::string& dest, const CpFileOptions& options);
+
+  virtual int cpAsync(const std::string& dest, const CpFileOptions& options, FileTransfer& fileTransfer);
+
+  virtual int mvAsync(const std::string& dest, const CpFileOptions& options, FileTransfer& fileTransfer);
+
 };
 
 #endif
