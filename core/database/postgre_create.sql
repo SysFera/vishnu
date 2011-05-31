@@ -185,22 +185,6 @@ CREATE TABLE process (
 );
 
 
-CREATE TABLE filetransfer (
-  numfiletransferid SERIAL  NOT NULL ,
-  command_numcommandid INTEGER   NOT NULL ,
-  filetransferid VARCHAR(255)    ,
-  statust INTEGER    ,
-  source VARCHAR(255)    ,
-  destination VARCHAR(255)    ,
-  client VARCHAR(255)    ,
-  filepath VARCHAR(255)    ,
-  destinationpath VARCHAR(255)    ,
-  globaltransferid INTEGER      ,
-PRIMARY KEY(numfiletransferid),
-  FOREIGN KEY(command_numcommandid)
-    REFERENCES command(numcommandid));
-
-
 CREATE TABLE fileSub (
   numfileid SERIAL  NOT NULL ,
   command_numcommandid INTEGER   NOT NULL ,
@@ -242,6 +226,25 @@ PRIMARY KEY(numjobid),
     FOREIGN KEY(vsession_numsessionid)
     REFERENCES vsession(numsessionid) ON DELETE CASCADE);
 
+CREATE TABLE fileTransfer (
+  numfileTransferid SERIAL  NOT NULL ,
+  vsession_numsessionid INTEGER   NOT NULL ,
+  transferId VARCHAR(255),
+  status INTEGER,
+  userId VARCHAR(255),
+  clientMachineName VARCHAR(255),
+  sourceMachineId VARCHAR(255),
+  destinationMachineId VARCHAR(255),
+  sourceFilePath VARCHAR(255),
+  destinationFilePath VARCHAR(255),
+  fileSize INTEGER,
+  startTime TIMESTAMP,
+  trCommand INTEGER,
+  processId INTEGER,
+PRIMARY KEY(numfileTransferid),
+    FOREIGN KEY(vsession_numsessionid)
+    REFERENCES vsession(numsessionid) ON DELETE CASCADE);
+
 -- Role Creation;
 
 CREATE USER vishnu_user WITH PASSWORD 'vishnu_user';
@@ -273,6 +276,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON filetransfer TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON filesub TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON job TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON process TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON fileTransfer TO "vishnu_db_admin";
 
 
 --CREATE ROLE vishnu_user;
@@ -295,6 +299,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON filetransfer TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON filesub TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON job TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON process TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON fileTransfer TO "vishnu_user";
 
 --Grant on sequences
 
