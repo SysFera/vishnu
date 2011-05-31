@@ -1,4 +1,4 @@
- 
+
 link_directories(
  ${VISHNU_EXCEPTION_INCLUDE_DIR}
 )
@@ -28,21 +28,6 @@ add_library(ims-client-proxy STATIC
   ExporterProxy.cpp
 )
 
-target_link_libraries(ims-client-proxy
-  ${DIET_CLIENT_LIB}
-  ${Boost_LIBRARIES}
-  emf4cpp-IMS_Data
-  exception-vishnu
-  utils-vishnu
-#  ims-client-proxy
-  ums-client-proxy
-)
-
-link_directories(
- ${VISHNU_EXCEPTION_INCLUDE_DIR}
-)
-
-
 SET_TARGET_PROPERTIES(ims-client-proxy PROPERTIES COMPILE_FLAGS "-fPIC")
 target_link_libraries(ims-client-proxy
   ${DIET_CLIENT_LIB}
@@ -50,8 +35,6 @@ target_link_libraries(ims-client-proxy
   emf4cpp-IMS_Data
   emf4cpp-TMS_Data
   exception-vishnu
-  utils-vishnu
-#  ims-client-proxy
   ums-client-proxy
 )
 
