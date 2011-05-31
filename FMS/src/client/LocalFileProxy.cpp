@@ -109,7 +109,10 @@ void LocalFileProxy::getInfos() const {
  * destination is a local path. Otherwise it calls the DIET service.
  */
 template <class TypeOfOption>
-int LocalFileProxy::transferFile(const string& dest, const TypeOfOption& options, const std::string& serviceName) {
+int LocalFileProxy::transferFile(const string& dest, 
+                                 const TypeOfOption& options, 
+                                 const std::string& serviceName,
+                                 FileTransfer& fileTransfer) {
   
   string host = FileProxy::extHost(dest);
   string path = FileProxy::extName(dest);
@@ -124,6 +127,7 @@ int LocalFileProxy::transferFile(const string& dest, const TypeOfOption& options
   char* localUser = pw->pw_name;
 
   char *optionsToString = NULL; 
+  char *fileTransferInString = NULL;
 
   if (host=="localhost") {
     throw FMSVishnuException(ERRCODE_INVALID_PATH, "The local to local transfer is not available");
@@ -131,12 +135,15 @@ int LocalFileProxy::transferFile(const string& dest, const TypeOfOption& options
 
   diet_profile_t* profile;
   char* errMsg;
-
+  
   std::string sessionKey=this->getSession().getSessionKey();
 
-
-  profile = diet_profile_alloc(const_cast<char*>(serviceName.c_str()), 5, 5, 6);
-
+  bool isAsyncTransfer = (serviceName.compare("FileCopyAsync")==0 || serviceName.compare("FileMoveAsync")==0);
+  if(!isAsyncTransfer) { 
+    profile = diet_profile_alloc(const_cast<char*>(serviceName.c_str()), 5, 5, 6);
+  } else {
+    profile = diet_profile_alloc(const_cast<char*>(serviceName.c_str()), 5, 5, 7);
+  }
   
 
   if (ba::starts_with(getPath(),"/")  ){
@@ -166,28 +173,57 @@ int LocalFileProxy::transferFile(const string& dest, const TypeOfOption& options
 
   diet_string_set(diet_parameter(profile,5 ), optionsToString, DIET_VOLATILE);
 
-  diet_string_set(diet_parameter(profile, 6), NULL, DIET_VOLATILE);
+  if(!isAsyncTransfer) {
+    diet_string_set(diet_parameter(profile, 6), NULL, DIET_VOLATILE);
+  } else {
+    diet_string_set(diet_parameter(profile, 6), NULL, DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile, 7), NULL, DIET_VOLATILE); 
+  }
 
   if (diet_call(profile)) {
     raiseDietMsgException("Error calling DIET service");
   }
 
+  if(!isAsyncTransfer) {
   diet_string_get(diet_parameter(profile, 6), &errMsg, NULL);
   
   /*To raise a vishnu exception if the received message is not empty*/
   raiseExceptionIfNotEmptyMsg(errMsg);
-  
+  } else {
+    diet_string_get(diet_parameter(profile, 5), &fileTransferInString, NULL);
+    diet_string_get(diet_parameter(profile, 6), &errMsg, NULL);
+
+    /*To raise a vishnu exception if the received message is not empty*/
+    raiseExceptionIfNotEmptyMsg(errMsg);
+
+    FMS_Data::FileTransfer_ptr fileTransfer_ptr = NULL;
+
+    parseEmfObject(std::string(fileTransferInString), fileTransfer_ptr);
+
+    fileTransfer = *fileTransfer_ptr;
+
+  }
+
   return 0;
 }
 
 int LocalFileProxy::cp(const string& dest, const CpFileOptions& options) {
-
- return  transferFile(dest, options, "FileCopy");
+ FileTransfer fileTransfer; //empty fileTransfer info, the cp function not fills this object structure
+ return transferFile(dest, options, "FileCopy", fileTransfer);
 
 }
 
 int LocalFileProxy::mv(const string& dest, const CpFileOptions& options) {
-
- return  transferFile(dest, options, "FileMove");
+ FileTransfer fileTransfer; //empty fileTransfer info, the cp function not fills this object structure
+ return  transferFile(dest, options, "FileMove", fileTransfer);
 
 }
+
+int LocalFileProxy::cpAsync(const std::string& dest, const CpFileOptions& options, FileTransfer& fileTransfer) {
+  return transferFile(dest, options, "FileMoveAsync", fileTransfer);
+}
+
+int LocalFileProxy::mvAsync(const std::string& dest, const CpFileOptions& options, FileTransfer& fileTransfer) {
+  return transferFile(dest, options, "FileCopyAsync", fileTransfer);
+}
+
