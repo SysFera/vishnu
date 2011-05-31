@@ -269,6 +269,18 @@ ServerFMS::init(int vishnuId,
 
   diet_profile_desc_free(mprofile);
 
+  // List file transfer
+
+  mprofile = getFileTransfersListProfile();
+
+  if ( diet_service_table_add(mprofile, NULL, solveGetListOfFileTransfers)){
+
+    return 1;
+  }
+
+  diet_profile_desc_free(mprofile);
+
+
 
   return 0;
 }
