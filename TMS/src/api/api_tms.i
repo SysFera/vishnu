@@ -14,7 +14,15 @@
 #include "api_tms.hpp"
 %}
 
+// Keep in separated files and before includes, all module need their own eobject in java
+%include "ecore/EObject.hpp"
+%include "ecorecpp/mapping/type_traits.hpp"
+%include "ecorecpp/mapping/out_ptr.hpp"
+%include "ecorecpp/mapping/EList.hpp"
+%include "ecore_forward.hpp"
+
 %import "api_ums_include.i"
+
 
 // All EMF includes (same as in UMS_Data.hpp)
 %include "TMS_Data_forward.hpp"
@@ -31,9 +39,11 @@
 %include "TMS_Data/SubmitOptions.hpp"
 
 
+
 // Instantiate the template for all lists
 // the templates used within the list template must be instantiated first
  //%template(EListPtr) ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList< ::ecore::EObject > >;
+%template(EListPtr) ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList< ::ecore::EObject > >;
 %template(EJobList) ::ecorecpp::mapping::EList<::TMS_Data::Job>;
 %template(EProgressionList) ::ecorecpp::mapping::EList<::TMS_Data::Progression>;
 %template(EQueueList) ::ecorecpp::mapping::EList<::TMS_Data::Queue>;
