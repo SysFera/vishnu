@@ -493,7 +493,7 @@ FMSMapper::decodeStopFileTransfer(vector<int> separator, const string& msg){
   string u;
   res += (mmap.find(VISHNU_STOP_FILE_TRANSFER))->second;
   res+= " ";
-  u    = msg.substr(separator.at(1)+1);
+  u    = msg.substr(separator.at(0)+1);
   FMS_Data::StopTransferOptions_ptr ac = NULL;
 
   //To parse the object serialized
@@ -505,11 +505,11 @@ FMSMapper::decodeStopFileTransfer(vector<int> separator, const string& msg){
      res += " -i "+ac->getTransferId();
   }
 
-  if(ac->getTransferId().size()!=0) {
+  if(ac->getFromMachineId().size()!=0) {
      res += " -m "+ac->getFromMachineId();
   }
 
-  if(ac->getTransferId().size()!=0) {
+  if(ac->getUserId().size()!=0) {
      res += " -u "+ac->getUserId();
   }
 
@@ -523,7 +523,7 @@ FMSMapper::decodeListFileTransfers(vector<int> separator, const string& msg){
   string u;
   res += (mmap.find(VISHNU_LIST_FILE_TRANSFERS))->second;
   res+= " ";
-  u    = msg.substr(separator.at(1)+1);
+  u    = msg.substr(separator.at(0)+1);
   FMS_Data::LsTransferOptions_ptr ac = NULL;
 
   //To parse the object serialized
@@ -535,16 +535,16 @@ FMSMapper::decodeListFileTransfers(vector<int> separator, const string& msg){
      res += " -t "+ac->getTransferId();
   }
 
-  if(ac->getTransferId().size()!=0) {
+  if(ac->getFromMachineId().size()!=0) {
      res += " -m "+ac->getFromMachineId();
   }
 
-  if(ac->getTransferId().size()!=0) {
+  if(ac->getUserId().size()!=0) {
      res += " -u "+ac->getUserId();
   }
 
   if(ac->getStatus()!=-1) {
-     res += " -s "+ac->getStatus();
+     res += " -s "+convertToString((ac->getStatus()));
   }
 
   return res;

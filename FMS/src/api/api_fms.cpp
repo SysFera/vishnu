@@ -449,6 +449,10 @@ using namespace std;
 int vishnu::listFileTransfers(const string& sessionKey,FileTransferList& fileTransferList, const LsTransferOptions& options)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
+    if(options.getStatus() < -1 || options.getStatus() > 3) {
+      throw UserException(ERRCODE_INVALID_PARAM, "The file status option value is incorrect");
+    }
+
     std::string serviceName = "FileTransfersList";
 
     SessionProxy sessionProxy(sessionKey);

@@ -19,6 +19,29 @@
 
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespace
 
+
+/**
+ * \brief Function to convert a given date into correspondant long value
+ * \fn long long convertToTimeType(std::string date)
+ * \param date The date to convert
+ * \return The converted value
+ */
+long long 
+vishnu::convertToTimeType(std::string date) {
+  if(date.size()==0 || 
+     // For mysql, the empty date is 0000-00-00, not empty, need this test to avoid problem in ptime
+     date.find("0000-00-00")!=std::string::npos) {
+    return 0;
+  }
+  
+  boost::posix_time::ptime pt(time_from_string(date));
+  boost::posix_time::ptime epoch(boost::gregorian::date(1970,1,1));
+  time_duration::sec_type time = (pt - epoch).total_seconds();
+  
+  return (long long) time_t(time);
+}
+
+
 /**
 * \brief Function to convert a string to int
 * \param  val a value to convert to int
