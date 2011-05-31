@@ -269,6 +269,42 @@ ServerFMS::init(int vishnuId,
 
   diet_profile_desc_free(mprofile);
 
+// Asynchronous command area
+
+
+// CopyAsync Remote file
+
+  mprofile = getTransferRemoteFileAsyncProfile("RemoteFileCopyAsync");
+
+  if ( diet_service_table_add(mprofile, NULL, solveTransferRemoteFileAsync<File::copy>)){
+
+    return 1;
+  }
+
+  diet_profile_desc_free(mprofile);
+
+// MoveAsync file
+
+  mprofile = getTransferRemoteFileAsyncProfile("RemoteFileMoveAsync");
+
+  
+  if ( diet_service_table_add(mprofile, NULL, solveTransferRemoteFileAsync<File::move>)){
+
+    return 1;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
   // List file transfer
 
   mprofile = getFileTransfersListProfile();
