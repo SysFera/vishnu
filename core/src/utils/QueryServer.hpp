@@ -73,6 +73,14 @@ public:
   virtual std::string getCommandName() = 0;
 
   /**
+   * \brief Destructor, raises an exception on error
+   */
+  virtual ~QueryServer()
+  {
+  }
+
+protected:
+  /**
    * \brief Function to add sql resquest "and condition" to a given request
    * \fn void addOptionRequest(const std::string& name, const std::string& value, std::string& request)
    * \param name The column name of the data base table
@@ -92,12 +100,12 @@ public:
    * \param request the request
    */
   template <class T>
-  void addIntegerOptionRequest(const std::string& name, T& value, std::string& request) {
-    std::ostringstream osValue;
-    osValue << value;
-    request.append(" and "+name+"=");
-    request.append("'"+osValue.str()+"'");
-  }
+    void addIntegerOptionRequest(const std::string& name, T& value, std::string& request) {
+      std::ostringstream osValue;
+      osValue << value;
+      request.append(" and "+name+"=");
+      request.append("'"+osValue.str()+"'");
+    }
 
   /**
    * \brief Function to add sql resquest "and condition" which contain an integer value to a given request
@@ -108,12 +116,12 @@ public:
    * \param comp The where statement
    */
   template <class T>
-  void addTimeRequest(const std::string& name, T& value, std::string& request, std::string comp) {
-    std::ostringstream osValue;
-    osValue << value;
-    request.append(" and "+name+ " "+comp+" ");
-    request.append("'"+osValue.str()+"'");
-  }
+    void addTimeRequest(const std::string& name, T& value, std::string& request, std::string comp) {
+      std::ostringstream osValue;
+      osValue << value;
+      request.append(" and "+name+ " "+comp+" ");
+      request.append("'"+osValue.str()+"'");
+    }
 
   /**
    * \brief Function to add sql resquest "where condition" to a given request
@@ -135,12 +143,12 @@ public:
    * \param request the request
    */
   template <class T>
-  void addIntegerCondition(const std::string& name, T& value, std::string& request) {
-    std::ostringstream osValue;
-    osValue << value;
-    request.append(" where "+name+"=");
-    request.append("'"+osValue.str()+"'");
-  }
+    void addIntegerCondition(const std::string& name, T& value, std::string& request) {
+      std::ostringstream osValue;
+      osValue << value;
+      request.append(" where "+name+"=");
+      request.append("'"+osValue.str()+"'");
+    }
 
   /**
    * \brief Function to convert a given date into correspondant long value
@@ -149,15 +157,15 @@ public:
    * \return The converted value
    */
   long long convertToTimeType(std::string date) {
-      if(date.size()==0 || 
-	 // For mysql, the empty date is 0000-00-00, not empty, need this test to avoid problem in ptime
-	 date.find("0000-00-00")!=std::string::npos) {
-        return 0;
-      }
+    if(date.size()==0 || 
+        // For mysql, the empty date is 0000-00-00, not empty, need this test to avoid problem in ptime
+        date.find("0000-00-00")!=std::string::npos) {
+      return 0;
+    }
 
-      boost::posix_time::ptime pt(time_from_string(date));
-      boost::posix_time::ptime epoch(boost::gregorian::date(1970,1,1));
-      time_duration::sec_type time = (pt - epoch).total_seconds();
+    boost::posix_time::ptime pt(time_from_string(date));
+    boost::posix_time::ptime epoch(boost::gregorian::date(1970,1,1));
+    time_duration::sec_type time = (pt - epoch).total_seconds();
 
     return (long long) time_t(time);
 
@@ -173,7 +181,7 @@ public:
     std::string sqlUserRequest = "SELECT userid from users where userid='"+userId+"'";
     boost::scoped_ptr<DatabaseResult> user(mdatabaseVishnu->getResult(sqlUserRequest.c_str()));
     if(user->getNbTuples()==0) {
-       throw UMSVishnuException(ERRCODE_UNKNOWN_USERID);
+      throw UMSVishnuException(ERRCODE_UNKNOWN_USERID);
     }
   }
 
@@ -186,7 +194,7 @@ public:
     std::string sqlMachineRequest = "SELECT machineid from machine where machineid='"+machineId+"'";
     boost::scoped_ptr<DatabaseResult> machine(mdatabaseVishnu->getResult(sqlMachineRequest.c_str()));
     if(machine->getNbTuples()==0) {
-       throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE);
+      throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE);
     }
   }
 
@@ -199,7 +207,7 @@ public:
     std::string sqlclMachineRequest = "SELECT name from clmachine where name='"+clmachineId+"'";
     boost::scoped_ptr<DatabaseResult> clmachine(mdatabaseVishnu->getResult(sqlclMachineRequest.c_str()));
     if(clmachine->getNbTuples()==0) {
-       throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE);
+      throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE);
     }
   }
 
@@ -213,7 +221,7 @@ public:
     std::string sqlNameRequest = "SELECT description from optionu where description='"+name+"'";
     boost::scoped_ptr<DatabaseResult> nameResults(mdatabaseVishnu->getResult(sqlNameRequest.c_str()));
     if(nameResults->getNbTuples()==0) {
-       throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION);
+      throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION);
     }
   }
 
@@ -226,7 +234,7 @@ public:
     std::string sqlSessionRequest = "SELECT vsessionid from vsession where vsessionid='"+sessionId+"'";
     boost::scoped_ptr<DatabaseResult> session(mdatabaseVishnu->getResult(sqlSessionRequest.c_str()));
     if(session->getNbTuples()==0) {
-       throw UMSVishnuException(ERRCODE_UNKNOWN_SESSION_ID);
+      throw UMSVishnuException(ERRCODE_UNKNOWN_SESSION_ID);
     }
   }
 
@@ -236,9 +244,9 @@ public:
    * \param status The status to check
    */
   void checkStatus(const int& status) {
-     if((status < 0) || (status > 1)) {
-       throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION, "Invalid Status value: its value must be 0 or 1");
-     }
+    if((status < 0) || (status > 1)) {
+      throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION, "Invalid Status value: its value must be 0 or 1");
+    }
   }
 
   /**
@@ -247,9 +255,9 @@ public:
    * \param closePolicy The closePolicy value to check
    */
   void checkClosePolicy(const int& closePolicy) {
-      if((closePolicy < 0) || (closePolicy > 2)) {
-         throw UMSVishnuException(ERRCODE_UNKNOWN_CLOSURE_MODE, "Invalid ClosePolicy value: its value must be 0, 1 or 2");
-      }
+    if((closePolicy < 0) || (closePolicy > 2)) {
+      throw UMSVishnuException(ERRCODE_UNKNOWN_CLOSURE_MODE, "Invalid ClosePolicy value: its value must be 0, 1 or 2");
+    }
   }
 
 
@@ -258,33 +266,26 @@ public:
    * \param jobId the job identifier
    */
   void
-  checkJobId(std::string jobId) {
-    std::string sqlJobRequest = "SELECT numjobid from job where jobId='"+jobId+"'";
-    boost::scoped_ptr<DatabaseResult> result (mdatabaseVishnu->getResult(sqlJobRequest.c_str()));
-    if(result->getNbTuples() == 0) {
-       throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
+    checkJobId(std::string jobId) {
+      std::string sqlJobRequest = "SELECT numjobid from job where jobId='"+jobId+"'";
+      boost::scoped_ptr<DatabaseResult> result (mdatabaseVishnu->getResult(sqlJobRequest.c_str()));
+      if(result->getNbTuples() == 0) {
+        throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
+      }
     }
-  }
   /**
    * \brief Function to check if a given queue exists
    * \param queueName the name of the queue
    */
   void
-  checkQueueName(std::string queueName) {
-    std::string sqlJobRequest = "SELECT numjobid from job where jobQueue='"+queueName+"'";
-    boost::scoped_ptr<DatabaseResult> result (mdatabaseVishnu->getResult(sqlJobRequest.c_str()));
-    if(result->getNbTuples() == 0) {
-       throw UserException(ERRCODE_INVALID_PARAM, "This queue name is unknwon");
+    checkQueueName(std::string queueName) {
+      std::string sqlJobRequest = "SELECT numjobid from job where jobQueue='"+queueName+"'";
+      boost::scoped_ptr<DatabaseResult> result (mdatabaseVishnu->getResult(sqlJobRequest.c_str()));
+      if(result->getNbTuples() == 0) {
+        throw UserException(ERRCODE_INVALID_PARAM, "This queue name is unknwon");
+      }
     }
-  }
  
-  /**
-   * \brief Destructor, raises an exception on error
-   */
-  virtual ~QueryServer()
-  {
-  }
-
 protected:
 
   /////////////////////////////////
