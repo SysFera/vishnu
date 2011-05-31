@@ -27,6 +27,7 @@ File
 SSHFile
 FileFactory
 FileTransferCommand
+FileTransferServer
 ScpCommand
 RsyncCommand
 

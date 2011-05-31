@@ -350,4 +350,14 @@ solveGenerique(diet_profile_t* pb) {
   return 0;
 }
 
+// Asynchronous command area
+
+
+//template <File::TransferType transferType> int solveTransferAsyncRemoteFile(diet_profile_t* profile){
+
+
+//}
+
+
+
 #endif
