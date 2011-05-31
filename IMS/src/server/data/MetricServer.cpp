@@ -271,7 +271,7 @@ MetricServer::getHistMet(string machineId){
 	IMS_Data::Metric_ptr met = ecoreFactory->createMetric();
 	met->setType(1);
 	met->setValue(convertToInt(*(iter+4)));
-	met->setTime(convertToInt(*(iter+5)));
+	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+5))));
 	mlistObject->getMetric().push_back(met);
       }
       break;
@@ -283,7 +283,7 @@ MetricServer::getHistMet(string machineId){
 	IMS_Data::Metric_ptr met = ecoreFactory->createMetric();
 	met->setType(3);
 	met->setValue(convertToInt(*(iter+3)));
-	met->setTime(convertToInt(*(iter+5)));
+	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+5))));
 	mlistObject->getMetric().push_back(met);
       }
       break;
@@ -295,7 +295,7 @@ MetricServer::getHistMet(string machineId){
 	IMS_Data::Metric_ptr met = ecoreFactory->createMetric();
 	met->setType(5);
 	met->setValue(convertToInt(*(iter+2)));
-	met->setTime(convertToInt(*(iter+5)));
+	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+5))));
 	mlistObject->getMetric().push_back(met);
       }
       break;
@@ -307,17 +307,17 @@ MetricServer::getHistMet(string machineId){
 	IMS_Data::Metric_ptr met = ecoreFactory->createMetric();
 	met->setType(5);
 	met->setValue(convertToInt(*(iter+2)));
-	met->setTime(convertToInt(*(iter+5)));
+	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+5))));
 	mlistObject->getMetric().push_back(met);
 	met = ecoreFactory->createMetric();
 	met->setType(3);
 	met->setValue(convertToInt(*(iter+3)));
-	met->setTime(convertToInt(*(iter+5)));
+	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+5))));
 	mlistObject->getMetric().push_back(met);
 	met = ecoreFactory->createMetric();
 	met->setType(1);
 	met->setValue(convertToInt(*(iter+4)));
-	met->setTime(convertToInt(*(iter+5)));
+	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+5))));
 	mlistObject->getMetric().push_back(met);
       }
       break;
