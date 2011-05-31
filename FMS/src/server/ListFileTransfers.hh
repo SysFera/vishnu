@@ -86,7 +86,7 @@ public:
   FMS_Data::FileTransferList*
     list() {
       std::string sqlListOfFiles = "SELECT vsessionid, transferId, status, userId, clientMachineId, sourceMachineId, "
-        "destinationMachineId, sourceFilePath, destinationFilePath, size, startTime, "
+        "destinationMachineId, sourceFilePath, destinationFilePath, fileSize, startTime, "
         " trCommand, processId from fileTransfer, vsession "
           "where vsession.numsessionid=fileTransfer.vsession_numsessionid and status > 0";
 
