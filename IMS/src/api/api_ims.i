@@ -14,7 +14,15 @@
 #include "api_ims.hpp"
 %}
 
-%import "api_ums.i"
+// Keep in separated files and before includes, all module need their own eobject in java
+%include "ecore/EObject.hpp"
+%include "ecorecpp/mapping/type_traits.hpp"
+%include "ecorecpp/mapping/out_ptr.hpp"
+%include "ecorecpp/mapping/EList.hpp"
+%include "ecore_forward.hpp"
+
+%import "api_ums_include.i"
+
 
 // All EMF includes (same as in IMS_Data.hpp)
 %include "IMS_Data_forward.hpp"
@@ -34,8 +42,10 @@
 %include "IMS_Data/Threshold.hpp"
 %include "IMS_Data/ThresholdOp.hpp"
 
+
 // Instantiate the template for all lists
 // the templates used within the list template must be instantiated first
+%template(EListPtr) ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList< ::ecore::EObject > >;
 %template(EMetricList) ::ecorecpp::mapping::EList<::IMS_Data::Metric>;
 %template(EProcessesList) ::ecorecpp::mapping::EList<::IMS_Data::Process>;
 %template(ESysInfoList) ::ecorecpp::mapping::EList<::IMS_Data::SystemInfo>;

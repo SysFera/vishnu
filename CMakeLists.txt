@@ -248,6 +248,7 @@ if (BUILD_TESTING)
   set( TEST_WORKING_DIR ${PROJECT_BINARY_DIR}/test_files CACHE PATH "Tests working directory")
   set( TEST_LOCAL_HOSTNAME "localhost" CACHE STRING " local hostname used for tests")
   set( TEST_DISTANT_HOSTNAME "distantHostname" CACHE STRING " distant hostname used for tests")
+  set( TEST_OMNINAMES_CFG_IP "127.0.0.1" CACHE STRING " The omniorb cfg ip for tests")
 
   mark_as_advanced(TEST_DB_TYPE)
   mark_as_advanced(TEST_DB_HOST)
@@ -264,6 +265,7 @@ if (BUILD_TESTING)
   mark_as_advanced(TEST_BATCH_SERVER_HOSTNAME)
   mark_as_advanced(TEST_LOCAL_HOSTNAME)
   mark_as_advanced(TEST_DISTANT_HOSTNAME)
+  mark_as_advanced(TEST_OMNINAMES_CFG_IP)
 
   # Common directories for tests
   set( TEST_SQL_PATH "${PROJECT_BINARY_DIR}/test_files/sql" CACHE STRING "Contains SQL for tests")
