@@ -66,6 +66,14 @@ namespace vishnu {
   }
 
   /**
+   * \brief Function to convert a given date into correspondant long value
+   * \fn long long convertToTimeType(std::string date)
+   * \param date The date to convert
+   * \return The converted value
+   */
+  long long convertToTimeType(std::string date);
+
+  /**
   * \brief Function to convert a string to int
   * \param  val a value to convert to int
   * \return int value of the corresponding string
