@@ -2,7 +2,7 @@
  * \file ListFileTransfers.hpp
  * \brief This file contains the VISHNU ListFileTransfers class.
  * \author Daouda Traore (daouda.traore@sysfera.com) and
- *   Eugène Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ *   Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  * \date May 2011
  */
 #ifndef _LIST_FILE_TRANSFERS_SERVER_
@@ -52,28 +52,45 @@ public:
   void
   processOptions(const FMS_Data::LsTransferOptions_ptr& options, std::string& sqlRequest) {
 
+    bool onlyProgressFile = true;
+
     //To check if the transferId is defined
     if (options->getTransferId().size() != 0) {
+      //To check the transfer Id
+      checkTransferId(options->getTransferId());
       //To add the transferId on the request
       addOptionRequest("transferId", options->getTransferId(), sqlRequest);
+      onlyProgressFile = false;
     }
 
     //To check if the fromMachineId is defined
     if (options->getFromMachineId().size() != 0) {
+      //To check the client machine Id
+      checkClientMachineName(options->getFromMachineId());
       //To add the fromMachineId on the request
-      addOptionRequest("fromMachineId", options->getFromMachineId(), sqlRequest);
+      addOptionRequest("clientMachineId", options->getFromMachineId(), sqlRequest);
+      onlyProgressFile = false;
     }
 
     //To check if the userId is defined
     if (options->getUserId().size() != 0) {
+      //To check the user Id
+      checkUserId(options->getUserId());
       //To add the userId on the request
       addOptionRequest("userId", options->getUserId(), sqlRequest);
+      onlyProgressFile = false;
     }
 
     //To check the file transfer status
     if (options->getStatus() != -1) {
+      //To check the file status
+      checkStatus(options->getStatus());
       //To add the status on the request
       addOptionRequest("status", convertToString(options->getStatus()), sqlRequest);
+    } else {
+      if(onlyProgressFile) {
+        addOptionRequest("status", "0", sqlRequest);
+      }
     }
 
   }
@@ -85,10 +102,10 @@ public:
    */
   FMS_Data::FileTransferList*
     list() {
-      std::string sqlListOfFiles = "SELECT vsessionid, transferId, status, userId, clientMachineId, sourceMachineId, "
+      std::string sqlListOfFiles = "SELECT transferId, fileTransfer.status, userId, clientMachineId, sourceMachineId, "
         "destinationMachineId, sourceFilePath, destinationFilePath, fileSize, startTime, "
         " trCommand, processId from fileTransfer, vsession "
-          "where vsession.numsessionid=fileTransfer.vsession_numsessionid and status > 0";
+          "where vsession.numsessionid=fileTransfer.vsession_numsessionid";
 
       std::vector<std::string>::iterator iter;
       std::vector<std::string> results;
@@ -113,6 +130,7 @@ public:
 
           FMS_Data::FileTransfer_ptr filetransfer = ecoreFactory->createFileTransfer();
 
+          
           filetransfer->setTransferId(*iter);
           filetransfer->setStatus(convertToInt(*(++iter)));
           filetransfer->setUserId(*(++iter));
@@ -123,17 +141,17 @@ public:
           filetransfer->setDestinationFilePath(*(++iter));
           filetransfer->setSize(convertToInt(*(++iter)));
           //convert the endDate into UTC date
-          startTime = convertLocaltimeINUTCtime(convertToTimeType(*(++iter))); 
+          std::string tmpTime = *(++iter);
+          startTime = convertLocaltimeINUTCtime(convertToTimeType(tmpTime)); 
           filetransfer->setStart_time(startTime);
           filetransfer->setTrCommand(convertToInt(*(++iter)));
-
+          
           mlistObject->getFileTransfers().push_back(filetransfer);
         }
       }
 
       return mlistObject;
     }
-
 
   /**
    * \brief Function to get the name of the ListFileTransfers command line
@@ -151,7 +169,30 @@ public:
   {
   }
 
-  private:
+private:
+
+  /**
+   * \brief Function to check if a given transfer identifier exists
+   * \param transferId the file transfer identifier
+   */
+  void checkTransferId(std::string transferId) {
+    std::string sqlTransferRequest = "SELECT transferId from fileTransfer where transferId='"+transferId+"'";
+    boost::scoped_ptr<DatabaseResult> transfer(mdatabaseVishnu->getResult(sqlTransferRequest.c_str()));
+    if(transfer->getNbTuples()==0) {
+      throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer identifier");;
+    }
+  }
+
+  /**
+   * \brief Function to check the file transfer status
+   * \param status the file transfer status
+   */
+  void checkStatus(int status) {
+      
+    if(status < 0 || status > 3) {
+      throw UserException(ERRCODE_INVALID_PARAM, "The file status option value is incorrect");
+    }
+  }
 
   /////////////////////////////////
   // Attributes

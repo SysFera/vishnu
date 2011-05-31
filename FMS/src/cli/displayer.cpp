@@ -377,7 +377,8 @@ operator<<(std::ostream& os, FileTransfer& fileTransfer) {
  os << setw(maxSize) << right << "clientMachineId: " << fileTransfer.getClientMachineId()   << std::endl;
  os << setw(maxSize) << right << "sourceMachineId: " << fileTransfer.getSourceMachineId()   << std::endl;
  os << setw(maxSize) << right << "destinationMachineId: " << fileTransfer.getDestinationMachineId()   << std::endl;
- os << setw(maxSize) << right << "destinationFilePath: " << fileTransfer.getTransferId()   << std::endl;
+ os << setw(maxSize) << right << "sourceFilePath: " << fileTransfer.getSourceFilePath()   << std::endl;
+ os << setw(maxSize) << right << "destinationFilePath: " << fileTransfer.getDestinationFilePath()   << std::endl;
  os << setw(maxSize) << right << "size: " << fileTransfer.getSize()   << std::endl;
  boost::posix_time::ptime pt;
  pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(fileTransfer.getStart_time()));
