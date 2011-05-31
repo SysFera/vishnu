@@ -103,7 +103,9 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/IMS_Data/ListSysInfo.hpp DESTINATION i
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${EMF4CPP_INCLUDE_DIR})
 
-add_library(emf4cpp-IMS_Data STATIC ${IMS_Data_HEADERS} ${IMS_Data_SOURCES})
+add_library(emf4cpp-IMS_Data SHARED  ${IMS_Data_HEADERS} ${IMS_Data_SOURCES})
 set_target_properties(emf4cpp-IMS_Data PROPERTIES COMPILE_FLAGS "-fPIC")
 target_link_libraries(emf4cpp-IMS_Data emf4cpp-ecore emf4cpp-ecorecpp)
 set_target_properties(emf4cpp-IMS_Data PROPERTIES VERSION 0.0.1 SOVERSION 1)
+
+install(TARGETS emf4cpp-IMS_Data DESTINATION lib)
