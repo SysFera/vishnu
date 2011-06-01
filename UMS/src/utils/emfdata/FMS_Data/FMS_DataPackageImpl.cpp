@@ -494,7 +494,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_FileStat__ctime->setOrdered(true);
     m_FileStat__type->setEType(m_FileTypeEEnum);
     m_FileStat__type->setName("type");
-    m_FileStat__type->setDefaultValueLiteral("");
+    m_FileStat__type->setDefaultValueLiteral("6");
     m_FileStat__type->setLowerBound(0);
     m_FileStat__type->setUpperBound(1);
     m_FileStat__type->setTransient(false);
@@ -727,7 +727,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_FileTransfer__transferId->setOrdered(true);
     m_FileTransfer__status->setEType(m_StatusEEnum);
     m_FileTransfer__status->setName("status");
-    m_FileTransfer__status->setDefaultValueLiteral("");
+    m_FileTransfer__status->setDefaultValueLiteral("-1");
     m_FileTransfer__status->setLowerBound(0);
     m_FileTransfer__status->setUpperBound(1);
     m_FileTransfer__status->setTransient(false);
@@ -839,7 +839,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_FileTransfer__start_time->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_FileTransfer__start_time->setName("start_time");
-    m_FileTransfer__start_time->setDefaultValueLiteral("");
+    m_FileTransfer__start_time->setDefaultValueLiteral("0");
     m_FileTransfer__start_time->setLowerBound(0);
     m_FileTransfer__start_time->setUpperBound(1);
     m_FileTransfer__start_time->setTransient(false);
@@ -852,7 +852,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_FileTransfer__start_time->setOrdered(true);
     m_FileTransfer__trCommand->setEType(m_TransferCommandEEnum);
     m_FileTransfer__trCommand->setName("trCommand");
-    m_FileTransfer__trCommand->setDefaultValueLiteral("");
+    m_FileTransfer__trCommand->setDefaultValueLiteral("-1");
     m_FileTransfer__trCommand->setLowerBound(0);
     m_FileTransfer__trCommand->setUpperBound(1);
     m_FileTransfer__trCommand->setTransient(false);
