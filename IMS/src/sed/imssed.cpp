@@ -12,6 +12,9 @@
 
 #include <boost/thread.hpp>
 
+#include <sys/types.h>
+#include <signal.h>
+
 using namespace vishnu;
 using namespace boost;
 /**
@@ -101,16 +104,17 @@ int main(int argc, char* argv[], char* envp[]) {
 
   // Initialize the DIET SeD
   if (!res) {
-    cout << "*****************************Printing services ! " << endl;
     diet_print_service_table();
     res = diet_SeD(dietConfigFile.c_str(), argc, argv);
+    pid_t pid = getpid();
+    kill(pid, SIGINT);
   } else {
     std::cerr << "There was a problem during services initialization" << std::endl;
     exit(1);
   }
+  // To avoid quitting to fast in case of problems
   while(1){
     sleep(1000);
   }
-
   return res;
 }
