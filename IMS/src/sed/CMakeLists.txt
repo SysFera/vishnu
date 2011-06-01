@@ -38,21 +38,5 @@ target_link_libraries(imssed
   ims-server
 )
 
-add_library(ims-sed
-  ServerIMS.cpp
-  internalApiIMS.cpp
-)
-SET_TARGET_PROPERTIES(ims-sed PROPERTIES COMPILE_FLAGS "-fPIC")
-
-target_link_libraries(ims-sed
-  ${DIET_SERVER_LIBRARIES}
-  ${Boost_LIBRARIES}
-  register-vishnu
-  exception-vishnu
-  database-vishnu
-  ims-server
-)
-
-install(TARGETS ims-sed DESTINATION lib)
 install(TARGETS imssed DESTINATION sbin)
 
