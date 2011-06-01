@@ -14,6 +14,7 @@
 // this includes the typemaps for STL strings
 %include "std_string.i"
 %include "std_except.i"
+%include "std_vector.i"
 
 // Keep in separated files and before includes, all module need their own eobject in java
 %include "ecore/EObject.hpp"
@@ -78,20 +79,37 @@
 %include "IMS_Data/Threshold.hpp"
 %include "IMS_Data/ThresholdOp.hpp"
 
+// All EMF includes (same as in FMS_Data.hpp)
+%include "FMS_Data_forward.hpp"
+%include "FMS_Data/CpFileOptions.hpp"
+%include "FMS_Data/FileStat.hpp"
+%include "FMS_Data/FileStatList.hpp"
+%include "FMS_Data/FileTransfer.hpp"
+%include "FMS_Data/FileTransferList.hpp"
+%include "FMS_Data/HeadOfFileOptions.hpp"
+%include "FMS_Data/LsDirOptions.hpp"
+%include "FMS_Data/LsTransferOptions.hpp"
+%include "FMS_Data/StopTransferOptions.hpp"
+%include "FMS_Data/StringList.hpp"
+%include "FMS_Data/TailOfFileOptions.hpp"
+
 %{
 #define SWIG_FILE_WITH_INIT
 #include "UMS_Data.hpp"
 #include "TMS_Data.hpp"
 #include "IMS_Data.hpp"
+#include "FMS_Data.hpp"
 #include "VishnuException.hpp"
 #include "UserException.hpp"
 #include "SystemException.hpp"
 #include "UMSVishnuException.hpp"
 #include "TMSVishnuException.hpp"
 #include "IMSVishnuException.hpp"
+#include "FMSVishnuException.hpp"
 #include "api_ums.hpp"
 #include "api_tms.hpp"
 #include "api_ims.hpp"
+#include "api_fms.hpp"
 %}
 
 
@@ -115,6 +133,10 @@
 %template(EProcessesList) ::ecorecpp::mapping::EList<::IMS_Data::Process>;
 %template(ESysInfoList) ::ecorecpp::mapping::EList<::IMS_Data::SystemInfo>;
 %template(EThresholdList) ::ecorecpp::mapping::EList<::IMS_Data::Threshold>;
+
+%template(EFileTransferList) ::ecorecpp::mapping::EList<::FMS_Data::FileTransfer>;
+%template(EFileStatList) ::ecorecpp::mapping::EList<::FMS_Data::FileStat>;
+%template(EStringList) std::vector< ::ecore::EString >;
 
 
 #ifdef SWIGPYTHON
@@ -287,3 +309,62 @@
 #endif
 
 %include "api_ims.hpp"
+
+
+#ifdef SWIGPYTHON
+
+// Add the output parameters to the result
+%typemap(argout) std::string& info {
+  PyObject *o = PyString_FromString($1);
+  $result = SWIG_Python_AppendOutput($result, o);
+}
+
+#endif
+
+
+#ifdef SWIGJAVA
+
+// Exception rule for system exception
+%typemap (throws) SystemException{
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/fms/internal/InternalFMSException");
+    std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
+    if (clazz) {
+      jenv->ThrowNew(clazz, ret.c_str());
+    }
+    return $null;
+ }
+
+// Exception rule for user exception
+%typemap (throws) UserException{
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/fms/internal/InternalFMSException");
+    std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
+    if (clazz) {
+      jenv->ThrowNew(clazz, ret.c_str());
+    }
+    return $null;
+ }
+// Exception rule for user exception
+%typemap (throws) FMSVishnuException{
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/fms/internal/InternalFMSException");
+    std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
+    if (clazz) {
+      jenv->ThrowNew(clazz, ret.c_str());
+    }
+    return $null;
+ }
+// Exception rule for user exception
+%typemap (throws) UMSVishnuException{
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/fms/internal/InternalFMSException");
+    std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
+    if (clazz) {
+      jenv->ThrowNew(clazz, ret.c_str());
+    }
+    return $null;
+ }
+
+// Add throw to method declaration
+%javaexception ("InternalFMSException") { $action }
+
+#endif
+
+%include "api_fms.hpp"
