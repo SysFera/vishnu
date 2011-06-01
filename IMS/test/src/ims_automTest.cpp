@@ -1001,7 +1001,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     int ret =-1;
     try {
       //To launched UMS sed on distant machine
-      string cmd = " ssh "+ string(IMSDISTANTHOSTNAME) +" \""+  string(IMSPATHDISTANTUMSSED) + " "
+      string cmd = " ssh "+ string(IMSDISTANTHOSTNAME) +" \" source ~/.bashrc ; "+  string(IMSPATHDISTANTUMSSED) + " "
                   + string(IMSPATHCONFIGDISTANTUMSSED)+ "\" &";//1>/dev/null 2>>test.log &";
       BOOST_MESSAGE ("cmd:" << cmd);
       ret = system(cmd.c_str());
