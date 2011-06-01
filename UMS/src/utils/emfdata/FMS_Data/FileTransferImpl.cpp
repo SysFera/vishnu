@@ -209,8 +209,7 @@ void FileTransfer::eSet(::ecore::EInt _featureID,
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_transferId);
     case ::FMS_Data::FMS_DataPackage::FILETRANSFER__STATUS:
-        return ::ecorecpp::mapping::set_traits< ::FMS_Data::Status >::is_set(
-                m_status);
+        return m_status != -1;
     case ::FMS_Data::FMS_DataPackage::FILETRANSFER__USERID:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_userId);
@@ -232,11 +231,9 @@ void FileTransfer::eSet(::ecore::EInt _featureID,
     case ::FMS_Data::FMS_DataPackage::FILETRANSFER__SIZE:
         return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(m_size);
     case ::FMS_Data::FMS_DataPackage::FILETRANSFER__START_TIME:
-        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(
-                m_start_time);
+        return m_start_time != 0;
     case ::FMS_Data::FMS_DataPackage::FILETRANSFER__TRCOMMAND:
-        return ::ecorecpp::mapping::set_traits< ::FMS_Data::TransferCommand >::is_set(
-                m_trCommand);
+        return m_trCommand != -1;
 
     }
     throw "Error";
