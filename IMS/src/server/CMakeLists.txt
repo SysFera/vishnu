@@ -1,7 +1,6 @@
 
 link_directories(
  ${VISHNU_EXCEPTION_INCLUDE_DIR}
-
  ${Boost_LIBRARY_DIRS}
 )
 
