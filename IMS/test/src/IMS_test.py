@@ -1,4 +1,5 @@
 
+import VISHNU
 import VISHNU_UMS
 import VISHNU_IMS
 
@@ -12,17 +13,24 @@ def displayProc(lip):
 VISHNU_UMS.vishnuInitialize("/home/keo/Bureau/client.cfg")
 
 mid = "machine_1"
-pop = VISHNU_IMS.ProcessOp()
-lip = VISHNU_IMS.ListProcesses()
-lic = VISHNU_IMS.ListMetric()
-opc = VISHNU_IMS.CurMetricOp()
-lih = VISHNU_IMS.ListMetric()
-oph = VISHNU_IMS.MetricHistOp()
+pop = VISHNU.ProcessOp()
+lip = VISHNU.ListProcesses()
+lic = VISHNU.ListMetric()
+opc = VISHNU.CurMetricOp()
+lih = VISHNU.ListMetric()
+oph = VISHNU.MetricHistOp()
 
-r, k = VISHNU_UMS.connect("root", "vishnu_user")
-VISHNU_IMS.getMetricHistory(k, mid, lih, oph)
-VISHNU_IMS.getMetricCurrentValue(k, mid, lic, opc)
-VISHNU_IMS.getProcesses(k, lip, pop)
+r, k = VISHNU.connect("root", "vishnu_user")
+try :
+  VISHNU.getMetricHistory(k, mid, lih, oph)
+except VISHNU_IMS.IMSVishnuException, e:
+    print e.what()
+except VISHNU_UMS.UMSVishnuException, e:
+  print e.what()
+except VISHNU_UMS.SystemException, e:
+  print e.what()
+VISHNU.getMetricCurrentValue(k, mid, lic, opc)
+VISHNU.getProcesses(k, lip, pop)
 
 try :
   VISHNU_IMS.getMetricCurrentValue(k, "toto", lic, opc)
