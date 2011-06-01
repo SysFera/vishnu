@@ -10,6 +10,8 @@
 #include <boost/thread.hpp>
 #include "DbFactory.hpp"
 #include "SessionServer.hpp"
+#include "SSHFile.hh"
+
 class FileTransferServer{
 
   public:
@@ -25,7 +27,8 @@ class FileTransferServer{
                    const int& vishnuId);
 
 
-    int addCpThread();
+
+    int addCpThread(const SSHFile& file,const std::string& dest, const FMS_Data::CpFileOptions& options);
     int  addMvThread();
     int addCpAsyncThread();
     int  addMvAsyncThread();
@@ -37,14 +40,17 @@ class FileTransferServer{
 
   private:
 
- boost::thread mthread;
- SessionServer msessionServer;
- void wait ();
-void getUserInfo(std::string& name, std::string& userId); 
-int mvishnuId;
-int insertIntoDatabase();
-mutable FMS_Data::FileTransfer mfileTransfer;
-Database *mdatabaseVishnu;
+    boost::thread mthread;
+    SessionServer msessionServer;
+    void wait ();
+    void getUserInfo(std::string& name, std::string& userId); 
+    void copy(const SSHFile& file,const std::string& dest, const FMS_Data::CpFileOptions& options);
+    int mvishnuId;
+    int insertIntoDatabase(int processId=-1);
+    void updateData();
+    
+    mutable FMS_Data::FileTransfer mfileTransfer;
+    Database *mdatabaseVishnu;
 };
 
 #endif

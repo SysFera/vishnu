@@ -225,8 +225,7 @@ void FileStat::eSet(::ecore::EInt _featureID,
         return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(
                 m_ctime);
     case ::FMS_Data::FMS_DataPackage::FILESTAT__TYPE:
-        return ::ecorecpp::mapping::set_traits< ::FMS_Data::FileType >::is_set(
-                m_type);
+        return m_type != 6;
 
     }
     throw "Error";
