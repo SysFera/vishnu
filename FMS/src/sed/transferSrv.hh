@@ -13,6 +13,7 @@
 #include "UserServer.hpp"
 #include "MachineServer.hpp"
 #include <boost/scoped_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 #include "ServerFMS.hpp"
 #include "FMSMapper.hpp"
 #include "ListFileTransfers.hh"
@@ -460,32 +461,49 @@ template <File::TransferType transferType> int solveTransferRemoteFileAsync(diet
     std::ostringstream destCompletePath;
     destCompletePath << destUserLogin << "@"<<destMachineName <<":"<<destPath;
     std::cout << "destCompletePath " <<destCompletePath.str() << "\n";
-   
- int vishnuId=ServerFMS::getInstance()->getVishnuId(); 
+
+    int vishnuId=ServerFMS::getInstance()->getVishnuId(); 
 
     FileTransferServer fileTransferServer(sessionServer, srcHost, destHost, srcPath, destPath,vishnuId);
 
-
-    
     if(transferType==File::copy){
-      fileTransferServer.addCpThread();
+      fileTransferServer.addCpThread(*(static_cast<SSHFile*>(file.get())),destCompletePath.str(),*options_ptr);
     }
 
     if (transferType==File::move){
-      
-     fileTransferServer.addMvThread();
+
+      fileTransferServer.addMvThread();
     }
 
-    FMS_Data::FileTransfer_ptr fileTransfer=new FMS_Data::FileTransfer();
-      *fileTransfer= fileTransferServer.getFileTransfer();
-   
-   const char* name = "fileTransfer";
-    ::ecorecpp::serializer::serializer _ser(name);
+    FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
+
+    FMS_Data::FileTransfer_ptr fileTransfer=ecoreFactory->createFileTransfer();
     
+    *fileTransfer= fileTransferServer.getFileTransfer();
+
+    std::cout <<"*********** affichage de fileTransfer ******************\n" ;
+
+    std::cout << "fileTransfer->getStatus()" <<fileTransfer->getStatus() << "\n";
+    std::cout << "fileTransfer->getSize()" <<fileTransfer->getSize() << "\n";
+    std::cout << "fileTransfer->getTrComand()" <<fileTransfer->getTrCommand() << "\n";
+    std::cout << "fileTransfer->getTransferId()" <<fileTransfer->getTransferId() << "\n";
+    std::cout << "fileTransfer->getClientMachineId()" <<fileTransfer->getClientMachineId() << "\n";
+    std::cout << "fileTransfer->getUserId()" <<fileTransfer->getUserId() << "\n";
+    std::cout << "fileTransfer->getSourceMachineId()" <<fileTransfer->getSourceMachineId() << "\n";
+    std::cout << "fileTransfer->getDestinationMachineId()" <<fileTransfer->getDestinationMachineId() << "\n";
+    std::cout << "fileTransfer->getSourceFilePath()" <<fileTransfer-> getSourceFilePath()<< "\n";
+    std::cout << "fileTransfer->getDestinationFilePath()" <<fileTransfer->getDestinationFilePath() << "\n";
+    std::cout << "fileTransfer->getStart_time()" <<fileTransfer->getStart_time() << "\n";
+
+
+    const char* name = "fileTransfer";
+    ::ecorecpp::serializer::serializer _ser(name);
+
     fileTransferSerialized =  _ser.serialize(const_cast<FMS_Data::FileTransfer_ptr>(fileTransfer));
 
+      std::cout << "Coucou  apres serialize \n";
     delete fileTransfer;
-   
+
     //To register the command
     sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
  
