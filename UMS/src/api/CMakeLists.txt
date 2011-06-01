@@ -15,6 +15,7 @@ INCLUDE_DIRECTORIES(
   ${Boost_INCLUDE_DIRS}
   ${TMS_API_SOURCE_DIR}
   ${IMS_API_SOURCE_DIR}
+  ${FMS_API_SOURCE_DIR}
   ${TMS_EMF_DATA_DIR}
   ${TMS_DATA_DIR}
   ${IMS_UTIL_DIR}
@@ -22,6 +23,9 @@ INCLUDE_DIRECTORIES(
   ${IMS_EMF_DATA_DIR}
   ${IMS_DATA_DIR}
   ${IMS_CLIENT_PROXY_SOURCE_DIR}
+  ${FMS_EMF_DATA_DIR}
+  ${FMS_DATA_DIR}
+  ${FMS_CLIENT_PROXY_SOURCE_DIR}
 )
 
 ADD_LIBRARY(vishnu-ums-api api_ums.cpp)
@@ -77,19 +81,19 @@ SET(CMAKE_SWIG_FLAGS "-w362,389")
 ## PYTHON MODULE
 #The module name must match the %module declaration in the interface file
 if(ENABLE_PYTHON)
-SWIG_ADD_MODULE(VISHNU python vishnu.i api_ums.cpp   ${TMS_API_SOURCE_DIR}/api_tms.cpp ${IMS_API_SOURCE_DIR}/api_ims.cpp)
+SWIG_ADD_MODULE(VISHNU python vishnu.i api_ums.cpp   ${TMS_API_SOURCE_DIR}/api_tms.cpp ${IMS_API_SOURCE_DIR}/api_ims.cpp ${FMS_API_SOURCE_DIR}/api_fms.cpp)
 SET_TARGET_PROPERTIES(${SWIG_MODULE_VISHNU_REAL_NAME} PROPERTIES COMPILE_FLAGS "-fPIC")
-SWIG_LINK_LIBRARIES(VISHNU ${PYTHON_LIBRARIES} ${DIET_CLIENT_LIB} vishnu-ums-api vishnu-tms-api vishnu-ims-api exception-vishnu)
+SWIG_LINK_LIBRARIES(VISHNU ${PYTHON_LIBRARIES} ${DIET_CLIENT_LIB} vishnu-ums-api vishnu-tms-api vishnu-ims-api vishnu-fms-api exception-vishnu)
 INSTALL( TARGETS ${SWIG_MODULE_VISHNU_REAL_NAME} DESTINATION lib )
 endif(ENABLE_PYTHON)
 
 ## JAVA MODULE
 if(ENABLE_JAVA)
 SET(CMAKE_SWIG_FLAGS "-w503" "-package" "com.sysfera.vishnu.api.vishnu.internal")
-SWIG_ADD_MODULE(VISHNU java vishnu.i api_ums.cpp ${TMS_API_SOURCE_DIR}/api_tms.cpp ${IMS_API_SOURCE_DIR}/api_ims.cpp)
+SWIG_ADD_MODULE(VISHNU java vishnu.i api_ums.cpp ${TMS_API_SOURCE_DIR}/api_tms.cpp ${IMS_API_SOURCE_DIR}/api_ims.cpp ${FMS_API_SOURCE_DIR}/api_fms.cpp)
 SET_TARGET_PROPERTIES(${SWIG_MODULE_VISHNU_REAL_NAME} PROPERTIES COMPILE_FLAGS "-fPIC")
 
-SWIG_LINK_LIBRARIES(VISHNU ${JAVA_LIBRARIES} ${DIET_CLIENT_LIB} vishnu-ums-api vishnu-tms-api vishnu-ims-api exception-vishnu)
+SWIG_LINK_LIBRARIES(VISHNU ${JAVA_LIBRARIES} ${DIET_CLIENT_LIB} vishnu-ums-api vishnu-tms-api vishnu-ims-api vishnu-fms-api exception-vishnu)
 INSTALL( TARGETS ${SWIG_MODULE_VISHNU_REAL_NAME} DESTINATION lib )
 endif(ENABLE_JAVA)
 
