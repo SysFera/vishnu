@@ -1004,11 +1004,12 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       //string cmd = " export OMNIORB_CONFIG=/home/hudson/workspace/IMS1/build/test_files/cfg/omniORB4_testing.cfg ; ssh "+ string(IMSDISTANTHOSTNAME) +" \""+  string(IMSPATHDISTANTUMSSED) + " "
       //            + string(IMSPATHCONFIGDISTANTUMSSED)+ "\" &";//1>/dev/null 2>>test.log &";
 
-      string cmd = " ssh "+ string(IMSDISTANTHOSTNAME) +" \" source "+  string(IMSPATHDISTANTUMSSED) + " \" &";
+      string cmd = " ssh "+ string(IMSDISTANTHOSTNAME) +" \" source "+  string(IMSPATHDISTANTUMSSED) + " \"  1>/dev/null 2>>test.log &";
                   //+ string(IMSPATHCONFIGDISTANTUMSSED)+ "\" &";//1>/dev/null 2>>test.log &";
 
       BOOST_MESSAGE ("cmd:" << cmd);
       ret = system(cmd.c_str());
+      sleep(5);
       BOOST_REQUIRE(ret != -1);
       BOOST_CHECK_EQUAL(getProcesses(sessionKey, listProcess, op),0  );
       BOOST_REQUIRE(listProcess.getProcess().size() != 0);
@@ -1036,6 +1037,14 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
           umssedFound = true;
         }
       }
+
+      //To clean the distant umssed if the previous function stop failed
+      if (umssedFound) {
+        string cmd = " ssh "+ string(IMSDISTANTHOSTNAME) +" \" killall umssed  \" 1>/dev/null 2>>test.log &";
+        BOOST_MESSAGE ("cmd:" << cmd);
+        ret = system(cmd.c_str());
+      }
+
       //To check if the process ums has not been found on the list because it is stopped
       BOOST_REQUIRE(umssedFound ==  false);
     }
@@ -1220,6 +1229,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
 
     BOOST_TEST_MESSAGE("Clean process table");
     VishnuConnection vc(adminId, adminPwd);
+    int ret;
     // get the session key and the machine identifier
     string sessionKey=vc.getSessionKey();
     try {
@@ -1230,6 +1240,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       if (restore(sqlPath + "/IMScleanProcesses.sql") != 0) {
         BOOST_TEST_MESSAGE("Database update failed for restore(sqlPath + /IMScleanProcesses.sql)");
       }
+
     }
     catch (VishnuException& e) {
       BOOST_MESSAGE("FAILED\n");
