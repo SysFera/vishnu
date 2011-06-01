@@ -30,7 +30,8 @@
 using namespace ::FMS_Data;
 
 // Default constructor
-FileStat::FileStat()
+FileStat::FileStat() :
+    m_type(6)
 {
 
     /*PROTECTED REGION ID(FileStatImpl__FileStatImpl) START*/
