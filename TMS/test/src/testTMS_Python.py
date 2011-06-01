@@ -1,6 +1,5 @@
 
-import VISHNU_UMS
-import VISHNU_TMS
+import VISHNU
 import time
 
 def displayQueue (q):
@@ -39,45 +38,45 @@ def displayListJ(lij):
     displayJob(lij.getJobs().get(i), i)
     print " "
 
-VISHNU_UMS.vishnuInitialize("/home/keo/Bureau/depot_git_edf/vishnu/UMS/test/src/sql/client.cfg")
+VISHNU.vishnuInitialize("/home/keo/Bureau/depot_git_edf/vishnu/UMS/test/src/sql/client.cfg")
 
-j = VISHNU_TMS.Job()
-op = VISHNU_TMS.SubmitOptions()
+j = VISHNU.Job()
+op = VISHNU.SubmitOptions()
 mid = "machine_1"
 path = "/home/keo/Bureau/launched"
-r, k = VISHNU_UMS.connect("root", "vishnu_user")
-q = VISHNU_TMS.ListQueues()
-opp = VISHNU_TMS.ProgressOptions()
-li = VISHNU_TMS.ListProgression()
-jr = VISHNU_TMS.JobResult()
-lijr = VISHNU_TMS.ListJobResults()
+r, k = VISHNU.connect("root", "vishnu_user")
+q = VISHNU.ListQueues()
+opp = VISHNU.ProgressOptions()
+li = VISHNU.ListProgression()
+jr = VISHNU.JobResult()
+lijr = VISHNU.ListJobResults()
 out = "/tmp"
-lij = VISHNU_TMS.ListJobs()
-opj = VISHNU_TMS.ListJobsOptions()
+lij = VISHNU.ListJobs()
+opj = VISHNU.ListJobsOptions()
 
 try :
-  VISHNU_TMS.submitJob(k, mid, path, j, op)
-  VISHNU_TMS.listJobs(k, mid, lij, opj)
-  VISHNU_TMS.listQueues(k, mid, q)
-  VISHNU_TMS.getJobInfo(k, mid, j.getJobId(), j)
+  VISHNU.submitJob(k, mid, path, j, op)
+  VISHNU.listJobs(k, mid, lij, opj)
+  VISHNU.listQueues(k, mid, q)
+  VISHNU.getJobInfo(k, mid, j.getJobId(), j)
   time.sleep(5)
-  VISHNU_TMS.getJobProgress(k, mid, li, opp)
+  VISHNU.getJobProgress(k, mid, li, opp)
   #status = 5 => TERMINATED
   print "waiting for job completion..."
   while j.getStatus() < 5:
     time.sleep(2)
-    VISHNU_TMS.getJobInfo(k, mid, j.getJobId(), j)
+    VISHNU.getJobInfo(k, mid, j.getJobId(), j)
   print "*****status=", j.getStatus()
 
-  VISHNU_TMS.getJobOutput(k, mid, j.getJobId(), jr, out)
-  VISHNU_TMS.getCompletedJobsOutput(k, mid, lijr, out)
-  VISHNU_TMS.submitJob(k, mid, path, j, op)
-  VISHNU_TMS.cancelJob(k, mid, j.getJobId())
-except VISHNU_TMS.TMSVishnuException, e:
+  VISHNU.getJobOutput(k, mid, j.getJobId(), jr, out)
+  VISHNU.getCompletedJobsOutput(k, mid, lijr, out)
+  VISHNU.submitJob(k, mid, path, j, op)
+  VISHNU.cancelJob(k, mid, j.getJobId())
+except VISHNU.TMSVishnuException, e:
   print e.what()
-except VISHNU_UMS.UMSVishnuException, e:
+except VISHNU.UMSVishnuException, e:
   print e.what()
-except VISHNU_UMS.SystemException, e:
+except VISHNU.SystemException, e:
   print e.what()
 
 
@@ -97,6 +96,6 @@ print "@@@@@@@@@ List of jobs @@@@@@@@@@"
 if lij.getNbJobs() > 0:
   displayListJ(lij)
 
-VISHNU_TMS.getJobProgress(k, mid, li, opp)
+VISHNU.getJobProgress(k, mid, li, opp)
 
 # command execfile("/home/keo/Bureau/depot_git_edf/vishnu/TMS/test/src/toto.py")
