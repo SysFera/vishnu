@@ -2,6 +2,13 @@
 #include <vector>
 #include "utilVishnu.hpp"
 #include <boost/scoped_ptr.hpp>
+#include "File.hh"
+#include "FMSVishnuException.hpp"
+#include "utilServer.hpp"
+#include <boost/scoped_ptr.hpp>
+#include "FileTransferCommand.hpp"
+#include <utility>
+
 
 FileTransferServer::FileTransferServer(const SessionServer& sessionServer,
     const FMS_Data::FileTransfer& fileTransfer,const int& vishnuId):mfileTransfer(fileTransfer),
@@ -37,7 +44,9 @@ mdatabaseVishnu= factory.getDatabaseInstance();
 
 
 
-void FileTransferServer::getUserInfo( std::string& name, std::string& userId) {
+void FileTransferServer::getUserInfo( std::string& clientMachineName, std::string& userId) {
+
+
   std::vector<std::string> result;  
   std::vector<std::string>::const_iterator iter;  
   std::string sessionId = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "vsessionid");
@@ -53,7 +62,7 @@ void FileTransferServer::getUserInfo( std::string& name, std::string& userId) {
       result.clear();
       result=transfer->get(i);
       iter=result.begin();
-      name=*(iter);
+      clientMachineName=*(iter);
       userId=*(++iter);
 
     }
@@ -74,41 +83,106 @@ void FileTransferServer::setFileTransfer( const FMS_Data::FileTransfer& fileTran
 } 
 
 
-int FileTransferServer::insertIntoDatabase(){
+int FileTransferServer::insertIntoDatabase(int processId){
  
-  std::string name;
-  std::string userId;
-  getUserInfo( name,  userId);
-
-
-  std::string vishnuFileTransferId = vishnu::getObjectId(mvishnuId, "filesubcpt", "formatidfiletransfer", FILETRANSFERT,name);
-
-  mfileTransfer.setClientMachineId(name);
-  mfileTransfer.setUserId(userId);
-  mfileTransfer.setTransferId(vishnuFileTransferId);
-
-int status =0; // TODO A calculer
-int fileSize =10; // TODO A calculer
-int trCommand =1; // TODO A calculer
-int processId =2011; // TODO A calculer
 
   std::string numsession = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
   std::string sqlInsert= "insert into fileTransfer (vsession_numsessionid,userId,clientMachineId,sourceMachineId, "
     "destinationMachineId,sourceFilePath,destinationFilePath, transferid,status,fileSize,trCommand,processid,startTime)"
-    "values ("+numsession+",'"+userId+"','"+ name+"','"+mfileTransfer.getSourceMachineId()+"','"+mfileTransfer.getDestinationMachineId()+"','"
-    +mfileTransfer.getSourceFilePath()+"','"+mfileTransfer.getDestinationFilePath() +"','"+vishnuFileTransferId+"',"+convertToString(status)+","
-    +convertToString(fileSize)+","+convertToString(trCommand)+","+convertToString(processId)+",CURRENT_TIMESTAMP)";
+    "values ("+numsession+",'"+mfileTransfer.getUserId()+"','"+ mfileTransfer.getClientMachineId()+"','"+mfileTransfer.getSourceMachineId()+"','"+mfileTransfer.getDestinationMachineId()+"','"
+    +mfileTransfer.getSourceFilePath()+"','"+mfileTransfer.getDestinationFilePath() +"','"+mfileTransfer.getTransferId()+"',"+convertToString(mfileTransfer.getStatus())+","
+    +convertToString(mfileTransfer.getSize())+","+convertToString(mfileTransfer.getTrCommand())+","+convertToString(processId)+",CURRENT_TIMESTAMP)";
 
-mdatabaseVishnu->process(sqlInsert);
+  mdatabaseVishnu->process(sqlInsert);
 
 
 }
 
+void FileTransferServer::updateData(){
 
-int FileTransferServer::addCpThread(){
-  insertIntoDatabase();
+  std::string clientMachineName;
+  std::string userId;
+  getUserInfo( clientMachineName,  userId);
+
+  std::string vishnuFileTransferId = vishnu::getObjectId(mvishnuId, "filesubcpt", "formatidfiletransfer", FILETRANSFERT,clientMachineName);
+  std::cout << "vishnuFileTransferId: " << vishnuFileTransferId << "\n"; 
+
+  mfileTransfer.setClientMachineId(clientMachineName);
+  mfileTransfer.setUserId(userId);
+  mfileTransfer.setTransferId(vishnuFileTransferId);
 
 }
+
+int FileTransferServer::addCpThread(const SSHFile& file,const std::string& dest, const FMS_Data::CpFileOptions& options){
+
+  mfileTransfer.setTrCommand(options.getTrCommand());
+
+  mfileTransfer.setStatus(0); //INPPROGRESS
+
+  updateData();// update datas and get the vishnu transfer id
+  
+  if (!file.exists() || false==file.getErrorMsg().empty()) { //if the file does not exist
+
+    mfileTransfer.setStatus(3); //failed
+    mfileTransfer.setSize(0); //failed
+
+    mfileTransfer.setStart_time(0);
+
+    insertIntoDatabase();
+
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,file.getErrorMsg());
+  }
+  std::cout << "file.getSize(): " << file.getSize()<< "\n";
+  mfileTransfer.setSize(file.getSize());
+  mfileTransfer.setStart_time(0);
+  std::cout << "coucou dans addCpthread avant copy \n";
+  copy(file,dest,options);
+  std::cout << "coucou dans addCpthread apres copy \n";
+
+}
+
+void FileTransferServer::copy(const SSHFile& file,const std::string& dest, const FMS_Data::CpFileOptions& options){
+
+
+  boost::scoped_ptr<FileTransferCommand> tr ( FileTransferCommand::getCopyCommand(options) );
+
+  std::string trCmd= tr->getCommand();
+
+  SSHExec ssh(file.sshCommand, file.scpCommand, file.sshHost, file.sshPort, file.sshUser, file.sshPassword,
+      file.sshPublicKey, file.sshPrivateKey);
+
+
+  std::pair<std::string,std::string> trResult;
+
+  //trResult = ssh.exec(trCmd + " " +getPath()+" "+dest + "\" " + "output.txt");
+  trResult = ssh.exec(trCmd + " " +file.getPath()+" "+dest );
+
+
+  if (trResult.second.find("Warning")!=std::string::npos){
+
+    std::cout << "Warning found \n";
+
+    trResult = ssh.exec(trCmd + " "+ file.getPath()+" "+dest);
+
+  }
+
+ 
+    if (trResult.second.length()!=0) {
+
+    mfileTransfer.setStatus(3); //failed
+
+    insertIntoDatabase(ssh.getProcessId());
+
+
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error transfering file: "+trResult.second);
+
+  }
+
+    mfileTransfer.setStatus(1); //COMPLETED
+
+    insertIntoDatabase(ssh.getProcessId());
+}
+
 
 int FileTransferServer::addMvThread(){
   insertIntoDatabase();
@@ -134,4 +208,12 @@ void FileTransferServer::wait (){
   mthread.join();
 
 }
+
+
+
+
+
+
+
+
 
