@@ -35,7 +35,9 @@
 
 /* A class for file representation through SSH. */
 class SSHFile : public File {
-private:
+
+public:
+  //private:
   mutable bool upToDate;
   std::string sshHost;
   std::string sshUser;
@@ -46,7 +48,7 @@ private:
   std::string sshCommand;
   std::string scpCommand;
   mutable std::string merror;
-public:
+//public:
   SSHFile();
   SSHFile(const SessionServer& sessionServer,
           const std::string& path,
