@@ -78,7 +78,8 @@
         <details key="content" value="The time of  the last change of the inode information"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//FileType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//FileType"
+        defaultValueLiteral="6">
       <eAnnotations source="Description">
         <details key="content" value="The file type"/>
       </eAnnotations>
@@ -194,7 +195,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//Status"
-        defaultValueLiteral="">
+        defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="The file transfer status"/>
       </eAnnotations>
@@ -204,7 +205,7 @@
         <details key="content" value="The user identifier"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="clientMachineName" eType="ecore:EDataType Ecore.ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="clientMachineId" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="The client machine identifier"/>
       </eAnnotations>
@@ -234,12 +235,14 @@
         <details key="content" value="The size of the file "/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="start_time" eType="ecore:EDataType Ecore.ecore#//ELong">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="start_time" eType="ecore:EDataType Ecore.ecore#//ELong"
+        defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="content" value="The start time of the file  transfer"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="trCommand" eType="#//TransferCommand">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="trCommand" eType="#//TransferCommand"
+        defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="The command used for the file transfer (scp or rsync)"/>
       </eAnnotations>
