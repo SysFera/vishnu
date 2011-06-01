@@ -1004,7 +1004,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       //string cmd = " export OMNIORB_CONFIG=/home/hudson/workspace/IMS1/build/test_files/cfg/omniORB4_testing.cfg ; ssh "+ string(IMSDISTANTHOSTNAME) +" \""+  string(IMSPATHDISTANTUMSSED) + " "
       //            + string(IMSPATHCONFIGDISTANTUMSSED)+ "\" &";//1>/dev/null 2>>test.log &";
 
-      string cmd = " ssh "+ string(IMSDISTANTHOSTNAME) +" \" source "+  string(IMSPATHDISTANTUMSSED) + " \" &";
+      string cmd = " ssh "+ string(IMSDISTANTHOSTNAME) +" \" source "+  string(IMSPATHDISTANTUMSSED) + " \" & 1>/dev/null 2>>test.log &";
                   //+ string(IMSPATHCONFIGDISTANTUMSSED)+ "\" &";//1>/dev/null 2>>test.log &";
 
       BOOST_MESSAGE ("cmd:" << cmd);
