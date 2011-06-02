@@ -464,22 +464,22 @@ template <File::TransferType transferType> int solveTransferRemoteFileAsync(diet
 
     int vishnuId=ServerFMS::getInstance()->getVishnuId(); 
 
-    FileTransferServer fileTransferServer(sessionServer, srcHost, destHost, srcPath, destPath,vishnuId);
+    boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer, srcHost, destHost, srcPath, destPath,vishnuId));
 
     if(transferType==File::copy){
-      fileTransferServer.addCpThread(*(static_cast<SSHFile*>(file.get())),destCompletePath.str(),*options_ptr);
+      fileTransferServer->addCpAsyncThread(*(static_cast<SSHFile*>(file.get())),destCompletePath.str(),*options_ptr);
     }
 
     if (transferType==File::move){
 
-      fileTransferServer.addMvThread();
+      fileTransferServer->addMvThread();
     }
 
     FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
 
     FMS_Data::FileTransfer_ptr fileTransfer=ecoreFactory->createFileTransfer();
     
-    *fileTransfer= fileTransferServer.getFileTransfer();
+    *fileTransfer= fileTransferServer->getFileTransfer();
 
     std::cout <<"*********** affichage de fileTransfer ******************\n" ;
 
@@ -502,7 +502,9 @@ template <File::TransferType transferType> int solveTransferRemoteFileAsync(diet
     fileTransferSerialized =  _ser.serialize(const_cast<FMS_Data::FileTransfer_ptr>(fileTransfer));
 
       std::cout << "Coucou  apres serialize \n";
-    delete fileTransfer;
+      std::cout << "fileTransferSerialized " << fileTransferSerialized<<" \n";
+   
+      delete fileTransfer;
 
     //To register the command
     sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
@@ -525,7 +527,6 @@ template <File::TransferType transferType> int solveTransferRemoteFileAsync(diet
   diet_string_set(diet_parameter(profile, 7), strdup(fileTransferSerialized.c_str()),DIET_VOLATILE);
   diet_string_set(diet_parameter(profile, 8), errMsg, DIET_VOLATILE);
   return 0;
-
 
 
 }

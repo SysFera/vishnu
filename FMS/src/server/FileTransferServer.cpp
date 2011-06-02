@@ -10,16 +10,21 @@
 #include <utility>
 
 
-FileTransferServer::FileTransferServer(const SessionServer& sessionServer,
-    const FMS_Data::FileTransfer& fileTransfer,const int& vishnuId):mfileTransfer(fileTransfer),
-msessionServer(sessionServer),mvishnuId(vishnuId){
-DbFactory factory;
-mdatabaseVishnu= factory.getDatabaseInstance();
+Database* FileTransferServer::getDatabaseInstance(){
 
+  DbFactory factory;
+
+  return factory.getDatabaseInstance();
 }
 
 
 
+FileTransferServer::FileTransferServer(const SessionServer& sessionServer,
+    const FMS_Data::FileTransfer& fileTransfer,const int& vishnuId):mfileTransfer(fileTransfer),
+msessionServer(sessionServer),mvishnuId(vishnuId){
+
+ssh=NULL;
+}
 
     
 FileTransferServer::FileTransferServer(const SessionServer& sessionServer,
@@ -35,10 +40,7 @@ mfileTransfer.setDestinationMachineId(destHost);
 mfileTransfer.setSourceFilePath(srcFilePath);
 mfileTransfer.setDestinationFilePath(destFilePath);
 
-
-DbFactory factory;
-mdatabaseVishnu= factory.getDatabaseInstance();
-
+ssh=NULL;
 }
 
 
@@ -55,7 +57,7 @@ void FileTransferServer::getUserInfo( std::string& clientMachineName, std::strin
     " and vsession.users_numuserid=users.numuserid and "
     "vsessionid='"+ sessionId+"'";
 
-  boost::scoped_ptr<DatabaseResult> transfer(mdatabaseVishnu->getResult(sqlTransferRequest.c_str()));
+  boost::scoped_ptr<DatabaseResult> transfer(FileTransferServer::getDatabaseInstance()->getResult(sqlTransferRequest.c_str()));
 
   if (transfer->getNbTuples()!=0){
     for (size_t i=0; i< transfer->getNbTuples(); ++i){
@@ -93,7 +95,9 @@ int FileTransferServer::insertIntoDatabase(int processId){
     +mfileTransfer.getSourceFilePath()+"','"+mfileTransfer.getDestinationFilePath() +"','"+mfileTransfer.getTransferId()+"',"+convertToString(mfileTransfer.getStatus())+","
     +convertToString(mfileTransfer.getSize())+","+convertToString(mfileTransfer.getTrCommand())+","+convertToString(processId)+",CURRENT_TIMESTAMP)";
 
-  mdatabaseVishnu->process(sqlInsert);
+  std::cout << "sqlInsert: " << sqlInsert << "\n";
+
+  FileTransferServer::getDatabaseInstance()->process(sqlInsert);
 
 
 }
@@ -113,14 +117,15 @@ void FileTransferServer::updateData(){
 
 }
 
-int FileTransferServer::addCpThread(const SSHFile& file,const std::string& dest, const FMS_Data::CpFileOptions& options){
+
+int FileTransferServer::addTransferThread(const SSHFile& file,const std::string& dest, const FMS_Data::CpFileOptions& options){
 
   mfileTransfer.setTrCommand(options.getTrCommand());
 
   mfileTransfer.setStatus(0); //INPPROGRESS
 
   updateData();// update datas and get the vishnu transfer id
-  
+
   if (!file.exists() || false==file.getErrorMsg().empty()) { //if the file does not exist
 
     mfileTransfer.setStatus(3); //failed
@@ -132,67 +137,107 @@ int FileTransferServer::addCpThread(const SSHFile& file,const std::string& dest,
 
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,file.getErrorMsg());
   }
+
   std::cout << "file.getSize(): " << file.getSize()<< "\n";
   mfileTransfer.setSize(file.getSize());
   mfileTransfer.setStart_time(0);
   std::cout << "coucou dans addCpthread avant copy \n";
-  copy(file,dest,options);
-  std::cout << "coucou dans addCpthread apres copy \n";
+
+  // create the thread to perform the copy
+
+  mthread = boost::thread(&FileTransferServer::copy,this, file, dest, options,mfileTransfer.getTransferId());
+  boost::posix_time::milliseconds sleepTime(1);
+
+  //FIXME replace by a boost condition variable
+  while (ssh==NULL){
+
+    boost::this_thread::sleep(sleepTime);
+
+  } 
+  while (ssh->getProcessId()==-1) {
+
+    boost::this_thread::sleep(sleepTime);
+
+  }
+
+  std::cout << "ssh->getProcessId(): " << ssh->getProcessId() << "\n";
+
+  insertIntoDatabase(ssh->getProcessId());
 
 }
 
-void FileTransferServer::copy(const SSHFile& file,const std::string& dest, const FMS_Data::CpFileOptions& options){
+
+void FileTransferServer::copy(const SSHFile& file,const std::string& dest, const FMS_Data::CpFileOptions& options, const std::string& transferId){
 
 
   boost::scoped_ptr<FileTransferCommand> tr ( FileTransferCommand::getCopyCommand(options) );
 
   std::string trCmd= tr->getCommand();
 
-  SSHExec ssh(file.sshCommand, file.scpCommand, file.sshHost, file.sshPort, file.sshUser, file.sshPassword,
+  ssh=new SSHExec(file.sshCommand, file.scpCommand, file.sshHost, file.sshPort, file.sshUser, file.sshPassword,
       file.sshPublicKey, file.sshPrivateKey);
 
 
   std::pair<std::string,std::string> trResult;
 
   //trResult = ssh.exec(trCmd + " " +getPath()+" "+dest + "\" " + "output.txt");
-  trResult = ssh.exec(trCmd + " " +file.getPath()+" "+dest );
 
+  trResult = ssh->exec(trCmd + " " +file.getPath()+" "+dest );
 
+  std::cout << "*******trResult=" << trResult.first << std::endl;
+ 
   if (trResult.second.find("Warning")!=std::string::npos){
 
     std::cout << "Warning found \n";
 
-    trResult = ssh.exec(trCmd + " "+ file.getPath()+" "+dest);
+    trResult = ssh->exec(trCmd + " "+ file.getPath()+" "+dest);
 
   }
-
  
     if (trResult.second.length()!=0) {
 
-    mfileTransfer.setStatus(3); //failed
-
-    insertIntoDatabase(ssh.getProcessId());
-
+      // The file transfer failed
+      updateStatus(3,transferId);
 
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error transfering file: "+trResult.second);
 
   }
-
-    mfileTransfer.setStatus(1); //COMPLETED
-
-    insertIntoDatabase(ssh.getProcessId());
+    // The file transfer is  now completed
+   
+   updateStatus (1,transferId);
 }
+
+
+void FileTransferServer::updateStatus(const FMS_Data::Status& status,const std::string& transferId){
+
+
+  std::string sqlUpdateRequest = "UPDATE fileTransfer SET status="+convertToString(status)+" where transferid='"+transferId+"'";
+
+  FileTransferServer::getDatabaseInstance()->process(sqlUpdateRequest.c_str());
+
+}
+
+
+int FileTransferServer::addCpThread(const SSHFile& file,const std::string& dest, const FMS_Data::CpFileOptions& options){
+
+addTransferThread(file, dest, options);
+wait();
+
+}
+
+
+
+int FileTransferServer::addCpAsyncThread( const SSHFile& file,const std::string& dest, const FMS_Data::CpFileOptions& options){
+addTransferThread( file, dest, options);
+}
+
+
 
 
 int FileTransferServer::addMvThread(){
   insertIntoDatabase();
-
 }
 
-int FileTransferServer::addCpAsyncThread(){
-  insertIntoDatabase();
-
-}
 int FileTransferServer::addMvAsyncThread(){
   insertIntoDatabase();
 
