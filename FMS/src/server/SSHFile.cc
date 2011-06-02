@@ -145,6 +145,7 @@ void SSHFile::getInfos() const {
   transform(fileType.begin(), fileType.end(), fileType.begin(), ::tolower);
 
   std::cout << "fileType in SSH getInfos: " << fileType << "\n";
+  std::cout << "fileSize in SSH getInfos: " << size << "\n";
   setOwner(owner);
   setGroup(group);
   setPerms(perms);

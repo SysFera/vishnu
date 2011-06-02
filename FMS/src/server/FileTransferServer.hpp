@@ -1,5 +1,5 @@
-#ifndef FILETRANSFERSERVER
-#define FILETRANSFERSERVER
+#ifndef FILETRANSFERSERVER_HPP
+#define FILETRANSFERSERVER_HPP
 /**
  * \file FileTransferServer.hpp
  * \brief Contains a declaration of all File transfer services
@@ -29,28 +29,33 @@ class FileTransferServer{
 
 
     int addCpThread(const SSHFile& file,const std::string& dest, const FMS_Data::CpFileOptions& options);
+    int addCpAsyncThread(const SSHFile& file,const std::string& dest, const FMS_Data::CpFileOptions& options);
     int  addMvThread();
-    int addCpAsyncThread();
     int  addMvAsyncThread();
   
     int stopThread(const std::string& thrId);
     const FMS_Data::FileTransfer& getFileTransfer() const; 
     void setFileTransfer( const FMS_Data::FileTransfer& fileTransfer) const; 
-
+static Database * getDatabaseInstance();
 
   private:
 
-    boost::thread mthread;
-    SessionServer msessionServer;
     void wait ();
     void getUserInfo(std::string& name, std::string& userId); 
-    void copy(const SSHFile& file,const std::string& dest, const FMS_Data::CpFileOptions& options);
-    int mvishnuId;
+    int addTransferThread(const SSHFile& file,const std::string& dest, const FMS_Data::CpFileOptions& options);
+    void copy(const SSHFile& file,const std::string& dest, const FMS_Data::CpFileOptions& options,const std::string& transferId);
     int insertIntoDatabase(int processId=-1);
     void updateData();
-    
+    void updateStatus(const FMS_Data::Status& status,const std::string& transferId);
+
+    int mvishnuId;
+    boost::thread mthread;
+    SessionServer msessionServer;
+    boost::mutex mmutex;
     mutable FMS_Data::FileTransfer mfileTransfer;
-    Database *mdatabaseVishnu;
+    SSHExec *ssh;
+
+  // static DbFactory mfactory;
 };
 
 #endif
