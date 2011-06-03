@@ -448,7 +448,7 @@ template <File::TransferType transferType> int solveTransferRemoteFileAsync(diet
     }
 
     std::cout << "source user login: " << srcUserLogin << "\n";
-    std::cout << "machineName: " << srcMachineName << "\n";
+    std::cout << "Source machineName: " << srcMachineName << "\n";
 
     FileFactory::setSSHServer(srcMachineName);
     boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,srcPath, srcUserLogin, userKey));
@@ -465,6 +465,8 @@ template <File::TransferType transferType> int solveTransferRemoteFileAsync(diet
     int vishnuId=ServerFMS::getInstance()->getVishnuId(); 
 
     boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer, srcHost, destHost, srcPath, destPath,vishnuId));
+
+    // Perfor the transfer now
 
     if(transferType==File::copy){
       fileTransferServer->addCpAsyncThread(*(static_cast<SSHFile*>(file.get())),destCompletePath.str(),*options_ptr);
