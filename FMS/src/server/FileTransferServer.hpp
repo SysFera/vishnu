@@ -29,7 +29,12 @@ class FileTransferServer{
 
 
     int addCpThread(const SSHFile& file,const std::string& dest, const FMS_Data::CpFileOptions& options);
+   
     int addCpAsyncThread(const SSHFile& file,const std::string& dest, const FMS_Data::CpFileOptions& options);
+   /*
+    int addCpThread(const TransferExec::TransferInfos& transferInfos, const FMS_Data::CpFileOptions& options);
+    int addCpAsyncThread(const TransferExec::TransferInfos& transferInfos, const FMS_Data::CpFileOptions& options);
+   */ 
     int  addMvThread();
     int  addMvAsyncThread();
   
@@ -57,5 +62,47 @@ static Database * getDatabaseInstance();
 
   // static DbFactory mfactory;
 };
+
+
+/**
+ * \brief A useful class to perform a transfer command
+ */
+
+
+/*class TransferExec{
+
+
+
+  public:
+
+ TransferExec (const TransferInfos& transferInfos);
+
+    const int& getLastExecStatus() const;
+
+    const int& getProcessId() const;
+    void setProcessId(const int& processId)const;
+
+    std::pair<std::string, std::string> exec(const std::string& cmd) const;
+
+    typedef struct{
+
+      std::string srcUser;
+      std::string srcMachineName;
+      std::string srcPath;
+      std::string destUser;
+      std::string destMachineName;
+      std::string destPath;
+    }TransferInfos;
+
+
+  private:
+    mutable int lastExecStatus;
+    mutable int mprocessId;
+    mutable std::string mtransferId;
+
+    mutable TransferInfos mtransferInfos;
+};
+*/
+
 
 #endif

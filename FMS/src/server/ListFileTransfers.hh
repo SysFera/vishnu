@@ -74,6 +74,16 @@ public:
 
     //To check if the userId is defined
     if (options->getUserId().size() != 0) {
+
+      //Creation of the object user
+      UserServer userServer = UserServer(msessionServer);   
+
+      userServer.init();
+      if (!userServer.isAdmin()) {
+        UMSVishnuException e (ERRCODE_NO_ADMIN);
+        throw e;
+      } 
+    
       //To check the user Id
       checkUserId(options->getUserId());
       //To add the userId on the request
