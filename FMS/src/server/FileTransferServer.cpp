@@ -188,7 +188,7 @@ void FileTransferServer::copy(const SSHFile& file,const std::string& dest, const
  
   if (trResult.second.find("Warning")!=std::string::npos){
 
-    std::cout << "Warning found \n";
+    std::cerr << "Warning found \n";
 
     trResult = ssh->exec(trCmd + " "+ file.getPath()+" "+dest);
 
@@ -199,12 +199,13 @@ void FileTransferServer::copy(const SSHFile& file,const std::string& dest, const
       // The file transfer failed
       updateStatus(3,transferId);
 
-    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error transfering file: "+trResult.second);
+    //throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error transfering file: "+trResult.second);
 
-  }
+  }else{
     // The file transfer is  now completed
    
    updateStatus (1,transferId);
+  }
 }
 
 
@@ -245,7 +246,6 @@ int FileTransferServer::addMvAsyncThread(){
 
 
 
-int FileTransferServer::stopThread(const std::string& thrId){}
 
 
 void FileTransferServer::wait (){
@@ -255,6 +255,10 @@ void FileTransferServer::wait (){
 }
 
 
+
+
+
+int FileTransferServer::stopThread(const std::string& thrId){}
 
 
 
