@@ -17,14 +17,13 @@ in which a UMS sed has been previously launched, must be
 defined using the CMacke variable TEST_DISTANT_HOSTNAME
 
 - The Cmake variable TEST_USER_LOGIN which is the name of the user unix
-account on the distant machine whose name is the value of the previous TEST_DISTANT_NAME variable,
+account on the distant machine whose name is the value of the previous TEST_REMOTE_NAME variable,
 must be defined.
 
-The Cmake variables TEST_PATH_DISTANT_UMSSED and TEST_PATH_CONFIG_DISTANT_UMSSED which are
-respectively the path to the distant umssed and the path to the distant umssed config fileContent
-must be defined
+The Cmake variables TEST_PATH_SCRIPT_REMOTE_UMSSED which is the path
+until the script to launch the remote umssed on the remote machine must be defined
 
-NB: the ssh connection between TEST_LOCAL_HOSTNAME machine and TEST_DISTANT_HOSTNAME machine must
+NB: the ssh connection between TEST_LOCAL_HOSTNAME machine and TEST_REMOTE_HOSTNAME machine must
 be possible.
 
 *********************************************************/
@@ -993,28 +992,31 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     //The distant machine on which the process UMS will be stopped
     IMS_Data::ListProcesses listProcess;
     IMS_Data::ProcessOp op;
-    op.setMachineId(machineId);
+    op.setMachineId(machineDistantId);
     //The process to stop
     IMS_Data::Process process;
     process.setMachineId(machineDistantId);
     process.setProcessName("UMS");
     int ret =-1;
+    string cmd;
+
     try {
       //To launched UMS sed on distant machine
       //string cmd = " export OMNIORB_CONFIG=/home/hudson/workspace/IMS1/build/test_files/cfg/omniORB4_testing.cfg ; ssh "+ string(IMSDISTANTHOSTNAME) +" \""+  string(IMSPATHDISTANTUMSSED) + " "
       //            + string(IMSPATHCONFIGDISTANTUMSSED)+ "\" &";//1>/dev/null 2>>test.log &";
 
-      string cmd = " ssh "+ string(IMSDISTANTHOSTNAME) +" \" source "+  string(IMSPATHDISTANTUMSSED) + " \"  1>/dev/null 2>>test.log &";
+      cmd = " ssh "+ string(IMSREMOTEHOSTNAME) +" \" source "+  string(IMSPATHSCRIPTREMOTEUMSSED) + " \"  1>/dev/null 2>>test.log &";
                   //+ string(IMSPATHCONFIGDISTANTUMSSED)+ "\" &";//1>/dev/null 2>>test.log &";
 
       BOOST_MESSAGE ("cmd:" << cmd);
       ret = system(cmd.c_str());
-      sleep(5);
+      sleep(7);
       BOOST_REQUIRE(ret != -1);
       BOOST_CHECK_EQUAL(getProcesses(sessionKey, listProcess, op),0  );
       BOOST_REQUIRE(listProcess.getProcess().size() != 0);
       //To check if the process UMS exists
       for(unsigned int i = 0; i < listProcess.getProcess().size(); i++) {
+        BOOST_MESSAGE (" listProcess.getProcess().size():" <<  listProcess.getProcess().size());
         //To check umssed process
         if (listProcess.getProcess().get(i)->getProcessName().compare("UMS") == 0) {
           umssedFound = true;
@@ -1032,6 +1034,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       umssedFound = false;
       //To check if the process UMS is stopped and not on the list
       for(unsigned int i = 0; i < listProcess.getProcess().size(); i++) {
+        BOOST_MESSAGE (" listProcess.getProcess().size():" <<  listProcess.getProcess().size());
         //To check umssed process
         if (listProcess.getProcess().get(i)->getProcessName().compare("UMS") == 0) {
           umssedFound = true;
@@ -1039,12 +1042,14 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       }
 
       //To clean the distant umssed if the previous function stop failed
-      if (umssedFound) {
-        string cmd = " ssh "+ string(IMSDISTANTHOSTNAME) +" \" killall umssed  \" 1>/dev/null 2>>test.log &";
+      /*if (umssedFound) {
+        cmd = " ssh "+ string(IMSREMOTEHOSTNAME) +" \" killall umssed \" 1>/dev/null 2>>test.log &";
         BOOST_MESSAGE ("cmd:" << cmd);
         ret = system(cmd.c_str());
-      }
-
+        if (ret < 0) {
+          BOOST_MESSAGE("umssed distant cleaning failed\n");
+        }
+      }*/
       //To check if the process ums has not been found on the list because it is stopped
       BOOST_REQUIRE(umssedFound ==  false);
     }
@@ -1241,6 +1246,13 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
         BOOST_TEST_MESSAGE("Database update failed for restore(sqlPath + /IMScleanProcesses.sql)");
       }
 
+      //To clean the distant umssed if the previous function stop failed
+      string cmd = " ssh "+ string(IMSREMOTEHOSTNAME) +" \" killall umssed \" 1>/dev/null 2>>test.log &";
+      BOOST_MESSAGE ("cmd:" << cmd);
+      ret = system(cmd.c_str());
+      if (ret < 0) {
+        BOOST_MESSAGE("umssed distant cleaning failed\n");
+      }
     }
     catch (VishnuException& e) {
       BOOST_MESSAGE("FAILED\n");
