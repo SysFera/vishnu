@@ -1247,12 +1247,12 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       }
 
       //To clean the distant umssed if the previous function stop failed
-      string cmd = " ssh "+ string(IMSREMOTEHOSTNAME) +" \" killall umssed \" 1>/dev/null 2>>test.log &";
+      /*string cmd = " ssh "+ string(IMSREMOTEHOSTNAME) +" \" killall umssed \" 1>/dev/null 2>>test.log &";
       BOOST_MESSAGE ("cmd:" << cmd);
       ret = system(cmd.c_str());
       if (ret < 0) {
         BOOST_MESSAGE("umssed distant cleaning failed\n");
-      }
+      }*/
     }
     catch (VishnuException& e) {
       BOOST_MESSAGE("FAILED\n");
