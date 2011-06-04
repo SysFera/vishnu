@@ -106,10 +106,18 @@
 #include "TMSVishnuException.hpp"
 #include "IMSVishnuException.hpp"
 #include "FMSVishnuException.hpp"
+#ifdef COMPILE_UMS
 #include "api_ums.hpp"
+#endif
+#ifdef COMPILE_TMS
 #include "api_tms.hpp"
+#endif
+#ifdef COMPILE_IMS
 #include "api_ims.hpp"
+#endif
+#ifdef COMPILE_FMS
 #include "api_fms.hpp"
+#endif
 %}
 
 
@@ -199,7 +207,9 @@
   $1 = NULL;
 }
 
+#ifdef COMPILE_UMS
 %include "api_ums.hpp"
+#endif
 
 #ifdef SWIGPYTHON
 %include "VishnuException.hpp"
@@ -257,8 +267,9 @@
 #endif
 
 
+#ifdef COMPILE_TMS
 %include "api_tms.hpp"
-
+#endif
 
 
 #ifdef SWIGJAVA
@@ -308,8 +319,9 @@
 
 #endif
 
+#ifdef COMPILE_IMS
 %include "api_ims.hpp"
-
+#endif
 
 #ifdef SWIGPYTHON
 
@@ -367,4 +379,6 @@
 
 #endif
 
+#ifdef COMPILE_FMS
 %include "api_fms.hpp"
+#endif
