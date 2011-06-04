@@ -158,6 +158,7 @@ template <File::TransferType transferType> int solveTransferRemoteFile(diet_prof
   string  userKey, srcUserLogin,srcMachineName;
   char* srcPath, *destUser, *srcHost,*sessionKey, *destHost,*destPath, *errMsg = NULL, *optionsSerialized=NULL;
   std::string finishError ="";
+  std::string fileTransferSerialized="";
   int mapperkey;
   std::string cmd = "";
 
@@ -239,28 +240,59 @@ template <File::TransferType transferType> int solveTransferRemoteFile(diet_prof
     }
 
     std::cout << "source user login: " << srcUserLogin << "\n";
-    std::cout << "machineName: " << srcMachineName << "\n";
-
-    FileFactory::setSSHServer(srcMachineName);
-    boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,srcPath, srcUserLogin, userKey));
+    std::cout << "Source machine name: " << srcMachineName << "\n";
 
     CpFileOptions_ptr options_ptr= NULL;
     if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr) ) {
       throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
     }
 
-    std::ostringstream destCompletePath;
-    destCompletePath << destUserLogin << "@"<<destMachineName <<":"<<destPath;
-    std::cout << "destCompletePath " <<destCompletePath.str() << "\n";
-   
+    int vishnuId=ServerFMS::getInstance()->getVishnuId(); 
+
+    boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer, srcHost, destHost, srcPath, destPath,vishnuId));
+
+    // Perfor the transfer now
 
     if(transferType==File::copy){
-      file->cp(destCompletePath.str(),*options_ptr);
+      fileTransferServer->addCpThread(srcUserLogin,srcMachineName,userKey,destUserLogin,destMachineName,*options_ptr);
     }
 
     if (transferType==File::move){
-      file->mv(destCompletePath.str(),*options_ptr);
+
+      fileTransferServer->addMvThread();
     }
+
+    FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
+
+    FMS_Data::FileTransfer_ptr fileTransfer=ecoreFactory->createFileTransfer();
+    
+    *fileTransfer= fileTransferServer->getFileTransfer();
+
+    std::cout <<"*********** affichage de fileTransfer ******************\n" ;
+
+    std::cout << "fileTransfer->getStatus() " <<fileTransfer->getStatus() << "\n";
+    std::cout << "fileTransfer->getSize() " <<fileTransfer->getSize() << "\n";
+    std::cout << "fileTransfer->getTrComand() " <<fileTransfer->getTrCommand() << "\n";
+    std::cout << "fileTransfer->getTransferId() " <<fileTransfer->getTransferId() << "\n";
+    std::cout << "fileTransfer->getClientMachineId() " <<fileTransfer->getClientMachineId() << "\n";
+    std::cout << "fileTransfer->getUserId() " <<fileTransfer->getUserId() << "\n";
+    std::cout << "fileTransfer->getSourceMachineId() " <<fileTransfer->getSourceMachineId() << "\n";
+    std::cout << "fileTransfer->getDestinationMachineId() " <<fileTransfer->getDestinationMachineId() << "\n";
+    std::cout << "fileTransfer->getSourceFilePath() " <<fileTransfer-> getSourceFilePath()<< "\n";
+    std::cout << "fileTransfer->getDestinationFilePath() " <<fileTransfer->getDestinationFilePath() << "\n";
+    std::cout << "fileTransfer->getStart_time() " <<fileTransfer->getStart_time() << "\n";
+
+
+    const char* name = "fileTransfer";
+    ::ecorecpp::serializer::serializer _ser(name);
+
+    fileTransferSerialized =  _ser.serialize(const_cast<FMS_Data::FileTransfer_ptr>(fileTransfer));
+
+      std::cout << "Coucou  apres serialize \n";
+      std::cout << "fileTransferSerialized " << fileTransferSerialized<<" \n";
+   
+      delete fileTransfer;
+
 
     //To register the command
     sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
@@ -450,17 +482,10 @@ template <File::TransferType transferType> int solveTransferRemoteFileAsync(diet
     std::cout << "source user login: " << srcUserLogin << "\n";
     std::cout << "Source machineName: " << srcMachineName << "\n";
 
-    FileFactory::setSSHServer(srcMachineName);
-    boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,srcPath, srcUserLogin, userKey));
-
     CpFileOptions_ptr options_ptr= NULL;
     if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr) ) {
       throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
     }
-
-    std::ostringstream destCompletePath;
-    destCompletePath << destUserLogin << "@"<<destMachineName <<":"<<destPath;
-    std::cout << "destCompletePath " <<destCompletePath.str() << "\n";
 
     int vishnuId=ServerFMS::getInstance()->getVishnuId(); 
 
@@ -469,7 +494,7 @@ template <File::TransferType transferType> int solveTransferRemoteFileAsync(diet
     // Perfor the transfer now
 
     if(transferType==File::copy){
-      fileTransferServer->addCpAsyncThread(*(static_cast<SSHFile*>(file.get())),destCompletePath.str(),*options_ptr);
+      fileTransferServer->addCpAsyncThread(srcUserLogin,srcMachineName,userKey,destUserLogin,destMachineName,*options_ptr);
     }
 
     if (transferType==File::move){
@@ -485,17 +510,17 @@ template <File::TransferType transferType> int solveTransferRemoteFileAsync(diet
 
     std::cout <<"*********** affichage de fileTransfer ******************\n" ;
 
-    std::cout << "fileTransfer->getStatus()" <<fileTransfer->getStatus() << "\n";
-    std::cout << "fileTransfer->getSize()" <<fileTransfer->getSize() << "\n";
-    std::cout << "fileTransfer->getTrComand()" <<fileTransfer->getTrCommand() << "\n";
-    std::cout << "fileTransfer->getTransferId()" <<fileTransfer->getTransferId() << "\n";
-    std::cout << "fileTransfer->getClientMachineId()" <<fileTransfer->getClientMachineId() << "\n";
-    std::cout << "fileTransfer->getUserId()" <<fileTransfer->getUserId() << "\n";
-    std::cout << "fileTransfer->getSourceMachineId()" <<fileTransfer->getSourceMachineId() << "\n";
-    std::cout << "fileTransfer->getDestinationMachineId()" <<fileTransfer->getDestinationMachineId() << "\n";
-    std::cout << "fileTransfer->getSourceFilePath()" <<fileTransfer-> getSourceFilePath()<< "\n";
-    std::cout << "fileTransfer->getDestinationFilePath()" <<fileTransfer->getDestinationFilePath() << "\n";
-    std::cout << "fileTransfer->getStart_time()" <<fileTransfer->getStart_time() << "\n";
+    std::cout << "fileTransfer->getStatus() " <<fileTransfer->getStatus() << "\n";
+    std::cout << "fileTransfer->getSize() " <<fileTransfer->getSize() << "\n";
+    std::cout << "fileTransfer->getTrComand() " <<fileTransfer->getTrCommand() << "\n";
+    std::cout << "fileTransfer->getTransferId() " <<fileTransfer->getTransferId() << "\n";
+    std::cout << "fileTransfer->getClientMachineId() " <<fileTransfer->getClientMachineId() << "\n";
+    std::cout << "fileTransfer->getUserId() " <<fileTransfer->getUserId() << "\n";
+    std::cout << "fileTransfer->getSourceMachineId() " <<fileTransfer->getSourceMachineId() << "\n";
+    std::cout << "fileTransfer->getDestinationMachineId() " <<fileTransfer->getDestinationMachineId() << "\n";
+    std::cout << "fileTransfer->getSourceFilePath() " <<fileTransfer-> getSourceFilePath()<< "\n";
+    std::cout << "fileTransfer->getDestinationFilePath() " <<fileTransfer->getDestinationFilePath() << "\n";
+    std::cout << "fileTransfer->getStart_time() " <<fileTransfer->getStart_time() << "\n";
 
 
     const char* name = "fileTransfer";

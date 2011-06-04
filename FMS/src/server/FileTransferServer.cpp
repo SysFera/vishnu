@@ -1,3 +1,5 @@
+
+#include "FileFactory.hh"
 #include "FileTransferServer.hpp"
 #include <vector>
 #include "utilVishnu.hpp"
@@ -8,6 +10,15 @@
 #include <boost/scoped_ptr.hpp>
 #include "FileTransferCommand.hpp"
 #include <utility>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <sstream>
+
+using namespace std;
+
+
+unsigned int FileTransferServer::msshPort=22;
+std::string FileTransferServer::msshCommand="/usr/bin/ssh";
 
 
 Database* FileTransferServer::getDatabaseInstance(){
@@ -23,7 +34,6 @@ FileTransferServer::FileTransferServer(const SessionServer& sessionServer,
     const FMS_Data::FileTransfer& fileTransfer,const int& vishnuId):mfileTransfer(fileTransfer),
 msessionServer(sessionServer),mvishnuId(vishnuId){
 
-ssh=NULL;
 }
 
     
@@ -40,7 +50,6 @@ mfileTransfer.setDestinationMachineId(destHost);
 mfileTransfer.setSourceFilePath(srcFilePath);
 mfileTransfer.setDestinationFilePath(destFilePath);
 
-ssh=NULL;
 }
 
 
@@ -118,15 +127,25 @@ void FileTransferServer::updateData(){
 }
 
 
-int FileTransferServer::addTransferThread(const SSHFile& file,const std::string& dest, const FMS_Data::CpFileOptions& options){
+int FileTransferServer::addTransferThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options){
 
-  mfileTransfer.setTrCommand(options.getTrCommand());
+  boost::scoped_ptr<FileTransferCommand> tr ( FileTransferCommand::getCopyCommand(options) );
+
+  std::string trCmd= tr->getCommand();
+
+
+ boost::scoped_ptr<SSHFile> srcFileServer (new SSHFile(msessionServer, mfileTransfer.getSourceFilePath(),srcMachineName, srcUser, "", srcUserKey, "", FileTransferServer::getSSHPort(), FileTransferServer::getSSHCommand(), tr->getLocation()));
+
+
+
+
+ mfileTransfer.setTrCommand(options.getTrCommand());
 
   mfileTransfer.setStatus(0); //INPPROGRESS
 
   updateData();// update datas and get the vishnu transfer id
 
-  if (!file.exists() || false==file.getErrorMsg().empty()) { //if the file does not exist
+  if (!srcFileServer->exists() || false==srcFileServer->getErrorMsg().empty()) { //if the file does not exist
 
     mfileTransfer.setStatus(3); //failed
     mfileTransfer.setSize(0); //failed
@@ -135,54 +154,60 @@ int FileTransferServer::addTransferThread(const SSHFile& file,const std::string&
 
     insertIntoDatabase();
 
-    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,file.getErrorMsg());
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,srcFileServer->getErrorMsg());
   }
 
-  std::cout << "file.getSize(): " << file.getSize()<< "\n";
-  mfileTransfer.setSize(file.getSize());
+  std::cout << "srcFileServer->getSize(): " << srcFileServer->getSize()<< "\n";
+  mfileTransfer.setSize(srcFileServer->getSize());
   mfileTransfer.setStart_time(0);
   std::cout << "coucou dans addCpthread avant copy \n";
 
+// create a TransferExec instance
+
+TransferExec transferExec(srcUser,srcMachineName,mfileTransfer.getSourceFilePath(), srcUserKey, destUser,destMachineName, mfileTransfer.getDestinationFilePath(),mfileTransfer.getTransferId());
+
+
   // create the thread to perform the copy
 
-  mthread = boost::thread(&FileTransferServer::copy,this, file, dest, options,mfileTransfer.getTransferId());
+  mthread = boost::thread(&FileTransferServer::copy,this, transferExec,trCmd);
   boost::posix_time::milliseconds sleepTime(1);
 
   //FIXME replace by a boost condition variable
-  while (ssh==NULL){
-
-    boost::this_thread::sleep(sleepTime);
-
-  } 
-  while (ssh->getProcessId()==-1) {
+  while (transferExec.getProcessId()==-1) {
 
     boost::this_thread::sleep(sleepTime);
 
   }
 
-  std::cout << "ssh->getProcessId(): " << ssh->getProcessId() << "\n";
+  
+  std::cout << "transferExec.getProcessId(): " << transferExec.getProcessId() << "\n";
 
-  insertIntoDatabase(ssh->getProcessId());
+  insertIntoDatabase(transferExec.getProcessId());
 
 }
 
 
-void FileTransferServer::copy(const SSHFile& file,const std::string& dest, const FMS_Data::CpFileOptions& options, const std::string& transferId){
+void FileTransferServer::copy(const TransferExec& transferExec, const std::string& trCmd)
+
+{
 
 
-  boost::scoped_ptr<FileTransferCommand> tr ( FileTransferCommand::getCopyCommand(options) );
+  //build the source and destination complete path
+  std::ostringstream srcCompletePath;
+  srcCompletePath << transferExec. getSrcUser() << "@"<<transferExec. getSrcMachineName() <<":"<<transferExec.getSrcPath();
+  std::cout << "srcCompletePath " <<srcCompletePath.str() << "\n";
 
-  std::string trCmd= tr->getCommand();
+  std::ostringstream destCompletePath;
+  destCompletePath << transferExec.getDestUser() << "@"<< transferExec.getDestMachineName() <<":"<<transferExec.getDestPath();
 
-  ssh=new SSHExec(file.sshCommand, file.scpCommand, file.sshHost, file.sshPort, file.sshUser, file.sshPassword,
-      file.sshPublicKey, file.sshPrivateKey);
+  std::cout << "destCompletePath " <<destCompletePath.str() << "\n";
 
 
   std::pair<std::string,std::string> trResult;
 
   //trResult = ssh.exec(trCmd + " " +getPath()+" "+dest + "\" " + "output.txt");
 
-  trResult = ssh->exec(trCmd + " " +file.getPath()+" "+dest );
+  trResult = transferExec.exec(trCmd + " " +transferExec.getSrcPath()+" "+destCompletePath.str() );
 
   std::cout << "*******trResult=" << trResult.first << std::endl;
  
@@ -190,21 +215,21 @@ void FileTransferServer::copy(const SSHFile& file,const std::string& dest, const
 
     std::cerr << "Warning found \n";
 
-    trResult = ssh->exec(trCmd + " "+ file.getPath()+" "+dest);
+  trResult = transferExec.exec(trCmd + " " +srcCompletePath.str()+" "+destCompletePath.str() );
 
   }
  
     if (trResult.second.length()!=0) {
 
       // The file transfer failed
-      updateStatus(3,transferId);
+      updateStatus(3,transferExec.getTransferId());
 
     //throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error transfering file: "+trResult.second);
 
   }else{
     // The file transfer is  now completed
    
-   updateStatus (1,transferId);
+   updateStatus (1,transferExec.getTransferId());
   }
 }
 
@@ -219,18 +244,19 @@ void FileTransferServer::updateStatus(const FMS_Data::Status& status,const std::
 }
 
 
-int FileTransferServer::addCpThread(const SSHFile& file,const std::string& dest, const FMS_Data::CpFileOptions& options){
+int FileTransferServer::addCpThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options){
 
-addTransferThread(file, dest, options);
-wait();
+addTransferThread(srcUser,srcMachineName,srcUserKey, destUser, destMachineName, options);
+waitThread();
 
 }
 
+int FileTransferServer::addCpAsyncThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options){
 
+addTransferThread(srcUser,srcMachineName,srcUserKey, destUser, destMachineName, options);
 
-int FileTransferServer::addCpAsyncThread( const SSHFile& file,const std::string& dest, const FMS_Data::CpFileOptions& options){
-addTransferThread( file, dest, options);
 }
+
 
 
 
@@ -245,14 +271,11 @@ int FileTransferServer::addMvAsyncThread(){
 }
 
 
-
-
-
-void FileTransferServer::wait (){
+void FileTransferServer::waitThread (){
 
   mthread.join();
-
 }
+
 
 
 
@@ -261,6 +284,196 @@ void FileTransferServer::wait (){
 int FileTransferServer::stopThread(const std::string& thrId){}
 
 
+
+
+void FileTransferServer::setSSHPort(const unsigned int sshPort){
+  msshPort=sshPort;
+}
+void FileTransferServer::setSSHCommand(const std::string& sshCommand){
+  msshCommand=sshCommand;
+}
+  
+const unsigned int FileTransferServer::getSSHPort(){
+  return msshPort;
+} 
+ const std::string& FileTransferServer::getSSHCommand( ){
+   return msshCommand;
+ }
+ 
+
+
+
+
+
+
+
+
+
+
+
+// TransferExec Class
+
+ TransferExec::TransferExec (const std::string& srcUser,
+                             const std::string& srcMachineName,
+                             const std::string& srcPath,
+                             const std::string& srcUserKey,
+                             const std::string& destUser,
+                             const std::string& destMachineName,
+                             const std::string& destPath,
+                             const std::string& transferId):msrcUser(srcUser),
+                             msrcMachineName(srcMachineName),
+                             msrcPath(srcPath),
+                             msrcUserKey(srcUserKey),
+                             mdestUser(destUser),
+                             mdestMachineName(destMachineName),
+                             mdestPath(destPath),                            
+                             mtransferId(transferId){}
+
+ const std::string& TransferExec::getSrcUser() const{
+return msrcUser;
+}
+
+const std::string& TransferExec::getSrcMachineName() const{
+return msrcMachineName;
+}
+
+const std::string& TransferExec::getSrcPath() const{
+return  msrcPath;
+}
+
+const std::string& TransferExec::getSrcUserKey() const{
+return msrcUserKey;
+}
+
+const std::string& TransferExec::getDestUser() const{
+return mdestUser;
+}
+
+const std::string& TransferExec::getDestMachineName() const{
+return  mdestMachineName;
+}
+
+const std::string& TransferExec::getDestPath() const{
+return mdestPath;
+}
+
+const std::string& TransferExec::getTransferId() const{
+return mtransferId;
+}
+
+
+const int& TransferExec::getProcessId() const{
+return mprocessId;
+}
+
+void TransferExec::setProcessId(const int&  processId) const{
+mprocessId=processId;
+}
+const int& TransferExec::getLastExecStatus() const{
+return lastExecStatus;
+}
+    
+std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) const{
+ vector<string> tokens;
+  ostringstream command;
+  pid_t pid;
+  pair<string,string> result;
+  int comPipeOut[2];
+  int comPipeErr[2];
+  int status;
+  char c;
+
+ /* command << sshCommand << " -i " << privateKey << " -l " << userName;
+  command << " -p " << sshPort << " " << server << " " << cmd;*/
+
+
+ command << FileTransferServer::getSSHCommand()  << " -l " << getSrcUser();
+  command << " -C"  << " -o BatchMode=yes " << " -o StrictHostKeyChecking=no";
+  command << " -o ForwardAgent=yes";
+ // command  << " -o ControlMaster=yes " << " -o ControlPath=/tmp/ssh-%r@%h:%p";
+  command << " -p " << FileTransferServer::getSSHPort() << " " << getSrcMachineName() << " " << cmd;
+
+
+  istringstream is(command.str());
+
+  copy(istream_iterator<string>(is),
+       istream_iterator<string>(),
+       back_inserter<vector<string> >(tokens));
+
+/***********************************************/
+
+vector<string>:: iterator ite;
+cout << endl;
+for (ite=tokens.begin(); ite!=tokens.end();++ite)
+cout << *ite << endl;
+char* argv[tokens.size()+1];
+  argv[tokens.size()]=NULL;
+
+  for (unsigned int i=0; i<tokens.size(); ++i)
+    argv[i]=strdup(tokens[i].c_str());
+
+  if (pipe(comPipeOut)==-1) {
+    for (unsigned int i=0; i<tokens.size(); ++i)
+      free(argv[i]);
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error creating communication pipe");
+  }
+  if (pipe(comPipeErr)==-1) {
+    for (unsigned int i=0; i<tokens.size(); ++i)
+      free(argv[i]);
+    close(comPipeOut[0]);
+    close(comPipeOut[1]);
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error creating communication pipe");
+  }
+  pid = fork();
+
+  if (pid==-1) {
+    for (unsigned int i=0; i<tokens.size(); ++i)
+      free(argv[i]);
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error forking process");
+  }
+  if (pid==0) {
+    close(comPipeOut[0]); /* Close unused read end */
+    close(comPipeErr[0]); /* Close unused write end */
+    dup2(comPipeOut[1], 1);
+    dup2(comPipeErr[1], 2);
+    close(comPipeOut[1]);
+    close(comPipeErr[1]);
+    if (execvp(argv[0], argv)) {
+      exit(-1);
+    }
+  }
+
+  // Store the child process id
+  setProcessId (pid);
+
+  close(comPipeOut[1]); /* Close unused write end */
+
+  close(comPipeErr[1]);/* Close unused write end */
+
+
+  while (read(comPipeOut[0], &c, 1))
+    result.first+=c;
+
+  while (read(comPipeErr[0], &c, 1))
+    result.second+=c;
+
+  if (waitpid(pid, &status, 0)==-1) {
+    close(comPipeOut[0]);
+    close(comPipeErr[0]);
+    for (unsigned int i=0; i<tokens.size(); ++i)
+      free(argv[i]);
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error executing command "+command.str());
+  }
+
+  close(comPipeOut[0]);
+  close(comPipeErr[0]);
+  for (unsigned int i=0; i<tokens.size(); ++i)
+    free(argv[i]);
+  lastExecStatus = status;
+  cout << "result.second    :" << result.second << endl;
+  return result;
+
+}
 
 
 
