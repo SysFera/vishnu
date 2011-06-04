@@ -1,6 +1,7 @@
 #include "ProcessCtl.hpp"
 #include <omniORB4/CORBA.h>
 #include "DIET_admin.h"
+#include "IMSVishnuException.hpp"
 
 ProcessCtl::ProcessCtl(string mid, UserServer user): mmid(mid),
 						     mp(user),
@@ -11,12 +12,25 @@ ProcessCtl::~ProcessCtl() {
 }
 
 void
-ProcessCtl::restart(IMS_Data::RestartOp_ptr op) {
+ProcessCtl::restart(IMS_Data::RestartOp_ptr op, bool isAPI) {
   string type;
   string cmd ;
-  string dest;
   mop = *op;
   IMS_Data::Process proc;
+  string keyPath;
+  string login;
+  string hostname;
+
+  // If call made by the api check admin
+  if (isAPI) {
+    if (!muser.isAdmin()) {
+    throw UMSVishnuException(ERRCODE_NO_ADMIN, "restart is an admin function. A user cannot call it");
+    }
+    mp.getSshKeyAndAcc(keyPath, login, mmid, muser.getData().getUserId(), hostname);
+  } else {
+    mp.getAnAdmin(keyPath, login, mmid, hostname);
+  }
+
   switch(mop.getSedType()) {
   case 1 : // UMS
     type = "UMS";
@@ -31,21 +45,21 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op) {
     type = "IMS";
     break;
   default:
-    throw SystemException(ERRCODE_SYSTEM, "Unknown component to restart type");
+    throw SystemException(ERRCODE_SYSTEM, "Unknown component to restart, type "+string(convertToString(mop.getSedType()))+" is unknown");
     break;
   }
   proc.setProcessName(type);
   proc.setMachineId(mmid);
   proc.setScript(mop.getVishnuConf());
 
+  // Keep blocks separated because no catch error when try to stop
   try {
-    // Filling the necessary data in the process (to stop it, diet id needed)
-    mp.fillContent(&proc);
     // Make sure the process is really not running on the machine
     stop(&proc);
   } catch (VishnuException &e) {
     // Do nothing, stop just to make sure the process is not running anymore    
   }
+
 
   char hname[200];
   gethostname(hname, 199);
@@ -55,12 +69,12 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op) {
     proc.setMachineId("");
   }
 
-  //  createFile (dest, &proc);
-  dest = proc.getScript();
+  createFile (cmd, &proc);
+  
 
   boost::to_lower(type);
   type += "sed";
-  cmd = type + " " + dest;
+  cmd += type + " /tmp/vishnu_restart";
   // If local
   if (proc.getMachineId().compare("")==0) {
     int ret = system(cmd.c_str());
@@ -68,7 +82,12 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op) {
       throw SystemException(ERRCODE_SYSTEM, "Failed to restart process "+type);
     }
   } else {
-    // TODO : faire le SSH  pour executer la commande  
+    // TODO : faire le SSH  pour executer la commande
+    string cmd = "ssh -i "+keyPath+" "+login+"@"+hostname+" \""+cmd+"\"";
+    int ret = system(cmd.c_str());
+    if (ret == -1) {
+      throw SystemException(ERRCODE_SYSTEM, "Failed to restart process "+type);
+    }
   }
 }
 
@@ -157,12 +176,7 @@ ProcessCtl::stopAll() {
 
 
 void 
-ProcessCtl::createFile(string& dest, IMS_Data::Process_ptr p) {
-  dest = "/tmp/vishnu_restart";
-  string cmd = "echo \""+p->getScript()+"\" > "+dest;
-  int res = system(cmd.c_str());
-  if (res == -1) {
-    throw SystemException(ERRCODE_SYSTEM, "Error creating restart file");
-  }
+ProcessCtl::createFile(string& cmd, IMS_Data::Process_ptr p) {
+  cmd = "echo \""+p->getScript()+"\" > /tmp/vishnu_restart; ";
 }
 
