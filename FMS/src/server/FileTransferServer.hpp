@@ -20,28 +20,29 @@
 class TransferExec{
 
 
-
   public:
 
-    TransferExec (const std::string& srcUser,
-                  const std::string& srcMachineName,
-                  const std::string& srcPath,
-                  const std::string& srcUserKey,
-                  const std::string& destUser,
-                  const std::string& destMachineName,
-                  const  std::string& destPath,
-                  const std::string& transferId);
+    TransferExec (const SessionServer& sessionServer,
+        const std::string& srcUser,
+        const std::string& srcMachineName,
+        const std::string& srcPath,
+        const std::string& srcUserKey,
+        const std::string& destUser,
+        const std::string& destMachineName,
+        const  std::string& destPath,
+        const std::string& transferId);
 
     const int& getLastExecStatus() const;
 
-const std::string& getSrcUser() const;
-const std::string& getSrcMachineName() const;
-const std::string& getSrcPath() const;
-const std::string& getSrcUserKey() const;
-const std::string& getDestUser() const;
-const std::string& getDestMachineName() const;
-const std::string& getDestPath() const;
-const std::string& getTransferId() const;
+    const SessionServer& getSessionServer() const;
+    const std::string& getSrcUser() const;
+    const std::string& getSrcMachineName() const;
+    const std::string& getSrcPath() const;
+    const std::string& getSrcUserKey() const;
+    const std::string& getDestUser() const;
+    const std::string& getDestMachineName() const;
+    const std::string& getDestPath() const;
+    const std::string& getTransferId() const;
 
     const int& getProcessId() const;
     void setProcessId(const int& processId)const;
@@ -54,6 +55,7 @@ const std::string& getTransferId() const;
     mutable int mprocessId;
     mutable std::string mtransferId;
 
+    SessionServer msessionServer;
     std::string msrcUser;
     std::string msrcMachineName;
     std::string msrcPath;
@@ -80,44 +82,47 @@ class FileTransferServer{
 
 
     FileTransferServer(const SessionServer& sessionServer,
-                    const std::string& srcHost,
-                   const std::string& destHost,
-                   const std::string& srcFilePath,
-                   const std::string& destFilePath,
-                   const int& vishnuId);
+        const std::string& srcHost,
+        const std::string& destHost,
+        const std::string& srcFilePath,
+        const std::string& destFilePath,
+        const int& vishnuId);
 
 
-int addCpThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options);
+    int addCpThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options);
 
 
-int addCpAsyncThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options);
+    int addCpAsyncThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options);
 
-    int  addMvThread();
-    int  addMvAsyncThread();
-  
+    int  addMvThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options);
+
+    int  addMvAsyncThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options);
+
     int stopThread(const std::string& thrId);
     const FMS_Data::FileTransfer& getFileTransfer() const; 
     void setFileTransfer( const FMS_Data::FileTransfer& fileTransfer) const; 
 
     static Database * getDatabaseInstance();
-static void setSSHPort(const unsigned int sshPort);
-  static void setSSHCommand(const std::string& sshCommand);
-  
-static const unsigned int getSSHPort();
-  static const std::string& getSSHCommand( );
-  
+    static void setSSHPort(const unsigned int sshPort);
+    static void setSSHCommand(const std::string& sshCommand);
+
+    static const unsigned int getSSHPort();
+    static const std::string& getSSHCommand( );
+
   private:
 
     void waitThread ();
     void getUserInfo(std::string& name, std::string& userId); 
 
-int addTransferThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options);
+    int addTransferThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options);
     void copy(const TransferExec& transferExec, const std::string& trCmd);
+    void move(const TransferExec& transferExec, const std::string& trCmd);
     int insertIntoDatabase(int processId=-1);
     void updateData();
     void updateStatus(const FMS_Data::Status& status,const std::string& transferId);
 
     int mvishnuId;
+    File::TransferType mtransferType;
     boost::thread mthread;
     SessionServer msessionServer;
     boost::mutex mmutex;
@@ -125,10 +130,10 @@ int addTransferThread(const std::string& srcUser,const std::string& srcMachineNa
 
     static unsigned int msshPort;
     static std::string msshCommand;
-    
+
     //TransferExec transferExec;
 
-  // static DbFactory mfactory;
+    // static DbFactory mfactory;
 };
 
 
