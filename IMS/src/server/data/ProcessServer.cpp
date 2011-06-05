@@ -199,3 +199,19 @@ ProcessServer::getAnAdmin(string &keyPath, string &login, string mmid, string& h
   keyPath= res.at(4);
   hostname = res.at(8);
 }
+
+
+// Return the last actif ims server
+string
+ProcessServer::getElectedHostname() {
+  string req = "select * from machine, process where machine.machineid=process.machineid and process.vishnuname='IMS' and process.pstatus='"+convertToString(PRUNNING)+"' order by uptime desc";
+  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
+  if(result->getNbTuples() == 0) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "No account found to restart on the machine");
+  }
+  vector<string> res;
+  res = result->get(0);
+  return string(res.at(2));
+}
+
+
