@@ -15,6 +15,10 @@
 
 using namespace std;
 
+/**
+ * \class ThresholdServer
+ * \brief Server that link the thresholds and the database
+ */
 class ThresholdServer{
 public:
   /**
@@ -57,6 +61,7 @@ private:
   /**
    * \brief Check if a threshold of this type on this machine is already defined
    * \param tree: The threshold
+   * \return True if the threshold already exist in the database
    */
   bool
   checkExist(IMS_Data::Threshold_ptr tree);
