@@ -12,6 +12,10 @@
 #include "data/ProcessServer.hpp"
 
 
+/**
+ * \class ProcessCtl
+ * \brief Class dealing wwith the control of the processes
+ */
 class ProcessCtl{
 public:
   /**

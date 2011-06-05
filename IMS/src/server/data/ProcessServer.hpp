@@ -15,6 +15,10 @@
 
 using namespace std;
 
+/**
+ * \class ProcessServer
+ * \brief Class linking the database and the processes
+ */
 class ProcessServer{
 public:
   /**
