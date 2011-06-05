@@ -45,6 +45,13 @@ public:
    * \param name: The name of the file filter
    */
   void setFilename(string name);
+  // ELECTION PROCESSUS IMS ACTIF LE PLUS RECENT
+  /**
+   * \brief Return true if the imssed is the last actif imssed
+   * \return True if the process is elected, false otherwise
+   */
+  bool
+  elect();
 protected:
 private:
   /**

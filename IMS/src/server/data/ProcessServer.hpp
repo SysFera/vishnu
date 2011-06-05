@@ -124,6 +124,12 @@ public:
   void
   getAnAdmin(string &keyPath, string &login, string mmid, string &hostname);
 
+  /**
+   * \brief Return the last actif ims server
+   * \return The last updated running IMS sed
+   */
+  string
+  getElectedHostname();
 
 protected:
 private:
