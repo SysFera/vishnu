@@ -113,9 +113,9 @@ int LocalFileProxy::transferFile(const string& dest,
                                  const TypeOfOption& options, 
                                  const std::string& serviceName,
                                  FileTransfer& fileTransfer) {
-  
+
   string host = FileProxy::extHost(dest);
-  string path = FileProxy::extName(dest);
+  string destPath = FileProxy::extName(dest);
   bfs::path localFullPath(bfs::current_path().string());
 
   if(getPath().compare(".")!=0){
@@ -151,6 +151,7 @@ int LocalFileProxy::transferFile(const string& dest,
     localFullPath=getPath();
 
   }
+
 
   //IN Parameters  
   
@@ -190,8 +191,8 @@ int LocalFileProxy::transferFile(const string& dest,
   /*To raise a vishnu exception if the received message is not empty*/
   raiseExceptionIfNotEmptyMsg(errMsg);
   } else {
-    diet_string_get(diet_parameter(profile, 5), &fileTransferInString, NULL);
-    diet_string_get(diet_parameter(profile, 6), &errMsg, NULL);
+    diet_string_get(diet_parameter(profile, 6), &fileTransferInString, NULL);
+    diet_string_get(diet_parameter(profile, 7), &errMsg, NULL);
 
     /*To raise a vishnu exception if the received message is not empty*/
     raiseExceptionIfNotEmptyMsg(errMsg);
@@ -220,10 +221,10 @@ int LocalFileProxy::mv(const string& dest, const CpFileOptions& options) {
 }
 
 int LocalFileProxy::cpAsync(const std::string& dest, const CpFileOptions& options, FileTransfer& fileTransfer) {
-  return transferFile(dest, options, "FileMoveAsync", fileTransfer);
+  return transferFile(dest, options, "FileCopyAsync", fileTransfer);
 }
 
 int LocalFileProxy::mvAsync(const std::string& dest, const CpFileOptions& options, FileTransfer& fileTransfer) {
-  return transferFile(dest, options, "FileCopyAsync", fileTransfer);
+  return transferFile(dest, options, "FileMoveAsync", fileTransfer);
 }
 
