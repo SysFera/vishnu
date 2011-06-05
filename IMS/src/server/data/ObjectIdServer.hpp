@@ -16,6 +16,10 @@
 
 using namespace std;
 
+/**
+ * \class ObjectIdServer
+ * \brief Class that implements the object id format server
+ */
 class ObjectIdServer{
 public:
   /**
@@ -50,6 +54,7 @@ protected:
 private:
   /**
    * \brief Test if fmt contains '$CPT' as a substring
+   * \param fmt: The format string to test
    * \return true if the string fmt contains the '$cpt' substring
    */
   bool
