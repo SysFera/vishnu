@@ -11,10 +11,16 @@
 #include "LogTool.hpp"
 #include "data/ProcessServer.hpp"
 
+/**
+ * \class IMSVishnuTool
+ * \brief Class that implements the log tool for the IMS SeD in VISHNU
+ */
 class IMSVishnuTool: public LogTool{
 public:
   /**
    * \brief Constructor
+   * \param argc: The argc of the main function
+   * \param argv: The argv of the main function
    */
   IMSVishnuTool(int argc, char** argv);
   /**
@@ -24,28 +30,32 @@ public:
   /**
    * \brief To run the program
    */
-  void run();
+  void 
+  run();
   /**
    * \brief To disconnect the tool
    * \return The disconnexion value
    */
-  int disconnect();
+  int 
+  disconnect();
   /**
    * \brief Function called when a message is received
    * \param msg: The message to send
    */
-  void sendMsg(const log_msg_buf_t& msg);
+  void 
+  sendMsg(const log_msg_buf_t& msg);
   /**
    * \brief To set the filter to use
-   * \param The path to the description file
+   * \param description_file: The path to the description file
    */
-  void setFilter(string description_file);
+  void 
+  setFilter(string description_file);
   /**
    * \brief To set the name of the output file
    * \param name: The name of the file filter
    */
-  void setFilename(string name);
-  // ELECTION PROCESSUS IMS ACTIF LE PLUS RECENT
+  void 
+  setFilename(string name);
   /**
    * \brief Return true if the imssed is the last actif imssed
    * \return True if the process is elected, false otherwise
@@ -56,6 +66,8 @@ protected:
 private:
   /**
    * \brief Extract hostname from log message
+   * \param msg: The message received from the log
+   * \return The hostname of the machine
    */
   string
   getHostnameFromLog(string msg);
@@ -64,7 +76,7 @@ private:
    */
   ProcessServer mproc;
   /**
-   * The size of the hostname
+   * \brief The size of the hostname
    */
   static const int HNAMESIZE = 200;
   /**

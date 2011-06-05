@@ -10,10 +10,17 @@
 
 #include "LogTool.hpp"
 
+/**
+ * \brief Type of tool to create
+ */
 typedef enum toolType{
   IMSVishnuTool_v1
 }toolType;
 
+/**
+ * \class ToolFactory
+ * \brief Factory to generate tools
+ */
 class ToolFactory{
 public:
   /**
