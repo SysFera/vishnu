@@ -228,8 +228,9 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	}
 	resOp.setSedType(ty);
 	resOp.setVishnuConf(p->getScript());
-	// TODO: FIXME, there should be an election to decide process that restarts it
-	ctl.restart(&resOp, false);
+	if (elect()) {
+	  ctl.restart(&resOp, false);
+	}// End elect
       } // end else ims out
     }// end if disconnexion
   }// End for
@@ -254,5 +255,12 @@ IMSVishnuTool::getHostnameFromLog(string msg){
   // Extracting hostname from msg
   int pos = msg.find_last_of(' ');
   return msg.substr(pos+1);
+}
+
+// ELECTION PROCESSUS IMS ACTIF LE PLUS RECENT
+bool
+IMSVishnuTool::elect() {
+  string elect = mproc.getElectedHostname();
+  return (elect.compare(msyshName)==0);
 }
 
