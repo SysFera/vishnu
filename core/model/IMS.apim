@@ -26,7 +26,7 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="process" direction="OUT" dataType="//@typeList/@types.7" description="The list of the Vishnu processes on the machine" shortOptionLetter=""/>
       <ports name="options" dataType="//@typeList/@types.15" description="The options to search for the processes" optional="true" shortOptionLetter="" defaultValueLiteral=""/>
-      <details key="description" value="This command allows an admin to get the VISHNU servers that are running on the whole infrastructure or on a single machine. The results contain  both the VISHNU identifier of the process and the DIET identifier. "/>
+      <details key="description" value="This command allows an admin to get the VISHNU servers that are running on the whole infrastructure or on a single machine. The results contain both the VISHNU identifier of the process and the DIET identifier. "/>
     </services>
     <services name="setSystemInfo" description="updates the system information of a machine" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
