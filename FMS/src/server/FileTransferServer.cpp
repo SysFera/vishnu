@@ -113,6 +113,7 @@ int FileTransferServer::insertIntoDatabase(int processId){
 
 void FileTransferServer::updateData(){
 
+  std::cout << "Coucou dans updateData() \n";
   std::string clientMachineName;
   std::string userId;
   getUserInfo( clientMachineName,  userId);
@@ -135,7 +136,6 @@ int FileTransferServer::addTransferThread(const std::string& srcUser,const std::
 
 
  boost::scoped_ptr<SSHFile> srcFileServer (new SSHFile(msessionServer, mfileTransfer.getSourceFilePath(),srcMachineName, srcUser, "", srcUserKey, "", FileTransferServer::getSSHPort(), FileTransferServer::getSSHCommand(), tr->getLocation()));
-
 
 
 
@@ -164,21 +164,26 @@ int FileTransferServer::addTransferThread(const std::string& srcUser,const std::
 
 // create a TransferExec instance
 
-TransferExec transferExec(srcUser,srcMachineName,mfileTransfer.getSourceFilePath(), srcUserKey, destUser,destMachineName, mfileTransfer.getDestinationFilePath(),mfileTransfer.getTransferId());
+TransferExec transferExec(msessionServer,srcUser,srcMachineName,mfileTransfer.getSourceFilePath(), srcUserKey, destUser,destMachineName, mfileTransfer.getDestinationFilePath(),mfileTransfer.getTransferId());
 
 
   // create the thread to perform the copy
 
+if(mtransferType==File::copy){
   mthread = boost::thread(&FileTransferServer::copy,this, transferExec,trCmd);
+}else if (mtransferType==File::move){
+  mthread = boost::thread(&FileTransferServer::move,this, transferExec,trCmd);
+}
+
   boost::posix_time::milliseconds sleepTime(1);
 
   //FIXME replace by a boost condition variable
+ 
   while (transferExec.getProcessId()==-1) {
 
     boost::this_thread::sleep(sleepTime);
 
   }
-
   
   std::cout << "transferExec.getProcessId(): " << transferExec.getProcessId() << "\n";
 
@@ -234,6 +239,25 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
 }
 
 
+void FileTransferServer::move(const TransferExec& transferExec, const std::string& trCmd){
+// perform the copy
+copy(transferExec,trCmd);
+// remove the source file
+FileFactory::setSSHServer(transferExec.getSrcMachineName());
+boost::scoped_ptr<File> file (FileFactory::getFileServer( transferExec.getSessionServer(),transferExec.getSrcPath(),
+                                                          transferExec.getSrcUser(),transferExec.getSrcUserKey() ) ) ;
+try{
+file->rm();
+}catch(...){
+updateStatus(3,transferExec.getTransferId());
+}
+
+
+}
+
+
+
+
 void FileTransferServer::updateStatus(const FMS_Data::Status& status,const std::string& transferId){
 
 
@@ -245,7 +269,7 @@ void FileTransferServer::updateStatus(const FMS_Data::Status& status,const std::
 
 
 int FileTransferServer::addCpThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options){
-
+mtransferType=File::copy;
 addTransferThread(srcUser,srcMachineName,srcUserKey, destUser, destMachineName, options);
 waitThread();
 
@@ -253,20 +277,23 @@ waitThread();
 
 int FileTransferServer::addCpAsyncThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options){
 
+mtransferType=File::copy;
 addTransferThread(srcUser,srcMachineName,srcUserKey, destUser, destMachineName, options);
 
 }
 
 
-
-
-
-int FileTransferServer::addMvThread(){
-  insertIntoDatabase();
+int FileTransferServer::addMvThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options){
+  
+  mtransferType=File::move;
+  addTransferThread(srcUser,srcMachineName,srcUserKey, destUser, destMachineName, options);
+  waitThread();
 }
 
-int FileTransferServer::addMvAsyncThread(){
-  insertIntoDatabase();
+int FileTransferServer::addMvAsyncThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options){
+ 
+  mtransferType=File::move;
+  addTransferThread(srcUser,srcMachineName,srcUserKey, destUser, destMachineName, options);
 
 }
 
@@ -313,14 +340,16 @@ const unsigned int FileTransferServer::getSSHPort(){
 
 // TransferExec Class
 
- TransferExec::TransferExec (const std::string& srcUser,
+ TransferExec::TransferExec (const SessionServer& sessionServer,
+                             const std::string& srcUser,
                              const std::string& srcMachineName,
                              const std::string& srcPath,
                              const std::string& srcUserKey,
                              const std::string& destUser,
                              const std::string& destMachineName,
                              const std::string& destPath,
-                             const std::string& transferId):msrcUser(srcUser),
+                             const std::string& transferId):msessionServer(sessionServer),
+                             msrcUser(srcUser),
                              msrcMachineName(srcMachineName),
                              msrcPath(srcPath),
                              msrcUserKey(srcUserKey),
@@ -328,6 +357,12 @@ const unsigned int FileTransferServer::getSSHPort(){
                              mdestMachineName(destMachineName),
                              mdestPath(destPath),                            
                              mtransferId(transferId){}
+
+
+const SessionServer& TransferExec::getSessionServer() const{
+  return msessionServer;
+}
+
 
  const std::string& TransferExec::getSrcUser() const{
 return msrcUser;

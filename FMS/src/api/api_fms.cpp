@@ -377,6 +377,17 @@ using namespace std;
         throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
       }
    
+      SessionProxy sessionProxy(sessionKey);
+
+      // FIXME use FileTransferProxy class to handle the copy
+
+      boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,src));
+
+      int result= f->mvAsync(dest,options,transferInfo);
+
+      return result; 
+
+
     }
 
    /**
