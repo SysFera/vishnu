@@ -6,6 +6,7 @@
 #include "DIET_server.h"
 // For gethostname
 #include <unistd.h>
+#include "controller/process/ProcessCtl.hpp"
 
 using namespace vishnu;
 
@@ -67,7 +68,7 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
   // DIET call parameters
   int service_number;
   diet_profile_desc_t **tab;
-
+  IMS_Data::RestartOp resOp;
   // For each message
   for (CORBA::ULong i=0; i<msg.length(); i++){
     string log = "";
@@ -143,6 +144,19 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	      p->setProcessName("IMS");
 	      mproc.authentifyProcess(p);
 	      break;
+	    }
+	    // else if FMS sed
+	    else if (string(tab[j]->path).compare("copyFile")==0) {
+	      log.append(msg[i].tag);
+	      log.append(":");
+	      //msg
+	      log.append(string(msg[i].msg)+", with type FMS");
+	      string t = getMidFromHost(msyshName);
+	      p->setMachineId(t);
+	      p->setDietId(string(msg[i].componentName));
+	      p->setProcessName("FMS");
+	      mproc.authentifyProcess(p);
+	      break;
 	    } // End else if ims
 	  }// end for
 	  for (unsigned j = 0 ; j<service_number ; j++) {
@@ -160,12 +174,29 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
     // If message of disconnexion
     if (string(msg[i].tag).compare("OUT")==0){
       string hname = getHostnameFromLog(string(msg[i].msg));
+      ProcessCtl ctl(getMidFromHost(hname), UserServer(SessionServer("")));
       // If it is on the same machine as the sed
       if (hname.compare(string(msyshName))){
 	log = "Disconnexion of the component with the name : " + string(msg[i].componentName);
 	p->setDietId(string(msg[i].componentName));
 	try{
 	  mproc.disconnectProcess(p);
+	  int ty;
+	  if(p->getProcessName().compare("UMS")==0) {
+	    ty = 1;
+	  } else if(p->getProcessName().compare("TMS")==0) {
+	    ty = 2;
+	  } else if(p->getProcessName().compare("FMS")==0) {
+	    ty = 3;
+	  } else if(p->getProcessName().compare("IMS")==0) {
+	    ty = 4;
+	  } else {
+	    throw SystemException(ERRCODE_SYSTEM, "Unknown component to restart, type is unknown");
+	  }
+	  resOp.setSedType(ty);
+	  resOp.setVishnuConf(p->getScript());
+	  // Restart a process disconnected, if the process was stopped with a stop call, no restart will be done
+	  ctl.restart(&resOp, false);
 	} catch(SystemException& e){
 	  throw (e);
 	}// end catch
@@ -175,16 +206,32 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
       }// end if same machine
       // If disconnexion of an IMS sed on an other machine, must set him as out
       else if (mproc.isIMSSeD(string(msg[i].componentName))){
-
-	/*******************************************************************************/
-	// TODO ELECT PROCESS
-	
-	// If not stopped voluntarily
-	
-	// SSH and reconnect
-	/*******************************************************************************/
-	
-      }
+	// Setting ims down
+	log = "Disconnexion of the component with the name : " + string(msg[i].componentName);
+	p->setDietId(string(msg[i].componentName));
+	try{
+	  mproc.disconnectProcess(p);
+	} catch(SystemException& e){
+	  throw (e);
+	}// end catch
+	int ty;
+	if(p->getProcessName().compare("UMS")==0) {
+	  ty = 1;
+	} else if(p->getProcessName().compare("TMS")==0) {
+	  ty = 2;
+	} else if(p->getProcessName().compare("FMS")==0) {
+	  ty = 3;
+	} else if(p->getProcessName().compare("IMS")==0) {
+	  ty = 4;
+	} else {
+	  throw SystemException(ERRCODE_SYSTEM, "Unknown component to restart, type is unknown");
+	}
+	resOp.setSedType(ty);
+	resOp.setVishnuConf(p->getScript());
+	if (elect()) {
+	  ctl.restart(&resOp, false);
+	}// End elect
+      } // end else ims out
     }// end if disconnexion
   }// End for
 }
@@ -208,5 +255,12 @@ IMSVishnuTool::getHostnameFromLog(string msg){
   // Extracting hostname from msg
   int pos = msg.find_last_of(' ');
   return msg.substr(pos+1);
+}
+
+// ELECTION PROCESSUS IMS ACTIF LE PLUS RECENT
+bool
+IMSVishnuTool::elect() {
+  string elect = mproc.getElectedHostname();
+  return (elect.compare(msyshName)==0);
 }
 

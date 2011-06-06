@@ -12,9 +12,16 @@
 
 using namespace std;
 
+/**
+ * \class LogTool
+ * \brief Root class to make a log tool in VISHNU
+ */
 class LogTool:  public POA_ToolMsgReceiver,
 		public PortableServer::RefCountServantBase{
 public:
+  /**
+   * \brief The size of the hostname
+   */
   static const int HOSTSIZE = 100;
   /**
    * \brief Constructor
@@ -40,7 +47,7 @@ public:
   virtual void sendMsg(const log_msg_buf_t& msg) = 0;
   /**
    * \brief To set the filter to use
-   * \param The path to the description file
+   * \param description_file: The path to the description file
    */
   virtual void setFilter(string description_file) = 0;
   /**
@@ -54,7 +61,7 @@ protected:
    */
   LogCentralTool_ptr mLCT;
   /**
-   * The name of the output log file
+   * \brief The name of the output log file
    */
   string mfilename;
   /**
