@@ -18,26 +18,23 @@ using namespace std;
 
 
 /**
- * \class TMSMapper
+ * \class TMSShellMapper
  * \brief Mapper implementation for the TMS module
  */
 class TMSShellMapper : public TMSMapper{
 public :
   /**
    * \brief Constructor
-   * \fn TMSMapper(MapperRegistry* reg, string name)
    * \param reg Registry to be linked to
    * \param name Name of the mapper
    */
   TMSShellMapper(MapperRegistry* reg, string name);
   /**
    * \brief Default constructor
-   * \fn TMSMapper()
    */
   TMSShellMapper();
   /**
    * \brief Destructor
-   * \fn ~TMSMapper()
    */
   ~TMSShellMapper();
 

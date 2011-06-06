@@ -19,7 +19,7 @@ class MetricProxy {
 public:
   /**
    * \brief Constructor
-   * \param The session connected
+   * \param session: The session connected
    */
   MetricProxy(const SessionProxy& session);
   /**
