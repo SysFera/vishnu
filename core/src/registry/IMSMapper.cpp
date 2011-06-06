@@ -24,8 +24,8 @@ IMSMapper::IMSMapper(MapperRegistry* reg, string na):Mapper(reg){
   mmap.insert (pair<int, string>(VISHNU_GET_HIST, "vishnu_get_history_metric"));
   mmap.insert (pair<int, string>(VISHNU_GET_PROC, "vishnu_get_processes"));
   mmap.insert (pair<int, string>(VISHNU_SET_SYSINF, "vishnu_set_system_info"));
-  mmap.insert (pair<int, string>(VISHNU_SET_THRESH, "vishnu_setSystemThreshold"));
-  mmap.insert (pair<int, string>(VISHNU_GET_THRESH, "vishnu_getSystemThreshold"));
+  mmap.insert (pair<int, string>(VISHNU_SET_THRESH, "vishnu_set_threshold"));
+  mmap.insert (pair<int, string>(VISHNU_GET_THRESH, "vishnu_get_threshold"));
   mmap.insert (pair<int, string>(VISHNU_DEFINE_UID, "vishnu_define_user_format"));
   mmap.insert (pair<int, string>(VISHNU_DEFINE_MID, "vishnu_define_machine_format"));
   mmap.insert (pair<int, string>(VISHNU_DEFINE_TID, "vishnu_define_job_format"));
