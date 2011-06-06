@@ -590,22 +590,154 @@ same conditions as regards security.</para>
               <entry><para>Normal execution of loadShed with LoadShedType SOFT</para></entry>
               <entry><para>The jobs launched on the corresponding batch scheduler are stopped</para></entry>
               <entry><para>The jobs launched on the corresponding batch scheduler are stopped</para></entry>
-	      <entry><para>0 <link linkend="Error"> A tester </link></para></entry>
+	      <entry><para>0 </para></entry>
             </row>
 	    <row>
               <entry><para>IA5-B Hard Load schedding </para></entry>
               <entry><para>Normal execution of loadShed with LoadShedType HARD</para></entry>
               <entry><para>All VISHNU elements are stopped</para></entry>
               <entry><para>All VISHNU elements are stopped</para></entry>
-	      <entry><para>0 <link linkend="Error">A tester</link></para></entry>
+	      <entry><para>0 <link linkend="Error">Not functional </link></para></entry>
             </row>
 	    <row>
              <entry><para>IA5-E1</para></entry>
               <entry><para>Bad machine Identifier</para></entry>
               <entry><para>VishnuException</para></entry>
               <entry><para>VishnuException</para></entry>
-              <entry><para>0</para></entry>
+              <entry><para>0 <link linkend="Error"> Not functional - exception VishnuException is expected </link></para></entry>
 	    </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+    
+    <section>
+      <title> IA9-B: Restart normal call </title>
+	<para><emphasis role = "italic"> API command: restart</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>IA9-B</para></entry>
+              <entry><para>Normal execution of restart</para></entry>
+              <entry><para>The sed UMS is restarted</para></entry>
+              <entry><para>The sed UMS is restarted</para></entry>
+	      <entry><para>0<link linkend="Error"> Not functional </link></para></entry>
+	    </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+    
+    <section>
+      <title> IA9-B: Stop </title>
+	<para><emphasis role = "italic"> API command: stop </emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>IA9-B</para></entry>
+              <entry><para>Normal execution of stop</para></entry>
+              <entry><para>The sed UMS on the remote machine is stopped</para></entry>
+              <entry><para>The sed UMS on the remote machine is stopped</para></entry>
+	      <entry><para>0<link linkend="Error"> Not functional </link></para></entry>
+	    </row>
+	    <row>
+              <entry><para>IA9-E1</para></entry>
+              <entry><para>Bad machine Identifier</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+	      <entry><para>0</para></entry>
+	    </row>
+	    <row>
+              <entry><para>IA9-E2</para></entry>
+              <entry><para>The remote process to stop is unknown</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+	      <entry><para>0</para></entry>
+	    </row>
+	    <row>
+              <entry><para>IA9-E3</para></entry>
+              <entry><para>stop is launched by a user who is not an administrator</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+	      <entry><para>0</para></entry>
+	    </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+   
+    <section>
+      <title> I3-B: Export and replay commands </title>
+	<para><emphasis role = "italic"> API command: exportCommands </emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>I3-B</para></entry>
+              <entry><para>Normal execution of exportCommands</para></entry>
+              <entry><para>The commands launched within an old session is exported </para></entry>
+              <entry><para>The commands launched within an old session is exported</para></entry>
+	      <entry><para>0</para></entry>
+	    </row>
+	    <row>
+              <entry><para>I3-E1</para></entry>
+              <entry><para>Bad old session Identifier</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+	      <entry><para>0</para></entry>
+	    </row>
+	    <row>
+              <entry><para>I3-E2</para></entry>
+              <entry><para>Bad file path</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+	      <entry><para>0</para></entry>
+	    </row>
+
           </tbody>
         </tgroup>
       </informaltable>
@@ -644,13 +776,13 @@ same conditions as regards security.</para>
                   <para>STR-SERV-DOWN</para>
                </entry>
                <entry>
-                  <para>05/05/11</para>
+                  <para>06/06/11</para>
                </entry>
                <entry>
-                  <para>The tms sed is stopped and restarted</para>
+                  <para>The ims sed is stopped and restarted</para>
                </entry>
                <entry>
-                  <para>submitJob</para>
+                  <para>setUpdateFrequency</para>
                </entry>
                <entry>
                   <para>Success - normal job submission</para>
@@ -662,7 +794,7 @@ same conditions as regards security.</para>
                   <para>STR-AGENT-DOWN</para>
                </entry>
                <entry>
-                  <para>05/05/11</para>
+                  <para>06/06/11</para>
                </entry>
                <entry>
                   <para>The SysFera-DS Agent is stopped and restarted </para>
@@ -672,23 +804,23 @@ same conditions as regards security.</para>
                   <para>failure</para>
                </entry>
                <entry>
-                  <para>The tms server must be restarted manually after the SysFera-DS is restarted</para>
+                  <para>The ims server must be restarted manually after the SysFera-DS Agent is restarted</para>
                </entry>
             </row>
 	    
 	     <row>
                <entry>
-                  <para>STR-BATCH-DOWN</para>
+                  <para>STR-DB-DOWN</para>
                </entry>
                <entry>
-                  <para>05/05/11</para>
+                  <para>06/06/11</para>
                </entry>
                <entry>
                   <para> The batch scheduler is stopped and the command submitJob is launched</para>
                </entry>
 	       
 	       <entry>
-                  <para>submitJob</para>
+                  <para>getUpdateFrequency</para>
                </entry>
 	       
                <entry>
