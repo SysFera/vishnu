@@ -20,6 +20,10 @@ static const std::string IMSSHELLMAPPERNAME = "IMSSHELL";
 static const std::string FMSSHELLMAPPERNAME = "FMSSHELL";
 
 
+/**
+ * \class ShellExporter
+ * \brief Class to export in shell format
+ */
 class ShellExporter: public ExportServer{
 public:
   /**
