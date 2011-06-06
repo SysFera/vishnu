@@ -18,26 +18,23 @@ using namespace std;
 
 
 /**
- * \class IMSMapper
+ * \class IMSShellMapper
  * \brief Mapper implementation for the IMS module
  */
 class IMSShellMapper : public IMSMapper{
 public :
   /**
    * \brief Constructor
-   * \fn IMSMapper(MapperRegistry* reg, string name)
    * \param reg Registry to be linked to
    * \param name Name of the mapper
    */
   IMSShellMapper(MapperRegistry* reg, string name);
   /**
    * \brief Default constructor
-   * \fn IMSMapper()
    */
   IMSShellMapper();
   /**
    * \brief Destructor
-   * \fn ~IMSMapper()
    */
   ~IMSShellMapper();
 

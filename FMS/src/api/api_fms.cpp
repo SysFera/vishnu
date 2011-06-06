@@ -203,13 +203,8 @@ int vishnu::copyFile(const string& sessionKey,const string& src, const string& d
       throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
     }    
 
-
-    SessionProxy sessionProxy(sessionKey);
-
-    boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,src));
-
-    int result= f->cp(dest,options);
-
+    FileTransferProxy fileTransferProxy(sessionKey, src, dest);
+    int result = fileTransferProxy.addCpThread(options);
     return result; 
 
   }
@@ -233,9 +228,8 @@ throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
   }
 
   FileTransferProxy fileTransferProxy(sessionKey, src, dest);
-  int result = fileTransferProxy.addCpThread(options);
+  int result = fileTransferProxy.addCpAsyncThread(options);
   transferInfo = fileTransferProxy.getFileTransfer();
-
   return result; 
 
 }
@@ -323,30 +317,29 @@ int vishnu::listDir(const string& sessionKey,const string& path, StringList& dir
 
   }
 
-/**
- * \brief move a file
- * \param sessionKey the session key
- * \param src   the "source" file path using host:path format
- * \param dest  the "destination" file path using host:path format
- * \param options   contains the options used to perform the service (like the transfer command :scp or rsync)
- * \return 0 if everything is OK, another value otherwise
- */
-int vishnu::moveFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options)
-  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
+ /**
+   * \brief move a file in synchronous mode
+   * \param sessionKey the session key
+   * \param src:   the "source" file path using host:path format
+   * \param dest:  the "destination" file path using host:path format
+   * \param transferInfo contains different information about the submitted file
+   * transfer (like the transfer identifier) 
+   * \param options   contains the options used to perform the service (like the transfer command :scp or rsync)
+   * \return 0 if everything is OK, another value otherwise
+   */
+  int vishnu::moveFile(const string& sessionKey,const string& src, const string& dest,const CpFileOptions& options)
+    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
+    
+      if((options.getTrCommand() < -1) || options.getTrCommand() > 1) {
+        throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
+      }
+   
+      FileTransferProxy fileTransferProxy(sessionKey, src, dest);
+      int result = fileTransferProxy.addMvThread(options);
+      return result; 
 
-    if((options.getTrCommand() < -1) || options.getTrCommand() > 1) {
-      throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
+
     }
-
-    SessionProxy sessionProxy(sessionKey);
-
-    boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,src));
-
-    int result= f->mv(dest,options);
-  
-    return result; 
-  }
-
 /**
  * \brief move a file in a asynchronous mode
  * \param sessionKey the session key
@@ -366,7 +359,7 @@ throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
   }
 
   FileTransferProxy fileTransferProxy(sessionKey, src, dest);
-  int result = fileTransferProxy.addMvThread(options);
+  int result = fileTransferProxy.addMvAsyncThread(options);
   transferInfo = fileTransferProxy.getFileTransfer();
 }
 

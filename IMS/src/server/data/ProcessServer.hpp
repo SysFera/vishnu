@@ -15,6 +15,10 @@
 
 using namespace std;
 
+/**
+ * \class ProcessServer
+ * \brief Class linking the database and the processes
+ */
 class ProcessServer{
 public:
   /**
@@ -104,6 +108,32 @@ public:
    */
   void
   fillContent(IMS_Data::Process_ptr p);
+  /**
+   * \brief To get the sshkey and login on the machine mmid for the user uid
+   * \param keyPath: The path to the ssh key
+   * \param login: The account login of the user on the machine
+   * \param mmid: Vishnu machine id
+   * \param uid: Vishnu user id of the user
+   * \param hostname: hostname of the machine
+   */
+  void
+  getSshKeyAndAcc(string &keyPath, string &login, string mmid, string uid, string &hostname);
+  /**
+   * \brief To get the sshkey and login on the machine mmid for an admin
+   * \param keyPath: The path to the ssh key
+   * \param login: The account login of the user on the machine
+   * \param mmid: Vishnu machine id
+   * \param hostname: hostname of the machine
+   */
+  void
+  getAnAdmin(string &keyPath, string &login, string mmid, string &hostname);
+
+  /**
+   * \brief Return the last actif ims server
+   * \return The last updated running IMS sed
+   */
+  string
+  getElectedHostname();
 
 protected:
 private:

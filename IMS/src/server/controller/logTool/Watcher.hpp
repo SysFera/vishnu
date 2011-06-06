@@ -12,6 +12,10 @@
 #include "LogTool.hpp"
 
 
+/**
+ * \class Watcher
+ * \brief Class that contain the main function to run the log tool
+ */
 class Watcher{
 public:
   /**

@@ -23,7 +23,7 @@ int FileTransferProxy::addCpThread(const CpFileOptions& options){
 
   boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,msrcFilePath));
 
-  int result= f->cpAsync(mdestFilePath,options,mtransferInfo);
+  int result= f->cp(mdestFilePath,options);
 
   return result;
 
@@ -35,10 +35,38 @@ int FileTransferProxy::addMvThread(const CpFileOptions& options){
 
   boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,msrcFilePath));
 
+  int result= f->mv(mdestFilePath,options);
+
+  return result;
+}
+
+int FileTransferProxy::addCpAsyncThread(const CpFileOptions& options){
+  
+  SessionProxy sessionProxy(msessionKey);
+
+  boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,msrcFilePath));
+
+  int result= f->cpAsync(mdestFilePath,options,mtransferInfo);
+
+  return result;
+
+}
+
+int FileTransferProxy::addMvAsyncThread(const CpFileOptions& options){
+
+  SessionProxy sessionProxy(msessionKey);
+
+  boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,msrcFilePath));
+
   int result= f->mvAsync(mdestFilePath,options,mtransferInfo);
 
   return result;
 }
+
+
+
+
+
 
 int FileTransferProxy::stopThread(const StopTransferOptions& options) {
 
