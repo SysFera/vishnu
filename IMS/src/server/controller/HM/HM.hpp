@@ -18,8 +18,9 @@ class HM{
 public:
   /**
    * \brief Constructor
+   * \param mail: The script to send mails
    */
-  HM();
+  HM(string mail);
   /**
    * \brief Destructor
    */

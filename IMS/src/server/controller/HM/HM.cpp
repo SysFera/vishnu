@@ -4,7 +4,7 @@
 
 #include "utilServer.hpp"
 
-HM::HM():mms(UserServer(SessionServer(""))){
+HM::HM(string mail):mms(UserServer(SessionServer("")), mail){
   
 }
 
