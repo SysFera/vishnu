@@ -63,7 +63,7 @@ makeListFileTransferTrOpt(string pgName,
       fuserId);
 
  opt->add("status,s",
-      "The file transfer status. The different values of job status are:\n"
+      "The file transfer status. The different  available status are:\n"
       "0 or I: for INPROGRESS file transfer\n"
       "1 or T: for COMPLETED file transfer\n"
       "2 or C: for CANCELLED file transfer\n"

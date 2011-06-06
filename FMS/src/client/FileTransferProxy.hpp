@@ -22,6 +22,11 @@ class FileTransferProxy{
 
     int addMvThread(const FMS_Data::CpFileOptions& options);
 
+    int addCpAsyncThread(const FMS_Data::CpFileOptions& options);
+
+    int addMvAsyncThread(const FMS_Data::CpFileOptions& options);
+
+
     int stopThread(const FMS_Data::StopTransferOptions& options);
 
     const FMS_Data::FileTransfer& getFileTransfer() const;
