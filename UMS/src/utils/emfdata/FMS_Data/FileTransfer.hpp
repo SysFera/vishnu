@@ -191,6 +191,17 @@ namespace FMS_Data
          **/
         void setTrCommand(::FMS_Data::TransferCommand _trCommand);
 
+        /**
+         * \brief To get the errorMsg
+         * \return The errorMsg attribute value
+         **/
+        ::ecore::EString const& getErrorMsg() const;
+        /**
+         * \brief To set the errorMsg
+         * \param _errorMsg The errorMsg value
+         **/
+        void setErrorMsg(::ecore::EString const& _errorMsg);
+
         // References
 
 
@@ -237,6 +248,8 @@ namespace FMS_Data
         ::ecore::ELong m_start_time;
 
         ::FMS_Data::TransferCommand m_trCommand;
+
+        ::ecore::EString m_errorMsg;
 
         // References
 

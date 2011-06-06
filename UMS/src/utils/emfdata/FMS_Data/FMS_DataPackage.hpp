@@ -304,19 +304,24 @@ namespace FMS_Data
         static const int FILETRANSFER__TRCOMMAND = 35;
 
         /**
+         * \brief Constant for FILETRANSFER__ERRORMSG feature
+         */
+        static const int FILETRANSFER__ERRORMSG = 36;
+
+        /**
          * \brief Constant for FILETRANSFERLIST__FILETRANSFERS feature
          */
-        static const int FILETRANSFERLIST__FILETRANSFERS = 36;
+        static const int FILETRANSFERLIST__FILETRANSFERS = 37;
 
         /**
          * \brief Constant for HEADOFFILEOPTIONS__NLINE feature
          */
-        static const int HEADOFFILEOPTIONS__NLINE = 37;
+        static const int HEADOFFILEOPTIONS__NLINE = 38;
 
         /**
          * \brief Constant for TAILOFFILEOPTIONS__NLINE feature
          */
-        static const int TAILOFFILEOPTIONS__NLINE = 38;
+        static const int TAILOFFILEOPTIONS__NLINE = 39;
 
         // EClassifiers methods
 
@@ -629,6 +634,12 @@ namespace FMS_Data
         virtual ::ecore::EAttribute_ptr getFileTransfer__trCommand();
 
         /**
+         * \brief Returns the reflective object for feature errorMsg of class FileTransfer
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getFileTransfer__errorMsg();
+
+        /**
          * \brief Returns the reflective object for feature fileTransfers of class FileTransferList
          * \return A pointer to the reflective object
          */
@@ -918,6 +929,11 @@ namespace FMS_Data
          * \brief The instance for the feature trCommand of class FileTransfer
          */
         ::ecore::EAttribute_ptr m_FileTransfer__trCommand;
+
+        /**
+         * \brief The instance for the feature errorMsg of class FileTransfer
+         */
+        ::ecore::EAttribute_ptr m_FileTransfer__errorMsg;
 
         /**
          * \brief The instance for the feature fileTransfers of class FileTransferList

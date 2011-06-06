@@ -30,6 +30,7 @@ CREATE TABLE fileTransfer (
   startTime TIMESTAMP,
   trCommand INTEGER,
   processId INTEGER,
+  errorMsg TEXT,
 PRIMARY KEY(numfileTransferid),
     FOREIGN KEY(vsession_numsessionid)
     REFERENCES vsession(numsessionid) ON DELETE CASCADE);

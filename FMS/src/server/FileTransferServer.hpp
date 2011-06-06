@@ -118,9 +118,9 @@ class FileTransferServer{
     int addTransferThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options);
     void copy(const TransferExec& transferExec, const std::string& trCmd);
     void move(const TransferExec& transferExec, const std::string& trCmd);
-    int insertIntoDatabase(int processId=-1);
+    int logIntoDatabase(int processId=-1,const std::string& errorMsg="");
     void updateData();
-    void updateStatus(const FMS_Data::Status& status,const std::string& transferId);
+    void updateStatus(const FMS_Data::Status& status,const std::string& transferId,const std::string& errorMsg);
 
     int mvishnuId;
     File::TransferType mtransferType;

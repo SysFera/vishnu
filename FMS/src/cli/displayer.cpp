@@ -373,6 +373,7 @@ operator<<(std::ostream& os, FileTransfer& fileTransfer) {
   os << setw(maxSize) << "------------ transfer infomation for file " << fileTransfer.getTransferId() << std::endl;
   os << setw(maxSize) << right << "transferId: " << fileTransfer.getTransferId()   << std::endl;
   os << setw(maxSize) << right << "status: " << ConvertFileTransferStatusToString(fileTransfer.getStatus())   << std::endl;
+  os << setw(maxSize) << right << "errorMsg: " << fileTransfer.getErrorMsg()  << std::endl;
   os << setw(maxSize) << right << "userId: " << fileTransfer.getUserId()   << std::endl;
   os << setw(maxSize) << right << "clientMachineId: " << fileTransfer.getClientMachineId()   << std::endl;
   os << setw(maxSize) << right << "sourceMachineId: " << fileTransfer.getSourceMachineId()   << std::endl;

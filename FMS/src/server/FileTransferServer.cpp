@@ -13,10 +13,10 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sstream>
-
+#include <boost/algorithm/string.hpp>
 using namespace std;
 
-
+namespace ba=boost::algorithm;
 unsigned int FileTransferServer::msshPort=22;
 std::string FileTransferServer::msshCommand="/usr/bin/ssh";
 
@@ -82,7 +82,6 @@ void FileTransferServer::getUserInfo( std::string& clientMachineName, std::strin
 }
 
 
-
 const FMS_Data::FileTransfer& FileTransferServer::getFileTransfer() const{
 
   return mfileTransfer;
@@ -94,15 +93,16 @@ void FileTransferServer::setFileTransfer( const FMS_Data::FileTransfer& fileTran
 } 
 
 
-int FileTransferServer::insertIntoDatabase(int processId){
+int FileTransferServer::logIntoDatabase(int processId, const std::string& errorMsg){
  
+  std::string errorMsgCleaned=ba::erase_all_copy(ba::erase_all_copy(errorMsg,":"),"'");
 
   std::string numsession = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
   std::string sqlInsert= "insert into fileTransfer (vsession_numsessionid,userId,clientMachineId,sourceMachineId, "
-    "destinationMachineId,sourceFilePath,destinationFilePath, transferid,status,fileSize,trCommand,processid,startTime)"
+    "destinationMachineId,sourceFilePath,destinationFilePath, transferid,status,fileSize,trCommand,processid,errorMsg,startTime)"
     "values ("+numsession+",'"+mfileTransfer.getUserId()+"','"+ mfileTransfer.getClientMachineId()+"','"+mfileTransfer.getSourceMachineId()+"','"+mfileTransfer.getDestinationMachineId()+"','"
     +mfileTransfer.getSourceFilePath()+"','"+mfileTransfer.getDestinationFilePath() +"','"+mfileTransfer.getTransferId()+"',"+convertToString(mfileTransfer.getStatus())+","
-    +convertToString(mfileTransfer.getSize())+","+convertToString(mfileTransfer.getTrCommand())+","+convertToString(processId)+",CURRENT_TIMESTAMP)";
+    +convertToString(mfileTransfer.getSize())+","+convertToString(mfileTransfer.getTrCommand())+","+convertToString(processId)+",'"+errorMsgCleaned+"'" +",CURRENT_TIMESTAMP)";
 
   std::cout << "sqlInsert: " << sqlInsert << "\n";
 
@@ -152,7 +152,7 @@ int FileTransferServer::addTransferThread(const std::string& srcUser,const std::
 
     mfileTransfer.setStart_time(0);
 
-    insertIntoDatabase();
+    logIntoDatabase(-1,srcFileServer->getErrorMsg());
 
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,srcFileServer->getErrorMsg());
   }
@@ -187,7 +187,7 @@ if(mtransferType==File::copy){
   
   std::cout << "transferExec.getProcessId(): " << transferExec.getProcessId() << "\n";
 
-  insertIntoDatabase(transferExec.getProcessId());
+  logIntoDatabase(transferExec.getProcessId());
 
 }
 
@@ -195,7 +195,6 @@ if(mtransferType==File::copy){
 void FileTransferServer::copy(const TransferExec& transferExec, const std::string& trCmd)
 
 {
-
 
   //build the destination complete path
 
@@ -224,14 +223,14 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
     if (trResult.second.length()!=0) {
 
       // The file transfer failed
-      updateStatus(3,transferExec.getTransferId());
+      updateStatus(3,transferExec.getTransferId(),trResult.second);
 
     //throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error transfering file: "+trResult.second);
 
   }else{
     // The file transfer is  now completed
    
-   updateStatus (1,transferExec.getTransferId());
+   updateStatus (1,transferExec.getTransferId(),"");
   }
 }
 
@@ -252,8 +251,8 @@ void FileTransferServer::move(const TransferExec& transferExec, const std::strin
           transferExec.getSrcUser(),transferExec.getSrcUserKey() ) ) ;
     try{
       file->rm(true);
-    }catch(...){
-      updateStatus(3,transferExec.getTransferId());
+    }catch(VishnuException& err){
+      updateStatus(3,transferExec.getTransferId(),err.what() );
       transferExec.setLastExecStatus(1);
 
     }
@@ -264,10 +263,10 @@ void FileTransferServer::move(const TransferExec& transferExec, const std::strin
 
 
 
-void FileTransferServer::updateStatus(const FMS_Data::Status& status,const std::string& transferId){
+void FileTransferServer::updateStatus(const FMS_Data::Status& status,const std::string& transferId, const std::string& errorMsg){
 
-
-  std::string sqlUpdateRequest = "UPDATE fileTransfer SET status="+convertToString(status)+" where transferid='"+transferId+"'";
+  std::string errorMsgCleaned=ba::erase_all_copy(ba::erase_all_copy(errorMsg,":"),"'");
+  std::string sqlUpdateRequest = "UPDATE fileTransfer SET status="+convertToString(status)+", errorMsg='"+errorMsgCleaned+"'"+ " where transferid='"+transferId+"'";
 
   FileTransferServer::getDatabaseInstance()->process(sqlUpdateRequest.c_str());
 
