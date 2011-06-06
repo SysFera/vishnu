@@ -24,20 +24,23 @@ public:
   /**
    * \brief Constructor
    * \param session: A session to use for the call
+   * \param mail: The script to send mails
    */
-  MetricServer(const UserServer session);
+  MetricServer(const UserServer session, string mail);
   /**
    * \brief Constructor
    * \param session: A session to use for the call
    * \param op: Options for the get metric history call
+   * \param mail: The script to send mails
    */
-  MetricServer(const UserServer session, IMS_Data::MetricHistOp_ptr op);
+  MetricServer(const UserServer session, IMS_Data::MetricHistOp_ptr op, string mail);
   /**
    * \brief Constructor
    * \param session: A session to use for the call
    * \param op: Options for the get current metric value call
+   * \param mail: The script to send mails
    */
-  MetricServer(const UserServer session, IMS_Data::CurMetricOp_ptr op);
+  MetricServer(const UserServer session, IMS_Data::CurMetricOp_ptr op, string mail);
   /**
    * \brief Destructor
    */
@@ -86,9 +89,10 @@ private:
    * \param type: The type of the threshold
    * \param email: The email adress
    * \param uid: The user id of the user target
+   * \param mid: The machine id of the machine where the threshold is reached
    */
   void
-  sendMail(int val, int threshold, int type, string email, string uid);
+  sendMail(int val, int threshold, int type, string email, string uid, string mid);
   /**
    * \brief The position of the frequency in the vishnu table
    */
@@ -113,6 +117,10 @@ private:
    * \brief The name of the command
    */
   string mcommandName;
+  /**
+   * \brief The process to send mails
+   */
+  string msendmail;
   /**
    * \brief The options for the history of metrics
    */
