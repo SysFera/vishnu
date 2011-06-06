@@ -63,7 +63,6 @@ namespace vishnu {
    * \brief To get the values of the metrics on a machine
    * \param sessionKey: The session key gotten after connection
    * \param machineId: The id of the machine
-   * \param type: The type of metric to get
    * \param list: OUT, the set of metrics
    * \param op: The options to get the metrics
    * \return int : an error code

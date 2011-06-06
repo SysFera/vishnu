@@ -1,3 +1,4 @@
+
 /**
  * \file ProcessCtl.hpp
  * \brief This file defines the class to control the processes
@@ -11,6 +12,10 @@
 #include "data/ProcessServer.hpp"
 
 
+/**
+ * \class ProcessCtl
+ * \brief Class dealing wwith the control of the processes
+ */
 class ProcessCtl{
 public:
   /**
@@ -23,9 +28,11 @@ public:
   ~ProcessCtl();
   /**
    * \brief To relaunch a process
+   * \param op: Options for restarting
+   * \param isAPI: If called with the external API or not
    */
   void
-  restart(IMS_Data::RestartOp_ptr op);
+  restart(IMS_Data::RestartOp_ptr op, bool isAPI = true);
   /**
    * \brief To stop a process
    */
