@@ -9,20 +9,20 @@
 
 using namespace vishnu;
 
-MetricServer::MetricServer(const UserServer session):msession(session) {
+MetricServer::MetricServer(const UserServer session, string mail):msession(session), msendmail(mail) {
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
   mvishnuId = 1;
   mfreq = 0;
 }
-MetricServer::MetricServer(const UserServer session, IMS_Data::MetricHistOp_ptr op):msession(session){
+MetricServer::MetricServer(const UserServer session, IMS_Data::MetricHistOp_ptr op, string mail):msession(session), msendmail(mail) {
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
   mhop = op;
   mvishnuId = 1;
   mfreq = 0;
 }
-MetricServer::MetricServer(const UserServer session, IMS_Data::CurMetricOp_ptr op):msession(session){
+MetricServer::MetricServer(const UserServer session, IMS_Data::CurMetricOp_ptr op, string mail):msession(session), msendmail(mail) {
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
   mcop = op;
@@ -121,19 +121,31 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
     case 1 : //cpu
       cpu = set->getMetric().get(i)->getValue();
       if (static_cast<int>(cpu)<cpu_thre.getValue()) {
-	sendMail(static_cast<int>(cpu), cpu_thre.getValue(), 1, cpu_user.getEmail(), cpu_user.getUserId());
+	try {
+	  sendMail(static_cast<int>(cpu), cpu_thre.getValue(), 1, cpu_user.getEmail(), cpu_user.getUserId(), mid);
+	} catch (SystemException& e) {
+	  throw (e);
+	}
       }
       break;
     case 3 : //disk
       disk = set->getMetric().get(i)->getValue();
       if (static_cast<int>(disk)<disk_thre.getValue()) {
-	sendMail(static_cast<int>(disk), disk_thre.getValue(), 3, disk_user.getEmail(), disk_user.getUserId());
+	try {
+	  sendMail(static_cast<int>(disk), disk_thre.getValue(), 3, disk_user.getEmail(), disk_user.getUserId(), mid);
+	} catch (SystemException& e) {
+	  throw (e);
+	}
       }
       break;
     case 5: //mem
       mem = set->getMetric().get(i)->getValue();
       if (static_cast<int>(mem)<mem_thre.getValue()) {
-	sendMail(static_cast<int>(mem), mem_thre.getValue(), 5, mem_user.getEmail(), mem_user.getUserId());
+	try {
+	  sendMail(static_cast<int>(mem), mem_thre.getValue(), 5, mem_user.getEmail(), mem_user.getUserId(), mid);
+	} catch (SystemException& e) {
+	  throw (e);
+	}
       }
       break;
     default:
@@ -330,6 +342,75 @@ MetricServer::getHistMet(string machineId){
 
 
 void
-MetricServer::sendMail(int val, int threshold, int type, string email, string uid){
-  
+MetricServer::sendMail(int val, int threshold, int type, string email, string uid, string machine){
+  std::ostringstream command;
+  std::vector<std::string> tokens;
+  string stype;
+  int pid;
+
+  // If no email script given, to not try to send, because in some occasions there may be a threshold reached but the object does not know about the script (a user call throught the api)
+  if (msendmail.empty()) {
+    return;
+  }
+  // Convert type from int to string for the email
+  switch (type) {
+  case 1:
+    stype = "cpuload";
+    break;
+  case 3:
+    stype = "free diskspace";
+    break;
+  case 5:
+    stype = "free memory";
+    break;
+  default:
+    throw SystemException(ERRCODE_SYSTEM, "Error during the creation of the process for sending mail to the user with the userId:" +uid);
+  }
+  string subject = "[VISHNU] Threshold reached";
+  string content = "WARNING: The threshold of type "+stype+" and with the value of "+convertToString(threshold)+" has been reached with the value "+convertToString(val)+" on the machine "+machine;
+  // To build the script command
+  command << msendmail << " --to " << email << " -s ";
+
+  std::istringstream is(command.str());
+  std::copy(std::istream_iterator<std::string>(is),
+  std::istream_iterator<std::string>(),
+  std::back_inserter<std::vector<std::string> >(tokens));
+
+  char* argv[tokens.size()+6];
+  argv[tokens.size()+5]=NULL;
+  //Use of tokens
+  for (unsigned int i = 0; i < tokens.size(); ++i) {
+    argv[i]=strdup(tokens[i].c_str());
+  }
+  //To avoid mutiple values by using tokens because of spaces
+  argv[tokens.size()]=strdup(subject.c_str());
+  argv[tokens.size()+1]=strdup(content.c_str());
+  //To execute the script on background
+  argv[tokens.size()+2]=strdup(std::string(" 1>/dev/null ").c_str());
+  argv[tokens.size()+3]=strdup(std::string(" 2>/dev/null ").c_str());
+  argv[tokens.size()+4]=strdup(std::string(" & ").c_str());
+
+  pid = fork();
+  if (pid == -1) {//if an error occurs during fork
+    for (unsigned int i=0; i<tokens.size()+5; ++i) {
+      free(argv[i]);
+    }
+    throw SystemException(ERRCODE_SYSTEM, "Error during the creation of the process for sending mail to the user with the userId:" +uid);
+  }
+
+  if (pid == 0) {//if the child process
+    freopen("dev/null", "r", stdin);
+    freopen("dev/null", "w", stdout);
+    freopen("dev/null", "w", stderr);
+
+    if (execv(argv[0], argv) == -1) {
+      for (unsigned int i=0; i<tokens.size()+5; ++i) {
+      free(argv[i]);
+      }
+      exit(1);
+    }
+  }
+  for (unsigned int i=0; i<tokens.size()+5; ++i) {
+    free(argv[i]);
+  }
 }
