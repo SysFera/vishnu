@@ -21,7 +21,7 @@ class ObjectIdProxy {
 public:
   /**
    * \brief Constructor
-   * \param The session connected
+   * \param session: The session connected
    */
   ObjectIdProxy(const SessionProxy& session);
   /**
