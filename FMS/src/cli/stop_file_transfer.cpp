@@ -71,12 +71,12 @@ int main (int argc, char* argv[]){
   string sessionKey;
 
    /********** EMF data ************/
-  FMS_Data::StopTransferOptions stopFileTranderOptions;
+  FMS_Data::StopTransferOptions stopFileTransferOptions;
 
   /******** Callback functions ******************/
-  boost::function1<void, string> ftranferId(boost::bind(&FMS_Data::StopTransferOptions::setTransferId, boost::ref(stopFileTranderOptions),_1));
-  boost::function1<void, string> ffromMachineId(boost::bind(&FMS_Data::StopTransferOptions::setFromMachineId, boost::ref(stopFileTranderOptions),_1));
-  boost::function1<void, string> fuserId(boost::bind(&FMS_Data::StopTransferOptions::setUserId, boost::ref(stopFileTranderOptions),_1));
+  boost::function1<void, string> ftranferId(boost::bind(&FMS_Data::StopTransferOptions::setTransferId, boost::ref(stopFileTransferOptions),_1));
+  boost::function1<void, string> ffromMachineId(boost::bind(&FMS_Data::StopTransferOptions::setFromMachineId, boost::ref(stopFileTransferOptions),_1));
+  boost::function1<void, string> fuserId(boost::bind(&FMS_Data::StopTransferOptions::setUserId, boost::ref(stopFileTransferOptions),_1));
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt= makeStopFileTrOpt(argv[0], dietConfig, ftranferId, ffromMachineId, fuserId);
@@ -113,7 +113,7 @@ int main (int argc, char* argv[]){
     // DIET call 
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
-      stopFileTransfer(sessionKey, stopFileTranderOptions);
+      stopFileTransfer(sessionKey, stopFileTransferOptions);
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
