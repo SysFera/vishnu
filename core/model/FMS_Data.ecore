@@ -247,6 +247,11 @@
         <details key="content" value="The command used for the file transfer (scp or rsync)"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="errorMsg" eType="ecore:EDataType Ecore.ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The eventual error message if the file transfer failed"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FileTransferList" instanceTypeName="FileTransferList">
     <eStructuralFeatures xsi:type="ecore:EReference" name="fileTransfers" upperBound="-1"

@@ -120,6 +120,12 @@ void FileTransfer::_initialize()
                 _any, m_trCommand);
     }
         return _any;
+    case ::FMS_Data::FMS_DataPackage::FILETRANSFER__ERRORMSG:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_errorMsg);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -196,6 +202,12 @@ void FileTransfer::eSet(::ecore::EInt _featureID,
                 _newValue, m_trCommand);
     }
         return;
+    case ::FMS_Data::FMS_DataPackage::FILETRANSFER__ERRORMSG:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_errorMsg);
+    }
+        return;
 
     }
     throw "Error";
@@ -234,6 +246,9 @@ void FileTransfer::eSet(::ecore::EInt _featureID,
         return m_start_time != 0;
     case ::FMS_Data::FMS_DataPackage::FILETRANSFER__TRCOMMAND:
         return m_trCommand != -1;
+    case ::FMS_Data::FMS_DataPackage::FILETRANSFER__ERRORMSG:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_errorMsg);
 
     }
     throw "Error";
