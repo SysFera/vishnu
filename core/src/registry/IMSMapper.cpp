@@ -197,7 +197,7 @@ IMSMapper::decodeExp(vector<int> separator, const string& msg) {
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
   res += u;
   res += " ";
-  u    = msg.substr(separator.at(1)+1, separator.at(2)-separator.at(1));
+  u    = msg.substr(separator.at(1)+1, separator.at(2)-separator.at(1)-1);
   res += u;
   res += " ";
   u    = msg.substr(separator.at(2)+1, msg.size()-separator.at(2));
