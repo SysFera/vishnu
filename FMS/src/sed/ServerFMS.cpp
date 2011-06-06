@@ -322,16 +322,6 @@ ServerFMS::init(int vishnuId,
 
 
 
-
-
-
-
-
-
-
-
-
-
   // List file transfer
 
   mprofile = getFileTransfersListProfile();
