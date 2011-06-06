@@ -135,11 +135,11 @@ int FileTransferServer::addTransferThread(const std::string& srcUser,const std::
   std::string trCmd= tr->getCommand();
 
 
- boost::scoped_ptr<SSHFile> srcFileServer (new SSHFile(msessionServer, mfileTransfer.getSourceFilePath(),srcMachineName, srcUser, "", srcUserKey, "", FileTransferServer::getSSHPort(), FileTransferServer::getSSHCommand(), tr->getLocation()));
+  boost::scoped_ptr<SSHFile> srcFileServer (new SSHFile(msessionServer, mfileTransfer.getSourceFilePath(),srcMachineName, srcUser, "", srcUserKey, "", FileTransferServer::getSSHPort(), FileTransferServer::getSSHCommand(), tr->getLocation()));
 
 
 
- mfileTransfer.setTrCommand(options.getTrCommand());
+  mfileTransfer.setTrCommand(options.getTrCommand());
 
   mfileTransfer.setStatus(0); //INPPROGRESS
 
@@ -291,14 +291,18 @@ addTransferThread(srcUser,srcMachineName,srcUserKey, destUser, destMachineName, 
 int FileTransferServer::addMvThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options){
   
   mtransferType=File::move;
-  addTransferThread(srcUser,srcMachineName,srcUserKey, destUser, destMachineName, options);
+  FMS_Data::CpFileOptions mvOptions(options);
+  mvOptions.setIsRecursive(true);
+  addTransferThread(srcUser,srcMachineName,srcUserKey, destUser, destMachineName,mvOptions);
   waitThread();
 }
 
 int FileTransferServer::addMvAsyncThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options){
  
   mtransferType=File::move;
-  addTransferThread(srcUser,srcMachineName,srcUserKey, destUser, destMachineName, options);
+  FMS_Data::CpFileOptions mvOptions(options);
+  mvOptions.setIsRecursive(true);
+  addTransferThread(srcUser,srcMachineName,srcUserKey, destUser, destMachineName,mvOptions);
 
 }
 
