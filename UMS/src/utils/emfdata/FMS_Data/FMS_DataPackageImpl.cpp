@@ -265,6 +265,11 @@ FMS_DataPackage::FMS_DataPackage()
             ::FMS_Data::FMS_DataPackage::FILETRANSFER__TRCOMMAND);
     m_FileTransferEClass->getEStructuralFeatures().push_back(
             m_FileTransfer__trCommand);
+    m_FileTransfer__errorMsg = new ::ecore::EAttribute();
+    m_FileTransfer__errorMsg->setFeatureID(
+            ::FMS_Data::FMS_DataPackage::FILETRANSFER__ERRORMSG);
+    m_FileTransferEClass->getEStructuralFeatures().push_back(
+            m_FileTransfer__errorMsg);
 
     // FileTransferList
     m_FileTransferListEClass = new ::ecore::EClass();
@@ -863,6 +868,20 @@ FMS_DataPackage::FMS_DataPackage()
     m_FileTransfer__trCommand->setUnique(true);
     m_FileTransfer__trCommand->setDerived(false);
     m_FileTransfer__trCommand->setOrdered(true);
+    m_FileTransfer__errorMsg->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_FileTransfer__errorMsg->setName("errorMsg");
+    m_FileTransfer__errorMsg->setDefaultValueLiteral("");
+    m_FileTransfer__errorMsg->setLowerBound(0);
+    m_FileTransfer__errorMsg->setUpperBound(1);
+    m_FileTransfer__errorMsg->setTransient(false);
+    m_FileTransfer__errorMsg->setVolatile(false);
+    m_FileTransfer__errorMsg->setChangeable(true);
+    m_FileTransfer__errorMsg->setUnsettable(false);
+    m_FileTransfer__errorMsg->setID(false);
+    m_FileTransfer__errorMsg->setUnique(true);
+    m_FileTransfer__errorMsg->setDerived(false);
+    m_FileTransfer__errorMsg->setOrdered(true);
     // FileTransferList
     m_FileTransferListEClass->setName("FileTransferList");
     m_FileTransferListEClass->setAbstract(false);
@@ -1289,6 +1308,10 @@ FMS_DataPackage::FMS_DataPackage()
 ::ecore::EAttribute_ptr FMS_DataPackage::getFileTransfer__trCommand()
 {
     return m_FileTransfer__trCommand;
+}
+::ecore::EAttribute_ptr FMS_DataPackage::getFileTransfer__errorMsg()
+{
+    return m_FileTransfer__errorMsg;
 }
 ::ecore::EReference_ptr FMS_DataPackage::getFileTransferList__fileTransfers()
 {
