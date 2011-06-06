@@ -97,7 +97,7 @@ int main(int argc, char* argv[], char* envp[]) {
 
 
   // History maker thread
-  HM hm = HM();
+  HM hm = HM(sendmailScriptPath);
   thread thr2(bind(&HM::run, &hm));
 //  thr2.join();
 //  thr1.join();

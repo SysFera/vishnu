@@ -361,9 +361,13 @@ IMSMapper::decodeSetThre(vector<int> separator, const string& msg) {
   if(!parseEmfObject(u, ac)) {
     throw IMSVishnuException(ERRCODE_INVALID_PARAM);
   }
+
   res += convertToString(ac->getValue());
+  res += " ";
   res += ac->getMachineId();
+  res += " ";
   res += convertToString(ac->getType());
+  res += " ";
   res += ac->getHandler();
   return res;
 }
