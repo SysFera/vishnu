@@ -496,7 +496,7 @@ solveSetThreshold(diet_profile_t* pb){
   try {
     // Getting options
     if(!parseEmfObject(string(tree), treeinf)) {
-      throw UserException(ERRCODE_INVALID_PARAM, "solve_setSysInfo: system info object is not well built");
+      throw UserException(ERRCODE_INVALID_PARAM, "solve_setThreshold: system info object is not well built");
     }
     userServer.init();
     //MAPPER CREATION

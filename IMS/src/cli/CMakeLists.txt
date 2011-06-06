@@ -40,8 +40,8 @@ set(ALLCLI
   define_machine_format
   define_transfer_format
   define_job_format
-  set_system_threshold
-  get_system_threshold
+  set_threshold
+  get_threshold
   restart
   stop
   load_shed
