@@ -11,7 +11,7 @@ INSERT INTO machine(vishnu_vishnuid, name, site, machineid, status) values (1, '
 UPDATE machine SET nummachineid=1 where machineid='machine_1';
 INSERT INTO description(machine_nummachineid, lang, description) values(1, 'ang', 'nutella');
 UPDATE description SET numdescriptionid=1 where description='nutella';
-INSERT INTO machine(vishnu_vishnuid, name, site, machineid, status) values (1, '@TEST_DISTANT_HOSTNAME@', 'Japan', 'machine_2', '1');
+INSERT INTO machine(vishnu_vishnuid, name, site, machineid, status) values (1, '@TEST_REMOTE_HOSTNAME@', 'Japan', 'machine_2', '1');
 UPDATE machine SET nummachineid=2 where machineid='machine_2';
 INSERT INTO description(machine_nummachineid, lang, description) values(2, 'jap', 'tokyo');
 UPDATE description SET numdescriptionid=2 where description='tokyo';
