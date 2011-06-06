@@ -47,11 +47,12 @@ class TransferExec{
     const int& getProcessId() const;
     void setProcessId(const int& processId)const;
 
+    void setLastExecStatus(const int& status) const;
     std::pair<std::string, std::string> exec(const std::string& cmd) const;
 
 
   private:
-    mutable int lastExecStatus;
+    mutable int mlastExecStatus;
     mutable int mprocessId;
     mutable std::string mtransferId;
 
