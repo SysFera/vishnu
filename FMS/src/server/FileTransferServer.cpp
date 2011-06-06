@@ -197,10 +197,7 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
 {
 
 
-  //build the source and destination complete path
-  std::ostringstream srcCompletePath;
-  srcCompletePath << transferExec. getSrcUser() << "@"<<transferExec. getSrcMachineName() <<":"<<transferExec.getSrcPath();
-  std::cout << "srcCompletePath " <<srcCompletePath.str() << "\n";
+  //build the destination complete path
 
   std::ostringstream destCompletePath;
   destCompletePath << transferExec.getDestUser() << "@"<< transferExec.getDestMachineName() <<":"<<transferExec.getDestPath();
@@ -220,7 +217,7 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
 
     std::cerr << "Warning found \n";
 
-  trResult = transferExec.exec(trCmd + " " +srcCompletePath.str()+" "+destCompletePath.str() );
+  trResult = transferExec.exec(trCmd + " " +transferExec.getSrcPath()+" "+destCompletePath.str() );
 
   }
  
@@ -240,19 +237,28 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
 
 
 void FileTransferServer::move(const TransferExec& transferExec, const std::string& trCmd){
-// perform the copy
-copy(transferExec,trCmd);
-// remove the source file
-FileFactory::setSSHServer(transferExec.getSrcMachineName());
-boost::scoped_ptr<File> file (FileFactory::getFileServer( transferExec.getSessionServer(),transferExec.getSrcPath(),
-                                                          transferExec.getSrcUser(),transferExec.getSrcUserKey() ) ) ;
-try{
-file->rm();
-}catch(...){
-updateStatus(3,transferExec.getTransferId());
-}
 
+  std::cout << "********************** Coucou dans FileTransferServer::move******************** \n";  
+  // perform the copy
+  copy(transferExec,trCmd);
+  int lastExecStatus=transferExec.getLastExecStatus();
+  std::cout<< "last exec status: " << lastExecStatus<< "\n";
 
+  if (lastExecStatus==0){
+
+    // remove the source file
+    FileFactory::setSSHServer(transferExec.getSrcMachineName());
+    boost::scoped_ptr<File> file (FileFactory::getFileServer( transferExec.getSessionServer(),transferExec.getSrcPath(),
+          transferExec.getSrcUser(),transferExec.getSrcUserKey() ) ) ;
+    try{
+      file->rm(true);
+    }catch(...){
+      updateStatus(3,transferExec.getTransferId());
+      transferExec.setLastExecStatus(1);
+
+    }
+
+  }
 }
 
 
@@ -405,9 +411,16 @@ void TransferExec::setProcessId(const int&  processId) const{
 mprocessId=processId;
 }
 const int& TransferExec::getLastExecStatus() const{
-return lastExecStatus;
+return mlastExecStatus;
 }
-    
+
+void TransferExec::setLastExecStatus(const int& lastExecStatus) const{
+
+ mlastExecStatus=lastExecStatus;
+}
+
+
+
 std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) const{
  vector<string> tokens;
   ostringstream command;
@@ -504,7 +517,7 @@ char* argv[tokens.size()+1];
   close(comPipeErr[0]);
   for (unsigned int i=0; i<tokens.size(); ++i)
     free(argv[i]);
-  lastExecStatus = status;
+  mlastExecStatus = status;
   cout << "result.second    :" << result.second << endl;
   return result;
 
