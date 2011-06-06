@@ -63,8 +63,9 @@ static const string userId = "user_1";
 static const string userPwd = "toto";
 static const string sqlPath = IMSSQLPATH;
 static const string machineId="machine_1";
-static const string machineDistantId="machine_2";
+static const string remoteMachineId="machine_2";
 static const string badMachineId="unknown_name";
+static const string sshCmd =" ssh -o PasswordAuthentication=no ";
 
 // The database, UMS and IMS SeD are launched by IMSSedFixture.
 BOOST_GLOBAL_FIXTURE(IMSSeDFixture)
@@ -84,7 +85,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     //List Metric
     IMS_Data::ListMetric list;
     IMS_Data::MetricHistOp op;
-    //Set FREEMOMORY metric
+    //Set FREEMEMORY metric
     op.setType(5);
 
     try {
@@ -243,7 +244,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
 
   BOOST_AUTO_TEST_CASE(get_system_load_threshold_for_no_admin_user_call) {
 
-    BOOST_TEST_MESSAGE("Use case IA2.1 – E2: Get a system load threshold with no admin user");
+    BOOST_TEST_MESSAGE("Use case IA2.1 – E3: Get a system load threshold with no admin user");
     VishnuConnection vc(userId, userPwd);
     // get the session key and the machine identifier
     string sessionKey=vc.getSessionKey();
@@ -912,7 +913,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     VishnuConnection vc(adminId, adminPwd);
     // get the session key and the machine identifier
     string sessionKey=vc.getSessionKey();
-    //Set loadShedType to 1: SOFT
+    //Set loadShedType to 2: SOFT
     IMS_Data::LoadShedType loadShedType = 2;
     //Job
     const std::string scriptFilePath= TMSSCRIPTSPATH "/torque_script";
@@ -948,15 +949,103 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     }
   }
 
+  //IA4.1-B : Hard load schedding normal
+  //Hard load schedding: normal call
+  BOOST_AUTO_TEST_CASE( load_schedding_hard_normal_call) {
+
+    BOOST_TEST_MESSAGE("Use case IA4.1-B: Hard load schedding normal call");
+
+    VishnuConnection vc(adminId, adminPwd);
+    // get the session key and the machine identifier
+    string sessionKey=vc.getSessionKey();
+    //Set loadShedType to 1: HARD
+    IMS_Data::LoadShedType loadShedType = 1;
+    string cmd;
+    //The distant machine on which the process UMS will be stopped
+    IMS_Data::ListProcesses listProcess;
+    IMS_Data::ProcessOp op;
+    op.setMachineId(remoteMachineId);
+    //The process to stop
+    IMS_Data::Process process;
+    process.setMachineId(remoteMachineId);
+    process.setProcessName("UMS");
+    int ret =-1;
+    bool umssedFound = false;
+
+    try {
+      //To clean all seds on the remote machine
+      cmd = sshCmd+ string(IMSREMOTEHOSTNAME) +" \" killall umssed; killall tmssed;"
+            "killall imssed \" 1>/dev/null 2>>test.log &";
+      BOOST_MESSAGE ("cmd:" << cmd);
+      ret = system(cmd.c_str());
+      if (ret < 0) {
+        BOOST_MESSAGE("remote seds cleaning failed\n");
+      }
+      sleep(4);
+      //To launch a remote umssed
+      cmd = sshCmd+ string(IMSREMOTEHOSTNAME) +" \" source "+  string(IMSPATHSCRIPTREMOTEUMSSED) +
+      " \"  1>/dev/null 2>>test.log &";
+
+      BOOST_MESSAGE ("cmd:" << cmd);
+      ret = system(cmd.c_str());
+      //For waiting remote sed launching
+      sleep(7);
+      BOOST_REQUIRE(ret != -1);
+      BOOST_CHECK_EQUAL(getProcesses(sessionKey, listProcess, op),0  );
+      BOOST_REQUIRE(listProcess.getProcess().size() != 0);
+      //To check if the process UMS exists
+      for(unsigned int i = 0; i < listProcess.getProcess().size(); i++) {
+        BOOST_MESSAGE (" listProcess.getProcess().size():" <<  listProcess.getProcess().size());
+        //To check umssed process
+        if (listProcess.getProcess().get(i)->getProcessName().compare("UMS") == 0) {
+          umssedFound = true;
+        }
+      }
+      //To clear the list
+      listProcess.getProcess().clear();
+      //To check if the process ums has been found on the list of machine_2
+      BOOST_REQUIRE(umssedFound ==  true);
+      //Launch load schedding HARD
+      BOOST_CHECK_EQUAL(loadShed(sessionKey, remoteMachineId, loadShedType), 0);
+      BOOST_CHECK_EQUAL(getProcesses(sessionKey, listProcess, op),0  );
+      BOOST_REQUIRE(listProcess.getProcess().size() != 0);
+      //To set umssedFound to false
+      umssedFound = false;
+      //To check if the process UMS is stopped and it is not on the list
+      for(unsigned int i = 0; i < listProcess.getProcess().size(); i++) {
+        BOOST_MESSAGE (" listProcess.getProcess().size():" <<  listProcess.getProcess().size());
+        //To check umssed process
+        if (listProcess.getProcess().get(i)->getProcessName().compare("UMS") == 0) {
+          umssedFound = true;
+        }
+      }
+      //To check if the process ums has not been found on the list because it is stopped
+      BOOST_REQUIRE(umssedFound ==  false);
+    }
+    catch (VishnuException& e) {
+      BOOST_MESSAGE("FAILED\n");
+      BOOST_MESSAGE(e.what());
+      BOOST_CHECK(false);
+      //To clean all seds on the remote machine
+      cmd = sshCmd+ string(IMSREMOTEHOSTNAME) +" \" killall umssed; killall tmssed;"
+      "killall imssed \" 1>/dev/null 2>>test.log &";
+      BOOST_MESSAGE ("cmd:" << cmd);
+      ret = system(cmd.c_str());
+      if (ret < 0) {
+        BOOST_MESSAGE("remote seds cleaning failed\n");
+      }
+    }
+  }
+
   //IA4.1-E1 : Soft load schedding with bad machine Id
   //Soft load schedding: bad machine Id
-  BOOST_AUTO_TEST_CASE(load_schedding_soft_bad_machine_Id_call) {
+  BOOST_AUTO_TEST_CASE(load_schedding_bad_machine_Id_call) {
 
     BOOST_TEST_MESSAGE("Use case IA4.1-E1: Soft load schedding with bad machine Id");
     VishnuConnection vc(adminId, adminPwd);
     // get the session key and the machine identifier
     string sessionKey=vc.getSessionKey();
-    //Set loadShedType to 1: SOFT
+    //Set loadShedType to 2: SOFT
     IMS_Data::LoadShedType loadShedType = 2;
 
     BOOST_CHECK_THROW(loadShed(sessionKey, badMachineId, loadShedType), VishnuException);
@@ -979,6 +1068,114 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     BOOST_CHECK_THROW(loadShed(sessionKey, machineId, loadShedType), VishnuException);
   }*/
 
+  //IA9-B:  Restart normal call
+  //Restart: normal call
+  BOOST_AUTO_TEST_CASE( restart_normal_call ) {
+
+    BOOST_TEST_MESSAGE("Use case IA9-B: Restart normal call");
+    bool umssedFound = false;
+    VishnuConnection vc(adminId, adminPwd);
+    // get the session key and the machine identifier
+    string sessionKey=vc.getSessionKey();
+    //The distant machine on which the process UMS will be stopped
+    IMS_Data::ListProcesses listProcess;
+    IMS_Data::ProcessOp op;
+    op.setMachineId(remoteMachineId);
+    //The process to stop
+    IMS_Data::Process process;
+    process.setMachineId(remoteMachineId);
+    process.setProcessName("UMS");
+    int ret =-1;
+    string cmd;
+    IMS_Data::RestartOp restartOp;
+    //1 represents UMS Sed type
+    restartOp.setSedType(1);
+    try {
+      //To clean all seds on the remote machine
+      cmd = sshCmd+ string(IMSREMOTEHOSTNAME) +" \" killall umssed; killall tmssed;"
+      "killall imssed \" 1>/dev/null 2>>test.log &";
+      BOOST_MESSAGE ("cmd:" << cmd);
+      ret = system(cmd.c_str());
+      if (ret < 0) {
+        BOOST_MESSAGE("remote seds cleaning failed\n");
+      }
+      sleep(4);
+      //To launched UMS sed on distant machine
+      cmd = sshCmd+ string(IMSREMOTEHOSTNAME) +" \" source "+
+            string(IMSPATHSCRIPTREMOTEUMSSED) + " \"  1>/dev/null 2>>test.log &";
+      BOOST_MESSAGE ("cmd:" << cmd);
+      ret = system(cmd.c_str());
+      sleep(7);
+      BOOST_REQUIRE(ret != -1);
+      BOOST_CHECK_EQUAL(getProcesses(sessionKey, listProcess, op),0  );
+      BOOST_REQUIRE(listProcess.getProcess().size() != 0);
+      //To check if the process UMS exists
+      for(unsigned int i = 0; i < listProcess.getProcess().size(); i++) {
+        BOOST_MESSAGE (" listProcess.getProcess().size():" <<  listProcess.getProcess().size());
+        //To check umssed process
+        if (listProcess.getProcess().get(i)->getProcessName().compare("UMS") == 0) {
+          umssedFound = true;
+        }
+      }
+      //To clear the list
+      listProcess.getProcess().clear();
+      //To check if the process ums has been found on the list of machine_2
+      BOOST_REQUIRE(umssedFound ==  true);
+      //To stop manually the umssed on the remote machine
+      cmd = sshCmd+ string(IMSREMOTEHOSTNAME) +" \" killall umssed \" 1>/dev/null 2>>test.log &";
+      BOOST_MESSAGE ("cmd:" << cmd);
+      ret = system(cmd.c_str());
+      if (ret < 0) {
+        BOOST_MESSAGE("remote seds cleaning failed\n");
+      }
+      sleep(4);
+      //To get the list of seds on the remote machine
+      BOOST_CHECK_EQUAL(getProcesses(sessionKey, listProcess, op),0  );
+      BOOST_REQUIRE(listProcess.getProcess().size() != 0);
+      //To set umssedFound to false
+      umssedFound = false;
+      //To check if the process UMS is stopped and not on the list
+      for(unsigned int i = 0; i < listProcess.getProcess().size(); i++) {
+        BOOST_MESSAGE (" listProcess.getProcess().size():" <<  listProcess.getProcess().size());
+        //To check umssed process
+        if (listProcess.getProcess().get(i)->getProcessName().compare("UMS") == 0) {
+          umssedFound = true;
+        }
+      }
+      //To clear the list
+      listProcess.getProcess().clear();
+      //To check if the process ums has not been found on the list because it is stopped
+      BOOST_REQUIRE(umssedFound ==  false);
+      //To restart the umssed on the remote machine
+      BOOST_CHECK_EQUAL(restart(sessionKey, remoteMachineId, restartOp),0  );
+       //To get the list of seds on the remote machine
+      BOOST_CHECK_EQUAL(getProcesses(sessionKey, listProcess, op),0  );
+      BOOST_REQUIRE(listProcess.getProcess().size() != 0);
+      //To check if the process UMS exists on the list of remote process
+      for(unsigned int i = 0; i < listProcess.getProcess().size(); i++) {
+        BOOST_MESSAGE (" listProcess.getProcess().size():" <<  listProcess.getProcess().size());
+        //To check umssed process
+        if (listProcess.getProcess().get(i)->getProcessName().compare("UMS") == 0) {
+          umssedFound = true;
+        }
+      }
+      //To check if the process ums has been restarted
+      BOOST_REQUIRE(umssedFound ==  true);
+    }
+    catch (VishnuException& e) {
+      BOOST_MESSAGE("FAILED\n");
+      BOOST_MESSAGE(e.what());
+      BOOST_CHECK(false);
+      //To clean all seds on the remote machine
+      cmd = sshCmd+ string(IMSREMOTEHOSTNAME) +" \" killall umssed; killall tmssed;"
+            "killall imssed \" 1>/dev/null 2>>test.log &";
+      BOOST_MESSAGE ("cmd:" << cmd);
+      ret = system(cmd.c_str());
+      if (ret < 0) {
+        BOOST_MESSAGE("remote seds cleaning failed\n");
+      }
+    }
+  }
   //TODO: Kévine ==> Ajouter use case dans Specs Genérales
   //IA9-B:  Stop normal call
   //Stop: normal call
@@ -992,22 +1189,26 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     //The distant machine on which the process UMS will be stopped
     IMS_Data::ListProcesses listProcess;
     IMS_Data::ProcessOp op;
-    op.setMachineId(machineDistantId);
+    op.setMachineId(remoteMachineId);
     //The process to stop
     IMS_Data::Process process;
-    process.setMachineId(machineDistantId);
+    process.setMachineId(remoteMachineId);
     process.setProcessName("UMS");
     int ret =-1;
     string cmd;
-
     try {
+      //To clean all seds on the remote machine
+      cmd = sshCmd+ string(IMSREMOTEHOSTNAME) +" \" killall umssed; killall tmssed;"
+      "killall imssed \" 1>/dev/null 2>>test.log &";
+      BOOST_MESSAGE ("cmd:" << cmd);
+      ret = system(cmd.c_str());
+      if (ret < 0) {
+        BOOST_MESSAGE("remote seds cleaning failed\n");
+      }
+      sleep(4);
       //To launched UMS sed on distant machine
-      //string cmd = " export OMNIORB_CONFIG=/home/hudson/workspace/IMS1/build/test_files/cfg/omniORB4_testing.cfg ; ssh "+ string(IMSDISTANTHOSTNAME) +" \""+  string(IMSPATHDISTANTUMSSED) + " "
-      //            + string(IMSPATHCONFIGDISTANTUMSSED)+ "\" &";//1>/dev/null 2>>test.log &";
-
-      cmd = " ssh "+ string(IMSREMOTEHOSTNAME) +" \" source "+  string(IMSPATHSCRIPTREMOTEUMSSED) + " \"  1>/dev/null 2>>test.log &";
-                  //+ string(IMSPATHCONFIGDISTANTUMSSED)+ "\" &";//1>/dev/null 2>>test.log &";
-
+      cmd = sshCmd+ string(IMSREMOTEHOSTNAME) +" \" source "+
+            string(IMSPATHSCRIPTREMOTEUMSSED) + " \"  1>/dev/null 2>>test.log &";
       BOOST_MESSAGE ("cmd:" << cmd);
       ret = system(cmd.c_str());
       sleep(7);
@@ -1040,16 +1241,6 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
           umssedFound = true;
         }
       }
-
-      //To clean the distant umssed if the previous function stop failed
-      /*if (umssedFound) {
-        cmd = " ssh "+ string(IMSREMOTEHOSTNAME) +" \" killall umssed \" 1>/dev/null 2>>test.log &";
-        BOOST_MESSAGE ("cmd:" << cmd);
-        ret = system(cmd.c_str());
-        if (ret < 0) {
-          BOOST_MESSAGE("umssed distant cleaning failed\n");
-        }
-      }*/
       //To check if the process ums has not been found on the list because it is stopped
       BOOST_REQUIRE(umssedFound ==  false);
     }
@@ -1057,6 +1248,14 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       BOOST_MESSAGE("FAILED\n");
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
+      //To clean all seds on the remote machine
+      cmd = sshCmd+ string(IMSREMOTEHOSTNAME) +" \" killall umssed; killall tmssed;"
+            "killall imssed \" 1>/dev/null 2>>test.log &";
+      BOOST_MESSAGE ("cmd:" << cmd);
+      ret = system(cmd.c_str());
+      if (ret < 0) {
+        BOOST_MESSAGE("remote seds cleaning failed\n");
+      }
     }
   }
   //IA9-E1:  Stop with bad machineId
@@ -1075,10 +1274,35 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     BOOST_CHECK_THROW(stop(sessionKey, process), VishnuException);
   }
 
-  //IA9-E1:  Stop for no admin user
+  //IA9-E2:  Stop with unknown process on the machine
+  //Stop: unknown process on the machine
+  BOOST_AUTO_TEST_CASE(stop_unknown_process_call) {
+    BOOST_TEST_MESSAGE("Use case IA9-E2: Stop with unknown process call");
+    //no admin user
+    VishnuConnection vc(userId, userPwd);
+    // get the session key and the machine identifier
+    string sessionKey=vc.getSessionKey();
+    //The process to stop
+    IMS_Data::Process process;
+    process.setMachineId(machineId);
+    process.setProcessName("FMS");
+    int ret = -1;
+    //To clean all seds on the remote machine
+    string cmd = sshCmd+ string(IMSREMOTEHOSTNAME) +" \" killall umssed; killall tmssed;"
+          "killall imssed \" 1>/dev/null 2>>test.log &";
+    BOOST_MESSAGE ("cmd:" << cmd);
+    ret = system(cmd.c_str());
+    if (ret < 0) {
+      BOOST_MESSAGE("remote seds cleaning failed\n");
+    }
+    BOOST_REQUIRE(ret != -1);
+    BOOST_CHECK_THROW(stop(sessionKey, process), VishnuException);
+  }
+
+  //IA9-E3:  Stop for no admin user
   //Stop: for no admin user
   BOOST_AUTO_TEST_CASE(stop_no_admin_user_call) {
-    BOOST_TEST_MESSAGE("Use case IA9-E1: Stop for no admin user call");
+    BOOST_TEST_MESSAGE("Use case IA9-E3: Stop for no admin user call");
     //no admin user
     VishnuConnection vc(userId, userPwd);
     // get the session key and the machine identifier
@@ -1099,7 +1323,6 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     VishnuConnection vc(adminId, adminPwd);
     // get the session key and the machine identifier
     string sessionKey=vc.getSessionKey();
-
     // Command history
     UMS_Data::ListCommands listCmd;
     UMS_Data::ListCmdOptions listCmdOpt ;
@@ -1203,7 +1426,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   }
 
   //I3-E2: export and replay commands with bad file path
-  BOOST_AUTO_TEST_CASE(export_command_bad__file_path_call) {
+  BOOST_AUTO_TEST_CASE(export_command_bad_file_path_call) {
 
     BOOST_TEST_MESSAGE("Use case I3 – E2: Export and replay commands with bad file path");
     VishnuConnection vc(adminId, adminPwd);
@@ -1230,9 +1453,9 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
   }
 
   //To clean the table process
-  BOOST_AUTO_TEST_CASE( clean_table_process_call) {
+  BOOST_AUTO_TEST_CASE( cleaning_call) {
 
-    BOOST_TEST_MESSAGE("Clean process table");
+    BOOST_TEST_MESSAGE("Cleaning call");
     VishnuConnection vc(adminId, adminPwd);
     int ret;
     // get the session key and the machine identifier
@@ -1245,13 +1468,13 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       if (restore(sqlPath + "/IMScleanProcesses.sql") != 0) {
         BOOST_TEST_MESSAGE("Database update failed for restore(sqlPath + /IMScleanProcesses.sql)");
       }
-
-      //To clean the distant umssed if the previous function stop failed
-      string cmd = " ssh "+ string(IMSREMOTEHOSTNAME) +" \" killall umssed \" 1>/dev/null 2>>test.log &";
+      //To clean all seds on the remote machine
+      string cmd = sshCmd+ string(IMSREMOTEHOSTNAME) +" \" killall umssed; killall tmssed;"
+            "killall imssed \" 1>/dev/null 2>>test.log &";
       BOOST_MESSAGE ("cmd:" << cmd);
       ret = system(cmd.c_str());
       if (ret < 0) {
-        BOOST_MESSAGE("umssed distant cleaning failed\n");
+        BOOST_MESSAGE("remote seds cleaning failed\n");
       }
     }
     catch (VishnuException& e) {
