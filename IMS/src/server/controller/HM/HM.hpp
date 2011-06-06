@@ -10,6 +10,10 @@
 #include "data/MetricServer.hpp"
 
 
+/**
+ * \class HM
+ * \brief History maker class, this class deals with the creation of the cache of the machines states
+ */
 class HM{
 public:
   /**
