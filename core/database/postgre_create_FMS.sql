@@ -13,8 +13,9 @@ CREATE TABLE fileTransfer (
   startTime TIMESTAMP,
   trCommand INTEGER,
   processId INTEGER,
-PRIMARY KEY(numfileTransferid),
-    FOREIGN KEY(vsession_numsessionid)
-    REFERENCES vsession(numsessionid) ON DELETE CASCADE);
+  errorMsg TEXT,
+  PRIMARY KEY(numfileTransferid),
+  FOREIGN KEY(vsession_numsessionid)
+  REFERENCES vsession(numsessionid) ON DELETE CASCADE);
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON fileTransfer TO "vishnu_db_admin";
