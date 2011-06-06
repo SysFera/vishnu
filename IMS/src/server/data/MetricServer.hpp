@@ -15,6 +15,10 @@
 
 using namespace std;
 
+/**
+ * \class MetricServer
+ * \brief Server that link the metrics and the database
+ */
 class MetricServer{
 public:
   /**
@@ -67,6 +71,7 @@ public:
   /**
    * \brief To add all the monitored types of metric in the database at a time t
    * \param set: A list containing the monitored
+   * \param mid: The machine id of the machine to add the set
    */
   void
   addMetricSet(IMS_Data::ListMetric* set, string mid);

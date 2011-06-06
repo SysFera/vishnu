@@ -15,6 +15,10 @@
 
 using namespace std;
 
+/**
+ * \class SysInfoServer
+ * \brief Class that links the database and the system information about the machines
+ */
 class SysInfoServer{
 public:
   /**

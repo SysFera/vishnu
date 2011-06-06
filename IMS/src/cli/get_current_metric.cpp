@@ -22,7 +22,7 @@ using namespace vishnu;
 
 
 boost::shared_ptr<Options>
-makeGCMOp(string pgName, 
+makeGCMOp(string pgName,
 	  boost::function1<void, IMS_Data::MetricType>& ftype,
 	  string& dietConfig){
   boost::shared_ptr<Options> opt(new Options(pgName));
@@ -36,7 +36,7 @@ makeGCMOp(string pgName,
   // All cli options
 
   opt->add("type,t",
-	   "The end time to get the history",
+	   "The type of the metric",
 	   CONFIG,
 	   ftype);
 
@@ -44,7 +44,7 @@ makeGCMOp(string pgName,
 }
 
 int main (int argc, char* argv[]){
-  
+
   int ret; // Return value
 
   /******* Parsed value containers ****************/
@@ -70,19 +70,19 @@ int main (int argc, char* argv[]){
 	   HIDDEN,
 	   mid,1);
   opt->setPosition("machineId",1);
- 
+
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
   // Parse the cli and setting the options found
   ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] machineId");  
+    helpUsage(*opt,"[options] machineId");
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);  
+  checkVishnuConfig(*opt);
   if ( opt->count("help")){
     helpUsage(*opt,"[options] machineId");
     return 0;

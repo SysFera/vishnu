@@ -18,39 +18,6 @@
 using namespace std;
 using namespace vishnu;
 
-boost::shared_ptr<Options>
-makeRestartOpt(string pgName,
-                  boost::function1<void, string>& fVishnuConf,
-                  boost::function1<void, IMS_Data::SeDType>& fSedType,
-                  string& dietConfig) {
-
-  boost::shared_ptr<Options> opt(new Options(pgName));
-
-  // Environement option
-  opt->add("dietConfig,c",
-           "The diet config file",
-           ENV,
-           dietConfig);
-
-    // All cli options
-   opt->add("vishnuConf,v",
-            "The path to the vishnu configuration file",
-            CONFIG,
-            fVishnuConf);
-
-
-  opt->add("sedType,t",
-           "The type of the vishnu Sed\n"
-           "1 for UMS,\n"
-           "2 for TMS,\n"
-           "3 for FMS,\n"
-           "4 for IMS,",
-            CONFIG,
-            fSedType);
-
-  return opt;
-}
-
 
 int main (int argc, char* argv[]){
 
@@ -60,20 +27,20 @@ int main (int argc, char* argv[]){
   string dietConfig;
   string sessionKey;
   string machineId;
+  string vishnu;
+  string type;
 
    /********** EMF data ************/
   IMS_Data::RestartOp restartOp;
 
-  /******** Callback functions ******************/
-  boost::function1<void, string> fVishnuConf (boost::bind(&IMS_Data::RestartOp::setVishnuConf,boost::ref(restartOp),_1));
-  boost::function1<void,IMS_Data::SeDType> fSedType (boost::bind(&IMS_Data::RestartOp::setSedType,boost::ref(restartOp),_1));
-  /*********** Out parameters *********************/
-
   /**************** Describe options *************/
+  boost::shared_ptr<Options> opt(new Options(argv[0]));
 
-
-  /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeRestartOpt(argv[0], fVishnuConf, fSedType, dietConfig);
+  // Environement option
+  opt->add("dietConfig,c",
+           "The diet config file",
+           ENV,
+           dietConfig);
 
   opt->add( "machineId,i",
             "represents the id of the machine",
@@ -82,6 +49,24 @@ int main (int argc, char* argv[]){
 
   opt->setPosition("machineId",1);
 
+    // All cli options
+   opt->add("vishnu,v",
+            "The path to the vishnu configuration file",
+            HIDDEN,
+            vishnu,1);
+
+  opt->setPosition("vishnu",1);
+
+  opt->add("type,t",
+           "The type of the vishnu Sed\n"
+           "1 for UMS,\n"
+           "2 for TMS,\n"
+           "3 for FMS,\n"
+           "4 for IMS,",
+            HIDDEN,
+	   type,1);
+
+  opt->setPosition("type",1);
 
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
@@ -90,17 +75,20 @@ int main (int argc, char* argv[]){
   ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] machineId");
+    helpUsage(*opt,"[options] machineId vishnuConf sedType");
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);
   if ( opt->count("help")){
-    helpUsage(*opt,"[options] machineId");
+    helpUsage(*opt,"[options] machineId vishnuConf sedType");
     return 0;
   }
 
+  //  switch()
+  restartOp.setSedType(convertToInt(type));
+  restartOp.setVishnuConf(vishnu);
   // Process command
   try {
     // initializing DIET
