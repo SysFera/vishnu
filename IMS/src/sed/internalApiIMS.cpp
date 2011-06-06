@@ -376,7 +376,7 @@ solveGetThreshold(diet_profile_t* pb){
     userServer.init();
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_get_system_info");
+    mapperkey = mapper->code("vishnu_get_threshold");
     mapper->code(string(treeOpSer), mapperkey);
     cmd = mapper->finalize(mapperkey);
 
@@ -501,7 +501,7 @@ solveSetThreshold(diet_profile_t* pb){
     userServer.init();
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_set_system_info");
+    mapperkey = mapper->code("vishnu_set_threshold");
     mapper->code(string(tree), mapperkey);
     cmd = mapper->finalize(mapperkey);
 
