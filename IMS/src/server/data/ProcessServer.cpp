@@ -86,13 +86,25 @@ ProcessServer::connectProcess(IMS_Data::Process_ptr proc){
 
 int
 ProcessServer::disconnectProcess(IMS_Data::Process_ptr proc){
-  string request = "UPDATE  process  SET  pstatus ='"+convertToString(PDOWN)+"',  uptime =CURRENT_TIMESTAMP WHERE  dietname ='"+proc->getDietId()+"'";
+  string request = "UPDATE  process  SET  pstatus ='"+convertToString(PDOWN)+"',  uptime =CURRENT_TIMESTAMP WHERE  dietname ='"+proc->getDietId()+"' and pstatus='"+convertToString(PRUNNING)+"'";
   try{
     mdatabase->process(request.c_str());
   }catch(SystemException& e){
     e.appendMsgComp(" Error disconnecting the process "+proc->getDietId());
     throw(e);
   }
+  string req = "SELECT * from process where dietname='"+proc->getDietId()+"'";
+  req += " order by uptime desc";
+  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
+  if(result->getNbTuples() == 0) {
+    throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown process");
+  }
+  vector<string> res;
+  res = result->get(0);
+  proc->setState(convertToInt(res.at(1)));
+  proc->setProcessName(res.at(2));
+  proc->setTimestamp(convertToInt(res.at(5)));
+  proc->setScript(res.at(6));
   return IMS_SUCCESS;
 }
 int
@@ -159,4 +171,47 @@ ProcessServer::fillContent(IMS_Data::Process_ptr p) {
   p->setTimestamp(convertToInt(res.at(5)));
   p->setScript(res.at(6));
 }
+
+void
+ProcessServer::getSshKeyAndAcc(string &keyPath, string &login, string mmid, string uid, string& hostname) {
+  string req = "select * from account, machine, users where machine.machineid='"+mmid+"' and machine.nummachineid=account.machine_nummachineid and users.userid='"+uid+"' and users.numuserid=account.users_numuserid";
+  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
+  if(result->getNbTuples() == 0) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "No account found to restart for the user "+uid);
+  }
+  vector<string> res;
+  res = result->get(0);
+  login=res.at(3);
+  keyPath= res.at(4);
+  hostname = res.at(8);
+}
+
+void
+ProcessServer::getAnAdmin(string &keyPath, string &login, string mmid, string& hostname) {
+  string req = "select * from account, machine, users where machine.machineid='"+mmid+"' and machine.nummachineid=account.machine_nummachineid and users.privilege='1' and user.numuserid=account.users_numuserid";
+  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
+  if(result->getNbTuples() == 0) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "No account found to restart on the machine");
+  }
+  vector<string> res;
+  res = result->get(0);
+  login=res.at(3);
+  keyPath= res.at(4);
+  hostname = res.at(8);
+}
+
+
+// Return the last actif ims server
+string
+ProcessServer::getElectedHostname() {
+  string req = "select * from machine, process where machine.machineid=process.machineid and process.vishnuname='IMS' and process.pstatus='"+convertToString(PRUNNING)+"' order by uptime desc";
+  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
+  if(result->getNbTuples() == 0) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "No account found to restart on the machine");
+  }
+  vector<string> res;
+  res = result->get(0);
+  return string(res.at(2));
+}
+
 

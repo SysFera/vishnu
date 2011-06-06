@@ -16,6 +16,10 @@
 
 using namespace std;
 
+/**
+ * \class ExportServer
+ * \brief Superclass to export in various formats
+ */
 class ExportServer{
 public:
   /**
@@ -32,6 +36,7 @@ public:
    * \brief To export the commands made in the oldSession in the file filename with the options op
    * \param oldSession: Session id of the old session to export
    * \param content: The content of the export (OUT)
+   * \return Return if the export was a SUCCESS
    */
   virtual int 
   exporte(string oldSession, string &content) = 0;
