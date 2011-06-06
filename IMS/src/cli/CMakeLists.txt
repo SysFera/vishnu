@@ -38,8 +38,8 @@ set(ALLCLI
   get_system_info
   define_user_format
   define_machine_format
-  define_file_format
-  define_task_format
+  define_transfer_format
+  define_job_format
   set_system_threshold
   get_system_threshold
   restart
