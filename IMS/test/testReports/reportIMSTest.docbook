@@ -316,8 +316,8 @@ same conditions as regards security.</para>
             <row>
               <entry><para>I1-B</para></entry>
               <entry><para>Normal execution of getUpdateFrequency</para></entry>
-              <entry><para>The update's frequency is returned</para></entry>
-              <entry><para>The update's frequency is returned</para></entry>
+              <entry><para>The update frequency value is returned</para></entry>
+              <entry><para>The update frequency value is returned</para></entry>
               <entry><para>0</para></entry>
             </row>	  
           </tbody>
@@ -348,8 +348,8 @@ same conditions as regards security.</para>
             <row>
               <entry><para>IA6-B</para></entry>
               <entry><para>Normal execution of setUpdateFrequency</para></entry>
-              <entry><para>The update's frequency is set</para></entry>
-              <entry><para>The update's frequency is set</para></entry>
+              <entry><para>The update frequency value is set</para></entry>
+              <entry><para>The update frequency value is set</para></entry>
               <entry><para> 0 </para></entry>
             </row>
 	    <row>
@@ -785,7 +785,7 @@ same conditions as regards security.</para>
                   <para>setUpdateFrequency</para>
                </entry>
                <entry>
-                  <para>Success - normal job submission</para>
+                  <para>Success - normal update frequency setting</para>
                </entry>
                <entry/>
             </row>
@@ -816,7 +816,7 @@ same conditions as regards security.</para>
                   <para>06/06/11</para>
                </entry>
                <entry>
-                  <para> The batch scheduler is stopped and the command submitJob is launched</para>
+                  <para> </para>
                </entry>
 	       
 	       <entry>
@@ -824,7 +824,7 @@ same conditions as regards security.</para>
                </entry>
 	       
                <entry>
-                  <para> Success - the corresponding error message is returned </para>
+                  <para> <link linkend="Error"> Not functional - Failure la deuxième fois qu'on relance la commande</link>  Success - the corresponding error message is returned </para>
                </entry>
                
             </row>
@@ -837,7 +837,6 @@ same conditions as regards security.</para>
   
   <chapter>
     <title>Load tests </title>
-    
      <informaltable frame="all">
       <tgroup cols="5">
        <tbody>
@@ -860,16 +859,16 @@ same conditions as regards security.</para>
             </row>
             <row>
                <entry>
-                  <para>LOAD-2.1-submitJob</para>
+                  <para>LOAD-2.1-getMetricCurrentValue</para>
                </entry>
                <entry>
-                  <para>05/05/11</para>
+                  <para>06/06/11</para>
                </entry>
                <entry>
                   <para>Simultaneous launch of 100 commands</para>
                </entry>
                <entry>
-                  <para>submitJob</para>
+                  <para>getMetricCurrentValue</para>
                </entry>
                <entry>
                   <para>Success - normal execution of all commands launched</para>
@@ -877,38 +876,22 @@ same conditions as regards security.</para>
             </row>   
 	    <row>
                <entry>
-                  <para>LOAD-2.1-listJobs</para>
+                  <para>LOAD-2.1-getMetricHistory</para>
                </entry>
                <entry>
-                  <para>05/05/11</para>
+                  <para>06/06/11</para>
                </entry>
                <entry>
                   <para>Success - Simultaneous launch of 100 commands</para>
                </entry>
                <entry>
-                  <para>listJobs</para>
+                  <para>getMetricHistory</para>
                </entry>
                <entry>
                   <para>Success - normal execution of all commands launched</para>
                </entry>
             </row>   
-	    <row>
-               <entry>
-                  <para>LOAD-2.1-listQueues</para>
-               </entry>
-               <entry>
-                  <para>05/05/11</para>
-               </entry>
-               <entry>
-                  <para>Simultaneous launch of 100 commands</para>
-               </entry>
-               <entry>
-                  <para>listQueues</para>
-               </entry>
-               <entry>
-                  <para>Success - normal execution of all commands launched</para>
-               </entry>
-            </row>
+	    
 	  </tbody>    
       </tgroup>
       </informaltable>
@@ -917,6 +900,40 @@ same conditions as regards security.</para>
     
   <chapter>
     <title>Performance tests </title>
+    
+    
+    
+      <title> I4-B: Get data on the infrastructure </title>
+      <para><emphasis role = "italic"> API command: getMetricCurrentValue</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="5.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+	  <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>I4-B</para></entry>
+              <entry><para>Normal execution of getMetricCurrentValue</para></entry>
+              <entry><para>The list of current value of metric is returned</para></entry>
+              <entry><para>The list of current value of metric is returned</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    
     
      <informaltable frame="all">
       <tgroup cols="6">
@@ -943,22 +960,24 @@ same conditions as regards security.</para>
             </row>
             <row>
                <entry>
-                  <para>CDP-3.1-submitJob</para>
+                  <para>CDP-3.1-getMetricCurrentValue</para>
                </entry>
                <entry>
-                  <para>comparison with " ssh localhost qsub " </para>
+                  <para>comparison with " ssh localhost ps -efl " </para>
                </entry>
                <entry>
-                  <para>submitJob</para>
+                  <para> getMetricCurrentValue 
+		    
+		  </para>
                </entry>
                <entry>
-                  <para>0,30s</para>
+                  <para>0,156s</para>
                </entry>
 	       <entry>
-                  <para>0,17s</para>
+                  <para>0,303s</para>
                </entry>
 	       <entry>
-                  <para>Failure</para>
+                  <para>Success</para>
                </entry>
             </row>   
 	    <row>
