@@ -376,7 +376,7 @@ same conditions as regards security.</para>
           </tbody>
         </tgroup>
       </informaltable>
-      <para> <emphasis role = "bold"> Remarks T2.7-B </emphasis>: there is a failure when the script's execution is very fast (under one seconds). </para>
+      
     </section>
       
       <section>
