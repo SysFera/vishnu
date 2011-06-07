@@ -1,7 +1,5 @@
 
 import VISHNU
-import VISHNU_UMS
-import VISHNU_IMS
 
 def displayProc(lip):
   for i in range(lip.getNbProcs()):
@@ -10,7 +8,7 @@ def displayProc(lip):
 
 
 
-VISHNU_UMS.vishnuInitialize("/home/keo/Bureau/client.cfg")
+VISHNU.vishnuInitialize("/home/keo/Bureau/client.cfg")
 
 mid = "machine_1"
 pop = VISHNU.ProcessOp()
@@ -23,22 +21,22 @@ oph = VISHNU.MetricHistOp()
 r, k = VISHNU.connect("root", "vishnu_user")
 try :
   VISHNU.getMetricHistory(k, mid, lih, oph)
-except VISHNU_IMS.IMSVishnuException, e:
+except VISHNU.IMSVishnuException, e:
     print e.what()
-except VISHNU_UMS.UMSVishnuException, e:
+except VISHNU.UMSVishnuException, e:
   print e.what()
-except VISHNU_UMS.SystemException, e:
+except VISHNU.SystemException, e:
   print e.what()
 VISHNU.getMetricCurrentValue(k, mid, lic, opc)
 VISHNU.getProcesses(k, lip, pop)
 
 try :
-  VISHNU_IMS.getMetricCurrentValue(k, "toto", lic, opc)
-except VISHNU_IMS.IMSVishnuException, e:
+  VISHNU.getMetricCurrentValue(k, "toto", lic, opc)
+except VISHNU.IMSVishnuException, e:
     print e.what()
-except VISHNU_UMS.UMSVishnuException, e:
+except VISHNU.UMSVishnuException, e:
   print e.what()
-except VISHNU_UMS.SystemException, e:
+except VISHNU.SystemException, e:
   print e.what()
 
 displayProc(lip);
