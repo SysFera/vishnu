@@ -816,7 +816,7 @@ same conditions as regards security.</para>
                   <para>06/06/11</para>
                </entry>
                <entry>
-                  <para> </para>
+                  <para>The VISHNU database is stopped and restarted</para>
                </entry>
 	       
 	       <entry>
@@ -900,74 +900,34 @@ same conditions as regards security.</para>
     
   <chapter>
     <title>Performance tests </title>
-    
-    
-    
-      <title> I4-B: Get data on the infrastructure </title>
-      <para><emphasis role = "italic"> API command: getMetricCurrentValue</emphasis></para>
      <informaltable>
-        <tgroup cols="5">
-          <colspec colwidth="5.0cm"/>
-          <colspec colwidth="6cm"/>
+        <tgroup cols="6">
+          <colspec colwidth="3.2cm"/>
+          <colspec colwidth="3.2cm"/>
           <colspec colwidth="3.5cm"/>
-          <colspec colwidth="3.5cm"/>
-          <colspec colwidth="1.5cm"/>
-	  <colspec colwidth="1.5cm"/>
+          <colspec colwidth="2.2cm"/>
+          <colspec colwidth="1.7cm"/>
+	  <colspec colwidth="1.3cm"/>
           <thead>
             <row>
               <entry>ID test</entry>
-              <entry>Description of the test cases</entry>
-              <entry>Output expected</entry>
-              <entry>Output gotten</entry>
-              <entry>Error</entry>
+              <entry>Test description</entry>
+              <entry>Command(s) tested</entry>
+              <entry>VISHNU execution time</entry>
+              <entry>SSH execution time</entry>
+	      <entry>Results</entry>
             </row>
           </thead>
           <tbody>
-            <row>
-              <entry><para>I4-B</para></entry>
-              <entry><para>Normal execution of getMetricCurrentValue</para></entry>
-              <entry><para>The list of current value of metric is returned</para></entry>
-              <entry><para>The list of current value of metric is returned</para></entry>
-              <entry><para>0</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-    
-    
-     <informaltable frame="all">
-      <tgroup cols="6">
-       <tbody>
-            <row>
-               <entry>
-                  <para>ID test</para>
-               </entry>
-               <entry>
-                  <para>Test description</para>
-               </entry>
-               <entry>
-                  <para>Command(s) tested</para>
-               </entry>
-               <entry>
-                  <para>VISHNU execution time</para>
-               </entry>
-	       <entry>
-                  <para>SSH execution time</para>
-               </entry>
-	       <entry>
-                  <para>Results</para>
-               </entry>
-            </row>
-            <row>
+	    <row>
                <entry>
                   <para>CDP-3.1-getMetricCurrentValue</para>
                </entry>
                <entry>
-                  <para>comparison with " ssh localhost ps -efl " </para>
+                  <para>comparison with " ssh host ps -efl " </para>
                </entry>
                <entry>
-                  <para> getMetricCurrentValue 
-		    
+                  <para> getMetricCurrentValue     
 		  </para>
                </entry>
                <entry>
@@ -979,70 +939,32 @@ same conditions as regards security.</para>
 	       <entry>
                   <para>Success</para>
                </entry>
-            </row>   
-	    <row>
-               <entry>
-                  <para>CDP-3.1-cancelJob</para>
-               </entry>
-               <entry>
-                  <para>comparison with " ssh localhost qsub " </para>
-               </entry>
-               <entry>
-                  <para>cancelJob</para>
-               </entry>
-               <entry>
-                  <para>0,25s</para>
-               </entry>
-	       <entry>
-                  <para>0,21s</para>
-               </entry>
-	       <entry>
-                  <para>Failure</para>
-               </entry>
-            </row>   
-	    <row>
-               <entry>
-                  <para>CDP-3.1-listJobs</para>
-               </entry>
-               <entry>
-                  <para>comparison with " ssh localhost qstat " </para>
-               </entry>
-               <entry>
-                  <para>listJobs</para>
-               </entry>
-               <entry>
-                  <para>0,08s</para>
-               </entry>
-	       <entry>
-                  <para>0,17s</para>
-               </entry>
-	       <entry>
-                  <para>Success</para>
-               </entry>
             </row>
 	    
 	    <row>
                <entry>
-                  <para>CDP-3.2.1-listQueues</para>
+                  <para>CDP-3.1-getMetricHistory</para>
                </entry>
                <entry>
-                  <para>execution time less than "ssh localhost qstat -Q" </para>
+                  <para>comparison with " ssh host ps -efl " </para>
                </entry>
                <entry>
-                  <para>listQueues</para>
+                  <para> getMetricHistory     
+		  </para>
                </entry>
                <entry>
-                  <para>0,10s</para>
+                  <para></para>
                </entry>
 	       <entry>
-                  <para>0,16s</para>
+                  <para></para>
                </entry>
 	       <entry>
-                  <para>Success</para>
+                  <para></para>
                </entry>
-            </row>
-	  </tbody>    
-      </tgroup>
+            </row>  
+	    
+          </tbody>
+        </tgroup>
       </informaltable>
       
       <informaltable frame="all">
@@ -1066,21 +988,75 @@ same conditions as regards security.</para>
                </entry>
             </row>
 	    
-	      <row>
+	    <row>
                <entry>
-                  <para>CDP-3.2.2-submitJob</para>
+                  <para>CDP-3.2.1-getMetricCurrentValue</para>
                </entry>
                <entry>
-                  <para>memory consumption</para>
+                  <para>memory consumption less than 500 Mb</para>
                </entry>
                <entry>
-                  <para>submitJob</para>
+                  <para></para>
                </entry>
                <entry>
-                  <para>0,8% of the RAM memory</para>
+                  <para></para>
                </entry>
 	       <entry>
-                  <para>Success</para>
+                  <para></para>
+               </entry>
+            </row>
+	    
+	    <row>
+               <entry>
+                  <para>CDP-3.2.1-getMetricHistory</para>
+               </entry>
+               <entry>
+                  <para>memory consumption less than 500 Mb</para>
+               </entry>
+               <entry>
+                  <para></para>
+               </entry>
+               <entry>
+                  <para></para>
+               </entry>
+	       <entry>
+                  <para></para>
+               </entry>
+            </row>
+	    
+	    <row>
+               <entry>
+                  <para>CDP-3.2.2-getMetricCurrentValue</para>
+               </entry>
+               <entry>
+                  <para>CPU consumption less than 10%</para>
+               </entry>
+               <entry>
+                  <para></para>
+               </entry>
+               <entry>
+                  <para></para>
+               </entry>
+	       <entry>
+                  <para></para>
+               </entry>
+            </row>
+	      
+	    <row>
+               <entry>
+                  <para>CDP-3.2.2-getMetricHistory</para>
+               </entry>
+               <entry>
+                  <para>CPU consumption less than 10%</para>
+               </entry>
+               <entry>
+                  <para></para>
+               </entry>
+               <entry>
+                  <para></para>
+               </entry>
+	       <entry>
+                  <para></para>
                </entry>
             </row>
 	    
@@ -1089,19 +1065,18 @@ same conditions as regards security.</para>
                   <para>CDP-Memserver</para>
                </entry>
                <entry>
-                  <para>Memory consumption of tms server running during 24 hours</para>
+                  <para>Memory consumption of ims server running during 24 hours</para>
                </entry>
                <entry>
-                  <para>tms server</para>
+                  <para>ims server</para>
                </entry>
                <entry>
-                  <para>0,7% of the RAM memory</para>
+                  <para></para>
                </entry>
 	       <entry>
-                  <para>Success</para>
+                  <para></para>
                </entry>
             </row>
-	    
 	</tbody>    
       </tgroup>
       </informaltable>
