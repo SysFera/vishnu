@@ -144,7 +144,7 @@
 
 %template(EFileTransferList) ::ecorecpp::mapping::EList<::FMS_Data::FileTransfer>;
 %template(EFileStatList) ::ecorecpp::mapping::EList<::FMS_Data::FileStat>;
-%template(EStringList) std::vector< ::ecore::EString >;
+%template(EStringList) ::ecorecpp::mapping::EList<::FMS_Data::StringList >;
 
 
 #ifdef SWIGPYTHON
@@ -153,6 +153,7 @@
 %typemap(in, numinputs=0) UMS_Data::Session& session(UMS_Data::Session temp) {
   $1 = &temp;
 }
+
 
 // Add the output parameters to the result
 %typemap(argout) UMS_Data::Session& session {
@@ -218,6 +219,7 @@
 %include "UMSVishnuException.hpp"
 %include "TMSVishnuException.hpp"
 %include "IMSVishnuException.hpp"
+%include "FMSVishnuException.hpp"
 #endif
 
 
@@ -271,9 +273,23 @@
 %include "api_tms.hpp"
 #endif
 
+#ifdef SWIGPYTHON
+%typemap(argout) int& freq {
+  PyObject *o = PyInt_FromLong(*$1);
+  $result = SWIG_Python_AppendOutput($result, o);
+ } 
+#endif
 
 #ifdef SWIGJAVA
+//e%include "intRef.i"
+%include "typemaps.i"
 //%apply int &INOUT { int& freq };
+ //%apply int &INOUT { int & freq };
+%apply int *OUTPUT { int &freq };
+//%typemap(inout) int &freq {
+//  $1 = PyInt_AsLong($input);
+// }
+
 
 // Exception rule for system exception
 %typemap (throws) SystemException{
