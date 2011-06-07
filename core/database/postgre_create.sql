@@ -8,6 +8,11 @@
 -- Revision author      : Benjamin Isnard <benjamin.isnard@sysfera.com>
 -- Revision comment     : initial version
 
+-- Revision nb          : 1.2
+-- Revision date        : 07/06/11
+-- Revision author      : Benjamin Isnard <benjamin.isnard@sysfera.com>
+-- Revision comment     : release of FMS and IMS modules
+
 CREATE TABLE optionu (
   numoptionid SERIAL  NOT NULL ,
   optionid INTEGER    ,
