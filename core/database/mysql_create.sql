@@ -4,9 +4,9 @@
 
 -- REVISIONS
 -- Revision nb          : 1.0
--- Revision date        : 27/01/11
+-- Revision date        : 07/06/11
 -- Revision author      : Kevin Coulomb <kevin.coulomb@sysfera.com>
--- Revision comment     : initial version
+-- Revision comment     : release of FMS and IMS modules (VISHNU v1.2.0)
 
 USE vishnu;
 
@@ -36,9 +36,6 @@ CREATE TABLE vishnu (
   machinecpt INTEGER      ,
 PRIMARY KEY(vishnuid));
 
-
-
-
 CREATE TABLE machine (
   nummachineid SERIAL  NOT NULL ,
   vishnu_vishnuid INTEGER   NOT NULL ,
@@ -53,8 +50,6 @@ CREATE TABLE machine (
 PRIMARY KEY(nummachineid),
   FOREIGN KEY(vishnu_vishnuid)
     REFERENCES vishnu(vishnuid));
-
-
 
 CREATE TABLE users (
   numuserid SERIAL  NOT NULL ,
@@ -71,8 +66,6 @@ PRIMARY KEY(numuserid),
   FOREIGN KEY(vishnu_vishnuid)
     REFERENCES vishnu(vishnuid));
 
-
-
 CREATE TABLE state (
   numstateid SERIAL  NOT NULL ,
   machine_nummachineid INTEGER   NOT NULL ,
@@ -84,9 +77,6 @@ PRIMARY KEY(numstateid),
   FOREIGN KEY(machine_nummachineid)
     REFERENCES machine(nummachineid) ON DELETE CASCADE);
 
-
-
-
 CREATE TABLE description (
   numdescriptionid SERIAL  NOT NULL ,
   machine_nummachineid INTEGER   NOT NULL ,
@@ -95,8 +85,6 @@ CREATE TABLE description (
 PRIMARY KEY(numdescriptionid),
   FOREIGN KEY(machine_nummachineid)
     REFERENCES machine(nummachineid) ON DELETE CASCADE);
-
-
 
 CREATE TABLE vsession (
   numsessionid SERIAL NOT NULL ,
@@ -116,8 +104,6 @@ PRIMARY KEY(numsessionid),
   FOREIGN KEY(clmachine_numclmachineid)
     REFERENCES clmachine(numclmachineid));
 
-
-
 CREATE TABLE account (
   numaccountid SERIAL  NOT NULL ,
   machine_nummachineid INTEGER   NOT NULL ,
@@ -131,8 +117,6 @@ PRIMARY KEY(numaccountid),
   FOREIGN KEY(machine_nummachineid)
     REFERENCES machine(nummachineid) ON DELETE CASCADE);
 
-
-
 CREATE TABLE optionvalue (
   numoptionvalueid SERIAL  NOT NULL ,
   users_numuserid INTEGER   NOT NULL ,
@@ -143,8 +127,6 @@ PRIMARY KEY(numoptionvalueid),
     REFERENCES optionu(numoptionid),
   FOREIGN KEY(users_numuserid)
     REFERENCES users(numuserid) ON DELETE CASCADE);
-
-
 
 CREATE TABLE threshold (
   thresholdid SERIAL  NOT NULL ,
@@ -157,8 +139,6 @@ PRIMARY KEY(thresholdid),
     REFERENCES machine(nummachineid) ON DELETE CASCADE,
   FOREIGN KEY(users_numuserid)
     REFERENCES users(numuserid));
-
-
 
 CREATE TABLE command (
   numcommandid SERIAL  NOT NULL ,
@@ -184,7 +164,6 @@ CREATE TABLE process (
   PRIMARY KEY(numprocess)
 );
 
-
 CREATE TABLE filetransfer (
   numfiletransferid SERIAL  NOT NULL ,
   vsession_numsessionid INTEGER   NOT NULL ,
@@ -204,7 +183,6 @@ CREATE TABLE filetransfer (
 PRIMARY KEY(numfileTransferid),
     FOREIGN KEY(vsession_numsessionid)
     REFERENCES vsession(numsessionid) ON DELETE CASCADE);
-
 
 CREATE TABLE filesub (
   numfileid SERIAL  NOT NULL ,
@@ -294,3 +272,4 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON filesub TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON job TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON process TO "vishnu_user";
 
+-- END
