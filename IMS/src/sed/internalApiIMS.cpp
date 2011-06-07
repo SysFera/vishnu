@@ -122,7 +122,7 @@ solveCurMetric(diet_profile_t* pb){
       throw UserException(ERRCODE_INVALID_PARAM, "solve_getCurentMetricValue: Curent metric option object is not well built");
     }
     // Creating the process server with the options
-    MetricServer met(userServer, curOp);
+    MetricServer met(userServer, curOp, string(""));
 
     // Listing the old metric
     IMS_Data::ListMetric* res;
@@ -191,7 +191,7 @@ solveOldMetric(diet_profile_t* pb){
       throw UserException(ERRCODE_INVALID_PARAM, "solve_getMetricHistory: Metric history option object is not well built");
     }
     // Creating the process server with the options
-    MetricServer met(userServer, histOp);
+    MetricServer met(userServer, histOp, string(""));
 
     // Listing the old metric
     IMS_Data::ListMetric* res;
@@ -376,7 +376,7 @@ solveGetThreshold(diet_profile_t* pb){
     userServer.init();
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_get_system_info");
+    mapperkey = mapper->code("vishnu_get_threshold");
     mapper->code(string(treeOpSer), mapperkey);
     cmd = mapper->finalize(mapperkey);
 
@@ -446,7 +446,7 @@ solveGetUpFreq(diet_profile_t* pb){
     cmd = mapper->finalize(mapperkey);
 
     // Creating the process server with the options
-    MetricServer met(userServer);
+    MetricServer met(userServer, string(""));
 
     // Listing the old metric
     int res;
@@ -496,12 +496,12 @@ solveSetThreshold(diet_profile_t* pb){
   try {
     // Getting options
     if(!parseEmfObject(string(tree), treeinf)) {
-      throw UserException(ERRCODE_INVALID_PARAM, "solve_setSysInfo: system info object is not well built");
+      throw UserException(ERRCODE_INVALID_PARAM, "solve_setThreshold: system info object is not well built");
     }
     userServer.init();
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_set_system_info");
+    mapperkey = mapper->code("vishnu_set_threshold");
     mapper->code(string(tree), mapperkey);
     cmd = mapper->finalize(mapperkey);
 
@@ -802,7 +802,7 @@ solveSetUpFreq(diet_profile_t* pb){
     cmd = mapper->finalize(mapperkey);
 
     // Creating the process server with the options
-    MetricServer met(userServer);
+    MetricServer met(userServer, string(""));
 
     // Listing the old metric
     met.setUpFreq(convertToInt(string(freq)));

@@ -178,7 +178,7 @@ CREATE TABLE process (
   pstatus INTEGER,
   vishnuname VARCHAR(255),
   dietname VARCHAR(255),
-  machineid VARCHAR(255),	
+  machineid VARCHAR(255),
   uptime TIMESTAMP,
   launchscript TEXT,
   PRIMARY KEY(numprocess)
@@ -197,7 +197,7 @@ PRIMARY KEY(numfileid),
 
 CREATE TABLE job (
   numjobid SERIAL  NOT NULL ,
-  vsession_numsessionid INTEGER   NOT NULL ,  
+  vsession_numsessionid INTEGER   NOT NULL ,
   submitMachineId VARCHAR(255),
   submitMachineName VARCHAR(255),
   jobId VARCHAR(255),
@@ -207,7 +207,7 @@ CREATE TABLE job (
   jobPath VARCHAR(255),
   outputPath VARCHAR(255),
   errorPath VARCHAR(255),
-  scriptContent TEXT,  
+  scriptContent TEXT,
   jobPrio INTEGER,
   nbCpus INTEGER,
   jobWorkingDir VARCHAR(255),
@@ -226,25 +226,25 @@ PRIMARY KEY(numjobid),
     FOREIGN KEY(vsession_numsessionid)
     REFERENCES vsession(numsessionid) ON DELETE CASCADE);
 
-  CREATE TABLE fileTransfer (
-    numfileTransferid SERIAL  NOT NULL ,
-    vsession_numsessionid INTEGER   NOT NULL ,
-    transferId VARCHAR(255),
-    status INTEGER,
-    userId VARCHAR(255),
-    clientMachineName VARCHAR(255),
-    sourceMachineId VARCHAR(255),
-    destinationMachineId VARCHAR(255),
-    sourceFilePath VARCHAR(255),
-    destinationFilePath VARCHAR(255),
-    fileSize INTEGER,
-    startTime TIMESTAMP,
-    trCommand INTEGER,
-    processId INTEGER,
-    errorMsg TEXT,
-    PRIMARY KEY(numfileTransferid),
-    FOREIGN KEY(vsession_numsessionid)
-    REFERENCES vsession(numsessionid) ON DELETE CASCADE);
+CREATE TABLE fileTransfer (
+  numfileTransferid SERIAL  NOT NULL ,
+  vsession_numsessionid INTEGER   NOT NULL ,
+  transferId VARCHAR(255),
+  status INTEGER,
+  userId VARCHAR(255),
+  clientMachineName VARCHAR(255),
+  sourceMachineId VARCHAR(255),
+  destinationMachineId VARCHAR(255),
+  sourceFilePath VARCHAR(255),
+  destinationFilePath VARCHAR(255),
+  fileSize INTEGER,
+  startTime TIMESTAMP,
+  trCommand INTEGER,
+  processId INTEGER,
+  errorMsg TEXT,
+  PRIMARY KEY(numfileTransferid),
+  FOREIGN KEY(vsession_numsessionid)
+  REFERENCES vsession(numsessionid) ON DELETE CASCADE);
 
 -- Role Creation;
 
