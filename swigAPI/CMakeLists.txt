@@ -66,8 +66,12 @@ file(MAKE_DIRECTORY ${CMAKE_SWIG_OUTDIR})
 #Suppress warnings about ignored operators (out_ptr::operator= and EList::operator[])
 SET(CMAKE_SWIG_FLAGS "-w362,389")
 
-  
+add_definitions(-DCOMPILE_UMS)
+  set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} "-DCOMPILE_UMS" )
+
 if(COMPILE_TMS)
+  add_definitions(-DCOMPILE_TMS)
+  set( CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} "-DCOMPILE_TMS" )
   set (SWIG_SOURCES
     ${SWIG_SOURCES}
     ${TMS_API_SOURCE_DIR}/api_tms.cpp
@@ -78,6 +82,8 @@ if(COMPILE_TMS)
     )
 endif()
 if(COMPILE_IMS)
+  add_definitions(-DCOMPILE_IMS)
+  set( CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} "-DCOMPILE_IMS" )
   set (SWIG_SOURCES
     ${SWIG_SOURCES}
     ${IMS_API_SOURCE_DIR}/api_ims.cpp
@@ -88,6 +94,8 @@ if(COMPILE_IMS)
     )
 endif()
 if(COMPILE_FMS)
+  set( CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} "-DCOMPILE_FMS" )
+  add_definitions(-DCOMPILE_FMS)
   set (SWIG_SOURCES
     ${SWIG_SOURCES}
     ${FMS_API_SOURCE_DIR}/api_fms.cpp
@@ -108,7 +116,7 @@ if(ENABLE_PYTHON)
 SWIG_ADD_MODULE(VISHNU python vishnu.i ${API_SOURCE_DIR}/api_ums.cpp ${SWIG_SOURCES})
 
 SET_TARGET_PROPERTIES(${SWIG_MODULE_VISHNU_REAL_NAME} PROPERTIES COMPILE_FLAGS "-fPIC")
-SWIG_LINK_LIBRARIES(VISHNU ${PYTHON_LIBRARIES} ${DIET_CLIENT_LIB} vishnu-ums-api exception-vishnu ${SWIG_LING_LIB})
+SWIG_LINK_LIBRARIES(VISHNU ${PYTHON_LIBRARIES} ${DIET_CLIENT_LIB} vishnu-ums-api exception-vishnu ${SWIG_LINK_LIB})
 
 INSTALL( TARGETS ${SWIG_MODULE_VISHNU_REAL_NAME} DESTINATION lib )
 endif(ENABLE_PYTHON)

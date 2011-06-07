@@ -24,8 +24,8 @@ IMSMapper::IMSMapper(MapperRegistry* reg, string na):Mapper(reg){
   mmap.insert (pair<int, string>(VISHNU_GET_HIST, "vishnu_get_history_metric"));
   mmap.insert (pair<int, string>(VISHNU_GET_PROC, "vishnu_get_processes"));
   mmap.insert (pair<int, string>(VISHNU_SET_SYSINF, "vishnu_set_system_info"));
-  mmap.insert (pair<int, string>(VISHNU_SET_THRESH, "vishnu_setSystemThreshold"));
-  mmap.insert (pair<int, string>(VISHNU_GET_THRESH, "vishnu_getSystemThreshold"));
+  mmap.insert (pair<int, string>(VISHNU_SET_THRESH, "vishnu_set_threshold"));
+  mmap.insert (pair<int, string>(VISHNU_GET_THRESH, "vishnu_get_threshold"));
   mmap.insert (pair<int, string>(VISHNU_DEFINE_UID, "vishnu_define_user_format"));
   mmap.insert (pair<int, string>(VISHNU_DEFINE_MID, "vishnu_define_machine_format"));
   mmap.insert (pair<int, string>(VISHNU_DEFINE_TID, "vishnu_define_job_format"));
@@ -241,6 +241,7 @@ IMSMapper::decodeHist(vector<int> separator, const string& msg) {
   string res = string("");
   string u;
   long l;
+  boost::posix_time::ptime pt;
   res += (mmap.find(VISHNU_GET_HIST))->second;
   res += " ";
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
@@ -259,13 +260,19 @@ IMSMapper::decodeHist(vector<int> separator, const string& msg) {
   }
   l = ac->getStartTime();
   if (l > 0) {
-    res+=" -s ";
-    res += convertToString(l);
+    pt = boost::posix_time::from_time_t(vishnu::convertUTCtimeINLocaltime(l));
+    u = boost::posix_time::to_simple_string(pt);
+    res+=" -s \"";
+    res += u;
+    res += "\"";
   }
   l = ac->getEndTime();
   if (l > 0) {
-    res+=" -e ";
-    res += convertToString(l);
+    pt = boost::posix_time::from_time_t(vishnu::convertUTCtimeINLocaltime(l));
+    u = boost::posix_time::to_simple_string(pt);
+    res+=" -e \"";
+    res += u;
+    res += "\"";
   }
   return res;
 }
@@ -354,9 +361,13 @@ IMSMapper::decodeSetThre(vector<int> separator, const string& msg) {
   if(!parseEmfObject(u, ac)) {
     throw IMSVishnuException(ERRCODE_INVALID_PARAM);
   }
+
   res += convertToString(ac->getValue());
+  res += " ";
   res += ac->getMachineId();
+  res += " ";
   res += convertToString(ac->getType());
+  res += " ";
   res += ac->getHandler();
   return res;
 }
@@ -460,10 +471,7 @@ IMSMapper::decodeGetSys(vector<int> separator, const string& msg) {
   string u;
   res += (mmap.find(VISHNU_GET_SYSINF))->second;
   res += " ";
-  u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
-  res += u;
-  res += " ";
-  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
+  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
   IMS_Data::SysInfoOp_ptr ac = NULL;
   //To parse the object serialized
   if(!parseEmfObject(u, ac)) {

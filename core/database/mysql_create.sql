@@ -187,18 +187,23 @@ CREATE TABLE process (
 
 CREATE TABLE filetransfer (
   numfiletransferid SERIAL  NOT NULL ,
-  command_numcommandid INTEGER   NOT NULL ,
-  filetransferid VARCHAR(255)    ,
-  statust INTEGER    ,
-  source VARCHAR(255)    ,
-  destination VARCHAR(255)    ,
-  client VARCHAR(255)    ,
-  filepath VARCHAR(255)    ,
-  destinationpath VARCHAR(255)    ,
-  globaltransferid INTEGER      ,
-PRIMARY KEY(numfiletransferid),
-  FOREIGN KEY(command_numcommandid)
-    REFERENCES command(numcommandid));
+  vsession_numsessionid INTEGER   NOT NULL ,
+  transferId VARCHAR(255)    ,
+  status INTEGER    ,
+  userId VARCHAR(255),
+  clientMachineId VARCHAR(255),
+  sourceMachineId VARCHAR(255),
+  destinationMachineId VARCHAR(255),
+  sourceFilePath VARCHAR(255),
+  destinationFilePath VARCHAR(255),
+  fileSize INTEGER,
+  startTime TIMESTAMP,
+  trCommand INTEGER,
+  processId INTEGER,
+  errorMsg TEXT,
+PRIMARY KEY(numfileTransferid),
+    FOREIGN KEY(vsession_numsessionid)
+    REFERENCES vsession(numsessionid) ON DELETE CASCADE);
 
 
 CREATE TABLE filesub (
