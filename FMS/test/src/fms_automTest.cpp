@@ -803,6 +803,8 @@ waitAsyncCopy(const string& sessionKey, const FileTransfer& transferInfo) {
       BOOST_MESSAGE("ERROR: File transfer list contains more than 1 item for a given transferId!");
       return -1;
     }
+    bpt::seconds sleepTime(5);
+    boost::this_thread::sleep(sleepTime);
   }
   if (!terminated) {
     BOOST_MESSAGE("ERROR: End of polling for file transfer");
