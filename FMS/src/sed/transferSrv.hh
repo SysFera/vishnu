@@ -30,6 +30,17 @@ using namespace std;
 int
 solveGetListOfFileTransfers(diet_profile_t* pb);
 
+/**
+ * \brief Function to solve the File transfer stop service 
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
+int
+solveFileTransferStop(diet_profile_t* pb);
+
+
+
+
 diet_profile_desc_t* getTransferFileProfile(const std::string& serviceName);
 
 diet_profile_desc_t* getTransferFileAsyncProfile(const std::string& serviceName);

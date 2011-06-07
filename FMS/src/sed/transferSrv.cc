@@ -156,7 +156,7 @@ solveFileTransferStop(diet_profile_t* pb) {
 
     boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer,vishnuId));
 
-    fileTransferServer.stopThread(*options_ptr);
+    fileTransferServer->stopThread(*options_ptr);
 
     diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
     sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
