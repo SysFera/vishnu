@@ -40,7 +40,7 @@ diet_profile_desc_t* getTransferRemoteFileAsyncProfile(const std::string& servic
 
 diet_profile_desc_t* getFileTransfersListProfile();
 
-
+diet_profile_desc_t* getFileTransferStopProfile();
 
 
   template < File::TransferType transferType> int solveTransferFile(diet_profile_t* profile){
@@ -491,13 +491,16 @@ solveGenerique(diet_profile_t* pb) {
 
   QueryParameters* options = NULL;
   List* list = NULL;
-
+  
+  
   try {
     //To parse the object serialized
     if(!parseEmfObject(std::string(optionValueSerialized), options)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
-    QueryType query(options, sessionServer);
+ 
+  
+  QueryType query(options, sessionServer);
 
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
@@ -508,10 +511,12 @@ solveGenerique(diet_profile_t* pb) {
     //  perform the query
     list = query.list();
 
+
     const char* name = "list";
     ::ecorecpp::serializer::serializer _ser(name);
-    listSerialized =  _ser.serialize(list);
+    listSerialized =  _ser.serialize(const_cast<List*>(list));
 
+  std::cout << "************* Coucou dans Solvegenerique sed \n";
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);

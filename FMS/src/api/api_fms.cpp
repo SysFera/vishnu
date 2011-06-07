@@ -29,7 +29,6 @@
 
 #include "FileProxyFactory.hpp"
 #include "FileTransferProxy.hpp"
-
 using namespace FMS_Data;
 using namespace UMS_Data;
 using namespace std;
@@ -409,14 +408,11 @@ int vishnu::getFilesInfo(const string& sessionKey,const string& path, FileStat& 
 
     FileProxy* f = FileProxyFactory::getFileProxy(sessionProxy,path);
 
-
     f->getInfos();
 
     fileInfos=f->getFileStat();
 
     return 0;
-
-
 
   }
 
@@ -429,9 +425,20 @@ int vishnu::getFilesInfo(const string& sessionKey,const string& path, FileStat& 
  */
 int vishnu::stopFileTransfer(const string& sessionKey,const StopTransferOptions& options)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
-    std::cout << "option: "  << options.getTransferId() << std::endl;
-    std::cout << "option: "  << options.getFromMachineId() << std::endl;
-    std::cout << "option: " << boolalpha << options.getUserId() << std::endl;
+
+    StopTransferOptions optionsCompleted(options);
+
+    if (optionsCompleted.getTransferId().empty()){
+   
+      optionsCompleted.setTransferId("all");
+    }
+    
+    FileTransferProxy fileTransferProxy(sessionKey);
+
+    int result = fileTransferProxy.stopThread(optionsCompleted);
+    
+    return result; 
+
 
   }
 

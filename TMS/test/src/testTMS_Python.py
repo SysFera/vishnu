@@ -38,7 +38,7 @@ def displayListJ(lij):
     displayJob(lij.getJobs().get(i), i)
     print " "
 
-VISHNU.vishnuInitialize("/home/keo/Bureau/depot_git_edf/vishnu/UMS/test/src/sql/client.cfg")
+VISHNU.vishnuInitialize("/home/keo/Bureau/client.cfg")
 
 j = VISHNU.Job()
 op = VISHNU.SubmitOptions()
