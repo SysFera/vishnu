@@ -104,9 +104,14 @@ class FileTransferServer{
 
     static const unsigned int getSSHPort();
     static const std::string& getSSHCommand( );
-    
-    static std::string filterString(  const std::string& toFilter);
 
+    static std::string filterString(  const std::string& toFilter);
+    static void checkTransferId(std::string transferId);
+    static void addOptionRequest(const std::string& name, const std::string& value, std::string& request);  
+
+    static void checkUserId(std::string userId);
+
+    static void checkClientMachineName(std::string clmachineId);
   private:
 
     void waitThread ();
@@ -116,6 +121,7 @@ class FileTransferServer{
     void copy(const TransferExec& transferExec, const std::string& trCmd);
     void move(const TransferExec& transferExec, const std::string& trCmd);
     int stopThread(const int& pid);
+    void processOptions(const FMS_Data::StopTransferOptions& options, std::string& sqlRequest);
     int logIntoDatabase(int processId=-1,const std::string& errorMsg="");
     void updateData();
     void updateStatus(const FMS_Data::Status& status,const std::string& transferId,const std::string& errorMsg);
