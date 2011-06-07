@@ -46,7 +46,7 @@ class TransferExec{
 
     const int& getProcessId() const;
     void setProcessId(const int& processId)const;
-
+    void updatePid(const int& pid)const;
     void setLastExecStatus(const int& status) const;
     std::pair<std::string, std::string> exec(const std::string& cmd) const;
 
@@ -70,16 +70,11 @@ class TransferExec{
 
 
 
-
-
-
-
-
 class FileTransferServer{
 
   public:
 
-    FileTransferServer(const SessionServer& sessionServer,const FMS_Data::FileTransfer& filetranfer, const int& vishnuId);
+    FileTransferServer(const SessionServer& sessionServer, const int& vishnuId);
 
 
     FileTransferServer(const SessionServer& sessionServer,
@@ -99,7 +94,7 @@ class FileTransferServer{
 
     int  addMvAsyncThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options);
 
-    int stopThread(const std::string& thrId);
+    int stopThread(const StopTransferOptions& options);
     const FMS_Data::FileTransfer& getFileTransfer() const; 
     void setFileTransfer( const FMS_Data::FileTransfer& fileTransfer) const; 
 
@@ -109,6 +104,8 @@ class FileTransferServer{
 
     static const unsigned int getSSHPort();
     static const std::string& getSSHCommand( );
+    
+    static std::string filterString(  const std::string& toFilter);
 
   private:
 
@@ -118,6 +115,7 @@ class FileTransferServer{
     int addTransferThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options);
     void copy(const TransferExec& transferExec, const std::string& trCmd);
     void move(const TransferExec& transferExec, const std::string& trCmd);
+    int stopThread(const int& pid);
     int logIntoDatabase(int processId=-1,const std::string& errorMsg="");
     void updateData();
     void updateStatus(const FMS_Data::Status& status,const std::string& transferId,const std::string& errorMsg);

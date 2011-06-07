@@ -316,8 +316,8 @@ same conditions as regards security.</para>
             <row>
               <entry><para>I1-B</para></entry>
               <entry><para>Normal execution of getUpdateFrequency</para></entry>
-              <entry><para>The update's frequency is returned</para></entry>
-              <entry><para>The update's frequency is returned</para></entry>
+              <entry><para>The update frequency value is returned</para></entry>
+              <entry><para>The update frequency value is returned</para></entry>
               <entry><para>0</para></entry>
             </row>	  
           </tbody>
@@ -348,8 +348,8 @@ same conditions as regards security.</para>
             <row>
               <entry><para>IA6-B</para></entry>
               <entry><para>Normal execution of setUpdateFrequency</para></entry>
-              <entry><para>The update's frequency is set</para></entry>
-              <entry><para>The update's frequency is set</para></entry>
+              <entry><para>The update frequency value is set</para></entry>
+              <entry><para>The update frequency value is set</para></entry>
               <entry><para> 0 </para></entry>
             </row>
 	    <row>
@@ -376,7 +376,7 @@ same conditions as regards security.</para>
           </tbody>
         </tgroup>
       </informaltable>
-      <para> <emphasis role = "bold"> Remarks T2.7-B </emphasis>: there is a failure when the script's execution is very fast (under one seconds). </para>
+      
     </section>
       
       <section>
@@ -785,7 +785,7 @@ same conditions as regards security.</para>
                   <para>setUpdateFrequency</para>
                </entry>
                <entry>
-                  <para>Success - normal job submission</para>
+                  <para>Success - normal update frequency setting</para>
                </entry>
                <entry/>
             </row>
@@ -816,7 +816,7 @@ same conditions as regards security.</para>
                   <para>06/06/11</para>
                </entry>
                <entry>
-                  <para> The batch scheduler is stopped and the command submitJob is launched</para>
+                  <para>The VISHNU database is stopped and restarted</para>
                </entry>
 	       
 	       <entry>
@@ -824,7 +824,7 @@ same conditions as regards security.</para>
                </entry>
 	       
                <entry>
-                  <para> Success - the corresponding error message is returned </para>
+                  <para> <link linkend="Error"> Not functional - Failure la deuxième fois qu'on relance la commande</link>  Success - the corresponding error message is returned </para>
                </entry>
                
             </row>
@@ -837,7 +837,6 @@ same conditions as regards security.</para>
   
   <chapter>
     <title>Load tests </title>
-    
      <informaltable frame="all">
       <tgroup cols="5">
        <tbody>
@@ -860,16 +859,16 @@ same conditions as regards security.</para>
             </row>
             <row>
                <entry>
-                  <para>LOAD-2.1-submitJob</para>
+                  <para>LOAD-2.1-getMetricCurrentValue</para>
                </entry>
                <entry>
-                  <para>05/05/11</para>
+                  <para>06/06/11</para>
                </entry>
                <entry>
                   <para>Simultaneous launch of 100 commands</para>
                </entry>
                <entry>
-                  <para>submitJob</para>
+                  <para>getMetricCurrentValue</para>
                </entry>
                <entry>
                   <para>Success - normal execution of all commands launched</para>
@@ -877,38 +876,22 @@ same conditions as regards security.</para>
             </row>   
 	    <row>
                <entry>
-                  <para>LOAD-2.1-listJobs</para>
+                  <para>LOAD-2.1-getMetricHistory</para>
                </entry>
                <entry>
-                  <para>05/05/11</para>
+                  <para>06/06/11</para>
                </entry>
                <entry>
                   <para>Success - Simultaneous launch of 100 commands</para>
                </entry>
                <entry>
-                  <para>listJobs</para>
+                  <para>getMetricHistory</para>
                </entry>
                <entry>
                   <para>Success - normal execution of all commands launched</para>
                </entry>
             </row>   
-	    <row>
-               <entry>
-                  <para>LOAD-2.1-listQueues</para>
-               </entry>
-               <entry>
-                  <para>05/05/11</para>
-               </entry>
-               <entry>
-                  <para>Simultaneous launch of 100 commands</para>
-               </entry>
-               <entry>
-                  <para>listQueues</para>
-               </entry>
-               <entry>
-                  <para>Success - normal execution of all commands launched</para>
-               </entry>
-            </row>
+	    
 	  </tbody>    
       </tgroup>
       </informaltable>
@@ -917,85 +900,41 @@ same conditions as regards security.</para>
     
   <chapter>
     <title>Performance tests </title>
-    
-     <informaltable frame="all">
-      <tgroup cols="6">
-       <tbody>
+     <informaltable>
+        <tgroup cols="6">
+          <colspec colwidth="3.2cm"/>
+          <colspec colwidth="3.2cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="2.2cm"/>
+          <colspec colwidth="1.7cm"/>
+	  <colspec colwidth="1.3cm"/>
+          <thead>
             <row>
-               <entry>
-                  <para>ID test</para>
-               </entry>
-               <entry>
-                  <para>Test description</para>
-               </entry>
-               <entry>
-                  <para>Command(s) tested</para>
-               </entry>
-               <entry>
-                  <para>VISHNU execution time</para>
-               </entry>
-	       <entry>
-                  <para>SSH execution time</para>
-               </entry>
-	       <entry>
-                  <para>Results</para>
-               </entry>
+              <entry>ID test</entry>
+              <entry>Test description</entry>
+              <entry>Command(s) tested</entry>
+              <entry>VISHNU execution time</entry>
+              <entry>SSH execution time</entry>
+	      <entry>Results</entry>
             </row>
-            <row>
-               <entry>
-                  <para>CDP-3.1-submitJob</para>
-               </entry>
-               <entry>
-                  <para>comparison with " ssh localhost qsub " </para>
-               </entry>
-               <entry>
-                  <para>submitJob</para>
-               </entry>
-               <entry>
-                  <para>0,30s</para>
-               </entry>
-	       <entry>
-                  <para>0,17s</para>
-               </entry>
-	       <entry>
-                  <para>Failure</para>
-               </entry>
-            </row>   
+          </thead>
+          <tbody>
 	    <row>
                <entry>
-                  <para>CDP-3.1-cancelJob</para>
+                  <para>CDP-3.1-getMetricCurrentValue</para>
                </entry>
                <entry>
-                  <para>comparison with " ssh localhost qsub " </para>
+                  <para>comparison with " ssh host ps -efl " </para>
                </entry>
                <entry>
-                  <para>cancelJob</para>
+                  <para> getMetricCurrentValue     
+		  </para>
                </entry>
                <entry>
-                  <para>0,25s</para>
+                  <para>0,156s</para>
                </entry>
 	       <entry>
-                  <para>0,21s</para>
-               </entry>
-	       <entry>
-                  <para>Failure</para>
-               </entry>
-            </row>   
-	    <row>
-               <entry>
-                  <para>CDP-3.1-listJobs</para>
-               </entry>
-               <entry>
-                  <para>comparison with " ssh localhost qstat " </para>
-               </entry>
-               <entry>
-                  <para>listJobs</para>
-               </entry>
-               <entry>
-                  <para>0,08s</para>
-               </entry>
-	       <entry>
-                  <para>0,17s</para>
+                  <para>0,303s</para>
                </entry>
 	       <entry>
                   <para>Success</para>
@@ -1004,26 +943,28 @@ same conditions as regards security.</para>
 	    
 	    <row>
                <entry>
-                  <para>CDP-3.2.1-listQueues</para>
+                  <para>CDP-3.1-getMetricHistory</para>
                </entry>
                <entry>
-                  <para>execution time less than "ssh localhost qstat -Q" </para>
+                  <para>comparison with " ssh host ps -efl " </para>
                </entry>
                <entry>
-                  <para>listQueues</para>
+                  <para> getMetricHistory     
+		  </para>
                </entry>
                <entry>
-                  <para>0,10s</para>
+                  <para></para>
                </entry>
 	       <entry>
-                  <para>0,16s</para>
+                  <para></para>
                </entry>
 	       <entry>
-                  <para>Success</para>
+                  <para></para>
                </entry>
-            </row>
-	  </tbody>    
-      </tgroup>
+            </row>  
+	    
+          </tbody>
+        </tgroup>
       </informaltable>
       
       <informaltable frame="all">
@@ -1047,21 +988,75 @@ same conditions as regards security.</para>
                </entry>
             </row>
 	    
-	      <row>
+	    <row>
                <entry>
-                  <para>CDP-3.2.2-submitJob</para>
+                  <para>CDP-3.2.1-getMetricCurrentValue</para>
                </entry>
                <entry>
-                  <para>memory consumption</para>
+                  <para>memory consumption less than 500 Mb</para>
                </entry>
                <entry>
-                  <para>submitJob</para>
+                  <para></para>
                </entry>
                <entry>
-                  <para>0,8% of the RAM memory</para>
+                  <para></para>
                </entry>
 	       <entry>
-                  <para>Success</para>
+                  <para></para>
+               </entry>
+            </row>
+	    
+	    <row>
+               <entry>
+                  <para>CDP-3.2.1-getMetricHistory</para>
+               </entry>
+               <entry>
+                  <para>memory consumption less than 500 Mb</para>
+               </entry>
+               <entry>
+                  <para></para>
+               </entry>
+               <entry>
+                  <para></para>
+               </entry>
+	       <entry>
+                  <para></para>
+               </entry>
+            </row>
+	    
+	    <row>
+               <entry>
+                  <para>CDP-3.2.2-getMetricCurrentValue</para>
+               </entry>
+               <entry>
+                  <para>CPU consumption less than 10%</para>
+               </entry>
+               <entry>
+                  <para></para>
+               </entry>
+               <entry>
+                  <para></para>
+               </entry>
+	       <entry>
+                  <para></para>
+               </entry>
+            </row>
+	      
+	    <row>
+               <entry>
+                  <para>CDP-3.2.2-getMetricHistory</para>
+               </entry>
+               <entry>
+                  <para>CPU consumption less than 10%</para>
+               </entry>
+               <entry>
+                  <para></para>
+               </entry>
+               <entry>
+                  <para></para>
+               </entry>
+	       <entry>
+                  <para></para>
                </entry>
             </row>
 	    
@@ -1070,19 +1065,18 @@ same conditions as regards security.</para>
                   <para>CDP-Memserver</para>
                </entry>
                <entry>
-                  <para>Memory consumption of tms server running during 24 hours</para>
+                  <para>Memory consumption of ims server running during 24 hours</para>
                </entry>
                <entry>
-                  <para>tms server</para>
+                  <para>ims server</para>
                </entry>
                <entry>
-                  <para>0,7% of the RAM memory</para>
+                  <para></para>
                </entry>
 	       <entry>
-                  <para>Success</para>
+                  <para></para>
                </entry>
             </row>
-	    
 	</tbody>    
       </tgroup>
       </informaltable>
