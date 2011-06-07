@@ -528,3 +528,20 @@ vishnu::checkRemotePath(const std::string& path){
     throw FMSVishnuException(ERRCODE_INVALID_PATH, "The path must be a remote file and in the form machineId:path");
   }
 }
+
+/**
+ * \brief Check if the pid exists
+ * \param pid The given pid
+ * \param proc_dir The given process info directory
+ * \return True if the pid exists
+ */
+
+
+bool
+vishnu::process_exists(const std::string& pid, const bfs::path& proc_dir){
+
+  bfs::path token(proc_dir);
+  token /= pid;
+  return bfs::exists(token);
+}
+

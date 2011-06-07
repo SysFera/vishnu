@@ -427,12 +427,7 @@ int vishnu::stopFileTransfer(const string& sessionKey,const StopTransferOptions&
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
     StopTransferOptions optionsCompleted(options);
-/*
-    if (optionsCompleted.getTransferId().empty()){
-   
-      optionsCompleted.setTransferId("all");
-    }
-  */  
+
     FileTransferProxy fileTransferProxy(sessionKey);
 
     int result = fileTransferProxy.stopThread(optionsCompleted);
