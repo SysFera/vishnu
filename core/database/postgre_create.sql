@@ -178,7 +178,7 @@ CREATE TABLE process (
   pstatus INTEGER,
   vishnuname VARCHAR(255),
   dietname VARCHAR(255),
-  machineid VARCHAR(255),	
+  machineid VARCHAR(255),
   uptime TIMESTAMP,
   launchscript TEXT,
   PRIMARY KEY(numprocess)
@@ -197,7 +197,7 @@ PRIMARY KEY(numfileid),
 
 CREATE TABLE job (
   numjobid SERIAL  NOT NULL ,
-  vsession_numsessionid INTEGER   NOT NULL ,  
+  vsession_numsessionid INTEGER   NOT NULL ,
   submitMachineId VARCHAR(255),
   submitMachineName VARCHAR(255),
   jobId VARCHAR(255),
@@ -207,7 +207,7 @@ CREATE TABLE job (
   jobPath VARCHAR(255),
   outputPath VARCHAR(255),
   errorPath VARCHAR(255),
-  scriptContent TEXT,  
+  scriptContent TEXT,
   jobPrio INTEGER,
   nbCpus INTEGER,
   jobWorkingDir VARCHAR(255),
@@ -241,6 +241,7 @@ CREATE TABLE fileTransfer (
   startTime TIMESTAMP,
   trCommand INTEGER,
   processId INTEGER,
+  errorMsg TEXT,
 PRIMARY KEY(numfileTransferid),
     FOREIGN KEY(vsession_numsessionid)
     REFERENCES vsession(numsessionid) ON DELETE CASCADE);
