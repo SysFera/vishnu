@@ -17,10 +17,10 @@
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include "boost/date_time/gregorian/gregorian.hpp"
 #include "FMSVishnuException.hpp"
-
+#include <boost/filesystem.hpp>
 using namespace boost::posix_time;
 using namespace boost::gregorian;
-
+namespace bfs=boost::filesystem;
 
 /**
 * \enum BatchType
@@ -248,5 +248,16 @@ namespace vishnu {
     */ 
    void
    checkRemotePath(const std::string& path);
+
+   /**
+    * \brief Check if the pid exists
+    * \param pid The given pid
+    * \param proc_dir The given process info directory
+    * \return True if the pid exists
+    */
+
+   bool
+     process_exists(const std::string& pid, const bfs::path& proc_dir="/proc");
+
 }
 #endif // _UTILVISHNU_H_

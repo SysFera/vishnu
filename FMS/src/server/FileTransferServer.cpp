@@ -361,40 +361,55 @@ void FileTransferServer::waitThread (){
  */
 void
 FileTransferServer::processOptions(const FMS_Data::StopTransferOptions& options, std::string& sqlRequest){
+  
+  std::string transferId(options.getTransferId()),clientMachineName(options.getFromMachineId()),userId(options.getUserId());
 
   //To check if the transferId is defined
-  if (options.getTransferId().size() != 0) {
+  if (transferId.size() != 0) {
+
+    if(transferId.compare("all")!=0 && transferId.compare("ALL")!=0){
     //To check the transfer Id
     FileTransferServer::checkTransferId(options.getTransferId());
     //To add the transferId on the request
     FileTransferServer::addOptionRequest("transferId", options.getTransferId(), sqlRequest);
+ 
+    }
+   
   }
 
   //To check if the fromMachineId is defined
-  if (options.getFromMachineId().size() != 0) {
+  if (clientMachineName.size() != 0) {
     //To check the client machine Id
     FileTransferServer::checkClientMachineName(options.getFromMachineId());
     //To add the fromMachineId on the request
     FileTransferServer::addOptionRequest("clientMachineId", options.getFromMachineId(), sqlRequest);
   }
 
-  //To check if the userId is defined
-  if (options.getUserId().size() != 0) {
-
-    //Creation of the object user
+  //Creation of the object user
     UserServer userServer = UserServer(msessionServer);
 
     userServer.init();
-    if (!userServer.isAdmin()) {
-      UMSVishnuException e (ERRCODE_NO_ADMIN);
-      throw e;
-    }
 
+    //To check if the userId is defined
+    if (userId.size() != 0) {
+
+      if (!userServer.isAdmin()) {
+        UMSVishnuException e (ERRCODE_NO_ADMIN);
+        throw e;
+      }
+
+      if(userId.compare("all")!=0 && userId.compare("ALL")!=0){
     //To check the user Id
     FileTransferServer::checkUserId(options.getUserId());
 
     //To add the userId on the request
-    FileTransferServer::addOptionRequest("userId", options.getUserId(), sqlRequest);
+    FileTransferServer::addOptionRequest("userId", userId, sqlRequest);
+
+    }
+  }else{
+  
+   FileTransferServer::addOptionRequest("userId", userServer.getData().getUserId(), sqlRequest);
+  
   }
 
 }
@@ -402,6 +417,8 @@ FileTransferServer::processOptions(const FMS_Data::StopTransferOptions& options,
 
 
 int FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options ){
+
+  if (false==options.getTransferId().empty() || false==options.getUserId().empty() || false==options.getFromMachineId().empty()){
 
   std::string sqlListOfPid = "SELECT processId from fileTransfer, vsession "
     "where vsession.numsessionid=fileTransfer.vsession_numsessionid and filetransfer.status=0";
@@ -421,9 +438,11 @@ int FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options 
       results = ListOfPid->get(i);
       iter = results.begin();
       std::cout << "pid: " << *iter << "\n";
+      stopThread(convertToInt(*iter) );
       ++iter;
     }
 
+  }
   }
 
   return 0;
@@ -432,10 +451,13 @@ int FileTransferServer::stopThread(const int& pid ){
 
   int result;
 
-  if(result=kill (pid, SIGKILL)){
+  if(result=kill(pid, SIGKILL)){
 
+    updateStatus(3,mfileTransfer.getTransferId(),strerror(errno));
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,strerror(errno));
   }
+  
+    updateStatus(2,mfileTransfer.getTransferId(),"");
   return result;
 }
 

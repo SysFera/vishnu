@@ -34,12 +34,10 @@ public :
    * \brief To initialize the FMS monitor with individual parameters instead of configuration file
    * \param vishnuId The password of the root user vishnu_user for the connection with the database
    * \param dbConfig The configuration of the database
-   * \param machineId The machine identifier
-   * \param batchType The batch scheduler type
    * \return raises an execption
    */
   void
-  init(int vishnuId, DbConfiguration dbConfig, const std::string& machineId, const BatchType& batchType);
+  init(int vishnuId, DbConfiguration dbConfig);
 
    /**
    * \brief To launch the FMS Monitor
