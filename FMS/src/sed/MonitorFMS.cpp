@@ -8,8 +8,6 @@
 
 #include <boost/scoped_ptr.hpp>
 #include "ServerFMS.hpp"
-#include "BatchServer.hpp"
-#include "BatchFactory.hpp"
 #include "DbFactory.hpp"
 #include "utilVishnu.hpp"
 #include "MonitorFMS.hpp"
@@ -44,13 +42,11 @@ MonitorFMS::~MonitorFMS() {
  * \return raises an execption
 */
 void
-MonitorFMS::init(int vishnuId, DbConfiguration dbConfig, const std::string& machineId, const BatchType& batchType) {
+MonitorFMS::init(int vishnuId, DbConfiguration dbConfig) {
 
   DbFactory factory;
 
   mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
-  mmachineId = machineId;
-  mbatchType = batchType;
 
   std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+vishnu::convertToString(vishnuId));
 
@@ -78,11 +74,10 @@ MonitorFMS::run() {
 
   std::vector<std::string>::iterator iter;
   std::vector<std::string> tmp;
-  std::string batchJobId;
-  std::string jobId;
+  std::string pid;
   int state;
   std::string sqlUpdatedRequest;
-  std::string sqlRequest = "SELECT transferid from filetransfer, vsession where vsession.numsessionid=filetransfer.vsession_numsessionid "
+  std::string sqlRequest = "SELECT transferId,processid from filetransfer, vsession where vsession.numsessionid=filetransfer.vsession_numsessionid "
                            " and status=0";
 
   try {
@@ -92,26 +87,18 @@ MonitorFMS::run() {
       for (size_t i = 0; i < result->getNbTuples(); ++i) {
         tmp.clear();
         tmp = result->get(i);
-
         iter = tmp.begin();
-        jobId = *iter;
+        transferId=*iter;
         ++iter;
-        batchJobId = *iter;
-        BatchFactory factory;
-        boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(mbatchType));
-        state = batchServer->getJobState(batchJobId);
-        if(state!=-1) {
-          sqlUpdatedRequest = "UPDATE job SET status="+vishnu::convertToString(state)+" where jobId='"+jobId+"'";
-         
-          mdatabaseVishnu->process(sqlUpdatedRequest.c_str()); 
-
-          if(state==5) {
-            sqlUpdatedRequest = "UPDATE job SET endDate=CURRENT_TIMESTAMP where jobId='"+jobId+"'";
-            mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
-          }
+        pid = *iter;
+        ++iter;
+        if(false==process_exists(converToString(pid))) {
+          sqlUpdatedRequest = "UPDATE filetransfer SET state=3 where transferid='"+transferId+"'";
+          mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
         }
       }
     }
+
     sleep(minterval);
 
   } catch (VishnuException& e) {
