@@ -113,7 +113,7 @@ public:
   FMS_Data::FileTransferList*
     list() {
       std::string sqlListOfFiles = "SELECT transferId, fileTransfer.status, userId, clientMachineId, sourceMachineId, "
-        "destinationMachineId, sourceFilePath, destinationFilePath, fileSize, startTime, "
+        "destinationMachineId, sourceFilePath, destinationFilePath, fileSize, startTime,errorMsg "
         " trCommand, processId from fileTransfer, vsession "
           "where vsession.numsessionid=fileTransfer.vsession_numsessionid";
 
@@ -154,6 +154,7 @@ public:
           std::string tmpTime = *(++iter);
           startTime = convertLocaltimeINUTCtime(convertToTimeType(tmpTime)); 
           filetransfer->setStart_time(startTime);
+          filetransfer->setErrorMsg(*(++iter));
           filetransfer->setTrCommand(convertToInt(*(++iter)));
           
           mlistObject->getFileTransfers().push_back(filetransfer);
