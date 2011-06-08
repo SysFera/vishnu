@@ -31,8 +31,10 @@
 vishnu_ch_mod \- changes access rights of remote files/directories\&.
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_ch_mod\fR\ 'u
-\fBvishnu_ch_mod\fR [\fB\-h\fR] \fIpath\fR \fImode\fR
+\fBvishnu_ch_mod\fR [\fB\-h\fR] \fImode\fR \fIpath\fR
 .SH "DESCRIPTION"
+.PP
+Changes the permissions of a file or directory at the location given by the path parameter\&. The path must be provided in the form \*(Aqmachine_id:path\*(Aq (the machine_id values can be obtained using the vishnu_list_machine command)\&. The mode parameter is the same value as for the unix chmod command\&.
 .SH "OPTIONS"
 .PP
 \fB\-h \fR\fB\fIhelp\fR\fR

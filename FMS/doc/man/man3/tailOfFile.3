@@ -31,8 +31,10 @@
 tailOfFile \- displays a few last lines of files located on remote machines
 .SH "SYNOPSIS"
 .HP \w'int\ vishnu::tailOfFile('u
-.BI "int vishnu::tailOfFile(const\ string&\ " "sessionKey" ", const\ string&\ " "path" ", string&\ " "fileContent" ", const\ int&\ " "nLine\ =\ 10" ");"
+.BI "int vishnu::tailOfFile(const\ string&\ " "sessionKey" ", const\ string&\ " "path" ", string&\ " "fileContent" ", const\ TailOfFileOptions&\ " "options\ =\ TailOfFileOptions()" ");"
 .SH "DESCRIPTION"
+.PP
+Displays the last lines of a file at the location given by the path parameter\&. The path must be provided in the form \*(Aqmachine_id:path\*(Aq (the machine_id values can be obtained using the vishnu_list_machine command)\&.
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR
@@ -50,9 +52,9 @@ Input argument\&. The file following the pattern [host:]file path\&.
 Output argument\&. The last "nLine" lines of the file\&.
 .RE
 .PP
-\fInLine\fR
+\fIoptions\fR
 .RS 4
-Input argument\&. Number of lines to display\&.
+Input argument\&. The tail command options\&.
 .RE
 .SH "EXCEPTIONS"
 .PP

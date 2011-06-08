@@ -33,6 +33,8 @@ stopFileTransfer \- stops an execution of a set of file transfers\&.
 .HP \w'int\ vishnu::stopFileTransfer('u
 .BI "int vishnu::stopFileTransfer(const\ string&\ " "sessionKey" ", const\ StopTransferOptions&\ " "options\ =\ StopTransferOptions()" ");"
 .SH "DESCRIPTION"
+.PP
+Cancels a file or directory transfer that has been initiated using a vishnu asynchronous copy or move file command\&. The command listFileTransfers can be used to check the status of the transfer after it has been cancelled, using the transfer id as the identifier\&.
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR
