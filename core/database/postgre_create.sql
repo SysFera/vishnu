@@ -231,7 +231,7 @@ PRIMARY KEY(numjobid),
     FOREIGN KEY(vsession_numsessionid)
     REFERENCES vsession(numsessionid) ON DELETE CASCADE);
 
-CREATE TABLE fileTransfer (
+CREATE TABLE filetransfer (
   numfileTransferid SERIAL  NOT NULL ,
   vsession_numsessionid INTEGER   NOT NULL ,
   transferId VARCHAR(255),
@@ -282,7 +282,6 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON filetransfer TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON filesub TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON job TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON process TO "vishnu_db_admin";
-GRANT SELECT, INSERT, UPDATE, DELETE ON fileTransfer TO "vishnu_db_admin";
 
 
 --CREATE ROLE vishnu_user;
@@ -305,7 +304,6 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON filetransfer TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON filesub TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON job TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON process TO "vishnu_user";
-GRANT SELECT, INSERT, UPDATE, DELETE ON fileTransfer TO "vishnu_user";
 
 --Grant on sequences
 
