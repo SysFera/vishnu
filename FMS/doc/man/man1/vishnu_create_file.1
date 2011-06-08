@@ -31,20 +31,15 @@
 vishnu_create_file \- creates files on remote machines\&.
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_create_file\fR\ 'u
-\fBvishnu_create_file\fR [\fB\-h\fR] [\fB\-m\ \fR\fB\fImode\fR\fR] \fIpath\fR
+\fBvishnu_create_file\fR [\fB\-h\fR] \fIpath\fR
 .SH "DESCRIPTION"
 .PP
-Creates an empty file at the location given by the path parameter\&.
+Creates an empty file at the location given by the path parameter\&. The path must be provided in the form \*(Aqmachine_id:path\*(Aq (the machine_id values can be obtained using the vishnu_list_machine command)
 .SH "OPTIONS"
 .PP
 \fB\-h \fR\fB\fIhelp\fR\fR
 .RS 4
 help about the command\&.
-.RE
-.PP
-\fB\-m \fR\fB\fImode\fR\fR
-.RS 4
-The file access permissions in octal numeral system\&.\&.
 .RE
 .SH "ENVIRONMENT"
 .PP
