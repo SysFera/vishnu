@@ -800,6 +800,9 @@ waitAsyncCopy(const string& sessionKey, const FileTransfer& transferInfo) {
     } else {
       BOOST_MESSAGE("ERROR: File transfer list contains more than 1 item for a given transferId!");
       BOOST_MESSAGE("SIZE=" + convertToString(fileTransferList.getFileTransfers().size()));
+      for (unsigned int i=0; i<fileTransferList.getFileTransfers().size(); ++i ) {
+        BOOST_MESSAGE("ID=" + convertToString(fileTransferList.getFileTransfers().get(0)->getTransferId()));
+      }
       return -1;
     }
     bpt::seconds sleepTime(5);
