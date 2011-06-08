@@ -144,8 +144,9 @@
 
 %template(EFileTransferList) ::ecorecpp::mapping::EList<::FMS_Data::FileTransfer>;
 %template(EFileStatList) ::ecorecpp::mapping::EList<::FMS_Data::FileStat>;
-%template(EStringList) ::ecorecpp::mapping::EList<::FMS_Data::StringList >;
+%template(EStringList) std::vector< ::ecore::EString >;
 
+//  ***************************** UMS MODULE  *****************************
 
 #ifdef SWIGPYTHON
 
@@ -222,6 +223,7 @@
 %include "FMSVishnuException.hpp"
 #endif
 
+// ***************************** TMS MODULE  *****************************
 
 #ifdef SWIGJAVA
 
@@ -273,11 +275,13 @@
 %include "api_tms.hpp"
 #endif
 
+//  ***************************** IMS MODULE  *****************************
+
 #ifdef SWIGPYTHON
 %typemap(argout) int& freq {
   PyObject *o = PyInt_FromLong(*$1);
   $result = SWIG_Python_AppendOutput($result, o);
- } 
+ }
 #endif
 
 #ifdef SWIGJAVA
@@ -339,11 +343,14 @@
 %include "api_ims.hpp"
 #endif
 
+//  ***************************** FMS MODULE  *****************************
+
+typedef unsigned int mode_t;
+
 #ifdef SWIGPYTHON
 
-// Add the output parameters to the result
-%typemap(argout) std::string& info {
-  PyObject *o = PyString_FromString($1);
+%typemap(argout) std::string& contentOfFile {
+  PyObject *o = PyString_FromString($1->c_str());
   $result = SWIG_Python_AppendOutput($result, o);
 }
 
@@ -351,6 +358,8 @@
 
 
 #ifdef SWIGJAVA
+
+%apply std::string &INOUT { std::string& contentOfFile };
 
 // Exception rule for system exception
 %typemap (throws) SystemException{
