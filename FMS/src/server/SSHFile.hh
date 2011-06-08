@@ -36,40 +36,40 @@
 /* A class for file representation through SSH. */
 class SSHFile : public File {
 
-public:
-  //private:
-  mutable bool upToDate;
-  std::string sshHost;
-  std::string sshUser;
-  std::string sshPublicKey;
-  std::string sshPrivateKey;
-  std::string sshPassword;
-  unsigned int sshPort;
-  std::string sshCommand;
-  std::string scpCommand;
-  mutable std::string merror;
-//public:
-  SSHFile();
-  SSHFile(const SessionServer& sessionServer,
-          const std::string& path,
-          const std::string& sshHost,
-          const std::string& sshUser,
-          const std::string& sshPublicKey,
-          const std::string& sshPrivateKey,
-          const std::string& sshPassword,
-          unsigned int sshPort,
-          const std::string& sshCommand="/usr/bin/ssh",
-          const std::string& scpCommand="/usr/bin/scp");
-  SSHFile(const SSHFile& file);
-  virtual ~SSHFile();
 
-  SSHFile& operator=(const SSHFile& file);
+  private:
+    mutable bool upToDate;
+    std::string sshHost;
+    std::string sshUser;
+    std::string sshPublicKey;
+    std::string sshPrivateKey;
+    std::string sshPassword;
+    unsigned int sshPort;
+    std::string sshCommand;
+    std::string scpCommand;
+    mutable std::string merror;
+  public:
+    SSHFile();
+    SSHFile(const SessionServer& sessionServer,
+        const std::string& path,
+        const std::string& sshHost,
+        const std::string& sshUser,
+        const std::string& sshPublicKey,
+        const std::string& sshPrivateKey,
+        const std::string& sshPassword,
+        unsigned int sshPort,
+        const std::string& sshCommand="/usr/bin/ssh",
+        const std::string& scpCommand="/usr/bin/scp");
+    SSHFile(const SSHFile& file);
+    virtual ~SSHFile();
 
-  virtual bool isUpToDate() const;
-  virtual void getInfos() const;
-  std::string getErrorMsg() const;
+    SSHFile& operator=(const SSHFile& file);
 
-  virtual int chgrp(const std::string& group);
+    virtual bool isUpToDate() const;
+    virtual void getInfos() const;
+    std::string getErrorMsg() const;
+
+    virtual int chgrp(const std::string& group);
   virtual int chmod(const mode_t mode);
   virtual std::string head(const HeadOfFileOptions& options);
   virtual std::string getContent();
