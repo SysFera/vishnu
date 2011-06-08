@@ -31,8 +31,10 @@
 VISHNU.listDir \- displays the content of a remote directory\&.
 .SH "SYNOPSIS"
 .HP \w'VISHNU\&.listDir('u
-.BI "VISHNU\&.listDir(string\ " "sessionKey" ", string\ " "path" ", FileStatList\ " "dirContent" ");"
+.BI "VISHNU\&.listDir(string\ " "sessionKey" ", string\ " "path" ", StringList\ " "dirContent" ");"
 .SH "DESCRIPTION"
+.PP
+Displays the content of a directory at the location given by the path parameter\&. The path must be provided in the form \*(Aqmachine_id:path\*(Aq (the machine_id values can be obtained using the vishnu_list_machine command)\&.
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR

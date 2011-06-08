@@ -33,6 +33,8 @@ vishnu_stop_file_transfer \- stops an execution of a set of file transfers\&.
 .HP \w'\fBvishnu_stop_file_transfer\fR\ 'u
 \fBvishnu_stop_file_transfer\fR [\fB\-h\fR] [\fB\-i\ \fR\fB\fItransferId\fR\fR] [\fB\-m\ \fR\fB\fIfromMachineId\fR\fR] [\fB\-u\ \fR\fB\fIuserId\fR\fR]
 .SH "DESCRIPTION"
+.PP
+Cancels a file or directory transfer that has been initiated using a vishnu asynchronous copy or move file command\&. The command listFileTransfers can be used to check the status of the transfer after it has been cancelled, using the transfer id as the identifier\&.
 .SH "OPTIONS"
 .PP
 \fB\-h \fR\fB\fIhelp\fR\fR
