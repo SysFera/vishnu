@@ -10,7 +10,7 @@
 
 -- Creates VISHNU record
 INSERT INTO vishnu (vishnuid, updatefreq, formatiduser, formatidmachine, formatidjob, formatidfiletransfer, usercpt,
-machinecpt, jobcpt, fileSubcpt) VALUES (1, 0, 'U_$CPT', 'MA_$CPT', 'J_$CPT', 'FT_$CPT', 1, 1, 1, 1);
+machinecpt, jobcpt, fileSubcpt) VALUES (1, 100, 'U_$CPT', 'MA_$CPT', 'J_$CPT', 'FT_$CPT', 1, 1, 1, 1);
 
 -- Creates required user options
 INSERT INTO optionu (optionid, description, defaultvalue) VALUES (1, 'VISHNU_CLOSE_POLICY', 1);
