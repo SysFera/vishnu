@@ -551,12 +551,16 @@ bool isFoundInLocalDir(const string& dirLocalPath,
                        const string& name) {
   bfs::path dir(dirLocalPath);
   bfs::directory_iterator end_iter;
-
+  string debugMsg = "Checking dir " + dirLocalPath;
+  debugMsg.append("for" + name);
+  BOOST_MESSAGE(debugMsg);
   if ( bfs::exists(dir) && bfs::is_directory(dir)) {
     for( bfs::directory_iterator dir_iter(dir) ; dir_iter != end_iter ; ++dir_iter) {
       if ( bfs::is_regular_file(dir_iter->status())
             && dir_iter->path().leaf() == name) {
         return true;
+      } else {
+        BOOST_MESSAGE(dir_iter->path().leaf());
       }
     }
   }
@@ -711,7 +715,7 @@ BOOST_AUTO_TEST_CASE(ListDirContent_Base)
   try {
     BOOST_REQUIRE( createDir(sessionKey, dirFullPath1) == 0);
     // put some content into the directory
-    const vector<string> fileSuffixes = ba::list_of("1.2.3")("éàè")("$")("!:");
+    const vector<string> fileSuffixes = ba::list_of("1.2.3")("éàè")("$")("!~-_#");
     vector<string> localFiles = fileSuffixes;
     createRemoteFiles(sessionKey, addPrefix(localFilePath, localFiles), dirFullPath1);
 
@@ -799,6 +803,8 @@ waitAsyncCopy(const string& sessionKey, const FileTransfer& transferInfo) {
       BOOST_MESSAGE("ERROR: File transfer list contains more than 1 item for a given transferId!");
       return -1;
     }
+    bpt::seconds sleepTime(5);
+    boost::this_thread::sleep(sleepTime);
   }
   if (!terminated) {
     BOOST_MESSAGE("ERROR: End of polling for file transfer");
@@ -1142,6 +1148,50 @@ BOOST_AUTO_TEST_CASE(AsyncMoveFile_Exceptions)
     BOOST_CHECK_THROW( moveAsyncFile(sessionKey, invalidMachineFullPath, baseDirFullPath1, transferInfo), VishnuException);
     // Cleanup
     vishnu::deleteFile(localFilePath.c_str());
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+BOOST_AUTO_TEST_CASE(CancelFileTransfer_Base)
+{
+  BOOST_TEST_MESSAGE("Testing file transfer cancel UC F2.CA1-B");
+  VishnuConnection vc(userId, userPwd);
+  string sessionKey=vc.getSessionKey();
+
+  try {
+    FileTransfer transferInfo;
+    createFile<100000>(localFilePath);
+    // local to remote
+    BOOST_MESSAGE("Checking local to remote cancel");
+    BOOST_REQUIRE( copyAsyncFile(sessionKey, localFilePath, baseDirFullPath1, transferInfo) == 0);
+    // Wait two seconds
+    bpt::seconds sleepTime(2);
+    boost::this_thread::sleep(sleepTime);
+    // Check list
+    FileTransferList transferList;
+    LsTransferOptions transferOpts;
+    BOOST_REQUIRE( listFileTransfers(sessionKey, transferList, transferOpts) == 0);
+    bool transferFound = false;
+    for (unsigned int i=0; i < transferList.getFileTransfers().size(); ++i) {
+      if (transferList.getFileTransfers().get(i)->getTransferId() == transferInfo.getTransferId()) {
+        transferFound = true;
+        break;
+      }
+    }
+    BOOST_CHECK_MESSAGE( transferFound, "The transfer was not found - id=" + transferInfo.getTransferId() );
+    // Cancel
+    StopTransferOptions stopOpts;
+    stopOpts.setTransferId(transferInfo.getTransferId());
+    BOOST_REQUIRE( stopFileTransfer(sessionKey, stopOpts) == 0 );
+    // Check
+    bool isRemoteCopyFound1 = isFoundInDir(sessionKey, baseDirFullPath1, newFileName);
+    BOOST_CHECK(isRemoteCopyFound1);
+    // Cleanup
+    BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
+    vishnu::deleteFile(localFilePath.c_str());
+
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
     BOOST_CHECK(false);

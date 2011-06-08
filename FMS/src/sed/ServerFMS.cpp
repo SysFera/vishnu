@@ -322,16 +322,6 @@ ServerFMS::init(int vishnuId,
 
 
 
-
-
-
-
-
-
-
-
-
-
   // List file transfer
 
   mprofile = getFileTransfersListProfile();
@@ -342,6 +332,19 @@ ServerFMS::init(int vishnuId,
   }
 
   diet_profile_desc_free(mprofile);
+
+  // Stop file transfer
+
+  mprofile = getFileTransferStopProfile();
+
+  if ( diet_service_table_add(mprofile, NULL,solveFileTransferStop ) ){
+
+    return 1;
+  }
+
+  diet_profile_desc_free(mprofile);
+
+
 
 
 

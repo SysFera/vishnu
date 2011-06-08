@@ -339,5 +339,31 @@ void FileTransfer::setTrCommand(::FMS_Data::TransferCommand _trCommand)
 #endif
 }
 
+::ecore::EString const& FileTransfer::getErrorMsg() const
+{
+    return m_errorMsg;
+}
+
+void FileTransfer::setErrorMsg(::ecore::EString const& _errorMsg)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_errorMsg = m_errorMsg;
+#endif
+    m_errorMsg = _errorMsg;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::FMS_Data::FMS_DataPackage::_instance()->getFileTransfer__errorMsg(),
+                _old_errorMsg,
+                m_errorMsg
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
 // References
 
