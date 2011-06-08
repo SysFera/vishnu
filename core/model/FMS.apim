@@ -6,12 +6,14 @@
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file to create following the pattern  [host:]file path." longOptionName=""/>
       <ports name="mode" dataType="//@modules.0/@typeList/@types.12" description="The file access permissions in octal numeral system." optional="true" shortOptionLetter="m" longOptionName="" defaultValueLiteral="644"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.0"/>
+      <details key="description" value="Creates an empty file at the location given by the path parameter."/>
     </services>
     <services name="createDir" description="creates directories on remote machines." resultCodes="VISHNU_OK ERRCODE_SESSION_KEY_NOT_FOUND ERRCODE_INVALID_MACHINE_ID ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH FMS_INVALID_CFG_FILE ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_PERMISSION_DENIED ERRCODE_DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to create following the pattern  [host:]directory path." longOptionName=""/>
       <ports name="mode" dataType="//@modules.0/@typeList/@types.12" description="the new directories permission access in octal numeral system." optional="true" shortOptionLetter="m" longOptionName="" defaultValueLiteral="755"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.1"/>
+      <details key="description" value="Creates an new directory at the location given by the path parameter."/>
     </services>
     <services name="removeFile" description="removes files from  remote hosts." resultCodes="VISHNU_OK ERRCODE_SESSION_KEY_NOT_FOUND ERRCODE_INVALID_MACHINE_ID ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH FMS_INVALID_CFG_FILE ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_PERMISSION_DENIED ERRCODE_DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
