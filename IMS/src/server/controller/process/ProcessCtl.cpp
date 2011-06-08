@@ -26,8 +26,10 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, bool isAPI) {
     if (!muser.isAdmin()) {
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "restart is an admin function. A user cannot call it");
     }
+    // Currently too much but kept
     mp.getSshKeyAndAcc(keyPath, login, mmid, muser.getData().getUserId(), hostname);
   } else {
+    // Currently too much but kept
     mp.getAnAdmin(keyPath, login, mmid, hostname);
   }
 
@@ -60,7 +62,6 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, bool isAPI) {
     // Do nothing, stop just to make sure the process is not running anymore    
   }
 
-
   char hname[200];
   gethostname(hname, 199);
   
@@ -83,7 +84,7 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, bool isAPI) {
     }
   } else {
     // TODO : faire le SSH  pour executer la commande
-    string cmd = "ssh -i "+keyPath+" "+login+"@"+hostname+" \""+cmd+"\"";
+    string cmd = "ssh vishnu@"+hostname+" \""+cmd+"\"";
     int ret = system(cmd.c_str());
     if (ret == -1) {
       throw SystemException(ERRCODE_SYSTEM, "Failed to restart process "+type);
