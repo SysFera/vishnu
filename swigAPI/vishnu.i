@@ -144,7 +144,7 @@
 
 %template(EFileTransferList) ::ecorecpp::mapping::EList<::FMS_Data::FileTransfer>;
 %template(EFileStatList) ::ecorecpp::mapping::EList<::FMS_Data::FileStat>;
-%template(EStringList) ::ecorecpp::mapping::EList<::FMS_Data::StringList >;
+%template(EStringList) std::vector< ::ecore::EString >;
 
 //  ***************************** UMS MODULE  *****************************
 
