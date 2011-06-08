@@ -794,7 +794,7 @@ waitAsyncCopy(const string& sessionKey, const FileTransfer& transferInfo) {
       return -1;
     }
     if (fileTransferList.getFileTransfers().size() == 1) {
-      BOOST_MESSAGE("Current status is " + fileTransferList.getFileTransfers().get(0)->getStatus());
+      BOOST_MESSAGE("Current status is " + convertToString<int>(fileTransferList.getFileTransfers().get(0)->getStatus()));
       if (fileTransferList.getFileTransfers().get(0)->getStatus() != STATUS_INPROGRESS) {
         BOOST_MESSAGE("Terminated!");
         terminated = true;
@@ -813,7 +813,7 @@ waitAsyncCopy(const string& sessionKey, const FileTransfer& transferInfo) {
     BOOST_MESSAGE("ERROR: End of polling for file transfer");
     return -1;
   }
-  BOOST_MESSAGE("Final status of transfer is " + fileTransferList.getFileTransfers().get(0)->getStatus());
+  BOOST_MESSAGE("Final status of transfer is " + convertToString<int>(fileTransferList.getFileTransfers().get(0)->getStatus()));
   return fileTransferList.getFileTransfers().get(0)->getStatus();
 }
 
@@ -853,6 +853,10 @@ BOOST_AUTO_TEST_CASE(SyncCopyFile_Base)
     BOOST_MESSAGE("Checking remote to local copy");
     string localCopyName = newFileName + ".bak";
     string localCopyPath = localDir + localCopyName;
+    BOOST_MESSAGE("SRC PATH:" + fileFullPath1);
+    BOOST_MESSAGE("DST PATH:" + localCopyPath);
+    BOOST_MESSAGE("Checking that source is in: " + baseDirFullPath1);
+    BOOST_CHECK( isFoundInDir(sessionKey, baseDirFullPath1, newFileName));
     BOOST_REQUIRE( copyFile(sessionKey, fileFullPath1, localCopyPath) == 0);
     // Check
     bool isLocalCopyFound = isFoundInLocalDir(localDir,localCopyName);
