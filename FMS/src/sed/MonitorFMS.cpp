@@ -74,8 +74,7 @@ MonitorFMS::run() {
 
   std::vector<std::string>::iterator iter;
   std::vector<std::string> tmp;
-  std::string pid;
-  int state;
+  std::string pid,transferId;
   std::string sqlUpdatedRequest;
   std::string sqlRequest = "SELECT transferId,processid from filetransfer, vsession where vsession.numsessionid=filetransfer.vsession_numsessionid "
                            " and status=0";
@@ -92,7 +91,7 @@ MonitorFMS::run() {
         ++iter;
         pid = *iter;
         ++iter;
-        if(false==process_exists(converToString(pid))) {
+        if(false==process_exists(vishnu::convertToString(pid))) {
           sqlUpdatedRequest = "UPDATE filetransfer SET state=3 where transferid='"+transferId+"'";
           mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
         }

@@ -1,9 +1,11 @@
 #include <csignal>
 #include <sys/wait.h>
+#include <sys/types.h>
 #include <fstream>
 #include "ServerFMS.hpp"
 #include "ExecConfiguration.hpp"
 #include "DbConfiguration.hpp"
+#include "MonitorFMS.hpp"
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/scoped_ptr.hpp>
@@ -34,6 +36,7 @@ int main(int argc, char* argv[], char* envp[]) {
 
   int res = 0;
   int vishnuId = 0;
+  int interval = 1;
   ExecConfiguration config;
   DbConfiguration dbConfig(config);
   std::string dietConfigFile;
@@ -48,24 +51,55 @@ int main(int argc, char* argv[], char* envp[]) {
     config.initFromFile(argv[1]);
     config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, dietConfigFile);
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
+    config.getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
+    if (interval < 0) {
+      throw UserException(ERRCODE_INVALID_PARAM, "The Monitor interval value is incorrect");
+    } 
     dbConfig.check();
   } catch (UserException& e) {
     std::cerr << e.what() << std::endl;
     exit(1);
   }
 
-    //Initialize the FMS Server (Opens a connection to the database)
-    boost::scoped_ptr<ServerFMS> server(ServerFMS::getInstance());
-    res = server->init(vishnuId, dbConfig);
+  // Fork a child for FMS monitoring
+  pid_t pid;
+  pid_t ppid;
+  pid = fork();
 
-    // Initialize the DIET SeD
-    if (!res) {
-      diet_print_service_table();
-      res = diet_SeD(dietConfigFile.c_str(), argc, argv);
-    } else {
-      std::cerr << "There was a problem during services initialization" << std::endl;
+  if (pid > 0) {
+
+    try {
+
+      //Initialize the FMS Server (Opens a connection to the database)
+      boost::scoped_ptr<ServerFMS> server(ServerFMS::getInstance());
+      res = server->init(vishnuId, dbConfig);
+
+      // Initialize the DIET SeD
+      if (!res) {
+        diet_print_service_table();
+        res = diet_SeD(dietConfigFile.c_str(), argc, argv);
+      } else {
+        std::cerr << "There was a problem during services initialization" << std::endl;
+        exit(1);
+      }
+    } catch (VishnuException& e) {
+      std::cerr << e.what() << std::endl;
       exit(1);
     }
-  
+  }  else if (pid == 0) {
+    // Initialize the TMS Monitor (Opens a connection to the database)
+    MonitorFMS monitor(interval);
+    dbConfig.setDbPoolSize(1);
+    monitor.init(vishnuId, dbConfig);
+    ppid = getppid();
+
+    while(kill(ppid,0) == 0) {
+      monitor.run();
+    }
+  } else {
+    std::cerr << "There was a problem to initialize the server" << std::endl;
+    exit(1);
+  }
+
   return res;
 }
