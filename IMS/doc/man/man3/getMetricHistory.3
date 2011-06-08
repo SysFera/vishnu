@@ -1,13 +1,13 @@
 '\" t
-.\"     Title: vishnu_copy_async_file
+.\"     Title: getMetricHistory
 .\"    Author:  SysFera SAS <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
 .\"      Date: June 2011
-.\"    Manual: FMS Command reference
+.\"    Manual: IMS C++ API Reference
 .\"    Source: VISHNU 1.2
 .\"  Language: English
 .\"
-.TH "VISHNU_COPY_ASYNC_FI" "1" "June 2011" "VISHNU 1.2" "FMS Command reference"
+.TH "GETMETRICHISTORY" "3" "June 2011" "VISHNU 1.2" "IMS C++ API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,71 +28,43 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-vishnu_copy_async_file \- executes an asynchronous copy of file\&.
+getMetricHistory \- Retrieve the history of values of a metric on a machine
 .SH "SYNOPSIS"
-.HP \w'\fBvishnu_copy_async_file\fR\ 'u
-\fBvishnu_copy_async_file\fR [\fB\-h\fR] [\fB\-r\fR] [\fB\-c\ \fR\fB\fItrCommand\fR\fR] \fIsrc\fR \fIdest\fR
+.HP \w'int\ vishnu::getMetricHistory('u
+.BI "int vishnu::getMetricHistory(const\ string&\ " "sessionKey" ", const\ string&\ " "machineId" ", ListMetric&\ " "metricValues" ", const\ MetricHistOp&\ " "options\ =\ MetricHistOp()" ");"
 .SH "DESCRIPTION"
-.SH "OPTIONS"
 .PP
-\fB\-h \fR\fB\fIhelp\fR\fR
+This command allows a use to get the history of the metrics on a machine\&. The options enable to specify a specific type of metric and the date of the desired metric values\&. These values are read from the database\&. If the machine does not have any IMS server, no data can be recorded on the machine\&.
+.SH "ARGUMENTS"
+.PP
+\fIsessionKey\fR
 .RS 4
-help about the command\&.
+Input argument\&. The session key\&.
 .RE
 .PP
-\fB\-r \fR\fB\fIisRecursive\fR\fR
+\fImachineId\fR
 .RS 4
-It specifies when the copy is recursive (case of directory) or not\&.\&.
+Input argument\&. The id of the machine\&.
 .RE
 .PP
-\fB\-c \fR\fB\fItrCommand\fR\fR
+\fImetricValues\fR
 .RS 4
-the command to use to perform file transfer\&.\&. The value must be an integer\&. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDEFINED)\&.
-.RE
-.SH "ENVIRONMENT"
-.PP
-\fBVISHNU_TRANSFER_CMD\fR
-.RS 4
-It specifies the command to use for all file transfers by default\&. It takes its values in the set {SCP,RSYNC}\&.\&. Overriden by the \-c option\&.
+Output argument\&. List of metric values\&.
 .RE
 .PP
-\fBVISHNU_CONFIG_FILE\fR
+\fIoptions\fR
 .RS 4
-Contains the path to the local configuration file for VISHNU\&.
+Input argument\&. The optional fields for the metric history\&.
 .RE
-.SH "DIAGNOSTICS"
+.SH "EXCEPTIONS"
 .PP
-The following diagnostics may be issued on stderr and the command will return the code provided within brackets:
+The following exceptions may be thrown:
 .PP
-"A problem occurs with the database\&." [\-9]
+"If a parameter is invalid" [1]
 .RS 4
 .RE
 .PP
-"User does not have permission access\&." [\-8]
-.RS 4
-.RE
-.PP
-"Option unknown in the config file\&." [\-7]
-.RS 4
-.RE
-.PP
-"The path provided is invalid\&." [\-6]
-.RS 4
-.RE
-.PP
-"an option or a parameter provided is invalid for this service\&." [\-5]
-.RS 4
-.RE
-.PP
-"The FMS server is unavailable\&." [\-4]
-.RS 4
-.RE
-.PP
-"Invalid provided machine identifier\&." [\-3]
-.RS 4
-.RE
-.PP
-"The session key is unrecognized\&." [\-2]
+"The database generated an error" [2]
 .RS 4
 .RE
 .SH "AUTHOR"
