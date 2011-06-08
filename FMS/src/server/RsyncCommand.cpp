@@ -34,5 +34,5 @@ RsyncCommand::RsyncCommand (const bool& isRecursive, const bool& useCompression)
   }
 
     addOptions ("--progress ");
-  addOptions("--rsh=ssh ");
+  addOptions("--rsh=\"ssh -t  -o StrictHostKeyChecking=no -o Compression=yes \" ");
 }

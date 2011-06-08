@@ -20,6 +20,7 @@ ScpCommand::ScpCommand (const bool& isRecursive, const bool& useCompression):Fil
   //setCommand("script -c \" scp ");
   setCommand("scp ");
 
+ 
   if (isRecursive()) {
 
     addOptions ("-r ");
