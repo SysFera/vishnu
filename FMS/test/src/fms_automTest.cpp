@@ -799,6 +799,10 @@ waitAsyncCopy(const string& sessionKey, const FileTransfer& transferInfo) {
       return -1;
     } else {
       BOOST_MESSAGE("ERROR: File transfer list contains more than 1 item for a given transferId!");
+      BOOST_MESSAGE("SIZE=" + convertToString(fileTransferList.getFileTransfers().size()));
+      for (unsigned int i=0; i<fileTransferList.getFileTransfers().size(); ++i ) {
+        BOOST_MESSAGE("ID=" + convertToString(fileTransferList.getFileTransfers().get(i)->getTransferId()));
+      }
       return -1;
     }
     bpt::seconds sleepTime(5);
@@ -1003,6 +1007,8 @@ BOOST_AUTO_TEST_CASE(SyncMoveFile_Base)
     createFile<10>(localFilePath);
     // local to remote
     BOOST_MESSAGE("Checking local to remote move");
+    BOOST_MESSAGE("SRC=" + localFilePath);
+    BOOST_MESSAGE("DST=" + baseDirFullPath1);
     BOOST_REQUIRE( moveFile(sessionKey, localFilePath, baseDirFullPath1) == 0);
     // Check
     bool isLocalSourceFound = isFoundInDir(sessionKey, localDir, newFileName);
