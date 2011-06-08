@@ -54,7 +54,6 @@ namespace vishnu{
    * \param sessionKey the session key
    * \param mode the path new mode
    * \param path  the file path using host:path format
-   * \param options contains the options used to set the new the permission mode  for this file
    * \return 0 if everything is OK, another value otherwise
    */
   int chMod(const string& sessionKey, const mode_t& mode, const string& path)

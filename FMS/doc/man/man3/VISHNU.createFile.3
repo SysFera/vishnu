@@ -31,10 +31,10 @@
 VISHNU.createFile \- creates files on remote machines\&.
 .SH "SYNOPSIS"
 .HP \w'VISHNU\&.createFile('u
-.BI "VISHNU\&.createFile(string\ " "sessionKey" ", string\ " "path" ", mode_t\ " "mode\ =\ 644" ");"
+.BI "VISHNU\&.createFile(string\ " "sessionKey" ", string\ " "path" ");"
 .SH "DESCRIPTION"
 .PP
-Creates an empty file at the location given by the path parameter\&.
+Creates an empty file at the location given by the path parameter\&. The path must be provided in the form \*(Aqmachine_id:path\*(Aq (the machine_id values can be obtained using the vishnu_list_machine command)
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR
@@ -45,11 +45,6 @@ Input argument\&. The session key\&.\&.
 \fIpath\fR
 .RS 4
 Input argument\&. The file to create following the pattern [host:]file path\&.\&.
-.RE
-.PP
-\fImode\fR
-.RS 4
-Input argument\&. The file access permissions in octal numeral system\&.\&.
 .RE
 .SH "RETURNED OBJECTS"
 .PP
