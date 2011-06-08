@@ -129,7 +129,7 @@ public:
       sqlListOfFiles.append(" order by startTime");
 
       boost::scoped_ptr<DatabaseResult> ListOfFiles (mdatabaseVishnu->getResult(sqlListOfFiles.c_str()));
-      int fileStatus ;
+      
       time_t startTime;
 
       if (ListOfFiles->getNbTuples() != 0){
