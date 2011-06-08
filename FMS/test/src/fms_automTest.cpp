@@ -551,16 +551,11 @@ bool isFoundInLocalDir(const string& dirLocalPath,
                        const string& name) {
   bfs::path dir(dirLocalPath);
   bfs::directory_iterator end_iter;
-  string debugMsg = "Checking dir " + dirLocalPath;
-  debugMsg.append("for" + name);
-  BOOST_MESSAGE(debugMsg);
   if ( bfs::exists(dir) && bfs::is_directory(dir)) {
     for( bfs::directory_iterator dir_iter(dir) ; dir_iter != end_iter ; ++dir_iter) {
       if ( bfs::is_regular_file(dir_iter->status())
             && dir_iter->path().leaf() == name) {
         return true;
-      } else {
-        BOOST_MESSAGE(dir_iter->path().leaf());
       }
     }
   }
@@ -852,10 +847,7 @@ BOOST_AUTO_TEST_CASE(SyncCopyFile_Base)
     // remote to local
     BOOST_MESSAGE("Checking remote to local copy");
     string localCopyName = newFileName + ".bak";
-    string localCopyPath = localDir + localCopyName;
-    BOOST_MESSAGE("SRC PATH:" + fileFullPath1);
-    BOOST_MESSAGE("DST PATH:" + localCopyPath);
-    BOOST_MESSAGE("Checking that source is in: " + baseDirFullPath1);
+    string localCopyPath = localDir + slash + localCopyName;
     BOOST_CHECK( isFoundInDir(sessionKey, baseDirFullPath1, newFileName));
     BOOST_REQUIRE( copyFile(sessionKey, fileFullPath1, localCopyPath) == 0);
     // Check
@@ -938,7 +930,7 @@ BOOST_AUTO_TEST_CASE(AsyncCopyFile_Base)
     // remote to local
     BOOST_MESSAGE("Checking remote to local copy");
     string localCopyName = newFileName + ".bak";
-    string localCopyPath = localDir + localCopyName;
+    string localCopyPath = localDir + slash + localCopyName;
     BOOST_REQUIRE( copyAsyncFile(sessionKey, fileFullPath1, localCopyPath, transferInfo) == 0);
     // Check
     BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_COMPLETED );
