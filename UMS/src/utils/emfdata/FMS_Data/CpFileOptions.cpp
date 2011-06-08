@@ -31,7 +31,7 @@ using namespace ::FMS_Data;
 
 // Default constructor
 CpFileOptions::CpFileOptions() :
-    m_isRecursive(false), m_trCommand(-1)
+    m_isRecursive(false), m_trCommand(2)
 {
 
     /*PROTECTED REGION ID(CpFileOptionsImpl__CpFileOptionsImpl) START*/
