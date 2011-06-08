@@ -1,5 +1,5 @@
 '\" t
-.\"     Title: VISHNU_UMS.moveFile
+.\"     Title: VISHNU.chMod
 .\"    Author:  SysFera SAS <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
 .\"      Date: June 2011
@@ -7,7 +7,7 @@
 .\"    Source: VISHNU 1.2
 .\"  Language: English
 .\"
-.TH "VISHNU_UMS\&.MOVEFIL" "3" "June 2011" "VISHNU 1.2" "FMS Python API Reference"
+.TH "VISHNU\&.CHMOD" "3" "June 2011" "VISHNU 1.2" "FMS Python API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,10 +28,10 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-VISHNU_UMS.moveFile \- executes a synchronous move of file\&.
+VISHNU.chMod \- changes access rights of remote files/directories\&.
 .SH "SYNOPSIS"
-.HP \w'VISHNU_UMS\&.moveFile('u
-.BI "VISHNU_UMS\&.moveFile(string\ " "sessionKey" ", string\ " "src" ", string\ " "dest" ");"
+.HP \w'VISHNU\&.chMod('u
+.BI "VISHNU\&.chMod(string\ " "sessionKey" ", string\ " "path" ", mode_t\ " "mode" ");"
 .SH "DESCRIPTION"
 .SH "ARGUMENTS"
 .PP
@@ -40,14 +40,14 @@ VISHNU_UMS.moveFile \- executes a synchronous move of file\&.
 Input argument\&. The session key\&.
 .RE
 .PP
-\fIsrc\fR
+\fIpath\fR
 .RS 4
-Input argument\&. The source file to move following the pattern [host:]file path\&.
+Input argument\&. The file/directory following the pattern [host:]file path\&.
 .RE
 .PP
-\fIdest\fR
+\fImode\fR
 .RS 4
-Input argument\&. The path of the destination file\&.
+Input argument\&. the access rigths of file/directory in octal system\&.\&.
 .RE
 .SH "RETURNED OBJECTS"
 .PP
