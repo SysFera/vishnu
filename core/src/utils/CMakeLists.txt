@@ -36,9 +36,6 @@ TARGET_LINK_LIBRARIES(
 
 ADD_LIBRARY(utils-server STATIC
   utilServer
-  ssh/SSHExecImpl
-  ssh/SSHExec
-  ssh/SSHResult
   )
 SET_TARGET_PROPERTIES(utils-server PROPERTIES COMPILE_FLAGS "-fPIC")
 
