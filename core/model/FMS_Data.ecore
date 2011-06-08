@@ -21,11 +21,11 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Status" instanceTypeName="Status">
-    <eLiterals name="UNDEFINED" value="-1" literal="UNDEFINED"/>
     <eLiterals name="INPROGRESS"/>
     <eLiterals name="COMPLETED" value="1"/>
     <eLiterals name="CANCELLED" value="2"/>
     <eLiterals name="FAILED" value="3"/>
+    <eLiterals name="UNDEFINED" value="4" literal="UNDEFINED"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FileStat" instanceTypeName="FileStat">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
@@ -94,7 +94,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="trCommand" eType="#//TransferCommand"
-        defaultValueLiteral="-1">
+        defaultValueLiteral="2">
       <eAnnotations source="Description">
         <details key="content" value="the command to use to perform file transfer."/>
         <details key="shortOption" value="c"/>
@@ -103,9 +103,9 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="TransferCommand" instanceTypeName="TransferCommand">
-    <eLiterals name="UNDEFINED" value="-1"/>
     <eLiterals name="SCP"/>
     <eLiterals name="RSYNC" value="1"/>
+    <eLiterals name="UNDEFINED" value="2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LsDirOptions" instanceTypeName="LsDirOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="longFormat" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
@@ -125,7 +125,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MvFileOptions" instanceTypeName="MvFileOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="trCommand" eType="#//TransferCommand"
-        defaultValueLiteral="-1">
+        defaultValueLiteral="2">
       <eAnnotations source="Description">
         <details key="content" value="the command to use to perform file transfer."/>
         <details key="shortOption" value="c"/>
@@ -153,7 +153,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//Status"
-        defaultValueLiteral="-1">
+        defaultValueLiteral="4">
       <eAnnotations source="Description">
         <details key="content" value="the file transfer status"/>
         <details key="shortOption" value="s"/>
@@ -195,7 +195,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//Status"
-        defaultValueLiteral="-1">
+        defaultValueLiteral="4">
       <eAnnotations source="Description">
         <details key="content" value="The file transfer status"/>
       </eAnnotations>
@@ -242,7 +242,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="trCommand" eType="#//TransferCommand"
-        defaultValueLiteral="-1">
+        defaultValueLiteral="2">
       <eAnnotations source="Description">
         <details key="content" value="The command used for the file transfer (scp or rsync)"/>
       </eAnnotations>
