@@ -221,7 +221,7 @@ void FileTransfer::eSet(::ecore::EInt _featureID,
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_transferId);
     case ::FMS_Data::FMS_DataPackage::FILETRANSFER__STATUS:
-        return m_status != -1;
+        return m_status != 4;
     case ::FMS_Data::FMS_DataPackage::FILETRANSFER__USERID:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_userId);
@@ -245,7 +245,7 @@ void FileTransfer::eSet(::ecore::EInt _featureID,
     case ::FMS_Data::FMS_DataPackage::FILETRANSFER__START_TIME:
         return m_start_time != 0;
     case ::FMS_Data::FMS_DataPackage::FILETRANSFER__TRCOMMAND:
-        return m_trCommand != -1;
+        return m_trCommand != 2;
     case ::FMS_Data::FMS_DataPackage::FILETRANSFER__ERRORMSG:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_errorMsg);

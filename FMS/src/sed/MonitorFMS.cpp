@@ -76,8 +76,8 @@ MonitorFMS::run() {
   std::vector<std::string> tmp;
   std::string pid,transferId;
   std::string sqlUpdatedRequest;
-  std::string sqlRequest = "SELECT transferId,processid from filetransfer, vsession where vsession.numsessionid=filetransfer.vsession_numsessionid "
-                           " and status=0";
+  std::string sqlRequest = "SELECT transferid,processid from filetransfer,vsession where vsession.numsessionid=filetransfer.vsession_numsessionid "
+                           " and filetransfer.status=0";
 
   try {
 
@@ -92,7 +92,7 @@ MonitorFMS::run() {
         pid = *iter;
         ++iter;
         if(false==process_exists(vishnu::convertToString(pid))) {
-          sqlUpdatedRequest = "UPDATE filetransfer SET state=3 where transferid='"+transferId+"'";
+          sqlUpdatedRequest = "UPDATE filetransfer SET status=3 where transferid='"+transferId+"'";
           mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
         }
       }
@@ -102,6 +102,11 @@ MonitorFMS::run() {
 
   } catch (VishnuException& e) {
     string errorInfo =  e.buildExceptionString();
+    if (e.getMsgI() == ERRCODE_DBERR) {
+      cerr << errorInfo << endl;
+      exit(1);
+    }
+    sleep(minterval);
   }
   return 0;
 }

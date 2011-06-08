@@ -530,7 +530,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_CpFileOptions__isRecursive->setOrdered(true);
     m_CpFileOptions__trCommand->setEType(m_TransferCommandEEnum);
     m_CpFileOptions__trCommand->setName("trCommand");
-    m_CpFileOptions__trCommand->setDefaultValueLiteral("-1");
+    m_CpFileOptions__trCommand->setDefaultValueLiteral("2");
     m_CpFileOptions__trCommand->setLowerBound(0);
     m_CpFileOptions__trCommand->setUpperBound(1);
     m_CpFileOptions__trCommand->setTransient(false);
@@ -579,7 +579,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_MvFileOptionsEClass->setInterface(false);
     m_MvFileOptions__trCommand->setEType(m_TransferCommandEEnum);
     m_MvFileOptions__trCommand->setName("trCommand");
-    m_MvFileOptions__trCommand->setDefaultValueLiteral("-1");
+    m_MvFileOptions__trCommand->setDefaultValueLiteral("2");
     m_MvFileOptions__trCommand->setLowerBound(0);
     m_MvFileOptions__trCommand->setUpperBound(1);
     m_MvFileOptions__trCommand->setTransient(false);
@@ -638,7 +638,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_LsTransferOptions__userId->setOrdered(true);
     m_LsTransferOptions__status->setEType(m_StatusEEnum);
     m_LsTransferOptions__status->setName("status");
-    m_LsTransferOptions__status->setDefaultValueLiteral("-1");
+    m_LsTransferOptions__status->setDefaultValueLiteral("4");
     m_LsTransferOptions__status->setLowerBound(0);
     m_LsTransferOptions__status->setUpperBound(1);
     m_LsTransferOptions__status->setTransient(false);
@@ -732,7 +732,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_FileTransfer__transferId->setOrdered(true);
     m_FileTransfer__status->setEType(m_StatusEEnum);
     m_FileTransfer__status->setName("status");
-    m_FileTransfer__status->setDefaultValueLiteral("-1");
+    m_FileTransfer__status->setDefaultValueLiteral("4");
     m_FileTransfer__status->setLowerBound(0);
     m_FileTransfer__status->setUpperBound(1);
     m_FileTransfer__status->setTransient(false);
@@ -857,7 +857,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_FileTransfer__start_time->setOrdered(true);
     m_FileTransfer__trCommand->setEType(m_TransferCommandEEnum);
     m_FileTransfer__trCommand->setName("trCommand");
-    m_FileTransfer__trCommand->setDefaultValueLiteral("-1");
+    m_FileTransfer__trCommand->setDefaultValueLiteral("2");
     m_FileTransfer__trCommand->setLowerBound(0);
     m_FileTransfer__trCommand->setUpperBound(1);
     m_FileTransfer__trCommand->setTransient(false);
@@ -1019,19 +1019,9 @@ FMS_DataPackage::FMS_DataPackage()
 
     {
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // UNDEFINED
-        _el->setName("UNDEFINED");
-        _el->setValue(0);
-        _el->setLiteral("UNDEFINED");
-        _el->setEEnum(m_StatusEEnum);
-        m_StatusEEnum->getELiterals().push_back(_el);
-    }
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // INPROGRESS
         _el->setName("INPROGRESS");
-        _el->setValue(1);
+        _el->setValue(0);
         _el->setLiteral("INPROGRESS");
         _el->setEEnum(m_StatusEEnum);
         m_StatusEEnum->getELiterals().push_back(_el);
@@ -1041,7 +1031,7 @@ FMS_DataPackage::FMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // COMPLETED
         _el->setName("COMPLETED");
-        _el->setValue(2);
+        _el->setValue(1);
         _el->setLiteral("COMPLETED");
         _el->setEEnum(m_StatusEEnum);
         m_StatusEEnum->getELiterals().push_back(_el);
@@ -1051,7 +1041,7 @@ FMS_DataPackage::FMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // CANCELLED
         _el->setName("CANCELLED");
-        _el->setValue(3);
+        _el->setValue(2);
         _el->setLiteral("CANCELLED");
         _el->setEEnum(m_StatusEEnum);
         m_StatusEEnum->getELiterals().push_back(_el);
@@ -1061,8 +1051,18 @@ FMS_DataPackage::FMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // FAILED
         _el->setName("FAILED");
-        _el->setValue(4);
+        _el->setValue(3);
         _el->setLiteral("FAILED");
+        _el->setEEnum(m_StatusEEnum);
+        m_StatusEEnum->getELiterals().push_back(_el);
+    }
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // UNDEFINED
+        _el->setName("UNDEFINED");
+        _el->setValue(4);
+        _el->setLiteral("UNDEFINED");
         _el->setEEnum(m_StatusEEnum);
         m_StatusEEnum->getELiterals().push_back(_el);
     }
@@ -1073,19 +1073,9 @@ FMS_DataPackage::FMS_DataPackage()
 
     {
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // UNDEFINED
-        _el->setName("UNDEFINED");
-        _el->setValue(0);
-        _el->setLiteral("UNDEFINED");
-        _el->setEEnum(m_TransferCommandEEnum);
-        m_TransferCommandEEnum->getELiterals().push_back(_el);
-    }
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // SCP
         _el->setName("SCP");
-        _el->setValue(1);
+        _el->setValue(0);
         _el->setLiteral("SCP");
         _el->setEEnum(m_TransferCommandEEnum);
         m_TransferCommandEEnum->getELiterals().push_back(_el);
@@ -1095,8 +1085,18 @@ FMS_DataPackage::FMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // RSYNC
         _el->setName("RSYNC");
-        _el->setValue(2);
+        _el->setValue(1);
         _el->setLiteral("RSYNC");
+        _el->setEEnum(m_TransferCommandEEnum);
+        m_TransferCommandEEnum->getELiterals().push_back(_el);
+    }
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // UNDEFINED
+        _el->setName("UNDEFINED");
+        _el->setValue(2);
+        _el->setLiteral("UNDEFINED");
         _el->setEEnum(m_TransferCommandEEnum);
         m_TransferCommandEEnum->getELiterals().push_back(_el);
     }
