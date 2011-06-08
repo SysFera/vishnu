@@ -345,6 +345,8 @@
 
 //  ***************************** FMS MODULE  *****************************
 
+typedef unsigned int mode_t;
+
 #ifdef SWIGPYTHON
 
 %typemap(argout) std::string& contentOfFile {
