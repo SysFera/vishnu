@@ -38,15 +38,33 @@ solveGetListOfFileTransfers(diet_profile_t* pb);
 int
 solveFileTransferStop(diet_profile_t* pb);
 
-
-
+/**
+ * \brief Function to build the File transfer (local to remote) service profile 
+ * \param serviceName the name of the service
+ * \return raises an exception on error
+ */
 
 diet_profile_desc_t* getTransferFileProfile(const std::string& serviceName);
 
+/**
+ * \brief Function to build the asynchronous File transfer (local to remote) service profile 
+ * \param serviceName the name of the service
+ * \return raises an exception on error
+ */
 diet_profile_desc_t* getTransferFileAsyncProfile(const std::string& serviceName);
 
+/**
+ * \brief Function to build the File transfer (remote to local) service profile 
+ * \param serviceName the name of the service
+ * \return raises an exception on error
+ */
 diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName);
 
+/**
+ * \brief Function to build the File transfer (remote to local) service profile 
+ * \param serviceName the name of the service
+ * \return raises an exception on error
+ */
 diet_profile_desc_t* getTransferRemoteFileAsyncProfile(const std::string& serviceName);
 
 diet_profile_desc_t* getFileTransfersListProfile();
@@ -525,9 +543,11 @@ solveGenerique(diet_profile_t* pb) {
 
     const char* name = "list";
     ::ecorecpp::serializer::serializer _ser(name);
+ 
+
     listSerialized =  _ser.serialize(const_cast<List*>(list));
 
-  std::cout << "************* Coucou dans Solvegenerique sed \n";
+    std::cout << "************* Coucou dans Solvegenerique sed \n";
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
