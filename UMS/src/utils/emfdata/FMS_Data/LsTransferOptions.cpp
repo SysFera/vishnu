@@ -31,7 +31,7 @@ using namespace ::FMS_Data;
 
 // Default constructor
 LsTransferOptions::LsTransferOptions() :
-    m_status(-1)
+    m_status(4)
 {
 
     /*PROTECTED REGION ID(LsTransferOptionsImpl__LsTransferOptionsImpl) START*/

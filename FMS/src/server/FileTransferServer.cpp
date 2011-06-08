@@ -34,7 +34,7 @@ Database* FileTransferServer::getDatabaseInstance(){
 }
 
 void FileTransferServer::checkTransferId(std::string transferId) {
-  std::string sqlTransferRequest = "SELECT transferId from fileTransfer where transferId='"+transferId+"'";
+  std::string sqlTransferRequest = "SELECT transferId from filetransfer where transferId='"+transferId+"'";
   boost::scoped_ptr<DatabaseResult> transfer(FileTransferServer::getDatabaseInstance()->getResult(sqlTransferRequest.c_str()));
   if(transfer->getNbTuples()==0) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer identifier");;
@@ -420,7 +420,7 @@ int FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options 
 
   if (false==options.getTransferId().empty() || false==options.getUserId().empty() || false==options.getFromMachineId().empty()){
 
-  std::string sqlListOfPid = "SELECT processId from fileTransfer, vsession "
+  std::string sqlListOfPid = "SELECT processId from filetransfer, vsession "
     "where vsession.numsessionid=fileTransfer.vsession_numsessionid and filetransfer.status=0";
 
   std::vector<std::string>::iterator iter;

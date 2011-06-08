@@ -87,7 +87,7 @@ void MvFileOptions::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::FMS_Data::FMS_DataPackage::MVFILEOPTIONS__TRCOMMAND:
-        return m_trCommand != -1;
+        return m_trCommand != 2;
 
     }
     throw "Error";

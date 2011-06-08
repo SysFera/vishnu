@@ -92,7 +92,7 @@ public:
     }
 
     //To check the file transfer status
-    if (options->getStatus() != -1) {
+    if (options->getStatus() != 4) { // UNDEFINED FILE TRANSFER STATUS
       //To check the file status
       checkStatus(options->getStatus());
       //To add the status on the request
@@ -112,10 +112,10 @@ public:
    */
   FMS_Data::FileTransferList*
     list() {
-      std::string sqlListOfFiles = "SELECT transferId, fileTransfer.status, userId, clientMachineId, sourceMachineId, "
+      std::string sqlListOfFiles = "SELECT transferId, filetransfer.status, userId, clientMachineId, sourceMachineId, "
         "destinationMachineId, sourceFilePath, destinationFilePath, fileSize, startTime,errorMsg "
-        " trCommand, processId from fileTransfer, vsession "
-          "where vsession.numsessionid=fileTransfer.vsession_numsessionid";
+        " trCommand, processId from filetransfer, vsession "
+          "where vsession.numsessionid=filetransfer.vsession_numsessionid";
 
       std::vector<std::string>::iterator iter;
       std::vector<std::string> results;
@@ -187,7 +187,7 @@ private:
    * \param transferId the file transfer identifier
    */
   void checkTransferId(std::string transferId) {
-    std::string sqlTransferRequest = "SELECT transferId from fileTransfer where transferId='"+transferId+"'";
+    std::string sqlTransferRequest = "SELECT transferId from filetransfer where transferId='"+transferId+"'";
     boost::scoped_ptr<DatabaseResult> transfer(mdatabaseVishnu->getResult(sqlTransferRequest.c_str()));
     if(transfer->getNbTuples()==0) {
       throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer identifier");;
@@ -200,8 +200,8 @@ private:
    */
   void checkStatus(int status) {
       
-    if(status < 0 || status > 3) {
-      throw UserException(ERRCODE_INVALID_PARAM, "The file status option value is incorrect");
+    if(status < 0 || status > 4) {
+      throw UserException(ERRCODE_INVALID_PARAM, "The file transfer status option value is incorrect");
     }
   }
 

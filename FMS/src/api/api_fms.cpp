@@ -198,7 +198,7 @@ int vishnu::chMod(const string& sessionKey, const mode_t& mode, const string& pa
 int vishnu::copyFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
 
-    if((options.getTrCommand() < -1) || options.getTrCommand() > 1) {
+    if((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
       throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
     }    
 
@@ -222,7 +222,7 @@ int vishnu::copyAsyncFile(const string& sessionKey,const string& src, const stri
     FileTransfer& transferInfo, const CpFileOptions& options)
 throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
-  if((options.getTrCommand() < -1) || options.getTrCommand() > 1) {
+  if((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
   }
 
@@ -329,7 +329,7 @@ int vishnu::listDir(const string& sessionKey,const string& path, StringList& dir
   int vishnu::moveFile(const string& sessionKey,const string& src, const string& dest,const CpFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
     
-      if((options.getTrCommand() < -1) || options.getTrCommand() > 1) {
+      if((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
         throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
       }
    
@@ -353,7 +353,7 @@ int vishnu::moveAsyncFile(const string& sessionKey,const string& src, const stri
     FileTransfer& transferInfo, const CpFileOptions& options)
 throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
-  if((options.getTrCommand() < -1) || options.getTrCommand() > 1) {
+  if((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
   }
 
@@ -449,9 +449,10 @@ int vishnu::stopFileTransfer(const string& sessionKey,const StopTransferOptions&
  */
 int vishnu::listFileTransfers(const string& sessionKey,FileTransferList& fileTransferList, const LsTransferOptions& options)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
-
-    if(options.getStatus() < -1 || options.getStatus() > 3) {
-      throw UserException(ERRCODE_INVALID_PARAM, "The file status option value is incorrect");
+    
+    
+    if(options.getStatus() < 0 || options.getStatus() > 4) {
+      throw UserException(ERRCODE_INVALID_PARAM, "The file transfer status option value is incorrect");
     }
 
     std::string serviceName = "FileTransfersList";
