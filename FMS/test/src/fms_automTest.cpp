@@ -17,10 +17,10 @@
 #include "FMS_Data_forward.hpp"
 #include "FMS_fixtures.hpp"
 #include "FMS_testconfig.h"
-#define STATUS_INPROGRESS 1
-#define STATUS_COMPLETED 2
-#define STATUS_CANCELED 3
-#define STATUS_FAILED 4
+#define STATUS_INPROGRESS 0
+#define STATUS_COMPLETED 1
+#define STATUS_CANCELED 2
+#define STATUS_FAILED 3
 
 // C++ Headers
 #include <iostream>
