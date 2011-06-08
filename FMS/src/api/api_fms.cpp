@@ -360,6 +360,7 @@ throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
   FileTransferProxy fileTransferProxy(sessionKey, src, dest);
   int result = fileTransferProxy.addMvAsyncThread(options);
   transferInfo = fileTransferProxy.getFileTransfer();
+  return result;
 }
 
 /**
