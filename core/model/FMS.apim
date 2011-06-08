@@ -4,14 +4,12 @@
     <services name="createFile" description="creates  files on  remote machines." resultCodes="VISHNU_OK ERRCODE_SESSION_KEY_NOT_FOUND ERRCODE_INVALID_MACHINE_ID ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH FMS_INVALID_CFG_FILE ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_PERMISSION_DENIED ERRCODE_DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key."/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file to create following the pattern  [host:]file path." longOptionName=""/>
-      <ports name="mode" dataType="//@modules.0/@typeList/@types.12" description="The file access permissions in octal numeral system." optional="true" shortOptionLetter="m" longOptionName="" defaultValueLiteral="644"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.0"/>
       <details key="description" value="Creates an empty file at the location given by the path parameter."/>
     </services>
     <services name="createDir" description="creates directories on remote machines." resultCodes="VISHNU_OK ERRCODE_SESSION_KEY_NOT_FOUND ERRCODE_INVALID_MACHINE_ID ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH FMS_INVALID_CFG_FILE ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_PERMISSION_DENIED ERRCODE_DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to create following the pattern  [host:]directory path." longOptionName=""/>
-      <ports name="mode" dataType="//@modules.0/@typeList/@types.12" description="the new directories permission access in octal numeral system." optional="true" shortOptionLetter="m" longOptionName="" defaultValueLiteral="755"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.1"/>
       <details key="description" value="Creates an new directory at the location given by the path parameter."/>
     </services>
@@ -29,28 +27,28 @@
     </services>
     <services name="chGrp" description="changes group owner of  remote files/directories. " resultCodes="VISHNU_OK ERRCODE_SESSION_KEY_NOT_FOUND ERRCODE_INVALID_MACHINE_ID ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH FMS_INVALID_CFG_FILE ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_PERMISSION_DENIED ERRCODE_DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
-      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file/directory following the pattern  [host:]file path" longOptionName=""/>
       <ports name="group" dataType="//@modules.0/@typeList/@types.0" description="the new group owner of file/directory"/>
+      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file/directory following the pattern  [host:]file path" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.4"/>
     </services>
     <services name="chMod" description="changes  access rights of remote files/directories." resultCodes="VISHNU_OK ERRCODE_SESSION_KEY_NOT_FOUND ERRCODE_DB_ERROR FMS_INVALID_CFG_FILE ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH ERRCODE_PERMISSION_DENIED ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_INVALID_MACHINE_ID">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
-      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file/directory following the pattern  [host:]file path" longOptionName=""/>
       <ports name="mode" dataType="//@modules.0/@typeList/@types.12" description=" the access rigths of file/directory in octal system." shortOptionLetter="" longOptionName=""/>
+      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file/directory following the pattern  [host:]file path" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.5"/>
     </services>
     <services name="headOfFile" description="displays a few first lines of  files located on  remote machines." resultCodes="VISHNU_OK ERRCODE_SESSION_KEY_NOT_FOUND ERRCODE_INVALID_MACHINE_ID ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH FMS_INVALID_CFG_FILE ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_PERMISSION_DENIED ERRCODE_DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file  following the pattern  [host:]file path" longOptionName=""/>
       <ports name="fileContent" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="The first &quot;nLine&quot; lines of the file" shortOptionLetter="" longOptionName=""/>
-      <ports name="nLine" dataType="//@modules.0/@typeList/@types.1" description="Number of lines to display" optional="true" shortOptionLetter="n" longOptionName="" defaultValueLiteral="10"/>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.18" description="the  head commandoptions" optional="true" shortOptionLetter="r"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.6"/>
     </services>
     <services name="tailOfFile" description="displays a few last lines of  files located on remote machines" resultCodes="VISHNU_OK ERRCODE_SESSION_KEY_NOT_FOUND ERRCODE_INVALID_MACHINE_ID ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH FMS_INVALID_CFG_FILE ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_PERMISSION_DENIED ERRCODE_DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file  following the pattern  [host:]file path" longOptionName=""/>
       <ports name="fileContent" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="The last &quot;nLine&quot; lines of the file" longOptionName=""/>
-      <ports name="nLine" dataType="//@modules.0/@typeList/@types.1" description="number of lines to display" optional="true" shortOptionLetter="n" longOptionName="line" defaultValueLiteral="10"/>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.19" description="the tail command options" optional="true" shortOptionLetter="r"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.7"/>
     </services>
     <services name="contentOfFile" description="displays content  of  files located on remote machines" resultCodes="VISHNU_OK ERRCODE_SESSION_KEY_NOT_FOUND ERRCODE_INVALID_MACHINE_ID ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH FMS_INVALID_CFG_FILE ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_PERMISSION_DENIED ERRCODE_DB_ERROR">
@@ -62,32 +60,30 @@
     <services name="listDir" description="displays  the content of a remote directory. " resultCodes="ERRCODE_DB_ERROR FMS_INVALID_CFG_FILE ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH ERRCODE_PERMISSION_DENIED ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_INVALID_MACHINE_ID ERRCODE_SESSION_KEY_NOT_FOUND VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to list following the pattern  [host:]directory path" longOptionName=""/>
-      <ports name="dirContent" direction="OUT" description="The content of the directory  (only files names with short format, all files informations with long format)." longOptionName="">
-        <dataType href="FMS_Internal.apim#//@modules.0/@typeList/@types.17"/>
-      </ports>
-      <ports name="options" usage="CLI_ONLY" dataType="//@modules.0/@typeList/@types.6" description="List of options for the listDir command" optional="true" longOptionName=""/>
+      <ports name="dirContent" direction="OUT" dataType="//@modules.0/@typeList/@types.4" description="The content of the directory  (only files names with short format, all files informations with long format)." longOptionName=""/>
+      <ports name="options" usage="CLI_ONLY" dataType="//@modules.0/@typeList/@types.6" description="List of options for the listDir command" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.9"/>
     </services>
     <services name="copyFile" description="executes a synchronous copy of file." resultCodes="ERRCODE_DB_ERROR FMS_INVALID_CFG_FILE ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH ERRCODE_PERMISSION_DENIED ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_INVALID_MACHINE_ID ERRCODE_SESSION_KEY_NOT_FOUND VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The  source file to copy following the pattern  [host:]file path" longOptionName=""/>
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file" longOptionName=""/>
-      <ports name="options" dataType="//@modules.0/@typeList/@types.7" description="the copy options" optional="true" shortOptionLetter="r"/>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.7" description="the copy options" optional="true" shortOptionLetter=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.10"/>
     </services>
     <services name="copyAsyncFile" description="executes an asynchronous copy of file." resultCodes="ERRCODE_DB_ERROR FMS_INVALID_CFG_FILE ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH ERRCODE_PERMISSION_DENIED ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_INVALID_MACHINE_ID ERRCODE_SESSION_KEY_NOT_FOUND VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The source file to copy following the pattern  [host:]file path" longOptionName=""/>
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file" longOptionName=""/>
-      <ports name="thrId" direction="OUT" dataType="//@modules.0/@typeList/@types.3" description="A file tranfer identifier (allowing for instance  to ckeck the status of a file transfer, or to cancel it)"/>
-      <ports name="options" usage="CLI_ONLY" dataType="//@modules.0/@typeList/@types.7" description="the copy options" optional="true" shortOptionLetter="r"/>
+      <ports name="transferInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.15" description="A file tranfer identifier (allowing for instance  to ckeck the status of a file transfer, or to cancel it)"/>
+      <ports name="options" usage="CLI_ONLY" dataType="//@modules.0/@typeList/@types.7" description="the copy options" shortOptionLetter=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.11"/>
     </services>
     <services name="moveFile" description="executes a synchronous move of file." resultCodes="ERRCODE_DB_ERROR FMS_INVALID_CFG_FILE ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH ERRCODE_PERMISSION_DENIED ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_INVALID_MACHINE_ID ERRCODE_SESSION_KEY_NOT_FOUND VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The  source file to move following the pattern  [host:]file path" longOptionName=""/>
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file" longOptionName=""/>
-      <ports name="options" usage="CLI_ONLY" dataType="//@modules.0/@typeList/@types.8" description="The move command options" optional="true" shortOptionLetter="r" longOptionName=""/>
+      <ports name="options" usage="CLI_ONLY" dataType="//@modules.0/@typeList/@types.7" description="The move command options" shortOptionLetter="" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.12"/>
     </services>
     <services name="moveAsyncFile" description="executes an asynchronous move of file." resultCodes="ERRCODE_DB_ERROR FMS_INVALID_CFG_FILE ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH ERRCODE_PERMISSION_DENIED ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_INVALID_MACHINE_ID ERRCODE_SESSION_KEY_NOT_FOUND VISHNU_OK">
@@ -139,7 +135,7 @@
       <types name="LsDirOptions" description="stores all options  to perform the list contents of directories command.">
         <ECoreType xsi:type="ecore:EClass" href="FMS_Data.ecore#//LsDirOptions"/>
       </types>
-      <types name="CopyFileOptions" description=" stores all  options to perform a file copy.">
+      <types name="CpFileOptions" description=" stores all  options to perform a file copy.">
         <ECoreType xsi:type="ecore:EClass" href="FMS_Data.ecore#//CpFileOptions"/>
       </types>
       <types name="MvFileOptions" description="stores all options to perform the move command.">
@@ -171,6 +167,12 @@
       </types>
       <types name="FileStatList" description="A container for file inode information">
         <ECoreType xsi:type="ecore:EClass" href="FMS_Data.ecore#//FileStatList"/>
+      </types>
+      <types name="HeadOfFileOptions" description="stores all options  to perform head command.">
+        <ECoreType xsi:type="ecore:EClass" href="FMS_Data.ecore#//HeadOfFileOptions"/>
+      </types>
+      <types name="TailOfFileOptions" description="stores all options  to perform tail command.">
+        <ECoreType xsi:type="ecore:EClass" href="FMS_Data.ecore#//HeadOfFileOptions"/>
       </types>
     </typeList>
     <resultCodeList>
