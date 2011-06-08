@@ -132,7 +132,7 @@ void LsTransferOptions::eSet(::ecore::EInt _featureID,
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_userId);
     case ::FMS_Data::FMS_DataPackage::LSTRANSFEROPTIONS__STATUS:
-        return m_status != -1;
+        return m_status != 4;
 
     }
     throw "Error";
