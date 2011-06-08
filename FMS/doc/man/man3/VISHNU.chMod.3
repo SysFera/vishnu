@@ -31,8 +31,10 @@
 VISHNU.chMod \- changes access rights of remote files/directories\&.
 .SH "SYNOPSIS"
 .HP \w'VISHNU\&.chMod('u
-.BI "VISHNU\&.chMod(string\ " "sessionKey" ", string\ " "path" ", mode_t\ " "mode" ");"
+.BI "VISHNU\&.chMod(string\ " "sessionKey" ", mode_t\ " "mode" ", string\ " "path" ");"
 .SH "DESCRIPTION"
+.PP
+Changes the permissions of a file or directory at the location given by the path parameter\&. The path must be provided in the form \*(Aqmachine_id:path\*(Aq (the machine_id values can be obtained using the vishnu_list_machine command)\&. The mode parameter is the same value as for the unix chmod command\&.
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR
@@ -40,14 +42,14 @@ VISHNU.chMod \- changes access rights of remote files/directories\&.
 Input argument\&. The session key\&.
 .RE
 .PP
-\fIpath\fR
-.RS 4
-Input argument\&. The file/directory following the pattern [host:]file path\&.
-.RE
-.PP
 \fImode\fR
 .RS 4
 Input argument\&. the access rigths of file/directory in octal system\&.\&.
+.RE
+.PP
+\fIpath\fR
+.RS 4
+Input argument\&. The file/directory following the pattern [host:]file path\&.
 .RE
 .SH "RETURNED OBJECTS"
 .PP

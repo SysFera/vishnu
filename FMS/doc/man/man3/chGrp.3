@@ -31,8 +31,10 @@
 chGrp \- changes group owner of remote files/directories\&.
 .SH "SYNOPSIS"
 .HP \w'int\ vishnu::chGrp('u
-.BI "int vishnu::chGrp(const\ string&\ " "sessionKey" ", const\ string&\ " "path" ", const\ string&\ " "group" ");"
+.BI "int vishnu::chGrp(const\ string&\ " "sessionKey" ", const\ string&\ " "group" ", const\ string&\ " "path" ");"
 .SH "DESCRIPTION"
+.PP
+Changes the group attribute of a file or directory at the location given by the path parameter\&. The path must be provided in the form \*(Aqmachine_id:path\*(Aq (the machine_id values can be obtained using the vishnu_list_machine command)
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR
@@ -40,14 +42,14 @@ chGrp \- changes group owner of remote files/directories\&.
 Input argument\&. The session key\&.
 .RE
 .PP
-\fIpath\fR
-.RS 4
-Input argument\&. The file/directory following the pattern [host:]file path\&.
-.RE
-.PP
 \fIgroup\fR
 .RS 4
 Input argument\&. The new group owner of file/directory\&.
+.RE
+.PP
+\fIpath\fR
+.RS 4
+Input argument\&. The file/directory following the pattern [host:]file path\&.
 .RE
 .SH "EXCEPTIONS"
 .PP
