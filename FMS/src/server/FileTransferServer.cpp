@@ -268,6 +268,8 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
   }else{
     // The file transfer is  now completed
 
+    // FIXME Check status before
+    
     updateStatus (1,transferExec.getTransferId(),"");
 
   }
@@ -277,6 +279,7 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
 void FileTransferServer::move(const TransferExec& transferExec, const std::string& trCmd){
 
   std::cout << "********************** Coucou dans FileTransferServer::move******************** \n";  
+  
   // perform the copy
   copy(transferExec,trCmd);
   int lastExecStatus=transferExec.getLastExecStatus();
