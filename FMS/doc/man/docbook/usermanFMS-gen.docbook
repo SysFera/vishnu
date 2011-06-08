@@ -906,7 +906,7 @@ same conditions as regards security.</para>
             <term><option>-c <replaceable>trCommand</replaceable></option></term>
             <listitem>
               <para>the command to use to perform file transfer..
-The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (SCP), 1 (RSYNC).</para>
+The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDEFINED).</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1003,7 +1003,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (SCP), 1 
             <term><option>-c <replaceable>trCommand</replaceable></option></term>
             <listitem>
               <para>the command to use to perform file transfer..
-The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (SCP), 1 (RSYNC).</para>
+The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDEFINED).</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1094,7 +1094,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (SCP), 1 
             <term><option>-c <replaceable>trCommand</replaceable></option></term>
             <listitem>
               <para>the command to use to perform file transfer..
-The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (SCP), 1 (RSYNC).</para>
+The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDEFINED).</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1185,7 +1185,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (SCP), 1 
             <term><option>-c <replaceable>trCommand</replaceable></option></term>
             <listitem>
               <para>the command to use to perform file transfer..
-The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (SCP), 1 (RSYNC).</para>
+The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDEFINED).</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1393,7 +1393,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (SCP), 1 
             <term><option>-s <replaceable>status</replaceable></option></term>
             <listitem>
               <para>the file transfer status.
-The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INPROGRESS), 1 (COMPLETED), 2 (CANCELLED), 3 (FAILED).</para>
+The value must be an integer. Predefined values are: 0 (INPROGRESS), 1 (COMPLETED), 2 (CANCELLED), 3 (FAILED), 4 (UNDEFINED).</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2773,15 +2773,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INPROGRE
     <title>FMS Python API Reference</title>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.createFile</refentrytitle>
+        <refentrytitle>VISHNU.createFile</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.createFile</refname>
+        <refname>VISHNU.createFile</refname>
         <refpurpose>creates  files on  remote machines.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.createFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>mode_t <parameter>mode = 644</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.createFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>mode_t <parameter>mode = 644</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2862,15 +2862,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INPROGRE
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.createDir</refentrytitle>
+        <refentrytitle>VISHNU.createDir</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.createDir</refname>
+        <refname>VISHNU.createDir</refname>
         <refpurpose>creates directories on remote machines.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.createDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>mode_t <parameter>mode = 755</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.createDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>mode_t <parameter>mode = 755</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2951,15 +2951,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INPROGRE
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.removeFile</refentrytitle>
+        <refentrytitle>VISHNU.removeFile</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.removeFile</refname>
+        <refname>VISHNU.removeFile</refname>
         <refpurpose>removes files from  remote hosts.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.removeFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.removeFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3033,15 +3033,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INPROGRE
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.removeDir</refentrytitle>
+        <refentrytitle>VISHNU.removeDir</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.removeDir</refname>
+        <refname>VISHNU.removeDir</refname>
         <refpurpose>removes  directories (and subdirectories) from  remote machines.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.removeDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.removeDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3115,15 +3115,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INPROGRE
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.chGrp</refentrytitle>
+        <refentrytitle>VISHNU.chGrp</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.chGrp</refname>
+        <refname>VISHNU.chGrp</refname>
         <refpurpose>changes group owner of  remote files/directories. </refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.chGrp</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>string <parameter>group</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.chGrp</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>string <parameter>group</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3203,15 +3203,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INPROGRE
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.chMod</refentrytitle>
+        <refentrytitle>VISHNU.chMod</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.chMod</refname>
+        <refname>VISHNU.chMod</refname>
         <refpurpose>changes  access rights of remote files/directories.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.chMod</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>mode_t <parameter>mode</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.chMod</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>mode_t <parameter>mode</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3291,15 +3291,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INPROGRE
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.headOfFile</refentrytitle>
+        <refentrytitle>VISHNU.headOfFile</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.headOfFile</refname>
+        <refname>VISHNU.headOfFile</refname>
         <refpurpose>displays a few first lines of  files located on  remote machines.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.headOfFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>string <parameter>fileContent</parameter></paramdef><paramdef>int <parameter>nLine = 10</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.headOfFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>string <parameter>fileContent</parameter></paramdef><paramdef>int <parameter>nLine = 10</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3385,15 +3385,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INPROGRE
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.tailOfFile</refentrytitle>
+        <refentrytitle>VISHNU.tailOfFile</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.tailOfFile</refname>
+        <refname>VISHNU.tailOfFile</refname>
         <refpurpose>displays a few last lines of  files located on remote machines</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.tailOfFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>string <parameter>fileContent</parameter></paramdef><paramdef>int <parameter>nLine = 10</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.tailOfFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>string <parameter>fileContent</parameter></paramdef><paramdef>int <parameter>nLine = 10</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3479,15 +3479,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INPROGRE
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.contentOfFile</refentrytitle>
+        <refentrytitle>VISHNU.contentOfFile</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.contentOfFile</refname>
+        <refname>VISHNU.contentOfFile</refname>
         <refpurpose>displays content  of  files located on remote machines</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.contentOfFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>string <parameter>fileContent</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.contentOfFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>string <parameter>fileContent</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3567,15 +3567,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INPROGRE
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.listDir</refentrytitle>
+        <refentrytitle>VISHNU.listDir</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.listDir</refname>
+        <refname>VISHNU.listDir</refname>
         <refpurpose>displays  the content of a remote directory. </refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>FileStatList <parameter>dirContent</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>FileStatList <parameter>dirContent</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3655,15 +3655,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INPROGRE
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.copyFile</refentrytitle>
+        <refentrytitle>VISHNU.copyFile</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.copyFile</refname>
+        <refname>VISHNU.copyFile</refname>
         <refpurpose>executes a synchronous copy of file.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.copyFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>CopyFileOptions <parameter>options = CopyFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.copyFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>CopyFileOptions <parameter>options = CopyFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3749,15 +3749,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INPROGRE
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.copyAsyncFile</refentrytitle>
+        <refentrytitle>VISHNU.copyAsyncFile</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.copyAsyncFile</refname>
+        <refname>VISHNU.copyAsyncFile</refname>
         <refpurpose>executes an asynchronous copy of file.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.copyAsyncFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>long <parameter>thrId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.copyAsyncFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>long <parameter>thrId</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3843,15 +3843,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INPROGRE
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.moveFile</refentrytitle>
+        <refentrytitle>VISHNU.moveFile</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.moveFile</refname>
+        <refname>VISHNU.moveFile</refname>
         <refpurpose>executes a synchronous move of file.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.moveFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.moveFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3931,15 +3931,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INPROGRE
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.moveAsyncFile</refentrytitle>
+        <refentrytitle>VISHNU.moveAsyncFile</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.moveAsyncFile</refname>
+        <refname>VISHNU.moveAsyncFile</refname>
         <refpurpose>executes an asynchronous move of file.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.moveAsyncFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>long <parameter>thrId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.moveAsyncFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>long <parameter>thrId</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4025,15 +4025,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INPROGRE
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.stopFileTransfer</refentrytitle>
+        <refentrytitle>VISHNU.stopFileTransfer</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.stopFileTransfer</refname>
+        <refname>VISHNU.stopFileTransfer</refname>
         <refpurpose>stops an execution of a set of file transfers.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.stopFileTransfer</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>StopTransferOptions <parameter>options = StopTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.stopFileTransfer</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>StopTransferOptions <parameter>options = StopTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4107,15 +4107,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INPROGRE
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.listFileTransfers</refentrytitle>
+        <refentrytitle>VISHNU.listFileTransfers</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.listFileTransfers</refname>
+        <refname>VISHNU.listFileTransfers</refname>
         <refpurpose>displays the history of all file transfers submitted by User.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listFileTransfers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>FileTransferList <parameter>fileTransferList</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listFileTransfers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>FileTransferList <parameter>fileTransferList</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4189,15 +4189,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INPROGRE
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.getFilesInfo</refentrytitle>
+        <refentrytitle>VISHNU.getFilesInfo</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.getFilesInfo</refname>
+        <refname>VISHNU.getFilesInfo</refname>
         <refpurpose>displays the information  of  files.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.getFilesInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>FileStat <parameter>filesinfo</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.getFilesInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>FileStat <parameter>filesinfo</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>

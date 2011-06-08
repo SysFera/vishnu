@@ -348,6 +348,9 @@
 typedef unsigned int mode_t;
 
 #ifdef SWIGPYTHON
+%typemap(in, numinputs=0) std::string& contentOfFile (std::string temp) {
+  $1 = &temp;
+}
 
 %typemap(argout) std::string& contentOfFile {
   PyObject *o = PyString_FromString($1->c_str());

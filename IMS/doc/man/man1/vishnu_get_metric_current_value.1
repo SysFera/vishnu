@@ -1,13 +1,13 @@
 '\" t
-.\"     Title: vishnu_copy_async_file
+.\"     Title: vishnu_get_metric_current_value
 .\"    Author:  SysFera SAS <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
 .\"      Date: June 2011
-.\"    Manual: FMS Command reference
+.\"    Manual: IMS Command reference
 .\"    Source: VISHNU 1.2
 .\"  Language: English
 .\"
-.TH "VISHNU_COPY_ASYNC_FI" "1" "June 2011" "VISHNU 1.2" "FMS Command reference"
+.TH "VISHNU_GET_METRIC_CU" "1" "June 2011" "VISHNU 1.2" "IMS Command reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,11 +28,13 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-vishnu_copy_async_file \- executes an asynchronous copy of file\&.
+vishnu_get_metric_current_value \- Retrieve the current value of a metric on a machine
 .SH "SYNOPSIS"
-.HP \w'\fBvishnu_copy_async_file\fR\ 'u
-\fBvishnu_copy_async_file\fR [\fB\-h\fR] [\fB\-r\fR] [\fB\-c\ \fR\fB\fItrCommand\fR\fR] \fIsrc\fR \fIdest\fR
+.HP \w'\fBvishnu_get_metric_current_value\fR\ 'u
+\fBvishnu_get_metric_current_value\fR [\fB\-h\fR] [\fB\-t\ \fR\fB\fImetricType\fR\fR] \fImachineId\fR
 .SH "DESCRIPTION"
+.PP
+This command allows a user to get the current values of the 3 monitored metrics : cpuload, free diskspace and free memory\&. These values are in percent for cpuload and Mega bytes (Mb) for the other two\&. These values are read directly on the OS at the call and are stored as integers values\&.
 .SH "OPTIONS"
 .PP
 \fB\-h \fR\fB\fIhelp\fR\fR
@@ -40,21 +42,11 @@ vishnu_copy_async_file \- executes an asynchronous copy of file\&.
 help about the command\&.
 .RE
 .PP
-\fB\-r \fR\fB\fIisRecursive\fR\fR
+\fB\-t \fR\fB\fImetricType\fR\fR
 .RS 4
-It specifies when the copy is recursive (case of directory) or not\&.\&.
-.RE
-.PP
-\fB\-c \fR\fB\fItrCommand\fR\fR
-.RS 4
-the command to use to perform file transfer\&.\&. The value must be an integer\&. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDEFINED)\&.
+The type of the metric\&. The value must be an integer\&. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 2 (DISKSPACE), 3 (FREEDISKSPACE), 4 (MEMORY), 5 (FREEMEMORY), 6 (CPUNBR)\&.
 .RE
 .SH "ENVIRONMENT"
-.PP
-\fBVISHNU_TRANSFER_CMD\fR
-.RS 4
-It specifies the command to use for all file transfers by default\&. It takes its values in the set {SCP,RSYNC}\&.\&. Overriden by the \-c option\&.
-.RE
 .PP
 \fBVISHNU_CONFIG_FILE\fR
 .RS 4
@@ -64,35 +56,11 @@ Contains the path to the local configuration file for VISHNU\&.
 .PP
 The following diagnostics may be issued on stderr and the command will return the code provided within brackets:
 .PP
-"A problem occurs with the database\&." [\-9]
+"If a parameter is invalid" [1]
 .RS 4
 .RE
 .PP
-"User does not have permission access\&." [\-8]
-.RS 4
-.RE
-.PP
-"Option unknown in the config file\&." [\-7]
-.RS 4
-.RE
-.PP
-"The path provided is invalid\&." [\-6]
-.RS 4
-.RE
-.PP
-"an option or a parameter provided is invalid for this service\&." [\-5]
-.RS 4
-.RE
-.PP
-"The FMS server is unavailable\&." [\-4]
-.RS 4
-.RE
-.PP
-"Invalid provided machine identifier\&." [\-3]
-.RS 4
-.RE
-.PP
-"The session key is unrecognized\&." [\-2]
+"The database generated an error" [2]
 .RS 4
 .RE
 .SH "AUTHOR"
