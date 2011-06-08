@@ -6,14 +6,14 @@
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file to create following the pattern  [host:]file path." longOptionName=""/>
       <ports name="mode" dataType="//@modules.0/@typeList/@types.12" description="The file access permissions in octal numeral system." optional="true" shortOptionLetter="m" longOptionName="" defaultValueLiteral="644"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.0"/>
-      <details key="description" value="Creates an empty file at the location given by the path parameter."/>
+      <details key="description" value="Creates an empty file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command)"/>
     </services>
     <services name="createDir" description="creates directories on remote machines." resultCodes="VISHNU_OK ERRCODE_SESSION_KEY_NOT_FOUND ERRCODE_INVALID_MACHINE_ID ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH FMS_INVALID_CFG_FILE ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_PERMISSION_DENIED ERRCODE_DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to create following the pattern  [host:]directory path." longOptionName=""/>
       <ports name="mode" dataType="//@modules.0/@typeList/@types.12" description="the new directories permission access in octal numeral system." optional="true" shortOptionLetter="m" longOptionName="" defaultValueLiteral="755"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.1"/>
-      <details key="description" value="Creates an new directory at the location given by the path parameter."/>
+      <details key="description" value="Creates an new directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command)"/>
     </services>
     <services name="removeFile" description="removes files from  remote hosts." resultCodes="VISHNU_OK ERRCODE_SESSION_KEY_NOT_FOUND ERRCODE_INVALID_MACHINE_ID ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH FMS_INVALID_CFG_FILE ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_PERMISSION_DENIED ERRCODE_DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
@@ -21,23 +21,27 @@
         <dataType href="FMS_Internal.apim#//@modules.0/@typeList/@types.0"/>
       </ports>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.2"/>
+      <details key="description" value="Deletes a file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command)"/>
     </services>
     <services name="removeDir" description="removes  directories (and subdirectories) from  remote machines." resultCodes="VISHNU_OK ERRCODE_SESSION_KEY_NOT_FOUND ERRCODE_INVALID_MACHINE_ID ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH FMS_INVALID_CFG_FILE ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_PERMISSION_DENIED ERRCODE_DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to remove following the pattern  [host:]directory path" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.3"/>
+      <details key="description" value="Deletes a directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command)"/>
     </services>
     <services name="chGrp" description="changes group owner of  remote files/directories. " resultCodes="VISHNU_OK ERRCODE_SESSION_KEY_NOT_FOUND ERRCODE_INVALID_MACHINE_ID ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH FMS_INVALID_CFG_FILE ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_PERMISSION_DENIED ERRCODE_DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file/directory following the pattern  [host:]file path" longOptionName=""/>
       <ports name="group" dataType="//@modules.0/@typeList/@types.0" description="the new group owner of file/directory"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.4"/>
+      <details key="description" value="Changes the group attribute of a file or directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command)"/>
     </services>
     <services name="chMod" description="changes  access rights of remote files/directories." resultCodes="VISHNU_OK ERRCODE_SESSION_KEY_NOT_FOUND ERRCODE_DB_ERROR FMS_INVALID_CFG_FILE ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH ERRCODE_PERMISSION_DENIED ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_INVALID_MACHINE_ID">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file/directory following the pattern  [host:]file path" longOptionName=""/>
       <ports name="mode" dataType="//@modules.0/@typeList/@types.12" description=" the access rigths of file/directory in octal system." shortOptionLetter="" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.5"/>
+      <details key="description" value="Changes the permissions of a file or directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;The mode parameter is the same value as for the unix chmod command."/>
     </services>
     <services name="headOfFile" description="displays a few first lines of  files located on  remote machines." resultCodes="VISHNU_OK ERRCODE_SESSION_KEY_NOT_FOUND ERRCODE_INVALID_MACHINE_ID ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH FMS_INVALID_CFG_FILE ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_PERMISSION_DENIED ERRCODE_DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
@@ -45,6 +49,7 @@
       <ports name="fileContent" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="The first &quot;nLine&quot; lines of the file" shortOptionLetter="" longOptionName=""/>
       <ports name="nLine" dataType="//@modules.0/@typeList/@types.1" description="Number of lines to display" optional="true" shortOptionLetter="n" longOptionName="" defaultValueLiteral="10"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.6"/>
+      <details key="description" value="Displays the first lines of a file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>
     </services>
     <services name="tailOfFile" description="displays a few last lines of  files located on remote machines" resultCodes="VISHNU_OK ERRCODE_SESSION_KEY_NOT_FOUND ERRCODE_INVALID_MACHINE_ID ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH FMS_INVALID_CFG_FILE ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_PERMISSION_DENIED ERRCODE_DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
@@ -52,12 +57,14 @@
       <ports name="fileContent" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="The last &quot;nLine&quot; lines of the file" longOptionName=""/>
       <ports name="nLine" dataType="//@modules.0/@typeList/@types.1" description="number of lines to display" optional="true" shortOptionLetter="n" longOptionName="line" defaultValueLiteral="10"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.7"/>
+      <details key="description" value="Displays the last lines of a file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>
     </services>
     <services name="contentOfFile" description="displays content  of  files located on remote machines" resultCodes="VISHNU_OK ERRCODE_SESSION_KEY_NOT_FOUND ERRCODE_INVALID_MACHINE_ID ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH FMS_INVALID_CFG_FILE ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_PERMISSION_DENIED ERRCODE_DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file to display following the pattern  [host:]file path" longOptionName=""/>
       <ports name="fileContent" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="The content of the file" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.8"/>
+      <details key="description" value="Displays the content of a file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>
     </services>
     <services name="listDir" description="displays  the content of a remote directory. " resultCodes="ERRCODE_DB_ERROR FMS_INVALID_CFG_FILE ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH ERRCODE_PERMISSION_DENIED ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_INVALID_MACHINE_ID ERRCODE_SESSION_KEY_NOT_FOUND VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
