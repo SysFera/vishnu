@@ -74,6 +74,7 @@
       </ports>
       <ports name="options" usage="CLI_ONLY" dataType="//@modules.0/@typeList/@types.6" description="List of options for the listDir command" optional="true" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.9"/>
+      <details key="description" value="Displays the content of a directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>
     </services>
     <services name="copyFile" description="executes a synchronous copy of file." resultCodes="ERRCODE_DB_ERROR FMS_INVALID_CFG_FILE ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH ERRCODE_PERMISSION_DENIED ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_INVALID_MACHINE_ID ERRCODE_SESSION_KEY_NOT_FOUND VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
@@ -81,6 +82,7 @@
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file" longOptionName=""/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.7" description="the copy options" optional="true" shortOptionLetter="r"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.10"/>
+      <details key="description" value="Copy a file or directory from the location given by the src parameter to the location given by the dest parameter.&#xA;The src parameter must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command) or 'path' only if the file is on the local system.&#xA;The dest parameter must be provided in a similar way. Note that one of the two locations at least must be a remote location,&#xA;i.e. a local copy cannot be handled by this command.&#xA;"/>
     </services>
     <services name="copyAsyncFile" description="executes an asynchronous copy of file." resultCodes="ERRCODE_DB_ERROR FMS_INVALID_CFG_FILE ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH ERRCODE_PERMISSION_DENIED ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_INVALID_MACHINE_ID ERRCODE_SESSION_KEY_NOT_FOUND VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
@@ -89,6 +91,7 @@
       <ports name="thrId" direction="OUT" dataType="//@modules.0/@typeList/@types.3" description="A file tranfer identifier (allowing for instance  to ckeck the status of a file transfer, or to cancel it)"/>
       <ports name="options" usage="CLI_ONLY" dataType="//@modules.0/@typeList/@types.7" description="the copy options" optional="true" shortOptionLetter="r"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.11"/>
+      <details key="description" value="Initiates a copy of a file or directory from the location given by the src parameter to the location given by the dest parameter.&#xA;The src parameter must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command) or 'path' only if the file is on the local system.&#xA;The dest parameter must be provided in a similar way. Note that one of the two locations at least must be a remote location,&#xA;i.e. a local copy cannot be handled by this command.&#xA;The command listFileTransfers can be used to check the status of the transfer after it is initiated, using the transfer id as the identifier.&#xA;"/>
     </services>
     <services name="moveFile" description="executes a synchronous move of file." resultCodes="ERRCODE_DB_ERROR FMS_INVALID_CFG_FILE ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH ERRCODE_PERMISSION_DENIED ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_INVALID_MACHINE_ID ERRCODE_SESSION_KEY_NOT_FOUND VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
@@ -96,6 +99,7 @@
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file" longOptionName=""/>
       <ports name="options" usage="CLI_ONLY" dataType="//@modules.0/@typeList/@types.8" description="The move command options" optional="true" shortOptionLetter="r" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.12"/>
+      <details key="description" value="Move a file or directory from the location given by the src parameter to the location given by the dest parameter.&#xA;The src parameter must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command) or 'path' only if the file is on the local system.&#xA;The dest parameter must be provided in a similar way. Note that one of the two locations at least must be a remote location,&#xA;i.e. a local move cannot be handled by this command.&#xA;"/>
     </services>
     <services name="moveAsyncFile" description="executes an asynchronous move of file." resultCodes="ERRCODE_DB_ERROR FMS_INVALID_CFG_FILE ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH ERRCODE_PERMISSION_DENIED ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_INVALID_MACHINE_ID ERRCODE_SESSION_KEY_NOT_FOUND VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
@@ -104,11 +108,13 @@
       <ports name="thrId" direction="OUT" dataType="//@modules.0/@typeList/@types.3" description="The file tranfer identifier (allowing for instance  to ckeck the status of a file transfer, or to cancel it)"/>
       <ports name="options" usage="CLI_ONLY" dataType="//@modules.0/@typeList/@types.8" description="The mv command options" optional="true" shortOptionLetter="r"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.13"/>
+      <details key="description" value="Initiates a move of a file or directory from the location given by the src parameter to the location given by the dest parameter.&#xA;The src parameter must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command) or 'path' only if the file is on the local system.&#xA;The dest parameter must be provided in a similar way. Note that one of the two locations at least must be a remote location,&#xA;i.e. a local move cannot be handled by this command.&#xA;The command listFileTransfers can be used to check the status of the transfer after it is initiated, using the transfer id as the identifier.&#xA;"/>
     </services>
     <services name="stopFileTransfer" description="stops an execution of a set of file transfers." resultCodes="ERRCODE_DB_ERROR FMS_INVALID_CFG_FILE ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH ERRCODE_PERMISSION_DENIED ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_INVALID_MACHINE_ID ERRCODE_SESSION_KEY_NOT_FOUND VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.10" description="The stop file transfer command options" optional="true" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.14"/>
+      <details key="description" value="Cancels a file or directory transfer that has been initiated using a vishnu asynchronous copy or move file command.&#xA;The command listFileTransfers can be used to check the status of the transfer after it has been cancelled, using the transfer id as the identifier.&#xA;"/>
     </services>
     <services name="listFileTransfers" description="displays the history of all file transfers submitted by User." resultCodes="ERRCODE_DB_ERROR FMS_INVALID_CFG_FILE ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH ERRCODE_PERMISSION_DENIED ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_INVALID_MACHINE_ID ERRCODE_SESSION_KEY_NOT_FOUND VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
@@ -117,12 +123,14 @@
       </ports>
       <ports name="options" usage="CLI_ONLY" dataType="//@modules.0/@typeList/@types.9" description="The filter options  " optional="true" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.15"/>
+      <details key="description" value="Get the list of all file or directory transfers that have been initiated &#xA;using a vishnu synchronous or asynchronous copy or move file command.&#xA;"/>
     </services>
     <services name="getFilesInfo" description="displays the information  of  files." isCommand="false" resultCodes="ERRCODE_DB_ERROR FMS_INVALID_CFG_FILE ERRCODE_INVALID_PARAMETER ERRCODE_INVALID_PATH ERRCODE_PERMISSION_DENIED ERRCODE_FMS_SERVER_UNAVAILABLE ERRCODE_INVALID_MACHINE_ID ERRCODE_SESSION_KEY_NOT_FOUND VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The file whose inode information will be displayed"/>
       <ports name="filesinfo" direction="OUT" dataType="//@modules.0/@typeList/@types.11" description="The  inode information" shortOptionLetter="" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.16"/>
+      <details key="description" value="Get the details of a remote file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>
     </services>
     <typeList>
       <types name="string" description="String standard">
