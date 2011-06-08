@@ -10,9 +10,9 @@
 
 -- UPDATES FOR FMS module
 
-DROP TABLE fileTransfer;
+DROP TABLE filetransfer;
 
-CREATE TABLE fileTransfer (
+CREATE TABLE filetransfer (
   numfileTransferid SERIAL  NOT NULL ,
   vsession_numsessionid INTEGER   NOT NULL ,
   transferId VARCHAR(255),
@@ -32,8 +32,8 @@ PRIMARY KEY(numfileTransferid),
     FOREIGN KEY(vsession_numsessionid)
     REFERENCES vsession(numsessionid) ON DELETE CASCADE);
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON fileTransfer TO "vishnu_db_admin";
-GRANT SELECT, INSERT, UPDATE, DELETE ON fileTransfer TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON filetransfer TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON filetransfer TO "vishnu_user";
 GRANT ALL ON SEQUENCE filetransfer_numfiletransferid_seq TO "vishnu_user";
 GRANT ALL ON SEQUENCE filetransfer_numfiletransferid_seq TO "vishnu_db_admin";
 
