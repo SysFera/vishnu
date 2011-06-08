@@ -128,11 +128,5 @@ move
 
 };
 
-/* Utility fonctions */
-/* Returns the basename of a file. */
-std::string basename(const std::string& path);
-
-std::string gen_uuid();
-
 
 #endif

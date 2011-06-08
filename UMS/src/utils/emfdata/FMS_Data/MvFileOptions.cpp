@@ -31,7 +31,7 @@ using namespace ::FMS_Data;
 
 // Default constructor
 MvFileOptions::MvFileOptions() :
-    m_trCommand(-1)
+    m_trCommand(2)
 {
 
     /*PROTECTED REGION ID(MvFileOptionsImpl__MvFileOptionsImpl) START*/
