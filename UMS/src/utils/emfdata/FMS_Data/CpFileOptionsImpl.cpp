@@ -101,7 +101,7 @@ void CpFileOptions::eSet(::ecore::EInt _featureID,
     case ::FMS_Data::FMS_DataPackage::CPFILEOPTIONS__ISRECURSIVE:
         return m_isRecursive != false;
     case ::FMS_Data::FMS_DataPackage::CPFILEOPTIONS__TRCOMMAND:
-        return m_trCommand != -1;
+        return m_trCommand != 2;
 
     }
     throw "Error";
