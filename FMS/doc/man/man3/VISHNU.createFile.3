@@ -1,5 +1,5 @@
 '\" t
-.\"     Title: VISHNU_UMS.stopFileTransfer
+.\"     Title: VISHNU.createFile
 .\"    Author:  SysFera SAS <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
 .\"      Date: June 2011
@@ -7,7 +7,7 @@
 .\"    Source: VISHNU 1.2
 .\"  Language: English
 .\"
-.TH "VISHNU_UMS\&.STOPFIL" "3" "June 2011" "VISHNU 1.2" "FMS Python API Reference"
+.TH "VISHNU\&.CREATEFILE" "3" "June 2011" "VISHNU 1.2" "FMS Python API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,21 +28,28 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-VISHNU_UMS.stopFileTransfer \- stops an execution of a set of file transfers\&.
+VISHNU.createFile \- creates files on remote machines\&.
 .SH "SYNOPSIS"
-.HP \w'VISHNU_UMS\&.stopFileTransfer('u
-.BI "VISHNU_UMS\&.stopFileTransfer(string\ " "sessionKey" ", StopTransferOptions\ " "options\ =\ StopTransferOptions()" ");"
+.HP \w'VISHNU\&.createFile('u
+.BI "VISHNU\&.createFile(string\ " "sessionKey" ", string\ " "path" ", mode_t\ " "mode\ =\ 644" ");"
 .SH "DESCRIPTION"
+.PP
+Creates an empty file at the location given by the path parameter\&.
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR
 .RS 4
-Input argument\&. The session key\&.
+Input argument\&. The session key\&.\&.
 .RE
 .PP
-\fIoptions\fR
+\fIpath\fR
 .RS 4
-Input argument\&. The stop file transfer command options\&.
+Input argument\&. The file to create following the pattern [host:]file path\&.\&.
+.RE
+.PP
+\fImode\fR
+.RS 4
+Input argument\&. The file access permissions in octal numeral system\&.\&.
 .RE
 .SH "RETURNED OBJECTS"
 .PP
