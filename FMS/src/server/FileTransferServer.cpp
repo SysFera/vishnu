@@ -78,7 +78,7 @@ void FileTransferServer::checkClientMachineName(std::string clmachineId) {
 
 
 FileTransferServer::FileTransferServer(const SessionServer& sessionServer,const int& vishnuId):
-  msessionServer(sessionServer),mvishnuId(vishnuId){
+  msessionServer(sessionServer),mvishnuId(vishnuId),mtransferType(File::undefined){
 
   }
 
@@ -89,7 +89,7 @@ FileTransferServer::FileTransferServer(const SessionServer& sessionServer,
     const std::string& srcFilePath,
     const std::string& destFilePath,
     const int& vishnuId):
-  msessionServer(sessionServer),mvishnuId(vishnuId){
+  msessionServer(sessionServer),mvishnuId(vishnuId),mtransferType(File::undefined){
 
     mfileTransfer.setSourceMachineId(srcHost);
     mfileTransfer.setDestinationMachineId(destHost);
@@ -508,6 +508,7 @@ TransferExec::TransferExec (const SessionServer& sessionServer,
   mtransferId(transferId){
 
     mprocessId=-1;
+    mlastExecStatus=0;
   }
 
 
