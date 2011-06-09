@@ -164,12 +164,6 @@ time_t FileProxy::getCtime() const {
   if (!isUpToDate()) getInfos();
   return mfileStat.getType();
 }
-/*
-file_host_t FileProxy::getHostType() const {
-  if (getHost()=="localhost") return local;
-  return remote;
-}
-*/
 
 
 bool FileProxy::exists() const {
@@ -183,19 +177,10 @@ FileProxy& FileProxy::operator=(const FileProxy& file) {
   setHost(file.getHost());
 
   exists(file.exists());
-
   
   return *this;
 }
 
-bool FileProxy::operator==(const FileProxy& file) {
-  return getPath()==file.getPath() && getHost()==file.getHost();
-}
-
-bool FileProxy::operator<(const FileProxy& file) {
-  return getPath()<file.getPath() ||
-         (getPath()==file.getPath() && getHost()<file.getHost());
-}
 
 string FileProxy::extHost(const string& path) {
   size_t pos;
