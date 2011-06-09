@@ -174,7 +174,12 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
     // If message of disconnexion
     if (string(msg[i].tag).compare("OUT")==0){
       string hname = getHostnameFromLog(string(msg[i].msg));
-      ProcessCtl ctl(getMidFromHost(hname), UserServer(SessionServer("")));
+      ProcessCtl ctl("", UserServer(SessionServer("")));
+      try {
+	ctl = ProcessCtl(getMidFromHost(hname), UserServer(SessionServer("")));
+      } catch (VishnuException& e) {
+	log.append(e.what());
+      }
       // If it is on the same machine as the sed
       if (hname.compare(string(msyshName))){
 	log = "Disconnexion of the component with the name : " + string(msg[i].componentName);
