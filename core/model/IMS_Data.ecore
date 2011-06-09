@@ -9,11 +9,8 @@
     </eAnnotations>
     <eLiterals name="UNDEFINED"/>
     <eLiterals name="CPUUSE" value="1"/>
-    <eLiterals name="DISKSPACE" value="2"/>
-    <eLiterals name="FREEDISKSPACE" value="3"/>
-    <eLiterals name="MEMORY" value="4"/>
-    <eLiterals name="FREEMEMORY" value="5"/>
-    <eLiterals name="CPUNBR" value="6"/>
+    <eLiterals name="FREEDISKSPACE" value="2"/>
+    <eLiterals name="FREEMEMORY" value="3"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Metric" instanceTypeName="Metric">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//MetricType"
