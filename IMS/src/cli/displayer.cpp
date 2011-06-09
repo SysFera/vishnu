@@ -35,11 +35,11 @@ displayMetric(IMS_Data::Metric* m){
     type = "CPU use";
     unity = " %";
     break;
-  case 3 :
+  case 2 :
     type = "Free diskspace";
     unity = " Mb";
     break;
-  case 5 :
+  case 3 :
     type = "Free memory";
     unity = " Mb";
     break;
