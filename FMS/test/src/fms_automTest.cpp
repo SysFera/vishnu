@@ -789,7 +789,7 @@ waitAsyncCopy(const string& sessionKey, const FileTransfer& transferInfo) {
     }
     if (fileTransferList.getFileTransfers().size() == 1) {
       if (fileTransferList.getFileTransfers().get(0)->getStatus() != STATUS_INPROGRESS) {
-        BOOST_MESSAGE("Async transfer is terminated!");
+        BOOST_MESSAGE("Async transfer is terminated! - status = " + fileTransferList.getFileTransfers().get(0)->getStatus());
         terminated = true;
       }
     } else if (fileTransferList.getFileTransfers().size() == 0) {
