@@ -115,7 +115,7 @@ int main (int argc, char* argv[]){
 
     // DIET call 
     if(false==sessionKey.empty()){
-      cout <<currentSessionKeyMsg << sessionKey <<endl;
+      printSessionKeyMessage();
       listDir(sessionKey, path, dirContent, lsDirOptions);
 
       // To display the directory content
