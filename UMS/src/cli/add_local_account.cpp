@@ -78,7 +78,7 @@ int main (int ac, char* av[]){
 
     if(false==sessionKey.empty()){
 
-      cout <<currentSessionKeyMsg << sessionKey <<endl;
+      printSessionKeyMessage();
 
       addLocalAccount(sessionKey,newAcLogin,sshPublicKey);// call the UMS add local account service
 

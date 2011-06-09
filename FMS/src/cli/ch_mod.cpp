@@ -92,7 +92,7 @@ int main (int argc, char* argv[]){
 
     // DIET call 
     if(false==sessionKey.empty()){
-      cout <<currentSessionKeyMsg << sessionKey <<endl;
+      printSessionKeyMessage();
       chMod(sessionKey, mode, path);
     }
     printSuccessMessage();

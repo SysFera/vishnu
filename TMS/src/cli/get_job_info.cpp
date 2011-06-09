@@ -91,7 +91,7 @@ main (int argc, char* argv[]){
 
     // DIET call : get job info
     if(false==sessionKey.empty()){
-      cout <<currentSessionKeyMsg << sessionKey <<endl;
+      printSessionKeyMessage();
       getJobInfo(sessionKey, machineId, jobId, job);
     }
 

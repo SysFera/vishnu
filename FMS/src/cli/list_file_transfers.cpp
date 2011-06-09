@@ -162,7 +162,7 @@ int main (int argc, char* argv[]){
 
     // DIET call 
     if(false==sessionKey.empty()){
-      cout <<currentSessionKeyMsg << sessionKey <<endl;
+      printSessionKeyMessage();
       listFileTransfers(sessionKey, fileTransferList,lsFileTransferOptions);
 
       //To display the file transfer list
