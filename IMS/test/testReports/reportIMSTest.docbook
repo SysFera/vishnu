@@ -544,7 +544,7 @@ same conditions as regards security.</para>
               <entry><para>Normal execution of getProcesses</para></entry>
               <entry><para>The list of running processes is returned</para></entry>
               <entry><para>The list of running processes is returned</para></entry>
-	      <entry><para>0 <link linkend="Error">ERROR: critical check tmssedFound == true failed </link></para></entry>
+	      <entry><para>0</para></entry>
             </row>
 	    <row>
              <entry><para>IA5-E1</para></entry>
@@ -597,18 +597,19 @@ same conditions as regards security.</para>
               <entry><para>Normal execution of loadShed with LoadShedType HARD</para></entry>
               <entry><para>All VISHNU elements are stopped</para></entry>
               <entry><para>All VISHNU elements are stopped</para></entry>
-	      <entry><para>0 <link linkend="Error">Not functional </link></para></entry>
+	      <entry><para>0</para></entry>
             </row>
 	    <row>
              <entry><para>IA5-E1</para></entry>
               <entry><para>Bad machine Identifier</para></entry>
               <entry><para>VishnuException</para></entry>
               <entry><para>VishnuException</para></entry>
-              <entry><para>0 <link linkend="Error"> Not functional - exception VishnuException is expected </link></para></entry>
+              <entry><para>_</para></entry>
 	    </row>
           </tbody>
         </tgroup>
       </informaltable>
+      <para> <emphasis role = "bold"> Remarks IA5-B Hard Load schedding </emphasis>: It has been tested manually with a remote machine.</para>
     </section>
     
     <section>
@@ -668,7 +669,7 @@ same conditions as regards security.</para>
               <entry><para>Normal execution of stop</para></entry>
               <entry><para>The sed UMS on the remote machine is stopped</para></entry>
               <entry><para>The sed UMS on the remote machine is stopped</para></entry>
-	      <entry><para>0<link linkend="Error"> Not functional </link></para></entry>
+	      <entry><para>0</para></entry>
 	    </row>
 	    <row>
               <entry><para>IA9-E1</para></entry>
@@ -694,6 +695,7 @@ same conditions as regards security.</para>
           </tbody>
         </tgroup>
       </informaltable>
+      <para> <emphasis role = "bold"> Remarks IA9-B Stop </emphasis>: It has been tested manually with a remote machine. </para>
     </section>
    
     <section>
