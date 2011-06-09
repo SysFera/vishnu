@@ -931,7 +931,7 @@ BOOST_AUTO_TEST_CASE(AsyncCopyFile_Base)
     BOOST_REQUIRE( copyAsyncFile(sessionKey, fileFullPath1, localCopyPath, transferInfo) == 0);
     // Check
     BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_COMPLETED );
-    bool isLocalCopyFound = isFoundInDir(sessionKey, localDir, localCopyName);
+    bool isLocalCopyFound = isFoundInLocalDir(sessionKey, localDir, localCopyName);
     BOOST_CHECK(isLocalCopyFound);
     // Cleanup
     vishnu::deleteFile(localFilePath.c_str());
