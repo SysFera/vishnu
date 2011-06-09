@@ -9,11 +9,6 @@
 const std::string dietErrorMsg="DIET initialization failed !";
 
 /**
- * \brief Contains a generic message to display the current session key
- */
-const std::string currentSessionKeyMsg="the current sessionkey is: ";
-
-/**
  * \struct env_name_mapper
  * \brief a environment variable name mapper
  *
@@ -53,27 +48,27 @@ EXECERROR /*!<  for any runtime error */
 }ErrorType;
 
 /**
- * \brief helper function to display help about a specific command 
+ * \brief helper function to display help about a specific command
  * \param opt: describes all options allowed by the command
- * \param signature: defines the usage of the command 
+ * \param signature: defines the usage of the command
  */
-void 
+void
 helpUsage (const Options& opt,const std::string& signature);
 
 /**
- * \brief helper function to display error about a specific command 
+ * \brief helper function to display error about a specific command
  * \param cli   :The name of the command
- * \param errMsg: The error message to display 
- * \param err   : The error type 
+ * \param errMsg: The error message to display
+ * \param err   : The error type
  */
 
 void
 errorUsage (const std::string& cli,const std::string& errMsg,const ErrorType& err=PARAMERROR);
 
 /**
- * \brief Helper function to display information (error or usage) about a specific command 
+ * \brief Helper function to display information (error or usage) about a specific command
  * \param opt   :describes all options allowed by the command
- * \param mess: The help usage message to display 
+ * \param mess: The help usage message to display
  * \param ewhat   : The error message to display
  * \return 0 if an help is required or 1 if an error must me displayed
  */
@@ -87,7 +82,7 @@ usage (const Options& opt,const std::string& mess,const std::string& ewhat);
  *\param opt: describes all options allowed by the command
  *\exception raise a runtime exception if the VISHNU_CONFIG_FILE is not set
  */
-void 
+void
 checkVishnuConfig(const Options& opt);
 
 #endif
