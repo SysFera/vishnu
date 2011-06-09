@@ -204,8 +204,8 @@ namespace vishnu {
     * \brief Function to return the difference between localtime and UTC time (seconds)
     * \return the difference time (seconds)
     */
-    long diffLocaltimeUTCtime(); 
-  
+    long diffLocaltimeUTCtime();
+
    /**
     * \brief Function to create temporary file
     * \param fileName The name of the file to create
@@ -230,7 +230,16 @@ namespace vishnu {
     * \brief Function to print success message
     */
    inline void printSuccessMessage() {
-     std::cout << "The service was performed successfully" << std::endl;
+     // can be used to display a message when vishnu service was performed successfully
+     ;
+   }
+
+   /**
+    * \brief Function to display the session key
+    */
+   inline void printSessionKeyMessage() {
+     // can be used to display a message containing the current session key
+     ;
    }
 
   /**
@@ -245,7 +254,7 @@ namespace vishnu {
     * \brief Function to check the remote file path
     * \param path the remote file path
     * \return raises an exception on error
-    */ 
+    */
    void
    checkRemotePath(const std::string& path);
 
