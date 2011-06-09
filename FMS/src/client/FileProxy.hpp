@@ -18,13 +18,8 @@
 #include "SessionProxy.hpp"
 #include "FMS_Data_forward.hpp"
 #include "FMS_Data.hpp"
-
+#include "FMSConstantes.hpp"
 using namespace FMS_Data;
-
-
-static const mode_t defaultFileAccessMode=420;
-static const mode_t defaultDirectoryAccessMode=493;
-
 
 
 /**
@@ -177,9 +172,9 @@ class FileProxy {
           const std::string& path);
       /**
        * \brief Another constructor by reference
-       * \param file the other file 
+       * \param fileProxy the other file 
        */ 
-      explicit FileProxy(const FileProxy& file);
+      explicit FileProxy(const FileProxy& fileProxy);
       /**
        * \brief The default destructor
        */
