@@ -48,6 +48,7 @@ mkdir $path/core
 mkdir $path/core/database
 cp -r core/database/database_init.sql $path/core/database/
 cp -r core/database/postgre_create.sql $path/core/database/
+cp -r core/database/postgre_update.sql $path/core/database/
 
 # Copy core sources
 mkdir $path/core/src/
@@ -144,6 +145,72 @@ mkdir $path/TMS/doc/man
 cp  TMS/doc/man/CMakeLists.txt $path/TMS/doc/man/
 cp  -r TMS/doc/man/man1 $path/TMS/doc/man/
 cp  -r TMS/doc/man/man3 $path/TMS/doc/man/
+
+###############################################################################
+#                                    F M S                                    #
+###############################################################################
+
+mkdir $path/FMS
+mkdir $path/FMS/src/
+cp FMS/src/CMakeLists.txt $path/FMS/src/
+cp -r FMS/src/api $path/FMS/src
+cp -r FMS/src/cli $path/FMS/src
+cp -r FMS/src/client $path/FMS/src
+cp -r FMS/src/sed $path/FMS/src
+cp -r FMS/src/server $path/FMS/src
+
+# Copy tests
+mkdir $path/FMS/test
+mkdir $path/FMS/test/src
+cp -r FMS/test/src/sql $path/FMS/test/src
+cp FMS/test/src/*pp $path/FMS/test/src
+cp FMS/test/src/*.in $path/FMS/test/src
+cp FMS/test/src/CMakeLists.txt $path/FMS/test/src
+
+# Copy man pages
+mkdir $path/FMS/doc/
+mkdir $path/FMS/doc/man
+cp  FMS/doc/man/CMakeLists.txt $path/FMS/doc/man/
+cp  -r FMS/doc/man/man1 $path/FMS/doc/man/
+cp  -r FMS/doc/man/man3 $path/FMS/doc/man/
+
+###############################################################################
+#                                    I M S                                    #
+###############################################################################
+
+mkdir $path/IMS
+mkdir $path/IMS/src/
+cp IMS/src/CMakeLists.txt $path/IMS/src/
+cp -r IMS/src/api $path/IMS/src
+cp -r IMS/src/cli $path/IMS/src
+cp -r IMS/src/client $path/IMS/src
+cp -r IMS/src/sed $path/IMS/src
+cp -r IMS/src/server $path/IMS/src
+cp -r IMS/src/utils $path/IMS/src
+
+# Copy tests
+mkdir $path/IMS/test
+mkdir $path/IMS/test/src
+cp -r IMS/test/src/sql $path/IMS/test/src
+cp -r IMS/test/src/scripts $path/IMS/test/src
+cp IMS/test/src/*pp $path/IMS/test/src
+cp IMS/test/src/*.in $path/IMS/test/src
+cp IMS/test/src/CMakeLists.txt $path/IMS/test/src
+
+# Copy man pages
+mkdir $path/IMS/doc/
+mkdir $path/IMS/doc/man
+cp  IMS/doc/man/CMakeLists.txt $path/IMS/doc/man/
+cp  -r IMS/doc/man/man1 $path/IMS/doc/man/
+cp  -r IMS/doc/man/man3 $path/IMS/doc/man/
+
+###############################################################################
+#                                  SWIG API                                   #
+###############################################################################
+
+mkdir $path/swigAPI
+cp swigAPI/CMakeLists.txt $path/swigAPI
+cp swigAPI/vishnu.i $path/swigAPI
 
 ###############################################################################
 #                                 All modules                                 #
