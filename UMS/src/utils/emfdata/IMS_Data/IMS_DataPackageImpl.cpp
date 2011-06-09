@@ -825,30 +825,10 @@ IMS_DataPackage::IMS_DataPackage()
 
     {
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // DISKSPACE
-        _el->setName("DISKSPACE");
-        _el->setValue(2);
-        _el->setLiteral("DISKSPACE");
-        _el->setEEnum(m_MetricTypeEEnum);
-        m_MetricTypeEEnum->getELiterals().push_back(_el);
-    }
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // FREEDISKSPACE
         _el->setName("FREEDISKSPACE");
-        _el->setValue(3);
+        _el->setValue(2);
         _el->setLiteral("FREEDISKSPACE");
-        _el->setEEnum(m_MetricTypeEEnum);
-        m_MetricTypeEEnum->getELiterals().push_back(_el);
-    }
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // MEMORY
-        _el->setName("MEMORY");
-        _el->setValue(4);
-        _el->setLiteral("MEMORY");
         _el->setEEnum(m_MetricTypeEEnum);
         m_MetricTypeEEnum->getELiterals().push_back(_el);
     }
@@ -857,28 +837,8 @@ IMS_DataPackage::IMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // FREEMEMORY
         _el->setName("FREEMEMORY");
-        _el->setValue(5);
+        _el->setValue(3);
         _el->setLiteral("FREEMEMORY");
-        _el->setEEnum(m_MetricTypeEEnum);
-        m_MetricTypeEEnum->getELiterals().push_back(_el);
-    }
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // CPUNBR
-        _el->setName("CPUNBR");
-        _el->setValue(6);
-        _el->setLiteral("CPUNBR");
-        _el->setEEnum(m_MetricTypeEEnum);
-        m_MetricTypeEEnum->getELiterals().push_back(_el);
-    }
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // ALL
-        _el->setName("ALL");
-        _el->setValue(7);
-        _el->setLiteral("ALL");
         _el->setEEnum(m_MetricTypeEEnum);
         m_MetricTypeEEnum->getELiterals().push_back(_el);
     }
