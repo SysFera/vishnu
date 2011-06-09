@@ -186,6 +186,6 @@ ProcessCtl::stopAll() {
 
 void 
 ProcessCtl::createFile(string& cmd, IMS_Data::Process_ptr p) {
-  cmd = "echo "+p->getScript()+" > /tmp/vishnu_restart; ";
+  cmd = "echo \\\""+p->getScript()+"\\\" > /tmp/vishnu_restart; ";
 }
 
