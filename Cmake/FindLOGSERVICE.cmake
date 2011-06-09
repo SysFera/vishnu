@@ -11,14 +11,30 @@ FILE( APPEND ${CMAKE_BINARY_DIR}/CMakeOutput.log
 set (libName "LogForwarderUtils")
 
 find_path(LOG_INCLUDE_DIR LogORBMgr.hh
-  PATHS ${LOGSERVICE_DIR}/include
+  PATHS
+    ${LOGSERVICE_DIR}/include
+    ${DIET_DIR}/include
+    /usr/local/include
+    /opt/local/include
+    /usr/include
   DOC "Directory containing the log service include files")
+
 find_library(LOG_LIBRARY ${libName}
-  PATHS ${LOGSERVICE_DIR}/lib
+  PATHS
+    ${LOGSERVICE_DIR}/lib
+    ${DIET_DIR}/lib
+    /usr/local/lib
+    /opt/local/lib
+    /usr/lib
   DOC "The log service library")
 
 find_program(LOG_CENTRAL LogCentral
-  PATHS ${LOGSERVICE_DIR}/bin
+  PATHS
+    ${LOGSERVICE_DIR}/bin
+    ${DIET_DIR}/bin
+    /usr/local/bin
+    /opt/local/bin
+    /usr/bin
   DOC "The log service binary")
 
 include(FindPackageHandleStandardArgs)
