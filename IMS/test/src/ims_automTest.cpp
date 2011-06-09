@@ -81,9 +81,8 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       }
       //Wait for metric recording in database
       //10 represents the update frequency
-      sleep ((nbResMetric*10)+5);
+      sleep ((nbResMetric*10)+10);
       BOOST_CHECK_EQUAL(getMetricHistory(sessionKey, machineId, list, op),0  );
-      BOOST_TEST_MESSAGE(list.getMetric().size());
       BOOST_REQUIRE(list.getMetric().size() == nbResMetric);
     }
     catch (VishnuException& e) {
