@@ -789,7 +789,7 @@ waitAsyncCopy(const string& sessionKey, const FileTransfer& transferInfo) {
     }
     if (fileTransferList.getFileTransfers().size() == 1) {
       if (fileTransferList.getFileTransfers().get(0)->getStatus() != STATUS_INPROGRESS) {
-        BOOST_MESSAGE("Async transfer is terminated!");
+        BOOST_MESSAGE("Async transfer is terminated! - status = " + fileTransferList.getFileTransfers().get(0)->getStatus());
         terminated = true;
       }
     } else if (fileTransferList.getFileTransfers().size() == 0) {
@@ -883,7 +883,7 @@ BOOST_AUTO_TEST_CASE(SyncCopyFile_Exceptions)
     string invalidFullPath = baseDirFullPath1 + slash + invalidDir;
     BOOST_CHECK_THROW( copyFile(sessionKey, invalidFullPath, baseDirFullPath1), VishnuException);
     // E2 case - wrong destination path
-    string invalidFullPath2 = baseDirFullPath1 + slash + invalidDir;
+    string invalidFullPath2 = baseDirFullPath1 + slash + invalidDir + slash;
     BOOST_CHECK_THROW( copyFile(sessionKey, localFilePath, invalidFullPath2), VishnuException);
     // E3 case - no access to source path
     string noAccessLocalPath = "/etc/ssh/ssh_host_dsa_key";
