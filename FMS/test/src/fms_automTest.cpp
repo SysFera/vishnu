@@ -783,15 +783,13 @@ waitAsyncCopy(const string& sessionKey, const FileTransfer& transferInfo) {
   FileTransferList    fileTransferList;
   options.setTransferId(transferInfo.getTransferId());
   while (!terminated && pollCounter--) {
-    BOOST_MESSAGE("Checking async transfer id=" + transferInfo.getTransferId());
     if (listFileTransfers(sessionKey, fileTransferList, options) != 0) {
       BOOST_MESSAGE("ERROR: Could not retrieve file transfer information");
       return -1;
     }
     if (fileTransferList.getFileTransfers().size() == 1) {
-      BOOST_MESSAGE("Current status is " + convertToString<int>(fileTransferList.getFileTransfers().get(0)->getStatus()));
       if (fileTransferList.getFileTransfers().get(0)->getStatus() != STATUS_INPROGRESS) {
-        BOOST_MESSAGE("Terminated!");
+        BOOST_MESSAGE("Async transfer is terminated!");
         terminated = true;
       }
     } else if (fileTransferList.getFileTransfers().size() == 0) {
@@ -799,10 +797,6 @@ waitAsyncCopy(const string& sessionKey, const FileTransfer& transferInfo) {
       return -1;
     } else {
       BOOST_MESSAGE("ERROR: File transfer list contains more than 1 item for a given transferId!");
-      BOOST_MESSAGE("SIZE=" + convertToString(fileTransferList.getFileTransfers().size()));
-      for (unsigned int i=0; i<fileTransferList.getFileTransfers().size(); ++i ) {
-        BOOST_MESSAGE("ID=" + convertToString(fileTransferList.getFileTransfers().get(i)->getTransferId()));
-      }
       return -1;
     }
     bpt::seconds sleepTime(5);
@@ -812,7 +806,6 @@ waitAsyncCopy(const string& sessionKey, const FileTransfer& transferInfo) {
     BOOST_MESSAGE("ERROR: End of polling for file transfer");
     return -1;
   }
-  BOOST_MESSAGE("Final status of transfer is " + convertToString<int>(fileTransferList.getFileTransfers().get(0)->getStatus()));
   return fileTransferList.getFileTransfers().get(0)->getStatus();
 }
 
@@ -929,7 +922,7 @@ BOOST_AUTO_TEST_CASE(AsyncCopyFile_Base)
     bool isRemoteCopyFound = isFoundInDir(sessionKey, baseDirFullPath1, newFileName);
     BOOST_CHECK(isRemoteCopyFound);
     // Cleanup
-    BOOST_CHECK( removeFile(sessionKey, localFilePath) == 0);
+    vishnu::deleteFile(localFilePath.c_str());
 
     // remote to local
     BOOST_MESSAGE("Checking remote to local copy");
@@ -941,7 +934,7 @@ BOOST_AUTO_TEST_CASE(AsyncCopyFile_Base)
     bool isLocalCopyFound = isFoundInDir(sessionKey, localDir, localCopyName);
     BOOST_CHECK(isLocalCopyFound);
     // Cleanup
-    BOOST_CHECK( removeFile(sessionKey, localCopyPath) == 0);
+    vishnu::deleteFile(localFilePath.c_str());
 
     // remote to remote
     BOOST_MESSAGE("Checking remote to remote copy");

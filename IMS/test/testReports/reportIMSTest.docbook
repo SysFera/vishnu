@@ -100,7 +100,7 @@ same conditions as regards security.</para>
 	   <para> Batch scheduler : TORQUE V2.5 </para>
 	 </listitem>
 	 <listitem>
-	   <para> RAM memory : 4Gb </para>
+	   <para> RAM memory : 2Gb </para>
 	 </listitem>
         </itemizedlist>
     </para>
@@ -934,7 +934,7 @@ same conditions as regards security.</para>
                   <para>0,156s</para>
                </entry>
 	       <entry>
-                  <para>0,303s</para>
+                  <para>0,280s</para>
                </entry>
 	       <entry>
                   <para>Success</para>
@@ -953,13 +953,13 @@ same conditions as regards security.</para>
 		  </para>
                </entry>
                <entry>
-                  <para></para>
+                  <para>0,116s</para>
                </entry>
 	       <entry>
-                  <para></para>
+                  <para>0,280s</para>
                </entry>
 	       <entry>
-                  <para></para>
+                  <para>Success</para>
                </entry>
             </row>  
 	    
@@ -981,7 +981,7 @@ same conditions as regards security.</para>
                   <para>Command(s) tested</para>
                </entry>
                <entry>
-                  <para>Memory comsumption</para>
+                  <para>Comsumption</para>
                </entry>
 	       <entry>
                   <para>Results</para>
@@ -996,13 +996,13 @@ same conditions as regards security.</para>
                   <para>memory consumption less than 500 Mb</para>
                </entry>
                <entry>
-                  <para></para>
+                  <para>getMetricCurrentValue</para>
                </entry>
                <entry>
-                  <para></para>
+                  <para>1,3% of the RAM</para>
                </entry>
 	       <entry>
-                  <para></para>
+                  <para>Success</para>
                </entry>
             </row>
 	    
@@ -1014,13 +1014,13 @@ same conditions as regards security.</para>
                   <para>memory consumption less than 500 Mb</para>
                </entry>
                <entry>
-                  <para></para>
+                  <para>getMetricHistory</para>
                </entry>
                <entry>
-                  <para></para>
+                  <para>1,6% of the RAM</para>
                </entry>
 	       <entry>
-                  <para></para>
+                  <para>Sucess</para>
                </entry>
             </row>
 	    
@@ -1032,13 +1032,13 @@ same conditions as regards security.</para>
                   <para>CPU consumption less than 10%</para>
                </entry>
                <entry>
-                  <para></para>
+                  <para>getMetricCurrentValue</para>
                </entry>
                <entry>
-                  <para></para>
+                  <para>0,7% of the CPU</para>
                </entry>
 	       <entry>
-                  <para></para>
+                  <para>Sucess</para>
                </entry>
             </row>
 	      
@@ -1050,13 +1050,13 @@ same conditions as regards security.</para>
                   <para>CPU consumption less than 10%</para>
                </entry>
                <entry>
-                  <para></para>
+                  <para>getMetricHistory</para>
                </entry>
                <entry>
-                  <para></para>
+                  <para>0,7% of the CPU</para>
                </entry>
 	       <entry>
-                  <para></para>
+                  <para>Sucess</para>
                </entry>
             </row>
 	    
