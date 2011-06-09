@@ -41,7 +41,7 @@ using namespace std;
  */
   int
 vishnu::createFile(const string& sessionKey,const string& path)
-  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
+  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
     //To check the remote path
     vishnu::checkRemotePath(path);
@@ -91,7 +91,7 @@ int vishnu::createDir(const string& sessionKey,const string& path)
 int vishnu::removeFile(const string& sessionKey,const string& path)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
-    //To check the remote path 
+    //To check the remote path
     vishnu::checkRemotePath(path);
 
     SessionProxy sessionProxy(sessionKey);
@@ -115,10 +115,10 @@ int vishnu::removeFile(const string& sessionKey,const string& path)
  * \return 0 if everything is OK, another value otherwise
  */
 int vishnu::removeDir(const string& sessionKey,const string& path)
-  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
+  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
-    //To check the remote path 
-    vishnu::checkRemotePath(path); 
+    //To check the remote path
+    vishnu::checkRemotePath(path);
 
     SessionProxy sessionProxy(sessionKey);
 
@@ -174,7 +174,7 @@ vishnu::chGrp(const string& sessionKey, const string& group, const string& path)
 int vishnu::chMod(const string& sessionKey, const mode_t& mode, const string& path)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
-    //To check the remote path 
+    //To check the remote path
     vishnu::checkRemotePath(path);
 
     SessionProxy sessionProxy(sessionKey);
@@ -192,19 +192,19 @@ int vishnu::chMod(const string& sessionKey, const mode_t& mode, const string& pa
  * \param sessionKey the session key
  * \param src  the "source" file path using host:path format
  * \param dest  the "destination" file path using host:path format
- * \param options contains the options 
+ * \param options contains the options
  * \return 0 if everything is OK, another value otherwise
  */
 int vishnu::copyFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options)
-  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
+  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
     if((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
       throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
-    }    
+    }
 
     FileTransferProxy fileTransferProxy(sessionKey, src, dest);
     int result = fileTransferProxy.addCpThread(options);
-    return result; 
+    return result;
 
   }
 
@@ -229,11 +229,11 @@ throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
   FileTransferProxy fileTransferProxy(sessionKey, src, dest);
   int result = fileTransferProxy.addCpAsyncThread(options);
   transferInfo = fileTransferProxy.getFileTransfer();
-  return result; 
+  return result;
 
 }
 
-/** 
+/**
  * \brief get the first lines of a file
  * \param sessionKey the session key
  * \param path   the file path using host:path format
@@ -259,7 +259,7 @@ int vishnu::headOfFile(const string& sessionKey,const string& path, string& cont
     return 0;
 
   }
-/** 
+/**
  * \brief get the content of a file
  * \param sessionKey the session key
  * \param path   the file path using host:path format
@@ -269,7 +269,7 @@ int vishnu::headOfFile(const string& sessionKey,const string& path, string& cont
 int vishnu::contentOfFile(const string& sessionKey,const string& path, string& contentOfFile)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
-    //To check the remote path 
+    //To check the remote path
     vishnu::checkRemotePath(path);
 
     SessionProxy sessionProxy(sessionKey);
@@ -280,7 +280,7 @@ int vishnu::contentOfFile(const string& sessionKey,const string& path, string& c
 
     contentOfFile= strdup(content.c_str());
 
-    return 0; 
+    return 0;
 
   }
 
@@ -292,7 +292,7 @@ int vishnu::contentOfFile(const string& sessionKey,const string& path, string& c
  * \return 0 if everything is OK, another value otherwise
  */
 int vishnu::listDir(const string& sessionKey,const string& path, StringList& dirContent,const LsDirOptions& options)
-  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
+  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
     //To check the remote path
     vishnu::checkRemotePath(path);
@@ -312,7 +312,7 @@ int vishnu::listDir(const string& sessionKey,const string& path, StringList& dir
     }
 
 
-    return 0; 
+    return 0;
 
   }
 
@@ -322,20 +322,20 @@ int vishnu::listDir(const string& sessionKey,const string& path, StringList& dir
    * \param src:   the "source" file path using host:path format
    * \param dest:  the "destination" file path using host:path format
    * \param transferInfo contains different information about the submitted file
-   * transfer (like the transfer identifier) 
+   * transfer (like the transfer identifier)
    * \param options   contains the options used to perform the service (like the transfer command :scp or rsync)
    * \return 0 if everything is OK, another value otherwise
    */
   int vishnu::moveFile(const string& sessionKey,const string& src, const string& dest,const CpFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
-    
+
       if((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
         throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
       }
-   
+
       FileTransferProxy fileTransferProxy(sessionKey, src, dest);
       int result = fileTransferProxy.addMvThread(options);
-      return result; 
+      return result;
 
 
     }
@@ -345,7 +345,7 @@ int vishnu::listDir(const string& sessionKey,const string& path, StringList& dir
  * \param src:   the "source" file path using host:path format
  * \param dest:  the "destination" file path using host:path format
  * \param transferInfo contains different information about the submitted file
- * transfer (like the transfer identifier) 
+ * transfer (like the transfer identifier)
  * \param options   contains the options used to perform the service (like the transfer command :scp or rsync)
  * \return 0 if everything is OK, another value otherwise
  */
@@ -373,7 +373,7 @@ throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
  * \return 0 if everything is OK, another value otherwise
  */
 int vishnu::tailOfFile(const string& sessionKey,const string& path, string& contentOfFile,const TailOfFileOptions& options)
-  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
+  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
     //To check the remote path
     vishnu::checkRemotePath(path);
@@ -402,7 +402,7 @@ int vishnu::tailOfFile(const string& sessionKey,const string& path, string& cont
 int vishnu::getFilesInfo(const string& sessionKey,const string& path, FileStat& fileInfos)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
-    //To check the remote path 
+    //To check the remote path
     vishnu::checkRemotePath(path);
 
     SessionProxy sessionProxy(sessionKey);
@@ -432,8 +432,8 @@ int vishnu::stopFileTransfer(const string& sessionKey,const StopTransferOptions&
     FileTransferProxy fileTransferProxy(sessionKey);
 
     int result = fileTransferProxy.stopThread(optionsCompleted);
-    
-    return result; 
+
+    return result;
 
 
   }
@@ -449,8 +449,10 @@ int vishnu::stopFileTransfer(const string& sessionKey,const StopTransferOptions&
  */
 int vishnu::listFileTransfers(const string& sessionKey,FileTransferList& fileTransferList, const LsTransferOptions& options)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
-    
-    
+
+    // initialize the list of file transfers
+    fileTransferList.getFileTransfers().clear();
+
     if(options.getStatus() < 0 || options.getStatus() > 4) {
       throw UserException(ERRCODE_INVALID_PARAM, "The file transfer status option value is incorrect");
     }
