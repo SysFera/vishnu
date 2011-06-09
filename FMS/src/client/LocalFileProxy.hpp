@@ -113,7 +113,7 @@ public:
        * \param mode the access permission of the directory
        * \return 0 if the command succeeds, an error code otherwise
        */ 
-      virtual int mkdir(const mode_t mode=defaultFileAccessMode) { }
+      virtual int mkdir(const mode_t mode=defaultDirectoryAccessMode) { }
       /**
        * \brief To remove a file
        * \return 0 if the command succeeds, an error code otherwise
