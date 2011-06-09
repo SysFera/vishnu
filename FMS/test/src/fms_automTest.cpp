@@ -883,7 +883,7 @@ BOOST_AUTO_TEST_CASE(SyncCopyFile_Exceptions)
     string invalidFullPath = baseDirFullPath1 + slash + invalidDir;
     BOOST_CHECK_THROW( copyFile(sessionKey, invalidFullPath, baseDirFullPath1), VishnuException);
     // E2 case - wrong destination path
-    string invalidFullPath2 = baseDirFullPath1 + slash + invalidDir;
+    string invalidFullPath2 = baseDirFullPath1 + slash + invalidDir + slash;
     BOOST_CHECK_THROW( copyFile(sessionKey, localFilePath, invalidFullPath2), VishnuException);
     // E3 case - no access to source path
     string noAccessLocalPath = "/etc/ssh/ssh_host_dsa_key";
