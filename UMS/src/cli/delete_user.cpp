@@ -1,7 +1,7 @@
 
 /**
  * \file delete_user.cpp
- * This file defines the VISHNU delete_user command 
+ * This file defines the VISHNU delete_user command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -59,7 +59,7 @@ int main (int ac, char* av[]){
     // initializing DIET
 
     if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
-    
+
       errorUsage(av[0],dietErrorMsg,EXECERROR);
 
       return  CLI_ERROR_DIET ;
@@ -71,7 +71,7 @@ int main (int ac, char* av[]){
 
     if(false==sessionKey.empty()){
 
-      cout << currentSessionKeyMsg << sessionKey <<endl;
+      printSessionKeyMessage();
 
       deleteUser(sessionKey, userId);
 
@@ -85,7 +85,7 @@ int main (int ac, char* av[]){
   catch(po::required_option& e){// a required parameter is missing
 
     usage(*opt," userId",requiredParamMsg);
-  
+
     return CLI_ERROR_MISSING_PARAMETER;
   }
 
