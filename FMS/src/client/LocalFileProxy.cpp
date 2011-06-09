@@ -1,3 +1,13 @@
+/**
+ * \file LocalFileProxy.cpp
+ * This file contains the definition of  proxy class to handle a local file
+ * \author Daouda Traore (daouda.traore@sysfera.com)
+ * \author Ibrahima Cisse (irahima.cisse@sysfera.com)
+ */
+
+
+
+
 #include <string>
 #include <stdexcept>
 #include <fstream>
@@ -29,7 +39,9 @@ using namespace FMS_Data;
 namespace bfs=boost::filesystem;
 namespace ba=boost::algorithm;
 
-/* Default constructor. */
+/**
+ * \brief Default constructor. 
+ */
 LocalFileProxy::LocalFileProxy() : FileProxy() {
   setHost("localhost");
   upToDate = false;
