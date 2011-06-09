@@ -96,6 +96,7 @@ int main(int argc, char* argv[], char* envp[]) {
   pid_t pid;
   pid_t ppid;
   pid = fork();
+  registerSeD(TMSTYPE, config);
 
   if (pid > 0) {
 
