@@ -14,14 +14,14 @@ IMSVishnuTool::IMSVishnuTool(int argc, char** argv):mproc(UserServer(SessionServ
   try {
     LogORBMgr::init(argc, argv);
   } catch (...) {
-    fprintf (stderr, "ORB initialization failed");
+    cerr << "ORB initialization failed" << endl;
   }
   setFilter("");
   mfilename = mname+".log";
   LogORBMgr::getMgr()->activate((IMSVishnuTool*)this);
   // Getting the hostname
   if (gethostname(msyshName, HNAMESIZE-1)==-1){
-    throw SystemException(ERRCODE_SYSTEM, "Cannot get hostname to check process");
+    cerr << "Cannot get hostname to check process" << endl;;
   }
 }
 
@@ -174,7 +174,12 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
     // If message of disconnexion
     if (string(msg[i].tag).compare("OUT")==0){
       string hname = getHostnameFromLog(string(msg[i].msg));
-      ProcessCtl ctl(getMidFromHost(hname), UserServer(SessionServer("")));
+      ProcessCtl ctl("", UserServer(SessionServer("")));
+      try {
+	ctl = ProcessCtl(getMidFromHost(hname), UserServer(SessionServer("")));
+      } catch (VishnuException& e) {
+	log.append(e.what());
+      }
       // If it is on the same machine as the sed
       if (hname.compare(string(msyshName))){
 	log = "Disconnexion of the component with the name : " + string(msg[i].componentName);
