@@ -85,22 +85,14 @@ std::string
 convertMetricToString(const int& metricType) {
 
   switch(metricType) {
-    case -1:
-      return "ALL";
     case 0:
       return "UNDEFINED";
     case 1:
       return "CPUUSE";
     case 2:
-      return "DISKSPACE";
-    case 3:
       return "FREEDISKSPACE";
-    case 4:
-      return "MEMORY";
-    case 5:
+    case 3:
       return "FREEMORY";
-    case 6:
-      return "CPUNBR";
     default:
       return "UNDEFINED";
   }
