@@ -355,7 +355,7 @@ class File {
        * \param mode the access permission of the directory
        * \return 0 if the command succeeds, an error code otherwise
        */ 
-      virtual int mkdir(const mode_t mode=defaultFileAccessMode) = 0;
+      virtual int mkdir(const mode_t mode=defaultDirectoryAccessMode) = 0;
       /**
        * \brief To remove a file
        * \return 0 if the command succeeds, an error code otherwise
