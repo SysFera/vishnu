@@ -931,7 +931,7 @@ BOOST_AUTO_TEST_CASE(AsyncCopyFile_Base)
     BOOST_REQUIRE( copyAsyncFile(sessionKey, fileFullPath1, localCopyPath, transferInfo) == 0);
     // Check
     BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_COMPLETED );
-    bool isLocalCopyFound = isFoundInDir(sessionKey, localDir, localCopyName);
+    bool isLocalCopyFound = isFoundInLocalDir(localDir, localCopyName);
     BOOST_CHECK(isLocalCopyFound);
     // Cleanup
     vishnu::deleteFile(localFilePath.c_str());
@@ -1004,7 +1004,7 @@ BOOST_AUTO_TEST_CASE(SyncMoveFile_Base)
     BOOST_MESSAGE("DST=" + baseDirFullPath1);
     BOOST_REQUIRE( moveFile(sessionKey, localFilePath, baseDirFullPath1) == 0);
     // Check
-    bool isLocalSourceFound = isFoundInDir(sessionKey, localDir, newFileName);
+    bool isLocalSourceFound = isFoundInLocalDir(localDir, newFileName);
     BOOST_CHECK(!isLocalSourceFound);
     bool isRemoteCopyFound1 = isFoundInDir(sessionKey, baseDirFullPath1, newFileName);
     BOOST_CHECK(isRemoteCopyFound1);
@@ -1024,7 +1024,7 @@ BOOST_AUTO_TEST_CASE(SyncMoveFile_Base)
     // Check
     isRemoteCopyFound2 = isFoundInDir(sessionKey, baseDirFullPath2, newFileName);
     BOOST_CHECK(!isRemoteCopyFound2);
-    bool isLocalCopyFound = isFoundInDir(sessionKey, localDir, newFileName);
+    bool isLocalCopyFound = isFoundInLocalDir(localDir, newFileName);
     BOOST_CHECK(isLocalCopyFound);
     // Cleanup
     vishnu::deleteFile(localFilePath.c_str());
@@ -1084,7 +1084,7 @@ BOOST_AUTO_TEST_CASE(AsyncMoveFile_Base)
     BOOST_REQUIRE( moveAsyncFile(sessionKey, localFilePath, baseDirFullPath1, transferInfo) == 0);
     // Check
     BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_COMPLETED );
-    bool isLocalSourceFound = isFoundInDir(sessionKey, localDir, newFileName);
+    bool isLocalSourceFound = isFoundInLocalDir(localDir, newFileName);
     BOOST_CHECK(!isLocalSourceFound);
     bool isRemoteCopyFound1 = isFoundInDir(sessionKey, baseDirFullPath1, newFileName);
     BOOST_CHECK(isRemoteCopyFound1);
@@ -1106,7 +1106,7 @@ BOOST_AUTO_TEST_CASE(AsyncMoveFile_Base)
     BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_COMPLETED );
     isRemoteCopyFound2 = isFoundInDir(sessionKey, baseDirFullPath2, newFileName);
     BOOST_CHECK(!isRemoteCopyFound2);
-    bool isLocalCopyFound = isFoundInDir(sessionKey, localDir, newFileName);
+    bool isLocalCopyFound = isFoundInLocalDir(localDir, newFileName);
     BOOST_CHECK(isLocalCopyFound);
     // Cleanup
     vishnu::deleteFile(localFilePath.c_str());
