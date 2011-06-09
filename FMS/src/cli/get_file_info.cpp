@@ -111,7 +111,7 @@ int main (int ac, char* av[]){
 
     // DIET call : getFileInfos
     if(false==sessionKey.empty()){
-      cout <<currentSessionKeyMsg << sessionKey <<endl;
+      printSessionKeyMessage();
 
       getFilesInfo(sessionKey,path,fileStat);
     

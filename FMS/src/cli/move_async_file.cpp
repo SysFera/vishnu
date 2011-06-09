@@ -137,7 +137,7 @@ int main (int argc, char* argv[]){
 
     // DIET call 
     if(false==sessionKey.empty()){
-      cout <<currentSessionKeyMsg << sessionKey <<endl;
+      printSessionKeyMessage();
       moveAsyncFile(sessionKey, src, dest, transferInfo, cpFileOptions);
       
       std::cout << transferInfo << std::endl;

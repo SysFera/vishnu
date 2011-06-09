@@ -111,7 +111,7 @@ int main (int ac, char* av[]){
 
     if(false==sessionKey.empty()){
 
-      cout <<currentSessionKeyMsg << sessionKey <<endl;
+      printSessionKeyMessage();
 
       listOptions(sessionKey,lsOptionsValues,lsOptions);
 
