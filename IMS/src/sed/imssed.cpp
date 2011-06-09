@@ -1,3 +1,5 @@
+#include <csignal>
+#include <sys/wait.h>
 #include <fstream>
 #include "ServerIMS.hpp"
 #include "ExecConfiguration.hpp"
@@ -47,6 +49,26 @@ usage(char* cmd) {
 }
 
 /**
+ * \brief To catch a signal
+ * \param signum is the signal to catch
+ */
+void
+controlSignal (int signum) {
+  int res;
+  switch (signum) {
+    case SIGCHLD:
+      res = waitpid (-1, NULL, WNOHANG);
+      while (res > 0) {
+        res = waitpid (-1, NULL, WNOHANG);
+      }
+      break;
+    default:
+     break;
+  }
+}
+
+
+/**
  * \brief The main function
  * \fn int main(int argc, char* argv[], char* envp[])
  * \param argc Number of parameter
@@ -63,6 +85,7 @@ int main(int argc, char* argv[], char* envp[]) {
   string sendmailScriptPath;
   string dietConfigFile;
   string IMSTYPE = "IMS";
+  struct sigaction action;
 
   if (argc < 2) {
     return usage(argv[0]);
@@ -99,8 +122,12 @@ int main(int argc, char* argv[], char* envp[]) {
   // History maker thread
   HM hm = HM(sendmailScriptPath);
   thread thr2(bind(&HM::run, &hm));
-//  thr2.join();
-//  thr1.join();
+
+  //Declaration of signal handler, to remove script children
+  action.sa_handler = controlSignal;
+  sigemptyset (&(action.sa_mask));
+  action.sa_flags = 0;
+  sigaction (SIGCHLD, &action, NULL);
 
   // Initialize the DIET SeD
   if (!res) {
