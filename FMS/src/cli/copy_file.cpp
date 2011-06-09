@@ -140,7 +140,7 @@ int main (int argc, char* argv[]){
 
     // DIET call 
     if(false==sessionKey.empty()){
-      cout <<currentSessionKeyMsg << sessionKey <<endl;
+      printSessionKeyMessage();
       copyFile(sessionKey, src, dest, cpFileOptions);
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error

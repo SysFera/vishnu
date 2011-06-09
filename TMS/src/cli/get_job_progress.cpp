@@ -116,7 +116,7 @@ int main (int argc, char* argv[]){
 
     // DIET call : get job progress
     if(false==sessionKey.empty()){
-      cout <<currentSessionKeyMsg << sessionKey <<endl;
+      printSessionKeyMessage();
       getJobProgress(sessionKey, machineId, prog, progOp);
     }
 
