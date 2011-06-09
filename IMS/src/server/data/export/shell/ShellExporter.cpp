@@ -64,7 +64,6 @@ ShellExporter::exporte(string oldSession, string &content){
       Mapper* mapper = MapperRegistry::getInstance()->getMapper(getMapperName(type));
     content += mapper->decode(*(++iter));
     } catch (SystemException &e) {
-      cout << "iter: " << *iter << endl;
       throw (e);
     }
     content += " \n";
