@@ -5,12 +5,13 @@
  */
 /*********************************************************
 #####Tests prerequisites:#######
-- The Cmake variable TEST_LOCAL_HOSTNAME which is the name of the
-local machine, hostname of the machine in which the tests will be launched,
+- All ums and tms prerequisites must be considered
+- The Cmake variable TEST_LOCAL_HOSTNAME, which is the name of the
+local machine on which the tests will be launched,
 must be defined.
 
 - The Cmake variable TEST_ROOT_LOGIN which is the name of the user unix
-account of local machine (The VISHNU local account on the local machine) must be defined
+account of local machine must be defined
 
 *********************************************************/
 
@@ -71,7 +72,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     IMS_Data::ListMetric list;
     IMS_Data::MetricHistOp op;
     //Set FREEMEMORY metric
-    op.setType(5);
+    op.setType(3);
 
     try {
       //Set the update frequency to 10 and clean the table state
@@ -82,6 +83,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
       //10 represents the update frequency
       sleep ((nbResMetric*10)+5);
       BOOST_CHECK_EQUAL(getMetricHistory(sessionKey, machineId, list, op),0  );
+      BOOST_TEST_MESSAGE(list.getMetric().size());
       BOOST_REQUIRE(list.getMetric().size() == nbResMetric);
     }
     catch (VishnuException& e) {
@@ -137,7 +139,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     //List metric
     IMS_Data::ListMetric list;
     IMS_Data::CurMetricOp op;
-    op.setMetricType(3);
+    op.setMetricType(2);
 
     try {
       BOOST_CHECK_EQUAL(getMetricCurrentValue(sessionKey, machineId, list, op),0 );
@@ -164,7 +166,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     IMS_Data::ThresholdOp op;
     op.setMachineId(machineId);
     //Set FreeDiskSpace Metric
-    op.setMetricType(3);
+    op.setMetricType(2);
 
     try {
       BOOST_CHECK_EQUAL(getSystemThreshold(sessionKey, list, op),0 );
@@ -307,13 +309,13 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     IMS_Data::ThresholdOp op;
     IMS_Data::Threshold systemThreshold;
     //Set FREEDISKSPACE Metric
-    op.setMetricType(3);
+    op.setMetricType(2);
     op.setMachineId(machineId);
     //Set handler
     systemThreshold.setHandler("root");
     systemThreshold.setMachineId(machineId);
     //Set FREEDISKSPACE Metric
-    systemThreshold.setType(3);
+    systemThreshold.setType(2);
 
     try {
 
@@ -359,13 +361,13 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     IMS_Data::ThresholdOp op;
     IMS_Data::Threshold systemThreshold;
     //Set FREEMEMORY Metric
-    op.setMetricType(5);
+    op.setMetricType(3);
     op.setMachineId(machineId);
     //Set handler
     systemThreshold.setHandler("root");
     systemThreshold.setMachineId(machineId);
     //Set FREEMEMORY Metric
-    systemThreshold.setType(5);
+    systemThreshold.setType(3);
 
     try {
       //To get the current value of the FREEMEMORY metric
@@ -410,7 +412,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     systemThreshold.setHandler("root");
     systemThreshold.setMachineId(badMachineId);
     //Set FREEMEMORY Metric
-    systemThreshold.setType(5);
+    systemThreshold.setType(3);
 
     BOOST_CHECK_THROW(setSystemThreshold(sessionKey, systemThreshold), VishnuException);
   }
@@ -450,7 +452,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     systemThreshold.setHandler("root");
     systemThreshold.setMachineId(machineId);
     //Set FREEMEMORY Metric
-    systemThreshold.setType(5);
+    systemThreshold.setType(3);
 
     BOOST_CHECK_THROW(setSystemThreshold(sessionKey, systemThreshold), VishnuException);
   }
