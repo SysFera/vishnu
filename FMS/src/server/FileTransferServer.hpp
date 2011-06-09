@@ -120,7 +120,7 @@ class FileTransferServer{
     int addTransferThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options);
     void copy(const TransferExec& transferExec, const std::string& trCmd);
     void move(const TransferExec& transferExec, const std::string& trCmd);
-    int stopThread(const int& pid);
+    int stopThread(const std::string& transferid,const int& pid);
     void processOptions(const FMS_Data::StopTransferOptions& options, std::string& sqlRequest);
     int logIntoDatabase(int processId=-1,const std::string& errorMsg="");
     void updateData();
