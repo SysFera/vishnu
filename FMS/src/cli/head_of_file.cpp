@@ -118,7 +118,7 @@ if (opt->count ("path")) cout << "path: " << path << "\n";
 
     // DIET call : head_of_file
     if(false==sessionKey.empty()){
-      cout <<currentSessionKeyMsg << sessionKey <<endl;
+      printSessionKeyMessage();
            
       headOfFile(sessionKey,path,contentOfFile, hofOptions);
 

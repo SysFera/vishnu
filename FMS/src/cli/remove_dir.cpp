@@ -69,7 +69,7 @@ int main (int argc, char* argv[]){
 
     // DIET call 
     if(false==sessionKey.empty()){
-      cout <<currentSessionKeyMsg << sessionKey <<endl;
+      printSessionKeyMessage();
       removeDir(sessionKey, path);
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error
