@@ -1,4 +1,3 @@
-
 /**
  * \file LocalFileProxy.hpp
  * This file declares a proxy class to handle a local file
