@@ -132,7 +132,7 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
       disk = set->getMetric().get(i)->getValue();
       if (static_cast<int>(disk)<disk_thre.getValue()) {
 	try {
-	  sendMail(static_cast<int>(disk), disk_thre.getValue(), 3, disk_user.getEmail(), disk_user.getUserId(), mid);
+	  sendMail(static_cast<int>(disk), disk_thre.getValue(), 2, disk_user.getEmail(), disk_user.getUserId(), mid);
 	} catch (SystemException& e) {
 	  throw (e);
 	}
@@ -142,7 +142,7 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
       mem = set->getMetric().get(i)->getValue();
       if (static_cast<int>(mem)<mem_thre.getValue()) {
 	try {
-	  sendMail(static_cast<int>(mem), mem_thre.getValue(), 5, mem_user.getEmail(), mem_user.getUserId(), mid);
+	  sendMail(static_cast<int>(mem), mem_thre.getValue(), 3, mem_user.getEmail(), mem_user.getUserId(), mid);
 	} catch (SystemException& e) {
 	  throw (e);
 	}
