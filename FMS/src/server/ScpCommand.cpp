@@ -17,8 +17,7 @@ ScpCommand::ScpCommand (const bool& isRecursive, const bool& useCompression):Fil
 
  void ScpCommand::build(){  
 
-  //setCommand("script -c \" scp ");
-  setCommand("scp ");
+  setCommand("scp -q ");
 
  
   if (isRecursive()) {
@@ -34,5 +33,5 @@ ScpCommand::ScpCommand (const bool& isRecursive, const bool& useCompression):Fil
 
   }
 
-  addOptions("-o StrictHostKeyChecking=no ");
+  addOptions("-o StrictHostKeyChecking=no -o BatchMode=yes");
 }

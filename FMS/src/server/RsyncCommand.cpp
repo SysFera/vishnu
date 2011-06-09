@@ -17,8 +17,7 @@ RsyncCommand::RsyncCommand (const bool& isRecursive, const bool& useCompression)
 
  void RsyncCommand::build(){  
 
-  //setCommand("script -c \" rsync -aP ");
-  setCommand("rsync -aP ");
+  setCommand("rsync -aPq ");
 
   if (isRecursive()) {
 
@@ -33,6 +32,5 @@ RsyncCommand::RsyncCommand (const bool& isRecursive, const bool& useCompression)
 
   }
 
-    addOptions ("--progress ");
-  addOptions("--rsh=\"ssh -t  -o StrictHostKeyChecking=no -o Compression=yes \" ");
+  addOptions("--rsh=\"ssh -t -q -o StrictHostKeyChecking=no -o BatchMode=yes -o Compression=yes \" ");
 }
