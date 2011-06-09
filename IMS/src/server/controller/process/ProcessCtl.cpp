@@ -27,10 +27,18 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, bool isAPI) {
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "restart is an admin function. A user cannot call it");
     }
     // Currently too much but kept
-    mp.getSshKeyAndAcc(keyPath, login, mmid, muser.getData().getUserId(), hostname);
+    try {
+      mp.getSshKeyAndAcc(keyPath, login, mmid, muser.getData().getUserId(), hostname);
+    } catch (VishnuException &e) {
+      return;
+    }
   } else {
     // Currently too much but kept
-    mp.getAnAdmin(keyPath, login, mmid, hostname);
+    try {
+      mp.getAnAdmin(keyPath, login, mmid, hostname);
+    } catch (VishnuException &e) {
+      return;
+    }
   }
 
   switch(mop.getSedType()) {
@@ -126,9 +134,9 @@ ProcessCtl::loadShed(int type) {
   // Setting processes as stopped in the database
   IMS_Data::Process_ptr p = new IMS_Data::Process();
   p->setMachineId(mmid);
-  mp.stopAllProcesses(p);
   // Physically stopping them
   stopAll();
+  mp.stopAllProcesses(p);
 }
 
 void

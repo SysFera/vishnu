@@ -789,7 +789,7 @@ waitAsyncCopy(const string& sessionKey, const FileTransfer& transferInfo) {
     }
     if (fileTransferList.getFileTransfers().size() == 1) {
       if (fileTransferList.getFileTransfers().get(0)->getStatus() != STATUS_INPROGRESS) {
-        BOOST_MESSAGE("Async transfer is terminated!");
+        BOOST_MESSAGE("Async transfer is terminated! - status = " + fileTransferList.getFileTransfers().get(0)->getStatus());
         terminated = true;
       }
     } else if (fileTransferList.getFileTransfers().size() == 0) {
@@ -879,11 +879,11 @@ BOOST_AUTO_TEST_CASE(SyncCopyFile_Exceptions)
     StringList dirContent;
     createFile<10>(localFilePath);
     // E1 case - wrong source path
-    string invalidDir = "rkvh";
+    string invalidDir = "boifdo";
     string invalidFullPath = baseDirFullPath1 + slash + invalidDir;
     BOOST_CHECK_THROW( copyFile(sessionKey, invalidFullPath, baseDirFullPath1), VishnuException);
     // E2 case - wrong destination path
-    string invalidFullPath2 = baseDirFullPath1 + slash + invalidDir;
+    string invalidFullPath2 = baseDirFullPath1 + slash + invalidDir + slash;
     BOOST_CHECK_THROW( copyFile(sessionKey, localFilePath, invalidFullPath2), VishnuException);
     // E3 case - no access to source path
     string noAccessLocalPath = "/etc/ssh/ssh_host_dsa_key";
@@ -964,19 +964,21 @@ BOOST_AUTO_TEST_CASE(AsyncCopyFile_Exceptions)
     FileTransfer transferInfo;
     createFile<10>(localFilePath);
     // E1 case - wrong source path
-    string invalidDir = "rkvh";
+    string invalidDir = "erli";
     string invalidFullPath = baseDirFullPath1 + slash + invalidDir;
     BOOST_CHECK_THROW( copyAsyncFile(sessionKey, invalidFullPath, baseDirFullPath1, transferInfo), VishnuException);
     // E2 case - wrong destination path
-    string invalidFullPath2 = baseDirFullPath1 + slash + invalidDir;
+    string invalidFullPath2 = baseDirFullPath1 + slash + invalidDir + slash;
     BOOST_CHECK_THROW( copyAsyncFile(sessionKey, localFilePath, invalidFullPath2, transferInfo), VishnuException);
     // E3 case - no access to source path
     string noAccessLocalPath = "/etc/ssh/ssh_host_dsa_key";
     string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
-    BOOST_CHECK_THROW( copyAsyncFile(sessionKey, noAccessFullPath, baseDirFullPath1, transferInfo), VishnuException);
+    BOOST_REQUIRE( copyAsyncFile(sessionKey, noAccessFullPath, baseDirFullPath1, transferInfo) == 0);
+    BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_FAILED );
     // E3 case - no access to remote path
     string noAccessRemotePath = machineId1 + sep + "/root";
-    BOOST_CHECK_THROW( copyAsyncFile(sessionKey, localFilePath, noAccessRemotePath, transferInfo), VishnuException);
+    BOOST_REQUIRE( copyAsyncFile(sessionKey, localFilePath, noAccessRemotePath, transferInfo) == 0);
+    BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_FAILED );
     // E4 case
     string invalidMachineId = "tt";
     string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
@@ -1045,11 +1047,11 @@ BOOST_AUTO_TEST_CASE(SyncMoveFile_Exceptions)
     StringList dirContent;
     createFile<10>(localFilePath);
     // E1 case - wrong source path
-    string invalidDir = "rkvh";
+    string invalidDir = "rtiui";
     string invalidFullPath = baseDirFullPath1 + slash + invalidDir;
     BOOST_CHECK_THROW( moveFile(sessionKey, invalidFullPath, baseDirFullPath1), VishnuException);
     // E2 case - wrong destination path
-    string invalidFullPath2 = baseDirFullPath1 + slash + invalidDir;
+    string invalidFullPath2 = baseDirFullPath1 + slash + invalidDir + slash;
     BOOST_CHECK_THROW( moveFile(sessionKey, localFilePath, invalidFullPath2), VishnuException);
     // E3 case - no access to source path
     string noAccessLocalPath = "/etc/ssh/ssh_host_dsa_key";;
@@ -1128,19 +1130,21 @@ BOOST_AUTO_TEST_CASE(AsyncMoveFile_Exceptions)
     FileTransfer transferInfo;
     createFile<10>(localFilePath);
     // E1 case - wrong source path
-    string invalidDir = "rkvh";
+    string invalidDir = "dffoize";
     string invalidFullPath = baseDirFullPath1 + slash + invalidDir;
     BOOST_CHECK_THROW( moveAsyncFile(sessionKey, invalidFullPath, baseDirFullPath1, transferInfo), VishnuException);
     // E2 case - wrong destination path
-    string invalidFullPath2 = baseDirFullPath1 + slash + invalidDir;
+    string invalidFullPath2 = baseDirFullPath1 + slash + invalidDir + slash;
     BOOST_CHECK_THROW( moveAsyncFile(sessionKey, localFilePath, invalidFullPath2, transferInfo), VishnuException);
     // E3 case - no access to source path
     string noAccessLocalPath = "/etc/ssh/ssh_host_dsa_key";;
     string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
-    BOOST_CHECK_THROW( moveAsyncFile(sessionKey, noAccessFullPath, baseDirFullPath1, transferInfo), VishnuException);
+    BOOST_REQUIRE( moveAsyncFile(sessionKey, noAccessFullPath, baseDirFullPath1, transferInfo) == 0);
+    BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_FAILED );
     // E3 case - no access to remote path
     string noAccessRemotePath = machineId1 + sep + "/root";
-    BOOST_CHECK_THROW( moveAsyncFile(sessionKey, localFilePath, noAccessRemotePath, transferInfo), VishnuException);
+    BOOST_REQUIRE( moveAsyncFile(sessionKey, localFilePath, noAccessRemotePath, transferInfo) == 0);
+    BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_FAILED );
     // E4 case
     string invalidMachineId = "tt";
     string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
