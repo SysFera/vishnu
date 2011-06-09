@@ -188,7 +188,7 @@ ProcessServer::getSshKeyAndAcc(string &keyPath, string &login, string mmid, stri
 
 void
 ProcessServer::getAnAdmin(string &keyPath, string &login, string mmid, string& hostname) {
-  string req = "select * from account, machine, users where machine.machineid='"+mmid+"' and machine.nummachineid=account.machine_nummachineid and users.privilege='1' and user.numuserid=account.users_numuserid";
+  string req = "select * from account, machine, users where machine.machineid='"+mmid+"' and machine.nummachineid=account.machine_nummachineid and users.privilege='1' and users.numuserid=account.users_numuserid";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
   if(result->getNbTuples() == 0) {
     throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "No account found to restart on the machine");
