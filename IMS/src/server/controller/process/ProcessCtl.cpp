@@ -27,10 +27,18 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, bool isAPI) {
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "restart is an admin function. A user cannot call it");
     }
     // Currently too much but kept
-    mp.getSshKeyAndAcc(keyPath, login, mmid, muser.getData().getUserId(), hostname);
+    try {
+      mp.getSshKeyAndAcc(keyPath, login, mmid, muser.getData().getUserId(), hostname);
+    } catch (VishnuException &e) {
+      return;
+    }
   } else {
     // Currently too much but kept
-    mp.getAnAdmin(keyPath, login, mmid, hostname);
+    try {
+      mp.getAnAdmin(keyPath, login, mmid, hostname);
+    } catch (VishnuException &e) {
+      return;
+    }
   }
 
   switch(mop.getSedType()) {
@@ -83,8 +91,8 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, bool isAPI) {
       throw SystemException(ERRCODE_SYSTEM, "Failed to restart process "+type);
     }
   } else {
-    // TODO : faire le SSH  pour executer la commande
     string dcmd = "ssh vishnu@"+hostname+" \""+cmd+"\"";
+    cout << "Cmd: " << dcmd << endl;
     int ret = system(dcmd.c_str());
     if (ret == -1) {
       throw SystemException(ERRCODE_SYSTEM, "Failed to restart process "+type);
@@ -126,9 +134,9 @@ ProcessCtl::loadShed(int type) {
   // Setting processes as stopped in the database
   IMS_Data::Process_ptr p = new IMS_Data::Process();
   p->setMachineId(mmid);
-  mp.stopAllProcesses(p);
   // Physically stopping them
   stopAll();
+  mp.stopAllProcesses(p);
 }
 
 void
@@ -178,6 +186,6 @@ ProcessCtl::stopAll() {
 
 void 
 ProcessCtl::createFile(string& cmd, IMS_Data::Process_ptr p) {
-  cmd = "echo \""+p->getScript()+"\" > /tmp/vishnu_restart; ";
+  cmd = "echo "+p->getScript()+" > /tmp/vishnu_restart; ";
 }
 
