@@ -85,8 +85,8 @@ ThresholdServer::getThreshold() {
     req += " AND machineid='"+mop.getMachineId()+"'";
   }
   if(mop.getMetricType()==1 || // cpuuse
-     mop.getMetricType()==3 || // free disk
-     mop.getMetricType()==5) { // free memory
+     mop.getMetricType()==2 || // free disk
+     mop.getMetricType()==3) { // free memory
     req += " AND typet='"+convertToString(mop.getMetricType())+"'";
   }
   IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
