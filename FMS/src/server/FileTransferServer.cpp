@@ -150,7 +150,6 @@ int FileTransferServer::logIntoDatabase(int processId, const std::string& errorM
     +mfileTransfer.getSourceFilePath()+"','"+mfileTransfer.getDestinationFilePath() +"','"+mfileTransfer.getTransferId()+"',"+convertToString(mfileTransfer.getStatus())+","
     +convertToString(mfileTransfer.getSize())+","+convertToString(mfileTransfer.getTrCommand())+","+convertToString(processId)+",'"+errorMsgCleaned+"'" +",CURRENT_TIMESTAMP)";
 
-  std::cout << "sqlInsert: " << sqlInsert << "\n";
 
   FileTransferServer::getDatabaseInstance()->process(sqlInsert);
 
@@ -161,13 +160,11 @@ int FileTransferServer::logIntoDatabase(int processId, const std::string& errorM
 
 void FileTransferServer::updateData(){
 
-  std::cout << "Coucou dans updateData() \n";
   std::string clientMachineName;
   std::string userId;
   getUserInfo( clientMachineName,  userId);
 
   std::string vishnuFileTransferId = vishnu::getObjectId(mvishnuId, "filesubcpt", "formatidfiletransfer", FILETRANSFERT,clientMachineName);
-  std::cout << "vishnuFileTransferId: " << vishnuFileTransferId << "\n"; 
 
   mfileTransfer.setClientMachineId(clientMachineName);
   mfileTransfer.setUserId(userId);
@@ -205,10 +202,8 @@ int FileTransferServer::addTransferThread(const std::string& srcUser,const std::
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,srcFileServer->getErrorMsg());
   }
 
-  std::cout << "srcFileServer->getSize(): " << srcFileServer->getSize()<< "\n";
   mfileTransfer.setSize(srcFileServer->getSize());
   mfileTransfer.setStart_time(0);
-  std::cout << "coucou dans addCpthread avant copy \n";
 
   // create a TransferExec instance
 
@@ -239,20 +234,13 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
   std::ostringstream destCompletePath;
   destCompletePath << transferExec.getDestUser() << "@"<< transferExec.getDestMachineName() <<":"<<transferExec.getDestPath();
 
-  std::cout << "destCompletePath " <<destCompletePath.str() << "\n";
-
 
   std::pair<std::string,std::string> trResult;
 
-  //trResult = ssh.exec(trCmd + " " +getPath()+" "+dest + "\" " + "output.txt");
 
   trResult = transferExec.exec(trCmd + " " +transferExec.getSrcPath()+" "+destCompletePath.str() );
 
-  std::cout << "*******trResult=" << trResult.first << std::endl;
-
   if (trResult.second.find("Warning")!=std::string::npos){
-
-    std::cerr << "Warning found \n";
 
     trResult = transferExec.exec(trCmd + " " +transferExec.getSrcPath()+" "+destCompletePath.str() );
 
@@ -266,10 +254,9 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
     //throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error transfering file: "+trResult.second);
 
   }else{
+   
     // The file transfer is  now completed
-
-    // FIXME Check status before
-    std::cout << "Coucou dans copy: update status to 1 \n";
+    
     updateStatus (1,transferExec.getTransferId(),"");
 
   }
@@ -277,13 +264,10 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
 
 
 void FileTransferServer::move(const TransferExec& transferExec, const std::string& trCmd){
-
-  std::cout << "********************** Coucou dans FileTransferServer::move******************** \n";  
   
   // perform the copy
   copy(transferExec,trCmd);
   int lastExecStatus=transferExec.getLastExecStatus();
-  std::cout<< "last exec status: " << lastExecStatus<< "\n";
 
   if (lastExecStatus==0){
 
@@ -309,8 +293,8 @@ void FileTransferServer::updateStatus(const FMS_Data::Status& status,const std::
 
   std::string errorMsgCleaned=FileTransferServer::filterString(errorMsg);
 
-  std::string sqlUpdateRequest = "UPDATE filetransfer SET status="+convertToString(status)+", errorMsg='"+errorMsgCleaned+"'"+ " where transferid='"+transferId+"'";
-
+  std::string sqlUpdateRequest = "UPDATE filetransfer SET status="+convertToString(status)+", errorMsg='"+errorMsgCleaned+"'"+ " where transferid='"+transferId+"'"
+                                  + " and status<>2";
   FileTransferServer::getDatabaseInstance()->process(sqlUpdateRequest.c_str());
 
 }
@@ -421,11 +405,15 @@ FileTransferServer::processOptions(const FMS_Data::StopTransferOptions& options,
 
 int FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options ){
 
+
   if (false==options.getTransferId().empty() || false==options.getUserId().empty() || false==options.getFromMachineId().empty()){
 
-  std::string sqlListOfPid = "SELECT processId from filetransfer, vsession "
+  
+    std::string sqlListOfPid = "SELECT transferid,processId from filetransfer, vsession "
     "where vsession.numsessionid=fileTransfer.vsession_numsessionid and filetransfer.status=0";
-
+    
+    std::string transferid;
+    int pid;
   std::vector<std::string>::iterator iter;
   std::vector<std::string> results;
 
@@ -440,27 +428,32 @@ int FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options 
       results.clear();
       results = ListOfPid->get(i);
       iter = results.begin();
-      std::cout << "pid: " << *iter << "\n";
-      stopThread(convertToInt(*iter) );
+      transferid=*iter;
+      iter++;
+      pid=convertToInt(*iter);
+      stopThread(transferid,pid );
       ++iter;
     }
 
+  }
+  else {
+  throw FMSVishnuException (ERRCODE_RUNTIME_ERROR, "There is no file transfer in progress ");
   }
   }
 
   return 0;
 }
-int FileTransferServer::stopThread(const int& pid ){
+int FileTransferServer::stopThread(const std::string& transferid,const int& pid ){
 
   int result;
 
   if(result=kill(pid, SIGTERM)){
 
-    updateStatus(3,mfileTransfer.getTransferId(),strerror(errno));
+    updateStatus(3,transferid,strerror(errno));
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,strerror(errno));
   }
-  std::cout << "Coucou dans stopThread: update status to 2 \n"; 
-    updateStatus(2,mfileTransfer.getTransferId(),"");
+    
+  updateStatus(2,transferid,"");
   return result;
 }
 
@@ -573,7 +566,6 @@ void TransferExec::updatePid(const int& pid)const {
 
   setProcessId(pid);
   std::string sqlUpdateRequest = "UPDATE fileTransfer SET processid="+convertToString(pid)+" where transferid='"+getTransferId()+"'";
-  std::cout << "sqlUpdateRequest: " << sqlUpdateRequest << "\n";
   FileTransferServer::getDatabaseInstance()->process(sqlUpdateRequest.c_str());
 
 }
@@ -588,14 +580,11 @@ std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) c
   int status;
   char c;
 
-  /* command << sshCommand << " -i " << privateKey << " -l " << userName;
-     command << " -p " << sshPort << " " << server << " " << cmd;*/
 
 
   command  << FileTransferServer::getSSHCommand() << " -t  " << " -l " << getSrcUser();
   command <<" -C"  << " -o BatchMode=yes " << " -o StrictHostKeyChecking=no";
   command << " -o ForwardAgent=yes";
-  // command  << " -o ControlMaster=yes " << " -o ControlPath=/tmp/ssh-%r@%h:%p";
   command << " -p " << FileTransferServer::getSSHPort() << " " << getSrcMachineName() << " " << cmd;
 
 
@@ -607,10 +596,7 @@ std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) c
 
   /***********************************************/
 
-  vector<string>:: iterator ite;
-  cout << endl;
-  for (ite=tokens.begin(); ite!=tokens.end();++ite)
-    cout << *ite << endl;
+  
   char* argv[tokens.size()+1];
   argv[tokens.size()]=NULL;
 
@@ -651,8 +637,6 @@ std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) c
   // Store the child process id
   updatePid (pid);
 
-  std::cout << "the child pid is : " << getProcessId()<<"\n";
-
   close(comPipeOut[1]); /* Close unused write end */
 
   close(comPipeErr[1]);/* Close unused write end */
@@ -677,7 +661,6 @@ std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) c
   for (unsigned int i=0; i<tokens.size(); ++i)
     free(argv[i]);
   mlastExecStatus = status;
-  cout << "result.second    :" << result.second << endl;
   return result;
 
 }
