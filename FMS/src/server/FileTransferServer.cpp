@@ -269,7 +269,7 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
     // The file transfer is  now completed
 
     // FIXME Check status before
-    
+    std::cout << "Coucou dans copy: update status to 1 \n";
     updateStatus (1,transferExec.getTransferId(),"");
 
   }
@@ -309,7 +309,7 @@ void FileTransferServer::updateStatus(const FMS_Data::Status& status,const std::
 
   std::string errorMsgCleaned=FileTransferServer::filterString(errorMsg);
 
-  std::string sqlUpdateRequest = "UPDATE fileTransfer SET status="+convertToString(status)+", errorMsg='"+errorMsgCleaned+"'"+ " where transferid='"+transferId+"'";
+  std::string sqlUpdateRequest = "UPDATE filetransfer SET status="+convertToString(status)+", errorMsg='"+errorMsgCleaned+"'"+ " where transferid='"+transferId+"'";
 
   FileTransferServer::getDatabaseInstance()->process(sqlUpdateRequest.c_str());
 
@@ -459,7 +459,7 @@ int FileTransferServer::stopThread(const int& pid ){
     updateStatus(3,mfileTransfer.getTransferId(),strerror(errno));
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,strerror(errno));
   }
-  
+  std::cout << "Coucou dans stopThread: update status to 2 \n"; 
     updateStatus(2,mfileTransfer.getTransferId(),"");
   return result;
 }

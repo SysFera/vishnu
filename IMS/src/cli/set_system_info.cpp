@@ -110,7 +110,7 @@ int main (int argc, char* argv[]){
 
     // DIET call : get job output
     if(false==sessionKey.empty()){
-      cout <<currentSessionKeyMsg << sessionKey <<endl;
+      printSessionKeyMessage();
       setSystemInfo(sessionKey, sysInfo);
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error

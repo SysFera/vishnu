@@ -118,7 +118,7 @@ if (opt->count ("path")) cout << "path: " << path << "\n";
 
     // DIET call : tail_of_file
     if(false==sessionKey.empty()){
-      cout <<currentSessionKeyMsg << sessionKey <<endl;
+      printSessionKeyMessage();
             tailOfFile(sessionKey,path,contentOfFile, tofOptions);
             cout << contentOfFile << "\n";
     }
