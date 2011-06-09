@@ -68,7 +68,7 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to list following the pattern  [host:]directory path" longOptionName=""/>
       <ports name="dirContent" direction="OUT" dataType="//@modules.0/@typeList/@types.4" description="The content of the directory  (only files names with short format, all files informations with long format)." longOptionName=""/>
-      <ports name="options" usage="CLI_ONLY" dataType="//@modules.0/@typeList/@types.6" description="List of options for the listDir command" longOptionName=""/>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.6" description="List of options for the listDir command" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.9"/>
       <details key="description" value="Displays the content of a directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>
     </services>
@@ -85,7 +85,7 @@
       <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The source file to copy following the pattern  [host:]file path" longOptionName=""/>
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file" longOptionName=""/>
       <ports name="transferInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.15" description="A file tranfer identifier (allowing for instance  to ckeck the status of a file transfer, or to cancel it)"/>
-      <ports name="options" usage="CLI_ONLY" dataType="//@modules.0/@typeList/@types.7" description="the copy options" shortOptionLetter=""/>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.7" description="the copy options" shortOptionLetter=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.11"/>
       <details key="description" value="Initiates a copy of a file or directory from the location given by the src parameter to the location given by the dest parameter.&#xA;The src parameter must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command) or 'path' only if the file is on the local system.&#xA;The dest parameter must be provided in a similar way. Note that one of the two locations at least must be a remote location,&#xA;i.e. a local copy cannot be handled by this command.&#xA;The command listFileTransfers can be used to check the status of the transfer after it is initiated, using the transfer id as the identifier.&#xA;"/>
     </services>
@@ -93,7 +93,7 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The  source file to move following the pattern  [host:]file path" longOptionName=""/>
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file" longOptionName=""/>
-      <ports name="options" usage="CLI_ONLY" dataType="//@modules.0/@typeList/@types.7" description="The move command options" shortOptionLetter="" longOptionName=""/>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.7" description="The move command options" shortOptionLetter="" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.12"/>
       <details key="description" value="Move a file or directory from the location given by the src parameter to the location given by the dest parameter.&#xA;The src parameter must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command) or 'path' only if the file is on the local system.&#xA;The dest parameter must be provided in a similar way. Note that one of the two locations at least must be a remote location,&#xA;i.e. a local move cannot be handled by this command.&#xA;"/>
     </services>
@@ -102,7 +102,7 @@
       <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The source file to move following the pattern  [host:]file path" longOptionName=""/>
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file" longOptionName=""/>
       <ports name="thrId" direction="OUT" dataType="//@modules.0/@typeList/@types.3" description="The file tranfer identifier (allowing for instance  to ckeck the status of a file transfer, or to cancel it)"/>
-      <ports name="options" usage="CLI_ONLY" dataType="//@modules.0/@typeList/@types.8" description="The mv command options" optional="true" shortOptionLetter="r"/>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.8" description="The mv command options" optional="true" shortOptionLetter="r"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.13"/>
       <details key="description" value="Initiates a move of a file or directory from the location given by the src parameter to the location given by the dest parameter.&#xA;The src parameter must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command) or 'path' only if the file is on the local system.&#xA;The dest parameter must be provided in a similar way. Note that one of the two locations at least must be a remote location,&#xA;i.e. a local move cannot be handled by this command.&#xA;The command listFileTransfers can be used to check the status of the transfer after it is initiated, using the transfer id as the identifier.&#xA;"/>
     </services>
