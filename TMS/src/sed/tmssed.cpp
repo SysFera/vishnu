@@ -96,7 +96,6 @@ int main(int argc, char* argv[], char* envp[]) {
   pid_t pid;
   pid_t ppid;
   pid = fork();
-  registerSeD(TMSTYPE, config);
 
   if (pid > 0) {
 
@@ -104,6 +103,7 @@ int main(int argc, char* argv[], char* envp[]) {
       //Initialize the TMS Server
       boost::scoped_ptr<ServerTMS> server (ServerTMS::getInstance());
       res = server->init(vishnuId, dbConfig, machineId, batchType, remoteBinDirectory);
+      registerSeD(TMSTYPE, config);
 
       UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
       UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
