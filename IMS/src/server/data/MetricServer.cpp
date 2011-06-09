@@ -88,13 +88,13 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
 	cpu_user.setUserId(*(iter+7));
 	cpu_user.setEmail(*(iter+12));
 	break;
-      case 3://disk
+      case 2://disk
 	disk_thre.setType(convertToInt(*(iter+3)));
 	disk_thre.setValue(convertToInt(*(iter+4)));
 	disk_user.setUserId(*(iter+7));
 	disk_user.setEmail(*(iter+12));
 	break;
-      case 5://memory
+      case 3://memory
 	mem_thre.setType(convertToInt(*(iter+3)));
 	mem_thre.setValue(convertToInt(*(iter+4)));
 	mem_user.setUserId(*(iter+7));
@@ -128,7 +128,7 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
 	}
       }
       break;
-    case 3 : //disk
+    case 2 : //disk
       disk = set->getMetric().get(i)->getValue();
       if (static_cast<int>(disk)<disk_thre.getValue()) {
 	try {
@@ -138,7 +138,7 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
 	}
       }
       break;
-    case 5: //mem
+    case 3: //mem
       mem = set->getMetric().get(i)->getValue();
       if (static_cast<int>(mem)<mem_thre.getValue()) {
 	try {
@@ -200,7 +200,7 @@ MetricServer::getCurMet(){
   diet_estimate_cori (vec, EST_FREESIZEDISK, EST_COLL_EASY, "./");
   disk = diet_est_get_system(vec, EST_FREESIZEDISK, -1); 
   met = ecoreFactory->createMetric();
-  met->setType(3);
+  met->setType(2);
   met->setValue(static_cast<int>(disk));
   met->setTime(string_to_time_t(boost::posix_time::to_simple_string(p)));
   if (mcop->getMetricType() != 1 && mcop->getMetricType() != 5) {
@@ -210,7 +210,7 @@ MetricServer::getCurMet(){
   diet_estimate_cori (vec, EST_FREEMEM, EST_COLL_EASY, NULL);
   mem = diet_est_get_system(vec, EST_FREEMEM, -1); 
   met = ecoreFactory->createMetric();
-  met->setType(5);
+  met->setType(3);
   met->setValue(static_cast<int>(mem));
   met->setTime(string_to_time_t(boost::posix_time::to_simple_string(p)));
   if (mcop->getMetricType() != 1 && mcop->getMetricType() != 3) {
@@ -287,7 +287,7 @@ MetricServer::getHistMet(string machineId){
 	mlistObject->getMetric().push_back(met);
       }
       break;
-    case 3: // CASE FREE DISKSPACE
+    case 2: // CASE FREE DISKSPACE
       for (size_t i = 0; i < listOfMetric->getNbTuples(); i++){
 	results.clear();
 	results = listOfMetric->get(i);
@@ -299,7 +299,7 @@ MetricServer::getHistMet(string machineId){
 	mlistObject->getMetric().push_back(met);
       }
       break;
-    case 5: // CASE FREE MEMORY
+    case 3: // CASE FREE MEMORY
       for (size_t i = 0; i < listOfMetric->getNbTuples(); i++){
 	results.clear();
 	results = listOfMetric->get(i);
@@ -317,12 +317,12 @@ MetricServer::getHistMet(string machineId){
 	results = listOfMetric->get(i);
 	iter = results.begin();
 	IMS_Data::Metric_ptr met = ecoreFactory->createMetric();
-	met->setType(5);
+	met->setType(3);
 	met->setValue(convertToInt(*(iter+2)));
 	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+5))));
 	mlistObject->getMetric().push_back(met);
 	met = ecoreFactory->createMetric();
-	met->setType(3);
+	met->setType(2);
 	met->setValue(convertToInt(*(iter+3)));
 	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+5))));
 	mlistObject->getMetric().push_back(met);
@@ -357,10 +357,10 @@ MetricServer::sendMail(int val, int threshold, int type, string email, string ui
   case 1:
     stype = "cpuload";
     break;
-  case 3:
+  case 2:
     stype = "free diskspace";
     break;
-  case 5:
+  case 3:
     stype = "free memory";
     break;
   default:
