@@ -1,6 +1,6 @@
 /**
  * \file update_user.cpp
- * This file defines the VISHNU update user command 
+ * This file defines the VISHNU update user command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -88,7 +88,7 @@ int main (int ac, char* av[]){
 
     if(false==sessionKey.empty()){
 
-      cout << currentSessionKeyMsg << sessionKey <<endl; 
+      printSessionKeyMessage();
 
       updateUser(sessionKey,upUser);
 
@@ -100,7 +100,7 @@ int main (int ac, char* av[]){
   catch(po::required_option& e){// a required parameter is missing
 
     usage(*opt," userId ",requiredParamMsg);
-    
+
     return CLI_ERROR_MISSING_PARAMETER;
   }
 
@@ -118,7 +118,7 @@ int main (int ac, char* av[]){
     errorUsage(av[0], msg,EXECERROR);
 
     //check the bad session key
-    
+
     if (checkBadSessionKeyError(e)){
 
       removeBadSessionKeyFromFile(getppid());

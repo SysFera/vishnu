@@ -87,7 +87,7 @@ int main (int argc, char* argv[]){
 
     // DIET call : get job output
     if(false==sessionKey.empty()){
-      cout <<currentSessionKeyMsg << sessionKey <<endl;
+      printSessionKeyMessage();
       cancelJob(sessionKey, machineId, jobId);
     }
     printSuccessMessage();

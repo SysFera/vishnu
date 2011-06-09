@@ -230,7 +230,7 @@ int main (int argc, char* argv[]){
 
     // DIET call : submit
     if(false==sessionKey.empty()){
-      cout <<currentSessionKeyMsg << sessionKey <<endl;
+      printSessionKeyMessage();
       listJobs(sessionKey, machineId, job, jobOp);
     }
 
