@@ -91,7 +91,7 @@ main (int argc, char* argv[]){
 
     // DIET call : list queue
     if(false==sessionKey.empty()){
-      cout <<currentSessionKeyMsg << sessionKey <<endl;
+      printSessionKeyMessage();
       listQueues(sessionKey, machineId, queue, queueName);
     }
 

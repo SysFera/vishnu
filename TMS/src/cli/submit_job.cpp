@@ -170,7 +170,7 @@ int main (int argc, char* argv[]){
 
     // DIET call : submit
     if(false==sessionKey.empty()){
-      cout <<currentSessionKeyMsg << sessionKey <<endl;
+      printSessionKeyMessage();
       submitJob(sessionKey, machineId, scriptPath, job, subOp);
     }
     displaySubmit(job);
