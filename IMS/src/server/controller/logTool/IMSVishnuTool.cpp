@@ -14,14 +14,14 @@ IMSVishnuTool::IMSVishnuTool(int argc, char** argv):mproc(UserServer(SessionServ
   try {
     LogORBMgr::init(argc, argv);
   } catch (...) {
-    fprintf (stderr, "ORB initialization failed");
+    cerr << "ORB initialization failed" << endl;
   }
   setFilter("");
   mfilename = mname+".log";
   LogORBMgr::getMgr()->activate((IMSVishnuTool*)this);
   // Getting the hostname
   if (gethostname(msyshName, HNAMESIZE-1)==-1){
-    throw SystemException(ERRCODE_SYSTEM, "Cannot get hostname to check process");
+    cerr << "Cannot get hostname to check process" << endl;;
   }
 }
 
