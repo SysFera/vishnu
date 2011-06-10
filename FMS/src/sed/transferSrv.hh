@@ -289,10 +289,9 @@ template < File::TransferType transferType> int solveTransferFileAsync(diet_prof
     std::cout << "fileTransfer->getStart_time() " <<fileTransfer->getStart_time() << "\n";
 
 
-    const char* name = "fileTransfer";
-    ::ecorecpp::serializer::serializer _ser(name);
+    ::ecorecpp::serializer::serializer _ser;
 
-    fileTransferSerialized =  _ser.serialize(const_cast<FMS_Data::FileTransfer_ptr>(fileTransfer));
+    fileTransferSerialized =  _ser.serialize_str(const_cast<FMS_Data::FileTransfer_ptr>(fileTransfer));
 
       std::cout << "Coucou  apres serialize \n";
       std::cout << "fileTransferSerialized " << fileTransferSerialized<<" \n";
@@ -460,10 +459,9 @@ template <File::TransferType transferType> int solveTransferRemoteFile(diet_prof
     std::cout << "fileTransfer->getStart_time() " <<fileTransfer->getStart_time() << "\n";
 
 
-    const char* name = "fileTransfer";
-    ::ecorecpp::serializer::serializer _ser(name);
+    ::ecorecpp::serializer::serializer _ser;
 
-    fileTransferSerialized =  _ser.serialize(const_cast<FMS_Data::FileTransfer_ptr>(fileTransfer));
+    fileTransferSerialized =  _ser.serialize_str(const_cast<FMS_Data::FileTransfer_ptr>(fileTransfer));
 
       std::cout << "Coucou  apres serialize \n";
       std::cout << "fileTransferSerialized " << fileTransferSerialized<<" \n";
@@ -541,12 +539,11 @@ solveGenerique(diet_profile_t* pb) {
     list = query.list();
 
 
-    const char* name = "list";
-    ::ecorecpp::serializer::serializer _ser(name);
+    ::ecorecpp::serializer::serializer _ser;
  
     std::cout << "************* Coucou dans Solvegenerique sed \n";
 
-    listSerialized =  _ser.serialize(const_cast<List*>(list));
+    listSerialized =  _ser.serialize_str(const_cast<List*>(list));
 
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
@@ -707,10 +704,9 @@ template <File::TransferType transferType> int solveTransferRemoteFileAsync(diet
     std::cout << "fileTransfer->getStart_time() " <<fileTransfer->getStart_time() << "\n";
 
 
-    const char* name = "fileTransfer";
-    ::ecorecpp::serializer::serializer _ser(name);
+    ::ecorecpp::serializer::serializer _ser;
 
-    fileTransferSerialized =  _ser.serialize(const_cast<FMS_Data::FileTransfer_ptr>(fileTransfer));
+    fileTransferSerialized =  _ser.serialize_str(const_cast<FMS_Data::FileTransfer_ptr>(fileTransfer));
 
       std::cout << "Coucou  apres serialize \n";
       std::cout << "fileTransferSerialized " << fileTransferSerialized<<" \n";
