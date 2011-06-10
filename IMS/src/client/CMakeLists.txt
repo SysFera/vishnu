@@ -17,6 +17,7 @@ include_directories(
   ${IMS_UTIL_DIR}
   ${CLIENT_PROXY_SOURCE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
+  ${FMS_API_SOURCE_DIR}
 )
 
 add_library(ims-client-proxy STATIC
@@ -34,7 +35,9 @@ target_link_libraries(ims-client-proxy
   ${Boost_LIBRARIES}
   emf4cpp-IMS_Data
   emf4cpp-TMS_Data
+  emf4cpp-FMS_Data
   exception-vishnu
   ums-client-proxy
+  vishnu-fms-api
 )
 
