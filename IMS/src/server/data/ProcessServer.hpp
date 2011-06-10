@@ -88,6 +88,15 @@ public:
    */
   int
   stopProcess(IMS_Data::Process_ptr proc);
+
+  /**
+   * \brief To set a process as stopped
+   * \param proc: The proc down to flag as stopped (means restarted)
+   * \return Success, an error code otherwise
+   */
+  int
+  setRestarted(IMS_Data::Process_ptr proc);
+
   /**
    * \brief To set all running processes as stopped on the machine
    * \param proc: The proc to flag as stopped
@@ -103,11 +112,25 @@ public:
   bool
   isIMSSeD(string Pname);
   /**
+   * \brief Return true if the process with a diet name Pname is of type IMS
+   * \param machine:  The vishnu machine id
+   * \param type: The type of the sed
+   * \return True if no process on this machine and of this type are down
+   */
+  bool
+  checkStopped(string machine, string type);
+  /**
    * \brief To get the script content from the machineId and dietName
    * \param p: Process to fill
    */
   void
   fillContent(IMS_Data::Process_ptr p);
+  /**
+   * \brief To get the script content from the dietId
+   * \param p: Process to fill
+   */
+  void
+  getDataFromDietId(IMS_Data::Process_ptr p);
   /**
    * \brief To get the sshkey and login on the machine mmid for the user uid
    * \param keyPath: The path to the ssh key

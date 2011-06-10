@@ -21,6 +21,7 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, bool isAPI) {
   string login;
   string hostname;
 
+
   // If call made by the api check admin
   if (isAPI) {
     if (!muser.isAdmin()) {
@@ -62,6 +63,12 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, bool isAPI) {
   proc.setMachineId(mmid);
   proc.setScript(mop.getVishnuConf());
 
+  // If process not to be restarted
+  if (mp.checkStopped(mmid, type)) {
+    throw SystemException(ERRCODE_SYSTEM, "No sed of type "+type+" running or down on machine "+mmid+", cannot restart it ");
+  }
+
+
   // Keep blocks separated because no catch error when try to stop
   try {
     // Make sure the process is really not running on the machine
@@ -78,19 +85,23 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, bool isAPI) {
     proc.setMachineId("");
   }
 
-  createFile (cmd, &proc);
   
 
   boost::to_lower(type);
   type += "sed";
-  cmd += type + " /tmp/vishnu_restart";
   // If local
   if (proc.getMachineId().compare("")==0) {
+    createFile (cmd, &proc, true);
+    cmd += type;
+    cmd += " /tmp/vishnu_restart &";
     int ret = system(cmd.c_str());
     if (ret == -1) {
       throw SystemException(ERRCODE_SYSTEM, "Failed to restart process "+type);
     }
   } else {
+    createFile (cmd, &proc, false);
+    cmd += type;
+    cmd += " /tmp/vishnu_restart&";
     string dcmd = "ssh vishnu@"+hostname+" \""+cmd+"\"";
     cout << "Cmd: " << dcmd << endl;
     int ret = system(dcmd.c_str());
@@ -185,7 +196,21 @@ ProcessCtl::stopAll() {
 
 
 void 
-ProcessCtl::createFile(string& cmd, IMS_Data::Process_ptr p) {
-  cmd = "echo \\\""+p->getScript()+"\\\" > /tmp/vishnu_restart; ";
+ProcessCtl::createFile(string& cmd, IMS_Data::Process_ptr p, bool loc) {
+  cmd = "echo ";
+  // If not local, need to protect the echoed string with the '\"' symbol
+  if (!loc) {
+    cmd += "\\\"";
+  } else {
+    cmd += "\"";
+  }
+  cmd += p->getScript();
+  // If not local, need to protect the echoed string with the '\"' symbol
+  if (!loc) {
+    cmd += "\\\"";
+  } else {
+    cmd += "\"";
+  }
+  cmd += " > /tmp/vishnu_restart; ";
 }
 
