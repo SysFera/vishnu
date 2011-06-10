@@ -101,9 +101,8 @@ int get_infos(diet_profile_t* profile) {
     if ( file->exists()) {
 
       *fileStat_ptr=file->getFileStat();
-      const char* name = "solve_getInfos";
-      ::ecorecpp::serializer::serializer _ser(name);
-      fileStatSerialized = strdup(_ser.serialize(const_cast<FMS_Data::FileStat_ptr>(fileStat_ptr.get())).c_str());
+      ::ecorecpp::serializer::serializer _ser;
+      fileStatSerialized = strdup(_ser.serialize_str(const_cast<FMS_Data::FileStat_ptr>(fileStat_ptr.get())).c_str());
 
     } else {
 

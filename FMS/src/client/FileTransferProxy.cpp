@@ -83,10 +83,9 @@ int FileTransferProxy::stopThread(const StopTransferOptions& options) {
   }
 
 
-  const char* name = "stop";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the option object in to optionsInString
-  optionsToString =  strdup(_ser.serialize(const_cast<FMS_Data::StopTransferOptions_ptr>(&options)).c_str());
+  optionsToString =  strdup(_ser.serialize_str(const_cast<FMS_Data::StopTransferOptions_ptr>(&options)).c_str());
 
   if (diet_string_set(diet_parameter(profile,1), optionsToString, DIET_VOLATILE)) {
     msgErrorDiet += "with jobInString parameter "+std::string(optionsToString);

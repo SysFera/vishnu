@@ -179,10 +179,9 @@ int LocalFileProxy::transferFile(const string& dest,
 
   diet_string_set(diet_parameter(profile, 4), const_cast<char*>(dest.c_str()), DIET_VOLATILE); 
 
-  const char* name = "cp";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object in to optionsInString
-  optionsToString =  strdup(_ser.serialize(const_cast<TypeOfOption*>(&options)).c_str());
+  optionsToString =  strdup(_ser.serialize_str(const_cast<TypeOfOption*>(&options)).c_str());
 
   diet_string_set(diet_parameter(profile,5 ), optionsToString, DIET_VOLATILE);
 
