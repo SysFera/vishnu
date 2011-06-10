@@ -317,6 +317,11 @@ string FileTransferServer::getErrorFromDatabase(const std::string& transferid){
 
 }
 
+/**
+ * \brief Clean an output message
+ * remove the line beginning by "Pseudo-terminal"
+ */
+
 std::string  FileTransferServer::cleanOutputMsg(const std::string& allOutputMsg){
 
   if (ba::starts_with(allOutputMsg,"Pseudo-terminal") ) {
@@ -325,13 +330,13 @@ std::string  FileTransferServer::cleanOutputMsg(const std::string& allOutputMsg)
 
   if (pos!=std::string::npos){
 
-    return allOutputMsg.substr(pos+1);
+    return filterString(allOutputMsg.substr(pos+1));
 
   }
 
 
   }
-  return allOutputMsg;
+  return filterString(allOutputMsg);
 }
 
 
@@ -531,7 +536,7 @@ const std::string& FileTransferServer::getSSHCommand( ){
 
 std::string FileTransferServer::filterString(  const std::string& toFilter){
 
-  std::string cleanString=ba::erase_all_copy( ba::erase_all_copy(ba::erase_all_copy(toFilter,":"),"'"),"`");
+  std::string cleanString=ba::erase_all_copy( ba::erase_all_copy( ba::erase_all_copy(ba::erase_all_copy(toFilter,":"),"'"),"`"),"\"");
 
   return cleanString; 
 

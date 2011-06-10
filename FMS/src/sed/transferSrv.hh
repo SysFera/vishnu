@@ -536,8 +536,8 @@ solveGenerique(diet_profile_t* pb) {
     cmd = mapper->finalize(mapperkey);
 
     //  perform the query
-    list = query.list();
 
+    list = query.list();
 
     ::ecorecpp::serializer::serializer _ser;
  
