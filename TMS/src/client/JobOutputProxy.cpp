@@ -13,7 +13,7 @@ using namespace vishnu;
 /**
 * \param session The object which encapsulates the session information
 * \param machine The object which encapsulates the machine information
-* \param outDir The output directory where the files will be stored 
+* \param outDir The output directory where the files will be stored
 * (default is current directory)
 * \brief Constructor
 */
@@ -148,7 +148,6 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 * \brief Function to get the results of all job submitted
 * \return The list of the job results
 */
-//TODO: faire un try catch Vishnu exception pour nettoyer l'id Dadga dans le catch puis throw e;
 TMS_Data::ListJobResults_ptr
 JobOutputProxy::getAllJobsOutPut() {
   diet_profile_t* profile = NULL;
@@ -182,7 +181,7 @@ JobOutputProxy::getAllJobsOutPut() {
     msgErrorDiet += "with outDir parameter "+moutDir;
     raiseDietMsgException(msgErrorDiet);
   }
- 
+
 
    //OUT Parameters
   diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
@@ -221,16 +220,16 @@ JobOutputProxy::getAllJobsOutPut() {
         for(unsigned int i = 0; i < content.size; i++) {
           char* path = NULL;
           dagda_get_file(content.elt_ids[i],&path);
-          
+
           std::string outFileName = "outputOfJob_"+listJobResults_ptr->getResults().get((i/2))->getJobId();
-          vishnu::boostMoveFile(std::string(path), moutDir, outFileName); 
+          vishnu::boostMoveFile(std::string(path), moutDir, outFileName);
           listJobResults_ptr->getResults().get((i/2))->setOutputPath(moutDir+"/"+outFileName) ;
-         
+
           if(i < content.size-1) {
             i++;
             char* errorPath = NULL;
             dagda_get_file(content.elt_ids[i],&errorPath);
-            
+
             std::string errFileName =  "errorsOfJob_"+listJobResults_ptr->getResults().get((i/2))->getJobId();
             vishnu::boostMoveFile(std::string(errorPath), moutDir, errFileName);
             listJobResults_ptr->getResults().get((i/2))->setErrorPath(moutDir+"/"+errFileName);
