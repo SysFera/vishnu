@@ -128,9 +128,8 @@ solveCurMetric(diet_profile_t* pb){
     IMS_Data::ListMetric* res;
     res = met.getCurMet();
     // Serializing the results
-    const char* name = "solve_getCurMetric";
-    ::ecorecpp::serializer::serializer _ser(name);
-    curSer = _ser.serialize(const_cast<IMS_Data::ListMetric_ptr>(res));
+    ::ecorecpp::serializer::serializer _ser;
+    curSer = _ser.serialize_str(const_cast<IMS_Data::ListMetric_ptr>(res));
 
     // Setting out diet param
     diet_string_set(diet_parameter(pb,3), strdup(curSer.c_str()), DIET_VOLATILE);
@@ -198,9 +197,8 @@ solveOldMetric(diet_profile_t* pb){
     res = met.getHistMet(string(mid));
 
     // Serializing the results
-    const char* name = "solve_getHistMetric";
-    ::ecorecpp::serializer::serializer _ser(name);
-    histSer = _ser.serialize(const_cast<IMS_Data::ListMetric_ptr>(res));
+    ::ecorecpp::serializer::serializer _ser;
+    histSer = _ser.serialize_str(const_cast<IMS_Data::ListMetric_ptr>(res));
 
     // Setting out diet param
     diet_string_set(diet_parameter(pb,3), strdup(histSer.c_str()), DIET_VOLATILE);
@@ -267,9 +265,8 @@ solvePS(diet_profile_t* pb){
     res = proc.list();
 
     // Serializing the results
-    const char* name = "solve_getProcesses";
-    ::ecorecpp::serializer::serializer _ser(name);
-    processSer = _ser.serialize(const_cast<IMS_Data::ListProcesses_ptr>(res));
+    ::ecorecpp::serializer::serializer _ser;
+    processSer = _ser.serialize_str(const_cast<IMS_Data::ListProcesses_ptr>(res));
 
     // Setting out diet param
     diet_string_set(diet_parameter(pb,2), strdup(processSer.c_str()), DIET_VOLATILE);
@@ -393,9 +390,8 @@ solveGetThreshold(diet_profile_t* pb){
     res = tree.getThreshold();
 
     // Serializing the results
-    const char* name = "solve_getThreshold";
-    ::ecorecpp::serializer::serializer _ser(name);
-    treeSer = _ser.serialize(const_cast<IMS_Data::ListThreshold_ptr>(res));
+    ::ecorecpp::serializer::serializer _ser;
+    treeSer = _ser.serialize_str(const_cast<IMS_Data::ListThreshold_ptr>(res));
 
     // Setting out diet param
     diet_string_set(diet_parameter(pb,2), strdup(treeSer.c_str()), DIET_VOLATILE);
@@ -985,9 +981,8 @@ solveGetSysInfo(diet_profile_t* pb){
     res = sys.getSysInfo();
 
     // Serializing the results
-    const char* name = "solve_getSysInfo";
-    ::ecorecpp::serializer::serializer _ser(name);
-    sysSer = _ser.serialize(const_cast<IMS_Data::ListSysInfo_ptr>(res));
+    ::ecorecpp::serializer::serializer _ser;
+    sysSer = _ser.serialize_str(const_cast<IMS_Data::ListSysInfo_ptr>(res));
 
     // Setting out diet param
     diet_string_set(diet_parameter(pb,2), strdup(sysSer.c_str()), DIET_VOLATILE);

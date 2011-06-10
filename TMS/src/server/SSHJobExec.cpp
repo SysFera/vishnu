@@ -131,7 +131,7 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
   vishnu::createTmpFile(const_cast<char*>(stderrFilePath.c_str()));
   cmd << " 2> " << stderrFilePath;
 
-  if(system((cmd.str()).c_str())) { 
+  if(system((cmd.str()).c_str())) {
     std::cerr << "can't execute " << cmd.str() << std::endl;
     vishnu::deleteFile(jobSerializedPath.c_str());
     vishnu::deleteFile(submitOptionsSerializedPath.c_str());
@@ -160,8 +160,8 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
       vishnu::deleteFile(stderrFilePath.c_str());
       throw SystemException(ERRCODE_INVDATA, "SSHJobExec::sshexec: job object is not well built");
     }
-    ::ecorecpp::serializer::serializer _ser("job");
-    mjobSerialized = strdup(_ser.serialize(job).c_str());
+    ::ecorecpp::serializer::serializer _ser;//("job");
+    mjobSerialized = strdup(_ser.serialize_str(job).c_str());
     wellSubmitted = true;
     delete job;
   }
@@ -225,7 +225,7 @@ SSHJobExec::copyFiles(const std::string& outputPath,
                       const char* copyOfErrorPath) {
 
   std::ostringstream cmd1;
-  cmd1 << "scp -o NoHostAuthenticationForLocalhost=yes  -o PasswordAuthentication=no "; 
+  cmd1 << "scp -o NoHostAuthenticationForLocalhost=yes  -o PasswordAuthentication=no ";
   cmd1 << muser << "@" << mhostname << ":" << outputPath << " " << copyOfOutputPath;
   if(system((cmd1.str()).c_str())) {
     return -1;
@@ -234,7 +234,7 @@ SSHJobExec::copyFiles(const std::string& outputPath,
   std::ostringstream cmd2;
   cmd2 << "scp -o NoHostAuthenticationForLocalhost=yes  -o PasswordAuthentication=no ";
   cmd2 << muser << "@" << mhostname << ":" << errorPath << " " << copyOfErrorPath;
-  if(system((cmd2.str()).c_str())) { 
+  if(system((cmd2.str()).c_str())) {
     return -1;
   }
  return 0;

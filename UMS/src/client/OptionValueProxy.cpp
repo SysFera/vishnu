@@ -42,10 +42,9 @@ int OptionValueProxy::setOptionValue(bool defaultValue)
   }
   sessionKey = msessionProxy.getSessionKey();
 
-  const char* name = "optionValueSet";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the moptionValue object in to optionValueToString
-  optionValueToString =  _ser.serialize(const_cast<UMS_Data::OptionValue_ptr>(&moptionValue));
+  optionValueToString =  _ser.serialize_str(const_cast<UMS_Data::OptionValue_ptr>(&moptionValue));
 
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
