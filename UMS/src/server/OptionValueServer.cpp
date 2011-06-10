@@ -100,6 +100,10 @@ OptionValueServer::configureOption(bool defaultOptions) {
           UMSVishnuException e (ERRCODE_UNKNOWN_CLOSURE_MODE);
           throw e;
         }
+        else if (moptionValue->getOptionName().compare(TRANSFERCMD_OPT) == 0) {
+          UMSVishnuException e (ERRCODE_INCORRECT_TRANSFER_CMD);
+          throw e;
+        }
         else {
           UMSVishnuException e (ERRCODE_INCORRECT_TIMEOUT);
           throw e;
@@ -198,6 +202,10 @@ int value = convertToInt(moptionValue->getValue());
   //if the option is VISHNU_TIMEOUT
   if (moptionValue->getOptionName().compare(TIMEOUT_OPT) == 0) {
       return (value > 0) ;
+  }
+  //if the option is VISHNU_TRANSFER_CMD
+  if (moptionValue->getOptionName().compare(TRANSFERCMD_OPT) == 0) {
+      return ( ( value==0)|| ( value==1)  ) ;
   }
   return iscorrect;
 }
