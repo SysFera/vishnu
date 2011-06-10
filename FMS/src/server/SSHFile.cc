@@ -412,7 +412,7 @@ int SSHFile::mv(const string& dest, const CpFileOptions& options){
 /* Transfer the file through scp or rsync. */
  int SSHFile::cp(const string& dest, const CpFileOptions& options ){
 
-   boost::scoped_ptr<FileTransferCommand> tr ( FileTransferCommand::getCopyCommand(options) );
+   boost::scoped_ptr<FileTransferCommand> tr (FileTransferCommand::getCopyCommand(getSession(),options) );
 
    string trCmd= tr->getCommand();
   

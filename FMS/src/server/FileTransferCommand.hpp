@@ -9,20 +9,20 @@
 
 #include <string>
 #include "FMS_Data.hpp"
-
+#include "SessionServer.hpp"
 class FileTransferCommand{
 
   public:
 
     FileTransferCommand ();
-    
-    
+
+
     FileTransferCommand (const std::string& name,
-                 const std::string& location,
-                  bool recursive,
-                  bool compression,
-                 const std::string& command=""
-                 );
+        const std::string& location,
+        bool recursive,
+        bool compression,
+        const std::string& command=""
+        );
     std::string getCommand()const;
 
     std::string getName()const;
@@ -31,9 +31,9 @@ class FileTransferCommand{
     bool isRecursive() const;
     bool useCompression() const;
 
-    static FileTransferCommand* getCopyCommand(const FMS_Data::CpFileOptions& options);
-  
-        protected:
+    static FileTransferCommand* getCopyCommand(const SessionServer& sessionServer, const FMS_Data::CpFileOptions& options);
+
+  protected:
     void setLocation (const std::string& location);
 
     void setName(const std::string& name);
