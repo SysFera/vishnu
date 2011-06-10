@@ -240,18 +240,18 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
 
   trResult = transferExec.exec(trCmd + " " +transferExec.getSrcPath()+" "+destCompletePath.str() );
 
-  if (trResult.second.find("Warning")!=std::string::npos){
+  if (trResult.second.find("Warning")!=std::string::npos || trResult.first.find("Warning")!=std::string::npos ){
 
     trResult = transferExec.exec(trCmd + " " +transferExec.getSrcPath()+" "+destCompletePath.str() );
 
   }
 
-  if (trResult.second.length()!=0) {
+  if (trResult.second.length()!=0 || trResult.first.length()!=0) {
 
     // The file transfer failed
-    updateStatus(3,transferExec.getTransferId(),trResult.second);
+    updateStatus(3,transferExec.getTransferId(),trResult.second+trResult.first);
 
-    //throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error transfering file: "+trResult.second);
+   // throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error transfering file: "+trResult.second);
 
   }else{
    
@@ -429,7 +429,7 @@ int FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options 
       results = ListOfPid->get(i);
       iter = results.begin();
       transferid=*iter;
-      iter++;
+      ++iter;
       pid=convertToInt(*iter);
       stopThread(transferid,pid );
       ++iter;
@@ -580,9 +580,7 @@ std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) c
   int status;
   char c;
 
-
-
-  command  << FileTransferServer::getSSHCommand() << " -t  " << " -l " << getSrcUser();
+  command  << FileTransferServer::getSSHCommand() << " -t -q " << " -l " << getSrcUser();
   command <<" -C"  << " -o BatchMode=yes " << " -o StrictHostKeyChecking=no";
   command << " -o ForwardAgent=yes";
   command << " -p " << FileTransferServer::getSSHPort() << " " << getSrcMachineName() << " " << cmd;
@@ -661,6 +659,7 @@ std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) c
   for (unsigned int i=0; i<tokens.size(); ++i)
     free(argv[i]);
   mlastExecStatus = status;
+  std::cout << "result.second: " << result.second << "\n";
   return result;
 
 }
