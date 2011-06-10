@@ -22,6 +22,7 @@ class SessionServer;
 
 static const std::string CLOSEPOLICY_OPT = "VISHNU_CLOSE_POLICY";
 static const std::string TIMEOUT_OPT = "VISHNU_TIMEOUT";
+static const std::string TRANSFERCMD_OPT = "VISHNU_TRANSFER_CMD";
 
 /**
 * \class OptionValueServer
