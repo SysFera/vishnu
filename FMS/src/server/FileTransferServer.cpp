@@ -104,6 +104,7 @@ FileTransferServer::FileTransferServer(const SessionServer& sessionServer,
 void FileTransferServer::getUserInfo( std::string& clientMachineName, std::string& userId) {
 
 
+  std::string home;
   std::vector<std::string> result;  
   std::vector<std::string>::const_iterator iter;  
   std::string sessionId = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "vsessionid");

@@ -38,9 +38,10 @@ static const int ERRCODE_RESTORE_CONFIG_ERROR = 40;
 static const int ERRCODE_UNKNOWN_OPTION = 41;
 static const int ERRCODE_UNKNOWN_CLOSURE_MODE = 42;
 static const int ERRCODE_INCORRECT_TIMEOUT = 43;
+static const int ERRCODE_INCORRECT_TRANSFER_CMD = 44;
 
-static const int ERRCODE_ROOT_USER_ONLY = 44;
-static const int ERRCODE_LOGIN_ALREADY_USED = 45;
+static const int ERRCODE_ROOT_USER_ONLY = 45;
+static const int ERRCODE_LOGIN_ALREADY_USED = 46;
 
 /**
  * \class UMSVishnuException
