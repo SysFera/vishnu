@@ -55,10 +55,9 @@ ExporterProxy::exportCmd(const std::string& oldSessionId,
     raiseDietMsgException(msgErrorDiet);
   }
 
-  const char* name = "int_exportCommands";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object
-  exportOptToString =  strdup(_ser.serialize(const_cast<IMS_Data::ExportOp_ptr>(&options)).c_str());
+  exportOptToString =  strdup(_ser.serialize_str(const_cast<IMS_Data::ExportOp_ptr>(&options)).c_str());
 
   if (diet_string_set(diet_parameter(profile,3), strdup(exportOptToString.c_str()),  DIET_VOLATILE)) {
     msgErrorDiet += "with Export options parameter ";

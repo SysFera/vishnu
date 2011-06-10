@@ -58,10 +58,9 @@ ProcessCtlProxy::restart(const IMS_Data::RestartOp& options) {
     raiseDietMsgException(msgErrorDiet);
   }
 
-   const char* name = "int_restart";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object in to optionsInString
-  restartOpToString =  strdup(_ser.serialize(const_cast<IMS_Data::RestartOp_ptr>(&options)).c_str());
+  restartOpToString =  strdup(_ser.serialize_str(const_cast<IMS_Data::RestartOp_ptr>(&options)).c_str());
 
   if (diet_string_set(diet_parameter(profile,2), strdup(restartOpToString.c_str()),  DIET_VOLATILE)) {
     msgErrorDiet += "with SystemInfo parameter ";
@@ -113,10 +112,9 @@ ProcessCtlProxy::stop(IMS_Data::Process process) {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  const char* name = "setSystemInfo";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object in to optionsInString
-  processToString =  strdup(_ser.serialize(const_cast<IMS_Data::Process_ptr>(&process)).c_str());
+  processToString =  strdup(_ser.serialize_str(const_cast<IMS_Data::Process_ptr>(&process)).c_str());
 
   if (diet_string_set(diet_parameter(profile,1), strdup(processToString.c_str()),  DIET_VOLATILE)) {
     msgErrorDiet += "with SystemInfo parameter ";
@@ -259,10 +257,9 @@ ProcessCtlProxy::cancelTMS() {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  const char* name = "cancel";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the job object in to optionsInString
-  jobToString =  strdup(_ser.serialize(const_cast<TMS_Data::Job_ptr>(&job)).c_str());
+  jobToString =  strdup(_ser.serialize_str(const_cast<TMS_Data::Job_ptr>(&job)).c_str());
 
   if (diet_string_set(diet_parameter(profile,2), jobToString, DIET_VOLATILE)) {
     msgErrorDiet += "with jobInString parameter "+std::string(jobToString);
