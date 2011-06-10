@@ -112,6 +112,7 @@ public:
    */
   FMS_Data::FileTransferList*
     list() {
+  
       std::string sqlListOfFiles = "SELECT transferId, filetransfer.status, userId, clientMachineId, sourceMachineId, "
         "destinationMachineId, sourceFilePath, destinationFilePath, fileSize, startTime,errorMsg "
         " trCommand, processId from filetransfer, vsession "
@@ -131,8 +132,13 @@ public:
       boost::scoped_ptr<DatabaseResult> ListOfFiles (mdatabaseVishnu->getResult(sqlListOfFiles.c_str()));
       
       time_t startTime;
+        
+      std::cout << "*******************Coucou dans ListFileTransfer ***************    \n" ;
 
       if (ListOfFiles->getNbTuples() != 0){
+      
+        std::cout << "*******************Coucou dans ListFileTransfer apres ListOfFiles->getNbTuples()  ***************    \n" ;
+        
         for (size_t i = 0; i < ListOfFiles->getNbTuples(); ++i) {
           results.clear();
           results = ListOfFiles->get(i);
@@ -156,13 +162,9 @@ public:
           filetransfer->setStart_time(startTime);
           filetransfer->setErrorMsg(*(++iter));
           filetransfer->setTrCommand(convertToInt(*(++iter)));
-          
+         std::cout << "transferId " << filetransfer->getTransferId() << "\n";   
           mlistObject->getFileTransfers().push_back(filetransfer);
         }
-      }
-      else{
-        std::cout << "*******************The list is empty***************    \n" ;
-
       }
 
       return mlistObject;
