@@ -173,52 +173,19 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
     } // EDNIF IN
     // If message of disconnexion
     if (string(msg[i].tag).compare("OUT")==0){
-      string hname = getHostnameFromLog(string(msg[i].msg));
+      p->setDietId(string(msg[i].componentName));
+      mproc.getDataFromDietId(p);
       ProcessCtl ctl("", UserServer(SessionServer("")));
       try {
-	ctl = ProcessCtl(getMidFromHost(hname), UserServer(SessionServer("")));
+	ctl = ProcessCtl(p->getMachineId(), UserServer(SessionServer("")));
       } catch (VishnuException& e) {
 	log.append(e.what());
       }
       // If it is on the same machine as the sed
-      if (hname.compare(string(msyshName))){
-	log = "Disconnexion of the component with the name : " + string(msg[i].componentName);
-	p->setDietId(string(msg[i].componentName));
-	try{
-	  mproc.disconnectProcess(p);
-	  int ty;
-	  if(p->getProcessName().compare("UMS")==0) {
-	    ty = 1;
-	  } else if(p->getProcessName().compare("TMS")==0) {
-	    ty = 2;
-	  } else if(p->getProcessName().compare("FMS")==0) {
-	    ty = 3;
-	  } else if(p->getProcessName().compare("IMS")==0) {
-	    ty = 4;
-	  } else {
-	    throw SystemException(ERRCODE_SYSTEM, "Unknown component to restart, type is unknown");
-	  }
-	  resOp.setSedType(ty);
-	  resOp.setVishnuConf(p->getScript());
-	  // Restart a process disconnected, if the process was stopped with a stop call, no restart will be done
-	  ctl.restart(&resOp, false);
-	} catch(SystemException& e){
-	  throw (e);
-	}// end catch
-	ofstream dest(mfilename.c_str(),ios::app);
-	dest << log << endl;
-	dest.close();
-      }// end if same machine
-      // If disconnexion of an IMS sed on an other machine, must set him as out
-      else if (mproc.isIMSSeD(string(msg[i].componentName))){
-	// Setting ims down
-	log = "Disconnexion of the component with the name : " + string(msg[i].componentName);
-	p->setDietId(string(msg[i].componentName));
-	try{
-	  mproc.disconnectProcess(p);
-	} catch(SystemException& e){
-	  throw (e);
-	}// end catch
+      log = "Disconnexion of the component with the name : " + string(msg[i].componentName);
+      p->setDietId(string(msg[i].componentName));
+      try{
+	mproc.disconnectProcess(p);
 	int ty;
 	if(p->getProcessName().compare("UMS")==0) {
 	  ty = 1;
@@ -233,11 +200,31 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	}
 	resOp.setSedType(ty);
 	resOp.setVishnuConf(p->getScript());
-	if (elect()) {
-	  ctl.restart(&resOp, false);
-	}// End elect
-      } // end else ims out
+	// Restart a process disconnected, if the process was stopped with a stop call, no restart will be done
+	try {
+	  if (p->getMachineId().compare(getMidFromHost(msyshName))){
+	    ctl.restart(&resOp, false);
+	  } else {
+	    if (elect()) {
+	      ctl.restart(&resOp, false);
+	    }
+	  }
+	} catch (SystemException& e) {
+	  log.append(e.what());
+	}
+      } catch(SystemException& e){
+	throw (e);
+      }// end catch
+      try {
+      mproc.setRestarted(p);
+      } catch (SystemException& e) {
+	log.append(e.what());
+      }
+      ofstream dest(mfilename.c_str(),ios::app);
+      dest << log << endl;
+      dest.close();
     }// end if disconnexion
+    delete (p);
   }// End for
 }
 

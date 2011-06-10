@@ -10,10 +10,8 @@
 using namespace vishnu;
 
 LogTool::LogTool(){
-  boost::mt19937 rng;
-  boost::uniform_int<> uni(1,1<<25); // Randon int between 1 and 1<<25
-  boost::variate_generator<boost::mt19937&, boost::uniform_int<> >
-    die(rng, uni);
+  srand(time(NULL));
+
   char host[HOSTSIZE];
   if (gethostname(host, HOSTSIZE)){
     mname = "IMSLogT";
@@ -22,7 +20,7 @@ LogTool::LogTool(){
     mname = "IMSLogT_";
     mname += string(host);
   }
-  mname += "_"+convertToString(die());
+  mname += "_"+convertToString(rand());
 }
 
 LogTool::~LogTool(){
