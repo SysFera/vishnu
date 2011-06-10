@@ -156,7 +156,7 @@ ProcessCtlProxy::loadShed(IMS_Data::LoadShedType loadShedType) {
     // If no TMS sed, catching exception and do nothing
     cancelTMS();
   } catch (VishnuException& e) {
-  }
+  } 
   // Cancelling FMS transfer
   try {
     // If no FMS sed, catching exception and do nothing
@@ -170,7 +170,7 @@ ProcessCtlProxy::loadShed(IMS_Data::LoadShedType loadShedType) {
     std::string sessionKey;
     char* errorInfo = NULL;
 
-    std::string serviceName = "int_loadShed";
+     std::string serviceName = "int_loadShed";
     profile = diet_profile_alloc(serviceName.c_str(), 2, 2, 3);
     sessionKey = msessionProxy.getSessionKey();
 

@@ -93,18 +93,6 @@ ProcessServer::disconnectProcess(IMS_Data::Process_ptr proc){
     e.appendMsgComp(" Error disconnecting the process "+proc->getDietId());
     throw(e);
   }
-  string req = "SELECT * from process where dietname='"+proc->getDietId()+"'";
-  req += " order by uptime desc";
-  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
-  if(result->getNbTuples() == 0) {
-    throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown process");
-  }
-  vector<string> res;
-  res = result->get(0);
-  proc->setState(convertToInt(res.at(1)));
-  proc->setProcessName(res.at(2));
-  proc->setTimestamp(convertToInt(res.at(5)));
-  proc->setScript(res.at(6));
   return IMS_SUCCESS;
 }
 int
@@ -130,6 +118,19 @@ ProcessServer::stopProcess(IMS_Data::Process_ptr proc){
   }
   return IMS_SUCCESS;
 }
+
+int
+ProcessServer::setRestarted(IMS_Data::Process_ptr proc){
+  string request = "UPDATE process SET pstatus='"+convertToString(PDELETED)+"', uptime=CURRENT_TIMESTAMP WHERE vishnuname='"+proc->getProcessName()+"' and machineid='"+proc->getMachineId()+"' and pstatus="+convertToString(PDOWN);
+  try{
+    mdatabase->process(request.c_str());
+  }catch(SystemException& e){
+    e.appendMsgComp(" Error setting the restarted process "+proc->getDietId());
+    throw(e);
+  }
+  return IMS_SUCCESS;
+}
+
 
 int
 ProcessServer::stopAllProcesses(IMS_Data::Process_ptr proc){
@@ -171,6 +172,38 @@ ProcessServer::fillContent(IMS_Data::Process_ptr p) {
   p->setTimestamp(convertToInt(res.at(5)));
   p->setScript(res.at(6));
 }
+
+void
+ProcessServer::getDataFromDietId(IMS_Data::Process_ptr p) {
+  string req = "SELECT * from process where dietname='"+p->getDietId()+"'";
+  req += " order by uptime desc";
+  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
+  if(result->getNbTuples() == 0) {
+    throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown process");
+  }
+  vector<string> res;
+  res = result->get(0);
+  p->setState(convertToInt(res.at(1)));
+  p->setProcessName(res.at(2));
+  p->setMachineId(res.at(4));
+  p->setTimestamp(convertToInt(res.at(5)));
+  p->setScript(res.at(6));
+}
+
+
+bool
+ProcessServer::checkStopped(string machine, string type) {
+  string req = "select * from process where machineid='"+machine+"' and vishnuname='"+type+"' and pstatus='"+convertToString(PDOWN)+"'";
+  try {
+    boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
+    return(result->getNbTuples() == 0);
+  } catch (SystemException& e) {
+    throw (e);
+  }
+  return true;
+}
+
+
 
 void
 ProcessServer::getSshKeyAndAcc(string &keyPath, string &login, string mmid, string uid, string& hostname) {

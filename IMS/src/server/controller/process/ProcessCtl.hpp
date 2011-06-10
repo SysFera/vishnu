@@ -55,9 +55,10 @@ private:
    * \brief To create the file for the restart function
    * \param dest: The destination file (inout)
    * \param p: The process containing the script
+   * \param loc: If the process is local
    */
   void 
-  createFile(string& dest, IMS_Data::Process_ptr p);
+  createFile(string& dest, IMS_Data::Process_ptr p, bool loc);
   /**
    * \brief The process server
    */
