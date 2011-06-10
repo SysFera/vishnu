@@ -15,6 +15,7 @@ machinecpt, jobcpt, fileSubcpt) VALUES (1, 100, 'U_$CPT', 'MA_$CPT', 'J_$CPT', '
 -- Creates required user options
 INSERT INTO optionu (optionid, description, defaultvalue) VALUES (1, 'VISHNU_CLOSE_POLICY', 1);
 INSERT INTO optionu (optionid, description, defaultvalue) VALUES (2, 'VISHNU_TIMEOUT', 3600);
+INSERT INTO optionu (optionid, description, defaultvalue) VALUES (3, 'VISHNU_TRANSFER_CMD', 1);
 
 -- Creates the vishnu default administrator (root)
 INSERT INTO users (vishnu_vishnuid, userid, pwd, privilege, passwordstate, status)
