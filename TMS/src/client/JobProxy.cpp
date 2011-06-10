@@ -59,10 +59,9 @@ JobProxy::submitJob(const std::string& scriptContent,
     raiseDietMsgException(msgErrorDiet);
   }
 
-  const char* name = "submit";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object in to optionsInString
-  optionsToString =  strdup(_ser.serialize(const_cast<TMS_Data::SubmitOptions_ptr>(&options)).c_str());
+  optionsToString =  strdup(_ser.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options)).c_str());
 
   if (diet_string_set(diet_parameter(profile,3), optionsToString, DIET_VOLATILE)) {
     msgErrorDiet += "with optionsInString parameter "+std::string(optionsToString);
@@ -72,7 +71,7 @@ JobProxy::submitJob(const std::string& scriptContent,
   _ser.resetSerializer();
 
   //To serialize the job object in to optionsInString
-  jobToString =  strdup(_ser.serialize(const_cast<TMS_Data::Job_ptr>(&mjob)).c_str());
+  jobToString =  strdup(_ser.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob)).c_str());
 
   if (diet_string_set(diet_parameter(profile,4), jobToString, DIET_VOLATILE)) {
     msgErrorDiet += "with jobInString parameter "+std::string(jobToString);
@@ -140,10 +139,9 @@ JobProxy::cancelJob() {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  const char* name = "cancel";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the job object in to optionsInString
-  jobToString =  strdup(_ser.serialize(const_cast<TMS_Data::Job_ptr>(&mjob)).c_str());
+  jobToString =  strdup(_ser.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob)).c_str());
 
   if (diet_string_set(diet_parameter(profile,2), jobToString, DIET_VOLATILE)) {
     msgErrorDiet += "with jobInString parameter "+std::string(jobToString);
@@ -203,10 +201,9 @@ JobProxy::getJobInfo() {
   }
 
 
-  const char* name = "jobInfo";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object in to optionsInString
-  jobToString =  strdup(_ser.serialize(const_cast<TMS_Data::Job_ptr>(&mjob)).c_str());
+  jobToString =  strdup(_ser.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob)).c_str());
 
   if (diet_string_set(diet_parameter(profile,2), jobToString, DIET_VOLATILE)) {
     msgErrorDiet += "with jobInString parameter "+std::string(jobToString);
