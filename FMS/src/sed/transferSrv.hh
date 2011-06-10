@@ -544,10 +544,10 @@ solveGenerique(diet_profile_t* pb) {
     const char* name = "list";
     ::ecorecpp::serializer::serializer _ser(name);
  
+    std::cout << "************* Coucou dans Solvegenerique sed \n";
 
     listSerialized =  _ser.serialize(const_cast<List*>(list));
 
-    std::cout << "************* Coucou dans Solvegenerique sed \n";
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);

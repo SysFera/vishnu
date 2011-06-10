@@ -104,6 +104,7 @@ FileTransferServer::FileTransferServer(const SessionServer& sessionServer,
 void FileTransferServer::getUserInfo( std::string& clientMachineName, std::string& userId) {
 
 
+  std::string home;
   std::vector<std::string> result;  
   std::vector<std::string>::const_iterator iter;  
   std::string sessionId = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "vsessionid");
@@ -175,7 +176,7 @@ void FileTransferServer::updateData(){
 
 int FileTransferServer::addTransferThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options){
 
-  boost::scoped_ptr<FileTransferCommand> tr ( FileTransferCommand::getCopyCommand(options) );
+  boost::scoped_ptr<FileTransferCommand> tr ( FileTransferCommand::getCopyCommand(msessionServer,options) );
 
   std::string trCmd= tr->getCommand();
 
@@ -245,11 +246,11 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
     trResult = transferExec.exec(trCmd + " " +transferExec.getSrcPath()+" "+destCompletePath.str() );
 
   }
-
-  if (trResult.second.length()!=0 || trResult.first.length()!=0) {
+  std::string allOutputMsg=trResult.second+trResult.first;
+  if (false==allOutputMsg.empty() && allOutputMsg.find("Pseudo-terminal")==std::string::npos) {
 
     // The file transfer failed
-    updateStatus(3,transferExec.getTransferId(),trResult.second+trResult.first);
+    updateStatus(3,transferExec.getTransferId(),allOutputMsg);
 
    // throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error transfering file: "+trResult.second);
 
@@ -581,7 +582,7 @@ std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) c
   char c;
 
   command  << FileTransferServer::getSSHCommand() << " -t -q " << " -l " << getSrcUser();
-  command <<" -C"  << " -o BatchMode=yes " << " -o StrictHostKeyChecking=no";
+  command <<" -C "  << " -o BatchMode=yes " << " -o StrictHostKeyChecking=no";
   command << " -o ForwardAgent=yes";
   command << " -p " << FileTransferServer::getSSHPort() << " " << getSrcMachineName() << " " << cmd;
 
