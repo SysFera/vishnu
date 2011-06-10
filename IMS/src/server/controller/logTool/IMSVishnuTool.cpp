@@ -174,6 +174,7 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
     // If message of disconnexion
     if (string(msg[i].tag).compare("OUT")==0){
       p->setDietId(string(msg[i].componentName));
+      cout << "SeD: " << string(msg[i].componentName) << endl;
       mproc.getDataFromDietId(p);
       ProcessCtl ctl("", UserServer(SessionServer("")));
       try {
@@ -200,6 +201,7 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	}
 	resOp.setSedType(ty);
 	resOp.setVishnuConf(p->getScript());
+	cout << "SeD type: " << ty << endl;
 	// Restart a process disconnected, if the process was stopped with a stop call, no restart will be done
 	try {
 	  if (p->getMachineId().compare(getMidFromHost(msyshName))){
@@ -210,13 +212,14 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	    }
 	  }
 	} catch (SystemException& e) {
+	  cout << "restart op: " << e.what() << endl;
 	  log.append(e.what());
 	}
       } catch(SystemException& e){
 	throw (e);
       }// end catch
       try {
-      mproc.setRestarted(p);
+	mproc.setRestarted(p);
       } catch (SystemException& e) {
 	log.append(e.what());
       }

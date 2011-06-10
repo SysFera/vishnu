@@ -41,20 +41,19 @@ parser::~parser()
 {
 }
 
-::ecore::EObject_ptr parser::load(const std::string myString)
+::ecore::EObject_ptr parser::load(const char* _file)
 {
     //
     //  Create our SAX handler object and install it on the parser, as the
     //  document and error handler.
     //
-
     handler _handler;
 
     xml_parser::SemanticState< handler > ss (_handler);
 
     ::ecorecpp::mapping::type_traits::char_t* buffer;
-    int length = myString.length();
-    /*{
+    int length;
+    {
         // Read file
         std::ifstream is (_file);
         // get length of file:
@@ -67,7 +66,60 @@ parser::~parser()
         is.read (buffer,length);
 
         is.close();
-    }*/
+    }
+
+    State< xml_parser::SemanticState< handler > >
+        st(ss, buffer, length);
+
+    //
+    //  Get the starting time and kick off the parse of the indicated
+    //  file. Catch any exceptions that might propogate out of it.
+    //
+#ifdef DEBUG
+    struct timeval start, end;
+    long mtime, seconds, useconds;
+#endif
+
+#ifdef DEBUG
+    gettimeofday(&start, NULL);
+#endif
+    xml_parser::grammar::the_xml::match(st);
+#ifdef DEBUG
+    gettimeofday(&end, NULL);
+
+    seconds  = end.tv_sec  - start.tv_sec;
+    useconds = end.tv_usec - start.tv_usec;
+
+    mtime = ((seconds) * 1000 + useconds/1000.0) + 0.5;
+#endif
+    DEBUG_MSG(cout,"--- DURATION: " << mtime);
+
+    //
+    //  Delete the buffer
+    //
+    delete[] buffer;
+
+    _handler.resolveReferences();
+
+    ::ecore::EObject_ptr _r = _handler.getRootElement();
+    _r->_initialize();
+    return _r;
+}
+
+::ecore::EObject_ptr parser::load_str(const std::string myString)
+{
+    //
+    //  Create our SAX handler object and install it on the parser, as the
+    //  document and error handler.
+    //
+
+    handler _handler;
+
+    xml_parser::SemanticState< handler > ss (_handler);
+
+    ::ecorecpp::mapping::type_traits::char_t* buffer;
+    int length = myString.length();
+
     buffer = strdup(myString.c_str());
     State< xml_parser::SemanticState< handler > >
         st(ss, buffer, length);
@@ -105,7 +157,7 @@ parser::~parser()
     ::ecore::EObject_ptr _r = _handler.getRootElement();
 
     if(_r==NULL) {
-      throw std::runtime_error("NULL emf pointer ***"); //TODO: a remplacer par EMF exception
+      throw std::runtime_error("NULL EMF pointer ***");
     }
 
     _r->_initialize();

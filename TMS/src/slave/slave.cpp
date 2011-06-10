@@ -138,12 +138,11 @@ main(int argc, char* argv[], char* envp[])
       if(batchServer->submit(jobScriptPath, *submitOptions, *job, envp)==0){;
 
         //To serialize the job object
-        const char* name = "Job";
-        ::ecorecpp::serializer::serializer _ser(name);
-        std::string slaveJob = strdup(_ser.serialize(job).c_str());
+        ::ecorecpp::serializer::serializer _ser;
+        std::string slaveJob = strdup(_ser.serialize_str(job).c_str());
 
-        ::ecorecpp::serializer::serializer _ser2(name);
-        std::string slaveOptions = strdup(_ser2.serialize(submitOptions).c_str());
+        ::ecorecpp::serializer::serializer _ser2;
+        std::string slaveOptions = strdup(_ser2.serialize_str(submitOptions).c_str());
 
         std::ofstream os_slaveJobFile(slaveJobFile);
         os_slaveJobFile << slaveJob;
