@@ -524,7 +524,6 @@ bool areFoundInDir(const string& sessionKey,
       }
       if (!isFound) {
         areFound = false;
-        BOOST_MESSAGE("File " << *iterNames << " not found in dir " << dirFullPath);
       }
   }
   return areFound;
@@ -788,8 +787,12 @@ waitAsyncCopy(const string& sessionKey, const FileTransfer& transferInfo) {
       return -1;
     }
     if (fileTransferList.getFileTransfers().size() == 1) {
-      if (fileTransferList.getFileTransfers().get(0)->getStatus() != STATUS_INPROGRESS) {
-        BOOST_MESSAGE("Async transfer is terminated! - status = " + fileTransferList.getFileTransfers().get(0)->getStatus());
+      FileTransfer* ft = fileTransferList.getFileTransfers().get(0);
+      if (ft->getStatus() != STATUS_INPROGRESS) {
+        BOOST_MESSAGE("Async transfer is terminated! - status = " + convertToString(ft->getStatus()));
+        if (ft->getStatus() == STATUS_FAILED) {
+          BOOST_MESSAGE("Transfer failed message: " + ft->getErrorMsg());
+        }
         terminated = true;
       }
     } else if (fileTransferList.getFileTransfers().size() == 0) {
