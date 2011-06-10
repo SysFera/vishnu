@@ -65,10 +65,9 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
     raiseDietMsgException(msgErrorDiet);
   }
 
-   const char* name = "getJobOutPut";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object in to optionsInString
-  jobResultToString =  strdup(_ser.serialize(const_cast<TMS_Data::JobResult_ptr>(&jobResult)).c_str());
+  jobResultToString =  strdup(_ser.serialize_str(const_cast<TMS_Data::JobResult_ptr>(&jobResult)).c_str());
 
   if (diet_string_set(diet_parameter(profile,2), jobResultToString, DIET_VOLATILE)) {
     msgErrorDiet += "with the job result parameter "+std::string(jobResultToString);

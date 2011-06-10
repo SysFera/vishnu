@@ -96,9 +96,8 @@ solveSubmitJob(diet_profile_t* pb) {
     jobServer.submitJob(script_content, *submitOptions, vishnuId, slaveDirectory);
     *job = jobServer.getData();
 
-    const char* name = "solve_submitJob";
-    ::ecorecpp::serializer::serializer _ser(name);
-    updateJobSerialized = strdup(_ser.serialize(const_cast<TMS_Data::Job_ptr>(job)).c_str());
+    ::ecorecpp::serializer::serializer _ser;
+    updateJobSerialized = strdup(_ser.serialize_str(const_cast<TMS_Data::Job_ptr>(job)).c_str());
 
     diet_string_set(diet_parameter(pb,5), updateJobSerialized, DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
@@ -215,9 +214,8 @@ solveJobInfo(diet_profile_t* pb) {
     JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
     *job = jobServer.getJobInfo();
 
-    const char* name = "solveJobOutPutGetResult";
-    ::ecorecpp::serializer::serializer _ser(name);
-    updateJobSerialized = strdup(_ser.serialize(const_cast<TMS_Data::Job_ptr>(job)).c_str());
+    ::ecorecpp::serializer::serializer _ser;
+    updateJobSerialized = strdup(_ser.serialize_str(const_cast<TMS_Data::Job_ptr>(job)).c_str());
 
     //OUT Parameter
     diet_string_set(diet_parameter(pb,3), updateJobSerialized, DIET_VOLATILE);
@@ -276,9 +274,8 @@ solveListOfQueues(diet_profile_t* pb) {
 
     listQueues = queryQueues.list();
 
-    const char* name = "listQueues";
-    ::ecorecpp::serializer::serializer _ser(name);
-    listQueuesSerialized =  _ser.serialize(listQueues);
+    ::ecorecpp::serializer::serializer _ser;
+    listQueuesSerialized =  _ser.serialize_str(listQueues);
 
     diet_string_set(diet_parameter(pb,3), strdup(listQueuesSerialized.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,4), strdup(errorInfo.c_str()), DIET_VOLATILE);
@@ -434,9 +431,8 @@ solveGenerique(diet_profile_t* pb) {
 
     list = query.list();
 
-    const char* name = "list";
-    ::ecorecpp::serializer::serializer _ser(name);
-    listSerialized =  _ser.serialize(list);
+    ::ecorecpp::serializer::serializer _ser;
+    listSerialized =  _ser.serialize_str(list);
 
     //OUT Parameter
     diet_string_set(diet_parameter(pb,3), strdup(listSerialized.c_str()), DIET_VOLATILE);
@@ -515,9 +511,8 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
     JobOutputServer jobOutputServer(sessionServer, machineId);
     TMS_Data::ListJobResults_ptr completedJobsOutput = jobOutputServer.getCompletedJobsOutput();
 
-    const char* name = "completedJobsOutput";
-    ::ecorecpp::serializer::serializer _ser(name);
-    jobsOutputSerialized =  _ser.serialize(completedJobsOutput);
+    ::ecorecpp::serializer::serializer _ser;
+    jobsOutputSerialized =  _ser.serialize_str(completedJobsOutput);
 
     //OUT Parameter
     diet_string_set(diet_parameter(pb,3), strdup(jobsOutputSerialized.c_str()), DIET_VOLATILE);

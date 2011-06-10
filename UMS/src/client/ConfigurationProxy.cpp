@@ -85,9 +85,8 @@ int ConfigurationProxy::save()
   mconfiguration->setFilePath(mfilePath);
 
   //To serialize the mconfiguration
-  const char* name = "saveConfiguration";
-  ::ecorecpp::serializer::serializer _ser(name);
-  std::string configurationToSave =  _ser.serialize(mconfiguration);
+  ::ecorecpp::serializer::serializer _ser;
+  std::string configurationToSave =  _ser.serialize_str(mconfiguration);
 
   //To save the configuration in the file
   std::ofstream ofile(mfilePath.c_str());
@@ -131,9 +130,8 @@ int ConfigurationProxy::restore(bool fromFile)
     ifile.close();
   }
   else { //To serialize the mconfiguration object in to configurationInString
-    const char* name = "ConfigurationRestore";
-    ::ecorecpp::serializer::serializer _ser(name);
-    configurationInString =  strdup((_ser.serialize(mconfiguration)).c_str());
+    ::ecorecpp::serializer::serializer _ser;
+    configurationInString =  strdup((_ser.serialize_str(mconfiguration)).c_str());
   }
   //To intialize the service description
   profile = diet_profile_alloc("configurationRestore", 1, 1, 2);

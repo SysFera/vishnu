@@ -45,10 +45,9 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
 
   sessionKey = msessionProxy.getSessionKey();
 
-  const char* name = "addLocalAccountInformation";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the mlocalAccount object in to localAccountToString
-  localAccountToString =  _ser.serialize(const_cast<UMS_Data::LocalAccount_ptr>(&mlocalAccount));
+  localAccountToString =  _ser.serialize_str(const_cast<UMS_Data::LocalAccount_ptr>(&mlocalAccount));
 
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {

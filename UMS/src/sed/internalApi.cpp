@@ -52,10 +52,9 @@ solveSessionConnect(diet_profile_t* pb) {
     sessionServer.connectSession(userServer, machineClientServer, connectOpt);
 
     //To serialize the user object
-    const char* name = "solveConnect";
-    ::ecorecpp::serializer::serializer _ser(name);
+    ::ecorecpp::serializer::serializer _ser;
     UMS_Data::Session session = sessionServer.getData();
-    std::string sessionSerializedUpdate = _ser.serialize(const_cast<UMS_Data::Session_ptr>(&session));
+    std::string sessionSerializedUpdate = _ser.serialize_str(const_cast<UMS_Data::Session_ptr>(&session));
 
     //OUT Parameters
     diet_string_set(diet_parameter(pb,5), strdup(sessionSerializedUpdate.c_str()), DIET_VOLATILE);
@@ -104,10 +103,9 @@ solveSessionReconnect(diet_profile_t* pb) {
   try {
       sessionServer.reconnect(userServer, machineClientServer, std::string(sessionId));
       //To serialize the user object
-      const char* name = "solveReconnect";
-      ::ecorecpp::serializer::serializer _ser(name);
+      ::ecorecpp::serializer::serializer _ser;
       UMS_Data::Session session = sessionServer.getData();
-      std::string sessionSerializedUpdate = _ser.serialize(const_cast<UMS_Data::Session_ptr>(&session));
+      std::string sessionSerializedUpdate = _ser.serialize_str(const_cast<UMS_Data::Session_ptr>(&session));
 
       //OUT Parameters
       diet_string_set(diet_parameter(pb,5), strdup(sessionSerializedUpdate.c_str()), DIET_VOLATILE);
@@ -210,9 +208,8 @@ solveUserCreate(diet_profile_t* pb) {
                    ServerUMS::getInstance()->getSendmailScriptPath());
 
     //To serialize the user object
-    const char* name = "solveUserCreate";
-    ::ecorecpp::serializer::serializer _ser(name);
-    std::string userSerializedUpdate = _ser.serialize(user);
+    ::ecorecpp::serializer::serializer _ser;
+    std::string userSerializedUpdate = _ser.serialize_str(user);
 
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(userSerializedUpdate.c_str()), DIET_VOLATILE);
@@ -487,9 +484,8 @@ solveMachineCreate(diet_profile_t* pb) {
     machineServer.add(ServerUMS::getInstance()->getVishnuId());
 
     //To serialize the user object
-    const char* name = "solveMachineCreate";
-    ::ecorecpp::serializer::serializer _ser(name);
-    std::string machineSerializedUpdate = _ser.serialize(machine);
+    ::ecorecpp::serializer::serializer _ser;
+    std::string machineSerializedUpdate = _ser.serialize_str(machine);
 
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(machineSerializedUpdate.c_str()), DIET_VOLATILE);
@@ -843,9 +839,8 @@ solveConfigurationSave(diet_profile_t* pb) {
     cmd = mapper->finalize(mapperkey);
 
     configurationServer.save();
-    const char* name = "ConfigurationSave";
-    ::ecorecpp::serializer::serializer _ser(name);
-    configurationSerialized =  _ser.serialize(configurationServer.getData());
+    ::ecorecpp::serializer::serializer _ser;
+    configurationSerialized =  _ser.serialize_str(configurationServer.getData());
 
     //OUT Parameters
     diet_string_set(diet_parameter(pb,1), strdup(configurationSerialized.c_str()), DIET_VOLATILE);
@@ -1090,9 +1085,8 @@ solveGenerique(diet_profile_t* pb) {
 
     list = query.list();
 
-    const char* name = "list";
-    ::ecorecpp::serializer::serializer _ser(name);
-    listSerialized =  _ser.serialize(list);
+    ::ecorecpp::serializer::serializer _ser;
+    listSerialized =  _ser.serialize_str(list);
 
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
@@ -1154,9 +1148,8 @@ solveListUsers(diet_profile_t* pb) {
 
     listUsers  = queryUsers.list();
 
-    const char* name = "listUsers";
-    ::ecorecpp::serializer::serializer _ser(name);
-    listUsersSerialized =  _ser.serialize(listUsers);
+    ::ecorecpp::serializer::serializer _ser;
+    listUsersSerialized =  _ser.serialize_str(listUsers);
 
     //OUT Parameters
     diet_string_set(diet_parameter(pb,2), strdup(listUsersSerialized.c_str()), DIET_VOLATILE);
