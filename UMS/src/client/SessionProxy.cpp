@@ -142,10 +142,9 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
 
   if(connect) {
     // SERIALIZE DATA MODEL
-    const char* name = "sessionConnect";
-    ::ecorecpp::serializer::serializer _ser(name);
+    ::ecorecpp::serializer::serializer _ser;
     //To serialize the options object in to optionsToString
-    optionsToString =  _ser.serialize(const_cast<UMS_Data::ConnectOptions_ptr>(&options));
+    optionsToString =  _ser.serialize_str(const_cast<UMS_Data::ConnectOptions_ptr>(&options));
     profile = diet_profile_alloc("sessionConnect", 4, 4, 6);
   } else {
     profile = diet_profile_alloc("sessionReconnect", 4, 4, 6);

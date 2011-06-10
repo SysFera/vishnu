@@ -38,10 +38,9 @@ int MachineProxy::add()
   profile = diet_profile_alloc("machineCreate", 1, 1, 3);
   sessionKey = msessionProxy.getSessionKey();
 
-  const char* name = "addMachineInformation";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the mmachine object in to machineToString
-  machineToString =  _ser.serialize(const_cast<UMS_Data::Machine_ptr>(&mmachine));
+  machineToString =  _ser.serialize_str(const_cast<UMS_Data::Machine_ptr>(&mmachine));
 
   std::string sshKeyFilePath = mmachine.getSshPublicKey();
   if(sshKeyFilePath.find("\"")!=std::string::npos) {
@@ -109,10 +108,9 @@ int MachineProxy::update()
   profile = diet_profile_alloc("machineUpdate", 1, 1, 2);
   sessionKey = msessionProxy.getSessionKey();
 
-  const char* name = "addMachineInformation";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the mmachine object in to machineToString
-  machineToString =  _ser.serialize(const_cast<UMS_Data::Machine_ptr>(&mmachine));
+  machineToString =  _ser.serialize_str(const_cast<UMS_Data::Machine_ptr>(&mmachine));
 
   std::string sshKeyFilePath = mmachine.getSshPublicKey();
   if(sshKeyFilePath.find("\"")!=std::string::npos) {

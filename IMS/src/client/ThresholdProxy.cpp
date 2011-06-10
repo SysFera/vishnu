@@ -41,10 +41,9 @@ ThresholdProxy::setSystemThreshold(IMS_Data::Threshold systemThreshold) {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  const char* name = "setSystemThreshold";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object in to optionsInString
-  objectToString =  strdup(_ser.serialize(const_cast<IMS_Data::Threshold_ptr>(&systemThreshold)).c_str());
+  objectToString =  strdup(_ser.serialize_str(const_cast<IMS_Data::Threshold_ptr>(&systemThreshold)).c_str());
 
   if (diet_string_set(diet_parameter(profile,1), strdup(objectToString.c_str()),  DIET_VOLATILE)) {
     msgErrorDiet += "with SystemInfo parameter ";
