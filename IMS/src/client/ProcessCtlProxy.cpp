@@ -4,6 +4,7 @@
 #include "utilClient.hpp"
 #include "utilVishnu.hpp"
 #include "TMS_Data.hpp"
+#include "api_fms.hpp"
 
 using namespace vishnu;
 
@@ -151,18 +152,21 @@ ProcessCtlProxy::stop(IMS_Data::Process process) {
 int
 ProcessCtlProxy::loadShed(IMS_Data::LoadShedType loadShedType) {
 
+  // Cancelling FMS transfer
+  try {
+    // If no FMS sed, catching exception and do nothing
+  cancelFMS();
+  } catch (UserException& e) {
+    throw (e);
+  } catch (SystemException& e) {
+    throw (e);
+  }
   // Cancelling TMS jobs
   try {
     // If no TMS sed, catching exception and do nothing
     cancelTMS();
   } catch (VishnuException& e) {
   } 
-  // Cancelling FMS transfer
-  try {
-    // If no FMS sed, catching exception and do nothing
-  cancelFMS();
-  } catch (VishnuException& e) {
-  }
 
   // If hard load shedding
   if (loadShedType == 1) {
@@ -220,7 +224,12 @@ ProcessCtlProxy::~ProcessCtlProxy() {
 
 void
 ProcessCtlProxy::cancelFMS() {
+  FMS_Data::StopTransferOptions op = FMS_Data::StopTransferOptions();
+  op.setFromMachineId(mmachineId);
+  op.setTransferId("all");
+  op.setUserId("all");
 
+  stopFileTransfer(msessionProxy.getSessionKey(), op);
 }
 
 void
