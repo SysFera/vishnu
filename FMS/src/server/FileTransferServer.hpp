@@ -95,23 +95,35 @@ class FileTransferServer{
     int  addMvAsyncThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options);
 
     int stopThread(const StopTransferOptions& options);
+    
     const FMS_Data::FileTransfer& getFileTransfer() const; 
+    
     void setFileTransfer( const FMS_Data::FileTransfer& fileTransfer) const; 
 
     static Database * getDatabaseInstance();
+    
     static void setSSHPort(const unsigned int sshPort);
+    
     static void setSSHCommand(const std::string& sshCommand);
 
     static const unsigned int getSSHPort();
+    
     static const std::string& getSSHCommand( );
 
     static std::string filterString(  const std::string& toFilter);
+    
     static void checkTransferId(std::string transferId);
+    
     static void addOptionRequest(const std::string& name, const std::string& value, std::string& request);  
 
     static void checkUserId(std::string userId);
 
     static void checkClientMachineName(std::string clmachineId);
+
+    static std::string getErrorFromDatabase(const std::string& transferid);
+  
+    static std::string cleanOutputMsg(const std::string& outputMsg); 
+  
   private:
 
     void waitThread ();
