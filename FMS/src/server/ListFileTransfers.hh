@@ -59,7 +59,7 @@ public:
       //To check the transfer Id
       checkTransferId(options->getTransferId());
       //To add the transferId on the request
-      addOptionRequest("transferId", options->getTransferId(), sqlRequest);
+      addOptionRequest("transferid", options->getTransferId(), sqlRequest);
       onlyProgressFile = false;
     }
 
@@ -159,6 +159,10 @@ public:
           
           mlistObject->getFileTransfers().push_back(filetransfer);
         }
+      }
+      else{
+        std::cout << "*******************The list is empty***************    \n" ;
+
       }
 
       return mlistObject;
