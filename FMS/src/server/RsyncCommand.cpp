@@ -11,7 +11,7 @@ RsyncCommand::RsyncCommand ():FileTransferCommand() {
   setLocation("/usr/bin/Rsync");
 }
 
-RsyncCommand::RsyncCommand (const bool& isRecursive, const bool& useCompression):FileTransferCommand("Rsync","/usr/bin/Scp",isRecursive,useCompression) {
+RsyncCommand::RsyncCommand (const bool& isRecursive, const bool& useCompression):FileTransferCommand("Rsync","/usr/bin/rsync",isRecursive,useCompression) {
   build();
 }
 
