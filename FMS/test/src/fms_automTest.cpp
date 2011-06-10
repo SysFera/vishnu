@@ -787,8 +787,12 @@ waitAsyncCopy(const string& sessionKey, const FileTransfer& transferInfo) {
       return -1;
     }
     if (fileTransferList.getFileTransfers().size() == 1) {
-      if (fileTransferList.getFileTransfers().get(0)->getStatus() != STATUS_INPROGRESS) {
-        BOOST_MESSAGE("Async transfer is terminated! - status = " + convertToString(fileTransferList.getFileTransfers().get(0)->getStatus()));
+      FileTransfer* ft = fileTransferList.getFileTransfers().get(0);
+      if (ft->getStatus() != STATUS_INPROGRESS) {
+        BOOST_MESSAGE("Async transfer is terminated! - status = " + convertToString(ft->getStatus()));
+        if (ft->getStatus() == STATUS_FAILED) {
+          BOOST_MESSAGE("Transfer failed message: " + ft->getErrorMsg());
+        }
         terminated = true;
       }
     } else if (fileTransferList.getFileTransfers().size() == 0) {
