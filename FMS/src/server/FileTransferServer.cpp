@@ -233,6 +233,7 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
   //build the destination complete path
 
   std::ostringstream destCompletePath;
+ 
   destCompletePath << transferExec.getDestUser() << "@"<< transferExec.getDestMachineName() <<":"<<transferExec.getDestPath();
 
 
@@ -246,13 +247,17 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
     trResult = transferExec.exec(trCmd + " " +transferExec.getSrcPath()+" "+destCompletePath.str() );
 
   }
-  std::string allOutputMsg=trResult.second+trResult.first;
-  if (false==allOutputMsg.empty() && allOutputMsg.find("Pseudo-terminal")==std::string::npos) {
+
+  // Clean the output message 
+  std::string allOutputMsg (FileTransferServer::cleanOutputMsg(trResult.first+trResult.second));
+  
+  
+  std::cout << "**************** allOutputMsg " << allOutputMsg << "\n";
+
+  if (false==allOutputMsg.empty() ) {
 
     // The file transfer failed
     updateStatus(3,transferExec.getTransferId(),allOutputMsg);
-
-   // throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error transfering file: "+trResult.second);
 
   }else{
    
@@ -289,7 +294,6 @@ void FileTransferServer::move(const TransferExec& transferExec, const std::strin
 
 
 
-
 void FileTransferServer::updateStatus(const FMS_Data::Status& status,const std::string& transferId, const std::string& errorMsg){
 
   std::string errorMsgCleaned=FileTransferServer::filterString(errorMsg);
@@ -301,10 +305,50 @@ void FileTransferServer::updateStatus(const FMS_Data::Status& status,const std::
 }
 
 
+
+string FileTransferServer::getErrorFromDatabase(const std::string& transferid){
+
+  std::string sqlCommand = "SELECT errormsg from filetransfer where transferid='"+ transferid +"'";
+ 
+  boost::scoped_ptr<DatabaseResult> result(FileTransferServer::getDatabaseInstance()->getResult(sqlCommand.c_str()));
+  
+  return result->getFirstElement();
+
+
+}
+
+std::string  FileTransferServer::cleanOutputMsg(const std::string& allOutputMsg){
+
+  if (ba::starts_with(allOutputMsg,"Pseudo-terminal") ) {
+
+  size_t pos =allOutputMsg.find_first_of("\n");
+
+  if (pos!=std::string::npos){
+
+    return allOutputMsg.substr(pos+1);
+
+  }
+
+
+  }
+  return allOutputMsg;
+}
+
+
+
+
 int FileTransferServer::addCpThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options){
   mtransferType=File::copy;
   addTransferThread(srcUser,srcMachineName,srcUserKey, destUser, destMachineName, options);
   waitThread();
+ 
+  std:: string errorMsg(getErrorFromDatabase(mfileTransfer.getTransferId()));
+ 
+ if(false==errorMsg.empty()){
+ throw FMSVishnuException (ERRCODE_RUNTIME_ERROR,errorMsg);
+ 
+ }
+return 0;
 
 }
 
@@ -316,6 +360,7 @@ int FileTransferServer::addCpAsyncThread(const std::string& srcUser,const std::s
 }
 
 
+
 int FileTransferServer::addMvThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options){
 
   mtransferType=File::move;
@@ -323,6 +368,15 @@ int FileTransferServer::addMvThread(const std::string& srcUser,const std::string
   mvOptions.setIsRecursive(true);
   addTransferThread(srcUser,srcMachineName,srcUserKey, destUser, destMachineName,mvOptions);
   waitThread();
+
+  std:: string errorMsg(getErrorFromDatabase(mfileTransfer.getTransferId()));
+ 
+ if(false==errorMsg.empty()){
+ throw FMSVishnuException (ERRCODE_RUNTIME_ERROR,errorMsg);
+ 
+ }
+return 0;
+
 }
 
 int FileTransferServer::addMvAsyncThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options){
