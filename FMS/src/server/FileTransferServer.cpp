@@ -254,7 +254,7 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
   
   std::cout << "**************** allOutputMsg " << allOutputMsg << "\n";
 
-  if (false==allOutputMsg.empty() ) {
+  if (allOutputMsg.length()!=0 ) {
 
     // The file transfer failed
     updateStatus(3,transferExec.getTransferId(),allOutputMsg);
@@ -491,7 +491,7 @@ int FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options 
       transferid=*iter;
       ++iter;
       pid=convertToInt(*iter);
-      stopThread(transferid,pid );
+      stopThread(transferid,pid);
       ++iter;
     }
 
@@ -503,6 +503,12 @@ int FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options 
 
   return 0;
 }
+
+
+
+
+
+
 int FileTransferServer::stopThread(const std::string& transferid,const int& pid ){
 
   int result;
@@ -512,8 +518,22 @@ int FileTransferServer::stopThread(const std::string& transferid,const int& pid 
     updateStatus(3,transferid,strerror(errno));
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,strerror(errno));
   }
-    
-  updateStatus(2,transferid,"");
+
+  // get the user responsible for the stop request
+
+  std::string sessionId = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "vsessionid");
+
+  std::string sqlCommand="SELECT userid,vsessionid from users,vsession where vsession.users_numuserid=users.numuserid and "
+    "vsessionid='"+ sessionId+"'";
+
+  boost::scoped_ptr<DatabaseResult> dbResult(FileTransferServer::getDatabaseInstance()->getResult(sqlCommand.c_str()));
+
+  std::string logMsg= "by: "+ dbResult->getFirstElement();
+
+// log into database
+
+  updateStatus(2,transferid,logMsg);
+
   return result;
 }
 
@@ -719,7 +739,7 @@ std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) c
   for (unsigned int i=0; i<tokens.size(); ++i)
     free(argv[i]);
   mlastExecStatus = status;
-  std::cout << "result.second: " << result.second << "\n";
+  
   return result;
 
 }

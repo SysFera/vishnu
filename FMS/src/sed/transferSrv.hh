@@ -19,13 +19,14 @@
 #include "ListFileTransfers.hh"
 
 #include "FileTransferServer.hpp"
+
 using namespace std;
 
 
 /**
  * \brief Function to solve the getListOfJobs service 
  * \param pb is a structure which corresponds to the descriptor of a profile
- * \return raises an exception on error
+ * \return 0 if the service succeeds 
  */
 int
 solveGetListOfFileTransfers(diet_profile_t* pb);
@@ -67,8 +68,17 @@ diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName
  */
 diet_profile_desc_t* getTransferRemoteFileAsyncProfile(const std::string& serviceName);
 
+/**
+ * \brief Function to build the File transfer list service profile 
+ * \return raises an exception on error
+ */
+
 diet_profile_desc_t* getFileTransfersListProfile();
 
+/**
+ * \brief Function to build the File transfer stop service profile 
+ * \return the diet profile description
+ */
 diet_profile_desc_t* getFileTransferStopProfile();
 
 
