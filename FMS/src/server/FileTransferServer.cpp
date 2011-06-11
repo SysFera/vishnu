@@ -18,6 +18,7 @@
 #include <sstream>
 #include <boost/algorithm/string.hpp>
 #include "ListFileTransfers.hh"
+#include "OptionValueServer.hpp"
 
 using namespace std;
 
@@ -176,16 +177,35 @@ void FileTransferServer::updateData(){
 
 int FileTransferServer::addTransferThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options){
 
-  boost::scoped_ptr<FileTransferCommand> tr ( FileTransferCommand::getCopyCommand(msessionServer,options) );
+
+  FMS_Data::CpFileOptions newOptions (options);
+
+  if (options.getTrCommand()==2){
+
+    std::string sessionId = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "vsessionid");
+
+    std::string sqlCommand="SELECT users.numuserid,users_numuserid,vsessionid from users,vsession where vsession.users_numuserid=users.numuserid and "
+      "vsessionid='"+ sessionId+"'";
+
+    boost::scoped_ptr<DatabaseResult> dbResult(FileTransferServer::getDatabaseInstance()->getResult(sqlCommand.c_str()));
+
+    if(dbResult->getNbTuples()!=0){
+     std::string numuserId= dbResult->getFirstElement(); 
+     OptionValueServer optionValueServer;
+      newOptions.setTrCommand(optionValueServer.getClosureInfo(numuserId, "VISHNU_TRANSFER_CMD"));
+    }
+
+  }
+
+  boost::scoped_ptr<FileTransferCommand> tr ( FileTransferCommand::getCopyCommand(msessionServer,newOptions) );
 
   std::string trCmd= tr->getCommand();
-
+  
 
   boost::scoped_ptr<SSHFile> srcFileServer (new SSHFile(msessionServer, mfileTransfer.getSourceFilePath(),srcMachineName, srcUser, "", srcUserKey, "", FileTransferServer::getSSHPort(), FileTransferServer::getSSHCommand(), tr->getLocation()));
 
 
-
-  mfileTransfer.setTrCommand(options.getTrCommand());
+  mfileTransfer.setTrCommand(newOptions.getTrCommand());
 
   mfileTransfer.setStatus(0); //INPPROGRESS
 
@@ -530,7 +550,7 @@ int FileTransferServer::stopThread(const std::string& transferid,const int& pid 
 
   std::string logMsg= "by: "+ dbResult->getFirstElement();
 
-// log into database
+  // log into database
 
   updateStatus(2,transferid,logMsg);
 
@@ -538,9 +558,13 @@ int FileTransferServer::stopThread(const std::string& transferid,const int& pid 
 }
 
 
+
+
 void FileTransferServer::setSSHPort(const unsigned int sshPort){
   msshPort=sshPort;
 }
+
+
 
 void FileTransferServer::setSSHCommand(const std::string& sshCommand){
   msshCommand=sshCommand;
