@@ -133,11 +133,9 @@ public:
       
       time_t startTime;
         
-      std::cout << "*******************Coucou dans ListFileTransfer ***************    \n" ;
 
       if (ListOfFiles->getNbTuples() != 0){
       
-        std::cout << "*******************Coucou dans ListFileTransfer apres ListOfFiles->getNbTuples()  ***************    \n" ;
         
         for (size_t i = 0; i < ListOfFiles->getNbTuples(); ++i) {
           results.clear();
@@ -148,7 +146,8 @@ public:
 
           
           filetransfer->setTransferId(*iter);
-          filetransfer->setStatus(convertToInt(*(++iter)));
+          int trStatus=convertToInt(*(++iter));
+          filetransfer->setStatus((trStatus >=0&& trStatus<5 ? trStatus:4));
           filetransfer->setUserId(*(++iter));
           filetransfer->setClientMachineId(*(++iter));
           filetransfer->setSourceMachineId(*(++iter));
@@ -161,8 +160,10 @@ public:
           startTime = convertLocaltimeINUTCtime(convertToTimeType(tmpTime)); 
           filetransfer->setStart_time(startTime);
           filetransfer->setErrorMsg(*(++iter));
-          filetransfer->setTrCommand(convertToInt(*(++iter)));
-         std::cout << "transferId " << filetransfer->getTransferId() << "\n";   
+          // Check the transfer Command enum value
+          int trCommand=convertToInt(*(++iter));
+
+          filetransfer->setTrCommand( (trCommand >=0&& trCommand<3 ? trCommand:2) );
           mlistObject->getFileTransfers().push_back(filetransfer);
         }
       }
