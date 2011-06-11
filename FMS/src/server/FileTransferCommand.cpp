@@ -75,13 +75,13 @@ FileTransferCommand* FileTransferCommand::getCopyCommand(const SessionServer& se
   // treat the case of default value  with the user option
  // if (options.getTrCommand==2){}
 
-  if (options.getTrCommand()==0) {// scp
+  if (options.getTrCommand()==1) {// Rsync
 
-  return new ScpCommand(options.isIsRecursive());
+  return new RsyncCommand(options.isIsRecursive());
 }
 else {
 
-  return new RsyncCommand(options.isIsRecursive());
+  return new ScpCommand(options.isIsRecursive());
 
 }
 
