@@ -114,8 +114,8 @@ public:
     list() {
   
       std::string sqlListOfFiles = "SELECT transferId, filetransfer.status, userId, clientMachineId, sourceMachineId, "
-        "destinationMachineId, sourceFilePath, destinationFilePath, fileSize, startTime,errorMsg "
-        " trCommand, processId from filetransfer, vsession "
+        "destinationMachineId, sourceFilePath, destinationFilePath, fileSize, startTime,errorMsg,"
+        " trCommand from filetransfer, vsession "
           "where vsession.numsessionid=filetransfer.vsession_numsessionid";
 
       std::vector<std::string>::iterator iter;
