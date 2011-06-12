@@ -11,8 +11,8 @@
 #include "DbFactory.hpp"
 #include <boost/scoped_ptr.hpp>
 #include "SystemException.hpp"
-#include "services.hh"
-//#include "transferSrv.hh"
+#include "internalApi.hpp"
+//#include "transferSrv.hpp"
 
 using namespace vishnu;
 using namespace FMS_Data;
