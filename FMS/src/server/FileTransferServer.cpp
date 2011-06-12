@@ -146,7 +146,7 @@ int FileTransferServer::logIntoDatabase(int processId, const std::string& errorM
   std::string errorMsgCleaned=FileTransferServer::filterString(errorMsg);
 
   std::string numsession = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
-  std::string sqlInsert= "insert into fileTransfer (vsession_numsessionid,userId,clientMachineId,sourceMachineId, "
+  std::string sqlInsert= "insert into filetransfer (vsession_numsessionid,userId,clientMachineId,sourceMachineId, "
     "destinationMachineId,sourceFilePath,destinationFilePath, transferid,status,fileSize,trCommand,processid,errorMsg,startTime)"
     "values ("+numsession+",'"+mfileTransfer.getUserId()+"','"+ mfileTransfer.getClientMachineId()+"','"+mfileTransfer.getSourceMachineId()+"','"+mfileTransfer.getDestinationMachineId()+"','"
     +mfileTransfer.getSourceFilePath()+"','"+mfileTransfer.getDestinationFilePath() +"','"+mfileTransfer.getTransferId()+"',"+convertToString(mfileTransfer.getStatus())+","
@@ -271,8 +271,6 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
   // Clean the output message 
   std::string allOutputMsg (FileTransferServer::cleanOutputMsg(trResult.first+trResult.second));
   
-  
-  std::cout << "**************** allOutputMsg " << allOutputMsg << "\n";
 
   if (allOutputMsg.length()!=0 ) {
 
@@ -490,7 +488,7 @@ int FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options 
 
   
     std::string sqlListOfPid = "SELECT transferid,processId from filetransfer, vsession "
-    "where vsession.numsessionid=fileTransfer.vsession_numsessionid and filetransfer.status=0";
+    "where vsession.numsessionid=filetransfer.vsession_numsessionid and filetransfer.status=0";
     
     std::string transferid;
     int pid;
@@ -669,7 +667,7 @@ void TransferExec::setLastExecStatus(const int& lastExecStatus) const{
 void TransferExec::updatePid(const int& pid)const {
 
   setProcessId(pid);
-  std::string sqlUpdateRequest = "UPDATE fileTransfer SET processid="+convertToString(pid)+" where transferid='"+getTransferId()+"'";
+  std::string sqlUpdateRequest = "UPDATE filetransfer SET processid="+convertToString(pid)+" where transferid='"+getTransferId()+"'";
   FileTransferServer::getDatabaseInstance()->process(sqlUpdateRequest.c_str());
 
 }
