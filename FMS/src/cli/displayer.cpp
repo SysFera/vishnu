@@ -294,7 +294,23 @@ string ConvertFileTypeToString(const int& type){
   }
  
 }
+/**
+ * \brief function to convert file transfer command to string
+ * \param trCmd The status value to convert
+ * \return converted command value
+ */
+string ConvertFileTransferCommandToString(const int& trCmd){
 
+  switch(trCmd) {
+    case 0:
+      return "SCP";
+    case 1:
+      return "RSYNC";
+    default:
+      return "UNDEFINED";
+  }
+
+}
 /**
  * \brief function to convert differnce time (seconds) to simple string (hour)
  * \param diff The a given difference time 
@@ -389,7 +405,7 @@ operator<<(std::ostream& os, FileTransfer& fileTransfer) {
   } else {
     os << setw(maxSize) << right << "start_time: " << "-----" << std::endl;
   }
-  os << setw(maxSize) << right << "trCommand: " << (fileTransfer.getTrCommand()?"RSYNC":"SCP")   << std::endl;
+  os << setw(maxSize) << right << "trCommand: " << ConvertFileTransferCommandToString(fileTransfer.getTrCommand())   << std::endl;
 
 return os;
 }
