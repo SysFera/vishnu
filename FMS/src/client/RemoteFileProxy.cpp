@@ -29,7 +29,6 @@ using namespace FMS_Data;
 /* Default constructor. */
 RemoteFileProxy::RemoteFileProxy() {
   upToDate = false;
-  printTrID = false;
 }
 
 /* Standard constructor.
@@ -46,7 +45,6 @@ RemoteFileProxy::RemoteFileProxy(const SessionProxy& sessionProxy,const string& 
 RemoteFileProxy::RemoteFileProxy(const RemoteFileProxy& file) : FileProxy(file) {
   upToDate = false;
   this->localUser = file.localUser;
-  this->printTrID = file.printTrID; 
 }
 
 /* Standard destructor. */
@@ -819,10 +817,6 @@ list<string> RemoteFileProxy::ls(const LsDirOptions& options) const {
   return result;
 }
 
-
-void RemoteFileProxy::printTransferID(const bool printTrID) {
-  this->printTrID=printTrID;
-}
 
 template <class TypeOfOption>
 int RemoteFileProxy::transferFile(const std::string& dest, 

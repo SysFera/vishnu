@@ -1,12 +1,12 @@
 
-#include "FileFactory.hh"
+#include "FileFactory.hpp"
 #include "FileTransferServer.hpp"
 #include <vector>
 #include <cstring>
 #include <list>
 #include "utilVishnu.hpp"
 #include <boost/scoped_ptr.hpp>
-#include "File.hh"
+#include "File.hpp"
 #include "FMSVishnuException.hpp"
 #include "utilServer.hpp"
 #include <boost/scoped_ptr.hpp>
@@ -17,23 +17,28 @@
 #include <signal.h>
 #include <sstream>
 #include <boost/algorithm/string.hpp>
-#include "ListFileTransfers.hh"
+#include "ListFileTransfers.hpp"
 #include "OptionValueServer.hpp"
 
 using namespace std;
 
 namespace ba=boost::algorithm;
+
 unsigned int FileTransferServer::msshPort=22;
 std::string FileTransferServer::msshCommand="/usr/bin/ssh";
 
 
 Database* FileTransferServer::getDatabaseInstance(){
 
-  DbFactory factory;
+  Database* databaseInstance (DbFactory().getDatabaseInstance());
+  if(databaseInstance !=NULL){
+    return databaseInstance;
+  }
+  else{
 
-  return factory.getDatabaseInstance();
+    throw SystemException(ERRCODE_DBERR, "Get a null instance of database" );
+  }
 }
-
 void FileTransferServer::checkTransferId(std::string transferId) {
   std::string sqlTransferRequest = "SELECT transferId from filetransfer where transferId='"+transferId+"'";
   boost::scoped_ptr<DatabaseResult> transfer(FileTransferServer::getDatabaseInstance()->getResult(sqlTransferRequest.c_str()));
@@ -190,8 +195,8 @@ int FileTransferServer::addTransferThread(const std::string& srcUser,const std::
     boost::scoped_ptr<DatabaseResult> dbResult(FileTransferServer::getDatabaseInstance()->getResult(sqlCommand.c_str()));
 
     if(dbResult->getNbTuples()!=0){
-     std::string numuserId= dbResult->getFirstElement(); 
-     OptionValueServer optionValueServer;
+      std::string numuserId= dbResult->getFirstElement(); 
+      OptionValueServer optionValueServer;
       newOptions.setTrCommand(optionValueServer.getClosureInfo(numuserId, "VISHNU_TRANSFER_CMD"));
     }
 
@@ -200,7 +205,7 @@ int FileTransferServer::addTransferThread(const std::string& srcUser,const std::
   boost::scoped_ptr<FileTransferCommand> tr ( FileTransferCommand::getCopyCommand(msessionServer,newOptions) );
 
   std::string trCmd= tr->getCommand();
-  
+
 
   boost::scoped_ptr<SSHFile> srcFileServer (new SSHFile(msessionServer, mfileTransfer.getSourceFilePath(),srcMachineName, srcUser, "", srcUserKey, "", FileTransferServer::getSSHPort(), FileTransferServer::getSSHCommand(), tr->getLocation()));
 
@@ -225,6 +230,16 @@ int FileTransferServer::addTransferThread(const std::string& srcUser,const std::
 
   mfileTransfer.setSize(srcFileServer->getSize());
   mfileTransfer.setStart_time(0);
+
+
+  if ( (srcUser==destUser) &&  (srcMachineName== destMachineName)  && (mfileTransfer.getSourceFilePath()==mfileTransfer.getDestinationFilePath())     ){
+
+    mfileTransfer.setStatus(3); //failed
+    logIntoDatabase(-1,"same source and destination ");
+
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"same source and destination ");
+
+  }
 
   // create a TransferExec instance
 
@@ -253,7 +268,7 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
   //build the destination complete path
 
   std::ostringstream destCompletePath;
- 
+
   destCompletePath << transferExec.getDestUser() << "@"<< transferExec.getDestMachineName() <<":"<<transferExec.getDestPath();
 
 
@@ -270,7 +285,7 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
 
   // Clean the output message 
   std::string allOutputMsg (FileTransferServer::cleanOutputMsg(trResult.first+trResult.second));
-  
+
 
   if (allOutputMsg.length()!=0 ) {
 
@@ -278,9 +293,9 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
     updateStatus(3,transferExec.getTransferId(),allOutputMsg);
 
   }else{
-   
+
     // The file transfer is  now completed
-    
+
     updateStatus (1,transferExec.getTransferId(),"");
 
   }
@@ -288,7 +303,7 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
 
 
 void FileTransferServer::move(const TransferExec& transferExec, const std::string& trCmd){
-  
+
   // perform the copy
   copy(transferExec,trCmd);
   int lastExecStatus=transferExec.getLastExecStatus();
@@ -317,7 +332,7 @@ void FileTransferServer::updateStatus(const FMS_Data::Status& status,const std::
   std::string errorMsgCleaned=FileTransferServer::filterString(errorMsg);
 
   std::string sqlUpdateRequest = "UPDATE filetransfer SET status="+convertToString(status)+", errorMsg='"+errorMsgCleaned+"'"+ " where transferid='"+transferId+"'"
-                                  + " and status<>2";
+    + " and status<>2";
   FileTransferServer::getDatabaseInstance()->process(sqlUpdateRequest.c_str());
 
 }
@@ -327,9 +342,9 @@ void FileTransferServer::updateStatus(const FMS_Data::Status& status,const std::
 string FileTransferServer::getErrorFromDatabase(const std::string& transferid){
 
   std::string sqlCommand = "SELECT errormsg from filetransfer where transferid='"+ transferid +"'";
- 
+
   boost::scoped_ptr<DatabaseResult> result(FileTransferServer::getDatabaseInstance()->getResult(sqlCommand.c_str()));
-  
+
   return result->getFirstElement();
 
 
@@ -344,13 +359,13 @@ std::string  FileTransferServer::cleanOutputMsg(const std::string& allOutputMsg)
 
   if (ba::starts_with(allOutputMsg,"Pseudo-terminal") ) {
 
-  size_t pos =allOutputMsg.find_first_of("\n");
+    size_t pos =allOutputMsg.find_first_of("\n");
 
-  if (pos!=std::string::npos){
+    if (pos!=std::string::npos){
 
-    return filterString(allOutputMsg.substr(pos+1));
+      return filterString(allOutputMsg.substr(pos+1));
 
-  }
+    }
 
 
   }
@@ -364,14 +379,14 @@ int FileTransferServer::addCpThread(const std::string& srcUser,const std::string
   mtransferType=File::copy;
   addTransferThread(srcUser,srcMachineName,srcUserKey, destUser, destMachineName, options);
   waitThread();
- 
+
   std:: string errorMsg(getErrorFromDatabase(mfileTransfer.getTransferId()));
- 
- if(false==errorMsg.empty()){
- throw FMSVishnuException (ERRCODE_RUNTIME_ERROR,errorMsg);
- 
- }
-return 0;
+
+  if(false==errorMsg.empty()){
+    throw FMSVishnuException (ERRCODE_RUNTIME_ERROR,errorMsg);
+
+  }
+  return 0;
 
 }
 
@@ -393,12 +408,12 @@ int FileTransferServer::addMvThread(const std::string& srcUser,const std::string
   waitThread();
 
   std:: string errorMsg(getErrorFromDatabase(mfileTransfer.getTransferId()));
- 
- if(false==errorMsg.empty()){
- throw FMSVishnuException (ERRCODE_RUNTIME_ERROR,errorMsg);
- 
- }
-return 0;
+
+  if(false==errorMsg.empty()){
+    throw FMSVishnuException (ERRCODE_RUNTIME_ERROR,errorMsg);
+
+  }
+  return 0;
 
 }
 
@@ -426,20 +441,20 @@ void FileTransferServer::waitThread (){
  */
 void
 FileTransferServer::processOptions(const FMS_Data::StopTransferOptions& options, std::string& sqlRequest){
-  
+
   std::string transferId(options.getTransferId()),clientMachineName(options.getFromMachineId()),userId(options.getUserId());
 
   //To check if the transferId is defined
   if (transferId.size() != 0) {
 
     if(transferId.compare("all")!=0 && transferId.compare("ALL")!=0){
-    //To check the transfer Id
-    FileTransferServer::checkTransferId(options.getTransferId());
-    //To add the transferId on the request
-    FileTransferServer::addOptionRequest("transferId", options.getTransferId(), sqlRequest);
- 
+      //To check the transfer Id
+      FileTransferServer::checkTransferId(options.getTransferId());
+      //To add the transferId on the request
+      FileTransferServer::addOptionRequest("transferId", options.getTransferId(), sqlRequest);
+
     }
-   
+
   }
 
   //To check if the fromMachineId is defined
@@ -451,30 +466,30 @@ FileTransferServer::processOptions(const FMS_Data::StopTransferOptions& options,
   }
 
   //Creation of the object user
-    UserServer userServer = UserServer(msessionServer);
+  UserServer userServer = UserServer(msessionServer);
 
-    userServer.init();
+  userServer.init();
 
-    //To check if the userId is defined
-    if (userId.size() != 0) {
+  //To check if the userId is defined
+  if (userId.size() != 0) {
 
-      if (!userServer.isAdmin()) {
-        UMSVishnuException e (ERRCODE_NO_ADMIN);
-        throw e;
-      }
+    if (!userServer.isAdmin()) {
+      UMSVishnuException e (ERRCODE_NO_ADMIN);
+      throw e;
+    }
 
-      if(userId.compare("all")!=0 && userId.compare("ALL")!=0){
-    //To check the user Id
-    FileTransferServer::checkUserId(options.getUserId());
+    if(userId.compare("all")!=0 && userId.compare("ALL")!=0){
+      //To check the user Id
+      FileTransferServer::checkUserId(options.getUserId());
 
-    //To add the userId on the request
-    FileTransferServer::addOptionRequest("userId", userId, sqlRequest);
+      //To add the userId on the request
+      FileTransferServer::addOptionRequest("userId", userId, sqlRequest);
 
     }
   }else{
-  
-   FileTransferServer::addOptionRequest("userId", userServer.getData().getUserId(), sqlRequest);
-  
+
+    FileTransferServer::addOptionRequest("userId", userServer.getData().getUserId(), sqlRequest);
+
   }
 
 }
@@ -486,37 +501,37 @@ int FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options 
 
   if (false==options.getTransferId().empty() || false==options.getUserId().empty() || false==options.getFromMachineId().empty()){
 
-  
+
     std::string sqlListOfPid = "SELECT transferid,processId from filetransfer, vsession "
-    "where vsession.numsessionid=filetransfer.vsession_numsessionid and filetransfer.status=0";
-    
+      "where vsession.numsessionid=filetransfer.vsession_numsessionid and filetransfer.status=0";
+
     std::string transferid;
     int pid;
-  std::vector<std::string>::iterator iter;
-  std::vector<std::string> results;
+    std::vector<std::string>::iterator iter;
+    std::vector<std::string> results;
 
-  msessionServer.check();
+    msessionServer.check();
 
-  processOptions(options, sqlListOfPid);
+    processOptions(options, sqlListOfPid);
 
-  boost::scoped_ptr<DatabaseResult> ListOfPid (FileTransferServer::getDatabaseInstance()->getResult(sqlListOfPid.c_str()));
+    boost::scoped_ptr<DatabaseResult> ListOfPid (FileTransferServer::getDatabaseInstance()->getResult(sqlListOfPid.c_str()));
 
-  if (ListOfPid->getNbTuples() != 0){
-    for (size_t i = 0; i < ListOfPid->getNbTuples(); ++i) {
-      results.clear();
-      results = ListOfPid->get(i);
-      iter = results.begin();
-      transferid=*iter;
-      ++iter;
-      pid=convertToInt(*iter);
-      stopThread(transferid,pid);
-      ++iter;
+    if (ListOfPid->getNbTuples() != 0){
+      for (size_t i = 0; i < ListOfPid->getNbTuples(); ++i) {
+        results.clear();
+        results = ListOfPid->get(i);
+        iter = results.begin();
+        transferid=*iter;
+        ++iter;
+        pid=convertToInt(*iter);
+        stopThread(transferid,pid);
+        ++iter;
+      }
+
     }
-
-  }
-  else {
-  throw FMSVishnuException (ERRCODE_RUNTIME_ERROR, "There is no file transfer in progress ");
-  }
+    else {
+      throw FMSVishnuException (ERRCODE_RUNTIME_ERROR, "There is no file transfer in progress ");
+    }
   }
 
   return 0;
@@ -696,7 +711,7 @@ std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) c
 
   /***********************************************/
 
-  
+
   char* argv[tokens.size()+1];
   argv[tokens.size()]=NULL;
 
@@ -761,7 +776,7 @@ std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) c
   for (unsigned int i=0; i<tokens.size(); ++i)
     free(argv[i]);
   mlastExecStatus = status;
-  
+
   return result;
 
 }
