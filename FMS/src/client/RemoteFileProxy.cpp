@@ -540,16 +540,16 @@ int RemoteFileProxy::mkdir(const mode_t mode) {
  * If something goes wrong, throw a raiseDietMsgException containing
  * the error message.
  */
-int RemoteFileProxy::rm() {
+int RemoteFileProxy::rm(const RmFileOptions& options) {
   diet_profile_t* profile;
   char* errMsg;
-
+ char* optionsToString=NULL;
   std::string serviceName("FileRemove");
 
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  profile = diet_profile_alloc(serviceName.c_str(), 3, 3, 4);
+  profile = diet_profile_alloc(serviceName.c_str(), 4, 4, 5);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters 
@@ -577,13 +577,19 @@ int RemoteFileProxy::rm() {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  diet_string_set(diet_parameter(profile, 4), NULL, DIET_VOLATILE);
+  ::ecorecpp::serializer::serializer _ser;
+  //To serialize the options object in to optionsInString
+  optionsToString =  strdup(_ser.serialize_str(const_cast<RmFileOptions*>(&options)).c_str());
+  
+  diet_string_set(diet_parameter(profile,4 ), optionsToString, DIET_VOLATILE);
+  
+  diet_string_set(diet_parameter(profile,5), NULL, DIET_VOLATILE);
 
   if (diet_call(profile)){
     raiseDietMsgException("Error calling DIET service");
   }
 
-  if(diet_string_get(diet_parameter(profile, 4), &errMsg, NULL)){
+  if(diet_string_get(diet_parameter(profile,5), &errMsg, NULL)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }

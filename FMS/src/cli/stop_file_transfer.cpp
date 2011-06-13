@@ -49,7 +49,7 @@ makeStopFileTrOpt(string pgName,
       ftransferId);
 
  opt->add("fromMachineId,m",
-      "The machine that is the source of the file transfer",
+      "The machine that is the source or destination of the file transfer",
       CONFIG,
       ffromMachineId);
 
