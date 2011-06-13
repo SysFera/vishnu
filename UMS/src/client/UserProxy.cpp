@@ -60,10 +60,9 @@ int UserProxy::add(UMS_Data::User& user)
   profile = diet_profile_alloc("userCreate", 1, 1, 3);
   sessionKey = msessionProxy->getSessionKey();
 
-  const char* name = "add";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the user object in to userToString
-  userToString =  strdup(_ser.serialize(const_cast<UMS_Data::User_ptr>(&user)).c_str());
+  userToString =  strdup(_ser.serialize_str(const_cast<UMS_Data::User_ptr>(&user)).c_str());
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
@@ -126,10 +125,9 @@ int UserProxy::update(const UMS_Data::User& user)
 
   sessionKey = msessionProxy->getSessionKey();
 
-  const char* name = "addUserInformation";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the user object in to userToString
-  userToString =  _ser.serialize(const_cast<UMS_Data::User_ptr>(&user));
+  userToString =  _ser.serialize_str(const_cast<UMS_Data::User_ptr>(&user));
 
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {

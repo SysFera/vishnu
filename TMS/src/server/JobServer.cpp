@@ -39,45 +39,44 @@ JobServer::JobServer(const SessionServer& sessionServer,
  * \param slaveDirectory the path to the TMS slave executable
  * \return raises an exception on error
  */
-int JobServer::submitJob(const std::string& scriptContent, 
+int JobServer::submitJob(const std::string& scriptContent,
                          const TMS_Data::SubmitOptions& options,
                          const int& vishnuId,
                          const std::string& slaveDirectory)
 {
 
   msessionServer.check(); //To check the sessionKey
- 
+
   std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
 
   UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
   machine->setMachineId(mmachineId);
-  MachineServer machineServer(machine); 
+  MachineServer machineServer(machine);
   std::string machineName = machineServer.getMachineName();
   delete machine;
 
   std::string jobSerialized ;
   std::string submitOptionsSerialized;
   char* scriptPath = NULL;
-  const char* name = "submit";
-  ::ecorecpp::serializer::serializer optSer(name);
-  ::ecorecpp::serializer::serializer jobSer(name);
+  ::ecorecpp::serializer::serializer optSer;
+  ::ecorecpp::serializer::serializer jobSer;
 
   scriptPath = strdup("/tmp/job_scriptXXXXXX");
 
   std::string convertedScript;
-  boost::shared_ptr<ScriptGenConvertor> scriptConvertor(vishnuScriptGenConvertor(mbatchType, scriptContent)); 
+  boost::shared_ptr<ScriptGenConvertor> scriptConvertor(vishnuScriptGenConvertor(mbatchType, scriptContent));
   if(scriptConvertor->scriptIsGeneric()) {
     std::string genScript = scriptConvertor->getConvertedScript();
     convertedScript = genScript;
-    std::cout << convertedScript << std::endl; 
+    std::cout << convertedScript << std::endl;
   } else {
     convertedScript = scriptContent;
-  }  
+  }
 
   vishnu::createTmpFile(scriptPath, convertedScript);
 
-  submitOptionsSerialized = optSer.serialize(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
-  jobSerialized =  jobSer.serialize(const_cast<TMS_Data::Job_ptr>(&mjob));
+  submitOptionsSerialized = optSer.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
+  jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
   SSHJobExec sshJobExec(acLogin, machineName, mbatchType, jobSerialized, submitOptionsSerialized);
   sshJobExec.sshexec(slaveDirectory, "SUBMIT", std::string(scriptPath));
@@ -116,7 +115,7 @@ int JobServer::submitJob(const std::string& scriptContent,
     scriptContentStr.replace(pos, 1, " ");
     pos = scriptContentStr.find("'");
   }
-  
+
   std::string numsession = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
   std::string sqlInsert = "insert into job (vsession_numsessionid, submitMachineId, submitMachineName, jobId, batchJobId, batchType, jobName,"
     "jobPath, outputPath, errorPath, scriptContent, jobPrio, nbCpus, jobWorkingDir,"
@@ -132,8 +131,8 @@ int JobServer::submitJob(const std::string& scriptContent,
     +convertToString(mjob.getMemLimit())
     +","+convertToString(mjob.getNbNodes())+",'"+mjob.getNbNodesAndCpuPerNode()+"')" ;
 
-  mdatabaseVishnu->process(sqlInsert); 
-    
+  mdatabaseVishnu->process(sqlInsert);
+
   return 0;
 }
 
@@ -164,11 +163,11 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
   machine->setMachineId(mmachineId);
   MachineServer machineServer(machine);
   machineName = machineServer.getMachineName();
-  delete machine; 
+  delete machine;
 
   //Creation of the object user
   UserServer userServer = UserServer(msessionServer);
-  userServer.init(); 
+  userServer.init();
 
   std::string sqlCancelRequest;
   initialJobId = mjob.getJobId();
@@ -180,13 +179,13 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
     if(!userServer.isAdmin()) {
       sqlCancelRequest = "SELECT owner, status, jobId, batchJobId from job, vsession "
         "where vsession.numsessionid=job.vsession_numsessionid and status < 5 and owner='"+acLogin+"'"
-        " and submitMachineId='"+mmachineId+"'" ; 
+        " and submitMachineId='"+mmachineId+"'" ;
     } else {
       sqlCancelRequest = "SELECT owner, status, jobId, batchJobId from job, vsession "
-        "where vsession.numsessionid=job.vsession_numsessionid and status < 5" 
+        "where vsession.numsessionid=job.vsession_numsessionid and status < 5"
         " and submitMachineId='"+mmachineId+"'" ;
     }
-  } 
+  }
 
 
   boost::scoped_ptr<DatabaseResult> sqlCancelResult(mdatabaseVishnu->getResult(sqlCancelRequest.c_str()));
@@ -196,7 +195,7 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
       results = sqlCancelResult->get(i);
       iter = results.begin();
 
-      owner = *iter; 
+      owner = *iter;
       if(userServer.isAdmin()) {
         acLogin = owner;
       } else if(owner.compare(acLogin)!=0) {
@@ -211,7 +210,7 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
       if(status==6) {
         throw TMSVishnuException(ERRCODE_ALREADY_CANCELED);
       }
-      
+
       ++iter;
       jobId = *iter;
 
@@ -220,9 +219,8 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
 
       mjob.setJobId(batchJobId); //To reset the jobId
 
-      const char* name = "cancel";
-      ::ecorecpp::serializer::serializer jobSer(name);
-      jobSerialized =  jobSer.serialize(const_cast<TMS_Data::Job_ptr>(&mjob));
+      ::ecorecpp::serializer::serializer jobSer;
+      jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
       SSHJobExec sshJobExec(acLogin, machineName, mbatchType, jobSerialized);
       sshJobExec.sshexec(slaveDirectory, "CANCEL");
@@ -272,13 +270,13 @@ TMS_Data::Job JobServer::getJobInfo() {
                                 " and status > 0 and job.submitMachineId='"+mmachineId+"' and jobId='"+mjob.getJobId()+"'";
 
   boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
-  
+
   if (sqlResult->getNbTuples() != 0){
       results.clear();
       results = sqlResult->get(0);
       iter = results.begin();
-  
-      mjob.setSessionId(*iter);  
+
+      mjob.setSessionId(*iter);
       mjob.setSubmitMachineId(*(++iter));
       mjob.setSubmitMachineName(*(++iter));
       mjob.setJobId(*(++iter));
@@ -291,7 +289,7 @@ TMS_Data::Job JobServer::getJobInfo() {
       mjob.setJobWorkingDir(*(++iter));
       mjob.setStatus(convertToInt(*(++iter)));
       //convert the submitDate into UTC date
-      submitDate = convertLocaltimeINUTCtime(convertToTimeType(*(++iter))); 
+      submitDate = convertLocaltimeINUTCtime(convertToTimeType(*(++iter)));
       mjob.setSubmitDate(submitDate);
       //convert the endDate into UTC date
       endDate = convertLocaltimeINUTCtime(convertToTimeType(*(++iter)));
@@ -303,7 +301,7 @@ TMS_Data::Job JobServer::getJobInfo() {
       mjob.setJobDescription(*(++iter));
       mjob.setMemLimit(convertToInt(*(++iter)));
       mjob.setNbNodes(convertToInt(*(++iter)));
-      mjob.setNbNodesAndCpuPerNode(*(++iter)); // a remplacer par  
+      mjob.setNbNodesAndCpuPerNode(*(++iter)); // a remplacer par
   } else {
     throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
   }
@@ -321,7 +319,7 @@ TMS_Data::Job JobServer::getData()
 }
 
 /**
- * \brief Function to scan VISHNU error message 
+ * \brief Function to scan VISHNU error message
  * \param errorInfo the error information to scan
  * \param code The code The code of the error
  * \param message The message associeted to the error code
@@ -349,7 +347,7 @@ void JobServer::scanErrorMessage(const std::string& errorInfo, int& code, std::s
  */
 long long JobServer::convertToTimeType(std::string date) {
 
-  if(date.size()==0 || 
+  if(date.size()==0 ||
      // For mysql, the empty date is 0000-00-00, not empty, need this test to avoid problem in ptime
      date.find("0000-00-00")!=std::string::npos) {
     return 0;

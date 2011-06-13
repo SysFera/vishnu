@@ -2,7 +2,6 @@
  * \file FileProxy.hpp
  * This file declares a  proxy class to handle a file
  * \author Daouda Traore (daouda.traore@sysfera.com)
- * \author Ibrahima Cisse (irahima.cisse@sysfera.com)
  */
 
 

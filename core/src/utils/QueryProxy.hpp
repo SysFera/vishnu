@@ -212,10 +212,9 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
 
   sessionKey = msessionProxy.getSessionKey();
 
-  const char* name = mserviceName.c_str();
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the mparameters object in to queryParmetersToString
-  queryParmetersToString =  _ser.serialize(const_cast<QueryParameters_ptr>(&mparameters));
+  queryParmetersToString =  _ser.serialize_str(const_cast<QueryParameters_ptr>(&mparameters));
   //IN Parameters
 
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
@@ -347,7 +346,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::listWithParamsString()
       raiseDietMsgException("DIET call failure");
     }
   } else {
- 
+
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,1), strdup(mparameters.c_str()), DIET_VOLATILE)) {
     msg += "with mparameters parameter "+mparameters;

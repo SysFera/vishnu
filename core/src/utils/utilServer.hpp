@@ -248,7 +248,7 @@ namespace vishnu {
 
       //Parse the model
       ecorecpp::parser::parser parser;
-      object_ptr = parser.load(objectSerialized)->as< T >();
+      object_ptr = parser.load_str(objectSerialized)->as< T >();
     }
     catch (std::exception& e) {
       return false;
@@ -256,8 +256,8 @@ namespace vishnu {
     return true;
   }
 
-/** 
- * \brief Function to parse a system error message 
+/**
+ * \brief Function to parse a system error message
  * \param errorMsg the error message
  * \return the parsed message
  */

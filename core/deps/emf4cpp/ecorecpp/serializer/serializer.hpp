@@ -38,12 +38,14 @@ class serializer
 public:
 
     serializer(const std::string& _filen);
+    serializer();
 
     virtual ~serializer();
 
-    std::string serialize(::ecore::EObject_ptr obj);
+    void serialize(::ecore::EObject_ptr obj);
+    std::string serialize_str(::ecore::EObject_ptr obj);
     void resetSerializer();
-    
+
 protected:
 
     ::ecorecpp::mapping::type_traits::string_t get_type(
@@ -57,7 +59,9 @@ protected:
     void create_node(::ecore::EObject_ptr parent_obj,
             ::ecore::EObject_ptr child_obj, ::ecore::EStructuralFeature_ptr ef);
 
-    std::ostringstream m_out;
+    std::ostringstream m_outStr;
+    std::string m_file;
+    std::ofstream m_out;
 
     int m_level; // current_level
     ::ecore::EObject_ptr m_root_obj;
