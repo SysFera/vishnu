@@ -30,18 +30,18 @@ add_library(ims-utils-cli
 
 set(ALLCLI
   get_processes
-  get_history_metric
+  get_metric_history
   get_update_frequency
   set_update_frequency
-  get_current_metric
+  get_metric_current_value
   set_system_info
   get_system_info
-  define_user_format
-  define_machine_format
-  define_transfer_format
-  define_job_format
-  set_threshold
-  get_threshold
+  define_user_identifier
+  define_machine_identifier
+  define_transfer_identifier
+  define_job_identifier
+  set_system_threshold
+  get_system_threshold
   restart
   stop
   load_shed
