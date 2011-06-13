@@ -41,10 +41,9 @@ SysInfoProxy::setSystemInfo(IMS_Data::SystemInfo systemInfo) {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  const char* name = "setSystemInfo";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object in to optionsInString
-  systemInfoToString =  strdup(_ser.serialize(const_cast<IMS_Data::SystemInfo_ptr>(&systemInfo)).c_str());
+  systemInfoToString =  strdup(_ser.serialize_str(const_cast<IMS_Data::SystemInfo_ptr>(&systemInfo)).c_str());
 
   if (diet_string_set(diet_parameter(profile,1), strdup(systemInfoToString.c_str()),  DIET_VOLATILE)) {
     msgErrorDiet += "with SystemInfo parameter ";

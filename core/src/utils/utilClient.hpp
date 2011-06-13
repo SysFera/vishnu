@@ -55,7 +55,7 @@ void parseEmfObject(const std::string& objectSerialized, T*& object_ptr, const s
 
     //Parse the model
     ecorecpp::parser::parser parser;
-    object_ptr = parser.load(objectSerialized)->as< T >();
+    object_ptr = parser.load_str(objectSerialized)->as< T >();
   }
   catch (std::exception& e) {
     throw SystemException(ERRCODE_INVDATA, msgComp);

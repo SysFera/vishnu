@@ -29,7 +29,6 @@ using namespace FMS_Data;
 /* Default constructor. */
 RemoteFileProxy::RemoteFileProxy() {
   upToDate = false;
-  printTrID = false;
 }
 
 /* Standard constructor.
@@ -46,7 +45,6 @@ RemoteFileProxy::RemoteFileProxy(const SessionProxy& sessionProxy,const string& 
 RemoteFileProxy::RemoteFileProxy(const RemoteFileProxy& file) : FileProxy(file) {
   upToDate = false;
   this->localUser = file.localUser;
-  this->printTrID = file.printTrID; 
 }
 
 /* Standard destructor. */
@@ -319,10 +317,9 @@ string RemoteFileProxy::head(const HeadOfFileOptions& options) {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  const char* name = "head";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object in to optionsInString
-  optionsToString =  strdup(_ser.serialize(const_cast<FMS_Data::HeadOfFileOptions_ptr>(&options)).c_str());
+  optionsToString =  strdup(_ser.serialize_str(const_cast<FMS_Data::HeadOfFileOptions_ptr>(&options)).c_str());
 
 
   if(diet_string_set(diet_parameter(profile, 4), optionsToString, DIET_VOLATILE)){
@@ -700,10 +697,9 @@ string RemoteFileProxy::tail(const TailOfFileOptions& options) {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  const char* name = "tail";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object in to optionsInString
-  optionsToString =  strdup(_ser.serialize(const_cast<FMS_Data::TailOfFileOptions_ptr>(&options)).c_str()); 
+  optionsToString =  strdup(_ser.serialize_str(const_cast<FMS_Data::TailOfFileOptions_ptr>(&options)).c_str()); 
 
   if(diet_string_set(diet_parameter(profile, 4), optionsToString, DIET_VOLATILE)){
     msgErrorDiet += " by receiving tail of file options values ";
@@ -777,10 +773,9 @@ list<string> RemoteFileProxy::ls(const LsDirOptions& options) const {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  const char* name = "ls";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object in to optionsInString
-  optionsToString =  strdup(_ser.serialize(const_cast<FMS_Data::LsDirOptions_ptr>(&options)).c_str()); 
+  optionsToString =  strdup(_ser.serialize_str(const_cast<FMS_Data::LsDirOptions_ptr>(&options)).c_str()); 
 
   if(diet_string_set(diet_parameter(profile, 4), optionsToString, DIET_VOLATILE)){
     msgErrorDiet += "with directory content option values ";
@@ -822,10 +817,6 @@ list<string> RemoteFileProxy::ls(const LsDirOptions& options) const {
   return result;
 }
 
-
-void RemoteFileProxy::printTransferID(const bool printTrID) {
-  this->printTrID=printTrID;
-}
 
 template <class TypeOfOption>
 int RemoteFileProxy::transferFile(const std::string& dest, 
@@ -892,10 +883,9 @@ int RemoteFileProxy::transferFile(const std::string& dest,
   //to set the destination path of the destination machine
   diet_string_set(diet_parameter(profile, 5), const_cast<char*>(destPath.string().c_str()), DIET_VOLATILE);
 
-  const char* name = "cp";
-  ::ecorecpp::serializer::serializer _ser(name);
+  ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object in to optionsInString
-  optionsToString =  strdup(_ser.serialize(const_cast<TypeOfOption*>(&options)).c_str());
+  optionsToString =  strdup(_ser.serialize_str(const_cast<TypeOfOption*>(&options)).c_str());
 
   diet_string_set(diet_parameter(profile,6 ), optionsToString, DIET_VOLATILE);
 
