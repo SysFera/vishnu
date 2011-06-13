@@ -332,9 +332,10 @@ class FileProxy {
 
       /**
        * \brief To remove a file
+       * \param options the remove file options  
        * \return 0 if the command succeeds, an error code otherwise
        */ 
-      virtual int rm() = 0;
+      virtual int rm(const RmFileOptions& options) = 0;
 
       /**
        * \brief To remove an empty directory
