@@ -135,9 +135,10 @@ class RemoteFileProxy : public FileProxy {
 
     /**
      * \brief To remove a file
+     * \param options the remove file options  
      * \return 0 if the command succeeds, an error code otherwise
      */ 
-    virtual int rm();
+    virtual int rm(const RmFileOptions& options);
     /**
      * \brief To remove an empty directory
      * \return 0 if the command succeeds, an error code otherwise
