@@ -27,8 +27,14 @@
 using namespace ::ecorecpp::serializer;
 using namespace ::ecore;
 
+
 serializer::serializer(const std::string& _file) :
-    m_out(_file.c_str()), m_level(0), m_ser(m_out)
+    m_file(_file), m_out(_file.c_str()), m_level(0), m_ser(m_out)
+{
+}
+
+serializer::serializer() :
+    m_file(""), m_out(""), m_level(0), m_ser(m_outStr)
 {
 }
 
@@ -261,7 +267,7 @@ void serializer::serialize_node(EObject_ptr obj)
     --m_level;
 }
 
-std::string serializer::serialize(EObject_ptr obj)
+void serializer::serialize(EObject_ptr obj)
 {
     m_root_obj = obj;
 
@@ -291,14 +297,47 @@ std::string serializer::serialize(EObject_ptr obj)
 
     m_ser.close_object(root_name);
 
-   // m_out.close();
-   return m_out.str(); 
+    m_out.close();
+}
+
+
+std::string serializer::serialize_str(EObject_ptr obj)
+{
+    m_root_obj = obj;
+
+    EClass_ptr cl = obj->eClass();
+    EPackage_ptr pkg = cl->getEPackage();
+
+    ::ecorecpp::mapping::type_traits::string_t const& ns_uri = pkg->getNsURI();
+
+    ::ecorecpp::mapping::type_traits::string_t root_name(get_type(obj));
+
+    ::ecorecpp::mapping::type_traits::stringstream_t root_namespace;
+    root_namespace << "xmlns:" << pkg->getName();
+
+    m_ser.open_object(root_name);
+
+    m_ser.add_attribute(root_namespace.str(),ns_uri); // root element namespace URI
+
+    // common attributes
+    // xmlns:xmi="http://www.omg.org/XMI"
+    m_ser.add_attribute("xmlns:xmi", "http://www.omg.org/XMI");
+    // xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    m_ser.add_attribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+    // xmi:version="2.0"
+    m_ser.add_attribute("xmi:version", "2.0");
+
+    serialize_node(obj);
+
+    m_ser.close_object(root_name);
+
+    return m_outStr.str();
 }
 
 
 
 void serializer::resetSerializer() {
- m_out.str("");
+ m_outStr.str("");
 }
 
 
