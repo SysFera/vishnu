@@ -86,9 +86,10 @@ int vishnu::createDir(const string& sessionKey,const string& path)
 /** remove a file
  * \param sessionKey the session key
  * \param path    the file path using host:path format
+ * \param options contains options used to perform the remove file function
  \return 0 if everything is OK, another value otherwise
  */
-int vishnu::removeFile(const string& sessionKey,const string& path)
+int vishnu::removeFile(const string& sessionKey,const string& path,const RmFileOptions& options)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
     //To check the remote path
@@ -98,13 +99,9 @@ int vishnu::removeFile(const string& sessionKey,const string& path)
 
     boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
 
-
-    int result= f->rm();
-
+    int result= f->rm(options);
 
     return result;
-
-
 
   }
 
