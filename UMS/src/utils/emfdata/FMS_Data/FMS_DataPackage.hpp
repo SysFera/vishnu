@@ -99,29 +99,34 @@ namespace FMS_Data
         static const int MVFILEOPTIONS = 9;
 
         /**
+         * \brief Constant for RmFileOptions class
+         */
+        static const int RMFILEOPTIONS = 10;
+
+        /**
          * \brief Constant for Status class
          */
-        static const int STATUS = 10;
+        static const int STATUS = 11;
 
         /**
          * \brief Constant for StopTransferOptions class
          */
-        static const int STOPTRANSFEROPTIONS = 11;
+        static const int STOPTRANSFEROPTIONS = 12;
 
         /**
          * \brief Constant for StringList class
          */
-        static const int STRINGLIST = 12;
+        static const int STRINGLIST = 13;
 
         /**
          * \brief Constant for TailOfFileOptions class
          */
-        static const int TAILOFFILEOPTIONS = 13;
+        static const int TAILOFFILEOPTIONS = 14;
 
         /**
          * \brief Constant for TransferCommand class
          */
-        static const int TRANSFERCOMMAND = 14;
+        static const int TRANSFERCOMMAND = 15;
 
         /**
          * \brief Constant for STRINGLIST__STRINGS feature
@@ -323,6 +328,11 @@ namespace FMS_Data
          */
         static const int TAILOFFILEOPTIONS__NLINE = 39;
 
+        /**
+         * \brief Constant for RMFILEOPTIONS__ISRECURSIVE feature
+         */
+        static const int RMFILEOPTIONS__ISRECURSIVE = 40;
+
         // EClassifiers methods
 
         /**
@@ -414,6 +424,12 @@ namespace FMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EClass_ptr getTailOfFileOptions();
+
+        /**
+         * \brief Returns the reflective object for class RmFileOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EClass_ptr getRmFileOptions();
 
         // EStructuralFeatures methods
 
@@ -657,6 +673,12 @@ namespace FMS_Data
          */
         virtual ::ecore::EAttribute_ptr getTailOfFileOptions__nline();
 
+        /**
+         * \brief Returns the reflective object for feature isRecursive of class RmFileOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getRmFileOptions__isRecursive();
+
     protected:
 
         /**
@@ -727,6 +749,11 @@ namespace FMS_Data
          * \brief The instance for the class TailOfFileOptions
          */
         ::ecore::EClass_ptr m_TailOfFileOptionsEClass;
+
+        /**
+         * \brief The instance for the class RmFileOptions
+         */
+        ::ecore::EClass_ptr m_RmFileOptionsEClass;
 
         // EEnuminstances 
 
@@ -949,6 +976,11 @@ namespace FMS_Data
          * \brief The instance for the feature nline of class TailOfFileOptions
          */
         ::ecore::EAttribute_ptr m_TailOfFileOptions__nline;
+
+        /**
+         * \brief The instance for the feature isRecursive of class RmFileOptions
+         */
+        ::ecore::EAttribute_ptr m_RmFileOptions__isRecursive;
 
     };
 

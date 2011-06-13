@@ -18,6 +18,7 @@
       <ports name="path" description="The  file to remove following the pattern  [host:]file path" longOptionName="">
         <dataType href="FMS_Internal.apim#//@modules.0/@typeList/@types.0"/>
       </ports>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.20" description="the remove command options" optional="true" shortOptionLetter=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.2"/>
       <details key="description" value="Deletes a file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command)"/>
     </services>
@@ -188,6 +189,9 @@
       </types>
       <types name="TailOfFileOptions" description="stores all options  to perform tail command.">
         <ECoreType xsi:type="ecore:EClass" href="FMS_Data.ecore#//HeadOfFileOptions"/>
+      </types>
+      <types name="RmFileOptions" description="the remove file command options">
+        <ECoreType xsi:type="ecore:EClass" href="FMS_Data.ecore#//RmFileOptions"/>
       </types>
     </typeList>
     <resultCodeList>
