@@ -269,6 +269,13 @@ MetricServer::getHistMet(string machineId){
       request.append("'"+osValue.str()+"'");
     }
   }
+  // To avoid having too much result if no date is given
+  if (mhop->getEndTime()<=0 && mhop->getStartTime()<=0) {
+    request.append(" order by time desc limit 1000");
+  } else {
+    request.append(" order by time asc");
+  }
+
   IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
   IMS_Data::ListMetric_ptr mlistObject = ecoreFactory->createListMetric();
   try {
