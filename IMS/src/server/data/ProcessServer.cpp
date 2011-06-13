@@ -193,7 +193,7 @@ ProcessServer::getDataFromDietId(IMS_Data::Process_ptr p) {
 
 bool
 ProcessServer::checkStopped(string machine, string type) {
-  string req = "select * from process where machineid='"+machine+"' and vishnuname='"+type+"' and pstatus='"+convertToString(PDOWN)+"'";
+  string req = "select * from process where machineid='"+machine+"' and vishnuname='"+type+"' and (pstatus='"+convertToString(PDOWN)+"' or pstatus='"+convertToString(PRUNNING)+"')";
   try {
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
     return(result->getNbTuples() == 0);
