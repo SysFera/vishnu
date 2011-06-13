@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <book label="UMS.apim#MAN(admin);UMS.apim#CPP(admin);UMS.apim#PYTHON(admin);IMS.apim#MAN(admin);IMS.apim#CPP(admin);IMS.apim#PYTHON(admin)" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
-<!--<book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">-->
+  <!--<book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">-->
   <info>
     <title>VISHNU - Le guide de l'administrateur</title>
     <author>
@@ -61,6 +61,14 @@
           <para>Ajout du parametre de configuration dbConnectionsNb.</para>
         </revdescription>
       </revision>
+      <revision>
+        <revnumber>6</revnumber>
+        <date>10/06/2011</date>
+        <authorinitials>K.COULOMB</authorinitials>
+        <revdescription>
+          <para>Documentation pour IMS.</para>
+        </revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -93,13 +101,13 @@
           <listitem>
             <para>Administration</para>
           </listitem>
-	    <listitem>
+	  <listitem>
             <para>Référence des commandes (en anglais)</para>
           </listitem>
-	    <listitem>
+	  <listitem>
             <para>Référence de l'API C++ (en anglais)</para>
           </listitem>
-	    <listitem>
+	  <listitem>
             <para>Référence de l'API Python (en anglais)</para>
           </listitem>
 	</itemizedlist>
@@ -111,46 +119,52 @@
     <title>Définitions</title> 
     <section> <!-- Accronymes -->
       <title>Acronymes</title> 
-	<itemizedlist>
-	  <listitem>
-	    <para>DB : Base de données: elle est centralisée et utilisée pour sauvegarder toutes les données manipulées
-	      par le module UMS. Cette base de données sera considérée comme étant de type PostgreSQL dans ce document.</para>
-	  </listitem>
-	  <listitem>
-	    <para> MA : "Master Agent": élément de Sysfera-DS distribuant les requêtes entre les clients et les services désirés.</para>
-	  </listitem>
-	  <listitem>
-	    <para>SQL : Langage de requêtes sur les bases de données</para>
-	  </listitem>
-	  <listitem>
-	    <para>TMS : Task Management Service</para>
-	  </listitem>
-	  <listitem>
-	    <para>UMS : User Management Service</para>
-	  </listitem>
-	  <listitem>
-	    <para>WS : Web Services</para>
-	  </listitem>
-	</itemizedlist>
-   </section> <!-- Accronymes -->
-   <section>
-     <title>Références</title>
-     <itemizedlist>
-          <listitem>
-            <para>[ARCH] D1.1g-VISHNU Technical Architecture : description de l'architecture de l'application VISHNU</para>
-          </listitem>
-          <listitem>
-            <para>[DIET_USERGUIDE] DIET User Guide : guide de l'utilisateur DIET (nom du projet OpenSource de l'application SysFera-DS)</para>
-          </listitem>
-          <listitem>
-            <para>[VISHNU_USERGUIDE] VISHNU User Guide : guide de l'utilisateur VISHNU.</para>
-          </listitem>
-        </itemizedlist>
-   </section>
+      <itemizedlist>
+	<listitem>
+	  <para>DB : Base de données: elle est centralisée et utilisée pour sauvegarder toutes les données manipulées
+	    par le module UMS. Cette base de données sera considérée comme étant de type PostgreSQL dans ce document.</para>
+	</listitem>
+	<listitem>
+	  <para>IMS : Information Management Service</para>
+	</listitem>
+	<listitem>
+	  <para> MA : "Master Agent": élément de Sysfera-DS distribuant les requêtes entre les clients et les services désirés.</para>
+	</listitem>
+	<listitem>
+	  <para>SQL : Langage de requêtes sur les bases de données</para>
+	</listitem>
+	<listitem>
+	  <para>TMS : Task Management Service</para>
+	</listitem>
+	<listitem>
+	  <para>UMS : User Management Service</para>
+	</listitem>
+	<listitem>
+	  <para>WS : Web Services</para>
+	</listitem>
+      </itemizedlist>
+    </section> <!-- Accronymes -->
+    <section>
+      <title>Références</title>
+      <itemizedlist>
+        <listitem>
+          <para>[ARCH] D1.1g-VISHNU Technical Architecture : description de l'architecture de l'application VISHNU</para>
+        </listitem>
+        <listitem>
+          <para>[DIET_USERGUIDE] DIET User Guide : guide de l'utilisateur DIET (nom du projet OpenSource de l'application SysFera-DS)</para>
+        </listitem>
+        <listitem>
+          <para>[VISHNU_USERGUIDE] VISHNU User Guide : guide de l'utilisateur VISHNU.</para>
+        </listitem>
+      </itemizedlist>
+    </section>
     <section> <!-- Glossaire -->
       <title>Glossaire</title>
       <para>
 	<itemizedlist>
+	  <listitem>
+	    <para>Client IMS : Cela désigne les classes intermédiaires permettant un accès à distance aux services du SeD IMS. </para>
+	  </listitem>
 	  <listitem>
 	    <para>Client TMS : Cela désigne les classes intermédiaires permettant un accès à distance aux services du SeD TMS. </para>
 	  </listitem>
@@ -159,6 +173,9 @@
 	  </listitem>
 	  <listitem>
 	    <para>Préfrontale : Cela désigne une machine mise avant la(les) frontale(s) des calculateurs. </para>
+	  </listitem>
+	  <listitem>
+	    <para>SeD IMS : Cela désigne le programme contenant et exécutant les services du module IMS. </para>
 	  </listitem>
 	  <listitem>
 	    <para>SeD TMS : Cela désigne le programme contenant et exécutant les services du module TMS. </para>
@@ -172,7 +189,7 @@
 	  </listitem>
           <listitem>
             <para>Se référer au glossaire du document [ARCH] pour des définitions additionnelles.</para>
-            </listitem>
+          </listitem>
 	</itemizedlist>
       </para>
     </section>  <!-- Glossaire -->
@@ -242,7 +259,7 @@
     <section>
       <title> Compilation des sources </title>
       <para>VISHNU utilise CMake comme système de construction et se conforme aux 
-pratiques communément admises.
+	pratiques communément admises.
 	Les options principales utilisables sont les suivantes:
 	<itemizedlist>
 	  <listitem>
@@ -302,24 +319,26 @@ pratiques communément admises.
 	      VISHNU_USE_TORQUE, compile le SeD TMS pour torque (OFF par défaut).
 	    </para>
 	  </listitem>
-        </itemizedlist></para>
-        <para>
-	  Par exemple, pour compiler VISHNU (clients et serveurs) avec l'API 
-	  Python puis l'installer dans le répertoire /opt/vishnu sous *nix:</para>
-	<itemizedlist>
-	  <listitem><para>1. créer un répertoire build à la racine du projet et se placer dedans</para></listitem>
-	  <listitem><para>$ mkdir build</para></listitem>
-	  <listitem><para>$ cd build</para></listitem>
-	  <listitem><para>2. générer le Makefile</para></listitem>
-	  <listitem><para>$ cmake -DENABLE_PYTHON=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu/ 
-	      -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DVISHNU_USE_TORQUE=0N -DTORQUE_DIR=/opt/torque ..</para></listitem>
-	  <listitem><para>3. lancer la compilation avec 2 jobs</para></listitem>
-	  <listitem><para>$ make -j 2</para></listitem>
-	  <listitem><para>4. installation (en mode super-utilisateur)</para></listitem>
-	  <listitem><para># make install</para></listitem>
 	</itemizedlist>
-	<para><emphasis role="bold">Note</emphasis>: pensez à ajouter le répertoire d'installation dans le $PATH 
-	  utilisateur pour avoir accès à la commande.</para>
+      </para>
+      <para>
+	Par exemple, pour compiler VISHNU (clients et serveurs) avec l'API 
+	Python puis l'installer dans le répertoire /opt/vishnu sous *nix:
+      </para>
+      <itemizedlist>
+	<listitem><para>1. créer un répertoire build à la racine du projet et se placer dedans</para></listitem>
+	<listitem><para>$ mkdir build</para></listitem>
+	<listitem><para>$ cd build</para></listitem>
+	<listitem><para>2. générer le Makefile</para></listitem>
+	<listitem><para>$ cmake -DENABLE_PYTHON=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu/ 
+	    -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DVISHNU_USE_TORQUE=0N -DTORQUE_DIR=/opt/torque ..</para></listitem>
+	<listitem><para>3. lancer la compilation avec 2 jobs</para></listitem>
+	<listitem><para>$ make -j 2</para></listitem>
+	<listitem><para>4. installation (en mode super-utilisateur)</para></listitem>
+	<listitem><para># make install</para></listitem>
+      </itemizedlist>
+      <para><emphasis role="bold">Note</emphasis>: pensez à ajouter le répertoire d'installation dans le $PATH 
+	utilisateur pour avoir accès à la commande.</para>
 
     </section> <!-- End compilation des sources -->
   </chapter> <!-- End compilation -->
@@ -334,15 +353,15 @@ pratiques communément admises.
             et vérifier que la variable JAVA_HOME est bien définie et contient le répertoire racine de l'installation de java.</para>
         </listitem>
 	<listitem>
-	  <para>Installer le module <emphasis role="bold">VISHNU UMS</emphasis> avec l'option -DENABLE_JAVA=ON.</para>
+	  <para>Installer les modules désirés avec l'option -DENABLE_JAVA=ON.</para>
 	</listitem>
         <listitem>
           <para>Installer <emphasis role="bold">Maven 2</emphasis> pour compiler les jars ( <emphasis role="bold">Note</emphasis> : 
-          Ce pré-requis est optionnel car les jars sont déjà fournis dans la distribution des web services. 
-          Par ailleurs la compilation avec maven nécessite une connexion internet).</para>
+            Ce pré-requis est optionnel car les jars sont déjà fournis dans la distribution des web services. 
+            Par ailleurs la compilation avec maven nécessite une connexion internet).</para>
         </listitem>
       </itemizedlist>
-
+      
     </section><!-- end prerequis -->
     <section>
       <title>Installation de JBoss</title>
@@ -374,7 +393,7 @@ pratiques communément admises.
 	</listitem>
 	<listitem>
           <para>Le lancement du serveur se fait en lançant le script JBOSS_HOME/bin/run.sh. Pour que le serveur jboss soit accessible depuis une autre machine, utiliser l'option '-b adresseIP' où
-          adresseIP représente l'adresse IP du serveur, et vérifier que le firewall du serveur autorise l'accès au port 8080.</para>
+            adresseIP représente l'adresse IP du serveur, et vérifier que le firewall du serveur autorise l'accès au port 8080.</para>
         </listitem>
         <listitem>
           <para><emphasis role="bold">Vérification de l'installation:</emphasis> Pour vérifier que le serveur JBoss est bien démarré et que le module web services est activé, lancer un navigateur internet sur le serveur et se connecter
@@ -422,52 +441,43 @@ pratiques communément admises.
             </para>
           </listitem>
           <listitem>
-            <para>libVISHNU_UMS.so
+            <para>libVISHNU.so
               <itemizedlist>
-                <listitem><para>Nécessaire pour le fonctionnement des WS, cette librairie dynamique est obtenue en compilant le module VISHNU UMS avec l'option ENABLE_JAVA.</para></listitem>
+                <listitem><para>Nécessaire pour le fonctionnement des WS, cette librairie dynamique est obtenue en compilant les modules VISHNU désirés avec l'option ENABLE_JAVA.</para></listitem>
                 <listitem><para>Le fichier est installé par défaut par le package VISHNU UMS dans '/usr/local/lib' et il n'est pas nécessaire de le copier.</para></listitem>
                 <listitem><para>S'il y a un problème de déploiement dans le serveur jboss, vérifier qu'elle est bien accessible et dans le LD_LIBRARY_PATH.</para></listitem>
               </itemizedlist>
             </para>
           </listitem>
-          <listitem>
-            <para>libVISHNU_TMS.so
-              <itemizedlist>
-                <listitem><para>Nécessaire pour le fonctionnement des WS, cette librairie dynamique est obtenue en compilant le module VISHNU TMS avec l'option ENABLE_JAVA.</para></listitem>
-                <listitem><para>Le fichier est installé par défaut par le package VISHNU TMS dans '/usr/local/lib' et il n'est pas nécessaire de le copier.</para></listitem>
-                <listitem><para>S'il y a un problème de déploiement dans le serveur jboss, vérifier qu'elle est bien accessible et dans le LD_LIBRARY_PATH.</para></listitem>
-              </itemizedlist>
-            </para>
-          </listitem>
-          </itemizedlist>
-        </section>
-       <section>
-        <title>Variables d'environnement à définir</title>
-        <itemizedlist>
+        </itemizedlist>
+      </section>
+      <section>
+	<title>Variables d'environnement à définir</title>
+	<itemizedlist>
           <listitem>
             <para>VISHNU_CONFIG_FILE : contient le chemin complet du fichier de configuration client de VISHNU. Se référer 
-            au guide d'installation du client [VISHNU_USER_GUIDE] pour connaître le contenu de ce fichier.
-            Si l'exécution échoue avec un message d'erreur lié à initialisation de la librairie lors du connect, vérifier le contenu de cette variable.
+              au guide d'installation du client [VISHNU_USER_GUIDE] pour connaître le contenu de ce fichier.
+              Si l'exécution échoue avec un message d'erreur lié à initialisation de la librairie lors du connect, vérifier le contenu de cette variable.
             </para>
           </listitem>
           <listitem>
             <para>LD_LIBRARY_PATH : contient les chemins des répertoires contenant les librairies VISHNU, notamment libVISHNU_UMS.so.</para>
           </listitem>
-        </itemizedlist>
+	</itemizedlist>
       </section>
       <section>
-        <title>Lancement du serveur JBoss avec le module WS</title>
-        <itemizedlist>
+	<title>Lancement du serveur JBoss avec le module WS</title>
+	<itemizedlist>
           <listitem>
             <para>Après installation des fichiers définis au paragraphe précédent, le serveur JBoss doit être redémarré en lançant le script JBOSS_HOME/bin/run.sh 
               (avec les options indiquées au paragraphe sur le serveur JBoss).</para>
-         </listitem>
+          </listitem>
           <listitem>
             <para><emphasis role="bold">Vérification de l'installation:</emphasis> Pour vérifier que le serveur JBoss est bien démarré et que le module UMS WS est activé, lancer un navigateur internet sur le serveur et se connecter
               sur l'adresse 'http://localhost:8080/jbossws/services' (ou 'http://adresseIP:8080/jbossws/services') et vérifier que le 
-                "service endPoint" : <emphasis role="bold">VISHNUUMSPortImpl</emphasis> est actif.</para> 
+              "service endPoint" : <emphasis role="bold">VISHNUUMSPortImpl</emphasis> est actif.</para> 
           </listitem>
-        </itemizedlist>
+	</itemizedlist>
       </section>
     </section>
   </chapter><!-- End WS -->  
@@ -479,87 +489,87 @@ pratiques communément admises.
       <para><emphasis role="bold">NOTE: l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
       <para>Pour mieux comprendre l'architecture de déploiement, se référer au document [ARCH], le chapitre 4, 'Technical Architecture'.</para>
       <orderedlist>
-        <listitem>
+	<listitem>
           <para> Avoir une base de données PostGreSQL accessible et initialisée (tables créées et premières données créées). Des scripts SQL sont fournis pour cela. Avoir la base PostGreSQL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base).</para>
-        </listitem>
-        <listitem>
+	</listitem>
+	<listitem>
           <para> Lancer le service de nommage CORBA sur la machine préfrontale. La commande est 'omniNames -start' pour la première fois, sinon 'omniNames' suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
-        </listitem>
-        <listitem>
+	</listitem>
+	<listitem>
           <para> Lancer le log service de DIET sur la machine préfrontale. La commande est 'LogCentral --config config.cfg' avec config.cfg un fichier de configuration pour le log central. </para>
-        </listitem>
-        <listitem>
+	</listitem>
+	<listitem>
           <para> Lancer le MA avec son fichier de configuration : 'dietAgent config.cfg'. Voir la figure 4.1 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes : 
             <itemizedlist>
-              <listitem>
-                <para> 'traceLevel = 0' : Le niveau de verbosité du master agent, cette valeur peut être entre 0 et 10 compris. </para>
-              </listitem>
-              <listitem>
-                <para> 'agentType = DIET_MASTER_AGENT' : Le type de l'agent, l'autre type disponible est DIET_LOCAL_AGENT mais dans notre cas il faut DIET_MASTER_AGENT.</para>
-              </listitem>
-              <listitem>
-                <para> 'name = MA0' : Le nom que l'on veut donner à l'agent.</para>
-              </listitem>
+	      <listitem>
+		<para> 'traceLevel = 0' : Le niveau de verbosité du master agent, cette valeur peut être entre 0 et 10 compris. </para>
+	      </listitem>
+	      <listitem>
+		<para> 'agentType = DIET_MASTER_AGENT' : Le type de l'agent, l'autre type disponible est DIET_LOCAL_AGENT mais dans notre cas il faut DIET_MASTER_AGENT.</para>
+	      </listitem>
+	      <listitem>
+		<para> 'name = MA0' : Le nom que l'on veut donner à l'agent.</para>
+	      </listitem>
             </itemizedlist>
           </para>
-        </listitem>
-        <listitem>
+	</listitem>
+	<listitem>
           <para>Lancer le SeD UMS avec 'umssed ~/ums_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.2 pour un exemple de configuration. Les paramètres à fournir correspondent à:
             <itemizedlist>
-              <listitem>
-                <para>
+	      <listitem>
+		<para>
                   'dietConfigFile=/usr/local/etc/SeD.cfg' : le chemin jusqu'au fichier de configuration DIET du SeD. Voir la figure 4.2 pour un exemple de configuration. Ce fichier peut par exemple contenir les 2 lignes suivantes :
                   <itemizedlist>
                     <listitem>
-                      <para>'traceLevel = 0' : Le niveau de verbosité du SeD UMS, ce niveau peut être entre 0 (minimum) et 10 compris.</para>
+		      <para>'traceLevel = 0' : Le niveau de verbosité du SeD UMS, ce niveau peut être entre 0 (minimum) et 10 compris.</para>
                     </listitem>
                     <listitem>
-                      <para> 'parentName = MA0' : Le nom du MA auquel le SeD UMS doit se lier. Ce doit être exactement le même nom que celui donné au même dans le champs 'name' du MA en question.</para>
+		      <para> 'parentName = MA0' : Le nom du MA auquel le SeD UMS doit se lier. Ce doit être exactement le même nom que celui donné au même dans le champs 'name' du MA en question.</para>
                     </listitem>
                     <listitem>
-                      <para> 'useLogService = 1' : Pour utiliser le service de log dans DIET (sinon les SeD n'émettent aucun message).</para>
+		      <para> 'useLogService = 1' : Pour utiliser le service de log dans DIET (sinon les SeD n'émettent aucun message).</para>
                     </listitem>
                   </itemizedlist>
-                </para>
-              </listitem>
-              <listitem>
-                <para> 'vishnuId=1' : L'id de VISHNU à utiliser dans la DB (valeur '1' par défaut) .</para>
-              </listitem>
-              <listitem>
-                <para> 'databaseType=postgresql' : Pour utiliser une base postgreSQL. Pour utiliser une base MySQL, il faut mettre 'mysql' comme type.</para>
-              </listitem>
-              <listitem>
-                <para>
+		</para>
+	      </listitem>
+	      <listitem>
+		<para> 'vishnuId=1' : L'id de VISHNU à utiliser dans la DB (valeur '1' par défaut) .</para>
+	      </listitem>
+	      <listitem>
+		<para> 'databaseType=postgresql' : Pour utiliser une base postgreSQL. Pour utiliser une base MySQL, il faut mettre 'mysql' comme type.</para>
+	      </listitem>
+	      <listitem>
+		<para>
                   'databaseHost=localhost' : Le nom DNS du serveur de bases de données, ou 'localhost' si la base est locale.
-                </para>
-              </listitem>
+		</para>
+	      </listitem>
 	      <listitem>
 		<para>'databaseName=vishnu' : Le nom de la base de données</para>
 	      </listitem>
-              <listitem>
-                <para> 'databaseUserName=vishnu_user' : Le nom d'utilisateur pour se connecter à la DB.</para>
-              </listitem>
-              <listitem>
-                <para> 'databaseUserPassword=vishnu_user' : Le mot de passe pour se connecter à la DB.</para>
-              </listitem>
-              <listitem>
-                <para> 'databaseConnectionsNb=5' : Le nombre de connexions ouvertes sur la base de données par le SeD afin de traiter des requêtes en parallèle.
+	      <listitem>
+		<para> 'databaseUserName=vishnu_user' : Le nom d'utilisateur pour se connecter à la DB.</para>
+	      </listitem>
+	      <listitem>
+		<para> 'databaseUserPassword=vishnu_user' : Le mot de passe pour se connecter à la DB.</para>
+	      </listitem>
+	      <listitem>
+		<para> 'databaseConnectionsNb=5' : Le nombre de connexions ouvertes sur la base de données par le SeD afin de traiter des requêtes en parallèle.
                   (le nombre par défaut est 10). Si le nombre d'utilisateurs simultané du SeD est grand, cette valeur doit être augmentée dans
                   la limite du nombre de connections simultanées autorisées par le serveur de base de données.</para>
-              </listitem>
-              <listitem>
-                <para> 'sendmailScriptPath=/usr/local/vishnu/sbin/sendmail.py' : Le script à utiliser pour envoyer les mails. Il est installé avec le module UMS
+	      </listitem>
+	      <listitem>
+		<para> 'sendmailScriptPath=/usr/local/vishnu/sbin/sendmail.py' : Le script à utiliser pour envoyer les mails. Il est installé avec le module UMS
                   dans le sous-répertoire sbin/ du répertoire d'installation.</para>
-              </listitem>
+	      </listitem>
             </itemizedlist>
           </para>
-        </listitem>
-        <listitem>
+	</listitem>
+	<listitem>
 	  <para>
 	    Sur la machine hôte de Torque, lancer le serveur (pbs_serv), le scheduler (pbs_sched) et l'ordonnanceur (pbs_mom) de Torque. 
 	  </para>
-        </listitem>
-        <listitem>
+	</listitem>
+	<listitem>
           <para>Lancer le SeD TMS sur la machine hôte de Torque. La commande de lancement est : 'tmssed ~/tms_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.3 pour un exemple de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
 	    <itemizedlist>
 	      <listitem>
@@ -571,193 +581,196 @@ pratiques communément admises.
 	      <listitem>
 		<para>'vishnuMachineId=machine_1' : L'identifiant VISHNU de la machine ou le SeD TMS est lancé (obtenu en utilisant la commande vishnu_list_machines).</para>
 	      </listitem>
-        <listitem>
-          <para>Lancer le SeD IMS sur toutes les machines à monitorer. La commande de lancement est : 'imssed ~/ims_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.3 pour un exemple de configuration. Les paramètres à fournir correspondent à ceux de UMS.
+	    </itemizedlist>
 	  </para>
 	</listitem>
-        <listitem>
-          <para>
-            Les modules de VISHNU sont prêts à être utilisés. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen des commandes UMS et TMS (voir le manuel de l'utilisateur VISHNU).
-          </para>
-        </listitem>
+	<listitem>
+	  <para>Lancer le SeD IMS sur toutes les machines à monitorer. La commande de lancement est : 'imssed ~/ims_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.3 pour un exemple de configuration. Les paramètres à fournir correspondent à ceux de UMS.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Les modules de VISHNU sont prêts à être utilisés. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen des commandes UMS et TMS (voir le manuel de l'utilisateur VISHNU).
+	  </para>
+	</listitem>
       </orderedlist>
     </section>
     <section>
       <title>Lancement sur plusieurs réseaux</title>
       <para>Un module VISHNU peut être lancé soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration.
-        On suppose dans la suite que le MA est sur le même réseau que l'omniNames et le SeD sur un autre réseau, séparés par un pare-feu</para>
+	On suppose dans la suite que le MA est sur le même réseau que l'omniNames et le SeD sur un autre réseau, séparés par un pare-feu</para>
       <para><emphasis role="bold">NOTE: l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
       <para>Pour une vue générale de l'architecture du système VISHNU, se référer au document [ARCH], chapitre 4 ('Technical Architecture').</para>
       <orderedlist>
-        <listitem>
-          <para> Avoir une base de données PostgreSQL accessible et initialisée (tables créées et premières données créées). Des scripts SQL sont fournis pour cela. Avoir la base PostGreSQL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base).</para>
-        </listitem>
-        <listitem>
-          <para> Lancer le service de nommage CORBA sur la machine préfrontale sur les deux réseaux. La commande est 'omniNames -start' pour la première fois, sinon 'omniNames' suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
-        </listitem>
-        <listitem>
-          <para> Lancer un démon forwarder sur le reseau 2 :  </para>
-          <para>dietForwarder --name forwarder2 --net-config forwarder2.cfg
-            <itemizedlist>
-              <listitem><para>
-                  forwarder2 : nom qui identifie le démon forwarder sur ce réseau
-              </para></listitem>
-              <listitem><para>
-                  forwarder2.cfg : fichier de configuration (voir la figure 4.3 pour un exemple de configuration) contenant des règles appliquées aux
-                  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de la figure 4.3, les
-                  règles utilisées sont:
-                  <itemizedlist>
-                    <listitem>
-                      <para> une règle 'accept' correspondant au filtre sur la source des connections acceptées. '.*' signifie les connections provenant
-                        de n'importe quelle adresse IP.</para>
-                    </listitem>
-                    <listitem>
-                      <para> deux règles 'reject' contenant les adresses destination à rejeter. Il est nécessaire que l'adresse IP du serveur sur lequel
-                        tourne le démon forwarder soit indiquée dans une règle de ce type. Dans l'exemple le serveur ayant deux adresses IP on a
-                        indiqué une règle pour chaque adresse.</para>
-                  </listitem>
-                  </itemizedlist>
-                </para>
-              </listitem>
-            </itemizedlist>
-          </para>
-        </listitem>
-        <listitem>
-          <para> Lancer un démon forwarder sur le reseau 1: </para>
-          <para>dietForwarder -C--peer-name forwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name forwarder 
-            --net-config forwarder1.cfg
-            --remote-host localhost
-            --ssh-login login
-          </para>
-          <para>
-            <itemizedlist>
-              <listitem><para>
-                  -C : indique que c'est ce démon forwarder qui crée le tunnel SSH.
-              </para></listitem>
-              <listitem><para>
-                  --peer-name : le nom donné au forwarder de l'autre coté, ici forwarder2.
-              </para></listitem>
-              <listitem><para>
-                  --ssh-host : la nom DNS de la machine distante pour connecter le tunnel SSH.
-              </para></listitem>
-              <listitem><para>
-                  --remote-port : le port à utiliser pour le tunnel ssh, ici 50005.
-              </para></listitem>
-              <listitem><para>
-                  --name : le nom identifiant ce démon forwarder, c'est-à-dire 'forwarder1'.
-              </para></listitem>
-              <listitem><para>
-                  --net-config : le fichier de configuration, ici forwarder1.cfg. Ce fichier doit contenir des règles 'reject' et 'accept' également,
-                  sur le même modèle que forwarder2.cfg.
-              </para></listitem>
-              <listitem><para>
-                  --remote-host : le nom de l'adresse loopback, c'est-à-dire 'localhost'.
-              </para></listitem>
-              <listitem><para>
-                  --ssh-login : le login de connection sur la machine distante.
-              </para></listitem>
-            </itemizedlist>
-          </para>
-        </listitem>
-        <listitem>
-          <para>Si la clé ssh est accessible (le chemin par défaut est le répertoire $HOME/.ssh/) et que la clé est protégée par une passphrase,
-            la passphrase est demandée et la connexion ssh s'établit.</para>
-        </listitem>
-        <listitem>
-          <para> Lancer un démon forwarder pour le log service sur le reseau 2 :  </para>
-          <para>logForwarder --name logforwarder2 --net-config logforwarder2.cfg
-            <itemizedlist>
-              <listitem><para>
-                  logforwarder2 : nom qui identifie le démon forwarder sur ce réseau
-              </para></listitem>
-              <listitem><para>
-                  logforwarder2.cfg : fichier de configuration (voir la figure 4.3 pour un exemple de configuration) contenant des règles appliquées aux
-                  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de la figure 4.3, les
-                  règles utilisées sont:
-                  <itemizedlist>
-                    <listitem>
-                      <para> une règle 'accept' correspondant au filtre sur la source des connections acceptées. '.*' signifie les connections provenant
-                        de n'importe quelle adresse IP.</para>
-                    </listitem>
-                    <listitem>
-                      <para> deux règles 'reject' contenant les adresses destination à rejeter. Il est nécessaire que l'adresse IP du serveur sur lequel
-                        tourne le démon forwarder soit indiquée dans une règle de ce type. Dans l'exemple le serveur ayant deux adresses IP on a
-                        indiqué une règle pour chaque adresse.</para>
-                  </listitem>
-                  </itemizedlist>
-                </para>
-              </listitem>
-            </itemizedlist>
-          </para>
-        </listitem>
-        <listitem>
-          <para> Lancer un démon log forwarder sur le reseau 1: </para>
-          <para>logForwarder -C--peer-name logforwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name logforwarder 
-            --net-config logforwarder1.cfg
-            --remote-host localhost
-            --ssh-login login
-          </para>
-          <para>
-            <itemizedlist>
-              <listitem><para>
-                  -C : indique que c'est ce démon forwarder qui crée le tunnel SSH.
-              </para></listitem>
-              <listitem><para>
-                  --peer-name : le nom donné au forwarder de l'autre coté, ici forwarder2.
-              </para></listitem>
-              <listitem><para>
-                  --ssh-host : la nom DNS de la machine distante pour connecter le tunnel SSH.
-              </para></listitem>
-              <listitem><para>
-                  --remote-port : le port à utiliser pour le tunnel ssh, ici 50005.
-              </para></listitem>
-              <listitem><para>
-                  --name : le nom identifiant ce démon forwarder, c'est-à-dire 'forwarder1'.
-              </para></listitem>
-              <listitem><para>
-                  --net-config : le fichier de configuration, ici forwarder1.cfg. Ce fichier doit contenir des règles 'reject' et 'accept' également,
-                  sur le même modèle que forwarder2.cfg.
-              </para></listitem>
-              <listitem><para>
-                  --remote-host : le nom de l'adresse loopback, c'est-à-dire 'localhost'.
-              </para></listitem>
-              <listitem><para>
-                  --ssh-login : le login de connection sur la machine distante.
-              </para></listitem>
-            </itemizedlist>
-          </para>
-        </listitem>
-        <listitem>
-          <para>Si la clé ssh est accessible (le chemin par défaut est le répertoire $HOME/.ssh/) et que la clé est protégée par une passphrase,
-            la passphrase est demandée et la connexion ssh s'établit.</para>
-        </listitem>
-        <listitem>
-          <para> Lancer le log service de DIET sur la machine préfrontale. La commande est 'LogCentral --config config.cfg' avec config.cfg un fichier de configuration pour le log central. </para>
-        </listitem>
-        <listitem>
-          <para> Lancer le MA avec son fichier de configuration sur le même réseau que le service de nommage : 'dietAgent config.cfg'. Voir la figure 4.2 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
-            <itemizedlist>
-              <listitem>
-                <para> 'traceLevel = 0' : Le niveau de verbosité du master agent, cette valeur peut être entre 0 et 10 compris. </para>
-              </listitem>
-              <listitem>
-                <para> 'agentType = DIET_MASTER_AGENT' : Le type de l'agent, l'autre type disponible est DIET_LOCAL_AGENT mais dans notre cas il faut DIET_MASTER_AGENT.</para>
-              </listitem>
-              <listitem>
-                <para> 'name = MA0' : Le nom que l'on veut donner à l'agent.</para>
-              </listitem>
-            </itemizedlist>
-          </para>
-        </listitem>
-        <listitem>
-          <para>Lancer le SeD, par exemple un UMS sur l'autre sous réseau. Un exemple de commande de lancement est : './umssed ~/ums_sed.cfg'. Se référer au chapitre de déploiement pour le contenu du fichier, c'est le même à utiliser que dans un déploiement sur un seul réseau.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Le module, ici UMS, de VISHNU est prêt à être utilisé. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen de clients UMS.
-          </para>
-        </listitem>
+	<listitem>
+	  <para> Avoir une base de données PostgreSQL accessible et initialisée (tables créées et premières données créées). Des scripts SQL sont fournis pour cela. Avoir la base PostGreSQL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base).</para>
+	</listitem>
+	<listitem>
+	  <para> Lancer le service de nommage CORBA sur la machine préfrontale sur les deux réseaux. La commande est 'omniNames -start' pour la première fois, sinon 'omniNames' suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
+	</listitem>
+	<listitem>
+	  <para> Lancer un démon forwarder sur le reseau 2 :  </para>
+	  <para>dietForwarder --name forwarder2 --net-config forwarder2.cfg
+	    <itemizedlist>
+	      <listitem><para>
+		  forwarder2 : nom qui identifie le démon forwarder sur ce réseau
+	      </para></listitem>
+	      <listitem><para>
+		  forwarder2.cfg : fichier de configuration (voir la figure 4.3 pour un exemple de configuration) contenant des règles appliquées aux
+		  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de la figure 4.3, les
+		  règles utilisées sont:
+		  <itemizedlist>
+		    <listitem>
+		      <para> une règle 'accept' correspondant au filtre sur la source des connections acceptées. '.*' signifie les connections provenant
+			de n'importe quelle adresse IP.</para>
+		    </listitem>
+		    <listitem>
+		      <para> deux règles 'reject' contenant les adresses destination à rejeter. Il est nécessaire que l'adresse IP du serveur sur lequel
+			tourne le démon forwarder soit indiquée dans une règle de ce type. Dans l'exemple le serveur ayant deux adresses IP on a
+			indiqué une règle pour chaque adresse.</para>
+		    </listitem>
+		  </itemizedlist>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para> Lancer un démon forwarder sur le reseau 1: </para>
+	  <para>dietForwarder -C--peer-name forwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name forwarder 
+	    --net-config forwarder1.cfg
+	    --remote-host localhost
+	    --ssh-login login
+	  </para>
+	  <para>
+	    <itemizedlist>
+	      <listitem><para>
+		  -C : indique que c'est ce démon forwarder qui crée le tunnel SSH.
+	      </para></listitem>
+	      <listitem><para>
+		  --peer-name : le nom donné au forwarder de l'autre coté, ici forwarder2.
+	      </para></listitem>
+	      <listitem><para>
+		  --ssh-host : la nom DNS de la machine distante pour connecter le tunnel SSH.
+	      </para></listitem>
+	      <listitem><para>
+		  --remote-port : le port à utiliser pour le tunnel ssh, ici 50005.
+	      </para></listitem>
+	      <listitem><para>
+		  --name : le nom identifiant ce démon forwarder, c'est-à-dire 'forwarder1'.
+	      </para></listitem>
+	      <listitem><para>
+		  --net-config : le fichier de configuration, ici forwarder1.cfg. Ce fichier doit contenir des règles 'reject' et 'accept' également,
+		  sur le même modèle que forwarder2.cfg.
+	      </para></listitem>
+	      <listitem><para>
+		  --remote-host : le nom de l'adresse loopback, c'est-à-dire 'localhost'.
+	      </para></listitem>
+	      <listitem><para>
+		  --ssh-login : le login de connection sur la machine distante.
+	      </para></listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>Si la clé ssh est accessible (le chemin par défaut est le répertoire $HOME/.ssh/) et que la clé est protégée par une passphrase,
+	    la passphrase est demandée et la connexion ssh s'établit.</para>
+	</listitem>
+	<listitem>
+	  <para> Lancer un démon forwarder pour le log service sur le reseau 2 :  </para>
+	  <para>logForwarder --name logforwarder2 --net-config logforwarder2.cfg
+	    <itemizedlist>
+	      <listitem><para>
+		  logforwarder2 : nom qui identifie le démon forwarder sur ce réseau
+	      </para></listitem>
+	      <listitem><para>
+		  logforwarder2.cfg : fichier de configuration (voir la figure 4.3 pour un exemple de configuration) contenant des règles appliquées aux
+		  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de la figure 4.3, les
+		  règles utilisées sont:
+		  <itemizedlist>
+		    <listitem>
+		      <para> une règle 'accept' correspondant au filtre sur la source des connections acceptées. '.*' signifie les connections provenant
+			de n'importe quelle adresse IP.</para>
+		    </listitem>
+		    <listitem>
+		      <para> deux règles 'reject' contenant les adresses destination à rejeter. Il est nécessaire que l'adresse IP du serveur sur lequel
+			tourne le démon forwarder soit indiquée dans une règle de ce type. Dans l'exemple le serveur ayant deux adresses IP on a
+			indiqué une règle pour chaque adresse.</para>
+		    </listitem>
+		  </itemizedlist>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para> Lancer un démon log forwarder sur le reseau 1: </para>
+	  <para>logForwarder -C--peer-name logforwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name logforwarder 
+	    --net-config logforwarder1.cfg
+	    --remote-host localhost
+	    --ssh-login login
+	  </para>
+	  <para>
+	    <itemizedlist>
+	      <listitem><para>
+		  -C : indique que c'est ce démon forwarder qui crée le tunnel SSH.
+	      </para></listitem>
+	      <listitem><para>
+		  --peer-name : le nom donné au forwarder de l'autre coté, ici forwarder2.
+	      </para></listitem>
+	      <listitem><para>
+		  --ssh-host : la nom DNS de la machine distante pour connecter le tunnel SSH.
+	      </para></listitem>
+	      <listitem><para>
+		  --remote-port : le port à utiliser pour le tunnel ssh, ici 50005.
+	      </para></listitem>
+	      <listitem><para>
+		  --name : le nom identifiant ce démon forwarder, c'est-à-dire 'forwarder1'.
+	      </para></listitem>
+	      <listitem><para>
+		  --net-config : le fichier de configuration, ici forwarder1.cfg. Ce fichier doit contenir des règles 'reject' et 'accept' également,
+		  sur le même modèle que forwarder2.cfg.
+	      </para></listitem>
+	      <listitem><para>
+		  --remote-host : le nom de l'adresse loopback, c'est-à-dire 'localhost'.
+	      </para></listitem>
+	      <listitem><para>
+		  --ssh-login : le login de connection sur la machine distante.
+	      </para></listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>Si la clé ssh est accessible (le chemin par défaut est le répertoire $HOME/.ssh/) et que la clé est protégée par une passphrase,
+	    la passphrase est demandée et la connexion ssh s'établit.</para>
+	</listitem>
+	<listitem>
+	  <para> Lancer le log service de DIET sur la machine préfrontale. La commande est 'LogCentral --config config.cfg' avec config.cfg un fichier de configuration pour le log central. </para>
+	</listitem>
+	<listitem>
+	  <para> Lancer le MA avec son fichier de configuration sur le même réseau que le service de nommage : 'dietAgent config.cfg'. Voir la figure 4.2 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
+	    <itemizedlist>
+	      <listitem>
+		<para> 'traceLevel = 0' : Le niveau de verbosité du master agent, cette valeur peut être entre 0 et 10 compris. </para>
+	      </listitem>
+	      <listitem>
+		<para> 'agentType = DIET_MASTER_AGENT' : Le type de l'agent, l'autre type disponible est DIET_LOCAL_AGENT mais dans notre cas il faut DIET_MASTER_AGENT.</para>
+	      </listitem>
+	      <listitem>
+		<para> 'name = MA0' : Le nom que l'on veut donner à l'agent.</para>
+	      </listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>Lancer le SeD, par exemple un UMS sur l'autre sous réseau. Un exemple de commande de lancement est : './umssed ~/ums_sed.cfg'. Se référer au chapitre de déploiement pour le contenu du fichier, c'est le même à utiliser que dans un déploiement sur un seul réseau.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Le module, ici UMS, de VISHNU est prêt à être utilisé. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen de clients UMS.
+	  </para>
+	</listitem>
       </orderedlist>
     </section>
     <section>
@@ -787,8 +800,8 @@ pratiques communément admises.
 	databaseName=vishnu
 	databaseUserName=vishnu_user
 	databaseUserPassword=vishnu_user
-        databaseConnectionsNb=5
-        sendmailScriptPath=/usr/local/sbin/sendmail.py
+	databaseConnectionsNb=5
+	sendmailScriptPath=/usr/local/sbin/sendmail.py
       </programlisting>
     </section>
     <section>
@@ -802,8 +815,8 @@ pratiques communément admises.
 	databaseName=vishnu
 	databaseUserName=vishnu_user
 	databaseUserPassword=vishnu_user
-        databaseConnectionsNb=5
-        sendmailScriptPath=/usr/local/sbin/sendmail.py
+	databaseConnectionsNb=5
+	sendmailScriptPath=/usr/local/sbin/sendmail.py
 	# Configuration propres à TMS
 	batchSchedulerType=TORQUE
 	vishnuMachineId=machine_1
@@ -823,81 +836,81 @@ pratiques communément admises.
     <section>
       <title>Configuration de l'envoi des emails par VISHNU</title>
       <para>Le processus UMS SeD utilise le fichier 'sendmail.py' (fourni dans l'installation VISHNU, dans le sous-répertoire sbin/)
-        pour envoyer des emails aux utilisateurs lors de certaines opérations. Ce fichier peut être modifié par l'administrateur afin
-        de s'adapter à la méthode d'envoi d'email propre au serveur sur lequel est installé le SeD. Par défaut, la configuration
-        fournie se connecte sur le serveur SMTP de 'localhost' sur le port 25, sans authentification.</para>
+	pour envoyer des emails aux utilisateurs lors de certaines opérations. Ce fichier peut être modifié par l'administrateur afin
+	de s'adapter à la méthode d'envoi d'email propre au serveur sur lequel est installé le SeD. Par défaut, la configuration
+	fournie se connecte sur le serveur SMTP de 'localhost' sur le port 25, sans authentification.</para>
       <para>Les paramètres suivants peuvent être configurés dans le script sendmail.py:</para>
       <informaltable>
-        <tgroup cols="2">
-          <colspec colwidth="2cm"/>
-          <colspec colwidth="15cm"/>
-          <thead>
-            <row>
-              <entry>Option</entry>
-              <entry>Ligne du script sendmail.py à modifier</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>login</para></entry>
-              <entry><programlisting>parser.add_option("--login", dest="login", help="", default="[login_utilisateur]")</programlisting></entry>
-            </row>
-            <row>
-              <entry><para>password</para></entry>
-              <entry><programlisting>parser.add_option("--password", dest="password", help="smtp password", default="[password_utilisateur]")</programlisting></entry>
-            </row>
-            <row>
-              <entry><para>hostname</para></entry>
-              <entry><programlisting>parser.add_option("--hostname", dest="host", help="smtp host", default="[nom_serveur_SMTP]")</programlisting></entry>
-            </row>
-            <row>
-              <entry><para>port</para></entry>
-              <entry><programlisting>parser.add_option("--port", dest="port", help="smtp port [default: 25]", type=int, default="[no_port]")</programlisting></entry>
-            </row>
-            <row>
-              <entry><para>SSL</para></entry>
-              <entry><programlisting>parser.add_option("--ssl", action="store_true", dest="use_ssl", help="enable ssl support [default: %default - default port: 587
-]", default=True)</programlisting></entry>
-            </row>
-          </tbody>
-        </tgroup>
+	<tgroup cols="2">
+	  <colspec colwidth="2cm"/>
+	  <colspec colwidth="15cm"/>
+	  <thead>
+	    <row>
+	      <entry>Option</entry>
+	      <entry>Ligne du script sendmail.py à modifier</entry>
+	    </row>
+	  </thead>
+	  <tbody>
+	    <row>
+	      <entry><para>login</para></entry>
+	      <entry><programlisting>parser.add_option("--login", dest="login", help="", default="[login_utilisateur]")</programlisting></entry>
+	    </row>
+	    <row>
+	      <entry><para>password</para></entry>
+	      <entry><programlisting>parser.add_option("--password", dest="password", help="smtp password", default="[password_utilisateur]")</programlisting></entry>
+	    </row>
+	    <row>
+	      <entry><para>hostname</para></entry>
+	      <entry><programlisting>parser.add_option("--hostname", dest="host", help="smtp host", default="[nom_serveur_SMTP]")</programlisting></entry>
+	    </row>
+	    <row>
+	      <entry><para>port</para></entry>
+	      <entry><programlisting>parser.add_option("--port", dest="port", help="smtp port [default: 25]", type=int, default="[no_port]")</programlisting></entry>
+	    </row>
+	    <row>
+	      <entry><para>SSL</para></entry>
+	      <entry><programlisting>parser.add_option("--ssl", action="store_true", dest="use_ssl", help="enable ssl support [default: %default - default port: 587
+		  ]", default=True)</programlisting></entry>
+	    </row>
+	  </tbody>
+	</tgroup>
       </informaltable>
     </section>
     <section>
       <title>Test d'exécution d'un service depuis une machine client par shell</title>
       <orderedlist>
-        <listitem>
-          <para>
-            Une fois que la plateforme a été installée, se mettre sur un poste client avec VISHNU d'installé. Se référer au document [VISHNU_USERGUIDE]
-            pour l'installation de la partie client.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Exporter la variable d'environnement VISHNU_CONFIG_FILE dans un script de configuration client. Se référer 
-            au guide d'installation du client [VISHNU_USER_GUIDE] pour connaître le contenu d'un fichier client.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Lancer la commande dans le shell 'vishnu_connect user', ou user représente un nom d'utilisateur dans la DB
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Taper le mot de passe 'password', correspondant à l'utilisateur 'user'
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Sur le client, un affichage doit signaler que le service a réussi. Dans le terminal ou le SeD UMS a été lancé et dans le terminal ou le MA tourne, selon le niveau de verbosité, plus ou moins d'informations, concernant le service effectué, doivent apparaitre.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Fermer la session avec 'vishnu_close'. Aucune erreur ne doit être remontée lors de ces tests.
-          </para>
-        </listitem>
+	<listitem>
+	  <para>
+	    Une fois que la plateforme a été installée, se mettre sur un poste client avec VISHNU d'installé. Se référer au document [VISHNU_USERGUIDE]
+	    pour l'installation de la partie client.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Exporter la variable d'environnement VISHNU_CONFIG_FILE dans un script de configuration client. Se référer 
+	    au guide d'installation du client [VISHNU_USER_GUIDE] pour connaître le contenu d'un fichier client.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Lancer la commande dans le shell 'vishnu_connect user', ou user représente un nom d'utilisateur dans la DB
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Taper le mot de passe 'password', correspondant à l'utilisateur 'user'
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Sur le client, un affichage doit signaler que le service a réussi. Dans le terminal ou le SeD UMS a été lancé et dans le terminal ou le MA tourne, selon le niveau de verbosité, plus ou moins d'informations, concernant le service effectué, doivent apparaitre.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Fermer la session avec 'vishnu_close'. Aucune erreur ne doit être remontée lors de ces tests.
+	  </para>
+	</listitem>
       </orderedlist>
     </section>
   </chapter><!-- End lancement  -->
@@ -906,118 +919,118 @@ pratiques communément admises.
     <section>
       <title>Présentation</title>
       <para>
-        Le module UMS correspond à la gestion des utilisateurs et des machines de VISHNU. Il permet aussi de sauvegarder la configuration de VISHNU à chaud et de la restaurer si besoin est. 
-        Dans toute la suite du chapitre, on supposera que l'utilisateur est déjà connecté avec un compte administrateur de VISHNU pour pouvoir réaliser ces manipulations. De plus, on présentera l'utilisation des commandes depuis le shell, mais cela reste valable depuis les API Python ou C++.
+	Le module UMS correspond à la gestion des utilisateurs et des machines de VISHNU. Il permet aussi de sauvegarder la configuration de VISHNU à chaud et de la restaurer si besoin est. 
+	Dans toute la suite du chapitre, on supposera que l'utilisateur est déjà connecté avec un compte administrateur de VISHNU pour pouvoir réaliser ces manipulations. De plus, on présentera l'utilisation des commandes depuis le shell, mais cela reste valable depuis les API Python ou C++.
       </para>
     </section>
     <section>
       <title>Gestion des utilisateurs (UMS)</title>
       <orderedlist>
-        <listitem>
-          <para>
-            L'ajout d'un utilisateur se fait à l'aide de la commande 'vishnu_add_user'. Elle prend en paramètre le prénom de l'utilisateur, son nom de famille, les droits qui lui sont associés dans VISHNU (administrateur ou simple utilisateur) et son adresse de couriel. Tout ces paramètres sont obligatoires. Un privilège à 1 signifie administrateur, un privilège à 0 signifie un utilisateur. L'identifiant de l'utilisateur est généré et renvoyé.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            La mise à jour d'un utilisateur ne peut être faite que par un administrateur. Cette mise à jour se fait avec un appel à la commande 'vishnu_update_user' et permet de modifier les paramètres de l'ajout (nom, prénom, statut, couriel). 
-            Il faut avoir l'identifiant de l'utilisateur (généré lors de la création de l'utilisateur) pour le désigner lors de la mise à jour.
-          </para>
-          <para>Note: le changement du statut d'un utilisateur à l'état "INACTIVE" correspond à un blocage de son compte.</para>
-        </listitem>
-        <listitem>
-          <para>
-            La suppression d'un utilisateur efface toutes les informations liées à l'utilisateur de la base de donnée. Cette suppression se fait à l'aide de la commande 'vishnu_delete_user'.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            La liste des utilisateurs ne peut être faite que par un administrateur. Cela se fait avec la commande 'vishnu_list_user'. Cette commande peut prendre en paramètre l'identifiant d'un utilisateur pour n'avoir les informations que concernant cet utilisateur.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Seul un administrateur peut réinitialiser le mot de passe d'un utilisateur de VISHNU. Pour ce faire, il doit appeller la commande 'vishnu_reset_password'  en fournissant l'identifiant de l'utilisateur dont l'administrateur veut réinitialiser le mot de passe. Le nouveau mot de passe est temporaire et renvoyé par la commande. Lors de la prochaine connexion, l'utilisateur devra changer son mot de passe avec 'vishnu_change_password'.
-          </para>
-        </listitem>
+	<listitem>
+	  <para>
+	    L'ajout d'un utilisateur se fait à l'aide de la commande 'vishnu_add_user'. Elle prend en paramètre le prénom de l'utilisateur, son nom de famille, les droits qui lui sont associés dans VISHNU (administrateur ou simple utilisateur) et son adresse de couriel. Tout ces paramètres sont obligatoires. Un privilège à 1 signifie administrateur, un privilège à 0 signifie un utilisateur. L'identifiant de l'utilisateur est généré et renvoyé.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    La mise à jour d'un utilisateur ne peut être faite que par un administrateur. Cette mise à jour se fait avec un appel à la commande 'vishnu_update_user' et permet de modifier les paramètres de l'ajout (nom, prénom, statut, couriel). 
+	    Il faut avoir l'identifiant de l'utilisateur (généré lors de la création de l'utilisateur) pour le désigner lors de la mise à jour.
+	  </para>
+	  <para>Note: le changement du statut d'un utilisateur à l'état "INACTIVE" correspond à un blocage de son compte.</para>
+	</listitem>
+	<listitem>
+	  <para>
+	    La suppression d'un utilisateur efface toutes les informations liées à l'utilisateur de la base de donnée. Cette suppression se fait à l'aide de la commande 'vishnu_delete_user'.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    La liste des utilisateurs ne peut être faite que par un administrateur. Cela se fait avec la commande 'vishnu_list_user'. Cette commande peut prendre en paramètre l'identifiant d'un utilisateur pour n'avoir les informations que concernant cet utilisateur.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Seul un administrateur peut réinitialiser le mot de passe d'un utilisateur de VISHNU. Pour ce faire, il doit appeller la commande 'vishnu_reset_password'  en fournissant l'identifiant de l'utilisateur dont l'administrateur veut réinitialiser le mot de passe. Le nouveau mot de passe est temporaire et renvoyé par la commande. Lors de la prochaine connexion, l'utilisateur devra changer son mot de passe avec 'vishnu_change_password'.
+	  </para>
+	</listitem>
       </orderedlist>
     </section>
     <section>
       <title>Gestion des machines (UMS+IMS)</title>
       <orderedlist>
-        <listitem>
-          <para>L'ajout d'une machine se fait à l'aide de la commande 'vishnu_add_machine'. Cette commande prend en paramètre le nom de la machine, le site ou elle se trouve, le language de la description qui sera donnée pour la machine, le fichier contenant la clé publique et la description. Ces paramètres sont obligatoires, en passant par le shell, la description n'a pas besoin d'être fournie en paramètre mais elle est alors demandée à l'administrateur avant d'ajouter la machine. A la fin de l'ajout, l'identifiant généré pour la machine est renvoyé.</para>
-        </listitem>
-        <listitem>
-          <para>
-            La mise à jour d'une machine se fait à l'aide de la commande 'vishnu_update_machine' et permet de modifier les paramètres mis lors de l'ajout de la machine. Il faut utiliser l'identifiant de la machine pour l'identifier lors de la mise à jour.
-          </para>
-          <para>Note: le changement du statut d'une machine à l'état "INACTIVE" correspond à un blocage de la machine. Cela rend la machine inaccessible aux utilisateurs de VISHNU mais toujours visible pour les administrateurs.</para>
-        </listitem>
-        <listitem>
-          <para>
-            La suppression d'une machine se fait à l'aide de la commande 'vishnu_delete_machine' avec l'identifiant de la machine à supprimer. Cela supprime la machine de la base de données, ainsi que toutes les informations qui y sont attachées (Attention: cette commande est irréversible).
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Les utilisateurs peuvent lister les machines, mais un administrateur a en plus une option qui est l'identifiant d'un utilisateur. Ceci lui permet de lister les machines sur lesquelles l'utilisateur a un compte VISHNU.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            La mise à jour d'informations système d'une machine se fait à l'aide de la commande 'vishnu_set_system_info' et permet d'ajouter ou modifier des informations système d'une machine. Il faut utiliser l'identifiant de la machine pour l'identifier lors de la mise à jour.
-          </para>
-        </listitem>
+	<listitem>
+	  <para>L'ajout d'une machine se fait à l'aide de la commande 'vishnu_add_machine'. Cette commande prend en paramètre le nom de la machine, le site ou elle se trouve, le language de la description qui sera donnée pour la machine, le fichier contenant la clé publique et la description. Ces paramètres sont obligatoires, en passant par le shell, la description n'a pas besoin d'être fournie en paramètre mais elle est alors demandée à l'administrateur avant d'ajouter la machine. A la fin de l'ajout, l'identifiant généré pour la machine est renvoyé.</para>
+	</listitem>
+	<listitem>
+	  <para>
+	    La mise à jour d'une machine se fait à l'aide de la commande 'vishnu_update_machine' et permet de modifier les paramètres mis lors de l'ajout de la machine. Il faut utiliser l'identifiant de la machine pour l'identifier lors de la mise à jour.
+	  </para>
+	  <para>Note: le changement du statut d'une machine à l'état "INACTIVE" correspond à un blocage de la machine. Cela rend la machine inaccessible aux utilisateurs de VISHNU mais toujours visible pour les administrateurs.</para>
+	</listitem>
+	<listitem>
+	  <para>
+	    La suppression d'une machine se fait à l'aide de la commande 'vishnu_delete_machine' avec l'identifiant de la machine à supprimer. Cela supprime la machine de la base de données, ainsi que toutes les informations qui y sont attachées (Attention: cette commande est irréversible).
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Les utilisateurs peuvent lister les machines, mais un administrateur a en plus une option qui est l'identifiant d'un utilisateur. Ceci lui permet de lister les machines sur lesquelles l'utilisateur a un compte VISHNU.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    La mise à jour d'informations système d'une machine se fait à l'aide de la commande 'vishnu_set_system_info' et permet d'ajouter ou modifier des informations système d'une machine. Il faut utiliser l'identifiant de la machine pour l'identifier lors de la mise à jour.
+	  </para>
+	</listitem>
       </orderedlist>
     </section>
     <section>
       <title>Gestion de la plateforme (UMS)</title>
       <orderedlist>
-        <listitem>
-          <para>
-            L'administrateur peut faire une sauvegarde à chaud à un moment donné de VISHNU. Ceci sauvegarde les utilisateurs, les machines et les comptes des utilisateurs. Le fichier, dans lequel la configuration est, est retourné par la fonction. La fonction est 'vishnu_save_configuration', pas besoin de paramètres. 
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            L'administrateur peut recharger une configuration précédente de VISHNU à l'aide de la commande 'vishnu_restore_configuration' qui a besoin du fichier de sauvegarde pour recharger la base. 
-            Avant de pouvoir lancer cette restauration, tous les utilisateurs de VISHNU doivent être déconnectés.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Un administrateur peut également définir les valeurs par défaut des options de VISHNU pour tout les utilisateurs (ces options sont le temps de déconnexion par défaut et le type de fermeture d'une session par défaut). Cela se fait en appellant 'vishnu_configure_default_option' en donnant le nom de l'option et sa nouvelle valeur.
-          </para>
-        </listitem>
+	<listitem>
+	  <para>
+	    L'administrateur peut faire une sauvegarde à chaud à un moment donné de VISHNU. Ceci sauvegarde les utilisateurs, les machines et les comptes des utilisateurs. Le fichier, dans lequel la configuration est, est retourné par la fonction. La fonction est 'vishnu_save_configuration', pas besoin de paramètres. 
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    L'administrateur peut recharger une configuration précédente de VISHNU à l'aide de la commande 'vishnu_restore_configuration' qui a besoin du fichier de sauvegarde pour recharger la base. 
+	    Avant de pouvoir lancer cette restauration, tous les utilisateurs de VISHNU doivent être déconnectés.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Un administrateur peut également définir les valeurs par défaut des options de VISHNU pour tout les utilisateurs (ces options sont le temps de déconnexion par défaut et le type de fermeture d'une session par défaut). Cela se fait en appellant 'vishnu_configure_default_option' en donnant le nom de l'option et sa nouvelle valeur.
+	  </para>
+	</listitem>
       </orderedlist>
     </section>
     <section>
       <title>Options propres à l'administrateur dans les commandes utilisateurs</title>
       <orderedlist>
-        <listitem>
-          <para>Dans la fonction 'vishnu_connect', un administrateur peut donner l'identifiant d'un utilisateur pour se connecter sous le nom de cet utilisateur dans VISHNU.</para>
-        </listitem>
-        <listitem>
-          <para>
-            Dans la fonction 'vishnu_list_history_cmd', l'administrateur peut lister toutes les commandes de tout les utilisateurs ou les commandes d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Dans la fonction 'vishnu_list_local_accounts', l'administrateur peut lister toutes les comptes de tout les utilisateurs ou les comptes d'un utilisateur particulier en fournissant l'identifiant de l'utilisateur.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Dans la fonction 'vishnu_list_options', l'administrateur peut lister les toutes les options de tout les utilisateurs ou les options d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Dans la fonction 'vishnu_list_sessions', l'administrateur peut lister les toutes les session de tout les utilisateurs ou les sessions d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur, ou les sessions sur une machine particulière en fournissant l'identifiant de la machine.
-          </para>
-        </listitem>
+	<listitem>
+	  <para>Dans la fonction 'vishnu_connect', un administrateur peut donner l'identifiant d'un utilisateur pour se connecter sous le nom de cet utilisateur dans VISHNU.</para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Dans la fonction 'vishnu_list_history_cmd', l'administrateur peut lister toutes les commandes de tout les utilisateurs ou les commandes d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Dans la fonction 'vishnu_list_local_accounts', l'administrateur peut lister toutes les comptes de tout les utilisateurs ou les comptes d'un utilisateur particulier en fournissant l'identifiant de l'utilisateur.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Dans la fonction 'vishnu_list_options', l'administrateur peut lister les toutes les options de tout les utilisateurs ou les options d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Dans la fonction 'vishnu_list_sessions', l'administrateur peut lister les toutes les session de tout les utilisateurs ou les sessions d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur, ou les sessions sur une machine particulière en fournissant l'identifiant de la machine.
+	  </para>
+	</listitem>
       </orderedlist>
     </section>
     <section>
@@ -1025,23 +1038,23 @@ pratiques communément admises.
       <itemizedlist>
 	<listitem>
 	  <para>L'administrateur peut lister les processus VISHNU, sur toute la plateforme ou sur une machine particulière.
-	  Fonction associée : vishnu_get_processes.</para>
+	    Fonction associée : vishnu_get_processes.</para>
 	</listitem>
 	<listitem>
 	  <para>L'administrateur peut arrêter un processus VISHNU, ce processus ne sera pas redémarrer automatiquement.
 	    Attention : l'administrateur doit avoir un compte sur la machine
-	  Fonction associée : vishnu_stop </para>
+	    Fonction associée : vishnu_stop </para>
 	</listitem>
 	<listitem>
 	  <para>L'administrateur peut redémarrer un processus VISHNU sur une machine, ce processus doit avoir déjà tourné 
 	    pour VISHNU sur cette machine et l'administrateur doit avoir un compte sur la machine.
-	  Fonction associée : vishnu_restart </para>
+	    Fonction associée : vishnu_restart </para>
 	</listitem>
 	<listitem>
 	  <para>L'administrateur peut délester une machine selon deux modes. Dans le mode HARD, tout les processus VISHNU
 	    de la machine sont arretés. Dans le mode SOFT, seul FMS et TMS sont touchés, on arrête tout leurs transferts 
 	    et jobs en cours.
-	  Fonction associée : vishnu_load_shed </para>
+	    Fonction associée : vishnu_load_shed </para>
 	</listitem>
       </itemizedlist>
     </section>
@@ -1050,22 +1063,22 @@ pratiques communément admises.
       <itemizedlist>
 	<listitem>
 	  <para> Un administrateur peut fixer la fréquence de mise à jour de l'enregistrement de l'état des machines.
-	  Fonction associée : vishnu_set_update_frequency</para>
+	    Fonction associée : vishnu_set_update_frequency</para>
 	</listitem>
 	<listitem>
 	  <para> Un administrateur peut obtenir la fréquence de mise à jour de l'enregistrement de l'état des machines.
-	  Fonction associée : vishnu_get_update_frequency</para>
+	    Fonction associée : vishnu_get_update_frequency</para>
 	</listitem>
 	<listitem>
 	  <para> Un administrateur peut fixer un seuil sur une machine. Ce seuil peut être l'utilisation du CPU, la 
 	    mémoire libre restante ou l'espace disque restant. Lors de l'enregistrement de l'état d'une machine,
 	    si un seuil est atteint sur cette machine, l'administrateur est notifié par mail de ce dépassement.
-	  Fonction associée : vishnu_set_threshold</para>
+	    Fonction associée : vishnu_set_threshold</para>
 	</listitem>
 	<listitem>
 	  <para> Un administrateur peut obtenir les seuils fixés sur une machine. Pour plus d'informations sur les seuils
 	    voir la partie pour fixer les seuils ci-dessus.
-	  Fonction associée : vishnu_get_threshold</para>
+	    Fonction associée : vishnu_get_threshold</para>
 	</listitem>
       </itemizedlist>
     </section>
