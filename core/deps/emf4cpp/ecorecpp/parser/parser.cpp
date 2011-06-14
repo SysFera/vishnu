@@ -77,7 +77,8 @@ parser::~parser()
     //
 #ifdef DEBUG
     struct timeval start, end;
-    long mtime, seconds, useconds;
+    long seconds, useconds;
+    double mtime;
 #endif
 
 #ifdef DEBUG
@@ -86,7 +87,6 @@ parser::~parser()
     xml_parser::grammar::the_xml::match(st);
 #ifdef DEBUG
     gettimeofday(&end, NULL);
-
     seconds  = end.tv_sec  - start.tv_sec;
     useconds = end.tv_usec - start.tv_usec;
 
