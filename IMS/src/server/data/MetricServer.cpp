@@ -37,12 +37,6 @@ MetricServer::MetricServer(const UserServer session, IMS_Data::CurMetricOp_ptr o
   mhop = ecoreFactory->createMetricHistOp();
 }
 MetricServer::~MetricServer(){
-  if (mhop != NULL) {
-    delete mhop;
-  }
-  if (mhop != NULL) {
-    delete mcop;
-  }
 }
 
 void
