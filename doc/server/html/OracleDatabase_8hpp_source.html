@@ -62,32 +62,35 @@
 <a name="l00088"></a>00088   <a class="code" href="classDatabaseResult.html" title="This class describes the object which encapsulates the database results.">DatabaseResult</a>*
 <a name="l00089"></a>00089   getResult(std::string request);
 <a name="l00090"></a>00090 
-<a name="l00091"></a>00091 <span class="keyword">private</span> :
-<a name="l00092"></a>00092 
-<a name="l00094"></a>00094   <span class="comment">// Attributes</span>
-<a name="l00096"></a>00096 <span class="comment"></span>
-<a name="l00100"></a><a class="code" href="classOracleDatabase.html#a5a3094ed80aeff4a7637e31eb86fab86">00100</a>   Environment *menvironment;
-<a name="l00104"></a><a class="code" href="classOracleDatabase.html#a5dc53869aaff49e9780885bf54d4acc6">00104</a>   Connection  *mcon;
-<a name="l00108"></a><a class="code" href="classOracleDatabase.html#ad6cd3577621325feda91be87b9ef4b29">00108</a>   Statement   *mstmt;
-<a name="l00112"></a><a class="code" href="classOracleDatabase.html#a97515c847c370c74e704cbd473ce54de">00112</a>   ResultSet   *mres;
-<a name="l00113"></a>00113 
-<a name="l00117"></a><a class="code" href="classOracleDatabase.html#a37125a639f4f689daaa1433d6ed57b60">00117</a>   std::string mhost;
-<a name="l00121"></a><a class="code" href="classOracleDatabase.html#a2377bf882e2086afa2defe873c2560b2">00121</a>   std::string musername;
-<a name="l00125"></a><a class="code" href="classOracleDatabase.html#a19613d7c0f3e400a8145e996e96962cb">00125</a>   std::string mpwd;
-<a name="l00129"></a><a class="code" href="classOracleDatabase.html#aa976189ee2c8b9ee6431c4893b39d8da">00129</a>   std::string mdatabase;
-<a name="l00133"></a><a class="code" href="classOracleDatabase.html#a7c808cda4f5516a9988d13e69035ea28">00133</a>   <span class="keywordtype">int</span> mport;
-<a name="l00137"></a><a class="code" href="classOracleDatabase.html#af044c8d8c050f17599b0e45453518ddf">00137</a>   <span class="keywordtype">bool</span> misConnected;
-<a name="l00138"></a>00138 
-<a name="l00140"></a>00140   <span class="comment">// Functions</span>
-<a name="l00142"></a>00142 <span class="comment"></span>
-<a name="l00148"></a>00148   <span class="keywordtype">int</span>
-<a name="l00149"></a>00149   disconnect();
-<a name="l00150"></a>00150 };
-<a name="l00151"></a>00151 
-<a name="l00152"></a>00152 <span class="preprocessor">#endif // POSTGREDATABASE</span>
+<a name="l00095"></a>00095   <a class="code" href="classDbConfiguration.html#a4a57e43a5017a5c4833a784a994c91cf" title="The database type.">DbConfiguration::db_type_t</a>
+<a name="l00096"></a><a class="code" href="classOracleDatabase.html#a5a3094ed80aeff4a7637e31eb86fab86">00096</a>   getDbType() { <span class="keywordflow">return</span> DbConfiguration::ORACLE; };
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098 <span class="keyword">private</span> :
+<a name="l00099"></a>00099 
+<a name="l00101"></a>00101   <span class="comment">// Attributes</span>
+<a name="l00103"></a>00103 <span class="comment"></span>
+<a name="l00107"></a>00107   Environment *menvironment;
+<a name="l00111"></a><a class="code" href="classOracleDatabase.html#a5dc53869aaff49e9780885bf54d4acc6">00111</a>   Connection  *mcon;
+<a name="l00115"></a><a class="code" href="classOracleDatabase.html#ad6cd3577621325feda91be87b9ef4b29">00115</a>   Statement   *mstmt;
+<a name="l00119"></a><a class="code" href="classOracleDatabase.html#a97515c847c370c74e704cbd473ce54de">00119</a>   ResultSet   *mres;
+<a name="l00120"></a>00120 
+<a name="l00124"></a><a class="code" href="classOracleDatabase.html#a37125a639f4f689daaa1433d6ed57b60">00124</a>   std::string mhost;
+<a name="l00128"></a><a class="code" href="classOracleDatabase.html#a2377bf882e2086afa2defe873c2560b2">00128</a>   std::string musername;
+<a name="l00132"></a><a class="code" href="classOracleDatabase.html#a19613d7c0f3e400a8145e996e96962cb">00132</a>   std::string mpwd;
+<a name="l00136"></a><a class="code" href="classOracleDatabase.html#aa976189ee2c8b9ee6431c4893b39d8da">00136</a>   std::string mdatabase;
+<a name="l00140"></a><a class="code" href="classOracleDatabase.html#a7c808cda4f5516a9988d13e69035ea28">00140</a>   <span class="keywordtype">int</span> mport;
+<a name="l00144"></a><a class="code" href="classOracleDatabase.html#af044c8d8c050f17599b0e45453518ddf">00144</a>   <span class="keywordtype">bool</span> misConnected;
+<a name="l00145"></a>00145 
+<a name="l00147"></a>00147   <span class="comment">// Functions</span>
+<a name="l00149"></a>00149 <span class="comment"></span>
+<a name="l00155"></a>00155   <span class="keywordtype">int</span>
+<a name="l00156"></a>00156   disconnect();
+<a name="l00157"></a>00157 };
+<a name="l00158"></a>00158 
+<a name="l00159"></a>00159 <span class="preprocessor">#endif // POSTGREDATABASE</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu May 12 2011 16:22:22 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 14 2011 23:13:12 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

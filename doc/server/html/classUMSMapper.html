@@ -28,7 +28,7 @@
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pri-methods">Private Member Functions</a>  </div>
+<a href="#pro-methods">Protected Member Functions</a>  </div>
   <div class="headertitle">
 <h1>UMSMapper Class Reference</h1>  </div>
 </div>
@@ -44,7 +44,8 @@ Inheritance diagram for UMSMapper:</div>
  <div class="center">
   <img src="classUMSMapper.png" usemap="#UMSMapper_map" alt=""/>
   <map id="UMSMapper_map" name="UMSMapper_map">
-<area href="classMapper.html" alt="Mapper" shape="rect" coords="0,0,83,24"/>
+<area href="classMapper.html" alt="Mapper" shape="rect" coords="0,0,111,24"/>
+<area href="classUMSShellMapper.html" alt="UMSShellMapper" shape="rect" coords="0,112,111,136"/>
 </map>
 </div>
 
@@ -72,51 +73,51 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to add an element to code.  <a href="#af5aec06e19b9b242645cf1abc2d6dad0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a09302a31b4cc2698d0e0d563988fb7c3">decode</a> (const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get, from a coded string, the cli like command that made it.  <a href="#a09302a31b4cc2698d0e0d563988fb7c3"></a><br/></td></tr>
-<tr><td colspan="2"><h2><a name="pri-methods"></a>
-Private Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a145a0e6311e595394f5f07da1a3a989b">decodeClose</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td colspan="2"><h2><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a145a0e6311e595394f5f07da1a3a989b">decodeClose</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the close call sequence of the string returned by finalize.  <a href="#a145a0e6311e595394f5f07da1a3a989b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a1f5caa2c4e02967efb3dc741813831a7">decodeAddUser</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a1f5caa2c4e02967efb3dc741813831a7">decodeAddUser</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#a1f5caa2c4e02967efb3dc741813831a7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#afc32e4e8ec824a76c57577d234a46f7c">decodeUpUser</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#afc32e4e8ec824a76c57577d234a46f7c">decodeUpUser</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#afc32e4e8ec824a76c57577d234a46f7c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a63cdc4905b7ad965c410cdccff455329">decodeDelUser</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a63cdc4905b7ad965c410cdccff455329">decodeDelUser</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#a63cdc4905b7ad965c410cdccff455329"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#afc9f56ce3627876213876ebbb0c3cedb">decodeChangePwd</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#afc9f56ce3627876213876ebbb0c3cedb">decodeChangePwd</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#afc9f56ce3627876213876ebbb0c3cedb"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a001ffc8295fb72cd937676973f0520cb">decodeResetPwd</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a001ffc8295fb72cd937676973f0520cb">decodeResetPwd</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#a001ffc8295fb72cd937676973f0520cb"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#aad443517f273c610f3ecc38f9e9b817f">decodeAddAcc</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#aad443517f273c610f3ecc38f9e9b817f">decodeAddAcc</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#aad443517f273c610f3ecc38f9e9b817f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a7be83cb37c8b72e6103c62669381ac5c">decodeUpAcc</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a7be83cb37c8b72e6103c62669381ac5c">decodeUpAcc</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#a7be83cb37c8b72e6103c62669381ac5c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a64e8fa1fe8aa071b405a4c1c67c837ec">decodeDelAcc</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a64e8fa1fe8aa071b405a4c1c67c837ec">decodeDelAcc</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#a64e8fa1fe8aa071b405a4c1c67c837ec"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a621d646f3f4525edb990813d31b2ee61">decodeSaveConf</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a621d646f3f4525edb990813d31b2ee61">decodeSaveConf</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#a621d646f3f4525edb990813d31b2ee61"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a26597d9d63ee7db4110669b59460f74f">decodeRestoreConf</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a26597d9d63ee7db4110669b59460f74f">decodeRestoreConf</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#a26597d9d63ee7db4110669b59460f74f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a8b40c596d15368717b8a62a00d80df22">decodeAddM</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a8b40c596d15368717b8a62a00d80df22">decodeAddM</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#a8b40c596d15368717b8a62a00d80df22"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a11c776ef36bfe7237e920dfdd3c0c1ec">decodeUpM</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a11c776ef36bfe7237e920dfdd3c0c1ec">decodeUpM</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#a11c776ef36bfe7237e920dfdd3c0c1ec"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a8b218eb1620678b625db8444dab8226c">decodeDelM</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a8b218eb1620678b625db8444dab8226c">decodeDelM</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#a8b218eb1620678b625db8444dab8226c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#aca69a6e37499b1e2536521048ff40403">decodeListAcc</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#aca69a6e37499b1e2536521048ff40403">decodeListAcc</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#aca69a6e37499b1e2536521048ff40403"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#af1a5337f43f288ba2f922f9876b8e0f8">decodeListM</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#af1a5337f43f288ba2f922f9876b8e0f8">decodeListM</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#af1a5337f43f288ba2f922f9876b8e0f8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a54ef53fc918cfacdeda213fafdcc76de">decodeListH</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a54ef53fc918cfacdeda213fafdcc76de">decodeListH</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#a54ef53fc918cfacdeda213fafdcc76de"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a72267ca71cc620570a238dfec3f0519f">decodeListOp</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a72267ca71cc620570a238dfec3f0519f">decodeListOp</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#a72267ca71cc620570a238dfec3f0519f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a569b2de623104e451711ff14b1f8f84f">decodeListUser</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a569b2de623104e451711ff14b1f8f84f">decodeListUser</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#a569b2de623104e451711ff14b1f8f84f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a750e6d307c48491a86a97d694807ca66">decodeListSession</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a750e6d307c48491a86a97d694807ca66">decodeListSession</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#a750e6d307c48491a86a97d694807ca66"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#ad157fb31bec53a8c140fb2e2d60465b3">decodeConfDefaultOp</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#ad157fb31bec53a8c140fb2e2d60465b3">decodeConfDefaultOp</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#ad157fb31bec53a8c140fb2e2d60465b3"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#ac1f47841882d3f85b8820ab836789036">decodeConfOp</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#ac1f47841882d3f85b8820ab836789036">decodeConfOp</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#ac1f47841882d3f85b8820ab836789036"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a60bb02d794c885f5e0feae133af7058d">getU</a> (string serial)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To deserialize the serial string, make a user objet, and get the values in the same string.  <a href="#a60bb02d794c885f5e0feae133af7058d"></a><br/></td></tr>
@@ -250,7 +251,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -287,7 +288,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -324,7 +325,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -361,7 +362,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -398,7 +399,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -435,7 +436,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -472,7 +473,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -509,7 +510,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -546,7 +547,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -583,7 +584,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -620,7 +621,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -657,7 +658,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -694,7 +695,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -731,7 +732,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -768,7 +769,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -805,7 +806,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -842,7 +843,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -879,7 +880,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -916,7 +917,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -953,7 +954,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -990,7 +991,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -1027,7 +1028,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
+          <td></td><td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -1129,7 +1130,7 @@ Private Member Functions</h2></td></tr>
           <td class="paramtype">string&nbsp;</td>
           <td class="paramname"> <em>serial</em></td>
           <td>&nbsp;)&nbsp;</td>
-          <td><code> [private]</code></td>
+          <td><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -1156,7 +1157,7 @@ Private Member Functions</h2></td></tr>
           <td class="paramtype">string&nbsp;</td>
           <td class="paramname"> <em>serial</em></td>
           <td>&nbsp;)&nbsp;</td>
-          <td><code> [private]</code></td>
+          <td><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -1221,7 +1222,7 @@ Private Member Functions</h2></td></tr>
 <li>core/src/registry/<a class="el" href="UMSMapper_8hpp_source.html">UMSMapper.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu May 12 2011 16:22:25 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 14 2011 23:13:17 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

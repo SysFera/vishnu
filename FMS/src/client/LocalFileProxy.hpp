@@ -16,7 +16,9 @@
 
 #include "FileProxy.hpp"
 
-
+/**
+ * \brief A proxy class to handle local to remote file transfer
+ */
 class LocalFileProxy : public FileProxy {
   private:
 

@@ -18,25 +18,76 @@
 #ifdef BSD_LIKE_SYSTEM
 #define STATCMD "LANG=C stat -f \"%Su %Sg %Lp %u %g %z %a %m %c %HT\" "
 #else
+/**
+ * \brief An alias of stat command 
+ */
 #define STATCMD " LANG=C stat --format=\"%U %G %a %u %g %s %X %Y %Z %F\" "
 #endif
 
 /* Define the command to use through ssh. */
+/**
+ * \brief An alias of change group command 
+ */
 #define CHGRPCMD "chgrp "
+/**
+ * \brief An alias of change mode command 
+ */
 #define CHMODCMD "chmod "
+/**
+ * \brief An alias of head command 
+ */
 #define HEADCMD  "head -"
+/**
+ * \brief An alias of head command 
+ */
 #define CATCMD  "cat "
+/**
+ * \brief An alias of mkdir command 
+ */
 #define MKDIRCMD "mkdir -m "
+/**
+ * \brief An alias of touch command 
+ */
 #define MKFILECMD "touch "
+/**
+ * \brief An alias of rm command 
+ */
 #define RMCMD    "rm -f "
+/**
+ * \brief An alias of recursive rm command 
+ */
 #define RMRCMD    "rm -rf "
+/**
+ * \brief An alias of rmdir command 
+ */
 #define RMDIRCMD "rmdir "
+/**
+ * \brief An alias of tail command 
+ */
 #define TAILCMD  "tail -"
+/**
+ * \brief An alias of scp command 
+ */
 #define CPCMD    "scp -o Compression=yes -o StrictHostKeyChecking=no "
+/**
+ * \brief An alias of mv command 
+ */
 #define MVCMD    "mv "
+/**
+ * \brief An alias of simple ls command 
+ */
 #define LSCMD    "ls  "
+/**
+ * \brief An alias of ls -a command 
+ */
 #define LSACMD  "ls -a "
+/**
+ * \brief An alias of ls -l command 
+ */
 #define LSLCMD "ls -l "
+/**
+ * \brief An alias of ls -al command 
+ */
 #define LSALCMD  "ls -al "
 
 #include "File.hpp"
@@ -91,7 +142,7 @@ class SSHFile : public File {
      */
     std::string scpCommand;
     /**
-     * \the last error during file properties manipulation
+     * \brief the last error during file properties manipulation
      */
     mutable std::string merror;
   public:
@@ -207,6 +258,7 @@ class SSHFile : public File {
     virtual int mkdir(const mode_t mode);
     /**
      * \brief To remove a file
+     * \param isRecursive To remove directory
      * \return 0 if the command succeeds, an error code otherwise
      */ 
     virtual int rm(bool isRecursive=false);
@@ -223,14 +275,14 @@ class SSHFile : public File {
     virtual std::list<std::string> ls(const LsDirOptions& options) const;
     /**
      * \brief To copy the file 
-     * \param dest the copy destination
+     * \param path the copy destination
      * \param options the copy options  
      * \return 0 if the command succeeds, an error code otherwise
      */
     virtual int cp(const std::string& path, const CpFileOptions& options);
     /**
      * \brief To move the file 
-     * \param dest the move destination
+     * \param path the move destination
      * \param options the move options  
      * \return 0 if the command succeeds, an error code otherwise
      */
