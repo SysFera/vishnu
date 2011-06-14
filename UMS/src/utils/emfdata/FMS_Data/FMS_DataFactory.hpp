@@ -105,6 +105,11 @@ namespace FMS_Data
          * \return Pointer to the object
          */
         virtual TailOfFileOptions_ptr createTailOfFileOptions();
+        /**
+         * \brief Creates a new object of class RmFileOptions
+         * \return Pointer to the object
+         */
+        virtual RmFileOptions_ptr createRmFileOptions();
 
         /**
          * \brief To create an object of a given class (reflective API)

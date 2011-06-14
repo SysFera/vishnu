@@ -55,19 +55,19 @@ include(FMSTestingMacros)
 fms_test_setup()
 fms_test(fms_automTest)
 
-# add_executable(tms_stresser
-#  tms_stress.cpp)
+ add_executable(fms_stresser
+  fms_stress.cpp)
 
-# target_link_libraries( tms_stresser
-#  ${DIET_CLIENT_LIB}
-#   ${DIET_SERVER_LIB}
-#   ${LIBPQ_LIB}
-#   ${Boost_LIBRARIES}
-#   emf4cpp-UMS_Data
-#   emf4cpp-FMS_Data
-#   database-vishnu
-#     exception-vishnu
-#     vishnu-ums-api
-#     vishnu-tms-api)
+ target_link_libraries( fms_stresser
+  ${DIET_CLIENT_LIB}
+   ${DIET_SERVER_LIB}
+   ${LIBPQ_LIB}
+   ${Boost_LIBRARIES}
+   emf4cpp-UMS_Data
+   emf4cpp-FMS_Data
+   database-vishnu
+     exception-vishnu
+     vishnu-ums-api
+     vishnu-fms-api)
 
 add_subdirectory( sql )
