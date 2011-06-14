@@ -73,44 +73,37 @@
 <a name="l00128"></a>00128   decode (<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
 <a name="l00129"></a>00129 
 <a name="l00130"></a>00130 <span class="keyword">protected</span>:
-<a name="l00131"></a>00131 <span class="keyword">private</span>:
-<a name="l00139"></a>00139   <span class="keywordtype">string</span>
-<a name="l00140"></a>00140   decodeSubmit(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00141"></a>00141   
-<a name="l00149"></a>00149   <span class="keywordtype">string</span>
-<a name="l00150"></a>00150   decodeProg(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00151"></a>00151 
-<a name="l00159"></a>00159   <span class="keywordtype">string</span>
-<a name="l00160"></a>00160   decodeQueue(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00161"></a>00161 
-<a name="l00169"></a>00169   <span class="keywordtype">string</span>
-<a name="l00170"></a>00170   decodeListJob(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00171"></a>00171 
-<a name="l00179"></a>00179   <span class="keywordtype">string</span>
-<a name="l00180"></a>00180   decodeOutput(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00181"></a>00181 
-<a name="l00189"></a>00189   <span class="keywordtype">string</span>
-<a name="l00190"></a>00190   decodeCompletedJob(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00191"></a>00191 
-<a name="l00199"></a>00199   <span class="keywordtype">string</span>
-<a name="l00200"></a>00200   decodeCancel(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00201"></a>00201 
-<a name="l00209"></a>00209   <span class="keywordtype">string</span>
-<a name="l00210"></a>00210   decodeGetPeriod(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00211"></a>00211 
-<a name="l00219"></a>00219   <span class="keywordtype">string</span>
-<a name="l00220"></a>00220   decodeSetPeriod(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00221"></a>00221 
-<a name="l00229"></a>00229   <span class="keywordtype">string</span>
-<a name="l00230"></a>00230   decodeJobInfo(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00231"></a>00231 
-<a name="l00232"></a>00232 };
-<a name="l00233"></a>00233 
-<a name="l00234"></a>00234 
-<a name="l00235"></a>00235 <span class="preprocessor">#endif</span>
+<a name="l00138"></a>00138   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00139"></a>00139   decodeSubmit(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00140"></a>00140   
+<a name="l00148"></a>00148   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00149"></a>00149   decodeProg(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00150"></a>00150 
+<a name="l00158"></a>00158   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00159"></a>00159   decodeQueue(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00160"></a>00160 
+<a name="l00168"></a>00168   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00169"></a>00169   decodeListJob(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00170"></a>00170 
+<a name="l00178"></a>00178   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00179"></a>00179   decodeOutput(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00180"></a>00180 
+<a name="l00188"></a>00188   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00189"></a>00189   decodeCompletedJob(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00190"></a>00190 
+<a name="l00198"></a>00198   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00199"></a>00199   decodeCancel(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00200"></a>00200 
+<a name="l00208"></a>00208   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00209"></a>00209   decodeJobInfo(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00210"></a>00210 <span class="keyword">private</span>:
+<a name="l00211"></a>00211 };
+<a name="l00212"></a>00212 
+<a name="l00213"></a>00213 
+<a name="l00214"></a>00214 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu May 12 2011 16:22:22 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 14 2011 23:13:12 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

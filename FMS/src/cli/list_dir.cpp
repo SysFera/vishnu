@@ -15,7 +15,7 @@
 #include "FMS_Data.hpp"
 #include "cmdArgs.hpp"
 #include <boost/bind.hpp>
-#include "displayer.hpp"
+#include "FMSDisplayer.hpp"
 
 namespace po = boost::program_options;
 
