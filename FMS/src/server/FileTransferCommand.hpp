@@ -71,6 +71,7 @@ class FileTransferCommand{
      * \brief A factory to build a copy command
      * \param sessionServer the session object server
      * \param options the copy options
+     * \return a new file transfer command
      */
     static FileTransferCommand* getCopyCommand(const SessionServer& sessionServer, const FMS_Data::CpFileOptions& options);
 
@@ -85,12 +86,12 @@ class FileTransferCommand{
 
     /**
      * \brief To update the command name
-     * \param location the new command name
+     * \param name the new command name
      */
     void setName(const std::string& name);
     /**
      * \brief To update the command 
-     * \param location the new command 
+     * \param command the new command 
      */
     void setCommand(const std::string& command);
 
