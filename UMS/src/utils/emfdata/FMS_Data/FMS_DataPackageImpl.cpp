@@ -304,6 +304,17 @@ FMS_DataPackage::FMS_DataPackage()
     m_TailOfFileOptionsEClass->getEStructuralFeatures().push_back(
             m_TailOfFileOptions__nline);
 
+    // RmFileOptions
+    m_RmFileOptionsEClass = new ::ecore::EClass();
+    m_RmFileOptionsEClass->setClassifierID(RMFILEOPTIONS);
+    m_RmFileOptionsEClass->setEPackage(this);
+    getEClassifiers().push_back(m_RmFileOptionsEClass);
+    m_RmFileOptions__isRecursive = new ::ecore::EAttribute();
+    m_RmFileOptions__isRecursive->setFeatureID(
+            ::FMS_Data::FMS_DataPackage::RMFILEOPTIONS__ISRECURSIVE);
+    m_RmFileOptionsEClass->getEStructuralFeatures().push_back(
+            m_RmFileOptions__isRecursive);
+
     // Create enums
 
     m_FileTypeEEnum = new ::ecore::EEnum();
@@ -935,6 +946,24 @@ FMS_DataPackage::FMS_DataPackage()
     m_TailOfFileOptions__nline->setUnique(true);
     m_TailOfFileOptions__nline->setDerived(false);
     m_TailOfFileOptions__nline->setOrdered(true);
+    // RmFileOptions
+    m_RmFileOptionsEClass->setName("RmFileOptions");
+    m_RmFileOptionsEClass->setAbstract(false);
+    m_RmFileOptionsEClass->setInterface(false);
+    m_RmFileOptions__isRecursive->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEBoolean());
+    m_RmFileOptions__isRecursive->setName("isRecursive");
+    m_RmFileOptions__isRecursive->setDefaultValueLiteral("false");
+    m_RmFileOptions__isRecursive->setLowerBound(0);
+    m_RmFileOptions__isRecursive->setUpperBound(1);
+    m_RmFileOptions__isRecursive->setTransient(false);
+    m_RmFileOptions__isRecursive->setVolatile(false);
+    m_RmFileOptions__isRecursive->setChangeable(true);
+    m_RmFileOptions__isRecursive->setUnsettable(false);
+    m_RmFileOptions__isRecursive->setID(false);
+    m_RmFileOptions__isRecursive->setUnique(true);
+    m_RmFileOptions__isRecursive->setDerived(false);
+    m_RmFileOptions__isRecursive->setOrdered(true);
 
     // TODO: Initialize data types
 
@@ -1164,6 +1193,10 @@ FMS_DataPackage::FMS_DataPackage()
 {
     return m_TailOfFileOptionsEClass;
 }
+::ecore::EClass_ptr FMS_DataPackage::getRmFileOptions()
+{
+    return m_RmFileOptionsEClass;
+}
 
 ::ecore::EAttribute_ptr FMS_DataPackage::getStringList__strings()
 {
@@ -1324,5 +1357,9 @@ FMS_DataPackage::FMS_DataPackage()
 ::ecore::EAttribute_ptr FMS_DataPackage::getTailOfFileOptions__nline()
 {
     return m_TailOfFileOptions__nline;
+}
+::ecore::EAttribute_ptr FMS_DataPackage::getRmFileOptions__isRecursive()
+{
+    return m_RmFileOptions__isRecursive;
 }
 

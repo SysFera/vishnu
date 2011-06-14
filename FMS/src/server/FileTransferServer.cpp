@@ -442,7 +442,7 @@ void FileTransferServer::waitThread (){
 void
 FileTransferServer::processOptions(const FMS_Data::StopTransferOptions& options, std::string& sqlRequest){
 
-  std::string transferId(options.getTransferId()),clientMachineName(options.getFromMachineId()),userId(options.getUserId());
+  std::string transferId(options.getTransferId()),machineName(options.getFromMachineId()),userId(options.getUserId());
 
   //To check if the transferId is defined
   if (transferId.size() != 0) {
@@ -458,11 +458,13 @@ FileTransferServer::processOptions(const FMS_Data::StopTransferOptions& options,
   }
 
   //To check if the fromMachineId is defined
-  if (clientMachineName.size() != 0) {
+  if (machineName.size() != 0) {
     //To check the client machine Id
-    FileTransferServer::checkClientMachineName(options.getFromMachineId());
-    //To add the fromMachineId on the request
-    FileTransferServer::addOptionRequest("clientMachineId", options.getFromMachineId(), sqlRequest);
+   // FileTransferServer::checkClientMachineName(options.getFromMachineId());
+    //To add the sourceMachineId on the request
+    FileTransferServer::addOptionRequest("sourcemachineid", machineName, sqlRequest);
+    //To add the destinationMachineId on the request
+    FileTransferServer::addOptionRequest("destinationmachineid", machineName, sqlRequest);
   }
 
   //Creation of the object user
