@@ -6,13 +6,11 @@
 */
 
 #include "ServerFMS.hpp"
-//#include "internalApiFMS.hpp"
 #include "utilVishnu.hpp"
 #include "DbFactory.hpp"
 #include <boost/scoped_ptr.hpp>
 #include "SystemException.hpp"
 #include "internalApiFMS.hpp"
-//#include "transferSrv.hpp"
 
 using namespace vishnu;
 using namespace FMS_Data;
@@ -33,7 +31,6 @@ ServerFMS::getInstance() {
 
 /**
 * \brief To get the vishnuId
-* \fn int getVishnuId()
 * \return the path of the configuration file
 */
 int
@@ -44,7 +41,6 @@ ServerFMS::getVishnuId() const {
 
 /**
 * \brief Constructor (private)
-* \fn ServerFMS()
 */
 ServerFMS::ServerFMS() : mprofile(NULL) {
 }
@@ -346,13 +342,10 @@ ServerFMS::init(int vishnuId,
 
 
 
-
-
   return 0;
 }
 
 /**
-* \fn ~ServerFMS()
 * \brief Destructor, raises an exception on error
 */
 ServerFMS::~ServerFMS() {

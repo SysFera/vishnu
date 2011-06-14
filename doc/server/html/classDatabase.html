@@ -59,10 +59,10 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to process the request in the database.  <a href="#a41881436b79aac5f4d8e179056564de1"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDatabase.html#aed0ada648871f841cfbe08bc1ee1bf92">connect</a> ()=0</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To make a connection to the database.  <a href="#aed0ada648871f841cfbe08bc1ee1bf92"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDatabase.html#aeba15395d2a36faf73dcb995695b9204">setDatabase</a> (std::string db)=0</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To set the name of the database to use.  <a href="#aeba15395d2a36faf73dcb995695b9204"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classDatabaseResult.html">DatabaseResult</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDatabase.html#a30f002bf9752a54c2a056abc1b8bb4d4">getResult</a> (std::string request)=0</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get the result of a select request.  <a href="#a30f002bf9752a54c2a056abc1b8bb4d4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classDbConfiguration.html#a4a57e43a5017a5c4833a784a994c91cf">DbConfiguration::db_type_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDatabase.html#a668ffe571cb0f9f355a2f874e40cb515">getDbType</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get the type of database.  <a href="#a668ffe571cb0f9f355a2f874e40cb515"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a84d399a2ad58d69daab9b05330e1316d"></a><!-- doxytag: member="Database::~Database" ref="a84d399a2ad58d69daab9b05330e1316d" args="()" -->
 virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDatabase.html#a84d399a2ad58d69daab9b05330e1316d">~Database</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructor, raises an exception on error. <br/></td></tr>
@@ -123,6 +123,28 @@ Private Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a668ffe571cb0f9f355a2f874e40cb515"></a><!-- doxytag: member="Database::getDbType" ref="a668ffe571cb0f9f355a2f874e40cb515" args="()=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="classDbConfiguration.html#a4a57e43a5017a5c4833a784a994c91cf">DbConfiguration::db_type_t</a> Database::getDbType </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To get the type of database. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>An enum identifying the type of database </dd></dl>
+
+<p>Implemented in <a class="el" href="classMYSQLDatabase.html#a6002562a486bc8a4c5a820cf45a62e64">MYSQLDatabase</a>, <a class="el" href="classOracleDatabase.html#a4079e91290576c8d71bc062ffa20330a">OracleDatabase</a>, and <a class="el" href="classPOSTGREDatabase.html#a6f446f99cff05695b37165ee0ce22a9a">POSTGREDatabase</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a30f002bf9752a54c2a056abc1b8bb4d4"></a><!-- doxytag: member="Database::getResult" ref="a30f002bf9752a54c2a056abc1b8bb4d4" args="(std::string request)=0" -->
 <div class="memitem">
 <div class="memproto">
@@ -171,7 +193,7 @@ Private Member Functions</h2></td></tr>
 <p>Function to process the request in the database. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>request</em>&nbsp;</td><td>The request to process </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>request</em>&nbsp;</td><td>The request to process (must contain a SINGLE SQL statement without a semicolumn) </td></tr>
   </table>
   </dd>
 </dl>
@@ -181,40 +203,11 @@ Private Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aeba15395d2a36faf73dcb995695b9204"></a><!-- doxytag: member="Database::setDatabase" ref="aeba15395d2a36faf73dcb995695b9204" args="(std::string db)=0" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Database::setDatabase </td>
-          <td>(</td>
-          <td class="paramtype">std::string&nbsp;</td>
-          <td class="paramname"> <em>db</em></td>
-          <td>&nbsp;)&nbsp;</td>
-          <td><code> [pure virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>To set the name of the database to use. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>db</em>&nbsp;</td><td>The name of database to use </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
-
-<p>Implemented in <a class="el" href="classMYSQLDatabase.html#a884c0742ea2d4d44d8c177144f5279ef">MYSQLDatabase</a>, <a class="el" href="classOracleDatabase.html#a937a096b286c4e6738ea5d314aabe109">OracleDatabase</a>, and <a class="el" href="classPOSTGREDatabase.html#acadff2a3649a40b323eb7711e0d705cf">POSTGREDatabase</a>.</p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>core/src/database/<a class="el" href="Database_8hpp_source.html">Database.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu May 12 2011 16:22:22 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 14 2011 23:13:12 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

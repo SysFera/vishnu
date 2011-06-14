@@ -40,7 +40,19 @@ const std::string \& \hyperlink{classDbConfiguration_a3baca98b7587f48e9ce0fe3692
 const std::string \& \hyperlink{classDbConfiguration_ad7574a825957ea574d97310d0e32f642}{getDbUserName} () const 
 \begin{DoxyCompactList}\small\item\em Get the database user name to connect to the database. \item\end{DoxyCompactList}\item 
 const std::string \& \hyperlink{classDbConfiguration_a24814f0a123ed8afdfc8f0883033bc80}{getDbUserPassword} () const 
-\begin{DoxyCompactList}\small\item\em Get the database user password to connect to the database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get the database user password to connect to the database. \item\end{DoxyCompactList}\item 
+void \hyperlink{classDbConfiguration_a188e9fb2d8159963d36fe07892ab6413}{setDbPoolSize} (unsigned poolSize)
+\begin{DoxyCompactList}\small\item\em Set the nb of connections to open simultaneously to the database. \item\end{DoxyCompactList}\item 
+int \hyperlink{classDbConfiguration_a4f4b6838ef282481d47f8b332c4da598}{getDbPoolSize} ()
+\begin{DoxyCompactList}\small\item\em Get the nb of connections to open simultaneously to the database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classDbConfiguration_ad8dfa863efbd93a229f7371e4c5ea2c2}{
+static const int \hyperlink{classDbConfiguration_ad8dfa863efbd93a229f7371e4c5ea2c2}{defaultDbPoolSize}}
+\label{classDbConfiguration_ad8dfa863efbd93a229f7371e4c5ea2c2}
+
+\begin{DoxyCompactList}\small\item\em Default value for the nb of db connections in the pool. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -59,9 +71,9 @@ std::string \hyperlink{classDbConfiguration_a99de17b15f3b8fa9e7ed76f564cbeaf0}{m
 \label{classDbConfiguration_a99de17b15f3b8fa9e7ed76f564cbeaf0}
 
 \begin{DoxyCompactList}\small\item\em Attribute host of the database. \item\end{DoxyCompactList}\item 
-\hypertarget{classDbConfiguration_a25508bbd318ad0a595dfcb05bb1a6a28}{
-int \hyperlink{classDbConfiguration_a25508bbd318ad0a595dfcb05bb1a6a28}{mdbPort}}
-\label{classDbConfiguration_a25508bbd318ad0a595dfcb05bb1a6a28}
+\hypertarget{classDbConfiguration_a156df53ac791e9b01a62d04a2e57926b}{
+unsigned \hyperlink{classDbConfiguration_a156df53ac791e9b01a62d04a2e57926b}{mdbPort}}
+\label{classDbConfiguration_a156df53ac791e9b01a62d04a2e57926b}
 
 \begin{DoxyCompactList}\small\item\em Attribute port of the database. \item\end{DoxyCompactList}\item 
 \hypertarget{classDbConfiguration_aeb3141eddb0bdb0081dee5e23ae9a29a}{
@@ -78,7 +90,12 @@ std::string \hyperlink{classDbConfiguration_a40128b55308f953f655b2589d4365460}{m
 std::string \hyperlink{classDbConfiguration_a9bd29c20a4ee1994c97d210a12ffa78b}{mdbPassword}}
 \label{classDbConfiguration_a9bd29c20a4ee1994c97d210a12ffa78b}
 
-\begin{DoxyCompactList}\small\item\em Attribute user password to connect to the database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Attribute user password to connect to the database. \item\end{DoxyCompactList}\item 
+\hypertarget{classDbConfiguration_a98ca16df035ce8a52f2dfc8951061726}{
+unsigned \hyperlink{classDbConfiguration_a98ca16df035ce8a52f2dfc8951061726}{mdbPoolSize}}
+\label{classDbConfiguration_a98ca16df035ce8a52f2dfc8951061726}
+
+\begin{DoxyCompactList}\small\item\em Attribute number of db connections in the pool. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -135,6 +152,22 @@ Get the database name.
 
 \begin{DoxyReturn}{Returns}
 database name 
+\end{DoxyReturn}
+\hypertarget{classDbConfiguration_a4f4b6838ef282481d47f8b332c4da598}{
+\index{DbConfiguration@{DbConfiguration}!getDbPoolSize@{getDbPoolSize}}
+\index{getDbPoolSize@{getDbPoolSize}!DbConfiguration@{DbConfiguration}}
+\subsubsection[{getDbPoolSize}]{\setlength{\rightskip}{0pt plus 5cm}int DbConfiguration::getDbPoolSize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classDbConfiguration_a4f4b6838ef282481d47f8b332c4da598}
+
+
+Get the nb of connections to open simultaneously to the database. 
+
+in order to process parallel requests. \begin{DoxyReturn}{Returns}
+nb of connections in the connection pool 
 \end{DoxyReturn}
 \hypertarget{classDbConfiguration_a990bf4ff748852ddf6c3855947222088}{
 \index{DbConfiguration@{DbConfiguration}!getDbPort@{getDbPort}}
@@ -200,8 +233,24 @@ Get the database user password to connect to the database.
 \begin{DoxyReturn}{Returns}
 database user password 
 \end{DoxyReturn}
+\hypertarget{classDbConfiguration_a188e9fb2d8159963d36fe07892ab6413}{
+\index{DbConfiguration@{DbConfiguration}!setDbPoolSize@{setDbPoolSize}}
+\index{setDbPoolSize@{setDbPoolSize}!DbConfiguration@{DbConfiguration}}
+\subsubsection[{setDbPoolSize}]{\setlength{\rightskip}{0pt plus 5cm}void DbConfiguration::setDbPoolSize (
+\begin{DoxyParamCaption}
+\item[{unsigned}]{ poolSize}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classDbConfiguration_a188e9fb2d8159963d36fe07892ab6413}
+
+
+Set the nb of connections to open simultaneously to the database. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em poolSize}]nb of connections in the connection pool \end{DoxyParams}
 
 
 The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
 \item 
-core/src/config/\hyperlink{DbConfiguration_8hpp}{DbConfiguration.hpp}\end{DoxyCompactItemize}
+core/src/database/\hyperlink{DbConfiguration_8hpp}{DbConfiguration.hpp}\end{DoxyCompactItemize}

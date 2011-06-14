@@ -14,7 +14,7 @@
 Inheritance diagram for UMSMapper:\begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[height=2.000000cm]{classUMSMapper}
+\includegraphics[height=3.000000cm]{classUMSMapper}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
@@ -44,52 +44,52 @@ virtual int \hyperlink{classUMSMapper_af5aec06e19b9b242645cf1abc2d6dad0}{code} (
 \begin{DoxyCompactList}\small\item\em Function to add an element to code. \item\end{DoxyCompactList}\item 
 virtual string \hyperlink{classUMSMapper_a09302a31b4cc2698d0e0d563988fb7c3}{decode} (const string \&msg)
 \begin{DoxyCompactList}\small\item\em To get, from a coded string, the cli like command that made it. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsection*{Private Member Functions}
+\subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-string \hyperlink{classUMSMapper_a145a0e6311e595394f5f07da1a3a989b}{decodeClose} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_a145a0e6311e595394f5f07da1a3a989b}{decodeClose} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the close call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classUMSMapper_a1f5caa2c4e02967efb3dc741813831a7}{decodeAddUser} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_a1f5caa2c4e02967efb3dc741813831a7}{decodeAddUser} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classUMSMapper_afc32e4e8ec824a76c57577d234a46f7c}{decodeUpUser} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_afc32e4e8ec824a76c57577d234a46f7c}{decodeUpUser} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classUMSMapper_a63cdc4905b7ad965c410cdccff455329}{decodeDelUser} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_a63cdc4905b7ad965c410cdccff455329}{decodeDelUser} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classUMSMapper_afc9f56ce3627876213876ebbb0c3cedb}{decodeChangePwd} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_afc9f56ce3627876213876ebbb0c3cedb}{decodeChangePwd} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classUMSMapper_a001ffc8295fb72cd937676973f0520cb}{decodeResetPwd} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_a001ffc8295fb72cd937676973f0520cb}{decodeResetPwd} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classUMSMapper_aad443517f273c610f3ecc38f9e9b817f}{decodeAddAcc} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_aad443517f273c610f3ecc38f9e9b817f}{decodeAddAcc} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classUMSMapper_a7be83cb37c8b72e6103c62669381ac5c}{decodeUpAcc} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_a7be83cb37c8b72e6103c62669381ac5c}{decodeUpAcc} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classUMSMapper_a64e8fa1fe8aa071b405a4c1c67c837ec}{decodeDelAcc} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_a64e8fa1fe8aa071b405a4c1c67c837ec}{decodeDelAcc} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classUMSMapper_a621d646f3f4525edb990813d31b2ee61}{decodeSaveConf} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_a621d646f3f4525edb990813d31b2ee61}{decodeSaveConf} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classUMSMapper_a26597d9d63ee7db4110669b59460f74f}{decodeRestoreConf} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_a26597d9d63ee7db4110669b59460f74f}{decodeRestoreConf} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classUMSMapper_a8b40c596d15368717b8a62a00d80df22}{decodeAddM} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_a8b40c596d15368717b8a62a00d80df22}{decodeAddM} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classUMSMapper_a11c776ef36bfe7237e920dfdd3c0c1ec}{decodeUpM} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_a11c776ef36bfe7237e920dfdd3c0c1ec}{decodeUpM} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classUMSMapper_a8b218eb1620678b625db8444dab8226c}{decodeDelM} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_a8b218eb1620678b625db8444dab8226c}{decodeDelM} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classUMSMapper_aca69a6e37499b1e2536521048ff40403}{decodeListAcc} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_aca69a6e37499b1e2536521048ff40403}{decodeListAcc} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classUMSMapper_af1a5337f43f288ba2f922f9876b8e0f8}{decodeListM} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_af1a5337f43f288ba2f922f9876b8e0f8}{decodeListM} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classUMSMapper_a54ef53fc918cfacdeda213fafdcc76de}{decodeListH} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_a54ef53fc918cfacdeda213fafdcc76de}{decodeListH} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classUMSMapper_a72267ca71cc620570a238dfec3f0519f}{decodeListOp} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_a72267ca71cc620570a238dfec3f0519f}{decodeListOp} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classUMSMapper_a569b2de623104e451711ff14b1f8f84f}{decodeListUser} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_a569b2de623104e451711ff14b1f8f84f}{decodeListUser} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classUMSMapper_a750e6d307c48491a86a97d694807ca66}{decodeListSession} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_a750e6d307c48491a86a97d694807ca66}{decodeListSession} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classUMSMapper_ad157fb31bec53a8c140fb2e2d60465b3}{decodeConfDefaultOp} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_ad157fb31bec53a8c140fb2e2d60465b3}{decodeConfDefaultOp} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classUMSMapper_ac1f47841882d3f85b8820ab836789036}{decodeConfOp} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classUMSMapper_ac1f47841882d3f85b8820ab836789036}{decodeConfOp} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
 string \hyperlink{classUMSMapper_a60bb02d794c885f5e0feae133af7058d}{getU} (string serial)
 \begin{DoxyCompactList}\small\item\em To deserialize the serial string, make a user objet, and get the values in the same string. \item\end{DoxyCompactList}\item 
@@ -176,7 +176,7 @@ Reimplemented from \hyperlink{classMapper_a5e51b9148704b25e26e5ec48bd643a0b}{Map
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_aad443517f273c610f3ecc38f9e9b817f}
 
 
@@ -196,7 +196,7 @@ The cli like add account command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_a8b40c596d15368717b8a62a00d80df22}
 
 
@@ -216,7 +216,7 @@ The cli like add machine command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_a1f5caa2c4e02967efb3dc741813831a7}
 
 
@@ -236,7 +236,7 @@ The cli like add user command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_afc9f56ce3627876213876ebbb0c3cedb}
 
 
@@ -256,7 +256,7 @@ The cli like change password command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_a145a0e6311e595394f5f07da1a3a989b}
 
 
@@ -276,7 +276,7 @@ The cli like close command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_ad157fb31bec53a8c140fb2e2d60465b3}
 
 
@@ -296,7 +296,7 @@ The cli like configure default option command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_ac1f47841882d3f85b8820ab836789036}
 
 
@@ -316,7 +316,7 @@ The cli like configure option command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_a64e8fa1fe8aa071b405a4c1c67c837ec}
 
 
@@ -336,7 +336,7 @@ The cli like delete account command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_a8b218eb1620678b625db8444dab8226c}
 
 
@@ -356,7 +356,7 @@ The cli like delete machine command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_a63cdc4905b7ad965c410cdccff455329}
 
 
@@ -376,7 +376,7 @@ The cli like delete user command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_aca69a6e37499b1e2536521048ff40403}
 
 
@@ -396,7 +396,7 @@ The cli like list account command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_a54ef53fc918cfacdeda213fafdcc76de}
 
 
@@ -416,7 +416,7 @@ The cli like list history command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_af1a5337f43f288ba2f922f9876b8e0f8}
 
 
@@ -436,7 +436,7 @@ The cli like list machine command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_a72267ca71cc620570a238dfec3f0519f}
 
 
@@ -456,7 +456,7 @@ The cli like list option command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_a750e6d307c48491a86a97d694807ca66}
 
 
@@ -476,7 +476,7 @@ The cli like list session command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_a569b2de623104e451711ff14b1f8f84f}
 
 
@@ -496,7 +496,7 @@ The cli like list user command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_a001ffc8295fb72cd937676973f0520cb}
 
 
@@ -516,7 +516,7 @@ The cli like reset password command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_a26597d9d63ee7db4110669b59460f74f}
 
 
@@ -536,7 +536,7 @@ The cli like crestore configuration command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_a621d646f3f4525edb990813d31b2ee61}
 
 
@@ -556,7 +556,7 @@ The cli like save configuration command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_a7be83cb37c8b72e6103c62669381ac5c}
 
 
@@ -576,7 +576,7 @@ The cli like update account command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_a11c776ef36bfe7237e920dfdd3c0c1ec}
 
 
@@ -596,7 +596,7 @@ The cli like update machine command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classUMSMapper_afc32e4e8ec824a76c57577d234a46f7c}
 
 
@@ -655,7 +655,7 @@ To get the key corresponding to a command.
 \begin{DoxyParamCaption}
 \item[{string}]{ serial}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
 \label{classUMSMapper_a60bb02d794c885f5e0feae133af7058d}
 
 
@@ -674,7 +674,7 @@ A string containing the user fields in the right order
 \begin{DoxyParamCaption}
 \item[{string}]{ serial}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
 \label{classUMSMapper_aadfd01766b31dfe8b40710b8b3bb432c}
 
 

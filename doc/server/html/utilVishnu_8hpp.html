@@ -43,6 +43,8 @@
 <code>#include &lt;boost/random/variate_generator.hpp&gt;</code><br/>
 <code>#include &quot;boost/date_time/posix_time/posix_time.hpp&quot;</code><br/>
 <code>#include &quot;boost/date_time/gregorian/gregorian.hpp&quot;</code><br/>
+<code>#include &quot;<a class="el" href="FMSVishnuException_8hpp_source.html">FMSVishnuException.hpp</a>&quot;</code><br/>
+<code>#include &lt;boost/filesystem.hpp&gt;</code><br/>
 
 <p><a href="utilVishnu_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -68,6 +70,8 @@ Functions</h2></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
 <tr><td class="memTemplItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#add18720aacc1db6052abecedd5d6feaa">vishnu::convertToString</a> (T val)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Generic function to convert an object to string.  <a href="#add18720aacc1db6052abecedd5d6feaa"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">long long&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ae4208edfb8924443b0971e68cccfce02">vishnu::convertToTimeType</a> (std::string date)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to convert a given date into correspondant long value.  <a href="#ae4208edfb8924443b0971e68cccfce02"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066">vishnu::convertToInt</a> (std::string val)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to convert a string to int.  <a href="#ac1899fb2792ddd63a003a06081fc9066"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a6315b6f5e86d48f4c75dc73d08348edf">vishnu::cryptPassword</a> (const std::string &amp;salt, const std::string password)</td></tr>
@@ -80,8 +84,8 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Simple function to convert time from string format (YYYY-MM-DD H:mm:ss) to long integer format in seconds.  <a href="#ace1a774c9d738133e7cdfe505d358764"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a50b77ca8a04c384cba2b8b6cdec4a26f">vishnu::get_file_content</a> (const std::string &amp;filePath)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Simple function to read the content of a regular file.  <a href="#a50b77ca8a04c384cba2b8b6cdec4a26f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a66626268c81795efe726f8c9bb70b1c2">vishnu::moveFile</a> (std::string src, std::string dest, const std::string &amp;filename=&quot;&quot;)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to move file.  <a href="#a66626268c81795efe726f8c9bb70b1c2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a0e3a3913b049d96a08712f45d71e86cb">vishnu::boostMoveFile</a> (const std::string &amp;src, const std::string &amp;dest, const std::string &amp;filename=&quot;&quot;)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to move file.  <a href="#a0e3a3913b049d96a08712f45d71e86cb"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a8087df6ef072800cecc1bf4e85d9aca5">vishnu::isNumericalValue</a> (const std::string value)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check a numerical value.  <a href="#a8087df6ef072800cecc1bf4e85d9aca5"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ad5bea19658f717e721e13dacad591b2a">vishnu::convertWallTimeToString</a> (const long &amp;walltime)</td></tr>
@@ -100,6 +104,8 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to convert UTC time into localtime (seconds).  <a href="#a912b9d87fc92812a07bb7f6dce8dcb85"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">time_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a7607f0891ab382dcb2343a36d9b25190">vishnu::convertLocaltimeINUTCtime</a> (const time_t &amp;localtime)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to localtime into UTC (seconds).  <a href="#a7607f0891ab382dcb2343a36d9b25190"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">long&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a34f4596f7c86c2f9bd6b6bd49be69e6f">vishnu::diffLocaltimeUTCtime</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to return the difference between localtime and UTC time (seconds).  <a href="#a34f4596f7c86c2f9bd6b6bd49be69e6f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a33f3fca5bc294663e2863c1abc1da5c8">vishnu::createTmpFile</a> (char *fileName, const std::string &amp;file_content)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to create temporary file.  <a href="#a33f3fca5bc294663e2863c1abc1da5c8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a18002572e5b0039069544475365f335d">vishnu::createTmpFile</a> (char *fileName)</td></tr>
@@ -109,6 +115,15 @@ Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab0ea8ccb86c430f6a602374c82f66d2e"></a><!-- doxytag: member="utilVishnu.hpp::printSuccessMessage" ref="ab0ea8ccb86c430f6a602374c82f66d2e" args="()" -->
 void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ab0ea8ccb86c430f6a602374c82f66d2e">vishnu::printSuccessMessage</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to print success message. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af872d4641cf320df3d2c2102dccbd18e"></a><!-- doxytag: member="utilVishnu.hpp::printSessionKeyMessage" ref="af872d4641cf320df3d2c2102dccbd18e" args="()" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#af872d4641cf320df3d2c2102dccbd18e">vishnu::printSessionKeyMessage</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to display the session key. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a7671a1a0faa2417f4224a68879979bc4">vishnu::checkMetricHistoryValue</a> (const int &amp;metric)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check the metric value.  <a href="#a7671a1a0faa2417f4224a68879979bc4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a3b238cf04a86c821f8a267afad489bee">vishnu::checkRemotePath</a> (const std::string &amp;path)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check the remote file path.  <a href="#a3b238cf04a86c821f8a267afad489bee"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a04f9a9dfc61b7390150222b10f64bb70">vishnu::process_exists</a> (const std::string &amp;pid, const bfs::path &amp;proc_dir=&quot;/proc&quot;)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Check if the pid exists.  <a href="#a04f9a9dfc61b7390150222b10f64bb70"></a><br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>This file presents the utils functions of the vishnu system. </p>
@@ -182,7 +197,7 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 </div>
 </div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu May 12 2011 16:22:22 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 14 2011 23:13:12 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

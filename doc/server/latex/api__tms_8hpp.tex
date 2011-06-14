@@ -34,15 +34,15 @@ namespace \hyperlink{namespacevishnu}{vishnu}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-int \hyperlink{namespacevishnu_adfcc1f58eb5f9294cd3e668704e62649}{vishnu::submitJob} (const std::string \&sessionKey, const std::string \&machineId, const std::string \&scriptFilePath, Job \&jobInfo, const SubmitOptions \&options)  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
+int \hyperlink{namespacevishnu_acee6838fcf107a7a9b2f058159b7b9be}{vishnu::submitJob} (const std::string \&sessionKey, const std::string \&machineId, const std::string \&scriptFilePath, Job \&jobInfo, const SubmitOptions \&options=SubmitOptions())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em The submitJob function submits job on a machine through the use of a script (scriptFilePath). \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_a151ba595af88d89107ff08ad0e2c5e31}{vishnu::cancelJob} (const std::string \&sessionKey, const std::string \&machineId, const std::string \&jobId)  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em The cancelJob function cancels a job from its id. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_a4461c3e9d86e9c507436655056a1b660}{vishnu::getJobInfo} (const std::string \&sessionKey, const std::string \&machineId, const std::string \&jobId, Job \&jobInfos)  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em The getJobInfo function gets information on a job from its id. \item\end{DoxyCompactList}\item 
-int \hyperlink{namespacevishnu_a6244690b88aff21355c382318bffff14}{vishnu::listJobs} (const std::string \&sessionKey, const std::string \&machineId, ListJobs \&listOfJobs, const ListJobsOptions \&options)  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
+int \hyperlink{namespacevishnu_a8e73e05d9006bd3e0388234ccf861538}{vishnu::listJobs} (const std::string \&sessionKey, const std::string \&machineId, ListJobs \&listOfJobs, const ListJobsOptions \&options=ListJobsOptions())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em The listJobs function gets a list of all submitted jobs. \item\end{DoxyCompactList}\item 
-int \hyperlink{namespacevishnu_a6cfe834ba44e65437afa5c324ef03fd3}{vishnu::getJobProgress} (const std::string \&sessionKey, const std::string \&machineId, ListProgression \&listOfProgress, const ProgressOptions \&options)  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
+int \hyperlink{namespacevishnu_a5bc51ba53a335079d0b7044cc2c8f4cc}{vishnu::getJobProgress} (const std::string \&sessionKey, const std::string \&machineId, ListProgression \&listOfProgress, const ProgressOptions \&options=ProgressOptions())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em The getJobProgress function gets the progression status of jobs. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_ada2d98155cffa475261261fb33f7e873}{vishnu::listQueues} (const std::string \&sessionKey, const std::string \&machineId, ListQueues \&listofQueues, const std::string \&queueName=std::string())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em The listQueues function gets queues information. \item\end{DoxyCompactList}\item 

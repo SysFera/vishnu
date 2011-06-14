@@ -14,6 +14,8 @@ This file presents the utils functions of the vishnu system.
 {\ttfamily \#include $<$boost/random/variate\_\-generator.hpp$>$}\par
 {\ttfamily \#include \char`\"{}boost/date\_\-time/posix\_\-time/posix\_\-time.hpp\char`\"{}}\par
 {\ttfamily \#include \char`\"{}boost/date\_\-time/gregorian/gregorian.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}FMSVishnuException.hpp\char`\"{}}\par
+{\ttfamily \#include $<$boost/filesystem.hpp$>$}\par
 \subsection*{Namespaces}
 \begin{DoxyCompactItemize}
 \item 
@@ -38,6 +40,8 @@ char $\ast$ \hyperlink{utilVishnu_8hpp_af8fddc209cd7604f6611fac491e14c65}{crypt}
 \begin{DoxyCompactList}\small\item\em Function to encrypt data and password. \item\end{DoxyCompactList}\item 
 {\footnotesize template$<$class T $>$ }\\std::string \hyperlink{namespacevishnu_add18720aacc1db6052abecedd5d6feaa}{vishnu::convertToString} (T val)
 \begin{DoxyCompactList}\small\item\em Generic function to convert an object to string. \item\end{DoxyCompactList}\item 
+long long \hyperlink{namespacevishnu_ae4208edfb8924443b0971e68cccfce02}{vishnu::convertToTimeType} (std::string date)
+\begin{DoxyCompactList}\small\item\em Function to convert a given date into correspondant long value. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_ac1899fb2792ddd63a003a06081fc9066}{vishnu::convertToInt} (std::string val)
 \begin{DoxyCompactList}\small\item\em Function to convert a string to int. \item\end{DoxyCompactList}\item 
 std::string \hyperlink{namespacevishnu_a6315b6f5e86d48f4c75dc73d08348edf}{vishnu::cryptPassword} (const std::string \&salt, const std::string password)
@@ -50,7 +54,7 @@ std::time\_\-t \hyperlink{namespacevishnu_ace1a774c9d738133e7cdfe505d358764}{vis
 \begin{DoxyCompactList}\small\item\em Simple function to convert time from string format (YYYY-\/MM-\/DD H:mm:ss) to long integer format in seconds. \item\end{DoxyCompactList}\item 
 std::string \hyperlink{namespacevishnu_a50b77ca8a04c384cba2b8b6cdec4a26f}{vishnu::get\_\-file\_\-content} (const std::string \&filePath)
 \begin{DoxyCompactList}\small\item\em Simple function to read the content of a regular file. \item\end{DoxyCompactList}\item 
-int \hyperlink{namespacevishnu_a66626268c81795efe726f8c9bb70b1c2}{vishnu::moveFile} (std::string src, std::string dest, const std::string \&filename=\char`\"{}\char`\"{})
+int \hyperlink{namespacevishnu_a0e3a3913b049d96a08712f45d71e86cb}{vishnu::boostMoveFile} (const std::string \&src, const std::string \&dest, const std::string \&filename=\char`\"{}\char`\"{})
 \begin{DoxyCompactList}\small\item\em Function to move file. \item\end{DoxyCompactList}\item 
 bool \hyperlink{namespacevishnu_a8087df6ef072800cecc1bf4e85d9aca5}{vishnu::isNumericalValue} (const std::string value)
 \begin{DoxyCompactList}\small\item\em Function to check a numerical value. \item\end{DoxyCompactList}\item 
@@ -70,6 +74,8 @@ time\_\-t \hyperlink{namespacevishnu_a912b9d87fc92812a07bb7f6dce8dcb85}{vishnu::
 \begin{DoxyCompactList}\small\item\em Function to convert UTC time into localtime (seconds). \item\end{DoxyCompactList}\item 
 time\_\-t \hyperlink{namespacevishnu_a7607f0891ab382dcb2343a36d9b25190}{vishnu::convertLocaltimeINUTCtime} (const time\_\-t \&localtime)
 \begin{DoxyCompactList}\small\item\em Function to localtime into UTC (seconds). \item\end{DoxyCompactList}\item 
+long \hyperlink{namespacevishnu_a34f4596f7c86c2f9bd6b6bd49be69e6f}{vishnu::diffLocaltimeUTCtime} ()
+\begin{DoxyCompactList}\small\item\em Function to return the difference between localtime and UTC time (seconds). \item\end{DoxyCompactList}\item 
 void \hyperlink{namespacevishnu_a33f3fca5bc294663e2863c1abc1da5c8}{vishnu::createTmpFile} (char $\ast$fileName, const std::string \&file\_\-content)
 \begin{DoxyCompactList}\small\item\em Function to create temporary file. \item\end{DoxyCompactList}\item 
 void \hyperlink{namespacevishnu_a18002572e5b0039069544475365f335d}{vishnu::createTmpFile} (char $\ast$fileName)
@@ -80,7 +86,18 @@ int \hyperlink{namespacevishnu_adccbbcf352ca9471d210e9d801c73e2d}{vishnu::delete
 void \hyperlink{namespacevishnu_ab0ea8ccb86c430f6a602374c82f66d2e}{vishnu::printSuccessMessage} ()}
 \label{namespacevishnu_ab0ea8ccb86c430f6a602374c82f66d2e}
 
-\begin{DoxyCompactList}\small\item\em Function to print success message. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Function to print success message. \item\end{DoxyCompactList}\item 
+\hypertarget{namespacevishnu_af872d4641cf320df3d2c2102dccbd18e}{
+void \hyperlink{namespacevishnu_af872d4641cf320df3d2c2102dccbd18e}{vishnu::printSessionKeyMessage} ()}
+\label{namespacevishnu_af872d4641cf320df3d2c2102dccbd18e}
+
+\begin{DoxyCompactList}\small\item\em Function to display the session key. \item\end{DoxyCompactList}\item 
+void \hyperlink{namespacevishnu_a7671a1a0faa2417f4224a68879979bc4}{vishnu::checkMetricHistoryValue} (const int \&metric)
+\begin{DoxyCompactList}\small\item\em Function to check the metric value. \item\end{DoxyCompactList}\item 
+void \hyperlink{namespacevishnu_a3b238cf04a86c821f8a267afad489bee}{vishnu::checkRemotePath} (const std::string \&path)
+\begin{DoxyCompactList}\small\item\em Function to check the remote file path. \item\end{DoxyCompactList}\item 
+bool \hyperlink{namespacevishnu_a04f9a9dfc61b7390150222b10f64bb70}{vishnu::process\_\-exists} (const std::string \&pid, const bfs::path \&proc\_\-dir=\char`\"{}/proc\char`\"{})
+\begin{DoxyCompactList}\small\item\em Check if the pid exists. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
