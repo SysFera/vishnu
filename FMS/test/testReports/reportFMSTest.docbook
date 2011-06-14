@@ -755,16 +755,16 @@ same conditions as regards security.</para>
             </row>
             <row>
                <entry>
-                  <para>LOAD-2.1-getMetricCurrentValue</para>
+                  <para>LOAD-2.1-createFile</para>
                </entry>
                <entry>
-                  <para>06/06/11</para>
+                  <para>13/06/11</para>
                </entry>
                <entry>
                   <para>Simultaneous launch of 100 commands</para>
                </entry>
                <entry>
-                  <para>getMetricCurrentValue</para>
+                  <para>createFile</para>
                </entry>
                <entry>
                   <para>Success - normal execution of all commands launched</para>
@@ -772,16 +772,16 @@ same conditions as regards security.</para>
             </row>   
 	    <row>
                <entry>
-                  <para>LOAD-2.1-getMetricHistory</para>
+                  <para>LOAD-2.1-listFileTransfers</para>
                </entry>
                <entry>
-                  <para>06/06/11</para>
+                  <para>13/06/11</para>
                </entry>
                <entry>
                   <para>Success - Simultaneous launch of 100 commands</para>
                </entry>
                <entry>
-                  <para>getMetricHistory</para>
+                  <para>listFileTransfers</para>
                </entry>
                <entry>
                   <para>Success - normal execution of all commands launched</para>

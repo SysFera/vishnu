@@ -31,6 +31,7 @@
 #include <FMS_Data/FileTransferList.hpp>
 #include <FMS_Data/HeadOfFileOptions.hpp>
 #include <FMS_Data/TailOfFileOptions.hpp>
+#include <FMS_Data/RmFileOptions.hpp>
 
 #include <ecore.hpp>
 #include <ecorecpp/mapping.hpp>
@@ -70,6 +71,8 @@ FMS_DataFactory::FMS_DataFactory()
         return createHeadOfFileOptions();
     case FMS_DataPackage::TAILOFFILEOPTIONS:
         return createTailOfFileOptions();
+    case FMS_DataPackage::RMFILEOPTIONS:
+        return createRmFileOptions();
     default:
         throw "IllegalArgumentException";
     }
@@ -190,5 +193,9 @@ HeadOfFileOptions_ptr FMS_DataFactory::createHeadOfFileOptions()
 TailOfFileOptions_ptr FMS_DataFactory::createTailOfFileOptions()
 {
     return new TailOfFileOptions();
+}
+RmFileOptions_ptr FMS_DataFactory::createRmFileOptions()
+{
+    return new RmFileOptions();
 }
 
