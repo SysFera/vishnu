@@ -19,6 +19,31 @@
 
 using namespace std;
 
+
+int 
+vishnu::unregisterSeD(string type) {
+  // Hostname limit size of 200
+  char hname[200];
+  gethostname(hname, 199);
+  string mid = getMidFromHost(hname);
+  string req = "update process set pstatus='";
+  req += convertToString(PDOWN);
+  req += "', uptime=CURRENT_TIMESTAMP where machineid='";
+  req += mid;
+  req += "' and vishnuname='";
+  req += type;
+  req += "'";
+  // Database execution
+  try {
+    DbFactory factory;
+    Database* database = factory.getDatabaseInstance();
+    database->process(req.c_str());
+  } catch (SystemException& e) {
+    throw (e);
+  }
+  return 0;
+}
+
 int
 vishnu::registerSeD(string type, ExecConfiguration config){
   string s = config.scriptToString();

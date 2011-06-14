@@ -133,6 +133,7 @@ int main(int argc, char* argv[], char* envp[]) {
   if (!res) {
     diet_print_service_table();
     res = diet_SeD(dietConfigFile.c_str(), argc, argv);
+    unregisterSeD(IMSTYPE);
     pid_t pid = getpid();
     kill(pid, SIGINT);
   } else {
