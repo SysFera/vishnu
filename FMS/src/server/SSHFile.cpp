@@ -494,15 +494,12 @@ pair<string, string> SSHExec::exec(const string& cmd) const {
   int comPipeErr[2];
   int status;
   char c;
-  
- /* command << sshCommand << " -i " << privateKey << " -l " << userName;
-  command << " -p " << sshPort << " " << server << " " << cmd;*/
-
+ 
+  // build the remote command  
   
   command << sshCommand  << " -l " << userName;
   command << " -C"  << " -o BatchMode=yes " << " -o StrictHostKeyChecking=no";
   command << " -o ForwardAgent=yes";
- // command  << " -o ControlMaster=yes " << " -o ControlPath=/tmp/ssh-%r@%h:%p";
   command << " -p " << sshPort << " " << server << " " << cmd;
 
   
@@ -512,12 +509,6 @@ pair<string, string> SSHExec::exec(const string& cmd) const {
        istream_iterator<string>(),
        back_inserter<vector<string> >(tokens));
   
-/***********************************************/
-
-vector<string>:: iterator ite;
-cout << endl;
-for (ite=tokens.begin(); ite!=tokens.end();++ite)
-cout << *ite << endl;
 
 /**********************************************/
 

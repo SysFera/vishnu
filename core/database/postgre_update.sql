@@ -32,6 +32,10 @@ PRIMARY KEY(numfileTransferid),
     FOREIGN KEY(vsession_numsessionid)
     REFERENCES vsession(numsessionid) ON DELETE CASCADE);
 
+  --- Update optionu table to add new user option :VISHNU_TRANSFER_CMD
+ 
+  INSERT INTO optionu (optionid, description, defaultvalue) VALUES (3, 'VISHNU_TRANSFER_CMD', 0);
+
 GRANT SELECT, INSERT, UPDATE, DELETE ON filetransfer TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON filetransfer TO "vishnu_user";
 GRANT ALL ON SEQUENCE filetransfer_numfiletransferid_seq TO "vishnu_user";
