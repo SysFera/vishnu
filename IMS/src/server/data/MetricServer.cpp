@@ -10,24 +10,31 @@
 using namespace vishnu;
 
 MetricServer::MetricServer(const UserServer session, string mail):msession(session), msendmail(mail) {
+  IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
   mvishnuId = 1;
   mfreq = 0;
+  mcop = ecoreFactory->createCurMetricOp();
+  mhop = ecoreFactory->createMetricHistOp();
 }
 MetricServer::MetricServer(const UserServer session, IMS_Data::MetricHistOp_ptr op, string mail):msession(session), msendmail(mail) {
+  IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
   mhop = op;
   mvishnuId = 1;
   mfreq = 0;
+  mcop = ecoreFactory->createCurMetricOp();
 }
 MetricServer::MetricServer(const UserServer session, IMS_Data::CurMetricOp_ptr op, string mail):msession(session), msendmail(mail) {
+  IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
   mcop = op;
   mvishnuId = 1;
   mfreq = 0;
+  mhop = ecoreFactory->createMetricHistOp();
 }
 MetricServer::~MetricServer(){
 }
