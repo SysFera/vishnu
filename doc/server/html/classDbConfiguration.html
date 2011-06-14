@@ -29,6 +29,7 @@
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
 <h1>DbConfiguration Class Reference</h1>  </div>
@@ -69,6 +70,15 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get the database user name to connect to the database.  <a href="#ad7574a825957ea574d97310d0e32f642"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const std::string &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDbConfiguration.html#a24814f0a123ed8afdfc8f0883033bc80">getDbUserPassword</a> () const </td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get the database user password to connect to the database.  <a href="#a24814f0a123ed8afdfc8f0883033bc80"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDbConfiguration.html#a188e9fb2d8159963d36fe07892ab6413">setDbPoolSize</a> (unsigned poolSize)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Set the nb of connections to open simultaneously to the database.  <a href="#a188e9fb2d8159963d36fe07892ab6413"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDbConfiguration.html#a4f4b6838ef282481d47f8b332c4da598">getDbPoolSize</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get the nb of connections to open simultaneously to the database.  <a href="#a4f4b6838ef282481d47f8b332c4da598"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad8dfa863efbd93a229f7371e4c5ea2c2"></a><!-- doxytag: member="DbConfiguration::defaultDbPoolSize" ref="ad8dfa863efbd93a229f7371e4c5ea2c2" args="" -->
+static const int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDbConfiguration.html#ad8dfa863efbd93a229f7371e4c5ea2c2">defaultDbPoolSize</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Default value for the nb of db connections in the pool. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec42c79cc0d155ffc54ddfa8ee9daecd"></a><!-- doxytag: member="DbConfiguration::mexecConfig" ref="aec42c79cc0d155ffc54ddfa8ee9daecd" args="" -->
@@ -80,8 +90,8 @@ const <a class="el" href="classExecConfiguration.html">ExecConfiguration</a> &am
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99de17b15f3b8fa9e7ed76f564cbeaf0"></a><!-- doxytag: member="DbConfiguration::mdbHost" ref="a99de17b15f3b8fa9e7ed76f564cbeaf0" args="" -->
 std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDbConfiguration.html#a99de17b15f3b8fa9e7ed76f564cbeaf0">mdbHost</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Attribute host of the database. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a25508bbd318ad0a595dfcb05bb1a6a28"></a><!-- doxytag: member="DbConfiguration::mdbPort" ref="a25508bbd318ad0a595dfcb05bb1a6a28" args="" -->
-int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDbConfiguration.html#a25508bbd318ad0a595dfcb05bb1a6a28">mdbPort</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a156df53ac791e9b01a62d04a2e57926b"></a><!-- doxytag: member="DbConfiguration::mdbPort" ref="a156df53ac791e9b01a62d04a2e57926b" args="" -->
+unsigned&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDbConfiguration.html#a156df53ac791e9b01a62d04a2e57926b">mdbPort</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Attribute port of the database. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeb3141eddb0bdb0081dee5e23ae9a29a"></a><!-- doxytag: member="DbConfiguration::mdbName" ref="aeb3141eddb0bdb0081dee5e23ae9a29a" args="" -->
 std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDbConfiguration.html#aeb3141eddb0bdb0081dee5e23ae9a29a">mdbName</a></td></tr>
@@ -92,6 +102,9 @@ std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9bd29c20a4ee1994c97d210a12ffa78b"></a><!-- doxytag: member="DbConfiguration::mdbPassword" ref="a9bd29c20a4ee1994c97d210a12ffa78b" args="" -->
 std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDbConfiguration.html#a9bd29c20a4ee1994c97d210a12ffa78b">mdbPassword</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Attribute user password to connect to the database. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a98ca16df035ce8a52f2dfc8951061726"></a><!-- doxytag: member="DbConfiguration::mdbPoolSize" ref="a98ca16df035ce8a52f2dfc8951061726" args="" -->
+unsigned&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDbConfiguration.html#a98ca16df035ce8a52f2dfc8951061726">mdbPoolSize</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Attribute number of db connections in the pool. <br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>Contains the configuration parameters for the Vishnu database. </p>
@@ -160,6 +173,27 @@ std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 <p>Get the database name. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>database name </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a4f4b6838ef282481d47f8b332c4da598"></a><!-- doxytag: member="DbConfiguration::getDbPoolSize" ref="a4f4b6838ef282481d47f8b332c4da598" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int DbConfiguration::getDbPoolSize </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the nb of connections to open simultaneously to the database. </p>
+<p>in order to process parallel requests. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>nb of connections in the connection pool </dd></dl>
 
 </div>
 </div>
@@ -243,11 +277,37 @@ std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 </div>
 </div>
+<a class="anchor" id="a188e9fb2d8159963d36fe07892ab6413"></a><!-- doxytag: member="DbConfiguration::setDbPoolSize" ref="a188e9fb2d8159963d36fe07892ab6413" args="(unsigned poolSize)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DbConfiguration::setDbPoolSize </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&nbsp;</td>
+          <td class="paramname"> <em>poolSize</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set the nb of connections to open simultaneously to the database. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>poolSize</em>&nbsp;</td><td>nb of connections in the connection pool </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>core/src/config/<a class="el" href="DbConfiguration_8hpp_source.html">DbConfiguration.hpp</a></li>
+<li>core/src/database/<a class="el" href="DbConfiguration_8hpp_source.html">DbConfiguration.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu May 12 2011 16:22:22 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 14 2011 23:13:12 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

@@ -22,7 +22,7 @@ include_directories(${Boost_INCLUDE_DIRS}
   )
 
 #add_library(tms-utils-cli
-#  displayer
+#  FMSDisplayer
 # )
 #declare all command lines provided
 
@@ -55,7 +55,7 @@ macro(genCli NAME )
 
   set(source_files ${NAME}
       cmdArgs
-      displayer 
+      FMSDisplayer 
      )
 
   set(CMDNAME ${CMDPREFIX}${NAME})

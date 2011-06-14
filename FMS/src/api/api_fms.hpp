@@ -111,6 +111,7 @@ namespace vishnu{
    * \param sessionKey the session key
    * \param path  the directory path using host:path format
    * \param dirContent  the directory content
+   * \param options   contains the options used to perform the service (like the long format list)
    * \return 0 if everything is OK, another value otherwise
    */
   int listDir(const string& sessionKey,const string& path, StringList& dirContent,const LsDirOptions& options=LsDirOptions())
@@ -120,7 +121,6 @@ namespace vishnu{
    * \brief create a directory
    * \param sessionKey the session key
    * \param path: the directory path using host:path format
-   * \param options: contains the properties for the new directory (like permission mode to use)
    * \return 0 if everything is OK, another value otherwise
    */
   int createDir(const string& sessionKey,const string& path)
@@ -185,7 +185,7 @@ namespace vishnu{
    * \brief  obtain informations about a file
    * \param sessionKey the session key
    * \param path the file path using host:path format
-   * \param :  a buffer to store the informations
+   * \param filesInfo  the file informations
    * \return 0 if everything is OK, another value otherwise
    */
   int getFilesInfo(const string& sessionKey,const string& path, FileStat& filesInfo)

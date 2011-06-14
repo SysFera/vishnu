@@ -1,5 +1,5 @@
 /**
- * \file FMSVishnuException.hh
+ * \file FMSVishnuException.hpp
  * \brief This file defines the FMS sub class for the Vishnu exceptions.
  * \author Kevin Coulomb (kevin.coulomb@sysfera.com)
  */
@@ -13,7 +13,9 @@ static const int ERRCODE_INVALID_PATH = 201;
 static const int ERRCODE_RUNTIME_ERROR = 202;
 static const int ERRCODE_UNKNOWN_FILETRANSFERID = 203;
 
-
+/**
+ * \brief A FMS error handling class
+ */
 
 class FMSVishnuException: public UserException{
 
@@ -25,23 +27,22 @@ class FMSVishnuException: public UserException{
   FMSVishnuException();
   /**
    * \brief Copy constructor
-   * \fn UMSVishnuException()
+   * \param e another FMS excpetion object
    */
   FMSVishnuException(const FMSVishnuException& e);
   /**
-   * \brief Constructor
-   * \fn UMSVishnuException()
+   * \brief Constructor with paramters
+   * \param  msg the error code
+   * \param msgComp The complementary message to add to generic error message
    */
   FMSVishnuException(int msg, std::string msgComp= "");
   /**
-   * \brief Default constructor
-   * \fn ~FMSVishnuException()
+   * \brief Default destructor
    */
   ~FMSVishnuException() throw (){};
 
   /**
-   * \brief Function to initialize all UMS generic messages
-   * \fn void initMsg()
+   * \brief Function to initialize all FMS generic messages
    */
   void
   initMsg();

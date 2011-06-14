@@ -14,7 +14,7 @@
 Inheritance diagram for TMSMapper:\begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[height=2.000000cm]{classTMSMapper}
+\includegraphics[height=3.000000cm]{classTMSMapper}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
@@ -44,28 +44,24 @@ virtual int \hyperlink{classTMSMapper_aae46d8055ecfe88e485be237a37f1f24}{code} (
 \begin{DoxyCompactList}\small\item\em Function to add an element to code. \item\end{DoxyCompactList}\item 
 virtual string \hyperlink{classTMSMapper_accb3c964a3f3cb147d1678d0efaeabb0}{decode} (const string \&msg)
 \begin{DoxyCompactList}\small\item\em To get, from a coded string, the cli like command that made it. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsection*{Private Member Functions}
+\subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-string \hyperlink{classTMSMapper_aa59a3b07e1d6149067d5c7ecee9d5586}{decodeSubmit} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classTMSMapper_aa59a3b07e1d6149067d5c7ecee9d5586}{decodeSubmit} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the submit call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classTMSMapper_aaf50d5b60f32283e5d6785c839446cdc}{decodeProg} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classTMSMapper_aaf50d5b60f32283e5d6785c839446cdc}{decodeProg} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the get progression call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classTMSMapper_a214f2d08465fc7a21343c4d74c67c255}{decodeQueue} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classTMSMapper_a214f2d08465fc7a21343c4d74c67c255}{decodeQueue} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the get queue call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classTMSMapper_a60f6a62060a0587a401da0435a32892f}{decodeListJob} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classTMSMapper_a60f6a62060a0587a401da0435a32892f}{decodeListJob} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the get list job call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classTMSMapper_aae8811bb1bf6bd8830154b1b1331002d}{decodeOutput} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classTMSMapper_aae8811bb1bf6bd8830154b1b1331002d}{decodeOutput} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the get output call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classTMSMapper_a0592e967b8eb2ddeaadfc7fe92094345}{decodeCompletedJob} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classTMSMapper_a0592e967b8eb2ddeaadfc7fe92094345}{decodeCompletedJob} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the get all output call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classTMSMapper_a305e7e1543609faddfc92c85159c0df4}{decodeCancel} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classTMSMapper_a305e7e1543609faddfc92c85159c0df4}{decodeCancel} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the cancel call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classTMSMapper_ae0cf75031bc644de6269a468356bfd87}{decodeGetPeriod} (vector$<$ int $>$ separator, const string \&msg)
-\begin{DoxyCompactList}\small\item\em To decode the get refresh period call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classTMSMapper_a46d9e9c019130eece031e627c0267f5d}{decodeSetPeriod} (vector$<$ int $>$ separator, const string \&msg)
-\begin{DoxyCompactList}\small\item\em To decode the set refresh period call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-string \hyperlink{classTMSMapper_a2082d6a55048ef9cf47fe6cfddb3e3f2}{decodeJobInfo} (vector$<$ int $>$ separator, const string \&msg)
+virtual string \hyperlink{classTMSMapper_a2082d6a55048ef9cf47fe6cfddb3e3f2}{decodeJobInfo} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the get job info call sequence of the string returned by finalize. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -148,7 +144,7 @@ Reimplemented from \hyperlink{classMapper_a5e51b9148704b25e26e5ec48bd643a0b}{Map
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classTMSMapper_a305e7e1543609faddfc92c85159c0df4}
 
 
@@ -168,31 +164,11 @@ The cli like close command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classTMSMapper_a0592e967b8eb2ddeaadfc7fe92094345}
 
 
 To decode the get all output call sequence of the string returned by finalize. 
-
-
-\begin{DoxyParams}{Parameters}
-\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-The cli like close command 
-\end{DoxyReturn}
-\hypertarget{classTMSMapper_ae0cf75031bc644de6269a468356bfd87}{
-\index{TMSMapper@{TMSMapper}!decodeGetPeriod@{decodeGetPeriod}}
-\index{decodeGetPeriod@{decodeGetPeriod}!TMSMapper@{TMSMapper}}
-\subsubsection[{decodeGetPeriod}]{\setlength{\rightskip}{0pt plus 5cm}string TMSMapper::decodeGetPeriod (
-\begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{ separator, }
-\item[{const string \&}]{ msg}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classTMSMapper_ae0cf75031bc644de6269a468356bfd87}
-
-
-To decode the get refresh period call sequence of the string returned by finalize. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -208,7 +184,7 @@ The cli like close command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classTMSMapper_a2082d6a55048ef9cf47fe6cfddb3e3f2}
 
 
@@ -228,7 +204,7 @@ The cli like close command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classTMSMapper_a60f6a62060a0587a401da0435a32892f}
 
 
@@ -248,7 +224,7 @@ The cli like close command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classTMSMapper_aae8811bb1bf6bd8830154b1b1331002d}
 
 
@@ -268,7 +244,7 @@ The cli like close command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classTMSMapper_aaf50d5b60f32283e5d6785c839446cdc}
 
 
@@ -288,31 +264,11 @@ The cli like close command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classTMSMapper_a214f2d08465fc7a21343c4d74c67c255}
 
 
 To decode the get queue call sequence of the string returned by finalize. 
-
-
-\begin{DoxyParams}{Parameters}
-\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-The cli like close command 
-\end{DoxyReturn}
-\hypertarget{classTMSMapper_a46d9e9c019130eece031e627c0267f5d}{
-\index{TMSMapper@{TMSMapper}!decodeSetPeriod@{decodeSetPeriod}}
-\index{decodeSetPeriod@{decodeSetPeriod}!TMSMapper@{TMSMapper}}
-\subsubsection[{decodeSetPeriod}]{\setlength{\rightskip}{0pt plus 5cm}string TMSMapper::decodeSetPeriod (
-\begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{ separator, }
-\item[{const string \&}]{ msg}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classTMSMapper_a46d9e9c019130eece031e627c0267f5d}
-
-
-To decode the set refresh period call sequence of the string returned by finalize. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -328,7 +284,7 @@ The cli like close command
 \item[{vector$<$ int $>$}]{ separator, }
 \item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classTMSMapper_aa59a3b07e1d6149067d5c7ecee9d5586}
 
 

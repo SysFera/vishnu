@@ -14,7 +14,7 @@
 #include "sessionUtils.hpp"
 #include "FMS_Data.hpp"
 #include <boost/bind.hpp>
-#include "displayer.hpp"
+#include "FMSDisplayer.hpp"
 namespace po = boost::program_options;
 
 using namespace std;
