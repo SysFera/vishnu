@@ -43,13 +43,6 @@ public :
    */
   ~MYSQLDatabase();
   /**
-   * \brief To set the db to use
-   * \param db The database to use
-   * \return 0 on success, an error code otherwise
-   */
-//   int
-//   setDatabase(std::string db);
-  /**
   * \brief To get the result of a select request
   * \fn DatabaseResult* getResult(std::string request)
   * \param request The request to process
