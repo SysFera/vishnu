@@ -1,6 +1,6 @@
 
 /**
- * \file internalApi.hpp
+ * \file internalApiFMS.hpp
  * This file contains the declaration of all vishnu FMS services headers
  */
 
