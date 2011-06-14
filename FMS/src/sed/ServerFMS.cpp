@@ -6,12 +6,12 @@
 */
 
 #include "ServerFMS.hpp"
-//#include "internalApi.hpp"
+//#include "internalApiFMS.hpp"
 #include "utilVishnu.hpp"
 #include "DbFactory.hpp"
 #include <boost/scoped_ptr.hpp>
 #include "SystemException.hpp"
-#include "internalApi.hpp"
+#include "internalApiFMS.hpp"
 //#include "transferSrv.hpp"
 
 using namespace vishnu;

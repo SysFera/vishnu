@@ -27,7 +27,7 @@ include_directories(
 add_executable(fmssed
   fmssed
   ServerFMS
-  internalApi
+  internalApiFMS
   getInfosSrv
   getContentSrv
   headSrv

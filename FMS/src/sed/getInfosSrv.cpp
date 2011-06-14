@@ -7,7 +7,7 @@
 #include "DIET_server.h"
 #include "FileFactory.hpp"
 #include "File.hpp"
-#include "internalApi.hpp"
+#include "internalApiFMS.hpp"
 #include "UserServer.hpp"
 #include "MachineServer.hpp"
 #include <boost/scoped_ptr.hpp>
