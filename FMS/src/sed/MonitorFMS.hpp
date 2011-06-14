@@ -9,8 +9,8 @@
 #define _MONITORFMS_H_
 
 #include <string>
-//#include "internalApi.hpp"
-#include "internalApi.hpp"
+//#include "internalApiFMS.hpp"
+#include "internalApiFMS.hpp"
 
 /**
  * \class MonitorFMS
