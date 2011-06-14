@@ -30,12 +30,14 @@
     </services>
     <services name="setSystemInfo" description="updates the system information of a machine" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
-      <ports name="systemInfo" dataType="//@typeList/@types.11" description="Contains system information to store in Vishnu database" shortOptionLetter=""/>
+      <ports name="systemInfo" usage="API_ONLY" dataType="//@typeList/@types.11" description="Contains system information to store in Vishnu database" shortOptionLetter=""/>
+      <ports name="systemInfo" usage="CLI_ONLY" description="Contains system information to store in Vishnu database" shortOptionLetter="" defaultValueLiteral=""/>
       <details key="description" value="This function allows an administrator to set system information on a machine in the VISHNU database. The machine must have been added previously through the UMS &quot;addMachine&quot; call. Using the given machine identifier, specific information such as the total memory and diskspace available on the machine can be added."/>
     </services>
     <services name="setSystemThreshold" description="sets a threshold on a machine of a system" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
-      <ports name="threshold" dataType="//@typeList/@types.18" description="The threshold to set" longOptionName="" defaultValueLiteral=""/>
+      <ports name="threshold" usage="API_ONLY" dataType="//@typeList/@types.18" description="The threshold to set" longOptionName="" defaultValueLiteral=""/>
+      <ports name="threshold" usage="CLI_ONLY" description="The threshold to set" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <details key="description" value="This function allows an admin to set a threshold. Each time an IMS server records the state of a machine, it checks the values defined, if a threshold is reached (over a use of the cpu or under the free memory or diskspace available), the administrator responsible for the threshold will have a mail sent.&#xA;These threshold will help the administrator to be aware problems on a machine. Warning, a mail is sent for each time the threshold is reached, if a value swings around a threshold, the administrator may receive lots of emails depending on the update frequency."/>
     </services>
     <services name="getSystemThreshold" description="gets a System threshold on a machine" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER">
@@ -82,8 +84,9 @@
     </services>
     <services name="stop" description="To stop (and do not try to relaunch) a SeD" adminOnly="true" resultCodes="ERRCODE_DB_ERROR VISHNU_OK ERRCODE_INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
-      <ports name="process" dataType="//@typeList/@types.19" description="The process to stop and do not try to restart anymore" defaultValueLiteral=""/>
-      <details key="description" value="This function allows an admin to stop a VISHNU server on a machine. The stopped process will not be restarted automatically.&#xA;The important parameters in the process are the names and the machine.&#xA;"/>
+      <ports name="process" usage="API_ONLY" dataType="//@typeList/@types.19" description="The process to stop and do not try to restart anymore" defaultValueLiteral=""/>
+      <ports name="process" usage="CLI_ONLY" dataType="//@typeList/@types.26" description="The process to stop and do not try to restart anymore" defaultValueLiteral=""/>
+      <details key="description" value="This function allows an admin to stop a VISHNU server on a machine. The stopped process will not be restarted automatically.&#xA;The important parameters in the process are the names and the machine.&#xA;The processName must be UMS, TMS, IMS or FMS , in upper case.&#xA;"/>
     </services>
     <services name="getSystemInfo" description="To get the system info on a machine" resultCodes="ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
@@ -179,6 +182,15 @@
     </types>
     <types name="RestartType" description="The type of element to restart">
       <ECoreType xsi:type="ecore:EEnum" href="IMS_Data.ecore#//RestartType"/>
+    </types>
+    <types name="ThresholdCLI" description="The threshold object for the CLI">
+      <ECoreType xsi:type="ecore:EClass" href="file:/home/keo/Bureau/depot_git_edf/vishnu/core/model/IMS_Data_CLI.ecore#//ThresholdCLI"/>
+    </types>
+    <types name="SystemInfoCLI" description="The system info object for cli">
+      <ECoreType xsi:type="ecore:EClass" href="file:/home/keo/Bureau/depot_git_edf/vishnu/core/model/IMS_Data_CLI.ecore#//SystemInfoCLI"/>
+    </types>
+    <types name="ProcessCLI" description="The process object for the cli">
+      <ECoreType xsi:type="ecore:EClass" href="file:/home/keo/Bureau/depot_git_edf/vishnu/core/model/IMS_Data_CLI.ecore#//ProcessCLI"/>
     </types>
   </typeList>
 </API>
