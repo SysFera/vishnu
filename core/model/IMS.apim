@@ -1,97 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <API xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="com.sysfera.codegen.apimodel" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
   <modules name="IMS">
-    <services name="exportCommands" description="exports all the commands made by a user during a session" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+    <services name="exportCommands" description="exports all the commands made by a user during a session" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="oldSessionId" dataType="//@typeList/@types.0" description="The id of the session to export (session has ended)" shortOptionLetter="" longOptionName=""/>
       <ports name="filename" direction="INOUT" dataType="//@typeList/@types.0" description="The path of the output file containing the Vishnu shell commands" longOptionName=""/>
       <ports name="options" dataType="//@typeList/@types.12" description="options which encapsulate the option for the export" optional="true" shortOptionLetter="" defaultValueLiteral=""/>
       <details key="description" value="Exports all the VISHNU commands submitted during a completed session. This session must be in closed state.&#xA;The output of this command is a file containing a shell script. For safety reasons, the commands having a password for parameter are not exported&#xA;(for example the vishnu_connect and vishnu_change_password commands). This means the shell script must be run after opening&#xA;a session manually or by adding the vishnu_connect command to the script.&#xA;The access to other user's sessions is only permitted to administrators."/>
     </services>
-    <services name="getMetricCurrentValue" description="Retrieve the current value of a metric on a machine" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+    <services name="getMetricCurrentValue" description="Retrieve the current value of a metric on a machine" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" defaultValueLiteral=""/>
       <ports name="metricValue" direction="OUT" dataType="//@typeList/@types.9" description="Value of the metric" defaultValueLiteral=""/>
       <ports name="options" dataType="//@typeList/@types.14" description="The options for the current metric value" longOptionName="" defaultValueLiteral=""/>
       <details key="description" value="Displays the current values of the monitored metrics on the system identified by the machineId argument : cpuload, free diskspace and free memory. &#xA;The units of displayed values are percentages for cpuload and Megabytes (Mb) for diskspace and memory. The provided values are always standard integers (no float values).&#xA;Please note that retrieving these values uses some valuable system ressources and should not occur too frequently to avoid an impact on system performance.&#xA;"/>
     </services>
-    <services name="getMetricHistory" description="Retrieve the history of values of a metric on a machine" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+    <services name="getMetricHistory" description="Retrieve the history of values of a metric on a machine" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" shortOptionLetter=""/>
       <ports name="metricValues" direction="OUT" dataType="//@typeList/@types.9" description="List of metric values" longOptionName=""/>
       <ports name="options" dataType="//@typeList/@types.13" description="The optional fields for the metric history" optional="true" shortOptionLetter="" defaultValueLiteral=""/>
       <details key="description" value="This command allows a use to get the history of the metrics on a machine. The options enable to specify a specific type of metric and the date of the desired metric values. These values are read from the database. If the machine does not have any IMS server, no data can be recorded on the machine."/>
     </services>
-    <services name="getProcesses" description="gets the list of the processes running over a front machine" adminOnly="true" resultCodes="VISHNU_OK INVALID_PARAMETER">
+    <services name="getProcesses" description="gets the list of the processes running over a front machine" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="process" direction="OUT" dataType="//@typeList/@types.7" description="The list of the Vishnu processes on the machine" shortOptionLetter=""/>
       <ports name="options" dataType="//@typeList/@types.15" description="The options to search for the processes" optional="true" shortOptionLetter="" defaultValueLiteral=""/>
       <details key="description" value="This command allows an admin to get the VISHNU servers that are running on the whole infrastructure or on a single machine. The results contain both the VISHNU identifier of the process and the DIET identifier. "/>
     </services>
-    <services name="setSystemInfo" description="updates the system information of a machine" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+    <services name="setSystemInfo" description="updates the system information of a machine" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="systemInfo" dataType="//@typeList/@types.11" description="Contains system information to store in Vishnu database" shortOptionLetter=""/>
       <details key="description" value="This function allows an administrator to set system information on a machine in the VISHNU database. The machine must have been added previously through the UMS &quot;addMachine&quot; call. Using the given machine identifier, specific information such as the total memory and diskspace available on the machine can be added."/>
     </services>
-    <services name="setSystemThreshold" description="sets a threshold on a machine of a system" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+    <services name="setSystemThreshold" description="sets a threshold on a machine of a system" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="threshold" dataType="//@typeList/@types.18" description="The threshold to set" longOptionName="" defaultValueLiteral=""/>
       <details key="description" value="This function allows an admin to set a threshold. Each time an IMS server records the state of a machine, it checks the values defined, if a threshold is reached (over a use of the cpu or under the free memory or diskspace available), the administrator responsible for the threshold will have a mail sent.&#xA;These threshold will help the administrator to be aware problems on a machine. Warning, a mail is sent for each time the threshold is reached, if a value swings around a threshold, the administrator may receive lots of emails depending on the update frequency."/>
     </services>
-    <services name="getSystemThreshold" description="gets a System threshold on a machine" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+    <services name="getSystemThreshold" description="gets a System threshold on a machine" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="value" direction="OUT" dataType="//@typeList/@types.17" description="The thresholds value" longOptionName="" defaultValueLiteral=""/>
       <ports name="options" dataType="//@typeList/@types.16" description="The options for the threshold" longOptionName="" defaultValueLiteral=""/>
       <details key="description" value="This function allows an administrator to get the thresholds that may be defined on a machine. This may be used to check the parameters defined to monitor the machine.&#xA;Each time a threshold is reached, a mail is sent. So checking the values of the threshold is important for the administrator to make sure they will not get tons of emails."/>
     </services>
-    <services name="defineUserIdentifier" description="defines the shape of the identifiers automatically generated for the users" adminOnly="true" resultCodes="VISHNU_OK INVALID_PARAMETER DB_ERROR">
+    <services name="defineUserIdentifier" description="defines the shape of the identifiers automatically generated for the users" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_INVALID_PARAMETER ERRCODE_DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter="" longOptionName=""/>
       <details key="description" value="This function allows an administrator to define the format of the identifier that will be automatically generated for the users. Once the format is defined, each time a user is added, the format will be used to define its identifier.&#xA;The format can contain various variables, a variable is preceded by the '$' symbol. Moreover, the counter variable '$CPT' MUST be present in the format, otherwise it will be rejected.&#xA;The available variables are: &#xA;$CPT: a counter&#xA;$NAME: The name of the user&#xA;$UNAME: The name of the user&#xA;$DAY: The day the user is added&#xA;$MONTH: The month the user is added&#xA;$YEAR: The year the user is added&#xA;$SITE: The site the user is&#xA;$TYPE: The 'U' symb to remind it is a user id"/>
     </services>
-    <services name="defineMachineIdentifier" description="defines the shape of the identifiers automatically generated for the machines" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+    <services name="defineMachineIdentifier" description="defines the shape of the identifiers automatically generated for the machines" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key"/>
       <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter=""/>
       <details key="description" value="This function allows an administrator to define the format of the identifier that will be automatically generated for the machines. Once the format is defined, each time a machine is added, the format will be used to define its identifier.&#xA;The format can contain various variables, a variable is preceded by the '$' symbol. Moreover, the counter variable '$CPT' MUST be present in the format, otherwise it will be rejected.&#xA;The available variables are: &#xA;$CPT: a counter&#xA;$MANAME: The hostname of the machine&#xA;$NAME: The hostname of the machine&#xA;$DAY: The day the machine is added&#xA;$MONTH: The month the machine is added&#xA;$YEAR: The year the machine is added&#xA;$SITE: The site the machine is&#xA;$TYPE: The 'M' symb to remind it is a machine id"/>
     </services>
-    <services name="defineJobIdentifier" description="defines the shape of the identifiers automatically generated for the jobs" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+    <services name="defineJobIdentifier" description="defines the shape of the identifiers automatically generated for the jobs" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter=""/>
       <details key="description" value="This function allows an administrator to define the format of the identifier that will be automatically generated for the jobs submited through TMS. Once the format is defined, each time a job is submitted, the format will be used to define its identifier.&#xA;The format can contain various variables, a variable is preceded by the '$' symbol. Moreover, the counter variable '$CPT' MUST be present in the format, otherwise it will be rejected.&#xA;The available variables are: &#xA;$CPT: a counter&#xA;$DAY: The day the job is submitted&#xA;$MONTH: The month the job is submitted&#xA;$YEAR: The year the job is submitted&#xA;$TYPE: The 'J' symb to remind it is a job id"/>
     </services>
-    <services name="defineTransferIdentifier" description="defines the shape of the identifiers automatically generated for the file transfers" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+    <services name="defineTransferIdentifier" description="defines the shape of the identifiers automatically generated for the file transfers" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter=""/>
       <details key="description" value="This function allows an administrator to define the format of the identifier that will be automatically generated for the file transfers. Once the format is defined, each time a file transfer is done, the format will be used to define its identifier.&#xA;The format can contain various variables, a variable is preceded by the '$' symbol. Moreover, the counter variable '$CPT' MUST be present in the format, otherwise it will be rejected.&#xA;The available variables are: &#xA;$CPT: a counter&#xA;$DAY: The day the file transfer is done&#xA;$MONTH: The month the file transfer is done&#xA;$YEAR: The year the file transfer is done&#xA;$TYPE: The 'F' symb to remind it is a file transfer id"/>
     </services>
-    <services name="loadShed" description="load sheds a machine" adminOnly="true" resultCodes="VISHNU_OK COMPONENT_ERROR DB_ERROR INVALID_PARAMETER">
+    <services name="loadShed" description="load sheds a machine" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_COMPONENT_ERROR ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine to stop" shortOptionLetter=""/>
       <ports name="loadShedType" dataType="//@typeList/@types.6" description="Selects a load shedding mode (SOFT: stops all services and they can be restarted, HARD: stops all services, they cannot be restarted)" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <details key="description" value="This function allows an admin to load shed a machine. There are two modes, the SOFT one  a machine cancelling all the submitted jobs and file transfers for all the users. The HARD one where the soft is done, and all the VISHNU processes are then stopped on the machine.&#xA;If a non admin use this function, it just cancels all its own jobs and file transfer on the machine.&#xA;In the HARD mode, the stopped processes will not be automatically restarted.&#xA;Type values:&#xA;HARD = 1&#xA;SOFT   = 2"/>
     </services>
-    <services name="setUpdateFrequency" description="sets the update frequency of the IMS tables" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+    <services name="setUpdateFrequency" description="sets the update frequency of the IMS tables" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="freq" dataType="//@typeList/@types.1" description="Frequency the data are updated, in second" shortOptionLetter="" longOptionName=""/>
       <details key="description" value="This function allows an admin to set the update frequency. This frequency corresponds to how often the state of the machines are automatically registered  in the database by the IMS server. The frequency is in second and must be strictly positive."/>
     </services>
-    <services name="getUpdateFrequency" description="gets the update frequency of the IMS database" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+    <services name="getUpdateFrequency" description="gets the update frequency of the IMS database" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="freq" direction="OUT" dataType="//@typeList/@types.1" description="Frequency the data are updated, in second"/>
       <details key="description" value="This function allows a user to get the update frequency, to know  how often the state of the machines are registered."/>
     </services>
-    <services name="stop" description="To stop (and do not try to relaunch) a SeD" adminOnly="true" resultCodes="DB_ERROR VISHNU_OK INVALID_PARAMETER">
+    <services name="stop" description="To stop (and do not try to relaunch) a SeD" adminOnly="true" resultCodes="ERRCODE_DB_ERROR VISHNU_OK ERRCODE_INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="process" dataType="//@typeList/@types.19" description="The process to stop and do not try to restart anymore" defaultValueLiteral=""/>
       <details key="description" value="This function allows an admin to stop a VISHNU server on a machine. The stopped process will not be restarted automatically.&#xA;The important parameters in the process are the names and the machine.&#xA;"/>
     </services>
-    <services name="getSystemInfo" description="To get the system info on a machine" resultCodes="DB_ERROR INVALID_PARAMETER VISHNU_OK">
+    <services name="getSystemInfo" description="To get the system info on a machine" resultCodes="ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="res" direction="OUT" dataType="//@typeList/@types.20" description="The list of the system information gotten"/>
       <ports name="options" dataType="//@typeList/@types.21" description="Optional field for system information" optional="true" shortOptionLetter=""/>
       <details key="description" value="This function allows a user to get system information about a machine. A system information describes a machine. The option is  the machine id (if no machine id, the information for all the machines are given)"/>
     </services>
-    <services name="restart" description="To restart a SeD or a MA" adminOnly="true" resultCodes="VISHNU_OK INVALID_PARAMETER DB_ERROR">
+    <services name="restart" description="To restart a SeD or a MA" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_INVALID_PARAMETER ERRCODE_DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine where to restart"/>
       <ports name="options" dataType="//@typeList/@types.22" description="The option for the restart" defaultValueLiteral=""/>
@@ -99,9 +99,11 @@
     </services>
     <resultCodeList>
       <resultCodes name="VISHNU_OK" description="Error code returned if success"/>
-      <resultCodes name="INVALID_PARAMETER" description="If a parameter is invalid" value="1"/>
-      <resultCodes name="DB_ERROR" description="The database generated an error" value="2"/>
-      <resultCodes name="COMPONENT_ERROR" description="If a component is unavailable" value="3"/>
+      <resultCodes name="ERRCODE_INVALID_PARAMETER" description="If a parameter is invalid" value="1"/>
+      <resultCodes name="ERRCODE_DB_ERROR" description="The database generated an error" value="2"/>
+      <resultCodes name="ERRCODE_COMPONENT_ERROR" description="If a component is unavailable" value="3"/>
+      <resultCodes name="ERRCODE_SESSION_KEY_EXPIRED" description="The session key has expired. The session is closed." value="4" diagnostic=""/>
+      <resultCodes name="ERRCODE_SESSION_KEY_NOT_FOUND" description="The session key is unrecognized." value="5"/>
     </resultCodeList>
   </modules>
   <envVariableList>
