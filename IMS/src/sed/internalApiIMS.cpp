@@ -53,6 +53,7 @@ solveExport(diet_profile_t* pb){
     mapper->code(string(filename), mapperkey);
     mapper->code(string(options), mapperkey);
     cmd = mapper->finalize(mapperkey);
+    sessionServer.check();
 
     // Getting options
     if(!parseEmfObject(string(options), expOp)) {
@@ -116,6 +117,7 @@ solveCurMetric(diet_profile_t* pb){
     mapper->code(string(mid), mapperkey);
     mapper->code(string(curOpSer), mapperkey);
     cmd = mapper->finalize(mapperkey);
+    sessionServer.check();
 
     // Getting options
     if(!parseEmfObject(string(curOpSer), curOp)) {
@@ -184,6 +186,7 @@ solveOldMetric(diet_profile_t* pb){
     mapper->code(string(mid), mapperkey);
     mapper->code(string(histOpSer), mapperkey);
     cmd = mapper->finalize(mapperkey);
+    sessionServer.check();
 
     // Getting options
     if(!parseEmfObject(string(histOpSer), histOp)) {
@@ -251,6 +254,7 @@ solvePS(diet_profile_t* pb){
     mapperkey = mapper->code("vishnu_get_processes");
     mapper->code(string(processOpSer), mapperkey);
     cmd = mapper->finalize(mapperkey);
+    sessionServer.check();
 
     // Getting options
     if(!parseEmfObject(string(processOpSer), processOp)) {
@@ -321,6 +325,7 @@ solveSetSysInfo(diet_profile_t* pb){
     mapperkey = mapper->code("vishnu_set_system_info");
     mapper->code(string(sys), mapperkey);
     cmd = mapper->finalize(mapperkey);
+    sessionServer.check();
 
     // Creating the process server with the options
     SysInfoServer sysser(userServer);
@@ -376,6 +381,7 @@ solveGetThreshold(diet_profile_t* pb){
     mapperkey = mapper->code("vishnu_get_system_threshold");
     mapper->code(string(treeOpSer), mapperkey);
     cmd = mapper->finalize(mapperkey);
+    sessionServer.check();
 
     // Getting options
     if(!parseEmfObject(string(treeOpSer), treeOp)) {
@@ -440,6 +446,7 @@ solveGetUpFreq(diet_profile_t* pb){
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_get_update_frequency");
     cmd = mapper->finalize(mapperkey);
+    sessionServer.check();
 
     // Creating the process server with the options
     MetricServer met(userServer, string(""));
@@ -500,6 +507,7 @@ solveSetThreshold(diet_profile_t* pb){
     mapperkey = mapper->code("vishnu_set_system_threshold");
     mapper->code(string(tree), mapperkey);
     cmd = mapper->finalize(mapperkey);
+    sessionServer.check();
 
     // Creating the process server with the options
     ThresholdServer treeser(userServer);
@@ -551,6 +559,7 @@ solveSetUID(diet_profile_t* pb){
     mapperkey = mapper->code("vishnu_define_user_identifier");
     mapper->code(string(fmt), mapperkey);
     cmd = mapper->finalize(mapperkey);
+    sessionServer.check();
 
     // Creating the process server with the options
     ObjectIdServer ob(userServer);
@@ -599,6 +608,7 @@ solveSetJID(diet_profile_t* pb){
     mapperkey = mapper->code("vishnu_define_job_identifier");
     mapper->code(string(fmt), mapperkey);
     cmd = mapper->finalize(mapperkey);
+    sessionServer.check();
 
     // Creating the process server with the options
     ObjectIdServer ob(userServer);
@@ -647,6 +657,7 @@ solveSetTID(diet_profile_t* pb){
     mapperkey = mapper->code("vishnu_define_transfer_identifier");
     mapper->code(string(fmt), mapperkey);
     cmd = mapper->finalize(mapperkey);
+    sessionServer.check();
 
     // Creating the process server with the options
     ObjectIdServer ob(userServer);
@@ -695,6 +706,7 @@ solveSetMID(diet_profile_t* pb){
     mapperkey = mapper->code("vishnu_define_machine_identifier");
     mapper->code(string(fmt), mapperkey);
     cmd = mapper->finalize(mapperkey);
+    sessionServer.check();
 
     // Creating the process server with the options
     ObjectIdServer ob(userServer);
@@ -747,6 +759,7 @@ solveLoadShed(diet_profile_t* pb){
     mapper->code(string(mid), mapperkey);
     mapper->code(string(type), mapperkey);
     cmd = mapper->finalize(mapperkey);
+    sessionServer.check();
 
     // Creating the process server with the options
     ProcessCtl proc(mid, userServer);
@@ -796,6 +809,7 @@ solveSetUpFreq(diet_profile_t* pb){
     mapperkey = mapper->code("vishnu_set_update_frequency");
     mapper->code(string(freq), mapperkey);
     cmd = mapper->finalize(mapperkey);
+    sessionServer.check();
 
     // Creating the process server with the options
     MetricServer met(userServer, string(""));
@@ -850,6 +864,7 @@ solveRestart(diet_profile_t* pb){
     mapper->code(string(mid), mapperkey);
     mapper->code(string(op), mapperkey);
     cmd = mapper->finalize(mapperkey);
+    sessionServer.check();
 
     // Getting options
     if(!parseEmfObject(string(op), reOp)) {
@@ -908,6 +923,7 @@ solveStop(diet_profile_t* pb){
     mapperkey = mapper->code("vishnu_stop");
     mapper->code(string(proc), mapperkey);
     cmd = mapper->finalize(mapperkey);
+    sessionServer.check();
 
     // Getting options
     if(!parseEmfObject(string(proc), procObj)) {
@@ -967,6 +983,7 @@ solveGetSysInfo(diet_profile_t* pb){
     mapperkey = mapper->code("vishnu_get_system_info");
     mapper->code(string(sysOpSer), mapperkey);
     cmd = mapper->finalize(mapperkey);
+    sessionServer.check();
 
     // Getting options
     if(!parseEmfObject(string(sysOpSer), sysOp)) {
