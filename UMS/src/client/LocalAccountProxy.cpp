@@ -75,6 +75,7 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
         msg += "by receiving errorInfo message";
         raiseDietMsgException(msg);
       }
+      msshPublicKey = sshPublicKey;
     }
     else {
       if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
@@ -82,7 +83,6 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
         raiseDietMsgException(msg);
       }
     }
-    msshPublicKey = sshPublicKey;
   }
   else {
     raiseDietMsgException("DIET call failure");
