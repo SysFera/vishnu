@@ -24,10 +24,10 @@ virtual int \hyperlink{classDatabase_a41881436b79aac5f4d8e179056564de1}{process}
 \begin{DoxyCompactList}\small\item\em Function to process the request in the database. \item\end{DoxyCompactList}\item 
 virtual int \hyperlink{classDatabase_aed0ada648871f841cfbe08bc1ee1bf92}{connect} ()=0
 \begin{DoxyCompactList}\small\item\em To make a connection to the database. \item\end{DoxyCompactList}\item 
-virtual int \hyperlink{classDatabase_aeba15395d2a36faf73dcb995695b9204}{setDatabase} (std::string db)=0
-\begin{DoxyCompactList}\small\item\em To set the name of the database to use. \item\end{DoxyCompactList}\item 
 virtual \hyperlink{classDatabaseResult}{DatabaseResult} $\ast$ \hyperlink{classDatabase_a30f002bf9752a54c2a056abc1b8bb4d4}{getResult} (std::string request)=0
 \begin{DoxyCompactList}\small\item\em To get the result of a select request. \item\end{DoxyCompactList}\item 
+virtual \hyperlink{classDbConfiguration_a4a57e43a5017a5c4833a784a994c91cf}{DbConfiguration::db\_\-type\_\-t} \hyperlink{classDatabase_a668ffe571cb0f9f355a2f874e40cb515}{getDbType} ()=0
+\begin{DoxyCompactList}\small\item\em To get the type of database. \item\end{DoxyCompactList}\item 
 \hypertarget{classDatabase_a84d399a2ad58d69daab9b05330e1316d}{
 virtual \hyperlink{classDatabase_a84d399a2ad58d69daab9b05330e1316d}{$\sim$Database} ()}
 \label{classDatabase_a84d399a2ad58d69daab9b05330e1316d}
@@ -92,6 +92,26 @@ raises an exception on error
 
 Implemented in \hyperlink{classMYSQLDatabase_a4dc57bd6bec47b4e0c19163c1d6c7fbe}{MYSQLDatabase}, \hyperlink{classOracleDatabase_a9839467588dcecbdb4c4582903379346}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_af026bcf159590b97226d829bddb8e00a}{POSTGREDatabase}.
 
+\hypertarget{classDatabase_a668ffe571cb0f9f355a2f874e40cb515}{
+\index{Database@{Database}!getDbType@{getDbType}}
+\index{getDbType@{getDbType}!Database@{Database}}
+\subsubsection[{getDbType}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf DbConfiguration::db\_\-type\_\-t} Database::getDbType (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classDatabase_a668ffe571cb0f9f355a2f874e40cb515}
+
+
+To get the type of database. 
+
+\begin{DoxyReturn}{Returns}
+An enum identifying the type of database 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classMYSQLDatabase_a6002562a486bc8a4c5a820cf45a62e64}{MYSQLDatabase}, \hyperlink{classOracleDatabase_a4079e91290576c8d71bc062ffa20330a}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_a6f446f99cff05695b37165ee0ce22a9a}{POSTGREDatabase}.
+
 \hypertarget{classDatabase_a30f002bf9752a54c2a056abc1b8bb4d4}{
 \index{Database@{Database}!getResult@{getResult}}
 \index{getResult@{getResult}!Database@{Database}}
@@ -130,36 +150,13 @@ Function to process the request in the database.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em request}]The request to process \end{DoxyParams}
+\item[{\em request}]The request to process (must contain a SINGLE SQL statement without a semicolumn) \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
 
 
 Implemented in \hyperlink{classMYSQLDatabase_ae43c4557f43b775f26817082f4913d81}{MYSQLDatabase}, \hyperlink{classOracleDatabase_ae6515239e0f313896f21b3ec267acdd9}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_a0371d887a489418bed525acb0d9c5eb3}{POSTGREDatabase}.
-
-\hypertarget{classDatabase_aeba15395d2a36faf73dcb995695b9204}{
-\index{Database@{Database}!setDatabase@{setDatabase}}
-\index{setDatabase@{setDatabase}!Database@{Database}}
-\subsubsection[{setDatabase}]{\setlength{\rightskip}{0pt plus 5cm}int Database::setDatabase (
-\begin{DoxyParamCaption}
-\item[{std::string}]{ db}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
-\label{classDatabase_aeba15395d2a36faf73dcb995695b9204}
-
-
-To set the name of the database to use. 
-
-
-\begin{DoxyParams}{Parameters}
-\item[{\em db}]The name of database to use \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-raises an exception on error 
-\end{DoxyReturn}
-
-
-Implemented in \hyperlink{classMYSQLDatabase_a884c0742ea2d4d44d8c177144f5279ef}{MYSQLDatabase}, \hyperlink{classOracleDatabase_a937a096b286c4e6738ea5d314aabe109}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_acadff2a3649a40b323eb7711e0d705cf}{POSTGREDatabase}.
 
 
 

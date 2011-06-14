@@ -89,7 +89,7 @@ diet_profile_desc_t* getFileTransferStopProfile();
 
 /**
  * \brief Implementation of file transfer (local to remote) solve function
- * \param the service profile
+ * \param profile the service profile
  * \return 0 if the service succeeds or an error code otherwise
  */
 
@@ -205,7 +205,7 @@ diet_profile_desc_t* getFileTransferStopProfile();
 
 /**
  * \brief Implementation of file transfer asynchronous(local to remote) solve function
- * \param the service profile
+ * \param profile the service profile
  * \return 0 if the service succeeds or an error code otherwise
  */
 template < File::TransferType transferType> int solveTransferFileAsync(diet_profile_t* profile){
@@ -329,7 +329,7 @@ template < File::TransferType transferType> int solveTransferFileAsync(diet_prof
 
 /**
  * \brief Implementation of file transfer (from remote to local or remote ) solve function
- * \param the service profile
+ * \param profile the service profile
  * \return 0 if the service succeeds or an error code otherwise
  */
 
@@ -552,7 +552,7 @@ solveGenerique(diet_profile_t* pb) {
 
 /**
  * \brief Implementation of file transfer asynchronous (from remote to local or remote ) solve function
- * \param the service profile
+ * \param profile the service profile
  * \return 0 if the service succeeds or an error code otherwise
  */
 
