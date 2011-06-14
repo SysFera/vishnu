@@ -154,9 +154,10 @@ namespace vishnu{
   /** remove a file
    * \param sessionKey the session key
    * \param path    the file path using host:path format
+   * \param options contains options used to perform the remove file function
    \return 0 if everything is OK, another value otherwise
    */
-  int removeFile(const string& sessionKey,const string& path)
+  int removeFile(const string& sessionKey,const string& path,const RmFileOptions& options= RmFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
