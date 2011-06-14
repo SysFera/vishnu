@@ -10,9 +10,9 @@
 
 #include <string>
 /**
- * \brief Number of service in FMS
+ * \brief Number of services in FMS
  */
-#define NB_SRV 17
+#define NB_SRV 22
 #include "DIET_server.h"
 #include "FMSMapper.hpp"
 #include "MapperRegistry.hpp"
@@ -22,12 +22,6 @@
 
 class Database;
 
-static const char* SRV[NB_SRV] = {
-"FileGetInfos",
-"FileHead",
-"FileTail"
-"FileContent"
-};
 /**
  * \class ServerFMS
  * \brief This class describes the FMS server
@@ -42,7 +36,6 @@ public :
 
   /**
   * \brief To get the vishnuId
-  * \fn int getVishnuId()
   * \return the path of the configuration file
   */
   int
@@ -60,7 +53,6 @@ public :
 
   /**
    * \brief Destructor, raises an exception on error
-   * \fn ~ServerFMS()
    */
   ~ServerFMS();
 

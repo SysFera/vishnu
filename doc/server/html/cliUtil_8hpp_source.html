@@ -35,46 +35,44 @@
 <a name="l00005"></a>00005 <span class="preprocessor"></span>
 <a name="l00009"></a>00009 <span class="keyword">const</span> std::string dietErrorMsg=<span class="stringliteral">&quot;DIET initialization failed !&quot;</span>;
 <a name="l00010"></a>00010 
-<a name="l00014"></a>00014 <span class="keyword">const</span> std::string currentSessionKeyMsg=<span class="stringliteral">&quot;the current sessionkey is: &quot;</span>;
-<a name="l00015"></a>00015 
-<a name="l00024"></a><a class="code" href="structenv__name__mapper.html">00024</a> <span class="keyword">struct </span><a class="code" href="structenv__name__mapper.html" title="a environment variable name mapper">env_name_mapper</a>{
-<a name="l00025"></a>00025 
-<a name="l00032"></a><a class="code" href="structenv__name__mapper.html#af6a2298ccd1d5c657bd73dfd1928314a">00032</a>         std::string <a class="code" href="structenv__name__mapper.html#af6a2298ccd1d5c657bd73dfd1928314a">operator ()</a>(std::string name){
-<a name="l00033"></a>00033 
-<a name="l00034"></a>00034                 std::string result= <span class="stringliteral">&quot;&quot;</span>;
+<a name="l00019"></a><a class="code" href="structenv__name__mapper.html">00019</a> <span class="keyword">struct </span><a class="code" href="structenv__name__mapper.html" title="a environment variable name mapper">env_name_mapper</a>{
+<a name="l00020"></a>00020 
+<a name="l00027"></a><a class="code" href="structenv__name__mapper.html#af6a2298ccd1d5c657bd73dfd1928314a">00027</a>         std::string <a class="code" href="structenv__name__mapper.html#af6a2298ccd1d5c657bd73dfd1928314a">operator ()</a>(std::string name){
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029                 std::string result= <span class="stringliteral">&quot;&quot;</span>;
+<a name="l00030"></a>00030 
+<a name="l00031"></a>00031                 <span class="keywordflow">if</span> (name==<span class="stringliteral">&quot;VISHNU_CONFIG_FILE&quot;</span>) {
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033                         result=<span class="stringliteral">&quot;dietConfig&quot;</span>;
+<a name="l00034"></a>00034                 }
 <a name="l00035"></a>00035 
-<a name="l00036"></a>00036                 <span class="keywordflow">if</span> (name==<span class="stringliteral">&quot;VISHNU_CONFIG_FILE&quot;</span>) {
-<a name="l00037"></a>00037 
-<a name="l00038"></a>00038                         result=<span class="stringliteral">&quot;dietConfig&quot;</span>;
-<a name="l00039"></a>00039                 }
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037                 <span class="keywordflow">return</span> result;
+<a name="l00038"></a>00038         }
+<a name="l00039"></a>00039 };
 <a name="l00040"></a>00040 
-<a name="l00041"></a>00041 
-<a name="l00042"></a>00042                 <span class="keywordflow">return</span> result;
-<a name="l00043"></a>00043         }
-<a name="l00044"></a>00044 };
-<a name="l00045"></a>00045 
-<a name="l00050"></a>00050 <span class="keyword">typedef</span> <span class="keyword">enum</span>{
-<a name="l00051"></a>00051 PARAMERROR,
-<a name="l00052"></a>00052 EXECERROR 
-<a name="l00053"></a>00053 }ErrorType;
-<a name="l00054"></a>00054 
-<a name="l00060"></a>00060 <span class="keywordtype">void</span> 
-<a name="l00061"></a>00061 helpUsage (<span class="keyword">const</span> <a class="code" href="classOptions.html" title="Used to process the users command line parameters.">Options</a>&amp; opt,<span class="keyword">const</span> std::string&amp; signature);
-<a name="l00062"></a>00062 
-<a name="l00070"></a>00070 <span class="keywordtype">void</span>
-<a name="l00071"></a>00071 errorUsage (<span class="keyword">const</span> std::string&amp; cli,<span class="keyword">const</span> std::string&amp; <a class="code" href="utilsClient_8hpp.html#a7117fd9479ada58240ab2638a677f5ed" title="Function to print an error message and the line and file where this error has been occured...">errMsg</a>,<span class="keyword">const</span> ErrorType&amp; err=PARAMERROR);
-<a name="l00072"></a>00072 
-<a name="l00081"></a>00081 <span class="keywordtype">int</span>
-<a name="l00082"></a>00082 usage (<span class="keyword">const</span> <a class="code" href="classOptions.html" title="Used to process the users command line parameters.">Options</a>&amp; opt,<span class="keyword">const</span> std::string&amp; mess,<span class="keyword">const</span> std::string&amp; ewhat);
-<a name="l00083"></a>00083 
-<a name="l00084"></a>00084 
-<a name="l00090"></a>00090 <span class="keywordtype">void</span> 
-<a name="l00091"></a>00091 checkVishnuConfig(<span class="keyword">const</span> <a class="code" href="classOptions.html" title="Used to process the users command line parameters.">Options</a>&amp; opt);
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093 <span class="preprocessor">#endif</span>
+<a name="l00045"></a>00045 <span class="keyword">typedef</span> <span class="keyword">enum</span>{
+<a name="l00046"></a>00046 PARAMERROR,
+<a name="l00047"></a>00047 EXECERROR 
+<a name="l00048"></a>00048 }ErrorType;
+<a name="l00049"></a>00049 
+<a name="l00055"></a>00055 <span class="keywordtype">void</span>
+<a name="l00056"></a>00056 helpUsage (<span class="keyword">const</span> <a class="code" href="classOptions.html" title="Used to process the users command line parameters.">Options</a>&amp; opt,<span class="keyword">const</span> std::string&amp; signature);
+<a name="l00057"></a>00057 
+<a name="l00065"></a>00065 <span class="keywordtype">void</span>
+<a name="l00066"></a>00066 errorUsage (<span class="keyword">const</span> std::string&amp; cli,<span class="keyword">const</span> std::string&amp; <a class="code" href="utilsClient_8hpp.html#a7117fd9479ada58240ab2638a677f5ed" title="Function to print an error message and the line and file where this error has been occured...">errMsg</a>,<span class="keyword">const</span> ErrorType&amp; err=PARAMERROR);
+<a name="l00067"></a>00067 
+<a name="l00076"></a>00076 <span class="keywordtype">int</span>
+<a name="l00077"></a>00077 usage (<span class="keyword">const</span> <a class="code" href="classOptions.html" title="Used to process the users command line parameters.">Options</a>&amp; opt,<span class="keyword">const</span> std::string&amp; mess,<span class="keyword">const</span> std::string&amp; ewhat);
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079 
+<a name="l00085"></a>00085 <span class="keywordtype">void</span>
+<a name="l00086"></a>00086 checkVishnuConfig(<span class="keyword">const</span> <a class="code" href="classOptions.html" title="Used to process the users command line parameters.">Options</a>&amp; opt);
+<a name="l00087"></a>00087 
+<a name="l00088"></a>00088 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu May 12 2011 16:22:22 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 14 2011 23:13:12 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

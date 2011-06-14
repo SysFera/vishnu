@@ -22,6 +22,14 @@ virtual ListObject $\ast$ \hyperlink{classQueryServer_a2ad0f3f1b75e6f0705a9edbe4
 \begin{DoxyCompactList}\small\item\em Function to list query information. \item\end{DoxyCompactList}\item 
 virtual std::string \hyperlink{classQueryServer_ad6b15831bd35508c3b5a393062d6e206}{getCommandName} ()=0
 \begin{DoxyCompactList}\small\item\em Function to get the name of the query command line. \item\end{DoxyCompactList}\item 
+\hypertarget{classQueryServer_a5e207567c6ce02000e949e277b54e2d3}{
+virtual \hyperlink{classQueryServer_a5e207567c6ce02000e949e277b54e2d3}{$\sim$QueryServer} ()}
+\label{classQueryServer_a5e207567c6ce02000e949e277b54e2d3}
+
+\begin{DoxyCompactList}\small\item\em Destructor, raises an exception on error. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
 void \hyperlink{classQueryServer_a908157c12cbf775d0dd7f270e0f291fe}{addOptionRequest} (const std::string \&name, const std::string \&value, std::string \&request)
 \begin{DoxyCompactList}\small\item\em Function to add sql resquest \char`\"{}and condition\char`\"{} to a given request. \item\end{DoxyCompactList}\item 
 {\footnotesize template$<$class T $>$ }\\void \hyperlink{classQueryServer_a468ed7f1ccfa3905d010ad67948ea28d}{addIntegerOptionRequest} (const std::string \&name, T \&value, std::string \&request)
@@ -51,12 +59,7 @@ void \hyperlink{classQueryServer_a73cc37f1e18f4e5028d8f4d68b9b148f}{checkClosePo
 void \hyperlink{classQueryServer_add7b3dc1799367f27cf0160a5ac63ecf}{checkJobId} (std::string jobId)
 \begin{DoxyCompactList}\small\item\em Function to check if a given job identifier exists. \item\end{DoxyCompactList}\item 
 void \hyperlink{classQueryServer_ad0f0f43c901920be7fb7a3719bb782ba}{checkQueueName} (std::string queueName)
-\begin{DoxyCompactList}\small\item\em Function to check if a given queue exists. \item\end{DoxyCompactList}\item 
-\hypertarget{classQueryServer_a5e207567c6ce02000e949e277b54e2d3}{
-virtual \hyperlink{classQueryServer_a5e207567c6ce02000e949e277b54e2d3}{$\sim$QueryServer} ()}
-\label{classQueryServer_a5e207567c6ce02000e949e277b54e2d3}
-
-\begin{DoxyCompactList}\small\item\em Destructor, raises an exception on error. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Function to check if a given queue exists. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -133,7 +136,7 @@ Constructor, raises an exception on error.
 \item[{const std::string \&}]{ value, }
 \item[{std::string \&}]{ request}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
 \label{classQueryServer_ae560033d0f8aac38f1feaa59f37305c8}
 
 
@@ -151,7 +154,7 @@ Function to add sql resquest \char`\"{}where condition\char`\"{} to a given requ
 \item[{T \&}]{ value, }
 \item[{std::string \&}]{ request}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
 \label{classQueryServer_afdb77d4186ae47e469a1eb19bc8a7722}
 
 
@@ -169,7 +172,7 @@ Function to add sql resquest \char`\"{}where condition\char`\"{} which contain a
 \item[{T \&}]{ value, }
 \item[{std::string \&}]{ request}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
 \label{classQueryServer_a468ed7f1ccfa3905d010ad67948ea28d}
 
 
@@ -187,7 +190,7 @@ Function to add sql resquest \char`\"{}and condition\char`\"{} which contain an 
 \item[{const std::string \&}]{ value, }
 \item[{std::string \&}]{ request}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
 \label{classQueryServer_a908157c12cbf775d0dd7f270e0f291fe}
 
 
@@ -206,7 +209,7 @@ Function to add sql resquest \char`\"{}and condition\char`\"{} to a given reques
 \item[{std::string \&}]{ request, }
 \item[{std::string}]{ comp}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
 \label{classQueryServer_a43a6aa8774b5a781bb3c5777eb557a24}
 
 
@@ -222,7 +225,7 @@ Function to add sql resquest \char`\"{}and condition\char`\"{} which contain an 
 \begin{DoxyParamCaption}
 \item[{std::string}]{ clmachineId}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
 \label{classQueryServer_ab05f1d7e54ec0e7bc51772300a7fe9c2}
 
 
@@ -238,7 +241,7 @@ Function to check if a given machine client identifier exists.
 \begin{DoxyParamCaption}
 \item[{const int \&}]{ closePolicy}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
 \label{classQueryServer_a73cc37f1e18f4e5028d8f4d68b9b148f}
 
 
@@ -254,7 +257,7 @@ Function to check a close policy value.
 \begin{DoxyParamCaption}
 \item[{std::string}]{ jobId}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
 \label{classQueryServer_add7b3dc1799367f27cf0160a5ac63ecf}
 
 
@@ -270,7 +273,7 @@ Function to check if a given job identifier exists.
 \begin{DoxyParamCaption}
 \item[{std::string}]{ machineId}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
 \label{classQueryServer_a192112eecd3ec9c706c472d45f82b549}
 
 
@@ -286,7 +289,7 @@ Function to check if a given machine identifier exists.
 \begin{DoxyParamCaption}
 \item[{std::string}]{ name}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
 \label{classQueryServer_addd5852b7271e319daa09c989f23ce83}
 
 
@@ -305,7 +308,7 @@ raises an exception on error
 \begin{DoxyParamCaption}
 \item[{std::string}]{ queueName}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
 \label{classQueryServer_ad0f0f43c901920be7fb7a3719bb782ba}
 
 
@@ -321,7 +324,7 @@ Function to check if a given queue exists.
 \begin{DoxyParamCaption}
 \item[{std::string}]{ sessionId}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
 \label{classQueryServer_aab30c247fe7f71f28ef30d28d78b23e2}
 
 
@@ -337,7 +340,7 @@ Function to check if a given session identifier exists.
 \begin{DoxyParamCaption}
 \item[{const int \&}]{ status}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
 \label{classQueryServer_a358f371f74bcb2dd3e789bd20d0cb672}
 
 
@@ -353,7 +356,7 @@ Function to check a status value.
 \begin{DoxyParamCaption}
 \item[{std::string}]{ userId}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
 \label{classQueryServer_a0f5faaf9f4be79361b2eb15e14480a7d}
 
 
@@ -372,7 +375,7 @@ raises an exception on error
 \begin{DoxyParamCaption}
 \item[{std::string}]{ date}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
 \label{classQueryServer_a3b2becf9f1ae6ca1d0097d7400997aa8}
 
 
@@ -402,7 +405,7 @@ The the name of the query command line
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classListCommandsServer_ae51f623d61d994481bdc0e77025b1cd3}{ListCommandsServer}, \hyperlink{classListLocalAccountsServer_acc12358ea99501ac83097ed65570b3c0}{ListLocalAccountsServer}, \hyperlink{classListMachinesServer_a1009395b555efa83eac39fa139a3625b}{ListMachinesServer}, \hyperlink{classListOptionsValuesServer_a8ddf0e769f4a7582bf818e599a2a8f6e}{ListOptionsValuesServer}, \hyperlink{classListSessionsServer_addba2aae3573750b1dc32220ec88dc94}{ListSessionsServer}, \hyperlink{classListJobServer_ae4efce66451934990d0575d1b8151378}{ListJobServer}, and \hyperlink{classListProgressServer_a9fefff901176f068962ab31ae42c25aa}{ListProgressServer}.
+Implemented in \hyperlink{classListCommandsServer_ae51f623d61d994481bdc0e77025b1cd3}{ListCommandsServer}, \hyperlink{classListLocalAccountsServer_acc12358ea99501ac83097ed65570b3c0}{ListLocalAccountsServer}, \hyperlink{classListMachinesServer_a1009395b555efa83eac39fa139a3625b}{ListMachinesServer}, \hyperlink{classListOptionsValuesServer_a8ddf0e769f4a7582bf818e599a2a8f6e}{ListOptionsValuesServer}, \hyperlink{classListSessionsServer_addba2aae3573750b1dc32220ec88dc94}{ListSessionsServer}, \hyperlink{classListJobServer_ae4efce66451934990d0575d1b8151378}{ListJobServer}, \hyperlink{classListProgressServer_a9fefff901176f068962ab31ae42c25aa}{ListProgressServer}, and \hyperlink{classListFileTransfers_a6d7e7aba9de33a523a30e80e43664f43}{ListFileTransfers}.
 
 \hypertarget{classQueryServer_a2ad0f3f1b75e6f0705a9edbe4bab76b0}{
 \index{QueryServer@{QueryServer}!list@{list}}
@@ -424,7 +427,7 @@ raises an exception on error
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classListCommandsServer_ae256dad4b7cb57e73dd3dc2c5dcb3e7b}{ListCommandsServer}, \hyperlink{classListLocalAccountsServer_aab1471d2b577b25471f12652b6e78b31}{ListLocalAccountsServer}, \hyperlink{classListMachinesServer_abbaceb388d6ad47bc9e82a3f33e978a3}{ListMachinesServer}, \hyperlink{classListOptionsValuesServer_a193d667fd5fa247300cebd4af85785d6}{ListOptionsValuesServer}, \hyperlink{classListSessionsServer_a2ce41ba3a29999d9ef1799c990d29b29}{ListSessionsServer}, \hyperlink{classListJobServer_a88da8c8e36fce6142758dc5779e0adae}{ListJobServer}, and \hyperlink{classListProgressServer_a638132aca020d8168e5185df47e881f0}{ListProgressServer}.
+Implemented in \hyperlink{classListCommandsServer_ae256dad4b7cb57e73dd3dc2c5dcb3e7b}{ListCommandsServer}, \hyperlink{classListLocalAccountsServer_aab1471d2b577b25471f12652b6e78b31}{ListLocalAccountsServer}, \hyperlink{classListMachinesServer_abbaceb388d6ad47bc9e82a3f33e978a3}{ListMachinesServer}, \hyperlink{classListOptionsValuesServer_a193d667fd5fa247300cebd4af85785d6}{ListOptionsValuesServer}, \hyperlink{classListSessionsServer_a2ce41ba3a29999d9ef1799c990d29b29}{ListSessionsServer}, \hyperlink{classListJobServer_a88da8c8e36fce6142758dc5779e0adae}{ListJobServer}, \hyperlink{classListProgressServer_a638132aca020d8168e5185df47e881f0}{ListProgressServer}, and \hyperlink{classListFileTransfers_a51a0f5e3382378220277271122a619d7}{ListFileTransfers}.
 
 
 
