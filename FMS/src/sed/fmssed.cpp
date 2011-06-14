@@ -74,12 +74,15 @@ int main(int argc, char* argv[], char* envp[]) {
       boost::scoped_ptr<ServerFMS> server(ServerFMS::getInstance());
       res = server->init(vishnuId, dbConfig);
 
+      registerSeD(FMSTYPE, config);
       // Initialize the DIET SeD
       if (!res) {
         diet_print_service_table();
         res = diet_SeD(dietConfigFile.c_str(), argc, argv);
+        unregisterSeD(FMSTYPE);
       } else {
         std::cerr << "There was a problem during services initialization" << std::endl;
+        unregisterSeD(FMSTYPE);
         exit(1);
       }
     } catch (VishnuException& e) {

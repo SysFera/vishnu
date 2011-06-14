@@ -76,8 +76,8 @@ same conditions as regards security.</para>
     
   <chapter>
     <title> Introduction </title>
-     <para>Author of the test code : TODO </para>
-     <para>Author of the test report : TODO </para>
+     <para>Author of the test code : Benjamin Isnard </para>
+     <para>Author of the test report : Eugène Capo-chichi and Ibrahima Cisse </para>
      
      <para> The tests which follows have been done in the following environment: </para>
       <para><itemizedlist>
@@ -97,7 +97,7 @@ same conditions as regards security.</para>
             <para>DIET version : V2.6.1</para>
           </listitem>
 	  <listitem>
-	   <para> Batch scheduler : TORQUE V2.5 </para>
+	   <para> ssh : OpenSSH_5.5p1 Debian-4ubuntu5, OpenSSL 0.9.8o 01 Jun 2010 </para>
 	 </listitem>
 	 <listitem>
 	   <para> RAM memory : 2Gb </para>
@@ -672,16 +672,16 @@ same conditions as regards security.</para>
                   <para>STR-SERV-DOWN</para>
                </entry>
                <entry>
-                  <para>06/06/11</para>
+                  <para>14/06/11</para>
                </entry>
                <entry>
-                  <para>The ims sed is stopped and restarted</para>
+                  <para>The fms sed is stopped and restarted</para>
                </entry>
                <entry>
-                  <para>setUpdateFrequency</para>
+                  <para>copyFileAsync</para>
                </entry>
                <entry>
-                  <para>Success - normal update frequency setting</para>
+                  <para>Success - normal update file transfer status setting</para>
                </entry>
                <entry/>
             </row>
@@ -690,7 +690,7 @@ same conditions as regards security.</para>
                   <para>STR-AGENT-DOWN</para>
                </entry>
                <entry>
-                  <para>06/06/11</para>
+                  <para>14/06/11</para>
                </entry>
                <entry>
                   <para>The SysFera-DS Agent is stopped and restarted </para>
@@ -700,29 +700,8 @@ same conditions as regards security.</para>
                   <para>failure</para>
                </entry>
                <entry>
-                  <para>The ims server must be restarted manually after the SysFera-DS Agent is restarted</para>
+                  <para>The fms server must be restarted manually after the SysFera-DS Agent is restarted</para>
                </entry>
-            </row>
-	    
-	     <row>
-               <entry>
-                  <para>STR-DB-DOWN</para>
-               </entry>
-               <entry>
-                  <para>06/06/11</para>
-               </entry>
-               <entry>
-                  <para>The VISHNU database is stopped and restarted</para>
-               </entry>
-	       
-	       <entry>
-                  <para>getUpdateFrequency</para>
-               </entry>
-	       
-               <entry>
-                  <para> <link linkend="Error"> Not functional - Failure la deuxième fois qu'on relance la commande</link>  Success - the corresponding error message is returned </para>
-               </entry>
-               
             </row>
            </tbody>
       </tgroup>
@@ -817,45 +796,45 @@ same conditions as regards security.</para>
           <tbody>
 	    <row>
                <entry>
-                  <para>CDP-3.1-getMetricCurrentValue</para>
+                  <para>CDP-3.1-vishnu_copy_file</para>
                </entry>
                <entry>
-                  <para>comparison with " ssh host ps -efl " </para>
+                  <para>comparison with "scp" </para>
                </entry>
                <entry>
-                  <para> getMetricCurrentValue     
+                  <para> vishnu_copy_file     
 		  </para>
                </entry>
                <entry>
-                  <para>0,156s</para>
+                  <para>0,04s</para>
                </entry>
 	       <entry>
-                  <para>0,280s</para>
+                  <para>0,02s</para>
                </entry>
 	       <entry>
-                  <para>Success</para>
+                  <para> </para>
                </entry>
             </row>
 	    
 	    <row>
                <entry>
-                  <para>CDP-3.1-getMetricHistory</para>
+                  <para>CDP-3.1-vishnu_get_file_info</para>
                </entry>
                <entry>
-                  <para>comparison with " ssh host ps -efl " </para>
+                  <para>comparison with "ssh host stat " </para>
                </entry>
                <entry>
-                  <para> getMetricHistory     
+                  <para> vishnu_get_file_info    
 		  </para>
                </entry>
                <entry>
-                  <para>0,116s</para>
+                  <para>0,04</para>
                </entry>
 	       <entry>
-                  <para>0,280s</para>
+                  <para>0,03s</para>
                </entry>
 	       <entry>
-                  <para>Success</para>
+                  <para> </para>
                </entry>
             </row>  
 	    
@@ -886,13 +865,13 @@ same conditions as regards security.</para>
 	    
 	    <row>
                <entry>
-                  <para>CDP-3.2.1-getMetricCurrentValue</para>
+                  <para>CDP-3.2.1-vishnu_copy_file</para>
                </entry>
                <entry>
                   <para>memory consumption less than 500 Mb</para>
                </entry>
                <entry>
-                  <para>getMetricCurrentValue</para>
+                  <para>vishnu_copy_file</para>
                </entry>
                <entry>
                   <para>1,3% of the RAM</para>
@@ -904,13 +883,13 @@ same conditions as regards security.</para>
 	    
 	    <row>
                <entry>
-                  <para>CDP-3.2.1-getMetricHistory</para>
+                  <para>CDP-3.2.1-vishnu_get_file_info</para>
                </entry>
                <entry>
                   <para>memory consumption less than 500 Mb</para>
                </entry>
                <entry>
-                  <para>getMetricHistory</para>
+                  <para>vishnu_get_file_info</para>
                </entry>
                <entry>
                   <para>1,6% of the RAM</para>
@@ -922,13 +901,13 @@ same conditions as regards security.</para>
 	    
 	    <row>
                <entry>
-                  <para>CDP-3.2.2-getMetricCurrentValue</para>
+                  <para>CDP-3.2.2-vishnu_copy_file</para>
                </entry>
                <entry>
                   <para>CPU consumption less than 10%</para>
                </entry>
                <entry>
-                  <para>getMetricCurrentValue</para>
+                  <para>vishnu_copy_file</para>
                </entry>
                <entry>
                   <para>0,7% of the CPU</para>
@@ -940,13 +919,13 @@ same conditions as regards security.</para>
 	      
 	    <row>
                <entry>
-                  <para>CDP-3.2.2-getMetricHistory</para>
+                  <para>CDP-3.2.2-vishnu_get_file_info</para>
                </entry>
                <entry>
                   <para>CPU consumption less than 10%</para>
                </entry>
                <entry>
-                  <para>getMetricHistory</para>
+                  <para>vishnu_get_file_info</para>
                </entry>
                <entry>
                   <para>0,7% of the CPU</para>
@@ -961,10 +940,10 @@ same conditions as regards security.</para>
                   <para>CDP-Memserver</para>
                </entry>
                <entry>
-                  <para>Memory consumption of ims server running during 24 hours</para>
+                  <para>Memory consumption of fms server running during 24 hours</para>
                </entry>
                <entry>
-                  <para>ims server</para>
+                  <para>fms server</para>
                </entry>
                <entry>
                   <para></para>
