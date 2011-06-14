@@ -23,10 +23,14 @@ HM::run(){
   IMS_Data::ListMetric_ptr li = ecoreFactory->createListMetric();
 
   while(true){
-    freq = mms.checkUpFreq();
-    sleep(freq);
-    li = mms.getCurMet();
-    mms.addMetricSet(li, mid);
+    try {
+      freq = mms.checkUpFreq();
+      sleep(freq);
+      li = mms.getCurMet();
+      mms.addMetricSet(li, mid);
+    } catch (VishnuException &e) {
+      // DO nothing to keep on trying to log
+    }
   }
 }
 
