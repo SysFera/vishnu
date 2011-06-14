@@ -83,6 +83,10 @@ namespace vishnu {
    * \brief If the process is in an undefined state
    */
   static const int PUNDEF = 0;
+  /**
+   * \brief If the process is down
+   */
+  static const int PDOWN = 2;
 
   /**
    * \brief To register the server in the database
@@ -92,6 +96,13 @@ namespace vishnu {
    */
   int
   registerSeD(std::string type, ExecConfiguration config);
+  /**
+   * \brief To unregister the server in the database (set as stopped)
+   * \param type: The type of the SeD
+   * \return 0 if the function succeeds or another value otherwise
+   */
+  int
+  unregisterSeD(std::string type);
 
   /**
    * \brief Return true if the string starts with 'MONTH'
