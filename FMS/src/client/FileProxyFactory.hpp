@@ -17,7 +17,7 @@
 #include "LocalFileProxy.hpp"
 #include "RemoteFileProxy.hpp"
 
-/*
+/**
  * \brief  A factory class for the FileProxys classes.
  */
 
@@ -30,6 +30,7 @@ class FileProxyFactory {
      * \param sessionProxy the session proxy object
      * \param path the path of the file to build
      * \param user the owner of the file
+     * \return  a new file proxy object
      */
   static FileProxy* getFileProxy(const SessionProxy& sessionProxy,const std::string& path,
                              const std::string& user="");

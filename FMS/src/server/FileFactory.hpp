@@ -28,17 +28,17 @@ class FileFactory {
     static void setSSHServer(const std::string& sshServer);
     /**
      * \brief Update a ssh port
-     * \param sshServer the new ssh port
+     * \param sshPort the new ssh port
      */
     static void setSSHPort(const unsigned int sshPort);
     /**
      * \brief Update a ssh command path
-     * \param sshServer the new ssh command path
+     * \param sshCommand the new ssh command path
      */
     static void setSSHCommand(const std::string& sshCommand);
     /**
      * \brief Update a scp command path
-     * \param sshServer the new scp command path
+     * \param scpCommand the new scp command path
      */
     static void setSCPCommand(const std::string& scpCommand);
 
@@ -48,6 +48,7 @@ class FileFactory {
      * \param path the path of the file
      * \param user the file user
      * \param key the ssh private key path
+     * \return The new built file
      */
     static File* getFileServer(const SessionServer& sessionServer,
         const std::string& path,

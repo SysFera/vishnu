@@ -72,7 +72,8 @@ Enumerations</h2></td></tr>
 <b>MACHINEID</b>, 
 <b>REMOTEBINDIR</b>, 
 <br/>
-&nbsp;&nbsp;<b>INTERVALMONITOR</b>
+&nbsp;&nbsp;<b>INTERVALMONITOR</b>, 
+<b>DBPOOLSIZE</b>
 <br/>
  }</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><p>Define a parameter type. </p>
@@ -102,6 +103,8 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get a vishnu machineid based on the hostname.  <a href="#af78f0170fec9be36ee34f702cbd7ab28"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#acc83b00c8c11d7ae44a4dee1b8bf66f3">registerSeD</a> (std::string type, <a class="el" href="classExecConfiguration.html">ExecConfiguration</a> config)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To register the server in the database.  <a href="#acc83b00c8c11d7ae44a4dee1b8bf66f3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a3b8e27715f0676ef58a806f2cc5e365c">unregisterSeD</a> (std::string type)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To unregister the server in the database (set as stopped).  <a href="#a3b8e27715f0676ef58a806f2cc5e365c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ae3f61f1465ef34d3cf2f20c67a019b43">isMonth</a> (const char *s)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Return true if the string starts with 'MONTH'.  <a href="#ae3f61f1465ef34d3cf2f20c67a019b43"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a646794297931366c08502e5079154ccd">isYear</a> (const char *s)</td></tr>
@@ -131,9 +134,13 @@ Functions</h2></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
 <tr><td class="memTemplItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a864d60dc9a2f4fe9048e522718698e84">parseEmfObject</a> (const std::string &amp;objectSerialized, T *&amp;object_ptr, const std::string msgComp=std::string())</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to parse the EMF object.  <a href="#a864d60dc9a2f4fe9048e522718698e84"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#aaf3976b9b53965c46bc9bcf847ba286f">parseErrorMessage</a> (const std::string &amp;errorMsg)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to parse a system error message.  <a href="#aaf3976b9b53965c46bc9bcf847ba286f"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
 <tr><td class="memTemplItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#add18720aacc1db6052abecedd5d6feaa">convertToString</a> (T val)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Generic function to convert an object to string.  <a href="#add18720aacc1db6052abecedd5d6feaa"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">long long&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ae4208edfb8924443b0971e68cccfce02">convertToTimeType</a> (std::string date)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to convert a given date into correspondant long value.  <a href="#ae4208edfb8924443b0971e68cccfce02"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066">convertToInt</a> (std::string val)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to convert a string to int.  <a href="#ac1899fb2792ddd63a003a06081fc9066"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a6315b6f5e86d48f4c75dc73d08348edf">cryptPassword</a> (const std::string &amp;salt, const std::string password)</td></tr>
@@ -146,8 +153,8 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Simple function to convert time from string format (YYYY-MM-DD H:mm:ss) to long integer format in seconds.  <a href="#ace1a774c9d738133e7cdfe505d358764"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a50b77ca8a04c384cba2b8b6cdec4a26f">get_file_content</a> (const std::string &amp;filePath)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Simple function to read the content of a regular file.  <a href="#a50b77ca8a04c384cba2b8b6cdec4a26f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a66626268c81795efe726f8c9bb70b1c2">moveFile</a> (std::string src, std::string dest, const std::string &amp;filename=&quot;&quot;)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to move file.  <a href="#a66626268c81795efe726f8c9bb70b1c2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a0e3a3913b049d96a08712f45d71e86cb">boostMoveFile</a> (const std::string &amp;src, const std::string &amp;dest, const std::string &amp;filename=&quot;&quot;)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to move file.  <a href="#a0e3a3913b049d96a08712f45d71e86cb"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a8087df6ef072800cecc1bf4e85d9aca5">isNumericalValue</a> (const std::string value)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check a numerical value.  <a href="#a8087df6ef072800cecc1bf4e85d9aca5"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ad5bea19658f717e721e13dacad591b2a">convertWallTimeToString</a> (const long &amp;walltime)</td></tr>
@@ -166,6 +173,8 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to convert UTC time into localtime (seconds).  <a href="#a912b9d87fc92812a07bb7f6dce8dcb85"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">time_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a7607f0891ab382dcb2343a36d9b25190">convertLocaltimeINUTCtime</a> (const time_t &amp;localtime)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to localtime into UTC (seconds).  <a href="#a7607f0891ab382dcb2343a36d9b25190"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">long&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a34f4596f7c86c2f9bd6b6bd49be69e6f">diffLocaltimeUTCtime</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to return the difference between localtime and UTC time (seconds).  <a href="#a34f4596f7c86c2f9bd6b6bd49be69e6f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a33f3fca5bc294663e2863c1abc1da5c8">createTmpFile</a> (char *fileName, const std::string &amp;file_content)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to create temporary file.  <a href="#a33f3fca5bc294663e2863c1abc1da5c8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a18002572e5b0039069544475365f335d">createTmpFile</a> (char *fileName)</td></tr>
@@ -175,6 +184,15 @@ Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab0ea8ccb86c430f6a602374c82f66d2e"></a><!-- doxytag: member="vishnu::printSuccessMessage" ref="ab0ea8ccb86c430f6a602374c82f66d2e" args="()" -->
 void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ab0ea8ccb86c430f6a602374c82f66d2e">printSuccessMessage</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to print success message. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af872d4641cf320df3d2c2102dccbd18e"></a><!-- doxytag: member="vishnu::printSessionKeyMessage" ref="af872d4641cf320df3d2c2102dccbd18e" args="()" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#af872d4641cf320df3d2c2102dccbd18e">printSessionKeyMessage</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to display the session key. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a7671a1a0faa2417f4224a68879979bc4">checkMetricHistoryValue</a> (const int &amp;metric)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check the metric value.  <a href="#a7671a1a0faa2417f4224a68879979bc4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a3b238cf04a86c821f8a267afad489bee">checkRemotePath</a> (const std::string &amp;path)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check the remote file path.  <a href="#a3b238cf04a86c821f8a267afad489bee"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a04f9a9dfc61b7390150222b10f64bb70">process_exists</a> (const std::string &amp;pid, const bfs::path &amp;proc_dir=&quot;/proc&quot;)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Check if the pid exists.  <a href="#a04f9a9dfc61b7390150222b10f64bb70"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ac58b058a6a467a21f7eb21192617c90f">connect</a> (const std::string &amp;userId, const std::string &amp;password, UMS_Data::Session &amp;session, const UMS_Data::ConnectOptions &amp;connectOpt=UMS_Data::ConnectOptions())  throw (UserException, SystemException)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to open a session.  <a href="#ac58b058a6a467a21f7eb21192617c90f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ae120231ba899d68724dc972374206745">reconnect</a> (const std::string &amp;userId, const std::string &amp;password, const std::string &amp;sessionId, UMS_Data::Session &amp;session)  throw (UserException, SystemException)</td></tr>
@@ -230,22 +248,89 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to finalize. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ab1b9efc3bdb39619f591a2eaa96baac9">restore</a> (const std::string &amp;filePath)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to initialize the data base.  <a href="#ab1b9efc3bdb39619f591a2eaa96baac9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#adfcc1f58eb5f9294cd3e668704e62649">submitJob</a> (const std::string &amp;sessionKey, const std::string &amp;machineId, const std::string &amp;scriptFilePath, Job &amp;jobInfo, const SubmitOptions &amp;options)  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The submitJob function submits job on a machine through the use of a script (scriptFilePath).  <a href="#adfcc1f58eb5f9294cd3e668704e62649"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#acee6838fcf107a7a9b2f058159b7b9be">submitJob</a> (const std::string &amp;sessionKey, const std::string &amp;machineId, const std::string &amp;scriptFilePath, Job &amp;jobInfo, const SubmitOptions &amp;options=SubmitOptions())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The submitJob function submits job on a machine through the use of a script (scriptFilePath).  <a href="#acee6838fcf107a7a9b2f058159b7b9be"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a151ba595af88d89107ff08ad0e2c5e31">cancelJob</a> (const std::string &amp;sessionKey, const std::string &amp;machineId, const std::string &amp;jobId)  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The cancelJob function cancels a job from its id.  <a href="#a151ba595af88d89107ff08ad0e2c5e31"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a4461c3e9d86e9c507436655056a1b660">getJobInfo</a> (const std::string &amp;sessionKey, const std::string &amp;machineId, const std::string &amp;jobId, Job &amp;jobInfos)  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The getJobInfo function gets information on a job from its id.  <a href="#a4461c3e9d86e9c507436655056a1b660"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a6244690b88aff21355c382318bffff14">listJobs</a> (const std::string &amp;sessionKey, const std::string &amp;machineId, ListJobs &amp;listOfJobs, const ListJobsOptions &amp;options)  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The listJobs function gets a list of all submitted jobs.  <a href="#a6244690b88aff21355c382318bffff14"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a6cfe834ba44e65437afa5c324ef03fd3">getJobProgress</a> (const std::string &amp;sessionKey, const std::string &amp;machineId, ListProgression &amp;listOfProgress, const ProgressOptions &amp;options)  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The getJobProgress function gets the progression status of jobs.  <a href="#a6cfe834ba44e65437afa5c324ef03fd3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a8e73e05d9006bd3e0388234ccf861538">listJobs</a> (const std::string &amp;sessionKey, const std::string &amp;machineId, ListJobs &amp;listOfJobs, const ListJobsOptions &amp;options=ListJobsOptions())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The listJobs function gets a list of all submitted jobs.  <a href="#a8e73e05d9006bd3e0388234ccf861538"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a5bc51ba53a335079d0b7044cc2c8f4cc">getJobProgress</a> (const std::string &amp;sessionKey, const std::string &amp;machineId, ListProgression &amp;listOfProgress, const ProgressOptions &amp;options=ProgressOptions())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The getJobProgress function gets the progression status of jobs.  <a href="#a5bc51ba53a335079d0b7044cc2c8f4cc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ada2d98155cffa475261261fb33f7e873">listQueues</a> (const std::string &amp;sessionKey, const std::string &amp;machineId, ListQueues &amp;listofQueues, const std::string &amp;queueName=std::string())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The listQueues function gets queues information.  <a href="#ada2d98155cffa475261261fb33f7e873"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a6e0b3df33a91bd16cdadf3ac428fcf0e">getJobOutput</a> (const std::string &amp;sessionKey, const std::string &amp;machineId, const std::string &amp;jobId, JobResult &amp;outputInfo, const std::string &amp;outDir=std::string())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The getJobOutput function gets outputPath and errorPath of a job from its id.  <a href="#a6e0b3df33a91bd16cdadf3ac428fcf0e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#aaedc4b5676f0c8e47f333316cff0b0a8">getCompletedJobsOutput</a> (const std::string &amp;sessionKey, const std::string &amp;machineId, ListJobResults &amp;listOfResults, const std::string &amp;outDir=std::string())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The <a class="el" href="namespacevishnu.html#aaedc4b5676f0c8e47f333316cff0b0a8" title="The getCompletedJobsOutput() function gets standard output and error output files of completed jobs (...">getCompletedJobsOutput()</a> function gets standard output and error output files of completed jobs (applies only once for each job).  <a href="#aaedc4b5676f0c8e47f333316cff0b0a8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ac6b5cc01ba9509aa07b89dd69ada02fa">exportCommands</a> (const string sessionKey, const string oldSessionId, string filename, IMS_Data::ExportOp op)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To export the commands made during a session in a format.  <a href="#ac6b5cc01ba9509aa07b89dd69ada02fa"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ad83c65006cee9dbbd73881089cc1f441">getMetricCurrentValue</a> (const string sessionKey, string machineId, IMS_Data::ListMetric &amp;val, IMS_Data::CurMetricOp op)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get the current value of a metric.  <a href="#ad83c65006cee9dbbd73881089cc1f441"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#aaec1e90bd62e865d63ed47dc7b2e7638">getMetricHistory</a> (const string sessionKey, string machineId, IMS_Data::ListMetric &amp;list, IMS_Data::MetricHistOp op)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get the values of the metrics on a machine.  <a href="#aaec1e90bd62e865d63ed47dc7b2e7638"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a9ab3615d929a06aa5e1feca1be9e49d9">getProcesses</a> (const string sessionKey, IMS_Data::ListProcesses &amp;list, IMS_Data::ProcessOp op)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get the running vishnu processes.  <a href="#a9ab3615d929a06aa5e1feca1be9e49d9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a3b056eb0ec0ad9a7ac591ece3cac3dbd">setSystemInfo</a> (const string sessionKey, IMS_Data::SystemInfo sys)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To set system information about a machine.  <a href="#a3b056eb0ec0ad9a7ac591ece3cac3dbd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#abdf98c34bf2ad136aa4e2cf2d8611cf0">setSystemThreshold</a> (const string sessionKey, IMS_Data::Threshold threshold)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To set a threshold.  <a href="#abdf98c34bf2ad136aa4e2cf2d8611cf0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a19659b2087323b8bd44940afae500a98">getSystemThreshold</a> (const string sessionKey, IMS_Data::ListThreshold &amp;list, IMS_Data::ThresholdOp op)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get a set of thresholds on the system.  <a href="#a19659b2087323b8bd44940afae500a98"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a6388e9aa2c64ef4dfeee9a253dfc2d55">defineUserIdentifier</a> (const string sessionKey, string fmt)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To define the format of the user id automatically generated in VISHNU.  <a href="#a6388e9aa2c64ef4dfeee9a253dfc2d55"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ae271c5ecdd758dcc4bee27ba2b9c8a3c">defineMachineIdentifier</a> (const string sessionKey, string fmt)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To define the format of the machine id automatically generated in VISHNU.  <a href="#ae271c5ecdd758dcc4bee27ba2b9c8a3c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a1b44c77d6bccf4fd886be4028f27bb73">defineJobIdentifier</a> (const string sessionKey, string fmt)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To define the format of the job id automatically generated in VISHNU.  <a href="#a1b44c77d6bccf4fd886be4028f27bb73"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#adc1d08f000cf50058dd8b0688ea7fb1f">defineTransferIdentifier</a> (const string sessionKey, string fmt)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To define the format of the file transfer id automatically generated in VISHNU.  <a href="#adc1d08f000cf50058dd8b0688ea7fb1f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ab088d903ec32abcb3ad6f1d2336c04ac">loadShed</a> (const string sessionKey, string machineId, IMS_Data::LoadShedType loadShedType)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To load shed a machine.  <a href="#ab088d903ec32abcb3ad6f1d2336c04ac"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a860094ba973969b94110555d6bb3b557">setUpdateFrequency</a> (const string sessionKey, int freq)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To change the automatic update frequency of the machines' state.  <a href="#a860094ba973969b94110555d6bb3b557"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a5b13b2b9e19299c652246a9533f92717">getUpdateFrequency</a> (const string sessionKey, int &amp;freq)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get the automatic update frequency of the machines' state.  <a href="#a5b13b2b9e19299c652246a9533f92717"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a0a5795c2a88415d758de3a05762850ce">stop</a> (const string sessionKey, IMS_Data::Process proc)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To stop a vishnu process.  <a href="#a0a5795c2a88415d758de3a05762850ce"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ab6cc46ec3fc97e19d7a57bcf42dee328">getSystemInfo</a> (const string sessionKey, IMS_Data::ListSysInfo &amp;list, IMS_Data::SysInfoOp op)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get system information about a machine.  <a href="#ab6cc46ec3fc97e19d7a57bcf42dee328"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#aa87ea9f13dc0bc74edd73e815c4bdf7c">restart</a> (const string sessionKey, string machineId, IMS_Data::RestartOp op)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To restart a vishnu process.  <a href="#aa87ea9f13dc0bc74edd73e815c4bdf7c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a7719eac49c7e537d743d0dbcb4bdb627">createFile</a> (const string &amp;sessionKey, const string &amp;path)  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">create a new remote file  <a href="#a7719eac49c7e537d743d0dbcb4bdb627"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a1dd41a50658d5aa0cdb4b46a654359e7">chGrp</a> (const string &amp;sessionKey, const string &amp;group, const string &amp;path)  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">change the group of a file  <a href="#a1dd41a50658d5aa0cdb4b46a654359e7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a88fa0cf47d649d26a520b6d84be734d0">chMod</a> (const string &amp;sessionKey, const mode_t &amp;mode, const string &amp;path)  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">change the permissions of a file  <a href="#a88fa0cf47d649d26a520b6d84be734d0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a9c08b2960915cf530451df2c7e0d2316">copyFile</a> (const string &amp;sessionKey, const string &amp;src, const string &amp;dest, const CpFileOptions &amp;options=CpFileOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">copy the file  <a href="#a9c08b2960915cf530451df2c7e0d2316"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#aa1f91396026194dd4f815035ec6b1f64">copyAsyncFile</a> (const string &amp;sessionKey, const string &amp;src, const string &amp;dest, FileTransfer &amp;transferInfo, const CpFileOptions &amp;options=CpFileOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">copy the file in a asynchronous mode  <a href="#aa1f91396026194dd4f815035ec6b1f64"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a2ce4c436458a99e531b2a2fe55c60854">headOfFile</a> (const string &amp;sessionKey, const string &amp;path, string &amp;contentOfFile, const HeadOfFileOptions &amp;options=HeadOfFileOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">get the first lines of a file  <a href="#a2ce4c436458a99e531b2a2fe55c60854"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a626981a5333a6cf9980ecab82a130fe5">contentOfFile</a> (const string &amp;sessionKey, const string &amp;path, string &amp;contentOfFile)  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">get the content of a file  <a href="#a626981a5333a6cf9980ecab82a130fe5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#abcd5b8873e7974f79f3325cd187ade2d">listDir</a> (const string &amp;sessionKey, const string &amp;path, StringList &amp;dirContent, const LsDirOptions &amp;options=LsDirOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">get the list of files and subdirectories of a directory  <a href="#abcd5b8873e7974f79f3325cd187ade2d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ac5cba7c19df7cf1661a792e9d7c49c82">createDir</a> (const string &amp;sessionKey, const string &amp;path)  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">create a directory  <a href="#ac5cba7c19df7cf1661a792e9d7c49c82"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#aab0a15fe913c3cfb7f1ba8416b21f116">moveFile</a> (const string &amp;sessionKey, const string &amp;src, const string &amp;dest, const CpFileOptions &amp;options=CpFileOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">move a file  <a href="#aab0a15fe913c3cfb7f1ba8416b21f116"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a1611f0d2a0056ab1c373211a5911b669">moveAsyncFile</a> (const string &amp;sessionKey, const string &amp;src, const string &amp;dest, FileTransfer &amp;transferInfo, const CpFileOptions &amp;options=CpFileOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">move a file in a asynchronous mode  <a href="#a1611f0d2a0056ab1c373211a5911b669"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#aa524b5e536bf51e3ac68ec06ee429691">removeFile</a> (const string &amp;sessionKey, const string &amp;path, const RmFileOptions &amp;options=RmFileOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a23105333be3ff847f7c274f6372364bc">removeDir</a> (const string &amp;sessionKey, const string &amp;path)  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">remove a directory  <a href="#a23105333be3ff847f7c274f6372364bc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#aa8c92237272b5c0e92360f617a2a4edc">tailOfFile</a> (const string &amp;sessionKey, const string &amp;path, string &amp;contentOfFile, const TailOfFileOptions &amp;options=TailOfFileOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">get the last lines of a file  <a href="#aa8c92237272b5c0e92360f617a2a4edc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a80b9f9b9ae713916ad8965e36458113d">getFilesInfo</a> (const string &amp;sessionKey, const string &amp;path, FileStat &amp;filesInfo)  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">obtain informations about a file  <a href="#a80b9f9b9ae713916ad8965e36458113d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ac7f9c1d4391157b7dddaab5051fd44a8">stopFileTransfer</a> (const string &amp;sessionKey, const StopTransferOptions &amp;options=StopTransferOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">cancel a file transfer  <a href="#ac7f9c1d4391157b7dddaab5051fd44a8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a5159cd0b198000c690a1e9f88abb1329">listFileTransfers</a> (const string &amp;sessionKey, FileTransferList &amp;fileTransferList, const LsTransferOptions &amp;options=LsTransferOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">List file transfers.  <a href="#a5159cd0b198000c690a1e9f88abb1329"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1ca7d1d1baf7cebd2530d93b9f064bd9"></a><!-- doxytag: member="vishnu::params" ref="a1ca7d1d1baf7cebd2530d93b9f064bd9" args="[]" -->
@@ -461,6 +546,50 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a0e3a3913b049d96a08712f45d71e86cb"></a><!-- doxytag: member="vishnu::boostMoveFile" ref="a0e3a3913b049d96a08712f45d71e86cb" args="(const std::string &amp;src, const std::string &amp;dest, const std::string &amp;filename=&quot;&quot;)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::boostMoveFile </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>filename</em> = <code>&quot;&quot;</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to move file. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>src,:</em>&nbsp;</td><td>the path of the file to move </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>dest,:</em>&nbsp;</td><td>the destination where the file will be moved </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>filename,:</em>&nbsp;</td><td>the name of the file in dest </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a151ba595af88d89107ff08ad0e2c5e31"></a><!-- doxytag: member="vishnu::cancelJob" ref="a151ba595af88d89107ff08ad0e2c5e31" args="(const std::string &amp;sessionKey, const std::string &amp;machineId, const std::string &amp;jobId)" -->
 <div class="memitem">
 <div class="memproto">
@@ -630,6 +759,148 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a7671a1a0faa2417f4224a68879979bc4"></a><!-- doxytag: member="vishnu::checkMetricHistoryValue" ref="a7671a1a0faa2417f4224a68879979bc4" args="(const int &amp;metric)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void vishnu::checkMetricHistoryValue </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;&nbsp;</td>
+          <td class="paramname"> <em>metric</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to check the metric value. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>metric</em>&nbsp;</td><td>the metric value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a3b238cf04a86c821f8a267afad489bee"></a><!-- doxytag: member="vishnu::checkRemotePath" ref="a3b238cf04a86c821f8a267afad489bee" args="(const std::string &amp;path)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void vishnu::checkRemotePath </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>path</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to check the remote file path. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>path</em>&nbsp;</td><td>the remote file path </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a1dd41a50658d5aa0cdb4b46a654359e7"></a><!-- doxytag: member="vishnu::chGrp" ref="a1dd41a50658d5aa0cdb4b46a654359e7" args="(const string &amp;sessionKey, const string &amp;group, const string &amp;path)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::chGrp </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>group</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>path</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classFMSVishnuException.html">FMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>change the group of a file </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey</em>&nbsp;</td><td>the session key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>group</em>&nbsp;</td><td>the name of the new group to use for this file </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>path</em>&nbsp;</td><td>the file path using host:path format </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 if everything is OK, another value otherwise </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a88fa0cf47d649d26a520b6d84be734d0"></a><!-- doxytag: member="vishnu::chMod" ref="a88fa0cf47d649d26a520b6d84be734d0" args="(const string &amp;sessionKey, const mode_t &amp;mode, const string &amp;path)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::chMod </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const mode_t &amp;&nbsp;</td>
+          <td class="paramname"> <em>mode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>path</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classFMSVishnuException.html">FMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>change the permissions of a file </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey</em>&nbsp;</td><td>the session key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>mode</em>&nbsp;</td><td>the path new mode </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>path</em>&nbsp;</td><td>the file path using host:path format </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 if everything is OK, another value otherwise </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a925f5cdd60d012ebd98cd328ed60d398"></a><!-- doxytag: member="vishnu::close" ref="a925f5cdd60d012ebd98cd328ed60d398" args="(const std::string &amp;sessionKey)" -->
 <div class="memitem">
 <div class="memproto">
@@ -782,6 +1053,50 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a626981a5333a6cf9980ecab82a130fe5"></a><!-- doxytag: member="vishnu::contentOfFile" ref="a626981a5333a6cf9980ecab82a130fe5" args="(const string &amp;sessionKey, const string &amp;path, string &amp;contentOfFile)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::contentOfFile </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string &amp;&nbsp;</td>
+          <td class="paramname"> <em>contentOfFile</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classFMSVishnuException.html">FMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>get the content of a file </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey</em>&nbsp;</td><td>the session key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>path</em>&nbsp;</td><td>the file path using host:path format </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>contentOfFile</em>&nbsp;</td><td>the content of specified the file </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 if everything is OK, another value otherwise </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a7607f0891ab382dcb2343a36d9b25190"></a><!-- doxytag: member="vishnu::convertLocaltimeINUTCtime" ref="a7607f0891ab382dcb2343a36d9b25190" args="(const time_t &amp;localtime)" -->
 <div class="memitem">
 <div class="memproto">
@@ -892,6 +1207,33 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="ae4208edfb8924443b0971e68cccfce02"></a><!-- doxytag: member="vishnu::convertToTimeType" ref="ae4208edfb8924443b0971e68cccfce02" args="(std::string date)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long long vishnu::convertToTimeType </td>
+          <td>(</td>
+          <td class="paramtype">std::string&nbsp;</td>
+          <td class="paramname"> <em>date</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to convert a given date into correspondant long value. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>date</em>&nbsp;</td><td>The date to convert </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The converted value </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a912b9d87fc92812a07bb7f6dce8dcb85"></a><!-- doxytag: member="vishnu::convertUTCtimeINLocaltime" ref="a912b9d87fc92812a07bb7f6dce8dcb85" args="(const time_t &amp;localtime)" -->
 <div class="memitem">
 <div class="memproto">
@@ -943,6 +1285,189 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>the walltime converted to string </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aa1f91396026194dd4f815035ec6b1f64"></a><!-- doxytag: member="vishnu::copyAsyncFile" ref="aa1f91396026194dd4f815035ec6b1f64" args="(const string &amp;sessionKey, const string &amp;src, const string &amp;dest, FileTransfer &amp;transferInfo, const CpFileOptions &amp;options=CpFileOptions())" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::copyAsyncFile </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FileTransfer &amp;&nbsp;</td>
+          <td class="paramname"> <em>transferInfo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const CpFileOptions &amp;&nbsp;</td>
+          <td class="paramname"> <em>options</em> = <code>CpFileOptions()</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classFMSVishnuException.html">FMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>copy the file in a asynchronous mode </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey</em>&nbsp;</td><td>the session key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>src</em>&nbsp;</td><td>the "source" file path using host:path format </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>dest</em>&nbsp;</td><td>the "destination" file path using host:path format </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>transferInfo</em>&nbsp;</td><td>contains different information about the submitted file transfer (like the transfer identifier) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>options</em>&nbsp;</td><td>contains options used to perform the file transfer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 if everything is OK, another value otherwise </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a9c08b2960915cf530451df2c7e0d2316"></a><!-- doxytag: member="vishnu::copyFile" ref="a9c08b2960915cf530451df2c7e0d2316" args="(const string &amp;sessionKey, const string &amp;src, const string &amp;dest, const CpFileOptions &amp;options=CpFileOptions())" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::copyFile </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const CpFileOptions &amp;&nbsp;</td>
+          <td class="paramname"> <em>options</em> = <code>CpFileOptions()</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classFMSVishnuException.html">FMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>copy the file </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey</em>&nbsp;</td><td>the session key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>src</em>&nbsp;</td><td>the "source" file path using host:path format </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>dest</em>&nbsp;</td><td>the "destination" file path using host:path format </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>options</em>&nbsp;</td><td>contains the options </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 if everything is OK, another value otherwise </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac5cba7c19df7cf1661a792e9d7c49c82"></a><!-- doxytag: member="vishnu::createDir" ref="ac5cba7c19df7cf1661a792e9d7c49c82" args="(const string &amp;sessionKey, const string &amp;path)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::createDir </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>path</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classFMSVishnuException.html">FMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>create a directory </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey</em>&nbsp;</td><td>the session key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>path,:</em>&nbsp;</td><td>the directory path using host:path format </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 if everything is OK, another value otherwise </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a7719eac49c7e537d743d0dbcb4bdb627"></a><!-- doxytag: member="vishnu::createFile" ref="a7719eac49c7e537d743d0dbcb4bdb627" args="(const string &amp;sessionKey, const string &amp;path)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::createFile </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>path</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classFMSVishnuException.html">FMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>create a new remote file </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey</em>&nbsp;</td><td>the session key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>path</em>&nbsp;</td><td>the file path using host:path format </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 if everything is OK, another value otherwise </dd></dl>
 
 </div>
 </div>
@@ -1042,6 +1567,154 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>The crypted password </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a1b44c77d6bccf4fd886be4028f27bb73"></a><!-- doxytag: member="vishnu::defineJobIdentifier" ref="a1b44c77d6bccf4fd886be4028f27bb73" args="(const string sessionKey, string fmt)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::defineJobIdentifier </td>
+          <td>(</td>
+          <td class="paramtype">const string&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&nbsp;</td>
+          <td class="paramname"> <em>fmt</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classIMSVishnuException.html">IMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To define the format of the job id automatically generated in VISHNU. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey,:</em>&nbsp;</td><td>The session key gotten after connection </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>fmt,:</em>&nbsp;</td><td>The new format </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ae271c5ecdd758dcc4bee27ba2b9c8a3c"></a><!-- doxytag: member="vishnu::defineMachineIdentifier" ref="ae271c5ecdd758dcc4bee27ba2b9c8a3c" args="(const string sessionKey, string fmt)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::defineMachineIdentifier </td>
+          <td>(</td>
+          <td class="paramtype">const string&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&nbsp;</td>
+          <td class="paramname"> <em>fmt</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classIMSVishnuException.html">IMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To define the format of the machine id automatically generated in VISHNU. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey,:</em>&nbsp;</td><td>The session key gotten after connection </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>fmt,:</em>&nbsp;</td><td>The new format </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="adc1d08f000cf50058dd8b0688ea7fb1f"></a><!-- doxytag: member="vishnu::defineTransferIdentifier" ref="adc1d08f000cf50058dd8b0688ea7fb1f" args="(const string sessionKey, string fmt)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::defineTransferIdentifier </td>
+          <td>(</td>
+          <td class="paramtype">const string&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&nbsp;</td>
+          <td class="paramname"> <em>fmt</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classIMSVishnuException.html">IMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To define the format of the file transfer id automatically generated in VISHNU. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey,:</em>&nbsp;</td><td>The session key gotten after connection </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>fmt,:</em>&nbsp;</td><td>The new format </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a6388e9aa2c64ef4dfeee9a253dfc2d55"></a><!-- doxytag: member="vishnu::defineUserIdentifier" ref="a6388e9aa2c64ef4dfeee9a253dfc2d55" args="(const string sessionKey, string fmt)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::defineUserIdentifier </td>
+          <td>(</td>
+          <td class="paramtype">const string&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&nbsp;</td>
+          <td class="paramname"> <em>fmt</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classIMSVishnuException.html">IMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To define the format of the user id automatically generated in VISHNU. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey,:</em>&nbsp;</td><td>The session key gotten after connection </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>fmt,:</em>&nbsp;</td><td>The new format </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
 
 </div>
 </div>
@@ -1187,6 +1860,77 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a34f4596f7c86c2f9bd6b6bd49be69e6f"></a><!-- doxytag: member="vishnu::diffLocaltimeUTCtime" ref="a34f4596f7c86c2f9bd6b6bd49be69e6f" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long vishnu::diffLocaltimeUTCtime </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to return the difference between localtime and UTC time (seconds). </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the difference time (seconds) </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac6b5cc01ba9509aa07b89dd69ada02fa"></a><!-- doxytag: member="vishnu::exportCommands" ref="ac6b5cc01ba9509aa07b89dd69ada02fa" args="(const string sessionKey, const string oldSessionId, string filename, IMS_Data::ExportOp op)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::exportCommands </td>
+          <td>(</td>
+          <td class="paramtype">const string&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string&nbsp;</td>
+          <td class="paramname"> <em>oldSessionId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&nbsp;</td>
+          <td class="paramname"> <em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IMS_Data::ExportOp&nbsp;</td>
+          <td class="paramname"> <em>op</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classIMSVishnuException.html">IMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To export the commands made during a session in a format. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey,:</em>&nbsp;</td><td>The session key gotten after connection </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>oldSessionId,:</em>&nbsp;</td><td>The session id of the session the user wants to export the commands. This session must be closed. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>filename,:</em>&nbsp;</td><td>The file to export the data </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>op,:</em>&nbsp;</td><td>The options for the export, currently the export type as shell format is the only possibility </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
 
 </div>
 </div>
@@ -1342,6 +2086,50 @@ template&lt;class T &gt; </div>
 
 <p>Function to get current time in seconds (UTC). </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>the time as the number of seconds since the Epoch, 1970-01-01 00:00:00 +0000 (UTC) </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a80b9f9b9ae713916ad8965e36458113d"></a><!-- doxytag: member="vishnu::getFilesInfo" ref="a80b9f9b9ae713916ad8965e36458113d" args="(const string &amp;sessionKey, const string &amp;path, FileStat &amp;filesInfo)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::getFilesInfo </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FileStat &amp;&nbsp;</td>
+          <td class="paramname"> <em>filesInfo</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classFMSVishnuException.html">FMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>obtain informations about a file </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey</em>&nbsp;</td><td>the session key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>path</em>&nbsp;</td><td>the file path using host:path format </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>filesInfo</em>&nbsp;</td><td>the file informations </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 if everything is OK, another value otherwise </dd></dl>
 
 </div>
 </div>
@@ -1512,7 +2300,7 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a6cfe834ba44e65437afa5c324ef03fd3"></a><!-- doxytag: member="vishnu::getJobProgress" ref="a6cfe834ba44e65437afa5c324ef03fd3" args="(const std::string &amp;sessionKey, const std::string &amp;machineId, ListProgression &amp;listOfProgress, const ProgressOptions &amp;options)" -->
+<a class="anchor" id="a5bc51ba53a335079d0b7044cc2c8f4cc"></a><!-- doxytag: member="vishnu::getJobProgress" ref="a5bc51ba53a335079d0b7044cc2c8f4cc" args="(const std::string &amp;sessionKey, const std::string &amp;machineId, ListProgression &amp;listOfProgress, const ProgressOptions &amp;options=ProgressOptions())" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1538,7 +2326,7 @@ template&lt;class T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const ProgressOptions &amp;&nbsp;</td>
-          <td class="paramname"> <em>options</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>options</em> = <code>ProgressOptions()</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -1635,6 +2423,108 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="ad83c65006cee9dbbd73881089cc1f441"></a><!-- doxytag: member="vishnu::getMetricCurrentValue" ref="ad83c65006cee9dbbd73881089cc1f441" args="(const string sessionKey, string machineId, IMS_Data::ListMetric &amp;val, IMS_Data::CurMetricOp op)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::getMetricCurrentValue </td>
+          <td>(</td>
+          <td class="paramtype">const string&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&nbsp;</td>
+          <td class="paramname"> <em>machineId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IMS_Data::ListMetric &amp;&nbsp;</td>
+          <td class="paramname"> <em>val</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IMS_Data::CurMetricOp&nbsp;</td>
+          <td class="paramname"> <em>op</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classIMSVishnuException.html">IMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To get the current value of a metric. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey,:</em>&nbsp;</td><td>The session key gotten after connection </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>machineId,:</em>&nbsp;</td><td>The id of the machine to get the value on </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>val,:</em>&nbsp;</td><td>The metric (OUT) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>op,:</em>&nbsp;</td><td>The options (the type of the metric only) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aaec1e90bd62e865d63ed47dc7b2e7638"></a><!-- doxytag: member="vishnu::getMetricHistory" ref="aaec1e90bd62e865d63ed47dc7b2e7638" args="(const string sessionKey, string machineId, IMS_Data::ListMetric &amp;list, IMS_Data::MetricHistOp op)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::getMetricHistory </td>
+          <td>(</td>
+          <td class="paramtype">const string&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&nbsp;</td>
+          <td class="paramname"> <em>machineId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IMS_Data::ListMetric &amp;&nbsp;</td>
+          <td class="paramname"> <em>list</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IMS_Data::MetricHistOp&nbsp;</td>
+          <td class="paramname"> <em>op</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classIMSVishnuException.html">IMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To get the values of the metrics on a machine. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey,:</em>&nbsp;</td><td>The session key gotten after connection </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>machineId,:</em>&nbsp;</td><td>The id of the machine </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>list,:</em>&nbsp;</td><td>OUT, the set of metrics </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>op,:</em>&nbsp;</td><td>The options to get the metrics </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="af78f0170fec9be36ee34f702cbd7ab28"></a><!-- doxytag: member="vishnu::getMidFromHost" ref="af78f0170fec9be36ee34f702cbd7ab28" args="(std::string hostname)" -->
 <div class="memitem">
 <div class="memproto">
@@ -1717,6 +2607,226 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>the corresponding conversion </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a9ab3615d929a06aa5e1feca1be9e49d9"></a><!-- doxytag: member="vishnu::getProcesses" ref="a9ab3615d929a06aa5e1feca1be9e49d9" args="(const string sessionKey, IMS_Data::ListProcesses &amp;list, IMS_Data::ProcessOp op)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::getProcesses </td>
+          <td>(</td>
+          <td class="paramtype">const string&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IMS_Data::ListProcesses &amp;&nbsp;</td>
+          <td class="paramname"> <em>list</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IMS_Data::ProcessOp&nbsp;</td>
+          <td class="paramname"> <em>op</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classIMSVishnuException.html">IMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To get the running vishnu processes. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey,:</em>&nbsp;</td><td>The session key gotten after connection </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>list,:</em>&nbsp;</td><td>The list of the running vishnu processes </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>op,:</em>&nbsp;</td><td><a class="el" href="classOptions.html" title="Used to process the users command line parameters.">Options</a> to get the processes </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab6cc46ec3fc97e19d7a57bcf42dee328"></a><!-- doxytag: member="vishnu::getSystemInfo" ref="ab6cc46ec3fc97e19d7a57bcf42dee328" args="(const string sessionKey, IMS_Data::ListSysInfo &amp;list, IMS_Data::SysInfoOp op)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::getSystemInfo </td>
+          <td>(</td>
+          <td class="paramtype">const string&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IMS_Data::ListSysInfo &amp;&nbsp;</td>
+          <td class="paramname"> <em>list</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IMS_Data::SysInfoOp&nbsp;</td>
+          <td class="paramname"> <em>op</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classIMSVishnuException.html">IMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To get system information about a machine. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey,:</em>&nbsp;</td><td>The session key gotten after connection </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>list,:</em>&nbsp;</td><td>The list of the system information </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>op,:</em>&nbsp;</td><td>The options, the id of the machine to get the system information about </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a19659b2087323b8bd44940afae500a98"></a><!-- doxytag: member="vishnu::getSystemThreshold" ref="a19659b2087323b8bd44940afae500a98" args="(const string sessionKey, IMS_Data::ListThreshold &amp;list, IMS_Data::ThresholdOp op)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::getSystemThreshold </td>
+          <td>(</td>
+          <td class="paramtype">const string&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IMS_Data::ListThreshold &amp;&nbsp;</td>
+          <td class="paramname"> <em>list</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IMS_Data::ThresholdOp&nbsp;</td>
+          <td class="paramname"> <em>op</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classIMSVishnuException.html">IMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To get a set of thresholds on the system. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey,:</em>&nbsp;</td><td>The session key gotten after connection </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>list,:</em>&nbsp;</td><td>The set of threshold </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>op,:</em>&nbsp;</td><td>The options to get the thresholds </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5b13b2b9e19299c652246a9533f92717"></a><!-- doxytag: member="vishnu::getUpdateFrequency" ref="a5b13b2b9e19299c652246a9533f92717" args="(const string sessionKey, int &amp;freq)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::getUpdateFrequency </td>
+          <td>(</td>
+          <td class="paramtype">const string&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&nbsp;</td>
+          <td class="paramname"> <em>freq</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classIMSVishnuException.html">IMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To get the automatic update frequency of the machines' state. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey,:</em>&nbsp;</td><td>The session key gotten after connection </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>freq,:</em>&nbsp;</td><td>The frequency used for the history maker to record the machines' states (OUT) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a2ce4c436458a99e531b2a2fe55c60854"></a><!-- doxytag: member="vishnu::headOfFile" ref="a2ce4c436458a99e531b2a2fe55c60854" args="(const string &amp;sessionKey, const string &amp;path, string &amp;contentOfFile, const HeadOfFileOptions &amp;options=HeadOfFileOptions())" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::headOfFile </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string &amp;&nbsp;</td>
+          <td class="paramname"> <em>contentOfFile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const HeadOfFileOptions &amp;&nbsp;</td>
+          <td class="paramname"> <em>options</em> = <code>HeadOfFileOptions()</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classFMSVishnuException.html">FMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>get the first lines of a file </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey</em>&nbsp;</td><td>the session key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>path</em>&nbsp;</td><td>the file path using host:path format </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>contentOfFile</em>&nbsp;</td><td>the first "nline" lines of the file </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>options</em>&nbsp;</td><td>contains the options used to perform the service (like the maximum number of lines to get) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 if everything is OK, another value otherwise </dd></dl>
 
 </div>
 </div>
@@ -2000,6 +3110,101 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="abcd5b8873e7974f79f3325cd187ade2d"></a><!-- doxytag: member="vishnu::listDir" ref="abcd5b8873e7974f79f3325cd187ade2d" args="(const string &amp;sessionKey, const string &amp;path, StringList &amp;dirContent, const LsDirOptions &amp;options=LsDirOptions())" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::listDir </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">StringList &amp;&nbsp;</td>
+          <td class="paramname"> <em>dirContent</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const LsDirOptions &amp;&nbsp;</td>
+          <td class="paramname"> <em>options</em> = <code>LsDirOptions()</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classFMSVishnuException.html">FMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>get the list of files and subdirectories of a directory </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey</em>&nbsp;</td><td>the session key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>path</em>&nbsp;</td><td>the directory path using host:path format </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>dirContent</em>&nbsp;</td><td>the directory content </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>options</em>&nbsp;</td><td>contains the options used to perform the service (like the long format list) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 if everything is OK, another value otherwise </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5159cd0b198000c690a1e9f88abb1329"></a><!-- doxytag: member="vishnu::listFileTransfers" ref="a5159cd0b198000c690a1e9f88abb1329" args="(const string &amp;sessionKey, FileTransferList &amp;fileTransferList, const LsTransferOptions &amp;options=LsTransferOptions())" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::listFileTransfers </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FileTransferList &amp;&nbsp;</td>
+          <td class="paramname"> <em>fileTransferList</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const LsTransferOptions &amp;&nbsp;</td>
+          <td class="paramname"> <em>options</em> = <code>LsTransferOptions()</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classFMSVishnuException.html">FMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>List file transfers. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey</em>&nbsp;</td><td>the session key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>fileTransferList</em>&nbsp;</td><td>the file transfer list </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>options</em>&nbsp;</td><td>contains the options used to perform the service (like the transfer id obtained after a call to copyAsyncFile or moveAsyncFile) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 if everything is OK, another value otherwise </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a8576a50af31abe3869a61bec780aa5ef"></a><!-- doxytag: member="vishnu::listHistoryCmd" ref="a8576a50af31abe3869a61bec780aa5ef" args="(const std::string &amp;sessionKey, UMS_Data::ListCommands &amp;listCommands, const UMS_Data::ListCmdOptions &amp;options=UMS_Data::ListCmdOptions())" -->
 <div class="memitem">
 <div class="memproto">
@@ -2044,7 +3249,7 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a6244690b88aff21355c382318bffff14"></a><!-- doxytag: member="vishnu::listJobs" ref="a6244690b88aff21355c382318bffff14" args="(const std::string &amp;sessionKey, const std::string &amp;machineId, ListJobs &amp;listOfJobs, const ListJobsOptions &amp;options)" -->
+<a class="anchor" id="a8e73e05d9006bd3e0388234ccf861538"></a><!-- doxytag: member="vishnu::listJobs" ref="a8e73e05d9006bd3e0388234ccf861538" args="(const std::string &amp;sessionKey, const std::string &amp;machineId, ListJobs &amp;listOfJobs, const ListJobsOptions &amp;options=ListJobsOptions())" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -2070,7 +3275,7 @@ template&lt;class T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const ListJobsOptions &amp;&nbsp;</td>
-          <td class="paramname"> <em>options</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>options</em> = <code>ListJobsOptions()</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -2366,47 +3571,156 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a66626268c81795efe726f8c9bb70b1c2"></a><!-- doxytag: member="vishnu::moveFile" ref="a66626268c81795efe726f8c9bb70b1c2" args="(std::string src, std::string dest, const std::string &amp;filename=&quot;&quot;)" -->
+<a class="anchor" id="ab088d903ec32abcb3ad6f1d2336c04ac"></a><!-- doxytag: member="vishnu::loadShed" ref="ab088d903ec32abcb3ad6f1d2336c04ac" args="(const string sessionKey, string machineId, IMS_Data::LoadShedType loadShedType)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::loadShed </td>
+          <td>(</td>
+          <td class="paramtype">const string&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&nbsp;</td>
+          <td class="paramname"> <em>machineId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IMS_Data::LoadShedType&nbsp;</td>
+          <td class="paramname"> <em>loadShedType</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classIMSVishnuException.html">IMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To load shed a machine. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey,:</em>&nbsp;</td><td>The session key gotten after connection </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>machineId,:</em>&nbsp;</td><td>The id of the machine to load shed </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>loadShedType,:</em>&nbsp;</td><td>The type of load shedding, HARD or SOFT. HARD stops all whereas SOFT stops jobs but they can be restarted later </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a1611f0d2a0056ab1c373211a5911b669"></a><!-- doxytag: member="vishnu::moveAsyncFile" ref="a1611f0d2a0056ab1c373211a5911b669" args="(const string &amp;sessionKey, const string &amp;src, const string &amp;dest, FileTransfer &amp;transferInfo, const CpFileOptions &amp;options=CpFileOptions())" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::moveAsyncFile </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FileTransfer &amp;&nbsp;</td>
+          <td class="paramname"> <em>transferInfo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const CpFileOptions &amp;&nbsp;</td>
+          <td class="paramname"> <em>options</em> = <code>CpFileOptions()</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classFMSVishnuException.html">FMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>move a file in a asynchronous mode </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey</em>&nbsp;</td><td>the session key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>src,:</em>&nbsp;</td><td>the "source" file path using host:path format </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>dest,:</em>&nbsp;</td><td>the "destination" file path using host:path format </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>transferInfo</em>&nbsp;</td><td>contains different information about the submitted file transfer (like the transfer identifier) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>options</em>&nbsp;</td><td>contains the options used to perform the service (like the transfer command :scp or rsync) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 if everything is OK, another value otherwise </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aab0a15fe913c3cfb7f1ba8416b21f116"></a><!-- doxytag: member="vishnu::moveFile" ref="aab0a15fe913c3cfb7f1ba8416b21f116" args="(const string &amp;sessionKey, const string &amp;src, const string &amp;dest, const CpFileOptions &amp;options=CpFileOptions())" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int vishnu::moveFile </td>
           <td>(</td>
-          <td class="paramtype">std::string&nbsp;</td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
           <td class="paramname"> <em>src</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string&nbsp;</td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
           <td class="paramname"> <em>dest</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::string &amp;&nbsp;</td>
-          <td class="paramname"> <em>filename</em> = <code>&quot;&quot;</code></td><td>&nbsp;</td>
+          <td class="paramtype">const CpFileOptions &amp;&nbsp;</td>
+          <td class="paramname"> <em>options</em> = <code>CpFileOptions()</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td></td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classFMSVishnuException.html">FMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Function to move file. </p>
+<p>move a file </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>src,:</em>&nbsp;</td><td>the path of the file to move </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>dest,:</em>&nbsp;</td><td>the destination where the file will be moved </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>filename,:</em>&nbsp;</td><td>the name of the file in dest </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey</em>&nbsp;</td><td>the session key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>src</em>&nbsp;</td><td>the "source" file path using host:path format </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>dest</em>&nbsp;</td><td>the "destination" file path using host:path format </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>options</em>&nbsp;</td><td>contains the options used to perform the service (like the transfer command :scp or rsync) </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 if everything is OK, another value otherwise </dd></dl>
 
 </div>
 </div>
@@ -2453,6 +3767,70 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>true if success else false </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aaf3976b9b53965c46bc9bcf847ba286f"></a><!-- doxytag: member="vishnu::parseErrorMessage" ref="aaf3976b9b53965c46bc9bcf847ba286f" args="(const std::string &amp;errorMsg)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string vishnu::parseErrorMessage </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>errorMsg</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to parse a system error message. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>errorMsg</em>&nbsp;</td><td>the error message </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the parsed message </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a04f9a9dfc61b7390150222b10f64bb70"></a><!-- doxytag: member="vishnu::process_exists" ref="a04f9a9dfc61b7390150222b10f64bb70" args="(const std::string &amp;pid, const bfs::path &amp;proc_dir=&quot;/proc&quot;)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool vishnu::process_exists </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>pid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bfs::path &amp;&nbsp;</td>
+          <td class="paramname"> <em>proc_dir</em> = <code>&quot;/proc&quot;</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Check if the pid exists. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pid</em>&nbsp;</td><td>The given pid </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>proc_dir</em>&nbsp;</td><td>The given process info directory </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True if the pid exists </dd></dl>
 
 </div>
 </div>
@@ -2544,6 +3922,86 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="a23105333be3ff847f7c274f6372364bc"></a><!-- doxytag: member="vishnu::removeDir" ref="a23105333be3ff847f7c274f6372364bc" args="(const string &amp;sessionKey, const string &amp;path)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::removeDir </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>path</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classFMSVishnuException.html">FMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>remove a directory </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey</em>&nbsp;</td><td>the session key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>path</em>&nbsp;</td><td>the directory path using host:path format </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 if everything is OK, another value otherwise </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aa524b5e536bf51e3ac68ec06ee429691"></a><!-- doxytag: member="vishnu::removeFile" ref="aa524b5e536bf51e3ac68ec06ee429691" args="(const string &amp;sessionKey, const string &amp;path, const RmFileOptions &amp;options=RmFileOptions())" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::removeFile </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const RmFileOptions &amp;&nbsp;</td>
+          <td class="paramname"> <em>options</em> = <code>RmFileOptions()</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classFMSVishnuException.html">FMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>remove a file </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey</em>&nbsp;</td><td>the session key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>path</em>&nbsp;</td><td>the file path using host:path format </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>options</em>&nbsp;</td><td>contains options used to perform the remove file function </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 if everything is OK, another value otherwise </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a11f16b7501b8814c491d13431409051c"></a><!-- doxytag: member="vishnu::resetPassword" ref="a11f16b7501b8814c491d13431409051c" args="(const std::string &amp;sessionKey, const std::string &amp;userId, std::string &amp;tmpPassword)" -->
 <div class="memitem">
 <div class="memproto">
@@ -2585,6 +4043,50 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aa87ea9f13dc0bc74edd73e815c4bdf7c"></a><!-- doxytag: member="vishnu::restart" ref="aa87ea9f13dc0bc74edd73e815c4bdf7c" args="(const string sessionKey, string machineId, IMS_Data::RestartOp op)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::restart </td>
+          <td>(</td>
+          <td class="paramtype">const string&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&nbsp;</td>
+          <td class="paramname"> <em>machineId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IMS_Data::RestartOp&nbsp;</td>
+          <td class="paramname"> <em>op</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classIMSVishnuException.html">IMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To restart a vishnu process. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey,:</em>&nbsp;</td><td>The session key gotten after connection </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>machineId,:</em>&nbsp;</td><td>The machine where to restart </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>op,:</em>&nbsp;</td><td>The options for the restart, the vishnuConfigurationFile and the type of sed to be restarted on the machine </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
 
 </div>
 </div>
@@ -2689,6 +4191,191 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="a3b056eb0ec0ad9a7ac591ece3cac3dbd"></a><!-- doxytag: member="vishnu::setSystemInfo" ref="a3b056eb0ec0ad9a7ac591ece3cac3dbd" args="(const string sessionKey, IMS_Data::SystemInfo sys)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::setSystemInfo </td>
+          <td>(</td>
+          <td class="paramtype">const string&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IMS_Data::SystemInfo&nbsp;</td>
+          <td class="paramname"> <em>sys</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classIMSVishnuException.html">IMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To set system information about a machine. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey,:</em>&nbsp;</td><td>The session key gotten after connection </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>sys,:</em>&nbsp;</td><td>The system info to set </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="abdf98c34bf2ad136aa4e2cf2d8611cf0"></a><!-- doxytag: member="vishnu::setSystemThreshold" ref="abdf98c34bf2ad136aa4e2cf2d8611cf0" args="(const string sessionKey, IMS_Data::Threshold threshold)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::setSystemThreshold </td>
+          <td>(</td>
+          <td class="paramtype">const string&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IMS_Data::Threshold&nbsp;</td>
+          <td class="paramname"> <em>threshold</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classIMSVishnuException.html">IMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To set a threshold. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey,:</em>&nbsp;</td><td>The session key gotten after connection </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>threshold,:</em>&nbsp;</td><td>The threshold to set </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a860094ba973969b94110555d6bb3b557"></a><!-- doxytag: member="vishnu::setUpdateFrequency" ref="a860094ba973969b94110555d6bb3b557" args="(const string sessionKey, int freq)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::setUpdateFrequency </td>
+          <td>(</td>
+          <td class="paramtype">const string&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>freq</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classIMSVishnuException.html">IMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To change the automatic update frequency of the machines' state. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey,:</em>&nbsp;</td><td>The session key gotten after connection </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>freq,:</em>&nbsp;</td><td>The new frequency to use for the history maker to record the machines' states </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a0a5795c2a88415d758de3a05762850ce"></a><!-- doxytag: member="vishnu::stop" ref="a0a5795c2a88415d758de3a05762850ce" args="(const string sessionKey, IMS_Data::Process proc)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::stop </td>
+          <td>(</td>
+          <td class="paramtype">const string&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IMS_Data::Process&nbsp;</td>
+          <td class="paramname"> <em>proc</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classIMSVishnuException.html">IMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To stop a vishnu process. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey,:</em>&nbsp;</td><td>The session key gotten after connection </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>proc,:</em>&nbsp;</td><td>The vishnu process to stop </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac7f9c1d4391157b7dddaab5051fd44a8"></a><!-- doxytag: member="vishnu::stopFileTransfer" ref="ac7f9c1d4391157b7dddaab5051fd44a8" args="(const string &amp;sessionKey, const StopTransferOptions &amp;options=StopTransferOptions())" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::stopFileTransfer </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const StopTransferOptions &amp;&nbsp;</td>
+          <td class="paramname"> <em>options</em> = <code>StopTransferOptions()</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classFMSVishnuException.html">FMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>cancel a file transfer </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey</em>&nbsp;</td><td>the session key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>options</em>&nbsp;</td><td>contains the options used to perform the service (like the transfer id obtained after a call to copyAsyncFile or moveAsyncFile ) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 if everything is OK, another value otherwise </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ace1a774c9d738133e7cdfe505d358764"></a><!-- doxytag: member="vishnu::string_to_time_t" ref="ace1a774c9d738133e7cdfe505d358764" args="(const std::string &amp;ts)" -->
 <div class="memitem">
 <div class="memproto">
@@ -2716,7 +4403,7 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="adfcc1f58eb5f9294cd3e668704e62649"></a><!-- doxytag: member="vishnu::submitJob" ref="adfcc1f58eb5f9294cd3e668704e62649" args="(const std::string &amp;sessionKey, const std::string &amp;machineId, const std::string &amp;scriptFilePath, Job &amp;jobInfo, const SubmitOptions &amp;options)" -->
+<a class="anchor" id="acee6838fcf107a7a9b2f058159b7b9be"></a><!-- doxytag: member="vishnu::submitJob" ref="acee6838fcf107a7a9b2f058159b7b9be" args="(const std::string &amp;sessionKey, const std::string &amp;machineId, const std::string &amp;scriptFilePath, Job &amp;jobInfo, const SubmitOptions &amp;options=SubmitOptions())" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -2748,7 +4435,7 @@ template&lt;class T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const SubmitOptions &amp;&nbsp;</td>
-          <td class="paramname"> <em>options</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>options</em> = <code>SubmitOptions()</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -2771,6 +4458,58 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aa8c92237272b5c0e92360f617a2a4edc"></a><!-- doxytag: member="vishnu::tailOfFile" ref="aa8c92237272b5c0e92360f617a2a4edc" args="(const string &amp;sessionKey, const string &amp;path, string &amp;contentOfFile, const TailOfFileOptions &amp;options=TailOfFileOptions())" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::tailOfFile </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string &amp;&nbsp;</td>
+          <td class="paramname"> <em>contentOfFile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const TailOfFileOptions &amp;&nbsp;</td>
+          <td class="paramname"> <em>options</em> = <code>TailOfFileOptions()</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classFMSVishnuException.html">FMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>get the last lines of a file </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey</em>&nbsp;</td><td>the session key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>path</em>&nbsp;</td><td>the file path using host:path format </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>contentOfFile</em>&nbsp;</td><td>the last "nline" lines of the file </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>options</em>&nbsp;</td><td>the options used to perform the service </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>contentOfFile</em>&nbsp;</td><td>an user-allocated buffer to store the result </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 if everything is OK, another value otherwise </dd></dl>
 
 </div>
 </div>
@@ -2798,6 +4537,33 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>The password entered. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a3b8e27715f0676ef58a806f2cc5e365c"></a><!-- doxytag: member="vishnu::unregisterSeD" ref="a3b8e27715f0676ef58a806f2cc5e365c" args="(std::string type)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::unregisterSeD </td>
+          <td>(</td>
+          <td class="paramtype">std::string&nbsp;</td>
+          <td class="paramname"> <em>type</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To unregister the server in the database (set as stopped). </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>type,:</em>&nbsp;</td><td>The type of the SeD </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 if the function succeeds or another value otherwise </dd></dl>
 
 </div>
 </div>
@@ -2957,7 +4723,7 @@ template&lt;class T &gt; </div>
 </div>
 </div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu May 12 2011 16:22:25 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 14 2011 23:13:18 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

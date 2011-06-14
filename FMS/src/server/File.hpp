@@ -81,7 +81,13 @@ typedef off_t file_size_t;
 #define STAT(path, buf) stat((path), (buf))
 #else
 typedef struct stat64 file_stat_t;
+/**
+ * \brief A defintion of object size type
+ */
 typedef off64_t file_size_t;
+/**
+ * \brief The default defintion of stat function
+ */
 #define STAT(path, buf) stat64((path), (buf))
 #endif
 
@@ -358,6 +364,7 @@ class File {
       virtual int mkdir(const mode_t mode=defaultDirectoryAccessMode) = 0;
       /**
        * \brief To remove a file
+       * \param isRecursive to remove directory
        * \return 0 if the command succeeds, an error code otherwise
        */ 
     virtual int rm(bool isRecursive=false) = 0;
@@ -375,14 +382,14 @@ class File {
 
       /**
        * \brief To copy the file 
-       * \param dest the copy destination
+       * \param path the copy destination
        * \param options the copy options  
        * \return 0 if the command succeeds, an error code otherwise
        */
     virtual int cp(const std::string& path, const CpFileOptions& options) = 0;
     /**
      * \brief To move the file 
-     * \param dest the move destination
+     * \param path the move destination
      * \param options the move options  
      * \return 0 if the command succeeds, an error code otherwise
      */

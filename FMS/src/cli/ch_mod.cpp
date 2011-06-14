@@ -16,7 +16,7 @@
 #include "cmdArgs.hpp"
 #include <boost/bind.hpp>
 #include <sys/types.h>
-#include "displayer.hpp"
+#include "FMSDisplayer.hpp"
 namespace po = boost::program_options;
 
 using namespace std;

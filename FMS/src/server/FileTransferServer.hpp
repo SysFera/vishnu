@@ -269,7 +269,7 @@ class FileTransferServer{
     
   /**
    * \brief Update The file transfer information
-   * \param The new file transfer information
+   * \param fileTransfer The new file transfer information
    */  
     void setFileTransfer( const FMS_Data::FileTransfer& fileTransfer) const; 
 /**
@@ -279,11 +279,13 @@ class FileTransferServer{
     static Database * getDatabaseInstance();
   /**
    * \brief Update the ssh port
+   * \param sshPort The new ssh port
    */  
     static void setSSHPort(const unsigned int sshPort);
     
   /**
    * \brief Update the ssh command
+   * \param sshCommand The new ssh command
    */  
     static void setSSHCommand(const std::string& sshCommand);
 
@@ -298,18 +300,19 @@ class FileTransferServer{
    * \return the ssh command
    */  
     static const std::string& getSSHCommand( );
-/**
- * \brief To remove some characters from string
- * \return The cleaned string
- */
+    /**
+     * \brief To remove some characters from string
+     * \param toFilter the string to filter
+     * \return The cleaned string
+     */
     static std::string filterString(  const std::string& toFilter);
   /**
    * \brief To check if the transfer identifier exists
-   * \param the transfer identifier
+   * \param  transferId the transfer identifier
    */
     static void checkTransferId(std::string transferId);
    /**
-    * \To add options to sql request
+    * \brief To add options to sql request
     * \param name the option name
     * \param value the option value
     * \param request the sql request to modify
@@ -318,13 +321,13 @@ class FileTransferServer{
 
   /**
    * \brief To check if the user identifier exists
-   * \param the user identifier
+   * \param userId the user identifier
    */
     static void checkUserId(std::string userId);
 
   /**
    * \brief To check if the client machine name exists in the vishnu database
-   * \param the client machine name
+   * \param clmachineId the client machine name
    */
     static void checkClientMachineName(std::string clmachineId);
 /**
