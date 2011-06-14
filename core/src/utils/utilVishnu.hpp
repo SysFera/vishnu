@@ -244,7 +244,7 @@ namespace vishnu {
 
   /**
     * \brief Function to check the metric value
-    * \param value the metric value
+    * \param metric: the metric value
     * \return raises an exception on error
     */
    void
