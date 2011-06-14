@@ -29,6 +29,10 @@ int main (int argc, char* argv[]){
   string sessionKey;
   string path;
 
+  /********** EMF data ************/
+  FMS_Data::RmFileOptions rmFileOptions;
+
+
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt=processOpt(argv[0], dietConfig);
 
@@ -38,11 +42,18 @@ int main (int argc, char* argv[]){
       path,1);
   opt->setPosition("path",1);
 
+  opt->add("isRecursive,r",
+      "It specifies when the remove command is recursive (case of directory) or not.",
+      CONFIG);
+  
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
   // Parse the cli and setting the options found
   ret = cmd.parse(env_name_mapper());
 
+  if(opt->count("isRecursive")){
+    rmFileOptions.setIsRecursive(true);
+  }
   if (ret != CLI_SUCCESS){
     helpUsage(*opt,"[options] path");
     return ret;
@@ -70,7 +81,7 @@ int main (int argc, char* argv[]){
     // DIET call 
     if(false==sessionKey.empty()){
       printSessionKeyMessage();
-      removeFile(sessionKey, path);
+      removeFile(sessionKey, path,rmFileOptions);
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
