@@ -92,6 +92,7 @@
 %include "FMS_Data/StopTransferOptions.hpp"
 %include "FMS_Data/StringList.hpp"
 %include "FMS_Data/TailOfFileOptions.hpp"
+%include "FMS_Data/RmFileOptions.hpp"
 
 %{
 #define SWIG_FILE_WITH_INIT
