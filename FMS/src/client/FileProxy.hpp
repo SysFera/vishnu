@@ -40,7 +40,14 @@ typedef off_t file_size_t;
 #define STAT(path, buf) stat((path), (buf))
 #else
 typedef struct stat64 file_stat_t;
+/**
+ * \brief The object size definition type
+ */
 typedef off64_t file_size_t;
+/**
+ * \brief A stat function default definition
+ */
+
 #define STAT(path, buf) stat64((path), (buf))
 #endif
 
@@ -370,6 +377,7 @@ class FileProxy {
        * \brief To copy the file in asynchronous mode 
        * \param dest the copy destination
        * \param options the copy options  
+       * \param fileTransfer the file transfer informatio
        * \return 0 if the command succeeds, an error code otherwise
        */
       virtual int cpAsync(const std::string& dest, 
@@ -380,6 +388,7 @@ class FileProxy {
        * \brief To move the file in asynchronous mode 
        * \param dest the move destination
        * \param options the move options  
+       * \param fileTransfer the file transfer informatio
        * \return 0 if the command succeeds, an error code otherwise
        */
       virtual int mvAsync(const std::string& dest, 

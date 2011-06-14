@@ -56,46 +56,46 @@
 <a name="l00032"></a>00032 
 <a name="l00033"></a>00033 <span class="keyword">namespace </span>vishnu {
 <a name="l00043"></a>00043   <span class="keywordtype">int</span>
-<a name="l00044"></a>00044   <a class="code" href="namespacevishnu.html#adfcc1f58eb5f9294cd3e668704e62649" title="The submitJob function submits job on a machine through the use of a script (scriptFilePath).">submitJob</a>(<span class="keyword">const</span> std::string&amp; sessionKey,
+<a name="l00044"></a>00044   <a class="code" href="namespacevishnu.html#acee6838fcf107a7a9b2f058159b7b9be" title="The submitJob function submits job on a machine through the use of a script (scriptFilePath).">submitJob</a>(<span class="keyword">const</span> std::string&amp; sessionKey,
 <a name="l00045"></a>00045             <span class="keyword">const</span> std::string&amp; machineId,
 <a name="l00046"></a>00046             <span class="keyword">const</span> std::string&amp; scriptFilePath,
 <a name="l00047"></a>00047             Job&amp; jobInfo,
-<a name="l00048"></a>00048             <span class="keyword">const</span> SubmitOptions&amp; options)
-<a name="l00049"></a>00049   <span class="keywordflow">throw</span> (<a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>, <a class="code" href="classTMSVishnuException.html" title="This class allows to treat an error specific to TMS Module.">TMSVishnuException</a>, <a class="code" href="classUserException.html" title="This class represents the exception due to a user misuse.">UserException</a>, <a class="code" href="classSystemException.html" title="This class represents the exception that are due to the system.">SystemException</a>);
+<a name="l00048"></a>00048             <span class="keyword">const</span> SubmitOptions&amp; options=SubmitOptions())
+<a name="l00049"></a>00049   throw (<a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>, <a class="code" href="classTMSVishnuException.html" title="This class allows to treat an error specific to TMS Module.">TMSVishnuException</a>, <a class="code" href="classUserException.html" title="This class represents the exception due to a user misuse.">UserException</a>, <a class="code" href="classSystemException.html" title="This class represents the exception that are due to the system.">SystemException</a>);
 <a name="l00050"></a>00050 
 <a name="l00058"></a>00058   <span class="keywordtype">int</span>
-<a name="l00059"></a>00059   <a class="code" href="namespacevishnu.html#a151ba595af88d89107ff08ad0e2c5e31" title="The cancelJob function cancels a job from its id.">cancelJob</a>(<span class="keyword">const</span> std::string&amp; sessionKey,
-<a name="l00060"></a>00060             <span class="keyword">const</span> std::string&amp; machineId,
-<a name="l00061"></a>00061             <span class="keyword">const</span> std::string&amp; jobId)
-<a name="l00062"></a>00062   <span class="keywordflow">throw</span> (<a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>, <a class="code" href="classTMSVishnuException.html" title="This class allows to treat an error specific to TMS Module.">TMSVishnuException</a>, <a class="code" href="classUserException.html" title="This class represents the exception due to a user misuse.">UserException</a>, <a class="code" href="classSystemException.html" title="This class represents the exception that are due to the system.">SystemException</a>);
+<a name="l00059"></a>00059   <a class="code" href="namespacevishnu.html#a151ba595af88d89107ff08ad0e2c5e31" title="The cancelJob function cancels a job from its id.">cancelJob</a>(const std::<span class="keywordtype">string</span>&amp; sessionKey,
+<a name="l00060"></a>00060             const std::<span class="keywordtype">string</span>&amp; machineId,
+<a name="l00061"></a>00061             const std::<span class="keywordtype">string</span>&amp; jobId)
+<a name="l00062"></a>00062   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 <a name="l00063"></a>00063 
 <a name="l00072"></a>00072   <span class="keywordtype">int</span>
-<a name="l00073"></a>00073   <a class="code" href="namespacevishnu.html#a4461c3e9d86e9c507436655056a1b660" title="The getJobInfo function gets information on a job from its id.">getJobInfo</a>(<span class="keyword">const</span> std::string&amp; sessionKey,
-<a name="l00074"></a>00074              <span class="keyword">const</span> std::string&amp; machineId,
-<a name="l00075"></a>00075              <span class="keyword">const</span> std::string&amp; jobId,
+<a name="l00073"></a>00073   <a class="code" href="namespacevishnu.html#a4461c3e9d86e9c507436655056a1b660" title="The getJobInfo function gets information on a job from its id.">getJobInfo</a>(const std::<span class="keywordtype">string</span>&amp; sessionKey,
+<a name="l00074"></a>00074              const std::<span class="keywordtype">string</span>&amp; machineId,
+<a name="l00075"></a>00075              const std::<span class="keywordtype">string</span>&amp; jobId,
 <a name="l00076"></a>00076              Job&amp; jobInfos)
-<a name="l00077"></a>00077   <span class="keywordflow">throw</span> (<a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>, <a class="code" href="classTMSVishnuException.html" title="This class allows to treat an error specific to TMS Module.">TMSVishnuException</a>, <a class="code" href="classUserException.html" title="This class represents the exception due to a user misuse.">UserException</a>, <a class="code" href="classSystemException.html" title="This class represents the exception that are due to the system.">SystemException</a>);
+<a name="l00077"></a>00077   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 <a name="l00078"></a>00078 
 <a name="l00087"></a>00087   <span class="keywordtype">int</span>
-<a name="l00088"></a>00088   <a class="code" href="namespacevishnu.html#a6244690b88aff21355c382318bffff14" title="The listJobs function gets a list of all submitted jobs.">listJobs</a>(<span class="keyword">const</span> std::string&amp; sessionKey,
-<a name="l00089"></a>00089            <span class="keyword">const</span> std::string&amp; machineId,
+<a name="l00088"></a>00088   <a class="code" href="namespacevishnu.html#a8e73e05d9006bd3e0388234ccf861538" title="The listJobs function gets a list of all submitted jobs.">listJobs</a>(const std::<span class="keywordtype">string</span>&amp; sessionKey,
+<a name="l00089"></a>00089            const std::<span class="keywordtype">string</span>&amp; machineId,
 <a name="l00090"></a>00090            ListJobs&amp; listOfJobs,
-<a name="l00091"></a>00091            <span class="keyword">const</span> ListJobsOptions&amp; options)
-<a name="l00092"></a>00092   <span class="keywordflow">throw</span> (<a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>, <a class="code" href="classTMSVishnuException.html" title="This class allows to treat an error specific to TMS Module.">TMSVishnuException</a>, <a class="code" href="classUserException.html" title="This class represents the exception due to a user misuse.">UserException</a>, <a class="code" href="classSystemException.html" title="This class represents the exception that are due to the system.">SystemException</a>);
+<a name="l00091"></a>00091            const ListJobsOptions&amp; options=ListJobsOptions())
+<a name="l00092"></a>00092   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 <a name="l00093"></a>00093 
 <a name="l00102"></a>00102   <span class="keywordtype">int</span>
-<a name="l00103"></a>00103   <a class="code" href="namespacevishnu.html#a6cfe834ba44e65437afa5c324ef03fd3" title="The getJobProgress function gets the progression status of jobs.">getJobProgress</a>(<span class="keyword">const</span> std::string&amp; sessionKey,
-<a name="l00104"></a>00104                  <span class="keyword">const</span> std::string&amp; machineId,
+<a name="l00103"></a>00103   <a class="code" href="namespacevishnu.html#a5bc51ba53a335079d0b7044cc2c8f4cc" title="The getJobProgress function gets the progression status of jobs.">getJobProgress</a>(const std::<span class="keywordtype">string</span>&amp; sessionKey,
+<a name="l00104"></a>00104                  const std::<span class="keywordtype">string</span>&amp; machineId,
 <a name="l00105"></a>00105                  ListProgression&amp; listOfProgress,
-<a name="l00106"></a>00106                  <span class="keyword">const</span> ProgressOptions&amp; options)
-<a name="l00107"></a>00107   <span class="keywordflow">throw</span> (<a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>, <a class="code" href="classTMSVishnuException.html" title="This class allows to treat an error specific to TMS Module.">TMSVishnuException</a>, <a class="code" href="classUserException.html" title="This class represents the exception due to a user misuse.">UserException</a>, <a class="code" href="classSystemException.html" title="This class represents the exception that are due to the system.">SystemException</a>);
+<a name="l00106"></a>00106                  const ProgressOptions&amp; options=ProgressOptions())
+<a name="l00107"></a>00107   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 <a name="l00108"></a>00108 
 <a name="l00117"></a>00117   <span class="keywordtype">int</span>
-<a name="l00118"></a>00118   <a class="code" href="namespacevishnu.html#ada2d98155cffa475261261fb33f7e873" title="The listQueues function gets queues information.">listQueues</a>(<span class="keyword">const</span> std::string&amp; sessionKey,
-<a name="l00119"></a>00119              <span class="keyword">const</span> std::string&amp; machineId,
+<a name="l00118"></a>00118   <a class="code" href="namespacevishnu.html#ada2d98155cffa475261261fb33f7e873" title="The listQueues function gets queues information.">listQueues</a>(const std::<span class="keywordtype">string</span>&amp; sessionKey,
+<a name="l00119"></a>00119              const std::<span class="keywordtype">string</span>&amp; machineId,
 <a name="l00120"></a>00120              ListQueues&amp; listofQueues,
-<a name="l00121"></a>00121              <span class="keyword">const</span> std::string&amp; queueName=std::string())
-<a name="l00122"></a>00122   throw (<a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>, <a class="code" href="classTMSVishnuException.html" title="This class allows to treat an error specific to TMS Module.">TMSVishnuException</a>, <a class="code" href="classUserException.html" title="This class represents the exception due to a user misuse.">UserException</a>, <a class="code" href="classSystemException.html" title="This class represents the exception that are due to the system.">SystemException</a>);
+<a name="l00121"></a>00121              const std::<span class="keywordtype">string</span>&amp; queueName=std::<span class="keywordtype">string</span>())
+<a name="l00122"></a>00122   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 <a name="l00123"></a>00123 
 <a name="l00124"></a>00124 
 <a name="l00134"></a>00134   <span class="keywordtype">int</span>
@@ -118,7 +118,7 @@
 <a name="l00160"></a>00160 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu May 12 2011 16:22:22 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 14 2011 23:13:12 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

@@ -28,6 +28,7 @@
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
 <h1>QueryServer&lt; QueryParameters, ListObject &gt; Class Template Reference</h1>  </div>
@@ -51,6 +52,11 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to list query information.  <a href="#a2ad0f3f1b75e6f0705a9edbe4bab76b0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQueryServer.html#ad6b15831bd35508c3b5a393062d6e206">getCommandName</a> ()=0</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the name of the query command line.  <a href="#ad6b15831bd35508c3b5a393062d6e206"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5e207567c6ce02000e949e277b54e2d3"></a><!-- doxytag: member="QueryServer::~QueryServer" ref="a5e207567c6ce02000e949e277b54e2d3" args="()" -->
+virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQueryServer.html#a5e207567c6ce02000e949e277b54e2d3">~QueryServer</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructor, raises an exception on error. <br/></td></tr>
+<tr><td colspan="2"><h2><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQueryServer.html#a908157c12cbf775d0dd7f270e0f291fe">addOptionRequest</a> (const std::string &amp;name, const std::string &amp;value, std::string &amp;request)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to add sql resquest "and condition" to a given request.  <a href="#a908157c12cbf775d0dd7f270e0f291fe"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
@@ -84,9 +90,6 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check if a given job identifier exists.  <a href="#add7b3dc1799367f27cf0160a5ac63ecf"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQueryServer.html#ad0f0f43c901920be7fb7a3719bb782ba">checkQueueName</a> (std::string queueName)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check if a given queue exists.  <a href="#ad0f0f43c901920be7fb7a3719bb782ba"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5e207567c6ce02000e949e277b54e2d3"></a><!-- doxytag: member="QueryServer::~QueryServer" ref="a5e207567c6ce02000e949e277b54e2d3" args="()" -->
-virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQueryServer.html#a5e207567c6ce02000e949e277b54e2d3">~QueryServer</a> ()</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructor, raises an exception on error. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4cf1497aa9c56864e8119645ccc42dc7"></a><!-- doxytag: member="QueryServer::mparameters" ref="a4cf1497aa9c56864e8119645ccc42dc7" args="" -->
@@ -202,7 +205,7 @@ template&lt;class QueryParameters, class ListObject&gt; </div>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [inline]</code></td>
+          <td></td><td></td><td><code> [inline, protected]</code></td>
         </tr>
       </table>
 </div>
@@ -249,7 +252,7 @@ template&lt;class T &gt; </div>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [inline]</code></td>
+          <td></td><td></td><td><code> [inline, protected]</code></td>
         </tr>
       </table>
 </div>
@@ -296,7 +299,7 @@ template&lt;class T &gt; </div>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [inline]</code></td>
+          <td></td><td></td><td><code> [inline, protected]</code></td>
         </tr>
       </table>
 </div>
@@ -341,7 +344,7 @@ template&lt;class QueryParameters, class ListObject&gt; </div>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [inline]</code></td>
+          <td></td><td></td><td><code> [inline, protected]</code></td>
         </tr>
       </table>
 </div>
@@ -394,7 +397,7 @@ template&lt;class T &gt; </div>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td><code> [inline]</code></td>
+          <td></td><td></td><td><code> [inline, protected]</code></td>
         </tr>
       </table>
 </div>
@@ -425,7 +428,7 @@ template&lt;class QueryParameters, class ListObject&gt; </div>
           <td class="paramtype">std::string&nbsp;</td>
           <td class="paramname"> <em>clmachineId</em></td>
           <td>&nbsp;)&nbsp;</td>
-          <td><code> [inline]</code></td>
+          <td><code> [inline, protected]</code></td>
         </tr>
       </table>
 </div>
@@ -453,7 +456,7 @@ template&lt;class QueryParameters, class ListObject&gt; </div>
           <td class="paramtype">const int &amp;&nbsp;</td>
           <td class="paramname"> <em>closePolicy</em></td>
           <td>&nbsp;)&nbsp;</td>
-          <td><code> [inline]</code></td>
+          <td><code> [inline, protected]</code></td>
         </tr>
       </table>
 </div>
@@ -481,7 +484,7 @@ template&lt;class QueryParameters, class ListObject&gt; </div>
           <td class="paramtype">std::string&nbsp;</td>
           <td class="paramname"> <em>jobId</em></td>
           <td>&nbsp;)&nbsp;</td>
-          <td><code> [inline]</code></td>
+          <td><code> [inline, protected]</code></td>
         </tr>
       </table>
 </div>
@@ -509,7 +512,7 @@ template&lt;class QueryParameters, class ListObject&gt; </div>
           <td class="paramtype">std::string&nbsp;</td>
           <td class="paramname"> <em>machineId</em></td>
           <td>&nbsp;)&nbsp;</td>
-          <td><code> [inline]</code></td>
+          <td><code> [inline, protected]</code></td>
         </tr>
       </table>
 </div>
@@ -537,7 +540,7 @@ template&lt;class QueryParameters, class ListObject&gt; </div>
           <td class="paramtype">std::string&nbsp;</td>
           <td class="paramname"> <em>name</em></td>
           <td>&nbsp;)&nbsp;</td>
-          <td><code> [inline]</code></td>
+          <td><code> [inline, protected]</code></td>
         </tr>
       </table>
 </div>
@@ -566,7 +569,7 @@ template&lt;class QueryParameters, class ListObject&gt; </div>
           <td class="paramtype">std::string&nbsp;</td>
           <td class="paramname"> <em>queueName</em></td>
           <td>&nbsp;)&nbsp;</td>
-          <td><code> [inline]</code></td>
+          <td><code> [inline, protected]</code></td>
         </tr>
       </table>
 </div>
@@ -594,7 +597,7 @@ template&lt;class QueryParameters, class ListObject&gt; </div>
           <td class="paramtype">std::string&nbsp;</td>
           <td class="paramname"> <em>sessionId</em></td>
           <td>&nbsp;)&nbsp;</td>
-          <td><code> [inline]</code></td>
+          <td><code> [inline, protected]</code></td>
         </tr>
       </table>
 </div>
@@ -622,7 +625,7 @@ template&lt;class QueryParameters, class ListObject&gt; </div>
           <td class="paramtype">const int &amp;&nbsp;</td>
           <td class="paramname"> <em>status</em></td>
           <td>&nbsp;)&nbsp;</td>
-          <td><code> [inline]</code></td>
+          <td><code> [inline, protected]</code></td>
         </tr>
       </table>
 </div>
@@ -650,7 +653,7 @@ template&lt;class QueryParameters, class ListObject&gt; </div>
           <td class="paramtype">std::string&nbsp;</td>
           <td class="paramname"> <em>userId</em></td>
           <td>&nbsp;)&nbsp;</td>
-          <td><code> [inline]</code></td>
+          <td><code> [inline, protected]</code></td>
         </tr>
       </table>
 </div>
@@ -679,7 +682,7 @@ template&lt;class QueryParameters, class ListObject&gt; </div>
           <td class="paramtype">std::string&nbsp;</td>
           <td class="paramname"> <em>date</em></td>
           <td>&nbsp;)&nbsp;</td>
-          <td><code> [inline]</code></td>
+          <td><code> [inline, protected]</code></td>
         </tr>
       </table>
 </div>
@@ -716,7 +719,7 @@ template&lt;class QueryParameters, class ListObject&gt; </div>
 <p>Function to get the name of the query command line. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>The the name of the query command line </dd></dl>
 
-<p>Implemented in <a class="el" href="classListCommandsServer.html#ae51f623d61d994481bdc0e77025b1cd3">ListCommandsServer</a>, <a class="el" href="classListLocalAccountsServer.html#acc12358ea99501ac83097ed65570b3c0">ListLocalAccountsServer</a>, <a class="el" href="classListMachinesServer.html#a1009395b555efa83eac39fa139a3625b">ListMachinesServer</a>, <a class="el" href="classListOptionsValuesServer.html#a8ddf0e769f4a7582bf818e599a2a8f6e">ListOptionsValuesServer</a>, <a class="el" href="classListSessionsServer.html#addba2aae3573750b1dc32220ec88dc94">ListSessionsServer</a>, <a class="el" href="classListJobServer.html#ae4efce66451934990d0575d1b8151378">ListJobServer</a>, and <a class="el" href="classListProgressServer.html#a9fefff901176f068962ab31ae42c25aa">ListProgressServer</a>.</p>
+<p>Implemented in <a class="el" href="classListCommandsServer.html#ae51f623d61d994481bdc0e77025b1cd3">ListCommandsServer</a>, <a class="el" href="classListLocalAccountsServer.html#acc12358ea99501ac83097ed65570b3c0">ListLocalAccountsServer</a>, <a class="el" href="classListMachinesServer.html#a1009395b555efa83eac39fa139a3625b">ListMachinesServer</a>, <a class="el" href="classListOptionsValuesServer.html#a8ddf0e769f4a7582bf818e599a2a8f6e">ListOptionsValuesServer</a>, <a class="el" href="classListSessionsServer.html#addba2aae3573750b1dc32220ec88dc94">ListSessionsServer</a>, <a class="el" href="classListJobServer.html#ae4efce66451934990d0575d1b8151378">ListJobServer</a>, <a class="el" href="classListProgressServer.html#a9fefff901176f068962ab31ae42c25aa">ListProgressServer</a>, and <a class="el" href="classListFileTransfers.html#a6d7e7aba9de33a523a30e80e43664f43">ListFileTransfers</a>.</p>
 
 </div>
 </div>
@@ -742,7 +745,7 @@ template&lt;class QueryParameters, class ListObject&gt; </div>
 <dd>
 raises an exception on error </dd></dl>
 
-<p>Implemented in <a class="el" href="classListCommandsServer.html#ae256dad4b7cb57e73dd3dc2c5dcb3e7b">ListCommandsServer</a>, <a class="el" href="classListLocalAccountsServer.html#aab1471d2b577b25471f12652b6e78b31">ListLocalAccountsServer</a>, <a class="el" href="classListMachinesServer.html#abbaceb388d6ad47bc9e82a3f33e978a3">ListMachinesServer</a>, <a class="el" href="classListOptionsValuesServer.html#a193d667fd5fa247300cebd4af85785d6">ListOptionsValuesServer</a>, <a class="el" href="classListSessionsServer.html#a2ce41ba3a29999d9ef1799c990d29b29">ListSessionsServer</a>, <a class="el" href="classListJobServer.html#a88da8c8e36fce6142758dc5779e0adae">ListJobServer</a>, and <a class="el" href="classListProgressServer.html#a638132aca020d8168e5185df47e881f0">ListProgressServer</a>.</p>
+<p>Implemented in <a class="el" href="classListCommandsServer.html#ae256dad4b7cb57e73dd3dc2c5dcb3e7b">ListCommandsServer</a>, <a class="el" href="classListLocalAccountsServer.html#aab1471d2b577b25471f12652b6e78b31">ListLocalAccountsServer</a>, <a class="el" href="classListMachinesServer.html#abbaceb388d6ad47bc9e82a3f33e978a3">ListMachinesServer</a>, <a class="el" href="classListOptionsValuesServer.html#a193d667fd5fa247300cebd4af85785d6">ListOptionsValuesServer</a>, <a class="el" href="classListSessionsServer.html#a2ce41ba3a29999d9ef1799c990d29b29">ListSessionsServer</a>, <a class="el" href="classListJobServer.html#a88da8c8e36fce6142758dc5779e0adae">ListJobServer</a>, <a class="el" href="classListProgressServer.html#a638132aca020d8168e5185df47e881f0">ListProgressServer</a>, and <a class="el" href="classListFileTransfers.html#a51a0f5e3382378220277271122a619d7">ListFileTransfers</a>.</p>
 
 </div>
 </div>
@@ -750,7 +753,7 @@ raises an exception on error </dd></dl>
 <li>core/src/utils/<a class="el" href="QueryServer_8hpp_source.html">QueryServer.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu May 12 2011 16:22:24 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 14 2011 23:13:16 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
