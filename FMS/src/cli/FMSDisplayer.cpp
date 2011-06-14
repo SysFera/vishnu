@@ -1,6 +1,6 @@
 /**
- * \file get_file_info.cpp
- * This file defines the VISHNU  FMS displayer functions 
+ * \file FMSDisplayer.cpp
+ * This file defines the VISHNU  FMS FMSDisplayer functions 
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -8,7 +8,7 @@
 #include "boost/date_time/c_time.hpp"
 #include "utilVishnu.hpp"
 #include "FMS_Data.hpp"
-#include "displayer.hpp"
+#include "FMSDisplayer.hpp"
 
 using namespace std;
 using namespace vishnu;

@@ -68,6 +68,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To set the db to use.  <a href="#a937a096b286c4e6738ea5d314aabe109"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDatabaseResult.html">DatabaseResult</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOracleDatabase.html#a399070863f94605bc2e520c968e3edbe">getResult</a> (std::string request)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get the result of a select request.  <a href="#a399070863f94605bc2e520c968e3edbe"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDbConfiguration.html#a4a57e43a5017a5c4833a784a994c91cf">DbConfiguration::db_type_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOracleDatabase.html#a4079e91290576c8d71bc062ffa20330a">getDbType</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get the type of database.  <a href="#a4079e91290576c8d71bc062ffa20330a"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOracleDatabase.html#a9839467588dcecbdb4c4582903379346">disconnect</a> ()</td></tr>
@@ -210,6 +212,28 @@ bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a class="anchor" id="a4079e91290576c8d71bc062ffa20330a"></a><!-- doxytag: member="OracleDatabase::getDbType" ref="a4079e91290576c8d71bc062ffa20330a" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classDbConfiguration.html#a4a57e43a5017a5c4833a784a994c91cf">DbConfiguration::db_type_t</a> OracleDatabase::getDbType </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline, virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To get the type of database. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>An enum identifying the type of database </dd></dl>
+
+<p>Implements <a class="el" href="classDatabase.html#a668ffe571cb0f9f355a2f874e40cb515">Database</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a399070863f94605bc2e520c968e3edbe"></a><!-- doxytag: member="OracleDatabase::getResult" ref="a399070863f94605bc2e520c968e3edbe" args="(std::string request)" -->
 <div class="memitem">
 <div class="memproto">
@@ -278,7 +302,7 @@ bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td class="paramtype">std::string&nbsp;</td>
           <td class="paramname"> <em>db</em></td>
           <td>&nbsp;)&nbsp;</td>
-          <td><code> [virtual]</code></td>
+          <td></td>
         </tr>
       </table>
 </div>
@@ -292,8 +316,6 @@ bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 raises an exception on error </dd></dl>
-
-<p>Implements <a class="el" href="classDatabase.html#aeba15395d2a36faf73dcb995695b9204">Database</a>.</p>
 
 </div>
 </div>
@@ -328,7 +350,7 @@ bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <li>core/src/database/<a class="el" href="OracleDatabase_8hpp_source.html">OracleDatabase.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu May 12 2011 16:22:24 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 14 2011 23:13:16 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

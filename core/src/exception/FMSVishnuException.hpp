@@ -13,7 +13,9 @@ static const int ERRCODE_INVALID_PATH = 201;
 static const int ERRCODE_RUNTIME_ERROR = 202;
 static const int ERRCODE_UNKNOWN_FILETRANSFERID = 203;
 
-
+/**
+ * \brief A FMS error handling class
+ */
 
 /**
  * \class FMSVishnuException
@@ -28,22 +30,22 @@ class FMSVishnuException: public UserException{
   FMSVishnuException();
   /**
    * \brief Copy constructor
-   * \param e: The exception to copy
+   * \param e another FMS excpetion object
    */
   FMSVishnuException(const FMSVishnuException& e);
   /**
-   * \brief Constructor
-   * \param msg: The message to set to the exception
-   * \param msgComp: The complementary message to set
+   * \brief Constructor with paramters
+   * \param  msg the error code
+   * \param msgComp The complementary message to add to generic error message
    */
   FMSVishnuException(int msg, std::string msgComp= "");
   /**
-   * \brief Default constructor
+   * \brief Default destructor
    */
   ~FMSVishnuException() throw (){};
 
   /**
-   * \brief Function to initialize all UMS generic messages
+   * \brief Function to initialize all FMS generic messages
    */
   void
   initMsg();
