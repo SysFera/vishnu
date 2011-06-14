@@ -36,7 +36,9 @@ int \hyperlink{classOracleDatabase_a4a93e348aa699fb34d62edc64dc8d5fd}{connect} (
 int \hyperlink{classOracleDatabase_a937a096b286c4e6738ea5d314aabe109}{setDatabase} (std::string db)
 \begin{DoxyCompactList}\small\item\em To set the db to use. \item\end{DoxyCompactList}\item 
 \hyperlink{classDatabaseResult}{DatabaseResult} $\ast$ \hyperlink{classOracleDatabase_a399070863f94605bc2e520c968e3edbe}{getResult} (std::string request)
-\begin{DoxyCompactList}\small\item\em To get the result of a select request. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em To get the result of a select request. \item\end{DoxyCompactList}\item 
+\hyperlink{classDbConfiguration_a4a57e43a5017a5c4833a784a994c91cf}{DbConfiguration::db\_\-type\_\-t} \hyperlink{classOracleDatabase_a4079e91290576c8d71bc062ffa20330a}{getDbType} ()
+\begin{DoxyCompactList}\small\item\em To get the type of database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -164,6 +166,26 @@ raises an exception on error
 
 Implements \hyperlink{classDatabase_adca650f8a5db531ff1fb85aaef25e711}{Database}.
 
+\hypertarget{classOracleDatabase_a4079e91290576c8d71bc062ffa20330a}{
+\index{OracleDatabase@{OracleDatabase}!getDbType@{getDbType}}
+\index{getDbType@{getDbType}!OracleDatabase@{OracleDatabase}}
+\subsubsection[{getDbType}]{\setlength{\rightskip}{0pt plus 5cm}{\bf DbConfiguration::db\_\-type\_\-t} OracleDatabase::getDbType (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classOracleDatabase_a4079e91290576c8d71bc062ffa20330a}
+
+
+To get the type of database. 
+
+\begin{DoxyReturn}{Returns}
+An enum identifying the type of database 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classDatabase_a668ffe571cb0f9f355a2f874e40cb515}{Database}.
+
 \hypertarget{classOracleDatabase_a399070863f94605bc2e520c968e3edbe}{
 \index{OracleDatabase@{OracleDatabase}!getResult@{getResult}}
 \index{getResult@{getResult}!OracleDatabase@{OracleDatabase}}
@@ -217,7 +239,7 @@ Implements \hyperlink{classDatabase_a41881436b79aac5f4d8e179056564de1}{Database}
 \begin{DoxyParamCaption}
 \item[{std::string}]{ db}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+)}}
 \label{classOracleDatabase_a937a096b286c4e6738ea5d314aabe109}
 
 
@@ -229,10 +251,6 @@ To set the db to use.
 \begin{DoxyReturn}{Returns}
 0 raises an exception on error 
 \end{DoxyReturn}
-
-
-Implements \hyperlink{classDatabase_aeba15395d2a36faf73dcb995695b9204}{Database}.
-
 \hypertarget{classOracleDatabase_a24767193dece017c4e97ca5bce7214e6}{
 \index{OracleDatabase@{OracleDatabase}!startTransaction@{startTransaction}}
 \index{startTransaction@{startTransaction}!OracleDatabase@{OracleDatabase}}

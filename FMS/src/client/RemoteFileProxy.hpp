@@ -40,7 +40,7 @@ class RemoteFileProxy : public FileProxy {
      * \brief A generic class to handle a local to remote file transfer
      * \param dest the destination
      * \param options the transfer options
-     * \param servicename the name of the service
+     * \param serviceName the name of the service
      * \param fileTransfer information about the transfer
      * \return 0 if the function succeeds or an error code otherwise
      */
