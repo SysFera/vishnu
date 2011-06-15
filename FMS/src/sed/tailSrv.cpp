@@ -49,23 +49,12 @@ int tailFile(diet_profile_t* profile) {
   diet_string_get(diet_parameter(profile, 2), &user, NULL);
   diet_paramstring_get(diet_parameter(profile, 3), &host, NULL);
   diet_string_get(diet_parameter(profile, 4),&optionsSerialized, NULL);
-  
-  std::cout << "Dans tailFile:  " << "\n"; 
-  std::cout << "path:  " << path <<"\n"; 
-  std::cout << "user:  " << user <<"\n";
-  std::cout << "host:  " << host <<"\n"; 
-
 
   localUser = user;
   localPath = path;
   SessionServer sessionServer (sessionKey);
 
     try {
-      
-    std::cout << "Dans headFile, dans le try catch:  " << "\n";
-    std::cout << "localPath:  " << localPath <<"\n";  
-    std::cout << "localUser:  " << localUser <<"\n";
-    std::cout << "userKey   " << userKey <<"\n";
 
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
@@ -91,9 +80,6 @@ int tailFile(diet_profile_t* profile) {
 
     // get the acLogin
     acLogin = UserServer(sessionServer).getUserAccountLogin(host);
-       
-    std::cout << "acLogin: " << acLogin << "\n";
-    std::cout << "machineName: " << machineName << "\n";
 
     FileFactory::setSSHServer(machineName);
     
