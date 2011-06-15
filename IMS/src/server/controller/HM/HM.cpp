@@ -21,14 +21,11 @@ HM::run(){
 
   IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
   IMS_Data::ListMetric_ptr li = ecoreFactory->createListMetric();
-  unsigned int cpt ;
   while(true){
     try {
       freq = mms.checkUpFreq();
-      cpt = freq;
-      while (cpt != 0 && freq > 0) {
-	cpt = sleep(freq);
-	freq -= cpt;
+      while (freq > 0) {
+	freq = sleep(freq);
       }
       li = mms.getCurMet();
       mms.addMetricSet(li, mid);
