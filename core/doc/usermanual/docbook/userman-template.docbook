@@ -235,7 +235,7 @@
 	    </listitem>
 	    <listitem>
 	      <para> <emphasis role="bold">To compile the FMS package : </emphasis></para>
-	      <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DCOMPILE_FMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
+	      <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_FMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
 	    </listitem>
 	    <listitem>
 	      <para> <emphasis role="bold">To compile the IMS package : </emphasis></para>
