@@ -5,7 +5,7 @@
 #include "utilServer.hpp"
 
 HM::HM(string mail):mms(UserServer(SessionServer("")), mail){
-  
+
 }
 
 HM::~HM(){
@@ -25,7 +25,8 @@ HM::run(){
   while(true){
     try {
       freq = mms.checkUpFreq();
-      sleep(freq);
+//       sleep(freq);
+      sleep(10);
       li = mms.getCurMet();
       mms.addMetricSet(li, mid);
     } catch (VishnuException &e) {
