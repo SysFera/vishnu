@@ -28,13 +28,13 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-getProcesses \- gets the list of the processes running over a front machine
+getProcesses \- displays the list of the VISHNU processes running on machines
 .SH "SYNOPSIS"
 .HP \w'int\ vishnu::getProcesses('u
 .BI "int vishnu::getProcesses(const\ string&\ " "sessionKey" ", ListProcesses&\ " "process" ", const\ ProcessOp&\ " "options\ =\ ProcessOp()" ");"
 .SH "DESCRIPTION"
 .PP
-This command allows an admin to get the VISHNU servers that are running on the whole infrastructure or on a single machine\&. The results contain both the VISHNU identifier of the process and the DIET identifier\&.
+This command with restricted access is used to get the list of VISHNU server processes that are running on the infrastructure or on a single machine\&. The results contain both the VISHNU identifier of the process and the DIET underlying middleware identifier\&.
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR
