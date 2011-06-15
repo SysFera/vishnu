@@ -155,9 +155,9 @@ ProcessCtlProxy::loadShed(IMS_Data::LoadShedType loadShedType) {
     // If no FMS sed, catching exception and do nothing
   cancelFMS();
   } catch (UserException& e) {
-    throw (e);
+    //    throw (e);
   } catch (SystemException& e) {
-    throw (e);
+    //    throw (e);
   }
   // Cancelling TMS jobs
   try {
