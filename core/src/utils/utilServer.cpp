@@ -39,7 +39,7 @@ vishnu::unregisterSeD(string type) {
     Database* database = factory.getDatabaseInstance();
     database->process(req.c_str());
   } catch (SystemException& e) {
-    throw (e);
+    // Do nothing in case of error to delete the own proc of the database
   }
   return 0;
 }
