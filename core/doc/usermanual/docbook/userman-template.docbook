@@ -3,7 +3,7 @@
         href="http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl"?>
 
  <!--;TMS.apim#MAN(user);UMS.apim#CPP(user);TMS.apim#CPP(user);UMS.apim#PYTHON(user);TMS.apim#PYTHON(user) -->
-<book label="UMS.apim#MAN(user);TMS.apim#MAN(user);UMS.apim#CPP(user);TMS.apim#CPP(user);UMS.apim#PYTHON(user);TMS.apim#PYTHON(user)" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
+<book label="UMS.apim#MAN(user);TMS.apim#MAN(user);FMS.apim#MAN(user);IMS.apim#MAN(user);UMS.apim#CPP(user);TMS.apim#CPP(user);FMS.apim#CPP(user);IMS.apim#CPP(user);UMS.apim#PYTHON(user);TMS.apim#PYTHON(user);FMS.apim#PYTHON(user);IMS.apim#PYTHON(user)" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
    <info>
       <title>User Manual</title>
       <productname>VISHNU</productname>
@@ -51,7 +51,7 @@
 	  <authorinitials>SysFera</authorinitials>
 	  <revdescription>
 	      
-	    <para> Added details concerning the IMS package.</para></revdescription>
+	    <para> Added details concerning the IMS and FMS package.</para></revdescription>
 	</revision>
 	</revhistory>
 	
@@ -441,6 +441,43 @@ same conditions as regards security.</para>
      the <emphasis role = "bold">vishnu_connect</emphasis> command.
    </para>
    </section>
+   <section> <!-- FMS description-->
+     <title> FMS package </title>
+     <section>
+       <title>Create and remove file or directories</title>
+       <para>
+         The user can create (or remove) a regular file located in a remote host by using the command <emphasis role="bold">vishnu_create_file</emphasis> ( or <emphasis role="bold">vishnu_remove_file</emphasis>). He can also create (or remove) directory located in a remote host by using the command <emphasis role="bold">vishnu_create_dir</emphasis> ( or <emphasis role="bold">vishnu_remove_dir</emphasis>).
+       </para>
+     </section>
+     <section>
+       <title>Get file information</title>
+       <para>Several services are available to get file information. The user can get the first ( or last lines) of a given remote file by using the command <emphasis role="bold">vishnu_head_of_file</emphasis> ( or <emphasis role="bold">vishnu_tail_of_file</emphasis>). He can also get the entire content of a remote file (or remote directory) with the command <emphasis role="bold">vishnu_content_of_file</emphasis>  (or <emphasis role="bold">vishnu_list__dir</emphasis>).</para> 
+     </section>
+     <section>
+       <title>Modify files properties </title>
+       <para> The commands <emphasis role="bold">vishnu_ch_grp</emphasis> and
+         <emphasis role="bold">vishnu_ch_mod</emphasis>  allow the user to change respectively the group and the access permissions of remote file.</para>
+     </section>
+  <section>
+       <title>Perform file transfer </title>
+       <para> The user can submit a file transfer in many ways:
+         <itemizedlist>
+           <listitem><para> copy (or move) file between two hosts by the commands <emphasis role="bold">vishnu_copy_file</emphasis> (or <emphasis role="bold">vishnu_move_file</emphasis>) </para>
+           </listitem>
+           <listitem><para> copy  (or move) file between two hosts in asynchronous way by the commands <emphasis role="bold">vishnu_copy_async_file</emphasis> (or <emphasis role="bold">vishnu_move_async_file</emphasis>) </para> </listitem>
+       <listitem><para> list or (cancel) file transfers by the commands <emphasis role="bold">vishnu_list_file_transfers</emphasis> (<emphasis role="bold">vishnu_stop_file_transfers</emphasis>) </para>
+           </listitem>
+         </itemizedlist>
+       </para>
+     </section>
+
+  
+   </section>
+
+
+   
+   
+   
    <section> <!-- IMS description-->
      <title> IMS package </title>
      <section>
