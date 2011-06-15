@@ -32,7 +32,7 @@ displayMetric(IMS_Data::Metric* m){
   string unity;
   switch(m->getType()){
   case 1 :
-    type = "CPU use";
+    type = "Free CPU";
     unity = " %";
     break;
   case 2 :
