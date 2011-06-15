@@ -34,7 +34,7 @@ setSystemInfo \- updates the system information of a machine
 .BI "int vishnu::setSystemInfo(const\ string&\ " "sessionKey" ", const\ SystemInfo&\ " "systemInfo" ");"
 .SH "DESCRIPTION"
 .PP
-This function allows an administrator to set system information on a machine in the VISHNU database\&. The machine must have been added previously through the UMS "addMachine" call\&. Using the given machine identifier, specific information such as the total memory and diskspace available on the machine can be added\&.
+This command with restricted access is used to set system information on a machine in the VISHNU database\&. The machine must first be registered using the UMS "addMachine" call\&. Using the machine identifier, information such as the total memory and available diskspace on the machine can be added\&.
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR
