@@ -124,10 +124,10 @@ int main(int argc, char* argv[], char* envp[]) {
   thread thr2(bind(&HM::run, &hm));
 
   //Declaration of signal handler, to remove script children
-//   action.sa_handler = controlSignal;
-//   sigemptyset (&(action.sa_mask));
-//   action.sa_flags = 0;
-//   sigaction (SIGCHLD, &action, NULL);
+   action.sa_handler = controlSignal;
+   sigemptyset (&(action.sa_mask));
+   action.sa_flags = 0;
+   sigaction (SIGCHLD, &action, NULL);
 
   // Initialize the DIET SeD
   if (!res) {
