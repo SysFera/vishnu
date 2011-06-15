@@ -28,13 +28,13 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-vishnu_load_shed \- load sheds a machine
+vishnu_load_shed \- sheds load on a machine
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_load_shed\fR\ 'u
 \fBvishnu_load_shed\fR [\fB\-h\fR] \fImachineId\fR \fIloadShedType\fR
 .SH "DESCRIPTION"
 .PP
-This function allows an admin to load shed a machine\&. There are two modes, the SOFT one a machine cancelling all the submitted jobs and file transfers for all the users\&. The HARD one where the soft is done, and all the VISHNU processes are then stopped on the machine\&. If a non admin use this function, it just cancels all its own jobs and file transfer on the machine\&. In the HARD mode, the stopped processes will not be automatically restarted\&. Type values: HARD = 1 SOFT = 2
+This function allows an administrator to shed load on a machine\&. Two modes are available: SOFT mode will cancel all the submitted jobs and file transfers for all VISHNU users (Note that jobs and file transfers not initiated through VISHNU will not be impacted)\&. HARD mode will additionally stop all the VISHNU processes on the machine\&. If a user without administrator rights uses this function, all the user\*(Aqs jobs and file transfers will be cancelled on the machine\&. In the HARD mode, the stopped processes will not be automatically restarted\&. Type values: HARD = 1 SOFT = 2
 .SH "OPTIONS"
 .PP
 \fB\-h \fR\fB\fIhelp\fR\fR

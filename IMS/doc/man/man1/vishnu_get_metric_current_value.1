@@ -28,13 +28,13 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-vishnu_get_metric_current_value \- Retrieve the current value of a metric on a machine
+vishnu_get_metric_current_value \- displays the current values of system metrics
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_get_metric_current_value\fR\ 'u
 \fBvishnu_get_metric_current_value\fR [\fB\-h\fR] [\fB\-t\ \fR\fB\fImetricType\fR\fR] \fImachineId\fR
 .SH "DESCRIPTION"
 .PP
-This command allows a user to get the current values of the 3 monitored metrics : cpuload, free diskspace and free memory\&. These values are in percent for cpuload and Mega bytes (Mb) for the other two\&. These values are read directly on the OS at the call and are stored as integers values\&.
+Displays the current values of the monitored metrics on the system identified by the machineId argument : cpuload, free diskspace and free memory\&. The units of displayed values are percentages for cpuload and Megabytes (Mb) for diskspace and memory\&. The provided values are always standard integers (no float values)\&. Please note that retrieving these values uses some valuable system ressources and should not occur too frequently to avoid an impact on system performance\&.
 .SH "OPTIONS"
 .PP
 \fB\-h \fR\fB\fIhelp\fR\fR
@@ -44,7 +44,7 @@ help about the command\&.
 .PP
 \fB\-t \fR\fB\fImetricType\fR\fR
 .RS 4
-The type of the metric\&. The value must be an integer\&. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 2 (DISKSPACE), 3 (FREEDISKSPACE), 4 (MEMORY), 5 (FREEMEMORY), 6 (CPUNBR)\&.
+The type of the metric\&. The value must be an integer\&. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 2 (FREEDISKSPACE), 3 (FREEMEMORY)\&.
 .RE
 .SH "ENVIRONMENT"
 .PP

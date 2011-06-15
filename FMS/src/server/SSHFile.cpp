@@ -78,7 +78,7 @@ SSHFile::SSHFile(const SSHFile& file) : File(file) {
   operator=(file);
 }
 
-/* Copy operator.  FIXME use copy and swap method instead*/
+/* Copy operator.  use copy and swap method instead*/
 SSHFile& SSHFile::operator=(const SSHFile& file) {
   upToDate = file.isUpToDate();
   this->sshHost = file.sshHost;
