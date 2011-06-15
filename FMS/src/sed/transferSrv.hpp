@@ -110,14 +110,6 @@ diet_profile_desc_t* getFileTransferStopProfile();
   diet_string_get(diet_parameter(profile, 5), &optionsSerialized, NULL);
 
 
-  std::cout << "Dans solveCopyFile:  " << "\n"; 
-  std::cout << "srcPath:  " << srcPath <<"\n"; 
-  std::cout << "srcUser:  " << srcUser <<"\n";
-  std::cout << "srcHost:  " << srcHost <<"\n"; 
-  std::cout << "dest:  " << dest <<"\n"; 
-
-
-
   std:: string destPath=File::extName(dest);
   std:: string destHost=File::extHost(dest);
   SessionServer sessionServer (sessionKey);
@@ -154,10 +146,6 @@ diet_profile_desc_t* getFileTransferStopProfile();
 
     // get the acLogin
     destUser = UserServer(sessionServer).getUserAccountLogin(destHost);
-
-    std::cout << "destUser: " << destUser << "\n";
-    std::cout << "destMachineName: " << destMachineName << "\n";
-
 
     CpFileOptions* options_ptr= NULL;
     if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr) ) {
