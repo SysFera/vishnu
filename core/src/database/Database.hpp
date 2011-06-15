@@ -36,14 +36,6 @@ public :
   virtual int
   connect() = 0;
   /**
-   * \brief To set the name of the database to use
-   * \fn virtual int setDatabase(std::string db) = 0
-   * \param db The name of database to use
-   * \return raises an exception on error
-   */
-//   virtual int
-//   setDatabase(std::string db) = 0;
-  /**
   * \brief To get the result of a select request
   * \fn DatabaseResult* getResult(std::string request)
   * \param request The request to process

@@ -204,10 +204,12 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	cout << "SeD type: " << ty << endl;
 	// Restart a process disconnected, if the process was stopped with a stop call, no restart will be done
 	try {
+	  // If local proc to restart
 	  if (p->getMachineId().compare(getMidFromHost(msyshName))){
 	    ctl.restart(&resOp, false);
-	  } else {
-	    if (elect()) {
+	  } else { // Else if ims down and i am elected to relaunch it
+	    if (ctl.isIMSSeD(p->getDietId()) && elect()) {
+	      cout << "restarting" << endl;
 	      ctl.restart(&resOp, false);
 	    }
 	  }
@@ -256,6 +258,8 @@ IMSVishnuTool::getHostnameFromLog(string msg){
 bool
 IMSVishnuTool::elect() {
   string elect = mproc.getElectedHostname();
+  cout << "machine elue: " << msyshName << endl;
+  cout << "comparaison: " << elect.compare(msyshName) << endl;
   return (elect.compare(msyshName)==0);
 }
 

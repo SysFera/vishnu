@@ -31,7 +31,7 @@
 VISHNU.listFileTransfers \- displays the history of all file transfers submitted by User\&.
 .SH "SYNOPSIS"
 .HP \w'VISHNU\&.listFileTransfers('u
-.BI "VISHNU\&.listFileTransfers(string\ " "sessionKey" ", FileTransferList\ " "fileTransferList" ");"
+.BI "VISHNU\&.listFileTransfers(string\ " "sessionKey" ", FileTransferList\ " "fileTransferList" ", LsTransferOptions\ " "options\ =\ LsTransferOptions()" ");"
 .SH "DESCRIPTION"
 .PP
 Get the list of all file or directory transfers that have been initiated using a vishnu synchronous or asynchronous copy or move file command\&.
@@ -45,6 +45,11 @@ Input argument\&. The session key\&.
 \fIfileTransferList\fR
 .RS 4
 Output argument\&. The file transfer list\&.
+.RE
+.PP
+\fIoptions\fR
+.RS 4
+Input argument\&. The filter options \&.
 .RE
 .SH "RETURNED OBJECTS"
 .PP
