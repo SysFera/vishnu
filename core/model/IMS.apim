@@ -31,13 +31,13 @@
     <services name="setSystemInfo" description="updates the system information of a machine" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="systemInfo" usage="API_ONLY" dataType="//@typeList/@types.11" description="Contains system information to store in Vishnu database" shortOptionLetter=""/>
-      <ports name="systemInfo" usage="CLI_ONLY" description="Contains system information to store in Vishnu database" shortOptionLetter="" defaultValueLiteral=""/>
+      <ports name="systemInfo" usage="CLI_ONLY" dataType="//@typeList/@types.25" description="Contains system information to store in Vishnu database" shortOptionLetter="" defaultValueLiteral=""/>
       <details key="description" value="This command with restricted access is used to set system information on a machine in the VISHNU database. The machine must first be registered using the UMS &quot;addMachine&quot; call. Using the machine identifier, information such as the total memory and available diskspace on the machine can be added."/>
     </services>
     <services name="setSystemThreshold" description="sets a threshold on a machine of a system" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="threshold" usage="API_ONLY" dataType="//@typeList/@types.18" description="The threshold to set" longOptionName="" defaultValueLiteral=""/>
-      <ports name="threshold" usage="CLI_ONLY" description="The threshold to set" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
+      <ports name="threshold" usage="CLI_ONLY" dataType="//@typeList/@types.24" description="The threshold to set" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <details key="description" value="This function allows an administrator to set a threshold. Each time an IMS server records the state of a machine, it checks the values defined, if a threshold is reached (over a use of the cpu or under the free memory or diskspace available), the administrator responsible for the threshold will receive an mail. These threshold will help the administrator to be aware of critical situations on a machine. Warning, a mail is sent for each time the threshold is reached, if a value swings around a threshold, the administrator may receive lots of emails depending on the update frequency."/>
     </services>
     <services name="getSystemThreshold" description="gets a system threshold on a machine" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER">

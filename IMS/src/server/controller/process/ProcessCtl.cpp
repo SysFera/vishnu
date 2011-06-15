@@ -11,6 +11,11 @@ ProcessCtl::ProcessCtl(string mid, UserServer user): mmid(mid),
 ProcessCtl::~ProcessCtl() {
 }
 
+bool
+ProcessCtl::isIMSSeD(string Pname) {
+  return mp.isIMSSeD(Pname);
+}
+
 void
 ProcessCtl::restart(IMS_Data::RestartOp_ptr op, bool isAPI) {
   string type;
@@ -27,20 +32,14 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, bool isAPI) {
     if (!muser.isAdmin()) {
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "restart is an admin function. A user cannot call it");
     }
-    // Currently too much but kept
-    try {
-      mp.getSshKeyAndAcc(keyPath, login, mmid, muser.getData().getUserId(), hostname);
-    } catch (VishnuException &e) {
-      return;
-    }
-  } else {
-    // Currently too much but kept
-    try {
-      mp.getAnAdmin(keyPath, login, mmid, hostname);
-    } catch (VishnuException &e) {
-      return;
-    }
   }
+
+  try  {
+    mp.getHost(mmid, hostname);
+  } catch (VishnuException &e) {
+    return;
+  }
+  
 
   switch(mop.getSedType()) {
   case 1 : // UMS

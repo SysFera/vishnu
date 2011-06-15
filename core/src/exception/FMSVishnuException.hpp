@@ -17,12 +17,15 @@ static const int ERRCODE_UNKNOWN_FILETRANSFERID = 203;
  * \brief A FMS error handling class
  */
 
+/**
+ * \class FMSVishnuException
+ * \brief Specialisation of the user exception for the FMS module
+ */
 class FMSVishnuException: public UserException{
 
   public:
   /**
    * \brief Default constructor
-   * \fn FMSVishnuException()
    */
   FMSVishnuException();
   /**
