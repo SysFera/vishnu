@@ -463,7 +463,22 @@ IMSMapper::decodeStop(vector<int> separator, const string& msg) {
 }
 string
 IMSMapper::decodeRestart(vector<int> separator, const string& msg) {
-  return "";
+  string res = string("");
+  string u;
+  res += (mmap.find(VISHNU_RESTART))->second;
+  res += " ";
+  u    = msg.substr(separator.at(0)+1, separator.at(1)-3);
+  res += u;
+  res += " ";
+  u = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
+  IMS_Data::RestartOp_ptr ac = NULL;
+  if(!parseEmfObject(u, ac)) {
+    throw IMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
+  res += ac->getVishnuConf();
+  res += " ";
+  res += convertToString(ac->getSedType());
+  return res;
 }
 string
 IMSMapper::decodeGetSys(vector<int> separator, const string& msg) {

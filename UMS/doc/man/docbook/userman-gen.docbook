@@ -53,10 +53,10 @@ data to be ensured and,  more generally, to use and operate it in the
 same conditions as regards security.</para>
     </legalnotice>
     <productname>VISHNU</productname>
-    <releaseinfo>1.0</releaseinfo>
+    <releaseinfo>1.2</releaseinfo>
   </info>
   <reference>
-    <title>Command reference</title>
+    <title>UMS Command reference</title>
     <refentry>
       <refmeta>
         <refentrytitle>vishnu_connect</refentrytitle>
@@ -429,6 +429,10 @@ homeDirectory path .</para>
             <term>&quot;The local account already exists&quot; [37]</term>
             <listitem/>
           </varlistentry>
+          <varlistentry>
+            <term>&quot;The system account login is already used by another vishnu user&quot; [45]</term>
+            <listitem/>
+          </varlistentry>
         </variablelist>
       </refsect1>
     </refentry>
@@ -518,6 +522,10 @@ homeDirectory path .</para>
           </varlistentry>
           <varlistentry>
             <term>&quot;The local is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The system account login is already used by another vishnu user&quot; [45]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1147,7 +1155,7 @@ opened the session).</para>
     </refentry>
   </reference>
   <reference>
-    <title>C++ API Reference</title>
+    <title>UMS C++ API Reference</title>
     <refentry>
       <refmeta>
         <refentrytitle>connect</refentrytitle>
@@ -1201,19 +1209,19 @@ completed and until the session is either manually or automatically closed.</par
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1301,19 +1309,19 @@ session that was opened on another client system.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1381,19 +1389,19 @@ the session (e.g., job submission or file transfers). After the session is close
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1459,19 +1467,19 @@ the session (e.g., job submission or file transfers). After the session is close
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1536,19 +1544,19 @@ homeDirectory path .</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1581,6 +1589,10 @@ homeDirectory path .</para>
           </varlistentry>
           <varlistentry>
             <term>&quot;The local account already exists&quot; [37]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The system account login is already used by another vishnu user&quot; [45]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1624,19 +1636,19 @@ homeDirectory path .</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1661,6 +1673,10 @@ homeDirectory path .</para>
           </varlistentry>
           <varlistentry>
             <term>&quot;The local is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The system account login is already used by another vishnu user&quot; [45]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1710,19 +1726,19 @@ homeDirectory path .</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1791,19 +1807,19 @@ local configurations related to your VISHNU account. </para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1874,19 +1890,19 @@ for other VISHNU commands.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1952,19 +1968,19 @@ for other VISHNU commands.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2030,19 +2046,19 @@ for other VISHNU commands.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2119,19 +2135,19 @@ The session's status is either 0 (inactive) or 1 (active).</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2199,19 +2215,19 @@ opened the session).</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2273,7 +2289,7 @@ opened the session).</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2304,7 +2320,7 @@ opened the session).</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2316,18 +2332,18 @@ opened the session).</para>
     </refentry>
   </reference>
   <reference>
-    <title>Python API Reference</title>
+    <title>UMS Python API Reference</title>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.connect</refentrytitle>
+        <refentrytitle>VISHNU.connect</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.connect</refname>
+        <refname>VISHNU.connect</refname>
         <refpurpose>opens a session</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.connect</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef><paramdef>ConnectOptions <parameter>options = ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.connect</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef><paramdef>ConnectOptions <parameter>options = ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2387,19 +2403,19 @@ completed and until the session is either manually or automatically closed.</par
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2435,15 +2451,15 @@ completed and until the session is either manually or automatically closed.</par
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.reconnect</refentrytitle>
+        <refentrytitle>VISHNU.reconnect</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.reconnect</refname>
+        <refname>VISHNU.reconnect</refname>
         <refpurpose>reconnects to a session that is still active</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.reconnect</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>string <parameter>sessionId</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.reconnect</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>string <parameter>sessionId</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2504,19 +2520,19 @@ session that was opened on another client system.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2552,15 +2568,15 @@ session that was opened on another client system.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.close</refentrytitle>
+        <refentrytitle>VISHNU.close</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.close</refname>
+        <refname>VISHNU.close</refname>
         <refpurpose>closes the session</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.close</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.close</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2595,19 +2611,19 @@ the session (e.g., job submission or file transfers). After the session is close
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2631,15 +2647,15 @@ the session (e.g., job submission or file transfers). After the session is close
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.changePassword</refentrytitle>
+        <refentrytitle>VISHNU.changePassword</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.changePassword</refname>
+        <refname>VISHNU.changePassword</refname>
         <refpurpose>changes the password</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.changePassword</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>string <parameter>passwordNew</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.changePassword</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>string <parameter>passwordNew</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2684,19 +2700,19 @@ the session (e.g., job submission or file transfers). After the session is close
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2716,15 +2732,15 @@ the session (e.g., job submission or file transfers). After the session is close
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.addLocalAccount</refentrytitle>
+        <refentrytitle>VISHNU.addLocalAccount</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.addLocalAccount</refname>
+        <refname>VISHNU.addLocalAccount</refname>
         <refpurpose>adds a new local user configuration </refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.addLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>LocalAccount <parameter>newAccount</parameter></paramdef><paramdef>string <parameter>sshPublicKey</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.addLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>LocalAccount <parameter>newAccount</parameter></paramdef><paramdef>string <parameter>sshPublicKey</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2772,19 +2788,19 @@ homeDirectory path .</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2819,20 +2835,24 @@ homeDirectory path .</para>
             <term>UMSVishnuException(&quot;The local account already exists&quot; [37])</term>
             <listitem/>
           </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The system account login is already used by another vishnu user&quot; [45])</term>
+            <listitem/>
+          </varlistentry>
         </variablelist>
       </refsect1>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.updateLocalAccount</refentrytitle>
+        <refentrytitle>VISHNU.updateLocalAccount</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.updateLocalAccount</refname>
+        <refname>VISHNU.updateLocalAccount</refname>
         <refpurpose>updates a local user configuration</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.updateLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>LocalAccount <parameter>LocalAccUpd</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.updateLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>LocalAccount <parameter>LocalAccUpd</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2871,19 +2891,19 @@ homeDirectory path .</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2910,20 +2930,24 @@ homeDirectory path .</para>
             <term>UMSVishnuException(&quot;The local is unknown&quot; [38])</term>
             <listitem/>
           </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The system account login is already used by another vishnu user&quot; [45])</term>
+            <listitem/>
+          </varlistentry>
         </variablelist>
       </refsect1>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.deleteLocalAccount</refentrytitle>
+        <refentrytitle>VISHNU.deleteLocalAccount</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.deleteLocalAccount</refname>
+        <refname>VISHNU.deleteLocalAccount</refname>
         <refpurpose>removes a local user configuration (for a given user on a given machine) from VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.deleteLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.deleteLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2968,19 +2992,19 @@ homeDirectory path .</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3004,15 +3028,15 @@ homeDirectory path .</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.listLocalAccount</refentrytitle>
+        <refentrytitle>VISHNU.listLocalAccount</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.listLocalAccount</refname>
+        <refname>VISHNU.listLocalAccount</refname>
         <refpurpose>lists the local user configurations</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts <parameter>listLocalAcct</parameter></paramdef><paramdef>ListLocalAccOptions <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts <parameter>listLocalAcct</parameter></paramdef><paramdef>ListLocalAccOptions <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3060,19 +3084,19 @@ local configurations related to your VISHNU account. </para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3096,15 +3120,15 @@ local configurations related to your VISHNU account. </para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.listMachine</refentrytitle>
+        <refentrytitle>VISHNU.listMachine</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.listMachine</refname>
+        <refname>VISHNU.listMachine</refname>
         <refpurpose>lists the machines that are accessible through VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines <parameter>listMachine</parameter></paramdef><paramdef>ListMachineOptions <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines <parameter>listMachine</parameter></paramdef><paramdef>ListMachineOptions <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3154,19 +3178,19 @@ for other VISHNU commands.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3190,15 +3214,15 @@ for other VISHNU commands.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.listHistoryCmd</refentrytitle>
+        <refentrytitle>VISHNU.listHistoryCmd</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.listHistoryCmd</refname>
+        <refname>VISHNU.listHistoryCmd</refname>
         <refpurpose>lists the commands</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listHistoryCmd</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListCommands <parameter>listCommands</parameter></paramdef><paramdef>ListCmdOptions <parameter>options = ListCmdOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listHistoryCmd</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListCommands <parameter>listCommands</parameter></paramdef><paramdef>ListCmdOptions <parameter>options = ListCmdOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3243,19 +3267,19 @@ for other VISHNU commands.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3279,15 +3303,15 @@ for other VISHNU commands.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.listOptions</refentrytitle>
+        <refentrytitle>VISHNU.listOptions</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.listOptions</refname>
+        <refname>VISHNU.listOptions</refname>
         <refpurpose>lists the options of the user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listOptions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListOptionsValues <parameter>listOptValues</parameter></paramdef><paramdef>ListOptOptions <parameter>options = ListOptOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listOptions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListOptionsValues <parameter>listOptValues</parameter></paramdef><paramdef>ListOptOptions <parameter>options = ListOptOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3332,19 +3356,19 @@ for other VISHNU commands.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3376,15 +3400,15 @@ for other VISHNU commands.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.listSessions</refentrytitle>
+        <refentrytitle>VISHNU.listSessions</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.listSessions</refname>
+        <refname>VISHNU.listSessions</refname>
         <refpurpose>lists all sessions of the user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listSessions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListSessions <parameter>listsession</parameter></paramdef><paramdef>ListSessionOptions <parameter>options = ListSessionOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listSessions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListSessions <parameter>listsession</parameter></paramdef><paramdef>ListSessionOptions <parameter>options = ListSessionOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3432,19 +3456,19 @@ The session's status is either 0 (inactive) or 1 (active).</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3472,15 +3496,15 @@ The session's status is either 0 (inactive) or 1 (active).</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.configureOption</refentrytitle>
+        <refentrytitle>VISHNU.configureOption</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.configureOption</refname>
+        <refname>VISHNU.configureOption</refname>
         <refpurpose>configures an option of the user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.configureOption</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>OptionValue <parameter>optionValue</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.configureOption</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>OptionValue <parameter>optionValue</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3523,19 +3547,19 @@ opened the session).</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3567,15 +3591,15 @@ opened the session).</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.vishnuInitialize</refentrytitle>
+        <refentrytitle>VISHNU.vishnuInitialize</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.vishnuInitialize</refname>
+        <refname>VISHNU.vishnuInitialize</refname>
         <refpurpose>initializes VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.vishnuInitialize</function></funcdef><paramdef>string <parameter>configPath</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.vishnuInitialize</function></funcdef><paramdef>string <parameter>configPath</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3608,7 +3632,7 @@ opened the session).</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3620,15 +3644,15 @@ opened the session).</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.vishnuFinalize</refentrytitle>
+        <refentrytitle>VISHNU.vishnuFinalize</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.vishnuFinalize</refname>
+        <refname>VISHNU.vishnuFinalize</refname>
         <refpurpose>allows a user to go out properly from VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.vishnuFinalize</function></funcdef><paramdef/></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.vishnuFinalize</function></funcdef><paramdef/></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3650,7 +3674,7 @@ opened the session).</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>

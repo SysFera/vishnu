@@ -102,7 +102,6 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, bool isAPI) {
     cmd += type;
     cmd += " /tmp/vishnu_restart&";
     string dcmd = "ssh vishnu@"+hostname+" \""+cmd+"\"";
-    cout << "Cmd: " << dcmd << endl;
     int ret = system(dcmd.c_str());
     if (ret == -1) {
       throw SystemException(ERRCODE_SYSTEM, "Failed to restart process "+type);
