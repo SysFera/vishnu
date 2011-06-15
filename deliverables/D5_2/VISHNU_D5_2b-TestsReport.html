@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>VISHNU - IMS - Tests report</title><meta name="generator" content="DocBook XSL Stylesheets V1.75.2" /></head><body><div class="book" title="VISHNU - IMS - Tests report"><div class="titlepage"><div><div><h1 class="title"><a id="id2968386"></a> VISHNU - IMS - Tests report</h1></div><div><div class="author"><h3 class="author"><span class="firstname">Benjamin</span> <span class="surname">Isnard</span></h3></div></div><div><div class="author"><h3 class="author"><span class="firstname">Daouda</span> <span class="surname">Traoré</span></h3></div></div><div><div class="author"><h3 class="author"><span class="firstname">Eugène</span> <span class="surname">Pamba Capo-Chichi</span></h3></div></div><div><div class="author"><h3 class="author"><span class="firstname">Kevin</span> <span class="surname">Coulomb</span></h3></div></div><div><div class="author"><h3 class="author"><span class="firstname">Ibrahima</span> <span class="surname">Cissé</span></h3></div></div><div><p class="releaseinfo">1.0</p></div><div><p class="copyright">Copyright © 2011 SysFera SAS</p></div><div><div class="legalnotice" title="Legal Notice"><a id="id2968493"></a><p>This report is provided under the following conditions:</p><p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</p></li><li class="listitem"><p>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</p></li></ol></div><p>This software is governed by the CECILL licence under French law and
+abiding by the rules of distribution of free software.  You can  use, 
+modify and/ or redistribute the software under the terms of the CeCILL
+license as circulated by CEA, CNRS and INRIA at the following URL
+"http://www.cecill.info".</p><p>As a counterpart to the access to the source code and  rights to copy,
+modify and redistribute granted by the license, users are provided only
+with a limited warranty  and the software's author,  the holder of the
+economic rights,  and the successive licensors  have only  limited
+liability.</p><p>In this respect, the user's attention is drawn to the risks associated
+with loading,  using,  modifying and/or developing or reproducing the
+software by the user in light of its specific status of free software,
+that may mean  that it is complicated to manipulate,  and  that  also
+therefore means  that it is reserved for developers  and  experienced
+professionals having in-depth computer knowledge. Users are therefore
+encouraged to load and test the software's suitability as regards their
+requirements in conditions enabling the security of their systems and/or 
+data to be ensured and,  more generally, to use and operate it in the 
+same conditions as regards security.</p></div></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="3"><b>Revision History</b></th></tr><tr><td align="left">Revision 1</td><td align="left">06/06/2011</td><td align="left">  SYSFERA SAS</td></tr><tr><td align="left" colspan="3">
+          <p>Deliverable version</p>
+        </td></tr></table></div></div></div><hr /></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="chapter"><a href="#id2967752">1.  Introduction </a></span></dt><dt><span class="chapter"><a href="#id2968851">2. Functional tests </a></span></dt><dd><dl><dt><span class="section"><a href="#id2968856"> I2-B: Get metric data </a></span></dt><dt><span class="section"><a href="#id2969002"> I4-B: Get data on the infrastructure </a></span></dt><dt><span class="section"><a href="#id2969099"> IA2.1-B: Get a system load threshold </a></span></dt><dt><span class="section"><a href="#id2969271"> IA2-B[1-3]: Define a system load threshold (CPUUSE, FREE_DISK_SPACE and FREE_MEMORY) </a></span></dt><dt><span class="section"><a href="#id2969444"> I1-B: Get the update frequency </a></span></dt><dt><span class="section"><a href="#id2969540"> IA6-B: Set the update frequency </a></span></dt><dt><span class="section"><a href="#id2969712"> IA3-B: Define User/Machine/Job/FileTransfer identifier </a></span></dt><dt><span class="section"><a href="#id2969872"> I5-B: Get system info</a></span></dt><dt><span class="section"><a href="#id2969997"> IA5-B: Set system info </a></span></dt><dt><span class="section"><a href="#id2970176"> IA1-B: Get the running processes </a></span></dt><dt><span class="section"><a href="#id2970328"> IA4.1-B: Load schedding </a></span></dt><dt><span class="section"><a href="#id2970466"> IA9-B: Restart </a></span></dt><dt><span class="section"><a href="#id2970575"> IA9-B: Stop </a></span></dt><dt><span class="section"><a href="#id2970763"> I3-B: Export and replay commands </a></span></dt></dl></dd><dt><span class="chapter"><a href="#id2970919">3. Stress tests </a></span></dt><dt><span class="chapter"><a href="#id2971169">4. Load tests </a></span></dt><dt><span class="chapter"><a href="#id2971302">5. Performance tests </a></span></dt></dl></div><div class="chapter" title="Chapter 1.  Introduction"><div class="titlepage"><div><div><h2 class="title"><a id="id2967752"></a>Chapter 1.  Introduction </h2></div></div></div><p>Author of the test code : Eugène PAMBA CAPO-CHICHI</p><p>Author of the test report : Eugène PAMBA CAPO-CHICHI</p><p> The tests which follows have been done in the following environment: </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Database used : PostgreSQL 8.4</p></li><li class="listitem"><p>OS used for the test : Ubuntu 10.10</p></li><li class="listitem"><p>Cmake version : V2.6</p></li><li class="listitem"><p>gcc version : V4.3.3</p></li><li class="listitem"><p>DIET version : V2.6.1</p></li><li class="listitem"><p> Batch scheduler : TORQUE V2.5 </p></li><li class="listitem"><p> RAM memory : 2Gb </p></li></ul></div><p>
+    </p></div><div class="chapter" title="Chapter 2. Functional tests"><div class="titlepage"><div><div><h2 class="title"><a id="id2968851"></a>Chapter 2. Functional tests </h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#id2968856"> I2-B: Get metric data </a></span></dt><dt><span class="section"><a href="#id2969002"> I4-B: Get data on the infrastructure </a></span></dt><dt><span class="section"><a href="#id2969099"> IA2.1-B: Get a system load threshold </a></span></dt><dt><span class="section"><a href="#id2969271"> IA2-B[1-3]: Define a system load threshold (CPUUSE, FREE_DISK_SPACE and FREE_MEMORY) </a></span></dt><dt><span class="section"><a href="#id2969444"> I1-B: Get the update frequency </a></span></dt><dt><span class="section"><a href="#id2969540"> IA6-B: Set the update frequency </a></span></dt><dt><span class="section"><a href="#id2969712"> IA3-B: Define User/Machine/Job/FileTransfer identifier </a></span></dt><dt><span class="section"><a href="#id2969872"> I5-B: Get system info</a></span></dt><dt><span class="section"><a href="#id2969997"> IA5-B: Set system info </a></span></dt><dt><span class="section"><a href="#id2970176"> IA1-B: Get the running processes </a></span></dt><dt><span class="section"><a href="#id2970328"> IA4.1-B: Load schedding </a></span></dt><dt><span class="section"><a href="#id2970466"> IA9-B: Restart </a></span></dt><dt><span class="section"><a href="#id2970575"> IA9-B: Stop </a></span></dt><dt><span class="section"><a href="#id2970763"> I3-B: Export and replay commands </a></span></dt></dl></div><div class="section" title="I2-B: Get metric data"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id2968856"></a> I2-B: Get metric data </h2></div></div></div><p><span class="italic"> API command: getMetricHistory</span></p><div class="informaltable"><table border="1"><colgroup><col width="2.0cm" /><col width="6cm" /><col width="3.5cm" /><col width="3.5cm" /><col width="1.5cm" /></colgroup><thead><tr><th>ID test</th><th>Description of the test cases</th><th>Output expected</th><th>Output gotten</th><th>Error</th></tr></thead><tbody><tr><td><p>I2-B</p></td><td><p>Normal execution of getMetricHistory</p></td><td><p>The list of FREEMEMORY metric is returned</p></td><td><p>The list of FREEMEMORY metric is returned</p></td><td><p>0</p></td></tr><tr><td><p>I2-E1</p></td><td><p>Bad machine Identifier</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr><tr><td><p>I2-E2</p></td><td><p>Bad metric type</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr></tbody></table></div></div><div class="section" title="I4-B: Get data on the infrastructure"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id2969002"></a> I4-B: Get data on the infrastructure </h2></div></div></div><p><span class="italic"> API command: getMetricCurrentValue</span></p><div class="informaltable"><table border="1"><colgroup><col width="2.0cm" /><col width="6cm" /><col width="3.5cm" /><col width="3.5cm" /><col width="1.5cm" /></colgroup><thead><tr><th>ID test</th><th>Description of the test cases</th><th>Output expected</th><th>Output gotten</th><th>Error</th></tr></thead><tbody><tr><td><p>I4-B</p></td><td><p>Normal execution of getMetricCurrentValue</p></td><td><p>The list of current value of metric is returned</p></td><td><p>The list of current value of metric is returned</p></td><td><p>0</p></td></tr></tbody></table></div></div><div class="section" title="IA2.1-B: Get a system load threshold"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id2969099"></a> IA2.1-B: Get a system load threshold </h2></div></div></div><p><span class="italic"> API command: getSystemThreshold</span></p><div class="informaltable"><table border="1"><colgroup><col width="2.0cm" /><col width="6cm" /><col width="3.5cm" /><col width="3.5cm" /><col width="1.5cm" /></colgroup><thead><tr><th>ID test</th><th>Description of the test cases</th><th>Output expected</th><th>Output gotten</th><th>Error</th></tr></thead><tbody><tr><td><p>IA2.1-B</p></td><td><p>Normal execution of getSystemThreshold</p></td><td><p>The threshold of the metric FREEDISKSPACE is returned</p></td><td><p>The threshold of the metric FREEDISKSPACE is returned</p></td><td><p>0</p></td></tr><tr><td><p>IA2.1-E1</p></td><td><p>Bad machine Identifier</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr><tr><td><p>IA2.1-E2</p></td><td><p>Bad metric value</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr><tr><td><p>IA2.1-E3</p></td><td><p>getSystemThreshold is launched by a user who is not an administrator</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr></tbody></table></div></div><div class="section" title="IA2-B[1-3]: Define a system load threshold (CPUUSE, FREE_DISK_SPACE and FREE_MEMORY)"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id2969271"></a> IA2-B[1-3]: Define a system load threshold (CPUUSE, FREE_DISK_SPACE and FREE_MEMORY) </h2></div></div></div><p><span class="italic"> API command: setSystemThreshold</span></p><div class="informaltable"><table border="1"><colgroup><col width="2.0cm" /><col width="6cm" /><col width="3.5cm" /><col width="3.5cm" /><col width="1.5cm" /></colgroup><thead><tr><th>ID test</th><th>Description of the test cases</th><th>Output expected</th><th>Output gotten</th><th>Error</th></tr></thead><tbody><tr><td><p>IA2-B[1-3]</p></td><td><p>Normal execution of setSystemThreshold</p></td><td><p>The threshold for the corresponding metric is set</p></td><td><p>The threshold for the corresponding metric is set</p></td><td><p>0</p></td></tr><tr><td><p>IA2-E1</p></td><td><p>Bad machine Identifier</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr><tr><td><p>IA2-E2</p></td><td><p>Bad metric value</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr><tr><td><p>IA2-E3</p></td><td><p>getSystemThreshold is launched by a user who is not an administrator</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr></tbody></table></div></div><div class="section" title="I1-B: Get the update frequency"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id2969444"></a> I1-B: Get the update frequency </h2></div></div></div><p><span class="italic"> API command: getUpdateFrequency</span></p><div class="informaltable"><table border="1"><colgroup><col width="2.0cm" /><col width="6cm" /><col width="3.5cm" /><col width="3.5cm" /><col width="1.5cm" /></colgroup><thead><tr><th>ID test</th><th>Description of the test cases</th><th>Output expected</th><th>Output gotten</th><th>Error</th></tr></thead><tbody><tr><td><p>I1-B</p></td><td><p>Normal execution of getUpdateFrequency</p></td><td><p>The update frequency value is returned</p></td><td><p>The update frequency value is returned</p></td><td><p>0</p></td></tr></tbody></table></div></div><div class="section" title="IA6-B: Set the update frequency"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id2969540"></a> IA6-B: Set the update frequency </h2></div></div></div><p><span class="italic"> API command: setUpdateFrequency</span></p><div class="informaltable"><table border="1"><colgroup><col width="2.0cm" /><col width="6cm" /><col width="3.5cm" /><col width="3.5cm" /><col width="1.5cm" /></colgroup><thead><tr><th>ID test</th><th>Description of the test cases</th><th>Output expected</th><th>Output gotten</th><th>Error</th></tr></thead><tbody><tr><td><p>IA6-B</p></td><td><p>Normal execution of setUpdateFrequency</p></td><td><p>The update frequency value is set</p></td><td><p>The update frequency value is set</p></td><td><p> 0 </p></td></tr><tr><td><p>IA6-E1</p></td><td><p>The frequency is zero</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr><tr><td><p>IA6-E2</p></td><td><p>The frequency is negative</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr><tr><td><p>IA2-E3</p></td><td><p>setUpdateFrequency is launched by a user who is not an administrator</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr></tbody></table></div></div><div class="section" title="IA3-B: Define User/Machine/Job/FileTransfer identifier"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id2969712"></a> IA3-B: Define User/Machine/Job/FileTransfer identifier </h2></div></div></div><p><span class="italic"> API command: define[User|Machine|Job|Transfer]Identifier</span></p><div class="informaltable"><table border="1"><colgroup><col width="2.0cm" /><col width="6cm" /><col width="3.5cm" /><col width="3.5cm" /><col width="1.5cm" /></colgroup><thead><tr><th>ID test</th><th>Description of the test cases</th><th>Output expected</th><th>Output gotten</th><th>Error</th></tr></thead><tbody><tr><td><p>IA3-B</p></td><td><p>Normal execution of define[User|Machine|Job]Identifier</p></td><td><p>The corresponding identifier is set</p></td><td><p>The corresponding identifier is set</p></td><td><p>0</p></td></tr><tr><td><p>IA3-E1</p></td><td><p>Bad format identifier</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr><tr><td><p>IA3-E2</p></td><td><p>define[User|Machine|Job]Identifier is launched by a user who is not an administrator</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr></tbody></table></div><p> <span class="bold"><strong> Remarks IA3-B </strong></span>: In this version of tests, only define[User|Machine|Job]Identifier is tested.
+      </p></div><div class="section" title="I5-B: Get system info"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id2969872"></a> I5-B: Get system info</h2></div></div></div><p><span class="italic"> API command: getSystemInfo</span></p><div class="informaltable"><table border="1"><colgroup><col width="2.0cm" /><col width="6cm" /><col width="3.5cm" /><col width="3.5cm" /><col width="1.5cm" /></colgroup><thead><tr><th>ID test</th><th>Description of the test cases</th><th>Output expected</th><th>Output gotten</th><th>Error</th></tr></thead><tbody><tr><td><p>I5-B</p></td><td><p>Normal execution of getSystemInfo</p></td><td><p>The system information (disk space and memory) is returned</p></td><td><p>The system information (disk space and memory) is returned</p></td><td><p>0</p></td></tr><tr><td><p>I5-E1</p></td><td><p>Bad machine Identifier</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr></tbody></table></div></div><div class="section" title="IA5-B: Set system info"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id2969997"></a> IA5-B: Set system info </h2></div></div></div><p><span class="italic"> API command: setSystemInfo</span></p><div class="informaltable"><table border="1"><colgroup><col width="2.0cm" /><col width="6cm" /><col width="3.5cm" /><col width="3.5cm" /><col width="1.5cm" /></colgroup><thead><tr><th>ID test</th><th>Description of the test cases</th><th>Output expected</th><th>Output gotten</th><th>Error</th></tr></thead><tbody><tr><td><p>IA5-B</p></td><td><p>Normal execution of setSystemInfo</p></td><td><p>The memory and the disk space of the corresponding machine is set</p></td><td><p>The memory and the disk space of the corresponding machine is set</p></td><td><p>0</p></td></tr><tr><td><p>IA5-E1</p></td><td><p>Bad machine Identifier</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr><tr><td><p>IA5-E2</p></td><td><p>Bad metric value (negative memory and disk space) </p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr><tr><td><p>IA5-E3</p></td><td><p>setSystemInfo is launched by a user who is not an administrator</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr></tbody></table></div></div><div class="section" title="IA1-B: Get the running processes"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id2970176"></a> IA1-B: Get the running processes </h2></div></div></div><p><span class="italic"> API command: getProcesses</span></p><div class="informaltable"><table border="1"><colgroup><col width="2.0cm" /><col width="6cm" /><col width="3.5cm" /><col width="3.5cm" /><col width="1.5cm" /></colgroup><thead><tr><th>ID test</th><th>Description of the test cases</th><th>Output expected</th><th>Output gotten</th><th>Error</th></tr></thead><tbody><tr><td><p>IA5-B</p></td><td><p>Normal execution of getProcesses</p></td><td><p>The list of running processes is returned</p></td><td><p>The list of running processes is returned</p></td><td><p>0</p></td></tr><tr><td><p>IA5-E1</p></td><td><p>Bad machine Identifier</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr><tr><td><p>IA5-E2</p></td><td><p>getProcesses is launched by a user who is not an administrator</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr></tbody></table></div></div><div class="section" title="IA4.1-B: Load schedding"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id2970328"></a> IA4.1-B: Load schedding </h2></div></div></div><p><span class="italic"> API command: loadShed</span></p><div class="informaltable"><table border="1"><colgroup><col width="2.0cm" /><col width="6cm" /><col width="3.5cm" /><col width="3.5cm" /><col width="1.5cm" /></colgroup><thead><tr><th>ID test</th><th>Description of the test cases</th><th>Output expected</th><th>Output gotten</th><th>Error</th></tr></thead><tbody><tr><td><p>IA5-B Soft Load schedding </p></td><td><p>Normal execution of loadShed with LoadShedType SOFT</p></td><td><p>The jobs launched on the corresponding batch scheduler are stopped</p></td><td><p>The jobs launched on the corresponding batch scheduler are stopped</p></td><td><p>0 </p></td></tr><tr><td><p>IA5-B Hard Load schedding </p></td><td><p>Normal execution of loadShed with LoadShedType HARD</p></td><td><p>All VISHNU elements are stopped</p></td><td><p>All VISHNU elements are stopped</p></td><td><p>0</p></td></tr></tbody></table></div><p> <span class="bold"><strong> Remarks IA5-B Hard Load schedding </strong></span>: It has been tested manually with a remote machine.</p></div><div class="section" title="IA9-B: Restart"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id2970466"></a> IA9-B: Restart </h2></div></div></div><p><span class="italic"> API command: restart</span></p><div class="informaltable"><table border="1"><colgroup><col width="2.0cm" /><col width="6cm" /><col width="3.5cm" /><col width="3.5cm" /><col width="1.5cm" /></colgroup><thead><tr><th>ID test</th><th>Description of the test cases</th><th>Output expected</th><th>Output gotten</th><th>Error</th></tr></thead><tbody><tr><td><p>IA9-B</p></td><td><p>Normal execution of restart</p></td><td><p>The sed UMS is restarted</p></td><td><p>The sed UMS is restarted</p></td><td><p>0</p></td></tr></tbody></table></div><p> <span class="bold"><strong> Remarks IA9-B Restart: </strong></span> It works locally but there is a problem when we restart processes on a remote machine.</p></div><div class="section" title="IA9-B: Stop"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id2970575"></a> IA9-B: Stop </h2></div></div></div><p><span class="italic"> API command: stop </span></p><div class="informaltable"><table border="1"><colgroup><col width="2.0cm" /><col width="6cm" /><col width="3.5cm" /><col width="3.5cm" /><col width="1.5cm" /></colgroup><thead><tr><th>ID test</th><th>Description of the test cases</th><th>Output expected</th><th>Output gotten</th><th>Error</th></tr></thead><tbody><tr><td><p>IA9-B</p></td><td><p>Normal execution of stop</p></td><td><p>The sed UMS on the remote machine is stopped</p></td><td><p>The sed UMS on the remote machine is stopped</p></td><td><p>0</p></td></tr><tr><td><p>IA9-E1</p></td><td><p>Bad machine Identifier</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr><tr><td><p>IA9-E2</p></td><td><p>The remote process to stop is unknown</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr><tr><td><p>IA9-E3</p></td><td><p>stop is launched by a user who is not an administrator</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr></tbody></table></div><p> <span class="bold"><strong> Remarks IA9-B Stop </strong></span>: It has been tested manually with a remote machine. </p></div><div class="section" title="I3-B: Export and replay commands"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id2970763"></a> I3-B: Export and replay commands </h2></div></div></div><p><span class="italic"> API command: exportCommands </span></p><div class="informaltable"><table border="1"><colgroup><col width="2.0cm" /><col width="6cm" /><col width="3.5cm" /><col width="3.5cm" /><col width="1.5cm" /></colgroup><thead><tr><th>ID test</th><th>Description of the test cases</th><th>Output expected</th><th>Output gotten</th><th>Error</th></tr></thead><tbody><tr><td><p>I3-B</p></td><td><p>Normal execution of exportCommands</p></td><td><p>The commands launched within an old session is exported </p></td><td><p>The commands launched within an old session is exported</p></td><td><p>0</p></td></tr><tr><td><p>I3-E1</p></td><td><p>Bad old session Identifier</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr><tr><td><p>I3-E2</p></td><td><p>Bad file path</p></td><td><p>VishnuException</p></td><td><p>VishnuException</p></td><td><p>0</p></td></tr></tbody></table></div></div></div><div class="chapter" title="Chapter 3. Stress tests"><div class="titlepage"><div><div><h2 class="title"><a id="id2970919"></a>Chapter 3. Stress tests </h2></div></div></div><div class="informaltable"><table border="1"><colgroup><col /><col /><col /><col /><col /></colgroup><tbody><tr><td>
+                  <p>ID test</p>
+               </td><td>
+                  <p>Date</p>
+               </td><td>
+                  <p>Test description</p>
+               </td><td>
+                  <p>Command(s) tested</p>
+               </td><td>
+                  <p>Results</p>
+               </td><td>
+                  <p>Remarks</p>
+               </td></tr><tr><td>
+                  <p>STR-SERV-DOWN</p>
+               </td><td>
+                  <p>06/06/11</p>
+               </td><td>
+                  <p>The ims sed is stopped and restarted</p>
+               </td><td>
+                  <p>setUpdateFrequency</p>
+               </td><td>
+                  <p>Success - normal update frequency setting</p>
+               </td><td> </td></tr><tr><td>
+                  <p>STR-AGENT-DOWN</p>
+               </td><td>
+                  <p>06/06/11</p>
+               </td><td>
+                  <p>The SysFera-DS Agent is stopped and restarted </p>
+               </td><td> </td><td>
+                  <p>failure</p>
+               </td><td>
+                  <p>The ims server must be restarted manually after the SysFera-DS Agent is restarted</p>
+               </td></tr><tr><td>
+                  <p>STR-DB-DOWN</p>
+               </td><td>
+                  <p>06/06/11</p>
+               </td><td>
+                  <p>The VISHNU database is stopped and restarted</p>
+               </td><td>
+                  <p>getUpdateFrequency</p>
+               </td><td>
+                  <p>  Success - the corresponding error message is returned </p>
+               </td><td class="auto-generated"> </td></tr></tbody></table></div></div><div class="chapter" title="Chapter 4. Load tests"><div class="titlepage"><div><div><h2 class="title"><a id="id2971169"></a>Chapter 4. Load tests </h2></div></div></div><div class="informaltable"><table border="1"><colgroup><col /><col /><col /><col /><col /></colgroup><tbody><tr><td>
+                  <p>ID test</p>
+               </td><td>
+                  <p>Date</p>
+               </td><td>
+                  <p>Test description</p>
+               </td><td>
+                  <p>Command(s) tested</p>
+               </td><td>
+                  <p>Results</p>
+               </td></tr><tr><td>
+                  <p>LOAD-2.1-getMetricCurrentValue</p>
+               </td><td>
+                  <p>06/06/11</p>
+               </td><td>
+                  <p>Simultaneous launch of 100 commands</p>
+               </td><td>
+                  <p>getMetricCurrentValue</p>
+               </td><td>
+                  <p>Success - normal execution of all commands launched</p>
+               </td></tr><tr><td>
+                  <p>LOAD-2.1-getMetricHistory</p>
+               </td><td>
+                  <p>06/06/11</p>
+               </td><td>
+                  <p>Success - Simultaneous launch of 100 commands</p>
+               </td><td>
+                  <p>getMetricHistory</p>
+               </td><td>
+                  <p>Success - normal execution of all commands launched</p>
+               </td></tr></tbody></table></div></div><div class="chapter" title="Chapter 5. Performance tests"><div class="titlepage"><div><div><h2 class="title"><a id="id2971302"></a>Chapter 5. Performance tests </h2></div></div></div><div class="informaltable"><table border="1"><colgroup><col width="3.2cm" /><col width="3.2cm" /><col width="3.5cm" /><col width="2.2cm" /><col width="1.7cm" /><col width="1.3cm" /></colgroup><thead><tr><th>ID test</th><th>Test description</th><th>Command(s) tested</th><th>VISHNU execution time</th><th>SSH execution time</th><th>Results</th></tr></thead><tbody><tr><td>
+                  <p>CDP-3.1-getMetricCurrentValue</p>
+               </td><td>
+                  <p>comparison with " ssh host ps -efl " </p>
+               </td><td>
+                  <p> getMetricCurrentValue     
+		  </p>
+               </td><td>
+                  <p>0,156s</p>
+               </td><td>
+                  <p>0,280s</p>
+               </td><td>
+                  <p>Success</p>
+               </td></tr><tr><td>
+                  <p>CDP-3.1-getMetricHistory</p>
+               </td><td>
+                  <p>comparison with " ssh host ps -efl " </p>
+               </td><td>
+                  <p> getMetricHistory     
+		  </p>
+               </td><td>
+                  <p>0,116s</p>
+               </td><td>
+                  <p>0,280s</p>
+               </td><td>
+                  <p>Success</p>
+               </td></tr></tbody></table></div><div class="informaltable"><table border="1"><colgroup><col /><col /><col /><col /><col /></colgroup><tbody><tr><td>
+                  <p>ID test</p>
+               </td><td>
+                  <p>Test description</p>
+               </td><td>
+                  <p>Command(s) tested</p>
+               </td><td>
+                  <p>Comsumption</p>
+               </td><td>
+                  <p>Results</p>
+               </td></tr><tr><td>
+                  <p>CDP-3.2.1-getMetricCurrentValue</p>
+               </td><td>
+                  <p>memory consumption less than 500 Mb</p>
+               </td><td>
+                  <p>getMetricCurrentValue</p>
+               </td><td>
+                  <p>1,3% of the RAM</p>
+               </td><td>
+                  <p>Success</p>
+               </td></tr><tr><td>
+                  <p>CDP-3.2.1-getMetricHistory</p>
+               </td><td>
+                  <p>memory consumption less than 500 Mb</p>
+               </td><td>
+                  <p>getMetricHistory</p>
+               </td><td>
+                  <p>1,6% of the RAM</p>
+               </td><td>
+                  <p>Sucess</p>
+               </td></tr><tr><td>
+                  <p>CDP-3.2.2-getMetricCurrentValue</p>
+               </td><td>
+                  <p>CPU consumption less than 10%</p>
+               </td><td>
+                  <p>getMetricCurrentValue</p>
+               </td><td>
+                  <p>0,7% of the CPU</p>
+               </td><td>
+                  <p>Sucess</p>
+               </td></tr><tr><td>
+                  <p>CDP-3.2.2-getMetricHistory</p>
+               </td><td>
+                  <p>CPU consumption less than 10%</p>
+               </td><td>
+                  <p>getMetricHistory</p>
+               </td><td>
+                  <p>0,7% of the CPU</p>
+               </td><td>
+                  <p>Sucess</p>
+               </td></tr><tr><td>
+                  <p>CDP-Memserver</p>
+               </td><td>
+                  <p>Memory consumption of ims server running during 24 hours</p>
+               </td><td>
+                  <p>ims server</p>
+               </td><td>
+                  <p>1,1% of the RAM</p>
+               </td><td>
+                  <p>Sucess</p>
+               </td></tr></tbody></table></div></div></div></body></html>

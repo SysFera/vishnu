@@ -46,11 +46,6 @@ int solveCreateFile(diet_profile_t* profile) {
   diet_string_get(diet_parameter(profile, 2), &user, NULL);
   diet_paramstring_get(diet_parameter(profile, 3), &host, NULL);
   
-  std::cout << "Dans solveCreateFile:  " << "\n"; 
-  std::cout << "path:  " << path <<"\n"; 
-  std::cout << "user:  " << user <<"\n";
-  std::cout << "host:  " << host <<"\n"; 
-
 
       localUser = user;
       localPath = path;
@@ -81,9 +76,6 @@ int solveCreateFile(diet_profile_t* profile) {
 
     // get the acLogin
     acLogin = UserServer(sessionServer).getUserAccountLogin(host);
-       
-    std::cout << "acLogin: " << acLogin << "\n";
-    std::cout << "machineName: " << machineName << "\n";
 
     FileFactory::setSSHServer(machineName);
     boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,localPath, acLogin, userKey));
