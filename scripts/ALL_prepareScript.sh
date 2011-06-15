@@ -46,9 +46,11 @@ cp -r Cmake $path/
 # Copy sql scripts
 mkdir $path/core
 mkdir $path/core/database
-cp -r core/database/database_init.sql $path/core/database/
-cp -r core/database/postgre_create.sql $path/core/database/
-cp -r core/database/postgre_update.sql $path/core/database/
+cp core/database/database_init.sql $path/core/database/
+cp core/database/database_update.sql $path/core/database/
+cp core/database/postgre_create.sql $path/core/database/
+cp core/database/postgre_update.sql $path/core/database/
+cp core/database/mysql_create.sql $path/core/database/
 
 # Copy core sources
 mkdir $path/core/src/
