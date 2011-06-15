@@ -109,6 +109,7 @@ int main(int argc, char* argv[], char* envp[]) {
     if (!res) {
       diet_print_service_table();
       res = diet_SeD(dietConfigFile.c_str(), argc, argv);
+      unregisterSeD(UMSTYPE);
     } else {
       std::cerr << "There was a problem during services initialization" << std::endl;
       exit(1);
