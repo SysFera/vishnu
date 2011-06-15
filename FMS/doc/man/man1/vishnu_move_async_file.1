@@ -31,7 +31,7 @@
 vishnu_move_async_file \- executes an asynchronous move of file\&.
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_move_async_file\fR\ 'u
-\fBvishnu_move_async_file\fR [\fB\-h\fR] [\fB\-c\ \fR\fB\fItrCommand\fR\fR] \fIsrc\fR \fIdest\fR
+\fBvishnu_move_async_file\fR [\fB\-h\fR] [\fB\-r\fR] [\fB\-c\ \fR\fB\fItrCommand\fR\fR] \fIsrc\fR \fIdest\fR
 .SH "DESCRIPTION"
 .PP
 Initiates a move of a file or directory from the location given by the src parameter to the location given by the dest parameter\&. The src parameter must be provided in the form \*(Aqmachine_id:path\*(Aq (the machine_id values can be obtained using the vishnu_list_machine command) or \*(Aqpath\*(Aq only if the file is on the local system\&. The dest parameter must be provided in a similar way\&. Note that one of the two locations at least must be a remote location, i\&.e\&. a local move cannot be handled by this command\&. The command listFileTransfers can be used to check the status of the transfer after it is initiated, using the transfer id as the identifier\&.
@@ -40,6 +40,11 @@ Initiates a move of a file or directory from the location given by the src param
 \fB\-h \fR\fB\fIhelp\fR\fR
 .RS 4
 help about the command\&.
+.RE
+.PP
+\fB\-r \fR\fB\fIisRecursive\fR\fR
+.RS 4
+It specifies when the copy is recursive (case of directory) or not\&.\&.
 .RE
 .PP
 \fB\-c \fR\fB\fItrCommand\fR\fR
