@@ -49,7 +49,7 @@ MetricServer::setUpFreq(unsigned int freq){
     throw UserException(ERRCODE_INVALID_PARAM, "Error invalid frequency.");
   }
 
-  string request = "update  vishnu  * set  updatefreq ='"+convertToString(freq)+"' where  vishnuid ='";
+  string request = "update vishnu set updatefreq ='"+convertToString(freq)+"' where  vishnuid ='";
   request += convertToString(mvishnuId);
   request += "'";
   try {
