@@ -31,29 +31,15 @@
 vishnu_set_system_info \- updates the system information of a machine
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_set_system_info\fR\ 'u
-\fBvishnu_set_system_info\fR [\fB\-h\fR] [\fB\-m\ \fR\fB\fImemory\fR\fR] [\fB\-d\ \fR\fB\fIdiskSpace\fR\fR] []
+\fBvishnu_set_system_info\fR [\fB\-h\fR]
 .SH "DESCRIPTION"
 .PP
-This function allows an administrator to set system information on a machine in the VISHNU database\&. The machine must have been added previously through the UMS "addMachine" call\&. Using the given machine identifier, specific information such as the total memory and diskspace available on the machine can be added\&.
+This command with restricted access is used to set system information on a machine in the VISHNU database\&. The machine must first be registered using the UMS "addMachine" call\&. Using the machine identifier, information such as the total memory and available diskspace on the machine can be added\&.
 .SH "OPTIONS"
 .PP
 \fB\-h \fR\fB\fIhelp\fR\fR
 .RS 4
 help about the command\&.
-.RE
-.PP
-\fB\-m \fR\fB\fImemory\fR\fR
-.RS 4
-Amount of RAM memory available on the machine (in Bytes)\&.
-.RE
-.PP
-\fB\-d \fR\fB\fIdiskSpace\fR\fR
-.RS 4
-Amount of disk space available on the machine (in Bytes)\&.
-.RE
-.PP
-.RS 4
-The id of the machine\&.
 .RE
 .SH "ENVIRONMENT"
 .PP

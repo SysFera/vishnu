@@ -31,7 +31,7 @@
 copyAsyncFile \- executes an asynchronous copy of file\&.
 .SH "SYNOPSIS"
 .HP \w'int\ vishnu::copyAsyncFile('u
-.BI "int vishnu::copyAsyncFile(const\ string&\ " "sessionKey" ", const\ string&\ " "src" ", const\ string&\ " "dest" ", FileTransfer&\ " "transferInfo" ");"
+.BI "int vishnu::copyAsyncFile(const\ string&\ " "sessionKey" ", const\ string&\ " "src" ", const\ string&\ " "dest" ", FileTransfer&\ " "transferInfo" ", const\ CpFileOptions&\ " "options" ");"
 .SH "DESCRIPTION"
 .PP
 Initiates a copy of a file or directory from the location given by the src parameter to the location given by the dest parameter\&. The src parameter must be provided in the form \*(Aqmachine_id:path\*(Aq (the machine_id values can be obtained using the vishnu_list_machine command) or \*(Aqpath\*(Aq only if the file is on the local system\&. The dest parameter must be provided in a similar way\&. Note that one of the two locations at least must be a remote location, i\&.e\&. a local copy cannot be handled by this command\&. The command listFileTransfers can be used to check the status of the transfer after it is initiated, using the transfer id as the identifier\&.
@@ -55,6 +55,11 @@ Input argument\&. The path of the destination file\&.
 \fItransferInfo\fR
 .RS 4
 Output argument\&. A file tranfer identifier (allowing for instance to ckeck the status of a file transfer, or to cancel it)\&.
+.RE
+.PP
+\fIoptions\fR
+.RS 4
+Input argument\&. The copy options\&.
 .RE
 .SH "EXCEPTIONS"
 .PP
