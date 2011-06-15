@@ -54,13 +54,6 @@ int solveListDir(diet_profile_t* profile) {
   diet_paramstring_get(diet_parameter(profile, 3), &host, NULL);
   diet_string_get(diet_parameter(profile, 4),&optionsSerialized, NULL);
 
-  
-  std::cout << "Dans LsDir:  " << "\n"; 
-  std::cout << "path:  " << path <<"\n"; 
-  std::cout << "user:  " << user <<"\n";
-  std::cout << "host:  " << host <<"\n"; 
-
-
   localUser = user;
   localPath = path;
   SessionServer sessionServer (sessionKey);
@@ -91,10 +84,6 @@ int solveListDir(diet_profile_t* profile) {
     // get the acLogin
     acLogin = UserServer(sessionServer).getUserAccountLogin(host);
        
-    std::cout << "acLogin: " << acLogin << "\n";
-    std::cout << "machineName: " << machineName << "\n";
-
-
 
     FileFactory::setSSHServer(machineName);
     
