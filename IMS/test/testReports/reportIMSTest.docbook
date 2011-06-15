@@ -599,13 +599,6 @@ same conditions as regards security.</para>
               <entry><para>All VISHNU elements are stopped</para></entry>
 	      <entry><para>0</para></entry>
             </row>
-	    <row>
-             <entry><para>IA5-E1</para></entry>
-              <entry><para>Bad machine Identifier</para></entry>
-              <entry><para>VishnuException</para></entry>
-              <entry><para>VishnuException</para></entry>
-              <entry><para>_</para></entry>
-	    </row>
           </tbody>
         </tgroup>
       </informaltable>
@@ -613,7 +606,7 @@ same conditions as regards security.</para>
     </section>
     
     <section>
-      <title> IA9-B: Restart normal call </title>
+      <title> IA9-B: Restart </title>
 	<para><emphasis role = "italic"> API command: restart</emphasis></para>
      <informaltable>
         <tgroup cols="5">
@@ -637,11 +630,12 @@ same conditions as regards security.</para>
               <entry><para>Normal execution of restart</para></entry>
               <entry><para>The sed UMS is restarted</para></entry>
               <entry><para>The sed UMS is restarted</para></entry>
-	      <entry><para>0<link linkend="Error"> Not functional </link></para></entry>
+	      <entry><para>0</para></entry>
 	    </row>
           </tbody>
         </tgroup>
       </informaltable>
+      <para> <emphasis role = "bold"> Remarks IA9-B Restart: </emphasis> It works locally but there is a problem when we restart processes on a remote machine.</para>
     </section>
     
     <section>
@@ -826,7 +820,7 @@ same conditions as regards security.</para>
                </entry>
 	       
                <entry>
-                  <para> <link linkend="Error"> Not functional - Failure la deuxième fois qu'on relance la commande</link>  Success - the corresponding error message is returned </para>
+                  <para>  Success - the corresponding error message is returned </para>
                </entry>
                
             </row>
@@ -1073,10 +1067,10 @@ same conditions as regards security.</para>
                   <para>ims server</para>
                </entry>
                <entry>
-                  <para></para>
+                  <para>1,1% of the RAM</para>
                </entry>
 	       <entry>
-                  <para></para>
+                  <para>Sucess</para>
                </entry>
             </row>
 	</tbody>    
