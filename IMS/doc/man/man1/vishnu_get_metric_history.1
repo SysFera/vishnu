@@ -28,13 +28,13 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-vishnu_get_metric_history \- Retrieve the history of values of a metric on a machine
+vishnu_get_metric_history \- displays the history of values of a system metric
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_get_metric_history\fR\ 'u
 \fBvishnu_get_metric_history\fR [\fB\-h\fR] [\fB\-s\ \fR\fB\fIstartTime\fR\fR] [\fB\-e\ \fR\fB\fIendTime\fR\fR] [\fB\-t\ \fR\fB\fItype\fR\fR] \fImachineId\fR
 .SH "DESCRIPTION"
 .PP
-This command allows a use to get the history of the metrics on a machine\&. The options enable to specify a specific type of metric and the date of the desired metric values\&. These values are read from the database\&. If the machine does not have any IMS server, no data can be recorded on the machine\&.
+Displays the chronological list of values of the metrics on the system identified by the machineId argument\&. Using the options it is possible to specify a type of metric and the starting and ending dates of the desired monitoring period\&. Note that some data will be available only if the required VISHNU agent (IMS server) has been running locally on the machine during the specified period\&.
 .SH "OPTIONS"
 .PP
 \fB\-h \fR\fB\fIhelp\fR\fR
@@ -54,7 +54,7 @@ The end time to get the history\&.
 .PP
 \fB\-t \fR\fB\fItype\fR\fR
 .RS 4
-The type of metric searched\&. The value must be an integer\&. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 2 (DISKSPACE), 3 (FREEDISKSPACE), 4 (MEMORY), 5 (FREEMEMORY), 6 (CPUNBR)\&.
+The type of metric searched\&. The value must be an integer\&. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 2 (FREEDISKSPACE), 3 (FREEMEMORY)\&.
 .RE
 .SH "ENVIRONMENT"
 .PP

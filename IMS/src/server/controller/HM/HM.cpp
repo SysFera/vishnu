@@ -5,7 +5,7 @@
 #include "utilServer.hpp"
 
 HM::HM(string mail):mms(UserServer(SessionServer("")), mail){
-  
+
 }
 
 HM::~HM(){
@@ -21,11 +21,12 @@ HM::run(){
 
   IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
   IMS_Data::ListMetric_ptr li = ecoreFactory->createListMetric();
-
   while(true){
     try {
       freq = mms.checkUpFreq();
-      sleep(freq);
+      while (freq > 0) {
+	freq = sleep(freq);
+      }
       li = mms.getCurMet();
       mms.addMetricSet(li, mid);
     } catch (VishnuException &e) {

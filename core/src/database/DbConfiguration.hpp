@@ -81,7 +81,7 @@ public:
 
   /**
    * \brief Set the nb of connections to open simultaneously to the database
-   * \param poolSize nb of connections in the connection pool
+   * \param poolSize: nb of connections in the connection pool
    */
   void setDbPoolSize(unsigned poolSize) { mdbPoolSize = poolSize; }
 
