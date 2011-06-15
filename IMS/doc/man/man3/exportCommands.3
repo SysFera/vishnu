@@ -34,7 +34,7 @@ exportCommands \- exports all the commands made by a user during a session
 .BI "int vishnu::exportCommands(const\ string&\ " "sessionKey" ", const\ string&\ " "oldSessionId" ", string&\ " "filename" ", const\ ExportOp&\ " "options\ =\ ExportOp()" ");"
 .SH "DESCRIPTION"
 .PP
-This command allows a user to export all the commands he made in a previous session\&. This session must be closed\&. Currently, the only available output format is shell\&. The output will be in a shell script\&. For safety reasons, the change password and connect function of UMS are not exported\&. A user can only export the commands of its own sessions whereas an admin can export the commands in all the sessions\&.
+Exports all the VISHNU commands submitted during a completed session\&. This session must be in closed state\&. The output of this command is a file containing a shell script\&. For safety reasons, the commands having a password for parameter are not exported (for example the vishnu_connect and vishnu_change_password commands)\&. This means the shell script must be run after opening a session manually or by adding the vishnu_connect command to the script\&. The access to other user\*(Aqs sessions is only permitted to administrators\&.
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR

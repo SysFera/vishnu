@@ -31,7 +31,7 @@
 vishnu_remove_file \- removes files from remote hosts\&.
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_remove_file\fR\ 'u
-\fBvishnu_remove_file\fR [\fB\-h\fR] \fIpath\fR
+\fBvishnu_remove_file\fR [\fB\-h\fR] [\fB\-r\fR] \fIpath\fR
 .SH "DESCRIPTION"
 .PP
 Deletes a file at the location given by the path parameter\&. The path must be provided in the form \*(Aqmachine_id:path\*(Aq (the machine_id values can be obtained using the vishnu_list_machine command)
@@ -40,6 +40,11 @@ Deletes a file at the location given by the path parameter\&. The path must be p
 \fB\-h \fR\fB\fIhelp\fR\fR
 .RS 4
 help about the command\&.
+.RE
+.PP
+\fB\-r \fR\fB\fIisRecursive\fR\fR
+.RS 4
+It specifies when the remove command is recursive (case of directory) or not\&.\&.
 .RE
 .SH "ENVIRONMENT"
 .PP
