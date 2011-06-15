@@ -53,7 +53,7 @@ data to be ensured and,  more generally, to use and operate it in the
 same conditions as regards security.</para>
     </legalnotice>
     <productname>VISHNU</productname>
-    <releaseinfo>1.0</releaseinfo>
+    <releaseinfo>1.2</releaseinfo>
   </info>
   <reference>
     <title>TMS Command reference</title>
@@ -332,7 +332,8 @@ same conditions as regards security.</para>
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_list_queues</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>queueName</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-q <replaceable>queueName</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -345,6 +346,12 @@ same conditions as regards security.</para>
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-q <replaceable>queueName</replaceable></option></term>
+            <listitem>
+              <para>if it is given, listQueues gives information only of this queue.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -455,7 +462,7 @@ same conditions as regards security.</para>
             <term><option>-s <replaceable>status</replaceable></option></term>
             <listitem>
               <para>lists the jobs with the specified status.
-The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (SUBMITTED), 2 (QUEUED), 3 (WAITING), 4 (RUNNING), 5 (TERMINATED), 6 (CANCELLED).</para>
+The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (SUBMITTED), 2 (QUEUED), 3 (WAITING), 4 (RUNNING), 5 (TERMINATED), 6 (CANCELLED), 7 (ALREADY_DOWNLOADED).</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -587,6 +594,10 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
           </varlistentry>
           <varlistentry>
             <term>&quot;The job is not terminated&quot; [107]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The job is already downloaded&quot; [108]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1034,7 +1045,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
         <refpurpose>gets queues information</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listQueues</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListQueues&amp; <parameter>listofQueues</parameter></paramdef><paramdef>const string&amp; <parameter>queueName</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listQueues</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListQueues&amp; <parameter>listofQueues</parameter></paramdef><paramdef>const string&amp; <parameter>queueName = string()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -1307,6 +1318,10 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <term>&quot;The job is not terminated&quot; [107]</term>
             <listitem/>
           </varlistentry>
+          <varlistentry>
+            <term>&quot;The job is already downloaded&quot; [108]</term>
+            <listitem/>
+          </varlistentry>
         </variablelist>
       </refsect1>
     </refentry>
@@ -1501,15 +1516,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
     <title>TMS Python API Reference</title>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.submitJob</refentrytitle>
+        <refentrytitle>VISHNU.submitJob</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.submitJob</refname>
+        <refname>VISHNU.submitJob</refname>
         <refpurpose>submits a job on a machine through the use of a script (scriptFilePath)</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.submitJob</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>scriptFilePath</parameter></paramdef><paramdef>Job <parameter>jobInfo</parameter></paramdef><paramdef>SubmitOptions <parameter>options = SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.submitJob</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>scriptFilePath</parameter></paramdef><paramdef>Job <parameter>jobInfo</parameter></paramdef><paramdef>SubmitOptions <parameter>options = SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -1598,15 +1613,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
+            <term>TMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
+            <term>TMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Permission denied&quot; [104])</term>
+            <term>TMSVishnuException(&quot;Permission denied&quot; [104])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1614,15 +1629,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.getJobInfo</refentrytitle>
+        <refentrytitle>VISHNU.getJobInfo</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.getJobInfo</refname>
+        <refname>VISHNU.getJobInfo</refname>
         <refpurpose>gets information on a job from its id</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.getJobInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef><paramdef>Job <parameter>jobInfos</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.getJobInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef><paramdef>Job <parameter>jobInfos</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -1701,15 +1716,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
+            <term>TMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
+            <term>TMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Permission denied&quot; [104])</term>
+            <term>TMSVishnuException(&quot;Permission denied&quot; [104])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1717,15 +1732,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.getJobProgress</refentrytitle>
+        <refentrytitle>VISHNU.getJobProgress</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.getJobProgress</refname>
+        <refname>VISHNU.getJobProgress</refname>
         <refpurpose>gets the progression status of jobs</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.getJobProgress</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListProgression <parameter>listProgress</parameter></paramdef><paramdef>ProgressOptions <parameter>options = ProgressOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.getJobProgress</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListProgression <parameter>listProgress</parameter></paramdef><paramdef>ProgressOptions <parameter>options = ProgressOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -1808,15 +1823,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.listQueues</refentrytitle>
+        <refentrytitle>VISHNU.listQueues</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.listQueues</refname>
+        <refname>VISHNU.listQueues</refname>
         <refpurpose>gets queues information</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listQueues</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListQueues <parameter>listofQueues</parameter></paramdef><paramdef>string <parameter>queueName</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listQueues</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListQueues <parameter>listofQueues</parameter></paramdef><paramdef>string <parameter>queueName = string()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -1895,15 +1910,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
+            <term>TMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
+            <term>TMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Permission denied&quot; [104])</term>
+            <term>TMSVishnuException(&quot;Permission denied&quot; [104])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1911,15 +1926,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.listJobs</refentrytitle>
+        <refentrytitle>VISHNU.listJobs</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.listJobs</refname>
+        <refname>VISHNU.listJobs</refname>
         <refpurpose>gets a list of all submitted jobs</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listJobs</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListJobs <parameter>listOfJobs</parameter></paramdef><paramdef>ListJobsOptions <parameter>options = ListJobsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listJobs</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListJobs <parameter>listOfJobs</parameter></paramdef><paramdef>ListJobsOptions <parameter>options = ListJobsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -1998,15 +2013,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
+            <term>TMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
+            <term>TMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Permission denied&quot; [104])</term>
+            <term>TMSVishnuException(&quot;Permission denied&quot; [104])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2014,15 +2029,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.getJobOutput</refentrytitle>
+        <refentrytitle>VISHNU.getJobOutput</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.getJobOutput</refname>
+        <refname>VISHNU.getJobOutput</refname>
         <refpurpose>gets standard output and error output files of a job given its id</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.getJobOutput</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef><paramdef>JobResult <parameter>outputInfo</parameter></paramdef><paramdef>string <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.getJobOutput</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef><paramdef>JobResult <parameter>outputInfo</parameter></paramdef><paramdef>string <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2107,19 +2122,23 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
+            <term>TMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
+            <term>TMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Permission denied&quot; [104])</term>
+            <term>TMSVishnuException(&quot;Permission denied&quot; [104])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;The job is not terminated&quot; [107])</term>
+            <term>TMSVishnuException(&quot;The job is not terminated&quot; [107])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>TMSVishnuException(&quot;The job is already downloaded&quot; [108])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2127,15 +2146,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.getCompletedJobsOutput</refentrytitle>
+        <refentrytitle>VISHNU.getCompletedJobsOutput</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.getCompletedJobsOutput</refname>
+        <refname>VISHNU.getCompletedJobsOutput</refname>
         <refpurpose>gets standard output and error output files of completed jobs (applies only once for each job)</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.getCompletedJobsOutput</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListJobResults <parameter>listOfResults</parameter></paramdef><paramdef>string <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.getCompletedJobsOutput</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListJobResults <parameter>listOfResults</parameter></paramdef><paramdef>string <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2214,15 +2233,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
+            <term>TMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
+            <term>TMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Permission denied&quot; [104])</term>
+            <term>TMSVishnuException(&quot;Permission denied&quot; [104])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2230,15 +2249,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.cancelJob</refentrytitle>
+        <refentrytitle>VISHNU.cancelJob</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.cancelJob</refname>
+        <refname>VISHNU.cancelJob</refname>
         <refpurpose>cancels a job from its id</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.cancelJob</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.cancelJob</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2311,23 +2330,23 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
+            <term>TMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
+            <term>TMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Permission denied&quot; [104])</term>
+            <term>TMSVishnuException(&quot;Permission denied&quot; [104])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;The job is already terminated&quot; [105])</term>
+            <term>TMSVishnuException(&quot;The job is already terminated&quot; [105])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;The job is already canceled&quot; [106])</term>
+            <term>TMSVishnuException(&quot;The job is already canceled&quot; [106])</term>
             <listitem/>
           </varlistentry>
         </variablelist>

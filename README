@@ -18,6 +18,10 @@ The root directory VISHNU_Vx.y
                       |---------- The UMS directory that contains the sources of the UMS module
                       |
                       |---------- The TMS directory that contains the sources of the TMS module
+		      |
+		      |---------- The FMS directory that contains the sources of the FMS module
+                      |
+                      |---------- The IMS directory that contains the sources of the IMS module
                       |
                       |---------- The CMakeLists.txt file that is used to generate the makefile
                       |

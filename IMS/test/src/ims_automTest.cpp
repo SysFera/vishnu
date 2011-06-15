@@ -936,20 +936,6 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     }
   }
 
-  //IA4.1-E1 : Soft load schedding with bad machine Id
-  //Soft load schedding: bad machine Id
-  BOOST_AUTO_TEST_CASE(load_schedding_bad_machine_Id_call) {
-
-    BOOST_TEST_MESSAGE("Use case IA4.1-E1: Soft load schedding with bad machine Id");
-    VishnuConnection vc(adminId, adminPwd);
-    // get the session key and the machine identifier
-    string sessionKey=vc.getSessionKey();
-    //Set loadShedType to 2: SOFT
-    IMS_Data::LoadShedType loadShedType = 2;
-
-    BOOST_CHECK_THROW(loadShed(sessionKey, badMachineId, loadShedType), VishnuException);
-  }
-
   //Test category 1
   //I3-B: export and replay commands
   BOOST_AUTO_TEST_CASE( export_command_normal_call) {
