@@ -57,11 +57,6 @@ int get_infos(diet_profile_t* profile) {
   diet_string_get(diet_parameter(profile, 2), &user, NULL);
   diet_paramstring_get(diet_parameter(profile, 3), &host, NULL);
 
-  std::cout << "Service get info, sessionKey : " << sessionKey << " bien recu\n";
-  std:: cout << "path: " << path << "\n";
-  std::cout << "user: "  << user << "\n";
-  std::cout << "host: "  << host<< "\n";
-
   localUser = user;
   localPath = path;
   SessionServer sessionServer (sessionKey);
@@ -89,8 +84,6 @@ int get_infos(diet_profile_t* profile) {
 
 
     std::string acLogin = UserServer(sessionServer).getUserAccountLogin(host);
-
-    std::cout << "acLogin: " << acLogin << "\n";
 
     FileFactory::setSSHServer(machineName);
 

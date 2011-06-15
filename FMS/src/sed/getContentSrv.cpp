@@ -48,22 +48,11 @@ int contentFile(diet_profile_t* profile) {
   diet_paramstring_get(diet_parameter(profile, 3), &host, NULL);
 
 
-  std::cout << "Dans getContentFile:  " << "\n"; 
-  std::cout << "path:  " << path <<"\n"; 
-  std::cout << "user:  " << user <<"\n";
-  std::cout << "host:  " << host <<"\n"; 
-
-
   localUser = user;
   localPath = path;
   SessionServer sessionServer (sessionKey);
 
   try {
-
-    std::cout << "Dans getContentFile, dans le try catch:  " << "\n";
-    std::cout << "localPath:  " << localPath <<"\n";  
-    std::cout << "localUser:  " << localUser <<"\n";
-    std::cout << "userKey   " << userKey <<"\n";
 
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
@@ -89,9 +78,6 @@ int contentFile(diet_profile_t* profile) {
 
     // get the acLogin
     acLogin = UserServer(sessionServer).getUserAccountLogin(host);
-       
-    std::cout << "acLogin: " << acLogin << "\n";
-    std::cout << "machineName: " << machineName << "\n";
 
     FileFactory::setSSHServer(machineName);
     boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,localPath, acLogin, userKey));
