@@ -84,19 +84,19 @@
     <section>
       <title>Objectifs du document</title>
       <para>Ce document présente l'administration de la plateforme VISHNU.
-      </para>  
+      </para>
     </section>
-    
+
     <section> <!--Document structure -->
       <title>Structure du document</title>
-      
+
       <para>Ce document contient les parties suivantes:
       </para>
       <para>
 	<itemizedlist>
           <listitem>
             <para>Définitions</para>
-          </listitem>  
+          </listitem>
 	  <listitem>
             <para>Installation</para>
           </listitem>
@@ -119,14 +119,14 @@
             <para>Référence de l'API Python (en anglais)</para>
           </listitem>
 	</itemizedlist>
-      </para> 
+      </para>
     </section> <!--Document structure -->
   </chapter>
-  
-  <chapter> <!--Définition -->  
-    <title>Définitions</title> 
+
+  <chapter> <!--Définition -->
+    <title>Définitions</title>
     <section> <!-- Accronymes -->
-      <title>Acronymes</title> 
+      <title>Acronymes</title>
       <itemizedlist>
 	<listitem>
 	  <para>DB : Base de données: elle est centralisée et utilisée pour sauvegarder toutes les données manipulées
@@ -195,7 +195,7 @@
 	    <para>SeD TMS : Cela désigne le programme contenant et exécutant les services du module TMS. </para>
 	  </listitem>
 	  <listitem>
-	    <para>SeD UMS : Cela désigne le programme contenant et exécutant les services du module UMS. 
+	    <para>SeD UMS : Cela désigne le programme contenant et exécutant les services du module UMS.
 	      Une seule instance est nécessaire pour faire tourner VISHNU. </para>
 	  </listitem>
 	  <listitem>
@@ -208,7 +208,7 @@
       </para>
     </section>  <!-- Glossaire -->
   </chapter><!-- end Definition -->
-  <chapter> 
+  <chapter>
     <title>Installation à partir des sources</title>
     <section>
       <title>Prérequis</title>
@@ -272,18 +272,18 @@
     </section><!-- end prerequis -->
     <section>
       <title> Compilation des sources </title>
-      <para>VISHNU utilise CMake comme système de construction et se conforme aux 
+      <para>VISHNU utilise CMake comme système de construction et se conforme aux
 	pratiques communément admises.
 	Les options principales utilisables sont les suivantes:
 	<itemizedlist>
 	  <listitem>
 	    <para>
-	      BUILD_TESTING, compile les tests si le flag est activé (OFF par défaut). 
+	      BUILD_TESTING, compile les tests si le flag est activé (OFF par défaut).
 	    </para>
 	  </listitem>
 	  <listitem>
 	    <para>
-	      CLIENT_ONLY, qui permet de ne compiler que les éléments clients si le flag est activé (OFF par défaut). 
+	      CLIENT_ONLY, qui permet de ne compiler que les éléments clients si le flag est activé (OFF par défaut).
 	    </para>
 	  </listitem>
 	  <listitem>
@@ -299,7 +299,7 @@
 	  </listitem>
 	  <listitem>
 	    <para>
-	      COMPILE_IMS, compile le module IMS si le flag est activé (OFF par défaut). Si ON, COMPILE_UMS, COMPILE_TMS et 
+	      COMPILE_IMS, compile le module IMS si le flag est activé (OFF par défaut). Si ON, COMPILE_UMS, COMPILE_TMS et
 	      COMPILE_FMS doivent aussi être à ON.
 	    </para>
 	  </listitem>
@@ -310,7 +310,7 @@
 	  </listitem>
 	  <listitem>
 	    <para>
-	      COMPILE_UMS, compile le module UMS si le flag est activé (OFF par défaut). 
+	      COMPILE_UMS, compile le module UMS si le flag est activé (OFF par défaut).
 	    </para>
 	  </listitem>
 	  <listitem>
@@ -336,7 +336,7 @@
 	</itemizedlist>
       </para>
       <para>
-	Par exemple, pour compiler VISHNU (clients et serveurs) avec l'API 
+	Par exemple, pour compiler VISHNU (clients et serveurs) avec l'API
 	Python puis l'installer dans le répertoire /opt/vishnu sous *nix:
       </para>
       <itemizedlist>
@@ -344,38 +344,53 @@
 	<listitem><para>$ mkdir build</para></listitem>
 	<listitem><para>$ cd build</para></listitem>
 	<listitem><para>2. générer le Makefile</para></listitem>
-	<listitem><para>$ cmake -DENABLE_PYTHON=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu/ 
+	<listitem><para>$ cmake -DENABLE_PYTHON=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu/
 	    -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DVISHNU_USE_TORQUE=0N -DTORQUE_DIR=/opt/torque ..</para></listitem>
 	<listitem><para>3. lancer la compilation avec 2 jobs</para></listitem>
 	<listitem><para>$ make -j 2</para></listitem>
 	<listitem><para>4. installation (en mode super-utilisateur)</para></listitem>
 	<listitem><para># make install</para></listitem>
       </itemizedlist>
-      <para><emphasis role="bold">Note</emphasis>: pensez à ajouter le répertoire d'installation dans le $PATH 
+      <para><emphasis role="bold">Note</emphasis>: pensez à ajouter le répertoire d'installation dans le $PATH
 	utilisateur pour avoir accès à la commande.</para>
 
     </section> <!-- End compilation des sources -->
   </chapter> <!-- End compilation -->
 
-  <chapter> 
+  <chapter>
+    <title>Configuration de la base de données</title>
+    <para>Les fichiers de configuration de la DB sont disponibles dans le répertoire core/database du package d'installation VISHNU.</para>
+    <section>
+      <title>Utilisation d'une base de données PostGreSQL</title>
+      <para>Pour une installation d'une nouvelle base de données, les scripts 'postgre_create.sql' et 'database_init.sql' doivent être utilisés par l'administrateur de la DB.</para>
+      <para>Pour la mise à jour de la base de données lors d'un passage de la release VISHNU précédente à la nouvelle release VISHNU, les scripts 'postgre_update.sql' et 'database_update.sql' doivent être utilisés par l'administrateur de la DB. Le détail des numéros de release est indiqué dans les commentaires au début du script.</para>
+    </section>
+    <section>
+      <title>Utilisation d'une base de données MySQL</title>
+      <para>Pour une installation d'une nouvelle base de données, les scripts 'mysql_create.sql' et 'database_init.sql' doivent être utilisés par l'administrateur de la DB.</para>
+      <para>Pour la mise à jour de la base de données lors d'un passage de la release VISHNU précédente à la nouvelle release VISHNU, les scripts 'postgre_update.sql' et 'mysql_update.sql' doivent être utilisés par l'administrateur de la DB. Le détail des numéros de release est indiqué dans les commentaires au début du script.</para>
+    </section>
+  </chapter>
+
+  <chapter>
     <title>Installation des web services</title>
     <section>
       <title>Pré-requis</title>
       <itemizedlist>
         <listitem>
-          <para>Installer <emphasis role="bold">Java 1.6</emphasis> (commande 'sudo apt-get install openjdk-6-jdk' ou bien 'sudo apt-get install sun-java6-jdk' sur Linux Debian) 
+          <para>Installer <emphasis role="bold">Java 1.6</emphasis> (commande 'sudo apt-get install openjdk-6-jdk' ou bien 'sudo apt-get install sun-java6-jdk' sur Linux Debian)
             et vérifier que la variable JAVA_HOME est bien définie et contient le répertoire racine de l'installation de java.</para>
         </listitem>
 	<listitem>
 	  <para>Installer les modules désirés avec l'option -DENABLE_JAVA=ON.</para>
 	</listitem>
         <listitem>
-          <para>Installer <emphasis role="bold">Maven 2</emphasis> pour compiler les jars ( <emphasis role="bold">Note</emphasis> : 
-            Ce pré-requis est optionnel car les jars sont déjà fournis dans la distribution des web services. 
+          <para>Installer <emphasis role="bold">Maven 2</emphasis> pour compiler les jars ( <emphasis role="bold">Note</emphasis> :
+            Ce pré-requis est optionnel car les jars sont déjà fournis dans la distribution des web services.
             Par ailleurs la compilation avec maven nécessite une connexion internet).</para>
         </listitem>
       </itemizedlist>
-      
+
     </section><!-- end prerequis -->
     <section>
       <title>Installation de JBoss</title>
@@ -412,7 +427,7 @@
         <listitem>
           <para><emphasis role="bold">Vérification de l'installation:</emphasis> Pour vérifier que le serveur JBoss est bien démarré et que le module web services est activé, lancer un navigateur internet sur le serveur et se connecter
             sur l'adresse 'http://localhost:8080/jbossws' (ou 'http://adresseIP:8080/jbossws') et vérifier que la page affiche bien la version
-            du module web services (jbossws-cxf-3.3.1.GA).</para> 
+            du module web services (jbossws-cxf-3.3.1.GA).</para>
         </listitem>
       </itemizedlist>
     </section>
@@ -469,7 +484,7 @@
 	<title>Variables d'environnement à définir</title>
 	<itemizedlist>
           <listitem>
-            <para>VISHNU_CONFIG_FILE : contient le chemin complet du fichier de configuration client de VISHNU. Se référer 
+            <para>VISHNU_CONFIG_FILE : contient le chemin complet du fichier de configuration client de VISHNU. Se référer
               au guide d'installation du client [VISHNU_USER_GUIDE] pour connaître le contenu de ce fichier.
               Si l'exécution échoue avec un message d'erreur lié à initialisation de la librairie lors du connect, vérifier le contenu de cette variable.
             </para>
@@ -483,18 +498,18 @@
 	<title>Lancement du serveur JBoss avec le module WS</title>
 	<itemizedlist>
           <listitem>
-            <para>Après installation des fichiers définis au paragraphe précédent, le serveur JBoss doit être redémarré en lançant le script JBOSS_HOME/bin/run.sh 
+            <para>Après installation des fichiers définis au paragraphe précédent, le serveur JBoss doit être redémarré en lançant le script JBOSS_HOME/bin/run.sh
               (avec les options indiquées au paragraphe sur le serveur JBoss).</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">Vérification de l'installation:</emphasis> Pour vérifier que le serveur JBoss est bien démarré et que le module UMS WS est activé, lancer un navigateur internet sur le serveur et se connecter
-              sur l'adresse 'http://localhost:8080/jbossws/services' (ou 'http://adresseIP:8080/jbossws/services') et vérifier que le 
-              "service endPoint" : <emphasis role="bold">VISHNUUMSPortImpl</emphasis> est actif.</para> 
+              sur l'adresse 'http://localhost:8080/jbossws/services' (ou 'http://adresseIP:8080/jbossws/services') et vérifier que le
+              "service endPoint" : <emphasis role="bold">VISHNUUMSPortImpl</emphasis> est actif.</para>
           </listitem>
 	</itemizedlist>
       </section>
     </section>
-  </chapter><!-- End WS -->  
+  </chapter><!-- End WS -->
   <chapter>
     <title>Déploiement de VISHNU</title>
     <section>
@@ -513,7 +528,7 @@
           <para> Lancer le log service de DIET sur la machine préfrontale. La commande est 'LogCentral --config config.cfg' avec config.cfg un fichier de configuration pour le log central. </para>
 	</listitem>
 	<listitem>
-          <para> Lancer le MA avec son fichier de configuration : 'dietAgent config.cfg'. Voir la figure 4.1 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes : 
+          <para> Lancer le MA avec son fichier de configuration : 'dietAgent config.cfg'. Voir la figure 4.1 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
             <itemizedlist>
 	      <listitem>
 		<para> 'traceLevel = 0' : Le niveau de verbosité du master agent, cette valeur peut être entre 0 et 10 compris. </para>
@@ -580,7 +595,7 @@
 	</listitem>
 	<listitem>
 	  <para>
-	    Sur la machine hôte de Torque, lancer le serveur (pbs_serv), le scheduler (pbs_sched) et l'ordonnanceur (pbs_mom) de Torque. 
+	    Sur la machine hôte de Torque, lancer le serveur (pbs_serv), le scheduler (pbs_sched) et l'ordonnanceur (pbs_mom) de Torque.
 	  </para>
 	</listitem>
 	<listitem>
@@ -660,7 +675,7 @@
 	</listitem>
 	<listitem>
 	  <para> Lancer un démon forwarder sur le reseau 1: </para>
-	  <para>dietForwarder -C--peer-name forwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name forwarder 
+	  <para>dietForwarder -C--peer-name forwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name forwarder
 	    --net-config forwarder1.cfg
 	    --remote-host localhost
 	    --ssh-login login
@@ -728,7 +743,7 @@
 	</listitem>
 	<listitem>
 	  <para> Lancer un démon log forwarder sur le reseau 1: </para>
-	  <para>logForwarder -C--peer-name logforwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name logforwarder 
+	  <para>logForwarder -C--peer-name logforwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name logforwarder
 	    --net-config logforwarder1.cfg
 	    --remote-host localhost
 	    --ssh-login login
@@ -946,20 +961,20 @@
     <section>
       <title>Test d'exécution d'un service depuis une machine client par shell</title>
       <orderedlist>
-        <listitem>
-          <para>
-            Une fois que la plateforme a été installée, se mettre sur un poste client avec VISHNU d'installé. Se référer au document [VISHNU_USERGUIDE]
-            pour l'installation de la partie client.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Exporter la variable d'environnement VISHNU_CONFIG_FILE dans un script de configuration client. Se référer 
-            au guide d'installation du client [VISHNU_USER_GUIDE] pour connaître le contenu d'un fichier client.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
+	<listitem>
+	  <para>
+	    Une fois que la plateforme a été installée, se mettre sur un poste client avec VISHNU d'installé. Se référer au document [VISHNU_USERGUIDE]
+	    pour l'installation de la partie client.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Exporter la variable d'environnement VISHNU_CONFIG_FILE dans un script de configuration client. Se référer
+	    au guide d'installation du client [VISHNU_USER_GUIDE] pour connaître le contenu d'un fichier client.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
 	    Lancer la commande dans le shell 'vishnu_connect user', ou user représente un nom d'utilisateur dans la DB
 	  </para>
 	</listitem>
@@ -986,7 +1001,7 @@
     <section>
       <title>Présentation</title>
       <para>
-	Le module UMS correspond à la gestion des utilisateurs et des machines de VISHNU. Il permet aussi de sauvegarder la configuration de VISHNU à chaud et de la restaurer si besoin est. 
+	Le module UMS correspond à la gestion des utilisateurs et des machines de VISHNU. Il permet aussi de sauvegarder la configuration de VISHNU à chaud et de la restaurer si besoin est.
 	Dans toute la suite du chapitre, on supposera que l'utilisateur est déjà connecté avec un compte administrateur de VISHNU pour pouvoir réaliser ces manipulations. De plus, on présentera l'utilisation des commandes depuis le shell, mais cela reste valable depuis les API Python ou C++.
       </para>
     </section>
@@ -1000,7 +1015,7 @@
 	</listitem>
 	<listitem>
 	  <para>
-	    La mise à jour d'un utilisateur ne peut être faite que par un administrateur. Cette mise à jour se fait avec un appel à la commande 'vishnu_update_user' et permet de modifier les paramètres de l'ajout (nom, prénom, statut, couriel). 
+	    La mise à jour d'un utilisateur ne peut être faite que par un administrateur. Cette mise à jour se fait avec un appel à la commande 'vishnu_update_user' et permet de modifier les paramètres de l'ajout (nom, prénom, statut, couriel).
 	    Il faut avoir l'identifiant de l'utilisateur (généré lors de la création de l'utilisateur) pour le désigner lors de la mise à jour.
 	  </para>
 	  <para>Note: le changement du statut d'un utilisateur à l'état "INACTIVE" correspond à un blocage de son compte.</para>
@@ -1056,12 +1071,12 @@
       <orderedlist>
 	<listitem>
 	  <para>
-	    L'administrateur peut faire une sauvegarde à chaud à un moment donné de VISHNU. Ceci sauvegarde les utilisateurs, les machines et les comptes des utilisateurs. Le fichier, dans lequel la configuration est, est retourné par la fonction. La fonction est 'vishnu_save_configuration', pas besoin de paramètres. 
+	    L'administrateur peut faire une sauvegarde à chaud à un moment donné de VISHNU. Ceci sauvegarde les utilisateurs, les machines et les comptes des utilisateurs. Le fichier, dans lequel la configuration est, est retourné par la fonction. La fonction est 'vishnu_save_configuration', pas besoin de paramètres.
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	    L'administrateur peut recharger une configuration précédente de VISHNU à l'aide de la commande 'vishnu_restore_configuration' qui a besoin du fichier de sauvegarde pour recharger la base. 
+	    L'administrateur peut recharger une configuration précédente de VISHNU à l'aide de la commande 'vishnu_restore_configuration' qui a besoin du fichier de sauvegarde pour recharger la base.
 	    Avant de pouvoir lancer cette restauration, tous les utilisateurs de VISHNU doivent être déconnectés.
 	  </para>
 	</listitem>
@@ -1124,13 +1139,13 @@
 	    Fonction associée : vishnu_stop </para>
 	</listitem>
 	<listitem>
-	  <para>L'administrateur peut redémarrer un processus VISHNU sur une machine, ce processus doit avoir déjà tourné 
+	  <para>L'administrateur peut redémarrer un processus VISHNU sur une machine, ce processus doit avoir déjà tourné
 	    pour VISHNU sur cette machine et l'administrateur doit avoir un compte sur la machine.
 	    Fonction associée : vishnu_restart </para>
 	</listitem>
 	<listitem>
 	  <para>L'administrateur peut délester une machine selon deux modes. Dans le mode HARD, tout les processus VISHNU
-	    de la machine sont arretés. Dans le mode SOFT, seul FMS et TMS sont touchés, on arrête tout leurs transferts 
+	    de la machine sont arretés. Dans le mode SOFT, seul FMS et TMS sont touchés, on arrête tout leurs transferts
 	    et jobs en cours.
 	    Fonction associée : vishnu_load_shed </para>
 	</listitem>
@@ -1148,7 +1163,7 @@
 	    Fonction associée : vishnu_get_update_frequency</para>
 	</listitem>
 	<listitem>
-	  <para> Un administrateur peut fixer un seuil sur une machine. Ce seuil peut être l'utilisation du CPU, la 
+	  <para> Un administrateur peut fixer un seuil sur une machine. Ce seuil peut être l'utilisation du CPU, la
 	    mémoire libre restante ou l'espace disque restant. Lors de l'enregistrement de l'état d'une machine,
 	    si un seuil est atteint sur cette machine, l'administrateur est notifié par mail de ce dépassement.
 	    Fonction associée : vishnu_set_threshold</para>
@@ -1211,6 +1226,6 @@
 	</listitem>
       </itemizedlist>
     </section>
-  </chapter><!-- End administration -->  
+  </chapter><!-- End administration -->
 </book>
 

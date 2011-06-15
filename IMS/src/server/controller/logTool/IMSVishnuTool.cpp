@@ -62,7 +62,6 @@ IMSVishnuTool::disconnect(){
   return mLCT->disconnectTool (mname.c_str());
 }
 
-// TODO IMPLEMENT THE FUNCTION TO PLAY ITS ROLES WITH THE DATABASE
 void
 IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
   // DIET call parameters
@@ -174,7 +173,6 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
     // If message of disconnexion
     if (string(msg[i].tag).compare("OUT")==0){
       p->setDietId(string(msg[i].componentName));
-      cout << "SeD: " << string(msg[i].componentName) << endl;
       mproc.getDataFromDietId(p);
       ProcessCtl ctl("", UserServer(SessionServer("")));
       try {
@@ -201,7 +199,6 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	}
 	resOp.setSedType(ty);
 	resOp.setVishnuConf(p->getScript());
-	cout << "SeD type: " << ty << endl;
 	// Restart a process disconnected, if the process was stopped with a stop call, no restart will be done
 	try {
 	  // If local proc to restart
@@ -209,12 +206,10 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	    ctl.restart(&resOp, false);
 	  } else { // Else if ims down and i am elected to relaunch it
 	    if (ctl.isIMSSeD(p->getDietId()) && elect()) {
-	      cout << "restarting" << endl;
 	      ctl.restart(&resOp, false);
 	    }
 	  }
 	} catch (SystemException& e) {
-	  cout << "restart op: " << e.what() << endl;
 	  log.append(e.what());
 	}
       } catch(SystemException& e){
@@ -258,8 +253,6 @@ IMSVishnuTool::getHostnameFromLog(string msg){
 bool
 IMSVishnuTool::elect() {
   string elect = mproc.getElectedHostname();
-  cout << "machine elue: " << msyshName << endl;
-  cout << "comparaison: " << elect.compare(msyshName) << endl;
   return (elect.compare(msyshName)==0);
 }
 
