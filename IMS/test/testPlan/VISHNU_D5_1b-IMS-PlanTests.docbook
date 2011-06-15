@@ -94,6 +94,20 @@
             <entry>
                <para>Ibrahima Cissé, Daouda Traoré, Benjamin Isnard,  Eugène Pamba Capo-Chichi</para>
             </entry>
+         </row>
+         <row>
+            <entry>
+               <para>V1.1</para>
+            </entry>
+            <entry>
+               <para>15/06/11</para>
+            </entry>
+            <entry>
+               <para>Mise à jour pour la livraison du module du IMS</para>
+            </entry>
+            <entry>
+               <para>Ibrahima Cissé, Daouda Traoré, Benjamin Isnard,  Eugène Pamba Capo-Chichi</para>
+            </entry>
          </row></tbody></tgroup>
    </informaltable>
    <para/>
@@ -344,7 +358,7 @@
                      <para>Ouvrir une session à l'aide de la commande vishnu_connect et enregistrer l'identifiant de la session.</para>
                   </listitem>
                   <listitem>
-                     <para>Lancer deux commandes VISHNU.</para>
+                     <para>Lancer trois commandes VISHNU.</para>
                   </listitem>
                   <listitem>
                      <para>Lancer la commande vishnu_list_history_cmd et enregistrer les commandes retournées.</para>
@@ -359,7 +373,7 @@
                      <para>Lancer la commande vishnu_export_commands avec comme paramètre le nom du fichier dans lequel les commandes seront exportées sous le format  SHELL et en utilisant l'identifiant de session de l'étape 2</para>
                   </listitem>
                   <listitem>
-                     <para>Vérifier que le fichier contient les deux commandes lancées (ceci est valable si les commandes sont ni connect, ni changePassword, ni resetPassword de UMS)</para>
+                     <para>Vérifier que le fichier contient les trois commandes lancées (ceci est valable si les commandes sont ni connect, ni changePassword, ni resetPassword de UMS)</para>
                   </listitem>
                </orderedlist>
             </entry>
@@ -394,15 +408,6 @@
                   <listitem>
                      <para>Test du cas E1 et E2 :</para>
                   </listitem>
-                  <listitem>
-                     <para>Test du cas E3 :  </para>
-                  </listitem>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
                </orderedlist>
                <para/>
             </entry>
@@ -445,13 +450,17 @@
                   </listitem>
                   <listitem>
                      <para>Si aucun serveur VISHNU n'a été lancé sur aucune machine se connecter sur les différentes machines et les lancer. Supposons les cas suivantes :</para>
-                     <para/>
+                  </listitem>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem>
+                     <para>Lancer  la commande vishnu_load_sched  avec comme option HARD et l'identifiant de la machine sur laquelle les processus seront stoppés (MA_2).</para>
                   </listitem>
                   <listitem>
-                     <para>Lancer  la commande vishnu_load_sched  avec comme option HARD et l'identifiant de la machine sur laquelle les processus seront stoppés.</para>
-                  </listitem>
-                  <listitem>
-                     <para>Lancer la commande   vishnu_get_processes et vérifier qu'aucun processus VISHNU n'est en cours d'exécution sur la machine cible.</para>
+                     <para>Lancer la commande  vishnu_get_processes et vérifier qu'aucun processus VISHNU n'est en cours d'exécution sur la machine cible.</para>
                      <para/>
                   </listitem>
                </orderedlist>
@@ -465,64 +474,24 @@
          </row>
          <row>
             <entry>
-               <para>IA4.1-E1:  Hard load schedding</para>
-               <para/>
-               <para>IA4.1-E2:  Hard load schedding</para>
-               <para/>
-               <para>IA4.1-E3:  Hard load schedding</para>
-               <para/>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : paramètres sont incorrects</para>
-                  </listitem>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-                  <listitem>
-                     <para>Lancer  la commande vishnu_load_sched pour les cas E1, E2 et E3.</para>
-                  </listitem>
-                  <listitem>
-                     <para> Vérifier que son exécution échoue avec le message d'erreur renvoyé.</para>
-                  </listitem>
-               </orderedlist>
-               <para/>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <para/>
-            </entry>
-            <entry>
-               <para>L'utilisateur doit être un administrateur</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
                <para>IA4.1-B :  Soft load schedding</para>
                <para/>
             </entry>
             <entry>
                <orderedlist>
                   <listitem>
-                     <para>Cas de test : les paramètres sont corrects et l'utilisateur est un administrateur.</para>
+                     <para>Cas de test : les paramètres sont corrects.</para>
                   </listitem>
                   <listitem>
                      <para>Si aucun serveur VISHNU n'a été lancé sur aucune machine se connecter sur les différentes machines et les lancer. Supposons les cas suivantes :</para>
                   </listitem>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
                   <listitem>
-                     <para>Soumettre deux jobs à l'aide de la commade vishnu_submit_job sur la machine MA_3</para>
+                     <para>Soumettre deux jobs à l'aide de la commade vishnu_submit_job sur la machine MA_1</para>
                   </listitem>
                   <listitem>
                      <para>Lancer  la commande vishnu_load_sched  avec comme option SOFT et l'identifiant de la machine sur laquelle les processus seront stoppés.</para>
@@ -536,52 +505,7 @@
                <para>- Les processus en cours d'exécution sur la machine donnée deviennent inactifs.</para>
             </entry>
             <entry>
-               <para>L'utilisateur doit être un administrateur</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>IA4.1-E1:  Soft load schedding</para>
                <para/>
-               <para>IA4.1-E2:  Soft load schedding</para>
-               <para/>
-               <para>IA4.1-E3:  Soft load schedding</para>
-               <para/>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : paramètres incorrects</para>
-                  </listitem>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-                  <listitem>
-                     <para>Lancer  la commande vishnu_load_sched  avec  les cas de test E1, E2 E3 et l'identifiant de la machine sur laquelle les processus seront stoppés.</para>
-                  </listitem>
-                  <listitem>
-                     <para> Vérifier que son exécution échoue avec le message d'erreur renvoyé.</para>
-                  </listitem>
-               </orderedlist>
-               <para/>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <para/>
-            </entry>
-            <entry>
-               <para>L'utilisateur doit être un administrateur</para>
             </entry>
          </row>
          <row>
@@ -594,10 +518,10 @@
                      <para>Lancer la plateforme VISHNU avec un sed IMS</para>
                   </listitem>
                   <listitem>
-                     <para>Appeller la fonction stop pour arreter un process sur une machine</para>
+                     <para>Appeler la fonction stop pour arreter un process sur une machine</para>
                   </listitem>
                   <listitem>
-                     <para>Attendre 10 seconde et vérifier que le processus n'a pas été relancé et est arreté</para>
+                     <para>Attendre 10 secondes et vérifier que le processus n'a pas été relancé et est arreté</para>
                   </listitem>
                </orderedlist>
             </entry>
@@ -704,14 +628,11 @@
                   <listitem/>
                </orderedlist>
                <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
                   <listitem>
-                     <para>Lancer la commande vishnu_get_processes  avec les paramètres correspondants (MA_2, MA_3).</para>
+                     <para>Lancer la commande vishnu_get_processes  avec les paramètres correspondants .</para>
                   </listitem>
                   <listitem>
-                     <para>Vérifier sur chaque machine (MA_2, MA_3) que les processus VISHNU affichés correspondent bien aux processus VISHNU lancés sur ces machines.</para>
+                     <para>Vérifier que les processus VISHNU affichés correspondent bien aux processus VISHNU lancés sur les machines.</para>
                   </listitem>
                </orderedlist>
             </entry>
@@ -793,7 +714,7 @@
                      <para/>
                   </listitem>
                   <listitem>
-                     <para>Après une minute, lancer la commande vishnu_get_metric_history avec l'identifiant de la machine sur laquelle la métrique sera récupérée  et la métrique MEMORY et vérifier que 6 enregistrements sont retournés.</para>
+                     <para>Après 20 secondes, lancer la commande vishnu_get_metric_history avec l'identifiant de la machine sur laquelle la métrique sera récupérée  et la métrique MEMORY et vérifier que 2 enregistrements sont retournés.</para>
                      <para/>
                   </listitem>
                </orderedlist>
@@ -899,19 +820,19 @@
             <entry>
                <orderedlist>
                   <listitem>
-                     <para>Cas de test : les paramètres sont corrects et la base de données a un seuil fixé à 2x1010 octets pour l'espace disque disponible sur la machine MA_1. </para>
+                     <para>Cas de test : les paramètres sont corrects et la base de données a un seuil fixé à 2x106 pour l'espace disque disponible sur la machine MA_1. </para>
                      <para/>
                   </listitem>
                   <listitem>
-                     <para>Lancer la commande vishnu_get_system_threshold sur MA_1 avec pour métrique DISKSPACE et vérifier que la valeur retournée est 2x1010.</para>
+                     <para>Lancer la commande vishnu_get_system_threshold sur MA_1 avec pour métrique DISKSPACE et vérifier que la valeur retournée est 2x106.</para>
                      <para/>
                   </listitem>
                   <listitem>
-                     <para>Modifier le  seuil pour  l'espace disque disponible à 1010  dans la base de données. </para>
+                     <para>Modifier le  seuil pour  l'espace disque disponible à 106  dans la base de données. </para>
                      <para> </para>
                   </listitem>
                   <listitem>
-                     <para>Lancer la commande vishnu_get_system_threshold sur MA_1 avec pour métrique DISKSPACE et vérifier que la valeur  retournée est 1010. </para>
+                     <para>Lancer la commande vishnu_get_system_threshold sur MA_1 avec pour métrique DISKSPACE et vérifier que la valeur  retournée est 106. </para>
                   </listitem>
                </orderedlist>
             </entry>
@@ -968,40 +889,19 @@
                      <para>Cas de test : les paramètres sont corrects et les seuils concernant l'espace disponible, la mémoire RAM non utilisée et le pourcentage d'utilisation de la machine MA_1 sont différents des valeurs définies dans les cas qui suivent. </para>
                      <para/>
                   </listitem>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
                   <listitem>
+                     <para>Lancer la commande vishnu_get_system_threshold sur MA_1 avec les métriques DISKPACE, FREEMORY et CPUUSE.</para>
                      <para/>
                   </listitem>
                   <listitem>
-                     <para>Lancer la commande vishnu_set_system_threshold sur MA_1 avec les métriques DISKPACE, FREEMORY et CPUUSE puis vérifier que les valeurs retournées sont respectivement 2x1010, 2000 et 30.</para>
+                     <para>Lancer la commande vishnu_set_system_threshold sur MA_1 avec les métriques DISKPACE, FREEMORY et CPUUSE puis rajouter 10 à chacune des valeurs retournées à l'étape 2.</para>
+                     <para/>
+                  </listitem>
+                  <listitem>
+                     <para>Lancer la commande vishnu_get_system_threshold sur MA_1 avec les métriques DISKPACE, FREEMORY et CPUUSE et vérifier que les modifications précedents ont été prises en compte.</para>
+                     <para/>
+                     <para/>
                      <para> </para>
-                  </listitem>
-                  <listitem>
-                     <para>Provoquer un dépassement des seuils pour  les trois cas de l'étape 1 respectivement :</para>
-                  </listitem>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem>
-                     <para/>
-                  </listitem>
-                  <listitem>
-                     <para>Vérifier qu'un mail est envoyé pour chacun des dépassement des seuils précédents.</para>
                   </listitem>
                </orderedlist>
                <para/>
@@ -1054,11 +954,11 @@
             <entry>
                <orderedlist>
                   <listitem>
-                     <para>Cas de test : les paramètres sont corrects et la fréquence de mise à jour de la base de donnée est fixée à 60 secondes.</para>
+                     <para>Cas de test : les paramètres sont corrects et la fréquence de mise à jour de la base de donnée est fixée à 10 secondes.</para>
                      <para/>
                   </listitem>
                   <listitem>
-                     <para>Lancer la commande vishnu_get_update_frequency et  vérifier que la valeur retournée est 60.</para>
+                     <para>Lancer la commande vishnu_get_update_frequency et  vérifier que la valeur retournée est 10.</para>
                      <para/>
                   </listitem>
                </orderedlist>
@@ -1069,7 +969,7 @@
                </orderedlist>
             </entry>
             <entry>
-               <para>la fréquence de mise à jour de la base de donnée doit être au préalable enregistrée dans la base de données et fixée à 60 secondes.</para>
+               <para>la fréquence de mise à jour de la base de donnée doit être au préalable enregistrée dans la base de données et fixée à 10 secondes.</para>
             </entry>
          </row>
          <row>
@@ -1081,14 +981,20 @@
                <orderedlist>
                   <listitem>
                      <para>Cas de test : les paramètres sont corrects.</para>
+                  </listitem>
+               </orderedlist>
+               <para/>
+               <orderedlist>
+                  <listitem>
+                     <para>Lancer la commande vishnu_get_update_frequency  et enregister la valeur retournée.</para>
                      <para/>
                   </listitem>
                   <listitem>
-                     <para>Lancer la commande vishnu_set_update_frequency  avec la valeur 10.</para>
+                     <para>Lancer la commande vishnu_set_update_frequency  en ajoutant 10 à la valeur retournée à l'étape 2.</para>
                      <para/>
                   </listitem>
                   <listitem>
-                     <para>Lancer la commande vishnu_get_update_frequency et vérifier que la valeur retournée est 10.</para>
+                     <para>Lancer la commande vishnu_get_update_frequency et vérifier que la modification de l'étape 2 a été bien prise en compte.</para>
                      <para/>
                      <para/>
                   </listitem>
@@ -1102,7 +1008,7 @@
             <entry>
                <para>L'utilisateur doit être un administrateur.</para>
                <para/>
-               <para>La valeur de fréquence de mise à jour avant le lancement du test doit être différente de 10 secondes.</para>
+               <para>La valeur de la fréquence de mise à jour avant le lancement du test doit être différente de 10 secondes.</para>
             </entry>
          </row>
          <row>
@@ -1295,8 +1201,7 @@
             <entry>
                <orderedlist>
                   <listitem>
-                     <para>Cas de test : les paramètres sont corrects.</para>
-                     <para>Consultation des données système  de la machine MA_1 enregistré dans VISHNU.</para>
+                     <para>Cas de test : les paramètres sont corrects et les valeurs de mémoire et d'espace disque pour la machine MA_1 sont respectivement 256 et 106.</para>
                      <para/>
                   </listitem>
                   <listitem>
@@ -1304,11 +1209,8 @@
                      <para/>
                   </listitem>
                   <listitem>
-                     <para>Vérifier dans le fichier /proc/meminfo  de  la machine d'identifiant MA_1</para>
+                     <para>Vérifier que les valeurs retournées pour la mémoire et l'espace disque de la machine MA_1 sont respectivement 256 et 106.</para>
                      <para/>
-                  </listitem>
-                  <listitem>
-                     <para>L'exécution de la commande est ainsi validée.</para>
                   </listitem>
                </orderedlist>
             </entry>
@@ -1318,7 +1220,7 @@
                </orderedlist>
             </entry>
             <entry>
-               <para/>
+               <para>Avant le lancement du test les valeurs  de mémoire et d'espace disque pour la machine MA_1 sont respectivement 256 et 106.</para>
             </entry>
          </row>
          <row>
@@ -1442,7 +1344,7 @@
             </entry>
             <entry>
                <para>- Lancer la commande 'ssh &lt;host&gt; ps -efl' sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
-               <para>- Lancer la commande 'vishnu_ get_metric_current_value &lt;machineId&gt;' en mesurant le temps de réponse</para>
+               <para>- Lancer la commande 'vishnu_ get_current_metric &lt;machineId&gt;' en mesurant le temps de réponse</para>
             </entry>
             <entry>
                <para>temps inférieur au temps de référence (valeur moyenne sur 10 itérations)</para>
@@ -1454,7 +1356,7 @@
             </entry>
             <entry>
                <para>- Lancer une commande 'ssh &lt;host&gt; ps -efl' sur une machine serveur en mesurant le temps de réponse  (temps de référence).</para>
-               <para>- Lancer la commande 'vishnu_get_metric_history &lt;machineId&gt; &lt;currentDay&gt; &lt;currentDay&gt; 5' en mesurant le temps de réponse</para>
+               <para>- Lancer la commande 'vishnu_get_metric_history &lt;machineId&gt;' en mesurant le temps de réponse</para>
             </entry>
             <entry>
                <para>temps inférieur au temps de référence (valeur moyenne sur 10 itérations)</para>
@@ -1476,7 +1378,7 @@
                <para>CDP-3.2.1-get_metric_history</para>
             </entry>
             <entry>
-               <para>- Lancer la commande 'vishnu_get_metric_history &lt;machineId&gt; &lt;jour_courant&gt; &lt;jour_courant&gt; 5' 100 fois </para>
+               <para>- Lancer la commande 'vishnu_get_metric_history &lt;machineId&gt;' 100 fois </para>
             </entry>
             <entry>
                <para>Consommation en mémoire virtuelle sur le serveur IMS inférieure à 500 Mégaoctets.</para>
@@ -1498,7 +1400,7 @@
                <para>CDP-3.2.2-get_metric_history</para>
             </entry>
             <entry>
-               <para>-  Lancer la commande 'vishnu_get_metric_history &lt;machineId&gt; &lt;jour_courant&gt; &lt;jour_courant&gt; 5'</para>
+               <para>-  Lancer la commande 'vishnu_get_metric_history &lt;machineId&gt;'</para>
             </entry>
             <entry>
                <para>Consommation CPU inférieure à 10%.</para>
@@ -1555,7 +1457,7 @@
                <para>LOAD-2.1-get_metric_history</para>
             </entry>
             <entry>
-               <para>- Lancer 100 commandes 'vishnu_get_metric_history &lt;machineId&gt; &lt;jour_courant&gt; &lt;jour_courant&gt; 5' simultanées</para>
+               <para>- Lancer 100 commandes 'vishnu_get_metric_history &lt;machineId&gt;' simultanées</para>
             </entry>
             <entry>
                <para>- Terminaison normale de toutes les commandes</para>
@@ -1800,7 +1702,7 @@
                <para>www.sysfera.com</para>
             </entry>
             <entry>
-               <para>1|19</para>
+               <para>18|18</para>
             </entry>
          </row></tbody></tgroup>
    </informaltable>
