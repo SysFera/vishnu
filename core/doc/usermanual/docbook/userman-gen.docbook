@@ -43,24 +43,24 @@
         <date>08/03/2011</date>
         <authorinitials>SysFera</authorinitials>
         <revdescription>
-		
-	      <para> First version of the VISHNU user manual which concerns only the UMS package.</para></revdescription>
+	  
+	  <para> First version of the VISHNU user manual which concerns only the UMS package.</para></revdescription>
       </revision>
       <revision>
         <revnumber>2</revnumber>
         <date>03/05/2011</date>
         <authorinitials>SysFera</authorinitials>
         <revdescription>
-	      
-	    <para> Added details concerning the TMS package.</para></revdescription>
+	  
+	  <para> Added details concerning the TMS package.</para></revdescription>
       </revision>
       <revision>
         <revnumber>3</revnumber>
         <date>15/06/2011</date>
         <authorinitials>SysFera</authorinitials>
         <revdescription>
-	      
-	    <para> Added details concerning the IMS and FMS package.</para></revdescription>
+	  
+	  <para> Added details concerning the IMS and FMS package.</para></revdescription>
       </revision>
     </revhistory>
     <copyright>
@@ -79,25 +79,25 @@
         </listitem>
       </orderedlist>
       <para>This software is governed by the CECILL licence under French law and
-abiding by the rules of distribution of free software.  You can  use, 
-modify and/ or redistribute the software under the terms of the CeCILL
-license as circulated by CEA, CNRS and INRIA at the following URL
-&quot;http://www.cecill.info&quot;.</para>
+	abiding by the rules of distribution of free software.  You can  use, 
+	modify and/ or redistribute the software under the terms of the CeCILL
+	license as circulated by CEA, CNRS and INRIA at the following URL
+	&quot;http://www.cecill.info&quot;.</para>
       <para>As a counterpart to the access to the source code and  rights to copy,
-modify and redistribute granted by the license, users are provided only
-with a limited warranty  and the software's author,  the holder of the
-economic rights,  and the successive licensors  have only  limited
-liability.</para>
+	modify and redistribute granted by the license, users are provided only
+	with a limited warranty  and the software's author,  the holder of the
+	economic rights,  and the successive licensors  have only  limited
+	liability.</para>
       <para>In this respect, the user's attention is drawn to the risks associated
-with loading,  using,  modifying and/or developing or reproducing the
-software by the user in light of its specific status of free software,
-that may mean  that it is complicated to manipulate,  and  that  also
-therefore means  that it is reserved for developers  and  experienced
-professionals having in-depth computer knowledge. Users are therefore
-encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security.</para>
+	with loading,  using,  modifying and/or developing or reproducing the
+	software by the user in light of its specific status of free software,
+	that may mean  that it is complicated to manipulate,  and  that  also
+	therefore means  that it is reserved for developers  and  experienced
+	professionals having in-depth computer knowledge. Users are therefore
+	encouraged to load and test the software's suitability as regards their
+	requirements in conditions enabling the security of their systems and/or 
+	data to be ensured and,  more generally, to use and operate it in the 
+	same conditions as regards security.</para>
     </legalnotice>
     <productname>VISHNU</productname>
     <releaseinfo>1.0</releaseinfo>
@@ -107,9 +107,9 @@ same conditions as regards security.</para>
     <section>
       <title>Document objectives</title>
       <para>
-     This documents is a quick start guide of VISHNU software for users. The main objective of this document is to describe 
-     the VISHNU installation procedure and the way to use it.
-     </para>
+	This documents is a quick start guide of VISHNU software for users. The main objective of this document is to describe 
+	the VISHNU installation procedure and the way to use it.
+      </para>
     </section>
     <section>
       <title>Document structure</title>
@@ -149,8 +149,8 @@ same conditions as regards security.</para>
   <chapter>
     <title>Installation and usage</title>
     <para>
-     The VISHNU software is based on SysFera-DS which is an open-source middleware developped by SysFera. VISHNU is primarly designed to facilitate the access to high-performance computing resources by providing the following services:
-     <itemizedlist>
+      The VISHNU software is based on SysFera-DS which is an open-source middleware developped by SysFera. VISHNU is primarly designed to facilitate the access to high-performance computing resources by providing the following services:
+      <itemizedlist>
         <listitem>
           <para>User management services (UMS): authentication and session management.</para>
         </listitem>
@@ -170,7 +170,7 @@ same conditions as regards security.</para>
       <para> 
 	This section details the main steps of the installation process, including the installation requirements [D1.1b]. VISHNU is based on SysFera-DS software
 	which must be installed before.
-	</para>
+      </para>
       <para> <emphasis role="bold">Installation requirements:</emphasis></para>
       <itemizedlist>
         <listitem>
@@ -205,7 +205,7 @@ same conditions as regards security.</para>
       <section>
         <title> From sources </title>
         <para>
-      <itemizedlist>
+	  <itemizedlist>
             <listitem>
               <para> Download the VISHNU install sources </para>
             </listitem>
@@ -229,11 +229,15 @@ same conditions as regards security.</para>
               <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
             </listitem>
             <listitem>
-              <para> <emphasis role="bold">To compile the TMS package : </emphasis></para>
+              <para> <emphasis role="bold">To compile the FMS package : </emphasis></para>
+              <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_FMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
+            </listitem>
+            <listitem>
+              <para> <emphasis role="bold">To compile the IMS package : </emphasis></para>
               <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DCOMPILE_FMS=ON -DCOMPILE_IMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
             </listitem>
           </itemizedlist>
-      </para>
+	</para>
       </section>
       <section>
         <title> From binaries package </title>
@@ -246,45 +250,45 @@ same conditions as regards security.</para>
         <section>
           <title> User account creation </title>
           <para>
-	The first step to access VISHNU is to request a new account to a VISHNU administrator. The only information required to create a new account is your full name and email address. You will automatically receive an email containing your userId and password.
-      </para>
+	    The first step to access VISHNU is to request a new account to a VISHNU administrator. The only information required to create a new account is your full name and email address. You will automatically receive an email containing your userId and password.
+	  </para>
         </section>
         <section>
           <title> Connection to VISHNU </title>
           <para>
-	To connect, use the <emphasis role="bold">vishnu_connect</emphasis> command in the shell terminal (all bourne shell are supported). 
-	The password received by email is temporary and must be changed at the first connection by using the <emphasis
+	    To connect, use the <emphasis role="bold">vishnu_connect</emphasis> command in the shell terminal (all bourne shell are supported). 
+	    The password received by email is temporary and must be changed at the first connection by using the <emphasis
                 role="bold"> vishnu_change_password </emphasis> command.
-      </para>
+	  </para>
         </section>
         <section>
           <title> Reconnection to VISHNU </title>
           <para>
-	Reconnection is done using the <emphasis role="bold">vishnu_reconnect</emphasis> command. This command allows using an existing session that was previously opened but not closed. It makes it possible to simultaneously use the same session in different shell terminals.
-      </para>
+	    Reconnection is done using the <emphasis role="bold">vishnu_reconnect</emphasis> command. This command allows using an existing session that was previously opened but not closed. It makes it possible to simultaneously use the same session in different shell terminals.
+	  </para>
         </section>
         <section>
           <title> Session management in VISHNU </title>
           <para>
-	After a successful call to the <emphasis role="bold">vishnu_connect</emphasis> command, a session is created. 
-	The session is required for calling any other commands. It avoids systematic authentification by userId and password. Only commands <emphasis
+	    After a successful call to the <emphasis role="bold">vishnu_connect</emphasis> command, a session is created. 
+	    The session is required for calling any other commands. It avoids systematic authentification by userId and password. Only commands <emphasis
                 role="bold">vishnu_connect</emphasis>, <emphasis role="bold">vishnu_reconnect</emphasis> and <emphasis
                 role="bold">vishnu_change_password</emphasis> can be used outside a session by using userId and password. 
-	The <emphasis role="bold">vishnu_list_history_cmd</emphasis> command lists all the commands launched within a session.
-      </para>
+	    The <emphasis role="bold">vishnu_list_history_cmd</emphasis> command lists all the commands launched within a session.
+	  </para>
           <para> To prevent unclosed sessions when the <emphasis role="bold">vishnu_close</emphasis> command is not used, the session is automatically closed on timeout or on disconnect (from the terminal). </para>
           <section>
             <title> Session close on timeout </title>
             <para>  
-	In this mode, the session is automatically closed after an inactivity delay specified by the system or 
-	configured by the user using the <emphasis role="bold">vishnu_configure_option</emphasis> command.
-	</para>
+	      In this mode, the session is automatically closed after an inactivity delay specified by the system or 
+	      configured by the user using the <emphasis role="bold">vishnu_configure_option</emphasis> command.
+	    </para>
           </section>
           <section>
             <title> Session close on disconnect </title>
             <para> 
-	In this mode, the session is automatically closed when the shell terminal is closed. It is important to note that the system makes it impossible to close a session while commands are running. In this case, a session with automatic close on disconnect changes the close mode to automatic close on timeout.
-        </para>
+	      In this mode, the session is automatically closed when the shell terminal is closed. It is important to note that the system makes it impossible to close a session while commands are running. In this case, a session with automatic close on disconnect changes the close mode to automatic close on timeout.
+            </para>
           </section>
         </section>
         <section>
@@ -292,40 +296,40 @@ same conditions as regards security.</para>
           <section>
             <title> Local user configuration creation </title>
             <para>  
-	    To access a UNIX account on a specific machine defined on VISHNU, the user must create a local user configuration by using the 
-	    <emphasis role="bold">vishnu_add_local_account</emphasis> command. The <emphasis
+	      To access a UNIX account on a specific machine defined on VISHNU, the user must create a local user configuration by using the 
+	      <emphasis role="bold">vishnu_add_local_account</emphasis> command. The <emphasis
                   role="bold">vishnu_list_machines</emphasis> command
-	    gives information about the machines in which a local user configuration can be created or where a local user configuration has already been created. The information 
-	    required to create a new local user configuration is: the userId, the machineId, the login of the UNIX account on the specified machine,
-	    the absolute path to the user's private SSH key (used for file transfers) and the home directory path. 
-	  </para>
+	      gives information about the machines in which a local user configuration can be created or where a local user configuration has already been created. The information 
+	      required to create a new local user configuration is: the userId, the machineId, the login of the UNIX account on the specified machine,
+	      the absolute path to the user's private SSH key (used for file transfers) and the home directory path. 
+	    </para>
             <para>  
-	    The ssh public key of the machine 
-	    named <emphasis role="italic">&quot;userId-machineId&quot;</emphasis> is returned and stored in the $HOME/.vishnu/localAccountPublicKey/ directory
-	    and must be added by the user in the ssh authorized key directory of the UNIX account.
-	    Doing this allows VISHNU to be directly connected on this UNIX account, running tasks as if it was the owner of the UNIX account.
-	 </para>
+	      The ssh public key of the machine 
+	      named <emphasis role="italic">&quot;userId-machineId&quot;</emphasis> is returned and stored in the $HOME/.vishnu/localAccountPublicKey/ directory
+	      and must be added by the user in the ssh authorized key directory of the UNIX account.
+	      Doing this allows VISHNU to be directly connected on this UNIX account, running tasks as if it was the owner of the UNIX account.
+	    </para>
           </section>
           <section>
             <title> Local user configuration update </title>
             <para>  
-	    All previous parameters used to create a local user configuration can be updated by using the 
-	    <emphasis role="bold">vishnu_update_local_account</emphasis> command except for userId and machineId. 
-	 </para>
+	      All previous parameters used to create a local user configuration can be updated by using the 
+	      <emphasis role="bold">vishnu_update_local_account</emphasis> command except for userId and machineId. 
+	    </para>
           </section>
           <section>
             <title> Local user configuration remove </title>
             <para> 
-	    A local user configuration can be removed by using the <emphasis role="bold">vishnu_delete_local_account</emphasis> command.
-	 </para>
+	      A local user configuration can be removed by using the <emphasis role="bold">vishnu_delete_local_account</emphasis> command.
+	    </para>
           </section>
           <para>
-	It is possible to display the local user configurations with the <emphasis role="bold">vishnu_list_local_account</emphasis> command. Other 
-	commands which are not cited above can be used to display information, such as the <emphasis
+	    It is possible to display the local user configurations with the <emphasis role="bold">vishnu_list_local_account</emphasis> command. Other 
+	    commands which are not cited above can be used to display information, such as the <emphasis
                 role="bold">vishnu_list_options</emphasis> command, which 
-	displays all the options configured by the user, or the <emphasis role="bold">vishnu_list_sessions</emphasis> command, which
-	displays information about the sessions.
-      </para>
+	    displays all the options configured by the user, or the <emphasis role="bold">vishnu_list_sessions</emphasis> command, which
+	    displays information about the sessions.
+	  </para>
         </section>
       </section>
       <section>
@@ -333,26 +337,26 @@ same conditions as regards security.</para>
         <section>
           <title> Job submission </title>
           <para>
-	To submit a job, via VISHNU, to the batch scheduler of a specific machine, the user needs: an active VISHNU session, 
-	a local user configuration registered on VISHNU that corresponds to an existing UNIX account on the specified machine and a script that describes 
-	the job to submit. In the current implementation of VISHNU, it is possible to use the directives for two batch schedulers: TORQUE and LoadLeveler.
-	In order to use the same script on different batch schedulers, a generic script with generic VISHNU directives is used.
-	The <emphasis role="bold">vishnu_submit_job</emphasis> command allows a user to submit a job in the shell terminal.
-	To obtain information on a job, the user can use the <emphasis role="bold">vishnu_get_job_info</emphasis> or 
-	<emphasis role="bold"> vishnu_list_jobs</emphasis>, 
-	and for a job's progression status, <emphasis role="bold"> the vishnu_get_job_progression</emphasis> command is used. The job's progression status is calculated according to the wall-clock time specified
-	by the user during the job's submission.
-      </para>
+	    To submit a job, via VISHNU, to the batch scheduler of a specific machine, the user needs: an active VISHNU session, 
+	    a local user configuration registered on VISHNU that corresponds to an existing UNIX account on the specified machine and a script that describes 
+	    the job to submit. In the current implementation of VISHNU, it is possible to use the directives for two batch schedulers: TORQUE and LoadLeveler.
+	    In order to use the same script on different batch schedulers, a generic script with generic VISHNU directives is used.
+	    The <emphasis role="bold">vishnu_submit_job</emphasis> command allows a user to submit a job in the shell terminal.
+	    To obtain information on a job, the user can use the <emphasis role="bold">vishnu_get_job_info</emphasis> or 
+	    <emphasis role="bold"> vishnu_list_jobs</emphasis>, 
+	    and for a job's progression status, <emphasis role="bold"> the vishnu_get_job_progression</emphasis> command is used. The job's progression status is calculated according to the wall-clock time specified
+	    by the user during the job's submission.
+	  </para>
           <section>
             <title> VISHNU generic script </title>
             <para> The key words of a VISHNU generic script start with the special character <emphasis
                   role="bold">%</emphasis>. For example, to specify 
-	       a job's name, users have to use the following directive in their scripts: <emphasis
+	      a job's name, users have to use the following directive in their scripts: <emphasis
                   role="bold">%vishnuJob_name</emphasis>. 
-	       The possible generic directives are:
-	</para>
+	      The possible generic directives are:
+	    </para>
             <para>  
-	    <itemizedlist>
+	      <itemizedlist>
                 <listitem>
                   <para><emphasis role="bold">%vishnugroup</emphasis>: specifies the group's name,</para>
                 </listitem>
@@ -371,31 +375,31 @@ same conditions as regards security.</para>
                 <listitem>
                   <para><emphasis role="bold">%vishnunotify_user</emphasis>: specifies the mail adress of the job's owner in order to receive a notification when the 
 		    job is completed, 
-		    </para>
+		  </para>
                 </listitem>
                 <listitem>
                   <para><emphasis role="bold">%vishnuqueue</emphasis>: specifies the queue where the job will be submitted. It is possible to obtain a list of 
 		    the batch scheduler's queues by using the <emphasis role="bold">vishnu_list_queues</emphasis> command.
-		    </para>
+		  </para>
                 </listitem>
               </itemizedlist>
-      </para>
+	    </para>
             <para>
-	It is important to note that the user can also add directives specific to a batch scheduler (TORQUE or LoadLeveler). Such specific directives must be added directly after the generic directives.
-      </para>
+	      It is important to note that the user can also add directives specific to a batch scheduler (TORQUE or LoadLeveler). Such specific directives must be added directly after the generic directives.
+	    </para>
           </section>
         </section>
         <section>
           <title> Job Cancellation </title>
           <para> To cancel a job, the <emphasis role="bold">vishnu_cancel_job</emphasis> command is used with the VISHNU identifer 
-	of the job to cancel. When the identifer of the job is <emphasis role="italic">all</emphasis>, all of the user's jobs are cancelled. 
-	An admin can also cancel all the jobs of all the users of VISHNU.
-	</para>
+	    of the job to cancel. When the identifer of the job is <emphasis role="italic">all</emphasis>, all of the user's jobs are cancelled. 
+	    An admin can also cancel all the jobs of all the users of VISHNU.
+	  </para>
         </section>
         <section>
           <title> Job output files </title>
           <para> VISHNU offers two commands, to be used in a shell terminal, to get the result output files for a job: 
-	  <itemizedlist>
+	    <itemizedlist>
               <listitem>
                 <para> <emphasis role="bold">vishnu_get_job_output</emphasis> or,</para>
               </listitem>
@@ -403,74 +407,75 @@ same conditions as regards security.</para>
                 <para> <emphasis role="bold">vishnu_get_completed_jobs_output</emphasis> </para>
               </listitem>
             </itemizedlist>        
-	The former gives the output files for a specific job while the latter gives the output files for all the completed jobs.
-	It is important to note that all submitted jobs have two output files: one with the job's results, one (possibly empty) with the errors that occurred during the job's execution. The path of the job's output files is specified during the job's submission.
-	</para>
+	    The former gives the output files for a specific job while the latter gives the output files for all the completed jobs.
+	    It is important to note that all submitted jobs have two output files: one with the job's results, one (possibly empty) with the errors that occurred during the job's execution. The path of the job's output files is specified during the job's submission.
+	  </para>
         </section>
       </section>
-    </section>
-    <section>
-      <title> Troubleshooting functions </title>
-      <para> The <emphasis role="italic">&quot;There is no session in this terminal&quot;</emphasis> error can be solved by connecting to VISHNU using 
-     the <emphasis role="bold">vishnu_connect</emphasis> command.
-   </para>
-    </section>
-    <section>
-      <title> FMS package </title>
       <section>
-        <title>Create and remove file or directories</title>
-        <para>
-         The user can create (or remove) a regular file located in a remote host by using the command <emphasis
-              role="bold">vishnu_create_file</emphasis> ( or <emphasis role="bold">vishnu_remove_file</emphasis>). He can also create (or remove) directory located in a remote host by using the command <emphasis
-              role="bold">vishnu_create_dir</emphasis> ( or <emphasis role="bold">vishnu_remove_dir</emphasis>).
-       </para>
+        <title> FMS package </title>
+        <section>
+          <title>Create and remove file or directories</title>
+          <para>
+            The user can create (or remove) a regular file located in a remote host by using the command <emphasis
+                role="bold">vishnu_create_file</emphasis> ( or <emphasis role="bold">vishnu_remove_file</emphasis>). He can also create (or remove) directory located in a remote host by using the command <emphasis
+                role="bold">vishnu_create_dir</emphasis> ( or <emphasis role="bold">vishnu_remove_dir</emphasis>).
+	  </para>
+        </section>
+        <section>
+          <title>Get file information</title>
+          <para>Several services are available to get file information. The user can get the first ( or last lines) of a given remote file by using the command <emphasis
+                role="bold">vishnu_head_of_file</emphasis> ( or <emphasis role="bold">vishnu_tail_of_file</emphasis>). He can also get the entire content of a remote file (or remote directory) with the command <emphasis
+                role="bold">vishnu_content_of_file</emphasis>  (or <emphasis role="bold">vishnu_list__dir</emphasis>).</para>
+        </section>
+        <section>
+          <title>Modify files properties </title>
+          <para> The commands <emphasis role="bold">vishnu_ch_grp</emphasis> and
+            <emphasis role="bold">vishnu_ch_mod</emphasis>  allow the user to change respectively the group and the access permissions of remote file.</para>
+        </section>
+        <section>
+          <title>Perform file transfer </title>
+          <para> The user can submit a file transfer in many ways:
+            <itemizedlist>
+              <listitem>
+                <para> copy (or move) file between two hosts by the commands <emphasis
+                      role="bold">vishnu_copy_file</emphasis> (or <emphasis role="bold">vishnu_move_file</emphasis>) </para>
+              </listitem>
+              <listitem>
+                <para> copy  (or move) file between two hosts in asynchronous way by the commands <emphasis
+                      role="bold">vishnu_copy_async_file</emphasis> (or <emphasis
+                      role="bold">vishnu_move_async_file</emphasis>) </para>
+              </listitem>
+              <listitem>
+                <para> list or (cancel) file transfers by the commands <emphasis role="bold">vishnu_list_file_transfers</emphasis> (<emphasis
+                      role="bold">vishnu_stop_file_transfers</emphasis>) </para>
+              </listitem>
+            </itemizedlist>
+	  </para>
+        </section>
+        <section>
+          <title> IMS package </title>
+          <section>
+            <title>Export of commands</title>
+            <para>
+	      The user can export the commands made during a session in shell format. The file must have been created before the call, the file will contain a shell script that can be executed. For safety reasons, the connect and change password cannot be in the file. Thus, to execute the shell script, the connect command must be added after the first line of the file that declares the shell format.
+	    </para>
+          </section>
+          <section>
+            <title>Get system information</title>
+            <para>The get system information is to get information about a machine of the system. It can give information about the memory and/or diskspace available on the machine.</para>
+          </section>
+          <section>
+            <title>Get the metric </title>
+            <para>The user can get the current metrics on a machine or the history of the metrics on a machine to know the evolution of the metric. The user can choose to get the metrics of a specific type (parameters are 1, 2, 3 respectively free CPUload, free diskspace and free memory). Note, when getting the history of metrics, by default, only the first 1000 results are gotten. This is to avoid having to much results with a single command (the metric table may be filled very fastly).</para>
+          </section>
+        </section>
       </section>
       <section>
-        <title>Get file information</title>
-        <para>Several services are available to get file information. The user can get the first ( or last lines) of a given remote file by using the command <emphasis
-              role="bold">vishnu_head_of_file</emphasis> ( or <emphasis role="bold">vishnu_tail_of_file</emphasis>). He can also get the entire content of a remote file (or remote directory) with the command <emphasis
-              role="bold">vishnu_content_of_file</emphasis>  (or <emphasis role="bold">vishnu_list__dir</emphasis>).</para>
-      </section>
-      <section>
-        <title>Modify files properties </title>
-        <para> The commands <emphasis role="bold">vishnu_ch_grp</emphasis> and
-         <emphasis role="bold">vishnu_ch_mod</emphasis>  allow the user to change respectively the group and the access permissions of remote file.</para>
-      </section>
-      <section>
-        <title>Perform file transfer </title>
-        <para> The user can submit a file transfer in many ways:
-         <itemizedlist>
-            <listitem>
-              <para> copy or (move) file between two hosts by the commands <emphasis
-                    role="bold">vishnu_copy_file</emphasis> (<emphasis role="bold">vishnu_move_file</emphasis>) </para>
-            </listitem>
-            <listitem>
-              <para> copy or (move) file between two hosts in asynchronous way by the commands <emphasis
-                    role="bold">vishnu_copy_async_file</emphasis> (<emphasis role="bold">vishnu_move_async_file</emphasis>) </para>
-            </listitem>
-            <listitem>
-              <para> list or (cancel) file transfer by the commands <emphasis role="bold">vishnu_list_file_transfers</emphasis> (<emphasis
-                    role="bold">vishnu_stop_file_transfers</emphasis>) </para>
-            </listitem>
-          </itemizedlist>
-       </para>
-      </section>
-    </section>
-    <section>
-      <title> IMS package </title>
-      <section>
-        <title>Export of commands</title>
-        <para>
-	 The user can export the commands made during a session in shell format. The file must have been created before the call, the file will contain a shell script that can be executed. For safety reasons, the connect and change password cannot be in the file. Thus, to execute the shell script, the connect command must be added after the first line of the file that declares the shell format.
-       </para>
-      </section>
-      <section>
-        <title>Get system information</title>
-        <para>The get system information is to get information about a machine of the system. It can give information about the memory and/or diskspace available on the machine.</para>
-      </section>
-      <section>
-        <title>Get the metric </title>
-        <para>The user can get the current metrics on a machine or the history of the metrics on a machine to know the evolution of the metric. The user can choose to get the metrics of a specific type (parameters are 1, 2, 3 respectively free CPUload, free diskspace and free memory). Note, when getting the history of metrics, by default, only the first 1000 results are gotten. This is to avoid having to much results with a single command (the metric table may be filled very fastly).</para>
+        <title> Troubleshooting functions </title>
+        <para> The <emphasis role="italic">&quot;There is no session in this terminal&quot;</emphasis> error can be solved by connecting to VISHNU using 
+	  the <emphasis role="bold">vishnu_connect</emphasis> command.
+	</para>
       </section>
     </section>
   </chapter>
