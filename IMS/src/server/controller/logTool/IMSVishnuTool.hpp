@@ -72,6 +72,13 @@ private:
   string
   getHostnameFromLog(string msg);
   /**
+   * \brief Extract hostname from log message
+   * \param msg: The message received from the log
+   * \return The hostname of the machine
+   */
+  string
+  getHostnameFromOutLog(string msg);
+  /**
    * \brief The process server
    */
   ProcessServer mproc;
