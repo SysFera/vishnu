@@ -100,7 +100,7 @@ same conditions as regards security.</para>
 	   <para> ssh : OpenSSH_5.5p1 Debian-4ubuntu5, OpenSSL 0.9.8o 01 Jun 2010 </para>
 	 </listitem>
 	 <listitem>
-	   <para> RAM memory : 2Gb </para>
+	   <para> RAM memory : 1Gb </para>
 	 </listitem>
         </itemizedlist>
     </para>
@@ -812,7 +812,7 @@ same conditions as regards security.</para>
                   <para>0,02s</para>
                </entry>
 	       <entry>
-                  <para> </para>
+                  <para>Success </para>
                </entry>
             </row>
 	    
@@ -834,7 +834,7 @@ same conditions as regards security.</para>
                   <para>0,03s</para>
                </entry>
 	       <entry>
-                  <para> </para>
+                  <para>Success </para>
                </entry>
             </row>  
 	    
@@ -895,7 +895,7 @@ same conditions as regards security.</para>
                   <para>1,6% of the RAM</para>
                </entry>
 	       <entry>
-                  <para>Sucess</para>
+                  <para>Success</para>
                </entry>
             </row>
 	    
@@ -913,25 +913,7 @@ same conditions as regards security.</para>
                   <para>0,7% of the CPU</para>
                </entry>
 	       <entry>
-                  <para>Sucess</para>
-               </entry>
-            </row>
-	      
-	    <row>
-               <entry>
-                  <para>CDP-3.2.2-vishnu_get_file_info</para>
-               </entry>
-               <entry>
-                  <para>CPU consumption less than 10%</para>
-               </entry>
-               <entry>
-                  <para>vishnu_get_file_info</para>
-               </entry>
-               <entry>
-                  <para>0,7% of the CPU</para>
-               </entry>
-	       <entry>
-                  <para>Sucess</para>
+                  <para>Success</para>
                </entry>
             </row>
 	    

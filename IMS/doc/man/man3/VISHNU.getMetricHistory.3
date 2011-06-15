@@ -28,13 +28,13 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-VISHNU.getMetricHistory \- Retrieve the history of values of a metric on a machine
+VISHNU.getMetricHistory \- displays the history of values of a system metric
 .SH "SYNOPSIS"
 .HP \w'VISHNU\&.getMetricHistory('u
 .BI "VISHNU\&.getMetricHistory(string\ " "sessionKey" ", string\ " "machineId" ", ListMetric\ " "metricValues" ", MetricHistOp\ " "options\ =\ MetricHistOp()" ");"
 .SH "DESCRIPTION"
 .PP
-This command allows a use to get the history of the metrics on a machine\&. The options enable to specify a specific type of metric and the date of the desired metric values\&. These values are read from the database\&. If the machine does not have any IMS server, no data can be recorded on the machine\&.
+Displays the chronological list of values of the metrics on the system identified by the machineId argument\&. Using the options it is possible to specify a type of metric and the starting and ending dates of the desired monitoring period\&. Note that some data will be available only if the required VISHNU agent (IMS server) has been running locally on the machine during the specified period\&.
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR

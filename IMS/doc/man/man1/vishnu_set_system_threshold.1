@@ -31,31 +31,15 @@
 vishnu_set_system_threshold \- sets a threshold on a machine of a system
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_set_system_threshold\fR\ 'u
-\fBvishnu_set_system_threshold\fR [\fB\-h\fR] [] [] [] []
+\fBvishnu_set_system_threshold\fR [\fB\-h\fR]
 .SH "DESCRIPTION"
 .PP
-This function allows an admin to set a threshold\&. Each time an IMS server records the state of a machine, it checks the values defined, if a threshold is reached (over a use of the cpu or under the free memory or diskspace available), the administrator responsible for the threshold will have a mail sent\&. These threshold will help the administrator to be aware problems on a machine\&. Warning, a mail is sent for each time the threshold is reached, if a value swings around a threshold, the administrator may receive lots of emails depending on the update frequency\&.
+This function allows an administrator to set a threshold\&. Each time an IMS server records the state of a machine, it checks the values defined, if a threshold is reached (over a use of the cpu or under the free memory or diskspace available), the administrator responsible for the threshold will receive an mail\&. These threshold will help the administrator to be aware of critical situations on a machine\&. Warning, a mail is sent for each time the threshold is reached, if a value swings around a threshold, the administrator may receive lots of emails depending on the update frequency\&.
 .SH "OPTIONS"
 .PP
 \fB\-h \fR\fB\fIhelp\fR\fR
 .RS 4
 help about the command\&.
-.RE
-.PP
-.RS 4
-The value of the threshold\&.
-.RE
-.PP
-.RS 4
-The machine ID the threshold is available\&.
-.RE
-.PP
-.RS 4
-The type of the threshold\&. The value must be an integer\&. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 2 (DISKSPACE), 3 (FREEDISKSPACE), 4 (MEMORY), 5 (FREEMEMORY), 6 (CPUNBR)\&.
-.RE
-.PP
-.RS 4
-The userId of the admin responsible for handling the threshold problems\&.
 .RE
 .SH "ENVIRONMENT"
 .PP

@@ -34,7 +34,7 @@ VISHNU.setSystemThreshold \- sets a threshold on a machine of a system
 .BI "VISHNU\&.setSystemThreshold(string\ " "sessionKey" ", Threshold\ " "threshold" ");"
 .SH "DESCRIPTION"
 .PP
-This function allows an admin to set a threshold\&. Each time an IMS server records the state of a machine, it checks the values defined, if a threshold is reached (over a use of the cpu or under the free memory or diskspace available), the administrator responsible for the threshold will have a mail sent\&. These threshold will help the administrator to be aware problems on a machine\&. Warning, a mail is sent for each time the threshold is reached, if a value swings around a threshold, the administrator may receive lots of emails depending on the update frequency\&.
+This function allows an administrator to set a threshold\&. Each time an IMS server records the state of a machine, it checks the values defined, if a threshold is reached (over a use of the cpu or under the free memory or diskspace available), the administrator responsible for the threshold will receive an mail\&. These threshold will help the administrator to be aware of critical situations on a machine\&. Warning, a mail is sent for each time the threshold is reached, if a value swings around a threshold, the administrator may receive lots of emails depending on the update frequency\&.
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR
