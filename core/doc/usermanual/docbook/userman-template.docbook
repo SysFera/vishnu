@@ -113,17 +113,14 @@
         <listitem>
           <para>Chapter 2 describes the VISHNU software (installation procedure, usage description and troubleshooting).</para>
         </listitem>
-        <listitem>
-          <para>Chapter 3 is a quick start guide for the different VISHNU interfaces.</para>
+        	<listitem>
+          <para>Chapter 3, Chapter 4, Chapter 5 and Chapter 6 contain the VISHNU commands reference respectively for UMS, TMS, FMS and IMS package.</para>
         </listitem>
 	<listitem>
-          <para>Chapter 4 and Chapter 5 contain the VISHNU commands reference respectively for UMS and TMS package.</para>
+          <para>Chapter 7, Chapter 8, Chapter 9 and Chapter 10 contain the C++ API reference respectively for UMS, TMS, FMS and IMS package.</para>
         </listitem>
 	<listitem>
-          <para>Chapter 6 and Chapter 7 contain the C++ API reference respectively for UMS and TMS package.</para>
-        </listitem>
-	<listitem>
-          <para>Chapter 8 and Chapter 9 contain the Python API reference respectively for UMS and TMS package.</para>
+          <para>Chapter 11, Chapter 12, Chapter 13 and Chapter 14 contain the Python API reference respectively for UMS, TMS, FMS and IMS package.</para>
         </listitem>
       </itemizedlist>
     </section>
