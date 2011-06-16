@@ -1,0 +1,119 @@
+File;Line;Severity;Rule;Description
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\CLICmd.hpp;31;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\cliError.hpp;14;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\cliError.hpp;15;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\cliUtil.hpp;9;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\cliUtil.hpp;14;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\cliUtil.hpp;53;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\CommonParser.cpp;10;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\CommonParser.cpp;11;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\CommonParser.hpp;31;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.cpp;6;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;18;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;18;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;18;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;18;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;18;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;18;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;38;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;38;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;38;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;38;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;38;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;38;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;38;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;38;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;38;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;38;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;38;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;38;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;38;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;48;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;54;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;60;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;67;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\constants.hpp;67;Required;MISRA_3_1_3;Size of arrays
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\database\DbFactory.cpp;19;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\ExecConfiguration.cpp;15;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\ExecConfiguration.hpp;29;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\ExecConfiguration.hpp;41;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\config\FileParser.cpp;38;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\exception\IMSVishnuException.hpp;13;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\registry\Mapper.cpp;6;Required;MISRA_15_1_1;Exception in exception
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\registry\Mapper.cpp;12;Required;MISRA_15_1_1;Exception in exception
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\registry\MapperRegistry.cpp;5;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\database\MYSQLDatabase.hpp;100;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\database\MYSQLDatabase.hpp;104;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\database\MYSQLDatabase.hpp;108;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\Options.cpp;109;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\database\OracleDatabase.cpp;158;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\database\OracleDatabase.hpp;133;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\database\OracleDatabase.hpp;137;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\database\POSTGREDatabase.hpp;96;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\database\POSTGREDatabase.hpp;100;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\database\POSTGREDatabase.hpp;104;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\database\POSTGREDatabase.hpp;158;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\SSHExec.cpp;61;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\SSHExec.cpp;65;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\SSHExec.cpp;70;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\SSHExec.cpp;79;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\SSHExec.cpp;97;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\SSHExec.cpp;100;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\SSHExec.cpp;106;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\SSHExec.cpp;113;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\SSHExec.cpp;138;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\SSHExec.cpp;144;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\SSHExec.cpp;154;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\SSHExec.cpp;159;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\SSHExec.cpp;183;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\SSHExec.cpp;189;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\SSHExec.cpp;199;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\SSHExec.cpp;204;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\SSHExec.hpp;15;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\SSHExec.hpp;16;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\SSHFile.cpp;1;Required;MISRA_16_1_2;Preprocessor directives
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\SSHFile.cpp;480;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\SSHFile.hpp;1;Required;MISRA_16_1_2;Preprocessor directives
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\registry\UMSMapper.cpp;774;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\registry\UMSMapper.cpp;775;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\registry\UMSMapper.cpp;776;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\registry\UMSMapper.cpp;777;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\registry\UMSMapper.cpp;778;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\registry\UMSMapper.cpp;779;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\registry\UMSMapper.cpp;813;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\registry\UMSMapper.cpp;814;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\registry\UMSMapper.cpp;815;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\registry\UMSMapper.cpp;816;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\registry\UMSMapper.cpp;817;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilServer.cpp;131;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilServer.cpp;243;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilServer.cpp;245;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilServer.hpp;25;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilServer.hpp;25;Advisory;dmaccess;Access to members data
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilServer.hpp;29;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilServer.hpp;29;Advisory;dmaccess;Access to members data
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilServer.hpp;34;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilServer.hpp;34;Advisory;dmaccess;Access to members data
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilServer.hpp;50;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilServer.hpp;61;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilServer.hpp;61;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilServer.hpp;61;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilServer.hpp;61;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilServer.hpp;69;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilServer.hpp;69;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilServer.hpp;80;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilServer.hpp;80;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilServer.hpp;80;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilServer.hpp;80;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilServer.hpp;85;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilVishnu.cpp;243;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilVishnu.hpp;32;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilVishnu.hpp;32;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilVishnu.hpp;32;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilVishnu.hpp;48;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilVishnu.hpp;49;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilVishnu.hpp;50;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilVishnu.hpp;51;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilVishnu.hpp;52;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\utils\utilVishnu.hpp;54;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\core\src\exception\VishnuException.hpp;50;Required;MISRA_0_1_3;Unused variables
