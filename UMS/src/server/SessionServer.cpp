@@ -344,6 +344,7 @@ SessionServer::finish(std::string cmdDescription,
   //To save the command
   CommandServer commandServer = CommandServer(cmdDescription, *this);
   commandServer.record(cmdType, cmdStatus, newVishnuObjectID);
+  return 0;
 }
 
 
