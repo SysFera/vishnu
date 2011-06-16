@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<book label="UMS.apim#MAN(admin);UMS.apim#CPP(admin);UMS.apim#PYTHON(admin);IMS.apim#MAN(admin);IMS.apim#CPP(admin);IMS.apim#PYTHON(admin)" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
+<book label="UMS.apim#MAN(admin);UMS.apim#CPP(admin);UMS.apim#PYTHON(admin);FMS.apim#MAN(admin);FMS.apim#CPP(admin);FMS.apim#PYTHON(admin);IMS.apim#MAN(admin);IMS.apim#CPP(admin);IMS.apim#PYTHON(admin)" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
   <!--<book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">-->
   <info>
     <title>VISHNU - Le guide de l'administrateur</title>
@@ -69,6 +69,14 @@
           <para>Documentation pour IMS.</para>
         </revdescription>
       </revision>
+   <revision>
+        <revnumber>7</revnumber>
+        <date>15/06/2011</date>
+        <authorinitials>I.CISSE</authorinitials>
+        <revdescription>
+          <para>Documentation pour FMS.</para>
+        </revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -125,6 +133,9 @@
 	    par le module UMS. Cette base de données sera considérée comme étant de type PostgreSQL dans ce document.</para>
 	</listitem>
 	<listitem>
+	  <para>FMS : File Management Service</para>
+	</listitem>
+	<listitem>
 	  <para>IMS : Information Management Service</para>
 	</listitem>
 	<listitem>
@@ -162,6 +173,9 @@
       <title>Glossaire</title>
       <para>
 	<itemizedlist>
+	  <listitem>
+	    <para>Client FMS : Cela désigne les classes intermédiaires permettant un accès à distance aux services du SeD FMS. </para>
+	  </listitem>
 	  <listitem>
 	    <para>Client IMS : Cela désigne les classes intermédiaires permettant un accès à distance aux services du SeD IMS. </para>
 	  </listitem>
@@ -603,7 +617,16 @@
 	  <para>Lancer le SeD IMS sur toutes les machines à monitorer. La commande de lancement est : 'imssed ~/ims_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.3 pour un exemple de configuration. Les paramètres à fournir correspondent à ceux de UMS.
 	  </para>
 	</listitem>
-	<listitem>
+  <listitem>
+          <para>Lancer le SeD FMS. La commande de lancement est : 'fmssed ~/fms_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.3 pour un exemple de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
+	    <itemizedlist>
+	      <listitem>
+		<para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des transferts de fichiers.</para>
+	      </listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+  <listitem>
 	  <para>
 	    Les modules de VISHNU sont prêts à être utilisés. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen des commandes UMS et TMS (voir le manuel de l'utilisateur VISHNU).
 	  </para>
@@ -839,6 +862,22 @@
       </programlisting>
     </section>
     <section>
+      <title>Exemple de fichier de configuration d'un SeD FMS </title>
+      <programlisting>
+	# Configuration of the VISHNU FMS SeD
+	dietConfigFile=/usr/local/etc/SeD.cfg
+	vishnuId=1
+	databaseType=postgresql
+	databaseHost=localhost
+	databaseName=vishnu
+	databaseUserName=vishnu_user
+	databaseUserPassword=vishnu_user
+	databaseConnectionsNb=5
+	# Configuration propres à FMS
+	intervalMonitor = 1
+      </programlisting>
+    </section>
+    <section>
       <title>Exemple de fichier d'un forwarder </title>
       <programlisting>
 	# accept everything from everyone
@@ -891,6 +930,34 @@
 	</tgroup>
       </informaltable>
     </section>
+    <section>
+      <title>Configuration des clés privées/publiques ssh requises pour FMS</title>
+      <para>
+        Toutes les commandes éxécutées par le SeD FMS sont lancées via ssh
+        sous le nom de l'utilisateur ayant émis la requête. Les services FMS
+        sont de deux types: il y a ceux qui n'impliquent qu'une machine
+        distante: Exemple getFilesInfo,listDir,etc.. et ceux qui impliquent au
+        moins deux machines distantes: machine source et destination pour les transferts de fichiers. 
+        <itemizedlist>
+          <listitem>
+            <para> Dans le premier cas le SeD se connecte sur la machine distante et
+              effectue la commande. Par conséquent la clé publique du SeD doit
+              être ajoutée au fichier authorized_keys ($HOME/.ssh/authorized_keys) de l'utilisateur de la machine distante 
+              concernée.</para>
+          </listitem>
+          <listitem>
+            <para> Dans le second cas, deux connexions ssh sont nécessaires. Le SeD se connecte sur la machine source et
+              lance le transfert (seconde connexion) vers la machine destination. Par conséquent la clé publique du SeD doit
+              être ajoutée au fichier authorized_key de la machine source pour
+              permettre la première connexion puis sur la machine destination pour permettre la seconde connexion. Il n'est pas nécessaire qu'il y ait un autre couple de clés entre la machine source et destination grâce au mécanisme d'agent forwarding (fonctionnalité de ssh).   </para>
+          </listitem>
+        </itemizedlist>
+        En somme, il est alors obligatoire que la clé publique du SeD soit ajoutée à tous les comptes utilisateurs des machines impliquées
+        par les requêtes FMS. Toutes les clés protégées par des passphrases
+        devront être stockées par un agent ssh pour permettre les
+        authentifications automatiques.
+      </para>
+    </section> 
     <section>
       <title>Test d'exécution d'un service depuis une machine client par shell</title>
       <orderedlist>
@@ -1021,7 +1088,7 @@
       </orderedlist>
     </section>
     <section>
-      <title>Options propres à l'administrateur dans les commandes utilisateurs</title>
+      <title>Options propres à l'administrateur dans les commandes utilisateurs(UMS+FMS)</title>
       <orderedlist>
 	<listitem>
 	  <para>Dans la fonction 'vishnu_connect', un administrateur peut donner l'identifiant d'un utilisateur pour se connecter sous le nom de cet utilisateur dans VISHNU.</para>
@@ -1043,10 +1110,21 @@
 	</listitem>
 	<listitem>
 	  <para>
-	    Dans la fonction 'vishnu_list_sessions', l'administrateur peut lister les toutes les session de tout les utilisateurs ou les sessions d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur, ou les sessions sur une machine particulière en fournissant l'identifiant de la machine.
+	    Dans la fonction 'vishnu_list_sessions', l'administrateur peut lister les toutes les sessions de tous les utilisateurs ou les sessions d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur, ou les sessions sur une machine particulière en fournissant l'identifiant de la machine.
 	  </para>
 	</listitem>
-      </orderedlist>
+<listitem>
+	  <para>
+	    Dans la fonction 'vishnu_list_file_transfers', l'administrateur peut lister tous les transferts de fichiers de tous les utilisateurs ou ceux  d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur, ou lister les transferts impliquant une machine particulière (qui peut être source ou destination du transfert) en fournissant l'identifiant de la machine.
+	  </para>
+	</listitem>
+<listitem>
+	  <para>
+	    Dans la fonction 'vishnu_stop_file_transfers', l'administrateur peut annuler tous les transferts de fichiers de tous les utilisateurs ou ceux  d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur, ou annuler les transferts impliquant une machine particulière (qui peut être source ou destination du transfert) en fournissant l'identifiant de la machine.
+	  </para>
+	</listitem>
+
+</orderedlist>
     </section>
     <section>
       <title>Gestion des processus VISHNU et délestage (IMS)</title>
