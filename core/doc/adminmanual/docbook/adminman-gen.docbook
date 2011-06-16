@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <book
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" label="UMS.apim#MAN(admin);UMS.apim#CPP(admin);UMS.apim#PYTHON(admin)">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" label="UMS.apim#MAN(admin);UMS.apim#CPP(admin);UMS.apim#PYTHON(admin);FMS.apim#MAN(admin);FMS.apim#CPP(admin);FMS.apim#PYTHON(admin);IMS.apim#MAN(admin);IMS.apim#CPP(admin);IMS.apim#PYTHON(admin)">
   <info>
     <author>
       <personname>
@@ -68,6 +68,30 @@
           
         <para>Réécriture du lancement avec fichier de configuration.</para><para>Ajout d'un paragraphe pour le sendmail.</para><para>Ajout de l'administration de TMS.</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>5</revnumber>
+        <date>18/05/2011</date>
+        <authorinitials>B.ISNARD</authorinitials>
+        <revdescription>
+          
+        <para>Ajout du parametre de configuration dbConnectionsNb.</para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>6</revnumber>
+        <date>10/06/2011</date>
+        <authorinitials>K.COULOMB</authorinitials>
+        <revdescription>
+          
+        <para>Documentation pour IMS.</para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>7</revnumber>
+        <date>15/06/2011</date>
+        <authorinitials>I.CISSE</authorinitials>
+        <revdescription>
+          
+        <para>Documentation pour FMS.</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -118,7 +142,13 @@
       <itemizedlist>
         <listitem>
           <para>DB : Base de données: elle est centralisée et utilisée pour sauvegarder toutes les données manipulées
-	      par le module UMS. Cette base de données sera considérée comme étant de type PostgreSQL dans ce document.</para>
+	    par le module UMS. Cette base de données sera considérée comme étant de type PostgreSQL dans ce document.</para>
+        </listitem>
+        <listitem>
+          <para>FMS : File Management Service</para>
+        </listitem>
+        <listitem>
+          <para>IMS : Information Management Service</para>
         </listitem>
         <listitem>
           <para> MA : &quot;Master Agent&quot;: élément de Sysfera-DS distribuant les requêtes entre les clients et les services désirés.</para>
@@ -156,6 +186,12 @@
       <para>
 	<itemizedlist>
           <listitem>
+            <para>Client FMS : Cela désigne les classes intermédiaires permettant un accès à distance aux services du SeD FMS. </para>
+          </listitem>
+          <listitem>
+            <para>Client IMS : Cela désigne les classes intermédiaires permettant un accès à distance aux services du SeD IMS. </para>
+          </listitem>
+          <listitem>
             <para>Client TMS : Cela désigne les classes intermédiaires permettant un accès à distance aux services du SeD TMS. </para>
           </listitem>
           <listitem>
@@ -165,10 +201,13 @@
             <para>Préfrontale : Cela désigne une machine mise avant la(les) frontale(s) des calculateurs. </para>
           </listitem>
           <listitem>
+            <para>SeD IMS : Cela désigne le programme contenant et exécutant les services du module IMS. </para>
+          </listitem>
+          <listitem>
             <para>SeD TMS : Cela désigne le programme contenant et exécutant les services du module TMS. </para>
           </listitem>
           <listitem>
-            <para>SeD UMS : Cela désigne le programme contenant et exécutant les services du module UMS. 
+            <para>SeD UMS : Cela désigne le programme contenant et exécutant les services du module UMS.
 	      Une seule instance est nécessaire pour faire tourner VISHNU. </para>
           </listitem>
           <listitem>
@@ -212,7 +251,7 @@
               <para>SSH</para>
             </listitem>
             <listitem>
-              <para>Sysfera-DS (DIET version 2.7 minimum)</para>
+              <para>Sysfera-DS (DIET version 2.7 minimum + le module log service associé)</para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -245,18 +284,18 @@
     </section>
     <section>
       <title> Compilation des sources </title>
-      <para>VISHNU utilise CMake comme système de construction et se conforme aux 
-pratiques communément admises.
+      <para>VISHNU utilise CMake comme système de construction et se conforme aux
+	pratiques communément admises.
 	Les options principales utilisables sont les suivantes:
 	<itemizedlist>
           <listitem>
             <para>
-	      BUILD_TESTING, compile les tests si le flag est activé (OFF par défaut). 
+	      BUILD_TESTING, compile les tests si le flag est activé (OFF par défaut).
 	    </para>
           </listitem>
           <listitem>
             <para>
-	      CLIENT_ONLY, qui permet de ne compiler que les éléments clients si le flag est activé (OFF par défaut). 
+	      CLIENT_ONLY, qui permet de ne compiler que les éléments clients si le flag est activé (OFF par défaut).
 	    </para>
           </listitem>
           <listitem>
@@ -272,7 +311,18 @@ pratiques communément admises.
           </listitem>
           <listitem>
             <para>
-	      COMPILE_UMS, compile le module UMS si le flag est activé (OFF par défaut). 
+	      COMPILE_IMS, compile le module IMS si le flag est activé (OFF par défaut). Si ON, COMPILE_UMS, COMPILE_TMS et
+	      COMPILE_FMS doivent aussi être à ON.
+	    </para>
+          </listitem>
+          <listitem>
+            <para>
+	      COMPILE_FMS, compile le module FMS si le flag est activé (OFF par défaut). Si ON, COMPILE_UMS doit aussi être à ON.
+	    </para>
+          </listitem>
+          <listitem>
+            <para>
+	      COMPILE_UMS, compile le module UMS si le flag est activé (OFF par défaut).
 	    </para>
           </listitem>
           <listitem>
@@ -295,10 +345,12 @@ pratiques communément admises.
 	      VISHNU_USE_TORQUE, compile le SeD TMS pour torque (OFF par défaut).
 	    </para>
           </listitem>
-        </itemizedlist></para>
+        </itemizedlist>
+      </para>
       <para>
-	  Par exemple, pour compiler VISHNU (clients et serveurs) avec l'API 
-	  Python puis l'installer dans le répertoire /opt/vishnu sous *nix:</para>
+	Par exemple, pour compiler VISHNU (clients et serveurs) avec l'API
+	Python puis l'installer dans le répertoire /opt/vishnu sous *nix:
+      </para>
       <itemizedlist>
         <listitem>
           <para>1. créer un répertoire build à la racine du projet et se placer dedans</para>
@@ -313,8 +365,8 @@ pratiques communément admises.
           <para>2. générer le Makefile</para>
         </listitem>
         <listitem>
-          <para>$ cmake -DENABLE_PYTHON=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu/ 
-	      -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DVISHNU_USE_TORQUE=0N -DTORQUE_DIR=/opt/torque ..</para>
+          <para>$ cmake -DENABLE_PYTHON=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu/
+	    -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DVISHNU_USE_TORQUE=0N -DTORQUE_DIR=/opt/torque ..</para>
         </listitem>
         <listitem>
           <para>3. lancer la compilation avec 2 jobs</para>
@@ -329,8 +381,22 @@ pratiques communément admises.
           <para># make install</para>
         </listitem>
       </itemizedlist>
-      <para><emphasis role="bold">Note</emphasis>: pensez à ajouter le répertoire d'installation dans le $PATH 
-	  utilisateur pour avoir accès à la commande.</para>
+      <para><emphasis role="bold">Note</emphasis>: pensez à ajouter le répertoire d'installation dans le $PATH
+	utilisateur pour avoir accès à la commande.</para>
+    </section>
+  </chapter>
+  <chapter>
+    <title>Configuration de la base de données</title>
+    <para>Les fichiers de configuration de la DB sont disponibles dans le répertoire core/database du package d'installation VISHNU.</para>
+    <section>
+      <title>Utilisation d'une base de données PostGreSQL</title>
+      <para>Pour une installation d'une nouvelle base de données, les scripts 'postgre_create.sql' et 'database_init.sql' doivent être utilisés par l'administrateur de la DB.</para>
+      <para>Pour la mise à jour de la base de données lors d'un passage de la release VISHNU précédente à la nouvelle release VISHNU, les scripts 'postgre_update.sql' et 'database_update.sql' doivent être utilisés par l'administrateur de la DB. Le détail des numéros de release est indiqué dans les commentaires au début du script.</para>
+    </section>
+    <section>
+      <title>Utilisation d'une base de données MySQL</title>
+      <para>Pour une installation d'une nouvelle base de données, les scripts 'mysql_create.sql' et 'database_init.sql' doivent être utilisés par l'administrateur de la DB.</para>
+      <para>Pour la mise à jour de la base de données lors d'un passage de la release VISHNU précédente à la nouvelle release VISHNU, les scripts 'postgre_update.sql' et 'mysql_update.sql' doivent être utilisés par l'administrateur de la DB. Le détail des numéros de release est indiqué dans les commentaires au début du script.</para>
     </section>
   </chapter>
   <chapter>
@@ -339,17 +405,17 @@ pratiques communément admises.
       <title>Pré-requis</title>
       <itemizedlist>
         <listitem>
-          <para>Installer <emphasis role="bold">Java 1.6</emphasis> (commande 'sudo apt-get install openjdk-6-jdk' ou bien 'sudo apt-get install sun-java6-jdk' sur Linux Debian) 
+          <para>Installer <emphasis role="bold">Java 1.6</emphasis> (commande 'sudo apt-get install openjdk-6-jdk' ou bien 'sudo apt-get install sun-java6-jdk' sur Linux Debian)
             et vérifier que la variable JAVA_HOME est bien définie et contient le répertoire racine de l'installation de java.</para>
         </listitem>
         <listitem>
-          <para>Installer le module <emphasis role="bold">VISHNU UMS</emphasis> avec l'option -DENABLE_JAVA=ON.</para>
+          <para>Installer les modules désirés avec l'option -DENABLE_JAVA=ON.</para>
         </listitem>
         <listitem>
           <para>Installer <emphasis role="bold">Maven 2</emphasis> pour compiler les jars ( <emphasis
-                role="bold">Note</emphasis> : 
-          Ce pré-requis est optionnel car les jars sont déjà fournis dans la distribution des web services. 
-          Par ailleurs la compilation avec maven nécessite une connexion internet).</para>
+                role="bold">Note</emphasis> :
+            Ce pré-requis est optionnel car les jars sont déjà fournis dans la distribution des web services.
+            Par ailleurs la compilation avec maven nécessite une connexion internet).</para>
         </listitem>
       </itemizedlist>
     </section>
@@ -383,7 +449,7 @@ pratiques communément admises.
         </listitem>
         <listitem>
           <para>Le lancement du serveur se fait en lançant le script JBOSS_HOME/bin/run.sh. Pour que le serveur jboss soit accessible depuis une autre machine, utiliser l'option '-b adresseIP' où
-          adresseIP représente l'adresse IP du serveur, et vérifier que le firewall du serveur autorise l'accès au port 8080.</para>
+            adresseIP représente l'adresse IP du serveur, et vérifier que le firewall du serveur autorise l'accès au port 8080.</para>
         </listitem>
         <listitem>
           <para><emphasis role="bold">Vérification de l'installation:</emphasis> Pour vérifier que le serveur JBoss est bien démarré et que le module web services est activé, lancer un navigateur internet sur le serveur et se connecter
@@ -461,28 +527,13 @@ pratiques communément admises.
             </para>
           </listitem>
           <listitem>
-            <para>libVISHNU_UMS.so
+            <para>libVISHNU.so
               <itemizedlist>
                 <listitem>
-                  <para>Nécessaire pour le fonctionnement des WS, cette librairie dynamique est obtenue en compilant le module VISHNU UMS avec l'option ENABLE_JAVA.</para>
+                  <para>Nécessaire pour le fonctionnement des WS, cette librairie dynamique est obtenue en compilant les modules VISHNU désirés avec l'option ENABLE_JAVA.</para>
                 </listitem>
                 <listitem>
                   <para>Le fichier est installé par défaut par le package VISHNU UMS dans '/usr/local/lib' et il n'est pas nécessaire de le copier.</para>
-                </listitem>
-                <listitem>
-                  <para>S'il y a un problème de déploiement dans le serveur jboss, vérifier qu'elle est bien accessible et dans le LD_LIBRARY_PATH.</para>
-                </listitem>
-              </itemizedlist>
-            </para>
-          </listitem>
-          <listitem>
-            <para>libVISHNU_TMS.so
-              <itemizedlist>
-                <listitem>
-                  <para>Nécessaire pour le fonctionnement des WS, cette librairie dynamique est obtenue en compilant le module VISHNU TMS avec l'option ENABLE_JAVA.</para>
-                </listitem>
-                <listitem>
-                  <para>Le fichier est installé par défaut par le package VISHNU TMS dans '/usr/local/lib' et il n'est pas nécessaire de le copier.</para>
                 </listitem>
                 <listitem>
                   <para>S'il y a un problème de déploiement dans le serveur jboss, vérifier qu'elle est bien accessible et dans le LD_LIBRARY_PATH.</para>
@@ -496,9 +547,9 @@ pratiques communément admises.
         <title>Variables d'environnement à définir</title>
         <itemizedlist>
           <listitem>
-            <para>VISHNU_CONFIG_FILE : contient le chemin complet du fichier de configuration client de VISHNU. Se référer 
-            au guide d'installation du client [VISHNU_USER_GUIDE] pour connaître le contenu de ce fichier.
-            Si l'exécution échoue avec un message d'erreur lié à initialisation de la librairie lors du connect, vérifier le contenu de cette variable.
+            <para>VISHNU_CONFIG_FILE : contient le chemin complet du fichier de configuration client de VISHNU. Se référer
+              au guide d'installation du client [VISHNU_USER_GUIDE] pour connaître le contenu de ce fichier.
+              Si l'exécution échoue avec un message d'erreur lié à initialisation de la librairie lors du connect, vérifier le contenu de cette variable.
             </para>
           </listitem>
           <listitem>
@@ -510,13 +561,13 @@ pratiques communément admises.
         <title>Lancement du serveur JBoss avec le module WS</title>
         <itemizedlist>
           <listitem>
-            <para>Après installation des fichiers définis au paragraphe précédent, le serveur JBoss doit être redémarré en lançant le script JBOSS_HOME/bin/run.sh 
+            <para>Après installation des fichiers définis au paragraphe précédent, le serveur JBoss doit être redémarré en lançant le script JBOSS_HOME/bin/run.sh
               (avec les options indiquées au paragraphe sur le serveur JBoss).</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">Vérification de l'installation:</emphasis> Pour vérifier que le serveur JBoss est bien démarré et que le module UMS WS est activé, lancer un navigateur internet sur le serveur et se connecter
-              sur l'adresse 'http://localhost:8080/jbossws/services' (ou 'http://adresseIP:8080/jbossws/services') et vérifier que le 
-                &quot;service endPoint&quot; : <emphasis role="bold">VISHNUUMSPortImpl</emphasis> est actif.</para>
+              sur l'adresse 'http://localhost:8080/jbossws/services' (ou 'http://adresseIP:8080/jbossws/services') et vérifier que le
+              &quot;service endPoint&quot; : <emphasis role="bold">VISHNUUMSPortImpl</emphasis> est actif.</para>
           </listitem>
         </itemizedlist>
       </section>
@@ -526,7 +577,7 @@ pratiques communément admises.
     <title>Déploiement de VISHNU</title>
     <section>
       <title>Lancement sur un même réseau</title>
-      <para>Les modules UMS et TMS peuvent être lancés soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration.</para>
+      <para>Les modules peuvent être lancés soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration.</para>
       <para><emphasis role="bold">NOTE: l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
       <para>Pour mieux comprendre l'architecture de déploiement, se référer au document [ARCH], le chapitre 4, 'Technical Architecture'.</para>
       <orderedlist>
@@ -537,7 +588,10 @@ pratiques communément admises.
           <para> Lancer le service de nommage CORBA sur la machine préfrontale. La commande est 'omniNames -start' pour la première fois, sinon 'omniNames' suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
         </listitem>
         <listitem>
-          <para> Lancer le MA avec son fichier de configuration : 'dietAgent config.cfg'. Voir la figure 4.1 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes : 
+          <para> Lancer le log service de DIET sur la machine préfrontale. La commande est 'LogCentral --config config.cfg' avec config.cfg un fichier de configuration pour le log central. </para>
+        </listitem>
+        <listitem>
+          <para> Lancer le MA avec son fichier de configuration : 'dietAgent config.cfg'. Voir la figure 4.1 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
             <itemizedlist>
               <listitem>
                 <para> 'traceLevel = 0' : Le niveau de verbosité du master agent, cette valeur peut être entre 0 et 10 compris. </para>
@@ -552,7 +606,7 @@ pratiques communément admises.
           </para>
         </listitem>
         <listitem>
-          <para>Lancer le SeD UMS avec './umssed ~/ums_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.2 pour un exemple de configuration. Les paramètres à fournir correspondent à:
+          <para>Lancer le SeD UMS avec 'umssed ~/ums_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.2 pour un exemple de configuration. Les paramètres à fournir correspondent à:
             <itemizedlist>
               <listitem>
                 <para>
@@ -564,19 +618,22 @@ pratiques communément admises.
                     <listitem>
                       <para> 'parentName = MA0' : Le nom du MA auquel le SeD UMS doit se lier. Ce doit être exactement le même nom que celui donné au même dans le champs 'name' du MA en question.</para>
                     </listitem>
+                    <listitem>
+                      <para> 'useLogService = 1' : Pour utiliser le service de log dans DIET (sinon les SeD n'émettent aucun message).</para>
+                    </listitem>
                   </itemizedlist>
-                </para>
+		</para>
               </listitem>
               <listitem>
                 <para> 'vishnuId=1' : L'id de VISHNU à utiliser dans la DB (valeur '1' par défaut) .</para>
               </listitem>
               <listitem>
-                <para> 'databaseType=postgresql' : Pour utiliser une base postgreSQL. Actuellement les bases de type Oracle ou MySQL ne sont pas supportées.</para>
+                <para> 'databaseType=postgresql' : Pour utiliser une base postgreSQL. Pour utiliser une base MySQL, il faut mettre 'mysql' comme type.</para>
               </listitem>
               <listitem>
                 <para>
                   'databaseHost=localhost' : Le nom DNS du serveur de bases de données, ou 'localhost' si la base est locale.
-                </para>
+		</para>
               </listitem>
               <listitem>
                 <para>'databaseName=vishnu' : Le nom de la base de données</para>
@@ -588,6 +645,11 @@ pratiques communément admises.
                 <para> 'databaseUserPassword=vishnu_user' : Le mot de passe pour se connecter à la DB.</para>
               </listitem>
               <listitem>
+                <para> 'databaseConnectionsNb=5' : Le nombre de connexions ouvertes sur la base de données par le SeD afin de traiter des requêtes en parallèle.
+                  (le nombre par défaut est 10). Si le nombre d'utilisateurs simultané du SeD est grand, cette valeur doit être augmentée dans
+                  la limite du nombre de connections simultanées autorisées par le serveur de base de données.</para>
+              </listitem>
+              <listitem>
                 <para> 'sendmailScriptPath=/usr/local/vishnu/sbin/sendmail.py' : Le script à utiliser pour envoyer les mails. Il est installé avec le module UMS
                   dans le sous-répertoire sbin/ du répertoire d'installation.</para>
               </listitem>
@@ -596,11 +658,11 @@ pratiques communément admises.
         </listitem>
         <listitem>
           <para>
-	    Sur la machine hôte de Torque, lancer le serveur (pbs_serv), le scheduler (pbs_sched) et l'ordonnanceur (pbs_mom) de Torque. 
+	    Sur la machine hôte de Torque, lancer le serveur (pbs_serv), le scheduler (pbs_sched) et l'ordonnanceur (pbs_mom) de Torque.
 	  </para>
         </listitem>
         <listitem>
-          <para>Lancer le SeD TMS sur la machine hôte de Torque. La commande de lancement est : './tmssed ~/tms_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.3 pour un exemple de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
+          <para>Lancer le SeD TMS sur la machine hôte de Torque. La commande de lancement est : 'tmssed ~/tms_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.3 pour un exemple de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
 	    <itemizedlist>
               <listitem>
                 <para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des jobs.</para>
@@ -615,16 +677,29 @@ pratiques communément admises.
 	  </para>
         </listitem>
         <listitem>
+          <para>Lancer le SeD IMS sur toutes les machines à monitorer. La commande de lancement est : 'imssed ~/ims_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.3 pour un exemple de configuration. Les paramètres à fournir correspondent à ceux de UMS.
+	  </para>
+        </listitem>
+        <listitem>
+          <para>Lancer le SeD FMS. La commande de lancement est : 'fmssed ~/fms_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.3 pour un exemple de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
+	    <itemizedlist>
+              <listitem>
+                <para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des transferts de fichiers.</para>
+              </listitem>
+            </itemizedlist>
+	  </para>
+        </listitem>
+        <listitem>
           <para>
-            Les modules UMS et TMS de VISHNU sont prêts à être utilisés. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen des commandes UMS et TMS (voir le manuel de l'utilisateur VISHNU).
-          </para>
+	    Les modules de VISHNU sont prêts à être utilisés. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen des commandes UMS et TMS (voir le manuel de l'utilisateur VISHNU).
+	  </para>
         </listitem>
       </orderedlist>
     </section>
     <section>
       <title>Lancement sur plusieurs réseaux</title>
       <para>Un module VISHNU peut être lancé soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration.
-        On suppose dans la suite que le MA est sur le même réseau que l'omniNames et le SeD sur un autre réseau, séparés par un pare-feu</para>
+	On suppose dans la suite que le MA est sur le même réseau que l'omniNames et le SeD sur un autre réseau, séparés par un pare-feu</para>
       <para><emphasis role="bold">NOTE: l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
       <para>Pour une vue générale de l'architecture du système VISHNU, se référer au document [ARCH], chapitre 4 ('Technical Architecture').</para>
       <orderedlist>
@@ -632,98 +707,188 @@ pratiques communément admises.
           <para> Avoir une base de données PostgreSQL accessible et initialisée (tables créées et premières données créées). Des scripts SQL sont fournis pour cela. Avoir la base PostGreSQL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base).</para>
         </listitem>
         <listitem>
-          <para> Lancer le service de nommage CORBA sur la machine préfrontale sur le premier réseau. La commande est 'omniNames -start' pour la première fois, sinon 'omniNames' suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
+          <para> Lancer le service de nommage CORBA sur la machine préfrontale sur les deux réseaux. La commande est 'omniNames -start' pour la première fois, sinon 'omniNames' suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
         </listitem>
         <listitem>
           <para> Lancer un démon forwarder sur le reseau 2 :  </para>
           <para>dietForwarder --name forwarder2 --net-config forwarder2.cfg
-            <itemizedlist>
+	    <itemizedlist>
               <listitem>
                 <para>
-                  forwarder2 : nom qui identifie le démon forwarder sur ce réseau
-              </para>
+		  forwarder2 : nom qui identifie le démon forwarder sur ce réseau
+	      </para>
               </listitem>
               <listitem>
                 <para>
-                  forwarder2.cfg : fichier de configuration (voir la figure 4.3 pour un exemple de configuration) contenant des règles appliquées aux
-                  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de la figure 4.3, les
-                  règles utilisées sont:
-                  <itemizedlist>
+		  forwarder2.cfg : fichier de configuration (voir la figure 4.3 pour un exemple de configuration) contenant des règles appliquées aux
+		  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de la figure 4.3, les
+		  règles utilisées sont:
+		  <itemizedlist>
                     <listitem>
                       <para> une règle 'accept' correspondant au filtre sur la source des connections acceptées. '.*' signifie les connections provenant
-                        de n'importe quelle adresse IP.</para>
+			de n'importe quelle adresse IP.</para>
                     </listitem>
                     <listitem>
                       <para> deux règles 'reject' contenant les adresses destination à rejeter. Il est nécessaire que l'adresse IP du serveur sur lequel
-                        tourne le démon forwarder soit indiquée dans une règle de ce type. Dans l'exemple le serveur ayant deux adresses IP on a
-                        indiqué une règle pour chaque adresse.</para>
+			tourne le démon forwarder soit indiquée dans une règle de ce type. Dans l'exemple le serveur ayant deux adresses IP on a
+			indiqué une règle pour chaque adresse.</para>
                     </listitem>
                   </itemizedlist>
-                </para>
+		</para>
               </listitem>
             </itemizedlist>
-          </para>
+	  </para>
         </listitem>
         <listitem>
           <para> Lancer un démon forwarder sur le reseau 1: </para>
-          <para>dietForwarder -C--peer-name forwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name forwarder 
-            --net-config forwarder1.cfg
-            --remote-host localhost
-            --ssh-login login
-          </para>
+          <para>dietForwarder -C--peer-name forwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name forwarder
+	    --net-config forwarder1.cfg
+	    --remote-host localhost
+	    --ssh-login login
+	  </para>
           <para>
-            <itemizedlist>
+	    <itemizedlist>
               <listitem>
                 <para>
-                  -C : indique que c'est ce démon forwarder qui crée le tunnel SSH.
-              </para>
+		  -C : indique que c'est ce démon forwarder qui crée le tunnel SSH.
+	      </para>
               </listitem>
               <listitem>
                 <para>
-                  --peer-name : le nom donné au forwarder de l'autre coté, ici forwarder2.
-              </para>
+		  --peer-name : le nom donné au forwarder de l'autre coté, ici forwarder2.
+	      </para>
               </listitem>
               <listitem>
                 <para>
-                  --ssh-host : la nom DNS de la machine distante pour connecter le tunnel SSH.
-              </para>
+		  --ssh-host : la nom DNS de la machine distante pour connecter le tunnel SSH.
+	      </para>
               </listitem>
               <listitem>
                 <para>
-                  --remote-port : le port à utiliser pour le tunnel ssh, ici 50005.
-              </para>
+		  --remote-port : le port à utiliser pour le tunnel ssh, ici 50005.
+	      </para>
               </listitem>
               <listitem>
                 <para>
-                  --name : le nom identifiant ce démon forwarder, c'est-à-dire 'forwarder1'.
-              </para>
+		  --name : le nom identifiant ce démon forwarder, c'est-à-dire 'forwarder1'.
+	      </para>
               </listitem>
               <listitem>
                 <para>
-                  --net-config : le fichier de configuration, ici forwarder1.cfg. Ce fichier doit contenir des règles 'reject' et 'accept' également,
-                  sur le même modèle que forwarder2.cfg.
-              </para>
+		  --net-config : le fichier de configuration, ici forwarder1.cfg. Ce fichier doit contenir des règles 'reject' et 'accept' également,
+		  sur le même modèle que forwarder2.cfg.
+	      </para>
               </listitem>
               <listitem>
                 <para>
-                  --remote-host : le nom de l'adresse loopback, c'est-à-dire 'localhost'.
-              </para>
+		  --remote-host : le nom de l'adresse loopback, c'est-à-dire 'localhost'.
+	      </para>
               </listitem>
               <listitem>
                 <para>
-                  --ssh-login : le login de connection sur la machine distante.
-              </para>
+		  --ssh-login : le login de connection sur la machine distante.
+	      </para>
               </listitem>
             </itemizedlist>
-          </para>
+	  </para>
         </listitem>
         <listitem>
           <para>Si la clé ssh est accessible (le chemin par défaut est le répertoire $HOME/.ssh/) et que la clé est protégée par une passphrase,
-            la passphrase est demandée et la connexion ssh s'établit.</para>
+	    la passphrase est demandée et la connexion ssh s'établit.</para>
+        </listitem>
+        <listitem>
+          <para> Lancer un démon forwarder pour le log service sur le reseau 2 :  </para>
+          <para>logForwarder --name logforwarder2 --net-config logforwarder2.cfg
+	    <itemizedlist>
+              <listitem>
+                <para>
+		  logforwarder2 : nom qui identifie le démon forwarder sur ce réseau
+	      </para>
+              </listitem>
+              <listitem>
+                <para>
+		  logforwarder2.cfg : fichier de configuration (voir la figure 4.3 pour un exemple de configuration) contenant des règles appliquées aux
+		  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de la figure 4.3, les
+		  règles utilisées sont:
+		  <itemizedlist>
+                    <listitem>
+                      <para> une règle 'accept' correspondant au filtre sur la source des connections acceptées. '.*' signifie les connections provenant
+			de n'importe quelle adresse IP.</para>
+                    </listitem>
+                    <listitem>
+                      <para> deux règles 'reject' contenant les adresses destination à rejeter. Il est nécessaire que l'adresse IP du serveur sur lequel
+			tourne le démon forwarder soit indiquée dans une règle de ce type. Dans l'exemple le serveur ayant deux adresses IP on a
+			indiqué une règle pour chaque adresse.</para>
+                    </listitem>
+                  </itemizedlist>
+		</para>
+              </listitem>
+            </itemizedlist>
+	  </para>
+        </listitem>
+        <listitem>
+          <para> Lancer un démon log forwarder sur le reseau 1: </para>
+          <para>logForwarder -C--peer-name logforwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name logforwarder
+	    --net-config logforwarder1.cfg
+	    --remote-host localhost
+	    --ssh-login login
+	  </para>
+          <para>
+	    <itemizedlist>
+              <listitem>
+                <para>
+		  -C : indique que c'est ce démon forwarder qui crée le tunnel SSH.
+	      </para>
+              </listitem>
+              <listitem>
+                <para>
+		  --peer-name : le nom donné au forwarder de l'autre coté, ici forwarder2.
+	      </para>
+              </listitem>
+              <listitem>
+                <para>
+		  --ssh-host : la nom DNS de la machine distante pour connecter le tunnel SSH.
+	      </para>
+              </listitem>
+              <listitem>
+                <para>
+		  --remote-port : le port à utiliser pour le tunnel ssh, ici 50005.
+	      </para>
+              </listitem>
+              <listitem>
+                <para>
+		  --name : le nom identifiant ce démon forwarder, c'est-à-dire 'forwarder1'.
+	      </para>
+              </listitem>
+              <listitem>
+                <para>
+		  --net-config : le fichier de configuration, ici forwarder1.cfg. Ce fichier doit contenir des règles 'reject' et 'accept' également,
+		  sur le même modèle que forwarder2.cfg.
+	      </para>
+              </listitem>
+              <listitem>
+                <para>
+		  --remote-host : le nom de l'adresse loopback, c'est-à-dire 'localhost'.
+	      </para>
+              </listitem>
+              <listitem>
+                <para>
+		  --ssh-login : le login de connection sur la machine distante.
+	      </para>
+              </listitem>
+            </itemizedlist>
+	  </para>
+        </listitem>
+        <listitem>
+          <para>Si la clé ssh est accessible (le chemin par défaut est le répertoire $HOME/.ssh/) et que la clé est protégée par une passphrase,
+	    la passphrase est demandée et la connexion ssh s'établit.</para>
+        </listitem>
+        <listitem>
+          <para> Lancer le log service de DIET sur la machine préfrontale. La commande est 'LogCentral --config config.cfg' avec config.cfg un fichier de configuration pour le log central. </para>
         </listitem>
         <listitem>
           <para> Lancer le MA avec son fichier de configuration sur le même réseau que le service de nommage : 'dietAgent config.cfg'. Voir la figure 4.2 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
-            <itemizedlist>
+	    <itemizedlist>
               <listitem>
                 <para> 'traceLevel = 0' : Le niveau de verbosité du master agent, cette valeur peut être entre 0 et 10 compris. </para>
               </listitem>
@@ -734,16 +899,16 @@ pratiques communément admises.
                 <para> 'name = MA0' : Le nom que l'on veut donner à l'agent.</para>
               </listitem>
             </itemizedlist>
-          </para>
+	  </para>
         </listitem>
         <listitem>
           <para>Lancer le SeD, par exemple un UMS sur l'autre sous réseau. Un exemple de commande de lancement est : './umssed ~/ums_sed.cfg'. Se référer au chapitre de déploiement pour le contenu du fichier, c'est le même à utiliser que dans un déploiement sur un seul réseau.
-          </para>
+	  </para>
         </listitem>
         <listitem>
           <para>
-            Le module, ici UMS, de VISHNU est prêt à être utilisé. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen de clients UMS.
-          </para>
+	    Le module, ici UMS, de VISHNU est prêt à être utilisé. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen de clients UMS.
+	  </para>
         </listitem>
       </orderedlist>
     </section>
@@ -760,6 +925,7 @@ pratiques communément admises.
       <programlisting>
 	traceLevel = 0
 	parentName = MA0
+	useLogService = 1
       </programlisting>
     </section>
     <section>
@@ -773,7 +939,8 @@ pratiques communément admises.
 	databaseName=vishnu
 	databaseUserName=vishnu_user
 	databaseUserPassword=vishnu_user
-        sendmailScriptPath=/usr/local/sbin/sendmail.py
+	databaseConnectionsNb=5
+	sendmailScriptPath=/usr/local/sbin/sendmail.py
       </programlisting>
     </section>
     <section>
@@ -787,10 +954,27 @@ pratiques communément admises.
 	databaseName=vishnu
 	databaseUserName=vishnu_user
 	databaseUserPassword=vishnu_user
-        sendmailScriptPath=/usr/local/sbin/sendmail.py
+	databaseConnectionsNb=5
+	sendmailScriptPath=/usr/local/sbin/sendmail.py
 	# Configuration propres à TMS
 	batchSchedulerType=TORQUE
 	vishnuMachineId=machine_1
+	intervalMonitor = 1
+      </programlisting>
+    </section>
+    <section>
+      <title>Exemple de fichier de configuration d'un SeD FMS </title>
+      <programlisting>
+	# Configuration of the VISHNU FMS SeD
+	dietConfigFile=/usr/local/etc/SeD.cfg
+	vishnuId=1
+	databaseType=postgresql
+	databaseHost=localhost
+	databaseName=vishnu
+	databaseUserName=vishnu_user
+	databaseUserPassword=vishnu_user
+	databaseConnectionsNb=5
+	# Configuration propres à FMS
 	intervalMonitor = 1
       </programlisting>
     </section>
@@ -807,9 +991,9 @@ pratiques communément admises.
     <section>
       <title>Configuration de l'envoi des emails par VISHNU</title>
       <para>Le processus UMS SeD utilise le fichier 'sendmail.py' (fourni dans l'installation VISHNU, dans le sous-répertoire sbin/)
-        pour envoyer des emails aux utilisateurs lors de certaines opérations. Ce fichier peut être modifié par l'administrateur afin
-        de s'adapter à la méthode d'envoi d'email propre au serveur sur lequel est installé le SeD. Par défaut, la configuration
-        fournie se connecte sur le serveur SMTP de 'localhost' sur le port 25, sans authentification.</para>
+	pour envoyer des emails aux utilisateurs lors de certaines opérations. Ce fichier peut être modifié par l'administrateur afin
+	de s'adapter à la méthode d'envoi d'email propre au serveur sur lequel est installé le SeD. Par défaut, la configuration
+	fournie se connecte sur le serveur SMTP de 'localhost' sur le port 25, sans authentification.</para>
       <para>Les paramètres suivants peuvent être configurés dans le script sendmail.py:</para>
       <informaltable>
         <tgroup cols="2">
@@ -841,46 +1025,74 @@ pratiques communément admises.
             <row>
               <entry><para>SSL</para></entry>
               <entry><programlisting>parser.add_option(&quot;--ssl&quot;, action=&quot;store_true&quot;, dest=&quot;use_ssl&quot;, help=&quot;enable ssl support [default: %default - default port: 587
-]&quot;, default=True)</programlisting></entry>
+		  ]&quot;, default=True)</programlisting></entry>
             </row>
           </tbody>
         </tgroup>
       </informaltable>
     </section>
     <section>
+      <title>Configuration des clés privées/publiques ssh requises pour FMS</title>
+      <para>
+        Toutes les commandes éxécutées par le SeD FMS sont lancées via ssh
+        sous le nom de l'utilisateur ayant émis la requête. Les services FMS
+        sont de deux types: il y a ceux qui n'impliquent qu'une machine
+        distante: Exemple getFilesInfo,listDir,etc.. et ceux qui impliquent au
+        moins deux machines distantes: machine source et destination pour les transferts de fichiers. 
+        <itemizedlist>
+          <listitem>
+            <para> Dans le premier cas le SeD se connecte sur la machine distante et
+              effectue la commande. Par conséquent la clé publique du SeD doit
+              être ajoutée au fichier authorized_keys ($HOME/.ssh/authorized_keys) de l'utilisateur de la machine distante 
+              concernée.</para>
+          </listitem>
+          <listitem>
+            <para> Dans le second cas, deux connexions ssh sont nécessaires. Le SeD se connecte sur la machine source et
+              lance le transfert (seconde connexion) vers la machine destination. Par conséquent la clé publique du SeD doit
+              être ajoutée au fichier authorized_key de la machine source pour
+              permettre la première connexion puis sur la machine destination pour permettre la seconde connexion. Il n'est pas nécessaire qu'il y ait un autre couple de clés entre la machine source et destination grâce au mécanisme d'agent forwarding (fonctionnalité de ssh).   </para>
+          </listitem>
+        </itemizedlist>
+        En somme, il est alors obligatoire que la clé publique du SeD soit ajoutée à tous les comptes utilisateurs des machines impliquées
+        par les requêtes FMS. Toutes les clés protégées par des passphrases
+        devront être stockées par un agent ssh pour permettre les
+        authentifications automatiques.
+      </para>
+    </section>
+    <section>
       <title>Test d'exécution d'un service depuis une machine client par shell</title>
       <orderedlist>
         <listitem>
           <para>
-            Une fois que la plateforme a été installée, se mettre sur un poste client avec VISHNU d'installé. Se référer au document [VISHNU_USERGUIDE]
-            pour l'installation de la partie client.
-          </para>
+	    Une fois que la plateforme a été installée, se mettre sur un poste client avec VISHNU d'installé. Se référer au document [VISHNU_USERGUIDE]
+	    pour l'installation de la partie client.
+	  </para>
         </listitem>
         <listitem>
           <para>
-            Exporter la variable d'environnement VISHNU_CONFIG_FILE dans un script de configuration client. Se référer 
-            au guide d'installation du client [VISHNU_USER_GUIDE] pour connaître le contenu d'un fichier client.
-          </para>
+	    Exporter la variable d'environnement VISHNU_CONFIG_FILE dans un script de configuration client. Se référer
+	    au guide d'installation du client [VISHNU_USER_GUIDE] pour connaître le contenu d'un fichier client.
+	  </para>
         </listitem>
         <listitem>
           <para>
-            Lancer la commande dans le shell 'vishnu_connect user', ou user représente un nom d'utilisateur dans la DB
-          </para>
+	    Lancer la commande dans le shell 'vishnu_connect user', ou user représente un nom d'utilisateur dans la DB
+	  </para>
         </listitem>
         <listitem>
           <para>
-            Taper le mot de passe 'password', correspondant à l'utilisateur 'user'
-          </para>
+	    Taper le mot de passe 'password', correspondant à l'utilisateur 'user'
+	  </para>
         </listitem>
         <listitem>
           <para>
-            Sur le client, un affichage doit signaler que le service a réussi. Dans le terminal ou le SeD UMS a été lancé et dans le terminal ou le MA tourne, selon le niveau de verbosité, plus ou moins d'informations, concernant le service effectué, doivent apparaitre.
-          </para>
+	    Sur le client, un affichage doit signaler que le service a réussi. Dans le terminal ou le SeD UMS a été lancé et dans le terminal ou le MA tourne, selon le niveau de verbosité, plus ou moins d'informations, concernant le service effectué, doivent apparaitre.
+	  </para>
         </listitem>
         <listitem>
           <para>
-            Fermer la session avec 'vishnu_close'. Aucune erreur ne doit être remontée lors de ces tests.
-          </para>
+	    Fermer la session avec 'vishnu_close'. Aucune erreur ne doit être remontée lors de ces tests.
+	  </para>
         </listitem>
       </orderedlist>
     </section>
@@ -890,114 +1102,229 @@ pratiques communément admises.
     <section>
       <title>Présentation</title>
       <para>
-        Le module UMS correspond à la gestion des utilisateurs et des machines de VISHNU. Il permet aussi de sauvegarder la configuration de VISHNU à chaud et de la restaurer si besoin est. 
-        Dans toute la suite du chapitre, on supposera que l'utilisateur est déjà connecté avec un compte administrateur de VISHNU pour pouvoir réaliser ces manipulations. De plus, on présentera l'utilisation des commandes depuis le shell, mais cela reste valable depuis les API Python ou C++.
+	Le module UMS correspond à la gestion des utilisateurs et des machines de VISHNU. Il permet aussi de sauvegarder la configuration de VISHNU à chaud et de la restaurer si besoin est.
+	Dans toute la suite du chapitre, on supposera que l'utilisateur est déjà connecté avec un compte administrateur de VISHNU pour pouvoir réaliser ces manipulations. De plus, on présentera l'utilisation des commandes depuis le shell, mais cela reste valable depuis les API Python ou C++.
       </para>
     </section>
     <section>
-      <title>Gestion des utilisateurs</title>
+      <title>Gestion des utilisateurs (UMS)</title>
       <orderedlist>
         <listitem>
           <para>
-            L'ajout d'un utilisateur se fait à l'aide de la commande 'vishnu_add_user'. Elle prend en paramètre le prénom de l'utilisateur, son nom de famille, les droits qui lui sont associés dans VISHNU (administrateur ou simple utilisateur) et son adresse de couriel. Tout ces paramètres sont obligatoires. Un privilège à 1 signifie administrateur, un privilège à 0 signifie un utilisateur. L'identifiant de l'utilisateur est généré et renvoyé.
-          </para>
+	    L'ajout d'un utilisateur se fait à l'aide de la commande 'vishnu_add_user'. Elle prend en paramètre le prénom de l'utilisateur, son nom de famille, les droits qui lui sont associés dans VISHNU (administrateur ou simple utilisateur) et son adresse de couriel. Tout ces paramètres sont obligatoires. Un privilège à 1 signifie administrateur, un privilège à 0 signifie un utilisateur. L'identifiant de l'utilisateur est généré et renvoyé.
+	  </para>
         </listitem>
         <listitem>
           <para>
-            La mise à jour d'un utilisateur ne peut être faite que par un administrateur. Cette mise à jour se fait avec un appel à la commande 'vishnu_update_user' et permet de modifier les paramètres de l'ajout (nom, prénom, statut, couriel). 
-            Il faut avoir l'identifiant de l'utilisateur (généré lors de la création de l'utilisateur) pour le désigner lors de la mise à jour.
-          </para>
+	    La mise à jour d'un utilisateur ne peut être faite que par un administrateur. Cette mise à jour se fait avec un appel à la commande 'vishnu_update_user' et permet de modifier les paramètres de l'ajout (nom, prénom, statut, couriel).
+	    Il faut avoir l'identifiant de l'utilisateur (généré lors de la création de l'utilisateur) pour le désigner lors de la mise à jour.
+	  </para>
           <para>Note: le changement du statut d'un utilisateur à l'état &quot;INACTIVE&quot; correspond à un blocage de son compte.</para>
         </listitem>
         <listitem>
           <para>
-            La suppression d'un utilisateur efface toutes les informations liées à l'utilisateur de la base de donnée. Cette suppression se fait à l'aide de la commande 'vishnu_delete_user'.
-          </para>
+	    La suppression d'un utilisateur efface toutes les informations liées à l'utilisateur de la base de donnée. Cette suppression se fait à l'aide de la commande 'vishnu_delete_user'.
+	  </para>
         </listitem>
         <listitem>
           <para>
-            La liste des utilisateurs ne peut être faite que par un administrateur. Cela se fait avec la commande 'vishnu_list_user'. Cette commande peut prendre en paramètre l'identifiant d'un utilisateur pour n'avoir les informations que concernant cet utilisateur.
-          </para>
+	    La liste des utilisateurs ne peut être faite que par un administrateur. Cela se fait avec la commande 'vishnu_list_user'. Cette commande peut prendre en paramètre l'identifiant d'un utilisateur pour n'avoir les informations que concernant cet utilisateur.
+	  </para>
         </listitem>
         <listitem>
           <para>
-            Seul un administrateur peut réinitialiser le mot de passe d'un utilisateur de VISHNU. Pour ce faire, il doit appeller la commande 'vishnu_reset_password'  en fournissant l'identifiant de l'utilisateur dont l'administrateur veut réinitialiser le mot de passe. Le nouveau mot de passe est temporaire et renvoyé par la commande. Lors de la prochaine connexion, l'utilisateur devra changer son mot de passe avec 'vishnu_change_password'.
-          </para>
+	    Seul un administrateur peut réinitialiser le mot de passe d'un utilisateur de VISHNU. Pour ce faire, il doit appeller la commande 'vishnu_reset_password'  en fournissant l'identifiant de l'utilisateur dont l'administrateur veut réinitialiser le mot de passe. Le nouveau mot de passe est temporaire et renvoyé par la commande. Lors de la prochaine connexion, l'utilisateur devra changer son mot de passe avec 'vishnu_change_password'.
+	  </para>
         </listitem>
       </orderedlist>
     </section>
     <section>
-      <title>Gestion des machines</title>
+      <title>Gestion des machines (UMS+IMS)</title>
       <orderedlist>
         <listitem>
           <para>L'ajout d'une machine se fait à l'aide de la commande 'vishnu_add_machine'. Cette commande prend en paramètre le nom de la machine, le site ou elle se trouve, le language de la description qui sera donnée pour la machine, le fichier contenant la clé publique et la description. Ces paramètres sont obligatoires, en passant par le shell, la description n'a pas besoin d'être fournie en paramètre mais elle est alors demandée à l'administrateur avant d'ajouter la machine. A la fin de l'ajout, l'identifiant généré pour la machine est renvoyé.</para>
         </listitem>
         <listitem>
           <para>
-            La mise à jour d'une machine se fait à l'aide de la commande 'vishnu_update_machine' et permet de modifier les paramètres mis lors de l'ajout de la machine. Il faut utiliser l'identifiant de la machine pour l'identifier lors de la mise à jour.
-          </para>
+	    La mise à jour d'une machine se fait à l'aide de la commande 'vishnu_update_machine' et permet de modifier les paramètres mis lors de l'ajout de la machine. Il faut utiliser l'identifiant de la machine pour l'identifier lors de la mise à jour.
+	  </para>
           <para>Note: le changement du statut d'une machine à l'état &quot;INACTIVE&quot; correspond à un blocage de la machine. Cela rend la machine inaccessible aux utilisateurs de VISHNU mais toujours visible pour les administrateurs.</para>
         </listitem>
         <listitem>
           <para>
-            La suppression d'une machine se fait à l'aide de la commande 'vishnu_delete_machine' avec l'identifiant de la machine à supprimer. Cela supprime la machine de la base de données, ainsi que toutes les informations qui y sont attachées (Attention: cette commande est irréversible).
-          </para>
+	    La suppression d'une machine se fait à l'aide de la commande 'vishnu_delete_machine' avec l'identifiant de la machine à supprimer. Cela supprime la machine de la base de données, ainsi que toutes les informations qui y sont attachées (Attention: cette commande est irréversible).
+	  </para>
         </listitem>
         <listitem>
           <para>
-            Les utilisateurs peuvent lister les machines, mais un administrateur a en plus une option qui est l'identifiant d'un utilisateur. Ceci lui permet de lister les machines sur lesquelles l'utilisateur a un compte VISHNU.
-          </para>
+	    Les utilisateurs peuvent lister les machines, mais un administrateur a en plus une option qui est l'identifiant d'un utilisateur. Ceci lui permet de lister les machines sur lesquelles l'utilisateur a un compte VISHNU.
+	  </para>
+        </listitem>
+        <listitem>
+          <para>
+	    La mise à jour d'informations système d'une machine se fait à l'aide de la commande 'vishnu_set_system_info' et permet d'ajouter ou modifier des informations système d'une machine. Il faut utiliser l'identifiant de la machine pour l'identifier lors de la mise à jour.
+	  </para>
         </listitem>
       </orderedlist>
     </section>
     <section>
-      <title>Gestion de la plateforme</title>
+      <title>Gestion de la plateforme (UMS)</title>
       <orderedlist>
         <listitem>
           <para>
-            L'administrateur peut faire une sauvegarde à chaud à un moment donné de VISHNU. Ceci sauvegarde les utilisateurs, les machines et les comptes des utilisateurs. Le fichier, dans lequel la configuration est, est retourné par la fonction. La fonction est 'vishnu_save_configuration', pas besoin de paramètres. 
-          </para>
+	    L'administrateur peut faire une sauvegarde à chaud à un moment donné de VISHNU. Ceci sauvegarde les utilisateurs, les machines et les comptes des utilisateurs. Le fichier, dans lequel la configuration est, est retourné par la fonction. La fonction est 'vishnu_save_configuration', pas besoin de paramètres.
+	  </para>
         </listitem>
         <listitem>
           <para>
-            L'administrateur peut recharger une configuration précédente de VISHNU à l'aide de la commande 'vishnu_restore_configuration' qui a besoin du fichier de sauvegarde pour recharger la base. 
-            Avant de pouvoir lancer cette restauration, tous les utilisateurs de VISHNU doivent être déconnectés.
-          </para>
+	    L'administrateur peut recharger une configuration précédente de VISHNU à l'aide de la commande 'vishnu_restore_configuration' qui a besoin du fichier de sauvegarde pour recharger la base.
+	    Avant de pouvoir lancer cette restauration, tous les utilisateurs de VISHNU doivent être déconnectés.
+	  </para>
         </listitem>
         <listitem>
           <para>
-            Un administrateur peut également définir les valeurs par défaut des options de VISHNU pour tout les utilisateurs (ces options sont le temps de déconnexion par défaut et le type de fermeture d'une session par défaut). Cela se fait en appellant 'vishnu_configure_default_option' en donnant le nom de l'option et sa nouvelle valeur.
-          </para>
+	    Un administrateur peut également définir les valeurs par défaut des options de VISHNU pour tout les utilisateurs (ces options sont le temps de déconnexion par défaut et le type de fermeture d'une session par défaut). Cela se fait en appellant 'vishnu_configure_default_option' en donnant le nom de l'option et sa nouvelle valeur.
+	  </para>
         </listitem>
       </orderedlist>
     </section>
     <section>
-      <title>Options propres à l'administrateur dans les commandes utilisateurs</title>
+      <title>Options propres à l'administrateur dans les commandes utilisateurs(UMS+FMS)</title>
       <orderedlist>
         <listitem>
           <para>Dans la fonction 'vishnu_connect', un administrateur peut donner l'identifiant d'un utilisateur pour se connecter sous le nom de cet utilisateur dans VISHNU.</para>
         </listitem>
         <listitem>
           <para>
-            Dans la fonction 'vishnu_list_history_cmd', l'administrateur peut lister toutes les commandes de tout les utilisateurs ou les commandes d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur.
-          </para>
+	    Dans la fonction 'vishnu_list_history_cmd', l'administrateur peut lister toutes les commandes de tout les utilisateurs ou les commandes d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur.
+	  </para>
         </listitem>
         <listitem>
           <para>
-            Dans la fonction 'vishnu_list_local_accounts', l'administrateur peut lister toutes les comptes de tout les utilisateurs ou les comptes d'un utilisateur particulier en fournissant l'identifiant de l'utilisateur.
-          </para>
+	    Dans la fonction 'vishnu_list_local_accounts', l'administrateur peut lister toutes les comptes de tout les utilisateurs ou les comptes d'un utilisateur particulier en fournissant l'identifiant de l'utilisateur.
+	  </para>
         </listitem>
         <listitem>
           <para>
-            Dans la fonction 'vishnu_list_options', l'administrateur peut lister les toutes les options de tout les utilisateurs ou les options d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur.
-          </para>
+	    Dans la fonction 'vishnu_list_options', l'administrateur peut lister les toutes les options de tout les utilisateurs ou les options d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur.
+	  </para>
         </listitem>
         <listitem>
           <para>
-            Dans la fonction 'vishnu_list_sessions', l'administrateur peut lister les toutes les session de tout les utilisateurs ou les sessions d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur, ou les sessions sur une machine particulière en fournissant l'identifiant de la machine.
-          </para>
+	    Dans la fonction 'vishnu_list_sessions', l'administrateur peut lister les toutes les sessions de tous les utilisateurs ou les sessions d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur, ou les sessions sur une machine particulière en fournissant l'identifiant de la machine.
+	  </para>
+        </listitem>
+        <listitem>
+          <para>
+	    Dans la fonction 'vishnu_list_file_transfers', l'administrateur peut lister tous les transferts de fichiers de tous les utilisateurs ou ceux  d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur, ou lister les transferts impliquant une machine particulière (qui peut être source ou destination du transfert) en fournissant l'identifiant de la machine.
+	  </para>
+        </listitem>
+        <listitem>
+          <para>
+	    Dans la fonction 'vishnu_stop_file_transfers', l'administrateur peut annuler tous les transferts de fichiers de tous les utilisateurs ou ceux  d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur, ou annuler les transferts impliquant une machine particulière (qui peut être source ou destination du transfert) en fournissant l'identifiant de la machine.
+	  </para>
         </listitem>
       </orderedlist>
+    </section>
+    <section>
+      <title>Gestion des processus VISHNU et délestage (IMS)</title>
+      <itemizedlist>
+        <listitem>
+          <para>L'administrateur peut lister les processus VISHNU, sur toute la plateforme ou sur une machine particulière.
+	    Fonction associée : vishnu_get_processes.</para>
+        </listitem>
+        <listitem>
+          <para>L'administrateur peut arrêter un processus VISHNU, ce processus ne sera pas redémarrer automatiquement.
+	    Attention : l'administrateur doit avoir un compte sur la machine
+	    Fonction associée : vishnu_stop </para>
+        </listitem>
+        <listitem>
+          <para>L'administrateur peut redémarrer un processus VISHNU sur une machine, ce processus doit avoir déjà tourné
+	    pour VISHNU sur cette machine et l'administrateur doit avoir un compte sur la machine.
+	    Fonction associée : vishnu_restart </para>
+        </listitem>
+        <listitem>
+          <para>L'administrateur peut délester une machine selon deux modes. Dans le mode HARD, tout les processus VISHNU
+	    de la machine sont arretés. Dans le mode SOFT, seul FMS et TMS sont touchés, on arrête tout leurs transferts
+	    et jobs en cours.
+	    Fonction associée : vishnu_load_shed </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Surveillance de l'état des machines (IMS)</title>
+      <itemizedlist>
+        <listitem>
+          <para> Un administrateur peut fixer la fréquence de mise à jour de l'enregistrement de l'état des machines.
+	    Fonction associée : vishnu_set_update_frequency</para>
+        </listitem>
+        <listitem>
+          <para> Un administrateur peut obtenir la fréquence de mise à jour de l'enregistrement de l'état des machines.
+	    Fonction associée : vishnu_get_update_frequency</para>
+        </listitem>
+        <listitem>
+          <para> Un administrateur peut fixer un seuil sur une machine. Ce seuil peut être l'utilisation du CPU, la
+	    mémoire libre restante ou l'espace disque restant. Lors de l'enregistrement de l'état d'une machine,
+	    si un seuil est atteint sur cette machine, l'administrateur est notifié par mail de ce dépassement.
+	    Fonction associée : vishnu_set_threshold</para>
+        </listitem>
+        <listitem>
+          <para> Un administrateur peut obtenir les seuils fixés sur une machine. Pour plus d'informations sur les seuils
+	    voir la partie pour fixer les seuils ci-dessus.
+	    Fonction associée : vishnu_get_threshold</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Définition des formats des identifiants (IMS)</title>
+      <itemizedlist>
+        <listitem>
+          <para>
+	    Un administrateur peut fixer le format des identifiants VISHNU automatiquement générés pour les utilisateurs,
+	    les machines, les jobs soumis aux batchs scheduler et les transferts de fichiers. Ces identifiants peuvent contenir
+	    plusieurs variables :
+	    <itemizedlist>
+              <listitem>
+                <para>
+		  '$DAY' : Variable qui sera remplacée par le jour de création (1-31)
+		</para>
+              </listitem>
+              <listitem>
+                <para>
+		  '$MONTH' : Variable qui sera remplacée par le mois de création (1-12)
+		</para>
+              </listitem>
+              <listitem>
+                <para>
+		  '$YEAR' :  Variable qui sera remplacé par l'année de création (0-99)
+		</para>
+              </listitem>
+              <listitem>
+                <para>
+		  '$CPT' : Variable compteur qui est automatiquement incrémentée
+		</para>
+              </listitem>
+              <listitem>
+                <para>
+		  '$SITE' : Pour les utilisateurs ou machine, une information sur le lieu
+		</para>
+              </listitem>
+              <listitem>
+                <para>
+		  '$UNAME' : Pour les utilisateurs, variable remplacée par le nom de l'utilisateur
+		</para>
+              </listitem>
+              <listitem>
+                <para>
+		  '$MANAME' : Pour les machines, variable remplacée par le nom de la machine
+		</para>
+              </listitem>
+            </itemizedlist>
+	    Attention la variable conteur est obligatoire pour éviter la génération d'un identifiant déjà existant.
+	    Fonctions associées : define_file_format, define_machine_format, define_task_format, define_user_format.
+	  </para>
+        </listitem>
+      </itemizedlist>
     </section>
   </chapter>
   <reference>
@@ -2756,15 +3083,15 @@ that option using the vishnu_configure_option command.</para>
     <title>UMS Python API Reference</title>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.addUser</refentrytitle>
+        <refentrytitle>VISHNU.addUser</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.addUser</refname>
+        <refname>VISHNU.addUser</refname>
         <refpurpose>adds a new VISHNU user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.addUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>User <parameter>newUser</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.addUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>User <parameter>newUser</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2858,15 +3185,15 @@ and password are sent to the user by email.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.updateUser</refentrytitle>
+        <refentrytitle>VISHNU.updateUser</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.updateUser</refname>
+        <refname>VISHNU.updateUser</refname>
         <refpurpose>updates the user information except the userId and the password</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.updateUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>User <parameter>user</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.updateUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>User <parameter>user</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2957,15 +3284,15 @@ and password are sent to the user by email.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.deleteUser</refentrytitle>
+        <refentrytitle>VISHNU.deleteUser</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.deleteUser</refname>
+        <refname>VISHNU.deleteUser</refname>
         <refpurpose>removes a user from VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.deleteUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.deleteUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3048,15 +3375,15 @@ and password are sent to the user by email.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.resetPassword</refentrytitle>
+        <refentrytitle>VISHNU.resetPassword</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.resetPassword</refname>
+        <refname>VISHNU.resetPassword</refname>
         <refpurpose>resets the password of a user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.resetPassword</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>tmpPassword</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.resetPassword</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>tmpPassword</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3145,15 +3472,15 @@ and password are sent to the user by email.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.saveConfiguration</refentrytitle>
+        <refentrytitle>VISHNU.saveConfiguration</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.saveConfiguration</refname>
+        <refname>VISHNU.saveConfiguration</refname>
         <refpurpose>saves the configuration of VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.saveConfiguration</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Configuration <parameter>configuration</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.saveConfiguration</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Configuration <parameter>configuration</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3224,15 +3551,15 @@ and password are sent to the user by email.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.restoreConfiguration</refentrytitle>
+        <refentrytitle>VISHNU.restoreConfiguration</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.restoreConfiguration</refname>
+        <refname>VISHNU.restoreConfiguration</refname>
         <refpurpose>restores the configuration of VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.restoreConfiguration</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>filePath</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.restoreConfiguration</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>filePath</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3309,15 +3636,15 @@ After restoring, the vishnu database is re-initialized.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.addMachine</refentrytitle>
+        <refentrytitle>VISHNU.addMachine</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.addMachine</refname>
+        <refname>VISHNU.addMachine</refname>
         <refpurpose>adds a new machine in VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.addMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Machine <parameter>newMachine</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.addMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Machine <parameter>newMachine</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3404,15 +3731,15 @@ have to add it to the authorized keys of their own account on the machine.</para
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.updateMachine</refentrytitle>
+        <refentrytitle>VISHNU.updateMachine</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.updateMachine</refname>
+        <refname>VISHNU.updateMachine</refname>
         <refpurpose>updates machine description</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.updateMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Machine <parameter>machine</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.updateMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Machine <parameter>machine</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3495,15 +3822,15 @@ have to add it to the authorized keys of their own account on the machine.</para
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.deleteMachine</refentrytitle>
+        <refentrytitle>VISHNU.deleteMachine</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.deleteMachine</refname>
+        <refname>VISHNU.deleteMachine</refname>
         <refpurpose>removes a machine from VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.deleteMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.deleteMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3582,15 +3909,15 @@ have to add it to the authorized keys of their own account on the machine.</para
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.listUsers</refentrytitle>
+        <refentrytitle>VISHNU.listUsers</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.listUsers</refname>
+        <refname>VISHNU.listUsers</refname>
         <refpurpose>lists VISHNU users</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listUsers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers <parameter>listuser</parameter></paramdef><paramdef>string <parameter>userIdOption = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listUsers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers <parameter>listuser</parameter></paramdef><paramdef>string <parameter>userIdOption = string()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3675,15 +4002,15 @@ have to add it to the authorized keys of their own account on the machine.</para
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.configureDefaultOption</refentrytitle>
+        <refentrytitle>VISHNU.configureDefaultOption</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.configureDefaultOption</refname>
+        <refname>VISHNU.configureDefaultOption</refname>
         <refpurpose>configures a default option value</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.configureDefaultOption</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>OptionValue <parameter>optionValue</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.configureDefaultOption</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>OptionValue <parameter>optionValue</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3760,6 +4087,2159 @@ that option using the vishnu_configure_option command.</para>
           </varlistentry>
           <varlistentry>
             <term>UMSVishnuException(&quot;The name of the user option is unknown&quot; [41])</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+  </reference>
+  <reference>
+    <title>FMS Command reference</title>
+  </reference>
+  <reference>
+    <title>FMS C++ API Reference</title>
+  </reference>
+  <reference>
+    <title>FMS Python API Reference</title>
+  </reference>
+  <reference>
+    <title>IMS Command reference</title>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_get_processes</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_get_processes</refname>
+        <refpurpose>displays the list of the VISHNU processes running on machines</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_get_processes</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-p <replaceable>machineId</replaceable></option></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This command with restricted access is used to get the list of VISHNU server processes that are running on the infrastructure or on a single machine. The results contain both the VISHNU identifier of the process and the DIET underlying middleware identifier. </para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-p <replaceable>machineId</replaceable></option></term>
+            <listitem>
+              <para>The id of the machine.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_set_system_info</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_set_system_info</refname>
+        <refpurpose>updates the system information of a machine</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_set_system_info</command><arg choice="opt"><option>-h</option></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This command with restricted access is used to set system information on a machine in the VISHNU database. The machine must first be registered using the UMS &quot;addMachine&quot; call. Using the machine identifier, information such as the total memory and available diskspace on the machine can be added.</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_set_system_threshold</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_set_system_threshold</refname>
+        <refpurpose>sets a threshold on a machine of a system</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_set_system_threshold</command><arg choice="opt"><option>-h</option></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to set a threshold. Each time an IMS server records the state of a machine, it checks the values defined, if a threshold is reached (over a use of the cpu or under the free memory or diskspace available), the administrator responsible for the threshold will receive an mail. These threshold will help the administrator to be aware of critical situations on a machine. Warning, a mail is sent for each time the threshold is reached, if a value swings around a threshold, the administrator may receive lots of emails depending on the update frequency.</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_get_system_threshold</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_get_system_threshold</refname>
+        <refpurpose>gets a system threshold on a machine</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_get_system_threshold</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg><arg
+              choice="opt"><option>-t <replaceable>metricType</replaceable></option></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to get the thresholds that may be defined on a machine. This may be used to check the parameters defined to monitor the machine.
+Each time a threshold is reached, a mail is sent. So checking the values of the threshold is important for the administrator to make sure they will not get tons of emails.</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-m <replaceable>machineId</replaceable></option></term>
+            <listitem>
+              <para>The id of the machine where the metric is defined.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-t <replaceable>metricType</replaceable></option></term>
+            <listitem>
+              <para>The type of the metric.
+The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 2 (FREEDISKSPACE), 3 (FREEMEMORY).</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_define_user_identifier</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_define_user_identifier</refname>
+        <refpurpose>defines the shape of the identifiers automatically generated for the users</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_define_user_identifier</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to define the format of the identifier that will be automatically generated for the users. Once the format is defined, each time a user is added, the format will be used to define its identifier.
+The format can contain various variables, a variable is preceded by the '$' symbol. Moreover, the counter variable '$CPT' MUST be present in the format, otherwise it will be rejected.
+The available variables are: 
+$CPT: a counter
+$NAME: The name of the user
+$UNAME: The name of the user
+$DAY: The day the user is added
+$MONTH: The month the user is added
+$YEAR: The year the user is added
+$SITE: The site the user is
+$TYPE: The 'U' symb to remind it is a user id</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_define_machine_identifier</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_define_machine_identifier</refname>
+        <refpurpose>defines the shape of the identifiers automatically generated for the machines</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_define_machine_identifier</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to define the format of the identifier that will be automatically generated for the machines. Once the format is defined, each time a machine is added, the format will be used to define its identifier.
+The format can contain various variables, a variable is preceded by the '$' symbol. Moreover, the counter variable '$CPT' MUST be present in the format, otherwise it will be rejected.
+The available variables are: 
+$CPT: a counter
+$MANAME: The hostname of the machine
+$NAME: The hostname of the machine
+$DAY: The day the machine is added
+$MONTH: The month the machine is added
+$YEAR: The year the machine is added
+$SITE: The site the machine is
+$TYPE: The 'M' symb to remind it is a machine id</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_define_job_identifier</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_define_job_identifier</refname>
+        <refpurpose>defines the shape of the identifiers automatically generated for the jobs</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_define_job_identifier</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to define the format of the identifier that will be automatically generated for the jobs submited through TMS. Once the format is defined, each time a job is submitted, the format will be used to define its identifier.
+The format can contain various variables, a variable is preceded by the '$' symbol. Moreover, the counter variable '$CPT' MUST be present in the format, otherwise it will be rejected.
+The available variables are: 
+$CPT: a counter
+$DAY: The day the job is submitted
+$MONTH: The month the job is submitted
+$YEAR: The year the job is submitted
+$TYPE: The 'J' symb to remind it is a job id</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_define_transfer_identifier</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_define_transfer_identifier</refname>
+        <refpurpose>defines the shape of the identifiers automatically generated for the file transfers</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_define_transfer_identifier</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to define the format of the identifier that will be automatically generated for the file transfers. Once the format is defined, each time a file transfer is done, the format will be used to define its identifier.
+The format can contain various variables, a variable is preceded by the '$' symbol. Moreover, the counter variable '$CPT' MUST be present in the format, otherwise it will be rejected.
+The available variables are: 
+$CPT: a counter
+$DAY: The day the file transfer is done
+$MONTH: The month the file transfer is done
+$YEAR: The year the file transfer is done
+$TYPE: The 'F' symb to remind it is a file transfer id</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_load_shed</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_load_shed</refname>
+        <refpurpose>sheds load on a machine</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_load_shed</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>loadShedType</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to shed load on a machine. Two modes are available: SOFT mode will cancel all the submitted jobs and file transfers for all VISHNU users (Note that jobs and file transfers not initiated through VISHNU will not be impacted). HARD mode will additionally stop all the VISHNU processes on the machine. If a user without administrator rights uses this function, all the user's jobs and file transfers will be cancelled on the machine. In the HARD mode, the stopped processes will not be automatically restarted.
+Type values:
+HARD = 1
+SOFT   = 2</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a component is unavailable&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_set_update_frequency</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_set_update_frequency</refname>
+        <refpurpose>sets the update frequency of the IMS tables</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_set_update_frequency</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>freq</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an admin to set the update frequency. This frequency corresponds to how often the state of the machines is automatically polled by the IMS server. The value must be in seconds.</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_stop</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_stop</refname>
+        <refpurpose>To stop (and do not try to relaunch) a SeD</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_stop</command><arg choice="opt"><option>-h</option></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an admin to stop a VISHNU server on a machine. The stopped process will not be restarted automatically.
+The important parameters in the process are the names and the machine.
+The processName must be UMS, TMS, IMS or FMS , in upper case.
+</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_restart</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_restart</refname>
+        <refpurpose>To restart a SeD or a MA</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_restart</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-v <replaceable>vishnuConf</replaceable></option></arg><arg
+              choice="opt"><option>-t <replaceable>sedType</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an admin to restart a VISHNU server on a machine. Warning when restarting a server, first it is tried to stop it, so if one is running it is stopped and then another is restarted.</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-v <replaceable>vishnuConf</replaceable></option></term>
+            <listitem>
+              <para>The path to the vishnu configuration file.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-t <replaceable>sedType</replaceable></option></term>
+            <listitem>
+              <para>The type of the vishnu sed.
+The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (UMS), 2 (TMS), 3 (FMS), 4 (IMS).</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+  </reference>
+  <reference>
+    <title>IMS C++ API Reference</title>
+    <refentry>
+      <refmeta>
+        <refentrytitle>getProcesses</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>getProcesses</refname>
+        <refpurpose>displays the list of the VISHNU processes running on machines</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getProcesses</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListProcesses&amp; <parameter>process</parameter></paramdef><paramdef>const ProcessOp&amp; <parameter>options = ProcessOp()</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This command with restricted access is used to get the list of VISHNU server processes that are running on the infrastructure or on a single machine. The results contain both the VISHNU identifier of the process and the DIET underlying middleware identifier. </para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>process</emphasis></term>
+            <listitem>
+              <para>Output argument. The list of the Vishnu processes on the machine.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>options</emphasis></term>
+            <listitem>
+              <para>Input argument. The options to search for the processes.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>setSystemInfo</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>setSystemInfo</refname>
+        <refpurpose>updates the system information of a machine</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::setSystemInfo</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const SystemInfo&amp; <parameter>systemInfo</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This command with restricted access is used to set system information on a machine in the VISHNU database. The machine must first be registered using the UMS &quot;addMachine&quot; call. Using the machine identifier, information such as the total memory and available diskspace on the machine can be added.</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>systemInfo</emphasis></term>
+            <listitem>
+              <para>Input argument. Contains system information to store in Vishnu database.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>setSystemThreshold</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>setSystemThreshold</refname>
+        <refpurpose>sets a threshold on a machine of a system</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::setSystemThreshold</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const Threshold&amp; <parameter>threshold</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to set a threshold. Each time an IMS server records the state of a machine, it checks the values defined, if a threshold is reached (over a use of the cpu or under the free memory or diskspace available), the administrator responsible for the threshold will receive an mail. These threshold will help the administrator to be aware of critical situations on a machine. Warning, a mail is sent for each time the threshold is reached, if a value swings around a threshold, the administrator may receive lots of emails depending on the update frequency.</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>threshold</emphasis></term>
+            <listitem>
+              <para>Input argument. The threshold to set.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>getSystemThreshold</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>getSystemThreshold</refname>
+        <refpurpose>gets a system threshold on a machine</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getSystemThreshold</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListThreshold&amp; <parameter>value</parameter></paramdef><paramdef>const ThresholdOp&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to get the thresholds that may be defined on a machine. This may be used to check the parameters defined to monitor the machine.
+Each time a threshold is reached, a mail is sent. So checking the values of the threshold is important for the administrator to make sure they will not get tons of emails.</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>value</emphasis></term>
+            <listitem>
+              <para>Output argument. The thresholds value.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>options</emphasis></term>
+            <listitem>
+              <para>Input argument. The options for the threshold.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>defineUserIdentifier</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>defineUserIdentifier</refname>
+        <refpurpose>defines the shape of the identifiers automatically generated for the users</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::defineUserIdentifier</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to define the format of the identifier that will be automatically generated for the users. Once the format is defined, each time a user is added, the format will be used to define its identifier.
+The format can contain various variables, a variable is preceded by the '$' symbol. Moreover, the counter variable '$CPT' MUST be present in the format, otherwise it will be rejected.
+The available variables are: 
+$CPT: a counter
+$NAME: The name of the user
+$UNAME: The name of the user
+$DAY: The day the user is added
+$MONTH: The month the user is added
+$YEAR: The year the user is added
+$SITE: The site the user is
+$TYPE: The 'U' symb to remind it is a user id</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>format</emphasis></term>
+            <listitem>
+              <para>Input argument. The new format to use.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>defineMachineIdentifier</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>defineMachineIdentifier</refname>
+        <refpurpose>defines the shape of the identifiers automatically generated for the machines</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::defineMachineIdentifier</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to define the format of the identifier that will be automatically generated for the machines. Once the format is defined, each time a machine is added, the format will be used to define its identifier.
+The format can contain various variables, a variable is preceded by the '$' symbol. Moreover, the counter variable '$CPT' MUST be present in the format, otherwise it will be rejected.
+The available variables are: 
+$CPT: a counter
+$MANAME: The hostname of the machine
+$NAME: The hostname of the machine
+$DAY: The day the machine is added
+$MONTH: The month the machine is added
+$YEAR: The year the machine is added
+$SITE: The site the machine is
+$TYPE: The 'M' symb to remind it is a machine id</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>format</emphasis></term>
+            <listitem>
+              <para>Input argument. The new format to use.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>defineJobIdentifier</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>defineJobIdentifier</refname>
+        <refpurpose>defines the shape of the identifiers automatically generated for the jobs</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::defineJobIdentifier</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to define the format of the identifier that will be automatically generated for the jobs submited through TMS. Once the format is defined, each time a job is submitted, the format will be used to define its identifier.
+The format can contain various variables, a variable is preceded by the '$' symbol. Moreover, the counter variable '$CPT' MUST be present in the format, otherwise it will be rejected.
+The available variables are: 
+$CPT: a counter
+$DAY: The day the job is submitted
+$MONTH: The month the job is submitted
+$YEAR: The year the job is submitted
+$TYPE: The 'J' symb to remind it is a job id</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>format</emphasis></term>
+            <listitem>
+              <para>Input argument. The new format to use.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>defineTransferIdentifier</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>defineTransferIdentifier</refname>
+        <refpurpose>defines the shape of the identifiers automatically generated for the file transfers</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::defineTransferIdentifier</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to define the format of the identifier that will be automatically generated for the file transfers. Once the format is defined, each time a file transfer is done, the format will be used to define its identifier.
+The format can contain various variables, a variable is preceded by the '$' symbol. Moreover, the counter variable '$CPT' MUST be present in the format, otherwise it will be rejected.
+The available variables are: 
+$CPT: a counter
+$DAY: The day the file transfer is done
+$MONTH: The month the file transfer is done
+$YEAR: The year the file transfer is done
+$TYPE: The 'F' symb to remind it is a file transfer id</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>format</emphasis></term>
+            <listitem>
+              <para>Input argument. The new format to use.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>loadShed</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>loadShed</refname>
+        <refpurpose>sheds load on a machine</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::loadShed</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const LoadShedType&amp; <parameter>loadShedType</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to shed load on a machine. Two modes are available: SOFT mode will cancel all the submitted jobs and file transfers for all VISHNU users (Note that jobs and file transfers not initiated through VISHNU will not be impacted). HARD mode will additionally stop all the VISHNU processes on the machine. If a user without administrator rights uses this function, all the user's jobs and file transfers will be cancelled on the machine. In the HARD mode, the stopped processes will not be automatically restarted.
+Type values:
+HARD = 1
+SOFT   = 2</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>machineId</emphasis></term>
+            <listitem>
+              <para>Input argument. The id of the machine to stop.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>loadShedType</emphasis></term>
+            <listitem>
+              <para>Input argument. Selects a load shedding mode (SOFT: stops all services and they can be restarted, HARD: stops all services, they cannot be restarted).</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a component is unavailable&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>setUpdateFrequency</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>setUpdateFrequency</refname>
+        <refpurpose>sets the update frequency of the IMS tables</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::setUpdateFrequency</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const int&amp; <parameter>freq</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an admin to set the update frequency. This frequency corresponds to how often the state of the machines is automatically polled by the IMS server. The value must be in seconds.</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>freq</emphasis></term>
+            <listitem>
+              <para>Input argument. Frequency the data are updated, in second.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>stop</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>stop</refname>
+        <refpurpose>To stop (and do not try to relaunch) a SeD</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::stop</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const Process&amp; <parameter>process</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an admin to stop a VISHNU server on a machine. The stopped process will not be restarted automatically.
+The important parameters in the process are the names and the machine.
+The processName must be UMS, TMS, IMS or FMS , in upper case.
+</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>process</emphasis></term>
+            <listitem>
+              <para>Input argument. The process to stop and do not try to restart anymore.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>restart</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>restart</refname>
+        <refpurpose>To restart a SeD or a MA</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::restart</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const RestartOp&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an admin to restart a VISHNU server on a machine. Warning when restarting a server, first it is tried to stop it, so if one is running it is stopped and then another is restarted.</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>machineId</emphasis></term>
+            <listitem>
+              <para>Input argument. The id of the machine where to restart.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>options</emphasis></term>
+            <listitem>
+              <para>Input argument. The option for the restart.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+  </reference>
+  <reference>
+    <title>IMS Python API Reference</title>
+    <refentry>
+      <refmeta>
+        <refentrytitle>VISHNU.getProcesses</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>VISHNU.getProcesses</refname>
+        <refpurpose>displays the list of the VISHNU processes running on machines</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.getProcesses</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListProcesses <parameter>process</parameter></paramdef><paramdef>ProcessOp <parameter>options = ProcessOp()</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This command with restricted access is used to get the list of VISHNU server processes that are running on the infrastructure or on a single machine. The results contain both the VISHNU identifier of the process and the DIET underlying middleware identifier. </para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>process</emphasis></term>
+            <listitem>
+              <para>Output argument. The list of the Vishnu processes on the machine.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>options</emphasis></term>
+            <listitem>
+              <para>Input argument. The options to search for the processes.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>VISHNU.setSystemInfo</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>VISHNU.setSystemInfo</refname>
+        <refpurpose>updates the system information of a machine</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.setSystemInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>SystemInfo <parameter>systemInfo</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This command with restricted access is used to set system information on a machine in the VISHNU database. The machine must first be registered using the UMS &quot;addMachine&quot; call. Using the machine identifier, information such as the total memory and available diskspace on the machine can be added.</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>systemInfo</emphasis></term>
+            <listitem>
+              <para>Input argument. Contains system information to store in Vishnu database.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>VISHNU.setSystemThreshold</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>VISHNU.setSystemThreshold</refname>
+        <refpurpose>sets a threshold on a machine of a system</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.setSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Threshold <parameter>threshold</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to set a threshold. Each time an IMS server records the state of a machine, it checks the values defined, if a threshold is reached (over a use of the cpu or under the free memory or diskspace available), the administrator responsible for the threshold will receive an mail. These threshold will help the administrator to be aware of critical situations on a machine. Warning, a mail is sent for each time the threshold is reached, if a value swings around a threshold, the administrator may receive lots of emails depending on the update frequency.</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>threshold</emphasis></term>
+            <listitem>
+              <para>Input argument. The threshold to set.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>VISHNU.getSystemThreshold</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>VISHNU.getSystemThreshold</refname>
+        <refpurpose>gets a system threshold on a machine</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.getSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListThreshold <parameter>value</parameter></paramdef><paramdef>ThresholdOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to get the thresholds that may be defined on a machine. This may be used to check the parameters defined to monitor the machine.
+Each time a threshold is reached, a mail is sent. So checking the values of the threshold is important for the administrator to make sure they will not get tons of emails.</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>value</emphasis></term>
+            <listitem>
+              <para>Output argument. The thresholds value.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>options</emphasis></term>
+            <listitem>
+              <para>Input argument. The options for the threshold.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>VISHNU.defineUserIdentifier</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>VISHNU.defineUserIdentifier</refname>
+        <refpurpose>defines the shape of the identifiers automatically generated for the users</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.defineUserIdentifier</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to define the format of the identifier that will be automatically generated for the users. Once the format is defined, each time a user is added, the format will be used to define its identifier.
+The format can contain various variables, a variable is preceded by the '$' symbol. Moreover, the counter variable '$CPT' MUST be present in the format, otherwise it will be rejected.
+The available variables are: 
+$CPT: a counter
+$NAME: The name of the user
+$UNAME: The name of the user
+$DAY: The day the user is added
+$MONTH: The month the user is added
+$YEAR: The year the user is added
+$SITE: The site the user is
+$TYPE: The 'U' symb to remind it is a user id</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>format</emphasis></term>
+            <listitem>
+              <para>Input argument. The new format to use.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>VISHNU.defineMachineIdentifier</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>VISHNU.defineMachineIdentifier</refname>
+        <refpurpose>defines the shape of the identifiers automatically generated for the machines</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.defineMachineIdentifier</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to define the format of the identifier that will be automatically generated for the machines. Once the format is defined, each time a machine is added, the format will be used to define its identifier.
+The format can contain various variables, a variable is preceded by the '$' symbol. Moreover, the counter variable '$CPT' MUST be present in the format, otherwise it will be rejected.
+The available variables are: 
+$CPT: a counter
+$MANAME: The hostname of the machine
+$NAME: The hostname of the machine
+$DAY: The day the machine is added
+$MONTH: The month the machine is added
+$YEAR: The year the machine is added
+$SITE: The site the machine is
+$TYPE: The 'M' symb to remind it is a machine id</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>format</emphasis></term>
+            <listitem>
+              <para>Input argument. The new format to use.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>VISHNU.defineJobIdentifier</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>VISHNU.defineJobIdentifier</refname>
+        <refpurpose>defines the shape of the identifiers automatically generated for the jobs</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.defineJobIdentifier</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to define the format of the identifier that will be automatically generated for the jobs submited through TMS. Once the format is defined, each time a job is submitted, the format will be used to define its identifier.
+The format can contain various variables, a variable is preceded by the '$' symbol. Moreover, the counter variable '$CPT' MUST be present in the format, otherwise it will be rejected.
+The available variables are: 
+$CPT: a counter
+$DAY: The day the job is submitted
+$MONTH: The month the job is submitted
+$YEAR: The year the job is submitted
+$TYPE: The 'J' symb to remind it is a job id</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>format</emphasis></term>
+            <listitem>
+              <para>Input argument. The new format to use.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>VISHNU.defineTransferIdentifier</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>VISHNU.defineTransferIdentifier</refname>
+        <refpurpose>defines the shape of the identifiers automatically generated for the file transfers</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.defineTransferIdentifier</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to define the format of the identifier that will be automatically generated for the file transfers. Once the format is defined, each time a file transfer is done, the format will be used to define its identifier.
+The format can contain various variables, a variable is preceded by the '$' symbol. Moreover, the counter variable '$CPT' MUST be present in the format, otherwise it will be rejected.
+The available variables are: 
+$CPT: a counter
+$DAY: The day the file transfer is done
+$MONTH: The month the file transfer is done
+$YEAR: The year the file transfer is done
+$TYPE: The 'F' symb to remind it is a file transfer id</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>format</emphasis></term>
+            <listitem>
+              <para>Input argument. The new format to use.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>VISHNU.loadShed</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>VISHNU.loadShed</refname>
+        <refpurpose>sheds load on a machine</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.loadShed</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>LoadShedType <parameter>loadShedType</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to shed load on a machine. Two modes are available: SOFT mode will cancel all the submitted jobs and file transfers for all VISHNU users (Note that jobs and file transfers not initiated through VISHNU will not be impacted). HARD mode will additionally stop all the VISHNU processes on the machine. If a user without administrator rights uses this function, all the user's jobs and file transfers will be cancelled on the machine. In the HARD mode, the stopped processes will not be automatically restarted.
+Type values:
+HARD = 1
+SOFT   = 2</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>machineId</emphasis></term>
+            <listitem>
+              <para>Input argument. The id of the machine to stop.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>loadShedType</emphasis></term>
+            <listitem>
+              <para>Input argument. Selects a load shedding mode (SOFT: stops all services and they can be restarted, HARD: stops all services, they cannot be restarted).</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;If a component is unavailable&quot; [3])</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>VISHNU.setUpdateFrequency</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>VISHNU.setUpdateFrequency</refname>
+        <refpurpose>sets the update frequency of the IMS tables</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.setUpdateFrequency</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>int <parameter>freq</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an admin to set the update frequency. This frequency corresponds to how often the state of the machines is automatically polled by the IMS server. The value must be in seconds.</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>freq</emphasis></term>
+            <listitem>
+              <para>Input argument. Frequency the data are updated, in second.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>VISHNU.stop</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>VISHNU.stop</refname>
+        <refpurpose>To stop (and do not try to relaunch) a SeD</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.stop</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Process <parameter>process</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an admin to stop a VISHNU server on a machine. The stopped process will not be restarted automatically.
+The important parameters in the process are the names and the machine.
+The processName must be UMS, TMS, IMS or FMS , in upper case.
+</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>process</emphasis></term>
+            <listitem>
+              <para>Input argument. The process to stop and do not try to restart anymore.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>VISHNU.restart</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>VISHNU.restart</refname>
+        <refpurpose>To restart a SeD or a MA</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.restart</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>RestartOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an admin to restart a VISHNU server on a machine. Warning when restarting a server, first it is tried to stop it, so if one is running it is stopped and then another is restarted.</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>machineId</emphasis></term>
+            <listitem>
+              <para>Input argument. The id of the machine where to restart.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>options</emphasis></term>
+            <listitem>
+              <para>Input argument. The option for the restart.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
         </variablelist>

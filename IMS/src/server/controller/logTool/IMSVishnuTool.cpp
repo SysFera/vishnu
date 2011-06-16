@@ -176,6 +176,7 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
       mproc.getDataFromDietId(p);
       ProcessCtl ctl("", UserServer(SessionServer("")));
       try {
+	p->setMachineId(getMidFromHost(getHostnameFromOutLog(string(msg[i].componentName))));
 	ctl = ProcessCtl(p->getMachineId(), UserServer(SessionServer("")));
       } catch (VishnuException& e) {
 	log.append(e.what());
@@ -202,7 +203,7 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	// Restart a process disconnected, if the process was stopped with a stop call, no restart will be done
 	try {
 	  // If local proc to restart
-	  if (p->getMachineId().compare(getMidFromHost(msyshName))){
+	  if (p->getMachineId().compare(getMidFromHost(msyshName))==0){
 	    ctl.restart(&resOp, false);
 	  } else { // Else if ims down and i am elected to relaunch it
 	    if (ctl.isIMSSeD(p->getDietId()) && elect()) {
@@ -247,6 +248,13 @@ IMSVishnuTool::getHostnameFromLog(string msg){
   // Extracting hostname from msg
   int pos = msg.find_last_of(' ');
   return msg.substr(pos+1);
+}
+
+string
+IMSVishnuTool::getHostnameFromOutLog(string msg){
+  // Extracting hostname from msg of tool name
+  int pos = msg.find_first_of('_');
+  return msg.substr(0,pos);
 }
 
 // ELECTION PROCESSUS IMS ACTIF LE PLUS RECENT

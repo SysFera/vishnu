@@ -179,7 +179,7 @@
 
 // Exception rule for system exception
 %typemap (throws) SystemException{
-    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/ums/internal/InternalUMSException");
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalUMSException");
     std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
     if (clazz) {
       jenv->ThrowNew(clazz, ret.c_str());
@@ -189,7 +189,7 @@
 
 // Exception rule for user exception
 %typemap (throws) UserException{
-    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/ums/internal/InternalUMSException");
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalUMSException");
     std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
     if (clazz) {
       jenv->ThrowNew(clazz, ret.c_str());
@@ -230,7 +230,7 @@
 
 // Exception rule for system exception
 %typemap (throws) SystemException{
-    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/tms/internal/InternalTMSException");
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
     std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
     if (clazz) {
       jenv->ThrowNew(clazz, ret.c_str());
@@ -240,7 +240,7 @@
 
 // Exception rule for user exception
 %typemap (throws) UserException{
-    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/tms/internal/InternalTMSException");
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
     std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
     if (clazz) {
       jenv->ThrowNew(clazz, ret.c_str());
@@ -249,7 +249,7 @@
  }
 // Exception rule for user exception
 %typemap (throws) TMSVishnuException{
-    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/tms/internal/InternalTMSException");
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
     std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
     if (clazz) {
       jenv->ThrowNew(clazz, ret.c_str());
@@ -258,7 +258,7 @@
  }
 // Exception rule for user exception
 %typemap (throws) UMSVishnuException{
-    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/tms/internal/InternalTMSException");
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
     std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
     if (clazz) {
       jenv->ThrowNew(clazz, ret.c_str());
@@ -298,7 +298,7 @@
 
 // Exception rule for system exception
 %typemap (throws) SystemException{
-    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/ims/internal/InternalIMSException");
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalIMSException");
     std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
     if (clazz) {
       jenv->ThrowNew(clazz, ret.c_str());
@@ -308,7 +308,7 @@
 
 // Exception rule for user exception
 %typemap (throws) UserException{
-    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/ims/internal/InternalIMSException");
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalIMSException");
     std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
     if (clazz) {
       jenv->ThrowNew(clazz, ret.c_str());
@@ -318,7 +318,7 @@
 
 // Exception rule for information exception
 %typemap (throws) IMSVishnuException{
-    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/ims/internal/InternalIMSException");
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalIMSException");
     std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
     if (clazz) {
       jenv->ThrowNew(clazz, ret.c_str());
@@ -327,7 +327,7 @@
  }
 // Exception rule for user exception
 %typemap (throws) UMSVishnuException{
-    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/ims/internal/InternalIMSException");
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalIMSException");
     std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
     if (clazz) {
       jenv->ThrowNew(clazz, ret.c_str());
@@ -367,7 +367,7 @@ typedef unsigned int mode_t;
 
 // Exception rule for system exception
 %typemap (throws) SystemException{
-    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/fms/internal/InternalFMSException");
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalFMSException");
     std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
     if (clazz) {
       jenv->ThrowNew(clazz, ret.c_str());
@@ -377,7 +377,7 @@ typedef unsigned int mode_t;
 
 // Exception rule for user exception
 %typemap (throws) UserException{
-    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/fms/internal/InternalFMSException");
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalFMSException");
     std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
     if (clazz) {
       jenv->ThrowNew(clazz, ret.c_str());
@@ -386,7 +386,7 @@ typedef unsigned int mode_t;
  }
 // Exception rule for user exception
 %typemap (throws) FMSVishnuException{
-    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/fms/internal/InternalFMSException");
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalFMSException");
     std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
     if (clazz) {
       jenv->ThrowNew(clazz, ret.c_str());
@@ -395,7 +395,7 @@ typedef unsigned int mode_t;
  }
 // Exception rule for user exception
 %typemap (throws) UMSVishnuException{
-    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/fms/internal/InternalFMSException");
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalFMSException");
     std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
     if (clazz) {
       jenv->ThrowNew(clazz, ret.c_str());
