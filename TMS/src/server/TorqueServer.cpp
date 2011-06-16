@@ -452,8 +452,9 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   // Getting job idx
   str = p->name;
   pos_found =  str.find(".");
-  if(pos_found!=std::string::npos)
+  if (pos_found!=std::string::npos) {
     pos_found =  str.find(".", pos_found+1);
+  }
   str = str.substr(0, pos_found);
   jobid = str;
 
