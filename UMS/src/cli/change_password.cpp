@@ -1,6 +1,6 @@
 /**
  * \file change_password.cpp
- * This file defines the VISHNU change password command 
+ * This file defines the VISHNU change password command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -23,8 +23,6 @@ int main (int ac, char* av[]){
   string oldPassword;
 
   string newPassword;
-
-  string sessionKey;
 
   string dietConfig;
 
@@ -122,7 +120,7 @@ int main (int ac, char* av[]){
 
     errorUsage(av[0], e.what());
 
-    return CLI_ERROR_RUNTIME; 
+    return CLI_ERROR_RUNTIME;
   }
 
   return 0;

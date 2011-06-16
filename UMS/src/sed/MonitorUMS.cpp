@@ -91,6 +91,7 @@ MonitorUMS::run() {
         }
         catch (VishnuException& e) {
           string errorInfo =  e.buildExceptionString();
+          cerr << errorInfo << endl;
         }
       }
     }
