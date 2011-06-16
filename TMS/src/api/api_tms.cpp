@@ -276,7 +276,6 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   }
 
   SessionProxy sessionProxy(sessionKey);
-  JobResult outputInfos;
   JobOutputProxy jobOutputProxy(sessionProxy, machineId, outDir);
 
   TMS_Data::ListJobResults_ptr listJobResults_ptr = jobOutputProxy.getAllJobsOutPut();

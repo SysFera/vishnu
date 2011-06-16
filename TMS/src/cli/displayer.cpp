@@ -156,8 +156,6 @@ displayQueues(ListQueues& j){
 void
 displayQueue(Queue& q){
 
-  boost::posix_time::ptime pt;
-
   cout << " ------------------------ " << endl;
   cout << " Name        : " << q.getName() << endl;
   if(q.getMaxJobCpu() > 0) {
@@ -207,26 +205,37 @@ displaySubmit(TMS_Data::Job job){
  */
 std::string convertJobStateToString(const int& state) {
 
+  string stateStr;
   switch(state) {
     case 0:
-      return "UNDEFINED";
+      stateStr = "UNDEFINED";
+      break;
     case 1:
-      return "SUBMITTED";
+      stateStr = "SUBMITTED";
+      break;
     case 2:
-      return "QUEUED";
+      stateStr = "QUEUED";
+      break;
     case 3:
-      return "WAITING";
+      stateStr = "WAITING";
+      break;
     case 4:
-      return "RUNNING";
+      stateStr = "RUNNING";
+      break;
     case 5:
-      return "TERMINATED";
+      stateStr = "TERMINATED";
+      break;
     case 6:
-      return "CANCELLED";
+      stateStr = "CANCELLED";
+      break;
     case 7:
-      return "DOWNLOADED";
+      stateStr = "DOWNLOADED";
+      break;
     default:
-      return "UNDEFINED"; 
+      stateStr = "UNDEFINED"; 
+      break;
   }
+  return stateStr;
 }
 
 /**
@@ -236,24 +245,34 @@ std::string convertJobStateToString(const int& state) {
  */
 std::string convertJobPriorityToString(const int& prio) {
 
+  string prioStr;
   switch(prio) {
     case -1:
-      return "UNDEFINED";
+      prioStr = "UNDEFINED";
+      break;
     case 0:
-      return "VERY_LOW";
+      prioStr = "VERY_LOW";
+      break;
     case 1:
-      return "VERY_LOW";
+      prioStr = "VERY_LOW";
+      break;
     case 2:
-      return "LOW";
+      prioStr = "LOW";
+      break;
     case 3:
-      return "NORMAL";
+      prioStr = "NORMAL";
+      break;
     case 4:
-      return "HIGH";
+      prioStr = "HIGH";
+      break;
     case 5:
-      return "VERY_HIGH";
+      prioStr = "VERY_HIGH";
+      break;
     default:
-      return "UNDEFINED";
+      prioStr = "UNDEFINED";
+      break;
   }
+  return prioStr;
 
 }
 
@@ -297,7 +316,6 @@ operator<<(std::ostream& os, ListQueues& lsQueues) {
   std::string nbRunJobsHead = "Running jobs";
   std::string nbJobsQueHead = "Job in queue"; 
   std::string stateHead = "State";
-  std::string blank = " --- ";
 
   size_t maxNameSize = nameHead.size();
   size_t maxMemorySize = memoryHead.size();
