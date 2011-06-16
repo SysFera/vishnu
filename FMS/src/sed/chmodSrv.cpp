@@ -51,24 +51,11 @@ int solveChangeMode (diet_profile_t* profile) {
   mode_t mode;
   is >> mode;
 
-  std::cout << "Dans Change mode File:  " << "\n"; 
-  std::cout << "path:  " << path <<"\n"; 
-  std::cout << "user:  " << user <<"\n";
-  std::cout << "host:  " << host <<"\n"; 
-  std::cout << "mode:  " << mode <<"\n"; 
-
-
-
   localUser = user;
   localPath = path;
   SessionServer sessionServer (sessionKey);
 
   try {
-
-    std::cout << "Dans changeModeFile, dans le try catch:  " << "\n";
-    std::cout << "localPath:  " << localPath <<"\n";  
-    std::cout << "localUser:  " << localUser <<"\n";
-    std::cout << "userKey   " << userKey <<"\n";
 
    //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
@@ -94,9 +81,6 @@ int solveChangeMode (diet_profile_t* profile) {
 
     // get the acLogin
     acLogin = UserServer(sessionServer).getUserAccountLogin(host);
-
-    std::cout << "acLogin: " << acLogin << "\n";
-    std::cout << "machineName: " << machineName << "\n";
 
     FileFactory::setSSHServer(machineName);
     
