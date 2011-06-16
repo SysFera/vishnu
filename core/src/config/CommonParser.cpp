@@ -7,9 +7,6 @@ std::ostream debug(std::cerr.rdbuf());
 std::ostream debug(0);
 #endif
 
-std::string nullString("");
-ConfigMap *configPtr = new ConfigMap;
-
 bool StartsWith::operator() (const std::string& s2) const
 {
     return (0 == s2.compare(0, s1.size(), s1)) ? true : false;
