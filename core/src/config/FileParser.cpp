@@ -35,7 +35,6 @@ FileParser::parseFile(const std::string& path) {
   while (!file.eof()) {
     char buffer[1024];
     std::string line, key, value;
-    std::istringstream is;
     std::string::size_type pos;
 
     l++;
