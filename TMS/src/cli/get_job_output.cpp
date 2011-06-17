@@ -39,7 +39,6 @@ int main (int argc, char* argv[]){
   /******** Callback functions ******************/
      
   /*********** Out parameters *********************/
-  TMS_Data::JobResult_ptr out;
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(new Options(argv[0]));

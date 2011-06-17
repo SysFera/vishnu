@@ -140,7 +140,6 @@ solveCancelJob(diet_profile_t* pb) {
 
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   TMS_Data::Job_ptr job = NULL;
-  TMS_Data::SubmitOptions_ptr submitOptions = NULL;
 
   try {
     //MAPPER CREATION
