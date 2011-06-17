@@ -115,7 +115,7 @@ MonitorTMS::run() {
     sleep(minterval);
 
   } catch (VishnuException& e) {
-    string errorInfo =  e.buildExceptionString();
+    ; // do nothing
   }
   return 0;
 }

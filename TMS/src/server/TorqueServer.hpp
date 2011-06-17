@@ -126,14 +126,6 @@ class TorqueServer : public BatchServer
                 struct batch_status *p);
 
     /**
-     * \brief List of jobs returned
-     */
-    TMS_Data::ListJobs_ptr mjobs;
-    /**
-     * \brief Job returned
-     */
-    TMS_Data::Job_ptr mjob;
-    /**
      * \brief ListQueues returned
      */
     TMS_Data::ListQueues_ptr mlistQueues; 
@@ -141,10 +133,7 @@ class TorqueServer : public BatchServer
      * \brief The name of the server to connect
      */
     char serverOut[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
-    /**
-     * \brief A progression object
-     */
-    TMS_Data::ListProgression_ptr mprog;
+
 };
 
 #endif
