@@ -256,8 +256,6 @@ TMS_Data::Job JobServer::getJobInfo() {
   //To check the sessionKey
   msessionServer.check();
 
-  std::string outputPath;
-  std::string errorPath;
   std::vector<std::string> results;
   std::vector<std::string>::iterator  iter;
   time_t submitDate;
