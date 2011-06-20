@@ -1,0 +1,22 @@
+File;Line;Severity;Rule;Description
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\UMS\src\cli\change_password.cpp;27;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\UMS\src\cli\daemon_cleaner.cpp;8;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\UMS\src\cli\daemon_cleaner.cpp;13;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\UMS\src\cli\daemon_cleaner.cpp;19;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\UMS\src\cli\daemon_cleaner.cpp;25;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\UMS\src\cli\daemon_cleaner.cpp;30;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\UMS\src\cli\daemon_cleaner.cpp;139;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\UMS\src\cli\daemon_cleaner.cpp;143;Advisory;fntype;Function types
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\UMS\src\server\ListCommandsServer.hpp;191;Required;MISRA_6_4_6;Default clause in switch
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\UMS\src\server\ListCommandsServer.hpp;218;Required;MISRA_6_4_6;Default clause in switch
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\UMS\src\sed\MonitorUMS.cpp;92;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\UMS\src\sed\MonitorUMS.cpp;99;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\UMS\src\sed\MonitorUMS.hpp;25;Required;MISRA_12_1_3;Constructors
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\UMS\src\sed\ServerUMS.cpp;11;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\UMS\src\sed\ServerUMS.cpp;12;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\UMS\src\sed\ServerUMS.cpp;13;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\UMS\src\sed\ServerUMS.cpp;14;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\UMS\src\sed\ServerUMS.cpp;15;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\UMS\src\sed\ServerUMS.cpp;16;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\UMS\src\server\SessionServer.cpp;325;Required;MISRA_8_4_3;Explicit return statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.1.0\UMS\src\sed\umssed.cpp;63;Required;MISRA_0_1_3;Unused variables
