@@ -31,20 +31,20 @@ def displayFiletransferList(fileTransferList):
   for i in range(fileTransferList.getFileTransfers().size()):
     displayFileTransfer(fileTransferList.getFileTransfers().get(i))
 
-VISHNU.vishnuInitialize("/home/capo-chichi/Sysfera/vishnu/build/test_files/cfg/client_testing.cfg")
+VISHNU.vishnuInitialize("/home/ibrahima/Brouillon/buildFMS/test_files/cfg/client_testing.cfg")
 
-path = "machine_1:/tmp/testFMSpython"
-DIR = "machine_1:/tmp/testFMSDirpython"
-path2 = "machine_1:/tmp/omninames-Paco-Sysfera.log"
-DIR2 = "machine_1:/tmp/"
-path3 = "machine_1:/tmp/testCpFms"
-path4 = "machine_1:/tmp/testGrp"
-path5 = "machine_1:/tmp/testGrpMoved"
-DIR3 = "machine_1:/tmp/TmpTestFMS"
+path = "MA_2:/tmp/testFMSpython"
+DIR = "MA_2:/tmp/testFMSDirpython"
+path2 = "MA_2:/tmp/omninames-Paco-Sysfera.log"
+DIR2 = "MA_2:/tmp/"
+path3 = "MA_2:/tmp/testCpFms"
+path4 = "MA_2:/tmp/testGrp"
+path5 = "MA_2:/tmp/testGrpMoved"
+DIR3 = "MA_2:/tmp/TmpTestFMS"
 DIR4 = "/home/capo-chichi/Telechargements/"
-DIR5 = "machine_1:/tmp/TransferLib/"
-DIR6 = "machine_1:/tmp/MoveAsyncTest/"
-contentOfFile = "machine_1"
+DIR5 = "MA_2:/tmp/TransferLib/"
+DIR6 = "MA_2:/tmp/MoveAsyncTest/"
+contentOfFile = "MA_2"
 
 #Objects initialization
 headOpt = VISHNU.HeadOfFileOptions()
@@ -60,7 +60,7 @@ stopTransferOptions = VISHNU.StopTransferOptions()
 lsTransferOptions = VISHNU.LsTransferOptions()
 
 try :
-  r, k = VISHNU.connect("root", "vishnu_user")
+  r, k = VISHNU.connect("user_1", "toto")
   print "createFile:"
   VISHNU.createFile(k, path)
   print "sessionKey:", k

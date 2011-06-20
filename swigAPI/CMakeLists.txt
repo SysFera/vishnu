@@ -69,6 +69,13 @@ SET(CMAKE_SWIG_FLAGS "-w362,389")
 add_definitions(-DCOMPILE_UMS)
 set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} "-DCOMPILE_UMS" )
 
+  set (SWIG_LINK_LIB
+    ${SWIG_LINK_LIB}
+    emf4cpp-UMS_Data
+    emf4cpp-TMS_Data
+    emf4cpp-FMS_Data
+    emf4cpp-IMS_Data)
+
 if(COMPILE_TMS)
   add_definitions(-DCOMPILE_TMS)
   set( CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} "-DCOMPILE_TMS" )
