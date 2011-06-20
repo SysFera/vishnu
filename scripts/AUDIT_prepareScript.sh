@@ -73,6 +73,33 @@ cp -r TMS/src/server $path/TMS/src
 cp -r TMS/src/slave $path/TMS/src
 
 ###############################################################################
+#                                    F M S                                    #
+###############################################################################
+
+mkdir $path/FMS
+mkdir $path/FMS/src/
+cp -r FMS/src/api $path/FMS/src
+cp -r FMS/src/cli $path/FMS/src
+cp -r FMS/src/client $path/FMS/src
+cp -r FMS/src/sed $path/FMS/src
+cp -r FMS/src/server $path/FMS/src
+
+###############################################################################
+#                                    I M S                                    #
+###############################################################################
+
+mkdir $path/IMS
+mkdir $path/IMS/src/
+cp IMS/src/CMakeLists.txt $path/IMS/src/
+cp -r IMS/src/api $path/IMS/src
+cp -r IMS/src/cli $path/IMS/src
+cp -r IMS/src/client $path/IMS/src
+cp -r IMS/src/sed $path/IMS/src
+cp -r IMS/src/server $path/IMS/src
+cp -r IMS/src/utils $path/IMS/src
+
+
+###############################################################################
 #                                 All modules                                 #
 ###############################################################################
 

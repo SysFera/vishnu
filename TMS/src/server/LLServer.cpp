@@ -79,7 +79,7 @@ LLServer::cancel(const char* jobId) {
   
   cmd << cancelCommand << " " << jobId;
   if(system((cmd.str()).c_str())) { 
-    return -1;;//error messages are written to stderr, VISHNU redirects these messages into a file
+    return -1; //error messages are written to stderr, VISHNU redirects these messages into a file
   }
  
  return 0; 
@@ -91,7 +91,7 @@ LLServer::cancel(const char* jobId) {
  * \param options the object which contains the SubmitOptions options values
  * \return raises an exception on error
  */
-int 
+void
 LLServer::processOptions(const char* scriptPath, 
                          const TMS_Data::SubmitOptions& options) {
 
@@ -126,7 +126,6 @@ LLServer::processOptions(const char* scriptPath,
       ofs.close();
     }
   }
-
 }
 
 /**
@@ -135,7 +134,7 @@ LLServer::processOptions(const char* scriptPath,
  * \param content The buffer containing the inserted option
  * \return raises an exception on error
  */
-int
+void
 LLServer::insertOptionLine(const std::string& optionLineToInsert, 
                            std::string& content) {
 
@@ -182,7 +181,6 @@ LLServer::insertOptionLine(const std::string& optionLineToInsert,
 int
 LLServer::getJobState(const std::string& jobId) {
  
-  LL_job jobInfo;
   LL_element *queryObject;
   LL_element *queryInfos;
   LL_element *step;
@@ -228,47 +226,71 @@ LLServer::getJobState(const std::string& jobId) {
     {
       while(step) {
         rc = ll_get_data(step, LL_StepState, &state);
-        if(!rc)
-        {
+        if(!rc) {
+          int res = 0;
           switch(state) {
             case STATE_IDLE:
-              return 3; 
+              res = 3;
+              break;
             case STATE_RUNNING:
-              return 4;
+              res = 4;
+              break;
             case STATE_STARTING:
-              return 4;
+              res = 4;
+              break;
             case STATE_COMPLETE_PENDING:
-              return 4;
+              res = 4;
+              break;
             case STATE_REJECT_PENDING:
-              return 6;
+              res = 6;
+              break;
             case STATE_REMOVE_PENDING:
-              return 6;
+              res = 6;
+              break;
             case STATE_VACATE_PENDING:
-              return 3;
+              res = 3;
+              break;
             case STATE_VACATED:
-              return 3;
+              res = 3;
+              break;
             case STATE_REJECTED:
-              return 6;
+              res = 6;
+              break;
             case STATE_CANCELED:
-              return 6;
+              res = 6;
+              break;
             case STATE_REMOVED:
-              return 6;
+              res = 6;
+              break;
             case STATE_PENDING:
-              return 2 ;
+              res = 2;
+              break;
             case STATE_PREEMPTED:
-              return 3;
+              res = 3;
+              break;
             case STATE_PREEMPT_PENDING:
-              return 3;
+              res = 3;
+              break;
             case STATE_RESUME_PENDING:
-              return 3;
+              res = 3;
+              break;
             case STATE_COMPLETED: 
-              return 5;
+              res = 5;
+              break;
             case STATE_TERMINATED:
-              return 5;
+              res = 5;
+              break;
             case STATE_HOLD:
-              return 2;
+              res = 2;
+              break;
             case STATE_NOTQUEUED:
-              return 1;
+              res = 1;
+              break;
+            default:
+              res = 0;
+          }
+          if (res > 0) {
+            return res;
           }
 
           machine = (char*)"";
@@ -288,11 +310,11 @@ LLServer::getJobState(const std::string& jobId) {
           }
 
           ll_get_data(queryInfos, LL_JobGetNextStep, &step);
-        } //end if(!rc)
-      } // end while(step)
-    } // end if(!rc)
+        }
+      }
+    }
     queryInfos = ll_next_obj(queryObject);
-  } //while(queryInfos)
+  }
 
  return -1; 
 }
@@ -305,7 +327,6 @@ LLServer::getJobState(const std::string& jobId) {
 time_t 
 LLServer::getJobStartTime(const std::string& jobId) { 
 
-  LL_job jobInfo;
   LL_element *queryObject;
   LL_element *queryInfos;
   LL_element *step;
@@ -579,56 +600,78 @@ LLServer::computeNbRunJobsAndQueueJobs(std::map<std::string, int>& run,
  */
 int 
 LLServer::convertLLStateToVishnuState(int state) {
-  
+  int res = 0;
   switch(state) {
     case STATE_IDLE:
-      return 3;
+      res = 3;
+      break;
     case STATE_RUNNING:
-      return 4;
+      res = 4;
+      break;
     case STATE_STARTING:
-      return 4;
+      res = 4;
+      break;
     case STATE_COMPLETE_PENDING:
-      return 4;
+      res = 4;
+      break;
     case STATE_REJECT_PENDING:
-      return 6;
+      res = 6;
+      break;
     case STATE_REMOVE_PENDING:
-      return 6;
+      res = 6;
+      break;
     case STATE_VACATE_PENDING:
-      return 3;
+      res = 3;
+      break;
     case STATE_VACATED:
-      return 3;
+      res = 3;
+      break;
     case STATE_REJECTED:
-      return 6;
+      res = 6;
+      break;
     case STATE_CANCELED:
-      return 6;
+      res = 6;
+      break;
     case STATE_REMOVED:
-      return 6;
+      res = 6;
+      break;
     case STATE_PENDING:
-      return 2 ;
+      res = 2;
+      break;
     case STATE_PREEMPTED:
-      return 3;
+      res = 3;
+      break;
     case STATE_PREEMPT_PENDING:
-      return 3;
+      res = 3;
+      break;
     case STATE_RESUME_PENDING:
-      return 3;
+      res = 3;
+      break;
     case STATE_COMPLETED:
-      return 5;
+      res = 5;
+      break;
     case STATE_TERMINATED:
-      return 5;
+      res = 5;
+      break;
     case STATE_HOLD:
-      return 2;
+      res = 2;
+      break;
     case STATE_DEFERRED:
-      return 1;
+      res = 1;
+      break;
     case STATE_SUBMISSION_ERR:
-      return 1;
+      res = 1;
+      break;
     case STATE_NOTQUEUED:
-      return 1;
+      res = 1;
+      break;
     case STATE_NOTRUN:
-      return 1;
+      res = 1;
+      break;
     default:
-      return 5;
+      res = 5;
   }
-
+  return res;
 }
 
 /**

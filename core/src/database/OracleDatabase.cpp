@@ -155,7 +155,7 @@ OracleDatabase::getResult(string request) {
         cout << ((colTypes[i] == OCCI_SQLT_NUM) ? "NUM" : "OTHER") << endl;
         unsigned int colId = i + 1; // Oracle count from 1 to size
         string colValue = "";
-        Number num1;
+
         if (mres->isNull(colId)) {
           cout << "NULL COLUMN" << endl;
         } else if (mres->isTruncated(colId)) {
