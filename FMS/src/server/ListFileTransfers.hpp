@@ -65,10 +65,12 @@ public:
 
     //To check if the fromMachineId is defined
     if (options->getFromMachineId().size() != 0) {
-      //To check the client machine Id
-      checkClientMachineName(options->getFromMachineId());
       //To add the fromMachineId on the request
-      addOptionRequest("clientMachineId", options->getFromMachineId(), sqlRequest);
+      
+      addOptionRequest("sourceMachineId", options->getFromMachineId(), sqlRequest);
+
+      sqlRequest.append(" or destinationMachineId='"+options->getFromMachineId()+"'");
+      
       onlyProgressFile = false;
     }
 
