@@ -42,7 +42,7 @@ class SSHJobExec {
      * \param script_path the path to script to submit
      * \return raises an exception on error
      */
-    int
+    void
     sshexec(const std::string& slaveDirectory,
             const std::string& serviceName,
             const std::string& script_path="");
