@@ -222,16 +222,19 @@ ProcessCtlProxy::~ProcessCtlProxy() {
 
 void
 ProcessCtlProxy::cancelFMS() {
+#ifdef COMPILE_FMS
   FMS_Data::StopTransferOptions op = FMS_Data::StopTransferOptions();
   op.setFromMachineId(mmachineId);
   op.setTransferId("all");
   op.setUserId("all");
 
   stopFileTransfer(msessionProxy.getSessionKey(), op);
+#endif
 }
 
 void
 ProcessCtlProxy::cancelTMS() {
+#ifdef COMPILE_TMS
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   char* jobToString = NULL;
@@ -283,5 +286,6 @@ ProcessCtlProxy::cancelTMS() {
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
   diet_profile_free(profile);
+#endif
 }
 
