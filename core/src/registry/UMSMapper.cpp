@@ -775,13 +775,6 @@ UMSMapper::decodeConfDefaultOp(vector<int> separator, const string& msg){
   if (opt != NULL) {
     delete opt;
   }
-//  u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
-//  res += " ";
-//  res += u;
-//  res+= " ";
-//  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
-//  res += u;
-
 
   return res;
 }
@@ -814,11 +807,7 @@ UMSMapper::decodeConfOp(vector<int> separator, const string& msg){
   if (opt != NULL) {
     delete opt;
   }
-//  res += " ";
-//  res += u;
-//  res+= " ";
-//  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
-//  res += u;
+
   return res;
 }
 

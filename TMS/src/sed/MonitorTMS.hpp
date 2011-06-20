@@ -21,7 +21,7 @@ public :
    * \brief Constructor, raises an exception on error
    * \param interval The interval in seconds to check the database
    */
-  MonitorTMS(int interval = 1);
+  explicit MonitorTMS(int interval = 1);
 
   /**
    * \brief Destructor
