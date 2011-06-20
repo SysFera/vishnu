@@ -19,19 +19,12 @@
 
 /**
  * @brief A flux to store a debug message
- */ 
+ */
 
 extern std::ostream debug;
 
 /**
- * @brief An empty string  
- */ 
-
-
-extern std::string nullString;
-
-/**
- *  @typedef std::map<std::string, std::string> ConfigMap  
+ *  @typedef std::map<std::string, std::string> ConfigMap
  *  @brief A map to store the configuration
  *  Configuration Map (key, value)
  */
@@ -110,15 +103,15 @@ private:
      */
     std::string str_;
 public:
-    
+
     /**
      * \brief Default constructor
      */
     Splitter();
-   
+
     /**
      * \brief constructor with parameters
-     * \param c A delimiter 
+     * \param c A delimiter
      */
     Splitter(const char c);
 
@@ -149,7 +142,7 @@ public:
     void reset(const std::string& str, const char c);
 
     /**
-     * \brief An overloaded operator () to get the token 
+     * \brief An overloaded operator () to get the token
      * \return the token
      */
     std::string& operator() ();

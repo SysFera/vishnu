@@ -1,0 +1,246 @@
+
+    <html>
+    <head>
+    <title>Rule Violations Report - VISHNU_UMS_V1_1</title>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="include/logiscope.css" type="text/css" />
+
+<SCRIPT LANGUAGE='JavaScript' type="text/javascript">
+var menu=new CreerMenu("#FFFFFF","#FFFFFF","include/dyn03.gif","include/dyn04.gif","include/dyn02.gif","include/dyn05.gif",18);
+menu.AddRub("<B>Violated Rules</B>","O","");
+menu.AddLien("Ordered by file","VISHNU_UMS_V1_1rule_main.html#ViolationsFile");
+menu.AddLien("Ordered by rule/severity","VISHNU_UMS_V1_1rule_main.html#ViolationsRule");
+menu.AddRub("<B>Files</B>","N","");
+menu.AddLien("add_local_account.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba0148");
+menu.AddLien("add_machine.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba01e8");
+menu.AddLien("add_user.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba0288");
+menu.AddLien("api_ums.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba00a8");
+menu.AddLien("api_ums.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.60429d0");
+menu.AddLien("change_password.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba0328");
+menu.AddLien("close.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba03c8");
+menu.AddLien("CommandServer.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6042430");
+menu.AddLien("CommandServer.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6043830");
+menu.AddLien("common.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6042a70");
+menu.AddLien("ConfigurationProxy.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba15e8");
+menu.AddLien("ConfigurationProxy.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6043150");
+menu.AddLien("ConfigurationServer.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.60424d0");
+menu.AddLien("ConfigurationServer.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.60438d0");
+menu.AddLien("configure_default_option.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba0508");
+menu.AddLien("configure_option.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba05a8");
+menu.AddLien("configureOptionUtils.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba0468");
+menu.AddLien("configureOptionUtils.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6042b10");
+menu.AddLien("connect.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba0648");
+menu.AddLien("connectUtils.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6042bb0");
+menu.AddLien("daemon_cleaner.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba06e8");
+menu.AddLien("daemon_cleaner.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6042c50");
+menu.AddLien("delete_local_account.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba0788");
+menu.AddLien("delete_machine.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba0828");
+menu.AddLien("delete_user.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba08c8");
+menu.AddLien("internalApi.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.60422f0");
+menu.AddLien("internalApi.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6043790");
+menu.AddLien("list_history_cmd.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba0b48");
+menu.AddLien("list_local_accounts.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba0be8");
+menu.AddLien("list_machines.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba0c88");
+menu.AddLien("list_options.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba0d28");
+menu.AddLien("list_sessions.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba0dc8");
+menu.AddLien("list_users.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba0e68");
+menu.AddLien("ListCommandsServer.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6043970");
+menu.AddLien("listHistoryCmdUtils.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba0968");
+menu.AddLien("listHistoryCmdUtils.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6042cf0");
+menu.AddLien("ListLocalAccountsServer.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6043a10");
+menu.AddLien("ListMachinesServer.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6043ab0");
+menu.AddLien("listMachineUtils.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba0a08");
+menu.AddLien("listMachineUtils.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6042d90");
+menu.AddLien("ListOptionsValuesServer.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6043b50");
+menu.AddLien("ListSessionsServer.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6043bf0");
+menu.AddLien("listSessionUtils.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba0aa8");
+menu.AddLien("listSessionUtils.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6042e30");
+menu.AddLien("ListUsersServer.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6042570");
+menu.AddLien("ListUsersServer.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6043c90");
+menu.AddLien("LocalAccountProxy.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6041d50");
+menu.AddLien("LocalAccountProxy.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.60431f0");
+menu.AddLien("LocalAccountServer.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6042610");
+menu.AddLien("LocalAccountServer.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6043d30");
+menu.AddLien("localAccountUtils.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba0f08");
+menu.AddLien("localAccountUtils.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6042ed0");
+menu.AddLien("MachineClientServer.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.60426b0");
+menu.AddLien("MachineClientServer.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6043dd0");
+menu.AddLien("MachineProxy.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6041df0");
+menu.AddLien("MachineProxy.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6043290");
+menu.AddLien("MachineServer.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6042750");
+menu.AddLien("MachineServer.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6043e70");
+menu.AddLien("machineUtils.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba0fa8");
+menu.AddLien("machineUtils.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6042f70");
+menu.AddLien("MonitorUMS.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.60421b0");
+menu.AddLien("MonitorUMS.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6043650");
+menu.AddLien("OptionValueProxy.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6041e90");
+menu.AddLien("OptionValueProxy.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6043330");
+menu.AddLien("OptionValueServer.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.60427f0");
+menu.AddLien("OptionValueServer.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6043f10");
+menu.AddLien("reconnect.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba1048");
+menu.AddLien("reset_password.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba10e8");
+menu.AddLien("restore_configuration.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba1188");
+menu.AddLien("save_configuration.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba1228");
+menu.AddLien("ServerUMS.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6042250");
+menu.AddLien("ServerUMS.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.60436f0");
+menu.AddLien("SessionProxy.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6041f30");
+menu.AddLien("SessionProxy.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.60433d0");
+menu.AddLien("SessionServer.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6042890");
+menu.AddLien("SessionServer.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6043fb0");
+menu.AddLien("umssed.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6042390");
+menu.AddLien("update_local_account.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba12c8");
+menu.AddLien("update_machine.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba1368");
+menu.AddLien("update_user.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba1408");
+menu.AddLien("UserProxy.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6041fd0");
+menu.AddLien("UserProxy.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6043470");
+menu.AddLien("UserServer.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6042930");
+menu.AddLien("UserServer.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6044050");
+menu.AddLien("userUtils.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba14a8");
+menu.AddLien("userUtils.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6043010");
+menu.AddLien("utils.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6ba1548");
+menu.AddLien("utils.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.60430b0");
+menu.AddLien("utilsClient.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6042110");
+menu.AddLien("utilsClient.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.60435b0");
+menu.AddLien("UtilsProxy.cpp","VISHNU_UMS_V1_1rule_main.html#i.79.6042070");
+menu.AddLien("UtilsProxy.hpp","VISHNU_UMS_V1_1rule_main.html#i.79.6043510");
+menu.AddRub("<B>Required Rules</B>","N","");
+menu.AddLien("MISRA_0_1_1","VISHNU_UMS_V1_1rule_main.html#i.77.7368280");
+menu.AddLien("MISRA_0_1_3","VISHNU_UMS_V1_1rule_main.html#i.77.73682d8");
+menu.AddLien("MISRA_2_13_2","VISHNU_UMS_V1_1rule_main.html#i.77.7368750");
+menu.AddLien("MISRA_2_13_4","VISHNU_UMS_V1_1rule_main.html#i.77.73687a8");
+menu.AddLien("MISRA_2_3_1","VISHNU_UMS_V1_1rule_main.html#i.77.7368438");
+menu.AddLien("MISRA_2_7_1","VISHNU_UMS_V1_1rule_main.html#i.77.7368490");
+menu.AddLien("MISRA_2_7_2","VISHNU_UMS_V1_1rule_main.html#i.77.73684e8");
+menu.AddLien("MISRA_3_1_3","VISHNU_UMS_V1_1rule_main.html#i.77.7368858");
+menu.AddLien("MISRA_5_14_1","VISHNU_UMS_V1_1rule_main.html#i.77.7368b70");
+menu.AddLien("MISRA_5_18_1","VISHNU_UMS_V1_1rule_main.html#i.77.7368bc8");
+menu.AddLien("MISRA_5_2_11","VISHNU_UMS_V1_1rule_main.html#i.77.7368ac0");
+menu.AddLien("MISRA_5_3_3","VISHNU_UMS_V1_1rule_main.html#i.77.7368b18");
+menu.AddLien("MISRA_6_2_2","VISHNU_UMS_V1_1rule_main.html#i.77.7368c20");
+menu.AddLien("MISRA_6_3_1","VISHNU_UMS_V1_1rule_main.html#i.77.7368cd0");
+menu.AddLien("MISRA_6_4_1","VISHNU_UMS_V1_1rule_main.html#i.77.7368d28");
+menu.AddLien("MISRA_6_4_5","VISHNU_UMS_V1_1rule_main.html#i.77.75e8698");
+menu.AddLien("MISRA_6_4_6","VISHNU_UMS_V1_1rule_main.html#i.77.75e86f0");
+menu.AddLien("MISRA_6_4_8","VISHNU_UMS_V1_1rule_main.html#i.77.75e8748");
+menu.AddLien("MISRA_6_5_1","VISHNU_UMS_V1_1rule_main.html#i.77.75e87a0");
+menu.AddLien("MISRA_6_5_4","VISHNU_UMS_V1_1rule_main.html#i.77.75e88a8");
+menu.AddLien("MISRA_6_6_1","VISHNU_UMS_V1_1rule_main.html#i.77.75e8900");
+menu.AddLien("MISRA_6_6_2","VISHNU_UMS_V1_1rule_main.html#i.77.75e8958");
+menu.AddLien("MISRA_7_3_2","VISHNU_UMS_V1_1rule_main.html#i.77.75e8a60");
+menu.AddLien("MISRA_7_3_3","VISHNU_UMS_V1_1rule_main.html#i.77.75e8ab8");
+menu.AddLien("MISRA_7_4_3","VISHNU_UMS_V1_1rule_main.html#i.77.75e8bc0");
+menu.AddLien("MISRA_7_5_2","VISHNU_UMS_V1_1rule_main.html#i.77.75e8c70");
+menu.AddLien("MISRA_8_3_1","VISHNU_UMS_V1_1rule_main.html#i.77.75e8d20");
+menu.AddLien("MISRA_8_4_1","VISHNU_UMS_V1_1rule_main.html#i.77.75e8d78");
+menu.AddLien("MISRA_8_4_3","VISHNU_UMS_V1_1rule_main.html#i.77.75e8dd0");
+menu.AddLien("MISRA_8_5_3","VISHNU_UMS_V1_1rule_main.html#i.77.75e8e80");
+menu.AddLien("MISRA_9_5_1","VISHNU_UMS_V1_1rule_main.html#i.77.75e8ed8");
+menu.AddLien("MISRA_9_6_2","VISHNU_UMS_V1_1rule_main.html#i.77.75e8f30");
+menu.AddLien("MISRA_9_6_4","VISHNU_UMS_V1_1rule_main.html#i.77.75e8f88");
+menu.AddLien("MISRA_10_3_3","VISHNU_UMS_V1_1rule_main.html#i.77.75e9140");
+menu.AddLien("MISRA_12_1_3","VISHNU_UMS_V1_1rule_main.html#i.77.75e9248");
+menu.AddLien("MISRA_15_0_3","VISHNU_UMS_V1_1rule_main.html#i.77.75e9350");
+menu.AddLien("MISRA_15_1_1","VISHNU_UMS_V1_1rule_main.html#i.77.75e93a8");
+menu.AddLien("MISRA_15_1_2","VISHNU_UMS_V1_1rule_main.html#i.77.75e9400");
+menu.AddLien("MISRA_15_1_3","VISHNU_UMS_V1_1rule_main.html#i.77.75e9458");
+menu.AddLien("MISRA_15_3_7","VISHNU_UMS_V1_1rule_main.html#i.77.75e9508");
+menu.AddLien("MISRA_15_5_1","VISHNU_UMS_V1_1rule_main.html#i.77.75e9560");
+menu.AddLien("MISRA_15_5_3","VISHNU_UMS_V1_1rule_main.html#i.77.75e95b8");
+menu.AddLien("MISRA_16_0_1","VISHNU_UMS_V1_1rule_main.html#i.77.75e9610");
+menu.AddLien("MISRA_16_0_2","VISHNU_UMS_V1_1rule_main.html#i.77.75e9668");
+menu.AddLien("MISRA_16_0_3","VISHNU_UMS_V1_1rule_main.html#i.77.75e96c0");
+menu.AddLien("MISRA_16_0_5","VISHNU_UMS_V1_1rule_main.html#i.77.75e9770");
+menu.AddLien("MISRA_16_0_6","VISHNU_UMS_V1_1rule_main.html#i.77.75e97c8");
+menu.AddLien("MISRA_16_0_8","VISHNU_UMS_V1_1rule_main.html#i.77.75e9820");
+menu.AddLien("MISRA_16_1_1","VISHNU_UMS_V1_1rule_main.html#i.77.75e9878");
+menu.AddLien("MISRA_16_1_2","VISHNU_UMS_V1_1rule_main.html#i.77.75e98d0");
+menu.AddLien("MISRA_16_2_3","VISHNU_UMS_V1_1rule_main.html#i.77.75e99d8");
+menu.AddLien("MISRA_16_2_4","VISHNU_UMS_V1_1rule_main.html#i.77.75e9a30");
+menu.AddLien("MISRA_16_2_6","VISHNU_UMS_V1_1rule_main.html#i.77.75e9ae0");
+menu.AddLien("MISRA_16_3_1","VISHNU_UMS_V1_1rule_main.html#i.77.75e9b38");
+menu.AddLien("MISRA_17_0_2","VISHNU_UMS_V1_1rule_main.html#i.77.75e9be8");
+menu.AddLien("MISRA_17_0_3","VISHNU_UMS_V1_1rule_main.html#i.77.75e9c40");
+menu.AddLien("MISRA_17_0_5","VISHNU_UMS_V1_1rule_main.html#i.77.75e9c98");
+menu.AddLien("MISRA_18_0_1","VISHNU_UMS_V1_1rule_main.html#i.77.75e9cf0");
+menu.AddLien("MISRA_18_0_2","VISHNU_UMS_V1_1rule_main.html#i.77.75e9d48");
+menu.AddLien("MISRA_18_0_4","VISHNU_UMS_V1_1rule_main.html#i.77.75e9df8");
+menu.AddLien("MISRA_18_2_1","VISHNU_UMS_V1_1rule_main.html#i.77.75e9ea8");
+menu.AddLien("cmdef","VISHNU_UMS_V1_1rule_main.html#i.77.73680c8");
+menu.AddRub("<B>Advisory Rules</B>","N","");
+menu.AddLien("MISRA_2_7_3","VISHNU_UMS_V1_1rule_main.html#i.77.7368540");
+menu.AddLien("MISRA_5_2_10","VISHNU_UMS_V1_1rule_main.html#i.77.7368a68");
+menu.AddLien("MISRA_10_2_1","VISHNU_UMS_V1_1rule_main.html#i.77.75e9038");
+menu.AddLien("MISRA_15_0_2","VISHNU_UMS_V1_1rule_main.html#i.77.75e92f8");
+menu.AddLien("MISRA_16_2_5","VISHNU_UMS_V1_1rule_main.html#i.77.75e9a88");
+menu.AddLien("dmaccess","VISHNU_UMS_V1_1rule_main.html#i.77.7368120");
+menu.AddLien("fntype","VISHNU_UMS_V1_1rule_main.html#i.77.7368178");
+menu.AddLien("inlinevirt","VISHNU_UMS_V1_1rule_main.html#i.77.73681d0");
+menu.AddLien("normalnew","VISHNU_UMS_V1_1rule_main.html#i.77.7368228");
+menu.AddRub("<B>Synthesis</B>","N","");
+menu.AddLien("Required Table","VISHNU_UMS_V1_1rule_main.html#SyntTableRequired");
+menu.AddLien("Advisory Table","VISHNU_UMS_V1_1rule_main.html#SyntTableAdvisory");
+function CreerMenu(ColFerme,ColOuvert,imgO,imgF,imgOption,imgOptionFin,hauteur) {
+	this.nb_rub=0;
+	this.colF=ColFerme;
+	this.colO=ColOuvert;
+	this.imgO=imgO;
+	this.imgF=imgF;
+	this.imgOpt=imgOption;
+	this.imgOptFin=imgOptionFin;
+	this.hauteur=hauteur;
+	this.AddRub=AddRubrique;
+	this.AddLien=AddLink;
+	this.Aff=AffMenu;
+}
+
+function AddRubrique(txt,aff,page) {
+	var rub = new Object;
+	rub.txt=txt;
+	rub.aff=aff;
+	rub.page=page;
+	rub.nb_lien=0;
+	this[this.nb_rub]=rub;
+	this.nb_rub++;
+}
+
+function AddLink(txt,page) {
+	var no_rub = this.nb_rub-1;
+	var no_lien= this[no_rub].nb_lien;
+	var lien = new Object;
+		lien.txt=txt;
+		lien.page=page;
+	this[no_rub][no_lien]=lien;
+	this[no_rub].nb_lien++;
+}
+
+function dM(txt) { parent.frames[0].document.write(txt) }
+function AffImg(img) {
+	dM("<IMG SRC='"+img+"' height='"+parent.menu.hauteur+"' BORDER=0 ALT='' ALIGN='top' vspace=0>");
+}
+
+function AffMenu() {
+	for(var i=0;i<this.nb_rub;i++) {
+		if (this[i].aff=="N") {
+			AffImg(this.imgF);
+			dM("<A class=menu HREF='javascript:ClicRub("+i+")' color='0C0C00'>");
+			dM(this[i].txt+"</A><BR>");
+		} else {
+			AffImg(this.imgO);
+			dM("<A class=menu HREF='javascript:ClicRub("+i+")'>");
+			dM(this[i].txt+"</A><BR>");
+			for(var j=0;j<this[i].nb_lien;j++) {
+			if (j==this[i].nb_lien-1) {AffImg(this.imgOptFin);} 
+			else  {AffImg(this.imgOpt);}
+				dM("<A class=menu target='right' HREF='"+this[i][j].page+"'>");
+				dM(this[i][j].txt+"</A><BR>");		
+			}
+		}
+	}
+}
+</SCRIPT>
+</HEAD>
+<frameset cols="200,*" border="0" framespacing="0" frameborder="NO">
+    <frame name="left" noresize src="VISHNU_UMS_V1_1rule_left.html">
+    <frame name="right" src="VISHNU_UMS_V1_1rule_main.html">
+</frameset>
+</HTML>

@@ -88,7 +88,7 @@ SSHJobExec::checkSshParams() {
  * \param script_path the path to script to submit
  * \return raises an exception on error
  */
-int
+void
 SSHJobExec::sshexec(const std::string& slaveDirectory,
                         const std::string& serviceName,
                         const std::string& script_path) {
@@ -199,15 +199,18 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
  * \return the converted batch type
  */
 std::string SSHJobExec::convertBatchTypeToString(BatchType batchType) {
-
+  std::string value;
   switch(batchType) {
     case TORQUE:
-      return "TORQUE";
+      value = "TORQUE";
+      break;
     case LOADLEVELER:
-      return "LOADLEVELER";
+      value = "LOADLEVELER";
+      break;
     default:
-      return "";
+      value = "";
   }
+  return value;
 }
 
 /**

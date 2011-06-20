@@ -12,8 +12,6 @@
 
 using namespace std;
 
-const std::string simple_cast_traits<std::string>::zero_value = "";
-
 /**
  * \brief Constructor
  */
