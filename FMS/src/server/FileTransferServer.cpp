@@ -459,12 +459,13 @@ FileTransferServer::processOptions(const FMS_Data::StopTransferOptions& options,
 
   //To check if the fromMachineId is defined
   if (machineName.size() != 0) {
-    //To check the client machine Id
-   // FileTransferServer::checkClientMachineName(options.getFromMachineId());
+    
     //To add the sourceMachineId on the request
-    FileTransferServer::addOptionRequest("sourcemachineid", machineName, sqlRequest);
+    FileTransferServer::addOptionRequest("sourceMachineId", machineName, sqlRequest);
     //To add the destinationMachineId on the request
-    FileTransferServer::addOptionRequest("destinationmachineid", machineName, sqlRequest);
+    sqlRequest.append(" or destinationMachineId='"+machineName+"'");
+
+
   }
 
   //Creation of the object user
@@ -504,7 +505,7 @@ int FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options 
   if (false==options.getTransferId().empty() || false==options.getUserId().empty() || false==options.getFromMachineId().empty()){
 
 
-    std::string sqlListOfPid = "SELECT transferid,processId from filetransfer, vsession "
+    std::string sqlListOfPid = "SELECT transferId,processId from filetransfer, vsession "
       "where vsession.numsessionid=filetransfer.vsession_numsessionid and filetransfer.status=0";
 
     std::string transferid;
@@ -684,7 +685,7 @@ void TransferExec::setLastExecStatus(const int& lastExecStatus) const{
 void TransferExec::updatePid(const int& pid)const {
 
   setProcessId(pid);
-  std::string sqlUpdateRequest = "UPDATE filetransfer SET processid="+convertToString(pid)+" where transferid='"+getTransferId()+"'";
+  std::string sqlUpdateRequest = "UPDATE filetransfer SET processid="+convertToString(pid)+" where transferId='"+getTransferId()+"'";
   FileTransferServer::getDatabaseInstance()->process(sqlUpdateRequest.c_str());
 
 }
