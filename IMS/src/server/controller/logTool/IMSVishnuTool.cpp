@@ -145,7 +145,7 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	      break;
 	    }
 	    // else if FMS sed
-	    else if (string(tab[j]->path).compare("copyFile")==0) {
+	    else if (string(tab[j]->path).compare("FileCopy")==0) {
 	      log.append(msg[i].tag);
 	      log.append(":");
 	      //msg
