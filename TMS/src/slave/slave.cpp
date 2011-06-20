@@ -142,6 +142,7 @@ main(int argc, char* argv[], char* envp[])
         std::string slaveJob = strdup(_ser.serialize_str(job).c_str());
 
         ::ecorecpp::serializer::serializer _ser2;
+        //FIXME next variable is unused
         std::string slaveOptions = strdup(_ser2.serialize_str(submitOptions).c_str());
 
         std::ofstream os_slaveJobFile(slaveJobFile);
@@ -159,6 +160,7 @@ main(int argc, char* argv[], char* envp[])
     os_error << errorInfo;
     os_error.close();
   } catch (std::exception& e) {
+    //FIXME next variable is unused
     std::string errorInfo = e.what();
   }
 
