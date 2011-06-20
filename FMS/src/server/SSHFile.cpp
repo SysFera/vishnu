@@ -496,11 +496,12 @@ pair<string, string> SSHExec::exec(const string& cmd) const {
   char c;
  
   // build the remote command  
-  
+  string beginMarker("beginVishnuCommand");
+
   command << sshCommand  << " -l " << userName;
   command << " -C"  << " -o BatchMode=yes " << " -o StrictHostKeyChecking=no";
   command << " -o ForwardAgent=yes";
-  command << " -p " << sshPort << " " << server << " " << cmd;
+  command << " -p " << sshPort << " " << server << " " << "echo "<< beginMarker<< " && "<<  cmd;
 
   
   istringstream is(command.str());
@@ -509,6 +510,12 @@ pair<string, string> SSHExec::exec(const string& cmd) const {
        istream_iterator<string>(),
        back_inserter<vector<string> >(tokens));
   
+
+/**********************************************/
+  std::vector<std::string>::const_iterator ite;
+  for (ite=tokens.begin(); ite!=tokens.end(); ++ite){
+    std::cout << *ite << "\n";
+  }
 
 /**********************************************/
 
@@ -576,7 +583,13 @@ pair<string, string> SSHExec::exec(const string& cmd) const {
   for (unsigned int i=0; i<tokens.size(); ++i)
     free(argv[i]);
   lastExecStatus = status;
-  
+
+  // Jump to the vishnu command output marker 
+string output=result.first;
+size_t pos= output.find(beginMarker);
+if (pos!= std::string::npos){
+result.first=output.substr(pos+beginMarker.size()+1);
+}
   return result;
 }
 
