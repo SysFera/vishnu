@@ -128,6 +128,7 @@ class SSHJobExec {
 
     /**
      * \brief The ssh private key path
+     * FIXME This attribute is not used
      */
     std::string msshKey;
 };

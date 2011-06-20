@@ -194,11 +194,10 @@ int main (int argc, char* argv[]){
             status = 7;
             break;
           default:
-            std::cerr << "Unknown job status " << statusStr << std::endl;
-            return 0;
+            status = -1;
         }
       }
-      if(statusStr.size() > 1) {
+      if ((statusStr.size() > 1) || (status == -1)) {
         std::cerr << "Unknown job status " << statusStr << std::endl;
         return 0;
       }
