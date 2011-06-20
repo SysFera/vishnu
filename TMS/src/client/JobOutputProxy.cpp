@@ -35,13 +35,11 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   char* jobResultToString;
-  //char* jobResultInString;
   char* errorInfo = NULL;
   char* IDContainer = NULL;
   diet_container_t content;
   char* outputPath = NULL;
   char* errorPath = NULL;
-  TMS_Data::JobResult_ptr outJobResult;
 
   TMS_Data::JobResult jobResult;
 
