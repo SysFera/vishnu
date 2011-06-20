@@ -86,7 +86,7 @@ private:
    * \param content The buffer containing the inserted option
    * \return raises an exception on error
    */
-  int 
+  void
   insertOptionLine(const std::string& optionLineToInsert, 
                        std::string& content);
 
@@ -96,7 +96,7 @@ private:
    * \param options the object which contains the SubmitOptions options values
    * \return raises an exception on error
    */
-  int 
+  void
   processOptions(const char* scriptPath, 
                  const TMS_Data::SubmitOptions& options);
 

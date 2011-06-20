@@ -114,7 +114,6 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
 
   while(!imscriptGenContent.eof()) {
 
-    std::istringstream is;
     getline(imscriptGenContent, line);
 
     numline +=1;
@@ -194,9 +193,11 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
     pos = line.find('=');
     if(pos == string::npos) {
 
-      ba::erase_all(line, " ");//while((pos=line.find(' '))!=string::npos) line.erase(pos, 1);
+      ba::erase_all(line, " ");
 
-      if(line=="") continue; 
+      if (line.empty()) {
+        continue;
+      }
       /*transform to lower case */
       std::string line_tolower(line);
       std::transform(line.begin(), line.end(), line_tolower.begin(), ::tolower);
@@ -215,7 +216,9 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
     key = line.substr(0, pos);
     ba::erase_all(key, " ");
 
-    if(key=="") continue;
+    if (key.empty()) {
+      continue;
+    }
 
     /*transform to lower case */
     std::string key_tolower(key);
@@ -232,7 +235,9 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
 
     value = line.substr(pos+1);
 
-    while((value[0]==' ')) value.erase(0,1);    
+    while((value[0]==' ')) {
+      value.erase(0,1);
+    }
 
     /*transform to lower case */
     std::transform(key.begin(), key.end(), key.begin(), ::tolower);

@@ -49,8 +49,6 @@ TorqueServer::submit(const char* scriptPath,
   struct attrl *attrib= NULL;
   char errMsg[1024];
   int argc = 0;
-  
-  std::ostringstream os_str;
 
   std::vector<std::string> cmdsOptions;
   //processes the options
@@ -452,8 +450,9 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   // Getting job idx
   str = p->name;
   pos_found =  str.find(".");
-  if(pos_found!=std::string::npos)
+  if (pos_found!=std::string::npos) {
     pos_found =  str.find(".", pos_found+1);
+  }
   str = str.substr(0, pos_found);
   jobid = str;
 
@@ -578,19 +577,19 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   }
 
   if (wall.compare("")!=0) {
-    job.setWallClockLimit(vishnu::convertStringToWallTime(std::string(wall.c_str())));
+    job.setWallClockLimit(vishnu::convertStringToWallTime(wall));
   } else {
     job.setWallClockLimit(0);
   }
 
   if (mem.compare("")!=0) {
-    job.setMemLimit(atoi(mem.c_str()));
+    job.setMemLimit(convertToInt(mem));
   } else {
     job.setMemLimit(0);
   }
 
   if (node.compare("")!=0) {
-    job.setNbNodes(vishnu::convertToInt(node.c_str()));
+    job.setNbNodes(vishnu::convertToInt(node));
   } else {
     job.setNbNodes(0);
   }
@@ -681,9 +680,9 @@ TorqueServer::listQueues(const std::string& OptqueueName) {
       if(a->name!=NULL) {
         if(!strcmp(a->name, ATTR_start)) {
           if(*a->value == 'T') {
-            queue->setState(2); //RUNNING = 'R';
+            queue->setState(2); // RUNNING
           } else {
-            queue->setState(1); // STARTED = 'S';
+            queue->setState(1); // STARTED
           }
         }  else if(!strcmp(a->name, ATTR_count)) { 
           // a->value=Transit:X Queued:X Held:X Waiting:W Running:X Exiting:X            
