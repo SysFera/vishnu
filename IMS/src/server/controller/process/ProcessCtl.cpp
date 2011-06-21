@@ -76,36 +76,15 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, bool isAPI) {
     // Do nothing, stop just to make sure the process is not running anymore    
   }
 
-  char hname[200];
-  gethostname(hname, 199);
-  
-  // If have to restart a local process, ssh will not be used
-  if (proc.getMachineId().compare(getMidFromHost(string(hname)))==0) {
-    proc.setMachineId("");
-  }
-
-  
-
   boost::to_lower(type);
   type += "sed";
-  // If local
-  if (proc.getMachineId().compare("")==0) {
-    createFile (cmd, &proc, true);
-    cmd += type;
-    cmd += " /tmp/vishnu_restart &";
-    int ret = system(cmd.c_str());
-    if (ret == -1) {
-      throw SystemException(ERRCODE_SYSTEM, "Failed to restart process "+type);
-    }
-  } else {
-    createFile (cmd, &proc, false);
-    cmd += type;
-    cmd += " /tmp/vishnu_restart&";
-    string dcmd = "ssh vishnu@"+hostname+" \""+cmd+"\"";
-    int ret = system(dcmd.c_str());
-    if (ret == -1) {
-      throw SystemException(ERRCODE_SYSTEM, "Failed to restart process "+type);
-    }
+  createFile (cmd, &proc, false);
+  cmd += type;
+  cmd += " /tmp/vishnu_restart&";
+  string dcmd = "ssh vishnu@"+hostname+" \""+cmd+"\"";
+  int ret = system(dcmd.c_str());
+  if (ret == -1) {
+    throw SystemException(ERRCODE_SYSTEM, "Failed to restart process "+type);
   }
 }
 

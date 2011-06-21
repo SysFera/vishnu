@@ -144,7 +144,7 @@ public:
    * \return The last updated running IMS sed
    */
   string
-  getElectedHostname();
+  getElectedMid();
 
 protected:
 private:

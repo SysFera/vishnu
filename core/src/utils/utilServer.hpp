@@ -37,14 +37,6 @@ public :
 namespace vishnu {
 
   /**
-   * \brief To get a vishnu machineid based on the hostname
-   * \param hostname: The name of the hostname
-   * \return The corresponding machine id
-   */
-  std::string
-  getMidFromHost(std::string hostname);
-
-  /**
    * \brief Position of the machine id in the machine table, starting at 0
    */
   static const int MIDPOS = 7;
@@ -92,17 +84,19 @@ namespace vishnu {
    * \brief To register the server in the database
    * \param type: The type of the SeD
    * \param config: The configuration of the executable
+   * \param cfg: The created path to the config file
    * \return 0 if the function succeeds or another value otherwise
    */
   int
-  registerSeD(std::string type, ExecConfiguration config);
+  registerSeD(std::string type, ExecConfiguration config, std::string &cfg);
   /**
    * \brief To unregister the server in the database (set as stopped)
    * \param type: The type of the SeD
+   * \param mid: The machine id
    * \return 0 if the function succeeds or another value otherwise
    */
   int
-  unregisterSeD(std::string type);
+  unregisterSeD(std::string type, std::string mid);
 
   /**
    * \brief Return true if the string starts with 'MONTH'
