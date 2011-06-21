@@ -242,6 +242,8 @@ if (DEBUG_TESTS)
 endif (DEBUG_TESTS)
 
 if (BUILD_TESTING)
+  add_definitions( -DBUILD_TESTING )
+  
   set( TEST_DB_TYPE "postgresql" CACHE STRING "Type of the test database")
   set( TEST_DB_HOST "localhost" CACHE STRING "Hostname of the test database server")
   set( TEST_DB_NAME "vishnu" CACHE STRING "Database name of the test database")

@@ -351,6 +351,7 @@ namespace vishnu {
   void
   vishnuFinalize();
 
+#ifdef BUILD_TESTING
   /**
    * \brief Function to initialize the data base 
    * \param filePath the file  
@@ -358,6 +359,7 @@ namespace vishnu {
    */
   int 
   restore(const std::string& filePath);
+#endif
 
 }
 
