@@ -61,12 +61,12 @@ ServerIMS::ServerIMS() : mprofile(NULL) {
 int
 ServerIMS::init(int vishnuId,
 		DbConfiguration dbConfig,
-		string sendmailScriptPath) {
+		string sendmailScriptPath,
+		string mid) {
 
   msendmailScriptPath = sendmailScriptPath;
 
   DbFactory factory;
-  string mid;
   mvishnuId = vishnuId;
 
   string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(mvishnuId));
@@ -83,7 +83,6 @@ ServerIMS::init(int vishnuId,
     if (gethostname(hostname, hostsize-1)==-1){
       throw SystemException(ERRCODE_SYSTEM, "Cannot get hostname to check process");
     }
-    mid = getMidFromHost(hostname);
 
     /*Mapper registration*/
     mmapperTMS = new TMSMapper(MapperRegistry::getInstance(), TMSMAPPERNAME);

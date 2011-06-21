@@ -41,6 +41,8 @@ int main(int argc, char* argv[], char* envp[]) {
   DbConfiguration dbConfig(config);
   std::string dietConfigFile;
   string FMSTYPE = "FMS";
+  string mid;
+  string cfg;
 
   if (argc != 2) {
     return usage(argv[0]);
@@ -52,6 +54,7 @@ int main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, dietConfigFile);
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     config.getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
+    config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
     if (interval < 0) {
       throw UserException(ERRCODE_INVALID_PARAM, "The Monitor interval value is incorrect");
     } 
@@ -74,15 +77,15 @@ int main(int argc, char* argv[], char* envp[]) {
       boost::scoped_ptr<ServerFMS> server(ServerFMS::getInstance());
       res = server->init(vishnuId, dbConfig);
 
-      registerSeD(FMSTYPE, config);
+      registerSeD(FMSTYPE, config, cfg);
       // Initialize the DIET SeD
       if (!res) {
         diet_print_service_table();
-        res = diet_SeD(dietConfigFile.c_str(), argc, argv);
-        unregisterSeD(FMSTYPE);
+        res = diet_SeD(cfg.c_str(), argc, argv);
+        unregisterSeD(FMSTYPE, mid);
       } else {
         std::cerr << "There was a problem during services initialization" << std::endl;
-        unregisterSeD(FMSTYPE);
+        unregisterSeD(FMSTYPE, mid);
         exit(1);
       }
     } catch (VishnuException& e) {
