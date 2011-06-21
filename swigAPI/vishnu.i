@@ -278,7 +278,14 @@
 
 //  ***************************** IMS MODULE  *****************************
 
+
 #ifdef SWIGPYTHON
+// Remove output parameters from the command
+%typemap(in, numinputs=0) int& freq(int temp) {
+  $1 = &temp;
+}
+
+
 %typemap(argout) int& freq {
   PyObject *o = PyInt_FromLong(*$1);
   $result = SWIG_Python_AppendOutput($result, o);
@@ -286,14 +293,8 @@
 #endif
 
 #ifdef SWIGJAVA
-//e%include "intRef.i"
 %include "typemaps.i"
-//%apply int &INOUT { int& freq };
- //%apply int &INOUT { int & freq };
 %apply int *OUTPUT { int &freq };
-//%typemap(inout) int &freq {
-//  $1 = PyInt_AsLong($input);
-// }
 
 
 // Exception rule for system exception
