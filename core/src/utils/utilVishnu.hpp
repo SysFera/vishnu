@@ -268,5 +268,15 @@ namespace vishnu {
    bool
      process_exists(const std::string& pid, const bfs::path& proc_dir="/proc");
 
+/**
+ * \brief Get the fully qualified name for the current system
+ * \param the port
+ * \return the fully qualified name for the current system
+ */
+
+
+std::string getLocalMachineName(const std::string& port );
+
+
 }
 #endif // _UTILVISHNU_H_
