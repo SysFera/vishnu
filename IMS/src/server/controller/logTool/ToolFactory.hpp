@@ -33,10 +33,11 @@ public:
    * \param type: The type of the tool to create
    * \param argc: Argc from main
    * \param argv: Argv from main
+   * \param mid: The machine id the log tool will run
    * \return The created tool
    */
   LogTool*
-  getTool(int type, int argc,  char** argv);
+  getTool(int type, int argc,  char** argv, string mid);
   /**
    * \brief Destructor
    */

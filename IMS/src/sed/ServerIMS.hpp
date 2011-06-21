@@ -74,10 +74,11 @@ public :
    * \param vishnuId The password of the root user vishnu_user for the connection with the database
    * \param dbConfig  The configuration of the database
    * \param sendmailScriptPath The path to the script for sending emails
+   * \param mid: The machine id
    * \return an error code (0 if success and 1 if an error occurs)
    */
   int
-  init(int vishnuId, DbConfiguration dbConfig, string sendmailScriptPath);
+  init(int vishnuId, DbConfiguration dbConfig, string sendmailScriptPath, string mid);
 
   /**
    * \brief Destructor, raises an exception on error

@@ -86,6 +86,8 @@ int main(int argc, char* argv[], char* envp[]) {
   string dietConfigFile;
   string IMSTYPE = "IMS";
   struct sigaction action;
+  string mid;
+  string cfg;
 
   if (argc < 2) {
     return usage(argv[0]);
@@ -98,6 +100,7 @@ int main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     dbConfig.check();
     config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT, sendmailScriptPath);
+    config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
   } catch (UserException& e) {
     std::cerr << e.what() << std::endl;
     exit(1);
@@ -110,17 +113,17 @@ int main(int argc, char* argv[], char* envp[]) {
 
   // Initialize the IMS Server (Opens a connection to the database)
   ServerIMS* server = ServerIMS::getInstance();
-  res = server->init(vishnuId, dbConfig, sendmailScriptPath);
+  res = server->init(vishnuId, dbConfig, sendmailScriptPath, mid);
 
-  registerSeD(IMSTYPE, config);
+  registerSeD(IMSTYPE, config, cfg);
 
   // Watcher thread
-  Watcher w(IMSVishnuTool_v1, argc, argv);
+  Watcher w(IMSVishnuTool_v1, argc, argv, mid);
   thread thr1(bind(&Watcher::run, &w));
 
 
   // History maker thread
-  HM hm = HM(sendmailScriptPath);
+  HM hm = HM(sendmailScriptPath, mid);
   thread thr2(bind(&HM::run, &hm));
 
   //Declaration of signal handler, to remove script children
@@ -132,8 +135,8 @@ int main(int argc, char* argv[], char* envp[]) {
   // Initialize the DIET SeD
   if (!res) {
     diet_print_service_table();
-    res = diet_SeD(dietConfigFile.c_str(), argc, argv);
-    unregisterSeD(IMSTYPE);
+    res = diet_SeD(cfg.c_str(), argc, argv);
+    unregisterSeD(IMSTYPE, mid);
     pid_t pid = getpid();
     kill(pid, SIGINT);
   } else {

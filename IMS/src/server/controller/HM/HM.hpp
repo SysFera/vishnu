@@ -19,8 +19,9 @@ public:
   /**
    * \brief Constructor
    * \param mail: The script to send mails
+   * \param mid: The machine id
    */
-  HM(string mail);
+  HM(string mail, string mid);
   /**
    * \brief Destructor
    */
@@ -36,6 +37,10 @@ private:
    * \brief The metric server object
    */
   MetricServer mms;
+  /**
+   * \brief The machine id
+   */
+  string mmid;
 };
 
 #endif

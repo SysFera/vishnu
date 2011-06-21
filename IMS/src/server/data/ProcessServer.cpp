@@ -218,7 +218,7 @@ ProcessServer::getHost(string mmid, string& hostname) {
 
 // Return the last actif ims server
 string
-ProcessServer::getElectedHostname() {
+ProcessServer::getElectedMid() {
   string req = "select * from machine, process where machine.machineid=process.machineid and process.vishnuname='IMS' and process.pstatus='"+convertToString(PRUNNING)+"' order by uptime desc";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
   if(result->getNbTuples() == 0) {
@@ -226,7 +226,7 @@ ProcessServer::getElectedHostname() {
   }
   vector<string> res;
   res = result->get(0);
-  return string(res.at(2));
+  return string(res.at(7));
 }
 
 
