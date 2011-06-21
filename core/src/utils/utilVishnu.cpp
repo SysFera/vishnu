@@ -12,6 +12,13 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <sstream>
 #include <sys/stat.h>
+// Headers for getaddrinfo function
+#include <netdb.h>
+#include <sys/param.h>
+#include<iostream>
+#include<string>
+#include<cstring>
+
 
 #include "UserException.hpp"
 #include "SystemException.hpp"
@@ -544,4 +551,42 @@ vishnu::process_exists(const std::string& pid, const bfs::path& proc_dir){
   token /= pid;
   return bfs::exists(token);
 }
+
+
+/**
+ * \brief Get the fully qualified name for the current system
+ * \param port the port
+ * \return the fully qualified name for the current system
+ */
+
+
+std::string vishnu::getLocalMachineName(const std::string& port ){
+
+  char hostname[MAXHOSTNAMELEN];
+
+  gethostname(hostname, MAXHOSTNAMELEN);
+
+  struct addrinfo hints, *servinfo;
+
+  int rv;
+
+  memset(&hints, 0, sizeof(hints));
+  hints.ai_family = AF_UNSPEC; // ither IPV4 or IPV6  use AF_INET6 to force IPv6
+  hints.ai_socktype = SOCK_STREAM;
+  hints.ai_flags = AI_CANONNAME;
+
+  if ((rv = getaddrinfo(hostname,port.c_str(), &hints, &servinfo)) != 0) {
+    SystemException(ERRCODE_SYSTEM,gai_strerror(rv));
+  }
+  if(servinfo->ai_canonname==NULL){
+    throw SystemException(ERRCODE_SYSTEM,"can not resolve the machine name");
+  }
+
+  return servinfo->ai_canonname;
+
+}
+
+
+
+
 

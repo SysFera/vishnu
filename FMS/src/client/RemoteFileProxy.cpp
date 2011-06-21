@@ -834,9 +834,11 @@ int RemoteFileProxy::transferFile(const std::string& dest,
   string localUser = "";
   bfs::path destPath(FileProxy::extName(dest));
   if(destHost.compare("localhost")==0){
-    char hostName[255];
-    gethostname(hostName, 255);
-    destHost = hostName;
+    
+  // get the destination full qualified host name 
+    
+    destHost =vishnu::getLocalMachineName("22");
+    
     uid_t uid = getuid();
     struct passwd*  pw = getpwuid(uid);
     localUser = pw->pw_name;
