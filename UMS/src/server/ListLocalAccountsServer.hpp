@@ -35,7 +35,7 @@ public:
   ListLocalAccountsServer(const SessionServer session):
     QueryServer<UMS_Data::ListLocalAccOptions, UMS_Data::ListLocalAccounts>(session)
   {
-    mcommandName = "vishnu_list_local_account";
+    mcommandName = "vishnu_list_local_accounts";
   }
   /**
    * \fn ListLocalAccountsServer(UMS_Data::ListLocalAccOptions_ptr params,
@@ -47,7 +47,7 @@ public:
   ListLocalAccountsServer(UMS_Data::ListLocalAccOptions_ptr params, const SessionServer& session):
     QueryServer<UMS_Data::ListLocalAccOptions, UMS_Data::ListLocalAccounts>(params, session)
   {
-    mcommandName = "vishnu_list_local_account";
+    mcommandName = "vishnu_list_local_accounts";
   }
 
   /**

@@ -61,6 +61,8 @@ int main(int argc, char* argv[], char* envp[]) {
   std::string sendmailScriptPath;
   struct sigaction action;
   string UMSTYPE = "UMS";
+  string mid;
+  string cfg;
 
   if (argc != 2) {
     return usage(argv[0]);
@@ -73,6 +75,7 @@ int main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     dbConfig.check();
     config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT, sendmailScriptPath);
+    config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
     if(!boost::filesystem::is_regular_file(sendmailScriptPath)) {
       std::cerr << "Error: cannot open the script file for sending email" << std::endl;
       exit(1);
@@ -94,7 +97,7 @@ int main(int argc, char* argv[], char* envp[]) {
     res = server->init(vishnuId, dbConfig, sendmailScriptPath);
 
     try {
-    registerSeD(UMSTYPE, config);
+      registerSeD(UMSTYPE, config, cfg);
     } catch (VishnuException& e) {
       
     }
@@ -108,8 +111,8 @@ int main(int argc, char* argv[], char* envp[]) {
     // Initialize the DIET SeD
     if (!res) {
       diet_print_service_table();
-      res = diet_SeD(dietConfigFile.c_str(), argc, argv);
-      unregisterSeD(UMSTYPE);
+      res = diet_SeD(cfg.c_str(), argc, argv);
+      unregisterSeD(UMSTYPE, mid);
     } else {
       std::cerr << "There was a problem during services initialization" << std::endl;
       exit(1);

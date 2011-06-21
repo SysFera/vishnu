@@ -10,7 +10,7 @@
 
 using namespace vishnu;
 
-IMSVishnuTool::IMSVishnuTool(int argc, char** argv):mproc(UserServer(SessionServer(""))){
+IMSVishnuTool::IMSVishnuTool(int argc, char** argv, string mid):mproc(UserServer(SessionServer(""))), LogTool(mid){
   try {
     LogORBMgr::init(argc, argv);
   } catch (...) {
@@ -19,10 +19,6 @@ IMSVishnuTool::IMSVishnuTool(int argc, char** argv):mproc(UserServer(SessionServ
   setFilter("");
   mfilename = mname+".log";
   LogORBMgr::getMgr()->activate((IMSVishnuTool*)this);
-  // Getting the hostname
-  if (gethostname(msyshName, HNAMESIZE-1)==-1){
-    cerr << "Cannot get hostname to check process" << endl;;
-  }
 }
 
 IMSVishnuTool::~IMSVishnuTool(){
@@ -78,17 +74,16 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 
     // If a connexion message arrive
     if (string(msg[i].tag).compare("IN")==0){
-      string hname = getHostnameFromLog(string(msg[i].msg));
+      string midname = getMidFromOutLog(string(msg[i].componentName));
 
       // If it is on the same machine as the imssed
-      if (hname.compare(string(msyshName))==0){
+      if (midname.compare(mmid)==0){
 	log += "Connexion of the component with the name : " + string(msg[i].componentName) + " and the message ->" + string(msg[i].msg) + "<- ";
 
 	// Initializing the corresponding process
 	p->setProcessName(string(msg[i].componentName));
 	try{
-	  string c = getMidFromHost(msyshName);
-	  p->setMachineId(c);
+	  p->setMachineId(mmid);
 	}catch(IMSVishnuException& e){
 	  log.append("Machine " + string(msg[i].componentName) + " is not registered as a server");
 	  ofstream dest(mfilename.c_str(),ios::app);
@@ -113,7 +108,7 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	      log.append(":");
 	      //msg
 	      log.append(string(msg[i].msg)+", with type UMS");
-	      p->setMachineId(getMidFromHost(msyshName));
+	      p->setMachineId(mmid);
 	      p->setDietId(string(msg[i].componentName));
 	      p->setProcessName("UMS");
 	      mproc.authentifyProcess(p);
@@ -125,7 +120,7 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	      log.append(":");
 	      //msg
 	      log.append(string(msg[i].msg)+", with type TMS");
-	      p->setMachineId(getMidFromHost(msyshName));
+	      p->setMachineId(mmid);
 	      p->setDietId(string(msg[i].componentName));
 	      p->setProcessName("TMS");
 	      mproc.authentifyProcess(p);
@@ -137,21 +132,19 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	      log.append(":");
 	      //msg
 	      log.append(string(msg[i].msg)+", with type IMS");
-	      string t = getMidFromHost(msyshName);
-	      p->setMachineId(t);
+	      p->setMachineId(mmid);
 	      p->setDietId(string(msg[i].componentName));
 	      p->setProcessName("IMS");
 	      mproc.authentifyProcess(p);
 	      break;
 	    }
 	    // else if FMS sed
-	    else if (string(tab[j]->path).compare("copyFile")==0) {
+	    else if (string(tab[j]->path).compare("FileCopy")==0) {
 	      log.append(msg[i].tag);
 	      log.append(":");
 	      //msg
 	      log.append(string(msg[i].msg)+", with type FMS");
-	      string t = getMidFromHost(msyshName);
-	      p->setMachineId(t);
+	      p->setMachineId(mmid);
 	      p->setDietId(string(msg[i].componentName));
 	      p->setProcessName("FMS");
 	      mproc.authentifyProcess(p);
@@ -176,12 +169,11 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
       mproc.getDataFromDietId(p);
       ProcessCtl ctl("", UserServer(SessionServer("")));
       try {
-	p->setMachineId(getMidFromHost(getHostnameFromOutLog(string(msg[i].componentName))));
+	p->setMachineId(getMidFromOutLog(string(msg[i].componentName)));
 	ctl = ProcessCtl(p->getMachineId(), UserServer(SessionServer("")));
       } catch (VishnuException& e) {
 	log.append(e.what());
       }
-      // If it is on the same machine as the sed
       log = "Disconnexion of the component with the name : " + string(msg[i].componentName);
       p->setDietId(string(msg[i].componentName));
       try{
@@ -203,7 +195,7 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	// Restart a process disconnected, if the process was stopped with a stop call, no restart will be done
 	try {
 	  // If local proc to restart
-	  if (p->getMachineId().compare(getMidFromHost(msyshName))==0){
+	  if (p->getMachineId().compare(mmid)==0){
 	    ctl.restart(&resOp, false);
 	  } else { // Else if ims down and i am elected to relaunch it
 	    if (ctl.isIMSSeD(p->getDietId()) && elect()) {
@@ -244,23 +236,16 @@ IMSVishnuTool::setFilename(string name){
 }
 
 string
-IMSVishnuTool::getHostnameFromLog(string msg){
-  // Extracting hostname from msg
-  int pos = msg.find_last_of(' ');
-  return msg.substr(pos+1);
-}
-
-string
-IMSVishnuTool::getHostnameFromOutLog(string msg){
+IMSVishnuTool::getMidFromOutLog(string msg){
   // Extracting hostname from msg of tool name
-  int pos = msg.find_first_of('_');
+  int pos = msg.find_first_of('@');
   return msg.substr(0,pos);
 }
 
 // ELECTION PROCESSUS IMS ACTIF LE PLUS RECENT
 bool
 IMSVishnuTool::elect() {
-  string elect = mproc.getElectedHostname();
-  return (elect.compare(msyshName)==0);
+  string elect = mproc.getElectedMid();
+  return (elect.compare(mmid)==0);
 }
 

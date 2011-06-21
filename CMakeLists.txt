@@ -113,6 +113,15 @@ if (COMPILE_TMS AND NOT CLIENT_ONLY AND NOT VISHNU_USE_LOADLEVELER AND NOT VISHN
    message(FATAL_ERROR "You MUST set either VISHNU_USE_TORQUE or VISHNU_USE_LOADLEVELER when compiling TMS server")
 endif()
 
+if (COMPILE_TMS)
+  add_definitions(-DCOMPILE_TMS)
+endif(COMPILE_TMS)
+
+if (COMPILE_FMS)
+  add_definitions(-DCOMPILE_FMS)
+endif(COMPILE_FMS)
+
+
 if (VISHNU_USE_TORQUE)
   add_definitions(-DHAVE_TORQUE)
 

@@ -41,7 +41,7 @@ add_library(ims-server STATIC
   data/export/shell/ShellExporter.cpp
   data/export/shell/UMSShellMapper.cpp
   data/export/shell/TMSShellMapper.cpp
-#  data/export/shell/FMSShellMapper.cpp
+  data/export/shell/FMSShellMapper.cpp
   data/export/shell/IMSShellMapper.cpp
   data/ObjectIdServer.cpp
   data/SysInfoServer.cpp
