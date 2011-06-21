@@ -39,7 +39,7 @@ public:
    * \param isAPI: If called with the external API or not
    */
   void
-  restart(IMS_Data::RestartOp_ptr op, bool isAPI = true);
+  restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI = true);
   /**
    * \brief To stop a process
    */
