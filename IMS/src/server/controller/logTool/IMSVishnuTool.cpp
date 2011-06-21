@@ -199,12 +199,12 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	  // If local proc to restart
 	  if (p->getMachineId().compare(mmid)==0){
 	    cout << "Local restart" << endl;
-	    ctl.restart(&resOp, false);
+	    ctl.restart(&resOp, p->getMachineId(), false);
 	  } else { // Else if ims down and i am elected to relaunch it
 	    cout << "DIstant restart" << endl;
 	    if (ctl.isIMSSeD(p->getDietId()) && elect()) {
 	      cout << "IMS and elected" << endl;
-	      ctl.restart(&resOp, false);
+	      ctl.restart(&resOp, p->getMachineId(), false);
 	    }
 	  }
 	} catch (SystemException& e) {
