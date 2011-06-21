@@ -33,6 +33,7 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI) {
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "restart is an admin function. A user cannot call it");
     }
   }
+  cout << "Restarting on host(mid): " << machineTo << endl;  
 
   try  {
     mp.getHost(machineTo, hostname);
