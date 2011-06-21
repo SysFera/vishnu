@@ -204,12 +204,13 @@ ProcessServer::checkStopped(string machine, string type) {
 }
 
 void
-ProcessServer::getHost(string mmid, string& hostname) {
-  string req = "select * from machine where machine.machineid='"+mmid+"'";
+ProcessServer::getHost(string mid, string& hostname) {
+  string req = "select * from machine where machine.machineid='"+mid+"'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
   if(result->getNbTuples() == 0) {
     throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "No account found to restart on the machine");
   }
+  cout << "Mid tested: " << mid << endl;
   vector<string> res;
   res = result->get(0);
   hostname = res.at(2);
