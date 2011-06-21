@@ -17,7 +17,7 @@ ProcessCtl::isIMSSeD(string Pname) {
 }
 
 void
-ProcessCtl::restart(IMS_Data::RestartOp_ptr op, bool isAPI) {
+ProcessCtl::restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI) {
   string type;
   string cmd ;
   mop = *op;
@@ -35,11 +35,11 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, bool isAPI) {
   }
 
   try  {
-    mp.getHost(mmid, hostname);
+    mp.getHost(machineTo, hostname);
   } catch (VishnuException &e) {
     return;
   }
-  
+  cout << "Restarting on host: " << hostname << endl;  
 
   switch(mop.getSedType()) {
   case 1 : // UMS
@@ -59,12 +59,12 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, bool isAPI) {
     break;
   }
   proc.setProcessName(type);
-  proc.setMachineId(mmid);
+  proc.setMachineId(machineTo);
   proc.setScript(mop.getVishnuConf());
-
+  cout << "sed of type to restart " << type << endl;
   // If process not to be restarted
-  if (mp.checkStopped(mmid, type)) {
-    throw SystemException(ERRCODE_SYSTEM, "No sed of type "+type+" running or down on machine "+mmid+", cannot restart it ");
+  if (mp.checkStopped(machineTo, type)) {
+    throw SystemException(ERRCODE_SYSTEM, "No sed of type "+type+" running or down on machine "+machineTo+", cannot restart it ");
   }
 
 
@@ -82,6 +82,9 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, bool isAPI) {
   cmd += type;
   cmd += " /tmp/vishnu_restart&";
   string dcmd = "ssh vishnu@"+hostname+" \""+cmd+"\"";
+  cout << "Restarting with the command:" << endl;
+  cout << dcmd << endl;
+  cout << "EOC" << endl;
   int ret = system(dcmd.c_str());
   if (ret == -1) {
     throw SystemException(ERRCODE_SYSTEM, "Failed to restart process "+type);
