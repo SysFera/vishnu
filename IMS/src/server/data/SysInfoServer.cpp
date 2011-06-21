@@ -72,7 +72,7 @@ SysInfoServer::setSysInfo(IMS_Data::SystemInfo_ptr sys) {
     throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
   }
 
-  string request = "update  machine  * set ";
+  string request = "update machine set ";
   if (sys->getDiskSpace() < 0 || sys->getMemory() < 0) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid negative value");
   }
