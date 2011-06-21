@@ -51,6 +51,7 @@ int main(int argc, char* argv[], char* envp[]) {
   std::string machineId;
   std::string remoteBinDirectory;
   string TMSTYPE = "TMS";
+  string cfg;
 
   if (argc != 2) {
     return usage(argv[0]);
@@ -103,7 +104,7 @@ int main(int argc, char* argv[], char* envp[]) {
       //Initialize the TMS Server
       boost::scoped_ptr<ServerTMS> server (ServerTMS::getInstance());
       res = server->init(vishnuId, dbConfig, machineId, batchType, remoteBinDirectory);
-      registerSeD(TMSTYPE, config);
+      registerSeD(TMSTYPE, config, cfg);
 
       UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
       UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
@@ -116,8 +117,8 @@ int main(int argc, char* argv[], char* envp[]) {
       // Initialize the DIET SeD
       if (!res) {
         diet_print_service_table();
-        res = diet_SeD(dietConfigFile.c_str(), argc, argv);
-        unregisterSeD(TMSTYPE);
+        res = diet_SeD(cfg.c_str(), argc, argv);
+        unregisterSeD(TMSTYPE, machineId);
       } else {
         std::cerr << "There was a problem during services initialization" << std::endl;
         exit(1);

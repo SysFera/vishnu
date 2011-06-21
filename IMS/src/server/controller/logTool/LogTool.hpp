@@ -20,13 +20,10 @@ class LogTool:  public POA_ToolMsgReceiver,
 		public PortableServer::RefCountServantBase{
 public:
   /**
-   * \brief The size of the hostname
-   */
-  static const int HOSTSIZE = 100;
-  /**
    * \brief Constructor
+   * \param mid: The machine id
    */
-  LogTool();
+  LogTool(string mid);
   /**
    * \brief Destructor
    */
@@ -72,6 +69,10 @@ protected:
    * \brief The name of the component
    */
   string mname;
+  /**
+   * \brief The machineid
+   */
+  string mmid;
 private:
   
 };
