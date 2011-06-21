@@ -7,3 +7,4 @@ databaseName=@TEST_DB_NAME@
 databaseUserName=@TEST_DB_LOGIN@
 databaseUserPassword=@TEST_DB_PASSWORD@
 sendmailScriptPath=@SENDMAILPY@
+vishnuMachineId=machine_1
