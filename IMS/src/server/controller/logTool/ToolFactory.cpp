@@ -19,10 +19,10 @@ ToolFactory::getInstance(){
 }
 
 LogTool*
-ToolFactory::getTool(int type, int argc, char** argv){
+ToolFactory::getTool(int type, int argc, char** argv, string mid){
   switch (type){
   case IMSVishnuTool_v1:
-    return new IMSVishnuTool(argc, argv);
+    return new IMSVishnuTool(argc, argv, mid);
     break;
   default:
     break;

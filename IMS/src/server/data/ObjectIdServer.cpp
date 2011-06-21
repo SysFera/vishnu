@@ -18,7 +18,10 @@ ObjectIdServer::setUID(string fmt) {
   if (!containCpt(fmt)) {
     throw UserException(10, "Invalid format, it does not contain any counter. ");
   }
-  string request = "update  vishnu  * set  formatiduser ='"+fmt+"' where  vishnuid ='";
+  if (fmt.find_first_of('@')!=string::npos) {
+    throw UserException(10, "Invalid format, it cannot contain the @ character. ");
+  }
+  string request = "update  vishnu set  formatiduser ='"+fmt+"' where  vishnuid ='";
   request += convertToString(mvishnuId);
   request += "'";
   try{
@@ -37,7 +40,10 @@ ObjectIdServer::setFID(string fmt) {
   if (!containCpt(fmt)) {
     throw UserException(10, "Invalid format, it does not contain any counter. ");
   }
-  string request = "update  vishnu  * set  formatidfiletransfer ='"+fmt+"' where  vishnuid ='";
+  if (fmt.find_first_of('@')!=string::npos) {
+    throw UserException(10, "Invalid format, it cannot contain the @ character. ");
+  }
+  string request = "update  vishnu set  formatidfiletransfer ='"+fmt+"' where  vishnuid ='";
   request += convertToString(mvishnuId);
   request += "'";
   try{
@@ -56,7 +62,10 @@ ObjectIdServer::setTID(string fmt) {
   if (!containCpt(fmt)) {
     throw UserException(10, "Invalid format, it does not contain any counter. ");
   }
-  string request = "update  vishnu  * set  formatidjob ='"+fmt+"' where  vishnuid ='";
+  if (fmt.find_first_of('@')!=string::npos) {
+    throw UserException(10, "Invalid format, it cannot contain the @ character. ");
+  }
+  string request = "update  vishnu set  formatidjob ='"+fmt+"' where  vishnuid ='";
   request += convertToString(mvishnuId);
   request += "'";
   try{
@@ -75,7 +84,10 @@ ObjectIdServer::setMID(string fmt) {
   if (!containCpt(fmt)) {
     throw UserException(10, "Invalid format, it does not contain any counter. ");
   }
-  string request = "update  vishnu  * set  formatidmachine ='"+fmt+"' where  vishnuid='";
+  if (fmt.find_first_of('@')!=string::npos) {
+    throw UserException(10, "Invalid format, it cannot contain the @ character. ");
+  }
+  string request = "update  vishnu set  formatidmachine ='"+fmt+"' where  vishnuid='";
   request += convertToString(mvishnuId);
   request += "'";
   try{

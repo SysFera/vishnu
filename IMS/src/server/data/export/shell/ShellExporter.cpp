@@ -3,22 +3,22 @@
 #include "IMSVishnuException.hpp"
 #include "Mapper.hpp"
 #include "UMSShellMapper.hpp"
-//#include "FMSShellMapper.hpp"
+#include "FMSShellMapper.hpp"
 #include "TMSShellMapper.hpp"
 #include "IMSShellMapper.hpp"
 
 ShellExporter::ShellExporter(UserServer u, IMS_Data::ExportOp_ptr op):ExportServer(u, *op) {
   UMSShellMapper *mmapperUMS;
   TMSShellMapper *mmapperTMS;
-  //  FMSShellMapper *mmapperFMS;
+  FMSShellMapper *mmapperFMS;
   IMSShellMapper *mmapperIMS;
   /*Mapper registration*/
   mmapperTMS = new TMSShellMapper(MapperRegistry::getInstance(), TMSSHELLMAPPERNAME);
   mmapperTMS->registerMapper();
   mmapperIMS = new IMSShellMapper(MapperRegistry::getInstance(), IMSSHELLMAPPERNAME);
   mmapperIMS->registerMapper();
-  //  mmapperFMS = new FMSShellMapper(MapperRegistry::getInstance(), FMSSHELLMAPPERNAME);
-  //  mmapperFMS->registerMapper();
+  mmapperFMS = new FMSShellMapper(MapperRegistry::getInstance(), FMSSHELLMAPPERNAME);
+  mmapperFMS->registerMapper();
   mmapperUMS = new UMSShellMapper(MapperRegistry::getInstance(), UMSSHELLMAPPERNAME);
   mmapperUMS->registerMapper();
 }

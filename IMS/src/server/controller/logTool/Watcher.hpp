@@ -23,8 +23,9 @@ public:
    * \param toolType: The type of the tool used by the watcher
    * \param argc: Argc from main
    * \param argv: Argv from main
+   * \param mid: The machine Id the watcher is running
    */
-  Watcher(int toolType, int argc, char** argv);
+  Watcher(int toolType, int argc, char** argv, string mid);
   /**
    * \brief Destructor
    */
