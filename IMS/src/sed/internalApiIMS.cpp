@@ -875,7 +875,7 @@ solveRestart(diet_profile_t* pb){
     ProcessCtl ctl(string(mid), userServer);
 
     // Listing the old metric
-    ctl.restart(reOp);
+    ctl.restart(reOp, mid);
 
     // Setting out diet param
     diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
