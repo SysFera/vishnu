@@ -79,6 +79,7 @@ void
 UtilsProxy::finalize() {
   diet_finalize();
 }
+#ifdef BUILD_TESTING
 /**
  * \brief Function to initialize the database
  * \fn  int restore()
@@ -117,6 +118,7 @@ UtilsProxy::restore() {
   }
   return 0;
 }
+#endif
 
 /**
  * \fn ~UtilsProxy()

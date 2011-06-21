@@ -56,6 +56,8 @@ class UtilsProxy
      */
     void
       finalize();
+
+#ifdef BUILD_TESTING
     /**
      * \brief Function to initialize the database
      * \fn int restore()
@@ -63,6 +65,7 @@ class UtilsProxy
      */
     int
       restore();
+#endif
 
     ~UtilsProxy();
 
