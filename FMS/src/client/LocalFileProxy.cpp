@@ -5,9 +5,6 @@
  * \author Ibrahima Cisse (irahima.cisse@sysfera.com)
  */
 
-
-
-
 #include <string>
 #include <stdexcept>
 #include <fstream>
@@ -30,6 +27,7 @@
 #include "RemoteFileProxy.hpp"
 #include "FileProxy.hpp"
 #include "utilClient.hpp"
+#include "utilVishnu.hpp"
 #include "FMSVishnuException.hpp"
 #include "boost/filesystem.hpp"
 #include<boost/algorithm/string.hpp>
@@ -129,14 +127,19 @@ int LocalFileProxy::transferFile(const string& dest,
   string host = FileProxy::extHost(dest);
   string destPath = FileProxy::extName(dest);
   bfs::path localFullPath(bfs::current_path().string());
+  
+  // get the source full qualified host name 
 
-  if(getPath().compare(".")!=0){
-    localFullPath/= getPath(); 
-  }
+  std::string srcHost(vishnu::getLocalMachineName("22"));
 
   uid_t uid = getuid();
   struct passwd*  pw = getpwuid(uid);
   char* localUser = pw->pw_name;
+  
+  if(getPath().compare(".")!=0){
+    localFullPath/= getPath(); 
+  }
+
 
   char *optionsToString = NULL; 
   char *fileTransferInString = NULL;
@@ -173,7 +176,7 @@ int LocalFileProxy::transferFile(const string& dest,
       DIET_VOLATILE); // local source file
   diet_string_set(diet_parameter(profile, 2), localUser, DIET_VOLATILE);
  
-  diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
+  diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(srcHost.c_str()),
       DIET_VOLATILE);
 
 
