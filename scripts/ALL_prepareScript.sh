@@ -213,7 +213,8 @@ cp  -r IMS/doc/man/man3 $path/IMS/doc/man/
 mkdir $path/swigAPI
 cp swigAPI/CMakeLists.txt $path/swigAPI
 cp swigAPI/vishnu.i $path/swigAPI
-
+cp -r swigAPI/generated $path/swigAPI
+ 
 ###############################################################################
 #                                 All modules                                 #
 ###############################################################################
