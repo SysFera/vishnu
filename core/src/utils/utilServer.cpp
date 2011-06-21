@@ -21,11 +21,7 @@ using namespace std;
 
 
 int 
-vishnu::unregisterSeD(string type) {
-  // Hostname limit size of 200
-  char hname[200];
-  gethostname(hname, 199);
-  string mid = getMidFromHost(hname);
+vishnu::unregisterSeD(string type, string mid) {
   string req = "update process set pstatus='";
   req += convertToString(PDOWN);
   req += "', uptime=CURRENT_TIMESTAMP where machineid='";
@@ -45,19 +41,23 @@ vishnu::unregisterSeD(string type) {
 }
 
 int
-vishnu::registerSeD(string type, ExecConfiguration config){
+vishnu::registerSeD(string type, ExecConfiguration config, string& cfg){
   string s = config.scriptToString();
-  // Hostname limit size of 200
-  char hname[200];
-  gethostname(hname, 199);
-  string mid = getMidFromHost(hname);
+  string mid; 
+  string path;
+  int res;
+  // The temporary file that will be used to launch diet
+  cfg = "/tmp/sed.cfg";
+
+  // Getting the machine id
+  config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
   // Insert sed statement
   string req = "insert into process(pstatus, vishnuname, machineid, uptime, launchscript) values ('";
   req += convertToString(PUNDEF);
   req += "', '";
   req += type;
   req += "', '";
-  req += string(mid);
+  req += mid;
   req += "', CURRENT_TIMESTAMP, '"+s+"')";
   // Database execution
   try {
@@ -67,22 +67,19 @@ vishnu::registerSeD(string type, ExecConfiguration config){
   } catch (SystemException& e) {
     throw (e);
   }
-  return 0;
-}
-
-string
-vishnu::getMidFromHost(string hostname){
-  DbFactory factory;
-  Database* database = factory.getDatabaseInstance();
-  string req = "SELECT * from machine where name='"+hostname+"'";
-  boost::scoped_ptr<DatabaseResult> result(database->getResult(req.c_str()));
-  if(result->getNbTuples() == 0) {
-    throw UserException(ERRCODE_INVALID_PARAM, "Unknown hostname");
+  config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, path);
+  string cmd;
+  cmd = "cp "+path+" "+cfg;
+  res = system(cmd.c_str());
+  if (res == -1) {
+    throw SystemException(ERRCODE_SYSTEM, "Failed to create the DIET sed script");
   }
-  vector<string> res;
-  res = result->get(0);
-  string ret = res.at(MIDPOS);
-  return ret;
+  cmd = "echo \"name="+mid+"@"+type+"\" >> "+cfg;
+  res = system(cmd.c_str());
+  if (res == -1) {
+    throw SystemException(ERRCODE_SYSTEM, "Failed to create the DIET sed script");
+  }
+  return 0;
 }
 
 

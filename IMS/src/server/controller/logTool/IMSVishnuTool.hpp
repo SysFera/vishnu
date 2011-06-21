@@ -21,8 +21,9 @@ public:
    * \brief Constructor
    * \param argc: The argc of the main function
    * \param argv: The argv of the main function
+   * \param mid: The machine id
    */
-  IMSVishnuTool(int argc, char** argv);
+  IMSVishnuTool(int argc, char** argv, string mid);
   /**
    * \brief Destructor
    */
@@ -65,31 +66,16 @@ public:
 protected:
 private:
   /**
-   * \brief Extract hostname from log message
+   * \brief Extract the machine if from log message (out message)
    * \param msg: The message received from the log
    * \return The hostname of the machine
    */
   string
-  getHostnameFromLog(string msg);
-  /**
-   * \brief Extract hostname from log message
-   * \param msg: The message received from the log
-   * \return The hostname of the machine
-   */
-  string
-  getHostnameFromOutLog(string msg);
+  getMidFromOutLog(string msg);
   /**
    * \brief The process server
    */
   ProcessServer mproc;
-  /**
-   * \brief The size of the hostname
-   */
-  static const int HNAMESIZE = 200;
-  /**
-   * \brief The hostname system
-   */
-  char msyshName[HNAMESIZE];
 };
 
 

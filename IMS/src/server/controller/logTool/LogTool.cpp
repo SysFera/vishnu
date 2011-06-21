@@ -9,17 +9,11 @@
 
 using namespace vishnu;
 
-LogTool::LogTool(){
+LogTool::LogTool(string mid):mmid(mid){
   srand(time(NULL));
 
-  char host[HOSTSIZE];
-  if (gethostname(host, HOSTSIZE)){
-    mname = "IMSLogT";
-  }
-  else{
-    mname = "IMSLogT_";
-    mname += string(host);
-  }
+  mname = "IMSLogT_";
+  mname += mid;
   mname += "_"+convertToString(rand());
 }
 
