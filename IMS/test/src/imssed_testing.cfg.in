@@ -9,4 +9,5 @@ databaseUserName=@TEST_DB_LOGIN@
 databaseUserPassword=@TEST_DB_PASSWORD@
 sendmailScriptPath=@SENDMAILPY@
 intervalMonitor=1
+vishnuMachineId=machine_1
 
