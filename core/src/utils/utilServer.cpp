@@ -20,7 +20,7 @@
 using namespace std;
 
 
-int 
+int
 vishnu::unregisterSeD(string type, string mid) {
   string req = "update process set pstatus='";
   req += convertToString(PDOWN);
@@ -43,7 +43,7 @@ vishnu::unregisterSeD(string type, string mid) {
 int
 vishnu::registerSeD(string type, ExecConfiguration config, string& cfg){
   string s = config.scriptToString();
-  string mid; 
+  string mid;
   string path;
   int res;
   // The temporary file that will be used to launch diet
@@ -150,7 +150,6 @@ vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, Id
   ptime now = microsec_clock::local_time();
   boost::gregorian::date::ymd_type ymd = now.date().year_month_day();
 
-  std::string monthStr = ymd.month.as_long_string();
   std::ostringstream osY, osM, osD;
   osY << ymd.year;
   std::string year = osY.str();
@@ -363,21 +362,21 @@ vishnu::getObjectId(int vishnuId,
   }
   return idGenerated;
 }
-/** 
- * \brief Function to parse a system error message 
+/**
+ * \brief Function to parse a system error message
  * \param errorMsg the error message
  * \return the parsed message
  */
 std::string vishnu::parseErrorMessage (const std::string& errorMsg){
- 
+
   size_t commandPos, endOfLinePos;
- 
+
   std::string result(errorMsg);
- 
+
   commandPos=result.find (":");
 
   if(commandPos!=std::string::npos){
-   
+
     result=result.substr(commandPos+1);
 
     if( (endOfLinePos=result.find_last_of("\n") )!= std::string::npos ){

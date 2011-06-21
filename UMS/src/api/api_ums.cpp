@@ -719,6 +719,7 @@ vishnu::vishnuFinalize()
   UtilsProxy().finalize();
 }
 
+#ifdef BUILD_TESTING
 /**
  * \brief Function to initialize the database
  * \param filePath the file
@@ -732,3 +733,4 @@ vishnu::restore(const std::string& filePath)
 
   return utilsProxy.restore();
 }
+#endif
