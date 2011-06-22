@@ -319,28 +319,24 @@ class FileTransferServer{
     */ 
     static void addOptionRequest(const std::string& name, const std::string& value, std::string& request);  
 
-  /**
-   * \brief To check if the user identifier exists
-   * \param userId the user identifier
-   */
+    /**
+    * \brief To check if the user identifier exists
+    * \param userId the user identifier
+    */
     static void checkUserId(std::string userId);
 
-  /**
-   * \brief To check if the client machine name exists in the vishnu database
-   * \param clmachineId the client machine name
-   */
-    static void checkClientMachineName(std::string clmachineId);
-/**
- * \brief Get an error execution of file transfer from database
- * \param transferid the transfer identifier
- * \return the error message
- */
+    /**
+    * \brief Get an error execution of file transfer from database
+    * \param transferid the transfer identifier
+    * \return the error message
+    */
     static std::string getErrorFromDatabase(const std::string& transferid);
- /**
-  * \brief A helper function to clean output message from verbosity
-  * \param outputMsg the output message
-  * \return the cleaned  output message
-  */
+
+    /**
+      * \brief A helper function to clean output message from verbosity
+      * \param outputMsg the output message
+      * \return the cleaned  output message
+      */
     static std::string cleanOutputMsg(const std::string& outputMsg); 
   
   private:
