@@ -67,9 +67,7 @@ public:
     if (options->getFromMachineId().size() != 0) {
       //To add the fromMachineId on the request
       
-      addOptionRequest("sourceMachineId", options->getFromMachineId(), sqlRequest);
-
-      sqlRequest.append(" or destinationMachineId='"+options->getFromMachineId()+"'");
+      sqlRequest.append(" and (sourceMachineId='"+options->getFromMachineId()+"'"+" or destinationMachineId='"+options->getFromMachineId()+"')");
       
       onlyProgressFile = false;
     }
