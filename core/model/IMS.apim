@@ -102,11 +102,12 @@
     </services>
     <resultCodeList>
       <resultCodes name="VISHNU_OK" description="Error code returned if success"/>
-      <resultCodes name="ERRCODE_INVALID_PARAMETER" description="If a parameter is invalid" value="1"/>
+      <resultCodes name="ERRCODE_INVALID_PARAMETER" description="If a parameter is invalid" value="10"/>
       <resultCodes name="ERRCODE_DB_ERROR" description="The database generated an error" value="2"/>
-      <resultCodes name="ERRCODE_COMPONENT_ERROR" description="If a component is unavailable" value="3"/>
-      <resultCodes name="ERRCODE_SESSION_KEY_EXPIRED" description="The session key has expired. The session is closed." value="4" diagnostic=""/>
-      <resultCodes name="ERRCODE_SESSION_KEY_NOT_FOUND" description="The session key is unrecognized." value="5"/>
+      <resultCodes name="ERRCODE_COMPONENT_ERROR" description="If a component is unavailable" value="301"/>
+      <resultCodes name="ERRCODE_SESSION_KEY_EXPIRED" description="The session key has expired. The session is closed." value="29" diagnostic=""/>
+      <resultCodes name="ERRCODE_SESSION_KEY_NOT_FOUND" description="The session key is unrecognized." value="28"/>
+      <resultCodes name="ERRCODE_UNDEFINED" description="Undefined error code" value="9" diagnostic=""/>
     </resultCodeList>
   </modules>
   <envVariableList>
