@@ -106,7 +106,6 @@
       <resultCodes name="ERRCODE_SYSTEM" description="Vishnu not available (System)" value="4" usage="API_ONLY" diagnostic=""/>
       <resultCodes name="ERRCODE_SSH" description="Vishnu not available (SSH error)" value="9"/>
       <resultCodes name="ERRCODE_UNDEFINED" description="Internal Error: Undefined exception" value="9" usage="API_ONLY" diagnostic=""/>
-      <resultCodes name="ERRCODE_UNDEFINED" description="Internal Error: Undefined exception" value="9" usage="API_ONLY" diagnostic=""/>
       <resultCodes name="ERRCODE_INVALID_PARAM" description="Error invalid parameters" value="10"/>
       <resultCodes name="ERRCODE_FILENOTFOUND" description="File not found" value="11"/>
       <resultCodes name="ERRCODE_CONFIGNOTFOUND" description="Undefined configuration parameter" value="12"/>
