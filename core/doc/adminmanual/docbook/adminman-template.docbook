@@ -78,6 +78,15 @@
         </revdescription>
       </revision>
     </revhistory>
+    <revision>
+        <revnumber>8</revnumber>
+        <date>22/06/2011</date>
+        <authorinitials>B.ISNARD</authorinitials>
+        <revdescription>
+          <para>Ajout de l'option ENABLE_SWIG.</para>
+        </revdescription>
+      </revision>
+    </revhistory>
   </info>
   <chapter>
     <title>Présentation du document</title>
@@ -323,6 +332,11 @@
 	      ENABLE_JAVA, qui permet d'activer la compilation des sources JAVA pour les web services (OFF par défaut).
 	    </para>
 	  </listitem>
+    <listitem>
+      <para>
+        ENABLE_SWIG, qui permet d'activer la generation du code des adapteurs Python et Java (OFF par défaut). Cette option doit obligatoirement être activée si on choisit de ne pas compiler tous les modules VISHNU c'est-à-dire si au moins l'une des options COMPILE_UMS, COMPILE_TMS, COMPILE_FMS ou COMPILE_IMS est à OFF. Si l'option ENABLE_SWIG est activée, le package SWIG (voir paragraphe 'Prérequis') est nécessaire pour compiler.
+      </para>
+    </listitem>
 	  <listitem>
 	    <para>
 	      VISHNU_USE_LOADLEVELER, compile le SeD TMS pour load leveler (OFF par défaut).
@@ -344,7 +358,7 @@
 	<listitem><para>$ mkdir build</para></listitem>
 	<listitem><para>$ cd build</para></listitem>
 	<listitem><para>2. générer le Makefile</para></listitem>
-	<listitem><para>$ cmake -DENABLE_PYTHON=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu/
+	<listitem><para>$ cmake -DENABLE_PYTHON=ON -DENABLE_SWIG=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu/
 	    -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DVISHNU_USE_TORQUE=0N -DTORQUE_DIR=/opt/torque ..</para></listitem>
 	<listitem><para>3. lancer la compilation avec 2 jobs</para></listitem>
 	<listitem><para>$ make -j 2</para></listitem>

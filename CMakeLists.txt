@@ -29,6 +29,10 @@ option(COMPILE_IMS "compile the module IMS")
 option(VISHNU_USE_TORQUE   "Build VISHNU with Torque support...")
 option(VISHNU_USE_LOADLEVELER   "Build VISHNU with LoadLeveler support...")
 
+if (COMPILE_UMS AND COMPILE_TMS AND COMPILE_FMS AND COMPILE_IMS)
+  set(COMPILE_ALL_MODULES 1)
+endif (COMPILE_UMS AND COMPILE_TMS AND COMPILE_FMS AND COMPILE_IMS)
+
 # FIXME: cache is not updated when CLIENT_ONLY is enabled and BUILD_TESTING previously set to ON
 include(CMakeDependentOption)
 cmake_dependent_option(BUILD_TESTING "Enable unit testing" OFF "NOT CLIENT_ONLY" OFF)

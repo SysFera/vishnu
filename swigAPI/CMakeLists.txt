@@ -31,6 +31,9 @@ INCLUDE_DIRECTORIES(
 # Java and/or python are options
 if (ENABLE_PYTHON OR ENABLE_JAVA)
 
+IF(NOT ENABLE_SWIG AND NOT COMPILE_ALL_MODULES)
+  MESSAGE(FATAL_ERROR "If all VISHNU modules are not compiled together, SWIG is required to regenerate the Python and Java wrappers code. Please set the option ENABLE_SWIG to ON or compile all VISHNU modules.")
+ENDIF(NOT ENABLE_SWIG AND NOT COMPILE_ALL_MODULES)
 
 IF(ENABLE_SWIG)
   FIND_PACKAGE(SWIG 1.3.40 REQUIRED)
