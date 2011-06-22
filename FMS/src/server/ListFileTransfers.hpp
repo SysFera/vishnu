@@ -131,6 +131,7 @@ public:
       processOptions(mparameters, sqlListOfFiles);
       sqlListOfFiles.append(" order by startTime");
 
+      std::cout << "sqlListOfFiles: " << sqlListOfFiles << "\n";
       boost::scoped_ptr<DatabaseResult> ListOfFiles (mdatabaseVishnu->getResult(sqlListOfFiles.c_str()));
       
       time_t startTime;
