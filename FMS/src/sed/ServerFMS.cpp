@@ -224,7 +224,7 @@ ServerFMS::init(int vishnuId,
   mprofile = getTransferFileProfile("FileCopy");
 
   
-  if ( diet_service_table_add(mprofile, NULL, solveTransferFile<File::copy>)){
+  if ( diet_service_table_add(mprofile, NULL, solveTransferFile<File::copy,File::sync>)){
 
     return 1;
   }
@@ -235,7 +235,7 @@ ServerFMS::init(int vishnuId,
 
   mprofile = getTransferRemoteFileProfile("RemoteFileCopy");
 
-  if ( diet_service_table_add(mprofile, NULL, solveTransferRemoteFile<File::copy>)){
+  if ( diet_service_table_add(mprofile, NULL, solveTransferRemoteFile<File::copy,File::sync>)){
 
     return 1;
   }
@@ -247,7 +247,7 @@ ServerFMS::init(int vishnuId,
   mprofile = getTransferFileProfile("FileMove");
 
   
-  if ( diet_service_table_add(mprofile, NULL, solveTransferFile<File::move>)){
+  if ( diet_service_table_add(mprofile, NULL, solveTransferFile<File::move,File::sync>)){
 
     return 1;
   }
@@ -258,7 +258,7 @@ ServerFMS::init(int vishnuId,
 
   mprofile = getTransferRemoteFileProfile("RemoteFileMove");
 
-  if ( diet_service_table_add(mprofile, NULL, solveTransferRemoteFile<File::move>)){
+  if ( diet_service_table_add(mprofile, NULL, solveTransferRemoteFile<File::move,File::sync>)){
 
     return 1;
   }
@@ -271,47 +271,45 @@ ServerFMS::init(int vishnuId,
 
   mprofile = getTransferFileAsyncProfile("FileCopyAsync");
 
-  if ( diet_service_table_add(mprofile, NULL, solveTransferFileAsync<File::copy>)){
+  if ( diet_service_table_add(mprofile, NULL, solveTransferFile<File::copy,File::async>)){
 
     return 1;
   }
 
   diet_profile_desc_free(mprofile);
 
-// Move Async file
-  
-  mprofile = getTransferFileAsyncProfile("FileMoveAsync");
-
-  if ( diet_service_table_add(mprofile, NULL, solveTransferFileAsync<File::move>)){
-
-    return 1;
-  }
-
-  diet_profile_desc_free(mprofile);
-
-
-
-
-
-
-
-// CopyAsync Remote file
+  // CopyAsync Remote file
 
   mprofile = getTransferRemoteFileAsyncProfile("RemoteFileCopyAsync");
 
-  if ( diet_service_table_add(mprofile, NULL, solveTransferRemoteFileAsync<File::copy>)){
+  if ( diet_service_table_add(mprofile, NULL, solveTransferRemoteFile<File::copy,File::async>)){
 
     return 1;
   }
 
   diet_profile_desc_free(mprofile);
 
-// MoveAsync Remote file
+
+  // Move Async file
+
+  mprofile = getTransferFileAsyncProfile("FileMoveAsync");
+
+  if ( diet_service_table_add(mprofile, NULL, solveTransferFile<File::move,File::async>)){
+
+    return 1;
+  }
+
+  diet_profile_desc_free(mprofile);
+
+
+
+
+  // MoveAsync Remote file
 
   mprofile = getTransferRemoteFileAsyncProfile("RemoteFileMoveAsync");
 
-  
-  if ( diet_service_table_add(mprofile, NULL, solveTransferRemoteFileAsync<File::move>)){
+
+  if ( diet_service_table_add(mprofile, NULL, solveTransferRemoteFile<File::move,File::async>)){
 
     return 1;
   }
