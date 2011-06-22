@@ -426,6 +426,22 @@ class File {
       move
     }TransferType;
 
+    /**
+     * \brief The file transfer mode
+     */
+    typedef enum{
+      /**
+       * \brief a synchronous file transfer
+       */
+      sync,
+
+      /**
+       * \brief an  asynchronous file transfer 
+       */
+      async
+    }TransferMode;
+
+
 };
 
 
