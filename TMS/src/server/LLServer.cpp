@@ -523,6 +523,7 @@ LLServer::computeNbRunJobsAndQueueJobs(std::map<std::string, int>& run,
   int rc;
   int objCount;
   int errCode;
+  int res = 0;
   // Set the type of query
   queryObject = ll_query(JOBS);
   if(!queryObject) {
@@ -580,6 +581,8 @@ LLServer::computeNbRunJobsAndQueueJobs(std::map<std::string, int>& run,
               case STATE_HOLD:
                 que[jclass]++;
                 break;
+              default:
+                res = 0;
             }
           } 
         }
@@ -590,7 +593,7 @@ LLServer::computeNbRunJobsAndQueueJobs(std::map<std::string, int>& run,
     queryInfos = ll_next_obj(queryObject);
   }
 
-  return 0;
+  return res;
 }
 
 /**

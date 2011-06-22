@@ -34,17 +34,14 @@ const std::string TMS_SERVER_FILES_DIR="/tmp";
  * \param batchType the type of the batch scheduler
  * \param jobSerialized the job serialized
  * \param submitOptionsSerialized the job options serialized
- * \param ssKey the ssh private key path
  */
 SSHJobExec::SSHJobExec(const std::string& user,
                        const std::string& hostname,
                        const BatchType& batchType,
                        const std::string& jobSerialized,
-                       const std::string& submitOptionsSerialized,
-                       const std::string& sshKey
-                       ):
+                       const std::string& submitOptionsSerialized):
  muser(user), mhostname(hostname), mbatchType(batchType), mjobSerialized(jobSerialized),
- msubmitOptionsSerialized(submitOptionsSerialized), msshKey(sshKey)
+ msubmitOptionsSerialized(submitOptionsSerialized)
 {
 }
 
