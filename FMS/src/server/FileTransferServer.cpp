@@ -445,12 +445,7 @@ FileTransferServer::processOptions(const FMS_Data::StopTransferOptions& options,
   //To check if the fromMachineId is defined
   if (machineName.size() != 0) {
     
-    //To add the sourceMachineId on the request
-    FileTransferServer::addOptionRequest("sourceMachineId", machineName, sqlRequest);
-    //To add the destinationMachineId on the request
-    sqlRequest.append(" or destinationMachineId='"+machineName+"'");
-
-
+    sqlRequest.append(" and (sourceMachineId='"+machineName+"'"+" or destinationMachineId='"+machineName+"')"); 
   }
 
   //Creation of the object user

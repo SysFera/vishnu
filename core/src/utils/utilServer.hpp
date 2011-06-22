@@ -17,8 +17,7 @@
 * \class Format_t
 * \brief The class used to get the variables of the string to parse
 */
-class Format_t{
-public :
+struct Format_t{
   /**
    * \brief The  position of the first character of the variable
    */
