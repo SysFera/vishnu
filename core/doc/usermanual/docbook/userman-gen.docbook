@@ -851,7 +851,7 @@ homeDirectory path .</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The system account login is already used by another vishnu user&quot; [45]</term>
+            <term>&quot;The system account login is already used by another vishnu user&quot; [46]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -946,7 +946,7 @@ homeDirectory path .</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The system account login is already used by another vishnu user&quot; [45]</term>
+            <term>&quot;The system account login is already used by another vishnu user&quot; [46]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1569,6 +1569,10 @@ opened the session).</para>
           </varlistentry>
           <varlistentry>
             <term>&quot;The value of the timeout is incorrect&quot; [43]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The value of the transfer command is incorrect&quot; [44]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4503,7 +4507,7 @@ homeDirectory path .</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The system account login is already used by another vishnu user&quot; [45]</term>
+            <term>&quot;The system account login is already used by another vishnu user&quot; [46]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4587,7 +4591,7 @@ homeDirectory path .</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The system account login is already used by another vishnu user&quot; [45]</term>
+            <term>&quot;The system account login is already used by another vishnu user&quot; [46]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5163,6 +5167,10 @@ opened the session).</para>
           </varlistentry>
           <varlistentry>
             <term>&quot;The value of the timeout is incorrect&quot; [43]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The value of the transfer command is incorrect&quot; [44]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -8205,7 +8213,7 @@ homeDirectory path .</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;The system account login is already used by another vishnu user&quot; [45])</term>
+            <term>UMSVishnuException(&quot;The system account login is already used by another vishnu user&quot; [46])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -8300,7 +8308,7 @@ homeDirectory path .</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;The system account login is already used by another vishnu user&quot; [45])</term>
+            <term>UMSVishnuException(&quot;The system account login is already used by another vishnu user&quot; [46])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -8953,6 +8961,10 @@ opened the session).</para>
           </varlistentry>
           <varlistentry>
             <term>UMSVishnuException(&quot;The value of the timeout is incorrect&quot; [43])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The value of the transfer command is incorrect&quot; [44])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
