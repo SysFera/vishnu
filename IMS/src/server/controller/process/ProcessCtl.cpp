@@ -81,8 +81,7 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI) {
   type += "sed";
   createFile (cmd, &proc, false);
   cmd += type;
-  cmd += " /tmp/vishnu_restart&;";
-  cmd += " rm /tmp/vishnu_restart;";
+  cmd += " /tmp/vishnu_restart&";
   string dcmd = "ssh vishnu@"+hostname+" `"+cmd+"`";
   cout << "Restarting with the command:" << endl;
   cout << dcmd << endl;
@@ -182,14 +181,14 @@ ProcessCtl::createFile(string& cmd, IMS_Data::Process_ptr p, bool loc) {
   cmd = "echo ";
   // If not local, need to protect the echoed string with the '\"' symbol
   if (!loc) {
-    cmd += "\\\"";
+    cmd += "\"";
   } else {
     cmd += "\"";
   }
   cmd += p->getScript();
   // If not local, need to protect the echoed string with the '\"' symbol
   if (!loc) {
-    cmd += "\\\"";
+    cmd += "\"";
   } else {
     cmd += "\"";
   }
