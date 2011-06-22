@@ -26,14 +26,12 @@ class SSHJobExec {
      * \param batchType the type of the batch scheduler
      * \param jobSerialized the job serialized
      * \param submitOptionsSerialized the job options serialized
-     * \param ssKey the ssh private key path
      */
     SSHJobExec(const std::string& user,
                const std::string& hostname,
                const BatchType& batchType = UNDEFINED,
                const std::string& jobSerialized = "",
-               const std::string& submitOptionsSerialized="",
-               const std::string& ssKey="");
+               const std::string& submitOptionsSerialized="");
 
      /**
      * \brief Function to execute command by using ssh
@@ -126,11 +124,6 @@ class SSHJobExec {
      */
     std::string mhostname;
 
-    /**
-     * \brief The ssh private key path
-     * FIXME This attribute is not used
-     */
-    std::string msshKey;
 };
 
 #endif

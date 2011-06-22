@@ -14,8 +14,6 @@
 #include <boost/date_time/local_time/local_time.hpp>
 #include <boost/date_time/local_time/posix_time_zone.hpp>
 #include <boost/date_time/date_facet.hpp>
-#include <locale>
-#include <memory>
 #include <sstream>
 
 #include "QueryServer.hpp"
