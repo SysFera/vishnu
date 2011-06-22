@@ -2182,6 +2182,14 @@ that option using the vishnu_configure_option command.</para>
             <term>&quot;The name of the user option is unknown&quot; [41]</term>
             <listitem/>
           </varlistentry>
+          <varlistentry>
+            <term>&quot;The value of the timeout is incorrect&quot; [43]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The value of the transfer command is incorrect&quot; [44]</term>
+            <listitem/>
+          </varlistentry>
         </variablelist>
       </refsect1>
     </refentry>
@@ -3073,6 +3081,14 @@ that option using the vishnu_configure_option command.</para>
           </varlistentry>
           <varlistentry>
             <term>&quot;The name of the user option is unknown&quot; [41]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The value of the timeout is incorrect&quot; [43]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The value of the transfer command is incorrect&quot; [44]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4087,6 +4103,14 @@ that option using the vishnu_configure_option command.</para>
           </varlistentry>
           <varlistentry>
             <term>UMSVishnuException(&quot;The name of the user option is unknown&quot; [41])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The value of the timeout is incorrect&quot; [43])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The value of the transfer command is incorrect&quot; [44])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
