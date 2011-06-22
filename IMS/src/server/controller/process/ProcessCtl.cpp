@@ -192,6 +192,6 @@ ProcessCtl::createFile(string& cmd, IMS_Data::Process_ptr p, bool loc) {
   } else {
     cmd += "\"";
   }
-  cmd += " > /tmp/vishnu_restart; ";
+  cmd += " > /tmp/vishnu_restart; source ~/.bashrc; ";
 }
 
