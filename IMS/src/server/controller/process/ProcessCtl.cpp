@@ -81,8 +81,9 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI) {
   type += "sed";
   createFile (cmd, &proc, false);
   cmd += type;
-  cmd += " /tmp/vishnu_restart&";
-  string dcmd = "ssh vishnu@"+hostname+" \""+cmd+"\"";
+  cmd += " /tmp/vishnu_restart&;";
+  cmd += " rm /tmp/vishnu_restart;"
+  string dcmd = "ssh vishnu@"+hostname+" `"+cmd+"`";
   cout << "Restarting with the command:" << endl;
   cout << dcmd << endl;
   cout << "EOC" << endl;
