@@ -71,9 +71,6 @@ main(int argc, char* argv[], char* envp[])
   BatchType batchType ;
   std::string batchTypeStr;
 
-  std::ostringstream os1;
-  std::ostringstream os2;//temporaire
-
   if(argc < 2) {
     usage(argv[0]);
   }
@@ -85,7 +82,6 @@ main(int argc, char* argv[], char* envp[])
     slaveJobFile = argv[5];
     optionsPath = argv[6];
     jobScriptPath = argv[7];
-    os2 << slaveJobFile << " " << optionsPath << " " << jobScriptPath << std::endl;
   }
   else if(action.compare("CANCEL")==0) {
     if(argc < 5) {
@@ -108,7 +104,6 @@ main(int argc, char* argv[], char* envp[])
 
   jobSerializedPath = argv[3];
   slaveErrorPath = argv[4];
-  os1 << argv[0] << " " << action << " " << batchTypeStr << " " << jobSerializedPath << " " << slaveErrorPath << " ";
 
   TMS_Data::Job_ptr job = NULL;
   TMS_Data::SubmitOptions_ptr submitOptions = NULL;
@@ -141,10 +136,6 @@ main(int argc, char* argv[], char* envp[])
         ::ecorecpp::serializer::serializer _ser;
         std::string slaveJob = strdup(_ser.serialize_str(job).c_str());
 
-        ::ecorecpp::serializer::serializer _ser2;
-        //FIXME next variable is unused
-        std::string slaveOptions = strdup(_ser2.serialize_str(submitOptions).c_str());
-
         std::ofstream os_slaveJobFile(slaveJobFile);
         os_slaveJobFile << slaveJob;
         os_slaveJobFile.close();
@@ -160,8 +151,10 @@ main(int argc, char* argv[], char* envp[])
     os_error << errorInfo;
     os_error.close();
   } catch (std::exception& e) {
-    //FIXME next variable is unused
     std::string errorInfo = e.what();
+    std::ofstream os_error(slaveErrorPath);
+    os_error << errorInfo;
+    os_error.close();
   }
 
   delete job;
