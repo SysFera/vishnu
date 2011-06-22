@@ -125,19 +125,6 @@ private:
   int 
   computeNbRunJobsAndQueueJobs(std::map<std::string, int>& run, 
                                std::map<std::string, int>& que);
-  
-  /**
-   * \brief List of jobs
-   */  
-  TMS_Data::ListJobs_ptr mjobs;
-  /**
-   * \brief List of jobs
-   */  
-  TMS_Data::ListProgression_ptr mprog;
-  /**
-   * \brief A job
-   */  
-  TMS_Data::Job_ptr mjob;
   /**
    * \brief ListQueues returned
    */
