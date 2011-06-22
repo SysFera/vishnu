@@ -92,119 +92,15 @@ diet_profile_desc_t* getFileTransferStopProfile();
  * \param profile the service profile
  * \return 0 if the service succeeds or an error code otherwise
  */
-
-
-  template < File::TransferType transferType> int solveTransferFile(diet_profile_t* profile){
-
-  string localPath, localUser, srcUserKey, head, destUser, destMachineName;
-  char* srcPath, *srcUser, *srcHost,*sessionKey, *dest, *errMsg = NULL, *optionsSerialized=NULL;
-  std::string finishError ="";
-  int mapperkey;
-  std::string cmd = "";
- 
-  diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(profile, 1), &srcPath, NULL);
-  diet_string_get(diet_parameter(profile, 2), &srcUser, NULL);
-  diet_paramstring_get(diet_parameter(profile, 3), &srcHost, NULL);
-  diet_string_get(diet_parameter(profile, 4), &dest, NULL);
-  diet_string_get(diet_parameter(profile, 5), &optionsSerialized, NULL);
-
-
-  std:: string destPath=File::extName(dest);
-  std:: string destHost=File::extHost(dest);
-  SessionServer sessionServer (sessionKey);
-
-  try {
-
-    //MAPPER CREATION
-    Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
-    if(transferType==File::copy){
-      mapperkey = mapper->code("vishnu_copy_file");
-    }
-    if(transferType==File::move){
-      mapperkey = mapper->code("vishnu_move_file");
-    }
-    mapper->code(srcPath, mapperkey);
-    mapper->code(dest, mapperkey);
-    mapper->code(optionsSerialized, mapperkey);
-    cmd = mapper->finalize(mapperkey);
-
-    // check the sessionKey
-    sessionServer.check();
-   
-
-    UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
-    machine->setMachineId(destHost);
-    MachineServer machineServer(machine);
-    
-    // check the machine
-    machineServer.checkMachine();
-
-    // get the machineName
-    destMachineName = machineServer.getMachineName();
-    delete machine;
-
-    // get the acLogin
-    destUser = UserServer(sessionServer).getUserAccountLogin(destHost);
-
-    CpFileOptions* options_ptr= NULL;
-    if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr) ) {
-      throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
-    }
-
-    int vishnuId=ServerFMS::getInstance()->getVishnuId(); 
-
-    boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer, srcHost, destHost, srcPath, destPath,vishnuId));
-
-    // Perfor the transfer now
-
-    if(transferType==File::copy){
-      fileTransferServer->addCpThread(srcUser,srcHost,srcUserKey,destUser,destMachineName,*options_ptr);
-    }
-
-    if (transferType==File::move){
-
-      fileTransferServer->addMvThread(srcUser,srcHost,srcUserKey,destUser,destMachineName,*options_ptr);
-    }
-
-
-    //To register the command
-    sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
-  } catch (VishnuException& err) {
-    try {
-      sessionServer.finish(cmd, FMS, vishnu::CMDFAILED);
-    } catch (VishnuException& fe) {
-      finishError =  fe.what();
-      finishError +="\n";
-    }
-    err.appendMsgComp(finishError);    
-
-    errMsg = strdup(err.buildExceptionString().c_str());
-  }
-  if (errMsg==NULL) {
-    errMsg = strdup("");
-  }
-
-    diet_string_set(diet_parameter(profile, 6), errMsg, DIET_VOLATILE);
-    return 0;
-
-
-}
-
-/**
- * \brief Implementation of file transfer asynchronous(local to remote) solve function
- * \param profile the service profile
- * \return 0 if the service succeeds or an error code otherwise
- */
-template < File::TransferType transferType> int solveTransferFileAsync(diet_profile_t* profile){
+template < File::TransferType transferType, File::TransferMode transferMode> int solveTransferFile(diet_profile_t* profile){
 
   string  srcUserKey, destUser, destMachineName,fileTransferSerialized;
   char* srcPath, *srcUser, *srcHost,*sessionKey, *dest, *errMsg = NULL, *optionsSerialized=NULL;
   std::string finishError ="";
- 
+
   int mapperkey;
   std::string cmd = "";
- 
+
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
   diet_string_get(diet_parameter(profile, 1), &srcPath, NULL);
   diet_string_get(diet_parameter(profile, 2), &srcUser, NULL);
@@ -221,12 +117,27 @@ template < File::TransferType transferType> int solveTransferFileAsync(diet_prof
 
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
-    if(transferType==File::copy){
-      mapperkey = mapper->code("vishnu_copy_async_file");
+    
+    if (transferMode==File::sync){
+
+      if(transferType==File::copy){
+        mapperkey = mapper->code("vishnu_copy_file");
+      }
+      if(transferType==File::move){
+        mapperkey = mapper->code("vishnu_move_file");
+      }
     }
-    if(transferType==File::move){
-      mapperkey = mapper->code("vishnu_move_async_file");
+    else{
+    
+      if(transferType==File::copy){
+        mapperkey = mapper->code("vishnu_copy_async_file");
+      }
+      if(transferType==File::move){
+        mapperkey = mapper->code("vishnu_move_async_file");
+      }
+
     }
+   
     mapper->code(srcPath, mapperkey);
     mapper->code(dest, mapperkey);
     mapper->code(optionsSerialized, mapperkey);
@@ -234,12 +145,12 @@ template < File::TransferType transferType> int solveTransferFileAsync(diet_prof
 
     // check the sessionKey
     sessionServer.check();
-   
+
 
     UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
     machine->setMachineId(destHost);
     MachineServer machineServer(machine);
-    
+
     // check the machine
     machineServer.checkMachine();
 
@@ -261,35 +172,46 @@ template < File::TransferType transferType> int solveTransferFileAsync(diet_prof
     boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer, srcHost, destHost, srcPath, destPath,vishnuId));
 
     // Perfor the transfer now
-
-    if(transferType==File::copy){
-      fileTransferServer->addCpAsyncThread(srcUser,srcHost,srcUserKey,destUser,destMachineName,*options_ptr);
-    }
-
-    if (transferType==File::move){
-
-      fileTransferServer->addMvAsyncThread(srcUser,srcHost,srcUserKey,destUser,destMachineName,*options_ptr);
-    }
-
-
-    FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
-
-    FMS_Data::FileTransfer_ptr fileTransfer=ecoreFactory->createFileTransfer();
-    
-    *fileTransfer= fileTransferServer->getFileTransfer();
-
-
-    ::ecorecpp::serializer::serializer _ser;
-
-    fileTransferSerialized =  _ser.serialize_str(const_cast<FMS_Data::FileTransfer_ptr>(fileTransfer));
-
+    if (transferMode==File::sync){
    
+     if(transferType==File::copy){
+        fileTransferServer->addCpThread(srcUser,srcHost,srcUserKey,destUser,destMachineName,*options_ptr);
+      }
+
+      if (transferType==File::move){
+
+        fileTransferServer->addMvThread(srcUser,srcHost,srcUserKey,destUser,destMachineName,*options_ptr);
+      }
+    }
+    else{
+
+      if(transferType==File::copy){
+        fileTransferServer->addCpAsyncThread(srcUser,srcHost,srcUserKey,destUser,destMachineName,*options_ptr);
+      }
+
+      if (transferType==File::move){
+
+        fileTransferServer->addMvAsyncThread(srcUser,srcHost,srcUserKey,destUser,destMachineName,*options_ptr);
+      }
+
+      FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
+
+      FMS_Data::FileTransfer_ptr fileTransfer=ecoreFactory->createFileTransfer();
+
+      *fileTransfer= fileTransferServer->getFileTransfer();
+
+
+      ::ecorecpp::serializer::serializer _ser;
+
+      fileTransferSerialized =  _ser.serialize_str(const_cast<FMS_Data::FileTransfer_ptr>(fileTransfer));
+
+
       delete fileTransfer;
 
-
+    }
     //To register the command
     sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
- 
+
   } catch (VishnuException& err) {
     try {
       sessionServer.finish(cmd, FMS, vishnu::CMDFAILED);
@@ -301,19 +223,24 @@ template < File::TransferType transferType> int solveTransferFileAsync(diet_prof
 
     errMsg = strdup(err.buildExceptionString().c_str());
   }
+
   if (errMsg==NULL) {
     errMsg = strdup("");
   }
 
-  
-  diet_string_set(diet_parameter(profile, 6), strdup(fileTransferSerialized.c_str()),DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 7), errMsg, DIET_VOLATILE);
-  
-  
+  if (transferMode==File::sync){
+
+    diet_string_set(diet_parameter(profile, 6), errMsg, DIET_VOLATILE);
+  }
+  else{
+
+    diet_string_set(diet_parameter(profile, 6), strdup(fileTransferSerialized.c_str()),DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile, 7), errMsg, DIET_VOLATILE);
+  }
+
   return 0;
 
 }
-
 
 /**
  * \brief Implementation of file transfer (from remote to local or remote ) solve function
@@ -321,8 +248,7 @@ template < File::TransferType transferType> int solveTransferFileAsync(diet_prof
  * \return 0 if the service succeeds or an error code otherwise
  */
 
-
-template <File::TransferType transferType> int solveTransferRemoteFile(diet_profile_t* profile){
+template <File::TransferType transferType, File::TransferMode transferMode> int solveTransferRemoteFile(diet_profile_t* profile){
 
   string  srcUserKey, srcUserLogin,srcMachineName;
   char* srcPath, *destUser, *srcHost,*sessionKey, *destHost,*destPath, *errMsg = NULL, *optionsSerialized=NULL;
@@ -339,26 +265,45 @@ template <File::TransferType transferType> int solveTransferRemoteFile(diet_prof
   diet_string_get(diet_parameter(profile, 5), &destPath, NULL);
   diet_string_get(diet_parameter(profile, 6), &optionsSerialized, NULL);
 
-
-
-  string destUserLogin(destUser);
-  string destMachineName(destHost);
   SessionServer sessionServer (sessionKey);
-  
-  
-     try {
+
+  try {
+
+    string destUserLogin(destUser);
+    string destMachineName(destHost);
+    SessionServer sessionServer (sessionKey);
 
     //MAPPER CREATION
     string destCpltPath = destPath;
     if(std::string(destUser).size()==0){
       destCpltPath = std::string(destHost)+":"+std::string(destPath);
     }
+   
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
-    if(transferType==File::copy){
+
+    
+    if (transferMode==File::sync){
+    
+     if(transferType==File::copy){
       mapperkey = mapper->code("vishnu_copy_file");
     }
-    if(transferType==File::move){
+   
+      if(transferType==File::move){
       mapperkey = mapper->code("vishnu_move_file");
+    }
+    
+    }
+    
+    else{
+    
+      if(transferType==File::copy){
+      mapperkey = mapper->code("vishnu_copy_async_file");
+    }
+   
+      if(transferType==File::move){
+      mapperkey = mapper->code("vishnu_move_async_file");
+    }
+   
     }
     mapper->code(std::string(srcHost)+":"+std::string(srcPath), mapperkey);
     mapper->code(destCpltPath, mapperkey);
@@ -414,30 +359,43 @@ template <File::TransferType transferType> int solveTransferRemoteFile(diet_prof
 
     // Perfor the transfer now
 
-    if(transferType==File::copy){
-      fileTransferServer->addCpThread(srcUserLogin,srcMachineName,srcUserKey,destUserLogin,destMachineName,*options_ptr);
-    }
+    if (transferMode==File::sync){
 
-    if (transferType==File::move){
+      if(transferType==File::copy){
+        fileTransferServer->addCpThread(srcUserLogin,srcMachineName,srcUserKey,destUserLogin,destMachineName,*options_ptr);
+      }
 
-      fileTransferServer->addMvThread(srcUserLogin,srcMachineName,srcUserKey,destUserLogin,destMachineName,*options_ptr);
-    }
+      if (transferType==File::move){
 
-    FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
+        fileTransferServer->addMvThread(srcUserLogin,srcMachineName,srcUserKey,destUserLogin,destMachineName,*options_ptr);
+      }
 
-    FMS_Data::FileTransfer_ptr fileTransfer=ecoreFactory->createFileTransfer();
-    
-    *fileTransfer= fileTransferServer->getFileTransfer();
+    }else{
+
+      if(transferType==File::copy){
+        fileTransferServer->addCpAsyncThread(srcUserLogin,srcMachineName,srcUserKey,destUserLogin,destMachineName,*options_ptr);
+      }
+
+      if (transferType==File::move){
+
+        fileTransferServer->addMvAsyncThread(srcUserLogin,srcMachineName,srcUserKey,destUserLogin,destMachineName,*options_ptr);
+      }
+
+      FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
+
+      FMS_Data::FileTransfer_ptr fileTransfer=ecoreFactory->createFileTransfer();
+
+      *fileTransfer= fileTransferServer->getFileTransfer();
 
 
-    ::ecorecpp::serializer::serializer _ser;
+      ::ecorecpp::serializer::serializer _ser;
 
-    fileTransferSerialized =  _ser.serialize_str(const_cast<FMS_Data::FileTransfer_ptr>(fileTransfer));
+      fileTransferSerialized =  _ser.serialize_str(const_cast<FMS_Data::FileTransfer_ptr>(fileTransfer));
 
-   
+
       delete fileTransfer;
-
-
+    }
+    
     //To register the command
     sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
  
@@ -456,10 +414,23 @@ template <File::TransferType transferType> int solveTransferRemoteFile(diet_prof
     errMsg = strdup("");
   }
 
-  diet_string_set(diet_parameter(profile, 7), errMsg, DIET_VOLATILE);
+  if (transferMode==File::sync){
+
+    diet_string_set(diet_parameter(profile, 7), errMsg, DIET_VOLATILE);
+
+  }
+  else{
+    diet_string_set(diet_parameter(profile, 7), strdup(fileTransferSerialized.c_str()),DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile, 8), errMsg, DIET_VOLATILE);
+
+  }
   return 0;
 
+
 }
+
+
+
 
 /**
  * \brief Function to solve the generic query service 
@@ -532,155 +503,6 @@ solveGenerique(diet_profile_t* pb) {
   delete options;
   delete list;
   return 0;
-}
-
-/****************************************************************************************************/
-
-// Asynchronous command area
-
-/**
- * \brief Implementation of file transfer asynchronous (from remote to local or remote ) solve function
- * \param profile the service profile
- * \return 0 if the service succeeds or an error code otherwise
- */
-
-template <File::TransferType transferType> int solveTransferRemoteFileAsync(diet_profile_t* profile){
-
-  string  srcUserKey, srcUserLogin,srcMachineName;
-  char* srcPath, *destUser, *srcHost,*sessionKey, *destHost,*destPath, *errMsg = NULL, *optionsSerialized=NULL;
-  std::string finishError ="";
-  std::string fileTransferSerialized="";
-  int mapperkey;
-  std::string cmd = "";
-
-  diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(profile, 1), &destUser, NULL);
-  diet_paramstring_get(diet_parameter(profile, 2), &srcHost, NULL);
-  diet_string_get(diet_parameter(profile, 3), &srcPath, NULL);
-  diet_paramstring_get(diet_parameter(profile, 4), &destHost, NULL);
-  diet_string_get(diet_parameter(profile, 5), &destPath, NULL);
-  diet_string_get(diet_parameter(profile, 6), &optionsSerialized, NULL);
-
-  SessionServer sessionServer (sessionKey);
-
-  try {
-
-    string destUserLogin(destUser);
-    string destMachineName(destHost);
-    SessionServer sessionServer (sessionKey);
-
-    //MAPPER CREATION
-    string destCpltPath = destPath;
-    if(std::string(destUser).size()==0){
-      destCpltPath = std::string(destHost)+":"+std::string(destPath);
-    }
-    Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
-    if(transferType==File::copy){
-      mapperkey = mapper->code("vishnu_copy_async_file");
-    }
-    if(transferType==File::move){
-      mapperkey = mapper->code("vishnu_move_async_file");
-    }
-    mapper->code(std::string(srcHost)+":"+std::string(srcPath), mapperkey);
-    mapper->code(destCpltPath, mapperkey);
-    mapper->code(optionsSerialized, mapperkey);
-    cmd = mapper->finalize(mapperkey);
-
-    // check the sessionKey
-    sessionServer.check();
-
-    // get the source Vishnu machine
-    UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
-    machine->setMachineId(srcHost);
-    MachineServer srcMachineServer(machine);
-
-    // check the source machine
-    srcMachineServer.checkMachine();
-
-    // get the source machineName
-    srcMachineName = srcMachineServer.getMachineName();
-    delete machine;
-
-    // get the source machine user login
-    srcUserLogin = UserServer(sessionServer).getUserAccountLogin(srcHost);
-
-    if(strcmp(destUser,"")==0) {
-
-      // get the destination Vishnu machine
-      machine = new UMS_Data::Machine();
-      machine->setMachineId(destHost);
-      MachineServer destMachineServer(machine);
-
-      // check the destination machine
-      destMachineServer.checkMachine();
-
-      // get the destination machineName
-      destMachineName = destMachineServer.getMachineName();
-      delete machine;
-
-      // get the destination  machine user login
-      destUserLogin = UserServer(sessionServer).getUserAccountLogin(destHost);
-
-    }
-
-
-    CpFileOptions_ptr options_ptr= NULL;
-    if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr) ) {
-      throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
-    }
-
-    int vishnuId=ServerFMS::getInstance()->getVishnuId(); 
-
-    boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer, srcHost, destHost, srcPath, destPath,vishnuId));
-
-    // Perfor the transfer now
-
-    if(transferType==File::copy){
-      fileTransferServer->addCpAsyncThread(srcUserLogin,srcMachineName,srcUserKey,destUserLogin,destMachineName,*options_ptr);
-    }
-
-    if (transferType==File::move){
-
-      fileTransferServer->addMvAsyncThread(srcUserLogin,srcMachineName,srcUserKey,destUserLogin,destMachineName,*options_ptr);
-    }
-
-    FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
-
-    FMS_Data::FileTransfer_ptr fileTransfer=ecoreFactory->createFileTransfer();
-    
-    *fileTransfer= fileTransferServer->getFileTransfer();
-
-
-    ::ecorecpp::serializer::serializer _ser;
-
-    fileTransferSerialized =  _ser.serialize_str(const_cast<FMS_Data::FileTransfer_ptr>(fileTransfer));
-
-   
-      delete fileTransfer;
-
-    //To register the command
-    sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
- 
-  } catch (VishnuException& err) {
-    try {
-      sessionServer.finish(cmd, FMS, vishnu::CMDFAILED);
-    } catch (VishnuException& fe) {
-      finishError =  fe.what();
-      finishError +="\n";
-    }
-    err.appendMsgComp(finishError);
-
-    errMsg = strdup(err.buildExceptionString().c_str());
-  }
-  if (errMsg==NULL) {
-    errMsg = strdup("");
-  }
-
-  diet_string_set(diet_parameter(profile, 7), strdup(fileTransferSerialized.c_str()),DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 8), errMsg, DIET_VOLATILE);
-  return 0;
-
-
 }
 
 
