@@ -68,21 +68,6 @@ void FileTransferServer::checkUserId(std::string userId) {
 }
 
 
-/**
- * \brief Function to check if a given machine client identifier exists
- * \fn void checkClientMachineName(std::string clmachineId)
- * \param clmachineId the machine client identifier
- */
-void FileTransferServer::checkClientMachineName(std::string clmachineId) {
-  std::string sqlclMachineRequest = "SELECT name from clmachine where name='"+clmachineId+"'";
-  boost::scoped_ptr<DatabaseResult> clmachine(FileTransferServer::getDatabaseInstance()->getResult(sqlclMachineRequest.c_str()));
-  if(clmachine->getNbTuples()==0) {
-    throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE);
-  }
-}
-
-
-
 FileTransferServer::FileTransferServer(const SessionServer& sessionServer,const int& vishnuId):
   msessionServer(sessionServer),mvishnuId(vishnuId),mtransferType(File::undefined){
 
