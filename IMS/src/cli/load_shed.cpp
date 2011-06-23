@@ -63,7 +63,7 @@ int main (int argc, char* argv[]){
 
 
 
-  CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
+  CLICmd cmd = CLICmd (argc, argv, opt);
 
   // Parse the cli and setting the options found
   ret = cmd.parse(env_name_mapper());
