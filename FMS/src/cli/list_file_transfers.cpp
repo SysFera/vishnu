@@ -99,7 +99,7 @@ int main (int argc, char* argv[]){
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt= makeListFileTransferTrOpt(argv[0], dietConfig, ftranferId, ffromMachineId, fuserId, statusStr);
 
-  CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
+  CLICmd cmd = CLICmd (argc, argv, opt);
 
  // Parse the cli and setting the options found
   ret = cmd.parse(env_name_mapper());
