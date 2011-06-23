@@ -154,7 +154,7 @@ ProcessServer::isIMSSeD(string Pname){
   }
   vector<string> res;
   res = result->get(0);
-  return (res.at(NAMEPOS)=="IMS");
+  return (string(res.at(NAMEPOS)).compare("IMS")==0);
 }
 
 void
@@ -210,7 +210,6 @@ ProcessServer::getHost(string mid, string& hostname) {
   if(result->getNbTuples() == 0) {
     throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "No account found to restart on the machine");
   }
-  cout << "Mid tested: " << mid << endl;
   vector<string> res;
   res = result->get(0);
   hostname = res.at(2);
