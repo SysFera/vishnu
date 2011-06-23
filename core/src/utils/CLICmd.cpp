@@ -1,7 +1,7 @@
 #include "CLICmd.hpp"
 
 
-CLICmd::CLICmd(int argc, char** argv, boost::shared_ptr<Options> op, string dietConfig):margc(argc), margv(argv), mdietConfig(dietConfig), mop(op){
+CLICmd::CLICmd(int argc, char** argv, boost::shared_ptr<Options> op):margc(argc), margv(argv), mop(op){
 }
 
 CLICmd::~CLICmd(){
