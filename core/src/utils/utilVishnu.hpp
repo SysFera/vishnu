@@ -270,7 +270,7 @@ namespace vishnu {
 
 /**
  * \brief Get the fully qualified name for the current system
- * \param the port
+ * \param port the port
  * \return the fully qualified name for the current system
  */
 

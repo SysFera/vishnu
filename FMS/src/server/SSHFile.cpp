@@ -509,13 +509,6 @@ pair<string, string> SSHExec::exec(const string& cmd) const {
   copy(istream_iterator<string>(is),
        istream_iterator<string>(),
        back_inserter<vector<string> >(tokens));
-  
-
-/**********************************************/
-  std::vector<std::string>::const_iterator ite;
-  for (ite=tokens.begin(); ite!=tokens.end(); ++ite){
-    std::cout << *ite << "\n";
-  }
 
 /**********************************************/
 
