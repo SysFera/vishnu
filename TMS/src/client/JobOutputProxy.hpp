@@ -47,7 +47,7 @@ public:
   * \return The list of the job results
   */
 	TMS_Data::ListJobResults_ptr
-	getAllJobsOutPut();
+	getCompletedJobsOutput();
 
   /**
   * \brief Destructor, raises an exception on error

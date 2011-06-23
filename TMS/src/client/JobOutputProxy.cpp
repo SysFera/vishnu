@@ -146,7 +146,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 * \return The list of the job results
 */
 TMS_Data::ListJobResults_ptr
-JobOutputProxy::getAllJobsOutPut() {
+JobOutputProxy::getCompletedJobsOutput() {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   char* listJobResultInString = NULL;
