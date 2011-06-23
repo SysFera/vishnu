@@ -40,55 +40,53 @@
 <a name="l00019"></a>00019 
 <a name="l00024"></a>00024 <span class="keyword">extern</span> std::ostream <a class="code" href="CommonParser_8hpp.html#ab68313cdb2ccb675835d523cf7c511ca" title="A flux to store a debug message.">debug</a>;
 <a name="l00025"></a>00025 
-<a name="l00031"></a>00031 <span class="keyword">extern</span> std::string <a class="code" href="CommonParser_8hpp.html#afe4d78e05e2d1d41360affa040b80ec4" title="An empty string.">nullString</a>;
+<a name="l00031"></a><a class="code" href="CommonParser_8hpp.html#a807e1daad5bfd9469080d93211df5dc1">00031</a> <span class="keyword">typedef</span> std::map&lt;std::string, std::string&gt; ConfigMap;
 <a name="l00032"></a>00032 
-<a name="l00038"></a><a class="code" href="CommonParser_8hpp.html#a807e1daad5bfd9469080d93211df5dc1">00038</a> <span class="keyword">typedef</span> std::map&lt;std::string, std::string&gt; ConfigMap;
+<a name="l00038"></a><a class="code" href="CommonParser_8hpp.html#ab9159c3df8bcd3d187740f9b123463d6">00038</a> <span class="keyword">typedef</span> std::map&lt;std::string, std::string&gt; OptionMap;
 <a name="l00039"></a>00039 
-<a name="l00045"></a><a class="code" href="CommonParser_8hpp.html#ab9159c3df8bcd3d187740f9b123463d6">00045</a> <span class="keyword">typedef</span> std::map&lt;std::string, std::string&gt; OptionMap;
-<a name="l00046"></a>00046 
-<a name="l00054"></a><a class="code" href="classStartsWith.html">00054</a> <span class="keyword">class </span><a class="code" href="classStartsWith.html" title="functor used to find short/long options">StartsWith</a> : <span class="keyword">public</span> std::unary_function&lt;std::string, bool&gt;
-<a name="l00055"></a>00055 {
-<a name="l00056"></a>00056   <span class="keyword">private</span>:
-<a name="l00060"></a><a class="code" href="classStartsWith.html#a781aa01b213aa7a6ba5864c4853b1a85">00060</a>     std::string <a class="code" href="classStartsWith.html#a781aa01b213aa7a6ba5864c4853b1a85" title="the to compare with">s1</a>;
-<a name="l00061"></a>00061 <span class="keyword">public</span>:
-<a name="l00066"></a><a class="code" href="classStartsWith.html#a77da87e1c3df7452d7a594ed0ab95d99">00066</a>     <a class="code" href="classStartsWith.html#a77da87e1c3df7452d7a594ed0ab95d99" title="A constructor with parameters.">StartsWith</a>(<span class="keyword">const</span> std::string&amp; str) : <a class="code" href="classStartsWith.html#a781aa01b213aa7a6ba5864c4853b1a85" title="the to compare with">s1</a>(str) {}
-<a name="l00067"></a>00067 
-<a name="l00073"></a>00073     <span class="keywordtype">bool</span> <a class="code" href="classStartsWith.html#a4c64e9845fb2f12f0a2e6c934a3da90a" title="An overloaded () operator to check if a given string sart with s1.">operator() </a>(<span class="keyword">const</span> std::string&amp; s2) <span class="keyword">const</span>;
-<a name="l00074"></a>00074 };
-<a name="l00075"></a>00075 
-<a name="l00081"></a><a class="code" href="classSplitter.html">00081</a> <span class="keyword">class </span><a class="code" href="classSplitter.html" title="functor working as token generator">Splitter</a>
-<a name="l00082"></a>00082 {
-<a name="l00083"></a>00083 <span class="keyword">private</span>:
-<a name="l00087"></a><a class="code" href="classSplitter.html#a3b7c9064cca2361c0388395b38bec579">00087</a>     <span class="keywordtype">char</span> <a class="code" href="classSplitter.html#a3b7c9064cca2361c0388395b38bec579" title="The delimiter.">delim_</a>;
-<a name="l00091"></a><a class="code" href="classSplitter.html#a1029aba99a088cfcf5936f9c921b4e76">00091</a>     <span class="keywordtype">bool</span> <a class="code" href="classSplitter.html#a1029aba99a088cfcf5936f9c921b4e76" title="Is equal to yes if there is a nex token.">hasNext_</a>;
-<a name="l00092"></a>00092 
-<a name="l00096"></a><a class="code" href="classSplitter.html#aeba274b41ab41513486c1dacc87acb9b">00096</a>     std::string::size_type <a class="code" href="classSplitter.html#aeba274b41ab41513486c1dacc87acb9b" title="the size of the previous token">previous_</a>;
-<a name="l00097"></a>00097 
-<a name="l00101"></a><a class="code" href="classSplitter.html#a582ea00d95874fd70cbcf3af257ac886">00101</a>     std::string::size_type <a class="code" href="classSplitter.html#a582ea00d95874fd70cbcf3af257ac886" title="the size of the current token">current_</a>;
-<a name="l00102"></a>00102 
-<a name="l00106"></a><a class="code" href="classSplitter.html#a2c4ef94b3d44dff8604cf8611dbef46d">00106</a>     std::string <a class="code" href="classSplitter.html#a2c4ef94b3d44dff8604cf8611dbef46d" title="the current token">token_</a>;
-<a name="l00107"></a>00107 
-<a name="l00111"></a><a class="code" href="classSplitter.html#a80aa982eb34b28760671c3033e0092b0">00111</a>     std::string <a class="code" href="classSplitter.html#a80aa982eb34b28760671c3033e0092b0" title="the string to split">str_</a>;
-<a name="l00112"></a>00112 <span class="keyword">public</span>:
-<a name="l00113"></a>00113     
-<a name="l00117"></a>00117     <a class="code" href="classSplitter.html#ac62b02b8374ebe8dfdf6c34fbd59c2a1" title="Default constructor.">Splitter</a>();
-<a name="l00118"></a>00118    
-<a name="l00123"></a>00123     <a class="code" href="classSplitter.html#ac62b02b8374ebe8dfdf6c34fbd59c2a1" title="Default constructor.">Splitter</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> c);
-<a name="l00124"></a>00124 
-<a name="l00131"></a>00131     <a class="code" href="classSplitter.html#ac62b02b8374ebe8dfdf6c34fbd59c2a1" title="Default constructor.">Splitter</a>(<span class="keyword">const</span> std::string&amp; str, <span class="keyword">const</span> <span class="keywordtype">char</span> c);
-<a name="l00132"></a>00132 
-<a name="l00137"></a><a class="code" href="classSplitter.html#a6f65c75ceb97d11a55c8dcb9b7d9ce83">00137</a>     <span class="keywordtype">bool</span> <a class="code" href="classSplitter.html#a6f65c75ceb97d11a55c8dcb9b7d9ce83" title="To check if there is a next token.">hasNext</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classSplitter.html#a1029aba99a088cfcf5936f9c921b4e76" title="Is equal to yes if there is a nex token.">hasNext_</a>; }
-<a name="l00138"></a>00138 
-<a name="l00143"></a>00143     <span class="keywordtype">void</span> <a class="code" href="classSplitter.html#a78f226f811f328aba0693e74f93a96a0" title="To take a new string to split.">reset</a>(<span class="keyword">const</span> std::string&amp; str);
-<a name="l00149"></a>00149     <span class="keywordtype">void</span> <a class="code" href="classSplitter.html#a78f226f811f328aba0693e74f93a96a0" title="To take a new string to split.">reset</a>(<span class="keyword">const</span> std::string&amp; str, <span class="keyword">const</span> <span class="keywordtype">char</span> c);
+<a name="l00047"></a><a class="code" href="classStartsWith.html">00047</a> <span class="keyword">class </span><a class="code" href="classStartsWith.html" title="functor used to find short/long options">StartsWith</a> : <span class="keyword">public</span> std::unary_function&lt;std::string, bool&gt;
+<a name="l00048"></a>00048 {
+<a name="l00049"></a>00049   <span class="keyword">private</span>:
+<a name="l00053"></a><a class="code" href="classStartsWith.html#a781aa01b213aa7a6ba5864c4853b1a85">00053</a>     std::string <a class="code" href="classStartsWith.html#a781aa01b213aa7a6ba5864c4853b1a85" title="the to compare with">s1</a>;
+<a name="l00054"></a>00054 <span class="keyword">public</span>:
+<a name="l00059"></a><a class="code" href="classStartsWith.html#a77da87e1c3df7452d7a594ed0ab95d99">00059</a>     <a class="code" href="classStartsWith.html#a77da87e1c3df7452d7a594ed0ab95d99" title="A constructor with parameters.">StartsWith</a>(<span class="keyword">const</span> std::string&amp; str) : <a class="code" href="classStartsWith.html#a781aa01b213aa7a6ba5864c4853b1a85" title="the to compare with">s1</a>(str) {}
+<a name="l00060"></a>00060 
+<a name="l00066"></a>00066     <span class="keywordtype">bool</span> <a class="code" href="classStartsWith.html#a4c64e9845fb2f12f0a2e6c934a3da90a" title="An overloaded () operator to check if a given string sart with s1.">operator() </a>(<span class="keyword">const</span> std::string&amp; s2) <span class="keyword">const</span>;
+<a name="l00067"></a>00067 };
+<a name="l00068"></a>00068 
+<a name="l00074"></a><a class="code" href="classSplitter.html">00074</a> <span class="keyword">class </span><a class="code" href="classSplitter.html" title="functor working as token generator">Splitter</a>
+<a name="l00075"></a>00075 {
+<a name="l00076"></a>00076 <span class="keyword">private</span>:
+<a name="l00080"></a><a class="code" href="classSplitter.html#a3b7c9064cca2361c0388395b38bec579">00080</a>     <span class="keywordtype">char</span> <a class="code" href="classSplitter.html#a3b7c9064cca2361c0388395b38bec579" title="The delimiter.">delim_</a>;
+<a name="l00084"></a><a class="code" href="classSplitter.html#a1029aba99a088cfcf5936f9c921b4e76">00084</a>     <span class="keywordtype">bool</span> <a class="code" href="classSplitter.html#a1029aba99a088cfcf5936f9c921b4e76" title="Is equal to yes if there is a nex token.">hasNext_</a>;
+<a name="l00085"></a>00085 
+<a name="l00089"></a><a class="code" href="classSplitter.html#aeba274b41ab41513486c1dacc87acb9b">00089</a>     std::string::size_type <a class="code" href="classSplitter.html#aeba274b41ab41513486c1dacc87acb9b" title="the size of the previous token">previous_</a>;
+<a name="l00090"></a>00090 
+<a name="l00094"></a><a class="code" href="classSplitter.html#a582ea00d95874fd70cbcf3af257ac886">00094</a>     std::string::size_type <a class="code" href="classSplitter.html#a582ea00d95874fd70cbcf3af257ac886" title="the size of the current token">current_</a>;
+<a name="l00095"></a>00095 
+<a name="l00099"></a><a class="code" href="classSplitter.html#a2c4ef94b3d44dff8604cf8611dbef46d">00099</a>     std::string <a class="code" href="classSplitter.html#a2c4ef94b3d44dff8604cf8611dbef46d" title="the current token">token_</a>;
+<a name="l00100"></a>00100 
+<a name="l00104"></a><a class="code" href="classSplitter.html#a80aa982eb34b28760671c3033e0092b0">00104</a>     std::string <a class="code" href="classSplitter.html#a80aa982eb34b28760671c3033e0092b0" title="the string to split">str_</a>;
+<a name="l00105"></a>00105 <span class="keyword">public</span>:
+<a name="l00106"></a>00106 
+<a name="l00110"></a>00110     <a class="code" href="classSplitter.html#ac62b02b8374ebe8dfdf6c34fbd59c2a1" title="Default constructor.">Splitter</a>();
+<a name="l00111"></a>00111 
+<a name="l00116"></a>00116     <a class="code" href="classSplitter.html#ac62b02b8374ebe8dfdf6c34fbd59c2a1" title="Default constructor.">Splitter</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> c);
+<a name="l00117"></a>00117 
+<a name="l00124"></a>00124     <a class="code" href="classSplitter.html#ac62b02b8374ebe8dfdf6c34fbd59c2a1" title="Default constructor.">Splitter</a>(<span class="keyword">const</span> std::string&amp; str, <span class="keyword">const</span> <span class="keywordtype">char</span> c);
+<a name="l00125"></a>00125 
+<a name="l00130"></a><a class="code" href="classSplitter.html#a6f65c75ceb97d11a55c8dcb9b7d9ce83">00130</a>     <span class="keywordtype">bool</span> <a class="code" href="classSplitter.html#a6f65c75ceb97d11a55c8dcb9b7d9ce83" title="To check if there is a next token.">hasNext</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classSplitter.html#a1029aba99a088cfcf5936f9c921b4e76" title="Is equal to yes if there is a nex token.">hasNext_</a>; }
+<a name="l00131"></a>00131 
+<a name="l00136"></a>00136     <span class="keywordtype">void</span> <a class="code" href="classSplitter.html#a78f226f811f328aba0693e74f93a96a0" title="To take a new string to split.">reset</a>(<span class="keyword">const</span> std::string&amp; str);
+<a name="l00142"></a>00142     <span class="keywordtype">void</span> <a class="code" href="classSplitter.html#a78f226f811f328aba0693e74f93a96a0" title="To take a new string to split.">reset</a>(<span class="keyword">const</span> std::string&amp; str, <span class="keyword">const</span> <span class="keywordtype">char</span> c);
+<a name="l00143"></a>00143 
+<a name="l00148"></a>00148     std::string&amp; <a class="code" href="classSplitter.html#a2d05ab558b5ded29ec81650ca6f732dc" title="An overloaded operator () to get the token.">operator() </a>();
+<a name="l00149"></a>00149 };
 <a name="l00150"></a>00150 
-<a name="l00155"></a>00155     std::string&amp; <a class="code" href="classSplitter.html#a2d05ab558b5ded29ec81650ca6f732dc" title="An overloaded operator () to get the token.">operator() </a>();
-<a name="l00156"></a>00156 };
-<a name="l00157"></a>00157 
-<a name="l00158"></a>00158 <span class="preprocessor">#endif </span><span class="comment">/* _COMMON_PARSER_HPP_ */</span>
+<a name="l00151"></a>00151 <span class="preprocessor">#endif </span><span class="comment">/* _COMMON_PARSER_HPP_ */</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 14 2011 23:13:12 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Jun 23 2011 16:43:50 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
