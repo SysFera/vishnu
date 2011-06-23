@@ -151,7 +151,7 @@ private:
   /**
    * \brief Position of the diet name in the process table, starting at 0
    */
-  static const int NAMEPOS = 3;
+  static const int NAMEPOS = 2;
   /**
    * \brief The list option
    */
