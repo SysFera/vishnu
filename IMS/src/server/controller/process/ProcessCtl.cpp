@@ -33,14 +33,12 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI) {
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "restart is an admin function. A user cannot call it");
     }
   }
-  cout << "Restarting on host(mid): " << machineTo << endl;  
 
   try  {
     mp.getHost(machineTo, hostname);
   } catch (VishnuException &e) {
     return;
   }
-  cout << "Restarting on host: " << hostname << endl;  
 
   switch(mop.getSedType()) {
   case 1 : // UMS
@@ -62,7 +60,6 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI) {
   proc.setProcessName(type);
   proc.setMachineId(machineTo);
   proc.setScript(mop.getVishnuConf());
-  cout << "sed of type to restart " << type << endl;
   // If process not to be restarted
   if (mp.checkStopped(machineTo, type)) {
     throw SystemException(ERRCODE_SYSTEM, "No sed of type "+type+" running or down on machine "+machineTo+", cannot restart it ");
@@ -81,12 +78,8 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI) {
   type += "sed";
   createFile (cmd, &proc, false);
   cmd += type;
-  cmd += " /tmp/vishnu_restart&;";
-  cmd += " rm /tmp/vishnu_restart;";
+  cmd += " /tmp/vishnu_restart&";
   string dcmd = "ssh vishnu@"+hostname+" `"+cmd+"`";
-  cout << "Restarting with the command:" << endl;
-  cout << dcmd << endl;
-  cout << "EOC" << endl;
   int ret = system(dcmd.c_str());
   if (ret == -1) {
     throw SystemException(ERRCODE_SYSTEM, "Failed to restart process "+type);
@@ -182,14 +175,14 @@ ProcessCtl::createFile(string& cmd, IMS_Data::Process_ptr p, bool loc) {
   cmd = "echo ";
   // If not local, need to protect the echoed string with the '\"' symbol
   if (!loc) {
-    cmd += "\\\"";
+    cmd += "\"";
   } else {
     cmd += "\"";
   }
   cmd += p->getScript();
   // If not local, need to protect the echoed string with the '\"' symbol
   if (!loc) {
-    cmd += "\\\"";
+    cmd += "\"";
   } else {
     cmd += "\"";
   }
