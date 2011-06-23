@@ -49,25 +49,29 @@
 <a name="l00051"></a>00051       <a class="code" href="classUtilsProxy.html#a037ff9b798890eb865cddef7dd9eec94" title="Function to initialize the SYSFERA-DS configuration.">initialize</a>();
 <a name="l00057"></a>00057     <span class="keywordtype">void</span>
 <a name="l00058"></a>00058       <a class="code" href="classUtilsProxy.html#a2dbe3b111c081b7acf07fcd3e7ee1353" title="Function to finalize.">finalize</a>();
-<a name="l00064"></a>00064     <span class="keywordtype">int</span>
-<a name="l00065"></a>00065       <a class="code" href="classUtilsProxy.html#a185d510ddd2ff67d2f4ab60d0a2bffda" title="Function to initialize the database.">restore</a>();
-<a name="l00066"></a>00066 
-<a name="l00067"></a>00067     ~<a class="code" href="classUtilsProxy.html" title="The class with the utilitaries function (not in the cli api).">UtilsProxy</a>();
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069   <span class="keyword">private</span>:
-<a name="l00070"></a>00070 
-<a name="l00072"></a>00072     <span class="comment">// Attributes</span>
-<a name="l00074"></a>00074 <span class="comment"></span>
-<a name="l00078"></a><a class="code" href="classUtilsProxy.html#a7ba14b7bc3d594279b050dfbadafe53e">00078</a>     <span class="keywordtype">char</span>* <a class="code" href="classUtilsProxy.html#a7ba14b7bc3d594279b050dfbadafe53e" title="The name of the Sysfera-DS configuration file.">mcfg</a>;
-<a name="l00082"></a><a class="code" href="classUtilsProxy.html#addc7c06a5e2acd28d2c952e397e91788">00082</a>     <span class="keywordtype">int</span> <a class="code" href="classUtilsProxy.html#addc7c06a5e2acd28d2c952e397e91788" title="The number of arguments used Sysfera-DS.">margc</a>;
-<a name="l00086"></a><a class="code" href="classUtilsProxy.html#a5217a4157bd80b6c546bc198e7fc3f68">00086</a>     <span class="keywordtype">char</span>** <a class="code" href="classUtilsProxy.html#a5217a4157bd80b6c546bc198e7fc3f68" title="The list of arguments used Sysfera-DS.">margv</a>;
-<a name="l00090"></a><a class="code" href="classUtilsProxy.html#abe1479afd2eb2f89157c031b119a3105">00090</a>     std::string <a class="code" href="classUtilsProxy.html#abe1479afd2eb2f89157c031b119a3105" title="The file used by the restore function.">mfilePath</a>;
-<a name="l00091"></a>00091 
-<a name="l00092"></a>00092 };
-<a name="l00093"></a>00093 <span class="preprocessor">#endif</span>
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060 <span class="preprocessor">#ifdef BUILD_TESTING</span>
+<a name="l00061"></a>00061 <span class="preprocessor"></span>
+<a name="l00066"></a>00066     <span class="keywordtype">int</span>
+<a name="l00067"></a>00067       restore();
+<a name="l00068"></a>00068 <span class="preprocessor">#endif</span>
+<a name="l00069"></a>00069 <span class="preprocessor"></span>
+<a name="l00070"></a>00070     ~<a class="code" href="classUtilsProxy.html" title="The class with the utilitaries function (not in the cli api).">UtilsProxy</a>();
+<a name="l00071"></a>00071 
+<a name="l00072"></a>00072   <span class="keyword">private</span>:
+<a name="l00073"></a>00073 
+<a name="l00075"></a>00075     <span class="comment">// Attributes</span>
+<a name="l00077"></a>00077 <span class="comment"></span>
+<a name="l00081"></a><a class="code" href="classUtilsProxy.html#a7ba14b7bc3d594279b050dfbadafe53e">00081</a>     <span class="keywordtype">char</span>* <a class="code" href="classUtilsProxy.html#a7ba14b7bc3d594279b050dfbadafe53e" title="The name of the Sysfera-DS configuration file.">mcfg</a>;
+<a name="l00085"></a><a class="code" href="classUtilsProxy.html#addc7c06a5e2acd28d2c952e397e91788">00085</a>     <span class="keywordtype">int</span> <a class="code" href="classUtilsProxy.html#addc7c06a5e2acd28d2c952e397e91788" title="The number of arguments used Sysfera-DS.">margc</a>;
+<a name="l00089"></a><a class="code" href="classUtilsProxy.html#a5217a4157bd80b6c546bc198e7fc3f68">00089</a>     <span class="keywordtype">char</span>** <a class="code" href="classUtilsProxy.html#a5217a4157bd80b6c546bc198e7fc3f68" title="The list of arguments used Sysfera-DS.">margv</a>;
+<a name="l00093"></a><a class="code" href="classUtilsProxy.html#abe1479afd2eb2f89157c031b119a3105">00093</a>     std::string <a class="code" href="classUtilsProxy.html#abe1479afd2eb2f89157c031b119a3105" title="The file used by the restore function.">mfilePath</a>;
+<a name="l00094"></a>00094 
+<a name="l00095"></a>00095 };
+<a name="l00096"></a>00096 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 14 2011 23:13:12 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Jun 23 2011 16:43:50 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

@@ -39,58 +39,56 @@
 <a name="l00019"></a>00019 
 <a name="l00020"></a>00020   <span class="keyword">public</span>:
 <a name="l00021"></a>00021 
-<a name="l00031"></a>00031     <a class="code" href="classSSHJobExec.html#a39f54584e7926a280f4b529066820a02" title="Constructor.">SSHJobExec</a>(<span class="keyword">const</span> std::string&amp; user,
-<a name="l00032"></a>00032                <span class="keyword">const</span> std::string&amp; hostname,
-<a name="l00033"></a>00033                <span class="keyword">const</span> <a class="code" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016ea" title="The type of the Batch.">BatchType</a>&amp; batchType = <a class="code" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016eaa605159e8a4c32319fd69b5d151369d93">UNDEFINED</a>,
-<a name="l00034"></a>00034                <span class="keyword">const</span> std::string&amp; jobSerialized = <span class="stringliteral">&quot;&quot;</span>,
-<a name="l00035"></a>00035                <span class="keyword">const</span> std::string&amp; submitOptionsSerialized=<span class="stringliteral">&quot;&quot;</span>,
-<a name="l00036"></a>00036                <span class="keyword">const</span> std::string&amp; ssKey=<span class="stringliteral">&quot;&quot;</span>);
-<a name="l00037"></a>00037 
-<a name="l00045"></a>00045     <span class="keywordtype">int</span>
-<a name="l00046"></a>00046     <a class="code" href="classSSHJobExec.html#ad0172cc17613578c6f2eebaed2404ce0" title="Function to execute command by using ssh.">sshexec</a>(<span class="keyword">const</span> std::string&amp; slaveDirectory,
-<a name="l00047"></a>00047             <span class="keyword">const</span> std::string&amp; serviceName,
-<a name="l00048"></a>00048             <span class="keyword">const</span> std::string&amp; script_path=<span class="stringliteral">&quot;&quot;</span>);
-<a name="l00049"></a>00049 
-<a name="l00058"></a>00058     <span class="keywordtype">int</span>
-<a name="l00059"></a>00059     <a class="code" href="classSSHJobExec.html#ae422bcb5022de94c945109142c5f9fdc" title="Function to copy files from remote machine.">copyFiles</a>(<span class="keyword">const</span> std::string&amp; outputPath,
-<a name="l00060"></a>00060               <span class="keyword">const</span> std::string&amp; errorPath,
-<a name="l00061"></a>00061               <span class="keyword">const</span> <span class="keywordtype">char</span>* copyOfOutputPath,
-<a name="l00062"></a>00062               <span class="keyword">const</span> <span class="keywordtype">char</span>* copyOfErrorPath);
-<a name="l00063"></a>00063 
-<a name="l00064"></a>00064 
-<a name="l00069"></a>00069     std::string
-<a name="l00070"></a>00070     <a class="code" href="classSSHJobExec.html#a760e6236808e1ca96832aa2ed4e6c997" title="Function to return the job serialized content.">getJobSerialized</a>();
-<a name="l00071"></a>00071 
-<a name="l00076"></a>00076     std::string
-<a name="l00077"></a>00077     <a class="code" href="classSSHJobExec.html#abf06bf930962ce64176116514620a20d" title="Function to return the error message of a service.">getErrorInfo</a>();
-<a name="l00078"></a>00078 
-<a name="l00082"></a>00082     <a class="code" href="classSSHJobExec.html#a99ad66768b94ddabf23ea33767d147da" title="Destructor.">~SSHJobExec</a>();
+<a name="l00030"></a>00030     <a class="code" href="classSSHJobExec.html#a5d668f7ace2d9254b2e56f6da222f1f4" title="Constructor.">SSHJobExec</a>(<span class="keyword">const</span> std::string&amp; user,
+<a name="l00031"></a>00031                <span class="keyword">const</span> std::string&amp; hostname,
+<a name="l00032"></a>00032                <span class="keyword">const</span> <a class="code" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016ea" title="The type of the Batch.">BatchType</a>&amp; batchType = <a class="code" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016eaa605159e8a4c32319fd69b5d151369d93">UNDEFINED</a>,
+<a name="l00033"></a>00033                <span class="keyword">const</span> std::string&amp; jobSerialized = <span class="stringliteral">&quot;&quot;</span>,
+<a name="l00034"></a>00034                <span class="keyword">const</span> std::string&amp; submitOptionsSerialized=<span class="stringliteral">&quot;&quot;</span>);
+<a name="l00035"></a>00035 
+<a name="l00043"></a>00043     <span class="keywordtype">void</span>
+<a name="l00044"></a>00044     <a class="code" href="classSSHJobExec.html#a8cd9b0b6bb07890bbe3d1dcacab24eb5" title="Function to execute command by using ssh.">sshexec</a>(<span class="keyword">const</span> std::string&amp; slaveDirectory,
+<a name="l00045"></a>00045             <span class="keyword">const</span> std::string&amp; serviceName,
+<a name="l00046"></a>00046             <span class="keyword">const</span> std::string&amp; script_path=<span class="stringliteral">&quot;&quot;</span>);
+<a name="l00047"></a>00047 
+<a name="l00056"></a>00056     <span class="keywordtype">int</span>
+<a name="l00057"></a>00057     <a class="code" href="classSSHJobExec.html#ae422bcb5022de94c945109142c5f9fdc" title="Function to copy files from remote machine.">copyFiles</a>(<span class="keyword">const</span> std::string&amp; outputPath,
+<a name="l00058"></a>00058               <span class="keyword">const</span> std::string&amp; errorPath,
+<a name="l00059"></a>00059               <span class="keyword">const</span> <span class="keywordtype">char</span>* copyOfOutputPath,
+<a name="l00060"></a>00060               <span class="keyword">const</span> <span class="keywordtype">char</span>* copyOfErrorPath);
+<a name="l00061"></a>00061 
+<a name="l00062"></a>00062 
+<a name="l00067"></a>00067     std::string
+<a name="l00068"></a>00068     <a class="code" href="classSSHJobExec.html#a760e6236808e1ca96832aa2ed4e6c997" title="Function to return the job serialized content.">getJobSerialized</a>();
+<a name="l00069"></a>00069 
+<a name="l00074"></a>00074     std::string
+<a name="l00075"></a>00075     <a class="code" href="classSSHJobExec.html#abf06bf930962ce64176116514620a20d" title="Function to return the error message of a service.">getErrorInfo</a>();
+<a name="l00076"></a>00076 
+<a name="l00080"></a>00080     <a class="code" href="classSSHJobExec.html#a99ad66768b94ddabf23ea33767d147da" title="Destructor.">~SSHJobExec</a>();
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082   <span class="keyword">private</span>:
 <a name="l00083"></a>00083 
-<a name="l00084"></a>00084   <span class="keyword">private</span>:
-<a name="l00085"></a>00085 
-<a name="l00091"></a>00091     std::string <a class="code" href="classSSHJobExec.html#a7299a222321c1ca1e32db976b1df79a2" title="Function to convert the batch type to string.">convertBatchTypeToString</a>(<a class="code" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016ea" title="The type of the Batch.">BatchType</a> batchType);
-<a name="l00092"></a>00092 
-<a name="l00097"></a>00097     <span class="keywordtype">void</span> <a class="code" href="classSSHJobExec.html#a259bd8021df6638c9dff43ebe416f25d" title="Function to check the parameters before launching ssh.">checkSshParams</a>();
-<a name="l00098"></a>00098 
-<a name="l00102"></a><a class="code" href="classSSHJobExec.html#aa39f12bb8b7bf5f64dcdf2ac4b1b7247">00102</a>     std::string <a class="code" href="classSSHJobExec.html#aa39f12bb8b7bf5f64dcdf2ac4b1b7247" title="The job serialized.">mjobSerialized</a>;
-<a name="l00103"></a>00103 
-<a name="l00107"></a><a class="code" href="classSSHJobExec.html#ab630639fee39050cc8d1fdcddc4c967e">00107</a>     std::string <a class="code" href="classSSHJobExec.html#ab630639fee39050cc8d1fdcddc4c967e" title="The job options serialized.">msubmitOptionsSerialized</a>;
-<a name="l00108"></a>00108 
-<a name="l00112"></a><a class="code" href="classSSHJobExec.html#a8f30e9956ed38ae7745d7faf828f0f14">00112</a>     <a class="code" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016ea" title="The type of the Batch.">BatchType</a> <a class="code" href="classSSHJobExec.html#a8f30e9956ed38ae7745d7faf828f0f14" title="The type of the batch scheduler.">mbatchType</a>;
-<a name="l00113"></a>00113 
-<a name="l00117"></a><a class="code" href="classSSHJobExec.html#a5ad47645934f0d66a014a91b51e689db">00117</a>     std::string <a class="code" href="classSSHJobExec.html#a5ad47645934f0d66a014a91b51e689db" title="The message erroro occured during execution of a service.">merrorInfo</a>;
-<a name="l00118"></a>00118 
-<a name="l00122"></a><a class="code" href="classSSHJobExec.html#aa9b820ea5e8dbbd83cfa883767f3b50c">00122</a>     std::string <a class="code" href="classSSHJobExec.html#aa9b820ea5e8dbbd83cfa883767f3b50c" title="The user login.">muser</a>;
-<a name="l00123"></a>00123 
-<a name="l00127"></a><a class="code" href="classSSHJobExec.html#a94726c18bdb344fe9a824b6a6125bb3a">00127</a>     std::string <a class="code" href="classSSHJobExec.html#a94726c18bdb344fe9a824b6a6125bb3a" title="The hostname of the machine.">mhostname</a>;
+<a name="l00089"></a>00089     std::string <a class="code" href="classSSHJobExec.html#a7299a222321c1ca1e32db976b1df79a2" title="Function to convert the batch type to string.">convertBatchTypeToString</a>(<a class="code" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016ea" title="The type of the Batch.">BatchType</a> batchType);
+<a name="l00090"></a>00090 
+<a name="l00095"></a>00095     <span class="keywordtype">void</span> <a class="code" href="classSSHJobExec.html#a259bd8021df6638c9dff43ebe416f25d" title="Function to check the parameters before launching ssh.">checkSshParams</a>();
+<a name="l00096"></a>00096 
+<a name="l00100"></a><a class="code" href="classSSHJobExec.html#aa39f12bb8b7bf5f64dcdf2ac4b1b7247">00100</a>     std::string <a class="code" href="classSSHJobExec.html#aa39f12bb8b7bf5f64dcdf2ac4b1b7247" title="The job serialized.">mjobSerialized</a>;
+<a name="l00101"></a>00101 
+<a name="l00105"></a><a class="code" href="classSSHJobExec.html#ab630639fee39050cc8d1fdcddc4c967e">00105</a>     std::string <a class="code" href="classSSHJobExec.html#ab630639fee39050cc8d1fdcddc4c967e" title="The job options serialized.">msubmitOptionsSerialized</a>;
+<a name="l00106"></a>00106 
+<a name="l00110"></a><a class="code" href="classSSHJobExec.html#a8f30e9956ed38ae7745d7faf828f0f14">00110</a>     <a class="code" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016ea" title="The type of the Batch.">BatchType</a> <a class="code" href="classSSHJobExec.html#a8f30e9956ed38ae7745d7faf828f0f14" title="The type of the batch scheduler.">mbatchType</a>;
+<a name="l00111"></a>00111 
+<a name="l00115"></a><a class="code" href="classSSHJobExec.html#a5ad47645934f0d66a014a91b51e689db">00115</a>     std::string <a class="code" href="classSSHJobExec.html#a5ad47645934f0d66a014a91b51e689db" title="The message erroro occured during execution of a service.">merrorInfo</a>;
+<a name="l00116"></a>00116 
+<a name="l00120"></a><a class="code" href="classSSHJobExec.html#aa9b820ea5e8dbbd83cfa883767f3b50c">00120</a>     std::string <a class="code" href="classSSHJobExec.html#aa9b820ea5e8dbbd83cfa883767f3b50c" title="The user login.">muser</a>;
+<a name="l00121"></a>00121 
+<a name="l00125"></a><a class="code" href="classSSHJobExec.html#a94726c18bdb344fe9a824b6a6125bb3a">00125</a>     std::string <a class="code" href="classSSHJobExec.html#a94726c18bdb344fe9a824b6a6125bb3a" title="The hostname of the machine.">mhostname</a>;
+<a name="l00126"></a>00126 
+<a name="l00127"></a>00127 };
 <a name="l00128"></a>00128 
-<a name="l00132"></a><a class="code" href="classSSHJobExec.html#adf98e2ac62801141620472e69a8b57af">00132</a>     std::string <a class="code" href="classSSHJobExec.html#adf98e2ac62801141620472e69a8b57af" title="The ssh private key path.">msshKey</a>;
-<a name="l00133"></a>00133 };
-<a name="l00134"></a>00134 
-<a name="l00135"></a>00135 <span class="preprocessor">#endif</span>
+<a name="l00129"></a>00129 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 14 2011 23:13:12 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Jun 23 2011 16:43:50 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
