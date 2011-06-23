@@ -77,7 +77,7 @@ int main (int ac, char* av[]){
   boost::shared_ptr<Options> opt ( makeFMSCommonOpt( av[0], path, dietConfig )   );
   
 
-  CLICmd cmd = CLICmd (ac, av, opt, dietConfig);
+  CLICmd cmd = CLICmd (ac, av, opt);
 
   // Parse the cli and setting the options found
   ret = cmd.parse(env_name_mapper());

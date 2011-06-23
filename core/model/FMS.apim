@@ -61,7 +61,6 @@
       <resultCodes href="#ERRCODE_DB_ERROR"/>
       <resultCodes href="#ERRCODE_CONFIGNOTFOUND"/>
       <resultCodes href="#ERRCODE_DIET"/>
-      <resultCodes href="FMS_Internal.apim#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#ERRCODE_NO_ADMIN"/>
       <resultCodes href="#ERRCODE_RUNTIME_ERROR"/>
       <resultCodes href="FMS_Internal.apim#ERRCODE_SESSION_KEY_EXPIRED"/>
