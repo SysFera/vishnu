@@ -44,27 +44,25 @@
 <a name="l00030"></a>00030   <a class="code" href="classDatabase.html#a41881436b79aac5f4d8e179056564de1" title="Function to process the request in the database.">process</a>(std::string request) = 0;
 <a name="l00036"></a>00036   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
 <a name="l00037"></a>00037   <a class="code" href="classDatabase.html#aed0ada648871f841cfbe08bc1ee1bf92" title="To make a connection to the database.">connect</a>() = 0;
-<a name="l00044"></a>00044 <span class="comment">//   virtual int</span>
-<a name="l00045"></a>00045 <span class="comment">//   setDatabase(std::string db) = 0;</span>
-<a name="l00052"></a>00052 <span class="comment"></span>  <span class="keyword">virtual</span> <a class="code" href="classDatabaseResult.html" title="This class describes the object which encapsulates the database results.">DatabaseResult</a>*
-<a name="l00053"></a>00053   <a class="code" href="classDatabase.html#a30f002bf9752a54c2a056abc1b8bb4d4" title="To get the result of a select request.">getResult</a>(std::string request) = 0;
-<a name="l00058"></a>00058   <span class="keyword">virtual</span> <a class="code" href="classDbConfiguration.html#a4a57e43a5017a5c4833a784a994c91cf" title="The database type.">DbConfiguration::db_type_t</a>
-<a name="l00059"></a>00059   <a class="code" href="classDatabase.html#a668ffe571cb0f9f355a2f874e40cb515" title="To get the type of database.">getDbType</a>() = 0;
-<a name="l00060"></a>00060 
-<a name="l00065"></a>00065 <span class="keyword">virtual</span> <a class="code" href="classDatabase.html#a84d399a2ad58d69daab9b05330e1316d" title="Destructor, raises an exception on error.">~Database</a>();
-<a name="l00066"></a>00066 <span class="keyword">protected</span> :
-<a name="l00071"></a>00071   <a class="code" href="classDatabase.html#a4703c80e6969d33565ea340f768fdadf" title="Constructor, raises an exception on error.">Database</a>();
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073 <span class="keyword">private</span> :
-<a name="l00079"></a>00079   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
-<a name="l00080"></a>00080   <a class="code" href="classDatabase.html#adca650f8a5db531ff1fb85aaef25e711" title="To disconnect from the database.">disconnect</a>() = 0;
-<a name="l00081"></a>00081 };
-<a name="l00082"></a>00082 
-<a name="l00083"></a>00083 
-<a name="l00084"></a>00084 <span class="preprocessor">#endif // ABSTRACTDATABASE</span>
+<a name="l00044"></a>00044   <span class="keyword">virtual</span> <a class="code" href="classDatabaseResult.html" title="This class describes the object which encapsulates the database results.">DatabaseResult</a>*
+<a name="l00045"></a>00045   <a class="code" href="classDatabase.html#a30f002bf9752a54c2a056abc1b8bb4d4" title="To get the result of a select request.">getResult</a>(std::string request) = 0;
+<a name="l00050"></a>00050   <span class="keyword">virtual</span> <a class="code" href="classDbConfiguration.html#a4a57e43a5017a5c4833a784a994c91cf" title="The database type.">DbConfiguration::db_type_t</a>
+<a name="l00051"></a>00051   <a class="code" href="classDatabase.html#a668ffe571cb0f9f355a2f874e40cb515" title="To get the type of database.">getDbType</a>() = 0;
+<a name="l00052"></a>00052 
+<a name="l00057"></a>00057 <span class="keyword">virtual</span> <a class="code" href="classDatabase.html#a84d399a2ad58d69daab9b05330e1316d" title="Destructor, raises an exception on error.">~Database</a>();
+<a name="l00058"></a>00058 <span class="keyword">protected</span> :
+<a name="l00063"></a>00063   <a class="code" href="classDatabase.html#a4703c80e6969d33565ea340f768fdadf" title="Constructor, raises an exception on error.">Database</a>();
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065 <span class="keyword">private</span> :
+<a name="l00071"></a>00071   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
+<a name="l00072"></a>00072   <a class="code" href="classDatabase.html#adca650f8a5db531ff1fb85aaef25e711" title="To disconnect from the database.">disconnect</a>() = 0;
+<a name="l00073"></a>00073 };
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076 <span class="preprocessor">#endif // ABSTRACTDATABASE</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 14 2011 23:13:12 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Jun 23 2011 16:43:50 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
