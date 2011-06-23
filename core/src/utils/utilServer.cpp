@@ -74,7 +74,13 @@ vishnu::registerSeD(string type, ExecConfiguration config, string& cfg){
   if (res == -1) {
     throw SystemException(ERRCODE_SYSTEM, "Failed to create the DIET sed script");
   }
-  cmd = "echo \"name="+mid+"@"+type+"\" >> "+cfg;
+  cmd = "chmod 777 "+cfg;
+  res = system(cmd.c_str());
+  if (res == -1) {
+    throw SystemException(ERRCODE_SYSTEM, "Failed to create the DIET sed script");
+  }
+  srand(time(NULL));
+  cmd = "echo \"name="+mid+"@"+type+"_"+convertToString(rand())+"\" >> "+cfg;
   res = system(cmd.c_str());
   if (res == -1) {
     throw SystemException(ERRCODE_SYSTEM, "Failed to create the DIET sed script");

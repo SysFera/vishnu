@@ -2,9 +2,9 @@
 import VISHNU
 
 def displayProc(lip):
-  for i in range(lip.getNbProcs()):
-    print "Name: ", lip.getProcessName()
-    print "machine: ", lip.getMachineId()
+  for i in range(lip.getProcess().size()):
+    print "Name: ", lip.getProcess().get(i).getProcessName()
+    print "machine: ", lip.getProcess().get(i).getMachineId()
 
 
 
@@ -20,24 +20,24 @@ oph = VISHNU.MetricHistOp()
 
 r, k = VISHNU.connect("root", "vishnu_user")
 try :
-  VISHNU.getMetricHistory(k, mid, lih, oph)
+  VISHNU.getProcesses(k, lip, pop)
+#  VISHNU.getMetricHistory(k, mid, lih, oph)
 except VISHNU.IMSVishnuException, e:
     print e.what()
 except VISHNU.UMSVishnuException, e:
   print e.what()
 except VISHNU.SystemException, e:
   print e.what()
-VISHNU.getMetricCurrentValue(k, mid, lic, opc)
-VISHNU.getProcesses(k, lip, pop)
+#VISHNU.getMetricCurrentValue(k, mid, lic, opc)
 
-try :
-  VISHNU.getMetricCurrentValue(k, "toto", lic, opc)
-except VISHNU.IMSVishnuException, e:
-    print e.what()
-except VISHNU.UMSVishnuException, e:
-  print e.what()
-except VISHNU.SystemException, e:
-  print e.what()
+#try :
+#  VISHNU.getMetricCurrentValue(k, "toto", lic, opc)
+#except VISHNU.IMSVishnuException, e:
+#    print e.what()
+#except VISHNU.UMSVishnuException, e:
+#  print e.what()
+#except VISHNU.SystemException, e:
+#  print e.what()
 
 displayProc(lip);
 
