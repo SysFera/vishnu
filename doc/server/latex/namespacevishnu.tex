@@ -64,11 +64,9 @@ enum \hyperlink{namespacevishnu_a89462b396eca68c9c1a94a06d2f39532}{CmdType} \{ \
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-std::string \hyperlink{namespacevishnu_af78f0170fec9be36ee34f702cbd7ab28}{getMidFromHost} (std::string hostname)
-\begin{DoxyCompactList}\small\item\em To get a vishnu machineid based on the hostname. \item\end{DoxyCompactList}\item 
-int \hyperlink{namespacevishnu_acc83b00c8c11d7ae44a4dee1b8bf66f3}{registerSeD} (std::string type, \hyperlink{classExecConfiguration}{ExecConfiguration} config)
+int \hyperlink{namespacevishnu_a9f137bd109d564a7366b3a847581d7f6}{registerSeD} (std::string type, \hyperlink{classExecConfiguration}{ExecConfiguration} config, std::string \&cfg)
 \begin{DoxyCompactList}\small\item\em To register the server in the database. \item\end{DoxyCompactList}\item 
-int \hyperlink{namespacevishnu_a3b8e27715f0676ef58a806f2cc5e365c}{unregisterSeD} (std::string type)
+int \hyperlink{namespacevishnu_ac55cf69f136045543c4586d42e3731a7}{unregisterSeD} (std::string type, std::string mid)
 \begin{DoxyCompactList}\small\item\em To unregister the server in the database (set as stopped). \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_ae3f61f1465ef34d3cf2f20c67a019b43}{isMonth} (const char $\ast$s)
 \begin{DoxyCompactList}\small\item\em Return true if the string starts with 'MONTH'. \item\end{DoxyCompactList}\item 
@@ -86,7 +84,7 @@ int \hyperlink{namespacevishnu_a11a59f26c9f250498ef8aed73e316c8b}{isDay} (const 
 \begin{DoxyCompactList}\small\item\em Return true if the string starts with 'DAY'. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_a9f8370bcc63bc78bd464447eecbee191}{isCpt} (const char $\ast$s)
 \begin{DoxyCompactList}\small\item\em Return true if the string starts with 'CPT'. \item\end{DoxyCompactList}\item 
-int \hyperlink{namespacevishnu_a04e3438b8bba4e8074e5102cccfd6cd1}{getKeywords} (int $\ast$size, \hyperlink{classFormat__t}{Format\_\-t} $\ast$array, const char $\ast$format, int cpt, \hyperlink{namespacevishnu_aff8a694c2bc2b55465a31b4bf00f58c1}{IdType} type, std::string name, std::string site)
+int \hyperlink{namespacevishnu_a04e3438b8bba4e8074e5102cccfd6cd1}{getKeywords} (int $\ast$size, \hyperlink{structFormat__t}{Format\_\-t} $\ast$array, const char $\ast$format, int cpt, \hyperlink{namespacevishnu_aff8a694c2bc2b55465a31b4bf00f58c1}{IdType} type, std::string name, std::string site)
 \begin{DoxyCompactList}\small\item\em Parse the format and fill the array with the variable and their value. \item\end{DoxyCompactList}\item 
 std::string \hyperlink{namespacevishnu_a1ac2452cabb31484e501d0e568a342c3}{getGeneratedName} (const char $\ast$format, int cpt, \hyperlink{namespacevishnu_aff8a694c2bc2b55465a31b4bf00f58c1}{IdType} type, std::string name=\char`\"{}\char`\"{}, std::string site=\char`\"{}\char`\"{})
 \begin{DoxyCompactList}\small\item\em Function to generate an ID. \item\end{DoxyCompactList}\item 
@@ -160,6 +158,8 @@ void \hyperlink{namespacevishnu_a3b238cf04a86c821f8a267afad489bee}{checkRemotePa
 \begin{DoxyCompactList}\small\item\em Function to check the remote file path. \item\end{DoxyCompactList}\item 
 bool \hyperlink{namespacevishnu_a04f9a9dfc61b7390150222b10f64bb70}{process\_\-exists} (const std::string \&pid, const bfs::path \&proc\_\-dir=\char`\"{}/proc\char`\"{})
 \begin{DoxyCompactList}\small\item\em Check if the pid exists. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{namespacevishnu_a7d9cd0241f290039aff6a6410b1cc22f}{getLocalMachineName} (const std::string \&port)
+\begin{DoxyCompactList}\small\item\em Get the fully qualified name for the current system. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_ac58b058a6a467a21f7eb21192617c90f}{connect} (const std::string \&userId, const std::string \&password, UMS\_\-Data::Session \&session, const UMS\_\-Data::ConnectOptions \&connectOpt=UMS\_\-Data::ConnectOptions())  throw (UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em Function to open a session. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_ae120231ba899d68724dc972374206745}{reconnect} (const std::string \&userId, const std::string \&password, const std::string \&sessionId, UMS\_\-Data::Session \&session)  throw (UserException, SystemException)
@@ -215,8 +215,6 @@ void \hyperlink{namespacevishnu_a5ef439295f52f8055a0771ae9f257b68}{vishnuFinaliz
 \label{namespacevishnu_a5ef439295f52f8055a0771ae9f257b68}
 
 \begin{DoxyCompactList}\small\item\em Function to finalize. \item\end{DoxyCompactList}\item 
-int \hyperlink{namespacevishnu_ab1b9efc3bdb39619f591a2eaa96baac9}{restore} (const std::string \&filePath)
-\begin{DoxyCompactList}\small\item\em Function to initialize the data base. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_acee6838fcf107a7a9b2f058159b7b9be}{submitJob} (const std::string \&sessionKey, const std::string \&machineId, const std::string \&scriptFilePath, Job \&jobInfo, const SubmitOptions \&options=SubmitOptions())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em The submitJob function submits job on a machine through the use of a script (scriptFilePath). \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_a151ba595af88d89107ff08ad0e2c5e31}{cancelJob} (const std::string \&sessionKey, const std::string \&machineId, const std::string \&jobId)  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
@@ -599,7 +597,7 @@ Function to check the metric value.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em metric}]the metric value \end{DoxyParams}
+\item[{\em metric,:}]the metric value \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -1464,6 +1462,25 @@ Parse the format and fill the array with the variable and their value.
 \begin{DoxyReturn}{Returns}
 0 on success and -\/1 when an error occurs 
 \end{DoxyReturn}
+\hypertarget{namespacevishnu_a7d9cd0241f290039aff6a6410b1cc22f}{
+\index{vishnu@{vishnu}!getLocalMachineName@{getLocalMachineName}}
+\index{getLocalMachineName@{getLocalMachineName}!vishnu@{vishnu}}
+\subsubsection[{getLocalMachineName}]{\setlength{\rightskip}{0pt plus 5cm}std::string vishnu::getLocalMachineName (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ port}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_a7d9cd0241f290039aff6a6410b1cc22f}
+
+
+Get the fully qualified name for the current system. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em port}]the port \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the fully qualified name for the current system 
+\end{DoxyReturn}
 \hypertarget{namespacevishnu_ad83c65006cee9dbbd73881089cc1f441}{
 \index{vishnu@{vishnu}!getMetricCurrentValue@{getMetricCurrentValue}}
 \index{getMetricCurrentValue@{getMetricCurrentValue}!vishnu@{vishnu}}
@@ -1507,25 +1524,6 @@ To get the values of the metrics on a machine.
 \item[{\em sessionKey,:}]The session key gotten after connection \item[{\em machineId,:}]The id of the machine \item[{\em list,:}]OUT, the set of metrics \item[{\em op,:}]The options to get the metrics \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 int : an error code 
-\end{DoxyReturn}
-\hypertarget{namespacevishnu_af78f0170fec9be36ee34f702cbd7ab28}{
-\index{vishnu@{vishnu}!getMidFromHost@{getMidFromHost}}
-\index{getMidFromHost@{getMidFromHost}!vishnu@{vishnu}}
-\subsubsection[{getMidFromHost}]{\setlength{\rightskip}{0pt plus 5cm}std::string vishnu::getMidFromHost (
-\begin{DoxyParamCaption}
-\item[{std::string}]{ hostname}
-\end{DoxyParamCaption}
-)}}
-\label{namespacevishnu_af78f0170fec9be36ee34f702cbd7ab28}
-
-
-To get a vishnu machineid based on the hostname. 
-
-
-\begin{DoxyParams}{Parameters}
-\item[{\em hostname,:}]The name of the hostname \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-The corresponding machine id 
 \end{DoxyReturn}
 \hypertarget{namespacevishnu_a9349617bc14f92c6dfe67745dcbac8ff}{
 \index{vishnu@{vishnu}!getObjectId@{getObjectId}}
@@ -2207,23 +2205,24 @@ Function to return the sessionKey of a session in which the user was disconnecte
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
-\hypertarget{namespacevishnu_acc83b00c8c11d7ae44a4dee1b8bf66f3}{
+\hypertarget{namespacevishnu_a9f137bd109d564a7366b3a847581d7f6}{
 \index{vishnu@{vishnu}!registerSeD@{registerSeD}}
 \index{registerSeD@{registerSeD}!vishnu@{vishnu}}
 \subsubsection[{registerSeD}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::registerSeD (
 \begin{DoxyParamCaption}
 \item[{std::string}]{ type, }
-\item[{{\bf ExecConfiguration}}]{ config}
+\item[{{\bf ExecConfiguration}}]{ config, }
+\item[{std::string \&}]{ cfg}
 \end{DoxyParamCaption}
 )}}
-\label{namespacevishnu_acc83b00c8c11d7ae44a4dee1b8bf66f3}
+\label{namespacevishnu_a9f137bd109d564a7366b3a847581d7f6}
 
 
 To register the server in the database. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em type,:}]The type of the SeD \item[{\em config,:}]The configuration of the executable \end{DoxyParams}
+\item[{\em type,:}]The type of the SeD \item[{\em config,:}]The configuration of the executable \item[{\em cfg,:}]The created path to the config file \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the function succeeds or another value otherwise 
 \end{DoxyReturn}
@@ -2305,25 +2304,6 @@ To restart a vishnu process.
 \item[{\em sessionKey,:}]The session key gotten after connection \item[{\em machineId,:}]The machine where to restart \item[{\em op,:}]The options for the restart, the vishnuConfigurationFile and the type of sed to be restarted on the machine \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 int : an error code 
-\end{DoxyReturn}
-\hypertarget{namespacevishnu_ab1b9efc3bdb39619f591a2eaa96baac9}{
-\index{vishnu@{vishnu}!restore@{restore}}
-\index{restore@{restore}!vishnu@{vishnu}}
-\subsubsection[{restore}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::restore (
-\begin{DoxyParamCaption}
-\item[{const std::string \&}]{ filePath}
-\end{DoxyParamCaption}
-)}}
-\label{namespacevishnu_ab1b9efc3bdb39619f591a2eaa96baac9}
-
-
-Function to initialize the data base. 
-
-
-\begin{DoxyParams}{Parameters}
-\item[{\em filePath}]the file \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-an error code 
 \end{DoxyReturn}
 \hypertarget{namespacevishnu_a60ecb3b47532d0df7b0d44fdf43f98f4}{
 \index{vishnu@{vishnu}!restoreConfiguration@{restoreConfiguration}}
@@ -2548,22 +2528,23 @@ To retrieve the password.
 \begin{DoxyReturn}{Returns}
 The password entered. 
 \end{DoxyReturn}
-\hypertarget{namespacevishnu_a3b8e27715f0676ef58a806f2cc5e365c}{
+\hypertarget{namespacevishnu_ac55cf69f136045543c4586d42e3731a7}{
 \index{vishnu@{vishnu}!unregisterSeD@{unregisterSeD}}
 \index{unregisterSeD@{unregisterSeD}!vishnu@{vishnu}}
 \subsubsection[{unregisterSeD}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::unregisterSeD (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ type}
+\item[{std::string}]{ type, }
+\item[{std::string}]{ mid}
 \end{DoxyParamCaption}
 )}}
-\label{namespacevishnu_a3b8e27715f0676ef58a806f2cc5e365c}
+\label{namespacevishnu_ac55cf69f136045543c4586d42e3731a7}
 
 
 To unregister the server in the database (set as stopped). 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em type,:}]The type of the SeD \end{DoxyParams}
+\item[{\em type,:}]The type of the SeD \item[{\em mid,:}]The machine id \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the function succeeds or another value otherwise 
 \end{DoxyReturn}
