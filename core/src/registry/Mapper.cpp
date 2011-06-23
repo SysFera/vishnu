@@ -2,15 +2,11 @@
 
 Mapper::Mapper(MapperRegistry* reg){
   mreg = reg;
-  if (pthread_mutex_init(&mutex, NULL)){
-    throw SystemException(ERRCODE_SYSTEM, "Failed to init mutex");
-  }
+  pthread_mutex_init(&mutex, NULL);
 }
 
 Mapper::Mapper(){
-  if(pthread_mutex_init(&mutex, NULL)){
-    throw  SystemException(ERRCODE_SYSTEM, "Failed to init mutex");
-  }
+  pthread_mutex_init(&mutex, NULL);
 }
 
 Mapper::Mapper(const Mapper& m){
