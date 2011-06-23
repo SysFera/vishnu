@@ -26,10 +26,6 @@ private :
    */
   char** 		     margv;
   /**
-   * \brief Ther diet config file
-   */
-  string 		     mdietConfig;
-  /**
    * \brief The option of the call
    */
   boost::shared_ptr<Options> mop;
@@ -48,9 +44,8 @@ public:
    * \param argc: argc from C program
    * \param argv: argv from C program
    * \param op: Option to fill (OUT)
-   * \param dietConfig: Configuration file for DIET
    */
-  CLICmd(int argc, char** argv, boost::shared_ptr<Options> op, string dietConfig);
+  CLICmd(int argc, char** argv, boost::shared_ptr<Options> op);
   /**
    * \brief Default destructor
    * \fn ~CLICmd()
