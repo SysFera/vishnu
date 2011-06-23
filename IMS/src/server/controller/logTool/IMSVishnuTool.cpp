@@ -165,7 +165,6 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
     } // EDNIF IN
     // If message of disconnexion
     if (string(msg[i].tag).compare("OUT")==0){
-      cout << "disconnexion of the component called " << string(msg[i].componentName) << endl;
       p->setDietId(string(msg[i].componentName));
       mproc.getDataFromDietId(p);
       ProcessCtl ctl("", UserServer(SessionServer("")));
@@ -195,15 +194,11 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	resOp.setVishnuConf(p->getScript());
 	// Restart a process disconnected, if the process was stopped with a stop call, no restart will be done
 	try {
-	  cout << "Trying to restart" << endl;
 	  // If local proc to restart
 	  if (p->getMachineId().compare(mmid)==0){
-	    cout << "Local restart" << endl;
 	    ctl.restart(&resOp, p->getMachineId(), false);
 	  } else { // Else if ims down and i am elected to relaunch it
-	    cout << "DIstant restart" << endl;
 	    if (ctl.isIMSSeD(p->getDietId()) && elect()) {
-	      cout << "IMS and elected" << endl;
 	      ctl.restart(&resOp, p->getMachineId(), false);
 	    }
 	  }
