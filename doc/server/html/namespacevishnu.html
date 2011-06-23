@@ -99,12 +99,10 @@ Enumerations</h2></td></tr>
  <a href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#af78f0170fec9be36ee34f702cbd7ab28">getMidFromHost</a> (std::string hostname)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get a vishnu machineid based on the hostname.  <a href="#af78f0170fec9be36ee34f702cbd7ab28"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#acc83b00c8c11d7ae44a4dee1b8bf66f3">registerSeD</a> (std::string type, <a class="el" href="classExecConfiguration.html">ExecConfiguration</a> config)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To register the server in the database.  <a href="#acc83b00c8c11d7ae44a4dee1b8bf66f3"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a3b8e27715f0676ef58a806f2cc5e365c">unregisterSeD</a> (std::string type)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To unregister the server in the database (set as stopped).  <a href="#a3b8e27715f0676ef58a806f2cc5e365c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a9f137bd109d564a7366b3a847581d7f6">registerSeD</a> (std::string type, <a class="el" href="classExecConfiguration.html">ExecConfiguration</a> config, std::string &amp;cfg)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To register the server in the database.  <a href="#a9f137bd109d564a7366b3a847581d7f6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ac55cf69f136045543c4586d42e3731a7">unregisterSeD</a> (std::string type, std::string mid)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To unregister the server in the database (set as stopped).  <a href="#ac55cf69f136045543c4586d42e3731a7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ae3f61f1465ef34d3cf2f20c67a019b43">isMonth</a> (const char *s)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Return true if the string starts with 'MONTH'.  <a href="#ae3f61f1465ef34d3cf2f20c67a019b43"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a646794297931366c08502e5079154ccd">isYear</a> (const char *s)</td></tr>
@@ -121,7 +119,7 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Return true if the string starts with 'DAY'.  <a href="#a11a59f26c9f250498ef8aed73e316c8b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a9f8370bcc63bc78bd464447eecbee191">isCpt</a> (const char *s)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Return true if the string starts with 'CPT'.  <a href="#a9f8370bcc63bc78bd464447eecbee191"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a04e3438b8bba4e8074e5102cccfd6cd1">getKeywords</a> (int *size, <a class="el" href="classFormat__t.html">Format_t</a> *array, const char *format, int cpt, <a class="el" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1">IdType</a> type, std::string name, std::string site)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a04e3438b8bba4e8074e5102cccfd6cd1">getKeywords</a> (int *size, <a class="el" href="structFormat__t.html">Format_t</a> *array, const char *format, int cpt, <a class="el" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1">IdType</a> type, std::string name, std::string site)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Parse the format and fill the array with the variable and their value.  <a href="#a04e3438b8bba4e8074e5102cccfd6cd1"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a1ac2452cabb31484e501d0e568a342c3">getGeneratedName</a> (const char *format, int cpt, <a class="el" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1">IdType</a> type, std::string name=&quot;&quot;, std::string site=&quot;&quot;)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to generate an ID.  <a href="#a1ac2452cabb31484e501d0e568a342c3"></a><br/></td></tr>
@@ -193,6 +191,8 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check the remote file path.  <a href="#a3b238cf04a86c821f8a267afad489bee"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a04f9a9dfc61b7390150222b10f64bb70">process_exists</a> (const std::string &amp;pid, const bfs::path &amp;proc_dir=&quot;/proc&quot;)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Check if the pid exists.  <a href="#a04f9a9dfc61b7390150222b10f64bb70"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a7d9cd0241f290039aff6a6410b1cc22f">getLocalMachineName</a> (const std::string &amp;port)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get the fully qualified name for the current system.  <a href="#a7d9cd0241f290039aff6a6410b1cc22f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ac58b058a6a467a21f7eb21192617c90f">connect</a> (const std::string &amp;userId, const std::string &amp;password, UMS_Data::Session &amp;session, const UMS_Data::ConnectOptions &amp;connectOpt=UMS_Data::ConnectOptions())  throw (UserException, SystemException)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to open a session.  <a href="#ac58b058a6a467a21f7eb21192617c90f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ae120231ba899d68724dc972374206745">reconnect</a> (const std::string &amp;userId, const std::string &amp;password, const std::string &amp;sessionId, UMS_Data::Session &amp;session)  throw (UserException, SystemException)</td></tr>
@@ -246,8 +246,6 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ef439295f52f8055a0771ae9f257b68"></a><!-- doxytag: member="vishnu::vishnuFinalize" ref="a5ef439295f52f8055a0771ae9f257b68" args="()" -->
 void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a5ef439295f52f8055a0771ae9f257b68">vishnuFinalize</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to finalize. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ab1b9efc3bdb39619f591a2eaa96baac9">restore</a> (const std::string &amp;filePath)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to initialize the data base.  <a href="#ab1b9efc3bdb39619f591a2eaa96baac9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#acee6838fcf107a7a9b2f058159b7b9be">submitJob</a> (const std::string &amp;sessionKey, const std::string &amp;machineId, const std::string &amp;scriptFilePath, Job &amp;jobInfo, const SubmitOptions &amp;options=SubmitOptions())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The submitJob function submits job on a machine through the use of a script (scriptFilePath).  <a href="#acee6838fcf107a7a9b2f058159b7b9be"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a151ba595af88d89107ff08ad0e2c5e31">cancelJob</a> (const std::string &amp;sessionKey, const std::string &amp;machineId, const std::string &amp;jobId)  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)</td></tr>
@@ -778,7 +776,7 @@ Variables</h2></td></tr>
 <p>Function to check the metric value. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>metric</em>&nbsp;</td><td>the metric value </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>metric,:</em>&nbsp;</td><td>the metric value </td></tr>
   </table>
   </dd>
 </dl>
@@ -2364,7 +2362,7 @@ template&lt;class T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classFormat__t.html">Format_t</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structFormat__t.html">Format_t</a> *&nbsp;</td>
           <td class="paramname"> <em>array</em>, </td>
         </tr>
         <tr>
@@ -2420,6 +2418,33 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 on success and -1 when an error occurs </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a7d9cd0241f290039aff6a6410b1cc22f"></a><!-- doxytag: member="vishnu::getLocalMachineName" ref="a7d9cd0241f290039aff6a6410b1cc22f" args="(const std::string &amp;port)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string vishnu::getLocalMachineName </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>port</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the fully qualified name for the current system. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>port</em>&nbsp;</td><td>the port </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the fully qualified name for the current system </dd></dl>
 
 </div>
 </div>
@@ -2522,33 +2547,6 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="af78f0170fec9be36ee34f702cbd7ab28"></a><!-- doxytag: member="vishnu::getMidFromHost" ref="af78f0170fec9be36ee34f702cbd7ab28" args="(std::string hostname)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string vishnu::getMidFromHost </td>
-          <td>(</td>
-          <td class="paramtype">std::string&nbsp;</td>
-          <td class="paramname"> <em>hostname</em></td>
-          <td>&nbsp;)&nbsp;</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>To get a vishnu machineid based on the hostname. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>hostname,:</em>&nbsp;</td><td>The name of the hostname </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>The corresponding machine id </dd></dl>
 
 </div>
 </div>
@@ -3885,7 +3883,7 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="acc83b00c8c11d7ae44a4dee1b8bf66f3"></a><!-- doxytag: member="vishnu::registerSeD" ref="acc83b00c8c11d7ae44a4dee1b8bf66f3" args="(std::string type, ExecConfiguration config)" -->
+<a class="anchor" id="a9f137bd109d564a7366b3a847581d7f6"></a><!-- doxytag: member="vishnu::registerSeD" ref="a9f137bd109d564a7366b3a847581d7f6" args="(std::string type, ExecConfiguration config, std::string &amp;cfg)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -3899,7 +3897,13 @@ template&lt;class T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classExecConfiguration.html">ExecConfiguration</a>&nbsp;</td>
-          <td class="paramname"> <em>config</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>cfg</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -3915,6 +3919,7 @@ template&lt;class T &gt; </div>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>type,:</em>&nbsp;</td><td>The type of the SeD </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>config,:</em>&nbsp;</td><td>The configuration of the executable </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>cfg,:</em>&nbsp;</td><td>The created path to the config file </td></tr>
   </table>
   </dd>
 </dl>
@@ -4087,33 +4092,6 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ab1b9efc3bdb39619f591a2eaa96baac9"></a><!-- doxytag: member="vishnu::restore" ref="ab1b9efc3bdb39619f591a2eaa96baac9" args="(const std::string &amp;filePath)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int vishnu::restore </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&nbsp;</td>
-          <td class="paramname"> <em>filePath</em></td>
-          <td>&nbsp;)&nbsp;</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Function to initialize the data base. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>filePath</em>&nbsp;</td><td>the file </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>an error code </dd></dl>
 
 </div>
 </div>
@@ -4540,7 +4518,7 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a3b8e27715f0676ef58a806f2cc5e365c"></a><!-- doxytag: member="vishnu::unregisterSeD" ref="a3b8e27715f0676ef58a806f2cc5e365c" args="(std::string type)" -->
+<a class="anchor" id="ac55cf69f136045543c4586d42e3731a7"></a><!-- doxytag: member="vishnu::unregisterSeD" ref="ac55cf69f136045543c4586d42e3731a7" args="(std::string type, std::string mid)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -4548,9 +4526,18 @@ template&lt;class T &gt; </div>
           <td class="memname">int vishnu::unregisterSeD </td>
           <td>(</td>
           <td class="paramtype">std::string&nbsp;</td>
-          <td class="paramname"> <em>type</em></td>
-          <td>&nbsp;)&nbsp;</td>
+          <td class="paramname"> <em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::string&nbsp;</td>
+          <td class="paramname"> <em>mid</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
         </tr>
       </table>
 </div>
@@ -4560,6 +4547,7 @@ template&lt;class T &gt; </div>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>type,:</em>&nbsp;</td><td>The type of the SeD </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>mid,:</em>&nbsp;</td><td>The machine id </td></tr>
   </table>
   </dd>
 </dl>
@@ -4723,7 +4711,7 @@ template&lt;class T &gt; </div>
 </div>
 </div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 14 2011 23:13:18 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Jun 23 2011 16:43:56 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

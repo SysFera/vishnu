@@ -14,7 +14,7 @@ This file implements the utils functions of the vishnu system.
 \subsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
-class \hyperlink{classFormat__t}{Format\_\-t}
+class \hyperlink{structFormat__t}{Format\_\-t}
 \begin{DoxyCompactList}\small\item\em The class used to get the variables of the string to parse. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Namespaces}
 \begin{DoxyCompactItemize}
@@ -47,11 +47,9 @@ enum \hyperlink{namespacevishnu_a89462b396eca68c9c1a94a06d2f39532}{vishnu::CmdTy
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-std::string \hyperlink{namespacevishnu_af78f0170fec9be36ee34f702cbd7ab28}{vishnu::getMidFromHost} (std::string hostname)
-\begin{DoxyCompactList}\small\item\em To get a vishnu machineid based on the hostname. \item\end{DoxyCompactList}\item 
-int \hyperlink{namespacevishnu_acc83b00c8c11d7ae44a4dee1b8bf66f3}{vishnu::registerSeD} (std::string type, \hyperlink{classExecConfiguration}{ExecConfiguration} config)
+int \hyperlink{namespacevishnu_a9f137bd109d564a7366b3a847581d7f6}{vishnu::registerSeD} (std::string type, \hyperlink{classExecConfiguration}{ExecConfiguration} config, std::string \&cfg)
 \begin{DoxyCompactList}\small\item\em To register the server in the database. \item\end{DoxyCompactList}\item 
-int \hyperlink{namespacevishnu_a3b8e27715f0676ef58a806f2cc5e365c}{vishnu::unregisterSeD} (std::string type)
+int \hyperlink{namespacevishnu_ac55cf69f136045543c4586d42e3731a7}{vishnu::unregisterSeD} (std::string type, std::string mid)
 \begin{DoxyCompactList}\small\item\em To unregister the server in the database (set as stopped). \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_ae3f61f1465ef34d3cf2f20c67a019b43}{vishnu::isMonth} (const char $\ast$s)
 \begin{DoxyCompactList}\small\item\em Return true if the string starts with 'MONTH'. \item\end{DoxyCompactList}\item 
@@ -69,7 +67,7 @@ int \hyperlink{namespacevishnu_a11a59f26c9f250498ef8aed73e316c8b}{vishnu::isDay}
 \begin{DoxyCompactList}\small\item\em Return true if the string starts with 'DAY'. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_a9f8370bcc63bc78bd464447eecbee191}{vishnu::isCpt} (const char $\ast$s)
 \begin{DoxyCompactList}\small\item\em Return true if the string starts with 'CPT'. \item\end{DoxyCompactList}\item 
-int \hyperlink{namespacevishnu_a04e3438b8bba4e8074e5102cccfd6cd1}{vishnu::getKeywords} (int $\ast$size, \hyperlink{classFormat__t}{Format\_\-t} $\ast$array, const char $\ast$format, int cpt, IdType type, std::string name, std::string site)
+int \hyperlink{namespacevishnu_a04e3438b8bba4e8074e5102cccfd6cd1}{vishnu::getKeywords} (int $\ast$size, \hyperlink{structFormat__t}{Format\_\-t} $\ast$array, const char $\ast$format, int cpt, IdType type, std::string name, std::string site)
 \begin{DoxyCompactList}\small\item\em Parse the format and fill the array with the variable and their value. \item\end{DoxyCompactList}\item 
 std::string \hyperlink{namespacevishnu_a1ac2452cabb31484e501d0e568a342c3}{vishnu::getGeneratedName} (const char $\ast$format, int cpt, IdType type, std::string name=\char`\"{}\char`\"{}, std::string site=\char`\"{}\char`\"{})
 \begin{DoxyCompactList}\small\item\em Function to generate an ID. \item\end{DoxyCompactList}\item 

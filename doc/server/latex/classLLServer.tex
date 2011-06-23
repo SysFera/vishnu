@@ -43,9 +43,9 @@ TMS\_\-Data::ListQueues $\ast$ \hyperlink{classLLServer_ae804a87a0a62253ec3b90eb
 \subsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-int \hyperlink{classLLServer_a38af261c6159c2816f7eae22d6aaa31a}{insertOptionLine} (const std::string \&optionLineToInsert, std::string \&content)
+void \hyperlink{classLLServer_a12ec697d6b846611c1e67ac1057d4ee0}{insertOptionLine} (const std::string \&optionLineToInsert, std::string \&content)
 \begin{DoxyCompactList}\small\item\em Function to insert option into string. \item\end{DoxyCompactList}\item 
-int \hyperlink{classLLServer_a3128afe568dabc4b043ffffe48159652}{processOptions} (const char $\ast$scriptPath, const TMS\_\-Data::SubmitOptions \&options)
+void \hyperlink{classLLServer_a54487bfb5d744a3b892e22127f3643ea}{processOptions} (const char $\ast$scriptPath, const TMS\_\-Data::SubmitOptions \&options)
 \begin{DoxyCompactList}\small\item\em Function to treat the submission options. \item\end{DoxyCompactList}\item 
 int \hyperlink{classLLServer_a0691e56eda4540ad4379a60ce1e5f3f5}{convertLLStateToVishnuState} (int state)
 \begin{DoxyCompactList}\small\item\em Function to convert the LL state into VISHNU state. \item\end{DoxyCompactList}\item 
@@ -56,21 +56,6 @@ int \hyperlink{classLLServer_af3ed7ec67ee318e43b9b8bb771cbc479}{computeNbRunJobs
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classLLServer_afba52bcf9ad47512b46a73a7ebe36cfc}{
-TMS\_\-Data::ListJobs\_\-ptr \hyperlink{classLLServer_afba52bcf9ad47512b46a73a7ebe36cfc}{mjobs}}
-\label{classLLServer_afba52bcf9ad47512b46a73a7ebe36cfc}
-
-\begin{DoxyCompactList}\small\item\em List of jobs. \item\end{DoxyCompactList}\item 
-\hypertarget{classLLServer_a0756372870c0be85949368d358e120e4}{
-TMS\_\-Data::ListProgression\_\-ptr \hyperlink{classLLServer_a0756372870c0be85949368d358e120e4}{mprog}}
-\label{classLLServer_a0756372870c0be85949368d358e120e4}
-
-\begin{DoxyCompactList}\small\item\em List of jobs. \item\end{DoxyCompactList}\item 
-\hypertarget{classLLServer_ad1575c813b96677e2a8cf26bd42816a9}{
-TMS\_\-Data::Job\_\-ptr \hyperlink{classLLServer_ad1575c813b96677e2a8cf26bd42816a9}{mjob}}
-\label{classLLServer_ad1575c813b96677e2a8cf26bd42816a9}
-
-\begin{DoxyCompactList}\small\item\em A job. \item\end{DoxyCompactList}\item 
 \hypertarget{classLLServer_a753c355ca93eb090880be918d1b54bf6}{
 TMS\_\-Data::ListQueues\_\-ptr \hyperlink{classLLServer_a753c355ca93eb090880be918d1b54bf6}{mlistQueues}}
 \label{classLLServer_a753c355ca93eb090880be918d1b54bf6}
@@ -209,16 +194,16 @@ Function to get the status of the job.
 
 Implements \hyperlink{classBatchServer_ac82e407645e4ad185cf59edcee832d58}{BatchServer}.
 
-\hypertarget{classLLServer_a38af261c6159c2816f7eae22d6aaa31a}{
+\hypertarget{classLLServer_a12ec697d6b846611c1e67ac1057d4ee0}{
 \index{LLServer@{LLServer}!insertOptionLine@{insertOptionLine}}
 \index{insertOptionLine@{insertOptionLine}!LLServer@{LLServer}}
-\subsubsection[{insertOptionLine}]{\setlength{\rightskip}{0pt plus 5cm}int LLServer::insertOptionLine (
+\subsubsection[{insertOptionLine}]{\setlength{\rightskip}{0pt plus 5cm}void LLServer::insertOptionLine (
 \begin{DoxyParamCaption}
 \item[{const std::string \&}]{ optionLineToInsert, }
 \item[{std::string \&}]{ content}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classLLServer_a38af261c6159c2816f7eae22d6aaa31a}
+\label{classLLServer_a12ec697d6b846611c1e67ac1057d4ee0}
 
 
 Function to insert option into string. 
@@ -252,16 +237,16 @@ The requested status in to ListQueues data structure
 
 Implements \hyperlink{classBatchServer_ab5cb2d2073b50e7c1f81693baed942ea}{BatchServer}.
 
-\hypertarget{classLLServer_a3128afe568dabc4b043ffffe48159652}{
+\hypertarget{classLLServer_a54487bfb5d744a3b892e22127f3643ea}{
 \index{LLServer@{LLServer}!processOptions@{processOptions}}
 \index{processOptions@{processOptions}!LLServer@{LLServer}}
-\subsubsection[{processOptions}]{\setlength{\rightskip}{0pt plus 5cm}int LLServer::processOptions (
+\subsubsection[{processOptions}]{\setlength{\rightskip}{0pt plus 5cm}void LLServer::processOptions (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{ scriptPath, }
 \item[{const TMS\_\-Data::SubmitOptions \&}]{ options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classLLServer_a3128afe568dabc4b043ffffe48159652}
+\label{classLLServer_a54487bfb5d744a3b892e22127f3643ea}
 
 
 Function to treat the submission options. 

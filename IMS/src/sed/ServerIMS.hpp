@@ -70,7 +70,7 @@ public :
 
    /**
    * \brief To initialize the IMS server
-   * \fn int init(int vishnuId, DbConfiguration dbConfig, std::string sendmailScriptPath)
+   * \fn int init(int vishnuId, DbConfiguration dbConfig, std::string sendmailScriptPath,string mid)
    * \param vishnuId The password of the root user vishnu_user for the connection with the database
    * \param dbConfig  The configuration of the database
    * \param sendmailScriptPath The path to the script for sending emails

@@ -37,7 +37,7 @@ int \hyperlink{classMYSQLDatabase_a3e0dc34a2b20ff76e5fa39cbe340c5d7}{connect} ()
 
 \begin{DoxyCompactList}\small\item\em Destructor, raises an exception on error. \item\end{DoxyCompactList}\item 
 \hyperlink{classDatabaseResult}{DatabaseResult} $\ast$ \hyperlink{classMYSQLDatabase_a4e3804ff11f44b3e5770932c8351ea92}{getResult} (std::string request)
-\begin{DoxyCompactList}\small\item\em To set the db to use. \item\end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em To get the result of a select request. \item\end{DoxyCompactList}\item 
 \hyperlink{classDbConfiguration_a4a57e43a5017a5c4833a784a994c91cf}{DbConfiguration::db\_\-type\_\-t} \hyperlink{classMYSQLDatabase_a6002562a486bc8a4c5a820cf45a62e64}{getDbType} ()
 \begin{DoxyCompactList}\small\item\em To get the type of database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Types}
@@ -185,14 +185,8 @@ Implements \hyperlink{classDatabase_a668ffe571cb0f9f355a2f874e40cb515}{Database}
 \label{classMYSQLDatabase_a4e3804ff11f44b3e5770932c8351ea92}
 
 
-To set the db to use. 
+To get the result of a select request. 
 
-
-\begin{DoxyParams}{Parameters}
-\item[{\em db}]The database to use \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-0 on success, an error code otherwise To get the result of a select request
-\end{DoxyReturn}
 
 \begin{DoxyParams}{Parameters}
 \item[{\em request}]The request to process \end{DoxyParams}
