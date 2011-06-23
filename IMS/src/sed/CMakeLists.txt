@@ -19,6 +19,8 @@ include_directories(
   ${Boost_INCLUDE_DIRS}
   ${REGISTRY_SOURCE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
+  ${OMNIORB4_INCLUDE_DIR}
+  ${LOG_INCLUDE_DIR}
 )
 
 add_executable(imssed
