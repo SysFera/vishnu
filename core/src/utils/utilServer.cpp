@@ -74,7 +74,13 @@ vishnu::registerSeD(string type, ExecConfiguration config, string& cfg){
   if (res == -1) {
     throw SystemException(ERRCODE_SYSTEM, "Failed to create the DIET sed script");
   }
-  cmd = "echo \"name="+mid+"@"+type+"\" >> "+cfg;
+  cmd = "chmod 777 "+cfg;
+  res = system(cmd.c_str());
+  if (res == -1) {
+    throw SystemException(ERRCODE_SYSTEM, "Failed to create the DIET sed script");
+  }
+  srand(time(NULL));
+  cmd = "echo \"name="+mid+"@"+type+"_"+convertToString(rand())+"\" >> "+cfg;
   res = system(cmd.c_str());
   if (res == -1) {
     throw SystemException(ERRCODE_SYSTEM, "Failed to create the DIET sed script");
@@ -260,10 +266,11 @@ vishnu::getGeneratedName (const char* format, int cpt, IdType type,
   // if there is no error with the getKeywords function
   if (ret != -1) {
     // Building the id using the format and the values of the var
-    if (size>0)
+    if (size>0){
       res.append (format, keywords[0].start);
-    else
+    } else {
       res = std::string (format);
+    }
     for (i=0;i<size;i++){
       res.append (keywords[i].value);
       // If other variables

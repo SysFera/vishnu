@@ -92,7 +92,7 @@ int main (int argc, char* argv[]){
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt= makeCopyAsyncOpt(argv[0], dietConfig, trCmdStr, src, dest);
 
-  CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
+  CLICmd cmd = CLICmd (argc, argv, opt);
 
  // Parse the cli and setting the options found
   ret = cmd.parse(env_name_mapper());
