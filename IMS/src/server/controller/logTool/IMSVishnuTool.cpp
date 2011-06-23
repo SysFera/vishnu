@@ -167,6 +167,10 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
     if (string(msg[i].tag).compare("OUT")==0){
       p->setDietId(string(msg[i].componentName));
       mproc.getDataFromDietId(p);
+      // If sed not to restart
+      if (p->getState()==3) {
+	continue;
+      }
       ProcessCtl ctl("", UserServer(SessionServer("")));
       try {
 	p->setMachineId(getMidFromOutLog(string(msg[i].componentName)));
