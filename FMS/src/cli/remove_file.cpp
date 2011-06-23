@@ -46,7 +46,7 @@ int main (int argc, char* argv[]){
       "It specifies when the remove command is recursive (case of directory) or not.",
       CONFIG);
   
-  CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
+  CLICmd cmd = CLICmd (argc, argv, opt);
 
   // Parse the cli and setting the options found
   ret = cmd.parse(env_name_mapper());

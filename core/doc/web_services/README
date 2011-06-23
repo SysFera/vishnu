@@ -1,0 +1,21 @@
+### Pour générer la doc des web services
+
+=> utiliser TechWriter for Web Services (sous Windows)
+
+
+1/ si version d'eval, la version html de la doc contient le pattern suivant:
+
+      <h5>Notice</h5>
+      <p>
+          This document was created with the trial version of TechWriter.
+          This notice is removed once a valid license is purchased.
+          Visit <a href="http://www.adivo.com">www.adivo.com</a> for purchase options.
+        </p>
+
+  ==> pour le supprimer, utiliser la commande perl suivante:
+  perl -pi -e 'if(/<h5>Notice/../<\/p>/){s/^.*$//s}' VishnuWS.html
+
+2/ il faut mettre à jour les titres des documents docbook et xml
+
+3/ il faut ajouter la partie <revision> au début du document docbook
+
