@@ -639,7 +639,459 @@ same conditions as regards security.</para>
       </tgroup>
     </informaltable>
   </section>
-  </chapter> <!-- end Functionnal Tests --> 
+<section>
+    <title> F1.CH2-B: Change group owner of files </title>
+    <para><emphasis role = "italic"> API command: chGrp</emphasis></para>
+    <informaltable>
+      <tgroup cols="5">
+	<colspec colwidth="2.0cm"/>
+	<colspec colwidth="6cm"/>
+	<colspec colwidth="3.5cm"/>
+	<colspec colwidth="3.5cm"/>
+	<colspec colwidth="1.5cm"/>
+	<thead>
+	  <row>
+	    <entry>ID test</entry>
+	    <entry>Description of the test cases</entry>
+	    <entry>Output expected</entry>
+	    <entry>Output gotten</entry>
+	    <entry>Error</entry>
+	  </row>
+	</thead>
+	<tbody>
+	  <row>
+	    <entry><para>F1.CH2-B</para></entry>
+	    <entry><para>Normal execution of chMod</para></entry>
+	    <entry><para>The group owner of file is changed</para></entry>
+	    <entry><para>The group owner of file is changed</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+	  <row>
+	    <entry><para>F1.CH2-E1</para></entry>
+	    <entry><para>The file path is invalid</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+	  <row>
+	    <entry><para>F1.CH2-E2</para></entry>
+	    <entry><para>Not access rights to the file</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+	  <row>
+	    <entry><para>F1.CH2-E3</para></entry>
+	    <entry><para>Bad machine Identifier</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+	</tbody>
+      </tgroup>
+    </informaltable>
+  </section>
+<section>
+    <title> F2.CP1-B: Execute a synchronous copy of files </title>
+    <para><emphasis role = "italic"> API command: copyFile</emphasis></para>
+    <informaltable>
+      <tgroup cols="5">
+	<colspec colwidth="2.0cm"/>
+	<colspec colwidth="6cm"/>
+	<colspec colwidth="3.5cm"/>
+	<colspec colwidth="3.5cm"/>
+	<colspec colwidth="1.5cm"/>
+	<thead>
+	  <row>
+	    <entry>ID test</entry>
+	    <entry>Description of the test cases</entry>
+	    <entry>Output expected</entry>
+	    <entry>Output gotten</entry>
+	    <entry>Error</entry>
+	  </row>
+	</thead>
+	<tbody>
+	  <row>
+	    <entry><para>F2.CP1-B</para></entry>
+	    <entry><para>Normal execution of copyFile</para></entry>
+	    <entry><para>The copy of source file is on the destination path.</para></entry>
+	    <entry><para>The copy of the source file is on the destination path.</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+	  <row>
+	    <entry><para>F2.CP1-E1</para></entry>
+	    <entry><para>The source file path is invalid</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+	  <row>
+	    <entry><para>F2.CP1-E2</para></entry>
+	    <entry><para>The destination file path is invalid</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+    <row>
+	    <entry><para>F2.CP1-E3</para></entry>
+	    <entry><para>Not access rights to the file</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+    <row>
+	    <entry><para>F2.CP1-E4</para></entry>
+	    <entry><para>Bad machine Identifier</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+	</tbody>
+      </tgroup>
+    </informaltable>
+  </section>
+<section>
+    <title> F2.CP2-B: Execute an asynchronous copy of files </title>
+    <para><emphasis role = "italic"> API command: copyAsyncFile</emphasis></para>
+    <informaltable>
+      <tgroup cols="5">
+	<colspec colwidth="2.0cm"/>
+	<colspec colwidth="6cm"/>
+	<colspec colwidth="3.5cm"/>
+	<colspec colwidth="3.5cm"/>
+	<colspec colwidth="1.5cm"/>
+	<thead>
+	  <row>
+	    <entry>ID test</entry>
+	    <entry>Description of the test cases</entry>
+	    <entry>Output expected</entry>
+	    <entry>Output gotten</entry>
+	    <entry>Error</entry>
+	  </row>
+	</thead>
+	<tbody>
+	  <row>
+	    <entry><para>F2.CP2-B</para></entry>
+	    <entry><para>Normal execution of copyAsyncFile</para></entry>
+	    <entry><para>The copy of source file is on the destination path.</para></entry>
+	    <entry><para>The copy of the source file is on the destination path.</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+	  <row>
+	    <entry><para>F2.CP2-E1</para></entry>
+	    <entry><para>The source file path is invalid</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+	  <row>
+	    <entry><para>F2.CP2-E2</para></entry>
+	    <entry><para>The destination file path is invalid</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+    <row>
+	    <entry><para>F2.CP2-E3</para></entry>
+	    <entry><para>Not access rights to the file</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+    <row>
+	    <entry><para>F2.CP2-E4</para></entry>
+	    <entry><para>Bad machine Identifier</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+	</tbody>
+      </tgroup>
+    </informaltable>
+  </section>
+
+<section>
+    <title> F2.MV1-B: Execute a synchronous move of files </title>
+    <para><emphasis role = "italic"> API command: moveFile</emphasis></para>
+    <informaltable>
+      <tgroup cols="5">
+	<colspec colwidth="2.0cm"/>
+	<colspec colwidth="6cm"/>
+	<colspec colwidth="3.5cm"/>
+	<colspec colwidth="3.5cm"/>
+	<colspec colwidth="1.5cm"/>
+	<thead>
+	  <row>
+	    <entry>ID test</entry>
+	    <entry>Description of the test cases</entry>
+	    <entry>Output expected</entry>
+	    <entry>Output gotten</entry>
+	    <entry>Error</entry>
+	  </row>
+	</thead>
+	<tbody>
+	  <row>
+	    <entry><para>F2.MV1-B</para></entry>
+	    <entry><para>Normal execution of moveFile</para></entry>
+	    <entry><para>The copy of source file is on the destination path and the source file is deleted.</para></entry>
+	    <entry><para>The copy of the source file is on the destination path and the source file is deleted.</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+	  <row>
+	    <entry><para>F2.MV1-E1</para></entry>
+	    <entry><para>The source file path is invalid</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+	  <row>
+	    <entry><para>F2.MV1-E2</para></entry>
+	    <entry><para>The destination file path is invalid</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+    <row>
+	    <entry><para>F2.MV1-E3</para></entry>
+	    <entry><para>Not access rights to the file</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+    <row>
+	    <entry><para>F2.MV1-E4</para></entry>
+	    <entry><para>Bad machine Identifier</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+	</tbody>
+      </tgroup>
+    </informaltable>
+  </section>
+
+<section>
+    <title> F2.MV2-B: Execute an asynchronous move of files </title>
+    <para><emphasis role = "italic"> API command: moveAsyncFile</emphasis></para>
+    <informaltable>
+      <tgroup cols="5">
+	<colspec colwidth="2.0cm"/>
+	<colspec colwidth="6cm"/>
+	<colspec colwidth="3.5cm"/>
+	<colspec colwidth="3.5cm"/>
+	<colspec colwidth="1.5cm"/>
+	<thead>
+	  <row>
+	    <entry>ID test</entry>
+	    <entry>Description of the test cases</entry>
+	    <entry>Output expected</entry>
+	    <entry>Output gotten</entry>
+	    <entry>Error</entry>
+	  </row>
+	</thead>
+	<tbody>
+	  <row>
+	    <entry><para>F2.MV2-B</para></entry>
+	    <entry><para>Normal execution of moveAsyncFile</para></entry>
+	    <entry><para>The copy of source file is on the destination path and the source file is deleted.</para></entry>
+	    <entry><para>The copy of the source file is on the destination path and the source file is deleted.</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+	  <row>
+	    <entry><para>F2.MV2-E1</para></entry>
+	    <entry><para>The source file path is invalid</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+	  <row>
+	    <entry><para>F2.MV2-E2</para></entry>
+	    <entry><para>The destination file path is invalid</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+    <row>
+	    <entry><para>F2.MV2-E3</para></entry>
+	    <entry><para>Not access rights to the file</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+    <row>
+	    <entry><para>F2.MV2-E4</para></entry>
+	    <entry><para>Bad machine Identifier</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+	</tbody>
+      </tgroup>
+    </informaltable>
+  </section>
+
+<section>
+    <title> F2.CA1-B: Cancel file transfer </title>
+    <para><emphasis role = "italic"> API command: stopFileTransfer</emphasis></para>
+    <informaltable>
+      <tgroup cols="5">
+	<colspec colwidth="2.0cm"/>
+	<colspec colwidth="6cm"/>
+	<colspec colwidth="3.5cm"/>
+	<colspec colwidth="3.5cm"/>
+	<colspec colwidth="1.5cm"/>
+	<thead>
+	  <row>
+	    <entry>ID test</entry>
+	    <entry>Description of the test cases</entry>
+	    <entry>Output expected</entry>
+	    <entry>Output gotten</entry>
+	    <entry>Error</entry>
+	  </row>
+	</thead>
+	<tbody>
+	  <row>
+	    <entry><para>F2.CA1-B</para></entry>
+	    <entry><para>Normal execution of stopFileTransfer</para></entry>
+	    <entry><para>The file transfer is cancelled.</para></entry>
+	    <entry><para>The file transfer is cancelled.</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+	  <row>
+	    <entry><para>F2.CA1-E1</para></entry>
+	    <entry><para>A given parameter is invalid</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+		</tbody>
+      </tgroup>
+    </informaltable>
+  </section>
+
+<section>
+    <title> F2.CA2-B: Cancel all users file transfers </title>
+    <para><emphasis role = "italic"> API command: stopFileTransfer</emphasis></para>
+    <informaltable>
+      <tgroup cols="5">
+	<colspec colwidth="2.0cm"/>
+	<colspec colwidth="6cm"/>
+	<colspec colwidth="3.5cm"/>
+	<colspec colwidth="3.5cm"/>
+	<colspec colwidth="1.5cm"/>
+	<thead>
+	  <row>
+	    <entry>ID test</entry>
+	    <entry>Description of the test cases</entry>
+	    <entry>Output expected</entry>
+	    <entry>Output gotten</entry>
+	    <entry>Error</entry>
+	  </row>
+	</thead>
+	<tbody>
+	  <row>
+	    <entry><para>F2.CA2-B</para></entry>
+	    <entry><para>Normal execution of stopFileTransfer</para></entry>
+	    <entry><para>All users file transfers are cancelled.</para></entry>
+	    <entry><para>All users file transfers are cancelled.</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+    
+    <row>
+	    <entry><para>F2.CA2-E1</para></entry>
+	    <entry><para>A given parameter is invalid</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+
+  </tbody>
+      </tgroup>
+    </informaltable>
+  </section>
+
+<section>
+    <title> F2.LT1-B: List all file transfers </title>
+    <para><emphasis role = "italic"> API command: listFileTransfers</emphasis></para>
+    <informaltable>
+      <tgroup cols="5">
+	<colspec colwidth="2.0cm"/>
+	<colspec colwidth="6cm"/>
+	<colspec colwidth="3.5cm"/>
+	<colspec colwidth="3.5cm"/>
+	<colspec colwidth="1.5cm"/>
+	<thead>
+	  <row>
+	    <entry>ID test</entry>
+	    <entry>Description of the test cases</entry>
+	    <entry>Output expected</entry>
+	    <entry>Output gotten</entry>
+	    <entry>Error</entry>
+	  </row>
+	</thead>
+	<tbody>
+	  <row>
+	    <entry><para>F2.LT1-B</para></entry>
+	    <entry><para>Normal execution of listFileTransfers</para></entry>
+	    <entry><para>The file transfers are listed.</para></entry>
+	    <entry><para>The file transfers are listed.</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+    <row>
+	    <entry><para>F2.LT1-E1</para></entry>
+	    <entry><para>a given parameter is invalid</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+    	</tbody>
+      </tgroup>
+    </informaltable>
+  </section>
+
+<section>
+    <title> F2.LT2-B: List all users file transfers </title>
+    <para><emphasis role = "italic"> API command: listFileTransfers</emphasis></para>
+    <informaltable>
+      <tgroup cols="5">
+	<colspec colwidth="2.0cm"/>
+	<colspec colwidth="6cm"/>
+	<colspec colwidth="3.5cm"/>
+	<colspec colwidth="3.5cm"/>
+	<colspec colwidth="1.5cm"/>
+	<thead>
+	  <row>
+	    <entry>ID test</entry>
+	    <entry>Description of the test cases</entry>
+	    <entry>Output expected</entry>
+	    <entry>Output gotten</entry>
+	    <entry>Error</entry>
+	  </row>
+	</thead>
+	<tbody>
+	  <row>
+	    <entry><para>F2.LT2-B</para></entry>
+	    <entry><para>Normal execution of listFileTransfers</para></entry>
+	    <entry><para>The file transfers are listed.</para></entry>
+	    <entry><para>The file transfers are listed.</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+    <row>
+	    <entry><para>F2.LT2-E1</para></entry>
+	    <entry><para>a given parameter is invalid</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>VishnuException</para></entry>
+	    <entry><para>0</para></entry>
+	  </row>
+    	</tbody>
+      </tgroup>
+    </informaltable>
+  </section>
+
+
+
+
+</chapter> <!-- end Functionnal Tests --> 
   
   <chapter>
     <title>Stress tests </title>
@@ -928,10 +1380,10 @@ same conditions as regards security.</para>
                   <para>fms server</para>
                </entry>
                <entry>
-                  <para></para>
+                  <para> 0,7% of the RAM </para>
                </entry>
 	       <entry>
-                  <para></para>
+                  <para>Success</para>
                </entry>
             </row>
 	</tbody>    
