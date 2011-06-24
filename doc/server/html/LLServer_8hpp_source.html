@@ -65,12 +65,12 @@
 <a name="l00080"></a>00080 
 <a name="l00081"></a>00081 <span class="keyword">private</span>:
 <a name="l00082"></a>00082 
-<a name="l00089"></a>00089   <span class="keywordtype">int</span> 
-<a name="l00090"></a>00090   <a class="code" href="classLLServer.html#a38af261c6159c2816f7eae22d6aaa31a" title="Function to insert option into string.">insertOptionLine</a>(<span class="keyword">const</span> std::string&amp; optionLineToInsert, 
+<a name="l00089"></a>00089   <span class="keywordtype">void</span>
+<a name="l00090"></a>00090   <a class="code" href="classLLServer.html#a12ec697d6b846611c1e67ac1057d4ee0" title="Function to insert option into string.">insertOptionLine</a>(<span class="keyword">const</span> std::string&amp; optionLineToInsert, 
 <a name="l00091"></a>00091                        std::string&amp; content);
 <a name="l00092"></a>00092 
-<a name="l00099"></a>00099   <span class="keywordtype">int</span> 
-<a name="l00100"></a>00100   <a class="code" href="classLLServer.html#a3128afe568dabc4b043ffffe48159652" title="Function to treat the submission options.">processOptions</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* scriptPath, 
+<a name="l00099"></a>00099   <span class="keywordtype">void</span>
+<a name="l00100"></a>00100   <a class="code" href="classLLServer.html#a54487bfb5d744a3b892e22127f3643ea" title="Function to treat the submission options.">processOptions</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* scriptPath, 
 <a name="l00101"></a>00101                  <span class="keyword">const</span> TMS_Data::SubmitOptions&amp; options);
 <a name="l00102"></a>00102 
 <a name="l00108"></a>00108   <span class="keywordtype">int</span> 
@@ -82,17 +82,13 @@
 <a name="l00125"></a>00125   <span class="keywordtype">int</span> 
 <a name="l00126"></a>00126   <a class="code" href="classLLServer.html#af3ed7ec67ee318e43b9b8bb771cbc479" title="Function to compute the number of running and waiting jobs of each queue.">computeNbRunJobsAndQueueJobs</a>(std::map&lt;std::string, int&gt;&amp; run, 
 <a name="l00127"></a>00127                                std::map&lt;std::string, int&gt;&amp; que);
-<a name="l00128"></a>00128   
-<a name="l00132"></a><a class="code" href="classLLServer.html#afba52bcf9ad47512b46a73a7ebe36cfc">00132</a>   TMS_Data::ListJobs_ptr <a class="code" href="classLLServer.html#afba52bcf9ad47512b46a73a7ebe36cfc" title="List of jobs.">mjobs</a>;
-<a name="l00136"></a><a class="code" href="classLLServer.html#a0756372870c0be85949368d358e120e4">00136</a>   TMS_Data::ListProgression_ptr <a class="code" href="classLLServer.html#a0756372870c0be85949368d358e120e4" title="List of jobs.">mprog</a>;
-<a name="l00140"></a><a class="code" href="classLLServer.html#ad1575c813b96677e2a8cf26bd42816a9">00140</a>   TMS_Data::Job_ptr <a class="code" href="classLLServer.html#ad1575c813b96677e2a8cf26bd42816a9" title="A job.">mjob</a>;
-<a name="l00144"></a><a class="code" href="classLLServer.html#a753c355ca93eb090880be918d1b54bf6">00144</a>   TMS_Data::ListQueues_ptr <a class="code" href="classLLServer.html#a753c355ca93eb090880be918d1b54bf6" title="ListQueues returned.">mlistQueues</a>;
-<a name="l00145"></a>00145 };
-<a name="l00146"></a>00146 
-<a name="l00147"></a>00147 <span class="preprocessor">#endif</span>
+<a name="l00131"></a><a class="code" href="classLLServer.html#a753c355ca93eb090880be918d1b54bf6">00131</a>   TMS_Data::ListQueues_ptr <a class="code" href="classLLServer.html#a753c355ca93eb090880be918d1b54bf6" title="ListQueues returned.">mlistQueues</a>;
+<a name="l00132"></a>00132 };
+<a name="l00133"></a>00133 
+<a name="l00134"></a>00134 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 14 2011 23:13:12 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Jun 23 2011 16:43:50 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
