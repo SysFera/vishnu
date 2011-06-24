@@ -201,6 +201,8 @@ public:
       case IMS :
          cmd = "IMS";
          break;
+      default:
+         cmd = "Unknown Command";
     }
     return cmd;
   }
@@ -228,6 +230,8 @@ public:
       case IMS :
          mapperName = IMSMAPPERNAME;
          break;
+      default:
+         mapperName = "Uknown Mapper Name";
     }
     return mapperName;
   }
