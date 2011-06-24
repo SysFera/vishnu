@@ -134,14 +134,6 @@ private :
    * \brief The database to connect
    */
   std::string mdatabase;
-  /**
-   * \brief The port to use
-   */
-  int mport;
-  /**
-   * \brief If the connection is right
-   */
-  bool misConnected;
 
   /////////////////////////////////
   // Functions
