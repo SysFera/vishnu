@@ -43,39 +43,37 @@
 <a name="l00033"></a>00033   <a class="code" href="classMYSQLDatabase.html#a3e0dc34a2b20ff76e5fa39cbe340c5d7" title="To make a connection to the database.">connect</a>();
 <a name="l00039"></a>00039   <a class="code" href="classMYSQLDatabase.html#a69cca4aa62adf08b995908aec1451522" title="Constructor, raises an exception on error.">MYSQLDatabase</a>(<a class="code" href="classDbConfiguration.html" title="Contains the configuration parameters for the Vishnu database.">DbConfiguration</a> dbConfig);
 <a name="l00044"></a>00044   <a class="code" href="classMYSQLDatabase.html#a5337e67330a1ffa3413a3e9725f1f1c0" title="Destructor, raises an exception on error.">~MYSQLDatabase</a>();
-<a name="l00050"></a>00050 <span class="comment">//   int</span>
-<a name="l00051"></a>00051 <span class="comment">//   setDatabase(std::string db);</span>
-<a name="l00058"></a>00058 <span class="comment"></span>  <a class="code" href="classDatabaseResult.html" title="This class describes the object which encapsulates the database results.">DatabaseResult</a>*
-<a name="l00059"></a>00059   <a class="code" href="classMYSQLDatabase.html#a4e3804ff11f44b3e5770932c8351ea92" title="To set the db to use.">getResult</a>(std::string request);
-<a name="l00064"></a>00064   <a class="code" href="classDbConfiguration.html#a4a57e43a5017a5c4833a784a994c91cf" title="The database type.">DbConfiguration::db_type_t</a>
-<a name="l00065"></a><a class="code" href="classMYSQLDatabase.html#a6002562a486bc8a4c5a820cf45a62e64">00065</a>   <a class="code" href="classMYSQLDatabase.html#a6002562a486bc8a4c5a820cf45a62e64" title="To get the type of database.">getDbType</a>() { <span class="keywordflow">return</span> DbConfiguration::MYSQL; };
-<a name="l00066"></a>00066 
-<a name="l00067"></a>00067 <span class="keyword">private</span> :
-<a name="l00074"></a>00074   MYSQL* <a class="code" href="classMYSQLDatabase.html#aab2f9ef902b164de793094a4cb92144c" title="To get a valid connexion.">getConnection</a>(<span class="keywordtype">int</span>&amp; pos);
+<a name="l00051"></a>00051   <a class="code" href="classDatabaseResult.html" title="This class describes the object which encapsulates the database results.">DatabaseResult</a>*
+<a name="l00052"></a>00052   <a class="code" href="classMYSQLDatabase.html#a4e3804ff11f44b3e5770932c8351ea92" title="To get the result of a select request.">getResult</a>(std::string request);
+<a name="l00057"></a>00057   <a class="code" href="classDbConfiguration.html#a4a57e43a5017a5c4833a784a994c91cf" title="The database type.">DbConfiguration::db_type_t</a>
+<a name="l00058"></a><a class="code" href="classMYSQLDatabase.html#a6002562a486bc8a4c5a820cf45a62e64">00058</a>   <a class="code" href="classMYSQLDatabase.html#a6002562a486bc8a4c5a820cf45a62e64" title="To get the type of database.">getDbType</a>() { <span class="keywordflow">return</span> DbConfiguration::MYSQL; };
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060 <span class="keyword">private</span> :
+<a name="l00067"></a>00067   MYSQL* <a class="code" href="classMYSQLDatabase.html#aab2f9ef902b164de793094a4cb92144c" title="To get a valid connexion.">getConnection</a>(<span class="keywordtype">int</span>&amp; pos);
+<a name="l00068"></a>00068 
+<a name="l00074"></a>00074   <span class="keywordtype">void</span> <a class="code" href="classMYSQLDatabase.html#a02068cf7e0dd72553013716d7aadabe7" title="To release a connexion.">releaseConnection</a>(<span class="keywordtype">int</span> pos);
 <a name="l00075"></a>00075 
-<a name="l00081"></a>00081   <span class="keywordtype">void</span> <a class="code" href="classMYSQLDatabase.html#a02068cf7e0dd72553013716d7aadabe7" title="To release a connexion.">releaseConnection</a>(<span class="keywordtype">int</span> pos);
-<a name="l00082"></a>00082 
-<a name="l00086"></a><a class="code" href="structMYSQLDatabase_1_1pool__t.html">00086</a>   <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structMYSQLDatabase_1_1pool__t.html" title="An element of the pool.">pool_t</a>{
-<a name="l00090"></a><a class="code" href="structMYSQLDatabase_1_1pool__t.html#ac7a9b13ff2dd5188479f78458f435055">00090</a>     <span class="keywordtype">bool</span> <a class="code" href="structMYSQLDatabase_1_1pool__t.html#ac7a9b13ff2dd5188479f78458f435055" title="If the connexion is used.">mused</a>;
-<a name="l00094"></a><a class="code" href="structMYSQLDatabase_1_1pool__t.html#a02c0ea818cd2a856ca87e4db38113a43">00094</a>     MYSQL <a class="code" href="structMYSQLDatabase_1_1pool__t.html#a02c0ea818cd2a856ca87e4db38113a43" title="The connection mysql structure.">mmysql</a>;
-<a name="l00098"></a><a class="code" href="structMYSQLDatabase_1_1pool__t.html#a16c6b8c915d44b0248d37d4700d59b56">00098</a>     pthread_mutex_t <a class="code" href="structMYSQLDatabase_1_1pool__t.html#a16c6b8c915d44b0248d37d4700d59b56" title="The associated mutex.">mmutex</a>;
-<a name="l00099"></a>00099   }<a class="code" href="structMYSQLDatabase_1_1pool__t.html" title="An element of the pool.">pool_t</a>;
-<a name="l00101"></a>00101   <span class="comment">// Attributes</span>
-<a name="l00103"></a>00103 <span class="comment"></span>
-<a name="l00106"></a><a class="code" href="classMYSQLDatabase.html#a2eeb6cd97595e6c48fd1f0f178c8f32b">00106</a>   <a class="code" href="classDbConfiguration.html" title="Contains the configuration parameters for the Vishnu database.">DbConfiguration</a> <a class="code" href="classMYSQLDatabase.html#a2eeb6cd97595e6c48fd1f0f178c8f32b" title="The configuration of the database client.">mconfig</a>;
-<a name="l00110"></a><a class="code" href="classMYSQLDatabase.html#a0f53187837ea8cc3ea5d76016ee22f1b">00110</a>   <a class="code" href="structMYSQLDatabase_1_1pool__t.html" title="An element of the pool.">pool_t</a> *<a class="code" href="classMYSQLDatabase.html#a0f53187837ea8cc3ea5d76016ee22f1b" title="The pool of connection.">mpool</a>;
-<a name="l00111"></a>00111 
-<a name="l00113"></a>00113   <span class="comment">// Functions</span>
-<a name="l00115"></a>00115 <span class="comment"></span>
-<a name="l00120"></a>00120   <span class="keywordtype">int</span>
-<a name="l00121"></a>00121   <a class="code" href="classMYSQLDatabase.html#a4dc57bd6bec47b4e0c19163c1d6c7fbe" title="To disconnect from the database.">disconnect</a>();
-<a name="l00122"></a>00122 };
-<a name="l00123"></a>00123 
-<a name="l00124"></a>00124 
-<a name="l00125"></a>00125 <span class="preprocessor">#endif // MYSQLDATABASE</span>
+<a name="l00079"></a><a class="code" href="structMYSQLDatabase_1_1pool__t.html">00079</a>   <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structMYSQLDatabase_1_1pool__t.html" title="An element of the pool.">pool_t</a>{
+<a name="l00083"></a><a class="code" href="structMYSQLDatabase_1_1pool__t.html#ac7a9b13ff2dd5188479f78458f435055">00083</a>     <span class="keywordtype">bool</span> <a class="code" href="structMYSQLDatabase_1_1pool__t.html#ac7a9b13ff2dd5188479f78458f435055" title="If the connexion is used.">mused</a>;
+<a name="l00087"></a><a class="code" href="structMYSQLDatabase_1_1pool__t.html#a02c0ea818cd2a856ca87e4db38113a43">00087</a>     MYSQL <a class="code" href="structMYSQLDatabase_1_1pool__t.html#a02c0ea818cd2a856ca87e4db38113a43" title="The connection mysql structure.">mmysql</a>;
+<a name="l00091"></a><a class="code" href="structMYSQLDatabase_1_1pool__t.html#a16c6b8c915d44b0248d37d4700d59b56">00091</a>     pthread_mutex_t <a class="code" href="structMYSQLDatabase_1_1pool__t.html#a16c6b8c915d44b0248d37d4700d59b56" title="The associated mutex.">mmutex</a>;
+<a name="l00092"></a>00092   }<a class="code" href="structMYSQLDatabase_1_1pool__t.html" title="An element of the pool.">pool_t</a>;
+<a name="l00094"></a>00094   <span class="comment">// Attributes</span>
+<a name="l00096"></a>00096 <span class="comment"></span>
+<a name="l00099"></a><a class="code" href="classMYSQLDatabase.html#a2eeb6cd97595e6c48fd1f0f178c8f32b">00099</a>   <a class="code" href="classDbConfiguration.html" title="Contains the configuration parameters for the Vishnu database.">DbConfiguration</a> <a class="code" href="classMYSQLDatabase.html#a2eeb6cd97595e6c48fd1f0f178c8f32b" title="The configuration of the database client.">mconfig</a>;
+<a name="l00103"></a><a class="code" href="classMYSQLDatabase.html#a0f53187837ea8cc3ea5d76016ee22f1b">00103</a>   <a class="code" href="structMYSQLDatabase_1_1pool__t.html" title="An element of the pool.">pool_t</a> *<a class="code" href="classMYSQLDatabase.html#a0f53187837ea8cc3ea5d76016ee22f1b" title="The pool of connection.">mpool</a>;
+<a name="l00104"></a>00104 
+<a name="l00106"></a>00106   <span class="comment">// Functions</span>
+<a name="l00108"></a>00108 <span class="comment"></span>
+<a name="l00113"></a>00113   <span class="keywordtype">int</span>
+<a name="l00114"></a>00114   <a class="code" href="classMYSQLDatabase.html#a4dc57bd6bec47b4e0c19163c1d6c7fbe" title="To disconnect from the database.">disconnect</a>();
+<a name="l00115"></a>00115 };
+<a name="l00116"></a>00116 
+<a name="l00117"></a>00117 
+<a name="l00118"></a>00118 <span class="preprocessor">#endif // MYSQLDATABASE</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 14 2011 23:13:12 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Jun 23 2011 16:43:50 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

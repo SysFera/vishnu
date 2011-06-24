@@ -36,6 +36,7 @@ public:
   /**
    * \brief To relaunch a process
    * \param op: Options for restarting
+   * \param machineTo: the host of the process
    * \param isAPI: If called with the external API or not
    */
   void

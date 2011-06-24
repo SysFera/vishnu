@@ -272,13 +272,13 @@ vishnu::getCompletedJobsOutput(const std::string& sessionKey,
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   if((outDir.size()!=0)&&(!boost::filesystem::exists(outDir))) {
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The derectory "+outDir+" does not exist");
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The directory "+outDir+" does not exist");
   }
 
   SessionProxy sessionProxy(sessionKey);
   JobOutputProxy jobOutputProxy(sessionProxy, machineId, outDir);
 
-  TMS_Data::ListJobResults_ptr listJobResults_ptr = jobOutputProxy.getAllJobsOutPut();
+  TMS_Data::ListJobResults_ptr listJobResults_ptr = jobOutputProxy.getCompletedJobsOutput();
 
   if(listJobResults_ptr != NULL) {
     TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
