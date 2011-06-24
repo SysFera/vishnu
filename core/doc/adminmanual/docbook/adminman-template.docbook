@@ -77,7 +77,6 @@
           <para>Documentation pour FMS.</para>
         </revdescription>
       </revision>
-    </revhistory>
     <revision>
         <revnumber>8</revnumber>
         <date>22/06/2011</date>
@@ -86,6 +85,17 @@
           <para>Ajout de l'option ENABLE_SWIG.</para>
         </revdescription>
       </revision>
+      
+      <revision>
+        <revnumber>9</revnumber>
+        <date>24/06/2011</date>
+        <authorinitials>I.CISSE</authorinitials>
+        <revdescription>
+          <para>Ajout de l'option vishnuMachineId dans les fichiers de
+            configuration de UMS, IMS et FMS .</para>
+        </revdescription>
+      </revision>
+
     </revhistory>
   </info>
   <chapter>
@@ -856,6 +866,7 @@
 	databaseUserPassword=vishnu_user
 	databaseConnectionsNb=5
 	sendmailScriptPath=/usr/local/sbin/sendmail.py
+	vishnuMachineId=machine_1
       </programlisting>
     </section>
     <section>
@@ -871,9 +882,9 @@
 	databaseUserPassword=vishnu_user
 	databaseConnectionsNb=5
 	sendmailScriptPath=/usr/local/sbin/sendmail.py
+	vishnuMachineId=machine_1
 	# Configuration propres à TMS
 	batchSchedulerType=TORQUE
-	vishnuMachineId=machine_1
 	intervalMonitor = 1
       </programlisting>
     </section>
@@ -889,6 +900,7 @@
 	databaseUserName=vishnu_user
 	databaseUserPassword=vishnu_user
 	databaseConnectionsNb=5
+	vishnuMachineId=machine_1
 	# Configuration propres à FMS
 	intervalMonitor = 1
       </programlisting>
