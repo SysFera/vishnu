@@ -92,6 +92,23 @@
           
         <para>Documentation pour FMS.</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>8</revnumber>
+        <date>22/06/2011</date>
+        <authorinitials>B.ISNARD</authorinitials>
+        <revdescription>
+          
+        <para>Ajout de l'option ENABLE_SWIG.</para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>9</revnumber>
+        <date>24/06/2011</date>
+        <authorinitials>I.CISSE</authorinitials>
+        <revdescription>
+          
+        <para>Ajout de l'option vishnuMachineId dans les fichiers de
+            configuration de UMS, IMS et FMS .</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -337,6 +354,11 @@
           </listitem>
           <listitem>
             <para>
+        ENABLE_SWIG, qui permet d'activer la generation du code des adapteurs Python et Java (OFF par défaut). Cette option doit obligatoirement être activée si on choisit de ne pas compiler tous les modules VISHNU c'est-à-dire si au moins l'une des options COMPILE_UMS, COMPILE_TMS, COMPILE_FMS ou COMPILE_IMS est à OFF. Si l'option ENABLE_SWIG est activée, le package SWIG (voir paragraphe 'Prérequis') est nécessaire pour compiler.
+      </para>
+          </listitem>
+          <listitem>
+            <para>
 	      VISHNU_USE_LOADLEVELER, compile le SeD TMS pour load leveler (OFF par défaut).
 	    </para>
           </listitem>
@@ -365,7 +387,7 @@
           <para>2. générer le Makefile</para>
         </listitem>
         <listitem>
-          <para>$ cmake -DENABLE_PYTHON=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu/
+          <para>$ cmake -DENABLE_PYTHON=ON -DENABLE_SWIG=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu/
 	    -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DVISHNU_USE_TORQUE=0N -DTORQUE_DIR=/opt/torque ..</para>
         </listitem>
         <listitem>
@@ -579,6 +601,8 @@
       <title>Lancement sur un même réseau</title>
       <para>Les modules peuvent être lancés soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration.</para>
       <para><emphasis role="bold">NOTE: l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
+      <para><emphasis role="bold">NOTE: Il est préférable d'éviter de lancer le même SeD sur la même machine.</emphasis></para>
+      <para><emphasis role="bold">NOTE: Chaque machine doit posséder un utilisateur 'vishnu' pouvant se connecter sur n'importe quelle autre machine. Cet utilisateur sera utilisé pour le redémarrage automatique des SeD.</emphasis></para>
       <para>Pour mieux comprendre l'architecture de déploiement, se référer au document [ARCH], le chapitre 4, 'Technical Architecture'.</para>
       <orderedlist>
         <listitem>
@@ -941,6 +965,7 @@
 	databaseUserPassword=vishnu_user
 	databaseConnectionsNb=5
 	sendmailScriptPath=/usr/local/sbin/sendmail.py
+	vishnuMachineId=machine_1
       </programlisting>
     </section>
     <section>
@@ -956,9 +981,9 @@
 	databaseUserPassword=vishnu_user
 	databaseConnectionsNb=5
 	sendmailScriptPath=/usr/local/sbin/sendmail.py
+	vishnuMachineId=machine_1
 	# Configuration propres à TMS
 	batchSchedulerType=TORQUE
-	vishnuMachineId=machine_1
 	intervalMonitor = 1
       </programlisting>
     </section>
@@ -974,6 +999,7 @@
 	databaseUserName=vishnu_user
 	databaseUserPassword=vishnu_user
 	databaseConnectionsNb=5
+	vishnuMachineId=machine_1
 	# Configuration propres à FMS
 	intervalMonitor = 1
       </programlisting>
@@ -2182,6 +2208,14 @@ that option using the vishnu_configure_option command.</para>
             <term>&quot;The name of the user option is unknown&quot; [41]</term>
             <listitem/>
           </varlistentry>
+          <varlistentry>
+            <term>&quot;The value of the timeout is incorrect&quot; [43]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The value of the transfer command is incorrect&quot; [44]</term>
+            <listitem/>
+          </varlistentry>
         </variablelist>
       </refsect1>
     </refentry>
@@ -3073,6 +3107,14 @@ that option using the vishnu_configure_option command.</para>
           </varlistentry>
           <varlistentry>
             <term>&quot;The name of the user option is unknown&quot; [41]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The value of the timeout is incorrect&quot; [43]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The value of the transfer command is incorrect&quot; [44]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4089,6 +4131,14 @@ that option using the vishnu_configure_option command.</para>
             <term>UMSVishnuException(&quot;The name of the user option is unknown&quot; [41])</term>
             <listitem/>
           </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The value of the timeout is incorrect&quot; [43])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The value of the transfer command is incorrect&quot; [44])</term>
+            <listitem/>
+          </varlistentry>
         </variablelist>
       </refsect1>
     </refentry>
@@ -4154,7 +4204,7 @@ that option using the vishnu_configure_option command.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4203,11 +4253,11 @@ that option using the vishnu_configure_option command.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4256,11 +4306,11 @@ that option using the vishnu_configure_option command.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4325,11 +4375,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4389,11 +4439,11 @@ $TYPE: The 'U' symb to remind it is a user id</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4453,11 +4503,11 @@ $TYPE: The 'M' symb to remind it is a machine id</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4514,11 +4564,11 @@ $TYPE: The 'J' symb to remind it is a job id</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4575,11 +4625,11 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4632,15 +4682,15 @@ SOFT   = 2</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;If a component is unavailable&quot; [3]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a component is unavailable&quot; [301]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4690,11 +4740,11 @@ SOFT   = 2</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4746,11 +4796,11 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4815,11 +4865,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (UMS), 2 (
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4872,7 +4922,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (UMS), 2 (
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4916,11 +4966,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (UMS), 2 (
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4964,11 +5014,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (UMS), 2 (
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5019,11 +5069,11 @@ Each time a threshold is reached, a mail is sent. So checking the values of the 
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5077,11 +5127,11 @@ $TYPE: The 'U' symb to remind it is a user id</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5135,11 +5185,11 @@ $TYPE: The 'M' symb to remind it is a machine id</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5190,11 +5240,11 @@ $TYPE: The 'J' symb to remind it is a job id</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5245,11 +5295,11 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5302,15 +5352,15 @@ SOFT   = 2</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;If a component is unavailable&quot; [3]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a component is unavailable&quot; [301]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5354,11 +5404,11 @@ SOFT   = 2</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5405,11 +5455,11 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5459,11 +5509,11 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5527,7 +5577,7 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5582,11 +5632,11 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5641,11 +5691,11 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5707,11 +5757,11 @@ Each time a threshold is reached, a mail is sent. So checking the values of the 
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5776,11 +5826,11 @@ $TYPE: The 'U' symb to remind it is a user id</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5845,11 +5895,11 @@ $TYPE: The 'M' symb to remind it is a machine id</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5911,11 +5961,11 @@ $TYPE: The 'J' symb to remind it is a job id</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5977,11 +6027,11 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -6045,15 +6095,15 @@ SOFT   = 2</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;If a component is unavailable&quot; [3])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>IMSVishnuException(&quot;If a component is unavailable&quot; [301])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -6108,11 +6158,11 @@ SOFT   = 2</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -6170,11 +6220,11 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -6235,11 +6285,11 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
