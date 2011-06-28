@@ -113,11 +113,23 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (SHELL).</
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;Undefined error code&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized.&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -178,11 +190,23 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;Undefined error code&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized.&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -254,11 +278,23 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;Undefined error code&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized.&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -314,7 +350,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -330,7 +366,10 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
         <refpurpose>updates the system information of a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_set_system_info</command><arg choice="opt"><option>-h</option></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_set_system_info</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-m <replaceable>memory</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>diskSpace</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -343,6 +382,18 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-m <replaceable>memory</replaceable></option></term>
+            <listitem>
+              <para>Amount of RAM memory available on the machine (in Bytes).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-d <replaceable>diskSpace</replaceable></option></term>
+            <listitem>
+              <para>Amount of disk space available on the machine (in Bytes).</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -363,11 +414,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -383,7 +434,9 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
         <refpurpose>sets a threshold on a machine of a system</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_set_system_threshold</command><arg choice="opt"><option>-h</option></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_set_system_threshold</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>value</replaceable></arg><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
+              choice="plain"><replaceable>type</replaceable></arg><arg choice="plain"><replaceable>handler</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -416,11 +469,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -485,11 +538,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -549,11 +602,11 @@ $TYPE: The 'U' symb to remind it is a user id</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -613,11 +666,11 @@ $TYPE: The 'M' symb to remind it is a machine id</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -674,11 +727,11 @@ $TYPE: The 'J' symb to remind it is a job id</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -735,11 +788,11 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -792,15 +845,15 @@ SOFT   = 2</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;If a component is unavailable&quot; [3]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a component is unavailable&quot; [301]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -850,11 +903,11 @@ SOFT   = 2</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -903,11 +956,23 @@ SOFT   = 2</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;Undefined error code&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized.&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -923,7 +988,8 @@ SOFT   = 2</para>
         <refpurpose>To stop (and do not try to relaunch) a SeD</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_stop</command><arg choice="opt"><option>-h</option></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_stop</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>processName</replaceable></arg><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -959,11 +1025,11 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1019,11 +1085,23 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;Undefined error code&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized.&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1088,11 +1166,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (UMS), 2 (
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1155,11 +1233,23 @@ The access to other user's sessions is only permitted to administrators.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;Undefined error code&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized.&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1218,11 +1308,23 @@ Please note that retrieving these values uses some valuable system ressources an
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;Undefined error code&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized.&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1278,11 +1380,23 @@ Please note that retrieving these values uses some valuable system ressources an
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;Undefined error code&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized.&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1332,7 +1446,7 @@ Please note that retrieving these values uses some valuable system ressources an
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1376,11 +1490,11 @@ Please note that retrieving these values uses some valuable system ressources an
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1424,11 +1538,11 @@ Please note that retrieving these values uses some valuable system ressources an
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1479,11 +1593,11 @@ Each time a threshold is reached, a mail is sent. So checking the values of the 
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1537,11 +1651,11 @@ $TYPE: The 'U' symb to remind it is a user id</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1595,11 +1709,11 @@ $TYPE: The 'M' symb to remind it is a machine id</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1650,11 +1764,11 @@ $TYPE: The 'J' symb to remind it is a job id</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1705,11 +1819,11 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1762,15 +1876,15 @@ SOFT   = 2</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;If a component is unavailable&quot; [3]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a component is unavailable&quot; [301]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1814,11 +1928,11 @@ SOFT   = 2</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1862,11 +1976,23 @@ SOFT   = 2</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;Undefined error code&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized.&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1913,11 +2039,11 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1967,11 +2093,23 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;Undefined error code&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized.&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2021,11 +2159,11 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2099,11 +2237,23 @@ The access to other user's sessions is only permitted to administrators.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>SystemException(&quot;Undefined error code&quot; [9])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key is unrecognized.&quot; [28])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2173,11 +2323,23 @@ Please note that retrieving these values uses some valuable system ressources an
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>SystemException(&quot;Undefined error code&quot; [9])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key is unrecognized.&quot; [28])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2244,11 +2406,23 @@ Please note that retrieving these values uses some valuable system ressources an
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>SystemException(&quot;Undefined error code&quot; [9])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key is unrecognized.&quot; [28])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2309,7 +2483,7 @@ Please note that retrieving these values uses some valuable system ressources an
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2364,11 +2538,11 @@ Please note that retrieving these values uses some valuable system ressources an
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2423,11 +2597,11 @@ Please note that retrieving these values uses some valuable system ressources an
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2489,11 +2663,11 @@ Each time a threshold is reached, a mail is sent. So checking the values of the 
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2558,11 +2732,11 @@ $TYPE: The 'U' symb to remind it is a user id</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2627,11 +2801,11 @@ $TYPE: The 'M' symb to remind it is a machine id</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2693,11 +2867,11 @@ $TYPE: The 'J' symb to remind it is a job id</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2759,11 +2933,11 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2827,15 +3001,15 @@ SOFT   = 2</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;If a component is unavailable&quot; [3])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>IMSVishnuException(&quot;If a component is unavailable&quot; [301])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2890,11 +3064,11 @@ SOFT   = 2</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2949,11 +3123,23 @@ SOFT   = 2</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>SystemException(&quot;Undefined error code&quot; [9])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key is unrecognized.&quot; [28])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3011,11 +3197,11 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3076,11 +3262,23 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>SystemException(&quot;Undefined error code&quot; [9])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key is unrecognized.&quot; [28])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3141,11 +3339,11 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
