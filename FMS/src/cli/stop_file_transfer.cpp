@@ -94,7 +94,7 @@ int main (int argc, char* argv[]){
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);  
   if ( opt->count("help")){
-    helpUsage(*opt,"[options] src dest");
+    helpUsage(*opt,"[options] ");
     return 0;
   }
 
