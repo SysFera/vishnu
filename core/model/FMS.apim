@@ -1,27 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <API xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="com.sysfera.codegen.apimodel" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
   <modules name="FMS">
-    <services name="createFile" description="creates  files on  remote machines.">
+    <services name="createFile" description="creates  files on  remote machines." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DB_ERROR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key."/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file to create following the pattern  [host:]file path." longOptionName=""/>
-      <resultCodes href="#ERRCODE_CONFIGNOTFOUND"/>
-      <resultCodes href="#ERRCODE_DB_ERROR"/>
-      <resultCodes href="#ERRCODE_DIET"/>
-      <resultCodes href="#ERRCODE_INVALID_PARAM"/>
-      <resultCodes href="#ERRCODE_INVALID_PATH"/>
-      <resultCodes href="#ERRCODE_NO_ADMIN"/>
-      <resultCodes href="#ERRCODE_RUNTIME_ERROR"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_EXPIRED"/>
-      <resultCodes href="FMS_Internal.apim#ERRCODE_SESSION_KEY_NOT_FOUND"/>
-      <resultCodes href="#ERRCODE_UNDEFINED"/>
-      <resultCodes href="#ERRCODE_UNKNOWN_FILE_TRANSFER"/>
-      <resultCodes href="#ERRCODE_UNKNOWN_LOCAL_ACCOUNT"/>
-      <resultCodes href="#ERRCODE_UNKNOWN_MACHINE"/>
-      <resultCodes href="#VISHNU_OK"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.0"/>
       <details key="description" value="Creates an empty file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command)"/>
     </services>
-    <services name="createDir" description="creates directories on remote machines." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DB_ERROR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSION_KEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
+    <services name="createDir" description="creates directories on remote machines." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DB_ERROR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to create following the pattern  [host:]directory path." longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.1"/>
@@ -40,13 +26,13 @@
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#ERRCODE_NO_ADMIN"/>
       <resultCodes href="#ERRCODE_RUNTIME_ERROR"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_EXPIRED"/>
+      <resultCodes href="#ERRCODE_SESSIONKEY_EXPIRED"/>
       <resultCodes href="#ERRCODE_SESSIONKEY_NOT_FOUND"/>
       <resultCodes href="#ERRCODE_UNDEFINED"/>
       <resultCodes href="#ERRCODE_UNKNOWN_FILE_TRANSFER"/>
       <resultCodes href="#ERRCODE_UNKNOWN_LOCAL_ACCOUNT"/>
       <resultCodes href="#ERRCODE_UNKNOWN_MACHINE"/>
-      <resultCodes href="FMS_Internal.apim#VISHNU_OK"/>
+      <resultCodes href="#VISHNU_OK"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.2"/>
       <details key="description" value="Deletes a file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command)"/>
     </services>
@@ -63,11 +49,11 @@
       <resultCodes href="#ERRCODE_DIET"/>
       <resultCodes href="#ERRCODE_NO_ADMIN"/>
       <resultCodes href="#ERRCODE_RUNTIME_ERROR"/>
-      <resultCodes href="FMS_Internal.apim#ERRCODE_SESSION_KEY_EXPIRED"/>
+      <resultCodes href="#ERRCODE_SESSIONKEY_EXPIRED"/>
       <resultCodes href="#ERRCODE_SESSIONKEY_NOT_FOUND"/>
       <resultCodes href="#ERRCODE_UNDEFINED"/>
       <resultCodes href="#ERRCODE_UNKNOWN_LOCAL_ACCOUNT"/>
-      <resultCodes href="FMS_Internal.apim#VISHNU_OK"/>
+      <resultCodes href="#VISHNU_OK"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.3"/>
       <details key="description" value="Deletes a directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command)"/>
     </services>
@@ -76,40 +62,26 @@
       <ports name="group" dataType="//@modules.0/@typeList/@types.0" description="the new group owner of file/directory"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file/directory following the pattern  [host:]file path" longOptionName=""/>
       <resultCodes href="#ERRCODE_CONFIGNOTFOUND"/>
-      <resultCodes href="FMS_Internal.apim#ERRCODE_DB_ERROR"/>
-      <resultCodes href="#ERRCODE_DIET"/>
-      <resultCodes href="#ERRCODE_INVALID_PARAM"/>
-      <resultCodes href="FMS_Internal.apim#ERRCODE_INVALID_PATH"/>
-      <resultCodes href="#ERRCODE_NO_ADMIN"/>
-      <resultCodes href="#ERRCODE_RUNTIME_ERROR"/>
-      <resultCodes href="FMS_Internal.apim#ERRCODE_SESSION_KEY_EXPIRED"/>
-      <resultCodes href="#ERRCODE_SESSIONKEY_NOT_FOUND"/>
-      <resultCodes href="#ERRCODE_UNDEFINED"/>
-      <resultCodes href="#ERRCODE_UNKNOWN_FILE_TRANSFER"/>
-      <resultCodes href="#ERRCODE_UNKNOWN_LOCAL_ACCOUNT"/>
-      <resultCodes href="#ERRCODE_UNKNOWN_MACHINE"/>
-      <resultCodes href="FMS_Internal.apim#VISHNU_OK"/>
-      <usedServices href="FMS_Internal.apim#//@modules.0/@services.4"/>
-      <details key="description" value="Changes the group attribute of a file or directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command)"/>
-    </services>
-    <services name="chMod" description="changes  access rights of remote files/directories.">
-      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
-      <ports name="mode" dataType="//@modules.0/@typeList/@types.12" description=" the access rigths of file/directory in octal system." shortOptionLetter="" longOptionName=""/>
-      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file/directory following the pattern  [host:]file path" longOptionName=""/>
-      <resultCodes href="#ERRCODE_CONFIGNOTFOUND"/>
       <resultCodes href="#ERRCODE_DB_ERROR"/>
       <resultCodes href="#ERRCODE_DIET"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#ERRCODE_NO_ADMIN"/>
       <resultCodes href="#ERRCODE_RUNTIME_ERROR"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_EXPIRED"/>
-      <resultCodes href="FMS_Internal.apim#ERRCODE_SESSION_KEY_NOT_FOUND"/>
+      <resultCodes href="#ERRCODE_SESSIONKEY_EXPIRED"/>
+      <resultCodes href="#ERRCODE_SESSIONKEY_NOT_FOUND"/>
       <resultCodes href="#ERRCODE_UNDEFINED"/>
       <resultCodes href="#ERRCODE_UNKNOWN_FILE_TRANSFER"/>
       <resultCodes href="#ERRCODE_UNKNOWN_LOCAL_ACCOUNT"/>
       <resultCodes href="#ERRCODE_UNKNOWN_MACHINE"/>
       <resultCodes href="#VISHNU_OK"/>
+      <usedServices href="FMS_Internal.apim#//@modules.0/@services.4"/>
+      <details key="description" value="Changes the group attribute of a file or directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command)"/>
+    </services>
+    <services name="chMod" description="changes  access rights of remote files/directories." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DB_ERROR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
+      <ports name="mode" dataType="//@modules.0/@typeList/@types.12" description=" the access rigths of file/directory in octal system." shortOptionLetter="" longOptionName=""/>
+      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file/directory following the pattern  [host:]file path" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.5"/>
       <details key="description" value="Changes the permissions of a file or directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;The mode parameter is the same value as for the unix chmod command."/>
     </services>
@@ -125,13 +97,13 @@
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#ERRCODE_NO_ADMIN"/>
       <resultCodes href="#ERRCODE_RUNTIME_ERROR"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_EXPIRED"/>
+      <resultCodes href="#ERRCODE_SESSIONKEY_EXPIRED"/>
       <resultCodes href="#ERRCODE_SESSIONKEY_NOT_FOUND"/>
       <resultCodes href="#ERRCODE_UNDEFINED"/>
       <resultCodes href="#ERRCODE_UNKNOWN_FILE_TRANSFER"/>
       <resultCodes href="#ERRCODE_UNKNOWN_LOCAL_ACCOUNT"/>
       <resultCodes href="#ERRCODE_UNKNOWN_MACHINE"/>
-      <resultCodes href="FMS_Internal.apim#VISHNU_OK"/>
+      <resultCodes href="#VISHNU_OK"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.6"/>
       <details key="description" value="Displays the first lines of a file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>
     </services>
@@ -147,13 +119,13 @@
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#ERRCODE_NO_ADMIN"/>
       <resultCodes href="#ERRCODE_RUNTIME_ERROR"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_EXPIRED"/>
+      <resultCodes href="#ERRCODE_SESSIONKEY_EXPIRED"/>
       <resultCodes href="#ERRCODE_SESSIONKEY_NOT_FOUND"/>
       <resultCodes href="#ERRCODE_UNDEFINED"/>
       <resultCodes href="#ERRCODE_UNKNOWN_FILE_TRANSFER"/>
       <resultCodes href="#ERRCODE_UNKNOWN_LOCAL_ACCOUNT"/>
       <resultCodes href="#ERRCODE_UNKNOWN_MACHINE"/>
-      <resultCodes href="FMS_Internal.apim#VISHNU_OK"/>
+      <resultCodes href="#VISHNU_OK"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.7"/>
       <details key="description" value="Displays the last lines of a file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>
     </services>
@@ -168,13 +140,13 @@
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#ERRCODE_NO_ADMIN"/>
       <resultCodes href="#ERRCODE_RUNTIME_ERROR"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_EXPIRED"/>
+      <resultCodes href="#ERRCODE_SESSIONKEY_EXPIRED"/>
       <resultCodes href="#ERRCODE_SESSIONKEY_NOT_FOUND"/>
       <resultCodes href="#ERRCODE_UNDEFINED"/>
       <resultCodes href="#ERRCODE_UNKNOWN_FILE_TRANSFER"/>
       <resultCodes href="#ERRCODE_UNKNOWN_LOCAL_ACCOUNT"/>
       <resultCodes href="#ERRCODE_UNKNOWN_MACHINE"/>
-      <resultCodes href="FMS_Internal.apim#VISHNU_OK"/>
+      <resultCodes href="#VISHNU_OK"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.8"/>
       <details key="description" value="Displays the content of a file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>
     </services>
@@ -190,35 +162,21 @@
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#ERRCODE_NO_ADMIN"/>
       <resultCodes href="#ERRCODE_RUNTIME_ERROR"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_EXPIRED"/>
+      <resultCodes href="#ERRCODE_SESSIONKEY_EXPIRED"/>
       <resultCodes href="#ERRCODE_SESSIONKEY_NOT_FOUND"/>
       <resultCodes href="#ERRCODE_UNDEFINED"/>
       <resultCodes href="#ERRCODE_UNKNOWN_FILE_TRANSFER"/>
       <resultCodes href="#ERRCODE_UNKNOWN_LOCAL_ACCOUNT"/>
       <resultCodes href="#ERRCODE_UNKNOWN_MACHINE"/>
-      <resultCodes href="FMS_Internal.apim#VISHNU_OK"/>
+      <resultCodes href="#VISHNU_OK"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.9"/>
       <details key="description" value="Displays the content of a directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>
     </services>
-    <services name="copyFile" description="executes a synchronous copy of file.">
+    <services name="copyFile" description="executes a synchronous copy of file." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DB_ERROR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The  source file to copy following the pattern  [host:]file path" longOptionName=""/>
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file" longOptionName=""/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.7" description="the copy options" optional="true" shortOptionLetter=""/>
-      <resultCodes href="#ERRCODE_CONFIGNOTFOUND"/>
-      <resultCodes href="#ERRCODE_DB_ERROR"/>
-      <resultCodes href="#ERRCODE_DIET"/>
-      <resultCodes href="#ERRCODE_INVALID_PARAM"/>
-      <resultCodes href="#ERRCODE_INVALID_PATH"/>
-      <resultCodes href="#ERRCODE_NO_ADMIN"/>
-      <resultCodes href="#ERRCODE_RUNTIME_ERROR"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_EXPIRED"/>
-      <resultCodes href="FMS_Internal.apim#ERRCODE_SESSION_KEY_NOT_FOUND"/>
-      <resultCodes href="#ERRCODE_SESSIONKEY_NOT_FOUND"/>
-      <resultCodes href="#ERRCODE_UNDEFINED"/>
-      <resultCodes href="#ERRCODE_UNKNOWN_FILE_TRANSFER"/>
-      <resultCodes href="#ERRCODE_UNKNOWN_LOCAL_ACCOUNT"/>
-      <resultCodes href="#ERRCODE_UNKNOWN_MACHINE"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.10"/>
       <details key="description" value="Copy a file or directory from the location given by the src parameter to the location given by the dest parameter.&#xA;The src parameter must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command) or 'path' only if the file is on the local system.&#xA;The dest parameter must be provided in a similar way. Note that one of the two locations at least must be a remote location,&#xA;i.e. a local copy cannot be handled by this command.&#xA;"/>
     </services>
@@ -235,13 +193,13 @@
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#ERRCODE_NO_ADMIN"/>
       <resultCodes href="#ERRCODE_RUNTIME_ERROR"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_EXPIRED"/>
+      <resultCodes href="#ERRCODE_SESSIONKEY_EXPIRED"/>
       <resultCodes href="#ERRCODE_SESSIONKEY_NOT_FOUND"/>
       <resultCodes href="#ERRCODE_UNDEFINED"/>
       <resultCodes href="#ERRCODE_UNKNOWN_FILE_TRANSFER"/>
       <resultCodes href="#ERRCODE_UNKNOWN_LOCAL_ACCOUNT"/>
       <resultCodes href="#ERRCODE_UNKNOWN_MACHINE"/>
-      <resultCodes href="FMS_Internal.apim#VISHNU_OK"/>
+      <resultCodes href="#VISHNU_OK"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.11"/>
       <details key="description" value="Initiates a copy of a file or directory from the location given by the src parameter to the location given by the dest parameter.&#xA;The src parameter must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command) or 'path' only if the file is on the local system.&#xA;The dest parameter must be provided in a similar way. Note that one of the two locations at least must be a remote location,&#xA;i.e. a local copy cannot be handled by this command.&#xA;The command listFileTransfers can be used to check the status of the transfer after it is initiated, using the transfer id as the identifier.&#xA;"/>
     </services>
@@ -257,13 +215,13 @@
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#ERRCODE_NO_ADMIN"/>
       <resultCodes href="#ERRCODE_RUNTIME_ERROR"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_EXPIRED"/>
+      <resultCodes href="#ERRCODE_SESSIONKEY_EXPIRED"/>
       <resultCodes href="#ERRCODE_SESSIONKEY_NOT_FOUND"/>
       <resultCodes href="#ERRCODE_UNDEFINED"/>
       <resultCodes href="#ERRCODE_UNKNOWN_FILE_TRANSFER"/>
       <resultCodes href="#ERRCODE_UNKNOWN_LOCAL_ACCOUNT"/>
       <resultCodes href="#ERRCODE_UNKNOWN_MACHINE"/>
-      <resultCodes href="FMS_Internal.apim#VISHNU_OK"/>
+      <resultCodes href="#VISHNU_OK"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.12"/>
       <details key="description" value="Move a file or directory from the location given by the src parameter to the location given by the dest parameter.&#xA;The src parameter must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command) or 'path' only if the file is on the local system.&#xA;The dest parameter must be provided in a similar way. Note that one of the two locations at least must be a remote location,&#xA;i.e. a local move cannot be handled by this command.&#xA;"/>
     </services>
@@ -280,17 +238,17 @@
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#ERRCODE_NO_ADMIN"/>
       <resultCodes href="#ERRCODE_RUNTIME_ERROR"/>
-      <resultCodes href="FMS_Internal.apim#ERRCODE_SESSION_KEY_EXPIRED"/>
+      <resultCodes href="#ERRCODE_SESSIONKEY_EXPIRED"/>
       <resultCodes href="#ERRCODE_SESSIONKEY_NOT_FOUND"/>
       <resultCodes href="#ERRCODE_UNDEFINED"/>
       <resultCodes href="#ERRCODE_UNKNOWN_FILE_TRANSFER"/>
       <resultCodes href="#ERRCODE_UNKNOWN_LOCAL_ACCOUNT"/>
       <resultCodes href="#ERRCODE_UNKNOWN_MACHINE"/>
-      <resultCodes href="FMS_Internal.apim#VISHNU_OK"/>
+      <resultCodes href="#VISHNU_OK"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.13"/>
       <details key="description" value="Initiates a move of a file or directory from the location given by the src parameter to the location given by the dest parameter.&#xA;The src parameter must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command) or 'path' only if the file is on the local system.&#xA;The dest parameter must be provided in a similar way. Note that one of the two locations at least must be a remote location,&#xA;i.e. a local move cannot be handled by this command.&#xA;The command listFileTransfers can be used to check the status of the transfer after it is initiated, using the transfer id as the identifier.&#xA;"/>
     </services>
-    <services name="stopFileTransfer" description="stops an execution of a set of file transfers." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DB_ERROR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSION_KEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
+    <services name="stopFileTransfer" description="stops an execution of a set of file transfers." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DB_ERROR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.10" description="The stop file transfer command options" optional="true" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.14"/>
@@ -309,7 +267,7 @@
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#ERRCODE_NO_ADMIN"/>
       <resultCodes href="#ERRCODE_RUNTIME_ERROR"/>
-      <resultCodes href="FMS_Internal.apim#ERRCODE_SESSION_KEY_EXPIRED"/>
+      <resultCodes href="#ERRCODE_SESSIONKEY_EXPIRED"/>
       <resultCodes href="#ERRCODE_SESSIONKEY_NOT_FOUND"/>
       <resultCodes href="#ERRCODE_UNDEFINED"/>
       <resultCodes href="#ERRCODE_UNKNOWN_FILE_TRANSFER"/>
@@ -330,7 +288,7 @@
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#ERRCODE_NO_ADMIN"/>
       <resultCodes href="#ERRCODE_RUNTIME_ERROR"/>
-      <resultCodes href="FMS_Internal.apim#ERRCODE_SESSION_KEY_EXPIRED"/>
+      <resultCodes href="#ERRCODE_SESSIONKEY_EXPIRED"/>
       <resultCodes href="#ERRCODE_SESSIONKEY_NOT_FOUND"/>
       <resultCodes href="#ERRCODE_UNDEFINED"/>
       <resultCodes href="#ERRCODE_UNKNOWN_FILE_TRANSFER"/>
@@ -414,7 +372,7 @@
       <resultCodes name="ERRCODE_CONFIGNOTFOUND" description="Undefined configuration parameter" value="12"/>
       <resultCodes name="ERRCODE_NO_ADMIN" description="The user is not an administrator" value="25"/>
       <resultCodes name="ERRCODE_SESSIONKEY_NOT_FOUND" description="The session key is unrecognized" value="28"/>
-      <resultCodes name="ERRCODE_SESSION_KEY_EXPIRED" description="The session key has expired. The session is closed." value="29"/>
+      <resultCodes name="ERRCODE_SESSIONKEY_EXPIRED" description="The session key has expired. The session is closed." value="29"/>
       <resultCodes name="ERRCODE_UNKNOWN_MACHINE" description="The machine id is unknown" value="32"/>
       <resultCodes name="ERRCODE_UNKNOWN_LOCAL_ACCOUNT" description="The local account  is unknown" value="38"/>
       <resultCodes name="ERRCODE_INVALID_PATH" description="The path provided is invalid." value="201"/>
