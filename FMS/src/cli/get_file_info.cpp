@@ -113,7 +113,7 @@ int main (int ac, char* av[]){
     if(false==sessionKey.empty()){
       printSessionKeyMessage();
 
-      getFilesInfo(sessionKey,path,fileStat);
+      getFileInfo(sessionKey,path,fileStat);
     
       //To dispaly the file information
       std::cout << fileStat << std::endl;

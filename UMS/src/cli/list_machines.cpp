@@ -99,7 +99,7 @@ int main (int ac, char* av[]){
 
       printSessionKeyMessage();
 
-      listMachine(sessionKey,lsMachine,listOptions);
+      listMachines(sessionKey,lsMachine,listOptions);
 
 
     }

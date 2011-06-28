@@ -614,7 +614,7 @@ try {
   BOOST_REQUIRE(restore     (sqlScript+"/clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing normal list machine UA6.3B" );
   BOOST_CHECK  (connect     (uid, pwd, sess, cop )==0);
-  BOOST_CHECK  (listMachine(sess.getSessionKey(), *lim, liom      )==0);
+  BOOST_CHECK  (listMachines(sess.getSessionKey(), *lim, liom      )==0);
   BOOST_CHECK  (close       (sess.getSessionKey()                 )==0);
   BOOST_CHECK (lim->getMachines().size() > 0);
   if (lim->getMachines().size()>0) {
@@ -627,7 +627,7 @@ try {
   BOOST_MESSAGE(" Testing normal list machine on a specific machine UA6.3B" );
   lim  = ecoreFactory->createListMachines();
   BOOST_CHECK  (connect     (uid, pwd, sess, cop )==0);
-  BOOST_CHECK  (listMachine(sess.getSessionKey(), *lim, liom      )==0);
+  BOOST_CHECK  (listMachines(sess.getSessionKey(), *lim, liom      )==0);
   BOOST_CHECK  (close       (sess.getSessionKey()                 )==0);
   BOOST_CHECK (lim->getMachines().size() > 0);
   if (lim->getMachines().size()>0) {
@@ -640,14 +640,14 @@ try {
   BOOST_MESSAGE(" Testing bad mid list machine on a specific machine UA6.3E" );
   lim  = ecoreFactory->createListMachines();
   BOOST_CHECK  (connect     (uid, pwd, sess, cop )==0);
-  BOOST_CHECK_THROW  (listMachine(sess.getSessionKey(), *lim, liom      ), VishnuException);
+  BOOST_CHECK_THROW  (listMachines(sess.getSessionKey(), *lim, liom      ), VishnuException);
   BOOST_CHECK  (close       (sess.getSessionKey()                 )==0);
 
   // Test list local account
   BOOST_REQUIRE(restore         (sqlScript+"/clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing normal list local account U4.3B" );
   BOOST_CHECK  (connect         (uid, pwd, sess, cop )==0);
-  BOOST_CHECK  (listLocalAccount(sess.getSessionKey(), *lia, lioa      )==0);
+  BOOST_CHECK  (listLocalAccounts(sess.getSessionKey(), *lia, lioa      )==0);
   BOOST_CHECK  (close           (sess.getSessionKey()                 )==0);
   BOOST_CHECK (lia->getAccounts().size()>0);
   if (lia->getAccounts().size()>0) {
@@ -660,7 +660,7 @@ try {
   BOOST_MESSAGE(" Testing normal list local account on a machine U4.3B" );
   BOOST_CHECK  (connect         (uid, pwd, sess, cop )==0);
   lia  = ecoreFactory->createListLocalAccounts();
-  BOOST_CHECK  (listLocalAccount(sess.getSessionKey(), *lia, lioa      )==0);
+  BOOST_CHECK  (listLocalAccounts(sess.getSessionKey(), *lia, lioa      )==0);
   BOOST_CHECK  (close           (sess.getSessionKey()                 )==0);
   BOOST_CHECK (lia->getAccounts().size()>0);
   if (lia->getAccounts().size()>0) {
@@ -673,7 +673,7 @@ try {
   BOOST_MESSAGE(" Testing bad machine on list local account U4.3E" );
   BOOST_CHECK  (connect         (uid, pwd, sess, cop )==0);
   lia  = ecoreFactory->createListLocalAccounts();
-  BOOST_CHECK_THROW  (listLocalAccount(sess.getSessionKey(), *lia, lioa      ), VishnuException);
+  BOOST_CHECK_THROW  (listLocalAccounts(sess.getSessionKey(), *lia, lioa      ), VishnuException);
   BOOST_CHECK  (close           (sess.getSessionKey()                 )==0);
 
   // Test configure default option
@@ -806,9 +806,9 @@ try {
   BOOST_CHECK	 (listUsers             (sess.getSessionKey(), *liu , ""       )==0);
   liom.setMachineId(mid);
   liom.setListAllmachine(true);
-  BOOST_CHECK	 (listMachine           (sess.getSessionKey(), *lim , liom     )==0);
+  BOOST_CHECK	 (listMachines           (sess.getSessionKey(), *lim , liom     )==0);
   lioa.setMachineId("");
-  BOOST_CHECK	 (listLocalAccount      (sess.getSessionKey(), *lia , lioa     )==0);
+  BOOST_CHECK	 (listLocalAccounts      (sess.getSessionKey(), *lia , lioa     )==0);
   lioo = ListOptOptions();
   BOOST_CHECK	 (listOptions           (sess.getSessionKey(), *liov, lioo     )==0);
   BOOST_CHECK	 (addUser               (sess.getSessionKey(), *use 	     )==0);

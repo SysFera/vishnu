@@ -90,7 +90,7 @@ BOOST_AUTO_TEST_CASE(CreateFile_Base)
 
     // To check the success of createFile function
     FileStat fileStat;
-    BOOST_CHECK( getFilesInfo(sessionKey, fileFullPath1, fileStat) ==0  );
+    BOOST_CHECK( getFileInfo(sessionKey, fileFullPath1, fileStat) ==0  );
 
     // Cleanup
     BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
@@ -137,7 +137,7 @@ BOOST_AUTO_TEST_CASE(DeleteFile_Base)
     BOOST_REQUIRE( createFile(sessionKey, fileFullPath1) == 0); // setup
     BOOST_REQUIRE( removeFile(sessionKey, fileFullPath1) == 0); // test
     FileStat fileStat;
-    BOOST_CHECK_THROW( getFilesInfo(sessionKey, fileFullPath1, fileStat), VishnuException );
+    BOOST_CHECK_THROW( getFileInfo(sessionKey, fileFullPath1, fileStat), VishnuException );
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
@@ -346,7 +346,7 @@ BOOST_AUTO_TEST_CASE(GetFileInfo_Base)
     // Copy file on remote host
     BOOST_REQUIRE( copyFile(sessionKey, localFilePath, fileFullPath1) == 0);
     FileStat stat;
-    BOOST_REQUIRE( getFilesInfo(sessionKey, fileFullPath1, stat) == 0);
+    BOOST_REQUIRE( getFileInfo(sessionKey, fileFullPath1, stat) == 0);
     // To check the success
     BOOST_CHECK( stat.getSize() == 10240 );
     BOOST_CHECK( stat.getOwner() == userLogin);
@@ -372,15 +372,15 @@ BOOST_AUTO_TEST_CASE(GetFileInfo_Exceptions)
     // E1 case
     string invalidDir = "rkvh";
     string invalidFullPath = baseDirFullPath1 + slash + invalidDir + slash + newFileName;
-    BOOST_CHECK_THROW( getFilesInfo(sessionKey, invalidFullPath, stat), VishnuException);
+    BOOST_CHECK_THROW( getFileInfo(sessionKey, invalidFullPath, stat), VishnuException);
     // E2 case
     string noAccessLocalPath = "/root/abc";
     string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
-    BOOST_CHECK_THROW( getFilesInfo(sessionKey, noAccessFullPath, stat), VishnuException);
+    BOOST_CHECK_THROW( getFileInfo(sessionKey, noAccessFullPath, stat), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
     string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
-    BOOST_CHECK_THROW( getFilesInfo(sessionKey, invalidMachineFullPath, stat), VishnuException);
+    BOOST_CHECK_THROW( getFileInfo(sessionKey, invalidMachineFullPath, stat), VishnuException);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
@@ -402,7 +402,7 @@ BOOST_AUTO_TEST_CASE(ChangeFileRights_Base)
     BOOST_REQUIRE( chMod(sessionKey, 600, fileFullPath1) == 0);
     // To check the success
     FileStat stat;
-    BOOST_REQUIRE( getFilesInfo(sessionKey, fileFullPath1, stat) == 0);
+    BOOST_REQUIRE( getFileInfo(sessionKey, fileFullPath1, stat) == 0);
     BOOST_CHECK( stat.getPerms() == 0600);
     // Cleanup
     BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
@@ -454,7 +454,7 @@ BOOST_AUTO_TEST_CASE(ChangeGroup_Base)
     BOOST_REQUIRE( chGrp(sessionKey, groupTest, fileFullPath1) == 0);
     // To check the success
     FileStat stat;
-    BOOST_REQUIRE( getFilesInfo(sessionKey, fileFullPath1, stat) == 0);
+    BOOST_REQUIRE( getFileInfo(sessionKey, fileFullPath1, stat) == 0);
     BOOST_CHECK( stat.getGroup() == groupTest);
     // Cleanup
     BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);

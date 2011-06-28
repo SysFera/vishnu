@@ -538,7 +538,7 @@ vishnu::listSessions(const std::string& sessionKey,
  * \return raises an exception on error
  */
 int
-vishnu::listLocalAccount(const std::string& sessionKey,
+vishnu::listLocalAccounts(const std::string& sessionKey,
                          UMS_Data::ListLocalAccounts& listLocalAcc,
                          const UMS_Data::ListLocalAccOptions& options)
                                                                      throw(UserException, SystemException)
@@ -572,7 +572,7 @@ vishnu::listLocalAccount(const std::string& sessionKey,
  * \return raises an exception on error
  */
 int
-vishnu::listMachine(const std::string& sessionKey,
+vishnu::listMachines(const std::string& sessionKey,
                     UMS_Data::ListMachines& listMachine,
                     const UMS_Data::ListMachineOptions& options)
                                                                throw(UserException, SystemException)

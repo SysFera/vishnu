@@ -276,7 +276,7 @@ namespace vishnu {
    * \return raises an exception on error 
    */
   int 
-  listLocalAccount(const std::string& sessionKey, 
+  listLocalAccounts(const std::string& sessionKey, 
                    UMS_Data::ListLocalAccounts& listLocalAcc,
                    const UMS_Data::ListLocalAccOptions& options=UMS_Data::ListLocalAccOptions())
                                                                                                throw(UserException, SystemException); 
@@ -290,7 +290,7 @@ namespace vishnu {
    * \return raises an exception on error 
    */
   int 
-  listMachine(const std::string& sessionKey, 
+  listMachines(const std::string& sessionKey, 
               UMS_Data::ListMachines& listMachine,
               const UMS_Data::ListMachineOptions& options=UMS_Data::ListMachineOptions())
                                                                                         throw(UserException, SystemException) ;
