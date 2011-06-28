@@ -62,6 +62,13 @@
 	  
 	  <para> Added details concerning the IMS and FMS package.</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>4</revnumber>
+        <date>28/06/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+	  <para> Added TMS generic script example.</para></revdescription>
+      </revision>
     </revhistory>
     <copyright>
       <year>2011</year>
@@ -347,50 +354,65 @@
           <section>
             <title> VISHNU generic script </title>
             <para> The key words of a VISHNU generic script start with the special character <emphasis
-                  role="bold">%</emphasis>. For example, to specify 
+                  role="bold">#%</emphasis>. For example, to specify 
 	      a job's name, users have to use the following directive in their scripts: <emphasis
-                  role="bold">%vishnuJob_name</emphasis>. 
+                  role="bold">#% vishnu_job_name</emphasis>. 
 	      The possible generic directives are:
 	    </para>
             <para>  
 	      <itemizedlist>
                 <listitem>
-                  <para><emphasis role="bold">%vishnugroup</emphasis>: specifies the group's name,</para>
+                  <para><emphasis role="bold">#% vishnu_group</emphasis>: specifies the group's name,</para>
                 </listitem>
                 <listitem>
-                  <para><emphasis role="bold">%vishnujob_name</emphasis>: specifies the job's name,</para>
+                  <para><emphasis role="bold">#% vishnu_job_name</emphasis>: specifies the job's name,</para>
                 </listitem>
                 <listitem>
-                  <para><emphasis role="bold">%vishnuoutput</emphasis>: specifies the path of the job's ouput file,</para>
+                  <para><emphasis role="bold">#% vishnu_output</emphasis>: specifies the path of the job's ouput file,</para>
                 </listitem>
                 <listitem>
-                  <para><emphasis role="bold">%vishnuerror</emphasis>: specifies the path of the file containing the problems that occured during the job's execution,</para>
+                  <para><emphasis role="bold">#% vishnu_error</emphasis>: specifies the path of the file containing the problems that occured during the job's execution,</para>
                 </listitem>
                 <listitem>
-                  <para><emphasis role="bold">%vishnuwallclocklimit</emphasis>: specifies the estimated time for the job's execution,</para>
+                  <para><emphasis role="bold">#% vishnu_wallclocklimit</emphasis>: specifies the estimated time for the job's execution,</para>
                 </listitem>
                 <listitem>
-                  <para><emphasis role="bold">%vishnunotify_user</emphasis>: specifies the mail adress of the job's owner in order to receive a notification when the 
+                  <para><emphasis role="bold">#% vishnu_notify_user</emphasis>: specifies the mail adress of the job's owner in order to receive a notification when the 
 		    job is completed, 
 		  </para>
                 </listitem>
                 <listitem>
-                  <para><emphasis role="bold">%vishnuqueue</emphasis>: specifies the queue where the job will be submitted. It is possible to obtain a list of 
+                  <para><emphasis role="bold">#% vishnu_queue</emphasis>: specifies the queue where the job will be submitted. It is possible to obtain a list of 
 		    the batch scheduler's queues by using the <emphasis role="bold">vishnu_list_queues</emphasis> command.
 		  </para>
                 </listitem>
               </itemizedlist>
 	    </para>
             <para>
-	      It is important to note that the user can also add directives specific to a batch scheduler (TORQUE or LoadLeveler). Such specific directives must be added directly after the generic directives.
-	    </para>
+        It is important to note that the user can also add directives specific to a batch scheduler (TORQUE or LoadLeveler). Such specific directives must be added directly after the generic directives. Here is an example:
+      </para>
+            <programlisting>
+        #!/bin/sh
+        #% vishnu_job_name=first_job
+        #% vishnu_queue=first_queue
+        #% vishnu_output=/path/to/jobOutput
+        #% vishnu_error=/path/to/jobError
+        #% vishnu_wallclocklimit=2:40:5
+        #This line is a comment
+        #The following lines are torque specific section
+        #PBS -l ncpus=1
+        #PBS -l mem=50
+        #The following lines are loadleveler specific section
+        #@ notify_user=user@mail
+        #@ cpu_limit=2
+      </programlisting>
           </section>
         </section>
         <section>
           <title> Job Cancellation </title>
           <para> To cancel a job, the <emphasis role="bold">vishnu_cancel_job</emphasis> command is used with the VISHNU identifer 
-	    of the job to cancel. When the identifer of the job is <emphasis role="italic">all</emphasis>, all of the user's jobs are cancelled. 
-	    An admin can also cancel all the jobs of all the users of VISHNU.
+      of the job to cancel. When the identifer of the job is <emphasis role="italic">all</emphasis>, all of the user's jobs are cancelled. 
+      An admin can also cancel all the jobs of all the users of VISHNU.
 	  </para>
         </section>
         <section>
@@ -450,22 +472,22 @@
             </itemizedlist>
 	  </para>
         </section>
+      </section>
+      <section>
+        <title> IMS package </title>
         <section>
-          <title> IMS package </title>
-          <section>
-            <title>Export of commands</title>
-            <para>
+          <title>Export of commands</title>
+          <para>
 	      The user can export the commands made during a session in shell format. The file must have been created before the call, the file will contain a shell script that can be executed. For safety reasons, the connect and change password cannot be in the file. Thus, to execute the shell script, the connect command must be added after the first line of the file that declares the shell format.
 	    </para>
-          </section>
-          <section>
-            <title>Get system information</title>
-            <para>The get system information is to get information about a machine of the system. It can give information about the memory and/or diskspace available on the machine.</para>
-          </section>
-          <section>
-            <title>Get the metric </title>
-            <para>The user can get the current metrics on a machine or the history of the metrics on a machine to know the evolution of the metric. The user can choose to get the metrics of a specific type (parameters are 1, 2, 3 respectively free CPUload, free diskspace and free memory). Note, when getting the history of metrics, by default, only the first 1000 results are gotten. This is to avoid having to much results with a single command (the metric table may be filled very fastly).</para>
-          </section>
+        </section>
+        <section>
+          <title>Get system information</title>
+          <para>The get system information is to get information about a machine of the system. It can give information about the memory and/or diskspace available on the machine.</para>
+        </section>
+        <section>
+          <title>Get the metric </title>
+          <para>The user can get the current metrics on a machine or the history of the metrics on a machine to know the evolution of the metric. The user can choose to get the metrics of a specific type (parameters are 1, 2, 3 respectively free CPUload, free diskspace and free memory). Note, when getting the history of metrics, by default, only the first 1000 results are gotten. This is to avoid having to much results with a single command (the metric table may be filled very fastly).</para>
         </section>
       </section>
       <section>
@@ -851,7 +873,7 @@ homeDirectory path .</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The system account login is already used by another vishnu user&quot; [45]</term>
+            <term>&quot;The system account login is already used by another vishnu user&quot; [46]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -946,7 +968,7 @@ homeDirectory path .</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The system account login is already used by another vishnu user&quot; [45]</term>
+            <term>&quot;The system account login is already used by another vishnu user&quot; [46]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1569,6 +1591,10 @@ opened the session).</para>
           </varlistentry>
           <varlistentry>
             <term>&quot;The value of the timeout is incorrect&quot; [43]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The value of the transfer command is incorrect&quot; [44]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2327,35 +2353,47 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2407,35 +2445,47 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2493,35 +2543,47 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2573,35 +2635,47 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2653,35 +2727,47 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2734,35 +2820,43 @@ The mode parameter is the same value as for the unix chmod command.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2822,35 +2916,47 @@ values can be obtained using the vishnu_list_machine command).
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2910,35 +3016,47 @@ values can be obtained using the vishnu_list_machine command).
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2991,35 +3109,47 @@ values can be obtained using the vishnu_list_machine command).
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3085,35 +3215,47 @@ values can be obtained using the vishnu_list_machine command).
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3188,35 +3330,47 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3292,35 +3446,47 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3395,35 +3561,47 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3499,35 +3677,47 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3599,35 +3789,47 @@ The command listFileTransfers can be used to check the status of the transfer af
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3707,35 +3909,140 @@ The value must be an integer. Predefined values are: 0 (INPROGRESS), 1 (COMPLETE
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_get_files_info</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_get_files_info</refname>
+        <refpurpose>displays the information  of  files.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_get_files_info</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>Get the details of a remote file at the location given by the path parameter.
+The path must be provided in the form 'machine_id:path' (the machine_id
+values can be obtained using the vishnu_list_machine command).
+</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3800,11 +4107,23 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (SHELL).</
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;Undefined error code&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized.&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3865,11 +4184,23 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;Undefined error code&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized.&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3941,11 +4272,23 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;Undefined error code&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized.&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3994,11 +4337,23 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;Undefined error code&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized.&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4054,11 +4409,23 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;Undefined error code&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized.&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4503,7 +4870,7 @@ homeDirectory path .</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The system account login is already used by another vishnu user&quot; [45]</term>
+            <term>&quot;The system account login is already used by another vishnu user&quot; [46]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4587,7 +4954,7 @@ homeDirectory path .</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The system account login is already used by another vishnu user&quot; [45]</term>
+            <term>&quot;The system account login is already used by another vishnu user&quot; [46]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5163,6 +5530,10 @@ opened the session).</para>
           </varlistentry>
           <varlistentry>
             <term>&quot;The value of the timeout is incorrect&quot; [43]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The value of the transfer command is incorrect&quot; [44]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -6037,35 +6408,55 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -6111,35 +6502,55 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -6191,35 +6602,55 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -6265,35 +6696,55 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -6345,35 +6796,55 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -6426,35 +6897,51 @@ The mode parameter is the same value as for the unix chmod command.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -6513,35 +7000,55 @@ values can be obtained using the vishnu_list_machine command).
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -6600,35 +7107,55 @@ values can be obtained using the vishnu_list_machine command).
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -6681,35 +7208,55 @@ values can be obtained using the vishnu_list_machine command).
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -6768,35 +7315,55 @@ values can be obtained using the vishnu_list_machine command).
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -6857,35 +7424,55 @@ i.e. a local copy cannot be handled by this command.
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -6953,35 +7540,55 @@ The command listFileTransfers can be used to check the status of the transfer af
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -7042,35 +7649,55 @@ i.e. a local move cannot be handled by this command.
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -7138,35 +7765,55 @@ The command listFileTransfers can be used to check the status of the transfer af
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -7212,35 +7859,55 @@ The command listFileTransfers can be used to check the status of the transfer af
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -7292,35 +7959,55 @@ using a vishnu synchronous or asynchronous copy or move file command.
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -7373,35 +8060,55 @@ values can be obtained using the vishnu_list_machine command).
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The path provided is invalid.&quot; [-6]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [-2]</term>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id ins unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -7464,11 +8171,23 @@ The access to other user's sessions is only permitted to administrators.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;Undefined error code&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized.&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -7527,11 +8246,23 @@ Please note that retrieving these values uses some valuable system ressources an
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;Undefined error code&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized.&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -7587,11 +8318,23 @@ Please note that retrieving these values uses some valuable system ressources an
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;Undefined error code&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized.&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -7635,11 +8378,23 @@ Please note that retrieving these values uses some valuable system ressources an
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;Undefined error code&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized.&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -7689,11 +8444,23 @@ Please note that retrieving these values uses some valuable system ressources an
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [1]</term>
+            <term>&quot;The database generated an error&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
+            <term>&quot;Undefined error code&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized.&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -8205,7 +8972,7 @@ homeDirectory path .</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;The system account login is already used by another vishnu user&quot; [45])</term>
+            <term>UMSVishnuException(&quot;The system account login is already used by another vishnu user&quot; [46])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -8300,7 +9067,7 @@ homeDirectory path .</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;The system account login is already used by another vishnu user&quot; [45])</term>
+            <term>UMSVishnuException(&quot;The system account login is already used by another vishnu user&quot; [46])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -8953,6 +9720,10 @@ opened the session).</para>
           </varlistentry>
           <varlistentry>
             <term>UMSVishnuException(&quot;The value of the timeout is incorrect&quot; [43])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The value of the transfer command is incorrect&quot; [44])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -9948,35 +10719,55 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;A problem occurs with the database.&quot; [-9])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;User does not have permission access.&quot; [-8])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Option unknown in the config file.&quot; [-7])</term>
+            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The path provided is invalid.&quot; [-6])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;an option or a parameter provided is invalid for this service.&quot; [-5])</term>
+            <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The FMS server is unavailable.&quot; [-4])</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Invalid provided machine identifier.&quot; [-3])</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The session key is unrecognized.&quot; [-2])</term>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The local account  is unknown&quot; [38])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -10033,35 +10824,55 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;A problem occurs with the database.&quot; [-9])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;User does not have permission access.&quot; [-8])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Option unknown in the config file.&quot; [-7])</term>
+            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The path provided is invalid.&quot; [-6])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;an option or a parameter provided is invalid for this service.&quot; [-5])</term>
+            <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The FMS server is unavailable.&quot; [-4])</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Invalid provided machine identifier.&quot; [-3])</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The session key is unrecognized.&quot; [-2])</term>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The local account  is unknown&quot; [38])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -10124,35 +10935,55 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;A problem occurs with the database.&quot; [-9])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;User does not have permission access.&quot; [-8])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Option unknown in the config file.&quot; [-7])</term>
+            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The path provided is invalid.&quot; [-6])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;an option or a parameter provided is invalid for this service.&quot; [-5])</term>
+            <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The FMS server is unavailable.&quot; [-4])</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Invalid provided machine identifier.&quot; [-3])</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The session key is unrecognized.&quot; [-2])</term>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The local account  is unknown&quot; [38])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -10209,35 +11040,55 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;A problem occurs with the database.&quot; [-9])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;User does not have permission access.&quot; [-8])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Option unknown in the config file.&quot; [-7])</term>
+            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The path provided is invalid.&quot; [-6])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;an option or a parameter provided is invalid for this service.&quot; [-5])</term>
+            <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The FMS server is unavailable.&quot; [-4])</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Invalid provided machine identifier.&quot; [-3])</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The session key is unrecognized.&quot; [-2])</term>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The local account  is unknown&quot; [38])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -10300,35 +11151,55 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;A problem occurs with the database.&quot; [-9])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;User does not have permission access.&quot; [-8])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Option unknown in the config file.&quot; [-7])</term>
+            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The path provided is invalid.&quot; [-6])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;an option or a parameter provided is invalid for this service.&quot; [-5])</term>
+            <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The FMS server is unavailable.&quot; [-4])</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Invalid provided machine identifier.&quot; [-3])</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The session key is unrecognized.&quot; [-2])</term>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The local account  is unknown&quot; [38])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -10392,35 +11263,51 @@ The mode parameter is the same value as for the unix chmod command.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;A problem occurs with the database.&quot; [-9])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;User does not have permission access.&quot; [-8])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Option unknown in the config file.&quot; [-7])</term>
+            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The path provided is invalid.&quot; [-6])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;an option or a parameter provided is invalid for this service.&quot; [-5])</term>
+            <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The FMS server is unavailable.&quot; [-4])</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Invalid provided machine identifier.&quot; [-3])</term>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The session key is unrecognized.&quot; [-2])</term>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The local account  is unknown&quot; [38])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -10490,35 +11377,55 @@ values can be obtained using the vishnu_list_machine command).
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;A problem occurs with the database.&quot; [-9])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;User does not have permission access.&quot; [-8])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Option unknown in the config file.&quot; [-7])</term>
+            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The path provided is invalid.&quot; [-6])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;an option or a parameter provided is invalid for this service.&quot; [-5])</term>
+            <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The FMS server is unavailable.&quot; [-4])</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Invalid provided machine identifier.&quot; [-3])</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The session key is unrecognized.&quot; [-2])</term>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The local account  is unknown&quot; [38])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -10588,35 +11495,55 @@ values can be obtained using the vishnu_list_machine command).
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;A problem occurs with the database.&quot; [-9])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;User does not have permission access.&quot; [-8])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Option unknown in the config file.&quot; [-7])</term>
+            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The path provided is invalid.&quot; [-6])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;an option or a parameter provided is invalid for this service.&quot; [-5])</term>
+            <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The FMS server is unavailable.&quot; [-4])</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Invalid provided machine identifier.&quot; [-3])</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The session key is unrecognized.&quot; [-2])</term>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The local account  is unknown&quot; [38])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -10680,35 +11607,55 @@ values can be obtained using the vishnu_list_machine command).
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;A problem occurs with the database.&quot; [-9])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;User does not have permission access.&quot; [-8])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Option unknown in the config file.&quot; [-7])</term>
+            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The path provided is invalid.&quot; [-6])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;an option or a parameter provided is invalid for this service.&quot; [-5])</term>
+            <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The FMS server is unavailable.&quot; [-4])</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Invalid provided machine identifier.&quot; [-3])</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The session key is unrecognized.&quot; [-2])</term>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The local account  is unknown&quot; [38])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -10778,35 +11725,55 @@ values can be obtained using the vishnu_list_machine command).
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;A problem occurs with the database.&quot; [-9])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;User does not have permission access.&quot; [-8])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Option unknown in the config file.&quot; [-7])</term>
+            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The path provided is invalid.&quot; [-6])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;an option or a parameter provided is invalid for this service.&quot; [-5])</term>
+            <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The FMS server is unavailable.&quot; [-4])</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Invalid provided machine identifier.&quot; [-3])</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The session key is unrecognized.&quot; [-2])</term>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The local account  is unknown&quot; [38])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -10878,35 +11845,55 @@ i.e. a local copy cannot be handled by this command.
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;A problem occurs with the database.&quot; [-9])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;User does not have permission access.&quot; [-8])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Option unknown in the config file.&quot; [-7])</term>
+            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The path provided is invalid.&quot; [-6])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;an option or a parameter provided is invalid for this service.&quot; [-5])</term>
+            <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The FMS server is unavailable.&quot; [-4])</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Invalid provided machine identifier.&quot; [-3])</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The session key is unrecognized.&quot; [-2])</term>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The local account  is unknown&quot; [38])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -10985,35 +11972,55 @@ The command listFileTransfers can be used to check the status of the transfer af
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;A problem occurs with the database.&quot; [-9])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;User does not have permission access.&quot; [-8])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Option unknown in the config file.&quot; [-7])</term>
+            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The path provided is invalid.&quot; [-6])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;an option or a parameter provided is invalid for this service.&quot; [-5])</term>
+            <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The FMS server is unavailable.&quot; [-4])</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Invalid provided machine identifier.&quot; [-3])</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The session key is unrecognized.&quot; [-2])</term>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The local account  is unknown&quot; [38])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11085,35 +12092,55 @@ i.e. a local move cannot be handled by this command.
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;A problem occurs with the database.&quot; [-9])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;User does not have permission access.&quot; [-8])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Option unknown in the config file.&quot; [-7])</term>
+            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The path provided is invalid.&quot; [-6])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;an option or a parameter provided is invalid for this service.&quot; [-5])</term>
+            <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The FMS server is unavailable.&quot; [-4])</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Invalid provided machine identifier.&quot; [-3])</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The session key is unrecognized.&quot; [-2])</term>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The local account  is unknown&quot; [38])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11192,35 +12219,55 @@ The command listFileTransfers can be used to check the status of the transfer af
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;A problem occurs with the database.&quot; [-9])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;User does not have permission access.&quot; [-8])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Option unknown in the config file.&quot; [-7])</term>
+            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The path provided is invalid.&quot; [-6])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;an option or a parameter provided is invalid for this service.&quot; [-5])</term>
+            <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The FMS server is unavailable.&quot; [-4])</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Invalid provided machine identifier.&quot; [-3])</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The session key is unrecognized.&quot; [-2])</term>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The local account  is unknown&quot; [38])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11277,35 +12324,55 @@ The command listFileTransfers can be used to check the status of the transfer af
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;A problem occurs with the database.&quot; [-9])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;User does not have permission access.&quot; [-8])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Option unknown in the config file.&quot; [-7])</term>
+            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The path provided is invalid.&quot; [-6])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;an option or a parameter provided is invalid for this service.&quot; [-5])</term>
+            <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The FMS server is unavailable.&quot; [-4])</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Invalid provided machine identifier.&quot; [-3])</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The session key is unrecognized.&quot; [-2])</term>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The local account  is unknown&quot; [38])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11368,35 +12435,55 @@ using a vishnu synchronous or asynchronous copy or move file command.
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;A problem occurs with the database.&quot; [-9])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;User does not have permission access.&quot; [-8])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Option unknown in the config file.&quot; [-7])</term>
+            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The path provided is invalid.&quot; [-6])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;an option or a parameter provided is invalid for this service.&quot; [-5])</term>
+            <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The FMS server is unavailable.&quot; [-4])</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Invalid provided machine identifier.&quot; [-3])</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The session key is unrecognized.&quot; [-2])</term>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The local account  is unknown&quot; [38])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11460,35 +12547,55 @@ values can be obtained using the vishnu_list_machine command).
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;A problem occurs with the database.&quot; [-9])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;User does not have permission access.&quot; [-8])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Option unknown in the config file.&quot; [-7])</term>
+            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The path provided is invalid.&quot; [-6])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;an option or a parameter provided is invalid for this service.&quot; [-5])</term>
+            <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The FMS server is unavailable.&quot; [-4])</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Invalid provided machine identifier.&quot; [-3])</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The session key is unrecognized.&quot; [-2])</term>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The local account  is unknown&quot; [38])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11562,11 +12669,23 @@ The access to other user's sessions is only permitted to administrators.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>SystemException(&quot;Undefined error code&quot; [9])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key is unrecognized.&quot; [28])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11636,11 +12755,23 @@ Please note that retrieving these values uses some valuable system ressources an
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>SystemException(&quot;Undefined error code&quot; [9])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key is unrecognized.&quot; [28])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11707,11 +12838,23 @@ Please note that retrieving these values uses some valuable system ressources an
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>SystemException(&quot;Undefined error code&quot; [9])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key is unrecognized.&quot; [28])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11766,11 +12909,23 @@ Please note that retrieving these values uses some valuable system ressources an
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>SystemException(&quot;Undefined error code&quot; [9])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key is unrecognized.&quot; [28])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11831,11 +12986,23 @@ Please note that retrieving these values uses some valuable system ressources an
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;If a parameter is invalid&quot; [1])</term>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <term>SystemException(&quot;Undefined error code&quot; [9])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key is unrecognized.&quot; [28])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
