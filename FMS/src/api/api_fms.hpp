@@ -188,7 +188,7 @@ namespace vishnu{
    * \param filesInfo  the file informations
    * \return 0 if everything is OK, another value otherwise
    */
-  int getFilesInfo(const string& sessionKey,const string& path, FileStat& filesInfo)
+  int getFileInfo(const string& sessionKey,const string& path, FileStat& filesInfo)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
 

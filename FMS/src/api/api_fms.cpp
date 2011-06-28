@@ -396,7 +396,7 @@ int vishnu::tailOfFile(const string& sessionKey,const string& path, string& cont
  * \param :  a buffer to store the informations
  * \return 0 if everything is OK, another value otherwise
  */
-int vishnu::getFilesInfo(const string& sessionKey,const string& path, FileStat& fileInfos)
+int vishnu::getFileInfo(const string& sessionKey,const string& path, FileStat& fileInfos)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
     //To check the remote path
