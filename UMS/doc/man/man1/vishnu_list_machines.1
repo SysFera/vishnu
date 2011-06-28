@@ -1,13 +1,13 @@
 '\" t
-.\"     Title: getFilesInfo
+.\"     Title: vishnu_list_machines
 .\"    Author:  SysFera SAS <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-.\"      Date: June 2011
-.\"    Manual: FMS C++ API Reference
+.\"      Date: February 2011
+.\"    Manual: UMS Command reference
 .\"    Source: VISHNU 1.2
 .\"  Language: English
 .\"
-.TH "GETFILESINFO" "3" "June 2011" "VISHNU 1.2" "FMS C++ API Reference"
+.TH "VISHNU_LIST_MACHINES" "1" "February 2011" "VISHNU 1.2" "UMS Command reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,62 +28,57 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-getFilesInfo \- displays the information of files\&.
+vishnu_list_machines \- lists the machines that are accessible through VISHNU
 .SH "SYNOPSIS"
-.HP \w'int\ vishnu::getFilesInfo('u
-.BI "int vishnu::getFilesInfo(const\ string&\ " "sessionKey" ", const\ string&\ " "path" ", FileStat&\ " "filesinfo" ");"
+.HP \w'\fBvishnu_list_machines\fR\ 'u
+\fBvishnu_list_machines\fR [\fB\-h\fR] [\fB\-u\ \fR\fB\fIuserId\fR\fR] [\fB\-a\fR] [\fB\-m\ \fR\fB\fImachineId\fR\fR]
 .SH "DESCRIPTION"
 .PP
-Get the details of a remote file at the location given by the path parameter\&. The path must be provided in the form \*(Aqmachine_id:path\*(Aq (the machine_id values can be obtained using the vishnu_list_machine command)\&.
-.SH "ARGUMENTS"
+This command is used to display the machines that you can use for VISHNU services\&. The machines you can access through VISHNU are those that are configured in VISHNU by the VISHNU administrator, and that have been added to your personal VISHNU configuration using the vishnu_add_local_account command\&. The results contain, for each machine, a machine identifier that you can use as a parameter for other VISHNU commands\&.
+.SH "OPTIONS"
 .PP
-\fIsessionKey\fR
+\fB\-h \fR\fB\fIhelp\fR\fR
 .RS 4
-Input argument\&. The session key\&.
+help about the command\&.
 .RE
 .PP
-\fIpath\fR
+\fB\-u \fR\fB\fIuserId\fR\fR
 .RS 4
-Input argument\&. The file whose inode information will be displayed\&.
+is an admin option for listing machines in which a specific user has a local configuration\&.
 .RE
 .PP
-\fIfilesinfo\fR
+\fB\-a \fR\fB\fIlistAllmachine\fR\fR
 .RS 4
-Output argument\&. The inode information\&.
-.RE
-.SH "EXCEPTIONS"
-.PP
-The following exceptions may be thrown:
-.PP
-"A problem occurs with the database\&." [\-9]
-.RS 4
+is an option for listing all VISHNU machines\&.
 .RE
 .PP
-"User does not have permission access\&." [\-8]
+\fB\-m \fR\fB\fImachineId\fR\fR
 .RS 4
+is an option for listing information about a specific machine\&.
 .RE
+.SH "ENVIRONMENT"
 .PP
-"Option unknown in the config file\&." [\-7]
+\fBVISHNU_CONFIG_FILE\fR
 .RS 4
+Contains the path to the local configuration file for VISHNU\&.
 .RE
+.SH "DIAGNOSTICS"
 .PP
-"The path provided is invalid\&." [\-6]
-.RS 4
-.RE
+The following diagnostics may be issued on stderr and the command will return the code provided within brackets:
 .PP
-"an option or a parameter provided is invalid for this service\&." [\-5]
+"There is no open session in this terminal" [10]
 .RS 4
 .RE
 .PP
-"The FMS server is unavailable\&." [\-4]
+"The userId is unknown" [21]
 .RS 4
 .RE
 .PP
-"Invalid provided machine identifier\&." [\-3]
+"The session key is unrecognized" [28]
 .RS 4
 .RE
 .PP
-"The session key is unrecognized\&." [\-2]
+"The sessionKey is expired\&. The session is closed\&." [29]
 .RS 4
 .RE
 .SH "AUTHOR"
