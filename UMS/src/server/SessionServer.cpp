@@ -525,10 +525,10 @@ SessionServer::solveConnectionMode(UMS_Data::ConnectOptions* connectOpt, std::st
   switch (connectOpt->getClosePolicy()) {
     ////The closure mode is undefined
     case 0:
-      msession.setClosePolicy(optionValueServer.getClosureInfo(numuserId));
+      msession.setClosePolicy(optionValueServer.getOptionValueForUser(numuserId, CLOSEPOLICY_OPT));
         //If the policy is not 2 (CLOSE_ON_DISCONNECT)
       if (msession.getClosePolicy() != 2) {
-        msession.setTimeout(optionValueServer.getClosureInfo(numuserId, "VISHNU_TIMEOUT"));
+        msession.setTimeout(optionValueServer.getOptionValueForUser(numuserId, TIMEOUT_OPT));
       }
     break;
     //The closure mode is close on timeout
@@ -538,7 +538,7 @@ SessionServer::solveConnectionMode(UMS_Data::ConnectOptions* connectOpt, std::st
         msession.setTimeout(connectOpt->getSessionInactivityDelay());
       } //END if the timeout is defined
       else {
-        msession.setTimeout(optionValueServer.getClosureInfo(numuserId, "VISHNU_TIMEOUT"));
+        msession.setTimeout(optionValueServer.getOptionValueForUser(numuserId, TIMEOUT_OPT));
       }
     break;
     //The closure mode is close on disconnect
@@ -575,7 +575,7 @@ SessionServer::disconnetToTimeout(UserServer user) {
   " and pwd='"+user.getData().getPassword()+"'");
 
   //To get the timeout
-  msession.setTimeout(optionValueServer.getClosureInfo(numuserId, "VISHNU_TIMEOUT"));
+  msession.setTimeout(optionValueServer.getOptionValueForUser(numuserId, TIMEOUT_OPT));
   mdatabaseVishnu->process("UPDATE vsession SET timeout="+convertToString(msession.getTimeout())+
   " WHERE sessionkey='"+msession.getSessionKey()+"';");
 
