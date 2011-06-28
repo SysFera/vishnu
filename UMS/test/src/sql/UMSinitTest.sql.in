@@ -7,7 +7,7 @@ INSERT INTO users(vishnu_vishnuid, userid, pwd, firstname, lastname, privilege, 
 UPDATE users SET numuserid=1 where userid='root';
 UPDATE users SET numuserid=2 where userid='admin_1';
 UPDATE users SET numuserid=3 where userid='user_1';
-INSERT INTO machine(vishnu_vishnuid, name, site, machineid, status)values(1, 'tiger', 'berlin', 'machine_1', '1');
+INSERT INTO machine(vishnu_vishnuid, name, site, machineid, status)values(1, '@TEST_LOCAL_HOSTNAME@', 'berlin', 'machine_1', '1');
 INSERT INTO machine(vishnu_vishnuid, name, site, machineid, status)values(1, 'tiger2', 'paris', 'machine_42', '1');
 UPDATE machine SET nummachineid=1 where machineid='machine_1';
 UPDATE machine SET nummachineid=2 where machineid='machine_42';
