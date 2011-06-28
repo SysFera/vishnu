@@ -207,6 +207,9 @@ vishnu::boostMoveFile(const std::string& src, const std::string& dest, const std
  * \return raises an exception on error
  */
 bool vishnu::isNumericalValue(const std::string value) {
+  if(value.size()==0) {
+    throw UserException(ERRCODE_INVALID_PARAM, ("Invalid numerical value: The given value is empty"));
+  }
   bool ret = (value.find_first_not_of("0123456789")==std::string::npos);
   if(!ret) {
     throw UserException(ERRCODE_INVALID_PARAM, ("Invalid numerical value: "+value));
@@ -267,86 +270,91 @@ std::string vishnu::convertWallTimeToString(const long& walltime) {
  */
 long vishnu::convertStringToWallTime(const std::string& walltime) {
 
-  int seconds = 0;
-  int minute = 0;
-  int heure = 0;
-  int jour = 0;
-  std::string value;
-  size_t found;
+  if(walltime.size()!=0) {
+    int seconds = 0;
+    int minute = 0;
+    int heure = 0;
+    int jour = 0;
+    std::string value;
+    size_t found;
 
-  size_t size = walltime.size();
-  size_t pos = walltime.rfind(":");
-  if(pos!=std::string::npos) {
-    if((size-pos > 1)) {
-      value = walltime.substr(pos+1, size-1-pos);
-      if(isNumericalValue(value)) {
-        seconds = convertToInt(value);
-      }
-    }
-  } else {
-    if(walltime.size() > 0) {
-      value = walltime;
-      if(isNumericalValue(value)) {
-        seconds = convertToInt(value);
-      }
-    }
-  }
-
-  if((pos!=std::string::npos) && (pos > 0)) {
-    size = pos;
-    pos =  walltime.rfind(":", size-1);
+    size_t size = walltime.size();
+    size_t pos = walltime.rfind(":");
     if(pos!=std::string::npos) {
       if((size-pos > 1)) {
-        value = walltime.substr(pos+1, size-pos-1);
+        value = walltime.substr(pos+1, size-1-pos);
+        if(isNumericalValue(value)) {
+          seconds = convertToInt(value);
+        }
+      }
+    } else {
+      if(walltime.size() > 0) {
+        value = walltime;
+        if(isNumericalValue(value)) {
+          seconds = convertToInt(value);
+        }
+      }
+    }
+
+    if((pos!=std::string::npos) && (pos > 0)) {
+      size = pos;
+      pos =  walltime.rfind(":", size-1);
+      if(pos!=std::string::npos) {
+        if((size-pos > 1)) {
+          value = walltime.substr(pos+1, size-pos-1);
+          if(isNumericalValue(value)) {
+            minute = convertToInt(value);
+          }
+        }
+      } else {
+        value = walltime.substr(0, size);
         if(isNumericalValue(value)) {
           minute = convertToInt(value);
         }
       }
-    } else {
-      value = walltime.substr(0, size);
-      if(isNumericalValue(value)) {
-        minute = convertToInt(value);
-      }
     }
-  }
 
-  if((pos!=std::string::npos) && (pos > 0)) {
-    size = pos;
-    pos =  walltime.rfind(":", size-1);
-    if(pos!=std::string::npos) {
-      if((size-pos > 1)) {
-        value = walltime.substr(pos+1, size-pos-1);
+    if((pos!=std::string::npos) && (pos > 0)) {
+      size = pos;
+      pos =  walltime.rfind(":", size-1);
+      if(pos!=std::string::npos) {
+        if((size-pos > 1)) {
+          value = walltime.substr(pos+1, size-pos-1);
+          if(isNumericalValue(value)) {
+            heure = convertToInt(value);
+          }
+        }
+      } else {
+        value = walltime.substr(0, size);
         if(isNumericalValue(value)) {
           heure = convertToInt(value);
         }
       }
-    } else {
-      value = walltime.substr(0, size);
-      if(isNumericalValue(value)) {
-        heure = convertToInt(value);
+    }
+
+    if((pos!=std::string::npos) && (pos > 0)) {
+      size = pos;
+      pos =  walltime.rfind(":", size-1);
+      if(pos!=std::string::npos) {
+        if((size-pos > 1)) {
+          throw std::runtime_error("Invalid wallltime value: "+walltime);
+        }
+      } else {
+        value = walltime.substr(0, size);
+        if(isNumericalValue(value)) {
+          jour = convertToInt(value);
+        }
       }
     }
+
+    long walltimeInSeconds = (jour*86400+heure*3600+minute*60+seconds);
+
+    return walltimeInSeconds;
+
+  } else {
+    throw UserException(ERRCODE_INVALID_PARAM, ("Invalid walltime value: The given value is empty"));
   }
-
-  if((pos!=std::string::npos) && (pos > 0)) {
-    size = pos;
-    pos =  walltime.rfind(":", size-1);
-    if(pos!=std::string::npos) {
-      if((size-pos > 1)) {
-        throw std::runtime_error("Invalid wallltime value: "+walltime);
-      }
-    } else {
-      value = walltime.substr(0, size);
-      if(isNumericalValue(value)) {
-        jour = convertToInt(value);
-      }
-    }
-  }
-
-  long walltimeInSeconds = (jour*86400+heure*3600+minute*60+seconds);
-
-  return walltimeInSeconds;
-
+  
 }
 
 /**
