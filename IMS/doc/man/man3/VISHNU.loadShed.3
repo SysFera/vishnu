@@ -61,15 +61,15 @@ Output parameter\&. Contains 0 on success and the error code on failure\&.
 .PP
 The following exceptions may be thrown:
 .PP
-SystemException("If a parameter is invalid" [1])
-.RS 4
-.RE
-.PP
 SystemException("The database generated an error" [2])
 .RS 4
 .RE
 .PP
-SystemException("If a component is unavailable" [3])
+UserException("If a parameter is invalid" [10])
+.RS 4
+.RE
+.PP
+IMSVishnuException("If a component is unavailable" [301])
 .RS 4
 .RE
 .SH "AUTHOR"

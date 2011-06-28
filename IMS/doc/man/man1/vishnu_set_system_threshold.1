@@ -31,7 +31,7 @@
 vishnu_set_system_threshold \- sets a threshold on a machine of a system
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_set_system_threshold\fR\ 'u
-\fBvishnu_set_system_threshold\fR [\fB\-h\fR]
+\fBvishnu_set_system_threshold\fR [\fB\-h\fR] \fIvalue\fR \fImachineId\fR \fItype\fR \fIhandler\fR
 .SH "DESCRIPTION"
 .PP
 This function allows an administrator to set a threshold\&. Each time an IMS server records the state of a machine, it checks the values defined, if a threshold is reached (over a use of the cpu or under the free memory or diskspace available), the administrator responsible for the threshold will receive an mail\&. These threshold will help the administrator to be aware of critical situations on a machine\&. Warning, a mail is sent for each time the threshold is reached, if a value swings around a threshold, the administrator may receive lots of emails depending on the update frequency\&.
@@ -51,11 +51,11 @@ Contains the path to the local configuration file for VISHNU\&.
 .PP
 The following diagnostics may be issued on stderr and the command will return the code provided within brackets:
 .PP
-"If a parameter is invalid" [1]
+"The database generated an error" [2]
 .RS 4
 .RE
 .PP
-"The database generated an error" [2]
+"If a parameter is invalid" [10]
 .RS 4
 .RE
 .SH "AUTHOR"
