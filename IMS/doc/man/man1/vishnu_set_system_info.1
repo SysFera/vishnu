@@ -31,7 +31,7 @@
 vishnu_set_system_info \- updates the system information of a machine
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_set_system_info\fR\ 'u
-\fBvishnu_set_system_info\fR [\fB\-h\fR]
+\fBvishnu_set_system_info\fR [\fB\-h\fR] [\fB\-m\ \fR\fB\fImemory\fR\fR] [\fB\-d\ \fR\fB\fIdiskSpace\fR\fR] \fImachineId\fR
 .SH "DESCRIPTION"
 .PP
 This command with restricted access is used to set system information on a machine in the VISHNU database\&. The machine must first be registered using the UMS "addMachine" call\&. Using the machine identifier, information such as the total memory and available diskspace on the machine can be added\&.
@@ -40,6 +40,16 @@ This command with restricted access is used to set system information on a machi
 \fB\-h \fR\fB\fIhelp\fR\fR
 .RS 4
 help about the command\&.
+.RE
+.PP
+\fB\-m \fR\fB\fImemory\fR\fR
+.RS 4
+Amount of RAM memory available on the machine (in Bytes)\&.
+.RE
+.PP
+\fB\-d \fR\fB\fIdiskSpace\fR\fR
+.RS 4
+Amount of disk space available on the machine (in Bytes)\&.
 .RE
 .SH "ENVIRONMENT"
 .PP
@@ -51,11 +61,11 @@ Contains the path to the local configuration file for VISHNU\&.
 .PP
 The following diagnostics may be issued on stderr and the command will return the code provided within brackets:
 .PP
-"If a parameter is invalid" [1]
+"The database generated an error" [2]
 .RS 4
 .RE
 .PP
-"The database generated an error" [2]
+"If a parameter is invalid" [10]
 .RS 4
 .RE
 .SH "AUTHOR"
