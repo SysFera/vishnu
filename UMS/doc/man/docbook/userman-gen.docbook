@@ -595,15 +595,15 @@ homeDirectory path .</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>vishnu_list_local_account</refentrytitle>
+        <refentrytitle>vishnu_list_local_accounts</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>vishnu_list_local_account</refname>
+        <refname>vishnu_list_local_accounts</refname>
         <refpurpose>lists the local user configurations</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_list_local_account</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_list_local_accounts</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-a</option></arg><arg choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
               choice="opt"><option>-i <replaceable>machineId</replaceable></option></arg></cmdsynopsis>
       </refsynopsisdiv>
@@ -679,15 +679,15 @@ local configurations related to your VISHNU account. </para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>vishnu_list_machine</refentrytitle>
+        <refentrytitle>vishnu_list_machines</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>vishnu_list_machine</refname>
+        <refname>vishnu_list_machines</refname>
         <refpurpose>lists the machines that are accessible through VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_list_machine</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_list_machines</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
               choice="opt"><option>-a</option></arg><arg choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg></cmdsynopsis>
       </refsynopsisdiv>
@@ -1766,15 +1766,15 @@ homeDirectory path .</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>listLocalAccount</refentrytitle>
+        <refentrytitle>listLocalAccounts</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>listLocalAccount</refname>
+        <refname>listLocalAccounts</refname>
         <refpurpose>lists the local user configurations</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listLocalAccount</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts&amp; <parameter>listLocalAcct</parameter></paramdef><paramdef>const ListLocalAccOptions&amp; <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listLocalAccounts</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts&amp; <parameter>listLocalAcct</parameter></paramdef><paramdef>const ListLocalAccOptions&amp; <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -1847,15 +1847,15 @@ local configurations related to your VISHNU account. </para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>listMachine</refentrytitle>
+        <refentrytitle>listMachines</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>listMachine</refname>
+        <refname>listMachines</refname>
         <refpurpose>lists the machines that are accessible through VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listMachine</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines&amp; <parameter>listMachine</parameter></paramdef><paramdef>const ListMachineOptions&amp; <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listMachines</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines&amp; <parameter>listMachine</parameter></paramdef><paramdef>const ListMachineOptions&amp; <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3036,15 +3036,15 @@ homeDirectory path .</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.listLocalAccount</refentrytitle>
+        <refentrytitle>VISHNU.listLocalAccounts</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.listLocalAccount</refname>
+        <refname>VISHNU.listLocalAccounts</refname>
         <refpurpose>lists the local user configurations</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts <parameter>listLocalAcct</parameter></paramdef><paramdef>ListLocalAccOptions <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listLocalAccounts</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts <parameter>listLocalAcct</parameter></paramdef><paramdef>ListLocalAccOptions <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3128,15 +3128,15 @@ local configurations related to your VISHNU account. </para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.listMachine</refentrytitle>
+        <refentrytitle>VISHNU.listMachines</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.listMachine</refname>
+        <refname>VISHNU.listMachines</refname>
         <refpurpose>lists the machines that are accessible through VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines <parameter>listMachine</parameter></paramdef><paramdef>ListMachineOptions <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listMachines</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines <parameter>listMachine</parameter></paramdef><paramdef>ListMachineOptions <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
