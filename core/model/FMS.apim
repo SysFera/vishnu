@@ -254,47 +254,19 @@
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.14"/>
       <details key="description" value="Cancels a file or directory transfer that has been initiated using a vishnu asynchronous copy or move file command.&#xA;The command listFileTransfers can be used to check the status of the transfer after it has been cancelled, using the transfer id as the identifier.&#xA;"/>
     </services>
-    <services name="listFileTransfers" description="displays the history of all file transfers submitted by User.">
+    <services name="listFileTransfers" description="displays the history of all file transfers submitted by User." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DB_ERROR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="fileTransferList" direction="OUT" description="The file transfer list" longOptionName="">
         <dataType href="FMS_Internal.apim#//@modules.0/@typeList/@types.16"/>
       </ports>
       <ports name="options" dataType="//@modules.0/@typeList/@types.9" description="The filter options  " optional="true" longOptionName=""/>
-      <resultCodes href="#ERRCODE_CONFIGNOTFOUND"/>
-      <resultCodes href="#ERRCODE_DB_ERROR"/>
-      <resultCodes href="#ERRCODE_DIET"/>
-      <resultCodes href="#ERRCODE_INVALID_PARAM"/>
-      <resultCodes href="#ERRCODE_INVALID_PATH"/>
-      <resultCodes href="#ERRCODE_NO_ADMIN"/>
-      <resultCodes href="#ERRCODE_RUNTIME_ERROR"/>
-      <resultCodes href="#ERRCODE_SESSIONKEY_EXPIRED"/>
-      <resultCodes href="#ERRCODE_SESSIONKEY_NOT_FOUND"/>
-      <resultCodes href="#ERRCODE_UNDEFINED"/>
-      <resultCodes href="#ERRCODE_UNKNOWN_FILE_TRANSFER"/>
-      <resultCodes href="#ERRCODE_UNKNOWN_LOCAL_ACCOUNT"/>
-      <resultCodes href="#ERRCODE_UNKNOWN_MACHINE"/>
-      <resultCodes href="#VISHNU_OK"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.15"/>
       <details key="description" value="Get the list of all file or directory transfers that have been initiated &#xA;using a vishnu synchronous or asynchronous copy or move file command.&#xA;"/>
     </services>
-    <services name="getFilesInfo" description="displays the information  of  files." isCommand="false">
+    <services name="getFilesInfo" description="displays the information  of  files." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DB_ERROR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The file whose inode information will be displayed"/>
       <ports name="filesinfo" direction="OUT" dataType="//@modules.0/@typeList/@types.11" description="The  inode information" shortOptionLetter="" longOptionName=""/>
-      <resultCodes href="#ERRCODE_CONFIGNOTFOUND"/>
-      <resultCodes href="#ERRCODE_DB_ERROR"/>
-      <resultCodes href="#ERRCODE_DIET"/>
-      <resultCodes href="#ERRCODE_INVALID_PARAM"/>
-      <resultCodes href="#ERRCODE_INVALID_PATH"/>
-      <resultCodes href="#ERRCODE_NO_ADMIN"/>
-      <resultCodes href="#ERRCODE_RUNTIME_ERROR"/>
-      <resultCodes href="#ERRCODE_SESSIONKEY_EXPIRED"/>
-      <resultCodes href="#ERRCODE_SESSIONKEY_NOT_FOUND"/>
-      <resultCodes href="#ERRCODE_UNDEFINED"/>
-      <resultCodes href="#ERRCODE_UNKNOWN_FILE_TRANSFER"/>
-      <resultCodes href="#ERRCODE_UNKNOWN_LOCAL_ACCOUNT"/>
-      <resultCodes href="#ERRCODE_UNKNOWN_MACHINE"/>
-      <resultCodes href="#VISHNU_OK"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.16"/>
       <details key="description" value="Get the details of a remote file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>
     </services>
