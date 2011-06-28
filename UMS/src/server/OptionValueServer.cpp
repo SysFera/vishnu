@@ -76,6 +76,11 @@ OptionValueServer::configureOption(bool defaultOptions) {
           numoptionid = getAttribut("where "
           "description='"+moptionValue->getOptionName()+"'", "numoptionid", true);
 
+          if (numoptionid.empty()) {
+            UMSVishnuException e (ERRCODE_UNKNOWN_OPTION, moptionValue->getOptionName());
+            throw e;
+          }
+
           //To check if this option is already defined for the user
           optionu_numoptionid = getAttribut("where "
           "users_numuserid="+numuserid+" and optionu_numoptionid="+numoptionid);
@@ -159,28 +164,24 @@ OptionValueServer::getAttribut(std::string condition, std::string attrname, bool
 
 }
 /**
-* \brief Function to get closure information from the database vishnu
-* \fn getAttribut(std::string condition, std::string attrname, defaultOptions);
-* \param numuserId The database number id of the user who wants to get closure information
-* \param nameInfo the name of the closure information
+* \brief Function to get user option value
+* \param numuserId The database number id of the user
+* \param nameInfo the name of the option
 */
 int
-OptionValueServer::getClosureInfo(std::string numuserId, std::string nameInfo) {
+OptionValueServer::getOptionValueForUser(std::string numuserId, std::string optionName) {
 
-  std::string userCloseInfo;
-
-  //To get the closure information of the user identified by the numuserId
-  userCloseInfo = getAttribut ("where users_numuserid='"+numuserId+"' and optionu_numoptionid="+
-  getAttribut("where description='"+nameInfo+"'", "numoptionid", true));
-  //If the closure information is not defined for the user
-  if (userCloseInfo.size() == 0) {
-    //To get the closure information from the table with the default options values
-    userCloseInfo = getAttribut("where description='"+nameInfo+"'", "defaultvalue", true);
-    return convertToInt(userCloseInfo);
-  } //END If the closure information is not defined for the user
-  else {
-    return convertToInt(userCloseInfo);
+  std::string optionId = getAttribut("where description='"+ optionName +"'", "numoptionid", true);
+  if (optionId.empty()) {
+     throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION, optionName);
   }
+  std::string optionValue = getAttribut ("where users_numuserid='"+numuserId+"' and optionu_numoptionid=" + optionId);
+  //If the option value is not defined for the user
+  if (optionValue.size() == 0) {
+    // get the default value of the option
+    optionValue = getAttribut("where description='"+optionName+"'", "defaultvalue", true);
+  }
+  return convertToInt(optionValue);
 }
 
 /**
