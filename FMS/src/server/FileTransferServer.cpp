@@ -527,7 +527,9 @@ int FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options 
 
 int FileTransferServer::stopThread(const std::string& transferid,const int& pid ){
 
-  int result;
+  int result=0;
+
+if (pid!=-1){
 
   if(result=kill(pid, SIGTERM)){
 
@@ -549,7 +551,7 @@ int FileTransferServer::stopThread(const std::string& transferid,const int& pid 
   // log into database
 
   updateStatus(2,transferid,logMsg);
-
+}
   return result;
 }
 

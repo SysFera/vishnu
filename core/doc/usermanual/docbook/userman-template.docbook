@@ -53,6 +53,14 @@
 	  
 	  <para> Added details concerning the IMS and FMS package.</para></revdescription>
       </revision>
+   
+   <revision>
+	<revnumber>4</revnumber>
+	<date>28/06/2011</date>
+	<authorinitials>SysFera</authorinitials>
+	<revdescription>
+	  <para> Added TMS generic script example.</para></revdescription>
+      </revision>
     </revhistory>
     
     <copyright>
@@ -366,51 +374,66 @@
 	  </para>
 	  <section>
 	    <title> VISHNU generic script </title>
-	    <para> The key words of a VISHNU generic script start with the special character <emphasis role="bold">%</emphasis>. For example, to specify 
-	      a job's name, users have to use the following directive in their scripts: <emphasis role="bold">%vishnuJob_name</emphasis>. 
+	    <para> The key words of a VISHNU generic script start with the special character <emphasis role="bold">#%</emphasis>. For example, to specify 
+	      a job's name, users have to use the following directive in their scripts: <emphasis role="bold">#% vishnu_job_name</emphasis>. 
 	      The possible generic directives are:
 	    </para>
 	    
 	    <para>  
 	      <itemizedlist>
 		<listitem>
-		  <para><emphasis role="bold">%vishnugroup</emphasis>: specifies the group's name,</para>
+		  <para><emphasis role="bold">#% vishnu_group</emphasis>: specifies the group's name,</para>
 		</listitem>
 		<listitem>
-		  <para><emphasis role="bold">%vishnujob_name</emphasis>: specifies the job's name,</para>
+		  <para><emphasis role="bold">#% vishnu_job_name</emphasis>: specifies the job's name,</para>
 		</listitem>
 		<listitem>
-		  <para><emphasis role="bold">%vishnuoutput</emphasis>: specifies the path of the job's ouput file,</para>
+		  <para><emphasis role="bold">#% vishnu_output</emphasis>: specifies the path of the job's ouput file,</para>
 		</listitem>
 		<listitem>
-		  <para><emphasis role="bold">%vishnuerror</emphasis>: specifies the path of the file containing the problems that occured during the job's execution,</para>
+		  <para><emphasis role="bold">#% vishnu_error</emphasis>: specifies the path of the file containing the problems that occured during the job's execution,</para>
 		</listitem>
 		<listitem>
-		  <para><emphasis role="bold">%vishnuwallclocklimit</emphasis>: specifies the estimated time for the job's execution,</para>
+		  <para><emphasis role="bold">#% vishnu_wallclocklimit</emphasis>: specifies the estimated time for the job's execution,</para>
 		</listitem>
 		<listitem>
-		  <para><emphasis role="bold">%vishnunotify_user</emphasis>: specifies the mail adress of the job's owner in order to receive a notification when the 
+		  <para><emphasis role="bold">#% vishnu_notify_user</emphasis>: specifies the mail adress of the job's owner in order to receive a notification when the 
 		    job is completed, 
 		  </para>
 		</listitem>
 		<listitem>
-		  <para><emphasis role="bold">%vishnuqueue</emphasis>: specifies the queue where the job will be submitted. It is possible to obtain a list of 
+		  <para><emphasis role="bold">#% vishnu_queue</emphasis>: specifies the queue where the job will be submitted. It is possible to obtain a list of 
 		    the batch scheduler's queues by using the <emphasis role="bold">vishnu_list_queues</emphasis> command.
 		  </para>
 		</listitem>
 	      </itemizedlist>
 	    </para>
 	    <para>
-	      It is important to note that the user can also add directives specific to a batch scheduler (TORQUE or LoadLeveler). Such specific directives must be added directly after the generic directives.
-	    </para>
-	  </section> 
-	</section>
-	
-	<section>
-	  <title> Job Cancellation </title>
-	  <para> To cancel a job, the <emphasis role="bold">vishnu_cancel_job</emphasis> command is used with the VISHNU identifer 
-	    of the job to cancel. When the identifer of the job is <emphasis role="italic">all</emphasis>, all of the user's jobs are cancelled. 
-	    An admin can also cancel all the jobs of all the users of VISHNU.
+        It is important to note that the user can also add directives specific to a batch scheduler (TORQUE or LoadLeveler). Such specific directives must be added directly after the generic directives. Here is an example:
+      </para>
+      <programlisting>
+        #!/bin/sh
+        #% vishnu_job_name=first_job
+        #% vishnu_queue=first_queue
+        #% vishnu_output=/path/to/jobOutput
+        #% vishnu_error=/path/to/jobError
+        #% vishnu_wallclocklimit=2:40:5
+        #This line is a comment
+        #The following lines are torque specific section
+        #PBS -l ncpus=1
+        #PBS -l mem=50
+        #The following lines are loadleveler specific section
+        #@ notify_user=user@mail
+        #@ cpu_limit=2
+      </programlisting>
+    </section> 
+  </section>
+
+  <section>
+    <title> Job Cancellation </title>
+    <para> To cancel a job, the <emphasis role="bold">vishnu_cancel_job</emphasis> command is used with the VISHNU identifer 
+      of the job to cancel. When the identifer of the job is <emphasis role="italic">all</emphasis>, all of the user's jobs are cancelled. 
+      An admin can also cancel all the jobs of all the users of VISHNU.
 	  </para>
 	</section> 
 	
@@ -462,6 +485,7 @@
             </itemizedlist>
 	  </para>
 	</section>
+	</section>
 	
 	<section> <!-- IMS description-->
 	  <title> IMS package </title>
@@ -480,7 +504,6 @@
 	    <para>The user can get the current metrics on a machine or the history of the metrics on a machine to know the evolution of the metric. The user can choose to get the metrics of a specific type (parameters are 1, 2, 3 respectively free CPUload, free diskspace and free memory). Note, when getting the history of metrics, by default, only the first 1000 results are gotten. This is to avoid having to much results with a single command (the metric table may be filled very fastly).</para>
 	  </section>    
 	</section>
-      </section>
       <section>
 	<title> Troubleshooting functions </title>
 	<para> The <emphasis role = "italic">"There is no session in this terminal"</emphasis> error can be solved by connecting to VISHNU using 
