@@ -98,7 +98,7 @@ int main (int ac, char* av[]){
 
       printSessionKeyMessage();
 
-      listLocalAccount(sessionKey,lsLocalAccount,listOptions);
+      listLocalAccounts(sessionKey,lsLocalAccount,listOptions);
 
     }
 

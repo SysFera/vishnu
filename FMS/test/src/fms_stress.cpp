@@ -62,12 +62,12 @@ void stress(int cpt,const string& sessionKey,const string& machineId,int type){
 
   
   }
-  else if (type ==4){// getFilesInfo
+  else if (type ==4){// getFileInfo
   
     FileStat fileInfos; 
       for (int i=0;i<5;i++) {
       cout << " In loop : " <<  i << endl;
-      getFilesInfo(sessionKey,machineId+":/proc",fileInfos);
+      getFileInfo(sessionKey,machineId+":/proc",fileInfos);
 
     }
     std::cout << "5 iterations done \n";
