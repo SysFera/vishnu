@@ -185,13 +185,13 @@
       <ECoreType xsi:type="ecore:EEnum" href="IMS_Data.ecore#//RestartType"/>
     </types>
     <types name="ThresholdCLI" description="The threshold object for the CLI">
-      <ECoreType xsi:type="ecore:EClass" href="file:/home/keo/Bureau/depot_git_edf/vishnu/core/model/IMS_Data_CLI.ecore#//ThresholdCLI"/>
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data_CLI.ecore#//ThresholdCLI"/>
     </types>
     <types name="SystemInfoCLI" description="The system info object for cli">
-      <ECoreType xsi:type="ecore:EClass" href="file:/home/keo/Bureau/depot_git_edf/vishnu/core/model/IMS_Data_CLI.ecore#//SystemInfoCLI"/>
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data_CLI.ecore#//SystemInfoCLI"/>
     </types>
     <types name="ProcessCLI" description="The process object for the cli">
-      <ECoreType xsi:type="ecore:EClass" href="file:/home/keo/Bureau/depot_git_edf/vishnu/core/model/IMS_Data_CLI.ecore#//ProcessCLI"/>
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data_CLI.ecore#//ProcessCLI"/>
     </types>
   </typeList>
 </API>
