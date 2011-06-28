@@ -38,6 +38,10 @@ target_link_libraries(ims-client-proxy
   emf4cpp-FMS_Data
   exception-vishnu
   ums-client-proxy
-  vishnu-fms-api
 )
 
+if (COMPILE_FMS)
+  target_link_libraries(ims-client-proxy
+    vishnu-fms-api
+    )
+endif (COMPILE_FMS)
