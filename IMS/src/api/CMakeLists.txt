@@ -32,10 +32,15 @@ TARGET_LINK_LIBRARIES(vishnu-ims-api
   emf4cpp-IMS_Data
   exception-vishnu
   ums-client-proxy
-  tms-client-proxy
   ims-client-proxy
   utils-vishnu
 )
+
+if (COMPILE_TMS)
+  TARGET_LINK_LIBRARIES(vishnu-ims-api
+    tms-client-proxy
+    )
+endif(COMPILE_TMS)
 
 INSTALL( TARGETS vishnu-ims-api DESTINATION lib )
 INSTALL( FILES api_ims.hpp DESTINATION include)
