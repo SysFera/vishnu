@@ -182,7 +182,8 @@ int FileTransferServer::addTransferThread(const std::string& srcUser,const std::
     if(dbResult->getNbTuples()!=0){
       std::string numuserId= dbResult->getFirstElement(); 
       OptionValueServer optionValueServer;
-      newOptions.setTrCommand(optionValueServer.getClosureInfo(numuserId, "VISHNU_TRANSFER_CMD"));
+      newOptions.setTrCommand(optionValueServer.getOptionValueForUser
+(numuserId, TRANSFERCMD_OPT));
     }
 
   }

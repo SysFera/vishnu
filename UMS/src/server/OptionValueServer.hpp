@@ -26,7 +26,7 @@ static const std::string TRANSFERCMD_OPT = "VISHNU_TRANSFER_CMD";
 
 /**
 * \class OptionValueServer
-* \brief OptionValueServer class implementation
+* \brief OptionValueServer class implementationT
 */
 class OptionValueServer {
 
@@ -74,14 +74,13 @@ public:
   std::string
   getAttribut(std::string condition, std::string attrname="value", bool defaultOptions=false);
   /**
-  * \brief Function to get closure information from the database vishnu
-  * \fn int getClosureInfo(std::string numuserId, std::string nameInfo = "VISHNU_CLOSE_POLICY");
-  * \param numuserId The database number id of the user who wants to get closure information
-  * \param nameInfo the name of the closure information
+  * \brief Function to get user option value
+  * \param numuserId The database number id of the user
+  * \param nameInfo the name of the option
   * \return The error or success code
   */
   int
-  getClosureInfo(std::string numuserId, std::string nameInfo = "VISHNU_CLOSE_POLICY");
+  getOptionValueForUser(std::string numuserId, std::string optionName);
 
 private:
   /////////////////////////////////
