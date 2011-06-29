@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<book  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
+  <info>
+    <title>Vishnu Home Page</title>
+    <productname>VISHNU</productname>
+    <releaseinfo>1.2.1</releaseinfo>
+    <date>June 28, 2011</date>
+    <author>
+      <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Kevin</firstname><surname>Coulomb</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Eugène</firstname><surname>Pamba Capo-Chichi</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
+    </author>
+    <title>VISHNU Home Page</title>
+    
+    <revhistory>
+      <revision>
+	<revnumber>1</revnumber>
+	<date>28/06/2011</date>
+	<authorinitials>SysFera</authorinitials>
+	<revdescription>
+	  <para>First version</para>
+        </revdescription>
+      </revision>
+    </revhistory>
+    
+    <copyright>
+      <year>2011</year>
+      <holder>SysFera SAS</holder>
+    </copyright>
+    <legalnotice>
+      <para>This documentation is provided under the following conditions:</para>
+      <para>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</para>
+      <orderedlist>
+        <listitem>
+          <para>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</para>
+        </listitem>
+        <listitem>
+          <para>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</para>
+        </listitem>
+      </orderedlist>
+      <para>This software is governed by the CECILL licence under French law and
+	abiding by the rules of distribution of free software.  You can  use, 
+	modify and/ or redistribute the software under the terms of the CeCILL
+	license as circulated by CEA, CNRS and INRIA at the following URL
+	&quot;http://www.cecill.info&quot;.</para>
+      <para>As a counterpart to the access to the source code and  rights to copy,
+	modify and redistribute granted by the license, users are provided only
+	with a limited warranty  and the software's author,  the holder of the
+	economic rights,  and the successive licensors  have only  limited
+	liability.</para>
+      <para>In this respect, the user's attention is drawn to the risks associated
+	with loading,  using,  modifying and/or developing or reproducing the
+	software by the user in light of its specific status of free software,
+	that may mean  that it is complicated to manipulate,  and  that  also
+	therefore means  that it is reserved for developers  and  experienced
+	professionals having in-depth computer knowledge. Users are therefore
+	encouraged to load and test the software's suitability as regards their
+	requirements in conditions enabling the security of their systems and/or 
+	data to be ensured and,  more generally, to use and operate it in the 
+	same conditions as regards security.</para>
+    </legalnotice>
+  </info>
+  
+  
+  <chapter>
+    <title>Presentation of VISHNU</title>
+    <section>
+      <title>What is VISHNU ?</title>
+      <para>VISHNU offers to end-users the capability of running computation tasks (jobs) on remote servers through a simple
+        interface that offers performance and interoperability with different kind of batch scheduler softwares running locally
+        on the servers. VISHNU also offers files management services to create, modify and transfer files on remote hosts using
+        secure transfer protocols. The VISHNU system is also capable of monitoring the performance of the servers and to recover
+        automatically from server failures.
+      </para>
+      <para>VISHNU is a modular system where each module can be deployed individually on a server to provide a subset of all VISHNU
+        services. For example the TMS module can be deployed on one server for providing jobs handling services, while other
+        VISHNU services (user mgmt, files mgmt, etc.) are served from another host. This allows a better performance by reducing 
+        the load on each server.
+      </para>
+    </section>
+    
+    <section>
+      <title>Change log</title>
+      <itemizedlist>
+	<listitem>
+          <para>V1.2.1 (24/06/2011): Fix problems with DNS resolution of VISHNU hosts.</para>
+        </listitem>
+        <listitem>
+          <para>V1.2.0 (15/06/2011): Release of modules IMS (information mgmt services) and FMS (files mgmt services).</para>
+        </listitem>
+        <listitem>
+          <para>V1.1.0 (13/05/2011): Release of module TMS (tasks mgmt services).</para>
+        </listitem>
+        <listitem>
+          <para>V1.0.1 (17/03/2011): Release of first module UMS (users mgmt services).</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    
+    <section>
+      <title>License</title>
+      <para>This software is released under the <ulink url="http://www.cecill.info/">CECILL licence</ulink>.</para>
+    </section>
+    
+    <section>
+      <title>Acknowledgements></title>
+    </section>
+    
+  <chapter>
+    <title>Install of VISHNU</title>
+    <section>
+      <title>Requirements</title>
+      <para></para>
+    </section>
+    <section>
+      <title>Install from debian packages</title>
+      <para></para>
+    </section>
+    <section>
+      <title>Install from source</title>
+      <para></para>
+    </section>
+    <section>
+      <title>Launch the VISHNU platform</title>
+      <para>VISHNU is a distributed system and can therefore be installed on several systems as well as on a single system.
+      When using several systems, the choice of which services to deploy on each system is dependent on the characteristics
+      of the systems and of the network.</para>
+      <para>Here is the list of processes that must be started to deploy all VISHNU services
+        (see also the <quote>VISHNU Administrator's guide</quote> in the Documentation section):</para>
+      <orderedlist numeration="lowerroman">
+        <listitem>
+          <para>Database instance: either a MySQL or PostgreSQL database</para>
+        </listitem>
+        <listitem>
+          <para>CORBA OmniNames process</para>
+        </listitem>
+        <listitem>
+          <para>DIET Master agent process</para>
+        </listitem>
+        <listitem>
+          <para>DIET LogCentral process</para>
+        </listitem>
+        <listitem>
+          <para>All VISHNU SeD processes (UMS, TMS, FMS, IMS)</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+  </chapter>
+  
+  <chapter>
+    <title>Small tutorial</title>
+    <para></para>
+  </chapter>
+  
+  <chapter>
+    <title>Documentation</title>
+    <section>
+      <title>Specifications</title>
+    </section>
+    <section>
+      <title>User and administrator's guides</title>
+    </section>
+    <section>
+      <title>Glossary</title>
+    </section>
+  </chapter>
+
+</book>
+
