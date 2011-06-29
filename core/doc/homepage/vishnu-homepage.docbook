@@ -82,6 +82,11 @@
         secure transfer protocols. The VISHNU system is also capable of monitoring the performance of the servers and to recover
         automatically from server failures.
       </para>
+      <para>The VISHNU software consists of a client part that provides both command-line executables and C++ shared libraries for
+        integration into an application, and a server part that is based on the <ulink url="http://graal.ens-lyon.fr/DIET">DIET</ulink>
+        middleware for remote invokation of distributed services. Other user interfaces are provided on top of the C++ API using SWIG
+        wrappers: currently it is available as Python module and Web services server.
+      </para>
       <para>VISHNU is a modular system where each module can be deployed individually on a server to provide a subset of all VISHNU
         services. For example the TMS module can be deployed on one server for providing jobs handling services, while other
         VISHNU services (user mgmt, files mgmt, etc.) are served from another host. This allows a better performance by reducing 
@@ -113,22 +118,57 @@
     </section>
     
     <section>
-      <title>Acknowledgements></title>
+      <title>Contacts</title>
     </section>
+  </chapter>
     
   <chapter>
-    <title>Install of VISHNU</title>
+    <title>Installation of VISHNU</title>
     <section>
       <title>Requirements</title>
-      <para></para>
+      <para>VISHNU can be installed on Linux systems only (preferably Debian distributions), and requires the following software:</para>
+      <itemizedlist>
+        <listitem>
+          <para>Boost C++ libraries (1.45 or greater)</para>
+        </listitem>
+        <listitem>
+          <para>OmniORB (4.1.4 or greater)</para>
+        </listitem>
+        <listitem>
+          <para>SSH</para>
+        </listitem>
+        <listitem>
+          <para>PostGreSQL (8.0 or greater) or MySQL (5.0 or greater)</para>
+        </listitem>
+        <listitem>
+          <para>Sysfera-DS (DIET version 2.7 minimum + le module log service associé)</para>
+        </listitem>
+        <listitem>
+          <para>On all hosts providing task mgmt services (TMS module):</para>
+          <itemizedlist>
+            <listitem>
+              <para>Torque API v3.2.6</para>
+            </listitem>
+            <listitem>
+              <para>OR IBM LoadLeveler API</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </itemizedlist>
     </section>
     <section>
       <title>Install from debian packages</title>
-      <para></para>
+      <para>The following binary packages are provided for the i386 architecture:</para>
+      <itemizedlist>
+        <listitem>
+          <para></para>
+        </listitem>
+      </itemizedlist>
     </section>
     <section>
       <title>Install from source</title>
-      <para></para>
+      <para>VISHNU must be compiled with GCC (4.4.3 or greater) and CMake (2.8 or greater).</para>
+      <para>Source tarball: VISHNU_V1.2.1.tgz <ulink url="VISHNU_V1.2.1.tgz">[download]</ulink> (added on 28th June 2011)</para>
     </section>
     <section>
       <title>Launch the VISHNU platform</title>
@@ -153,25 +193,27 @@
         <listitem>
           <para>All VISHNU SeD processes (UMS, TMS, FMS, IMS)</para>
         </listitem>
-      </itemizedlist>
+      </orderedlist>
     </section>
   </chapter>
   
   <chapter>
     <title>Small tutorial</title>
-    <para></para>
+    <para>TODO</para>
   </chapter>
   
   <chapter>
     <title>Documentation</title>
     <section>
       <title>Specifications</title>
+      <para>The following documents provide a detailed specification of VISHNU functionalities:</para>
     </section>
     <section>
       <title>User and administrator's guides</title>
     </section>
     <section>
       <title>Glossary</title>
+      <para>TODO</para>
     </section>
   </chapter>
 
