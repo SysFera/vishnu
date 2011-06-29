@@ -1066,7 +1066,10 @@ BOOST_AUTO_TEST_CASE( get_completed_jobs_output_normal_call)
 
     ListJobResults listOfResults;
 
-    BOOST_CHECK_EQUAL(getCompletedJobsOutput(sessionKey,machineId,listOfResults, TMSWORKINGDIR),0 );
+    BOOST_MESSAGE("Before getCompletedJobsOutput..");
+    BOOST_CHECK_EQUAL(getCompletedJobsOutput(sessionKey,machineId,listOfResults, "/tmp"/*TMSWORKINGDIR*/),0 );
+
+    BOOST_MESSAGE("After getCompletedJobsOutput..");
 
     bool pathExist=false;
 
