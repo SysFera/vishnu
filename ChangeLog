@@ -1,0 +1,41 @@
++--------------+
+| VISHNU 1.2.1 |
++--------------+
+
+* Add the machineid as a forced parameter
+* Fix TMS code quality (audit correction)
+* Remove getHostname dependency
+
++--------------+
+| VISHNU 1.2.0 |
++--------------+
+
+* Add FMS et IMS modules first versions.
+* Python and WS api available for FMS and IMS
+
++--------------+
+| VISHNU 1.1.0 |
++--------------+
+
+* Add TMS Module
+* Python and WS api available for TMS
+
++--------------+
+| VISHNU 1.0.2 |
++--------------+
+
+* Audit and fix UMS bugs
+
++--------------+
+| VISHNU 1.0.1 |
++--------------+
+
+* Memory leak fix
+
++--------------+
+| VISHNU 1.0.0 |
++--------------+
+
+* First version of the VISHNU software, with only the UMS module (=user handling)
+* Python and WS api available for UMS
+
