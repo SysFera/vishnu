@@ -112,11 +112,11 @@ int main (int argc, char* argv[]){
 
     //convert the date in long format
     if(opt->count("start")){
-      op.setStartTime(string_to_time_t(startTime));
+      op.setStartTime(convertLocaltimeINUTCtime(string_to_time_t(startTime)));
     }
 
     if(opt->count("end")){
-      op.setEndTime(string_to_time_t(endTime));
+      op.setEndTime(convertLocaltimeINUTCtime(string_to_time_t(endTime)));
     }
 
     // initializing DIET

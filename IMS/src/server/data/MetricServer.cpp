@@ -266,7 +266,7 @@ MetricServer::getHistMet(string machineId){
     }
   }
   if (mhop->getEndTime()>0) {
-    time_t end = static_cast<time_t>(mhop->getStartTime());
+    time_t end = static_cast<time_t>(mhop->getEndTime());
     if (end != -1) {
       end = convertUTCtimeINLocaltime(end);
       string endStr = boost::posix_time::to_simple_string(boost::posix_time::from_time_t(end));
