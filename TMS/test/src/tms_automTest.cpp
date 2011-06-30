@@ -1036,7 +1036,9 @@ BOOST_AUTO_TEST_CASE( get_completed_jobs_output_normal_call)
 
   string machineId="machine_1";
 
-  try {
+  
+    try {
+
     //Setting submitjob parameters
 
     const std::string scriptFilePath=TMSSCRIPTSPATH "/fast_torque_script";
@@ -1066,25 +1068,21 @@ BOOST_AUTO_TEST_CASE( get_completed_jobs_output_normal_call)
 
     ListJobResults listOfResults;
 
-    BOOST_MESSAGE("Before getCompletedJobsOutput..");
-    BOOST_CHECK_EQUAL(getCompletedJobsOutput(sessionKey,machineId,listOfResults, "/tmp"/*TMSWORKINGDIR*/),0 );
+    BOOST_CHECK_EQUAL(getCompletedJobsOutput(sessionKey,machineId,listOfResults, TMSWORKINGDIR),0 );
 
-    BOOST_MESSAGE("After getCompletedJobsOutput..");
+    for (size_t i=0; i< listOfResults.getNbJobs(); ++i){
+    
+      bool pathExist=false;
 
-    bool pathExist=false;
+      pathExist=bfs::exists(bfs::path(listOfResults.getResults().get(i)->getOutputPath())) &&  bfs::exists(bfs::path(listOfResults.getResults().get(i)->getErrorPath()));
 
-    if (listOfResults.getNbJobs()>0){
+      BOOST_CHECK( pathExist );
 
-      pathExist=bfs::exists(bfs::path(listOfResults.getResults().get(0)->getOutputPath())) &&  bfs::exists(bfs::path(listOfResults.getResults().get(0)->getErrorPath()));
+      if (pathExist){
+        bfs::remove (bfs::path(listOfResults.getResults().get(i)->getOutputPath()));
+        bfs::remove (bfs::path(listOfResults.getResults().get(i)->getErrorPath() ));
+      }
     }
-
-    BOOST_CHECK( pathExist );
-
-    if (pathExist){
-      bfs::remove (bfs::path(listOfResults.getResults().get(0)->getOutputPath()));
-      bfs::remove (bfs::path(listOfResults.getResults().get(0)->getErrorPath() ));
-    }
-
 
     BOOST_TEST_MESSAGE("*********************** get completed jobs output : normal call ok!!!!*****************************" << " \n");
   } catch (VishnuException& e) {
