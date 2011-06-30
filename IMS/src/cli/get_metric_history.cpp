@@ -49,7 +49,7 @@ makeGHMOp(string pgName,
 	   endTime);
 
   opt->add("type,t",
-	   "The end time to get the history",
+	   "The type of the metric to get",
 	   CONFIG,
 	   ftype);
 
