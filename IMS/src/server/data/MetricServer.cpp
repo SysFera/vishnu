@@ -210,7 +210,7 @@ MetricServer::getCurMet(){
   met->setType(2);
   met->setValue(static_cast<int>(disk));
   met->setTime(string_to_time_t(boost::posix_time::to_simple_string(p)));
-  if (mcop->getMetricType() != 1 && mcop->getMetricType() != 5) {
+  if (mcop->getMetricType() != 1 && mcop->getMetricType() != 3) {
     mlistObject->getMetric().push_back(met);
   }
 
@@ -220,7 +220,7 @@ MetricServer::getCurMet(){
   met->setType(3);
   met->setValue(static_cast<int>(mem));
   met->setTime(string_to_time_t(boost::posix_time::to_simple_string(p)));
-  if (mcop->getMetricType() != 1 && mcop->getMetricType() != 3) {
+  if (mcop->getMetricType() != 1 && mcop->getMetricType() != 2) {
     mlistObject->getMetric().push_back(met);
   }
 
@@ -231,7 +231,7 @@ MetricServer::getCurMet(){
   met->setType(1);
   met->setValue(static_cast<int>(cpu));
   met->setTime(string_to_time_t(boost::posix_time::to_simple_string(p)));
-  if (mcop->getMetricType() != 3 && mcop->getMetricType() != 5) {
+  if (mcop->getMetricType() != 3 && mcop->getMetricType() != 2) {
     mlistObject->getMetric().push_back(met);
   }
 
@@ -307,7 +307,7 @@ MetricServer::getHistMet(string machineId){
 	results = listOfMetric->get(i);
 	iter = results.begin();
 	IMS_Data::Metric_ptr met = ecoreFactory->createMetric();
-	met->setType(3);
+	met->setType(2);
 	met->setValue(convertToInt(*(iter+3)));
 	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+5))));
 	mlistObject->getMetric().push_back(met);
@@ -319,7 +319,7 @@ MetricServer::getHistMet(string machineId){
 	results = listOfMetric->get(i);
 	iter = results.begin();
 	IMS_Data::Metric_ptr met = ecoreFactory->createMetric();
-	met->setType(5);
+	met->setType(3);
 	met->setValue(convertToInt(*(iter+2)));
 	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+5))));
 	mlistObject->getMetric().push_back(met);
