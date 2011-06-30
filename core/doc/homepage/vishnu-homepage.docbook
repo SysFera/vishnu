@@ -134,7 +134,7 @@
           <para>OmniORB (4.1.4 or greater)</para>
         </listitem>
         <listitem>
-          <para>EMF4CPP (0.0.2 or greater)</para>
+          <para>EMF4CPP (0.0.2 patched - see debian packages below - or greater)</para>
         </listitem>
         <listitem>
           <para>SSH</para>
@@ -192,7 +192,7 @@
     </section>
     <section>
       <title>Install from source</title>
-      <para>VISHNU must be compiled with GCC (4.4.3 or greater) and CMake (2.8 or greater).</para>
+      <para>VISHNU must be compiled with G++ (4.4.3 or greater) and CMake (2.8 or greater).</para>
       <para>Source tarball: VISHNU_V1.2.1.tgz <ulink url="VISHNU_V1.2.1.tgz">[download]</ulink> (added on 28th June 2011)</para>
     </section>
     <section>
