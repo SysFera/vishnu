@@ -114,6 +114,19 @@
           </para>
         </revdescription>
         </revision>
+     <revision>
+        <revnumber>9</revnumber>
+        <date>29/06/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Updates of UMS:
+            Modified API functions names listLocalAccount and listMachine to listLocalAccounts and listMachines.
+          </para>
+       <para>Updates of FMS:
+            Modified API function name getFilesInfo to getFileInfo.
+          </para>
+        </revdescription>
+        </revision>
       </revhistory>
     </info>
   <chapter>
