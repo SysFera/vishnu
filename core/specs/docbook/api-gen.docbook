@@ -8839,6 +8839,10 @@
                 <entry><para>Runtime error</para></entry>
               </row>
               <row>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
                 <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
