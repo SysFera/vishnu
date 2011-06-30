@@ -49,7 +49,7 @@ displayMetric(IMS_Data::Metric* m){
   cout << " ------------------------ " << endl;
   cout << " type : " << type << endl;
   cout << " value: " << m->getValue() << unity << endl;
-  string date = boost::posix_time::to_simple_string(boost::posix_time::from_time_t(m->getTime()));
+  string date = boost::posix_time::to_simple_string(boost::posix_time::from_time_t(convertUTCtimeINLocaltime(m->getTime())));
   cout << " time : " << date << endl;
 }
 
