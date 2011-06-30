@@ -44,7 +44,7 @@ UMSMapper::UMSMapper(MapperRegistry* reg, string na):Mapper(reg){
   mmap.insert (pair<int, string>(VISHNU_UPDATE_MACHINE 	   	, "vishnu_update_machine"));
   mmap.insert (pair<int, string>(VISHNU_DELETE_MACHINE 	   	, "vishnu_delete_machine"));
   mmap.insert (pair<int, string>(VISHNU_LIST_LOCAL_ACCOUNT      , "vishnu_list_local_accounts"));
-  mmap.insert (pair<int, string>(VISHNU_LIST_MACHINE 	        , "vishnu_list_machine"));
+  mmap.insert (pair<int, string>(VISHNU_LIST_MACHINE 	        , "vishnu_list_machines"));
   mmap.insert (pair<int, string>(VISHNU_LIST_HISTORY_CMD        , "vishnu_list_history_cmd"));
   mmap.insert (pair<int, string>(VISHNU_LIST_OPTIONS 	        , "vishnu_list_options"));
   mmap.insert (pair<int, string>(VISHNU_LIST_USERS 	        , "vishnu_list_users"));
