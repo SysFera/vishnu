@@ -130,6 +130,19 @@
             Added new error code for addLocalAccount and updateLocalAccount.
           </para></revdescription>
       </revision>
+      <revision>
+        <revnumber>9</revnumber>
+        <date>29/06/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+       
+        <para>Updates of UMS:
+            Modified API functions names listLocalAccount and listMachine to listLocalAccounts and listMachines.
+          </para><para>Updates of FMS:
+            Modified API function name getFilesInfo to getFileInfo.
+          </para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -1461,6 +1474,10 @@
                 <entry><para>There is no open session in this terminal</para></entry>
               </row>
               <row>
+                <entry><para>ERRCODE_LOGIN_ALREADY_USED</para></entry>
+                <entry><para>The system account login is already used by another vishnu user</para></entry>
+              </row>
+              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -1483,10 +1500,6 @@
               <row>
                 <entry><para>ERRCODE_UNUSABLE_MACHINE</para></entry>
                 <entry><para>The machine does not exist or it is locked</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_LOGIN_ALREADY_USED</para></entry>
-                <entry><para>The system account login is already used by another vishnu user</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2271,7 +2284,7 @@
         <funcsynopsis><funcprototype><funcdef>int <function>vishnu::deleteMachine</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function UMS::listLocalAccount</title>
+        <title>Function UMS::listLocalAccounts</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -2322,7 +2335,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listLocalAccount() function lists the local user configurations</para>
+        <para>The listLocalAccounts() function lists the local user configurations</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -2382,10 +2395,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listLocalAccount</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts&amp; <parameter>listLocalAcct</parameter></paramdef><paramdef>const ListLocalAccOptions&amp; <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listLocalAccounts</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts&amp; <parameter>listLocalAcct</parameter></paramdef><paramdef>const ListLocalAccOptions&amp; <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function UMS::listMachine</title>
+        <title>Function UMS::listMachines</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -2436,7 +2449,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listMachine() function lists the machines that are accessible through VISHNU</para>
+        <para>The listMachines() function lists the machines that are accessible through VISHNU</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -2496,7 +2509,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listMachine</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines&amp; <parameter>listMachine</parameter></paramdef><paramdef>const ListMachineOptions&amp; <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listMachines</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines&amp; <parameter>listMachine</parameter></paramdef><paramdef>const ListMachineOptions&amp; <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::listHistoryCmd</title>
@@ -3048,6 +3061,14 @@
                 <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
+                <entry><para>ERRCODE_INCORRECT_TIMEOUT</para></entry>
+                <entry><para>The value of the timeout is incorrect</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INCORRECT_TRANSFER_CMD</para></entry>
+                <entry><para>The value of the transfer command is incorrect</para></entry>
+              </row>
+              <row>
                 <entry><para>CLI_ERROR_NO_SESSION</para></entry>
                 <entry><para>There is no open session in this terminal</para></entry>
               </row>
@@ -3159,6 +3180,14 @@
                 <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
+                <entry><para>ERRCODE_INCORRECT_TIMEOUT</para></entry>
+                <entry><para>The value of the timeout is incorrect</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INCORRECT_TRANSFER_CMD</para></entry>
+                <entry><para>The value of the transfer command is incorrect</para></entry>
+              </row>
+              <row>
                 <entry><para>CLI_ERROR_NO_SESSION</para></entry>
                 <entry><para>There is no open session in this terminal</para></entry>
               </row>
@@ -3181,10 +3210,6 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INCORRECT_TIMEOUT</para></entry>
-                <entry><para>The value of the timeout is incorrect</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -6048,12 +6073,24 @@
                 <entry><para>Error code returned if success</para></entry>
               </row>
               <row>
-                <entry><para>DB_ERROR</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>The database generated an error</para></entry>
               </row>
               <row>
-                <entry><para>INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Undefined error code</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -6120,7 +6157,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getMetricCurrentValue() function retrieve the current value of a metric on a machine</para>
+        <para>The getMetricCurrentValue() function displays the current values of system metrics</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -6141,12 +6178,24 @@
                 <entry><para>Error code returned if success</para></entry>
               </row>
               <row>
-                <entry><para>DB_ERROR</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>The database generated an error</para></entry>
               </row>
               <row>
-                <entry><para>INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Undefined error code</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -6213,7 +6262,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getMetricHistory() function retrieve the history of values of a metric on a machine</para>
+        <para>The getMetricHistory() function displays the history of values of a system metric</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -6234,12 +6283,24 @@
                 <entry><para>Error code returned if success</para></entry>
               </row>
               <row>
-                <entry><para>DB_ERROR</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>The database generated an error</para></entry>
               </row>
               <row>
-                <entry><para>INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Undefined error code</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -6299,7 +6360,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getProcesses() function gets the list of the processes running over a front machine</para>
+        <para>The getProcesses() function displays the list of the VISHNU processes running on machines</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -6320,7 +6381,7 @@
                 <entry><para>Error code returned if success</para></entry>
               </row>
               <row>
-                <entry><para>INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
               </row>
             </tbody>
@@ -6395,11 +6456,11 @@
                 <entry><para>Error code returned if success</para></entry>
               </row>
               <row>
-                <entry><para>DB_ERROR</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>The database generated an error</para></entry>
               </row>
               <row>
-                <entry><para>INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
               </row>
             </tbody>
@@ -6474,11 +6535,11 @@
                 <entry><para>Error code returned if success</para></entry>
               </row>
               <row>
-                <entry><para>DB_ERROR</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>The database generated an error</para></entry>
               </row>
               <row>
-                <entry><para>INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
               </row>
             </tbody>
@@ -6539,7 +6600,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getSystemThreshold() function gets a System threshold on a machine</para>
+        <para>The getSystemThreshold() function gets a system threshold on a machine</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -6560,11 +6621,11 @@
                 <entry><para>Error code returned if success</para></entry>
               </row>
               <row>
-                <entry><para>DB_ERROR</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>The database generated an error</para></entry>
               </row>
               <row>
-                <entry><para>INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
               </row>
             </tbody>
@@ -6639,11 +6700,11 @@
                 <entry><para>Error code returned if success</para></entry>
               </row>
               <row>
-                <entry><para>INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
               </row>
               <row>
-                <entry><para>DB_ERROR</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>The database generated an error</para></entry>
               </row>
             </tbody>
@@ -6718,11 +6779,11 @@
                 <entry><para>Error code returned if success</para></entry>
               </row>
               <row>
-                <entry><para>DB_ERROR</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>The database generated an error</para></entry>
               </row>
               <row>
-                <entry><para>INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
               </row>
             </tbody>
@@ -6797,11 +6858,11 @@
                 <entry><para>Error code returned if success</para></entry>
               </row>
               <row>
-                <entry><para>DB_ERROR</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>The database generated an error</para></entry>
               </row>
               <row>
-                <entry><para>INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
               </row>
             </tbody>
@@ -6876,11 +6937,11 @@
                 <entry><para>Error code returned if success</para></entry>
               </row>
               <row>
-                <entry><para>DB_ERROR</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>The database generated an error</para></entry>
               </row>
               <row>
-                <entry><para>INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
               </row>
             </tbody>
@@ -6941,7 +7002,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The loadShed() function load sheds a machine</para>
+        <para>The loadShed() function sheds load on a machine</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -6962,15 +7023,15 @@
                 <entry><para>Error code returned if success</para></entry>
               </row>
               <row>
-                <entry><para>COMPONENT_ERROR</para></entry>
+                <entry><para>ERRCODE_COMPONENT_ERROR</para></entry>
                 <entry><para>If a component is unavailable</para></entry>
               </row>
               <row>
-                <entry><para>DB_ERROR</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>The database generated an error</para></entry>
               </row>
               <row>
-                <entry><para>INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
               </row>
             </tbody>
@@ -7045,11 +7106,11 @@
                 <entry><para>Error code returned if success</para></entry>
               </row>
               <row>
-                <entry><para>DB_ERROR</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>The database generated an error</para></entry>
               </row>
               <row>
-                <entry><para>INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
               </row>
             </tbody>
@@ -7124,12 +7185,24 @@
                 <entry><para>Error code returned if success</para></entry>
               </row>
               <row>
-                <entry><para>DB_ERROR</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>The database generated an error</para></entry>
               </row>
               <row>
-                <entry><para>INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Undefined error code</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -7199,7 +7272,7 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>DB_ERROR</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>The database generated an error</para></entry>
               </row>
               <row>
@@ -7207,7 +7280,7 @@
                 <entry><para>Error code returned if success</para></entry>
               </row>
               <row>
-                <entry><para>INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
               </row>
             </tbody>
@@ -7285,16 +7358,28 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>DB_ERROR</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>The database generated an error</para></entry>
               </row>
               <row>
-                <entry><para>INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
               </row>
               <row>
                 <entry><para>VISHNU_OK</para></entry>
                 <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Undefined error code</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -7305,7 +7390,7 @@
       <section>
         <title>Function IMS::restart</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any VISHNU user</para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -7375,11 +7460,11 @@
                 <entry><para>Error code returned if success</para></entry>
               </row>
               <row>
-                <entry><para>INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
               </row>
               <row>
-                <entry><para>DB_ERROR</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>The database generated an error</para></entry>
               </row>
             </tbody>
@@ -7938,28 +8023,12 @@
               <entry><para>1</para></entry>
             </row>
             <row>
-              <entry><para>DISKSPACE</para></entry>
+              <entry><para>FREEDISKSPACE</para></entry>
               <entry><para>2</para></entry>
             </row>
             <row>
-              <entry><para>FREEDISKSPACE</para></entry>
-              <entry><para>3</para></entry>
-            </row>
-            <row>
-              <entry><para>MEMORY</para></entry>
-              <entry><para>4</para></entry>
-            </row>
-            <row>
               <entry><para>FREEMEMORY</para></entry>
-              <entry><para>5</para></entry>
-            </row>
-            <row>
-              <entry><para>CPUNBR</para></entry>
-              <entry><para>6</para></entry>
-            </row>
-            <row>
-              <entry><para>ALL</para></entry>
-              <entry><para>-1</para></entry>
+              <entry><para>3</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -8081,13 +8150,6 @@
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
-              <row>
-                <entry><para>mode</para></entry>
-                <entry><para>mode_t</para></entry>
-                <entry><para>The file access permissions in octal numeral system.</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>no</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -8109,19 +8171,19 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service has been performed succesfully.</para></entry>
+                <entry><para>ERRCODE_CONFIGNOTFOUND</para></entry>
+                <entry><para>Undefined configuration parameter</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
               <row>
@@ -8129,26 +8191,46 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
+                <entry><para>ERRCODE_RUNTIME_ERROR</para></entry>
+                <entry><para>Runtime error</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_FILE_TRANSFER</para></entry>
+                <entry><para>The transfer id ins unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local account  is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::createFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>const mode_t&amp; <parameter>mode = 644</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::createFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::createDir</title>
@@ -8191,13 +8273,6 @@
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
-              <row>
-                <entry><para>mode</para></entry>
-                <entry><para>mode_t</para></entry>
-                <entry><para>the new directories permission access in octal numeral system.</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>no</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -8219,19 +8294,19 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service has been performed succesfully.</para></entry>
+                <entry><para>ERRCODE_CONFIGNOTFOUND</para></entry>
+                <entry><para>Undefined configuration parameter</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
               <row>
@@ -8239,26 +8314,46 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
+                <entry><para>ERRCODE_RUNTIME_ERROR</para></entry>
+                <entry><para>Runtime error</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_FILE_TRANSFER</para></entry>
+                <entry><para>The transfer id ins unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local account  is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::createDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>const mode_t&amp; <parameter>mode = 755</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::createDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::removeFile</title>
@@ -8301,6 +8396,13 @@
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para><link linkend="RmFileOptions">RmFileOptions</link></para></entry>
+                <entry><para>the remove command options</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>no</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -8322,19 +8424,19 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service has been performed succesfully.</para></entry>
+                <entry><para>ERRCODE_CONFIGNOTFOUND</para></entry>
+                <entry><para>Undefined configuration parameter</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
               <row>
@@ -8342,26 +8444,46 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
+                <entry><para>ERRCODE_RUNTIME_ERROR</para></entry>
+                <entry><para>Runtime error</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_FILE_TRANSFER</para></entry>
+                <entry><para>The transfer id ins unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local account  is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::removeFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::removeFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>const RmFileOptions&amp; <parameter>options = RmFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::removeDir</title>
@@ -8429,15 +8551,11 @@
                 <entry><para>The service has been performed succesfully.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
               <row>
@@ -8445,20 +8563,48 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_FILE_TRANSFER</para></entry>
+                <entry><para>The transfer id ins unknown</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_CONFIGNOTFOUND</para></entry>
+                <entry><para>Undefined configuration parameter</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_RUNTIME_ERROR</para></entry>
+                <entry><para>Runtime error</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local account  is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -8501,16 +8647,16 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>path</para></entry>
+                <entry><para>group</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>The  file/directory following the pattern  [host:]file path</para></entry>
+                <entry><para>the new group owner of file/directory</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>group</para></entry>
+                <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>the new group owner of file/directory</para></entry>
+                <entry><para>The  file/directory following the pattern  [host:]file path</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -8535,19 +8681,19 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service has been performed succesfully.</para></entry>
+                <entry><para>ERRCODE_CONFIGNOTFOUND</para></entry>
+                <entry><para>Undefined configuration parameter</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
               <row>
@@ -8555,26 +8701,46 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
+                <entry><para>ERRCODE_RUNTIME_ERROR</para></entry>
+                <entry><para>Runtime error</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_FILE_TRANSFER</para></entry>
+                <entry><para>The transfer id ins unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local account  is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::chGrp</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>const string&amp; <parameter>group</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::chGrp</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>group</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::chMod</title>
@@ -8611,16 +8777,16 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>path</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The  file/directory following the pattern  [host:]file path</para></entry>
+                <entry><para>mode</para></entry>
+                <entry><para>mode_t</para></entry>
+                <entry><para> the access rigths of file/directory in octal system.</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>mode</para></entry>
-                <entry><para>mode_t</para></entry>
-                <entry><para> the access rigths of file/directory in octal system.</para></entry>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The  file/directory following the pattern  [host:]file path</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -8645,23 +8811,19 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service has been performed succesfully.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>ERRCODE_CONFIGNOTFOUND</para></entry>
+                <entry><para>Undefined configuration parameter</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
               <row>
@@ -8669,22 +8831,42 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
+                <entry><para>ERRCODE_RUNTIME_ERROR</para></entry>
+                <entry><para>Runtime error</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_FILE_TRANSFER</para></entry>
+                <entry><para>The transfer id ins unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local account  is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::chMod</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>const mode_t&amp; <parameter>mode</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::chMod</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const mode_t&amp; <parameter>mode</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::headOfFile</title>
@@ -8735,9 +8917,9 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>nLine</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>Number of lines to display</para></entry>
+                <entry><para>options</para></entry>
+                <entry><para><link linkend="HeadOfFileOptions">HeadOfFileOptions</link></para></entry>
+                <entry><para>the  head commandoptions</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>no</para></entry>
               </row>
@@ -8762,19 +8944,19 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service has been performed succesfully.</para></entry>
+                <entry><para>ERRCODE_CONFIGNOTFOUND</para></entry>
+                <entry><para>Undefined configuration parameter</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
               <row>
@@ -8782,26 +8964,46 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
+                <entry><para>ERRCODE_RUNTIME_ERROR</para></entry>
+                <entry><para>Runtime error</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_FILE_TRANSFER</para></entry>
+                <entry><para>The transfer id ins unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local account  is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::headOfFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>string&amp; <parameter>fileContent</parameter></paramdef><paramdef>const int&amp; <parameter>nLine = 10</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::headOfFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>string&amp; <parameter>fileContent</parameter></paramdef><paramdef>const HeadOfFileOptions&amp; <parameter>options = HeadOfFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::tailOfFile</title>
@@ -8852,9 +9054,9 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>nLine</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>number of lines to display</para></entry>
+                <entry><para>options</para></entry>
+                <entry><para><link linkend="TailOfFileOptions">TailOfFileOptions</link></para></entry>
+                <entry><para>the tail command options</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>no</para></entry>
               </row>
@@ -8879,19 +9081,19 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service has been performed succesfully.</para></entry>
+                <entry><para>ERRCODE_CONFIGNOTFOUND</para></entry>
+                <entry><para>Undefined configuration parameter</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
               <row>
@@ -8899,26 +9101,46 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
+                <entry><para>ERRCODE_RUNTIME_ERROR</para></entry>
+                <entry><para>Runtime error</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_FILE_TRANSFER</para></entry>
+                <entry><para>The transfer id ins unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local account  is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::tailOfFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>string&amp; <parameter>fileContent</parameter></paramdef><paramdef>const int&amp; <parameter>nLine = 10</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::tailOfFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>string&amp; <parameter>fileContent</parameter></paramdef><paramdef>const TailOfFileOptions&amp; <parameter>options = TailOfFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::contentOfFile</title>
@@ -8989,19 +9211,19 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service has been performed succesfully.</para></entry>
+                <entry><para>ERRCODE_CONFIGNOTFOUND</para></entry>
+                <entry><para>Undefined configuration parameter</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
               <row>
@@ -9009,20 +9231,40 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
+                <entry><para>ERRCODE_RUNTIME_ERROR</para></entry>
+                <entry><para>Runtime error</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_FILE_TRANSFER</para></entry>
+                <entry><para>The transfer id ins unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local account  is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -9073,9 +9315,16 @@
               </row>
               <row>
                 <entry><para>dirContent</para></entry>
-                <entry><para><link linkend="FileStatList">FileStatList</link></para></entry>
+                <entry><para><link linkend="StringList">StringList</link></para></entry>
                 <entry><para>The content of the directory  (only files names with short format, all files informations with long format).</para></entry>
                 <entry><para>OUT</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para><link linkend="LsDirOptions">LsDirOptions</link></para></entry>
+                <entry><para>List of options for the listDir command</para></entry>
+                <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
             </tbody>
@@ -9099,15 +9348,19 @@
             </thead>
             <tbody>
               <row>
+                <entry><para>ERRCODE_CONFIGNOTFOUND</para></entry>
+                <entry><para>Undefined configuration parameter</para></entry>
+              </row>
+              <row>
                 <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
               <row>
@@ -9115,20 +9368,36 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
+                <entry><para>ERRCODE_RUNTIME_ERROR</para></entry>
+                <entry><para>Runtime error</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_FILE_TRANSFER</para></entry>
+                <entry><para>The transfer id ins unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local account  is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
                 <entry><para>VISHNU_OK</para></entry>
@@ -9138,7 +9407,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>FileStatList&amp; <parameter>dirContent</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>StringList&amp; <parameter>dirContent</parameter></paramdef><paramdef>const LsDirOptions&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::copyFile</title>
@@ -9190,7 +9459,7 @@
               </row>
               <row>
                 <entry><para>options</para></entry>
-                <entry><para><link linkend="CopyFileOptions">CopyFileOptions</link></para></entry>
+                <entry><para><link linkend="CpFileOptions">CpFileOptions</link></para></entry>
                 <entry><para>the copy options</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>no</para></entry>
@@ -9216,15 +9485,19 @@
             </thead>
             <tbody>
               <row>
+                <entry><para>ERRCODE_CONFIGNOTFOUND</para></entry>
+                <entry><para>Undefined configuration parameter</para></entry>
+              </row>
+              <row>
                 <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
               <row>
@@ -9232,30 +9505,42 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
+                <entry><para>ERRCODE_RUNTIME_ERROR</para></entry>
+                <entry><para>Runtime error</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service has been performed succesfully.</para></entry>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_FILE_TRANSFER</para></entry>
+                <entry><para>The transfer id ins unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local account  is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::copyFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>const CopyFileOptions&amp; <parameter>options = CopyFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::copyFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>const CpFileOptions&amp; <parameter>options = CpFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::copyAsyncFile</title>
@@ -9306,10 +9591,17 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>thrId</para></entry>
-                <entry><para>long</para></entry>
+                <entry><para>transferInfo</para></entry>
+                <entry><para><link linkend="FileTransfer">FileTransfer</link></para></entry>
                 <entry><para>A file tranfer identifier (allowing for instance  to ckeck the status of a file transfer, or to cancel it)</para></entry>
                 <entry><para>OUT</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para><link linkend="CpFileOptions">CpFileOptions</link></para></entry>
+                <entry><para>the copy options</para></entry>
+                <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
             </tbody>
@@ -9333,15 +9625,19 @@
             </thead>
             <tbody>
               <row>
+                <entry><para>ERRCODE_CONFIGNOTFOUND</para></entry>
+                <entry><para>Undefined configuration parameter</para></entry>
+              </row>
+              <row>
                 <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
               <row>
@@ -9349,20 +9645,36 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
+                <entry><para>ERRCODE_RUNTIME_ERROR</para></entry>
+                <entry><para>Runtime error</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_FILE_TRANSFER</para></entry>
+                <entry><para>The transfer id ins unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local account  is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
                 <entry><para>VISHNU_OK</para></entry>
@@ -9372,7 +9684,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::copyAsyncFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>long&amp; <parameter>thrId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::copyAsyncFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>FileTransfer&amp; <parameter>transferInfo</parameter></paramdef><paramdef>const CpFileOptions&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::moveFile</title>
@@ -9422,6 +9734,13 @@
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para><link linkend="CpFileOptions">CpFileOptions</link></para></entry>
+                <entry><para>The move command options</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -9443,15 +9762,19 @@
             </thead>
             <tbody>
               <row>
+                <entry><para>ERRCODE_CONFIGNOTFOUND</para></entry>
+                <entry><para>Undefined configuration parameter</para></entry>
+              </row>
+              <row>
                 <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
               <row>
@@ -9459,20 +9782,36 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
+                <entry><para>ERRCODE_RUNTIME_ERROR</para></entry>
+                <entry><para>Runtime error</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_FILE_TRANSFER</para></entry>
+                <entry><para>The transfer id ins unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local account  is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
                 <entry><para>VISHNU_OK</para></entry>
@@ -9482,7 +9821,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::moveFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::moveFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>const CpFileOptions&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::moveAsyncFile</title>
@@ -9533,11 +9872,18 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>thrId</para></entry>
-                <entry><para>long</para></entry>
-                <entry><para>The file tranfer identifier (allowing for instance  to ckeck the status of a file transfer, or to cancel it)</para></entry>
+                <entry><para>transferInfo</para></entry>
+                <entry><para><link linkend="FileTransfer">FileTransfer</link></para></entry>
+                <entry><para>A file tranfer identifier (allowing for instance  to ckeck the status of a file transfer, or to cancel it)</para></entry>
                 <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para><link linkend="CpFileOptions">CpFileOptions</link></para></entry>
+                <entry><para>The transfer command options</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>no</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -9560,15 +9906,19 @@
             </thead>
             <tbody>
               <row>
+                <entry><para>ERRCODE_CONFIGNOTFOUND</para></entry>
+                <entry><para>Undefined configuration parameter</para></entry>
+              </row>
+              <row>
                 <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
               <row>
@@ -9576,20 +9926,36 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
+                <entry><para>ERRCODE_RUNTIME_ERROR</para></entry>
+                <entry><para>Runtime error</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_FILE_TRANSFER</para></entry>
+                <entry><para>The transfer id ins unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local account  is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
                 <entry><para>VISHNU_OK</para></entry>
@@ -9599,7 +9965,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::moveAsyncFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>long&amp; <parameter>thrId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::moveAsyncFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>FileTransfer&amp; <parameter>transferInfo</parameter></paramdef><paramdef>const CpFileOptions&amp; <parameter>options = CpFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::stopFileTransfer</title>
@@ -9663,15 +10029,19 @@
             </thead>
             <tbody>
               <row>
+                <entry><para>ERRCODE_CONFIGNOTFOUND</para></entry>
+                <entry><para>Undefined configuration parameter</para></entry>
+              </row>
+              <row>
                 <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
               <row>
@@ -9679,20 +10049,36 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
+                <entry><para>ERRCODE_RUNTIME_ERROR</para></entry>
+                <entry><para>Runtime error</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_FILE_TRANSFER</para></entry>
+                <entry><para>The transfer id ins unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local account  is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
                 <entry><para>VISHNU_OK</para></entry>
@@ -9745,6 +10131,13 @@
                 <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para><link linkend="LsTransferOptions">LsTransferOptions</link></para></entry>
+                <entry><para>The filter options  </para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>no</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -9766,15 +10159,19 @@
             </thead>
             <tbody>
               <row>
+                <entry><para>ERRCODE_CONFIGNOTFOUND</para></entry>
+                <entry><para>Undefined configuration parameter</para></entry>
+              </row>
+              <row>
                 <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
               <row>
@@ -9782,20 +10179,36 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
+                <entry><para>ERRCODE_RUNTIME_ERROR</para></entry>
+                <entry><para>Runtime error</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_FILE_TRANSFER</para></entry>
+                <entry><para>The transfer id ins unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local account  is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
                 <entry><para>VISHNU_OK</para></entry>
@@ -9805,10 +10218,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listFileTransfers</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>FileTransferList&amp; <parameter>fileTransferList</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listFileTransfers</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>FileTransferList&amp; <parameter>fileTransferList</parameter></paramdef><paramdef>const LsTransferOptions&amp; <parameter>options = LsTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function FMS::getFilesInfo</title>
+        <title>Function FMS::getFileInfo</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -9859,7 +10272,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getFilesInfo() function displays the information  of  files.</para>
+        <para>The getFileInfo() function displays the information  of  files.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -9876,15 +10289,19 @@
             </thead>
             <tbody>
               <row>
+                <entry><para>ERRCODE_CONFIGNOTFOUND</para></entry>
+                <entry><para>Undefined configuration parameter</para></entry>
+              </row>
+              <row>
                 <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
               <row>
@@ -9892,20 +10309,36 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
+                <entry><para>ERRCODE_RUNTIME_ERROR</para></entry>
+                <entry><para>Runtime error</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_FILE_TRANSFER</para></entry>
+                <entry><para>The transfer id ins unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local account  is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
                 <entry><para>VISHNU_OK</para></entry>
@@ -9915,7 +10348,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getFilesInfo</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>FileStat&amp; <parameter>filesinfo</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getFileInfo</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>FileStat&amp; <parameter>filesinfo</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
     </section>
     <section>
@@ -10027,32 +10460,6 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="FileStatList"><emphasis role="bold">Class FMS::FileStatList Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>fileStats</para></entry>
-              <entry><para>List of <link linkend="FileStat">FileStat</link></para></entry>
-              <entry><para>list of inodes.</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
       <para xml:id="FileTransfer"><emphasis role="bold">Class FMS::FileTransfer Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
@@ -10126,6 +10533,11 @@
               <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
               <entry><para>The command used for the file transfer (scp or rsync)</para></entry>
             </row>
+            <row>
+              <entry><para>errorMsg</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The eventual error message if the file transfer failed</para></entry>
+            </row>
           </tbody>
         </tgroup>
       </informaltable>
@@ -10155,7 +10567,64 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="StopTransferOptions"><emphasis role="bold">Class FMS::StopTransferOptions Content</emphasis></para>
+      <para xml:id="HeadOfFileOptions"><emphasis role="bold">Class FMS::HeadOfFileOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>nline</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>the number of line to get</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="LsDirOptions"><emphasis role="bold">Class FMS::LsDirOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>longFormat</para></entry>
+              <entry><para>boolean</para></entry>
+              <entry><para>It specifies the long display format (all available file informations)</para></entry>
+            </row>
+            <row>
+              <entry><para>allFiles</para></entry>
+              <entry><para>boolean</para></entry>
+              <entry><para>Allows to display all files including hidden files</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="LsTransferOptions"><emphasis role="bold">Class FMS::LsTransferOptions Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
           <colspec colwidth="4cm"/>
@@ -10186,7 +10655,100 @@
             <row>
               <entry><para>userId</para></entry>
               <entry><para>string</para></entry>
+              <entry><para>allows the admin to list file transfers initiated by a specific user</para></entry>
+            </row>
+            <row>
+              <entry><para>status</para></entry>
+              <entry><para><link linkend="Status">Status</link></para></entry>
+              <entry><para>the file transfer status</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="RmFileOptions"><emphasis role="bold">Class FMS::RmFileOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>isRecursive</para></entry>
+              <entry><para>boolean</para></entry>
+              <entry><para>It specifies when the remove command is recursive (case of directory) or not.</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="StopTransferOptions"><emphasis role="bold">Class FMS::StopTransferOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>transferId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>a given transfer id</para></entry>
+            </row>
+            <row>
+              <entry><para>fromMachineId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>the machine that is the source or destination of the file transfer</para></entry>
+            </row>
+            <row>
+              <entry><para>userId</para></entry>
+              <entry><para>string</para></entry>
               <entry><para>allows an admin to stop file transfers of a specific user</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="StringList"><emphasis role="bold">Class FMS::StringList Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>strings</para></entry>
+              <entry><para>List of string</para></entry>
+              <entry><para>the dynamic list of strings.</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -10251,10 +10813,6 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>UNDEFINED</para></entry>
-              <entry><para>-1</para></entry>
-            </row>
-            <row>
               <entry><para>INPROGRESS</para></entry>
               <entry><para>0</para></entry>
             </row>
@@ -10269,6 +10827,10 @@
             <row>
               <entry><para>FAILED</para></entry>
               <entry><para>3</para></entry>
+            </row>
+            <row>
+              <entry><para>UNDEFINED</para></entry>
+              <entry><para>4</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -10288,16 +10850,16 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>UNDEFINED</para></entry>
-              <entry><para>-1</para></entry>
-            </row>
-            <row>
               <entry><para>SCP</para></entry>
               <entry><para>0</para></entry>
             </row>
             <row>
               <entry><para>RSYNC</para></entry>
               <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>UNDEFINED</para></entry>
+              <entry><para>2</para></entry>
             </row>
           </tbody>
         </tgroup>
