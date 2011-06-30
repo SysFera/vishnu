@@ -36,7 +36,7 @@ public:
   ListMachinesServer(const SessionServer session):
   QueryServer<UMS_Data::ListMachineOptions, UMS_Data::ListMachines>(session)
   {
-    mcommandName = "vishnu_list_machine";
+    mcommandName = "vishnu_list_machines";
   }
   /**
    * \fn ListMachinesServer(UMS_Data::ListMachineOptions_ptr params,
@@ -48,7 +48,7 @@ public:
   ListMachinesServer(UMS_Data::ListMachineOptions_ptr params, const SessionServer& session):
   QueryServer<UMS_Data::ListMachineOptions, UMS_Data::ListMachines>(params, session)
   {
-    mcommandName = "vishnu_list_machine";
+    mcommandName = "vishnu_list_machines";
   }
 
   /**
