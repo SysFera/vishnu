@@ -3,7 +3,7 @@
   <info>
     <title>Vishnu Home Page</title>
     <productname>VISHNU</productname>
-    <releaseinfo>1.2.1</releaseinfo>
+    <releaseinfo>Version 1.2.1</releaseinfo>
     <date>June 28, 2011</date>
     <author>
       <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
@@ -20,8 +20,6 @@
     <author>
       <personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
     </author>
-    <title>VISHNU Home Page</title>
-    
     <revhistory>
       <revision>
 	<revnumber>1</revnumber>
@@ -119,10 +117,11 @@
     
     <section>
       <title>Contacts</title>
+      <para>Please contact the development team by email at <emphasis role="bold">support@sysfera.com</emphasis> for any questions or bug report</para>
     </section>
   </chapter>
     
-  <chapter>
+  <chapter id="install">
     <title>Installation of VISHNU</title>
     <section>
       <title>Requirements</title>
@@ -133,6 +132,9 @@
         </listitem>
         <listitem>
           <para>OmniORB (4.1.4 or greater)</para>
+        </listitem>
+        <listitem>
+          <para>EMF4CPP (0.0.2 or greater)</para>
         </listitem>
         <listitem>
           <para>SSH</para>
@@ -158,10 +160,33 @@
     </section>
     <section>
       <title>Install from debian packages</title>
-      <para>The following binary packages are provided for the i386 architecture:</para>
+      <para>The following binary packages are provided for the i386 (32 bits) architecture:</para>
       <itemizedlist>
         <listitem>
-          <para></para>
+          <para>VISHNU packages</para>
+          <itemizedlist>
+            <listitem><para>libvishnu_1.2.0-1_i386.deb<ulink url="libvishnu_1.2.0-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>libvishnu-dev_1.2.0-1_i386.deb<ulink url="libvishnu-dev_1.2.0-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>vishnu-client_1.2.0-1_i386.deb<ulink url="vishnu-client_1.2.0-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>vishnu-doc_1.2.0-1_all.deb<ulink url="vishnu-doc_1.2.0-1_all.deb">[download]</ulink></para></listitem>
+            <listitem><para>vishnu-server-fms_1.2.0-1_i386.deb<ulink url="vishnu-server-fms_1.2.0-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>vishnu-server-ims_1.2.0-1_i386.deb<ulink url="vishnu-server-ims_1.2.0-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>vishnu-server-tms_1.2.0-1_i386.deb<ulink url="vishnu-server-tms_1.2.0-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>vishnu-server-ums_1.2.0-1_i386.deb<ulink url="vishnu-server-ums_1.2.0-1_i386.deb">[download]</ulink></para></listitem>
+          </itemizedlist>
+        </listitem>
+        <listitem>
+          <para>Dependencies</para>
+          <itemizedlist>
+            <listitem><para>diet_2.7.0-1_i386.deb <ulink url="diet_2.7.0-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>diet-agent_2.7.0-1_i386.deb <ulink url="diet-agent_2.7.0-1_i386.de">[download]</ulink></para></listitem>
+            <listitem><para>libdiet_2.7.0-1_i386.deb <ulink url="libdiet_2.7.0-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>libdiet-dev_2.7.0-1_i386.deb <ulink url="libdiet-dev_2.7.0-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>logservice_2.7.0-1_i386.deb <ulink url="logservice_2.7.0-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>logservice-dev_2.7.0-1_i386.deb <ulink url="logservice-dev_2.7.0-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>libemf4cpp_0.0.2-1_i386.deb <ulink url="libemf4cpp_0.0.2-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>libemf4cpp-dev_0.0.2-1_i386.deb <ulink url="libemf4cpp-dev_0.0.2-1_i386.deb">[download]</ulink></para></listitem>
+          </itemizedlist>
         </listitem>
       </itemizedlist>
     </section>
@@ -176,44 +201,98 @@
       When using several systems, the choice of which services to deploy on each system is dependent on the characteristics
       of the systems and of the network.</para>
       <para>Here is the list of processes that must be started to deploy all VISHNU services
-        (see also the <quote>VISHNU Administrator's guide</quote> in the Documentation section):</para>
+        (see also the <quote>VISHNU Administrator's guide</quote> in the <link linkend="documentation">Documentation</link> section):</para>
       <orderedlist numeration="lowerroman">
         <listitem>
           <para>Database instance: either a MySQL or PostgreSQL database</para>
         </listitem>
         <listitem>
-          <para>CORBA OmniNames process</para>
+          <para>CORBA OmniNames process (omniNames)</para>
         </listitem>
         <listitem>
-          <para>DIET Master agent process</para>
+          <para>DIET Master agent process (dietAgent)</para>
         </listitem>
         <listitem>
-          <para>DIET LogCentral process</para>
+          <para>DIET LogCentral process (LogCentral)</para>
         </listitem>
         <listitem>
-          <para>All VISHNU SeD processes (UMS, TMS, FMS, IMS)</para>
+          <para>All VISHNU SeD processes (umssed, tmssed, imssed, fmssed)</para>
         </listitem>
       </orderedlist>
     </section>
   </chapter>
-  
+  <!--
   <chapter>
     <title>Small tutorial</title>
     <para>TODO</para>
   </chapter>
+  -->
   
-  <chapter>
+  <chapter id="documentation">
     <title>Documentation</title>
     <section>
       <title>Specifications</title>
-      <para>The following documents provide a detailed specification of VISHNU functionalities:</para>
+      <itemizedlist>
+        <listitem>
+          <para>General specifications (use cases) <ulink url="VISHNU_D1_1a-SpecGen.docbook.pdf">[download pdf]</ulink></para>
+        </listitem>
+        <listitem>
+          <para>API specifications <ulink url="VISHNU_D1_1c-API.docbook.pdf">[download pdf]</ulink></para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Design</title>
+      <itemizedlist>
+        <listitem>
+          <para>General architecture <ulink url="VISHNU_D1_1g-ARCH.pdf">[download pdf]</ulink></para>
+        </listitem>
+      </itemizedlist>
     </section>
     <section>
       <title>User and administrator's guides</title>
+      <itemizedlist>
+        <listitem>
+          <para>Administrator's guide (in french) <ulink url="VISHNU_D5_2d-GuideAdmin.pdf">[download pdf]</ulink></para>
+        </listitem>
+        <listitem>
+          <para>User's guide <ulink url="VISHNU_D5_2c-UserManual.pdf">[download pdf]</ulink></para>
+        </listitem>
+      </itemizedlist>
     </section>
     <section>
       <title>Glossary</title>
-      <para>TODO</para>
+      <itemizedlist>
+        <listitem>
+          <para><emphasis role="bold">Computing resource</emphasis>: a server that is used to process batch jobs. This definition covers
+          supercomputers, the cluster gateway servers and the cluster processing nodes.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Host</emphasis>: represents a physical client or server computer system.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Middleware</emphasis>: an application that sits "in the middle" between application software that
+          may be working on different operating systems. It is similar to the middle layer of a three-tier single system architecture,
+          except that it is stretched across multiple systems or applications. [source: Wikipedia]</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">POSIX</emphasis>: international standard that defines an API to access a filesystem.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Storage resource</emphasis>: a server that is used to store data as files. This definition covers the
+          user desktops or laptops and all unix servers.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware developped by SysFera.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">SysFera-DS Agent</emphasis>: SysFera-DS process running permanently (or daemon).</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">VISHNU system</emphasis>: set of all elements (software, hardware, data) that compose a single instance of the
+          VISHNU application and that work together to provide VISHNU services to the users.</para>
+        </listitem>
+      </itemizedlist>
     </section>
   </chapter>
 
