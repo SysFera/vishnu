@@ -1251,13 +1251,13 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_list_local_account</title>
+        <title>vishnu_list_local_accounts</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_list_local_account command lists the local user configurations</para>
+        <para>The vishnu_list_local_accounts command lists the local user configurations</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_list_local_account</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_list_local_accounts</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-a</option></arg><arg choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
               choice="opt"><option>-i <replaceable>machineId</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -1311,13 +1311,13 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_list_machine</title>
+        <title>vishnu_list_machines</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_list_machine command lists the machines that are accessible through VISHNU</para>
+        <para>The vishnu_list_machines command lists the machines that are accessible through VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_list_machine</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_list_machines</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
               choice="opt"><option>-a</option></arg><arg choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -2659,7 +2659,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_get_metric_current_value command retrieve the current value of a metric on a machine</para>
+        <para>The vishnu_get_metric_current_value command displays the current values of system metrics</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_get_metric_current_value</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-t <replaceable>metricType</replaceable></option></arg><arg
@@ -2712,7 +2712,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_get_metric_history command retrieve the history of values of a metric on a machine</para>
+        <para>The vishnu_get_metric_history command displays the history of values of a system metric</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_get_metric_history</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-s <replaceable>startTime</replaceable></option></arg><arg
@@ -2781,7 +2781,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_get_processes command gets the list of the processes running over a front machine</para>
+        <para>The vishnu_get_processes command displays the list of the VISHNU processes running on machines</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_get_processes</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-p <replaceable>machineId</replaceable></option></arg></cmdsynopsis>
@@ -2830,7 +2830,8 @@
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_set_system_info</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-m <replaceable>memory</replaceable></option></arg><arg
-              choice="opt"><option>-d <replaceable>diskSpace</replaceable></option></arg><arg/></cmdsynopsis>
+              choice="opt"><option>-d <replaceable>diskSpace</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2873,7 +2874,7 @@
                 <entry><para>string</para></entry>
                 <entry/>
                 <entry><para>The id of the machine</para></entry>
-                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2888,7 +2889,9 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The vishnu_set_system_threshold command sets a threshold on a machine of a system</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_set_system_threshold</command><arg choice="opt"><option>-h</option></arg><arg/><arg/><arg/><arg/></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_set_system_threshold</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>value</replaceable></arg><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
+              choice="plain"><replaceable>type</replaceable></arg><arg choice="plain"><replaceable>handler</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2917,28 +2920,28 @@
                 <entry><para>long</para></entry>
                 <entry/>
                 <entry><para>The value of the threshold</para></entry>
-                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
                 <entry><para>The machine ID the threshold is available</para></entry>
-                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>type</para></entry>
                 <entry><para><link linkend="MetricType">MetricType</link></para></entry>
                 <entry/>
                 <entry><para>The type of the threshold</para></entry>
-                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>handler</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
                 <entry><para>The userId of the admin responsible for handling the threshold problems</para></entry>
-                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2951,7 +2954,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_get_system_threshold command gets a System threshold on a machine</para>
+        <para>The vishnu_get_system_threshold command gets a system threshold on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_get_system_threshold</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg><arg
@@ -3184,7 +3187,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_load_shed command load sheds a machine</para>
+        <para>The vishnu_load_shed command sheds load on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_load_shed</command><arg choice="opt"><option>-h</option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>loadShedType</replaceable></arg></cmdsynopsis>
@@ -3296,11 +3299,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The vishnu_stop command to stop (and do not try to relaunch) a SeD</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_stop</command><arg choice="opt"><option>-h</option></arg><arg/><arg/><arg
-              choice="opt"><option>-d <replaceable>dietId</replaceable></option></arg><arg
-              choice="opt"><option>-s <replaceable>state</replaceable></option></arg><arg
-              choice="opt"><option>-t <replaceable>timestamp</replaceable></option></arg><arg
-              choice="opt"><option>-l <replaceable>script</replaceable></option></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_stop</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>processName</replaceable></arg><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3329,42 +3329,14 @@
                 <entry><para>string</para></entry>
                 <entry/>
                 <entry><para>The name of the process (the name of the executable)</para></entry>
-                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
                 <entry><para>The id of the machine</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>dietId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>d</para></entry>
-                <entry><para>The diet id of the process</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>state</para></entry>
-                <entry><para><link linkend="ProcessState">ProcessState</link></para></entry>
-                <entry><para>s</para></entry>
-                <entry><para>THe state of the process</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>timestamp</para></entry>
-                <entry><para>long</para></entry>
-                <entry><para>t</para></entry>
-                <entry><para>The timestamp corresponding to the moment the process has been updated</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>script</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>l</para></entry>
-                <entry><para>The content of the script used to launch the sed</para></entry>
-                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -3420,7 +3392,7 @@
       <section>
         <title>vishnu_restart</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any VISHNU user</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The vishnu_restart command to restart a SeD or a MA</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -3558,28 +3530,12 @@
               <entry><para>1</para></entry>
             </row>
             <row>
-              <entry><para>DISKSPACE</para></entry>
+              <entry><para>FREEDISKSPACE</para></entry>
               <entry><para>2</para></entry>
             </row>
             <row>
-              <entry><para>FREEDISKSPACE</para></entry>
-              <entry><para>3</para></entry>
-            </row>
-            <row>
-              <entry><para>MEMORY</para></entry>
-              <entry><para>4</para></entry>
-            </row>
-            <row>
               <entry><para>FREEMEMORY</para></entry>
-              <entry><para>5</para></entry>
-            </row>
-            <row>
-              <entry><para>CPUNBR</para></entry>
-              <entry><para>6</para></entry>
-            </row>
-            <row>
-              <entry><para>ALL</para></entry>
-              <entry><para>-1</para></entry>
+              <entry><para>3</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -3668,7 +3624,6 @@
         <para>The vishnu_create_file command creates  files on  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_create_file</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-m <replaceable>mode</replaceable></option></arg><arg
               choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -3700,13 +3655,6 @@
                 <entry><para>The  file to create following the pattern  [host:]file path.</para></entry>
                 <entry><para>YES</para></entry>
               </row>
-              <row>
-                <entry><para>mode</para></entry>
-                <entry><para>mode_t</para></entry>
-                <entry><para>m</para></entry>
-                <entry><para>The file access permissions in octal numeral system.</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -3721,7 +3669,6 @@
         <para>The vishnu_create_dir command creates directories on remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_create_dir</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-m <replaceable>mode</replaceable></option></arg><arg
               choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -3753,13 +3700,6 @@
                 <entry><para>The  directory to create following the pattern  [host:]directory path.</para></entry>
                 <entry><para>YES</para></entry>
               </row>
-              <row>
-                <entry><para>mode</para></entry>
-                <entry><para>mode_t</para></entry>
-                <entry><para>m</para></entry>
-                <entry><para>the new directories permission access in octal numeral system.</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -3774,7 +3714,7 @@
         <para>The vishnu_remove_file command removes files from  remote hosts.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_remove_file</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-r</option></arg><arg choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3804,6 +3744,13 @@
                 <entry/>
                 <entry><para>The  file to remove following the pattern  [host:]file path</para></entry>
                 <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>isRecursive</para></entry>
+                <entry><para>boolean</para></entry>
+                <entry><para>r</para></entry>
+                <entry><para>It specifies when the remove command is recursive (case of directory) or not.</para></entry>
+                <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -3864,7 +3811,7 @@
         <para>The vishnu_ch_grp command changes group owner of  remote files/directories. </para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_ch_grp</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>path</replaceable></arg><arg choice="plain"><replaceable>group</replaceable></arg></cmdsynopsis>
+              choice="plain"><replaceable>group</replaceable></arg><arg choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3889,17 +3836,17 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>path</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The  file/directory following the pattern  [host:]file path</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
                 <entry><para>group</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
                 <entry><para>the new group owner of file/directory</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The  file/directory following the pattern  [host:]file path</para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>
@@ -3916,7 +3863,7 @@
         <para>The vishnu_ch_mod command changes  access rights of remote files/directories.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_ch_mod</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>path</replaceable></arg><arg choice="plain"><replaceable>mode</replaceable></arg></cmdsynopsis>
+              choice="plain"><replaceable>mode</replaceable></arg><arg choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3941,17 +3888,17 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>path</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The  file/directory following the pattern  [host:]file path</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
                 <entry><para>mode</para></entry>
                 <entry><para>mode_t</para></entry>
                 <entry/>
                 <entry><para> the access rigths of file/directory in octal system.</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The  file/directory following the pattern  [host:]file path</para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>
@@ -3968,7 +3915,7 @@
         <para>The vishnu_head_of_file command displays a few first lines of  files located on  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_head_of_file</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-n <replaceable>nLine</replaceable></option></arg><arg
+              choice="opt"><option>-n <replaceable>nline</replaceable></option></arg><arg
               choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -4001,10 +3948,10 @@
                 <entry><para>YES</para></entry>
               </row>
               <row>
-                <entry><para>nLine</para></entry>
+                <entry><para>nline</para></entry>
                 <entry><para>int</para></entry>
                 <entry><para>n</para></entry>
-                <entry><para>Number of lines to display</para></entry>
+                <entry><para>the number of line to get</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -4021,7 +3968,7 @@
         <para>The vishnu_tail_of_file command displays a few last lines of  files located on remote machines</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_tail_of_file</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-n <replaceable>nLine</replaceable></option></arg><arg
+              choice="opt"><option>-n <replaceable>nline</replaceable></option></arg><arg
               choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -4054,10 +4001,10 @@
                 <entry><para>YES</para></entry>
               </row>
               <row>
-                <entry><para>nLine</para></entry>
+                <entry><para>nline</para></entry>
                 <entry><para>int</para></entry>
                 <entry><para>n</para></entry>
-                <entry><para>number of lines to display</para></entry>
+                <entry><para>the number of line to get</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -4383,7 +4330,7 @@
         <para>The vishnu_move_file command executes a synchronous move of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_move_file</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
+              choice="opt"><option>-r</option></arg><arg choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
               choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -4421,6 +4368,13 @@
                 <entry/>
                 <entry><para>The path of the destination file</para></entry>
                 <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>isRecursive</para></entry>
+                <entry><para>boolean</para></entry>
+                <entry><para>r</para></entry>
+                <entry><para>It specifies when the copy is recursive (case of directory) or not.</para></entry>
+                <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>trCommand</para></entry>
@@ -4478,7 +4432,7 @@
         <para>The vishnu_move_async_file command executes an asynchronous move of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_move_async_file</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
+              choice="opt"><option>-r</option></arg><arg choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
               choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -4516,6 +4470,13 @@
                 <entry/>
                 <entry><para>The path of the destination file</para></entry>
                 <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>isRecursive</para></entry>
+                <entry><para>boolean</para></entry>
+                <entry><para>r</para></entry>
+                <entry><para>It specifies when the copy is recursive (case of directory) or not.</para></entry>
+                <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>trCommand</para></entry>
@@ -4610,7 +4571,7 @@
                 <entry><para>fromMachineId</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>m</para></entry>
-                <entry><para>the machine that is the source of the file transfer</para></entry>
+                <entry><para>the machine that is the source or destination of the file transfer</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -4695,6 +4656,51 @@
         <para><emphasis role="bold">Environment variables</emphasis></para>
         <para>This command defines no environment variables.</para>
       </section>
+      <section>
+        <title>vishnu_get_file_info</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_get_file_info command displays the information  of  files.</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_get_file_info</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The file whose inode information will be displayed</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
     </section>
     <section>
       <title>Parameters definitions</title>
@@ -4758,10 +4764,6 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>UNDEFINED</para></entry>
-              <entry><para>-1</para></entry>
-            </row>
-            <row>
               <entry><para>INPROGRESS</para></entry>
               <entry><para>0</para></entry>
             </row>
@@ -4776,6 +4778,10 @@
             <row>
               <entry><para>FAILED</para></entry>
               <entry><para>3</para></entry>
+            </row>
+            <row>
+              <entry><para>UNDEFINED</para></entry>
+              <entry><para>4</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -4795,16 +4801,16 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>UNDEFINED</para></entry>
-              <entry><para>-1</para></entry>
-            </row>
-            <row>
               <entry><para>SCP</para></entry>
               <entry><para>0</para></entry>
             </row>
             <row>
               <entry><para>RSYNC</para></entry>
               <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>UNDEFINED</para></entry>
+              <entry><para>2</para></entry>
             </row>
           </tbody>
         </tgroup>
