@@ -35,7 +35,7 @@
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.4"/>
       <details key="description" value="Changes the group attribute of a file or directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command)"/>
     </services>
-    <services name="chMod" description="changes  access rights of remote files/directories." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DB_ERROR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
+    <services name="chMod" description="changes  access rights of remote files/directories." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DB_ERROR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_SESSIONKEY_EXPIRED ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="mode" dataType="//@modules.0/@typeList/@types.12" description=" the access rigths of file/directory in octal system." shortOptionLetter="" longOptionName=""/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file/directory following the pattern  [host:]file path" longOptionName=""/>
