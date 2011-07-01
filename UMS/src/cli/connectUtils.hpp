@@ -21,6 +21,44 @@
 
 class Options;
 
+
+
+/**
+ * \brief a environment variable name mapper
+ *
+ * For each environment variable, the name_mapper function
+ * is called to obtain the option name. If it returns empty string
+ * the variable is ignored.
+ */
+struct UMS_env_name_mapper{
+
+/**
+ * Mapper operator for environnement variable
+ * \param name The environment variable name
+ * \return The name used in the program
+ */
+
+	std::string operator ()(std::string name){
+
+		std::string result= "";
+
+                if (name=="VISHNU_CONFIG_FILE") {
+
+                        result="dietConfig";
+                }
+
+                if (name=="VISHNU_CLOSE_POLICY") {
+
+                        result="closePolicy";
+                }
+
+		return result;
+	}
+};
+
+
+
+
 /**
  * \brief To build options for the VISHNU authentication (connect, reconnect)command
  * command

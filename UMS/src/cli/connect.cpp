@@ -18,6 +18,8 @@ namespace po = boost::program_options;
 using namespace std;
 using namespace vishnu;
 
+
+
 int main (int ac, char* av[]){
 
 
@@ -59,7 +61,7 @@ int main (int ac, char* av[]){
 
   opt->add("substituteUserId,s","The substitute user identifier",CONFIG,fSubstituteUserId);
 
-  opt->add("closePolicy,p","for closing session automatically",CONFIG,fClosePolicy );
+  opt->add("closePolicy,p","for closing session automatically",ENV,fClosePolicy );
   
   opt->add("password,w","To give the password ",CONFIG,password );
 
@@ -70,7 +72,7 @@ int main (int ac, char* av[]){
 
     opt->parse_cli(ac,av);
 
-    opt->parse_env(env_name_mapper());
+    opt->parse_env(UMS_env_name_mapper());
 
     opt->notify();
 
