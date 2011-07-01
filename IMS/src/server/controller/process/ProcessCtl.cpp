@@ -35,8 +35,9 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI) {
   }
 
   try  {
-    mp.getHost(machineTo, hostname);
+    mp.getHost(machineTo, hostname, login);
   } catch (VishnuException &e) {
+    cerr << e.what() << endl;
     return;
   }
 
@@ -79,7 +80,7 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI) {
   createFile (cmd, &proc, false);
   cmd += type;
   cmd += " /tmp/vishnu_restart&";
-  string dcmd = "ssh vishnu@"+hostname+" `"+cmd+"`";
+  string dcmd = "ssh "+login+"@"+hostname+" `"+cmd+"`";
   int ret = system(dcmd.c_str());
   if (ret == -1) {
     throw SystemException(ERRCODE_SYSTEM, "Failed to restart process "+type);

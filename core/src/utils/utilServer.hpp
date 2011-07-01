@@ -75,6 +75,10 @@ namespace vishnu {
    */
   static const int PUNDEF = 0;
   /**
+   * \brief If the process is running
+   */
+  static const int PRUNNING = 1;
+  /**
    * \brief If the process is down
    */
   static const int PDOWN = 2;

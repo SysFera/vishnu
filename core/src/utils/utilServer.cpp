@@ -28,6 +28,8 @@ vishnu::unregisterSeD(string type, string mid) {
   req += mid;
   req += "' and vishnuname='";
   req += type;
+  req += "' and pstatus='";
+  req += convertToString(PRUNNING);
   req += "'";
   // Database execution
   try {
