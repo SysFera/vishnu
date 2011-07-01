@@ -68,7 +68,7 @@ public:
     std::vector<std::string> results;
     std::vector<std::string>::iterator  iter;
     std::string batchJobId;
-    int status;
+    int oldStatus;
     long startTime;
     long walltime;
 
@@ -112,49 +112,67 @@ public:
         walltime = convertToInt(*(++iter));
         job->setWallTime(walltime);
         job->setEndTime(convertToTimeType(*(++iter)));
-        status = convertToInt(*(++iter));
-        job->setStatus(status);
+        oldStatus = convertToInt(*(++iter));
         batchJobId = *(++iter);    
 
         BatchFactory factory;
-        BatchType batchType  = ServerTMS::getInstance()->getBatchType(); 
+        BatchType batchType  = ServerTMS::getInstance()->getBatchType();
         boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType));
+        int currentStatus = batchServer->getJobState(batchJobId);
+        if(currentStatus!=-1) {
+          job->setStatus(currentStatus);
 
-        startTime = batchServer->getJobStartTime(batchJobId); 
-        if(startTime!=0) {
-          job->setStartTime(startTime);
+          std::string sqlUpdatedRequest = "UPDATE job SET status="+vishnu::convertToString(currentStatus)+" where jobId='"+job->getJobId()+"'";
+          ServerTMS::getInstance()->getDatabaseVishnu()->process(sqlUpdatedRequest.c_str());
 
-          if(status==5) {
-            job->setPercent(100);  
+          if(currentStatus==5) {
+            sqlUpdatedRequest = "UPDATE job SET endDate=CURRENT_TIMESTAMP where jobId='"+job->getJobId()+"'";
+            ServerTMS::getInstance()->getDatabaseVishnu()->process(sqlUpdatedRequest.c_str());
+            job->setEndTime(vishnu::getCurrentTimeInUTC());
+            startTime = batchServer->getJobStartTime(batchJobId);
+            if(startTime!=0) {
+              job->setStartTime(startTime);
+            }
+            job->setPercent(100);
           } else {
-            time_t currentTime = vishnu::getCurrentTimeInUTC();
-            int percent = 0;
-            time_t gap = currentTime-startTime;
-            if(walltime==0) {
-               walltime = 60;
-            }
 
-            if(gap < walltime) {
-              double ratio =  100*(double(gap)/walltime);
-              if(ratio > 0.0 && ratio <= 1.0) {
-                percent = 1;
-              } else {
-                percent = static_cast<int>(ratio);
+            startTime = batchServer->getJobStartTime(batchJobId); 
+            if(startTime!=0) {
+              job->setStartTime(startTime);
+
+              time_t currentTime = vishnu::getCurrentTimeInUTC();
+              int percent = 0;
+              time_t gap = currentTime-startTime;
+              if(walltime==0) {
+                walltime = 60;
               }
-            } else {
-              percent = 99;
+
+              if(gap < walltime) {
+                double ratio =  100*(double(gap)/walltime);
+                if(ratio > 0.0 && ratio <= 1.0) {
+                  percent = 1;
+                } else {
+                  percent = static_cast<int>(ratio);
+                }
+              } else {
+                percent = 99;
+              }
+              job->setPercent(percent);
+            }  else {
+              job->setPercent(0);
             }
-            job->setPercent(percent);
-          } 
+          }
         } else {
+          job->setStatus(oldStatus);
           job->setPercent(0);
         }
+
         mlistObject->getProgress().push_back(job); 
       }
     }
-    
+
     mlistObject->setNbJobs(mlistObject->getProgress().size());
-   
+
     return mlistObject;
 
   }
