@@ -162,7 +162,7 @@ public:
 
           if(status==5) {
             job->setPercent(100);  
-          } else {
+          } else if(status==4) {
             time_t currentTime = vishnu::getCurrentTimeInUTC();
             int percent = 0;
             time_t gap = currentTime-startTime;
@@ -181,6 +181,8 @@ public:
               percent = 99;
             }
             job->setPercent(percent);
+          } else {
+            job->setPercent(0);
           } 
         } else {
           job->setPercent(0);
