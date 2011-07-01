@@ -135,9 +135,10 @@ public:
    * \brief To get the hostname on the machine mmid
    * \param mmid: Vishnu machine id
    * \param hostname: hostname of the machine
+   * \param acclog: Account login of the user 'root' on the machine
    */
   void
-  getHost(string mmid, string &hostname);
+  getHost(string mmid, string &hostname, string& acclog);
 
   /**
    * \brief Return the last actif ims server

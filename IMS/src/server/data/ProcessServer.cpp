@@ -204,15 +204,23 @@ ProcessServer::checkStopped(string machine, string type) {
 }
 
 void
-ProcessServer::getHost(string mid, string& hostname) {
+ProcessServer::getHost(string mid, string& hostname, string& acclog) {
   string req = "select * from machine where machine.machineid='"+mid+"'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
   if(result->getNbTuples() == 0) {
-    throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "No account found to restart on the machine");
+    throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, "Machine not found");
   }
   vector<string> res;
   res = result->get(0);
   hostname = res.at(2);
+
+  req = "select * from account, users where users.userid='root' and users.numuserid=account.users_numuserid and account.machine_nummachineid='"+res.at(0)+"'";
+  boost::scoped_ptr<DatabaseResult> result2(mdatabase->getResult(req.c_str()));
+  if(result2->getNbTuples() == 0) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "No account found to restart the machine"+mid);
+  }
+  res = result2->get(0);
+  acclog = res.at(3);
 }
 
 
