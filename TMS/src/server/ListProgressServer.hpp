@@ -1,3 +1,39 @@
+/* This file is a part of VISHNU.
+
+* Copyright SysFera SAS (2011) 
+
+* contact@sysfera.com
+
+* This software is a computer program whose purpose is to provide 
+* access to distributed computing resources.
+*
+* This software is governed by the CeCILL  license under French law and
+* abiding by the rules of distribution of free software.  You can  use, 
+* modify and/ or redistribute the software under the terms of the CeCILL
+* license as circulated by CEA, CNRS and INRIA at the following URL
+* "http://www.cecill.info". 
+
+* As a counterpart to the access to the source code and  rights to copy,
+* modify and redistribute granted by the license, users are provided only
+* with a limited warranty  and the software's author,  the holder of the
+* economic rights,  and the successive licensors  have only  limited
+* liability. 
+*
+* In this respect, the user's attention is drawn to the risks associated
+* with loading,  using,  modifying and/or developing or reproducing the
+* software by the user in light of its specific status of free software,
+* that may mean  that it is complicated to manipulate,  and  that  also
+* therefore means  that it is reserved for developers  and  experienced
+* professionals having in-depth computer knowledge. Users are therefore
+* encouraged to load and test the software's suitability as regards their
+* requirements in conditions enabling the security of their systems and/or 
+* data to be ensured and,  more generally, to use and operate it in the 
+* same conditions as regards security. 
+*
+* The fact that you are presently reading this means that you have had
+* knowledge of the CeCILL license and that you accept its terms.
+*/
+
 /**
  * \file ListProgressServer.hpp
  * \brief This file contains the VISHNU ListProgressServer class.
@@ -68,7 +104,7 @@ public:
     std::vector<std::string> results;
     std::vector<std::string>::iterator  iter;
     std::string batchJobId;
-    int oldStatus;
+    int status;
     long startTime;
     long walltime;
 
@@ -112,67 +148,49 @@ public:
         walltime = convertToInt(*(++iter));
         job->setWallTime(walltime);
         job->setEndTime(convertToTimeType(*(++iter)));
-        oldStatus = convertToInt(*(++iter));
+        status = convertToInt(*(++iter));
+        job->setStatus(status);
         batchJobId = *(++iter);    
 
         BatchFactory factory;
-        BatchType batchType  = ServerTMS::getInstance()->getBatchType();
+        BatchType batchType  = ServerTMS::getInstance()->getBatchType(); 
         boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType));
-        int currentStatus = batchServer->getJobState(batchJobId);
-        if(currentStatus!=-1) {
-          job->setStatus(currentStatus);
 
-          std::string sqlUpdatedRequest = "UPDATE job SET status="+vishnu::convertToString(currentStatus)+" where jobId='"+job->getJobId()+"'";
-          ServerTMS::getInstance()->getDatabaseVishnu()->process(sqlUpdatedRequest.c_str());
+        startTime = batchServer->getJobStartTime(batchJobId); 
+        if(startTime!=0) {
+          job->setStartTime(startTime);
 
-          if(currentStatus==5) {
-            sqlUpdatedRequest = "UPDATE job SET endDate=CURRENT_TIMESTAMP where jobId='"+job->getJobId()+"'";
-            ServerTMS::getInstance()->getDatabaseVishnu()->process(sqlUpdatedRequest.c_str());
-            job->setEndTime(vishnu::getCurrentTimeInUTC());
-            startTime = batchServer->getJobStartTime(batchJobId);
-            if(startTime!=0) {
-              job->setStartTime(startTime);
-            }
-            job->setPercent(100);
+          if(status==5) {
+            job->setPercent(100);  
           } else {
-
-            startTime = batchServer->getJobStartTime(batchJobId); 
-            if(startTime!=0) {
-              job->setStartTime(startTime);
-
-              time_t currentTime = vishnu::getCurrentTimeInUTC();
-              int percent = 0;
-              time_t gap = currentTime-startTime;
-              if(walltime==0) {
-                walltime = 60;
-              }
-
-              if(gap < walltime) {
-                double ratio =  100*(double(gap)/walltime);
-                if(ratio > 0.0 && ratio <= 1.0) {
-                  percent = 1;
-                } else {
-                  percent = static_cast<int>(ratio);
-                }
-              } else {
-                percent = 99;
-              }
-              job->setPercent(percent);
-            }  else {
-              job->setPercent(0);
+            time_t currentTime = vishnu::getCurrentTimeInUTC();
+            int percent = 0;
+            time_t gap = currentTime-startTime;
+            if(walltime==0) {
+               walltime = 60;
             }
-          }
+
+            if(gap < walltime) {
+              double ratio =  100*(double(gap)/walltime);
+              if(ratio > 0.0 && ratio <= 1.0) {
+                percent = 1;
+              } else {
+                percent = static_cast<int>(ratio);
+              }
+            } else {
+              percent = 99;
+            }
+            job->setPercent(percent);
+          } 
         } else {
-          job->setStatus(oldStatus);
           job->setPercent(0);
         }
-
         mlistObject->getProgress().push_back(job); 
       }
     }
-
+    
     mlistObject->setNbJobs(mlistObject->getProgress().size());
-
+   
     return mlistObject;
 
   }
