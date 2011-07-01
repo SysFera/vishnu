@@ -61,9 +61,10 @@ JobOutputServer::getJobOutput() {
   std::vector<std::string> results;
   std::vector<std::string>::iterator  iter;
   //To get the output and error path of the job
-  std::string sqlRequest = "SELECT outputPath, errorPath, owner, status from vsession, job where"
+  std::string sqlRequest = "SELECT outputPath, errorPath, owner, status, submitDate from vsession, job where"
                            " vsession.numsessionid=job.vsession_numsessionid and jobId='"+mjobResult.getJobId()+"'"
-                           " and submitMachineId='"+mmachineId+"'" ; 
+                           " and submitMachineId='"+mmachineId+"'" ;
+
   boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
 
   acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
@@ -115,14 +116,22 @@ JobOutputServer::getJobOutput() {
     if(sshJobExec.copyFiles(outputPath, errorPath , copyOfOutputPath, copyOfErrorPath)){
       vishnu::deleteFile(copyOfOutputPath);
       vishnu::deleteFile(copyOfErrorPath);
+      time_t submitDate = convertLocaltimeINUTCtime(convertToTimeType(*(++iter)));
+      if(vishnu::getCurrentTimeInUTC()-submitDate > 648000) {
+        std::string sqlUpdatedRequest = "UPDATE job SET status=7 where jobId='"+mjobResult.getJobId()+"'";
+        mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
+      }
       throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::copyFiles: problem to get the output or error file on this user local account"); 
     }
 
     mjobResult.setOutputPath(std::string(copyOfOutputPath));
     mjobResult.setErrorPath(std::string(copyOfErrorPath));
 
-    std::string sqlUpdatedRequest = "UPDATE job SET status=7 where jobId='"+mjobResult.getJobId()+"'";
-    mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
+    time_t submitDate = convertLocaltimeINUTCtime(convertToTimeType(*(++iter)));
+    if(vishnu::getCurrentTimeInUTC()-submitDate > 2592000) {
+      std::string sqlUpdatedRequest = "UPDATE job SET status=7 where jobId='"+mjobResult.getJobId()+"'";
+      mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
+    }
   } else {
       throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
   }
@@ -160,7 +169,7 @@ JobOutputServer::getCompletedJobsOutput() {
   mlistJobsResult = ecoreFactory->createListJobResults();
 
   //To get the output and error path of all jobs
-  std::string sqlRequest = "SELECT jobId, outputPath, errorPath, status from vsession, job where"
+  std::string sqlRequest = "SELECT jobId, outputPath, errorPath, status, submitDate from vsession, job where"
                            " vsession.numsessionid=job.vsession_numsessionid and owner='"+acLogin+"'"
                            " and submitMachineId='"+mmachineId+"'" ;
   boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
@@ -205,11 +214,19 @@ JobOutputServer::getCompletedJobsOutput() {
 
           mlistJobsResult->getResults().push_back(out);
 
-          std::string sqlUpdatedRequest = "UPDATE job SET status=7 where jobId='"+jobId+"'";
-          mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
+          time_t submitDate = convertLocaltimeINUTCtime(convertToTimeType(*(++iter)));
+          if(vishnu::getCurrentTimeInUTC()-submitDate > 2592000) {
+            std::string sqlUpdatedRequest = "UPDATE job SET status=7 where jobId='"+jobId+"'";
+            mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
+          }
         } else {
           vishnu::deleteFile(copyOfOutputPath);
-          vishnu::deleteFile(copyOfErrorPath); 
+          vishnu::deleteFile(copyOfErrorPath);
+          time_t submitDate = convertLocaltimeINUTCtime(convertToTimeType(*(++iter)));
+          if(vishnu::getCurrentTimeInUTC()-submitDate > 648000) {
+            std::string sqlUpdatedRequest = "UPDATE job SET status=7 where jobId='"+jobId+"'";
+            mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
+          }  
         }
       }
     }

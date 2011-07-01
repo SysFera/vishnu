@@ -115,10 +115,32 @@ LLServer::processOptions(const char* scriptPath,
       insertOptionLine(optionLineToInsert, content);
     }
     if(options.getWallTime()!=-1) {
-      optionLineToInsert ="# @ wall_clock_limit="+vishnu::convertWallTimeToString(options.getWallTime());
+      optionLineToInsert ="# @ wall_clock_limit="+vishnu::convertWallTimeToString(options.getWallTime())+"\n";
       insertOptionLine(optionLineToInsert, content);
     }
-
+    if(options.getNbCpu()!=-1) {
+      std::ostringstream os_str;
+      os_str << options.getNbCpu();
+      optionLineToInsert ="# @ job_type=parallel \n # @ min_processors="+os_str.str()+"\n";
+      insertOptionLine(optionLineToInsert, content);
+    }
+    if(options.getMemory()!=-1) {
+      std::ostringstream os_str;
+      os_str << options.getMemory();
+      optionLineToInsert ="# @ data_limit="+os_str.str()+"mb\n"; 
+      insertOptionLine(optionLineToInsert, content);
+    }
+    if(options.getNbNodesAndCpuPerNode()!="") {
+      std::string NbNodesAndCpuPerNode = options.getNbNodesAndCpuPerNode();
+      size_t posNbNodes = NbNodesAndCpuPerNode.find(":");
+      if(posNbNodes!=std::string::npos) {
+        std::string nbNodes = NbNodesAndCpuPerNode.substr(0, posNbNodes);
+        std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1); 
+        optionLineToInsert ="# @ job_type=parallel \n # @ node="+nbNodes+"\n";  
+        optionLineToInsert +="# @ min_processors="+cpuPerNode+"\n";
+        insertOptionLine(optionLineToInsert, content);
+      }
+    }
 
     if(optionLineToInsert.size()!=0) {
       ofstream ofs(scriptPath);
