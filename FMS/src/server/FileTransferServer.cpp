@@ -27,18 +27,18 @@ namespace ba=boost::algorithm;
 unsigned int FileTransferServer::msshPort=22;
 std::string FileTransferServer::msshCommand="/usr/bin/ssh";
 
-
+// Get The Database instance
 Database* FileTransferServer::getDatabaseInstance(){
 
   Database* databaseInstance (DbFactory().getDatabaseInstance());
-  if(databaseInstance !=NULL){
-    return databaseInstance;
-  }
-  else{
-
+  if(databaseInstance ==NULL){
     throw SystemException(ERRCODE_DBERR, "Get a null instance of database" );
   }
+    return databaseInstance;
 }
+
+// Check The transfer id
+
 void FileTransferServer::checkTransferId(std::string transferId) {
   std::string sqlTransferRequest = "SELECT transferId from filetransfer where transferId='"+transferId+"'";
   boost::scoped_ptr<DatabaseResult> transfer(FileTransferServer::getDatabaseInstance()->getResult(sqlTransferRequest.c_str()));
@@ -46,6 +46,8 @@ void FileTransferServer::checkTransferId(std::string transferId) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer identifier");;
   }
 }
+
+// add a query to the sql request
 
 void FileTransferServer::addOptionRequest(const std::string& name, const std::string& value, std::string& request) {
   request.append(" and "+name+"=");
@@ -67,12 +69,14 @@ void FileTransferServer::checkUserId(std::string userId) {
   }
 }
 
+// A constructor with parameters
 
 FileTransferServer::FileTransferServer(const SessionServer& sessionServer,const int& vishnuId):
   msessionServer(sessionServer),mvishnuId(vishnuId),mtransferType(File::undefined){
 
   }
 
+// Another constructor with parameters
 
 FileTransferServer::FileTransferServer(const SessionServer& sessionServer,
     const std::string& srcHost,
@@ -90,7 +94,7 @@ FileTransferServer::FileTransferServer(const SessionServer& sessionServer,
   }
 
 
-
+// To get a user info from the database
 
 void FileTransferServer::getUserInfo( std::string& clientMachineName, std::string& userId) {
 
@@ -119,17 +123,20 @@ void FileTransferServer::getUserInfo( std::string& clientMachineName, std::strin
 
 }
 
+// To get the file transfer information
 
 const FMS_Data::FileTransfer& FileTransferServer::getFileTransfer() const{
 
   return mfileTransfer;
 }
 
+// To update the file transfer information
 
 void FileTransferServer::setFileTransfer( const FMS_Data::FileTransfer& fileTransfer) const{
   mfileTransfer=fileTransfer;
 } 
 
+// To log data into database 
 
 int FileTransferServer::logIntoDatabase(int processId, const std::string& errorMsg){
 
@@ -148,7 +155,7 @@ int FileTransferServer::logIntoDatabase(int processId, const std::string& errorM
 
 }
 
-
+// update file transfer data
 
 void FileTransferServer::updateData(){
 
@@ -164,6 +171,7 @@ void FileTransferServer::updateData(){
 
 }
 
+// To add a new file transfer thread
 
 int FileTransferServer::addTransferThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options){
 
@@ -247,6 +255,11 @@ int FileTransferServer::addTransferThread(const std::string& srcUser,const std::
 }
 
 
+
+// To perform a file copy
+
+
+
 void FileTransferServer::copy(const TransferExec& transferExec, const std::string& trCmd)
 
 {
@@ -311,7 +324,7 @@ void FileTransferServer::move(const TransferExec& transferExec, const std::strin
   }
 }
 
-
+// To update file transfer status into database
 
 void FileTransferServer::updateStatus(const FMS_Data::Status& status,const std::string& transferId, const std::string& errorMsg){
 
@@ -323,7 +336,7 @@ void FileTransferServer::updateStatus(const FMS_Data::Status& status,const std::
 
 }
 
-
+// get error message from database
 
 string FileTransferServer::getErrorFromDatabase(const std::string& transferid){
 
@@ -359,6 +372,7 @@ std::string  FileTransferServer::cleanOutputMsg(const std::string& allOutputMsg)
 }
 
 
+// A file copy thread
 
 
 int FileTransferServer::addCpThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options){
@@ -376,6 +390,9 @@ int FileTransferServer::addCpThread(const std::string& srcUser,const std::string
 
 }
 
+
+// add a new synchronous file copy thread
+
 int FileTransferServer::addCpAsyncThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options){
 
   mtransferType=File::copy;
@@ -384,6 +401,7 @@ int FileTransferServer::addCpAsyncThread(const std::string& srcUser,const std::s
 }
 
 
+// add a new synchronous move file  thread
 
 int FileTransferServer::addMvThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options){
 
@@ -403,6 +421,9 @@ int FileTransferServer::addMvThread(const std::string& srcUser,const std::string
 
 }
 
+// add a new asynchronous file move thread
+
+
 int FileTransferServer::addMvAsyncThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options){
 
   mtransferType=File::move;
@@ -412,6 +433,7 @@ int FileTransferServer::addMvAsyncThread(const std::string& srcUser,const std::s
 
 }
 
+// Wait until a thread terminates
 
 void FileTransferServer::waitThread (){
 
@@ -478,7 +500,7 @@ FileTransferServer::processOptions(const FMS_Data::StopTransferOptions& options,
 
 }
 
-
+// Cancel  file transfers 
 
 int FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options ){
 
@@ -523,7 +545,7 @@ int FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options 
 
 
 
-
+// cancel a file transfer 
 
 
 int FileTransferServer::stopThread(const std::string& transferid,const int& pid ){
@@ -557,18 +579,20 @@ if (pid!=-1){
 }
 
 
-
+// update an ssh port
 
 void FileTransferServer::setSSHPort(const unsigned int sshPort){
   msshPort=sshPort;
 }
 
 
+// update the ssh command path
 
 void FileTransferServer::setSSHCommand(const std::string& sshCommand){
   msshCommand=sshCommand;
 }
 
+// get the ssh port
 const unsigned int FileTransferServer::getSSHPort(){
   return msshPort;
 } 
@@ -576,6 +600,7 @@ const std::string& FileTransferServer::getSSHCommand( ){
   return msshCommand;
 }
 
+// filter string by removing some character like :, ', "
 
 std::string FileTransferServer::filterString(  const std::string& toFilter){
 
@@ -610,60 +635,86 @@ TransferExec::TransferExec (const SessionServer& sessionServer,
     mlastExecStatus=0;
   }
 
+// get a session server object
 
 const SessionServer& TransferExec::getSessionServer() const{
   return msessionServer;
 }
 
-
+// get the source machine user object
 const std::string& TransferExec::getSrcUser() const{
   return msrcUser;
 }
 
+// get the source machine name
 const std::string& TransferExec::getSrcMachineName() const{
   return msrcMachineName;
 }
+
+
+// get the source file path
 
 const std::string& TransferExec::getSrcPath() const{
   return  msrcPath;
 }
 
+
+// get the source machine user ssh private key path
 const std::string& TransferExec::getSrcUserKey() const{
   return msrcUserKey;
 }
+
+
+// get the destination machine user object
 
 const std::string& TransferExec::getDestUser() const{
   return mdestUser;
 }
 
+// get the destination machine name
+
 const std::string& TransferExec::getDestMachineName() const{
   return  mdestMachineName;
 }
+
+// get the destination file path
 
 const std::string& TransferExec::getDestPath() const{
   return mdestPath;
 }
 
+// get the file transfer identifier
+
 const std::string& TransferExec::getTransferId() const{
   return mtransferId;
 }
 
+// get the file transfer process identifier
 
 const int& TransferExec::getProcessId() const{
   return mprocessId;
 }
 
+// set the file transfer process identifier
 void TransferExec::setProcessId(const int&  processId) const{
   mprocessId=processId;
 }
+
+// get the file transfer process  last execution status
+
 const int& TransferExec::getLastExecStatus() const{
   return mlastExecStatus;
 }
+
+// Set the file transfer process  last execution status
 
 void TransferExec::setLastExecStatus(const int& lastExecStatus) const{
 
   mlastExecStatus=lastExecStatus;
 }
+
+
+// Set the file transfer process identifier into database
 
 void TransferExec::updatePid(const int& pid)const {
 
@@ -672,6 +723,10 @@ void TransferExec::updatePid(const int& pid)const {
   FileTransferServer::getDatabaseInstance()->process(sqlUpdateRequest.c_str());
 
 }
+
+// Perform a remote command through ssh
+
+
 
 std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) const{
   vector<string> tokens;
@@ -766,7 +821,6 @@ std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) c
   return result;
 
 }
-
 
 
 

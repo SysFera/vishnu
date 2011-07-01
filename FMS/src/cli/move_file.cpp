@@ -12,6 +12,7 @@
 #include "api_ums.hpp"
 #include "api_fms.hpp"
 #include "sessionUtils.hpp"
+#include "fileTransferUtils.hpp"
 #include "FMS_Data.hpp"
 #include <boost/bind.hpp>
 
@@ -20,51 +21,7 @@ namespace po = boost::program_options;
 using namespace std;
 using namespace vishnu;
 
-/**
- * \brief To build options for the VISHNU move of file command
- * \param pgName: The name of the command
- * \param dietConfig: Represents the VISHNU config file
- * \param trCmdStr: The command to use to perform file transfer
- * \param src: The source file to copy following the pattern [host:]file path
- * \param dest: The path of the destination file
- * \param cpFileOptions: The copy file transfer options structure
- */
-boost::shared_ptr<Options>
-makeMoveOpt(string pgName, 
-    string& dietConfig,
-    string& trCmdStr,
-    string& src,
-    string& dest){
 
-  boost::shared_ptr<Options> opt(new Options(pgName));
-
-  // Environement option
-  opt->add("dietConfig,c",
-      "The diet config file",
-      ENV,
-      dietConfig);
-
-  opt->add("trCommand,t",
-      "The command to use to perform file transfer. The different values  are:\n"
-      "O or scp: for SCP transfer\n"
-      "1 or rsync: for RSYNC transfer\n",
-      CONFIG,
-      trCmdStr);
-
-  opt->add("src,s",
-      "The source file to move following the pattern [host:]file path.",
-      HIDDEN,
-      src,1);
-  opt->setPosition("src",1);
-
-  opt->add("dest,d",
-      "The path of the destination file.",
-      HIDDEN,
-      dest,1);
-  opt->setPosition("dest",1);
-
-  return opt;
-}
 
 
 int main (int argc, char* argv[]){
@@ -83,12 +40,13 @@ int main (int argc, char* argv[]){
   FMS_Data::CpFileOptions cpFileOptions;
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt= makeMoveOpt(argv[0], dietConfig, trCmdStr, src, dest);
+  boost::shared_ptr<Options> opt(makeTransferCommandOptions(argv[0], dietConfig, trCmdStr, src, dest));
+
 
   CLICmd cmd = CLICmd (argc, argv, opt);
 
  // Parse the cli and setting the options found
-  ret = cmd.parse(env_name_mapper());
+  ret = cmd.parse(FMS_env_name_mapper());
 
   if(trCmdStr.size()!=0) {
     size_t pos = trCmdStr.find_first_not_of("0123456789");
