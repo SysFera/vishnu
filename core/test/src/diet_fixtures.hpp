@@ -51,9 +51,6 @@ public:
       BOOST_TEST_MESSAGE( "== Test setup [END]: setting environment ==" );
     }
 
-    // std::string dietPath = std::string(DIETAGENT_DIR)
-    //   + std::string(getenv("PATH"));
-    // setenv("PATH", dietPath.c_str(), 1);
   }
 
   ~setDIETEnvFixture() {
@@ -347,8 +344,7 @@ public:
     if( processSeD ) {
       try {
         processSeD->terminate();
-        // processSeD->wait();
-
+        
         // FIXME: currently processSeD->wait() crashes, we need to set the signal handler of SIGCHLD to SID_DFL
         signal(SIGCHLD, SIG_DFL);
       } catch (...) {

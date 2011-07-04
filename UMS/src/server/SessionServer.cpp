@@ -270,6 +270,8 @@ SessionServer::getSessionToclosebyTimeout() {
     case DbConfiguration::ORACLE:
       throw SystemException(ERRCODE_DBERR, "SessionServer::getSessionToclosebyTimeout: Oracle query not defined");
       break;
+    default:
+      break;
   }
 
   result = mdatabaseVishnu->getResult(sqlCommand.c_str());

@@ -30,7 +30,6 @@ int
 ShellExporter::exporte(string oldSession, string &content){
   vector<string>::iterator iter;
   vector<string> line;
-  string desc;
 
   // Init the script
   content = "#!/bin/sh";
@@ -75,8 +74,9 @@ ShellExporter::exporte(string oldSession, string &content){
 bool
 ShellExporter::isClosed(string sid) {
   bool res = false;
-  if (sid.size() < 1)
+  if (sid.size() < 1) {
     return res;
+  }
   string req = "select * from vsession where vsessionid ='"+sid+"' and state='0'";
   try {
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
@@ -105,18 +105,13 @@ ShellExporter::getMapperName(int type) {
   switch (type) {
   case UMS:
     return UMSSHELLMAPPERNAME;
-    break;
   case TMS:
     return TMSSHELLMAPPERNAME;
-    break;
   case FMS:
     return FMSSHELLMAPPERNAME;
-    break;
   case IMS:
     return IMSSHELLMAPPERNAME;
-    break;
   default:
     throw IMSVishnuException(ERRCODE_INVEXPORT, "Cannot find mapper");
-    break;
   }
 }
