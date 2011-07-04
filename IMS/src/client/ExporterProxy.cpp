@@ -98,6 +98,7 @@ ExporterProxy::exportCmd(const std::string& oldSessionId,
     throw UserException(ERRCODE_INVALID_PARAM, "Error opening file: " + filename);
   }
   diet_profile_free(profile);
+  return 0;
 }
 
 /**
