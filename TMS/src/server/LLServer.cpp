@@ -242,7 +242,6 @@ LLServer::getJobState(const std::string& jobId) {
 
   while(queryInfos)
   {
-
     rc = ll_get_data(queryInfos, LL_JobGetFirstStep, &step);
     if(!rc)
     {
@@ -251,62 +250,25 @@ LLServer::getJobState(const std::string& jobId) {
         if(!rc) {
           int res = 0;
           switch(state) {
-            case STATE_IDLE:
-              res = 3;
-              break;
-            case STATE_RUNNING:
-              res = 4;
-              break;
-            case STATE_STARTING:
-              res = 4;
-              break;
-            case STATE_COMPLETE_PENDING:
-              res = 4;
-              break;
-            case STATE_REJECT_PENDING:
-              res = 6;
-              break;
-            case STATE_REMOVE_PENDING:
-              res = 6;
-              break;
-            case STATE_VACATE_PENDING:
-              res = 3;
-              break;
-            case STATE_VACATED:
-              res = 3;
-              break;
-            case STATE_REJECTED:
-              res = 6;
-              break;
-            case STATE_CANCELED:
-              res = 6;
-              break;
-            case STATE_REMOVED:
-              res = 6;
-              break;
-            case STATE_PENDING:
-              res = 2;
-              break;
-            case STATE_PREEMPTED:
-              res = 3;
-              break;
-            case STATE_PREEMPT_PENDING:
-              res = 3;
-              break;
-            case STATE_RESUME_PENDING:
-              res = 3;
-              break;
-            case STATE_COMPLETED: 
-              res = 5;
-              break;
-            case STATE_TERMINATED:
-              res = 5;
-              break;
-            case STATE_HOLD:
-              res = 2;
-              break;
             case STATE_NOTQUEUED:
               res = 1;
+              break; 
+            case STATE_PENDING:case STATE_HOLD:
+              res = 2;
+              break;
+            case STATE_IDLE:case STATE_VACATE_PENDING:case STATE_VACATED:case STATE_PREEMPTED:
+            case STATE_PREEMPT_PENDING:case STATE_RESUME_PENDING:
+              res = 3;
+              break;
+            case STATE_RUNNING:case STATE_STARTING:case STATE_COMPLETE_PENDING:
+              res = 4;
+              break;
+            case STATE_COMPLETED:case STATE_TERMINATED: 
+              res = 5;
+              break;
+            case STATE_REJECT_PENDING:case STATE_REMOVE_PENDING:case STATE_REJECTED:
+            case STATE_CANCELED:case STATE_REMOVED:
+              res = 6;
               break;
             default:
               res = 0;
@@ -315,7 +277,6 @@ LLServer::getJobState(const std::string& jobId) {
           if (res > 0) {
             return res;
           }
-
           machine = (char*)"";
           if(state==STATE_RUNNING)
           {
@@ -331,14 +292,12 @@ LLServer::getJobState(const std::string& jobId) {
               return 2;
             }
           }
-
           ll_get_data(queryInfos, LL_JobGetNextStep, &step);
         }
       }
     }
     queryInfos = ll_next_obj(queryObject);
   }
-
  return -1; 
 }
 
@@ -580,28 +539,11 @@ LLServer::computeNbRunJobsAndQueueJobs(std::map<std::string, int>& run,
           if(!rc)
           {
             switch(state) {
-              case STATE_RUNNING:
+              case STATE_RUNNING:case STATE_STARTING:
                 run[jclass]++;
                 break;
-              case STATE_IDLE:
-                que[jclass]++;
-                break;
-              case STATE_STARTING:
-                run[jclass]++;
-                break;
-              case STATE_PENDING:
-                que[jclass]++;
-                break;
-              case STATE_PREEMPTED:
-                que[jclass]++;
-                break;
-              case STATE_PREEMPT_PENDING:
-                que[jclass]++;
-                break;
-              case STATE_RESUME_PENDING:
-                que[jclass]++;
-                break;
-              case STATE_HOLD:
+              case STATE_IDLE:case STATE_PENDING:case STATE_PREEMPTED:
+              case STATE_PREEMPT_PENDING:case STATE_RESUME_PENDING:case STATE_HOLD:
                 que[jclass]++;
                 break;
               default:
@@ -610,7 +552,6 @@ LLServer::computeNbRunJobsAndQueueJobs(std::map<std::string, int>& run,
             }
           } 
         }
-
         ll_get_data(queryInfos, LL_JobGetNextStep, &step);
       }
     }
