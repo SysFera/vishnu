@@ -16,7 +16,7 @@
 #endif
 //#include "OracleDatabase.hpp"
 
-Database* DbFactory::mdb = NULL;
+Database* DbFactory::mdb = NULL; //%RELAX<MISRA_0_1_3> Used in this file
 
 DbFactory::DbFactory(){
 }
