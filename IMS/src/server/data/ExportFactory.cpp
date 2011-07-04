@@ -14,10 +14,8 @@ ExportFactory::getExporter(UserServer u, IMS_Data::ExportOp_ptr expOp) {
   case 0 :
   case 1 :
     return new ShellExporter(u, expOp);
-    break;
   default:
     break;
   }
   throw UserException(ERRCODE_INVALID_PARAM, "Unknown export type");
-  return NULL;
 }

@@ -104,7 +104,7 @@ int main (int argc, char* argv[]){
       printSessionKeyMessage();
       copyAsyncFile(sessionKey, src, dest, transferInfo, cpFileOptions);
      
-      std::cout << transferInfo << std::endl;
+      std::cout << "The transfer identifier is " << transferInfo.getTransferId() << std::endl;
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
