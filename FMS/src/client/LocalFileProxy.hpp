@@ -81,53 +81,53 @@ class LocalFileProxy : public FileProxy {
      * \param group the new group
      * \return 0 if the command succeeds, an error code otherwise
      */
-    virtual int chgrp(const std::string& group) { }
+    virtual int chgrp(const std::string& group) { return 0;}
     /**
      * \brief To update the new file access permissions
      * \param mode the new file access permissions
      * \return 0 if the command succeeds, an error code otherwise
      */
-    virtual int chmod(const mode_t mode) { }
+    virtual int chmod(const mode_t mode) {return 0; }
     /**
      * \brief To get the first lines of the file
      * \param options the options object 
      * \return the first lines of the file
      */
-    virtual std::string head(const HeadOfFileOptions& options) { }
+    virtual std::string head(const HeadOfFileOptions& options) {return std::string(""); }
     /**
      * \brief To get the last lines of the file
      * \param options the options object 
      * \return the last lines of the file
      */
-    virtual std::string tail(const TailOfFileOptions& options) { }
+    virtual std::string tail(const TailOfFileOptions& options) { return std::string("");}
     /**
      * \brief To get the content of the file
      * \return the content of the file
      */
-    virtual std::string getContent() { }
+    virtual std::string getContent() { return std::string("");}
     /**
      * \brief To create a new file
      * \param mode the access permission of the file
      * \return 0 if the command succeeds, an error code otherwise
      */ 
-    virtual int mkfile(const mode_t mode=defaultFileAccessMode) { }
+    virtual int mkfile(const mode_t mode=defaultFileAccessMode) {return 0; }
     /**
      * \brief To create a new directory
      * \param mode the access permission of the directory
      * \return 0 if the command succeeds, an error code otherwise
      */ 
-    virtual int mkdir(const mode_t mode=defaultDirectoryAccessMode) { }
+    virtual int mkdir(const mode_t mode=defaultDirectoryAccessMode) {return 0; }
     /**
      * \brief To remove a file
        * \param options the remove file options  
      * \return 0 if the command succeeds, an error code otherwise
      */ 
-    virtual int rm(const RmFileOptions& options) { }
+    virtual int rm(const RmFileOptions& options) {return 0; }
     /**
      * \brief To remove an empty directory
      * \return 0 if the command succeeds, an error code otherwise
      */ 
-    virtual int rmdir() { }
+    virtual int rmdir() {return 0;  }
 
     /**
      * \brief To copy the file 
@@ -168,7 +168,7 @@ class LocalFileProxy : public FileProxy {
      * \param options the list options 
      * \return the content of the directory
      */ 
-    virtual std::list<std::string> ls(const LsDirOptions& options) const { }
+    virtual std::list<std::string> ls(const LsDirOptions& options) const { std::list<std::string>(); }
 };
 
 #endif

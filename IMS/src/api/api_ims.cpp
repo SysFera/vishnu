@@ -167,7 +167,6 @@ vishnu::defineUserIdentifier(const string sessionKey,
 		     string fmt)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   SessionProxy sessionProxy(sessionKey);
-  string name = "int_defineUserIdentifier";
 
   ObjectIdProxy ob(sessionProxy);
   ob.setUID(fmt);
@@ -180,7 +179,6 @@ vishnu::defineMachineIdentifier(const string sessionKey,
 			string fmt)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   SessionProxy sessionProxy(sessionKey);
-  string name = "int_defineMachineIdentifier";
 
   ObjectIdProxy ob(sessionProxy);
   ob.setMID(fmt);
@@ -193,7 +191,6 @@ vishnu::defineJobIdentifier(const string sessionKey,
 		    string fmt)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   SessionProxy sessionProxy(sessionKey);
-  string name = "int_defineJobIdentifier";
 
   ObjectIdProxy ob(sessionProxy);
   ob.setTID(fmt);
@@ -206,7 +203,6 @@ vishnu::defineTransferIdentifier(const string sessionKey,
 			 string fmt)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   SessionProxy sessionProxy(sessionKey);
-  string name = "int_defineTransferIdentifier";
 
   ObjectIdProxy ob(sessionProxy);
   ob.setFID(fmt);
@@ -233,7 +229,6 @@ vishnu::setUpdateFrequency(const string sessionKey,
 		   int freq)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   SessionProxy sessionProxy(sessionKey);  
-  string name = "int_setUpdateFreq";
 
   MetricProxy met(sessionProxy);
   met.setUpFreq(freq);
@@ -246,7 +241,6 @@ vishnu::getUpdateFrequency(const string sessionKey,
 		   int& freq)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   SessionProxy sessionProxy(sessionKey);  
-  string name = "int_setUpdateFreq";
 
   MetricProxy met(sessionProxy);
   freq = met.getUpFreq();

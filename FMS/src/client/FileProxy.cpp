@@ -140,7 +140,7 @@ void FileProxy::exists(const bool exist) const {
  * \brief The default constructor
  */ 
 FileProxy::FileProxy() {
-  srand(time(NULL));
+  
   this->exist = exist;
 }
 
@@ -153,7 +153,7 @@ FileProxy::FileProxy(const SessionProxy& sessionProxy,
     const string& path)
 :msessionProxy(sessionProxy)  {
 
-  srand(time(NULL));
+  
   size_t pos = path.find(':');
 
   if (pos==string::npos) {
@@ -170,7 +170,7 @@ FileProxy::FileProxy(const SessionProxy& sessionProxy,
  */ 
 
 FileProxy::FileProxy(const FileProxy& file) {
-  srand(time(NULL));
+  
   operator=(file);
 }
 
@@ -204,7 +204,11 @@ const string& FileProxy::getPath() const {
  * \return the file owner name
  */
 const string& FileProxy::getOwner() const {
-  if (!isUpToDate()) getInfos();
+ 
+  if (!isUpToDate()){
+    getInfos();
+  }
+ 
   return mfileStat.getOwner();
 }
 
@@ -213,7 +217,9 @@ const string& FileProxy::getOwner() const {
  * \return the group name
  */
 const string& FileProxy::getGroup() const {
-  if (!isUpToDate()) getInfos();
+  if (!isUpToDate()) {
+    getInfos();
+  }
   return mfileStat.getGroup();
 }
 
@@ -230,7 +236,11 @@ const string& FileProxy::getHost() const {
  * \return the file access permissions
  */
 mode_t FileProxy::getPerms() const {
-  if (!isUpToDate()) getInfos();
+ 
+  if (!isUpToDate()){
+    getInfos();
+  }
+ 
   return mfileStat.getPerms();
 }
 
@@ -239,7 +249,10 @@ mode_t FileProxy::getPerms() const {
  * \return the identifier of the file owner
  */
 uid_t FileProxy::getUid() const {
-  if (!isUpToDate()) getInfos();
+ 
+  if (!isUpToDate()) {
+    getInfos();
+  }
   return mfileStat.getUid();
 }
 
@@ -248,7 +261,11 @@ uid_t FileProxy::getUid() const {
  * \return the group identifier of the file owner
  */
 gid_t FileProxy::getGid() const {
-  if (!isUpToDate()) getInfos();
+ 
+  if (!isUpToDate()){
+    getInfos();
+  }
+ 
   return mfileStat.getGid();
 }
 
@@ -257,7 +274,10 @@ gid_t FileProxy::getGid() const {
  * \return the file size
  */
 file_size_t FileProxy::getSize() const {
-  if (!isUpToDate()) getInfos();
+ 
+  if (!isUpToDate()){
+    getInfos();
+  }
   return mfileStat.getSize();
 }
 
@@ -266,7 +286,10 @@ file_size_t FileProxy::getSize() const {
  * \return the last file access time
  */
 time_t FileProxy::getAtime() const {
-  if (!isUpToDate()) getInfos();
+ 
+  if (!isUpToDate()) {
+    getInfos();
+  }
   return mfileStat.getAtime();
 }
 
@@ -275,7 +298,9 @@ time_t FileProxy::getAtime() const {
  * \return the last  modification time
  */
 time_t FileProxy::getMtime() const {
-  if (!isUpToDate()) getInfos();
+  if (!isUpToDate()) {
+    getInfos();
+  }
   return mfileStat.getMtime();
 }
 
@@ -284,7 +309,9 @@ time_t FileProxy::getMtime() const {
  * \return the last change time
  */
 time_t FileProxy::getCtime() const {
-  if (!isUpToDate()) getInfos();
+  if (!isUpToDate()){
+    getInfos();
+  }
   return mfileStat.getCtime();
 }
 
@@ -293,7 +320,10 @@ time_t FileProxy::getCtime() const {
  * \return the file type
  */
 FileType FileProxy::getType() const {
-  if (!isUpToDate()) getInfos();
+  
+  if (!isUpToDate()){
+    getInfos();
+  }
   return mfileStat.getType();
 }
 
@@ -303,7 +333,10 @@ FileType FileProxy::getType() const {
  */
 
 bool FileProxy::exists() const {
-  if (!isUpToDate()) getInfos();
+  
+  if (!isUpToDate()){
+    getInfos();
+  }
   return exist;
 }
 
@@ -332,7 +365,9 @@ string FileProxy::extHost(const string& path) {
   size_t pos;
 
   pos = path.find_first_of(':');
-  if (pos == string::npos) return "localhost";
+  if (pos == string::npos) {
+    return "localhost";
+  }
   return path.substr(0, pos);
 }
 
@@ -345,7 +380,10 @@ string FileProxy::extName(const string& path) {
   size_t pos;
 
   pos = path.find_first_of(':');
-  if (pos == string::npos) return path;
+ 
+  if (pos == string::npos){
+    return path;
+  }
   return path.substr(pos+1);
 }
 

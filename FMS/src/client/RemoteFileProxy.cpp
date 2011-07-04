@@ -357,7 +357,7 @@ string RemoteFileProxy::head(const HeadOfFileOptions& options) {
  * the error message.
  */
 string RemoteFileProxy::getContent() {
-  string result;
+  
   char* fileContent, * errMsg;
   diet_profile_t* profile;
 
