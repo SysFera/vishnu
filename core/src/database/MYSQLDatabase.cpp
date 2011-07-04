@@ -119,22 +119,6 @@ MYSQLDatabase::disconnect(){
 
 
 /**
- * \brief To set the db to use
- * \fn virtual int setDatabase(string db) = 0
- * \param db The database to use
- * \return 0 on success, an error code otherwise
- */
-// int
-// MYSQLDatabase::setDatabase(string db){
-//   mdatabase = db;
-//   for (unsigned int i = 0 ; i<mconfig.getDbPoolSize(); i++) {
-//     if (!mysql_select_db(&(mpool[i].mmysql), db.c_str ())) {
-//       throw SystemException(ERRCODE_DBERR, "Database problem with message: "+string(mysql_error(&(mpool[i].mmysql))));
-//     }
-//   }
-//   return SUCCESS;
-// }
-/**
  * \brief To get the result of the latest request (if any result)
  * \fn DatabaseResult* getResult(string request)
  * \return The result of the latest request

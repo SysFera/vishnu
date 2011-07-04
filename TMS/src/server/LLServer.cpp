@@ -310,6 +310,7 @@ LLServer::getJobState(const std::string& jobId) {
               break;
             default:
               res = 0;
+              break;
           }
           if (res > 0) {
             return res;
@@ -605,6 +606,7 @@ LLServer::computeNbRunJobsAndQueueJobs(std::map<std::string, int>& run,
                 break;
               default:
                 res = 0;
+                break;
             }
           } 
         }
@@ -695,6 +697,7 @@ LLServer::convertLLStateToVishnuState(int state) {
       break;
     default:
       res = 5;
+      break;
   }
   return res;
 }

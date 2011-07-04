@@ -9,7 +9,7 @@
 
 using namespace std;
 
-const int DbConfiguration::defaultDbPoolSize = 10;
+const int DbConfiguration::defaultDbPoolSize = 10;  //%RELAX<MISRA_0_1_3> Used in this file
 
 /**
  * \brief Constructor
