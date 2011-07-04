@@ -284,7 +284,6 @@ long vishnu::convertStringToWallTime(const std::string& walltime) {
     int heure = 0;
     int jour = 0;
     std::string value;
-    size_t found;
 
     size_t size = walltime.size();
     size_t pos = walltime.rfind(":");

@@ -2,6 +2,7 @@
 
 namespace vishnu {
 
+//{{RELAX<MISRA_0_1_3> Because this table is used in other files
 // !!! None of these keywords can be a prefix for another !!!
   param_t params[] =
   {
@@ -20,5 +21,6 @@ namespace vishnu {
     /* [12] */ {INTERVALMONITOR, "intervalMonitor", INT_PARAMETER},
     /* [13] */ {DBPOOLSIZE, "databaseConnectionsNb", INT_PARAMETER}
   };
+//}}RELAX<MISRA_0_1_3>
 }
 
