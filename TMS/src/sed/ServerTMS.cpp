@@ -12,8 +12,10 @@
 #include <boost/scoped_ptr.hpp>
 #include "SystemException.hpp"
 
+//{{RELAX<MISRA_0_1_3> Because these variables are used this class
 ServerTMS *ServerTMS::minstance = NULL;
 TMSMapper *ServerTMS::mmapper = NULL;
+//}}RELAX<MISRA_0_1_3>
 
 /**
  * \brief To get the unique instance of the server

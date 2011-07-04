@@ -8,12 +8,14 @@
 #include "ServerUMS.hpp"
 #include "internalApi.hpp"
 
+//{{RELAX<MISRA_0_1_3> Because these variables are used in this class
 Database *ServerUMS::mdatabaseVishnu = NULL;
 ServerUMS *ServerUMS::minstance = NULL;
 UMSMapper *ServerUMS::mmapper = NULL;
 TMSMapper *ServerUMS::mmapperTMS = NULL;
 FMSMapper *ServerUMS::mmapperFMS = NULL;
 IMSMapper *ServerUMS::mmapperIMS = NULL;
+//}}RELAX<MISRA_0_1_3>
 
 /**
  * \brief To get the unique instance of the server
