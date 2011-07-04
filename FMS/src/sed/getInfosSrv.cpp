@@ -118,7 +118,9 @@ int get_infos(diet_profile_t* profile) {
     fileStatSerialized=strdup(""); 
   }
 
-  if (errMsg==NULL) errMsg = strdup("");
+  if (errMsg==NULL){
+    errMsg = strdup("");
+  }
 
 
   diet_string_set(diet_parameter(profile, 4),fileStatSerialized, DIET_VOLATILE);

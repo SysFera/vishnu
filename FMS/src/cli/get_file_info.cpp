@@ -95,8 +95,6 @@ int main (int ac, char* av[]){
   }
 
 
-
-
   // Process command
   try {
 
@@ -111,6 +109,7 @@ int main (int ac, char* av[]){
 
     // DIET call : getFileInfos
     if(false==sessionKey.empty()){
+
       printSessionKeyMessage();
 
       getFileInfo(sessionKey,path,fileStat);
