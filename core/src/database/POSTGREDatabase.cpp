@@ -124,17 +124,6 @@ POSTGREDatabase::disconnect(){
   return SUCCESS;
 }
 
-/**
- * \brief To set the name of the database to use
- * \param db The name of database to use
- * \return raises an exception on error
- */
-// int
-// POSTGREDatabase::setDatabase(std::string db){
-//
-//   mdatabase = db;
-//   return SUCCESS;
-// }
 
 /**
  * \brief To get the result of a select request
