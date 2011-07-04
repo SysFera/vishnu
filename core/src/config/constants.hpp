@@ -65,7 +65,7 @@ namespace vishnu {
   /**
    * \brief An arry to store all paraeters
    */
-  extern param_t params[];
+  extern param_t params[]; //%RELAX<MISRA_3_1_3> Because this table is defined in constants.cpp 
 }
 
 #endif /* _CONSTANTS_HPP_ */
