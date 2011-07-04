@@ -64,7 +64,7 @@ void File::exists(const bool exist) const {
 }
 
 File::File():exist("false") {
-  srand(time(NULL));
+  
 }
 
 File::File(const SessionServer& sessionServer,
@@ -72,7 +72,7 @@ File::File(const SessionServer& sessionServer,
            :msessionServer(sessionServer) {
   
  
-  srand(time(NULL));
+  
   size_t pos = path.find(':');
   
   if (pos==string::npos) {
@@ -85,7 +85,7 @@ File::File(const SessionServer& sessionServer,
 }
 
 File::File(const File& file) {
-  srand(time(NULL));
+  
   operator=(file);
 }
 
@@ -116,52 +116,75 @@ const string& File::getHost() const {
 }
 
 mode_t File::getPerms() const {
-  if (!isUpToDate()) getInfos();
+  if (!isUpToDate()){
+    getInfos();
+  }
   return mfileStat.getPerms();
 }
 
 uid_t File::getUid() const {
-  if (!isUpToDate()) getInfos();
+  if (!isUpToDate()){
+    getInfos();
+  }
   return mfileStat.getUid();
 }
 
 gid_t File::getGid() const {
-  if (!isUpToDate()) getInfos();
+  if (!isUpToDate()){
+    getInfos();
+  }
   return mfileStat.getGid();
 }
 
 file_size_t File::getSize() const {
-  if (!isUpToDate()) getInfos();
+  if (!isUpToDate()){
+    getInfos();
+  }
   return mfileStat.getSize();
 }
 
 time_t File::getAtime() const {
-  if (!isUpToDate()) getInfos();
+ 
+  if (!isUpToDate()){
+    getInfos();
+  }
   return mfileStat.getAtime();
 }
 
 time_t File::getMtime() const {
-  if (!isUpToDate()) getInfos();
+  if (!isUpToDate()){
+    getInfos();
+  }
   return mfileStat.getMtime();
 }
 
 time_t File::getCtime() const {
-  if (!isUpToDate()) getInfos();
+  if (!isUpToDate()){
+    getInfos();
+  }
   return mfileStat.getCtime();
 }
 
 FileType File::getType() const {
-  if (!isUpToDate()) getInfos();
+ 
+  if (!isUpToDate()){
+    getInfos();
+  }
   return mfileStat.getType();
 }
 
 file_host_t File::getHostType() const {
-  if (getHost()=="localhost") return local;
+ 
+  if (getHost()=="localhost") {
+    return local;
+  }
   return remote;
 }
 
 bool File::exists() const {
-  if (!isUpToDate()) getInfos();
+  if (!isUpToDate()){
+    getInfos();
+  }
   return exist;
 }
 
@@ -188,15 +211,21 @@ string File::extHost(const string& path) {
   size_t pos;
   
   pos = path.find_first_of(':');
-  if (pos == string::npos) return "localhost";
+  if (pos == string::npos) {
+    return "localhost";
+  }
   return path.substr(0, pos);
 }
 
 string File::extName(const string& path) {
+
   size_t pos;
   
   pos = path.find_first_of(':');
-  if (pos == string::npos) return path;
+ 
+  if (pos == string::npos){
+    return path;
+  }
   return path.substr(pos+1);
 }
 

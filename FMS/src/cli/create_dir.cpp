@@ -29,8 +29,6 @@ int main (int argc, char* argv[]){
   string sessionKey;
   string path;
 
-  mode_t mode = 755;
-
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt=processOpt(argv[0], dietConfig);
 

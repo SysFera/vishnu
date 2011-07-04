@@ -68,7 +68,7 @@ int FileTransferProxy::addMvAsyncThread(const CpFileOptions& options){
 int FileTransferProxy::stopThread(const StopTransferOptions& options) {
 
   diet_profile_t* profile = NULL;
-  std::string sessionKey;
+  
   char* optionsToString = NULL;
   char* errorInfo = NULL;
   std::string serviceName = "FileTransferStop";

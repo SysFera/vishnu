@@ -86,28 +86,41 @@ void LocalFileProxy::getInfos() const {
   setAtime(fileStat.st_atime);
   setMtime(fileStat.st_mtime);
   setCtime(fileStat.st_ctime);
-  if (S_ISBLK(fileStat.st_mode))
+ 
+  if (S_ISBLK(fileStat.st_mode)){
     setType(0); //BLOCK
-  if (S_ISCHR(fileStat.st_mode))
+  }
+  if (S_ISCHR(fileStat.st_mode)){
     setType(1); // CHARACTER
-  if (S_ISDIR(fileStat.st_mode))
+  }
+ 
+  if (S_ISDIR(fileStat.st_mode)){
     setType(2);//DIRECTORY
-  if (S_ISLNK(fileStat.st_mode))
+  }
+ 
+  if (S_ISLNK(fileStat.st_mode)){
     setType(3);//SYMBOLICLINK
-  if (S_ISSOCK(fileStat.st_mode))
+  }
+  if (S_ISSOCK(fileStat.st_mode)){
     setType(4);//SCKT
-  if (S_ISFIFO(fileStat.st_mode))
+  }
+  if (S_ISFIFO(fileStat.st_mode)){
     setType(5);//FIFO
-  if (S_ISREG(fileStat.st_mode))
+  }
+  
+  if (S_ISREG(fileStat.st_mode)){
     setType(6);//REGULAR
+  }
   
   usr = getpwuid(fileStat.st_uid);
   grp = getgrgid(fileStat.st_gid);
   
-  if (usr!=NULL)
+  if (usr!=NULL){
     setOwner(usr->pw_name);
-  if (grp!=NULL)
+  }
+  if (grp!=NULL){
     setGroup(grp->gr_name);
+  }
   
   exists(true);
   upToDate=true;
@@ -125,7 +138,6 @@ int LocalFileProxy::transferFile(const string& dest,
                                  FileTransfer& fileTransfer) {
 
   string host = FileProxy::extHost(dest);
-  string destPath = FileProxy::extName(dest);
   bfs::path localFullPath(bfs::current_path().string());
   
   // get the source full qualified host name 
