@@ -206,6 +206,7 @@ std::string SSHJobExec::convertBatchTypeToString(BatchType batchType) {
       break;
     default:
       value = "";
+      break;
   }
   return value;
 }

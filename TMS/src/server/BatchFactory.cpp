@@ -46,6 +46,7 @@ BatchFactory::getBatchServerInstance(BatchType batchType) {
       break;
     default:
       mbatchServer = NULL;
+      break;
   }
 
   return mbatchServer;

@@ -195,6 +195,7 @@ int main (int argc, char* argv[]){
             break;
           default:
             status = -1;
+            break;
         }
       }
       if ((statusStr.size() > 1) || (status == -1)) {
