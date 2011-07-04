@@ -98,12 +98,6 @@ int main (int ac, char* av[]){
     return 0;
   }
 
-
-if (opt->count ("nline")) cout << "nline: " << hofOptions.getNline() << "\n";
-if (opt->count ("path")) cout << "path: " << path << "\n";
-
-
-
   // Process command
   try {
 
@@ -118,11 +112,13 @@ if (opt->count ("path")) cout << "path: " << path << "\n";
 
     // DIET call : head_of_file
     if(false==sessionKey.empty()){
+      
       printSessionKeyMessage();
            
       headOfFile(sessionKey,path,contentOfFile, hofOptions);
 
       cout << contentOfFile << "\n";
+
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";

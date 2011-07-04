@@ -22,7 +22,7 @@ public :
    * \brief Constructor, raises an exception on error
    * \param interval The interval in seconds to check the database
    */
-  MonitorFMS(int interval = 1);
+explicit  MonitorFMS(int interval = 1);
 
   /**
    * \brief Destructor

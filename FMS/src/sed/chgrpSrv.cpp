@@ -35,7 +35,7 @@ diet_profile_desc_t* getChangeGroupProfile() {
  client parameters. Returns an error message if something gone wrong. */
 /* Returns the n first line of the file to the client application. */
 int solveChangeGroup (diet_profile_t* profile) {
-  string localPath, localUser, userKey, head, acLogin, machineName;
+  string localPath, localUser,userKey="", acLogin, machineName;
   char* path, *user, *host,*sessionKey, *group, *errMsg = NULL;
   std::string finishError ="";
   int mapperkey;

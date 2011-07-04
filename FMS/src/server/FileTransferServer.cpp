@@ -24,8 +24,11 @@ using namespace std;
 
 namespace ba=boost::algorithm;
 
+// {{RELAX<MISRA_0_1_3> Two static variables 
 unsigned int FileTransferServer::msshPort=22;
 std::string FileTransferServer::msshCommand="/usr/bin/ssh";
+
+// }}RELAX<MISRA_0_1_3>
 
 // Get The Database instance
 Database* FileTransferServer::getDatabaseInstance(){
@@ -98,8 +101,6 @@ FileTransferServer::FileTransferServer(const SessionServer& sessionServer,
 
 void FileTransferServer::getUserInfo( std::string& clientMachineName, std::string& userId) {
 
-
-  std::string home;
   std::vector<std::string> result;  
   std::vector<std::string>::const_iterator iter;  
   std::string sessionId = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "vsessionid");
@@ -138,7 +139,7 @@ void FileTransferServer::setFileTransfer( const FMS_Data::FileTransfer& fileTran
 
 // To log data into database 
 
-int FileTransferServer::logIntoDatabase(int processId, const std::string& errorMsg){
+void FileTransferServer::logIntoDatabase(int processId, const std::string& errorMsg){
 
   std::string errorMsgCleaned=FileTransferServer::filterString(errorMsg);
 
@@ -250,7 +251,7 @@ int FileTransferServer::addTransferThread(const std::string& srcUser,const std::
     mthread = boost::thread(&FileTransferServer::move,this, transferExec,trCmd);
   }
 
-
+return 0;
 
 }
 
@@ -397,7 +398,7 @@ int FileTransferServer::addCpAsyncThread(const std::string& srcUser,const std::s
 
   mtransferType=File::copy;
   addTransferThread(srcUser,srcMachineName,srcUserKey, destUser, destMachineName, options);
-
+return 0;
 }
 
 
@@ -430,7 +431,7 @@ int FileTransferServer::addMvAsyncThread(const std::string& srcUser,const std::s
   FMS_Data::CpFileOptions mvOptions(options);
   mvOptions.setIsRecursive(true);
   addTransferThread(srcUser,srcMachineName,srcUserKey, destUser, destMachineName,mvOptions);
-
+return 0;
 }
 
 // Wait until a thread terminates
@@ -756,26 +757,35 @@ std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) c
   char* argv[tokens.size()+1];
   argv[tokens.size()]=NULL;
 
-  for (unsigned int i=0; i<tokens.size(); ++i)
+  for (unsigned int i=0; i<tokens.size(); ++i){
     argv[i]=strdup(tokens[i].c_str());
-
+  }
+ 
   if (pipe(comPipeOut)==-1) {
-    for (unsigned int i=0; i<tokens.size(); ++i)
+    for (unsigned int i=0; i<tokens.size(); ++i){
       free(argv[i]);
+    }
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error creating communication pipe");
   }
+ 
   if (pipe(comPipeErr)==-1) {
-    for (unsigned int i=0; i<tokens.size(); ++i)
+ 
+    for (unsigned int i=0; i<tokens.size(); ++i){
+ 
       free(argv[i]);
+ 
+    }
     close(comPipeOut[0]);
     close(comPipeOut[1]);
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error creating communication pipe");
   }
+ 
   pid = fork();
 
   if (pid==-1) {
-    for (unsigned int i=0; i<tokens.size(); ++i)
+    for (unsigned int i=0; i<tokens.size(); ++i){
       free(argv[i]);
+    }
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error forking process");
   }
   if (pid==0) {
@@ -798,24 +808,28 @@ std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) c
   close(comPipeErr[1]);/* Close unused write end */
 
 
-  while (read(comPipeOut[0], &c, 1))
+  while (read(comPipeOut[0], &c, 1)){
     result.first+=c;
+  }
 
-  while (read(comPipeErr[0], &c, 1))
+  while (read(comPipeErr[0], &c, 1)){
     result.second+=c;
-
+  }
+ 
   if (waitpid(pid, &status, 0)==-1) {
     close(comPipeOut[0]);
     close(comPipeErr[0]);
-    for (unsigned int i=0; i<tokens.size(); ++i)
+    for (unsigned int i=0; i<tokens.size(); ++i){
       free(argv[i]);
+    }
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error executing command "+command.str());
   }
 
   close(comPipeOut[0]);
   close(comPipeErr[0]);
-  for (unsigned int i=0; i<tokens.size(); ++i)
+  for (unsigned int i=0; i<tokens.size(); ++i){
     free(argv[i]);
+  }
   mlastExecStatus = status;
 
   return result;

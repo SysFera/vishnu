@@ -10,12 +10,7 @@
 
 using namespace std;
 
-/*FileFactory::FileFactory()
 
-
-
-FileFactory::FileFactory()
-*/
 
 void FileFactory::setSSHServer(const string& sshServer) {
   FileFactory::sshServer = sshServer;
@@ -39,10 +34,8 @@ File* FileFactory::getFileServer(const SessionServer& sessionServer,
                                  const string& user,
                                  const string& key) {
   
-  //if (File::extHost(path)=="localhost")
     return new SSHFile(sessionServer,path, sshServer, user, "", key, "",
                        sshPort, sshCommand, scpCommand);
-  //return new RemoteFile(path, user);
 }
 
 string FileFactory::sshServer = "localhost";
