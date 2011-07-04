@@ -2,7 +2,7 @@
 
 using namespace std;
 
-MapperRegistry* MapperRegistry::mreg = NULL;
+MapperRegistry* MapperRegistry::mreg = NULL; //%RELAX<MISRA_0_1_3> Used in this file
 
 MapperRegistry::MapperRegistry(){
   mmapper = map<string, Mapper*>();

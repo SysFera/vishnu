@@ -197,7 +197,6 @@ string
 FMSMapper::decodeCreateFile(vector<int> separator, const string& msg) {
   string res = "";
   string u;
-  long l;
   res += (mmap.find(VISHNU_CREATE_FILE))->second;
   res+= " ";
   u    = msg.substr(separator.at(0)+1);
