@@ -45,6 +45,7 @@ displayMetric(IMS_Data::Metric* m){
     break;
   default:
     type = "unknown ";
+    break;
   }
   cout << " ------------------------ " << endl;
   cout << " type : " << type << endl;
@@ -83,19 +84,20 @@ displayListSysInfo(IMS_Data::ListSysInfo* li) {
  */
 std::string
 convertMetricToString(const int& metricType) {
-
+  string res = "";
   switch(metricType) {
     case 0:
-      return "UNDEFINED";
+      res = "UNDEFINED";
     case 1:
-      return "CPUUSE";
+      res = "CPUUSE";
     case 2:
-      return "FREEDISKSPACE";
+      res = "FREEDISKSPACE";
     case 3:
-      return "FREEMORY";
+      res = "FREEMORY";
     default:
-      return "UNDEFINED";
+      res = "UNDEFINED";
   }
+  return res;
 }
 
 
