@@ -122,11 +122,11 @@ int main (int argc, char* argv[]){
             status = 3;
             break;
           default:
-            std::cerr << "Unknown file transfer status " << statusStr << std::endl;
-            return 0;
+            status = -1;
+            break;
         }
       }
-      if(statusStr.size() > 1) {
+      if( ( statusStr.size() > 1 ) || ( status==-1) ){
         std::cerr << "Unknown file transfer status " << statusStr << std::endl;
         return 0;
       }

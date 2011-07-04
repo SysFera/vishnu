@@ -98,12 +98,6 @@ int main (int ac, char* av[]){
     return 0;
   }
 
-
-if (opt->count ("nline")) cout << "nline: " << tofOptions.getNline() << "\n";
-if (opt->count ("path")) cout << "path: " << path << "\n";
-
-
-
   // Process command
   try {
 
