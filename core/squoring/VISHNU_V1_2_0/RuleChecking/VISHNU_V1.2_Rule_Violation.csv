@@ -1,0 +1,212 @@
+File;Line;Severity;Rule;Description
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\api\api_ims.cpp;170;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\api\api_ims.cpp;183;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\api\api_ims.cpp;196;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\api\api_ims.cpp;209;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\api\api_ims.cpp;236;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\api\api_ims.cpp;249;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\TMS\src\server\BatchFactory.cpp;48;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\sed\chgrpSrv.cpp;38;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\sed\chmodSrv.cpp;38;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\core\src\config\constants.cpp;6;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\core\src\config\constants.hpp;68;Required;MISRA_3_1_3;Size of arrays
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\create_dir.cpp;32;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\UMS\src\cli\daemon_cleaner.cpp;8;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\UMS\src\cli\daemon_cleaner.cpp;13;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\UMS\src\cli\daemon_cleaner.cpp;19;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\UMS\src\cli\daemon_cleaner.cpp;25;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\UMS\src\cli\daemon_cleaner.cpp;30;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\UMS\src\cli\daemon_cleaner.cpp;139;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\core\src\database\DbConfiguration.cpp;12;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\core\src\database\DbFactory.cpp;19;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\core\test\src\diet_fixtures.hpp;55;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\core\test\src\diet_fixtures.hpp;350;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\cli\displayer.cpp;47;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\cli\displayer.cpp;89;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\cli\displayer.cpp;91;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\cli\displayer.cpp;93;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\cli\displayer.cpp;95;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\cli\displayer.cpp;97;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\client\ExporterProxy.cpp;28;Required;MISRA_8_4_3;Explicit return statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\server\data\ExportFactory.cpp;17;Required;MISRA_0_1_1;Unreachable code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\File.cpp;67;Required;MISRA_18_0_4;Time handling functions
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\File.cpp;75;Required;MISRA_18_0_4;Time handling functions
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\File.cpp;88;Required;MISRA_18_0_4;Time handling functions
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\File.cpp;105;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\File.cpp;110;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\File.cpp;119;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\File.cpp;124;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\File.cpp;129;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\File.cpp;134;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\File.cpp;139;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\File.cpp;144;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\File.cpp;149;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\File.cpp;154;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\File.cpp;159;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\File.cpp;164;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\File.cpp;191;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\File.cpp;199;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\FileFactory.cpp;42;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\FileFactory.cpp;48;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\FileFactory.cpp;49;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\FileFactory.cpp;50;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\FileFactory.cpp;51;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\FileProxy.cpp;143;Required;MISRA_18_0_4;Time handling functions
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\FileProxy.cpp;156;Required;MISRA_18_0_4;Time handling functions
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\FileProxy.cpp;173;Required;MISRA_18_0_4;Time handling functions
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\FileProxy.cpp;207;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\FileProxy.cpp;216;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\FileProxy.cpp;233;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\FileProxy.cpp;242;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\FileProxy.cpp;251;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\FileProxy.cpp;260;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\FileProxy.cpp;269;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\FileProxy.cpp;278;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\FileProxy.cpp;287;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\FileProxy.cpp;296;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\FileProxy.cpp;306;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\FileProxy.cpp;335;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\FileProxy.cpp;348;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\FileProxyFactory.cpp;21;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\FileTransferProxy.cpp;71;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\FileTransferServer.cpp;27;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\FileTransferServer.cpp;28;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\FileTransferServer.cpp;98;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\FileTransferServer.cpp;134;Required;MISRA_8_4_3;Explicit return statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\FileTransferServer.cpp;168;Required;MISRA_8_4_3;Explicit return statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\FileTransferServer.cpp;378;Required;MISRA_8_4_3;Explicit return statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\FileTransferServer.cpp;405;Required;MISRA_8_4_3;Explicit return statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\FileTransferServer.cpp;702;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\FileTransferServer.cpp;706;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\FileTransferServer.cpp;711;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\FileTransferServer.cpp;720;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\FileTransferServer.cpp;744;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\FileTransferServer.cpp;747;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\FileTransferServer.cpp;753;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\FileTransferServer.cpp;760;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\FMSDisplayer.cpp;256;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\FMSDisplayer.cpp;258;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\FMSDisplayer.cpp;260;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\FMSDisplayer.cpp;262;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\FMSDisplayer.cpp;264;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\FMSDisplayer.cpp;279;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\FMSDisplayer.cpp;281;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\FMSDisplayer.cpp;283;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\FMSDisplayer.cpp;285;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\FMSDisplayer.cpp;287;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\FMSDisplayer.cpp;289;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\FMSDisplayer.cpp;291;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\FMSDisplayer.cpp;293;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\FMSDisplayer.cpp;306;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\FMSDisplayer.cpp;308;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\FMSDisplayer.cpp;310;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\FMSDisplayer.cpp;364;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\core\src\registry\FMSMapper.cpp;200;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\cli\get_processes.cpp;51;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\cli\get_processes.cpp;52;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\sed\getInfosSrv.cpp;121;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\head_of_file.cpp;102;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\head_of_file.cpp;103;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\core\src\registry\IMSMapper.cpp;134;Required;MISRA_6_4_6;Default clause in switch
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\sed\imssed.cpp;122;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\sed\imssed.cpp;127;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\list_file_transfers.cpp;126;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\TMS\src\cli\list_jobs.cpp;197;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\TMS\src\server\LLServer.cpp;290;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\TMS\src\server\LLServer.cpp;585;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\TMS\src\server\LLServer.cpp;675;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\UMS\src\server\LocalAccountServer.cpp;303;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\LocalFileProxy.cpp;90;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\LocalFileProxy.cpp;92;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\LocalFileProxy.cpp;94;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\LocalFileProxy.cpp;96;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\LocalFileProxy.cpp;98;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\LocalFileProxy.cpp;100;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\LocalFileProxy.cpp;102;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\LocalFileProxy.cpp;108;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\LocalFileProxy.cpp;110;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\LocalFileProxy.cpp;128;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\LocalFileProxy.hpp;84;Required;MISRA_8_4_3;Explicit return statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\LocalFileProxy.hpp;90;Required;MISRA_8_4_3;Explicit return statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\LocalFileProxy.hpp;96;Required;MISRA_8_4_3;Explicit return statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\LocalFileProxy.hpp;102;Required;MISRA_8_4_3;Explicit return statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\LocalFileProxy.hpp;107;Required;MISRA_8_4_3;Explicit return statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\LocalFileProxy.hpp;113;Required;MISRA_8_4_3;Explicit return statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\LocalFileProxy.hpp;119;Required;MISRA_8_4_3;Explicit return statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\LocalFileProxy.hpp;125;Required;MISRA_8_4_3;Explicit return statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\LocalFileProxy.hpp;130;Required;MISRA_8_4_3;Explicit return statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\LocalFileProxy.hpp;171;Required;MISRA_8_4_3;Explicit return statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\server\controller\logTool\LogTool.cpp;13;Required;MISRA_18_0_4;Time handling functions
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\sed\lsSrv.cpp;41;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\core\src\registry\MapperRegistry.cpp;5;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\server\data\MetricServer.cpp;91;Required;MISRA_6_4_6;Default clause in switch
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\sed\MonitorFMS.hpp;25;Required;MISRA_12_1_3;Constructors
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\core\src\database\MYSQLDatabase.cpp;129;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\core\src\database\MYSQLDatabase.cpp;130;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\core\src\database\MYSQLDatabase.cpp;131;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\core\src\database\MYSQLDatabase.cpp;132;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\core\src\utils\Options.cpp;109;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\core\src\database\POSTGREDatabase.cpp;135;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\server\controller\process\ProcessCtl.cpp;25;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\server\controller\process\ProcessCtl.cpp;26;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\server\controller\process\ProcessCtl.cpp;134;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\client\RemoteFileProxy.cpp;360;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\cli\restart.cpp;89;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\sed\ServerFMS.cpp;17;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\sed\ServerFMS.cpp;18;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\sed\ServerFMS.cpp;19;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\sed\ServerIMS.cpp;20;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\sed\ServerIMS.cpp;21;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\sed\ServerIMS.cpp;22;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\sed\ServerIMS.cpp;23;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\sed\ServerIMS.cpp;24;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\sed\ServerIMS.cpp;25;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\TMS\src\sed\ServerTMS.cpp;15;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\TMS\src\sed\ServerTMS.cpp;16;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\UMS\src\sed\ServerUMS.cpp;11;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\UMS\src\sed\ServerUMS.cpp;12;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\UMS\src\sed\ServerUMS.cpp;13;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\UMS\src\sed\ServerUMS.cpp;14;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\UMS\src\sed\ServerUMS.cpp;15;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\UMS\src\sed\ServerUMS.cpp;16;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\UMS\src\server\SessionServer.cpp;259;Required;MISRA_6_4_6;Default clause in switch
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\server\data\export\shell\ShellExporter.cpp;33;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\server\data\export\shell\ShellExporter.cpp;79;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\server\data\export\shell\ShellExporter.cpp;108;Required;MISRA_0_1_1;Unreachable code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\server\data\export\shell\ShellExporter.cpp;111;Required;MISRA_0_1_1;Unreachable code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\server\data\export\shell\ShellExporter.cpp;114;Required;MISRA_0_1_1;Unreachable code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\server\data\export\shell\ShellExporter.cpp;117;Required;MISRA_0_1_1;Unreachable code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;151;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;153;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;155;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;157;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;159;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;161;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;163;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;175;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;191;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;226;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;231;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;243;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;248;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;266;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;284;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;305;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;324;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;360;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;425;Advisory;MISRA_2_7_3;Commented out sections of code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;519;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;523;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;528;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;537;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;561;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;564;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;570;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\server\SSHFile.cpp;577;Required;MISRA_6_3_1;Compound statement
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\TMS\src\server\SSHJobExec.cpp;208;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\tail_of_file.cpp;102;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\FMS\src\cli\tail_of_file.cpp;103;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\server\controller\logTool\ToolFactory.cpp;5;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\IMS\src\server\controller\logTool\ToolFactory.cpp;26;Required;MISRA_0_1_1;Unreachable code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\core\src\utils\utilServer.cpp;82;Required;MISRA_18_0_4;Time handling functions
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.0\core\src\utils\utilVishnu.cpp;275;Required;MISRA_0_1_3;Unused variables
