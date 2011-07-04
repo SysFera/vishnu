@@ -183,7 +183,8 @@ IMSMapper::decode (const string& msg){
   case VISHNU_GET_SYSINF 	:
     res = decodeGetSys(separatorPos, msg);
     break;
-  default :
+  default:
+    res = "";
     break;
   }
   return res;
