@@ -2,6 +2,9 @@
 #include "sessionUtils.hpp"
 #include "api_ums.hpp"
 #include <fstream>
+
+//{{RELAX<MISRA_0_1_3> Because these variables are used in this file or other files
+
 /**
  * \brief The home directory
  */
@@ -29,7 +32,7 @@ bfs::path daemon_file;
 
 bfs::path proc_dir("/proc");
 
-
+//}}RELAX<MISRA_0_1_3>
 
 using namespace std;
 using namespace vishnu;
@@ -136,7 +139,8 @@ deleter(char* dietConfig,int ac,char* av[]){
 
         }
       }
-      btt::sleep(bpt::seconds(5));// take a pause
+      // take a pause
+      btt::sleep(bpt::seconds(5));//%RELAX<MISRA_0_1_3> Because it used to take a pause
     }
 
 

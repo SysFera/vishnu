@@ -300,7 +300,9 @@ LocalAccountServer::exist(std::string idmachine, std::string iduser) {
  */
 bool
 LocalAccountServer::isLoginUsed(std::string numMachine, std::string acLogin) {
-  if (numMachine.empty() || acLogin.empty()) return false;
+  if (numMachine.empty() || acLogin.empty()) {
+    return false;
+  }
   std::string numUser = getAttribut("where machine_nummachineid="+numMachine+" and aclogin='"+acLogin+"'", "users_numuserid");
   return !numUser.empty();
 }
