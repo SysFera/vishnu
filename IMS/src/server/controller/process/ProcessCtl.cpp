@@ -22,7 +22,6 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI) {
   string cmd ;
   mop = *op;
   IMS_Data::Process proc;
-  string keyPath;
   string login;
   string hostname;
 
@@ -132,7 +131,7 @@ ProcessCtl::stopAll() {
   if (mmid.compare("")==0) {
     throw SystemException(ERRCODE_SYSTEM, "Invalid empty machine id");
   }
-  IMS_Data::ProcessOp processOp;// = ecoreFactory->createProcessOp();
+  IMS_Data::ProcessOp processOp;
   processOp.setMachineId(mmid);
   // Creating the process server with the options
   ProcessServer proc(&processOp, muser);
