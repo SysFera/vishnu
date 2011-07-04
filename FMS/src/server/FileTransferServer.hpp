@@ -394,10 +394,9 @@ class FileTransferServer{
     * \brief To store file transfer information into database
     * \param processId the transfer process identifier
     * \param errorMsg the eventual file transfer execution error message
-    * \return 0 if the function succeeds or an error code otherwise
     */
    
-    int logIntoDatabase(int processId=-1,const std::string& errorMsg="");
+    void logIntoDatabase(int processId=-1,const std::string& errorMsg="");
     /**
      * \brief To Update file transfer data
      */
