@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <API xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="com.sysfera.codegen.apimodel" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
   <modules name="IMS">
-    <services name="exportCommands" description="exports all the commands made by a user during a session" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER ERRCODE_UNDEFINED ERRCODE_SESSION_KEY_EXPIRED ERRCODE_SESSION_KEY_NOT_FOUND">
+    <services name="exportCommands" description="exports all the commands made by a user during a session" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER ERRCODE_UNDEFINED ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="oldSessionId" dataType="//@typeList/@types.0" description="The id of the session to export (session has ended)" shortOptionLetter="" longOptionName=""/>
       <ports name="filename" direction="INOUT" dataType="//@typeList/@types.0" description="The path of the output file containing the Vishnu shell commands" longOptionName=""/>
       <ports name="options" dataType="//@typeList/@types.12" description="options which encapsulate the option for the export" optional="true" shortOptionLetter="" defaultValueLiteral=""/>
       <details key="description" value="Exports all the VISHNU commands submitted during a completed session. This session must be in closed state.&#xA;The output of this command is a file containing a shell script. For safety reasons, the commands having a password for parameter are not exported&#xA;(for example the vishnu_connect and vishnu_change_password commands). This means the shell script must be run after opening&#xA;a session manually or by adding the vishnu_connect command to the script.&#xA;The access to other user's sessions is only permitted to administrators."/>
     </services>
-    <services name="getMetricCurrentValue" description="displays the current values of system metrics" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER ERRCODE_SESSION_KEY_EXPIRED ERRCODE_SESSION_KEY_NOT_FOUND ERRCODE_UNDEFINED">
+    <services name="getMetricCurrentValue" description="displays the current values of system metrics" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" defaultValueLiteral=""/>
       <ports name="metricValue" direction="OUT" dataType="//@typeList/@types.9" description="Value of the metric" defaultValueLiteral=""/>
       <ports name="options" dataType="//@typeList/@types.14" description="The options for the current metric value" longOptionName="" defaultValueLiteral=""/>
       <details key="description" value="Displays the current values of the monitored metrics on the system identified by the machineId argument : cpuload, free diskspace and free memory. &#xA;The units of displayed values are percentages for cpuload and Megabytes (Mb) for diskspace and memory. The provided values are always standard integers (no float values).&#xA;Please note that retrieving these values uses some valuable system ressources and should not occur too frequently to avoid an impact on system performance.&#xA;"/>
     </services>
-    <services name="getMetricHistory" description="displays the history of values of a system metric" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER ERRCODE_SESSION_KEY_EXPIRED ERRCODE_SESSION_KEY_NOT_FOUND ERRCODE_UNDEFINED">
+    <services name="getMetricHistory" description="displays the history of values of a system metric" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" shortOptionLetter=""/>
       <ports name="metricValues" direction="OUT" dataType="//@typeList/@types.9" description="List of metric values" longOptionName=""/>
@@ -77,7 +77,7 @@
       <ports name="freq" dataType="//@typeList/@types.1" description="Frequency the data are updated, in second" shortOptionLetter="" longOptionName=""/>
       <details key="description" value="This function allows an admin to set the update frequency. This frequency corresponds to how often the state of the machines is automatically polled by the IMS server. The value must be in seconds."/>
     </services>
-    <services name="getUpdateFrequency" description="gets the update frequency of the IMS database" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER ERRCODE_SESSION_KEY_EXPIRED ERRCODE_SESSION_KEY_NOT_FOUND ERRCODE_UNDEFINED">
+    <services name="getUpdateFrequency" description="gets the update frequency of the IMS database" resultCodes="VISHNU_OK ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="freq" direction="OUT" dataType="//@typeList/@types.1" description="Frequency the data are updated, in second"/>
       <details key="description" value="This function allows a user to get the update frequency, to know  how often the state of the machines is automatically polled to get historical data."/>
@@ -88,7 +88,7 @@
       <ports name="process" usage="CLI_ONLY" dataType="//@typeList/@types.26" description="The process to stop and do not try to restart anymore" defaultValueLiteral=""/>
       <details key="description" value="This function allows an admin to stop a VISHNU server on a machine. The stopped process will not be restarted automatically.&#xA;The important parameters in the process are the names and the machine.&#xA;The processName must be UMS, TMS, IMS or FMS , in upper case.&#xA;"/>
     </services>
-    <services name="getSystemInfo" description="To get the system info on a machine" resultCodes="ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER VISHNU_OK ERRCODE_SESSION_KEY_EXPIRED ERRCODE_SESSION_KEY_NOT_FOUND ERRCODE_UNDEFINED">
+    <services name="getSystemInfo" description="To get the system info on a machine" resultCodes="ERRCODE_DB_ERROR ERRCODE_INVALID_PARAMETER VISHNU_OK ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="res" direction="OUT" dataType="//@typeList/@types.20" description="The list of the system information gotten"/>
       <ports name="options" dataType="//@typeList/@types.21" description="Optional field for system information" optional="true" shortOptionLetter=""/>
@@ -105,8 +105,8 @@
       <resultCodes name="ERRCODE_INVALID_PARAMETER" description="If a parameter is invalid" value="10"/>
       <resultCodes name="ERRCODE_DB_ERROR" description="The database generated an error" value="2"/>
       <resultCodes name="ERRCODE_COMPONENT_ERROR" description="If a component is unavailable" value="301"/>
-      <resultCodes name="ERRCODE_SESSION_KEY_EXPIRED" description="The session key has expired. The session is closed." value="29" diagnostic=""/>
-      <resultCodes name="ERRCODE_SESSION_KEY_NOT_FOUND" description="The session key is unrecognized." value="28"/>
+      <resultCodes name="ERRCODE_SESSIONKEY_EXPIRED" description="The session key has expired. The session is closed." value="29" diagnostic=""/>
+      <resultCodes name="ERRCODE_SESSIONKEY_NOT_FOUND" description="The session key is unrecognized." value="28"/>
       <resultCodes name="ERRCODE_UNDEFINED" description="Undefined error code" value="9" diagnostic=""/>
     </resultCodeList>
   </modules>
