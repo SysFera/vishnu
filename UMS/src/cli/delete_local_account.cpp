@@ -11,25 +11,25 @@
 #include "connectUtils.hpp"
 
 #include "GenericCli.hpp"
+
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
 
 struct DeleteLocalAccountFunc {
-string muserId;
-string mmachineId;
+  string muserId;
+  string mmachineId;
 
-  
-DeleteLocalAccountFunc(const std::string& userId, const std::string& machineId):muserId(userId), mmachineId(machineId)
+
+  DeleteLocalAccountFunc(const std::string& userId, const std::string& machineId):muserId(userId), mmachineId(machineId)
   {};
 
-  int operator()(std::string sessionKey) {
+  int operator()(const std::string& sessionKey) {
 
-    deleteLocalAccount(sessionKey,muserId,mmachineId);
+    int res= deleteLocalAccount(sessionKey,muserId,mmachineId);
 
-      printSuccessMessage();
-
+    return res;
   }
 };
 
@@ -45,9 +45,6 @@ int main (int ac, char* av[]){
 
   std::string machineId;
 
-  std::string sessionKey;
-
-
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1, dietConfig);
 
@@ -55,14 +52,15 @@ int main (int ac, char* av[]){
 
 
   opt->add("machineId",
-           "the identifier of the machine associated to the local user configuration",
-           HIDDEN,
-           machineId,
-           1);
+      "the identifier of the machine associated to the local user configuration",
+      HIDDEN,
+      machineId,
+      1);
 
   opt->setPosition("machineId",1);
 
-CLICmd cmd = CLICmd (ac, av, opt);
+  CLICmd cmd = CLICmd (ac, av, opt);
+ 
   int ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS){
@@ -72,11 +70,12 @@ CLICmd cmd = CLICmd (ac, av, opt);
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);
+
   if ( opt->count("help")){
     helpUsage(*opt,"userId machineId ");
     return 0;
   }
- 
+
   DeleteLocalAccountFunc apiFunc(userId,machineId);
   return GenericCli().run(apiFunc, dietConfig, ac, av);
 

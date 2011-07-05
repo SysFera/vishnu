@@ -12,16 +12,35 @@
 #include "sessionUtils.hpp"
 #include<boost/bind.hpp>
 
+#include "GenericCli.hpp"
+
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
 
+struct AddUserFunc {
+
+  UMS_Data::User mnewUser;
+
+  AddUserFunc(const UMS_Data::User& newUser ):
+     mnewUser(newUser)
+  {};
+
+  int operator()(std::string sessionKey) {
+
+
+     int res=addUser(sessionKey,mnewUser);
+    
+      cout <<"The user identifier is " << mnewUser.getUserId() << endl;
+
+    return res;
+  }
+};
+
+
 int main (int ac, char* av[]){
 
-
-
-  string sessionKey;
 
   /******* Parsed value containers ****************/
 
@@ -43,91 +62,25 @@ int main (int ac, char* av[]){
   boost::shared_ptr<Options>opt= makeUserOptions(av[0],dietConfig,fPrivilege,fFirstname, fLastname,fEmail,1);
 
 
-  try{
-    /**************  Parse to retrieve option values  ********************/
+  CLICmd cmd = CLICmd (ac, av, opt);
 
-    opt->parse_cli(ac,av);
+ // Parse the cli and setting the options found
+  int ret = cmd.parse(env_name_mapper());
 
-    opt->parse_env(env_name_mapper());
-
-    opt->notify();
-
-
-    /********  Process **************************/
-
-
-    checkVishnuConfig(*opt);
-
-
-
-    /************** Call UMS add user service *******************************/
-
-    // initializing DIET
-
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
-      
-      errorUsage(av[0],dietErrorMsg,EXECERROR);
-
-      return  CLI_ERROR_DIET ;
-    }
-
-    // get the sessionKey
-
-    sessionKey=getLastSessionKey(getppid());
-
-    if(false==sessionKey.empty()){
-
-      printSessionKeyMessage();
-
-      addUser(sessionKey,newUser);
-    
-      cout <<"The user identifier is " << newUser.getUserId() << endl;
-      
-      printSuccessMessage();
-
-    }
-
-
-  }// End of try bloc
-
-  catch(po::required_option& e){// a required parameter is missing
-
-    usage(*opt," firstname lastname privilege email ",requiredParamMsg);
-   
-    return CLI_ERROR_MISSING_PARAMETER;
+  if (ret != CLI_SUCCESS){
+    helpUsage(*opt,"firstname lastname privilege email");
+    return ret;
   }
 
-  catch(po::error& e){ // catch all other bad parameter errors
-
-    errorUsage(av[0], e.what());
-
-    return CLI_ERROR_INVALID_PARAMETER;
+  // PreProcess (adapt some parameters if necessary)
+  checkVishnuConfig(*opt);
+  if ( opt->count("help")){
+    helpUsage(*opt,"firstname lastname privilege email");
+    return 0;
   }
-
-  catch(VishnuException& e){// catch all Vishnu runtime error
-   
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]"; 
-
-    errorUsage(av[0], msg, EXECERROR);
-    
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-
-      removeBadSessionKeyFromFile(getppid());
-    }
-
-
-    return e.getMsgI() ;
-  }
-
-  catch(std::exception& e){// catch all std runtime error
-
-    errorUsage(av[0],e.what());
-
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
+ 
+  AddUserFunc apiFunc(newUser);
+  return GenericCli().run(apiFunc, dietConfig, ac, av);
 
 }// end of main
 
