@@ -3,8 +3,6 @@
 #include "utilVishnu.hpp"
 #include "cliError.hpp"
 #include "cliUtil.hpp"
-#include "api_ums.hpp"
-#include "api_fms.hpp"
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
 
@@ -37,7 +35,7 @@ class GenericCli {
         // DIET call 
         if(false==sessionKey.empty()){
           printSessionKeyMessage();
-          //call of the appi fuction
+          //call of the api fuction
           function(sessionKey);
         }
       } catch(VishnuException& e){// catch all Vishnu runtime error
