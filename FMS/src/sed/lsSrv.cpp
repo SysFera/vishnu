@@ -38,7 +38,7 @@ diet_profile_desc_t* getListDirProfile() {
 /* Returns the n last lines of a file to the client application. */
 int solveListDir(diet_profile_t* profile) {
   
-  string localPath, localUser, userKey, tail, acLogin, machineName, lsString;
+  string localPath, localUser, userKey, acLogin, machineName, lsString;
   list<string> ls;
   list<string>::iterator it;
 
