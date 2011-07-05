@@ -107,6 +107,8 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
 	mem_user.setUserId(*(iter+7));
 	mem_user.setEmail(*(iter+12));
 	break;
+      default :
+	break;
       }	
     }
   } catch (SystemException &e) {
