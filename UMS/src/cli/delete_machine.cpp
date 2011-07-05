@@ -26,11 +26,9 @@ struct DeleteMachineFunc {
   {};
 
   int operator()(std::string sessionKey) {
-      printSessionKeyMessage();
+    printSessionKeyMessage();
 
-      int res = deleteMachine(sessionKey,mmachineId);
-
-      printSuccessMessage(); 
+    int res = deleteMachine(sessionKey,mmachineId);
     return res;
   }
 };
@@ -48,9 +46,9 @@ int main (int ac, char* av[]){
   boost::shared_ptr<Options> opt(new Options(av[0]));
 
   opt->add("dietConfig,c",
-          "The diet config file",
-          ENV,
-          dietConfig);
+      "The diet config file",
+      ENV,
+      dietConfig);
 
   opt->add("machineId",
           "The identifier of the machine",

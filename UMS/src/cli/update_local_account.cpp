@@ -29,8 +29,6 @@ struct UpdateLocalAccountFunc {
 
     int res= updateLocalAccount(sessionKey,mupAcLogin);
 
-    printSuccessMessage();
-
     return res;
 
 
@@ -43,9 +41,6 @@ int main (int ac, char* av[]){
   /******* Parsed value containers ****************/
 
   string dietConfig;
-
-  std::string sessionKey;
-
 
   /********** EMF data ************/
 
