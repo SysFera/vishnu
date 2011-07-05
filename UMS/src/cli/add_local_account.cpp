@@ -22,37 +22,36 @@ using namespace vishnu;
 struct AddLocalAccountFunc {
 
   UMS_Data::LocalAccount mnewAcLogin;
-  
+
   AddLocalAccountFunc(UMS_Data::LocalAccount newAcLogin): mnewAcLogin(newAcLogin)
   {};
 
   int operator()(std::string sessionKey) {
-string sshPublicKey;
+    string sshPublicKey;
     int res=addLocalAccount(sessionKey,mnewAcLogin,sshPublicKey);// call the UMS add local account service
 
-       //To construct the file to save
-      boost::filesystem::path home_dir = getenv("HOME");
-      boost::filesystem::path  config_dir = home_dir;
-      config_dir /= ".vishnu";
-      config_dir /= "localAccountPublicKey";
-    
+    //To construct the file to save
+    boost::filesystem::path home_dir = getenv("HOME");
+    boost::filesystem::path  config_dir = home_dir;
+    config_dir /= ".vishnu";
+    config_dir /= "localAccountPublicKey";
 
-      if(!boost::filesystem::exists(config_dir)){
-        boost::filesystem::create_directories(config_dir);
-      }
-     
-      std::string publicKeyName;
-      publicKeyName.append(config_dir.string()+"/");
-      publicKeyName.append(mnewAcLogin.getUserId());
-      publicKeyName.append("-"+mnewAcLogin.getMachineId());
-      
-      ofstream os(publicKeyName.c_str());
-      os << sshPublicKey;
-      
-      std::cout << "The ssh public key path is  " << publicKeyName << std::endl;
-    
-      printSuccessMessage();
 
+    if(!boost::filesystem::exists(config_dir)){
+      boost::filesystem::create_directories(config_dir);
+    }
+
+    std::string publicKeyName;
+    publicKeyName.append(config_dir.string()+"/");
+    publicKeyName.append(mnewAcLogin.getUserId());
+    publicKeyName.append("-"+mnewAcLogin.getMachineId());
+
+    ofstream os(publicKeyName.c_str());
+    os << sshPublicKey;
+
+    std::cout << "The ssh public key path is  " << publicKeyName << std::endl;
+
+    return res;
   }
 };
 
@@ -61,7 +60,6 @@ int main (int ac, char* av[]){
   /******* Parsed value containers ****************/
 
   string dietConfig;
-  string sessionKey;
 
   /********** EMF data ************/
 
@@ -79,9 +77,9 @@ int main (int ac, char* av[]){
   /**************** Describe options *************/
 
   boost::shared_ptr<Options> opt=makeLocalAccountOptions(av[0], fUserId,dietConfig,fMachineId,
-                                                         fAcLogin,fSshKeyPath,fHomeDirectory,1);
+      fAcLogin,fSshKeyPath,fHomeDirectory,1);
 
-CLICmd cmd = CLICmd (ac, av, opt);
+  CLICmd cmd = CLICmd (ac, av, opt);
   int ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS){
@@ -95,12 +93,12 @@ CLICmd cmd = CLICmd (ac, av, opt);
     helpUsage(*opt,"userId machineId acLogin sshKeyPath homeDirectory");
     return 0;
   }
- 
+
   AddLocalAccountFunc apiFunc(newAcLogin);
   return GenericCli().run(apiFunc, dietConfig, ac, av);
 
 }// end of main
 
 
-     
+
 

@@ -37,6 +37,9 @@ class GenericCli {
           printSessionKeyMessage();
           //call of the api fuction
           function(sessionKey);
+      
+          printSuccessMessage(); 
+
         }
       } catch(VishnuException& e){// catch all Vishnu runtime error
         std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
