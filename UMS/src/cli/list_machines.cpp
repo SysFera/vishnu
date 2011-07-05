@@ -12,10 +12,40 @@
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
 
+#include "GenericCli.hpp"
+
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
+
+struct ListMachineFunc {
+
+  UMS_Data::ListMachines mlsMachine;
+  UMS_Data::ListMachineOptions mlistOptions;
+  bool mfull;
+
+  ListMachineFunc(UMS_Data::ListMachines lsMachine, UMS_Data::ListMachineOptions listOptions, bool full):
+    mlsMachine(lsMachine), mlistOptions(listOptions), mfull(full)
+  {};
+
+  int operator()(std::string sessionKey) {
+    printSessionKeyMessage();
+    int res = listMachines(sessionKey,mlsMachine,mlistOptions);
+    // Display the list
+    if(mfull) {
+      cout << mlsMachine << endl;
+    }
+    else {
+      for(unsigned int i = 0; i < mlsMachine.getMachines().size(); i++) {
+        cout << mlsMachine.getMachines().get(i) << endl;
+      }
+    }
+
+    printSuccessMessage();
+    return res;
+  }
+};
 
 int main (int ac, char* av[]){
 
@@ -46,110 +76,46 @@ int main (int ac, char* av[]){
            "An option for listing all VISHNU machines",
            CONFIG);
 
+  CLICmd cmd = CLICmd (ac, av, opt);
 
   try {
-
-    /**************  Parse to retrieve option values  ********************/
-
     opt->parse_cli(ac,av);
-
-    bool isEmpty=opt->empty();//if no value was given in the command line
-
-    opt->parse_env(env_name_mapper());
-
-    opt->notify();
-
-
-    /********  Process **************************/
-
-    if (opt->count("listAllmachine")){
-
-      listOptions.setListAllmachine(true);
-    }
-
-
-    checkVishnuConfig(*opt);
-
-    if ( opt->count("help")){
-
-      helpUsage(*opt," [options]");
-
-      return 0;
-    }
-
-    /************** Call UMS connect service *******************************/
-
-
-    // initializing DIET
-
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
-    
-      errorUsage(av[0],dietErrorMsg,EXECERROR);
-
-           return  CLI_ERROR_DIET ;
-
-    }
-
-
-    // get the sessionKey
-
-    sessionKey=getLastSessionKey(getppid());
-
-    if(false==sessionKey.empty()){
-
-      printSessionKeyMessage();
-
-      listMachines(sessionKey,lsMachine,listOptions);
-
-
-    }
-
-
-    // Display the list
-    if(isEmpty || opt->count("listAllmachine")) {
-      cout << lsMachine << endl;
-    }
-    else {
-      for(unsigned int i = 0; i < lsMachine.getMachines().size(); i++) {
-        cout << lsMachine.getMachines().get(i) << endl;
-      }
-    }
-
-    printSuccessMessage();
-  }// End of try bloc
-
-  catch(po::error& e){ // catch all other bad parameter errors
-
+  } catch(po::error& e){ // catch all other bad parameter errors
     errorUsage(av[0], e.what());
-
     return CLI_ERROR_INVALID_PARAMETER;
   }
 
-  catch(VishnuException& e){// catch all Vishnu runtime error
+  bool isEmpty=opt->empty();//if no value was given in the command line
 
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
+  // Parse the cli and setting the options found
+  int ret = cmd.parse(env_name_mapper());
 
-    errorUsage(av[0], msg,EXECERROR);
-
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-
-      removeBadSessionKeyFromFile(getppid());
-    }
-
-    return e.getMsgI() ;
-
+  if (ret != CLI_SUCCESS){
+    helpUsage(*opt,"[option]");
+    return ret;
   }
 
-  catch(std::exception& e){ // catch all std runtime error
-
-    errorUsage(av[0], e.what());
-
-    return CLI_ERROR_RUNTIME;
+  // PreProcess (adapt some parameters if necessary)
+  checkVishnuConfig(*opt);
+  if ( opt->count("help")){
+    helpUsage(*opt,"[option]");
+    return 0;
   }
 
-  return 0;
+  /********  Process **************************/
 
+  if (opt->count("listAllmachine")){
+    listOptions.setListAllmachine(true);
+  }
+
+  bool full = false;
+  // Display the list
+  if(isEmpty || opt->count("listAllmachine")) {
+    full = true;
+  }
+
+  ListMachineFunc listFunc(lsMachine,listOptions, full);
+  return GenericCli().run(listFunc, dietConfig, ac, av);
 }// end of main
 
 
