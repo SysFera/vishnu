@@ -38,12 +38,9 @@ struct AddMachineFunc {
 
 int main (int ac, char* av[]){
 
-
   /******* Parsed value containers ****************/
 
   string dietConfig;
-
-  std::string sessionKey;
 
   std::string sshPublicKeyPath;
 
