@@ -30,7 +30,6 @@ struct ListMachineFunc {
   {};
 
   int operator()(std::string sessionKey) {
-    printSessionKeyMessage();
     int res = listMachines(sessionKey,mlsMachine,mlistOptions);
     // Display the list
     if(mfull) {
@@ -42,7 +41,6 @@ struct ListMachineFunc {
       }
     }
 
-    printSuccessMessage();
     return res;
   }
 };

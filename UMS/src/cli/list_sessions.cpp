@@ -11,10 +11,39 @@
 #include "listHistoryCmdUtils.hpp"
 #include<boost/bind.hpp>
 #include "sessionUtils.hpp"
+#include "GenericCli.hpp"
+
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
+
+struct ListSessionFunc {
+
+  UMS_Data::ListSessions mlistSession;
+  UMS_Data::ListSessionOptions mlistOptions;
+  bool mfull;
+
+  ListSessionFunc(UMS_Data::ListSessions listSession, UMS_Data::ListSessionOptions listOptions, bool full):
+    mlistSession(listSession), mlistOptions(listOptions), mfull(full)
+  {};
+
+  int operator()(std::string sessionKey) {
+    int res = listSessions(sessionKey, mlistSession, mlistOptions);
+    // Display the list
+    if(mfull) {
+      cout << mlistSession << std::endl;
+    }
+    else {
+      for(unsigned int i = 0; i < mlistSession.getSessions().size(); i++) {
+        cout << mlistSession.getSessions().get(i) << endl;
+      }
+    }
+  
+   return res;
+  }
+};
+
 
 int main (int ac, char* av[]){
 
@@ -26,8 +55,6 @@ int main (int ac, char* av[]){
   std::string startDateOption;
   
   std::string endDateOption;
-
-  std::string sessionKey;
 
   /********** EMF data ************/
 
@@ -78,119 +105,56 @@ int main (int ac, char* av[]){
            CONFIG,
            fMachineId);
 
+  CLICmd cmd = CLICmd (ac, av, opt);
 
-  try{
-    /**************  Parse to retrieve option values  ********************/
-
+  try {
     opt->parse_cli(ac,av);
-
-    bool isEmpty=opt->empty();//if no value was given in the command line
-
-    opt->parse_env(env_name_mapper());
-
-    opt->notify();
-
-
-    /********  Process **************************/
-
-
-    if (opt->count("adminListOption")){
-
-      listOptions.setAdminListOption(true);
-    }
-
-
-    checkVishnuConfig(*opt);
-
-    if ( opt->count("help")){
-
-      helpUsage(*opt,"[options]  ");
-
-      return 0;
-    }
-
-
-    //convert the date in long format 
-    
-    if(opt->count("startDateOption")){
-      listOptions.setStartDateOption(string_to_time_t(startDateOption));
-    }
-
-    if(opt->count("endDateOption")){
-      listOptions.setEndDateOption(string_to_time_t(endDateOption));
-    }
-
-
-    /************** Call UMS list sessions service *******************************/
-
-
-    // initializing DIET
-
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
-
-      errorUsage(av[0],dietErrorMsg,EXECERROR);
-
-      return  CLI_ERROR_DIET ;
-    }
-
-
-    // get the sessionKey
-
-    sessionKey=getLastSessionKey(getppid());
-
-    if(false==sessionKey.empty()){
-
-      printSessionKeyMessage();
-
-      listSessions(sessionKey,listSession,listOptions);
-
-    }
-
-
-    // Display the list
-    if(isEmpty|| (opt->count("adminListOption"))) {
-      cout << listSession << std::endl;
-    }
-    else {
-      for(unsigned int i = 0; i < listSession.getSessions().size(); i++) {
-        cout << listSession.getSessions().get(i) << endl;
-      }
-    }
-
-    printSuccessMessage();
-  }// End of try bloc
-
-  catch(po::error& e){ // catch all other bad parameter errors
-
+  } catch(po::error& e){ // catch all other bad parameter errors
     errorUsage(av[0], e.what());
-
     return CLI_ERROR_INVALID_PARAMETER;
   }
 
-  catch(VishnuException& e){// catch all Vishnu runtime error
+  bool isEmpty=opt->empty();//if no value was given in the command line
 
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
+  // Parse the cli and setting the options found
+  int ret = cmd.parse(env_name_mapper());
 
-    errorUsage(av[0], msg,EXECERROR);
-
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-
-      removeBadSessionKeyFromFile(getppid());
-    }
-
-    return e.getMsgI() ;
+  if (ret != CLI_SUCCESS){
+    helpUsage(*opt,"[option]");
+    return ret;
   }
 
-  catch(std::exception& e){// catch all std runtime error
-
-    errorUsage(av[0],e.what());
-
-    return CLI_ERROR_RUNTIME;
+  // PreProcess (adapt some parameters if necessary)
+  checkVishnuConfig(*opt);
+  if ( opt->count("help")){
+    helpUsage(*opt,"[option]");
+    return 0;
   }
 
-  return 0;
+
+  /********  Process **************************/
+  if (opt->count("adminListOption")){
+
+    listOptions.setAdminListOption(true);
+  }
+
+  //convert the date in long format 
+  if(opt->count("startDateOption")){
+    listOptions.setStartDateOption(string_to_time_t(startDateOption));
+  }
+
+  if(opt->count("endDateOption")){
+    listOptions.setEndDateOption(string_to_time_t(endDateOption));
+  }
+
+  bool full = false;
+  // Display the list
+  if(isEmpty|| (opt->count("adminListOption"))) {
+    full = true;
+  }
+
+  /************** Call UMS list sessions service *******************************/
+  ListSessionFunc listSessFunc(listSession,listOptions, full);
+  return GenericCli().run(listSessFunc, dietConfig, ac, av);
 
 }// end of main
-
-
