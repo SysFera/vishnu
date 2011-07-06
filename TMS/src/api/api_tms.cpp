@@ -10,6 +10,20 @@
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 
+//UMS include
+#include "SessionProxy.hpp"
+#include "MachineProxy.hpp"
+#include "LocalAccountProxy.hpp"
+#include "ConfigurationProxy.hpp"
+#include "OptionValueProxy.hpp"
+#include "QueryProxy.hpp"
+#include "UtilsProxy.hpp"
+#include "utilVishnu.hpp"
+
+//TMS include
+#include "JobProxy.hpp"
+#include "JobOutputProxy.hpp"
+
 /**
   * \brief The submitJob function submits job on a machine through the use of a script (scriptFilePath).
   * \param sessionKey : The session key

@@ -10,6 +10,7 @@
 #include "listMachineUtils.hpp"
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
+#include "utilVishnu.hpp"
 
 namespace po = boost::program_options;
 
