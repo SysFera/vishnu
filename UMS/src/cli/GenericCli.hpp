@@ -87,7 +87,7 @@ class GenericCli {
 
     }
 
-    void processListOpt(const boost::shared_ptr<Options>& opt,  CLICmd cmd, bool isEmpty, int ac, char*  av[]) {
+    void processListOpt(const boost::shared_ptr<Options>& opt,  CLICmd cmd, bool& isEmpty, int ac, char*  av[]) {
     
       try {
         opt->parse_cli(ac,av);
