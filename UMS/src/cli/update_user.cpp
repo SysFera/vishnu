@@ -27,9 +27,7 @@ struct UpDateUserFunc {
   {};
 
   int operator()(std::string sessionKey) {
-    printSessionKeyMessage();
     int res = updateUser(sessionKey,mupDateUser);
-    printSuccessMessage();
     return res;
   }
 };
