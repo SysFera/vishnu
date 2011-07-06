@@ -14,28 +14,42 @@
 #include "sessionUtils.hpp"
 #include "displayer.hpp"
 
+#include "GenericCli.hpp"
+
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
 
+struct ListQueuesFunc {
+
+  std::string mmachineId;
+  std::string mqueueName;
+
+  ListQueuesFunc(const std::string& machineId, const std::string& queueName):
+    mmachineId(machineId), mqueueName(queueName)
+  {};
+
+  int operator()(std::string sessionKey) {
+    TMS_Data::ListQueues queue;
+    int res = listQueues(sessionKey, mmachineId, queue, mqueueName);
+    if (mqueueName.size()!=0){
+      displayQueues(queue);
+    } else {
+      std::cout << queue << std::endl;
+    }
+  
+      return res;
+  }
+};
+
 int 
 main (int argc, char* argv[]){
   
-  int ret; // Return value
-
   /******* Parsed value containers ****************/
   string dietConfig;
-  string sessionKey;
   string machineId;
   string queueName;
-
-  /********** EMF data ************/
-
-  /******** Callback functions ******************/
-     
-  /*********** Out parameters *********************/
-  TMS_Data::ListQueues queue;
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(new Options(argv[0]));
@@ -60,59 +74,11 @@ main (int argc, char* argv[]){
 	   HIDDEN,
 	   machineId,1);
 
-  CLICmd cmd = CLICmd (argc, argv, opt);
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
-  // Parse the cli and setting the options found
-  ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] machineId");
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);  
-  if ( opt->count("help")){
-    helpUsage(*opt,"[options] machineId");
-    return 0;
-  }
-
-  // Process command
-  try {
-
-    // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
-      errorUsage(argv[0],dietErrorMsg,EXECERROR);
-      return  CLI_ERROR_DIET ;
-    }
-
-    // get the sessionKey
-    sessionKey=getLastSessionKey(getppid());
-
-    // DIET call : list queue
-    if(false==sessionKey.empty()){
-      printSessionKeyMessage();
-      listQueues(sessionKey, machineId, queue, queueName);
-    }
-
-    if (queueName.size()!=0){
-      displayQueues(queue);
-    } else {
-      std::cout << queue << std::endl;
-    }
-    printSuccessMessage();
-  } catch(VishnuException& e){// catch all Vishnu runtime error
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-    errorUsage(argv[0], msg,EXECERROR);
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-      removeBadSessionKeyFromFile(getppid());
-    }
-    return e.getMsgI() ;
-  } catch(std::exception& e){// catch all std runtime error
-    errorUsage(argv[0],e.what());
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
+  //call of the api function
+  ListQueuesFunc listQueueFunc(machineId, queueName);
+  return GenericCli().run(listQueueFunc, dietConfig, argc, argv);
 }
