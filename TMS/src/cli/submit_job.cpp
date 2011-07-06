@@ -175,16 +175,16 @@ int main (int argc, char* argv[]){
     }
     displaySubmit(job);
     printSuccessMessage();
-  } catch(VishnuException& e){// catch all Vishnu runtime error
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-    errorUsage(argv[0], msg,EXECERROR);
+  } catch(VishnuException& except){// catch all Vishnu runtime error
+    std::string  submitErrmsg = except.getMsg()+" ["+except.getMsgComp()+"]";
+    errorUsage(argv[0], submitErrmsg,EXECERROR);
     //check the bad session key
-    if (checkBadSessionKeyError(e)){
+    if (checkBadSessionKeyError(except)){
       removeBadSessionKeyFromFile(getppid());
     }
-    return e.getMsgI() ;
-  } catch(std::exception& e){// catch all std runtime error
-    errorUsage(argv[0],e.what());
+    return except.getMsgI() ;
+  } catch(std::exception& except){// catch all std runtime error
+    errorUsage(argv[0],except.what());
     return CLI_ERROR_RUNTIME;
   }
 
