@@ -66,6 +66,7 @@ int main (int ac, char* av[]){
 
   boost::function1<void,string> fUserId( boost::bind(&UMS_Data::ListMachineOptions::setUserId,boost::ref(listOptions),_1));
   boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::ListMachineOptions::setMachineId,boost::ref(listOptions),_1));
+  boost::function1<void,bool> fListAllmachine( boost::bind(&UMS_Data::ListMachineOptions::setListAllmachine,boost::ref(listOptions),_1));
 
   /**************** Describe options *************/
 
@@ -74,7 +75,8 @@ int main (int ac, char* av[]){
 
   opt->add("listAllmachine,a",
            "An option for listing all VISHNU machines",
-           CONFIG);
+           CONFIG,
+           fListAllmachine);
 
   CLICmd cmd = CLICmd (ac, av, opt);
 
@@ -103,10 +105,6 @@ int main (int ac, char* av[]){
   }
 
   /********  Process **************************/
-
-  if (opt->count("listAllmachine")){
-    listOptions.setListAllmachine(true);
-  }
 
   bool full = false;
   // Display the list

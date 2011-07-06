@@ -29,7 +29,6 @@ struct UpDateMachineFunc {
   {};
 
   int operator()(std::string sessionKey) {
-    printSessionKeyMessage();
     int res = updateMachine(sessionKey,mupDateMachine);
     return res;
   }
