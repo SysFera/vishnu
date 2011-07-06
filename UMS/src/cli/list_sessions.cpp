@@ -8,6 +8,7 @@
 #include "common.hpp"
 #include "cliUtil.hpp"
 #include "utils.hpp"
+#include "utilVishnu.hpp"
 #include "listHistoryCmdUtils.hpp"
 #include<boost/bind.hpp>
 #include "sessionUtils.hpp"
