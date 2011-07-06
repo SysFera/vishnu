@@ -7,6 +7,7 @@
 #include "common.hpp"
 #include "cliUtil.hpp"
 #include "utils.hpp"
+#include "utilVishnu.hpp"
 #include "sessionUtils.hpp"
 #include<boost/bind.hpp>
 
