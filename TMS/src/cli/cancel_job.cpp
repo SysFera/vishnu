@@ -37,8 +37,6 @@ struct CancelJobFunc {
 
 int main (int argc, char* argv[]){
   
-  int ret; // Return value
-
   /******* Parsed value containers ****************/
   string dietConfig;
   string machineId;
