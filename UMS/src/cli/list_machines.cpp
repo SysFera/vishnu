@@ -64,20 +64,17 @@ int main (int ac, char* av[]){
 
   boost::function1<void,string> fUserId( boost::bind(&UMS_Data::ListMachineOptions::setUserId,boost::ref(listOptions),_1));
   boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::ListMachineOptions::setMachineId,boost::ref(listOptions),_1));
-  boost::function1<void,bool> fListAllmachine( boost::bind(&UMS_Data::ListMachineOptions::setListAllmachine,boost::ref(listOptions),_1));
 
   /**************** Describe options *************/
-
   boost::shared_ptr<Options> opt= makeListMachineOptions(av[0],fUserId, dietConfig, fMachineId);
 
 
   opt->add("listAllmachine,a",
            "An option for listing all VISHNU machines",
-           CONFIG,
-           fListAllmachine);
+           CONFIG);
 
   CLICmd cmd = CLICmd (ac, av, opt);
-
+ /*
   try {
     opt->parse_cli(ac,av);
   } catch(po::error& e){ // catch all other bad parameter errors
@@ -100,9 +97,17 @@ int main (int ac, char* av[]){
   if ( opt->count("help")){
     helpUsage(*opt,"[option]");
     return 0;
-  }
+  }*/
+
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, cmd, isEmpty, ac, av);
 
   /********  Process **************************/
+  if (opt->count("listAllmachine")){
+
+    listOptions.setListAllmachine(true);
+  }
 
   bool full = false;
   // Display the list
