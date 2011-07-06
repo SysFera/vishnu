@@ -10,7 +10,7 @@
 #include "UMS_fixtures.hpp"
 #include "api_ums.hpp"
 #include "diet_config_tests.h"
-
+#include"DIET_client.h" 
 //BOOST_AUTO_TEST_SUITE( test_suite )
 BOOST_FIXTURE_TEST_SUITE( test_suite, UMSSeDFixture )
 using namespace std;
