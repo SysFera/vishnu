@@ -106,33 +106,6 @@ int main (int ac, char* av[]){
            CONFIG,
            fMachineId);
 
-  /*
-  CLICmd cmd = CLICmd (ac, av, opt);
-  
-  try {
-    opt->parse_cli(ac,av);
-  } catch(po::error& e){ // catch all other bad parameter errors
-    errorUsage(av[0], e.what());
-    return CLI_ERROR_INVALID_PARAMETER;
-  }
-
-  bool isEmpty=opt->empty();//if no value was given in the command line
-
-  // Parse the cli and setting the options found
-  int ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[option]");
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);
-  if ( opt->count("help")){
-    helpUsage(*opt,"[option]");
-    return 0;
-  }*/
-
   bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, ac, av);

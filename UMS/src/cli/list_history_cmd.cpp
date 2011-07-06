@@ -70,30 +70,6 @@ int main (int ac, char* av[]){
 
   boost::shared_ptr<Options> opt= makeListHistoryCmdOptions(av[0],fUserId, dietConfig, fSessionId, startDateOption, endDateOption);
 
-
-  /*CLICmd cmd = CLICmd (ac, av, opt);
-  
-  try {
-    opt->parse_cli(ac,av);
-  } catch(po::error& e){ // catch all other bad parameter errors
-    errorUsage(av[0], e.what());
-    return CLI_ERROR_INVALID_PARAMETER;
-  }
-
-  bool isEmpty=opt->empty();//if no value was given in the command line
-
-  // Parse the cli and setting the options found
-  int ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[option]");
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);
-  */
-
   bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, ac, av);
