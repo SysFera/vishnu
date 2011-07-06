@@ -133,6 +133,83 @@ Options::add(const std::string& name,
 
 }
 
+  /**
+      *
+      * \brief function provinding a way to add a boolean option
+      * \param name: the name of the option
+      * \param desc: brief description of the option
+      * \param group: a group which option belongs to
+      * \param value: the value of the option when option is provided in
+      * command line
+      * \param required: for required option
+      */
+
+      template<>
+      void Options::add(const std::string& name,
+              const std::string& desc,
+              const Group_type& group,
+              bool& value,
+              int required){
+
+          po::options_description tmp_options;
+
+          po::typed_value<bool>* optionvalue=po::bool_switch(&value);
+
+
+          if (required){
+
+            optionvalue=optionvalue->required();
+          }
+
+            tmp_options.add_options()(name.c_str(),optionvalue,desc.c_str());
+
+
+          // Set the group
+
+          setGroup(tmp_options,group);
+
+        }
+     
+
+/**
+ *
+ * \brief Function providing another way to add a typed option
+ * \param name: the name of the option
+ * \param desc: brief description of the option
+ * \param group: a group which option belongs to
+ * \param userFunc: The user defined function (callback)
+ * command line
+ * \param required: for required option
+ */
+
+template<>
+void Options::add(const std::string& name,
+    const std::string& desc,
+    const Group_type& group,
+    boost::function1<void, bool>& userFunc,
+    int required){
+
+  po::options_description tmp_options;
+
+  po::typed_value<bool>* optionvalue=po::bool_switch()->notifier(userFunc);
+
+
+  if (required){
+
+    optionvalue=optionvalue->required();
+  }
+
+  tmp_options.add_options()(name.c_str(),optionvalue,desc.c_str());
+
+  // Set the group
+
+  setGroup(tmp_options,group);
+
+}
+
+
+
+
 
 
 
@@ -160,13 +237,13 @@ Options::parse_cli(int ac, char* av[]) {
   po::options_description cmdline_options;
 
   cmdline_options.add(generic_options)
-                 .add(config_options)
-                 .add(env_options)
-                 .add(hidden_options);
+    .add(config_options)
+    .add(env_options)
+    .add(hidden_options);
 
   store(po::command_line_parser(ac, av)
-        .options(cmdline_options).positional(position)
-        .run(), vm);
+      .options(cmdline_options).positional(position)
+      .run(), vm);
 }
 
 /**

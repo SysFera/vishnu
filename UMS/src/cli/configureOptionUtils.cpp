@@ -7,6 +7,7 @@
 
 #include "configureOptionUtils.hpp"
 #include "Options.hpp"
+#include "cliUtil.hpp"
 #include "utils.hpp"
 #include <boost/bind.hpp>
 
@@ -60,13 +61,14 @@ void makeConfigureOptions(boost::shared_ptr<Options> opt,std::string& dietConfig
  * \param opt:  Describes all allowed options for the command
  * \param ac :  The number of parameters the command takes
  * \param av : The name of all of that parameters
- * \param conf_func: The VISHNU API function, configureOption our
+ * \param conf_func: The VISHNU API function, configureOption or
  * ConfigureDefaultOption
+ * \return 0 if the function succeeds, an error code otherwise
  */
 
 
 
-void commonConfigure(boost::shared_ptr<Options> opt, int ac, char* av[], const ConfigureCallBackType& conf_func){
+int commonConfigure(boost::shared_ptr<Options> opt, int ac, char* av[], const ConfigureCallBackType& conf_func){
 
 
   /******* Parsed value containers ****************/
@@ -92,6 +94,7 @@ void commonConfigure(boost::shared_ptr<Options> opt, int ac, char* av[], const C
   makeConfigureOptions(opt,dietConfig,fOptionName, fValue);
 
 
+  try{
 
   /**************  Parse to retrieve option values  ********************/
 
@@ -127,14 +130,61 @@ void commonConfigure(boost::shared_ptr<Options> opt, int ac, char* av[], const C
   sessionKey=getLastSessionKey(getppid());
 
 
-  if(false==sessionKey.empty()){
+    if(false==sessionKey.empty()){
 
-    conf_func(sessionKey,optionValue);
+      conf_func(sessionKey,optionValue);
 
+
+    }
 
   }
+  catch(po::required_option& e){// a required parameter is missing
 
-}
+    usage(*opt,"[options] optionName value ",requiredParamMsg);
+
+    return CLI_ERROR_MISSING_PARAMETER;
+  }
+
+  catch(po::error& e){ // catch all other bad parameter errors
+
+    errorUsage(av[0], e.what());
+
+    return CLI_ERROR_INVALID_PARAMETER;
+  }
+
+
+  catch(VishnuException& e){// catch all Vishnu runtime error
+
+    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
+
+    errorUsage(av[0], msg,EXECERROR);
+
+    //check the bad session key
+
+    if (checkBadSessionKeyError(e)){
+
+      removeBadSessionKeyFromFile(getppid());
+    }
+
+
+    return e.getMsgI() ;
+  }
+
+  catch(std::exception& e){// catch all std runtime error
+
+    errorUsage(av[0], e.what());
+
+    return CLI_ERROR_RUNTIME;
+  }
+
+  return 0;
+
+
+}// end of main
+
+
+
+
 
 
 

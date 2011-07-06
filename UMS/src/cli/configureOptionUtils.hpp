@@ -57,8 +57,9 @@ makeConfigureOptions(boost::shared_ptr<Options> opt,std::string& dietConfig,
  * \param av : The name of all of that parameters
  * \param conf_func: The VISHNU API function, configureOption our
  * ConfigureDefaultOption
+ * \return 0 if the function succeeds, an error code otherwise
  */
-void
+int
 commonConfigure(boost::shared_ptr<Options> opt, int ac, char* av[] , const ConfigureCallBackType& conf_func);
 
 
