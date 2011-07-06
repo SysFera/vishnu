@@ -61,7 +61,7 @@ main (int argc, char* argv[]){
 
   // All cli obligatory parameters
   opt->add("machineId,m",
-	   "represents the id of the machine",
+	   "represents the id of the machine where the job has been submitted",
 	   HIDDEN,
 	   machineId,1);
   opt->setPosition("machineId",1);
