@@ -87,4 +87,30 @@ class GenericCli {
 
     }
 
+    void processListOpt(const boost::shared_ptr<Options>& opt,  CLICmd cmd, bool isEmpty, int ac, char*  av[]) {
+    
+      try {
+        opt->parse_cli(ac,av);
+      } catch(po::error& e){ // catch all other bad parameter errors
+        helpUsage(*opt,"[option]");
+        exit(CLI_ERROR_INVALID_PARAMETER);
+      }
+
+      isEmpty=opt->empty();//if no value was given in the command line
+      // Parse the cli and setting the options found
+      int ret = cmd.parse(env_name_mapper());
+
+      if (ret != CLI_SUCCESS){
+        helpUsage(*opt,"[option]");
+        exit(ret);
+      }
+
+      // PreProcess (adapt some parameters if necessary)
+      checkVishnuConfig(*opt);
+      if ( opt->count("help")){
+        helpUsage(*opt,"[option]");
+        exit(0);
+      }
+
+    }
 };
