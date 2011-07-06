@@ -12,10 +12,39 @@
 #include "utils.hpp"
 #include "utilVishnu.hpp"
 #include<boost/bind.hpp>
+#include "GenericCli.hpp"
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
+
+struct ListCommandsFunc {
+
+  UMS_Data::ListCommands mlistCmd;
+
+  UMS_Data::ListCmdOptions mlistOptions;
+  bool mfull;
+
+  ListCommandsFunc(const UMS_Data::ListCommands& listCmd,const UMS_Data::ListCmdOptions& listOptions, bool full):
+    mlistCmd(listCmd), mlistOptions(listOptions), mfull(full)
+  {};
+
+  int operator()(std::string sessionKey) {
+    int res = listHistoryCmd(sessionKey,mlistCmd,mlistOptions);
+    // Display the list
+    if(mfull) {
+      cout << mlistCmd << endl;
+    }
+    else {
+      for(unsigned int i = 0; i <mlistCmd.getCommands().size(); i++) {
+        cout << mlistCmd.getCommands().get(i) << endl;
+      }
+    }
+
+    return res;
+  }
+};
+
 
 int main (int ac, char* av[]){
 
@@ -25,7 +54,6 @@ int main (int ac, char* av[]){
 
   string startDateOption;
   string endDateOption;
-  std::string sessionKey;
 
   /********** EMF data ************/
 
@@ -43,20 +71,47 @@ int main (int ac, char* av[]){
   boost::shared_ptr<Options> opt= makeListHistoryCmdOptions(av[0],fUserId, dietConfig, fSessionId, startDateOption, endDateOption);
 
 
+  /*CLICmd cmd = CLICmd (ac, av, opt);
+  
   try {
-
-    /**************  Parse to retrieve option values  ********************/
-
     opt->parse_cli(ac,av);
+  } catch(po::error& e){ // catch all other bad parameter errors
+    errorUsage(av[0], e.what());
+    return CLI_ERROR_INVALID_PARAMETER;
+  }
 
-    bool isEmpty=opt->empty();//if no value was given in the command line
+  bool isEmpty=opt->empty();//if no value was given in the command line
 
-    opt->parse_env(env_name_mapper());
+  // Parse the cli and setting the options found
+  int ret = cmd.parse(env_name_mapper());
 
-    opt->notify();
+  if (ret != CLI_SUCCESS){
+    helpUsage(*opt,"[option]");
+    return ret;
+  }
 
+  // PreProcess (adapt some parameters if necessary)
+  checkVishnuConfig(*opt);
+  */
 
-    /********  Process **************************/
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, ac, av);
+
+  if ( opt->count("help")){
+    helpUsage(*opt,"[option]");
+    return 0;
+  }
+
+  /********  Process **************************/
+
+  bool full = false;
+  // Display the list
+  if(isEmpty || opt->count("adminListOption")) {
+    full = true;
+  }
+
+  /********  Process **************************/
 
     if (opt->count("adminListOption")){
 
@@ -82,79 +137,10 @@ int main (int ac, char* av[]){
       listOptions.setEndDateOption(string_to_time_t(endDateOption));
     }
 
-    /************** Call UMS list history command service *******************************/
 
-    // initializing DIET
-
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
-
-      errorUsage(av[0],dietErrorMsg,EXECERROR);
-
-      return  CLI_ERROR_DIET ;
-    }
-
-    // get the sessionKey
-
-    sessionKey=getLastSessionKey(getppid());
-
-    if(false==sessionKey.empty()){
-
-      printSessionKeyMessage();
-
-      listHistoryCmd(sessionKey,listCmd,listOptions);
-
-    }
-
-
-    // Display the list
-    if(isEmpty || (opt->count("adminListOption"))) {
-      cout << listCmd << endl;
-    }
-    else {
-      for(unsigned int i = 0; i < listCmd.getCommands().size(); i++) {
-        cout << listCmd.getCommands().get(i) << endl;
-      }
-    }
-
-    printSuccessMessage();
-  }// End of try bloc
-
-
-  // {{RELAX<CODEREDUCER> The error handling is the same in all command 
-
-  catch(po::error& e){ // catch all bad parameter errors
-
-    errorUsage(av[0], e.what());
-
-    return CLI_ERROR_INVALID_PARAMETER;
-  }
-
-  catch(VishnuException& e){// catch all Vishnu runtime error
-
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-
-    errorUsage(av[0], msg,EXECERROR);
-
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-
-      removeBadSessionKeyFromFile(getppid());
-    }
-
-    return e.getMsgI() ;
-  }
-
-  catch(std::exception& e){// catch all std runtime error
-
-    errorUsage(av[0], e.what());
-
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
-
-  // }}RELAX<CODEREDUCER>
-
+  ListCommandsFunc listFunc(listCmd,listOptions, full);
+  return GenericCli().run(listFunc, dietConfig, ac, av);
 }// end of main
 
 
+  

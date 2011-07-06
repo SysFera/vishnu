@@ -12,10 +12,38 @@
 #include <boost/bind.hpp>
 #include "utilVishnu.hpp"
 
+#include "GenericCli.hpp"
+
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
+
+struct ListLocalAccountFunc {
+
+  UMS_Data::ListLocalAccounts mlsLocalAccount;
+  UMS_Data::ListLocalAccOptions mlistOptions;
+  bool mfull;
+
+  ListLocalAccountFunc(UMS_Data::ListLocalAccounts lsLocalAccount, UMS_Data::ListLocalAccOptions listOptions, bool full):
+    mlsLocalAccount(lsLocalAccount), mlistOptions(listOptions), mfull(full)
+  {};
+
+  int operator()(std::string sessionKey) {
+    int res =  listLocalAccounts(sessionKey,mlsLocalAccount,mlistOptions);
+    // Display the list
+    if(mfull) {
+      cout << mlsLocalAccount << endl;
+    }
+    else {
+      for(unsigned int i = 0; i < mlsLocalAccount.getAccounts().size(); i++) {
+        cout << mlsLocalAccount.getAccounts().get(i) ;
+      }
+    }
+
+    return res;
+  }
+};
 
 int main (int ac, char* av[]){
 
@@ -23,8 +51,6 @@ int main (int ac, char* av[]){
   /******* Parsed value containers ****************/
 
   string dietConfig;
-
-  std::string sessionKey;
 
   /********** EMF data ************/
 
@@ -39,8 +65,6 @@ int main (int ac, char* av[]){
   boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::ListLocalAccOptions::setMachineId,boost::ref(listOptions),_1));
 
   /**************** Describe options *************/
-
-
   boost::shared_ptr<Options> opt= makeListMachineOptions(av[0],fUserId, dietConfig, fMachineId);
 
 
@@ -48,109 +72,47 @@ int main (int ac, char* av[]){
            "is an admin option for listing all local configurations of all users	",
            CONFIG);
 
+  /*CLICmd cmd = CLICmd (ac, av, opt);
 
   try {
-    /**************  Parse to retrieve option values  ********************/
-
     opt->parse_cli(ac,av);
-
-    bool isEmpty=opt->empty();//if no value was given in the command line
-
-    opt->parse_env(env_name_mapper());
-
-    opt->notify();
-
-
-    /********  Process **************************/
-
-    if (opt->count("adminListOption")){
-
-        listOptions.setAdminListOption(true);
-    }
-
-    checkVishnuConfig(*opt);
-
-    if ( opt->count("help")){
-
-      helpUsage(*opt," [options]");
-
-      return 0;
-    }
-
-
-    /************** Call UMS list loacl account service *******************************/
-
-
-    // initializing DIET
-
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
-     
-      errorUsage(av[0],dietErrorMsg,EXECERROR);
-
-           return  CLI_ERROR_DIET ;
-    }
-
-
-    // get the sessionKey
-
-    sessionKey=getLastSessionKey(getppid());
-
-    if(false==sessionKey.empty()){
-
-      printSessionKeyMessage();
-
-      listLocalAccounts(sessionKey,lsLocalAccount,listOptions);
-
-    }
-
-
-    // Display the list
-    if(isEmpty|| (opt->count("adminListOption"))) {
-      cout << lsLocalAccount << endl;
-    }
-    else {
-      for(unsigned int i = 0; i < lsLocalAccount.getAccounts().size(); i++) {
-        cout << lsLocalAccount.getAccounts().get(i) ;
-      }
-    }
-
-    printSuccessMessage();
-  }// End of try bloc
-
-  catch(po::error& e){ // catch all other bad parameter errors
-
+  } catch(po::error& e){ // catch all other bad parameter errors
     errorUsage(av[0], e.what());
-
     return CLI_ERROR_INVALID_PARAMETER;
   }
 
-  catch(VishnuException& e){// catch all Vishnu runtime error
+  bool isEmpty=opt->empty();//if no value was given in the command line
+  // Parse the cli and setting the options found
+  int ret = cmd.parse(env_name_mapper());
 
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-
-    errorUsage(av[0], msg,EXECERROR);
- 
-  //check the bad session key
-
-    if (checkBadSessionKeyError(e)){
-
-      removeBadSessionKeyFromFile(getppid());
-    }
- 
-
-    return e.getMsgI() ;
-
+  if (ret != CLI_SUCCESS){
+    helpUsage(*opt,"[option]");
+    return ret;
   }
 
-  catch(std::exception& e){// catch all std runtime error
+  // PreProcess (adapt some parameters if necessary)
+  checkVishnuConfig(*opt);
+  if ( opt->count("help")){
+    helpUsage(*opt,"[option]");
+    return 0;
+  }*/
 
-    errorUsage(av[0], e.what());
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, ac, av);
 
-    return CLI_ERROR_RUNTIME;
+  if (opt->count("adminListOption")){
+    listOptions.setAdminListOption(true);
   }
 
-  return 0;
-
+  bool full = false;
+  // Display the list
+  if(isEmpty|| (opt->count("adminListOption"))) {
+    full = true;
+  }
+  
+  ListLocalAccountFunc listAccountFunc(lsLocalAccount, listOptions, full);
+  return GenericCli().run(listAccountFunc, dietConfig, ac, av);
 }// end of main
 
 
