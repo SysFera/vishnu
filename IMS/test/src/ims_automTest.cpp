@@ -21,6 +21,7 @@ account of local machine must be defined
 #include "IMS_Data_forward.hpp"
 #include "IMS_fixtures.hpp"
 #include "vishnuTestUtils.hpp"
+#include "utilVishnu.hpp"
 #include "IMS_testconfig.h"
 
 #include "TMS_Data.hpp"

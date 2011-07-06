@@ -33,6 +33,9 @@
 #include <boost/filesystem.hpp>
 #include <boost/assign/list_of.hpp>
 
+// Vishnu Headers
+
+#include "utilVishnu.hpp"
 #include "vishnuTestUtils.hpp"
 
 // namespaces declaration and  aliases
