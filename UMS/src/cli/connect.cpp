@@ -12,6 +12,7 @@
 #include <boost/bind.hpp>
 #include "daemon_cleaner.hpp"
 #include "utilVishnu.hpp"
+#include "UMSVishnuException.hpp"
 
 namespace po = boost::program_options;
 

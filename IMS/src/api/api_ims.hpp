@@ -15,14 +15,10 @@
 #include "UserException.hpp"
 #include "SystemException.hpp"
 #include "UMSVishnuException.hpp"
-#include "utilVishnu.hpp"
 
 //IMS include
-#include <ecore.hpp> // Ecore metamodel
-#include <ecorecpp.hpp> // EMF4CPP utils
 #include "IMS_Data.hpp"
 #include "IMSVishnuException.hpp"
-#include "utilIMS.hpp"
 // Include added because of swig generation of python, otherwise should not be used
 #include "api_ums.hpp"
 
