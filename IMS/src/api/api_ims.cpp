@@ -9,6 +9,9 @@
 #include "ExporterProxy.hpp"
 #include <boost/filesystem.hpp>
 
+#include "utilIMS.hpp"
+#include "utilVishnu.hpp"
+
 int
 vishnu::exportCommands(const string sessionKey,
 	       const string oldSessionId,

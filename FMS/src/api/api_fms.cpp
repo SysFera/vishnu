@@ -20,6 +20,11 @@
 //UMS Data Headers
 #include <UMS_Data.hpp>
 
+//Vishnu Headers
+#include "QueryProxy.hpp"
+#include "UtilsProxy.hpp"
+#include "utilVishnu.hpp"
+
 
 // FMS API Headers
 #include <api_fms.hpp>

@@ -11,22 +11,12 @@
 #include <iostream>
 #include <string>
 
-//UMS include
-#include "SessionProxy.hpp"
-#include "MachineProxy.hpp"
-#include "LocalAccountProxy.hpp"
-#include "ConfigurationProxy.hpp"
-#include "OptionValueProxy.hpp"
-#include "QueryProxy.hpp"
-#include "UtilsProxy.hpp"
 #include "UserException.hpp"
+#include "SystemException.hpp"
 #include "UMSVishnuException.hpp"
 #include "TMSVishnuException.hpp"
-#include "utilVishnu.hpp"
 
-//TMS include
-#include "JobProxy.hpp"
-#include "JobOutputProxy.hpp"
+#include "TMS_Data.hpp"
 
 using namespace TMS_Data;
 
