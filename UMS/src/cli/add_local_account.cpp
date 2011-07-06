@@ -14,17 +14,53 @@
 #include "utilVishnu.hpp"
 #include <boost/bind.hpp>
 #include <boost/filesystem.hpp>
+#include "GenericCli.hpp"
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
+
+struct AddLocalAccountFunc {
+
+  UMS_Data::LocalAccount mnewAcLogin;
+
+  AddLocalAccountFunc(UMS_Data::LocalAccount newAcLogin): mnewAcLogin(newAcLogin)
+  {};
+
+  int operator()(std::string sessionKey) {
+    string sshPublicKey;
+    int res=addLocalAccount(sessionKey,mnewAcLogin,sshPublicKey);// call the UMS add local account service
+
+    //To construct the file to save
+    boost::filesystem::path home_dir = getenv("HOME");
+    boost::filesystem::path  config_dir = home_dir;
+    config_dir /= ".vishnu";
+    config_dir /= "localAccountPublicKey";
+
+
+    if(!boost::filesystem::exists(config_dir)){
+      boost::filesystem::create_directories(config_dir);
+    }
+
+    std::string publicKeyName;
+    publicKeyName.append(config_dir.string()+"/");
+    publicKeyName.append(mnewAcLogin.getUserId());
+    publicKeyName.append("-"+mnewAcLogin.getMachineId());
+
+    ofstream os(publicKeyName.c_str());
+    os << sshPublicKey;
+
+    std::cout << "The ssh public key path is  " << publicKeyName << std::endl;
+
+    return res;
+  }
+};
 
 int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
 
   string dietConfig;
-  string sessionKey;
 
   /********** EMF data ************/
 
@@ -38,120 +74,32 @@ int main (int ac, char* av[]){
   boost::function1<void,string> fSshKeyPath( boost::bind(&UMS_Data::LocalAccount::setSshKeyPath,boost::ref(newAcLogin),_1));
   boost::function1<void,string> fHomeDirectory( boost::bind(&UMS_Data::LocalAccount::setHomeDirectory,boost::ref(newAcLogin),_1));
 
-  /*****************Out parameters***/
-
-  std::string sshPublicKey;
 
   /**************** Describe options *************/
 
   boost::shared_ptr<Options> opt=makeLocalAccountOptions(av[0], fUserId,dietConfig,fMachineId,
-                                                         fAcLogin,fSshKeyPath,fHomeDirectory,1);
+      fAcLogin,fSshKeyPath,fHomeDirectory,1);
 
-  try {
-    /**************  Parse to retrieve option values  ********************/
+  CLICmd cmd = CLICmd (ac, av, opt);
+  int ret = cmd.parse(env_name_mapper());
 
-    opt->parse_cli(ac,av);
-
-    opt->parse_env(env_name_mapper());
-
-    opt->notify();
-
-    /********  Process **************************/
-
-
-    checkVishnuConfig(*opt);
-
-    /************** Call UMS add local account service *******************************/
-
-    // initializing DIET
-
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
-    
-      errorUsage(av[0],dietErrorMsg,EXECERROR);
-
-      return  CLI_ERROR_DIET ;
-    }
-
-
-    //get the sessionKey
-
-    sessionKey=getLastSessionKey(getppid());
-
-    if(false==sessionKey.empty()){
-
-      printSessionKeyMessage();
-
-      addLocalAccount(sessionKey,newAcLogin,sshPublicKey);// call the UMS add local account service
-
-       //To construct the file to save
-      boost::filesystem::path home_dir = getenv("HOME");
-      boost::filesystem::path  config_dir = home_dir;
-      config_dir /= ".vishnu";
-      config_dir /= "localAccountPublicKey";
-    
-
-      if(!boost::filesystem::exists(config_dir)){
-        boost::filesystem::create_directories(config_dir);
-      }
-     
-      std::string publicKeyName;
-      publicKeyName.append(config_dir.string()+"/");
-      publicKeyName.append(newAcLogin.getUserId());
-      publicKeyName.append("-"+newAcLogin.getMachineId());
-      
-      ofstream os(publicKeyName.c_str());
-      os << sshPublicKey;
-      
-      std::cout << "The ssh public key path is  " << publicKeyName << std::endl;
-    
-      printSuccessMessage();
-
-    }
-
-
-  }// End of try bloc
-
-  catch(po::required_option& e){// a required parameter is missing
-
-    usage(*opt," userId machineId acLogin sshKeyPath homeDirectory ",requiredParamMsg);
-    
-    return CLI_ERROR_MISSING_PARAMETER;
+  if (ret != CLI_SUCCESS){
+    helpUsage(*opt,"userId machineId acLogin sshKeyPath homeDirectory");
+    return ret;
   }
 
-
-  catch(VishnuException& e){// catch all Vishnu runtime error
-
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-
-    errorUsage(av[0], msg,EXECERROR);
-
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-
-      removeBadSessionKeyFromFile(getppid());
-    }
-
-
-    return e.getMsgI() ;
+  // PreProcess (adapt some parameters if necessary)
+  checkVishnuConfig(*opt);
+  if ( opt->count("help")){
+    helpUsage(*opt,"userId machineId acLogin sshKeyPath homeDirectory");
+    return 0;
   }
 
-  catch(po::error& e){ // catch all other bad parameter errors
-
-    errorUsage(av[0], e.what());
-
-    return CLI_ERROR_INVALID_PARAMETER;
-  }
-
-
-  catch(std::exception& e){// catch all std runtime error
-
-    errorUsage(av[0],e.what());
-
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
+  AddLocalAccountFunc apiFunc(newAcLogin);
+  return GenericCli().run(apiFunc, dietConfig, ac, av);
 
 }// end of main
+
+
 
 
