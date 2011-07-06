@@ -11,10 +11,41 @@
 #include "sessionUtils.hpp"
 #include<boost/bind.hpp>
 
+#include "GenericCli.hpp"
+
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
+
+struct ListOptionsFunc {
+
+  UMS_Data::ListOptionsValues mlsOptionsValues;
+
+  UMS_Data::ListOptOptions mlsOptions;
+
+  bool mfull;
+
+  ListOptionsFunc(const UMS_Data::ListOptionsValues& lsOptionsValues,const UMS_Data::ListOptOptions& lsOptions , bool full):
+   mlsOptionsValues(lsOptionsValues),mlsOptions(lsOptions), mfull(full)
+  {};
+
+  int operator()(std::string sessionKey) {
+    int res = listOptions(sessionKey,mlsOptionsValues,mlsOptions);
+    // Display the list
+    if(mfull) {
+      cout << mlsOptionsValues << endl;
+    }
+    else {
+      for(unsigned int i = 0; i < mlsOptionsValues.getOptionValues().size(); i++) {
+        cout <<mlsOptionsValues.getOptionValues().get(i) << endl;
+      }
+    }
+
+    return res;
+  }
+};
+
 
 int main (int ac, char* av[]){
 
@@ -23,7 +54,6 @@ int main (int ac, char* av[]){
 
   string dietConfig;
 
-  std::string sessionKey;
 
   /********** EMF data ************/
 
@@ -39,133 +69,75 @@ int main (int ac, char* av[]){
   /**************** Describe options *************/
 
 
-  Options opt(av[0] );
+  boost::shared_ptr<Options> opt(new Options (av[0]) );
 
-  opt.add("dietConfig,c",
+  opt->add("dietConfig,c",
           "The diet config file",
           ENV,
           dietConfig);
 
-  opt.add("listAllDeftValue,a",
+  opt->add("listAllDeftValue,a",
           "is an option for listing all default option values\n"
           "defined by VISHNU administrator",
           CONFIG);
 
-  opt.add("userId,u",
+  opt->add("userId,u",
           "an admin option for listing commands launched\n"
           "by a specific user identified by his/her userId",
           CONFIG,
           fUserId);
 
-  opt.add("optionName,n",
+  opt->add("optionName,n",
           "is an option for listing all default option values\n"
           "defined by VISHNU administrator",
           CONFIG,
           fOptionName);
 
+  /*CLICmd cmd = CLICmd (ac, av, opt);
 
   try {
-    /**************  Parse to retrieve option values  ********************/
-
-    opt.parse_cli(ac,av);
-
-    bool isEmpty=opt.empty();//if no value was given in the command line
-
-    opt.parse_env(env_name_mapper());
-
-    opt.notify();
-
-
-    /********  Process **************************/
-
-    if (opt.count("listAllDeftValue")){
-
-      lsOptions.setListAllDeftValue(true);
-    }
-
-
-    checkVishnuConfig(opt);
-
-    if ( opt.count("help")){
-
-      helpUsage(opt,"[options] ");
-
-      return 0;
-    }
-
-    /************** Call UMS list options service *******************************/
-
-    // initializing DIET
-
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
-    
-    errorUsage(av[0],dietErrorMsg,EXECERROR);
-
-          return  CLI_ERROR_DIET ;
-    }
-
-
-
-    // get the sessionKey
-
-    sessionKey=getLastSessionKey(getppid());
-
-    if(false==sessionKey.empty()){
-
-      printSessionKeyMessage();
-
-      listOptions(sessionKey,lsOptionsValues,lsOptions);
-
-
-    }
-
-
-    // Display the list
-    if(isEmpty || (opt.count("listAllDeftValue")) ) {
-      cout << lsOptionsValues << endl;
-    }
-    else {
-      for(unsigned int i = 0; i < lsOptionsValues.getOptionValues().size(); i++) {
-        cout << lsOptionsValues.getOptionValues().get(i) << endl;
-      }
-    }
-
-    printSuccessMessage();
-  }// End of try bloc
-
-  catch(po::error& e){ // catch all other bad parameter errors
-
+    opt->parse_cli(ac,av);
+  } catch(po::error& e){ // catch all other bad parameter errors
     errorUsage(av[0], e.what());
-
     return CLI_ERROR_INVALID_PARAMETER;
   }
 
-  catch(VishnuException& e){// catch all Vishnu runtime error
+  bool isEmpty=opt->empty();//if no value was given in the command line
 
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
+  // Parse the cli and setting the options found
+  int ret = cmd.parse(env_name_mapper());
 
-    errorUsage(av[0], msg,EXECERROR);
-    
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-
-      removeBadSessionKeyFromFile(getppid());
-    }
-
-
-    return e.getMsgI() ;
-
+  if (ret != CLI_SUCCESS){
+    helpUsage(*opt,"[option]");
+    return ret;
   }
 
-  catch(std::exception& e){// catch all std runtime error
+  // PreProcess (adapt some parameters if necessary)
+  checkVishnuConfig(*opt);
+  if ( opt->count("help")){
+    helpUsage(*opt,"[option]");
+    return 0;
+  }*/
 
-    errorUsage(av[0],e.what());
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, ac, av);
 
-    return CLI_ERROR_RUNTIME;
+  /********  Process **************************/
+
+  bool full = false;
+  // Display the list
+  if(isEmpty || opt->count("listAllDeftValue")) {
+    full = true;
   }
 
-  return 0;
-
+  if( opt->count("listAllDeftValue")) {
+    lsOptions.setListAllDeftValue (true);
+  }
+  ListOptionsFunc listFunc(lsOptionsValues,lsOptions, full);
+  return GenericCli().run(listFunc, dietConfig, ac, av);
 }// end of main
 
 
+
+ 
