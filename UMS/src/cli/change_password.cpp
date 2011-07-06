@@ -10,122 +10,72 @@
 #include "utils.hpp"
 #include "sessionUtils.hpp"
 #include "utilVishnu.hpp"
+#include "GenericCli.hpp"
+
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
+
+struct ChgPassWordFunc {
+
+  std::string muserId;
+
+  ChgPassWordFunc(std::string userId):
+    muserId(userId)
+  {};
+
+  int operator()() {
+   std::string oldPassword=vishnu::takePassword("old password: ");
+   std::string newPassword=vishnu::takePassword("new password: ");
+   return changePassword(muserId,oldPassword, newPassword);
+  }
+};
+
 
 int main (int ac, char* av[]){
 
 
   string userId;
 
-  string oldPassword;
-
-  string newPassword;
-
   string dietConfig;
 
   /**************** Describe options *************/
 
-  Options opt(av[0] );
+  boost::shared_ptr<Options> opt(new Options(av[0]));
 
-  opt.add("dietConfig,c",
+  opt->add("dietConfig,c",
           "The diet config file",
           ENV,
           dietConfig);
 
-  opt.add("userId",
+  opt->add("userId",
           "The VISHNU user identifier",
           HIDDEN,
           userId,
           1);
-  opt.setPosition("userId",-1);
+  opt->setPosition("userId",-1);
 
+   CLICmd cmd = CLICmd (ac, av, opt);
 
-  try {
+  // Parse the cli and setting the options found
+  int ret = cmd.parse(env_name_mapper());
 
-
-    /**************  Parse to retrieve option values  ********************/
-
-    opt.parse_cli(ac,av);
-
-    opt.parse_env(env_name_mapper());
-
-    opt.notify();
-
-
-    /********  Process **************************/
-
-    if (opt.count("help")){
-
-      helpUsage(opt,"[options]");
-
-      return 0;
-
-    }
-
-    checkVishnuConfig(opt);
-
-    oldPassword=vishnu::takePassword("old password: ");
-
-    newPassword=vishnu::takePassword("new password: ");
-
-    /************** Call UMS change password service *******************************/
-
-
-    // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
-
-      errorUsage(av[0],dietErrorMsg,EXECERROR);
-
-      return  CLI_ERROR_DIET ;
-
-    }
-
-    changePassword(userId,oldPassword, newPassword);
-
-    printSuccessMessage();
-
-  }// End of try bloc
-
-  // {{RELAX<CODEREDUCER> The error handling is the same in all command
-
-  catch(po::required_option& e){// a required parameter is missing
-
-    usage(opt,"[options] userId ",requiredParamMsg);
-
-    return CLI_ERROR_MISSING_PARAMETER;
-
+  if (ret != CLI_SUCCESS){
+    helpUsage(*opt,"[options] userId");
+    return ret;
   }
 
-  catch(po::error& e){ // catch all other bad parameter errors
-
-    errorUsage(av[0], e.what());
-
-    return CLI_ERROR_INVALID_PARAMETER;
+  // PreProcess (adapt some parameters if necessary)
+  checkVishnuConfig(*opt);
+  if ( opt->count("help")){
+    helpUsage(*opt,"[options] userId");
+    return 0;
   }
+ 
+  ChgPassWordFunc chPwdFunc(userId);  
+  return GenericCli().runWithoutSessionKey(chPwdFunc, dietConfig, ac, av);
 
-  catch(VishnuException& e){// catch all Vishnu runtime error
-
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-
-    errorUsage(av[0], msg,EXECERROR);
-
-    return e.getMsgI() ;
-
-  }
-
-  catch(std::exception& e){// catch all std runtime error
-
-    errorUsage(av[0], e.what());
-
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
-
-  // }}RELAX<CODEREDUCER>
 
 }// end of main
 
