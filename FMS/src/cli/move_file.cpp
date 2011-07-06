@@ -16,6 +16,8 @@
 #include "FMS_Data.hpp"
 #include <boost/bind.hpp>
 
+#include "GenericCli.hpp"
+
 namespace po = boost::program_options;
 
 using namespace std;
@@ -30,7 +32,6 @@ int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
   string dietConfig;
-  string sessionKey;
   string src;
   string dest;
   string trCmdStr;
@@ -42,7 +43,7 @@ int main (int argc, char* argv[]){
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(makeTransferCommandOptions(argv[0], dietConfig, trCmdStr, src, dest));
 
-
+/*
   CLICmd cmd = CLICmd (argc, argv, opt);
 
  // Parse the cli and setting the options found
@@ -64,48 +65,29 @@ int main (int argc, char* argv[]){
     }
     cpFileOptions.setTrCommand(trCmd);
   }
- 
+ */
+  
+   ret=copyParseOptions ( opt, argc, argv,cpFileOptions );
+
+
   if (ret != CLI_SUCCESS){
     helpUsage(*opt,"[options] src dest");
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
+  
   checkVishnuConfig(*opt);  
+  
   if ( opt->count("help")){
     helpUsage(*opt,"[options] src dest");
     return 0;
   }
 
-  // Process command
-  try {
-
-    // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
-      errorUsage(argv[0],dietErrorMsg,EXECERROR);
-      return  CLI_ERROR_DIET ;
-    }
-
-    // get the sessionKey
-    sessionKey=getLastSessionKey(getppid());
-
-    // DIET call 
-    if(false==sessionKey.empty()){
-      printSessionKeyMessage();
-      moveFile(sessionKey, src, dest, cpFileOptions);
-    }
-  } catch(VishnuException& e){// catch all Vishnu runtime error
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-    errorUsage(argv[0], msg,EXECERROR);
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-      removeBadSessionKeyFromFile(getppid());
-    }
-    return e.getMsgI() ;
-  } catch(std::exception& e){// catch all std runtime error
-    errorUsage(argv[0],e.what());
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
+  TransferSyncFunc<MV> apiFunc(src, dest, cpFileOptions);
+ 
+  return GenericCli().run(apiFunc, dietConfig, argc, argv);
 }
+
+
+
