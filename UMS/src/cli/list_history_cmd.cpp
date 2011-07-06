@@ -70,7 +70,7 @@ int main (int ac, char* av[]){
   boost::shared_ptr<Options> opt= makeListHistoryCmdOptions(av[0],fUserId, dietConfig, fSessionId, startDateOption, endDateOption);
 
 
-  CLICmd cmd = CLICmd (ac, av, opt);
+  /*CLICmd cmd = CLICmd (ac, av, opt);
   
   try {
     opt->parse_cli(ac,av);
@@ -91,6 +91,11 @@ int main (int ac, char* av[]){
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);
+  */
+
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, ac, av);
 
   if ( opt->count("help")){
     helpUsage(*opt,"[option]");

@@ -92,7 +92,7 @@ int main (int ac, char* av[]){
           CONFIG,
           fOptionName);
 
-  CLICmd cmd = CLICmd (ac, av, opt);
+  /*CLICmd cmd = CLICmd (ac, av, opt);
 
   try {
     opt->parse_cli(ac,av);
@@ -116,7 +116,11 @@ int main (int ac, char* av[]){
   if ( opt->count("help")){
     helpUsage(*opt,"[option]");
     return 0;
-  }
+  }*/
+
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, ac, av);
 
   /********  Process **************************/
 
