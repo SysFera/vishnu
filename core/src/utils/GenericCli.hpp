@@ -87,8 +87,8 @@ class GenericCli {
 
     }
 
-
-    void processListOpt(const boost::shared_ptr<Options>& opt, bool& isEmpty, int ac, char*  av[]) {
+    void processListOpt(const boost::shared_ptr<Options>& opt, bool& isEmpty, int ac, char*  av[], 
+                        const std::string& signature=std::string()) {
     
       CLICmd cmd = CLICmd (ac, av, opt);
       try {
@@ -100,18 +100,17 @@ class GenericCli {
 
       isEmpty=opt->empty();//if no value was given in the command line
       // Parse the cli and setting the options found
-     
       int ret = cmd.parse(env_name_mapper());
 
       if (ret != CLI_SUCCESS){
-        helpUsage(*opt,"[option]");
+        helpUsage(*opt,"[option] "+signature);
         exit(ret);
       }
 
       // PreProcess (adapt some parameters if necessary)
       checkVishnuConfig(*opt);
       if ( opt->count("help")){
-        helpUsage(*opt,"[option]");
+        helpUsage(*opt,"[option]"+signature);
         exit(0);
       }
 
