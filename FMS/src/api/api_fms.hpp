@@ -10,13 +10,10 @@
 // C++ Headers
 #include <string>
 
-//Vishnu Headers
-#include "QueryProxy.hpp"
-#include "UtilsProxy.hpp"
 #include "UserException.hpp"
+#include "SystemException.hpp"
 #include "UMSVishnuException.hpp"
 #include "FMSVishnuException.hpp"
-#include "utilVishnu.hpp"
 #include <sys/types.h>
 //FMS data  declarations
 #include <FMS_Data.hpp>

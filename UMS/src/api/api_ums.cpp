@@ -10,6 +10,16 @@
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 
+#include "SessionProxy.hpp"
+#include "MachineProxy.hpp"
+#include "LocalAccountProxy.hpp"
+#include "ConfigurationProxy.hpp"
+#include "OptionValueProxy.hpp"
+#include "QueryProxy.hpp"
+#include "UtilsProxy.hpp"
+#include "utilVishnu.hpp"
+
+
 using namespace std;
 
 /**
