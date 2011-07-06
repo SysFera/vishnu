@@ -15,6 +15,7 @@ class GenericCli {
 
   public:
 
+
     template <class ApiFunc>
     int run(ApiFunc function, std::string dietConfig, int ac, char*  av[]) {
 
@@ -37,7 +38,7 @@ class GenericCli {
           printSessionKeyMessage();
           //call of the api fuction
           function(sessionKey);
-      
+
           printSuccessMessage(); 
 
         }
@@ -56,4 +57,61 @@ class GenericCli {
 
     }
 
+    template <class ApiFunc>
+    int runWithoutSessionKey(ApiFunc function, std::string dietConfig, int ac, char*  av[]) {
+
+      try{
+
+        // initializing DIET
+
+        if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
+
+          errorUsage(av[0],dietErrorMsg,EXECERROR);
+
+          return  CLI_ERROR_DIET ;
+        }
+
+          //call of the api fuction
+          function();
+
+          printSuccessMessage(); 
+
+      } catch(VishnuException& e){// catch all Vishnu runtime error
+        std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
+        errorUsage(av[0], msg,EXECERROR);
+        return e.getMsgI() ;
+      } catch(std::exception& e){// catch all std runtime error
+        errorUsage(av[0],e.what());
+        return CLI_ERROR_RUNTIME;
+      }
+
+    }
+
+    void processListOpt(const boost::shared_ptr<Options>& opt, bool& isEmpty, int ac, char*  av[]) {
+    
+      CLICmd cmd = CLICmd (ac, av, opt);
+      try {
+        opt->parse_cli(ac,av);
+      } catch(po::error& e){ // catch all other bad parameter errors
+        helpUsage(*opt,"[option]");
+        exit(CLI_ERROR_INVALID_PARAMETER);
+      }
+
+      isEmpty=opt->empty();//if no value was given in the command line
+      // Parse the cli and setting the options found
+      int ret = cmd.parse(env_name_mapper());
+
+      if (ret != CLI_SUCCESS){
+        helpUsage(*opt,"[option]");
+        exit(ret);
+      }
+
+      // PreProcess (adapt some parameters if necessary)
+      checkVishnuConfig(*opt);
+      if ( opt->count("help")){
+        helpUsage(*opt,"[option]");
+        exit(0);
+      }
+
+    }
 };
