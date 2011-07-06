@@ -87,6 +87,7 @@ class GenericCli {
 
     }
 
+
     void processListOpt(const boost::shared_ptr<Options>& opt, bool& isEmpty, int ac, char*  av[]) {
     
       CLICmd cmd = CLICmd (ac, av, opt);
@@ -99,6 +100,7 @@ class GenericCli {
 
       isEmpty=opt->empty();//if no value was given in the command line
       // Parse the cli and setting the options found
+     
       int ret = cmd.parse(env_name_mapper());
 
       if (ret != CLI_SUCCESS){
