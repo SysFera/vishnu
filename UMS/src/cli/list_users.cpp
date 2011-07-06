@@ -71,8 +71,9 @@ int main (int ac, char* av[]){
           CONFIG,
           userIdOption);
 
-   CLICmd cmd = CLICmd (ac, av, opt);
-/*
+ /*
+  CLICmd cmd = CLICmd (ac, av, opt);
+
   try {
     opt->parse_cli(ac,av);
   } catch(po::error& e){ // catch all other bad parameter errors
@@ -99,7 +100,7 @@ int main (int ac, char* av[]){
 
   bool isEmpty;
   //To process list options
-  GenericCli().processListOpt(opt, cmd, isEmpty, ac, av);
+  GenericCli().processListOpt(opt, isEmpty, ac, av);
 
   /********  Process **************************/
 
