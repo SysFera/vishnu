@@ -14,11 +14,29 @@
 #include "sessionUtils.hpp"
 #include "displayer.hpp"
 
+#include "GenericCli.hpp"
+
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
 
+struct JobResultsFunc {
+
+  std::string mmachineId;
+  std::string moutDir;
+
+  JobResultsFunc(const std::string& machineId, const std::string& outDir):
+    mmachineId(machineId), moutDir(outDir)
+  {};
+
+  int operator()(std::string sessionKey) {
+    TMS_Data::ListJobResults jobResults;
+    int res = getCompletedJobsOutput(sessionKey, mmachineId, jobResults, moutDir);
+    displayAllJobOutput(jobResults); 
+    return res;
+  }
+};
 
 
 int main (int argc, char* argv[]){
@@ -27,18 +45,10 @@ int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
   string dietConfig;
-  string sessionKey;
   string machineId;
   std::string outDir;
 
-  /********** EMF data ************/
-
-  /******** Callback functions ******************/
-    
-  /*********** Out parameters *********************/
-  TMS_Data::ListJobResults job;
-
-  /**************** Describe options *************/
+   /**************** Describe options *************/
   boost::shared_ptr<Options> opt (new Options(argv[0]));
 
   // Environement option
@@ -48,66 +58,22 @@ int main (int argc, char* argv[]){
            dietConfig);
 
   opt->add("outDir,o",
-     "The outputh dir of the job output",
+     "The outputh dir of the jobs results",
      CONFIG,
      outDir);
 
   // All cli obligatory parameters
   opt->add("machineId,m",
-	   "represents the id of the machine",
-	   HIDDEN,
-	   machineId,1);
+     "represents the id of the machine",
+     HIDDEN,
+     machineId,1);
   opt->setPosition("machineId",1);
 
-  CLICmd cmd = CLICmd (argc, argv, opt);
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId");
 
-  // Parse the cli and setting the options found
-  ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] machineId");  
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);  
-  if ( opt->count("help")){
-    helpUsage(*opt,"[options] machineId");  
-    return 0;
-  }
-
-  // Process command
-  try {
-
-    // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
-      errorUsage(argv[0],dietErrorMsg,EXECERROR);
-      return  CLI_ERROR_DIET ;
-    }
-
-    // get the sessionKey
-    sessionKey=getLastSessionKey(getppid());
-
-    // DIET call : get job output
-    if(false==sessionKey.empty()){
-      printSessionKeyMessage();
-      getCompletedJobsOutput(sessionKey, machineId, job, outDir);
-    }
-
-    displayAllJobOutput(job);
-    printSuccessMessage();
-  } catch(VishnuException& e){// catch all Vishnu runtime error
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-    errorUsage(argv[0], msg,EXECERROR);
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-      removeBadSessionKeyFromFile(getppid());
-    }
-    return e.getMsgI() ;
-  } catch(std::exception& e){// catch all std runtime error
-    errorUsage(argv[0],e.what());
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
+  //call of the api function
+  JobResultsFunc jobResultsFunc(machineId, outDir);
+  return GenericCli().run(jobResultsFunc, dietConfig, argc, argv);
 }
