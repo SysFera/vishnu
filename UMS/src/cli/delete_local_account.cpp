@@ -10,10 +10,29 @@
 #include "sessionUtils.hpp"
 #include "connectUtils.hpp"
 
+#include "GenericCli.hpp"
+
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
+
+struct DeleteLocalAccountFunc {
+  string muserId;
+  string mmachineId;
+
+
+  DeleteLocalAccountFunc(const std::string& userId, const std::string& machineId):muserId(userId), mmachineId(machineId)
+  {};
+
+  int operator()(const std::string& sessionKey) {
+
+    int res= deleteLocalAccount(sessionKey,muserId,mmachineId);
+
+    return res;
+  }
+};
+
 
 int main (int ac, char* av[]){
 
@@ -26,9 +45,6 @@ int main (int ac, char* av[]){
 
   std::string machineId;
 
-  std::string sessionKey;
-
-
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1, dietConfig);
 
@@ -36,97 +52,35 @@ int main (int ac, char* av[]){
 
 
   opt->add("machineId",
-           "the identifier of the machine associated to the local user configuration",
-           HIDDEN,
-           machineId,
-           1);
+      "the identifier of the machine associated to the local user configuration",
+      HIDDEN,
+      machineId,
+      1);
 
   opt->setPosition("machineId",1);
 
+  CLICmd cmd = CLICmd (ac, av, opt);
+ 
+  int ret = cmd.parse(env_name_mapper());
 
-
-  try {
-    /**************  Parse to retrieve option values  ********************/
-
-    opt->parse_cli(ac,av);
-
-    opt->parse_env(env_name_mapper());
-
-    opt->notify();
-
-
-    /********  Process **************************/
-
-    checkVishnuConfig(*opt);
-
-    /************** Call UMS delete local account service ************/
-
-    // initializing DIET
-
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
-
-      errorUsage(av[0],dietErrorMsg,EXECERROR);
-
-      return  CLI_ERROR_DIET ;
-    }
-
-    //get the sessionKey
-
-    sessionKey=getLastSessionKey(getppid());
-
-    if(false==sessionKey.empty()){
-
-      printSessionKeyMessage();
-
-      deleteLocalAccount(sessionKey,userId,machineId);
-
-      printSuccessMessage();
-
-    }
-
-  }// End of try bloc
-  
-  catch(po::required_option& e){// a required parameter is missing
-
-    usage(*opt," userId machineId ",requiredParamMsg);
-
-    return CLI_ERROR_MISSING_PARAMETER;
-  }
-  
-  catch(po::error& e){ // catch all other bad parameter errors
-
-    errorUsage(av[0], e.what());
-
-    return CLI_ERROR_INVALID_PARAMETER;
+  if (ret != CLI_SUCCESS){
+    helpUsage(*opt,"userId machineId ");
+    return ret;
   }
 
+  // PreProcess (adapt some parameters if necessary)
+  checkVishnuConfig(*opt);
 
-  catch(VishnuException& e){// catch all Vishnu runtime error
-
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-
-    errorUsage(av[0], msg,EXECERROR);
-    
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-
-      removeBadSessionKeyFromFile(getppid());
-    }
-
-
-
-    return e.getMsgI() ;
+  if ( opt->count("help")){
+    helpUsage(*opt,"userId machineId ");
+    return 0;
   }
 
-  catch(std::exception& e){// catch all std runtime error
-
-    errorUsage(av[0],e.what());
-
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
+  DeleteLocalAccountFunc apiFunc(userId,machineId);
+  return GenericCli().run(apiFunc, dietConfig, ac, av);
 
 }// end of main
+
+
 
 
