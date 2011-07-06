@@ -42,8 +42,6 @@ struct InfoJobFunc {
 int 
 main (int argc, char* argv[]){
   
-  int ret; // Return value
-
   /******* Parsed value containers ****************/
   string dietConfig;
   string machineId;
@@ -74,7 +72,7 @@ main (int argc, char* argv[]){
 	   jobId,1);
   opt->setPosition("jobId",1);
  
-   bool isEmpty;
+  bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId jobId");
 
