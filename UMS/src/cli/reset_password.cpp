@@ -27,7 +27,8 @@ struct ResetPassWordFunc {
   {};
 
   int operator()(std::string sessionKey) {
-   return resetPassword(sessionKey,muserId, mtmpPassword);
+   int res = resetPassword(sessionKey,muserId, mtmpPassword);
+   return res;
   }
 };
 
