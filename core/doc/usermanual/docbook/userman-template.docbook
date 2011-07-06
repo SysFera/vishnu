@@ -259,7 +259,7 @@
     
     <section>
       <title> Sofware usage description </title>
-      
+      <para><emphasis role="bold">WARNING: The lists are INOUT parameters, the results are appended, they do not overwrite the existing list.</emphasis></para>
       <section><!-- UMS Package -->
 	<title> UMS package </title> 
 	
