@@ -40,7 +40,7 @@ int main (int argc, char* argv[]){
   /******* Parsed value containers ****************/
   string dietConfig;
   string machineId;
-  string jobId;
+  string cancelJobId;
 
   /********** EMF data ************/
 
@@ -55,15 +55,15 @@ int main (int argc, char* argv[]){
 
   // All cli obligatory parameters
   opt->add("machineId,m",
-	   "represents the id of the machine",
+	   "The id of the machine where the job has been submitted",
 	   HIDDEN,
 	   machineId,1);
   opt->setPosition("machineId",1);
 
   opt->add("jobId,j",
-	   "represents the id of the job",
+	   "The id of the job to cancel",
 	   HIDDEN,
-	   jobId,1);
+	   cancelJobId,1);
   opt->setPosition("jobId",1);
  
   bool isEmpty;
@@ -71,7 +71,7 @@ int main (int argc, char* argv[]){
   GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId jobId");
 
   //call of the api function
-  CancelJobFunc cancelJobFunc(machineId, jobId);
+  CancelJobFunc cancelJobFunc(machineId, cancelJobId);
   return GenericCli().run(cancelJobFunc, dietConfig, argc, argv); 
 
 }
