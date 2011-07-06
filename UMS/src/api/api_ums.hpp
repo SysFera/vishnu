@@ -25,15 +25,9 @@
 #include <iostream>
 #include <string>
 
-#include "SessionProxy.hpp"
-#include "MachineProxy.hpp"
-#include "LocalAccountProxy.hpp"
-#include "ConfigurationProxy.hpp"
-#include "OptionValueProxy.hpp"
-#include "QueryProxy.hpp"
-#include "UtilsProxy.hpp"
+#include "UMS_Data.hpp"
 #include "UserException.hpp"
-#include "utilVishnu.hpp"
+#include "SystemException.hpp"
 
 
 namespace vishnu {
