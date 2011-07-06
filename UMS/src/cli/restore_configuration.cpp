@@ -9,122 +9,71 @@
 #include "cliUtil.hpp"
 #include "utils.hpp"
 #include "sessionUtils.hpp"
+#include "GenericCli.hpp"
+
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
+
+struct RestoreConfigFunc {
+
+  std::string mfilePath;
+
+  RestoreConfigFunc(std::string filePath):
+    mfilePath(filePath)
+  {};
+
+  int operator()(std::string sessionKey) {
+   return restoreConfiguration(sessionKey, mfilePath);
+  }
+};
+
 
 int main (int ac, char* av[]){
 
 
   string filePath;
 
-  string sessionKey;
-
   string dietConfig;
 
   /**************** Describe options *************/
+  boost::shared_ptr<Options> opt(new Options(av[0]));
 
-  Options opt(av[0] );
-
-  opt.add("dietConfig,c",
-          "The diet config file",
-          ENV,
-          dietConfig);
-
-
-  opt.add("filePath",
-          "The path of the VISHNU configuration file",
-          HIDDEN,
-          filePath,
-          1);
-
-  opt.setPosition("filePath",-1);
+  opt->add("dietConfig,c",
+      "The diet config file",
+      ENV,
+      dietConfig);
 
 
-  try {
+  opt->add("filePath",
+      "The path of the VISHNU configuration file",
+      HIDDEN,
+      filePath,
+      1);
 
-    /**************  Parse to retrieve option values  ********************/
-
-    opt.parse_cli(ac,av);
-
-    opt.parse_env(env_name_mapper());
-
-    opt.notify();
+  opt->setPosition("filePath",-1);
 
 
-    /********  Process **************************/
+  CLICmd cmd = CLICmd (ac, av, opt);
 
-    checkVishnuConfig(opt);
+  // Parse the cli and setting the options found
+  int ret = cmd.parse(env_name_mapper());
 
-    /************** Call UMS restore configuration service *******************************/
-
-    // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
-
-      errorUsage(av[0],dietErrorMsg,EXECERROR);
-
-      return  CLI_ERROR_DIET ;
-
-    }
-
-
-    // get the sessionKey
-
-    sessionKey=getLastSessionKey(getppid());
-
-    if(false==sessionKey.empty()){
-
-      printSessionKeyMessage();
-
-      restoreConfiguration(sessionKey, filePath);
-
-      printSuccessMessage();
-    }
-
-
-  }// End of try bloc
-
-  catch(po::required_option& e){// a required parameter is missing
-
-    usage(opt,"[options] filePath ",requiredParamMsg);
-
-    return CLI_ERROR_MISSING_PARAMETER;
-
+  if (ret != CLI_SUCCESS){
+    helpUsage(*opt,"[options] filePath");
+    return ret;
   }
 
-  catch(po::error& e){ // catch all other bad parameter errors
-
-    errorUsage(av[0], e.what());
-
-    return CLI_ERROR_INVALID_PARAMETER;
+  // PreProcess (adapt some parameters if necessary)
+  checkVishnuConfig(*opt);
+  if ( opt->count("help")){
+    helpUsage(*opt,"[options] filePath");
+    return 0;
   }
 
-  catch(VishnuException& e){// catch all Vishnu runtime error
-
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-
-    errorUsage(av[0], msg,EXECERROR);
-
-    //check the bad session key
-    
-    if (checkBadSessionKeyError(e)){
-
-      removeBadSessionKeyFromFile(getppid());
-    }
-
-
-    return e.getMsgI() ;
-  }
-
-  catch(std::exception& e){// catch all std runtime error
-
-    errorUsage(av[0], e.what());
-
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
+  RestoreConfigFunc restconfigFunc(filePath);
+  return GenericCli().run(restconfigFunc, dietConfig, ac, av);
 
 }// end of main
 
