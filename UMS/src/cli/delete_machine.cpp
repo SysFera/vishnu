@@ -26,8 +26,6 @@ struct DeleteMachineFunc {
   {};
 
   int operator()(std::string sessionKey) {
-    printSessionKeyMessage();
-
     int res = deleteMachine(sessionKey,mmachineId);
     return res;
   }
