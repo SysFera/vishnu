@@ -15,6 +15,7 @@
 #include "FMS_Data.hpp"
 #include <boost/bind.hpp>
 #include "FMSDisplayer.hpp"
+#include "GenericCli.hpp"
 
 namespace po = boost::program_options;
 
@@ -75,7 +76,33 @@ makeListFileTransferTrOpt(string pgName,
 }
 
 
-int main (int argc, char* argv[]){
+
+// List file transfer functor
+struct ListFileTransferFunc {
+
+  FMS_Data::LsTransferOptions mlsFileTransferOptions;
+
+
+
+  ListFileTransferFunc(const FMS_Data::LsTransferOptions& lsFileTransferOptions):mlsFileTransferOptions(lsFileTransferOptions)
+  {};
+
+  int operator()(std::string sessionKey) {
+
+    FileTransferList fileTransferList;
+
+    int res=listFileTransfers(sessionKey, fileTransferList,mlsFileTransferOptions);
+
+    //To display the file transfer list
+    std::cout << fileTransferList << std::endl;
+
+    return res;
+  }
+};
+
+
+
+int main (int ac, char* av[]){
   
   int ret; // Return value
 
@@ -87,9 +114,6 @@ int main (int argc, char* argv[]){
 
    /********** EMF data ************/
   FMS_Data::LsTransferOptions lsFileTransferOptions;
-
-  /***OutPut Values  */
-  FileTransferList fileTransferList;
   
   /******** Callback functions ******************/
   boost::function1<void, string> ftranferId(boost::bind(&FMS_Data::LsTransferOptions::setTransferId, boost::ref(lsFileTransferOptions),_1));
@@ -97,13 +121,14 @@ int main (int argc, char* argv[]){
   boost::function1<void, string> fuserId(boost::bind(&FMS_Data::LsTransferOptions::setUserId, boost::ref(lsFileTransferOptions),_1));
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt= makeListFileTransferTrOpt(argv[0], dietConfig, ftranferId, ffromMachineId, fuserId, statusStr);
+  boost::shared_ptr<Options> opt= makeListFileTransferTrOpt(av[0], dietConfig, ftranferId, ffromMachineId, fuserId, statusStr);
 
-  CLICmd cmd = CLICmd (argc, argv, opt);
+  CLICmd cmd = CLICmd (ac, av, opt);
 
  // Parse the cli and setting the options found
-  ret = cmd.parse(env_name_mapper());
- 
+    ret = cmd.parse(env_name_mapper());
+
+
   if(statusStr.size()!=0) {
     size_t pos = statusStr.find_first_not_of("0123456789");
     if(pos!=std::string::npos) {
@@ -144,42 +169,12 @@ int main (int argc, char* argv[]){
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);  
   if ( opt->count("help")){
-    helpUsage(*opt,"[options] src dest");
+    helpUsage(*opt,"[options] ");
     return 0;
   }
 
   // Process command
-  try {
+ ListFileTransferFunc apiFunc( lsFileTransferOptions); 
+ return GenericCli().run(apiFunc, dietConfig, ac, av);
 
-    // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
-      errorUsage(argv[0],dietErrorMsg,EXECERROR);
-      return  CLI_ERROR_DIET ;
-    }
-
-    // get the sessionKey
-    sessionKey=getLastSessionKey(getppid());
-
-    // DIET call 
-    if(false==sessionKey.empty()){
-      printSessionKeyMessage();
-      listFileTransfers(sessionKey, fileTransferList,lsFileTransferOptions);
-
-      //To display the file transfer list
-      std::cout << fileTransferList << std::endl;
-    }
-  } catch(VishnuException& e){// catch all Vishnu runtime error
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-    errorUsage(argv[0], msg,EXECERROR);
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-      removeBadSessionKeyFromFile(getppid());
-    }
-    return e.getMsgI() ;
-  } catch(std::exception& e){// catch all std runtime error
-    errorUsage(argv[0],e.what());
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
 }
