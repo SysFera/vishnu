@@ -13,8 +13,24 @@
 #include "api_ims.hpp"
 #include "sessionUtils.hpp"
 
+#include "GenericCli.hpp"
+
 using namespace std;
 using namespace vishnu;
+
+struct SetSysThresholdFunc {
+
+  IMS_Data::Threshold msystemThreshold;
+
+  SetSysThresholdFunc(const IMS_Data::Threshold& systemThreshold):
+   msystemThreshold(systemThreshold)
+  {};
+
+  int operator()(std::string sessionKey) {
+    return setSystemThreshold(sessionKey, msystemThreshold);
+  }
+};
+
 
 int main (int argc, char* argv[]){
 
@@ -29,9 +45,6 @@ int main (int argc, char* argv[]){
   IMS_Data::MetricType type;
    /********** EMF data ************/
   IMS_Data::Threshold systemThreshold;
-
-  /**************** Describe options *************/
-
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(new Options(argv[0]));
@@ -67,58 +80,18 @@ int main (int argc, char* argv[]){
   opt->setPosition("handler",1);
 
 
-  CLICmd cmd = CLICmd (argc, argv, opt);
-
-  // Parse the cli and setting the options found
-  ret = cmd.parse(env_name_mapper());
-
   //To set the corresponding values to the object systemThreshold
   systemThreshold.setMachineId(machineId);
   systemThreshold.setValue(value);
   systemThreshold.setType(type);
   systemThreshold.setHandler(handler);
 
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"machineId value type handler");
-    return ret;
-  }
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId value type handler");
 
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);
-  if ( opt->count("help")){
-    helpUsage(*opt,"machineId value type handler");
-    return 0;
-  }
-
-  // Process command
-  try {
-    // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
-      errorUsage(argv[0],dietErrorMsg,EXECERROR);
-      return  CLI_ERROR_DIET ;
-    }
-
-    // get the sessionKey
-    sessionKey=getLastSessionKey(getppid());
-
-    // DIET call : get job output
-    if(false==sessionKey.empty()){
-      printSessionKeyMessage();
-      setSystemThreshold(sessionKey, systemThreshold);
-    }
-  } catch(VishnuException& e){// catch all Vishnu runtime error
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-    errorUsage(argv[0], msg,EXECERROR);
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-      removeBadSessionKeyFromFile(getppid());
-    }
-    return e.getMsgI() ;
-  } catch(std::exception& e){// catch all std runtime error
-    errorUsage(argv[0],e.what());
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
+  //call of the api function
+  SetSysThresholdFunc setSysThresholdFunc(systemThreshold);
+  return GenericCli().run(setSysThresholdFunc, dietConfig, argc, argv);
 }
 
