@@ -198,7 +198,6 @@ int RemoteFileProxy::chgrp(const string& group) {
 
   /*To raise a vishnu exception if the received message is not empty*/
   raiseExceptionIfNotEmptyMsg(errMsg);
-  setGroup(group);
 
   return 0;
 }
@@ -269,9 +268,7 @@ int RemoteFileProxy::chmod(const mode_t mode) {
 
   /*To raise a vishnu exception if the received message is not empty*/
   raiseExceptionIfNotEmptyMsg(errMsg);
-
-  setPerms(mode);
-
+  
   return 0;
 }
 

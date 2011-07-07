@@ -46,87 +46,7 @@ void FileProxy::setPath(const string& path) {
 void FileProxy::setHost(const string& host) {
   mhost = host;
 }
-/**
- * \brief To update the name of the file owner
- * \param owner the new owner
- */  
 
-void FileProxy::setOwner(const string& owner) const {
-  mfileStat.setOwner(owner);
-
-}
-/**
- * \brief To update the group of the file owner
- * \param group the new group
- */  
-
-void FileProxy::setGroup(const string& group) const {
-  mfileStat.setGroup(group);
-}
-/**
- * \brief To update the access permissions of the file
- * \param perms the new access permissions
- */  
-
-void FileProxy::setPerms(const mode_t perms) const {
-  mfileStat.setPerms(perms);
-}
-/**
- * \brief To update the identifier of the file owner
- * \param uid the new owner identifier
- */  
-
-void FileProxy::setUid(const uid_t uid) const {
-  mfileStat.setUid(uid);
-}
-/**
- * \brief To update the group identifier of the file owner
- * \param gid the new group identifier
- */  
-
-void FileProxy::setGid(const gid_t gid) const {
-  mfileStat.setGid(gid);
-}
-/**
- * \brief To update the size of the file
- * \param size the new size
- */  
-
-void FileProxy::setSize(const file_size_t size) const {
-  mfileStat.setSize(size);
-}
-/**
- * \brief To update the last access time of the file
- * \param atime the new access time
- */  
-
-void FileProxy::setAtime(const time_t atime) const {
-  mfileStat.setAtime(atime);
-}
-/**
- * \brief To update the last modification time of the file
- * \param mtime the new modofocation time
- */  
-
-void FileProxy::setMtime(const time_t mtime) const {
-  mfileStat.setMtime(mtime);
-}
-/**
- * \brief To update the last change time of the file
- * \param ctime the new change time
- */  
-
-void FileProxy::setCtime(const time_t ctime) const {
-  mfileStat.setCtime(ctime);
-}
-/**
- * \brief To update the file type
- * \param type the new  file type
- */  
-
-void FileProxy::setType(const FileType& type) const {
-  mfileStat.setType(type);
-}
 /**
  * \brief To updata the file existence flag
  * \param exist the new file existence flag 
@@ -199,29 +119,6 @@ const string& FileProxy::getPath() const {
   return mfileStat.getPath();
 }
 
-/**
- * \brief To get the name of the file owner
- * \return the file owner name
- */
-const string& FileProxy::getOwner() const {
- 
-  if (!isUpToDate()){
-    getInfos();
-  }
- 
-  return mfileStat.getOwner();
-}
-
-/**
- * \brief To get the group name of the file owner
- * \return the group name
- */
-const string& FileProxy::getGroup() const {
-  if (!isUpToDate()) {
-    getInfos();
-  }
-  return mfileStat.getGroup();
-}
 
 /**
  * \brief To get the host in which the file is located
@@ -231,101 +128,6 @@ const string& FileProxy::getHost() const {
   return mhost;
 }
 
-/**
- * \brief To get the file access permissions
- * \return the file access permissions
- */
-mode_t FileProxy::getPerms() const {
- 
-  if (!isUpToDate()){
-    getInfos();
-  }
- 
-  return mfileStat.getPerms();
-}
-
-/**
- * \brief To get the identifier of the file owner
- * \return the identifier of the file owner
- */
-uid_t FileProxy::getUid() const {
- 
-  if (!isUpToDate()) {
-    getInfos();
-  }
-  return mfileStat.getUid();
-}
-
-/**
- * \brief To get the group identifier of the file owner
- * \return the group identifier of the file owner
- */
-gid_t FileProxy::getGid() const {
- 
-  if (!isUpToDate()){
-    getInfos();
-  }
- 
-  return mfileStat.getGid();
-}
-
-/**
- * \brief To get the size of the file 
- * \return the file size
- */
-file_size_t FileProxy::getSize() const {
- 
-  if (!isUpToDate()){
-    getInfos();
-  }
-  return mfileStat.getSize();
-}
-
-/**
- * \brief To get the last access time of the file
- * \return the last file access time
- */
-time_t FileProxy::getAtime() const {
- 
-  if (!isUpToDate()) {
-    getInfos();
-  }
-  return mfileStat.getAtime();
-}
-
-/**
- * \brief To get the last  modification time of the file
- * \return the last  modification time
- */
-time_t FileProxy::getMtime() const {
-  if (!isUpToDate()) {
-    getInfos();
-  }
-  return mfileStat.getMtime();
-}
-
-/**
- * \brief To get the last change time of the file
- * \return the last change time
- */
-time_t FileProxy::getCtime() const {
-  if (!isUpToDate()){
-    getInfos();
-  }
-  return mfileStat.getCtime();
-}
-
-/**
- * \brief To get the file type
- * \return the file type
- */
-FileType FileProxy::getType() const {
-  
-  if (!isUpToDate()){
-    getInfos();
-  }
-  return mfileStat.getType();
-}
 
 /**
  * \brief To check if the file exists
