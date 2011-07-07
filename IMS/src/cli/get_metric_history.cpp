@@ -15,10 +15,43 @@
 #include "displayer.hpp"
 #include <boost/bind.hpp>
 
+#include "GenericCli.hpp"
+
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
+
+struct MetricHistoryFunc {
+
+  std::string mmachineId;
+  IMS_Data::MetricHistOp mop;
+  boost::shared_ptr<Options> mcliOpt;
+  std::string mstartTime;
+  std::string mendTime;
+
+  MetricHistoryFunc(const std::string& machineId, const IMS_Data::MetricHistOp& op,
+                    boost::shared_ptr<Options> cliOpt, const std::string& startTime,
+                    const  std::string& endTime):
+   mmachineId(machineId), mop(op), mcliOpt(cliOpt), mstartTime(startTime), mendTime(endTime)
+  {};
+
+  int operator()(std::string sessionKey) {
+    IMS_Data::ListMetric met;
+    //convert the date in long format
+    if(mcliOpt->count("start")){
+      mop.setStartTime(convertLocaltimeINUTCtime(string_to_time_t(mstartTime)));
+    }
+
+    if(mcliOpt->count("end")){
+      mop.setEndTime(convertLocaltimeINUTCtime(string_to_time_t(mendTime)));
+    }
+
+    int res = getMetricHistory(sessionKey, mmachineId, met, mop);
+    displayListMetric(&met);
+    return res;
+  }
+};
 
 
 boost::shared_ptr<Options>
@@ -62,7 +95,6 @@ int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
   string dietConfig;
-  string sessionKey;
   string mid;
   string startTime;
   string endTime;
@@ -71,12 +103,7 @@ int main (int argc, char* argv[]){
   IMS_Data::MetricHistOp op;
 
   /******** Callback functions ******************/
-  //boost::function1<void,long> fstart(boost::bind(&IMS_Data::MetricHistOp::setStartTime,boost::ref(op),_1));
-  //boost::function1<void,long> fend(boost::bind(&IMS_Data::MetricHistOp::setEndTime,boost::ref(op),_1));
   boost::function1<void,IMS_Data::MetricType> ftype(boost::bind(&IMS_Data::MetricHistOp::setType,boost::ref(op),_1));
-
-  /*********** Out parameters *********************/
-  IMS_Data::ListMetric met;
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt = makeGHMOp(argv[0], startTime, endTime, ftype,  dietConfig);
@@ -88,64 +115,11 @@ int main (int argc, char* argv[]){
 	   mid,1);
   opt->setPosition("machineId",1);
 
-  CLICmd cmd = CLICmd (argc, argv, opt);
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId");
 
-  // Parse the cli and setting the options found
-  ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] machineId");
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);
-  if ( opt->count("help")){
-    helpUsage(*opt,"[options] machineId");
-    return 0;
-  }
-
-
-
-  // Process command
-  try {
-
-    //convert the date in long format
-    if(opt->count("start")){
-      op.setStartTime(convertLocaltimeINUTCtime(string_to_time_t(startTime)));
-    }
-
-    if(opt->count("end")){
-      op.setEndTime(convertLocaltimeINUTCtime(string_to_time_t(endTime)));
-    }
-
-    // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
-      errorUsage(argv[0],dietErrorMsg,EXECERROR);
-      return  CLI_ERROR_DIET ;
-    }
-
-    // get the sessionKey
-    sessionKey=getLastSessionKey(getppid());
-
-    // DIET call : get job output
-    if(false==sessionKey.empty()){
-      printSessionKeyMessage();
-      getMetricHistory(sessionKey, mid, met, op);
-    }
-    displayListMetric(&met);
-  } catch(VishnuException& e){// catch all Vishnu runtime error
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-    errorUsage(argv[0], msg,EXECERROR);
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-      removeBadSessionKeyFromFile(getppid());
-    }
-    return e.getMsgI() ;
-  } catch(std::exception& e){// catch all std runtime error
-    errorUsage(argv[0],e.what());
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
+  //call of the api function
+  MetricHistoryFunc metricHistoryFunc(mid, op, opt, startTime, endTime);
+  return GenericCli().run(metricHistoryFunc, dietConfig, argc, argv);
 }

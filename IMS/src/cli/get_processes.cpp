@@ -15,11 +15,28 @@
 #include "displayer.hpp"
 #include <boost/bind.hpp>
 
+#include "GenericCli.hpp"
+
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
 
+struct GetProcessesFunc {
+
+  IMS_Data::ProcessOp mop; 
+
+  GetProcessesFunc(const IMS_Data::ProcessOp& op):
+   mop(op)
+  {};
+
+  int operator()(std::string sessionKey) {
+    IMS_Data::ListProcesses processes;
+    int res = getProcesses(sessionKey, processes, mop);
+    displayListProc(&processes);
+    return res;
+  }
+};
 
 boost::shared_ptr<Options>
 makeGProcOp(string pgName, 
@@ -43,11 +60,8 @@ makeGProcOp(string pgName,
 
 int main (int argc, char* argv[]){
   
-  int ret; // Return value
-
   /******* Parsed value containers ****************/
   string dietConfig;
-  string sessionKey;
 
   /********** EMF data ************/
   IMS_Data::ProcessOp op;
@@ -61,54 +75,11 @@ int main (int argc, char* argv[]){
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt = makeGProcOp(argv[0], fmid, dietConfig);
 
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
- 
-  CLICmd cmd = CLICmd (argc, argv, opt);
-
-  // Parse the cli and setting the options found
-  ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options]");  
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);  
-  if ( opt->count("help")){
-    helpUsage(*opt,"[options]");
-    return 0;
-  }
-
-  // Process command
-  try {
-    // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
-      errorUsage(argv[0],dietErrorMsg,EXECERROR);
-      return  CLI_ERROR_DIET ;
-    }
-
-    // get the sessionKey
-    sessionKey=getLastSessionKey(getppid());
-
-    // DIET call : get job output
-    if(false==sessionKey.empty()){
-      printSessionKeyMessage();
-      getProcesses(sessionKey, p, op);
-    }
-    displayListProc(&p);
-  } catch(VishnuException& e){// catch all Vishnu runtime error
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-    errorUsage(argv[0], msg,EXECERROR);
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-      removeBadSessionKeyFromFile(getppid());
-    }
-    return e.getMsgI() ;
-  } catch(std::exception& e){// catch all std runtime error
-    errorUsage(argv[0],e.what());
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
+  //call of the api function
+  GetProcessesFunc metricGetProcessesFunc(op);
+  return GenericCli().run(metricGetProcessesFunc, dietConfig, argc, argv);
 }
