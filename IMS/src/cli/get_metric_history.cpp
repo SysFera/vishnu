@@ -37,7 +37,6 @@ struct MetricHistoryFunc {
   {};
 
   int operator()(std::string sessionKey) {
-    IMS_Data::ListMetric met;
     //convert the date in long format
     if(mcliOpt->count("start")){
       mop.setStartTime(convertLocaltimeINUTCtime(string_to_time_t(mstartTime)));
@@ -47,6 +46,7 @@ struct MetricHistoryFunc {
       mop.setEndTime(convertLocaltimeINUTCtime(string_to_time_t(mendTime)));
     }
 
+    IMS_Data::ListMetric met;
     int res = getMetricHistory(sessionKey, mmachineId, met, mop);
     displayListMetric(&met);
     return res;
@@ -90,8 +90,6 @@ makeGHMOp(string pgName,
 }
 
 int main (int argc, char* argv[]){
-
-  int ret; // Return value
 
   /******* Parsed value containers ****************/
   string dietConfig;

@@ -109,13 +109,13 @@ class GenericCli {
       // PreProcess (adapt some parameters if necessary)
       checkVishnuConfig(*opt);
       if ( opt->count("help")){
-        helpUsage(*opt,"[option]"+signature);
+        helpUsage(*opt,"[option] "+signature);
         exit(0);
       }
 
      }
       catch(po::error& e){ // catch all other bad parameter errors
-        helpUsage(*opt,"[option]"+signature);
+        helpUsage(*opt,"[option] "+signature);
         exit(CLI_ERROR_INVALID_PARAMETER);
       }
       catch(std::exception& e){// catch all std runtime error

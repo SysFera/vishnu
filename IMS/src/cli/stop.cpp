@@ -87,13 +87,12 @@ int main (int argc, char* argv[]){
 
   opt->setPosition("machineId",1);
 
-  process.setMachineId(machineId);
-  process.setProcessName(processName);
-
   bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, argc, argv, "processName machineId");
 
+  process.setMachineId(machineId);
+  process.setProcessName(processName);
   //call of the api function
   StopFunc stopFunc(process);
   return GenericCli().run(stopFunc, dietConfig, argc, argv);
