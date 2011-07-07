@@ -20,6 +20,8 @@
 #include "FMS_Data.hpp"
 
 #include "utilVishnu.hpp"
+#include "cliError.hpp"
+#include "cliUtil.hpp"
 
 class Options;
 
@@ -108,9 +110,16 @@ makeTransferCommandOptions(string pgName,
 
   return opt;
 }
+// A file transfer type
+typedef enum{
+MV,
+CP
+}TransferType;
 
 
-int copyParseOptions (const boost::shared_ptr<Options>& opt,int argc, char* argv[],FMS_Data::CpFileOptions& cpFileOptions ){
+
+void copyParseOptions (int argc, char* argv[],std::string& dietConfig,
+                       std::string& src, std::string& dest, FMS_Data::CpFileOptions& cpFileOptions, TransferType transferType){
 
   int ret; // Return value
 
@@ -118,11 +127,31 @@ int copyParseOptions (const boost::shared_ptr<Options>& opt,int argc, char* argv
 
   int trCmd;
 
+// build transfer command options
+
+  boost::shared_ptr<Options> opt(makeTransferCommandOptions(argv[0], dietConfig, trCmdStr, src, dest));
+
+  if (transferType==CP){
+  
+  opt->add("isRecursive,r",
+        "It specifies when the copy is recursive (case of directory) or not.",
+        CONFIG);
+  }
 
   CLICmd cmd (argc, argv, opt);
 
   // Parse the cli and setting the options found
   ret = cmd.parse(FMS_env_name_mapper());
+
+  if ( opt->count("help")){
+    helpUsage(*opt,"[options] src dest");
+    exit(0);
+  }
+  
+  // Check for vishnu config file
+  
+  checkVishnuConfig(*opt);  
+  
 
   if(trCmdStr.size()!=0) {
     size_t pos = trCmdStr.find_first_not_of("0123456789");
@@ -132,8 +161,9 @@ int copyParseOptions (const boost::shared_ptr<Options>& opt,int argc, char* argv
       } else if(trCmdStr.compare("rsync")==0 || trCmdStr.compare("RSYNC")==0){
         trCmd = 1;
       } else {
-        std::cerr << "Unknown file transfer command type " << trCmdStr << std::endl;
-        ret= 0;
+
+        errorUsage (argv[0],"Unknown file transfer command type "+trCmdStr,PARAMERROR);
+        exit (CLI_ERROR_INVALID_PARAMETER);
       }
     } else {
       trCmd = convertToInt(trCmdStr);
@@ -141,19 +171,18 @@ int copyParseOptions (const boost::shared_ptr<Options>& opt,int argc, char* argv
     cpFileOptions.setTrCommand(trCmd);
   }
 
+
+  if (ret != CLI_SUCCESS){
+    helpUsage(*opt,"[options] src dest");
+    exit (ret);
+  }
+
   if (opt->count("isRecursive")){
     cpFileOptions.setIsRecursive(true);
   }
 
-  return ret;
-
 }
 
-
-typedef enum{
-MV,
-CP
-}TransferType;
 
 
 template<TransferType transferType>
@@ -187,6 +216,10 @@ int res;
     return res;
   }
 };
+
+
+
+
 
 template<TransferType transferType>
 struct TransferSyncFunc {
