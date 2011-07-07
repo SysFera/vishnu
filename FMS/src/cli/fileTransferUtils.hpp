@@ -22,7 +22,8 @@
 #include "utilVishnu.hpp"
 #include "cliError.hpp"
 #include "cliUtil.hpp"
-
+#include "cmdArgs.hpp"
+#include "CLICmd.hpp"
 class Options;
 
 using namespace std;
@@ -185,6 +186,14 @@ void copyParseOptions (int argc, char* argv[],std::string& dietConfig,
 
 
 
+
+
+
+
+
+
+
+
 template<TransferType transferType>
 struct TransferAsyncFunc {
 
@@ -247,6 +256,9 @@ int res;
     return res;
   }
 };
+
+
+
 
 
 

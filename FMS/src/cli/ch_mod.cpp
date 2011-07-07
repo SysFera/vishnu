@@ -17,10 +17,29 @@
 #include <boost/bind.hpp>
 #include <sys/types.h>
 #include "FMSDisplayer.hpp"
+#include "GenericCli.hpp"
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
+
+struct ChangeFileModeFunc {
+
+  std::string mpath;
+  mode_t  mmode;
+  
+  ChangeFileModeFunc(const std::string& path,const mode_t&  mode):mpath(path),mmode(mode){}
+
+  int operator()(std::string sessionKey) {
+    
+      int res =chMod(sessionKey, mmode, mpath);
+    return res;
+  }
+};
+
+
+
+
 
 int main (int argc, char* argv[]){
   
@@ -29,7 +48,6 @@ int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
   string dietConfig;
-  string sessionKey;
   string path;
   mode_t  mode;
   /******** Callback functions ******************/
@@ -51,53 +69,9 @@ int main (int argc, char* argv[]){
       path,1);
   opt->setPosition("path",1); 
 
-  CLICmd cmd = CLICmd (argc, argv, opt);
+  bool isEmpty;
+  GenericCli().processListOpt( opt, isEmpty,argc,argv,"mode path");
+  ChangeFileModeFunc apiFunc(path,mode);
+  return GenericCli().run(apiFunc, dietConfig, argc, argv);
 
-  // Parse the cli and setting the options found
-  ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt," mode path");
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);  
-  if ( opt->count("help")){
-    helpUsage(*opt,"[options] mode path");
-    return 0;
-  }
-
-  // Process command
-  try {
-
-    // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
-      errorUsage(argv[0],dietErrorMsg,EXECERROR);
-      return  CLI_ERROR_DIET ;
-    }
-
-    // get the sessionKey
-    sessionKey=getLastSessionKey(getppid());
-
-    // DIET call 
-    if(false==sessionKey.empty()){
-      printSessionKeyMessage();
-      chMod(sessionKey, mode, path);
-    }
-    printSuccessMessage();
-  } catch(VishnuException& e){// catch all Vishnu runtime error
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-    errorUsage(argv[0], msg,EXECERROR);
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-      removeBadSessionKeyFromFile(getppid());
-    }
-    return e.getMsgI() ;
-  } catch(std::exception& e){// catch all std runtime error
-    errorUsage(argv[0],e.what());
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
 }

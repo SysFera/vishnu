@@ -14,26 +14,39 @@
 #include "sessionUtils.hpp"
 #include "cmdArgs.hpp"
 #include <boost/bind.hpp>
+#include "GenericCli.hpp"
 
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
 
+struct ChangeFileGroupFunc {
+
+  std::string mpath;
+  std::string mgroup;
+
+  ChangeFileGroupFunc(const std::string& path,const std::string& group):mpath(path),mgroup(group){}
+
+  int operator()(std::string sessionKey) {
+    
+      int res =chGrp(sessionKey, mgroup, mpath);
+    return res;
+  }
+};
+
+
 int main (int argc, char* argv[]){
-  
-  int ret; // Return value
 
   /******* Parsed value containers ****************/
   string dietConfig;
-  string sessionKey;
   string path;
   string group;
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt=processOpt(argv[0], dietConfig);
 
- opt->add("group,g",
+  opt->add("group,g",
       "The new group owner of file/directory",
       HIDDEN,
       group,1);
@@ -45,53 +58,9 @@ int main (int argc, char* argv[]){
       path,1);
   opt->setPosition("path",1);
 
-  CLICmd cmd = CLICmd (argc, argv, opt);
+  bool isEmpty;
+  GenericCli().processListOpt( opt, isEmpty,argc,argv,"group path");
+  ChangeFileGroupFunc apiFunc(path,group);
+  return GenericCli().run(apiFunc, dietConfig, argc, argv);
 
- // Parse the cli and setting the options found
-  ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] group path");
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);  
-  if ( opt->count("help")){
-    helpUsage(*opt,"[options] group path");
-    return 0;
-  }
-
-  // Process command
-  try {
-
-    // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
-      errorUsage(argv[0],dietErrorMsg,EXECERROR);
-      return  CLI_ERROR_DIET ;
-    }
-
-    // get the sessionKey
-    sessionKey=getLastSessionKey(getppid());
-
-    // DIET call 
-    if(false==sessionKey.empty()){
-      printSessionKeyMessage();
-      chGrp(sessionKey, group, path);
-    }
-    printSuccessMessage();
-  } catch(VishnuException& e){// catch all Vishnu runtime error
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-    errorUsage(argv[0], msg,EXECERROR);
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-      removeBadSessionKeyFromFile(getppid());
-    }
-    return e.getMsgI() ;
-  } catch(std::exception& e){// catch all std runtime error
-    errorUsage(argv[0],e.what());
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
 }
