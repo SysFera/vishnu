@@ -138,6 +138,8 @@ int LocalFileProxy::transferFile(const string& dest,
                                  FileTransfer& fileTransfer) {
 
   string host = FileProxy::extHost(dest);
+  std::cout << "dest " << host << "\n";
+  std::cout << "host " << host << "\n";
   bfs::path localFullPath(bfs::current_path().string());
   
   // get the source full qualified host name 

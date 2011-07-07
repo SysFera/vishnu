@@ -96,12 +96,8 @@ class GenericCli {
       CLICmd cmd = CLICmd (ac, av, opt);
       try {
         opt->parse_cli(ac,av);
-      } catch(po::error& e){ // catch all other bad parameter errors
-        helpUsage(*opt,"[option]"+signature);
-        exit(CLI_ERROR_INVALID_PARAMETER);
-      }
-
-      isEmpty=opt->empty();//if no value was given in the command line
+           
+        isEmpty=opt->empty();//if no value was given in the command line
       // Parse the cli and setting the options found
       int ret = cmd.parse(env_name_mapper());
 
@@ -115,6 +111,16 @@ class GenericCli {
       if ( opt->count("help")){
         helpUsage(*opt,"[option]"+signature);
         exit(0);
+      }
+
+     }
+      catch(po::error& e){ // catch all other bad parameter errors
+        helpUsage(*opt,"[option]"+signature);
+        exit(CLI_ERROR_INVALID_PARAMETER);
+      }
+      catch(std::exception& e){// catch all std runtime error
+        errorUsage(av[0],e.what());
+        exit(CLI_ERROR_INVALID_PARAMETER);
       }
 
     }
