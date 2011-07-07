@@ -80,6 +80,6 @@ int main (int argc, char* argv[]){
   GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
-  GetProcessesFunc metricGetProcessesFunc(op);
-  return GenericCli().run(metricGetProcessesFunc, dietConfig, argc, argv);
+  GetProcessesFunc getProcessesFunc(op);
+  return GenericCli().run(getProcessesFunc, dietConfig, argc, argv);
 }
