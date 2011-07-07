@@ -74,7 +74,7 @@ class LocalFileProxy : public FileProxy {
     /**
      * \brief To get the file inode information
      */
-    virtual void getInfos() const;
+    virtual void getInfos() const {};
 
     /**
      * \brief To update the group of the file
