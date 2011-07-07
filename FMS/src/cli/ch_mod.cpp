@@ -43,15 +43,11 @@ struct ChangeFileModeFunc {
 
 int main (int argc, char* argv[]){
   
-  int ret; // Return value
- // ChModOptions chOptions;
 
   /******* Parsed value containers ****************/
   string dietConfig;
   string path;
   mode_t  mode;
-  /******** Callback functions ******************/
-  //boost::function1<void,string> fmode(boost::bind(&FMS_Data::ChModOptions::setMode,boost::ref(chOptions),_1));
 
 
   /**************** Describe options *************/
