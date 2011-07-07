@@ -69,9 +69,6 @@ int main (int argc, char* argv[]){
   /******** Callback functions ******************/
   boost::function1<void,string> fmid(boost::bind(&IMS_Data::ProcessOp::setMachineId,boost::ref(op),_1));
 
-  /*********** Out parameters *********************/
-  IMS_Data::ListProcesses p;
-
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt = makeGProcOp(argv[0], fmid, dietConfig);
 
