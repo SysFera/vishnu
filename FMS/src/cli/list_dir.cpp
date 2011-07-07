@@ -47,8 +47,6 @@ struct ListDirFunc {
 
 int main (int ac, char* av[]){
   
-  int ret; // Return value
-
   /******* Parsed value containers ****************/
   string dietConfig;
   string path;
