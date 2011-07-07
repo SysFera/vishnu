@@ -80,13 +80,12 @@ int main (int argc, char* argv[]){
 
   opt->setPosition("type",1);
 
-  restartOp.setSedType(convertToInt(type));
-  restartOp.setVishnuConf(vishnu);
-
   bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId vishnuConf sedType");
 
+  restartOp.setSedType(convertToInt(type));
+  restartOp.setVishnuConf(vishnu);
   //call of the api function
   RestartFunc restartFunc(machineId, restartOp);
   return GenericCli().run(restartFunc, dietConfig, argc, argv);
