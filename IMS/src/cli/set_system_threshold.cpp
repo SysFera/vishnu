@@ -91,7 +91,7 @@ int main (int argc, char* argv[]){
   GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId value type handler");
 
   //call of the api function
-  SetSysThresholdFunc metricSetSysThresholdFunc(systemThreshold);
-  return GenericCli().run(metricSetSysThresholdFunc, dietConfig, argc, argv);
+  SetSysThresholdFunc setSysThresholdFunc(systemThreshold);
+  return GenericCli().run(setSysThresholdFunc, dietConfig, argc, argv);
 }
 
