@@ -731,27 +731,28 @@ void TransferExec::updatePid(const int& pid)const {
 
 std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) const{
   vector<string> tokens;
-  ostringstream command;
+  ostringstream trCommand;
   pid_t pid;
   pair<string,string> result;
-  int comPipeOut[2];
-  int comPipeErr[2];
+  int transferComPipeOut[2];
+  int transferComPipeErr[2];
   int status;
   char c;
 
-  command  << FileTransferServer::getSSHCommand() << " -t -q " << " -l " << getSrcUser();
-  command <<" -C "  << " -o BatchMode=yes " << " -o StrictHostKeyChecking=no";
-  command << " -o ForwardAgent=yes";
-  command << " -p " << FileTransferServer::getSSHPort() << " " << getSrcMachineName() << " " << cmd;
+  // build the transfer command
+  trCommand  << FileTransferServer::getSSHCommand() << " -t -q " << " -l " << getSrcUser();
+  trCommand <<" -C "  << " -o BatchMode=yes " << " -o StrictHostKeyChecking=no";
+  trCommand << " -o ForwardAgent=yes";
+  trCommand << " -p " << FileTransferServer::getSSHPort() << " " << getSrcMachineName() << " " << cmd;
 
+// Exec The transfer command
 
-  istringstream is(command.str());
+  istringstream is(trCommand.str());
 
   copy(istream_iterator<string>(is),
       istream_iterator<string>(),
       back_inserter<vector<string> >(tokens));
 
-  /***********************************************/
 
 
   char* argv[tokens.size()+1];
@@ -761,22 +762,22 @@ std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) c
     argv[i]=strdup(tokens[i].c_str());
   }
  
-  if (pipe(comPipeOut)==-1) {
+  if (pipe(transferComPipeOut)==-1) {
     for (unsigned int i=0; i<tokens.size(); ++i){
       free(argv[i]);
     }
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error creating communication pipe");
   }
  
-  if (pipe(comPipeErr)==-1) {
+  if (pipe(transferComPipeErr)==-1) {
  
     for (unsigned int i=0; i<tokens.size(); ++i){
  
       free(argv[i]);
  
     }
-    close(comPipeOut[0]);
-    close(comPipeOut[1]);
+    close(transferComPipeOut[0]);
+    close(transferComPipeOut[1]);
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error creating communication pipe");
   }
  
@@ -789,12 +790,12 @@ std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) c
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error forking process");
   }
   if (pid==0) {
-    close(comPipeOut[0]); /* Close unused read end */
-    close(comPipeErr[0]); /* Close unused write end */
-    dup2(comPipeOut[1], 1);
-    dup2(comPipeErr[1], 2);
-    close(comPipeOut[1]);
-    close(comPipeErr[1]);
+    close(transferComPipeOut[0]); /* Close unused read end */
+    close(transferComPipeErr[0]); /* Close unused write end */
+    dup2(transferComPipeOut[1], 1);
+    dup2(transferComPipeErr[1], 2);
+    close(transferComPipeOut[1]);
+    close(transferComPipeErr[1]);
     if (execvp(argv[0], argv)) {
       exit(-1);
     }
@@ -803,30 +804,30 @@ std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) c
   // Store the child process id
   updatePid (pid);
 
-  close(comPipeOut[1]); /* Close unused write end */
+  close(transferComPipeOut[1]); /* Close unused write end */
 
-  close(comPipeErr[1]);/* Close unused write end */
+  close(transferComPipeErr[1]);/* Close unused write end */
 
 
-  while (read(comPipeOut[0], &c, 1)){
+  while (read(transferComPipeOut[0], &c, 1)){
     result.first+=c;
   }
 
-  while (read(comPipeErr[0], &c, 1)){
+  while (read(transferComPipeErr[0], &c, 1)){
     result.second+=c;
   }
  
   if (waitpid(pid, &status, 0)==-1) {
-    close(comPipeOut[0]);
-    close(comPipeErr[0]);
+    close(transferComPipeOut[0]);
+    close(transferComPipeErr[0]);
     for (unsigned int i=0; i<tokens.size(); ++i){
       free(argv[i]);
     }
-    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error executing command "+command.str());
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error executing command "+trCommand.str());
   }
 
-  close(comPipeOut[0]);
-  close(comPipeErr[0]);
+  close(transferComPipeOut[0]);
+  close(transferComPipeErr[0]);
   for (unsigned int i=0; i<tokens.size(); ++i){
     free(argv[i]);
   }
