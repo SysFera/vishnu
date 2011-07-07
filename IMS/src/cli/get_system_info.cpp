@@ -81,7 +81,7 @@ int main (int argc, char* argv[]){
   GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
-  GetSysInfoFunc metricGetSysInfoFunc(sysInfoOp);
-  return GenericCli().run(metricGetSysInfoFunc, dietConfig, argc, argv);
+  GetSysInfoFunc getSysInfoFunc(sysInfoOp);
+  return GenericCli().run(getSysInfoFunc, dietConfig, argc, argv);
 }
 
