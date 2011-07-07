@@ -34,8 +34,6 @@ struct SetSysThresholdFunc {
 
 int main (int argc, char* argv[]){
 
-  int ret; // Return value
-
   /******* Parsed value containers ****************/
   string dietConfig;
   string sessionKey;
@@ -79,17 +77,15 @@ int main (int argc, char* argv[]){
             handler,1);
   opt->setPosition("handler",1);
 
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId value type handler");
 
   //To set the corresponding values to the object systemThreshold
   systemThreshold.setMachineId(machineId);
   systemThreshold.setValue(value);
   systemThreshold.setType(type);
   systemThreshold.setHandler(handler);
-
-  bool isEmpty;
-  //To process list options
-  GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId value type handler");
-
   //call of the api function
   SetSysThresholdFunc setSysThresholdFunc(systemThreshold);
   return GenericCli().run(setSysThresholdFunc, dietConfig, argc, argv);
