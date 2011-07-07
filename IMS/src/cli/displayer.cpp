@@ -95,7 +95,7 @@ convertMetricToString(const int& metricType) {
     case 3:
       res = "FREEMORY";
     default:
-      res = "UNDEFINED";
+      break;
   }
   return res;
 }
