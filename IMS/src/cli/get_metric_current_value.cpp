@@ -15,10 +15,29 @@
 #include "displayer.hpp"
 #include <boost/bind.hpp>
 
+#include "GenericCli.hpp"
+
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
+
+struct MetricCurrentValueFunc {
+
+  std::string mmachineId;
+  IMS_Data::CurMetricOp mop;
+
+  MetricCurrentValueFunc(const std::string& machineId, const IMS_Data::CurMetricOp& op):
+   mmachineId(machineId), mop(op)
+  {};
+
+  int operator()(std::string sessionKey) {
+    IMS_Data::ListMetric met;
+    int res = getMetricCurrentValue(sessionKey, mmachineId, met, mop);
+    displayListMetric(&met);
+    return res;
+  }
+};
 
 
 boost::shared_ptr<Options>
@@ -45,11 +64,8 @@ makeGCMOp(string pgName,
 
 int main (int argc, char* argv[]){
 
-  int ret; // Return value
-
   /******* Parsed value containers ****************/
   string dietConfig;
-  string sessionKey;
   string mid;
 
   /********** EMF data ************/
@@ -57,9 +73,6 @@ int main (int argc, char* argv[]){
 
   /******** Callback functions ******************/
   boost::function1<void,IMS_Data::MetricType> ftype(boost::bind(&IMS_Data::CurMetricOp::setMetricType,boost::ref(op),_1));
-
-  /*********** Out parameters *********************/
-  IMS_Data::ListMetric met;
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt = makeGCMOp(argv[0], ftype,  dietConfig);
@@ -71,52 +84,12 @@ int main (int argc, char* argv[]){
 	   mid,1);
   opt->setPosition("machineId",1);
 
-  CLICmd cmd = CLICmd (argc, argv, opt);
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId");
 
-  // Parse the cli and setting the options found
-  ret = cmd.parse(env_name_mapper());
+  //call of the api function
+  MetricCurrentValueFunc metricMetricCurrentValueFunc(mid, op);
+  return GenericCli().run(metricMetricCurrentValueFunc, dietConfig, argc, argv);
 
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] machineId");
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);
-  if ( opt->count("help")){
-    helpUsage(*opt,"[options] machineId");
-    return 0;
-  }
-
-  // Process command
-  try {
-    // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
-      errorUsage(argv[0],dietErrorMsg,EXECERROR);
-      return  CLI_ERROR_DIET ;
-    }
-
-    // get the sessionKey
-    sessionKey=getLastSessionKey(getppid());
-
-    // DIET call : get job output
-    if(false==sessionKey.empty()){
-      printSessionKeyMessage();
-      getMetricCurrentValue(sessionKey, mid, met, op);
-    }
-    displayListMetric(&met);
-  } catch(VishnuException& e){// catch all Vishnu runtime error
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-    errorUsage(argv[0], msg,EXECERROR);
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-      removeBadSessionKeyFromFile(getppid());
-    }
-    return e.getMsgI() ;
-  } catch(std::exception& e){// catch all std runtime error
-    errorUsage(argv[0],e.what());
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
 }

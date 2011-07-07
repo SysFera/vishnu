@@ -16,9 +16,27 @@
 #include <boost/bind.hpp>
 #include "displayer.hpp"
 
+#include "GenericCli.hpp"
 
 using namespace std;
 using namespace vishnu;
+
+struct GetSysInfoFunc {
+
+  IMS_Data::SysInfoOp msysInfoOp;
+
+  GetSysInfoFunc(const IMS_Data::SysInfoOp& sysInfoOp):
+   msysInfoOp(sysInfoOp)
+  {};
+
+  int operator()(std::string sessionKey) {
+    IMS_Data::ListSysInfo listSysInfo;    
+    int res = getSystemInfo(sessionKey, listSysInfo, msysInfoOp);
+    displayListSysInfo(&listSysInfo);
+    return res;
+  }
+};
+
 
 boost::shared_ptr<Options>
 makeGetystemInfoOpt(string pgName,
@@ -48,7 +66,6 @@ int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
   string dietConfig;
-  string sessionKey;
 
    /********** EMF data ************/
   IMS_Data::SysInfoOp sysInfoOp;
@@ -56,59 +73,15 @@ int main (int argc, char* argv[]){
   /******** Callback functions ******************/
   boost::function1<void,string> fMachineId (boost::bind(&IMS_Data::SysInfoOp::setMachineId,boost::ref(sysInfoOp),_1));
 
-  /*********** Out parameters *********************/
-  IMS_Data::ListSysInfo listSysInfo;
-
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt=makeGetystemInfoOpt(argv[0], fMachineId, dietConfig);
 
-  CLICmd cmd = CLICmd (argc, argv, opt);
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
-  // Parse the cli and setting the options found
-  ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] ");
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);
-  if ( opt->count("help")){
-    helpUsage(*opt,"[options]");
-    return 0;
-  }
-
-  // Process command
-  try {
-    // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
-      errorUsage(argv[0],dietErrorMsg,EXECERROR);
-      return  CLI_ERROR_DIET ;
-    }
-
-    // get the sessionKey
-    sessionKey=getLastSessionKey(getppid());
-
-    // DIET call : get job output
-    if(false==sessionKey.empty()){
-      printSessionKeyMessage();
-      getSystemInfo(sessionKey, listSysInfo, sysInfoOp);
-      displayListSysInfo(&listSysInfo);
-    }
-  } catch(VishnuException& e){// catch all Vishnu runtime error
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-    errorUsage(argv[0], msg,EXECERROR);
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-      removeBadSessionKeyFromFile(getppid());
-    }
-    return e.getMsgI() ;
-  } catch(std::exception& e){// catch all std runtime error
-    errorUsage(argv[0],e.what());
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
+  //call of the api function
+  GetSysInfoFunc metricGetSysInfoFunc(sysInfoOp);
+  return GenericCli().run(metricGetSysInfoFunc, dietConfig, argc, argv);
 }
 
