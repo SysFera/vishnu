@@ -29,6 +29,32 @@ class Options;
 using namespace std;
 using namespace vishnu;
 
+/**
+ * \brief To build options for the VISHNU cmdArgs command
+ * \param pgName : The name of the command
+ * \param dietConfig: Represents the VISHNU config file
+ * \return  The built command
+ */
+boost::shared_ptr<Options>
+makeRemoteCommandOpt(string pgName,
+           string& dietConfig,
+           string& path){
+
+
+  boost::shared_ptr<Options> opt=processOpt(pgName, dietConfig);
+  
+  opt->add("path,p",
+      "represents the path of the file",
+      HIDDEN,
+      path,1);
+
+  opt->setPosition("path",1);
+
+
+  return opt;
+}
+
+
 
 void ParseRemoteCommandOptions (int argc, char* argv[],std::string& dietConfig, std::string& path){
 
