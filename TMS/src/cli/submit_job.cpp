@@ -137,23 +137,23 @@ int main (int argc, char* argv[]){
 
   CLICmd cmd = CLICmd (argc, argv, opt);
 
-  // Parse the cli and setting the options found
-  ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] machineId script");
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);  
-  if ( opt->count("help")){
-    helpUsage(*opt,"[options] machineId script");
-    return 0;
-  }
-
   // Process command
   try {
+
+    // Parse the cli and setting the options found
+    ret = cmd.parse(env_name_mapper());
+
+    if (ret != CLI_SUCCESS){
+      helpUsage(*opt,"[options] machineId script");
+      return ret;
+    }
+
+    // PreProcess (adapt some parameters if necessary)
+    checkVishnuConfig(*opt);  
+    if ( opt->count("help")){
+      helpUsage(*opt,"[options] machineId script");
+      return 0;
+    }
 
     if(walltime.size()!=0) {
       subOp.setWallTime(convertStringToWallTime(walltime));
