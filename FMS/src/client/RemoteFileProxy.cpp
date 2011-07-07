@@ -59,7 +59,7 @@ bool RemoteFileProxy::isUpToDate() const {
 /* Get the informations about this remote file. Call the DIET service. */
 void RemoteFileProxy::getInfos() const {
 
-  diet_profile_t* profile;
+  diet_profile_t* getInfosProfile;
 
   char *fileStatInString=NULL, * errMsg=NULL;
 
@@ -68,49 +68,49 @@ void RemoteFileProxy::getInfos() const {
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  profile = diet_profile_alloc(serviceName.c_str(), 3, 3, 5);
+  getInfosProfile = diet_profile_alloc(serviceName.c_str(), 3, 3, 5);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters 
-  if(diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
+  if(diet_string_set(diet_parameter(getInfosProfile, 0), const_cast<char*>(sessionKey.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getPath().c_str()),
+  if(diet_string_set(diet_parameter(getInfosProfile, 1), const_cast<char*>(getPath().c_str()),
         DIET_VOLATILE)){  
     msgErrorDiet += "with file path parameter "+getPath();
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 2), const_cast<char*>(localUser.c_str()),
+  if(diet_string_set(diet_parameter(getInfosProfile, 2), const_cast<char*>(localUser.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with local user parameter "+localUser;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_paramstring_set(diet_parameter(getInfosProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile, 4), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 5), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(getInfosProfile, 4), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(getInfosProfile, 5), NULL, DIET_VOLATILE);
 
-  if (diet_call(profile)) {
+  if (diet_call(getInfosProfile)) {
     raiseDietMsgException("Error calling DIET service to obtain file informations");
   }
 
-  if(diet_string_get(diet_parameter(profile, 4), &fileStatInString, NULL)){
+  if(diet_string_get(diet_parameter(getInfosProfile, 4), &fileStatInString, NULL)){
     msgErrorDiet += " by receiving FileStat serialized  content";
     raiseDietMsgException(msgErrorDiet);
   }
 
 
-  if(diet_string_get(diet_parameter(profile, 5), &errMsg, NULL)){
+  if(diet_string_get(diet_parameter(getInfosProfile, 5), &errMsg, NULL)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -144,7 +144,7 @@ RemoteFileProxy& RemoteFileProxy::operator=(const RemoteFileProxy& file) {
  * the error message.
  */
 int RemoteFileProxy::chgrp(const string& group) {
-  diet_profile_t* profile;
+  diet_profile_t* chgrpProfile;
   char* errMsg;
 
   std::string serviceName("FileChangeGroup");
@@ -152,46 +152,46 @@ int RemoteFileProxy::chgrp(const string& group) {
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  profile = diet_profile_alloc(serviceName.c_str(), 4, 4, 5);
+  chgrpProfile = diet_profile_alloc(serviceName.c_str(), 4, 4, 5);
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
+  if(diet_string_set(diet_parameter(chgrpProfile, 0), const_cast<char*>(sessionKey.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getPath().c_str()),
+  if(diet_string_set(diet_parameter(chgrpProfile, 1), const_cast<char*>(getPath().c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with file path parameter "+getPath();
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 2), const_cast<char*>(localUser.c_str()),
+  if(diet_string_set(diet_parameter(chgrpProfile, 2), const_cast<char*>(localUser.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with local user parameter "+localUser;
     raiseDietMsgException(msgErrorDiet); 
   }
 
-  if(diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_paramstring_set(diet_parameter(chgrpProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 4), const_cast<char*>(group.c_str()),
+  if(diet_string_set(diet_parameter(chgrpProfile, 4), const_cast<char*>(group.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with group parameter "+group;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  diet_string_set(diet_parameter(profile, 5), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(chgrpProfile, 5), NULL, DIET_VOLATILE);
 
-  if (diet_call(profile)) {
+  if (diet_call(chgrpProfile)) {
     raiseDietMsgException("Error calling DIET service to change file group");
   }
 
-  if(diet_string_get(diet_parameter(profile, 5), &errMsg, NULL)){
+  if(diet_string_get(diet_parameter(chgrpProfile, 5), &errMsg, NULL)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -207,7 +207,7 @@ int RemoteFileProxy::chgrp(const string& group) {
  * the error message.
  */
 int RemoteFileProxy::chmod(const mode_t mode) {
-  diet_profile_t* profile;
+  diet_profile_t* chmodProfile;
   char* errMsg;
 
   std::string serviceName("FileChangeMode");
@@ -215,29 +215,29 @@ int RemoteFileProxy::chmod(const mode_t mode) {
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  profile = diet_profile_alloc(serviceName.c_str(), 4, 4, 5);
+  chmodProfile = diet_profile_alloc(serviceName.c_str(), 4, 4, 5);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters 
-  if(diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
+  if(diet_string_set(diet_parameter(chmodProfile, 0), const_cast<char*>(sessionKey.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getPath().c_str()),
+  if(diet_string_set(diet_parameter(chmodProfile, 1), const_cast<char*>(getPath().c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with file path parameter "+getPath();
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 2), const_cast<char*>(localUser.c_str()),
+  if(diet_string_set(diet_parameter(chmodProfile, 2), const_cast<char*>(localUser.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with local user parameter "+localUser;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_paramstring_set(diet_parameter(chmodProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
@@ -247,21 +247,21 @@ int RemoteFileProxy::chmod(const mode_t mode) {
   os << mode;
   string modeInString (os.str());
 
-  if(diet_string_set(diet_parameter(profile, 4), const_cast<char*>(modeInString.c_str()),
+  if(diet_string_set(diet_parameter(chmodProfile, 4), const_cast<char*>(modeInString.c_str()),
       DIET_VOLATILE)){
     msgErrorDiet += " by receiving mode parameter "+modeInString;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  diet_string_set(diet_parameter(profile, 5), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(chmodProfile, 5), NULL, DIET_VOLATILE);
 
 
-  if (diet_call(profile)){
+  if (diet_call(chmodProfile)){
     raiseDietMsgException("Error calling DIET service to obtain file informations");
   }
 
   //Output parameter
-  if(diet_string_get(diet_parameter(profile, 5), &errMsg, NULL)){
+  if(diet_string_get(diet_parameter(chmodProfile, 5), &errMsg, NULL)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -279,36 +279,36 @@ int RemoteFileProxy::chmod(const mode_t mode) {
 string RemoteFileProxy::head(const HeadOfFileOptions& options) {
   string result;
   char* fileHead, * errMsg, *optionsToString = NULL;
-  diet_profile_t* profile;
+  diet_profile_t* headProfile;
 
   std::string serviceName("FileHead");
 
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  profile = diet_profile_alloc(serviceName.c_str(), 4, 4, 6);
+  headProfile = diet_profile_alloc(serviceName.c_str(), 4, 4, 6);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters  
-  if(diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
+  if(diet_string_set(diet_parameter(headProfile, 0), const_cast<char*>(sessionKey.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getPath().c_str()),
+  if(diet_string_set(diet_parameter(headProfile, 1), const_cast<char*>(getPath().c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with file path parameter "+getPath();
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 2), const_cast<char*>(localUser.c_str()),
+  if(diet_string_set(diet_parameter(headProfile, 2), const_cast<char*>(localUser.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with local user parameter "+localUser;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_paramstring_set(diet_parameter(headProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
@@ -319,25 +319,25 @@ string RemoteFileProxy::head(const HeadOfFileOptions& options) {
   optionsToString =  strdup(_ser.serialize_str(const_cast<FMS_Data::HeadOfFileOptions_ptr>(&options)).c_str());
 
 
-  if(diet_string_set(diet_parameter(profile, 4), optionsToString, DIET_VOLATILE)){
+  if(diet_string_set(diet_parameter(headProfile, 4), optionsToString, DIET_VOLATILE)){
     msgErrorDiet += " by receiving head of file options values ";
     raiseDietMsgException(msgErrorDiet);
   }
 
-  diet_string_set(diet_parameter(profile, 5), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 6), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(headProfile, 5), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(headProfile, 6), NULL, DIET_VOLATILE);
 
-  if (diet_call(profile)){
+  if (diet_call(headProfile)){
     raiseDietMsgException("Error calling DIET service");
   }
   
   //Output parameter
-  if(diet_string_get(diet_parameter(profile, 5), &fileHead, NULL)){
+  if(diet_string_get(diet_parameter(headProfile, 5), &fileHead, NULL)){
     msgErrorDiet += " by receiving fileHead message";
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_get(diet_parameter(profile, 6), &errMsg, NULL)){
+  if(diet_string_get(diet_parameter(headProfile, 6), &errMsg, NULL)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -356,53 +356,53 @@ string RemoteFileProxy::head(const HeadOfFileOptions& options) {
 string RemoteFileProxy::getContent() {
   
   char* fileContent, * errMsg;
-  diet_profile_t* profile;
+  diet_profile_t* getContentProfile;
 
   std::string serviceName("FileContent");
 
   std::string sessionKey=this->getSession().getSessionKey();
 
-  profile = diet_profile_alloc(serviceName.c_str(), 3, 3, 5);
+  getContentProfile = diet_profile_alloc(serviceName.c_str(), 3, 3, 5);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters 
-  if(diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
+  if(diet_string_set(diet_parameter(getContentProfile, 0), const_cast<char*>(sessionKey.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getPath().c_str()),
+  if(diet_string_set(diet_parameter(getContentProfile, 1), const_cast<char*>(getPath().c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with file path parameter "+getPath();
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 2), const_cast<char*>(localUser.c_str()),
+  if(diet_string_set(diet_parameter(getContentProfile, 2), const_cast<char*>(localUser.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with local user parameter "+localUser;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_paramstring_set(diet_parameter(getContentProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
   }
 
-  diet_string_set(diet_parameter(profile, 4), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 5), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(getContentProfile, 4), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(getContentProfile, 5), NULL, DIET_VOLATILE);
 
-  if (diet_call(profile)){
+  if (diet_call(getContentProfile)){
     raiseDietMsgException("Error calling DIET service");
   }
 
-  if(diet_string_get(diet_parameter(profile, 4), &fileContent, NULL)){
+  if(diet_string_get(diet_parameter(getContentProfile, 4), &fileContent, NULL)){
     msgErrorDiet += " by receiving fileContent message";
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_get(diet_parameter(profile, 5), &errMsg, NULL)){
+  if(diet_string_get(diet_parameter(getContentProfile, 5), &errMsg, NULL)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -419,48 +419,48 @@ string RemoteFileProxy::getContent() {
  * the error message.
  */
 int RemoteFileProxy::mkfile(const mode_t mode) {
-  diet_profile_t* profile;
+  diet_profile_t* mkfileProfile;
   char* errMsg;
   std::string serviceName("FileCreate");
 
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  profile = diet_profile_alloc(serviceName.c_str(), 3, 3, 4);
+  mkfileProfile = diet_profile_alloc(serviceName.c_str(), 3, 3, 4);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
+  if(diet_string_set(diet_parameter(mkfileProfile, 0), const_cast<char*>(sessionKey.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getPath().c_str()),
+  if(diet_string_set(diet_parameter(mkfileProfile, 1), const_cast<char*>(getPath().c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with file path parameter "+getPath();
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 2), const_cast<char*>(localUser.c_str()),
+  if(diet_string_set(diet_parameter(mkfileProfile, 2), const_cast<char*>(localUser.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with local user parameter "+localUser;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_paramstring_set(diet_parameter(mkfileProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
   }
 
-  diet_string_set(diet_parameter(profile, 4), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(mkfileProfile, 4), NULL, DIET_VOLATILE);
 
-  if (diet_call(profile)){
+  if (diet_call(mkfileProfile)){
     raiseDietMsgException("Error calling DIET service");
   }
 
-  if(diet_string_get(diet_parameter(profile, 4), &errMsg, NULL)){
+  if(diet_string_get(diet_parameter(mkfileProfile, 4), &errMsg, NULL)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -478,48 +478,48 @@ int RemoteFileProxy::mkfile(const mode_t mode) {
  * the error message.
  */
 int RemoteFileProxy::mkdir(const mode_t mode) {
-  diet_profile_t* profile;
+  diet_profile_t* mkdirProfile;
   char* errMsg;
   std::string serviceName("DirCreate");
 
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  profile = diet_profile_alloc(serviceName.c_str(), 3, 3, 4);
+  mkdirProfile = diet_profile_alloc(serviceName.c_str(), 3, 3, 4);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
+  if(diet_string_set(diet_parameter(mkdirProfile, 0), const_cast<char*>(sessionKey.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getPath().c_str()),
+  if(diet_string_set(diet_parameter(mkdirProfile, 1), const_cast<char*>(getPath().c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with file path parameter "+getPath();
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 2), const_cast<char*>(localUser.c_str()),
+  if(diet_string_set(diet_parameter(mkdirProfile, 2), const_cast<char*>(localUser.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with local user parameter "+localUser;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_paramstring_set(diet_parameter(mkdirProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
   }
 
-  diet_string_set(diet_parameter(profile, 4), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(mkdirProfile, 4), NULL, DIET_VOLATILE);
 
-  if (diet_call(profile)){
+  if (diet_call(mkdirProfile)){
     raiseDietMsgException("Error calling DIET service");
   }
 
-  if(diet_string_get(diet_parameter(profile, 4), &errMsg, NULL)){
+  if(diet_string_get(diet_parameter(mkdirProfile, 4), &errMsg, NULL)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -538,7 +538,7 @@ int RemoteFileProxy::mkdir(const mode_t mode) {
  * the error message.
  */
 int RemoteFileProxy::rm(const RmFileOptions& options) {
-  diet_profile_t* profile;
+  diet_profile_t* rmProfile;
   char* errMsg;
  char* optionsToString=NULL;
   std::string serviceName("FileRemove");
@@ -546,29 +546,29 @@ int RemoteFileProxy::rm(const RmFileOptions& options) {
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  profile = diet_profile_alloc(serviceName.c_str(), 4, 4, 5);
+  rmProfile = diet_profile_alloc(serviceName.c_str(), 4, 4, 5);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters 
-  if(diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
+  if(diet_string_set(diet_parameter(rmProfile, 0), const_cast<char*>(sessionKey.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getPath().c_str()),
+  if(diet_string_set(diet_parameter(rmProfile, 1), const_cast<char*>(getPath().c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with file path parameter "+getPath();
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 2), const_cast<char*>(localUser.c_str()),
+  if(diet_string_set(diet_parameter(rmProfile, 2), const_cast<char*>(localUser.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with local user parameter "+localUser;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_paramstring_set(diet_parameter(rmProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
@@ -578,15 +578,15 @@ int RemoteFileProxy::rm(const RmFileOptions& options) {
   //To serialize the options object in to optionsInString
   optionsToString =  strdup(_ser.serialize_str(const_cast<RmFileOptions*>(&options)).c_str());
   
-  diet_string_set(diet_parameter(profile,4 ), optionsToString, DIET_VOLATILE);
+  diet_string_set(diet_parameter(rmProfile,4 ), optionsToString, DIET_VOLATILE);
   
-  diet_string_set(diet_parameter(profile,5), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(rmProfile,5), NULL, DIET_VOLATILE);
 
-  if (diet_call(profile)){
+  if (diet_call(rmProfile)){
     raiseDietMsgException("Error calling DIET service");
   }
 
-  if(diet_string_get(diet_parameter(profile,5), &errMsg, NULL)){
+  if(diet_string_get(diet_parameter(rmProfile,5), &errMsg, NULL)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -603,7 +603,7 @@ int RemoteFileProxy::rm(const RmFileOptions& options) {
  * the error message.
  */
 int RemoteFileProxy::rmdir() {
-  diet_profile_t* profile;
+  diet_profile_t* rmdirProfile;
   char* errMsg;
 
   std::string serviceName("DirRemove");
@@ -611,41 +611,41 @@ int RemoteFileProxy::rmdir() {
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  profile = diet_profile_alloc(serviceName.c_str(), 3, 3, 4);
+  rmdirProfile = diet_profile_alloc(serviceName.c_str(), 3, 3, 4);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters    
-  if(diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
+  if(diet_string_set(diet_parameter(rmdirProfile, 0), const_cast<char*>(sessionKey.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getPath().c_str()),
+  if(diet_string_set(diet_parameter(rmdirProfile, 1), const_cast<char*>(getPath().c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with file path parameter "+getPath();
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 2), const_cast<char*>(localUser.c_str()),
+  if(diet_string_set(diet_parameter(rmdirProfile, 2), const_cast<char*>(localUser.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with local user parameter "+localUser;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_paramstring_set(diet_parameter(rmdirProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
   }
 
-  diet_string_set(diet_parameter(profile, 4), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(rmdirProfile, 4), NULL, DIET_VOLATILE);
 
-  if (diet_call(profile)){
+  if (diet_call(rmdirProfile)){
     raiseDietMsgException("Error calling DIET service");
   }
 
-  if(diet_string_get(diet_parameter(profile, 4), &errMsg, NULL)){
+  if(diet_string_get(diet_parameter(rmdirProfile, 4), &errMsg, NULL)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -666,35 +666,35 @@ int RemoteFileProxy::rmdir() {
 string RemoteFileProxy::tail(const TailOfFileOptions& options) {
   string result;
   char* fileTail, * errMsg, *optionsToString = NULL;
-  diet_profile_t* profile;
+  diet_profile_t* tailProfile;
 
   std::string serviceName("FileTail");
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  profile = diet_profile_alloc(serviceName.c_str(), 4, 4, 6);
+  tailProfile = diet_profile_alloc(serviceName.c_str(), 4, 4, 6);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters 
-  if(diet_string_set(diet_parameter(profile, 0), strdup(sessionKey.c_str()),
+  if(diet_string_set(diet_parameter(tailProfile, 0), strdup(sessionKey.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getPath().c_str()),
+  if(diet_string_set(diet_parameter(tailProfile, 1), const_cast<char*>(getPath().c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with file path parameter "+getPath();
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 2), const_cast<char*>(localUser.c_str()),
+  if(diet_string_set(diet_parameter(tailProfile, 2), const_cast<char*>(localUser.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with local user parameter "+localUser;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_paramstring_set(diet_parameter(tailProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
@@ -704,24 +704,24 @@ string RemoteFileProxy::tail(const TailOfFileOptions& options) {
   //To serialize the options object in to optionsInString
   optionsToString =  strdup(_ser.serialize_str(const_cast<FMS_Data::TailOfFileOptions_ptr>(&options)).c_str()); 
 
-  if(diet_string_set(diet_parameter(profile, 4), optionsToString, DIET_VOLATILE)){
+  if(diet_string_set(diet_parameter(tailProfile, 4), optionsToString, DIET_VOLATILE)){
     msgErrorDiet += " by receiving tail of file options values ";
     raiseDietMsgException(msgErrorDiet);
   }
 
-  diet_string_set(diet_parameter(profile, 5), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 6), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(tailProfile, 5), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(tailProfile, 6), NULL, DIET_VOLATILE);
 
-  if (diet_call(profile)){
+  if (diet_call(tailProfile)){
     raiseDietMsgException("Error calling DIET service");
   }
 
-  if(diet_string_get(diet_parameter(profile, 5), &fileTail, NULL)){
+  if(diet_string_get(diet_parameter(tailProfile, 5), &fileTail, NULL)){
      msgErrorDiet += " by receiving fileTail message";
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_get(diet_parameter(profile, 6), &errMsg, NULL)){
+  if(diet_string_get(diet_parameter(tailProfile, 6), &errMsg, NULL)){
       msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -742,35 +742,35 @@ list<string> RemoteFileProxy::ls(const LsDirOptions& options) const {
 
   list<string> result;
   char* errMsg, *ls, *optionsToString = NULL;
-  diet_profile_t* profile;
+  diet_profile_t* lsProfile;
 
   std::string serviceName("DirList");
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  profile = diet_profile_alloc(serviceName.c_str(), 4, 4, 6);
+  lsProfile = diet_profile_alloc(serviceName.c_str(), 4, 4, 6);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters 
-  if(diet_string_set(diet_parameter(profile, 0), strdup(sessionKey.c_str()),
+  if(diet_string_set(diet_parameter(lsProfile, 0), strdup(sessionKey.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getPath().c_str()),
+  if(diet_string_set(diet_parameter(lsProfile, 1), const_cast<char*>(getPath().c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with file path parameter "+getPath();
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(diet_parameter(profile, 2), const_cast<char*>(localUser.c_str()),
+  if(diet_string_set(diet_parameter(lsProfile, 2), const_cast<char*>(localUser.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with local user parameter "+localUser;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_paramstring_set(diet_parameter(lsProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
@@ -780,25 +780,25 @@ list<string> RemoteFileProxy::ls(const LsDirOptions& options) const {
   //To serialize the options object in to optionsInString
   optionsToString =  strdup(_ser.serialize_str(const_cast<FMS_Data::LsDirOptions_ptr>(&options)).c_str()); 
 
-  if(diet_string_set(diet_parameter(profile, 4), optionsToString, DIET_VOLATILE)){
+  if(diet_string_set(diet_parameter(lsProfile, 4), optionsToString, DIET_VOLATILE)){
     msgErrorDiet += "with directory content option values ";
     raiseDietMsgException(msgErrorDiet);
   }
 
-  diet_string_set(diet_parameter(profile, 5), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 6), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(lsProfile, 5), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(lsProfile, 6), NULL, DIET_VOLATILE);
 
-  if (diet_call(profile)) {
+  if (diet_call(lsProfile)) {
     raiseDietMsgException("Error calling DIET service");
   }
 
   //Output parameters
-  if(diet_string_get(diet_parameter(profile, 5), &ls, NULL)){
+  if(diet_string_get(diet_parameter(lsProfile, 5), &ls, NULL)){
     msgErrorDiet += " by receiving directory content information";
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_get(diet_parameter(profile, 6), &errMsg, NULL)){
+  if(diet_string_get(diet_parameter(lsProfile, 6), &errMsg, NULL)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -859,59 +859,59 @@ int RemoteFileProxy::transferFile(const std::string& dest,
 
   char *optionsToString = NULL;
   char *fileTransferInString = NULL;
-  diet_profile_t* profile;
+  diet_profile_t* transferFileProfile;
   char* errMsg;
 
   std::string sessionKey=this->getSession().getSessionKey();
 
   bool isAsyncTransfer = (serviceName.compare("RemoteFileCopyAsync")==0 || serviceName.compare("RemoteFileMoveAsync")==0);
   if(!isAsyncTransfer) {
-    profile = diet_profile_alloc(serviceName.c_str(), 6, 6, 7);
+    transferFileProfile = diet_profile_alloc(serviceName.c_str(), 6, 6, 7);
   } else {
-    profile = diet_profile_alloc(serviceName.c_str(), 6, 6, 8);
+    transferFileProfile = diet_profile_alloc(serviceName.c_str(), 6, 6, 8);
   }
 
   //IN Parameters  
 
-  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
+  diet_string_set(diet_parameter(transferFileProfile, 0), const_cast<char*>(sessionKey.c_str()),
       DIET_VOLATILE);
 
-  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(localUser.c_str()), DIET_VOLATILE);
+  diet_string_set(diet_parameter(transferFileProfile, 1), const_cast<char*>(localUser.c_str()), DIET_VOLATILE);
 
   //to set the hostname of the source machine
-  diet_paramstring_set(diet_parameter(profile, 2), const_cast<char*>(srcHost.c_str()), DIET_VOLATILE);
+  diet_paramstring_set(diet_parameter(transferFileProfile, 2), const_cast<char*>(srcHost.c_str()), DIET_VOLATILE);
   //to set the hostname of the destination machine
-  diet_string_set(diet_parameter(profile, 3), const_cast<char*>(srcPath.c_str()),DIET_VOLATILE); 
+  diet_string_set(diet_parameter(transferFileProfile, 3), const_cast<char*>(srcPath.c_str()),DIET_VOLATILE); 
 
   //to set the hostname of the destination machine
-  diet_paramstring_set(diet_parameter(profile, 4), const_cast<char*>(destHost.c_str()), DIET_VOLATILE);
+  diet_paramstring_set(diet_parameter(transferFileProfile, 4), const_cast<char*>(destHost.c_str()), DIET_VOLATILE);
   //to set the destination path of the destination machine
-  diet_string_set(diet_parameter(profile, 5), const_cast<char*>(destPath.string().c_str()), DIET_VOLATILE);
+  diet_string_set(diet_parameter(transferFileProfile, 5), const_cast<char*>(destPath.string().c_str()), DIET_VOLATILE);
 
   ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object in to optionsInString
   optionsToString =  strdup(_ser.serialize_str(const_cast<TypeOfOption*>(&options)).c_str());
 
-  diet_string_set(diet_parameter(profile,6 ), optionsToString, DIET_VOLATILE);
+  diet_string_set(diet_parameter(transferFileProfile,6 ), optionsToString, DIET_VOLATILE);
 
   if(!isAsyncTransfer) { 
-    diet_string_set(diet_parameter(profile, 7), NULL, DIET_VOLATILE);
+    diet_string_set(diet_parameter(transferFileProfile, 7), NULL, DIET_VOLATILE);
   } else {
-    diet_string_set(diet_parameter(profile, 7), NULL, DIET_VOLATILE);
-    diet_string_set(diet_parameter(profile, 8), NULL, DIET_VOLATILE);
+    diet_string_set(diet_parameter(transferFileProfile, 7), NULL, DIET_VOLATILE);
+    diet_string_set(diet_parameter(transferFileProfile, 8), NULL, DIET_VOLATILE);
   }
 
-  if (diet_call(profile)) {
+  if (diet_call(transferFileProfile)) {
     raiseDietMsgException("Error calling DIET service");
   }
 
   if(!isAsyncTransfer) {
-    diet_string_get(diet_parameter(profile, 7), &errMsg, NULL);
+    diet_string_get(diet_parameter(transferFileProfile, 7), &errMsg, NULL);
     /*To raise a vishnu exception if the received message is not empty*/
     raiseExceptionIfNotEmptyMsg(errMsg);
   } else {
-    diet_string_get(diet_parameter(profile, 7), &fileTransferInString, NULL);
-    diet_string_get(diet_parameter(profile, 8), &errMsg, NULL);
+    diet_string_get(diet_parameter(transferFileProfile, 7), &fileTransferInString, NULL);
+    diet_string_get(diet_parameter(transferFileProfile, 8), &errMsg, NULL);
 
     /*To raise a vishnu exception if the received message is not empty*/
     raiseExceptionIfNotEmptyMsg(errMsg);
