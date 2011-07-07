@@ -148,7 +148,9 @@ void copyParseOptions (int argc, char* argv[],std::string& dietConfig,
     helpUsage(*opt,"[options] src dest");
     exit(0);
   }
-  
+ 
+
+
   // Check for vishnu config file
   
   checkVishnuConfig(*opt);  
@@ -204,8 +206,7 @@ struct TransferAsyncFunc {
   FMS_Data::CpFileOptions mcpFileOptions;
 
 
-    TransferAsyncFunc(const std::string& src,const std::string& dest,const FMS_Data::FileTransfer& transferInfo,const FMS_Data::CpFileOptions& cpFileOptions ):msrc(src),
-    mtransferInfo(transferInfo), mcpFileOptions (cpFileOptions) {};
+    TransferAsyncFunc(const std::string& src,const std::string& dest,const FMS_Data::FileTransfer& transferInfo,const FMS_Data::CpFileOptions& cpFileOptions ):msrc(src),mdest(dest), mtransferInfo(transferInfo), mcpFileOptions (cpFileOptions) {};
 
 
   int operator()(const std::string& sessionKey) {
@@ -239,7 +240,7 @@ struct TransferSyncFunc {
   FMS_Data::CpFileOptions mcpFileOptions;
 
 
-    TransferSyncFunc(const std::string& src,const std::string& dest,const FMS_Data::CpFileOptions& cpFileOptions ):msrc(src), mcpFileOptions (cpFileOptions) {};
+    TransferSyncFunc(const std::string& src,const std::string& dest,const FMS_Data::CpFileOptions& cpFileOptions ):msrc(src),mdest(dest),mcpFileOptions (cpFileOptions) {};
 
 
   int operator()(const std::string& sessionKey) {
