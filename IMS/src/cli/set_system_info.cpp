@@ -14,10 +14,10 @@
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
 
+#include "GenericCli.hpp"
+
 using namespace std;
 using namespace vishnu;
-
-#include "GenericCli.hpp"
 
 struct SetSysInfoFunc {
 
@@ -93,8 +93,8 @@ int main (int argc, char* argv[]){
   GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId");
 
   //call of the api function
-  SetSysInfoFunc metricSetSysInfoFunc(sysInfo);
-  return GenericCli().run(metricSetSysInfoFunc, dietConfig, argc, argv);
+  SetSysInfoFunc setSysInfoFunc(sysInfo);
+  return GenericCli().run(setSysInfoFunc, dietConfig, argc, argv);
 
 }
 

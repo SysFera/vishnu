@@ -85,8 +85,8 @@ int main (int argc, char* argv[]){
   GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
-  GetSysThresholdFunc metricGetSysThresholdFunc(thresholdOp);
-  return GenericCli().run(metricGetSysThresholdFunc, dietConfig, argc, argv);
+  GetSysThresholdFunc getSysThresholdFunc(thresholdOp);
+  return GenericCli().run(getSysThresholdFunc, dietConfig, argc, argv);
 
 }
 
