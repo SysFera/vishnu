@@ -30,7 +30,7 @@ int
 JobProxy::submitJob(const std::string& scriptContent,
                     const TMS_Data::SubmitOptions& options) {
 
-  diet_profile_t* profile = NULL;
+  diet_profile_t* submitJobProfile = NULL;
   std::string sessionKey;
   char* optionsToString = NULL;
   char* jobToString = NULL;
@@ -39,22 +39,22 @@ JobProxy::submitJob(const std::string& scriptContent,
   std::string serviceName = "jobSubmit_";
   serviceName.append(mmachineId);
 
-  profile = diet_profile_alloc(serviceName.c_str(), 4, 4, 6);
+  submitJobProfile = diet_profile_alloc(serviceName.c_str(), 4, 4, 6);
   sessionKey = msessionProxy.getSessionKey();
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if (diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(submitJobProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(diet_parameter(profile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(submitJobProfile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with machineId parameter "+mmachineId;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(diet_parameter(profile,2), strdup(scriptContent.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(submitJobProfile,2), strdup(scriptContent.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with optionsInString parameter "+scriptContent;
     raiseDietMsgException(msgErrorDiet);
   }
@@ -63,7 +63,7 @@ JobProxy::submitJob(const std::string& scriptContent,
   //To serialize the options object in to optionsInString
   optionsToString =  strdup(_ser.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options)).c_str());
 
-  if (diet_string_set(diet_parameter(profile,3), optionsToString, DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(submitJobProfile,3), optionsToString, DIET_VOLATILE)) {
     msgErrorDiet += "with optionsInString parameter "+std::string(optionsToString);
     raiseDietMsgException(msgErrorDiet);
   }
@@ -73,21 +73,21 @@ JobProxy::submitJob(const std::string& scriptContent,
   //To serialize the job object in to optionsInString
   jobToString =  strdup(_ser.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob)).c_str());
 
-  if (diet_string_set(diet_parameter(profile,4), jobToString, DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(submitJobProfile,4), jobToString, DIET_VOLATILE)) {
     msgErrorDiet += "with jobInString parameter "+std::string(jobToString);
     raiseDietMsgException(msgErrorDiet);
   }
 
    //OUT Parameters
-  diet_string_set(diet_parameter(profile,5), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile,6), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(submitJobProfile,5), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(submitJobProfile,6), NULL, DIET_VOLATILE);
 
-  if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,5), &jobInString, NULL)){
+  if(!diet_call(submitJobProfile)) {
+    if(diet_string_get(diet_parameter(submitJobProfile,5), &jobInString, NULL)){
       msgErrorDiet += " by receiving User serialized  message";
       raiseDietMsgException(msgErrorDiet);
     }
-    if(diet_string_get(diet_parameter(profile,6), &errorInfo, NULL)){
+    if(diet_string_get(diet_parameter(submitJobProfile,6), &errorInfo, NULL)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseDietMsgException(msgErrorDiet);
     }
@@ -106,7 +106,7 @@ JobProxy::submitJob(const std::string& scriptContent,
   mjob = *job_ptr;
 
   delete job_ptr;
-  diet_profile_free(profile);
+  diet_profile_free(submitJobProfile);
   return 0;
 }
 
@@ -117,24 +117,24 @@ JobProxy::submitJob(const std::string& scriptContent,
 int
 JobProxy::cancelJob() {
 
-  diet_profile_t* profile = NULL;
+  diet_profile_t* cancelJobProfile = NULL;
   std::string sessionKey;
   char* jobToString = NULL;
   char* errorInfo = NULL;
   std::string serviceName = "jobCancel_";
   serviceName.append(mmachineId);
 
-  profile = diet_profile_alloc(serviceName.c_str(), 2, 2, 3);
+  cancelJobProfile = diet_profile_alloc(serviceName.c_str(), 2, 2, 3);
   sessionKey = msessionProxy.getSessionKey();
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if (diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(cancelJobProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(diet_parameter(profile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(cancelJobProfile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with machineId parameter "+mmachineId;
     raiseDietMsgException(msgErrorDiet);
   }
@@ -143,16 +143,16 @@ JobProxy::cancelJob() {
   //To serialize the job object in to optionsInString
   jobToString =  strdup(_ser.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob)).c_str());
 
-  if (diet_string_set(diet_parameter(profile,2), jobToString, DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(cancelJobProfile,2), jobToString, DIET_VOLATILE)) {
     msgErrorDiet += "with jobInString parameter "+std::string(jobToString);
     raiseDietMsgException(msgErrorDiet);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(cancelJobProfile,3), NULL, DIET_VOLATILE);
 
-  if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+  if(!diet_call(cancelJobProfile)) {
+    if(diet_string_get(diet_parameter(cancelJobProfile,3), &errorInfo, NULL)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseDietMsgException(msgErrorDiet);
     }
@@ -164,7 +164,7 @@ JobProxy::cancelJob() {
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
-  diet_profile_free(profile);
+  diet_profile_free(cancelJobProfile);
 	return 0;
 }
 
@@ -177,7 +177,7 @@ JobProxy::cancelJob() {
 TMS_Data::Job
 JobProxy::getJobInfo() {
 
-  diet_profile_t* profile = NULL;
+  diet_profile_t* getJobInfoProfile = NULL;
   std::string sessionKey;
   char* jobToString = NULL;
   char* jobInString = NULL;
@@ -185,17 +185,17 @@ JobProxy::getJobInfo() {
   std::string serviceName = "jobInfo_";
   serviceName.append(mmachineId);
 
-  profile = diet_profile_alloc(serviceName.c_str(), 2, 2, 4);
+  getJobInfoProfile = diet_profile_alloc(serviceName.c_str(), 2, 2, 4);
   sessionKey = msessionProxy.getSessionKey();
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if (diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(getJobInfoProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(diet_parameter(profile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(getJobInfoProfile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with machineId parameter "+mmachineId;
     raiseDietMsgException(msgErrorDiet);
   }
@@ -205,21 +205,21 @@ JobProxy::getJobInfo() {
   //To serialize the options object in to optionsInString
   jobToString =  strdup(_ser.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob)).c_str());
 
-  if (diet_string_set(diet_parameter(profile,2), jobToString, DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(getJobInfoProfile,2), jobToString, DIET_VOLATILE)) {
     msgErrorDiet += "with jobInString parameter "+std::string(jobToString);
     raiseDietMsgException(msgErrorDiet);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(getJobInfoProfile,3), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(getJobInfoProfile,4), NULL, DIET_VOLATILE);
 
-  if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,3), &jobInString, NULL)){
+  if(!diet_call(getJobInfoProfile)) {
+    if(diet_string_get(diet_parameter(getJobInfoProfile,3), &jobInString, NULL)){
       msgErrorDiet += " by receiving User serialized  message";
       raiseDietMsgException(msgErrorDiet);
     }
-    if(diet_string_get(diet_parameter(profile,4), &errorInfo, NULL)){
+    if(diet_string_get(diet_parameter(getJobInfoProfile,4), &errorInfo, NULL)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseDietMsgException(msgErrorDiet);
     }
@@ -238,7 +238,7 @@ JobProxy::getJobInfo() {
   mjob = *job_ptr;
   delete job_ptr;
 
-  diet_profile_free(profile);
+  diet_profile_free(getJobInfoProfile);
   return mjob;
 }
 

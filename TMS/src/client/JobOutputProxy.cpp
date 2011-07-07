@@ -32,7 +32,7 @@ JobOutputProxy::JobOutputProxy( const SessionProxy& session,
 TMS_Data::JobResult
 JobOutputProxy::getJobOutPut(const std::string& jobId) {
 
-  diet_profile_t* profile = NULL;
+  diet_profile_t* getJobOutPutProfile = NULL;
   std::string sessionKey;
   char* jobResultToString;
   char* errorInfo = NULL;
@@ -48,17 +48,17 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
   std::string serviceName = "jobOutputGetResult_";
   serviceName.append(mmachineId);
 
-  profile = diet_profile_alloc(serviceName.c_str(), 3, 3, 5);
+  getJobOutPutProfile = diet_profile_alloc(serviceName.c_str(), 3, 3, 5);
   sessionKey = msessionProxy.getSessionKey();
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
    //IN Parameters
-  if (diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(getJobOutPutProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(diet_parameter(profile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(getJobOutPutProfile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with machineId parameter "+mmachineId;
     raiseDietMsgException(msgErrorDiet);
   }
@@ -67,22 +67,22 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
   //To serialize the options object in to optionsInString
   jobResultToString =  strdup(_ser.serialize_str(const_cast<TMS_Data::JobResult_ptr>(&jobResult)).c_str());
 
-  if (diet_string_set(diet_parameter(profile,2), jobResultToString, DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(getJobOutPutProfile,2), jobResultToString, DIET_VOLATILE)) {
     msgErrorDiet += "with the job result parameter "+std::string(jobResultToString);
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(diet_parameter(profile,3), strdup((moutDir.c_str())), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(getJobOutPutProfile,3), strdup((moutDir.c_str())), DIET_VOLATILE)) {
     msgErrorDiet += "with outDir parameter "+moutDir;
     raiseDietMsgException(msgErrorDiet);
   }
 
    //OUT Parameters
-  diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
-  diet_container_set(diet_parameter(profile,5), DIET_PERSISTENT_RETURN);
+  diet_string_set(diet_parameter(getJobOutPutProfile,4), NULL, DIET_VOLATILE);
+  diet_container_set(diet_parameter(getJobOutPutProfile,5), DIET_PERSISTENT_RETURN);
 
-  if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,4), &errorInfo, NULL)){
+  if(!diet_call(getJobOutPutProfile)) {
+    if(diet_string_get(diet_parameter(getJobOutPutProfile,4), &errorInfo, NULL)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseDietMsgException(msgErrorDiet);
     }
@@ -92,7 +92,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 
 
     try {
-      IDContainer = (profile->parameters[5]).desc.id;
+      IDContainer = (getJobOutPutProfile->parameters[5]).desc.id;
       dagda_get_container(IDContainer);
       dagda_get_container_elements(IDContainer, &content);
 
@@ -121,7 +121,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
         }
       }
       dagda_delete_data(IDContainer);
-      diet_profile_free(profile);
+      diet_profile_free(getJobOutPutProfile);
       throw UserException(ERRCODE_INVALID_PARAM,"CORBA Exception: "+ std::string(e._name())+
             " ("+std::string(IDContainer) + ")");
       }
@@ -137,7 +137,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
   }
   //To clean the container Id
   dagda_delete_data(IDContainer);
-  diet_profile_free(profile);
+  diet_profile_free(getJobOutPutProfile);
   return jobResult;
 }
 
@@ -147,7 +147,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 */
 TMS_Data::ListJobResults_ptr
 JobOutputProxy::getCompletedJobsOutput() {
-  diet_profile_t* profile = NULL;
+  diet_profile_t* getCompletedJobsOutputProfile = NULL;
   std::string sessionKey;
   char* listJobResultInString = NULL;
   char* errorInfo = NULL;
@@ -159,40 +159,40 @@ JobOutputProxy::getCompletedJobsOutput() {
   std::string serviceName = "jobOutputGetCompletedJobs_";
   serviceName.append(mmachineId);
 
-  profile = diet_profile_alloc(serviceName.c_str(), 2, 2, 5);
+  getCompletedJobsOutputProfile = diet_profile_alloc(serviceName.c_str(), 2, 2, 5);
   sessionKey = msessionProxy.getSessionKey();
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
    //IN Parameters
-  if (diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(getCompletedJobsOutputProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(diet_parameter(profile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(getCompletedJobsOutputProfile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with machineId parameter "+mmachineId;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(diet_parameter(profile,2), strdup((moutDir.c_str())), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(getCompletedJobsOutputProfile,2), strdup((moutDir.c_str())), DIET_VOLATILE)) {
     msgErrorDiet += "with outDir parameter "+moutDir;
     raiseDietMsgException(msgErrorDiet);
   }
 
 
    //OUT Parameters
-  diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
-  diet_container_set(diet_parameter(profile,5), DIET_PERSISTENT_RETURN);
+  diet_string_set(diet_parameter(getCompletedJobsOutputProfile,3), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(getCompletedJobsOutputProfile,4), NULL, DIET_VOLATILE);
+  diet_container_set(diet_parameter(getCompletedJobsOutputProfile,5), DIET_PERSISTENT_RETURN);
 
-  if(!diet_call(profile)) {
+  if(!diet_call(getCompletedJobsOutputProfile)) {
 
-    if(diet_string_get(diet_parameter(profile,3), &listJobResultInString, NULL)){
+    if(diet_string_get(diet_parameter(getCompletedJobsOutputProfile,3), &listJobResultInString, NULL)){
       msgErrorDiet += " by receiving User serialized  message";
       raiseDietMsgException(msgErrorDiet);
     }
 
-    if(diet_string_get(diet_parameter(profile,4), &errorInfo, NULL)){
+    if(diet_string_get(diet_parameter(getCompletedJobsOutputProfile,4), &errorInfo, NULL)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseDietMsgException(msgErrorDiet);
     }
@@ -208,7 +208,7 @@ JobOutputProxy::getCompletedJobsOutput() {
     }
 
     try {
-      IDContainer = (profile->parameters[5]).desc.id;
+      IDContainer = (getCompletedJobsOutputProfile->parameters[5]).desc.id;
       dagda_get_container(IDContainer);
       dagda_get_container_elements(IDContainer, &content);
 
@@ -244,7 +244,7 @@ JobOutputProxy::getCompletedJobsOutput() {
           }
         }
         dagda_delete_data(IDContainer);
-        diet_profile_free(profile);
+        diet_profile_free(getCompletedJobsOutputProfile);
         throw UserException(ERRCODE_INVALID_PARAM, "CORBA Exception: "+std::string(e._name())+
         " ("+std::string(IDContainer) + ")");
       }
@@ -254,7 +254,7 @@ JobOutputProxy::getCompletedJobsOutput() {
   }
   //To clean the container Id
   dagda_delete_data(IDContainer);
-  diet_profile_free(profile);
+  diet_profile_free(getCompletedJobsOutputProfile);
   return listJobResults_ptr;
 }
 
