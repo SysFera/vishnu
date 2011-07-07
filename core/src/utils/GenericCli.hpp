@@ -1,3 +1,6 @@
+#ifndef GENERIC_CLI_HPP
+#define GENERIC_CLI_HPP
+
 
 #include "CLICmd.hpp"
 #include "utilVishnu.hpp"
@@ -94,7 +97,7 @@ class GenericCli {
       try {
         opt->parse_cli(ac,av);
       } catch(po::error& e){ // catch all other bad parameter errors
-        helpUsage(*opt,"[option]");
+        helpUsage(*opt,"[option]"+signature);
         exit(CLI_ERROR_INVALID_PARAMETER);
       }
 
@@ -116,3 +119,5 @@ class GenericCli {
 
     }
 };
+
+#endif 
