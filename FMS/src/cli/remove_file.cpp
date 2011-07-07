@@ -14,19 +14,36 @@
 #include "sessionUtils.hpp"
 #include "cmdArgs.hpp"
 #include <boost/bind.hpp>
+#include "GenericCli.hpp"
+#include "remoteCommandUtils.hpp"
 
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
 
-int main (int argc, char* argv[]){
+using namespace FMS_Data;
+
+struct RemoveFileFunc {
+
+  std::string mpath;
+  RmFileOptions moptions;
+  RemoveFileFunc(const std::string& path,const RmFileOptions& options):mpath(path),moptions(options){}
+
+  int operator()(std::string sessionKey) {
+
+    int res=removeFile(sessionKey,mpath,moptions);
+    
+    return res;
+  }
+};
+
+
+int main (int ac, char* av[]){
   
-  int ret; // Return value
 
   /******* Parsed value containers ****************/
   string dietConfig;
-  string sessionKey;
   string path;
 
   /********** EMF data ************/
@@ -34,67 +51,22 @@ int main (int argc, char* argv[]){
 
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=processOpt(argv[0], dietConfig);
-
-  opt->add("path,p",
-      "The file to remove following the pattern [host:]file path.",
-      HIDDEN,
-      path,1);
-  opt->setPosition("path",1);
-
+  boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],dietConfig,path));
+  
   opt->add("isRecursive,r",
       "It specifies when the remove command is recursive (case of directory) or not.",
       CONFIG);
   
-  CLICmd cmd = CLICmd (argc, argv, opt);
-
+  bool isEmpty;
+  GenericCli().processListOpt( opt, isEmpty,ac,av," path");
+ 
   // Parse the cli and setting the options found
-  ret = cmd.parse(env_name_mapper());
 
   if(opt->count("isRecursive")){
     rmFileOptions.setIsRecursive(true);
   }
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] path");
-    return ret;
-  }
 
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);  
-  if ( opt->count("help")){
-    helpUsage(*opt,"[options] path");
-    return 0;
-  }
+  RemoveFileFunc apiFunc(path,rmFileOptions);
+  return GenericCli().run(apiFunc, dietConfig, ac, av);
 
-  // Process command
-  try {
-
-    // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
-      errorUsage(argv[0],dietErrorMsg,EXECERROR);
-      return  CLI_ERROR_DIET ;
-    }
-
-    // get the sessionKey
-    sessionKey=getLastSessionKey(getppid());
-
-    // DIET call 
-    if(false==sessionKey.empty()){
-      printSessionKeyMessage();
-      removeFile(sessionKey, path,rmFileOptions);
-    }
-  } catch(VishnuException& e){// catch all Vishnu runtime error
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-    errorUsage(argv[0], msg,EXECERROR);
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-      removeBadSessionKeyFromFile(getppid());
-    }
-    return e.getMsgI() ;
-  } catch(std::exception& e){// catch all std runtime error
-    errorUsage(argv[0],e.what());
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
 }

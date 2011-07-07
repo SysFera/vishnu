@@ -37,7 +37,8 @@ int main (int argc, char* argv[]){
   copyParseOptions ( argc, argv,dietConfig,src,dest,cpFileOptions,CP);
 
   TransferSyncFunc<CP> apiFunc(src, dest, cpFileOptions);
- 
+  std::cout << "src " << src << "\n"; 
+  std::cout << "dest " << dest << "\n"; 
   return GenericCli().run(apiFunc, dietConfig, argc, argv);
 }
 
