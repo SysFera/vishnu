@@ -13,27 +13,29 @@
 #include "api_ims.hpp"
 #include "sessionUtils.hpp"
 
+#include "GenericCli.hpp"
 
 using namespace std;
 using namespace vishnu;
 
+struct SetUpdateFreqFunc {
 
+  std::string mfreq;
+
+  SetUpdateFreqFunc(const std::string& freq):
+   mfreq(freq)
+  {};
+
+  int operator()(std::string sessionKey) {
+    return setUpdateFrequency(sessionKey, convertToInt(mfreq));
+  }
+};
 
 int main (int argc, char* argv[]){
   
-  int ret; // Return value
-
   /******* Parsed value containers ****************/
   string dietConfig;
-  string sessionKey;
   string freq;
-
-  /********** EMF data ************/
-
-
-  /******** Callback functions ******************/
-
-  /*********** Out parameters *********************/
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(new Options(argv[0]));
@@ -50,53 +52,13 @@ int main (int argc, char* argv[]){
 	   HIDDEN,
 	   freq,1);
   opt->setPosition("freq",1);
- 
-  CLICmd cmd = CLICmd (argc, argv, opt);
 
-  // Parse the cli and setting the options found
-  ret = cmd.parse(env_name_mapper());
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, argc, argv, "freq");
 
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] freq");  
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);  
-  if ( opt->count("help")){
-    helpUsage(*opt,"[options] freq");
-    return 0;
-  }
-
-  // Process command
-  try {
-    // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
-      errorUsage(argv[0],dietErrorMsg,EXECERROR);
-      return  CLI_ERROR_DIET ;
-    }
-
-    // get the sessionKey
-    sessionKey=getLastSessionKey(getppid());
-
-    // DIET call : get job output
-    if(false==sessionKey.empty()){
-      printSessionKeyMessage();
-      setUpdateFrequency(sessionKey, convertToInt(freq));
-    }
-  } catch(VishnuException& e){// catch all Vishnu runtime error
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-    errorUsage(argv[0], msg,EXECERROR);
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-      removeBadSessionKeyFromFile(getppid());
-    }
-    return e.getMsgI() ;
-  } catch(std::exception& e){// catch all std runtime error
-    errorUsage(argv[0],e.what());
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
+  //call of the api function
+  SetUpdateFreqFunc setUpdateFreqFunc(freq);
+  return GenericCli().run(setUpdateFreqFunc, dietConfig, argc, argv); 
 }
 
