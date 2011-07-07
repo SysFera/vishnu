@@ -13,27 +13,30 @@
 #include "api_ims.hpp"
 #include "sessionUtils.hpp"
 
+#include "GenericCli.hpp"
 
 using namespace std;
 using namespace vishnu;
 
+struct UserIdentifierFunc {
+
+  std::string muserFormat;
+
+  UserIdentifierFunc(const std::string& userFormat):
+   muserFormat(userFormat)
+  {};
+
+  int operator()(std::string sessionKey) {
+    return defineUserIdentifier(sessionKey, muserFormat);
+  }
+};
 
 
 int main (int argc, char* argv[]){
   
-  int ret; // Return value
-
   /******* Parsed value containers ****************/
   string dietConfig;
-  string sessionKey;
-  string fmt;
-
-  /********** EMF data ************/
-
-
-  /******** Callback functions ******************/
-
-  /*********** Out parameters *********************/
+  string userFormat;
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(new Options(argv[0]));
@@ -46,57 +49,18 @@ int main (int argc, char* argv[]){
 
   // All cli obligatory parameters
   opt->add("format,f",
-	   "represents the id of the machine",
+	   "The id of the machine on which the user format must be defined",
 	   HIDDEN,
-	   fmt,1);
+	   userFormat,1);
   opt->setPosition("format",1);
- 
-  CLICmd cmd = CLICmd (argc, argv, opt);
 
-  // Parse the cli and setting the options found
-  ret = cmd.parse(env_name_mapper());
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, argc, argv, "format");
 
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] format");  
-    return ret;
-  }
+  //call of the api function
+  UserIdentifierFunc jobIdFunc(userFormat);
+  return GenericCli().run(jobIdFunc, dietConfig, argc, argv); 
 
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);  
-  if ( opt->count("help")){
-    helpUsage(*opt,"[options] format");
-    return 0;
-  }
-
-  // Process command
-  try {
-    // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
-      errorUsage(argv[0],dietErrorMsg,EXECERROR);
-      return  CLI_ERROR_DIET ;
-    }
-
-    // get the sessionKey
-    sessionKey=getLastSessionKey(getppid());
-
-    // DIET call : get job output
-    if(false==sessionKey.empty()){
-      printSessionKeyMessage();
-      defineUserIdentifier(sessionKey, fmt);
-    }
-  } catch(VishnuException& e){// catch all Vishnu runtime error
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-    errorUsage(argv[0], msg,EXECERROR);
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-      removeBadSessionKeyFromFile(getppid());
-    }
-    return e.getMsgI() ;
-  } catch(std::exception& e){// catch all std runtime error
-    errorUsage(argv[0],e.what());
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
 }
 
