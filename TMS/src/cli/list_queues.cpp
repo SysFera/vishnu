@@ -76,7 +76,7 @@ main (int argc, char* argv[]){
 
   bool isEmpty;
   //To process list options
-  GenericCli().processListOpt(opt, isEmpty, argc, argv);
+  GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId");
 
   //call of the api function
   ListQueuesFunc listQueueFunc(machineId, queueName);

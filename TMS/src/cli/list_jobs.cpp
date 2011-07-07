@@ -152,64 +152,64 @@ int main (int argc, char* argv[]){
 
   CLICmd cmd = CLICmd (argc, argv, opt);
 
-  // Parse the cli and setting the options found
-  ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] machineId");
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);
-  if ( opt->count("help")){
-    helpUsage(*opt,"[options] machineId");
-    return 0;
-  }
-
-  if(statusStr.size()!=0) {
-    size_t pos = statusStr.find_first_not_of("0123456789");
-    if(pos!=std::string::npos) {
-      if(statusStr.size()==1) {
-        switch(statusStr[0]) {
-          case 'S' :
-            status = 1;
-            break;
-          case 'Q' :
-            status = 2;
-            break;
-          case 'W' :
-            status = 3;
-            break;
-          case 'R' :
-            status = 4;
-            break;
-          case 'T' :
-            status = 5;
-            break;
-          case 'C' :
-            status = 6;
-            break;
-          case 'D' :
-            status = 7;
-            break;
-          default:
-            status = -1;
-            break;
-        }
-      }
-      if ((statusStr.size() > 1) || (status == -1)) {
-        std::cerr << "Unknown job status " << statusStr << std::endl;
-        return 0;
-      }
-    } else {
-      status = convertToInt(statusStr);
-    }
-  jobOp.setStatus(status);
- }
   // Process command
   try {
 
+    // Parse the cli and setting the options found
+    ret = cmd.parse(env_name_mapper());
+
+    if (ret != CLI_SUCCESS){
+      helpUsage(*opt,"[options] machineId");
+      return ret;
+    }
+
+    // PreProcess (adapt some parameters if necessary)
+    checkVishnuConfig(*opt);
+    if ( opt->count("help")){
+      helpUsage(*opt,"[options] machineId");
+      return 0;
+    }
+
+    if(statusStr.size()!=0) {
+      size_t pos = statusStr.find_first_not_of("0123456789");
+      if(pos!=std::string::npos) {
+        if(statusStr.size()==1) {
+          switch(statusStr[0]) {
+            case 'S' :
+              status = 1;
+              break;
+            case 'Q' :
+              status = 2;
+              break;
+            case 'W' :
+              status = 3;
+              break;
+            case 'R' :
+              status = 4;
+              break;
+            case 'T' :
+              status = 5;
+              break;
+            case 'C' :
+              status = 6;
+              break;
+            case 'D' :
+              status = 7;
+              break;
+            default:
+              status = -1;
+              break;
+          }
+        }
+        if ((statusStr.size() > 1) || (status == -1)) {
+          std::cerr << "Unknown job status " << statusStr << std::endl;
+          return 0;
+        }
+      } else {
+        status = convertToInt(statusStr);
+      }
+      jobOp.setStatus(status);
+    }
     //convert the date in long format 
     if(opt->count("fromSubmitDate")){
       jobOp.setFromSubmitDate(convertLocaltimeINUTCtime(string_to_time_t(fromDate)));
