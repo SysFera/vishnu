@@ -16,32 +16,52 @@
 #include "cmdArgs.hpp"
 #include <boost/bind.hpp>
 #include "FMSDisplayer.hpp"
+#include "GenericCli.hpp"
+#include "remoteCommandUtils.hpp"
 
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
+using namespace FMS_Data;
 
-/**
- * \brief To build options for the VISHNU list directory of file command
- * \param pgName : The name of the command
- * \param path : the path of the file to display
- * \param dietConfig: Represents the VISHNU config file
- */
-boost::shared_ptr<Options>
-makeListDirOpt(string pgName,
-            string& path,
-            string& dietConfig){
+struct ListDirFunc {
 
-  boost::shared_ptr<Options> opt(new Options(pgName));
+  std::string mpath;
+  LsDirOptions moptions;
 
-  // Environement option
-  opt->add("dietConfig,c",
-      "The diet config file",
-      ENV,
-      dietConfig);
+  ListDirFunc(const std::string& path,const LsDirOptions& options):mpath(path),moptions(options){}
 
-  opt->add("longFormat,l",
+  int operator()(std::string sessionKey) {
+
+    StringList dirContent;
+
+     int res= listDir(sessionKey, mpath, dirContent, moptions);
+    
+     cout << dirContent << "\n"; 
+  
+     return res;
+  }
+};
+
+
+int main (int ac, char* av[]){
+  
+  int ret; // Return value
+
+  /******* Parsed value containers ****************/
+  string dietConfig;
+  string path;
+   
+  /********** EMF data ************/
+  FMS_Data::LsDirOptions lsDirOptions;
+  
+  /**************** Describe options *************/
+
+
+  boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],dietConfig,path));
+
+ opt->add("longFormat,l",
       "It specifies the long display format (all available file information",
       CONFIG);
 
@@ -49,48 +69,10 @@ makeListDirOpt(string pgName,
       "Allows to display all files including hidden file",
       CONFIG);
 
-   opt->add("path,p",
-      "The directory to list following the pattern [host:]directory path.",
-      HIDDEN,
-      path,1);
-  opt->setPosition("path",1);
 
-  return opt;
-}
+  bool isEmpty;
+  GenericCli().processListOpt( opt, isEmpty,ac,av," path");
 
-
-int main (int argc, char* argv[]){
-  
-  int ret; // Return value
-
-  /******* Parsed value containers ****************/
-  string dietConfig;
-  string sessionKey;
-  string path;
-  StringList dirContent;
-
-   /********** EMF data ************/
-  FMS_Data::LsDirOptions lsDirOptions;
-  
-  /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeListDirOpt(argv[0], path,dietConfig);
-
-  CLICmd cmd = CLICmd (argc, argv, opt);
-
- // Parse the cli and setting the options found
-  ret = cmd.parse(env_name_mapper());
-  
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] path");
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);  
-  if ( opt->count("help")){
-    helpUsage(*opt,"[options] path");
-    return 0;
-  }
 
  if ( opt->count("allFiles")){
      lsDirOptions.setAllFiles(true);
@@ -100,39 +82,8 @@ int main (int argc, char* argv[]){
      lsDirOptions.setLongFormat(true);
   }
 
+ ListDirFunc apiFunc(path,lsDirOptions);
+  
+ return GenericCli().run(apiFunc, dietConfig, ac, av);
 
-  // Process command
-  try {
-    std::cout << "dietConfig: "  << dietConfig << "\n";
-    // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
-      errorUsage(argv[0],dietErrorMsg,EXECERROR);
-      return  CLI_ERROR_DIET ;
-    }
-
-    // get the sessionKey
-    sessionKey=getLastSessionKey(getppid());
-
-    // DIET call 
-    if(false==sessionKey.empty()){
-      printSessionKeyMessage();
-      listDir(sessionKey, path, dirContent, lsDirOptions);
-
-      // To display the directory content
-      std::cout << dirContent << std::endl;
-    }
-  } catch(VishnuException& e){// catch all Vishnu runtime error
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-    errorUsage(argv[0], msg,EXECERROR);
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
-      removeBadSessionKeyFromFile(getppid());
-    }
-    return e.getMsgI() ;
-  } catch(std::exception& e){// catch all std runtime error
-    errorUsage(argv[0],e.what());
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
 }

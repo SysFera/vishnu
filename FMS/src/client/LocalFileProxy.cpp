@@ -69,62 +69,7 @@ bool LocalFileProxy::isUpToDate() const {
   return upToDate;
 }
 
-/* Obtain the information of a local file. Uses the POSIX standard functions. */
-void LocalFileProxy::getInfos() const {
-  file_stat_t fileStat;
-  struct group* grp;
-  struct passwd* usr;
-  
-  if (STAT(getPath().c_str(), &fileStat)==-1) {
-    exists(false);
-    return;
-  }
-  setPerms(fileStat.st_mode & ACCESSPERMS);
-  setUid(fileStat.st_uid);
-  setGid(fileStat.st_gid);
-  setSize(fileStat.st_size);
-  setAtime(fileStat.st_atime);
-  setMtime(fileStat.st_mtime);
-  setCtime(fileStat.st_ctime);
- 
-  if (S_ISBLK(fileStat.st_mode)){
-    setType(0); //BLOCK
-  }
-  if (S_ISCHR(fileStat.st_mode)){
-    setType(1); // CHARACTER
-  }
- 
-  if (S_ISDIR(fileStat.st_mode)){
-    setType(2);//DIRECTORY
-  }
- 
-  if (S_ISLNK(fileStat.st_mode)){
-    setType(3);//SYMBOLICLINK
-  }
-  if (S_ISSOCK(fileStat.st_mode)){
-    setType(4);//SCKT
-  }
-  if (S_ISFIFO(fileStat.st_mode)){
-    setType(5);//FIFO
-  }
-  
-  if (S_ISREG(fileStat.st_mode)){
-    setType(6);//REGULAR
-  }
-  
-  usr = getpwuid(fileStat.st_uid);
-  grp = getgrgid(fileStat.st_gid);
-  
-  if (usr!=NULL){
-    setOwner(usr->pw_name);
-  }
-  if (grp!=NULL){
-    setGroup(grp->gr_name);
-  }
-  
-  exists(true);
-  upToDate=true;
-}
+
 
 
 /* Copy the local file to remote destination. */
@@ -138,8 +83,7 @@ int LocalFileProxy::transferFile(const string& dest,
                                  FileTransfer& fileTransfer) {
 
   string host = FileProxy::extHost(dest);
-  std::cout << "dest " << host << "\n";
-  std::cout << "host " << host << "\n";
+  
   bfs::path localFullPath(bfs::current_path().string());
   
   // get the source full qualified host name 
