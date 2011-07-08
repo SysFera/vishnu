@@ -1373,14 +1373,14 @@
               <row>
                 <entry><para>dirContent</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="FileStatList">FileStatList</link></para></entry>
+                <entry><para><!--link linkend="FileStatList"-->FileStatList<!--/link--></para></entry>
                 <entry><para>The content of the directory  (only files names with short format, all files informations with long format).</para></entry>
                 <entry><para>OUT</para></entry>
               </row>
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="LsDirOptions">LsDirOptions</link></para></entry>
+                <entry><para><!--link linkend="LsDirOptions"-->LsDirOptions<!--/link--></para></entry>
                 <entry><para>List of options for the listDir command.</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -1495,7 +1495,7 @@
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="CopyFileOptions">CopyFileOptions</link></para></entry>
+                <entry><para><!--link linkend="CopyFileOptions"-->CopyFileOptions<!--/link--></para></entry>
                 <entry><para>the copy options.</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -1613,7 +1613,7 @@
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="CopyFileOptions">CopyFileOptions</link></para></entry>
+                <entry><para><!--link linkend="CopyFileOptions"-->CopyFileOptions<!--/link--></para></entry>
                 <entry><para>the copy options</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -1724,7 +1724,7 @@
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="MvFileOptions">MvFileOptions</link></para></entry>
+                <entry><para><!--link linkend="MvFileOptions"-->MvFileOptions<!--/link--></para></entry>
                 <entry><para>The move command options</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -1846,7 +1846,7 @@
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="MvFileOptions">MvFileOptions</link></para></entry>
+                <entry><para><!--link linkend="MvFileOptions"-->MvFileOptions<!--/link--></para></entry>
                 <entry><para>The mv command options</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -1947,7 +1947,7 @@
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="StopTransferOptions">StopTransferOptions</link></para></entry>
+                <entry><para><!--link linkend="StopTransferOptions"-->StopTransferOptions<!--/link--></para></entry>
                 <entry><para>The stop file transfer command options</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -2041,14 +2041,14 @@
               <row>
                 <entry><para>fileTransferList</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="FileTransferList">FileTransferList</link></para></entry>
+                <entry><para><!--link linkend="FileTransferList"-->FileTransferList<!--/link--></para></entry>
                 <entry><para>The file transfer container.</para></entry>
                 <entry><para>OUT</para></entry>
               </row>
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="LsTransferOptions">LsTransferOptions</link></para></entry>
+                <entry><para><!--link linkend="LsTransferOptions"-->LsTransferOptions<!--/link--></para></entry>
                 <entry><para>The filter options .</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -2156,7 +2156,7 @@
               <row>
                 <entry><para>filesinfo</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="FileStat">FileStat</link></para></entry>
+                <entry><para><!--link linkend="FileStat"-->FileStat<!--/link--></para></entry>
                 <entry><para>The  inode information.</para></entry>
                 <entry><para>OUT</para></entry>
               </row>
