@@ -54,7 +54,7 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file  following the pattern  [host:]file path" longOptionName=""/>
       <ports name="fileContent" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="The last &quot;nLine&quot; lines of the file" longOptionName=""/>
-      <ports name="options" dataType="//@modules.0/@typeList/@types.19" description="the tail command options" optional="true" shortOptionLetter="r"/>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.19" description="the tail command options" optional="true" shortOptionLetter=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.7"/>
       <details key="description" value="Displays the last lines of a file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>
     </services>
@@ -188,7 +188,7 @@
         <ECoreType xsi:type="ecore:EClass" href="FMS_Data.ecore#//HeadOfFileOptions"/>
       </types>
       <types name="TailOfFileOptions" description="stores all options  to perform tail command.">
-        <ECoreType xsi:type="ecore:EClass" href="FMS_Data.ecore#//HeadOfFileOptions"/>
+        <ECoreType xsi:type="ecore:EClass" href="FMS_Data.ecore#//TailOfFileOptions"/>
       </types>
       <types name="RmFileOptions" description="the remove file command options">
         <ECoreType xsi:type="ecore:EClass" href="FMS_Data.ecore#//RmFileOptions"/>
