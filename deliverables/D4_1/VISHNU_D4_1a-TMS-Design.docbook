@@ -486,14 +486,14 @@ in the Vishnu Database.
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="SubmitOptions">SubmitOptions</link></para></entry>
+                <entry><para><!--link linkend="SubmitOptions"-->SubmitOptions<!--/link--></para></entry>
                 <entry><para>Is an instance of the class SubmitOptions. It allows the user to submit job by using different options</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>job</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="Job">Job</link></para></entry>
+                <entry><para><!--link linkend="Job"-->Job<!--/link--></para></entry>
                 <entry><para>The  Job object containing the input information (ex: jobPath) and output information (ex:  jobId) of the job to submit</para></entry>
                 <entry><para>INOUT</para></entry>
               </row>
@@ -621,7 +621,7 @@ in the Vishnu Database.
               <row>
                 <entry><para>job</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="Job">Job</link></para></entry>
+                <entry><para><!--link linkend="Job"-->Job<!--/link--></para></entry>
                 <entry><para>The  Job object containing the input information (ex: jobId)</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -757,7 +757,7 @@ in the Vishnu Database.
               <row>
                 <entry><para>job</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="Job">Job</link></para></entry>
+                <entry><para><!--link linkend="Job"-->Job<!--/link--></para></entry>
                 <entry><para>The  Job object containing the input information (ex: jobId) and the resulting information</para></entry>
                 <entry><para>INOUT</para></entry>
               </row>
@@ -881,14 +881,14 @@ in the Vishnu Database.
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ListJobsOptions">ListJobsOptions</link></para></entry>
+                <entry><para><!--link linkend="ListJobsOptions"-->ListJobsOptions<!--/link--></para></entry>
                 <entry><para>Additional options for jobs listing</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>listOfJobs</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ListJobs">ListJobs</link></para></entry>
+                <entry><para><!--link linkend="ListJobs"-->ListJobs<!--/link--></para></entry>
                 <entry><para>The constructed object list of jobs</para></entry>
                 <entry><para>OUT</para></entry>
               </row>
@@ -1015,7 +1015,7 @@ in the Vishnu Database.
               <row>
                 <entry><para>listofQueues</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ListQueues">ListQueues</link></para></entry>
+                <entry><para><!--link linkend="ListQueues"-->ListQueues<!--/link--></para></entry>
                 <entry><para>The list of queues</para></entry>
                 <entry><para>OUT</para></entry>
               </row>
@@ -1139,14 +1139,14 @@ in the Vishnu Database.
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ProgressOptions">ProgressOptions</link></para></entry>
+                <entry><para><!--link linkend="ProgressOptions"-->ProgressOptions<!--/link--></para></entry>
                 <entry><para>Is an object containing the available options jobs for progression .</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>listOfProgress</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ListProgression">ListProgression</link></para></entry>
+                <entry><para><!--link linkend="ListProgression"-->ListProgression<!--/link--></para></entry>
                 <entry><para>Is the object containing jobs progression information</para></entry>
                 <entry><para>OUT</para></entry>
               </row>
@@ -1266,7 +1266,7 @@ in the Vishnu Database.
               <row>
                 <entry><para>result</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="JobResult">JobResult</link></para></entry>
+                <entry><para><!--link linkend="JobResult"-->JobResult<!--/link--></para></entry>
                 <entry><para>The  Job object containing the input information (ex: jobId)</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -1409,7 +1409,7 @@ in the Vishnu Database.
               <row>
                 <entry><para>listOfResults</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ListJobResults">ListJobResults</link></para></entry>
+                <entry><para><!--link linkend="ListJobResults"-->ListJobResults<!--/link--></para></entry>
                 <entry><para>Is the list of jobs results</para></entry>
                 <entry><para>OUT</para></entry>
               </row>
