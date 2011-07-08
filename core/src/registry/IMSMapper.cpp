@@ -245,38 +245,52 @@ IMSMapper::decodeHist(vector<int> separator, const string& msg) {
   string u;
   long l;
   boost::posix_time::ptime pt;
+  cout << "decoding history " << endl;
   res += (mmap.find(VISHNU_GET_HIST))->second;
+  cout << "Result: " << res << endl;
   res += " ";
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
   res += u;
   res += " ";
+  cout << "Result: " << res << endl;
   u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
+  cout << "Result: " << res << endl;
   IMS_Data::MetricHistOp_ptr ac = NULL;
   //To parse the object serialized
+  cout << "decoding history parsing" << endl;
+  cout << "Result: " << res << endl;
+
   if(!parseEmfObject(u, ac)) {
     throw IMSVishnuException(ERRCODE_INVALID_PARAM);
   }
+  cout << "decoding history parsing done" << endl;
   u = convertToString(ac->getType());
+  cout << "Result: " << res << endl;
   if (u.compare("")) {
     res+=" -t ";
     res += u;
   }
   l = ac->getStartTime();
+  cout << "decoding history parsing, temps = " << l << endl;
+  cout << "Result: " << res << endl;
   if (l > 0) {
     pt = boost::posix_time::from_time_t(vishnu::convertUTCtimeINLocaltime(l));
     u = boost::posix_time::to_simple_string(pt);
-    res+=" -s \"";
+    res+=" -s '";
     res += u;
-    res += "\"";
+    res += "'";
   }
   l = ac->getEndTime();
+  cout << "decoding history parsing, temps2 = " << l << endl;
+  cout << "Result: " << res << endl;
   if (l > 0) {
     pt = boost::posix_time::from_time_t(vishnu::convertUTCtimeINLocaltime(l));
     u = boost::posix_time::to_simple_string(pt);
-    res+=" -e \"";
+    res+=" -e '";
     res += u;
-    res += "\"";
+    res += "'";
   }
+  cout << "Result: " << res << endl;
   return res;
 }
 

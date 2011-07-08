@@ -602,17 +602,17 @@ UMSMapper::decodeListH(vector<int> separator, const string& msg){
   if (date>0){
     pt = boost::posix_time::from_time_t(date);
     a = boost::posix_time::to_simple_string(pt);
-    res+=" -s \"";
+    res+=" -s '";
     res+=a;
-    res += "\"";
+    res += "'";
   }
   date = ac->getEndDateOption();
   if (date>0){
     pt = boost::posix_time::from_time_t(date);
     a = boost::posix_time::to_simple_string(pt);
-    res+=" -e \"";
+    res+=" -e '";
     res+=a;
-    res += "\"";
+    res += "'";
   }
 
   if (ac != NULL) {
@@ -726,17 +726,17 @@ UMSMapper::decodeListSession(vector<int> separator, const string& msg){
   if (date>0){
     pt =  boost::posix_time::from_time_t(date);
     a = boost::posix_time::to_simple_string(pt);
-    res+=" -s \"";
+    res+=" -s '";
     res+=a;
-    res += "\"";
+    res += "'";
   }
   date = ac->getEndDateOption();
   if (date>0){
     pt =  boost::posix_time::from_time_t(date);
     a = boost::posix_time::to_simple_string(pt);
-    res+=" -e \"";
+    res+=" -e '";
     res+=a;
-    res += "\"";
+    res += "'";
   }
 
   if (ac != NULL) {
