@@ -1,5 +1,5 @@
 /**
- * \file fileTrnsferUtils.hpp
+ * \file fileTransferUtils.hpp
  * \brief This file declare useful functions and types for the VISHNU file
  * transfer
  * command
@@ -40,28 +40,28 @@ using namespace vishnu;
  */
 struct FMS_env_name_mapper{
 
-/**
- * Mapper operator for environnement variable
- * \param name The environment variable name
- * \return The name used in the program
- */
+  /**
+   * Mapper operator for environnement variable
+   * \param name The environment variable name
+   * \return The name used in the program
+   */
 
-	std::string operator ()(std::string name){
+  std::string operator ()(std::string name){
 
-		std::string result= "";
+    std::string result= "";
 
-                if (name=="VISHNU_CONFIG_FILE") {
+    if (name=="VISHNU_CONFIG_FILE") {
 
-                        result="dietConfig";
-                }
+      result="dietConfig";
+    }
 
-                if (name=="VISHNU_TRANSFER_CMD") {
+    if (name=="VISHNU_TRANSFER_CMD") {
 
-                        result="trCommand";
-                }
+      result="trCommand";
+    }
 
-		return result;
-	}
+    return result;
+  }
 };
 
 
@@ -69,11 +69,12 @@ struct FMS_env_name_mapper{
 
 /**
  * \brief To build options for the VISHNU copy of file command
- * \param pgName: The name of the command
- * \param dietConfig: Represents the VISHNU config file
- * \param trCmdStr: The command to use to perform file transfer
- * \param src: The source file to copy following the pattern [host:]file path
- * \param dest: The path of the destination file
+ * \param pgName The name of the command
+ * \param dietConfig Represents the VISHNU config file
+ * \param trCmdStr The command to use to perform file transfer
+ * \param src The source file to copy following the pattern [host:]file path
+ * \param dest The path of the destination file
+ * \return The built option
  */
 boost::shared_ptr<Options>
 makeTransferCommandOptions(string pgName, 
@@ -89,7 +90,7 @@ makeTransferCommandOptions(string pgName,
       "The diet config file",
       ENV,
       dietConfig);
-  
+
   opt->add("trCommand,t",
       "The command to use to perform file transfer. The different values  are:\n"
       "O or scp: for SCP transfer\n"
@@ -111,16 +112,30 @@ makeTransferCommandOptions(string pgName,
 
   return opt;
 }
-// A file transfer type
+
+/**
+ * \brief  A file transfer type
+ */
+
 typedef enum{
-MV,
-CP
+  MV,
+  CP
 }TransferType;
 
 
+/**
+ * \brief common parse function for file transfer command
+ * \param argc The number of command line arguments
+ * \param argv The command line arguments
+ * \param dietConfig The VISHNU client config file
+ * \param src The file transfer source
+ * \param dest The file transfer destination
+ * \param cpFileOptions The file transfer options
+ * \param transferType The file transfer type
+ */
 
 void copyParseOptions (int argc, char* argv[],std::string& dietConfig,
-                       std::string& src, std::string& dest, FMS_Data::CpFileOptions& cpFileOptions, TransferType transferType){
+    std::string& src, std::string& dest, FMS_Data::CpFileOptions& cpFileOptions, TransferType transferType){
 
   int ret; // Return value
 
@@ -128,13 +143,13 @@ void copyParseOptions (int argc, char* argv[],std::string& dietConfig,
 
   int trCmd;
 
-// build transfer command options
+  // build transfer command options
 
   boost::shared_ptr<Options> opt(makeTransferCommandOptions(argv[0], dietConfig, trCmdStr, src, dest));
 
   if (transferType==CP){
-  
-  opt->add("isRecursive,r",
+
+    opt->add("isRecursive,r",
         "It specifies when the copy is recursive (case of directory) or not.",
         CONFIG);
   }
@@ -148,13 +163,13 @@ void copyParseOptions (int argc, char* argv[],std::string& dietConfig,
     helpUsage(*opt,"[options] src dest");
     exit(0);
   }
- 
+
 
 
   // Check for vishnu config file
-  
+
   checkVishnuConfig(*opt);  
-  
+
 
   if(trCmdStr.size()!=0) {
     size_t pos = trCmdStr.find_first_not_of("0123456789");
@@ -191,33 +206,57 @@ void copyParseOptions (int argc, char* argv[],std::string& dietConfig,
 
 
 
-
-
-
-
+/**
+ * \brief A functor to handle asynchronous file transfer api function
+ */
 
 template<TransferType transferType>
 struct TransferAsyncFunc {
 
+  /**
+   * \brief The file transfer source 
+   */
   std::string msrc;
-  std::string mdest;
 
+  /**
+   * \brief The file transfer destination
+   */ 
+
+  std::string mdest;
+  /**
+   * \brief The file transfer information
+   */
   FMS_Data::FileTransfer mtransferInfo;
+
+  /**
+   * \brief The file transfer command options
+   */
+
   FMS_Data::CpFileOptions mcpFileOptions;
 
+  /**
+   * \brief Constructor with parameters
+   * \param src The source
+   * \param dest The destination
+   * \param transferInfo The file transfer complete information 
+   * \param cpFileOptions The file transfer options
+   */
+  TransferAsyncFunc(const std::string& src,const std::string& dest,const FMS_Data::FileTransfer& transferInfo,const FMS_Data::CpFileOptions& cpFileOptions ):msrc(src),mdest(dest), mtransferInfo(transferInfo), mcpFileOptions (cpFileOptions) {};
 
-    TransferAsyncFunc(const std::string& src,const std::string& dest,const FMS_Data::FileTransfer& transferInfo,const FMS_Data::CpFileOptions& cpFileOptions ):msrc(src),mdest(dest), mtransferInfo(transferInfo), mcpFileOptions (cpFileOptions) {};
-
-
+  /**
+   * \brief () operator
+   * \param sessionKey The session key
+   * \return 0 if it succeeds or an error code otherwise
+   */
   int operator()(const std::string& sessionKey) {
-int res;
+    int res;
     if (transferType==MV){
 
-     res=moveAsyncFile(sessionKey, msrc, mdest, mtransferInfo, mcpFileOptions);
-   
+      res=moveAsyncFile(sessionKey, msrc, mdest, mtransferInfo, mcpFileOptions);
+
     }else {
 
-      
+
       res=copyAsyncFile(sessionKey, msrc, mdest, mtransferInfo, mcpFileOptions);
     }
 
@@ -229,38 +268,55 @@ int res;
 
 
 
-
+/**
+ * \brief A functor to handle synchronous file transfer api function
+ */
 
 template<TransferType transferType>
 struct TransferSyncFunc {
-
+  /**
+   * \brief The file transfer source
+   */
   std::string msrc;
+  /**
+   * \brief The file transfer destination
+   */
   std::string mdest;
-
+  /**
+   * \brief The file transfer options
+   */
   FMS_Data::CpFileOptions mcpFileOptions;
 
+  /**
+   * \brief Constructor with parameters
+   * \param src The source
+   * \param dest The destination
+   * \param cpFileOptions The file transfer options
+   */
 
-    TransferSyncFunc(const std::string& src,const std::string& dest,const FMS_Data::CpFileOptions& cpFileOptions ):msrc(src),mdest(dest),mcpFileOptions (cpFileOptions) {};
 
+  TransferSyncFunc(const std::string& src,const std::string& dest,const FMS_Data::CpFileOptions& cpFileOptions ):msrc(src),mdest(dest),mcpFileOptions (cpFileOptions) {};
+
+  /**
+   * \brief () operator
+   * \param sessionKey The session key
+   * \return 0 if it succeeds or an error code otherwise
+   */
 
   int operator()(const std::string& sessionKey) {
-int res;
+    int res;
     if (transferType==MV){
 
-     res=moveFile(sessionKey, msrc, mdest, mcpFileOptions);
-   
+      res=moveFile(sessionKey, msrc, mdest, mcpFileOptions);
+
     }else {
-   
-     res=copyFile(sessionKey, msrc, mdest, mcpFileOptions);
+
+      res=copyFile(sessionKey, msrc, mdest, mcpFileOptions);
     }
 
     return res;
   }
 };
-
-
-
-
 
 
 #endif
