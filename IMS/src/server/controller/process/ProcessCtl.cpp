@@ -80,9 +80,14 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI) {
   cmd += type;
   cmd += " /tmp/vishnu_restart&";
   string dcmd = "ssh "+login+"@"+hostname+" `"+cmd+"`";
-  int ret = system(dcmd.c_str());
-  if (ret == -1) {
+  switch(fork()) {
+  case 0 :
+    system(dcmd.c_str());
+    break;
+  case -1:
     throw SystemException(ERRCODE_SYSTEM, "Failed to restart process "+type);
+  default :
+    break;
   }
 }
 
