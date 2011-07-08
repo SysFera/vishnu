@@ -28,6 +28,7 @@ mkdir $path
 cp CMakeLists.txt $path/
 cp copyright $path/
 cp README $path/
+cp ChangeLog $path/
 cp vishnu_version.hpp.in $path/
 
 # Copy doxygen generator
