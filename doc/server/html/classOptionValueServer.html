@@ -35,7 +35,7 @@
 </div>
 <div class="contents">
 <!-- doxytag: class="OptionValueServer" -->
-<p><a class="el" href="classOptionValueServer.html" title="OptionValueServer class implementation.">OptionValueServer</a> class implementation.  
+<p><a class="el" href="classOptionValueServer.html" title="OptionValueServer class implementationT.">OptionValueServer</a> class implementationT.  
 <a href="#_details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="OptionValueServer_8hpp_source.html">OptionValueServer.hpp</a>&gt;</code></p>
@@ -58,8 +58,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get option data structure.  <a href="#a9d40a465b4c6c048d49dd121cbbcb4c4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptionValueServer.html#a9be8cdef4ed59ef0fdf421bb973257d0">getAttribut</a> (std::string condition, std::string attrname=&quot;value&quot;, bool defaultOptions=false)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get option information from the database vishnu.  <a href="#a9be8cdef4ed59ef0fdf421bb973257d0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptionValueServer.html#a156098735b4d0ce3a23de69278d40d6a">getClosureInfo</a> (std::string numuserId, std::string nameInfo=&quot;VISHNU_CLOSE_POLICY&quot;)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get closure information from the database vishnu.  <a href="#a156098735b4d0ce3a23de69278d40d6a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptionValueServer.html#a849d033e5fd6ec57b8e9afb1fdd75986">getOptionValueForUser</a> (std::string numuserId, std::string optionName)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get user option value.  <a href="#a849d033e5fd6ec57b8e9afb1fdd75986"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptionValueServer.html#aa9d00391ec222d6f200c7ea1db8a4892">isCorrectValue</a> ()</td></tr>
@@ -77,7 +77,7 @@ UMS_Data::OptionValue *&nbsp;</td><td class="memItemRight" valign="bottom"><a cl
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">An object which encapsulates user data. <br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
-<p><a class="el" href="classOptionValueServer.html" title="OptionValueServer class implementation.">OptionValueServer</a> class implementation. </p>
+<p><a class="el" href="classOptionValueServer.html" title="OptionValueServer class implementationT.">OptionValueServer</a> class implementationT. </p>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a2f432257cbe83451b54d59c584cc35c6"></a><!-- doxytag: member="OptionValueServer::OptionValueServer" ref="a2f432257cbe83451b54d59c584cc35c6" args="(UMS_Data::OptionValue *&amp;optionvalue, SessionServer session)" -->
 <div class="memitem">
@@ -187,43 +187,6 @@ UMS_Data::OptionValue *&nbsp;</td><td class="memItemRight" valign="bottom"><a cl
 
 </div>
 </div>
-<a class="anchor" id="a156098735b4d0ce3a23de69278d40d6a"></a><!-- doxytag: member="OptionValueServer::getClosureInfo" ref="a156098735b4d0ce3a23de69278d40d6a" args="(std::string numuserId, std::string nameInfo=&quot;VISHNU_CLOSE_POLICY&quot;)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int OptionValueServer::getClosureInfo </td>
-          <td>(</td>
-          <td class="paramtype">std::string&nbsp;</td>
-          <td class="paramname"> <em>numuserId</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string&nbsp;</td>
-          <td class="paramname"> <em>nameInfo</em> = <code>&quot;VISHNU_CLOSE_POLICY&quot;</code></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Function to get closure information from the database vishnu. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>numuserId</em>&nbsp;</td><td>The database number id of the user who wants to get closure information </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>nameInfo</em>&nbsp;</td><td>the name of the closure information </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>The error or success code </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="a9d40a465b4c6c048d49dd121cbbcb4c4"></a><!-- doxytag: member="OptionValueServer::getData" ref="a9d40a465b4c6c048d49dd121cbbcb4c4" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -241,6 +204,43 @@ UMS_Data::OptionValue *&nbsp;</td><td class="memItemRight" valign="bottom"><a cl
 
 <p>Function to get option data structure. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>The user data structure </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a849d033e5fd6ec57b8e9afb1fdd75986"></a><!-- doxytag: member="OptionValueServer::getOptionValueForUser" ref="a849d033e5fd6ec57b8e9afb1fdd75986" args="(std::string numuserId, std::string optionName)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int OptionValueServer::getOptionValueForUser </td>
+          <td>(</td>
+          <td class="paramtype">std::string&nbsp;</td>
+          <td class="paramname"> <em>numuserId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&nbsp;</td>
+          <td class="paramname"> <em>optionName</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to get user option value. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>numuserId</em>&nbsp;</td><td>The database number id of the user </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>optionName</em>&nbsp;</td><td>the name of the option </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The error or success code </dd></dl>
 
 </div>
 </div>
@@ -268,7 +268,7 @@ UMS_Data::OptionValue *&nbsp;</td><td class="memItemRight" valign="bottom"><a cl
 <li>UMS/src/server/<a class="el" href="OptionValueServer_8hpp_source.html">OptionValueServer.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jun 23 2011 16:43:54 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jul 8 2011 10:36:07 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

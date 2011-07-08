@@ -11,10 +11,20 @@ namespace po = boost::program_options;
 using namespace std;
 using namespace vishnu;
 
+/**
+ * \brief A generic class for common operations in command line
+ */
 class GenericCli {
 
   public:
-
+/**
+ * \brief generic function to perform api function in command line
+ * \param function the api function
+ * \param dietConfig the diet client config file path
+ * \param ac the number of command line arguments
+ * \param av the command line arguments
+ * \return 0 if it succeeds or an error code otherwise
+ */
 
     template <class ApiFunc>
     int run(ApiFunc function, std::string dietConfig, int ac, char*  av[]) {
@@ -57,6 +67,17 @@ class GenericCli {
 
     }
 
+    /**
+ * \brief generic function to perform api function in command line without the
+ * session management 
+ * \param function the api function
+ * \param dietConfig the diet client config file path
+ * \param ac the number of command line arguments
+ * \param av the command line arguments
+ * \return 0 if it succeeds or an error code otherwise
+ */
+
+
     template <class ApiFunc>
     int runWithoutSessionKey(ApiFunc function, std::string dietConfig, int ac, char*  av[]) {
 
@@ -87,6 +108,13 @@ class GenericCli {
 
     }
 
+    /**
+     * \brief An helpul function to parse and check command line options
+     * \param opt command line options 
+     * \param isEmpty in out variable to check if av does not contain options
+     * \param ac the the number of command line arguments
+     *  \param av the command line arguments
+     */
 
     void processListOpt(const boost::shared_ptr<Options>& opt, bool& isEmpty, int ac, char*  av[]) {
     
