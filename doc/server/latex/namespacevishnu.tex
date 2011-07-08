@@ -198,9 +198,9 @@ int \hyperlink{namespacevishnu_a05878cbc7dbb3f5da87dbc32dd25ab78}{configureDefau
 \begin{DoxyCompactList}\small\item\em Function to configure a default option value. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_adaf9c8ca47f577cf1a0c9effe7bd9c52}{listSessions} (const std::string \&sessionKey, UMS\_\-Data::ListSessions \&listSession, const UMS\_\-Data::ListSessionOptions \&options=UMS\_\-Data::ListSessionOptions())  throw (UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em Function to list all sessions of the user. \item\end{DoxyCompactList}\item 
-int \hyperlink{namespacevishnu_a05618a81d403ef5c11e014fcecd7ba00}{listLocalAccount} (const std::string \&sessionKey, UMS\_\-Data::ListLocalAccounts \&listLocalAcc, const UMS\_\-Data::ListLocalAccOptions \&options=UMS\_\-Data::ListLocalAccOptions())  throw (UserException, SystemException)
+int \hyperlink{namespacevishnu_a2c892a93b3100eab8bd4de84f12178fa}{listLocalAccounts} (const std::string \&sessionKey, UMS\_\-Data::ListLocalAccounts \&listLocalAcc, const UMS\_\-Data::ListLocalAccOptions \&options=UMS\_\-Data::ListLocalAccOptions())  throw (UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em Function to list the local user configurations. \item\end{DoxyCompactList}\item 
-int \hyperlink{namespacevishnu_a59e26ccbe8510d774528c86511f7476b}{listMachine} (const std::string \&sessionKey, UMS\_\-Data::ListMachines \&listMachine, const UMS\_\-Data::ListMachineOptions \&options=UMS\_\-Data::ListMachineOptions())  throw (UserException, SystemException)
+int \hyperlink{namespacevishnu_a1173c380a74b87ee3f3e0651628ad800}{listMachines} (const std::string \&sessionKey, UMS\_\-Data::ListMachines \&listMachine, const UMS\_\-Data::ListMachineOptions \&options=UMS\_\-Data::ListMachineOptions())  throw (UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em Function to list the machines in which the local user configurations are defined for the given user. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_a8576a50af31abe3869a61bec780aa5ef}{listHistoryCmd} (const std::string \&sessionKey, UMS\_\-Data::ListCommands \&listCommands, const UMS\_\-Data::ListCmdOptions \&options=UMS\_\-Data::ListCmdOptions())  throw (UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em Function to list the commands. \item\end{DoxyCompactList}\item 
@@ -293,7 +293,7 @@ int \hyperlink{namespacevishnu_a23105333be3ff847f7c274f6372364bc}{removeDir} (co
 \begin{DoxyCompactList}\small\item\em remove a directory \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_aa8c92237272b5c0e92360f617a2a4edc}{tailOfFile} (const string \&sessionKey, const string \&path, string \&contentOfFile, const TailOfFileOptions \&options=TailOfFileOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em get the last lines of a file \item\end{DoxyCompactList}\item 
-int \hyperlink{namespacevishnu_a80b9f9b9ae713916ad8965e36458113d}{getFilesInfo} (const string \&sessionKey, const string \&path, FileStat \&filesInfo)  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)
+int \hyperlink{namespacevishnu_a3da75d7c75b5d6a58112f62c5b3eeae0}{getFileInfo} (const string \&sessionKey, const string \&path, FileStat \&filesInfo)  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em obtain informations about a file \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_ac7f9c1d4391157b7dddaab5051fd44a8}{stopFileTransfer} (const string \&sessionKey, const StopTransferOptions \&options=StopTransferOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em cancel a file transfer \item\end{DoxyCompactList}\item 
@@ -1326,17 +1326,17 @@ Function to get current time in seconds (UTC).
 \begin{DoxyReturn}{Returns}
 the time as the number of seconds since the Epoch, 1970-\/01-\/01 00:00:00 +0000 (UTC) 
 \end{DoxyReturn}
-\hypertarget{namespacevishnu_a80b9f9b9ae713916ad8965e36458113d}{
-\index{vishnu@{vishnu}!getFilesInfo@{getFilesInfo}}
-\index{getFilesInfo@{getFilesInfo}!vishnu@{vishnu}}
-\subsubsection[{getFilesInfo}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::getFilesInfo (
+\hypertarget{namespacevishnu_a3da75d7c75b5d6a58112f62c5b3eeae0}{
+\index{vishnu@{vishnu}!getFileInfo@{getFileInfo}}
+\index{getFileInfo@{getFileInfo}!vishnu@{vishnu}}
+\subsubsection[{getFileInfo}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::getFileInfo (
 \begin{DoxyParamCaption}
 \item[{const string \&}]{ sessionKey, }
 \item[{const string \&}]{ path, }
 \item[{FileStat \&}]{ filesInfo}
 \end{DoxyParamCaption}
 )  throw ({\bf UMSVishnuException}, {\bf FMSVishnuException}, {\bf UserException}, {\bf SystemException})}}
-\label{namespacevishnu_a80b9f9b9ae713916ad8965e36458113d}
+\label{namespacevishnu_a3da75d7c75b5d6a58112f62c5b3eeae0}
 
 
 obtain informations about a file 
@@ -1930,17 +1930,17 @@ The listJobs function gets a list of all submitted jobs.
 \begin{DoxyReturn}{Returns}
 int : an error code 
 \end{DoxyReturn}
-\hypertarget{namespacevishnu_a05618a81d403ef5c11e014fcecd7ba00}{
-\index{vishnu@{vishnu}!listLocalAccount@{listLocalAccount}}
-\index{listLocalAccount@{listLocalAccount}!vishnu@{vishnu}}
-\subsubsection[{listLocalAccount}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::listLocalAccount (
+\hypertarget{namespacevishnu_a2c892a93b3100eab8bd4de84f12178fa}{
+\index{vishnu@{vishnu}!listLocalAccounts@{listLocalAccounts}}
+\index{listLocalAccounts@{listLocalAccounts}!vishnu@{vishnu}}
+\subsubsection[{listLocalAccounts}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::listLocalAccounts (
 \begin{DoxyParamCaption}
 \item[{const std::string \&}]{ sessionKey, }
 \item[{UMS\_\-Data::ListLocalAccounts \&}]{ listLocalAcc, }
 \item[{const UMS\_\-Data::ListLocalAccOptions \&}]{ options = {\ttfamily UMS\_\-Data::ListLocalAccOptions()}}
 \end{DoxyParamCaption}
 )  throw ({\bf UserException}, {\bf SystemException})}}
-\label{namespacevishnu_a05618a81d403ef5c11e014fcecd7ba00}
+\label{namespacevishnu_a2c892a93b3100eab8bd4de84f12178fa}
 
 
 Function to list the local user configurations. 
@@ -1951,17 +1951,17 @@ Function to list the local user configurations.
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
-\hypertarget{namespacevishnu_a59e26ccbe8510d774528c86511f7476b}{
-\index{vishnu@{vishnu}!listMachine@{listMachine}}
-\index{listMachine@{listMachine}!vishnu@{vishnu}}
-\subsubsection[{listMachine}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::listMachine (
+\hypertarget{namespacevishnu_a1173c380a74b87ee3f3e0651628ad800}{
+\index{vishnu@{vishnu}!listMachines@{listMachines}}
+\index{listMachines@{listMachines}!vishnu@{vishnu}}
+\subsubsection[{listMachines}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::listMachines (
 \begin{DoxyParamCaption}
 \item[{const std::string \&}]{ sessionKey, }
 \item[{UMS\_\-Data::ListMachines \&}]{ listMachine, }
 \item[{const UMS\_\-Data::ListMachineOptions \&}]{ options = {\ttfamily UMS\_\-Data::ListMachineOptions()}}
 \end{DoxyParamCaption}
 )  throw ({\bf UserException}, {\bf SystemException})}}
-\label{namespacevishnu_a59e26ccbe8510d774528c86511f7476b}
+\label{namespacevishnu_a1173c380a74b87ee3f3e0651628ad800}
 
 
 Function to list the machines in which the local user configurations are defined for the given user. 
