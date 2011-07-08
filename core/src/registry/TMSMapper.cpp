@@ -341,7 +341,6 @@ TMSMapper::decodeListJob(vector<int> separator, const string& msg){
     res += " -q ";
     res += u;
   }
-  cout << "Chaine decodee: " << res << endl;
   return res;
 }
 string
