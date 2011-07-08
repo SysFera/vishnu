@@ -1,4 +1,12 @@
 +--------------+
+| VISHNU 1.2.2 |
++--------------+
+
+* Reduce cli code duplication
+* Fix audit IMS and FMS
+* Fix bugs
+
++--------------+
 | VISHNU 1.2.1 |
 +--------------+
 
