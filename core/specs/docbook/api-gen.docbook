@@ -6085,11 +6085,11 @@
                 <entry><para>Undefined error code</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
                 <entry><para>The session key is unrecognized.</para></entry>
               </row>
             </tbody>
@@ -6186,11 +6186,11 @@
                 <entry><para>If a parameter is invalid</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
                 <entry><para>The session key is unrecognized.</para></entry>
               </row>
               <row>
@@ -6291,11 +6291,11 @@
                 <entry><para>If a parameter is invalid</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
                 <entry><para>The session key is unrecognized.</para></entry>
               </row>
               <row>
@@ -7193,11 +7193,11 @@
                 <entry><para>If a parameter is invalid</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
                 <entry><para>The session key is unrecognized.</para></entry>
               </row>
               <row>
@@ -7370,11 +7370,11 @@
                 <entry><para>Error code returned if success</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
                 <entry><para>The session key is unrecognized.</para></entry>
               </row>
               <row>
