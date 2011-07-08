@@ -68,7 +68,6 @@ int JobServer::submitJob(const std::string& scriptContent,
   if(scriptConvertor->scriptIsGeneric()) {
     std::string genScript = scriptConvertor->getConvertedScript();
     convertedScript = genScript;
-    std::cout << convertedScript << std::endl;
   } else {
     convertedScript = scriptContent;
   }
