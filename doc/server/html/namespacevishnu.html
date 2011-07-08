@@ -231,10 +231,10 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to configure a default option value.  <a href="#a05878cbc7dbb3f5da87dbc32dd25ab78"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#adaf9c8ca47f577cf1a0c9effe7bd9c52">listSessions</a> (const std::string &amp;sessionKey, UMS_Data::ListSessions &amp;listSession, const UMS_Data::ListSessionOptions &amp;options=UMS_Data::ListSessionOptions())  throw (UserException, SystemException)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to list all sessions of the user.  <a href="#adaf9c8ca47f577cf1a0c9effe7bd9c52"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a05618a81d403ef5c11e014fcecd7ba00">listLocalAccount</a> (const std::string &amp;sessionKey, UMS_Data::ListLocalAccounts &amp;listLocalAcc, const UMS_Data::ListLocalAccOptions &amp;options=UMS_Data::ListLocalAccOptions())  throw (UserException, SystemException)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to list the local user configurations.  <a href="#a05618a81d403ef5c11e014fcecd7ba00"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a59e26ccbe8510d774528c86511f7476b">listMachine</a> (const std::string &amp;sessionKey, UMS_Data::ListMachines &amp;listMachine, const UMS_Data::ListMachineOptions &amp;options=UMS_Data::ListMachineOptions())  throw (UserException, SystemException)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to list the machines in which the local user configurations are defined for the given user.  <a href="#a59e26ccbe8510d774528c86511f7476b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a2c892a93b3100eab8bd4de84f12178fa">listLocalAccounts</a> (const std::string &amp;sessionKey, UMS_Data::ListLocalAccounts &amp;listLocalAcc, const UMS_Data::ListLocalAccOptions &amp;options=UMS_Data::ListLocalAccOptions())  throw (UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to list the local user configurations.  <a href="#a2c892a93b3100eab8bd4de84f12178fa"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a1173c380a74b87ee3f3e0651628ad800">listMachines</a> (const std::string &amp;sessionKey, UMS_Data::ListMachines &amp;listMachine, const UMS_Data::ListMachineOptions &amp;options=UMS_Data::ListMachineOptions())  throw (UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to list the machines in which the local user configurations are defined for the given user.  <a href="#a1173c380a74b87ee3f3e0651628ad800"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a8576a50af31abe3869a61bec780aa5ef">listHistoryCmd</a> (const std::string &amp;sessionKey, UMS_Data::ListCommands &amp;listCommands, const UMS_Data::ListCmdOptions &amp;options=UMS_Data::ListCmdOptions())  throw (UserException, SystemException)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to list the commands.  <a href="#a8576a50af31abe3869a61bec780aa5ef"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a53106e021a6e98049b41106c12356e28">listOptions</a> (const std::string &amp;sessionKey, UMS_Data::ListOptionsValues &amp;listOptValues, const UMS_Data::ListOptOptions &amp;options=UMS_Data::ListOptOptions())  throw (UserException, SystemException)</td></tr>
@@ -323,8 +323,8 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">remove a directory  <a href="#a23105333be3ff847f7c274f6372364bc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#aa8c92237272b5c0e92360f617a2a4edc">tailOfFile</a> (const string &amp;sessionKey, const string &amp;path, string &amp;contentOfFile, const TailOfFileOptions &amp;options=TailOfFileOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">get the last lines of a file  <a href="#aa8c92237272b5c0e92360f617a2a4edc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a80b9f9b9ae713916ad8965e36458113d">getFilesInfo</a> (const string &amp;sessionKey, const string &amp;path, FileStat &amp;filesInfo)  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">obtain informations about a file  <a href="#a80b9f9b9ae713916ad8965e36458113d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a3da75d7c75b5d6a58112f62c5b3eeae0">getFileInfo</a> (const string &amp;sessionKey, const string &amp;path, FileStat &amp;filesInfo)  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">obtain informations about a file  <a href="#a3da75d7c75b5d6a58112f62c5b3eeae0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ac7f9c1d4391157b7dddaab5051fd44a8">stopFileTransfer</a> (const string &amp;sessionKey, const StopTransferOptions &amp;options=StopTransferOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">cancel a file transfer  <a href="#ac7f9c1d4391157b7dddaab5051fd44a8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a5159cd0b198000c690a1e9f88abb1329">listFileTransfers</a> (const string &amp;sessionKey, FileTransferList &amp;fileTransferList, const LsTransferOptions &amp;options=LsTransferOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)</td></tr>
@@ -2087,12 +2087,12 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a80b9f9b9ae713916ad8965e36458113d"></a><!-- doxytag: member="vishnu::getFilesInfo" ref="a80b9f9b9ae713916ad8965e36458113d" args="(const string &amp;sessionKey, const string &amp;path, FileStat &amp;filesInfo)" -->
+<a class="anchor" id="a3da75d7c75b5d6a58112f62c5b3eeae0"></a><!-- doxytag: member="vishnu::getFileInfo" ref="a3da75d7c75b5d6a58112f62c5b3eeae0" args="(const string &amp;sessionKey, const string &amp;path, FileStat &amp;filesInfo)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int vishnu::getFilesInfo </td>
+          <td class="memname">int vishnu::getFileInfo </td>
           <td>(</td>
           <td class="paramtype">const string &amp;&nbsp;</td>
           <td class="paramname"> <em>sessionKey</em>, </td>
@@ -3298,12 +3298,12 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a05618a81d403ef5c11e014fcecd7ba00"></a><!-- doxytag: member="vishnu::listLocalAccount" ref="a05618a81d403ef5c11e014fcecd7ba00" args="(const std::string &amp;sessionKey, UMS_Data::ListLocalAccounts &amp;listLocalAcc, const UMS_Data::ListLocalAccOptions &amp;options=UMS_Data::ListLocalAccOptions())" -->
+<a class="anchor" id="a2c892a93b3100eab8bd4de84f12178fa"></a><!-- doxytag: member="vishnu::listLocalAccounts" ref="a2c892a93b3100eab8bd4de84f12178fa" args="(const std::string &amp;sessionKey, UMS_Data::ListLocalAccounts &amp;listLocalAcc, const UMS_Data::ListLocalAccOptions &amp;options=UMS_Data::ListLocalAccOptions())" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int vishnu::listLocalAccount </td>
+          <td class="memname">int vishnu::listLocalAccounts </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&nbsp;</td>
           <td class="paramname"> <em>sessionKey</em>, </td>
@@ -3342,12 +3342,12 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a59e26ccbe8510d774528c86511f7476b"></a><!-- doxytag: member="vishnu::listMachine" ref="a59e26ccbe8510d774528c86511f7476b" args="(const std::string &amp;sessionKey, UMS_Data::ListMachines &amp;listMachine, const UMS_Data::ListMachineOptions &amp;options=UMS_Data::ListMachineOptions())" -->
+<a class="anchor" id="a1173c380a74b87ee3f3e0651628ad800"></a><!-- doxytag: member="vishnu::listMachines" ref="a1173c380a74b87ee3f3e0651628ad800" args="(const std::string &amp;sessionKey, UMS_Data::ListMachines &amp;listMachine, const UMS_Data::ListMachineOptions &amp;options=UMS_Data::ListMachineOptions())" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int vishnu::listMachine </td>
+          <td class="memname">int vishnu::listMachines </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&nbsp;</td>
           <td class="paramname"> <em>sessionKey</em>, </td>
@@ -4711,7 +4711,7 @@ template&lt;class T &gt; </div>
 </div>
 </div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jun 23 2011 16:43:56 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jul 8 2011 10:36:09 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

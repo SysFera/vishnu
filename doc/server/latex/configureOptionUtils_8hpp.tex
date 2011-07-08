@@ -29,7 +29,7 @@ typedef boost::function2$<$ int, const std::string \&, const UMS\_\-Data::Option
 \item 
 void \hyperlink{configureOptionUtils_8hpp_aebcc5e5cfeb3b2641997ebe5e159b11e}{makeConfigureOptions} (boost::shared\_\-ptr$<$ \hyperlink{classOptions}{Options} $>$ opt, std::string \&dietConfig, \hyperlink{configureOptionUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{StringcallBackType} \&fOptionName, \hyperlink{configureOptionUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{StringcallBackType} \&fValue)
 \begin{DoxyCompactList}\small\item\em To build options for the VISHNU configure option command. \item\end{DoxyCompactList}\item 
-void \hyperlink{configureOptionUtils_8hpp_acd53556179fd367463f7ed703a070e2e}{commonConfigure} (boost::shared\_\-ptr$<$ \hyperlink{classOptions}{Options} $>$ opt, int ac, char $\ast$av\mbox{[}$\,$\mbox{]}, const \hyperlink{configureOptionUtils_8hpp_a460334d72d1cfff489b7b982c5b584ab}{ConfigureCallBackType} \&conf\_\-func)
+int \hyperlink{configureOptionUtils_8hpp_ab856997bbed7bc5d7007be786518c8ca}{commonConfigure} (boost::shared\_\-ptr$<$ \hyperlink{classOptions}{Options} $>$ opt, int ac, char $\ast$av\mbox{[}$\,$\mbox{]}, const \hyperlink{configureOptionUtils_8hpp_a460334d72d1cfff489b7b982c5b584ab}{ConfigureCallBackType} \&conf\_\-func)
 \begin{DoxyCompactList}\small\item\em A common function betwenn the VISHNU configure option command and the VISHNU configure default option command. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -40,10 +40,10 @@ Ibrahima Cisse (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sysf
 
 
 \subsection{Function Documentation}
-\hypertarget{configureOptionUtils_8hpp_acd53556179fd367463f7ed703a070e2e}{
+\hypertarget{configureOptionUtils_8hpp_ab856997bbed7bc5d7007be786518c8ca}{
 \index{configureOptionUtils.hpp@{configureOptionUtils.hpp}!commonConfigure@{commonConfigure}}
 \index{commonConfigure@{commonConfigure}!configureOptionUtils.hpp@{configureOptionUtils.hpp}}
-\subsubsection[{commonConfigure}]{\setlength{\rightskip}{0pt plus 5cm}void commonConfigure (
+\subsubsection[{commonConfigure}]{\setlength{\rightskip}{0pt plus 5cm}int commonConfigure (
 \begin{DoxyParamCaption}
 \item[{boost::shared\_\-ptr$<$ {\bf Options} $>$}]{ opt, }
 \item[{int}]{ ac, }
@@ -51,7 +51,7 @@ Ibrahima Cisse (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sysf
 \item[{const {\bf ConfigureCallBackType} \&}]{ conf\_\-func}
 \end{DoxyParamCaption}
 )}}
-\label{configureOptionUtils_8hpp_acd53556179fd367463f7ed703a070e2e}
+\label{configureOptionUtils_8hpp_ab856997bbed7bc5d7007be786518c8ca}
 
 
 A common function betwenn the VISHNU configure option command and the VISHNU configure default option command. 
@@ -59,6 +59,9 @@ A common function betwenn the VISHNU configure option command and the VISHNU con
 
 \begin{DoxyParams}{Parameters}
 \item[{\em opt,:}]Describes all allowed options for the command \item[{\em ac}]: The number of parameters the command takes \item[{\em av}]: The name of all of that parameters \item[{\em conf\_\-func,:}]The VISHNU API function, configureOption our ConfigureDefaultOption \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the function succeeds, an error code otherwise 
+\end{DoxyReturn}
 \hypertarget{configureOptionUtils_8hpp_aebcc5e5cfeb3b2641997ebe5e159b11e}{
 \index{configureOptionUtils.hpp@{configureOptionUtils.hpp}!makeConfigureOptions@{makeConfigureOptions}}
 \index{makeConfigureOptions@{makeConfigureOptions}!configureOptionUtils.hpp@{configureOptionUtils.hpp}}

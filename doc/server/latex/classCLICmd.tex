@@ -16,7 +16,7 @@ This class represents the class to parse the cli.
 \item 
 int \hyperlink{classCLICmd_a867bca3ebdb191e644ddd4de0a4bee98}{parse} (const \hyperlink{Options_8hpp_a3e992ba9ff50fb8a17ae2d36ea9b3f80}{func1} \&s)
 \begin{DoxyCompactList}\small\item\em To get all the parameters for the C++ API call. \item\end{DoxyCompactList}\item 
-\hyperlink{classCLICmd_a1c8d00bf0bccf453e5c7dd4de93e2d43}{CLICmd} (int argc, char $\ast$$\ast$argv, boost::shared\_\-ptr$<$ \hyperlink{classOptions}{Options} $>$ op, string dietConfig)
+\hyperlink{classCLICmd_a574259371aeb8b67f3b83a4e0c477255}{CLICmd} (int argc, char $\ast$$\ast$argv, boost::shared\_\-ptr$<$ \hyperlink{classOptions}{Options} $>$ op)
 \begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
 \hypertarget{classCLICmd_a4084198949bd825f8b9440a10637963c}{
 \hyperlink{classCLICmd_a4084198949bd825f8b9440a10637963c}{$\sim$CLICmd} ()}
@@ -36,11 +36,6 @@ char $\ast$$\ast$ \hyperlink{classCLICmd_ae0007becec7bb0edf881e893ae52d146}{marg
 \label{classCLICmd_ae0007becec7bb0edf881e893ae52d146}
 
 \begin{DoxyCompactList}\small\item\em The argv value. \item\end{DoxyCompactList}\item 
-\hypertarget{classCLICmd_af29a86d75b1fc016834dc0a1e153c074}{
-string \hyperlink{classCLICmd_af29a86d75b1fc016834dc0a1e153c074}{mdietConfig}}
-\label{classCLICmd_af29a86d75b1fc016834dc0a1e153c074}
-
-\begin{DoxyCompactList}\small\item\em Ther diet config file. \item\end{DoxyCompactList}\item 
 \hypertarget{classCLICmd_a52b8b2e326acae016090856aab3e3e55}{
 boost::shared\_\-ptr$<$ \hyperlink{classOptions}{Options} $>$ \hyperlink{classCLICmd_a52b8b2e326acae016090856aab3e3e55}{mop}}
 \label{classCLICmd_a52b8b2e326acae016090856aab3e3e55}
@@ -52,25 +47,24 @@ boost::shared\_\-ptr$<$ \hyperlink{classOptions}{Options} $>$ \hyperlink{classCL
 This class represents the class to parse the cli. 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classCLICmd_a1c8d00bf0bccf453e5c7dd4de93e2d43}{
+\hypertarget{classCLICmd_a574259371aeb8b67f3b83a4e0c477255}{
 \index{CLICmd@{CLICmd}!CLICmd@{CLICmd}}
 \index{CLICmd@{CLICmd}!CLICmd@{CLICmd}}
 \subsubsection[{CLICmd}]{\setlength{\rightskip}{0pt plus 5cm}CLICmd::CLICmd (
 \begin{DoxyParamCaption}
 \item[{int}]{ argc, }
 \item[{char $\ast$$\ast$}]{ argv, }
-\item[{boost::shared\_\-ptr$<$ {\bf Options} $>$}]{ op, }
-\item[{string}]{ dietConfig}
+\item[{boost::shared\_\-ptr$<$ {\bf Options} $>$}]{ op}
 \end{DoxyParamCaption}
 )}}
-\label{classCLICmd_a1c8d00bf0bccf453e5c7dd4de93e2d43}
+\label{classCLICmd_a574259371aeb8b67f3b83a4e0c477255}
 
 
 Constructor. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em argc,:}]argc from C program \item[{\em argv,:}]argv from C program \item[{\em op,:}]Option to fill (OUT) \item[{\em dietConfig,:}]\hyperlink{classConfiguration}{Configuration} file for DIET \end{DoxyParams}
+\item[{\em argc,:}]argc from C program \item[{\em argv,:}]argv from C program \item[{\em op,:}]Option to fill (OUT) \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}

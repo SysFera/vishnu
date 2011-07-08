@@ -76,7 +76,7 @@ public:
   /**
   * \brief Function to get user option value
   * \param numuserId The database number id of the user
-  * \param nameInfo the name of the option
+  * \param optionName the name of the option
   * \return The error or success code
   */
   int
