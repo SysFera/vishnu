@@ -28,14 +28,14 @@ MachineProxy::MachineProxy(const UMS_Data::Machine& machine, const SessionProxy&
 int MachineProxy::add()
 {
 
-  diet_profile_t* profile = NULL;
+  diet_profile_t* addProfile = NULL;
   std::string sessionKey;
   std::string machineToString;
   char* machineInString;
   char* errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc("machineCreate", 1, 1, 3);
+  addProfile = diet_profile_alloc("machineCreate", 1, 1, 3);
   sessionKey = msessionProxy.getSessionKey();
 
   ::ecorecpp::serializer::serializer _ser;
@@ -48,25 +48,25 @@ int MachineProxy::add()
   }
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(addProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), strdup(machineToString.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(addProfile,1), strdup(machineToString.c_str()), DIET_VOLATILE)) {
     msg += "with machineToString parameter "+machineToString;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(addProfile,2), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(addProfile,3), NULL, DIET_VOLATILE);
 
-  if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), &machineInString, NULL)){
+  if(!diet_call(addProfile)) {
+    if(diet_string_get(diet_parameter(addProfile,2), &machineInString, NULL)){
       msg += "by receiving Machine serialized  message";
       raiseDietMsgException(msg);
     }
-    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+    if(diet_string_get(diet_parameter(addProfile,3), &errorInfo, NULL)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -86,7 +86,7 @@ int MachineProxy::add()
   mmachine = *machine_ptr;
   delete machine_ptr;
 
-  diet_profile_free(profile);
+  diet_profile_free(addProfile);
 
   return 0;
 
@@ -99,13 +99,13 @@ int MachineProxy::add()
  */
 int MachineProxy::update()
 {
-  diet_profile_t* profile = NULL;
+  diet_profile_t* updateProfile = NULL;
   std::string sessionKey;
   std::string machineToString;
   char* errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc("machineUpdate", 1, 1, 2);
+  updateProfile = diet_profile_alloc("machineUpdate", 1, 1, 2);
   sessionKey = msessionProxy.getSessionKey();
 
   ::ecorecpp::serializer::serializer _ser;
@@ -118,20 +118,20 @@ int MachineProxy::update()
   }
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(updateProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), strdup(machineToString.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(updateProfile,1), strdup(machineToString.c_str()), DIET_VOLATILE)) {
     msg += "with machineToString parameter "+machineToString;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(updateProfile,2), NULL, DIET_VOLATILE);
 
-  if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+  if(!diet_call(updateProfile)) {
+    if(diet_string_get(diet_parameter(updateProfile,2), &errorInfo, NULL)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -143,7 +143,7 @@ int MachineProxy::update()
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
-  diet_profile_free(profile);
+  diet_profile_free(updateProfile);
 
   return 0;
 }
@@ -155,31 +155,31 @@ int MachineProxy::update()
  */
 int MachineProxy::deleteMachine()
 {
-  diet_profile_t* profile = NULL;
+  diet_profile_t* deleteProfile = NULL;
   std::string sessionKey;
   std::string machineId;
   char* errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc("machineDelete", 1, 1, 2);
+  deleteProfile = diet_profile_alloc("machineDelete", 1, 1, 2);
   sessionKey = msessionProxy.getSessionKey();
   machineId = mmachine.getMachineId();
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(deleteProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), strdup(machineId.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(deleteProfile,1), strdup(machineId.c_str()), DIET_VOLATILE)) {
     msg += "with machineId parameter "+machineId;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(deleteProfile,2), NULL, DIET_VOLATILE);
 
-  if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+  if(!diet_call(deleteProfile)) {
+    if(diet_string_get(diet_parameter(deleteProfile,2), &errorInfo, NULL)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -191,7 +191,7 @@ int MachineProxy::deleteMachine()
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
   
-  diet_profile_free(profile);
+  diet_profile_free(deleteProfile);
 
   return 0;
 }
