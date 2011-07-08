@@ -109,6 +109,7 @@ int main (int ac, char* av[]){
 
     storeLastSession(session.getSessionKey(),session.getClosePolicy(),getppid()); // store sessionKey into $HOME/.vishnu/sessions
 
+    std::cout << "sessionId: " << session.getSessionId() << "\n";
     printSuccessMessage();
 
 
