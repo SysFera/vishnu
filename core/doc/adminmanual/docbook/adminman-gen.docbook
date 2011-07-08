@@ -4220,7 +4220,10 @@ that option using the vishnu_configure_option command.</para>
         <refpurpose>updates the system information of a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_set_system_info</command><arg choice="opt"><option>-h</option></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_set_system_info</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-m <replaceable>memory</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>diskSpace</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4233,6 +4236,18 @@ that option using the vishnu_configure_option command.</para>
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-m <replaceable>memory</replaceable></option></term>
+            <listitem>
+              <para>Amount of RAM memory available on the machine (in Bytes).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-d <replaceable>diskSpace</replaceable></option></term>
+            <listitem>
+              <para>Amount of disk space available on the machine (in Bytes).</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -4273,7 +4288,9 @@ that option using the vishnu_configure_option command.</para>
         <refpurpose>sets a threshold on a machine of a system</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_set_system_threshold</command><arg choice="opt"><option>-h</option></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_set_system_threshold</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>value</replaceable></arg><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
+              choice="plain"><replaceable>type</replaceable></arg><arg choice="plain"><replaceable>handler</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4760,7 +4777,8 @@ SOFT   = 2</para>
         <refpurpose>To stop (and do not try to relaunch) a SeD</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_stop</command><arg choice="opt"><option>-h</option></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_stop</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>processName</replaceable></arg><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
