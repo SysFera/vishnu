@@ -586,6 +586,10 @@ The mode parameter is the same value as for the unix chmod command.</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
@@ -2351,6 +2355,10 @@ The mode parameter is the same value as for the unix chmod command.</para>
           </varlistentry>
           <varlistentry>
             <term>&quot;The user is not an administrator&quot; [25]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -4166,6 +4174,10 @@ The mode parameter is the same value as for the unix chmod command.</para>
           </varlistentry>
           <varlistentry>
             <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
