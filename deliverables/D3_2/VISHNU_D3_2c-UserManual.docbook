@@ -249,6 +249,7 @@
     </section>
     <section>
       <title> Sofware usage description </title>
+      <para><emphasis role="bold">WARNING: The lists are INOUT parameters, the results are appended, they do not overwrite the existing list.</emphasis></para>
       <section>
         <title> UMS package </title>
         <section>
@@ -1038,15 +1039,15 @@ homeDirectory path .</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>vishnu_list_local_account</refentrytitle>
+        <refentrytitle>vishnu_list_local_accounts</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>vishnu_list_local_account</refname>
+        <refname>vishnu_list_local_accounts</refname>
         <refpurpose>lists the local user configurations</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_list_local_account</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_list_local_accounts</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-a</option></arg><arg choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
               choice="opt"><option>-i <replaceable>machineId</replaceable></option></arg></cmdsynopsis>
       </refsynopsisdiv>
@@ -1122,15 +1123,15 @@ local configurations related to your VISHNU account. </para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>vishnu_list_machine</refentrytitle>
+        <refentrytitle>vishnu_list_machines</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>vishnu_list_machine</refname>
+        <refname>vishnu_list_machines</refname>
         <refpurpose>lists the machines that are accessible through VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_list_machine</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_list_machines</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
               choice="opt"><option>-a</option></arg><arg choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg></cmdsynopsis>
       </refsynopsisdiv>
@@ -2836,6 +2837,10 @@ The mode parameter is the same value as for the unix chmod command.</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
@@ -3957,15 +3962,15 @@ The value must be an integer. Predefined values are: 0 (INPROGRESS), 1 (COMPLETE
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>vishnu_get_files_info</refentrytitle>
+        <refentrytitle>vishnu_get_file_info</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>vishnu_get_files_info</refname>
+        <refname>vishnu_get_file_info</refname>
         <refpurpose>displays the information  of  files.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_get_files_info</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_get_file_info</command><arg choice="opt"><option>-h</option></arg><arg
               choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
@@ -5040,15 +5045,15 @@ homeDirectory path .</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>listLocalAccount</refentrytitle>
+        <refentrytitle>listLocalAccounts</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>listLocalAccount</refname>
+        <refname>listLocalAccounts</refname>
         <refpurpose>lists the local user configurations</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listLocalAccount</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts&amp; <parameter>listLocalAcct</parameter></paramdef><paramdef>const ListLocalAccOptions&amp; <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listLocalAccounts</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts&amp; <parameter>listLocalAcct</parameter></paramdef><paramdef>const ListLocalAccOptions&amp; <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5121,15 +5126,15 @@ local configurations related to your VISHNU account. </para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>listMachine</refentrytitle>
+        <refentrytitle>listMachines</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>listMachine</refname>
+        <refname>listMachines</refname>
         <refpurpose>lists the machines that are accessible through VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listMachine</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines&amp; <parameter>listMachine</parameter></paramdef><paramdef>const ListMachineOptions&amp; <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listMachines</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines&amp; <parameter>listMachine</parameter></paramdef><paramdef>const ListMachineOptions&amp; <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -6921,6 +6926,10 @@ The mode parameter is the same value as for the unix chmod command.</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
@@ -8015,15 +8024,15 @@ using a vishnu synchronous or asynchronous copy or move file command.
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>getFilesInfo</refentrytitle>
+        <refentrytitle>getFileInfo</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>getFilesInfo</refname>
+        <refname>getFileInfo</refname>
         <refpurpose>displays the information  of  files.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getFilesInfo</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>FileStat&amp; <parameter>filesinfo</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getFileInfo</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>FileStat&amp; <parameter>filesinfo</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -9164,15 +9173,15 @@ homeDirectory path .</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.listLocalAccount</refentrytitle>
+        <refentrytitle>VISHNU.listLocalAccounts</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.listLocalAccount</refname>
+        <refname>VISHNU.listLocalAccounts</refname>
         <refpurpose>lists the local user configurations</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts <parameter>listLocalAcct</parameter></paramdef><paramdef>ListLocalAccOptions <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listLocalAccounts</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts <parameter>listLocalAcct</parameter></paramdef><paramdef>ListLocalAccOptions <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -9256,15 +9265,15 @@ local configurations related to your VISHNU account. </para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.listMachine</refentrytitle>
+        <refentrytitle>VISHNU.listMachines</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.listMachine</refname>
+        <refname>VISHNU.listMachines</refname>
         <refpurpose>lists the machines that are accessible through VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines <parameter>listMachine</parameter></paramdef><paramdef>ListMachineOptions <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listMachines</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines <parameter>listMachine</parameter></paramdef><paramdef>ListMachineOptions <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -11287,6 +11296,10 @@ The mode parameter is the same value as for the unix chmod command.</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
@@ -12491,15 +12504,15 @@ using a vishnu synchronous or asynchronous copy or move file command.
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.getFilesInfo</refentrytitle>
+        <refentrytitle>VISHNU.getFileInfo</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.getFilesInfo</refname>
+        <refname>VISHNU.getFileInfo</refname>
         <refpurpose>displays the information  of  files.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.getFilesInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>FileStat <parameter>filesinfo</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU.getFileInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>FileStat <parameter>filesinfo</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
