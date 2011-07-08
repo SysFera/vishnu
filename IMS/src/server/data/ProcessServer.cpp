@@ -29,7 +29,7 @@ ProcessServer::list(){
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "get processes is an admin function. A user cannot call it");
   }
 
-  string request = "SELECT * from process WHERE  pstatus ='"+convertToString(PRUNNING)+"' ";
+  string request = "SELECT DISTINCT * from process WHERE  pstatus ='"+convertToString(PRUNNING)+"' ";
   vector<string> results;
   vector<string>::iterator iter;
   
