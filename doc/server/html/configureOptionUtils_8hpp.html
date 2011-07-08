@@ -57,19 +57,19 @@ UMS_Data::OptionValue &amp; &gt;&nbsp;</td><td class="memItemRight" valign="bott
 Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="configureOptionUtils_8hpp.html#aebcc5e5cfeb3b2641997ebe5e159b11e">makeConfigureOptions</a> (boost::shared_ptr&lt; <a class="el" href="classOptions.html">Options</a> &gt; opt, std::string &amp;dietConfig, <a class="el" href="configureOptionUtils_8hpp.html#af175c3bbfc8af0bcd8d1e14538713acc">StringcallBackType</a> &amp;fOptionName, <a class="el" href="configureOptionUtils_8hpp.html#af175c3bbfc8af0bcd8d1e14538713acc">StringcallBackType</a> &amp;fValue)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To build options for the VISHNU configure option command.  <a href="#aebcc5e5cfeb3b2641997ebe5e159b11e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="configureOptionUtils_8hpp.html#acd53556179fd367463f7ed703a070e2e">commonConfigure</a> (boost::shared_ptr&lt; <a class="el" href="classOptions.html">Options</a> &gt; opt, int ac, char *av[], const <a class="el" href="configureOptionUtils_8hpp.html#a460334d72d1cfff489b7b982c5b584ab">ConfigureCallBackType</a> &amp;conf_func)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">A common function betwenn the VISHNU configure option command and the VISHNU configure default option command.  <a href="#acd53556179fd367463f7ed703a070e2e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="configureOptionUtils_8hpp.html#ab856997bbed7bc5d7007be786518c8ca">commonConfigure</a> (boost::shared_ptr&lt; <a class="el" href="classOptions.html">Options</a> &gt; opt, int ac, char *av[], const <a class="el" href="configureOptionUtils_8hpp.html#a460334d72d1cfff489b7b982c5b584ab">ConfigureCallBackType</a> &amp;conf_func)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">A common function betwenn the VISHNU configure option command and the VISHNU configure default option command.  <a href="#ab856997bbed7bc5d7007be786518c8ca"></a><br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>This file declare useful functions and types for the VISHNU configure option command. </p>
 <dl class="author"><dt><b>Author:</b></dt><dd>Ibrahima Cisse (<a href="mailto:ibrahima.cisse@sysfera.com">ibrahima.cisse@sysfera.com</a>) </dd></dl>
 <hr/><h2>Function Documentation</h2>
-<a class="anchor" id="acd53556179fd367463f7ed703a070e2e"></a><!-- doxytag: member="configureOptionUtils.hpp::commonConfigure" ref="acd53556179fd367463f7ed703a070e2e" args="(boost::shared_ptr&lt; Options &gt; opt, int ac, char *av[], const ConfigureCallBackType &amp;conf_func)" -->
+<a class="anchor" id="ab856997bbed7bc5d7007be786518c8ca"></a><!-- doxytag: member="configureOptionUtils.hpp::commonConfigure" ref="ab856997bbed7bc5d7007be786518c8ca" args="(boost::shared_ptr&lt; Options &gt; opt, int ac, char *av[], const ConfigureCallBackType &amp;conf_func)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void commonConfigure </td>
+          <td class="memname">int commonConfigure </td>
           <td>(</td>
           <td class="paramtype">boost::shared_ptr&lt; <a class="el" href="classOptions.html">Options</a> &gt;&nbsp;</td>
           <td class="paramname"> <em>opt</em>, </td>
@@ -111,6 +111,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 if the function succeeds, an error code otherwise </dd></dl>
 
 </div>
 </div>
@@ -165,7 +166,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jun 23 2011 16:43:50 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jul 8 2011 10:36:04 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
