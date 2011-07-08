@@ -309,17 +309,17 @@ TMSMapper::decodeListJob(vector<int> separator, const string& msg){
   if (l>0){
     pt = boost::posix_time::from_time_t(vishnu::convertUTCtimeINLocaltime(l));
     u = boost::posix_time::to_simple_string(pt);
-    res += " -d \"";
+    res += " -d '";
     res += u;
-    res += "\"";
+    res += "'";
   }
   l = j->getToSubmitDate();
   if (l>0){
     pt = boost::posix_time::from_time_t(vishnu::convertUTCtimeINLocaltime(l));
     u = boost::posix_time::to_simple_string(pt);
-    res += " -D \"";
+    res += " -D '";
     res += u;
-    res += "\"";
+    res += "'";
   }
   u = j->getOwner();
   if (u.compare("")){
