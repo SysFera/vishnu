@@ -106,7 +106,6 @@ Options::setGroup (const po::options_description& tmp_options,
 
     default:// for unknown option group
 
-      cout << "unknown option group " << endl;
       break;
 
   }
