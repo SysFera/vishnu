@@ -379,14 +379,14 @@
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ListCmdOptions">ListCmdOptions</link></para></entry>
+                <entry><para><!--link linkend="ListCmdOptions"-->ListCmdOptions<!--/link--></para></entry>
                 <entry><para>allows the user to list commands by using several optional criteria: a period, specific session and for admin to list all commands of all VISHNU users or commands from a specific user</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>listCommands</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ListCommands">ListCommands</link></para></entry>
+                <entry><para><!--link linkend="ListCommands"-->ListCommands<!--/link--></para></entry>
                 <entry><para>listCommands is the list of commands</para></entry>
                 <entry><para>OUT</para></entry>
               </row>
@@ -500,7 +500,7 @@
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ConnectOptions">ConnectOptions</link></para></entry>
+                <entry><para><!--link linkend="ConnectOptions"-->ConnectOptions<!--/link--></para></entry>
                 <entry><para>options is an object which encapsulates the options available for the connect method. It allows the user to choose the way for closing the session automatically on TIMEOUT or on DISCONNECT and the possibility for an admin to open a session as if he/she was a specific user</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -831,14 +831,14 @@
               <row>
                 <entry><para>listsession</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ListSessions">ListSessions</link></para></entry>
+                <entry><para><!--link linkend="ListSessions"-->ListSessions<!--/link--></para></entry>
                 <entry><para>listsession is the list of sessions </para></entry>
                 <entry><para>OUT</para></entry>
               </row>
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ListSessionOptions">ListSessionOptions</link></para></entry>
+                <entry><para><!--link linkend="ListSessionOptions"-->ListSessionOptions<!--/link--></para></entry>
                 <entry><para>allows the user to list sessions using several optional criteria such as: the state of sessions (active or inactive, by default, all sessions are listed), a period, a specific session or for admin to list all sessions of all users or sessions of a specific user.</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -935,7 +935,7 @@
               <row>
                 <entry><para>user</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="User">User</link></para></entry>
+                <entry><para><!--link linkend="User"-->User<!--/link--></para></entry>
                 <entry><para>The user object</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -1044,7 +1044,7 @@
               <row>
                 <entry><para>user</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="User">User</link></para></entry>
+                <entry><para><!--link linkend="User"-->User<!--/link--></para></entry>
                 <entry><para>The user object</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -1249,7 +1249,7 @@
               <row>
                 <entry><para>listuser</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ListUsers">ListUsers</link></para></entry>
+                <entry><para><!--link linkend="ListUsers"-->ListUsers<!--/link--></para></entry>
                 <entry><para>listuser is the list of users </para></entry>
                 <entry><para>OUT</para></entry>
               </row>
@@ -1543,7 +1543,7 @@
               <row>
                 <entry><para>newAccount</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="LocalAccount">LocalAccount</link></para></entry>
+                <entry><para><!--link linkend="LocalAccount"-->LocalAccount<!--/link--></para></entry>
                 <entry><para>newAccount is the object which encapsulates the new local user configuration</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -1648,7 +1648,7 @@
               <row>
                 <entry><para>LocalAccUpd</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="LocalAccount">LocalAccount</link></para></entry>
+                <entry><para><!--link linkend="LocalAccount"-->LocalAccount<!--/link--></para></entry>
                 <entry><para>is an object which encapsulates the local user configuration changes except the machineId and the userId</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -1837,14 +1837,14 @@
               <row>
                 <entry><para>listLocalAcct</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ListLocalAccounts">ListLocalAccounts</link></para></entry>
+                <entry><para><!--link linkend="ListLocalAccounts"-->ListLocalAccounts<!--/link--></para></entry>
                 <entry><para>listLocalAccount is the list of the local user configuations </para></entry>
                 <entry><para>OUT</para></entry>
               </row>
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ListLocalAccOptions">ListLocalAccOptions</link></para></entry>
+                <entry><para><!--link linkend="ListLocalAccOptions"-->ListLocalAccOptions<!--/link--></para></entry>
                 <entry><para>allows an admin to list all local configurations of all users or a simple user to list his/her local user configurations on a specific machine</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -1937,7 +1937,7 @@
               <row>
                 <entry><para>configuration</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="Configuration">Configuration</link></para></entry>
+                <entry><para><!--link linkend="Configuration"-->Configuration<!--/link--></para></entry>
                 <entry><para>The configuration is an object which encapsulates the configuration description</para></entry>
                 <entry><para>OUT</para></entry>
               </row>
@@ -2022,7 +2022,7 @@
               <row>
                 <entry><para>configuration </para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="Configuration">Configuration</link></para></entry>
+                <entry><para><!--link linkend="Configuration"-->Configuration<!--/link--></para></entry>
                 <entry><para>The configuration is the object which encapsulates the configuration information </para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -2107,7 +2107,7 @@
               <row>
                 <entry><para>machine</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="Machine">Machine</link></para></entry>
+                <entry><para><!--link linkend="Machine"-->Machine<!--/link--></para></entry>
                 <entry><para>Machine information</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -2204,7 +2204,7 @@
               <row>
                 <entry><para>machine</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="Machine">Machine</link></para></entry>
+                <entry><para><!--link linkend="Machine"-->Machine<!--/link--></para></entry>
                 <entry><para>existing machine information</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -2394,14 +2394,14 @@
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ListMachineOptions">ListMachineOptions</link></para></entry>
+                <entry><para><!--link linkend="ListMachineOptions"-->ListMachineOptions<!--/link--></para></entry>
                 <entry><para>allows a user to list all VISHNU machines or information about a specific machine and an admin to list machines used by a specific user</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>listMachine</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ListMachines">ListMachines</link></para></entry>
+                <entry><para><!--link linkend="ListMachines"-->ListMachines<!--/link--></para></entry>
                 <entry><para>listLocalAccount is the list of the local configs </para></entry>
                 <entry><para>OUT</para></entry>
               </row>
@@ -2494,14 +2494,14 @@
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ListOptOptions">ListOptOptions</link></para></entry>
+                <entry><para><!--link linkend="ListOptOptions"-->ListOptOptions<!--/link--></para></entry>
                 <entry><para>allows to list a specific option or all default options values or for an admin to list options of a specific user</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>listOptValues</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ListOptionsValues">ListOptionsValues</link></para></entry>
+                <entry><para><!--link linkend="ListOptionsValues"-->ListOptionsValues<!--/link--></para></entry>
                 <entry><para>listOptValues is an object which encapsulates the list of options</para></entry>
                 <entry><para>OUT</para></entry>
               </row>
@@ -2602,7 +2602,7 @@
               <row>
                 <entry><para>optionValue</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="OptionValue">OptionValue</link></para></entry>
+                <entry><para><!--link linkend="OptionValue"-->OptionValue<!--/link--></para></entry>
                 <entry><para>The optionValue is an object which encapsulates the option information</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -2691,7 +2691,7 @@
               <row>
                 <entry><para>optionValue</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="OptionValue">OptionValue</link></para></entry>
+                <entry><para><!--link linkend="OptionValue"-->OptionValue<!--/link--></para></entry>
                 <entry><para>The optionValue is an object which encapsulates the option information</para></entry>
                 <entry><para>IN</para></entry>
               </row>
