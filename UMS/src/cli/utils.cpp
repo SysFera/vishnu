@@ -482,19 +482,10 @@ std::ostream&
 operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
 
    std::string commandId;
-   std::string sessionId;
-   std::string machineId;
+   std::string commandDesc; 
    int status;
-   long startTime;
-   long endTime;
-   std::string blank =  "  ----  ";
-   std::string startTimeStr = blank ;
-   std::string endTimeStr = blank;
    size_t maxCommandIdSize = std::string("CommandId").size();
-   size_t maxSessionIdSize = std::string("SessionId").size();
-   size_t maxMachineIdSize = std::string("MachineId").size();
-   size_t maxStartTimeSize = std::string("Start Time").size();
-   size_t maxEndTimeSize = std::string("End Time").size();
+   size_t maxCommandDescSize = std::string("Vishnu Command").size();
    size_t maxStatusSize = std::string("Status").size()+1;
    boost::posix_time::ptime pt;
 
@@ -504,68 +495,26 @@ operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
      commandId = (lsCommand.getCommands().get(i))->getCommandId();
      maxCommandIdSize = max(maxCommandIdSize, commandId.size());
 
-
-     sessionId = (lsCommand.getCommands().get(i))->getSessionId();
-     maxSessionIdSize = max(maxSessionIdSize, sessionId.size());
-
-     machineId = (lsCommand.getCommands().get(i))->getMachineId();
-     maxMachineIdSize = max(maxMachineIdSize, machineId.size());
-
-     startTime = (lsCommand.getCommands().get(i))->getCmdStartTime();
-     if(startTime > 0) {
-       pt =  boost::posix_time::from_time_t(startTime);
-       startTimeStr = boost::posix_time::to_simple_string(pt);
-     }
-     maxStartTimeSize = max(maxStartTimeSize, startTimeStr.size());
-
-     endTime = (lsCommand.getCommands().get(i))->getCmdEndTime();
-     if(endTime > 0) {
-       pt =  boost::posix_time::from_time_t(endTime);
-       endTimeStr = boost::posix_time::to_simple_string(pt);
-     }
-     maxEndTimeSize = max(maxEndTimeSize, endTimeStr.size());
-
+     commandDesc = (lsCommand.getCommands().get(i))->getCmdDescription();
+     maxCommandDescSize = max(maxCommandDescSize, commandDesc.size()); 
   }
 
-  os << setw(maxCommandIdSize+2) << left << "CommandId" << setw(maxSessionIdSize+2) << left << "SessionId" << setw(maxMachineIdSize+2) << left << "MachineId";
-  os << setw(maxStartTimeSize+2) << left << "Start Time" << setw(maxEndTimeSize+2) << left << "End Time";
+  os << setw(maxCommandIdSize+2) << left << "CommandId";
+  os << setw(maxCommandDescSize+2) << left << "Vishnu Command";
   os << setw(maxStatusSize+2) << left << "Status"<< endl;
   setFill(maxCommandIdSize, os);
-  setFill(maxSessionIdSize, os);
-  setFill(maxMachineIdSize, os);
-  setFill(maxStartTimeSize, os);
-  setFill(maxEndTimeSize, os);
+  setFill(maxCommandDescSize, os);
   setFill(maxStatusSize, os);
   os << endl;
 
   for(unsigned int i = 0; i < lsCommand.getCommands().size(); i++) {
 
      commandId = (lsCommand.getCommands().get(i))->getCommandId();
-     sessionId = (lsCommand.getCommands().get(i))->getSessionId();
-     machineId = (lsCommand.getCommands().get(i))->getMachineId();
+     commandDesc = (lsCommand.getCommands().get(i))->getCmdDescription();
      status = (lsCommand.getCommands().get(i))->getStatus();
 
-     startTime = (lsCommand.getCommands().get(i))->getCmdStartTime();
-     if(startTime > 0) {
-       pt =  boost::posix_time::from_time_t(startTime);
-       startTimeStr = boost::posix_time::to_simple_string(pt);
-     } else {
-       startTimeStr = blank;
-     }
-
-     endTime = (lsCommand.getCommands().get(i))->getCmdEndTime();
-     if(endTime > 0) {
-       pt =  boost::posix_time::from_time_t(endTime);
-       endTimeStr = boost::posix_time::to_simple_string(pt);
-     } else {
-       endTimeStr = blank;
-     }
-
      os << setw(maxCommandIdSize+2) << left << commandId;
-     os << setw(maxSessionIdSize+2) << left << sessionId;
-     os << setw(maxMachineIdSize+2) << left << machineId;
-     os << setw(maxStartTimeSize+2) << left << startTimeStr ;
-     os << setw(maxEndTimeSize+2) << left << endTimeStr;
+     os << setw(maxCommandDescSize+2) << left << commandDesc;
      os << setw(maxStatusSize+2) << left << (status?"SUCCESS":"FAILURE");
      os << endl;
   }
