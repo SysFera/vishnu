@@ -28,165 +28,202 @@
 <h1>TMS/src/server/ListProgressServer.hpp</h1>  </div>
 </div>
 <div class="contents">
-<a href="ListProgressServer_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
-<a name="l00007"></a>00007 <span class="preprocessor">#ifndef _LIST_PROGRESS_SERVER_</span>
-<a name="l00008"></a>00008 <span class="preprocessor"></span><span class="preprocessor">#define _LIST_PROGRESS_SERVER_</span>
-<a name="l00009"></a>00009 <span class="preprocessor"></span>
-<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;vector&gt;</span>
-<a name="l00012"></a>00012 <span class="preprocessor">#include &lt;iostream&gt;</span>
-<a name="l00013"></a>00013 <span class="preprocessor">#include &quot;boost/date_time/posix_time/posix_time.hpp&quot;</span>
-<a name="l00014"></a>00014 <span class="preprocessor">#include &lt;boost/date_time/local_time/local_time.hpp&gt;</span>
-<a name="l00015"></a>00015 <span class="preprocessor">#include &lt;boost/date_time/local_time/posix_time_zone.hpp&gt;</span>
-<a name="l00016"></a>00016 <span class="preprocessor">#include &lt;boost/date_time/date_facet.hpp&gt;</span>
-<a name="l00017"></a>00017 <span class="preprocessor">#include &lt;sstream&gt;</span>
-<a name="l00018"></a>00018 
-<a name="l00019"></a>00019 <span class="preprocessor">#include &quot;<a class="code" href="QueryServer_8hpp.html" title="This file contains the VISHNU QueryServer class.">QueryServer.hpp</a>&quot;</span>
-<a name="l00020"></a>00020 <span class="preprocessor">#include &quot;<a class="code" href="SessionServer_8hpp.html" title="This file presents the Class which manipulates VISHNU sessions on server side.">SessionServer.hpp</a>&quot;</span>
-<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;TMS_Data.hpp&quot;</span>
-<a name="l00022"></a>00022 <span class="preprocessor">#include &quot;<a class="code" href="BatchServer_8hpp.html" title="This file contains the VISHNU BatchServer class.">BatchServer.hpp</a>&quot;</span>
-<a name="l00023"></a>00023 <span class="preprocessor">#include &quot;<a class="code" href="BatchFactory_8hpp.html" title="This file implements the batch factory.">BatchFactory.hpp</a>&quot;</span>
-<a name="l00024"></a>00024 
-<a name="l00029"></a><a class="code" href="classListProgressServer.html">00029</a> <span class="keyword">class </span><a class="code" href="classListProgressServer.html" title="ListProgressServer class implementation.">ListProgressServer</a>: <span class="keyword">public</span> <a class="code" href="classQueryServer.html" title="QueryServer class implementation.">QueryServer</a>&lt;TMS_Data::ProgressOptions, TMS_Data::ListProgression&gt; {
-<a name="l00030"></a>00030 
-<a name="l00031"></a>00031 <span class="keyword">public</span>:
-<a name="l00032"></a>00032 
-<a name="l00038"></a><a class="code" href="classListProgressServer.html#a49042d8db19b90501711398c913d4b31">00038</a>   <a class="code" href="classListProgressServer.html#a49042d8db19b90501711398c913d4b31" title="Constructor, raises an exception on error.">ListProgressServer</a>(<span class="keyword">const</span> <a class="code" href="classSessionServer.html" title="UserServer class implementation.">SessionServer</a> session, <span class="keyword">const</span> std::string&amp; machineId):
-<a name="l00039"></a>00039     <a class="code" href="classQueryServer.html" title="QueryServer class implementation.">QueryServer</a>&lt;TMS_Data::ProgressOptions, TMS_Data::ListProgression&gt;(session)
-<a name="l00040"></a>00040   {
-<a name="l00041"></a>00041    <a class="code" href="classListProgressServer.html#a8e52544f21b8a6d9f9ad3179dae0157f" title="The name of the ListProgressServer command line.">mcommandName</a> = <span class="stringliteral">&quot;vishnu_get_job_progress&quot;</span>;
-<a name="l00042"></a>00042    <a class="code" href="classListProgressServer.html#a799ab5eccb3d3f2ffe5f79e878f867aa" title="The identifier of the machine in which the jobs whill be listed.">mmachineId</a> = machineId;
-<a name="l00043"></a>00043   }
-<a name="l00050"></a><a class="code" href="classListProgressServer.html#ab2de6df88e4616749465a398ae3f7c44">00050</a>   <a class="code" href="classListProgressServer.html#a49042d8db19b90501711398c913d4b31" title="Constructor, raises an exception on error.">ListProgressServer</a>(TMS_Data::ProgressOptions_ptr params, <span class="keyword">const</span> <a class="code" href="classSessionServer.html" title="UserServer class implementation.">SessionServer</a>&amp; session, <span class="keyword">const</span> std::string&amp; machineId):
-<a name="l00051"></a>00051     <a class="code" href="classQueryServer.html" title="QueryServer class implementation.">QueryServer</a>&lt;TMS_Data::ProgressOptions, TMS_Data::ListProgression&gt;(params, session)
-<a name="l00052"></a>00052   {
-<a name="l00053"></a>00053     <a class="code" href="classListProgressServer.html#a8e52544f21b8a6d9f9ad3179dae0157f" title="The name of the ListProgressServer command line.">mcommandName</a> = <span class="stringliteral">&quot;vishnu_get_job_progress&quot;</span>;
-<a name="l00054"></a>00054     <a class="code" href="classListProgressServer.html#a799ab5eccb3d3f2ffe5f79e878f867aa" title="The identifier of the machine in which the jobs whill be listed.">mmachineId</a> = machineId;
-<a name="l00055"></a>00055   }
-<a name="l00056"></a>00056 
-<a name="l00062"></a>00062   TMS_Data::ListProgression*
-<a name="l00063"></a><a class="code" href="classListProgressServer.html#a638132aca020d8168e5185df47e881f0">00063</a>   <a class="code" href="classListProgressServer.html#a638132aca020d8168e5185df47e881f0" title="Function to list sessions information.">list</a>() {
-<a name="l00064"></a>00064     
-<a name="l00065"></a>00065     <span class="comment">//To check the sessionKey</span>
-<a name="l00066"></a>00066     <a class="code" href="classQueryServer.html#aca7fcfb763b77c52c23a587f698caf50" title="The SessionServer object containing the encrypted identifier of the session generated by VISHNU...">msessionServer</a>.<a class="code" href="classSessionServer.html#a97647ee61a04b91e9b220fb0700910b7" title="Function to make a complete checking of the session key.">check</a>();
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068     std::vector&lt;std::string&gt; results;
-<a name="l00069"></a>00069     std::vector&lt;std::string&gt;::iterator  iter;
-<a name="l00070"></a>00070     std::string batchJobId;
-<a name="l00071"></a>00071     <span class="keywordtype">int</span> status;
-<a name="l00072"></a>00072     <span class="keywordtype">long</span> startTime;
-<a name="l00073"></a>00073     <span class="keywordtype">long</span> walltime;
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075     std::string acLogin = <a class="code" href="classUserServer.html" title="UserServer class implementation.">UserServer</a>(<a class="code" href="classQueryServer.html#aca7fcfb763b77c52c23a587f698caf50" title="The SessionServer object containing the encrypted identifier of the session generated by VISHNU...">msessionServer</a>).getUserAccountLogin(<a class="code" href="classListProgressServer.html#a799ab5eccb3d3f2ffe5f79e878f867aa" title="The identifier of the machine in which the jobs whill be listed.">mmachineId</a>);
-<a name="l00076"></a>00076 
-<a name="l00077"></a>00077     TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
-<a name="l00078"></a>00078     <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a> = ecoreFactory-&gt;createListProgression();
-<a name="l00079"></a>00079 
-<a name="l00080"></a>00080     std::string sqlRequest = <span class="stringliteral">&quot;SELECT jobId, jobName, wallClockLimit, endDate, status, batchJobId from vsession, job where&quot;</span>
-<a name="l00081"></a>00081             <span class="stringliteral">&quot; vsession.numsessionid=job.vsession_numsessionid and submitMachineId=&#39;&quot;</span>+<a class="code" href="classListProgressServer.html#a799ab5eccb3d3f2ffe5f79e878f867aa" title="The identifier of the machine in which the jobs whill be listed.">mmachineId</a>+<span class="stringliteral">&quot;&#39;&quot;</span>;
-<a name="l00082"></a>00082 
-<a name="l00083"></a>00083     <span class="keywordflow">if</span>(<a class="code" href="classQueryServer.html#a4cf1497aa9c56864e8119645ccc42dc7" title="The pointer to the QueryParameters information.">mparameters</a>-&gt;getJobId().size()!=0) {
-<a name="l00084"></a>00084       std::string jobId = <a class="code" href="classQueryServer.html#a4cf1497aa9c56864e8119645ccc42dc7" title="The pointer to the QueryParameters information.">mparameters</a>-&gt;getJobId();
-<a name="l00085"></a>00085       sqlRequest.append(<span class="stringliteral">&quot; and jobId=&#39;&quot;</span>+jobId+<span class="stringliteral">&quot;&#39;&quot;</span>);
-<a name="l00086"></a>00086       boost::scoped_ptr&lt;DatabaseResult&gt; sqlResult(<a class="code" href="classServerTMS.html#a8880ada96e5fa2e57b5ffdbe82cc3c56" title="To get the unique instance of the server.">ServerTMS::getInstance</a>()-&gt;getDatabaseVishnu()-&gt;getResult(sqlRequest.c_str()));
-<a name="l00087"></a>00087       <span class="keywordflow">if</span>(sqlResult-&gt;getNbTuples() == 0) {
-<a name="l00088"></a>00088         <span class="keywordflow">throw</span> <a class="code" href="classTMSVishnuException.html" title="This class allows to treat an error specific to TMS Module.">TMSVishnuException</a>(ERRCODE_UNKNOWN_JOBID);        
-<a name="l00089"></a>00089       }
-<a name="l00090"></a>00090     } <span class="keywordflow">else</span> {
-<a name="l00091"></a>00091       <span class="keywordflow">if</span>(<a class="code" href="classQueryServer.html#a4cf1497aa9c56864e8119645ccc42dc7" title="The pointer to the QueryParameters information.">mparameters</a>-&gt;getJobOwner().size()!=0) {
-<a name="l00092"></a>00092         acLogin = <a class="code" href="classQueryServer.html#a4cf1497aa9c56864e8119645ccc42dc7" title="The pointer to the QueryParameters information.">mparameters</a>-&gt;getJobOwner(); 
-<a name="l00093"></a>00093       }
-<a name="l00094"></a>00094       sqlRequest.append(<span class="stringliteral">&quot; and owner=&#39;&quot;</span>+acLogin+<span class="stringliteral">&quot;&#39;&quot;</span>);
-<a name="l00095"></a>00095     }
-<a name="l00096"></a>00096 
-<a name="l00097"></a>00097     sqlRequest.append(<span class="stringliteral">&quot;  and status &lt; 5 order by jobId&quot;</span>);
-<a name="l00098"></a>00098     
-<a name="l00099"></a>00099     boost::scoped_ptr&lt;DatabaseResult&gt; sqlResult(<a class="code" href="classServerTMS.html#a8880ada96e5fa2e57b5ffdbe82cc3c56" title="To get the unique instance of the server.">ServerTMS::getInstance</a>()-&gt;getDatabaseVishnu()-&gt;getResult(sqlRequest.c_str()));
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101     <span class="keywordflow">if</span> (sqlResult-&gt;getNbTuples() != 0){
-<a name="l00102"></a>00102       <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; sqlResult-&gt;getNbTuples(); ++i) {
+<a href="ListProgressServer_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/* This file is a part of VISHNU.</span>
+<a name="l00002"></a>00002 <span class="comment"></span>
+<a name="l00003"></a>00003 <span class="comment">* Copyright SysFera SAS (2011) </span>
+<a name="l00004"></a>00004 <span class="comment"></span>
+<a name="l00005"></a>00005 <span class="comment">* contact@sysfera.com</span>
+<a name="l00006"></a>00006 <span class="comment"></span>
+<a name="l00007"></a>00007 <span class="comment">* This software is a computer program whose purpose is to provide </span>
+<a name="l00008"></a>00008 <span class="comment">* access to distributed computing resources.</span>
+<a name="l00009"></a>00009 <span class="comment">*</span>
+<a name="l00010"></a>00010 <span class="comment">* This software is governed by the CeCILL  license under French law and</span>
+<a name="l00011"></a>00011 <span class="comment">* abiding by the rules of distribution of free software.  You can  use, </span>
+<a name="l00012"></a>00012 <span class="comment">* modify and/ or redistribute the software under the terms of the CeCILL</span>
+<a name="l00013"></a>00013 <span class="comment">* license as circulated by CEA, CNRS and INRIA at the following URL</span>
+<a name="l00014"></a>00014 <span class="comment">* &quot;http://www.cecill.info&quot;. </span>
+<a name="l00015"></a>00015 <span class="comment"></span>
+<a name="l00016"></a>00016 <span class="comment">* As a counterpart to the access to the source code and  rights to copy,</span>
+<a name="l00017"></a>00017 <span class="comment">* modify and redistribute granted by the license, users are provided only</span>
+<a name="l00018"></a>00018 <span class="comment">* with a limited warranty  and the software&#39;s author,  the holder of the</span>
+<a name="l00019"></a>00019 <span class="comment">* economic rights,  and the successive licensors  have only  limited</span>
+<a name="l00020"></a>00020 <span class="comment">* liability. </span>
+<a name="l00021"></a>00021 <span class="comment">*</span>
+<a name="l00022"></a>00022 <span class="comment">* In this respect, the user&#39;s attention is drawn to the risks associated</span>
+<a name="l00023"></a>00023 <span class="comment">* with loading,  using,  modifying and/or developing or reproducing the</span>
+<a name="l00024"></a>00024 <span class="comment">* software by the user in light of its specific status of free software,</span>
+<a name="l00025"></a>00025 <span class="comment">* that may mean  that it is complicated to manipulate,  and  that  also</span>
+<a name="l00026"></a>00026 <span class="comment">* therefore means  that it is reserved for developers  and  experienced</span>
+<a name="l00027"></a>00027 <span class="comment">* professionals having in-depth computer knowledge. Users are therefore</span>
+<a name="l00028"></a>00028 <span class="comment">* encouraged to load and test the software&#39;s suitability as regards their</span>
+<a name="l00029"></a>00029 <span class="comment">* requirements in conditions enabling the security of their systems and/or </span>
+<a name="l00030"></a>00030 <span class="comment">* data to be ensured and,  more generally, to use and operate it in the </span>
+<a name="l00031"></a>00031 <span class="comment">* same conditions as regards security. </span>
+<a name="l00032"></a>00032 <span class="comment">*</span>
+<a name="l00033"></a>00033 <span class="comment">* The fact that you are presently reading this means that you have had</span>
+<a name="l00034"></a>00034 <span class="comment">* knowledge of the CeCILL license and that you accept its terms.</span>
+<a name="l00035"></a>00035 <span class="comment">*/</span>
+<a name="l00036"></a>00036 
+<a name="l00043"></a>00043 <span class="preprocessor">#ifndef _LIST_PROGRESS_SERVER_</span>
+<a name="l00044"></a>00044 <span class="preprocessor"></span><span class="preprocessor">#define _LIST_PROGRESS_SERVER_</span>
+<a name="l00045"></a>00045 <span class="preprocessor"></span>
+<a name="l00046"></a>00046 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00047"></a>00047 <span class="preprocessor">#include &lt;vector&gt;</span>
+<a name="l00048"></a>00048 <span class="preprocessor">#include &lt;iostream&gt;</span>
+<a name="l00049"></a>00049 <span class="preprocessor">#include &quot;boost/date_time/posix_time/posix_time.hpp&quot;</span>
+<a name="l00050"></a>00050 <span class="preprocessor">#include &lt;boost/date_time/local_time/local_time.hpp&gt;</span>
+<a name="l00051"></a>00051 <span class="preprocessor">#include &lt;boost/date_time/local_time/posix_time_zone.hpp&gt;</span>
+<a name="l00052"></a>00052 <span class="preprocessor">#include &lt;boost/date_time/date_facet.hpp&gt;</span>
+<a name="l00053"></a>00053 <span class="preprocessor">#include &lt;sstream&gt;</span>
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055 <span class="preprocessor">#include &quot;<a class="code" href="QueryServer_8hpp.html" title="This file contains the VISHNU QueryServer class.">QueryServer.hpp</a>&quot;</span>
+<a name="l00056"></a>00056 <span class="preprocessor">#include &quot;<a class="code" href="SessionServer_8hpp.html" title="This file presents the Class which manipulates VISHNU sessions on server side.">SessionServer.hpp</a>&quot;</span>
+<a name="l00057"></a>00057 <span class="preprocessor">#include &quot;TMS_Data.hpp&quot;</span>
+<a name="l00058"></a>00058 <span class="preprocessor">#include &quot;<a class="code" href="BatchServer_8hpp.html" title="This file contains the VISHNU BatchServer class.">BatchServer.hpp</a>&quot;</span>
+<a name="l00059"></a>00059 <span class="preprocessor">#include &quot;<a class="code" href="BatchFactory_8hpp.html" title="This file implements the batch factory.">BatchFactory.hpp</a>&quot;</span>
+<a name="l00060"></a>00060 
+<a name="l00065"></a><a class="code" href="classListProgressServer.html">00065</a> <span class="keyword">class </span><a class="code" href="classListProgressServer.html" title="ListProgressServer class implementation.">ListProgressServer</a>: <span class="keyword">public</span> <a class="code" href="classQueryServer.html" title="QueryServer class implementation.">QueryServer</a>&lt;TMS_Data::ProgressOptions, TMS_Data::ListProgression&gt; {
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067 <span class="keyword">public</span>:
+<a name="l00068"></a>00068 
+<a name="l00074"></a><a class="code" href="classListProgressServer.html#a49042d8db19b90501711398c913d4b31">00074</a>   <a class="code" href="classListProgressServer.html#a49042d8db19b90501711398c913d4b31" title="Constructor, raises an exception on error.">ListProgressServer</a>(<span class="keyword">const</span> <a class="code" href="classSessionServer.html" title="UserServer class implementation.">SessionServer</a> session, <span class="keyword">const</span> std::string&amp; machineId):
+<a name="l00075"></a>00075     <a class="code" href="classQueryServer.html" title="QueryServer class implementation.">QueryServer</a>&lt;TMS_Data::ProgressOptions, TMS_Data::ListProgression&gt;(session)
+<a name="l00076"></a>00076   {
+<a name="l00077"></a>00077    <a class="code" href="classListProgressServer.html#a8e52544f21b8a6d9f9ad3179dae0157f" title="The name of the ListProgressServer command line.">mcommandName</a> = <span class="stringliteral">&quot;vishnu_get_job_progress&quot;</span>;
+<a name="l00078"></a>00078    <a class="code" href="classListProgressServer.html#a799ab5eccb3d3f2ffe5f79e878f867aa" title="The identifier of the machine in which the jobs whill be listed.">mmachineId</a> = machineId;
+<a name="l00079"></a>00079   }
+<a name="l00086"></a><a class="code" href="classListProgressServer.html#ab2de6df88e4616749465a398ae3f7c44">00086</a>   <a class="code" href="classListProgressServer.html#a49042d8db19b90501711398c913d4b31" title="Constructor, raises an exception on error.">ListProgressServer</a>(TMS_Data::ProgressOptions_ptr params, <span class="keyword">const</span> <a class="code" href="classSessionServer.html" title="UserServer class implementation.">SessionServer</a>&amp; session, <span class="keyword">const</span> std::string&amp; machineId):
+<a name="l00087"></a>00087     <a class="code" href="classQueryServer.html" title="QueryServer class implementation.">QueryServer</a>&lt;TMS_Data::ProgressOptions, TMS_Data::ListProgression&gt;(params, session)
+<a name="l00088"></a>00088   {
+<a name="l00089"></a>00089     <a class="code" href="classListProgressServer.html#a8e52544f21b8a6d9f9ad3179dae0157f" title="The name of the ListProgressServer command line.">mcommandName</a> = <span class="stringliteral">&quot;vishnu_get_job_progress&quot;</span>;
+<a name="l00090"></a>00090     <a class="code" href="classListProgressServer.html#a799ab5eccb3d3f2ffe5f79e878f867aa" title="The identifier of the machine in which the jobs whill be listed.">mmachineId</a> = machineId;
+<a name="l00091"></a>00091   }
+<a name="l00092"></a>00092 
+<a name="l00098"></a>00098   TMS_Data::ListProgression*
+<a name="l00099"></a><a class="code" href="classListProgressServer.html#a638132aca020d8168e5185df47e881f0">00099</a>   <a class="code" href="classListProgressServer.html#a638132aca020d8168e5185df47e881f0" title="Function to list sessions information.">list</a>() {
+<a name="l00100"></a>00100     
+<a name="l00101"></a>00101     <span class="comment">//To check the sessionKey</span>
+<a name="l00102"></a>00102     <a class="code" href="classQueryServer.html#aca7fcfb763b77c52c23a587f698caf50" title="The SessionServer object containing the encrypted identifier of the session generated by VISHNU...">msessionServer</a>.<a class="code" href="classSessionServer.html#a97647ee61a04b91e9b220fb0700910b7" title="Function to make a complete checking of the session key.">check</a>();
 <a name="l00103"></a>00103 
-<a name="l00104"></a>00104         results.clear();
-<a name="l00105"></a>00105         results = sqlResult-&gt;get(i);
-<a name="l00106"></a>00106         iter = results.begin();
-<a name="l00107"></a>00107 
-<a name="l00108"></a>00108         TMS_Data::Progression_ptr job = ecoreFactory-&gt;createProgression();
-<a name="l00109"></a>00109 
-<a name="l00110"></a>00110         job-&gt;setJobId(*iter);
-<a name="l00111"></a>00111         job-&gt;setJobName(*(++iter));
-<a name="l00112"></a>00112         walltime = <a class="code" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066" title="Function to convert a string to int.">convertToInt</a>(*(++iter));
-<a name="l00113"></a>00113         job-&gt;setWallTime(walltime);
-<a name="l00114"></a>00114         job-&gt;setEndTime(<a class="code" href="classQueryServer.html#a3b2becf9f1ae6ca1d0097d7400997aa8">convertToTimeType</a>(*(++iter)));
-<a name="l00115"></a>00115         status = <a class="code" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066" title="Function to convert a string to int.">convertToInt</a>(*(++iter));
-<a name="l00116"></a>00116         job-&gt;setStatus(status);
-<a name="l00117"></a>00117         batchJobId = *(++iter);    
+<a name="l00104"></a>00104     std::vector&lt;std::string&gt; results;
+<a name="l00105"></a>00105     std::vector&lt;std::string&gt;::iterator  iter;
+<a name="l00106"></a>00106     std::string batchJobId;
+<a name="l00107"></a>00107     <span class="keywordtype">int</span> status;
+<a name="l00108"></a>00108     <span class="keywordtype">long</span> startTime;
+<a name="l00109"></a>00109     <span class="keywordtype">long</span> walltime;
+<a name="l00110"></a>00110 
+<a name="l00111"></a>00111     std::string acLogin = <a class="code" href="classUserServer.html" title="UserServer class implementation.">UserServer</a>(<a class="code" href="classQueryServer.html#aca7fcfb763b77c52c23a587f698caf50" title="The SessionServer object containing the encrypted identifier of the session generated by VISHNU...">msessionServer</a>).getUserAccountLogin(<a class="code" href="classListProgressServer.html#a799ab5eccb3d3f2ffe5f79e878f867aa" title="The identifier of the machine in which the jobs whill be listed.">mmachineId</a>);
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113     TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
+<a name="l00114"></a>00114     <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a> = ecoreFactory-&gt;createListProgression();
+<a name="l00115"></a>00115 
+<a name="l00116"></a>00116     std::string sqlRequest = <span class="stringliteral">&quot;SELECT jobId, jobName, wallClockLimit, endDate, status, batchJobId from vsession, job where&quot;</span>
+<a name="l00117"></a>00117             <span class="stringliteral">&quot; vsession.numsessionid=job.vsession_numsessionid and submitMachineId=&#39;&quot;</span>+<a class="code" href="classListProgressServer.html#a799ab5eccb3d3f2ffe5f79e878f867aa" title="The identifier of the machine in which the jobs whill be listed.">mmachineId</a>+<span class="stringliteral">&quot;&#39;&quot;</span>;
 <a name="l00118"></a>00118 
-<a name="l00119"></a>00119         <a class="code" href="classBatchFactory.html" title="A factory class to manage the life of BatchServer instance.">BatchFactory</a> factory;
-<a name="l00120"></a>00120         <a class="code" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016ea" title="The type of the Batch.">BatchType</a> batchType  = <a class="code" href="classServerTMS.html#a8880ada96e5fa2e57b5ffdbe82cc3c56" title="To get the unique instance of the server.">ServerTMS::getInstance</a>()-&gt;<a class="code" href="classServerTMS.html#a60ed1874cf24873ad1ed23dedf4b8a52" title="To get the batchType.">getBatchType</a>(); 
-<a name="l00121"></a>00121         boost::scoped_ptr&lt;BatchServer&gt; batchServer(factory.<a class="code" href="classBatchFactory.html#af328351dea45d4725ef1cdad782a1a22" title="Function to create a batchServer.">getBatchServerInstance</a>(batchType));
-<a name="l00122"></a>00122 
-<a name="l00123"></a>00123         startTime = batchServer-&gt;getJobStartTime(batchJobId); 
-<a name="l00124"></a>00124         <span class="keywordflow">if</span>(startTime!=0) {
-<a name="l00125"></a>00125           job-&gt;setStartTime(startTime);
-<a name="l00126"></a>00126 
-<a name="l00127"></a>00127           <span class="keywordflow">if</span>(status==5) {
-<a name="l00128"></a>00128             job-&gt;setPercent(100);  
-<a name="l00129"></a>00129           } <span class="keywordflow">else</span> {
-<a name="l00130"></a>00130             time_t currentTime = <a class="code" href="namespacevishnu.html#a34810356a494e9db0e924c76889474b0" title="Function to get current time in seconds (UTC).">vishnu::getCurrentTimeInUTC</a>();
-<a name="l00131"></a>00131             <span class="keywordtype">int</span> percent = 0;
-<a name="l00132"></a>00132             time_t gap = currentTime-startTime;
-<a name="l00133"></a>00133             <span class="keywordflow">if</span>(walltime==0) {
-<a name="l00134"></a>00134                walltime = 60;
-<a name="l00135"></a>00135             }
+<a name="l00119"></a>00119     <span class="keywordflow">if</span>(<a class="code" href="classQueryServer.html#a4cf1497aa9c56864e8119645ccc42dc7" title="The pointer to the QueryParameters information.">mparameters</a>-&gt;getJobId().size()!=0) {
+<a name="l00120"></a>00120       std::string jobId = <a class="code" href="classQueryServer.html#a4cf1497aa9c56864e8119645ccc42dc7" title="The pointer to the QueryParameters information.">mparameters</a>-&gt;getJobId();
+<a name="l00121"></a>00121       sqlRequest.append(<span class="stringliteral">&quot; and jobId=&#39;&quot;</span>+jobId+<span class="stringliteral">&quot;&#39;&quot;</span>);
+<a name="l00122"></a>00122       boost::scoped_ptr&lt;DatabaseResult&gt; sqlResult(<a class="code" href="classServerTMS.html#a8880ada96e5fa2e57b5ffdbe82cc3c56" title="To get the unique instance of the server.">ServerTMS::getInstance</a>()-&gt;getDatabaseVishnu()-&gt;getResult(sqlRequest.c_str()));
+<a name="l00123"></a>00123       <span class="keywordflow">if</span>(sqlResult-&gt;getNbTuples() == 0) {
+<a name="l00124"></a>00124         <span class="keywordflow">throw</span> <a class="code" href="classTMSVishnuException.html" title="This class allows to treat an error specific to TMS Module.">TMSVishnuException</a>(ERRCODE_UNKNOWN_JOBID);        
+<a name="l00125"></a>00125       }
+<a name="l00126"></a>00126     } <span class="keywordflow">else</span> {
+<a name="l00127"></a>00127       <span class="keywordflow">if</span>(<a class="code" href="classQueryServer.html#a4cf1497aa9c56864e8119645ccc42dc7" title="The pointer to the QueryParameters information.">mparameters</a>-&gt;getJobOwner().size()!=0) {
+<a name="l00128"></a>00128         acLogin = <a class="code" href="classQueryServer.html#a4cf1497aa9c56864e8119645ccc42dc7" title="The pointer to the QueryParameters information.">mparameters</a>-&gt;getJobOwner(); 
+<a name="l00129"></a>00129       }
+<a name="l00130"></a>00130       sqlRequest.append(<span class="stringliteral">&quot; and owner=&#39;&quot;</span>+acLogin+<span class="stringliteral">&quot;&#39;&quot;</span>);
+<a name="l00131"></a>00131     }
+<a name="l00132"></a>00132 
+<a name="l00133"></a>00133     sqlRequest.append(<span class="stringliteral">&quot;  and status &lt; 5 order by jobId&quot;</span>);
+<a name="l00134"></a>00134     
+<a name="l00135"></a>00135     boost::scoped_ptr&lt;DatabaseResult&gt; sqlResult(<a class="code" href="classServerTMS.html#a8880ada96e5fa2e57b5ffdbe82cc3c56" title="To get the unique instance of the server.">ServerTMS::getInstance</a>()-&gt;getDatabaseVishnu()-&gt;getResult(sqlRequest.c_str()));
 <a name="l00136"></a>00136 
-<a name="l00137"></a>00137             <span class="keywordflow">if</span>(gap &lt; walltime) {
-<a name="l00138"></a>00138               <span class="keywordtype">double</span> ratio =  100*(double(gap)/walltime);
-<a name="l00139"></a>00139               <span class="keywordflow">if</span>(ratio &gt; 0.0 &amp;&amp; ratio &lt;= 1.0) {
-<a name="l00140"></a>00140                 percent = 1;
-<a name="l00141"></a>00141               } <span class="keywordflow">else</span> {
-<a name="l00142"></a>00142                 percent = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(ratio);
-<a name="l00143"></a>00143               }
-<a name="l00144"></a>00144             } <span class="keywordflow">else</span> {
-<a name="l00145"></a>00145               percent = 99;
-<a name="l00146"></a>00146             }
-<a name="l00147"></a>00147             job-&gt;setPercent(percent);
-<a name="l00148"></a>00148           } 
-<a name="l00149"></a>00149         } <span class="keywordflow">else</span> {
-<a name="l00150"></a>00150           job-&gt;setPercent(0);
-<a name="l00151"></a>00151         }
-<a name="l00152"></a>00152         <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getProgress().push_back(job); 
-<a name="l00153"></a>00153       }
-<a name="l00154"></a>00154     }
-<a name="l00155"></a>00155     
-<a name="l00156"></a>00156     <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;setNbJobs(<a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getProgress().size());
-<a name="l00157"></a>00157    
-<a name="l00158"></a>00158     <span class="keywordflow">return</span> <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>;
-<a name="l00159"></a>00159 
-<a name="l00160"></a>00160   }
-<a name="l00161"></a>00161 
+<a name="l00137"></a>00137     <span class="keywordflow">if</span> (sqlResult-&gt;getNbTuples() != 0){
+<a name="l00138"></a>00138       <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; sqlResult-&gt;getNbTuples(); ++i) {
+<a name="l00139"></a>00139 
+<a name="l00140"></a>00140         results.clear();
+<a name="l00141"></a>00141         results = sqlResult-&gt;get(i);
+<a name="l00142"></a>00142         iter = results.begin();
+<a name="l00143"></a>00143 
+<a name="l00144"></a>00144         TMS_Data::Progression_ptr job = ecoreFactory-&gt;createProgression();
+<a name="l00145"></a>00145 
+<a name="l00146"></a>00146         job-&gt;setJobId(*iter);
+<a name="l00147"></a>00147         job-&gt;setJobName(*(++iter));
+<a name="l00148"></a>00148         walltime = <a class="code" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066" title="Function to convert a string to int.">convertToInt</a>(*(++iter));
+<a name="l00149"></a>00149         job-&gt;setWallTime(walltime);
+<a name="l00150"></a>00150         job-&gt;setEndTime(<a class="code" href="classQueryServer.html#a3b2becf9f1ae6ca1d0097d7400997aa8">convertToTimeType</a>(*(++iter)));
+<a name="l00151"></a>00151         status = <a class="code" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066" title="Function to convert a string to int.">convertToInt</a>(*(++iter));
+<a name="l00152"></a>00152         job-&gt;setStatus(status);
+<a name="l00153"></a>00153         batchJobId = *(++iter);    
+<a name="l00154"></a>00154 
+<a name="l00155"></a>00155         <a class="code" href="classBatchFactory.html" title="A factory class to manage the life of BatchServer instance.">BatchFactory</a> factory;
+<a name="l00156"></a>00156         <a class="code" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016ea" title="The type of the Batch.">BatchType</a> batchType  = <a class="code" href="classServerTMS.html#a8880ada96e5fa2e57b5ffdbe82cc3c56" title="To get the unique instance of the server.">ServerTMS::getInstance</a>()-&gt;<a class="code" href="classServerTMS.html#a60ed1874cf24873ad1ed23dedf4b8a52" title="To get the batchType.">getBatchType</a>(); 
+<a name="l00157"></a>00157         boost::scoped_ptr&lt;BatchServer&gt; batchServer(factory.<a class="code" href="classBatchFactory.html#af328351dea45d4725ef1cdad782a1a22" title="Function to create a batchServer.">getBatchServerInstance</a>(batchType));
+<a name="l00158"></a>00158 
+<a name="l00159"></a>00159         startTime = batchServer-&gt;getJobStartTime(batchJobId); 
+<a name="l00160"></a>00160         <span class="keywordflow">if</span>(startTime!=0) {
+<a name="l00161"></a>00161           job-&gt;setStartTime(startTime);
 <a name="l00162"></a>00162 
-<a name="l00167"></a><a class="code" href="classListProgressServer.html#a9fefff901176f068962ab31ae42c25aa">00167</a>   std::string <a class="code" href="classListProgressServer.html#a9fefff901176f068962ab31ae42c25aa" title="Function to get the name of the ListProgressServer command line.">getCommandName</a>()
-<a name="l00168"></a>00168   {
-<a name="l00169"></a>00169     <span class="keywordflow">return</span> <a class="code" href="classListProgressServer.html#a8e52544f21b8a6d9f9ad3179dae0157f" title="The name of the ListProgressServer command line.">mcommandName</a>;
-<a name="l00170"></a>00170   }
-<a name="l00171"></a>00171 
-<a name="l00175"></a><a class="code" href="classListProgressServer.html#a61ed79d6958db9b81d298a9e2dce8382">00175</a>   <a class="code" href="classListProgressServer.html#a61ed79d6958db9b81d298a9e2dce8382" title="Destructor, raises an exception on error.">~ListProgressServer</a>()
-<a name="l00176"></a>00176   {
-<a name="l00177"></a>00177   }
-<a name="l00178"></a>00178 
-<a name="l00179"></a>00179   <span class="keyword">private</span>:
-<a name="l00180"></a>00180 
-<a name="l00182"></a>00182   <span class="comment">// Attributes</span>
-<a name="l00184"></a>00184 <span class="comment"></span>
-<a name="l00185"></a>00185 
-<a name="l00189"></a><a class="code" href="classListProgressServer.html#a8e52544f21b8a6d9f9ad3179dae0157f">00189</a>   std::string <a class="code" href="classListProgressServer.html#a8e52544f21b8a6d9f9ad3179dae0157f" title="The name of the ListProgressServer command line.">mcommandName</a>;
-<a name="l00193"></a><a class="code" href="classListProgressServer.html#a799ab5eccb3d3f2ffe5f79e878f867aa">00193</a>   std::string <a class="code" href="classListProgressServer.html#a799ab5eccb3d3f2ffe5f79e878f867aa" title="The identifier of the machine in which the jobs whill be listed.">mmachineId</a>; 
-<a name="l00194"></a>00194 };
-<a name="l00195"></a>00195 
-<a name="l00196"></a>00196 <span class="preprocessor">#endif</span>
+<a name="l00163"></a>00163           <span class="keywordflow">if</span>(status==5) {
+<a name="l00164"></a>00164             job-&gt;setPercent(100);  
+<a name="l00165"></a>00165           } <span class="keywordflow">else</span> <span class="keywordflow">if</span>(status==4) {
+<a name="l00166"></a>00166             time_t currentTime = <a class="code" href="namespacevishnu.html#a34810356a494e9db0e924c76889474b0" title="Function to get current time in seconds (UTC).">vishnu::getCurrentTimeInUTC</a>();
+<a name="l00167"></a>00167             <span class="keywordtype">int</span> percent = 0;
+<a name="l00168"></a>00168             time_t gap = currentTime-startTime;
+<a name="l00169"></a>00169             <span class="keywordflow">if</span>(walltime==0) {
+<a name="l00170"></a>00170                walltime = 60;
+<a name="l00171"></a>00171             }
+<a name="l00172"></a>00172 
+<a name="l00173"></a>00173             <span class="keywordflow">if</span>(gap &lt; walltime) {
+<a name="l00174"></a>00174               <span class="keywordtype">double</span> ratio =  100*(double(gap)/walltime);
+<a name="l00175"></a>00175               <span class="keywordflow">if</span>(ratio &gt; 0.0 &amp;&amp; ratio &lt;= 1.0) {
+<a name="l00176"></a>00176                 percent = 1;
+<a name="l00177"></a>00177               } <span class="keywordflow">else</span> {
+<a name="l00178"></a>00178                 percent = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(ratio);
+<a name="l00179"></a>00179               }
+<a name="l00180"></a>00180             } <span class="keywordflow">else</span> {
+<a name="l00181"></a>00181               percent = 99;
+<a name="l00182"></a>00182             }
+<a name="l00183"></a>00183             job-&gt;setPercent(percent);
+<a name="l00184"></a>00184           } <span class="keywordflow">else</span> {
+<a name="l00185"></a>00185             job-&gt;setPercent(0);
+<a name="l00186"></a>00186           } 
+<a name="l00187"></a>00187         } <span class="keywordflow">else</span> {
+<a name="l00188"></a>00188           job-&gt;setPercent(0);
+<a name="l00189"></a>00189         }
+<a name="l00190"></a>00190         <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getProgress().push_back(job); 
+<a name="l00191"></a>00191       }
+<a name="l00192"></a>00192     }
+<a name="l00193"></a>00193     
+<a name="l00194"></a>00194     <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;setNbJobs(<a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getProgress().size());
+<a name="l00195"></a>00195    
+<a name="l00196"></a>00196     <span class="keywordflow">return</span> <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>;
+<a name="l00197"></a>00197 
+<a name="l00198"></a>00198   }
+<a name="l00199"></a>00199 
+<a name="l00200"></a>00200 
+<a name="l00205"></a><a class="code" href="classListProgressServer.html#a9fefff901176f068962ab31ae42c25aa">00205</a>   std::string <a class="code" href="classListProgressServer.html#a9fefff901176f068962ab31ae42c25aa" title="Function to get the name of the ListProgressServer command line.">getCommandName</a>()
+<a name="l00206"></a>00206   {
+<a name="l00207"></a>00207     <span class="keywordflow">return</span> <a class="code" href="classListProgressServer.html#a8e52544f21b8a6d9f9ad3179dae0157f" title="The name of the ListProgressServer command line.">mcommandName</a>;
+<a name="l00208"></a>00208   }
+<a name="l00209"></a>00209 
+<a name="l00213"></a><a class="code" href="classListProgressServer.html#a61ed79d6958db9b81d298a9e2dce8382">00213</a>   <a class="code" href="classListProgressServer.html#a61ed79d6958db9b81d298a9e2dce8382" title="Destructor, raises an exception on error.">~ListProgressServer</a>()
+<a name="l00214"></a>00214   {
+<a name="l00215"></a>00215   }
+<a name="l00216"></a>00216 
+<a name="l00217"></a>00217   <span class="keyword">private</span>:
+<a name="l00218"></a>00218 
+<a name="l00220"></a>00220   <span class="comment">// Attributes</span>
+<a name="l00222"></a>00222 <span class="comment"></span>
+<a name="l00223"></a>00223 
+<a name="l00227"></a><a class="code" href="classListProgressServer.html#a8e52544f21b8a6d9f9ad3179dae0157f">00227</a>   std::string <a class="code" href="classListProgressServer.html#a8e52544f21b8a6d9f9ad3179dae0157f" title="The name of the ListProgressServer command line.">mcommandName</a>;
+<a name="l00231"></a><a class="code" href="classListProgressServer.html#a799ab5eccb3d3f2ffe5f79e878f867aa">00231</a>   std::string <a class="code" href="classListProgressServer.html#a799ab5eccb3d3f2ffe5f79e878f867aa" title="The identifier of the machine in which the jobs whill be listed.">mmachineId</a>; 
+<a name="l00232"></a>00232 };
+<a name="l00233"></a>00233 
+<a name="l00234"></a>00234 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jun 23 2011 16:43:50 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jul 8 2011 10:36:03 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

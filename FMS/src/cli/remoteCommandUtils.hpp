@@ -30,9 +30,10 @@ using namespace std;
 using namespace vishnu;
 
 /**
- * \brief To build options for the VISHNU cmdArgs command
+ * \brief To build options for the VISHNU command line
  * \param pgName : The name of the command
- * \param dietConfig: Represents the VISHNU config file
+ * \param dietConfig Represents the VISHNU config file
+ * \param path  Represents the path of the file
  * \return  The built command
  */
 boost::shared_ptr<Options>
@@ -55,7 +56,13 @@ makeRemoteCommandOpt(string pgName,
 }
 
 
-
+/**
+ * \brief A generic functio to parse remote command involving a file 
+ * \param argc The number of command line arguments
+ * \param argv the command line arguments
+ * \param dietConfig the diet client config file
+ * \param path the path of the file 
+ */
 void ParseRemoteCommandOptions (int argc, char* argv[],std::string& dietConfig, std::string& path){
 
 // build remote command options
