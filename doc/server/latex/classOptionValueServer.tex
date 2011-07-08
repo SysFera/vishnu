@@ -4,7 +4,7 @@
 }
 
 
-\hyperlink{classOptionValueServer}{OptionValueServer} class implementation.  
+\hyperlink{classOptionValueServer}{OptionValueServer} class implementationT.  
 
 
 
@@ -32,8 +32,8 @@ UMS\_\-Data::OptionValue $\ast$ \hyperlink{classOptionValueServer_a9d40a465b4c6c
 \begin{DoxyCompactList}\small\item\em Function to get option data structure. \item\end{DoxyCompactList}\item 
 std::string \hyperlink{classOptionValueServer_a9be8cdef4ed59ef0fdf421bb973257d0}{getAttribut} (std::string condition, std::string attrname=\char`\"{}value\char`\"{}, bool defaultOptions=false)
 \begin{DoxyCompactList}\small\item\em Function to get option information from the database vishnu. \item\end{DoxyCompactList}\item 
-int \hyperlink{classOptionValueServer_a156098735b4d0ce3a23de69278d40d6a}{getClosureInfo} (std::string numuserId, std::string nameInfo=\char`\"{}VISHNU\_\-CLOSE\_\-POLICY\char`\"{})
-\begin{DoxyCompactList}\small\item\em Function to get closure information from the database vishnu. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+int \hyperlink{classOptionValueServer_a849d033e5fd6ec57b8e9afb1fdd75986}{getOptionValueForUser} (std::string numuserId, std::string optionName)
+\begin{DoxyCompactList}\small\item\em Function to get user option value. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -60,7 +60,7 @@ UMS\_\-Data::OptionValue $\ast$ \hyperlink{classOptionValueServer_afffe0327c4375
 
 
 \subsection{Detailed Description}
-\hyperlink{classOptionValueServer}{OptionValueServer} class implementation. 
+\hyperlink{classOptionValueServer}{OptionValueServer} class implementationT. 
 
 \subsection{Constructor \& Destructor Documentation}
 \hypertarget{classOptionValueServer_a2f432257cbe83451b54d59c584cc35c6}{
@@ -123,26 +123,6 @@ Function to get option information from the database vishnu.
 \begin{DoxyReturn}{Returns}
 the value of the attribut or empty string if no results 
 \end{DoxyReturn}
-\hypertarget{classOptionValueServer_a156098735b4d0ce3a23de69278d40d6a}{
-\index{OptionValueServer@{OptionValueServer}!getClosureInfo@{getClosureInfo}}
-\index{getClosureInfo@{getClosureInfo}!OptionValueServer@{OptionValueServer}}
-\subsubsection[{getClosureInfo}]{\setlength{\rightskip}{0pt plus 5cm}int OptionValueServer::getClosureInfo (
-\begin{DoxyParamCaption}
-\item[{std::string}]{ numuserId, }
-\item[{std::string}]{ nameInfo = {\ttfamily \char`\"{}VISHNU\_\-CLOSE\_\-POLICY\char`\"{}}}
-\end{DoxyParamCaption}
-)}}
-\label{classOptionValueServer_a156098735b4d0ce3a23de69278d40d6a}
-
-
-Function to get closure information from the database vishnu. 
-
-
-\begin{DoxyParams}{Parameters}
-\item[{\em numuserId}]The database number id of the user who wants to get closure information \item[{\em nameInfo}]the name of the closure information \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-The error or success code 
-\end{DoxyReturn}
 \hypertarget{classOptionValueServer_a9d40a465b4c6c048d49dd121cbbcb4c4}{
 \index{OptionValueServer@{OptionValueServer}!getData@{getData}}
 \index{getData@{getData}!OptionValueServer@{OptionValueServer}}
@@ -158,6 +138,26 @@ Function to get option data structure.
 
 \begin{DoxyReturn}{Returns}
 The user data structure 
+\end{DoxyReturn}
+\hypertarget{classOptionValueServer_a849d033e5fd6ec57b8e9afb1fdd75986}{
+\index{OptionValueServer@{OptionValueServer}!getOptionValueForUser@{getOptionValueForUser}}
+\index{getOptionValueForUser@{getOptionValueForUser}!OptionValueServer@{OptionValueServer}}
+\subsubsection[{getOptionValueForUser}]{\setlength{\rightskip}{0pt plus 5cm}int OptionValueServer::getOptionValueForUser (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ numuserId, }
+\item[{std::string}]{ optionName}
+\end{DoxyParamCaption}
+)}}
+\label{classOptionValueServer_a849d033e5fd6ec57b8e9afb1fdd75986}
+
+
+Function to get user option value. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em numuserId}]The database number id of the user \item[{\em optionName}]the name of the option \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The error or success code 
 \end{DoxyReturn}
 \hypertarget{classOptionValueServer_aa9d00391ec222d6f200c7ea1db8a4892}{
 \index{OptionValueServer@{OptionValueServer}!isCorrectValue@{isCorrectValue}}

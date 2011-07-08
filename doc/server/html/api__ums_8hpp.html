@@ -37,15 +37,9 @@
 <a href="#_details">More...</a></p>
 <code>#include &lt;iostream&gt;</code><br/>
 <code>#include &lt;string&gt;</code><br/>
-<code>#include &quot;<a class="el" href="SessionProxy_8hpp_source.html">SessionProxy.hpp</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="MachineProxy_8hpp_source.html">MachineProxy.hpp</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="LocalAccountProxy_8hpp_source.html">LocalAccountProxy.hpp</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="ConfigurationProxy_8hpp_source.html">ConfigurationProxy.hpp</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="OptionValueProxy_8hpp_source.html">OptionValueProxy.hpp</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="QueryProxy_8hpp_source.html">QueryProxy.hpp</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="UtilsProxy_8hpp_source.html">UtilsProxy.hpp</a>&quot;</code><br/>
+<code>#include &quot;UMS_Data.hpp&quot;</code><br/>
 <code>#include &quot;<a class="el" href="UserException_8hpp_source.html">UserException.hpp</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="utilVishnu_8hpp_source.html">utilVishnu.hpp</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="SystemException_8hpp_source.html">SystemException.hpp</a>&quot;</code><br/>
 
 <p><a href="api__ums_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -96,10 +90,10 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to configure a default option value.  <a href="#a05878cbc7dbb3f5da87dbc32dd25ab78"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#adaf9c8ca47f577cf1a0c9effe7bd9c52">vishnu::listSessions</a> (const std::string &amp;sessionKey, UMS_Data::ListSessions &amp;listSession, const UMS_Data::ListSessionOptions &amp;options=UMS_Data::ListSessionOptions())  throw (UserException, SystemException)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to list all sessions of the user.  <a href="#adaf9c8ca47f577cf1a0c9effe7bd9c52"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a05618a81d403ef5c11e014fcecd7ba00">vishnu::listLocalAccount</a> (const std::string &amp;sessionKey, UMS_Data::ListLocalAccounts &amp;listLocalAcc, const UMS_Data::ListLocalAccOptions &amp;options=UMS_Data::ListLocalAccOptions())  throw (UserException, SystemException)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to list the local user configurations.  <a href="#a05618a81d403ef5c11e014fcecd7ba00"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a59e26ccbe8510d774528c86511f7476b">vishnu::listMachine</a> (const std::string &amp;sessionKey, UMS_Data::ListMachines &amp;listMachine, const UMS_Data::ListMachineOptions &amp;options=UMS_Data::ListMachineOptions())  throw (UserException, SystemException)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to list the machines in which the local user configurations are defined for the given user.  <a href="#a59e26ccbe8510d774528c86511f7476b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a2c892a93b3100eab8bd4de84f12178fa">vishnu::listLocalAccounts</a> (const std::string &amp;sessionKey, UMS_Data::ListLocalAccounts &amp;listLocalAcc, const UMS_Data::ListLocalAccOptions &amp;options=UMS_Data::ListLocalAccOptions())  throw (UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to list the local user configurations.  <a href="#a2c892a93b3100eab8bd4de84f12178fa"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a1173c380a74b87ee3f3e0651628ad800">vishnu::listMachines</a> (const std::string &amp;sessionKey, UMS_Data::ListMachines &amp;listMachine, const UMS_Data::ListMachineOptions &amp;options=UMS_Data::ListMachineOptions())  throw (UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to list the machines in which the local user configurations are defined for the given user.  <a href="#a1173c380a74b87ee3f3e0651628ad800"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a8576a50af31abe3869a61bec780aa5ef">vishnu::listHistoryCmd</a> (const std::string &amp;sessionKey, UMS_Data::ListCommands &amp;listCommands, const UMS_Data::ListCmdOptions &amp;options=UMS_Data::ListCmdOptions())  throw (UserException, SystemException)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to list the commands.  <a href="#a8576a50af31abe3869a61bec780aa5ef"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a53106e021a6e98049b41106c12356e28">vishnu::listOptions</a> (const std::string &amp;sessionKey, UMS_Data::ListOptionsValues &amp;listOptValues, const UMS_Data::ListOptOptions &amp;options=UMS_Data::ListOptOptions())  throw (UserException, SystemException)</td></tr>
@@ -117,7 +111,7 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 <dl class="author"><dt><b>Author:</b></dt><dd>Daouda Traore (<a href="mailto:daouda.traore@sysfera.com">daouda.traore@sysfera.com</a>) and Ibrahima Cisse (<a href="mailto:ibrahima.cisse@sysfera.com">ibrahima.cisse@sysfera.com</a>) </dd></dl>
 <dl class="date"><dt><b>Date:</b></dt><dd>February 2011 </dd></dl>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jun 23 2011 16:43:50 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jul 8 2011 10:36:04 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

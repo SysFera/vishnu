@@ -9,15 +9,9 @@ This file contains the VISHNU api functions.
 
 {\ttfamily \#include $<$iostream$>$}\par
 {\ttfamily \#include $<$string$>$}\par
-{\ttfamily \#include \char`\"{}SessionProxy.hpp\char`\"{}}\par
-{\ttfamily \#include \char`\"{}MachineProxy.hpp\char`\"{}}\par
-{\ttfamily \#include \char`\"{}LocalAccountProxy.hpp\char`\"{}}\par
-{\ttfamily \#include \char`\"{}ConfigurationProxy.hpp\char`\"{}}\par
-{\ttfamily \#include \char`\"{}OptionValueProxy.hpp\char`\"{}}\par
-{\ttfamily \#include \char`\"{}QueryProxy.hpp\char`\"{}}\par
-{\ttfamily \#include \char`\"{}UtilsProxy.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}UMS\_\-Data.hpp\char`\"{}}\par
 {\ttfamily \#include \char`\"{}UserException.hpp\char`\"{}}\par
-{\ttfamily \#include \char`\"{}utilVishnu.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}SystemException.hpp\char`\"{}}\par
 \subsection*{Namespaces}
 \begin{DoxyCompactItemize}
 \item 
@@ -68,9 +62,9 @@ int \hyperlink{namespacevishnu_a05878cbc7dbb3f5da87dbc32dd25ab78}{vishnu::config
 \begin{DoxyCompactList}\small\item\em Function to configure a default option value. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_adaf9c8ca47f577cf1a0c9effe7bd9c52}{vishnu::listSessions} (const std::string \&sessionKey, UMS\_\-Data::ListSessions \&listSession, const UMS\_\-Data::ListSessionOptions \&options=UMS\_\-Data::ListSessionOptions())  throw (UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em Function to list all sessions of the user. \item\end{DoxyCompactList}\item 
-int \hyperlink{namespacevishnu_a05618a81d403ef5c11e014fcecd7ba00}{vishnu::listLocalAccount} (const std::string \&sessionKey, UMS\_\-Data::ListLocalAccounts \&listLocalAcc, const UMS\_\-Data::ListLocalAccOptions \&options=UMS\_\-Data::ListLocalAccOptions())  throw (UserException, SystemException)
+int \hyperlink{namespacevishnu_a2c892a93b3100eab8bd4de84f12178fa}{vishnu::listLocalAccounts} (const std::string \&sessionKey, UMS\_\-Data::ListLocalAccounts \&listLocalAcc, const UMS\_\-Data::ListLocalAccOptions \&options=UMS\_\-Data::ListLocalAccOptions())  throw (UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em Function to list the local user configurations. \item\end{DoxyCompactList}\item 
-int \hyperlink{namespacevishnu_a59e26ccbe8510d774528c86511f7476b}{vishnu::listMachine} (const std::string \&sessionKey, UMS\_\-Data::ListMachines \&listMachine, const UMS\_\-Data::ListMachineOptions \&options=UMS\_\-Data::ListMachineOptions())  throw (UserException, SystemException)
+int \hyperlink{namespacevishnu_a1173c380a74b87ee3f3e0651628ad800}{vishnu::listMachines} (const std::string \&sessionKey, UMS\_\-Data::ListMachines \&listMachine, const UMS\_\-Data::ListMachineOptions \&options=UMS\_\-Data::ListMachineOptions())  throw (UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em Function to list the machines in which the local user configurations are defined for the given user. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_a8576a50af31abe3869a61bec780aa5ef}{vishnu::listHistoryCmd} (const std::string \&sessionKey, UMS\_\-Data::ListCommands \&listCommands, const UMS\_\-Data::ListCmdOptions \&options=UMS\_\-Data::ListCmdOptions())  throw (UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em Function to list the commands. \item\end{DoxyCompactList}\item 
