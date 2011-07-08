@@ -610,7 +610,7 @@
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ExportOp">ExportOp</link></para></entry>
+                <entry><para><!--link linkend="ExportOp"-->ExportOp<!--/link--></para></entry>
                 <entry><para>Options for the export</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -678,14 +678,14 @@
               <row>
                 <entry><para>metricValue</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="Metric">Metric</link></para></entry>
+                <entry><para><!--linkend="Metric"-->Metric<!--/link--></para></entry>
                 <entry><para>Value of the metric</para></entry>
                 <entry><para>OUT</para></entry>
               </row>
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="CurMetricOp">CurMetricOp</link></para></entry>
+                <entry><para><!--linkend="CurMetricOp"-->CurMetricOp<!--/link--></para></entry>
                 <entry><para>Options</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -753,21 +753,21 @@
               <row>
                 <entry><para>metricType</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="MetricType">MetricType</link></para></entry>
+                <entry><para><!--linkend="MetricType"-->MetricType<!--/link--></para></entry>
                 <entry><para>Type of metric</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>metricValues</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ListMetric">ListMetric</link></para></entry>
+                <entry><para><!--linkend="ListMetric"-->ListMetric<!--/link--></para></entry>
                 <entry><para>List of metric values</para></entry>
                 <entry><para>OUT</para></entry>
               </row>
               <row>
                 <entry><para>endTime</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="MetricHistOp">MetricHistOp</link></para></entry>
+                <entry><para><!--linkend="MetricHistOp"-->MetricHistOp<!--/link--></para></entry>
                 <entry><para>End time of metric history</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -828,14 +828,14 @@
               <row>
                 <entry><para>process</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ListProcesses">ListProcesses</link></para></entry>
+                <entry><para><!--linkend="ListProcesses"-->ListProcesses<!--/link--></para></entry>
                 <entry><para>The list of the Vishnu processes on the machine</para></entry>
                 <entry><para>OUT</para></entry>
               </row>
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ProcessOp">ProcessOp</link></para></entry>
+                <entry><para><!--linkend="ProcessOp"-->ProcessOp<!--/link--></para></entry>
                 <entry><para>The id of the machine the user wants the running processes</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -896,7 +896,7 @@
               <row>
                 <entry><para>systemInfo</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="SystemInfo">SystemInfo</link></para></entry>
+                <entry><para><!--linkend="SystemInfo"-->SystemInfo<!--/link--></para></entry>
                 <entry><para>Contains system information to store in Vishnu database</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -957,7 +957,7 @@
               <row>
                 <entry><para>threshold</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="Threshold">Threshold</link></para></entry>
+                <entry><para><!--linkend="Threshold"-->Threshold<!--/link--></para></entry>
                 <entry><para>The type of the metric to set</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -1018,14 +1018,14 @@
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ThresholdOp">ThresholdOp</link></para></entry>
+                <entry><para><!--linkend="ThresholdOp"-->ThresholdOp<!--/link--></para></entry>
                 <entry><para>The options for the threshold</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>value</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ListThreshold">ListThreshold</link></para></entry>
+                <entry><para><!--linkend="ListThreshold"-->ListThreshold<!--/link--></para></entry>
                 <entry><para>The threshold values</para></entry>
                 <entry><para>OUT</para></entry>
               </row>
@@ -1337,7 +1337,7 @@
               <row>
                 <entry><para>loadShedType</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="LoadShedType">LoadShedType</link></para></entry>
+                <entry><para><!--linkend="LoadShedType"-->LoadShedType<!--/link--></para></entry>
                 <entry><para>Selects a load shedding mode (SOFT: stops all services and they can be restarted, HARD: stops all services, they cannot be restarted)</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -1527,14 +1527,14 @@
               <row>
                 <entry><para>type</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="RestartType">RestartType</link></para></entry>
+                <entry><para><!--linkend="RestartType"-->RestartType<!--/link--></para></entry>
                 <entry><para>The type of restart</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="RestartOp">RestartOp</link></para></entry>
+                <entry><para><!--linkend="RestartOp"-->RestartOp<!--/link--></para></entry>
                 <entry><para>The options to restart</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -1595,7 +1595,7 @@
               <row>
                 <entry><para>process</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="Process">Process</link></para></entry>
+                <entry><para><!--linkend="Process"-->Process<!--/link--></para></entry>
                 <entry><para>The process to stop</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -1656,14 +1656,14 @@
               <row>
                 <entry><para>res</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="ListSysInfo">ListSysInfo</link></para></entry>
+                <entry><para><!--linkend="ListSysInfo"-->ListSysInfo<!--/link--></para></entry>
                 <entry><para>The set of system information</para></entry>
                 <entry><para>OUT</para></entry>
               </row>
               <row>
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="SysInfoOp">SysInfoOp</link></para></entry>
+                <entry><para><!--linkend="SysInfoOp"-->SysInfoOp<!--/link--></para></entry>
                 <entry><para>Options for the sysinfo</para></entry>
                 <entry><para>IN</para></entry>
               </row>
