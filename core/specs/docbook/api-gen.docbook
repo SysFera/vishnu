@@ -10757,6 +10757,32 @@
           </tbody>
         </tgroup>
       </informaltable>
+      <para xml:id="TailOfFileOptions"><emphasis role="bold">Class FMS::TailOfFileOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>nline</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>the number of line to get</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
       <para xml:id="FileType"><emphasis role="bold">Enumeration FMS::FileType Type</emphasis></para>
       <informaltable>
         <tgroup cols="2">
