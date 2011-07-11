@@ -47,9 +47,6 @@ main (int argc, char* argv[]){
   string machineId;
   string jobId;
 
-  /*********** Out parameters *********************/
-  TMS_Data::Job job;
-
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(new Options(argv[0]));
 

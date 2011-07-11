@@ -36,7 +36,6 @@ int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
   string dietConfig;
-  string sessionKey;
   string machineId;
   string handler;
   int value;
