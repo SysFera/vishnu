@@ -88,13 +88,18 @@ convertMetricToString(const int& metricType) {
   switch(metricType) {
     case 0:
       res = "UNDEFINED";
+      break;
     case 1:
       res = "CPUUSE";
+      break;
     case 2:
       res = "FREEDISKSPACE";
+      break;
     case 3:
       res = "FREEMORY";
+      break;
     default:
+      res = "UNDEFINED";
       break;
   }
   return res;

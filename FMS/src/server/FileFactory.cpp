@@ -38,7 +38,9 @@ File* FileFactory::getFileServer(const SessionServer& sessionServer,
                        sshPort, sshCommand, scpCommand);
 }
 
+//{{RELAX<MISRA_0_1_3> Because these variables are used this class
 string FileFactory::sshServer = "localhost";
 unsigned int FileFactory::sshPort = 22;
 string FileFactory::sshCommand = "/usr/bin/ssh";
 string FileFactory::scpCommand = "/usr/bin/scp";
+//}}RELAX<MISRA_0_1_3>
