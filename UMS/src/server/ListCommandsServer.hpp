@@ -203,6 +203,7 @@ public:
          break;
       default:
          cmd = "Unknown Command";
+         break;
     }
     return cmd;
   }
@@ -232,6 +233,7 @@ public:
          break;
       default:
          mapperName = "Uknown Mapper Name";
+         break;
     }
     return mapperName;
   }

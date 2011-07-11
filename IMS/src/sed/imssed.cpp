@@ -119,12 +119,12 @@ int main(int argc, char* argv[], char* envp[]) {
 
   // Watcher thread
   Watcher w(IMSVishnuTool_v1, argc, argv, mid);
-  thread thr1(bind(&Watcher::run, &w));
+  thread thr1(bind(&Watcher::run, &w));//%RELAX<MISRA_0_1_3> Because it used to launch a thread
 
 
   // History maker thread
   HM hm = HM(sendmailScriptPath, mid);
-  thread thr2(bind(&HM::run, &hm));
+  thread thr2(bind(&HM::run, &hm));//%RELAX<MISRA_0_1_3> Because it used to launch a thread
 
   //Declaration of signal handler, to remove script children
    action.sa_handler = controlSignal;
