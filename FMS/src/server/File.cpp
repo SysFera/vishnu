@@ -102,12 +102,16 @@ const string& File::getPath() const {
 }
 
 const string& File::getOwner() const {
-  if (!isUpToDate()) getInfos();
+  if (!isUpToDate()) {
+    getInfos();
+  }
   return mfileStat.getOwner();
 }
 
 const string& File::getGroup() const {
-  if (!isUpToDate()) getInfos();
+  if (!isUpToDate()) {
+    getInfos();
+  }
   return mfileStat.getGroup();
 }
 

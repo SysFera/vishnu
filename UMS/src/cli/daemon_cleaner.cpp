@@ -143,7 +143,6 @@ deleter(char* dietConfig,int ac,char* av[]){
       btt::sleep(bpt::seconds(5));//%RELAX<MISRA_0_1_3> Because it used to take a pause
     }
 
-
     exit(EXIT_SUCCESS);
 
   }
