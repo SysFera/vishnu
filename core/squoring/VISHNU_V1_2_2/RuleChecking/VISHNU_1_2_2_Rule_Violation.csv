@@ -1,0 +1,28 @@
+File;Line;Severity;Rule;Description
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\UMS\src\cli\daemon_cleaner.cpp;147;Advisory;fntype;Function types
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\IMS\src\cli\displayer.cpp;90;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\IMS\src\cli\displayer.cpp;92;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\IMS\src\cli\displayer.cpp;94;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\IMS\src\cli\displayer.cpp;96;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\IMS\src\server\data\ExportFactory.cpp;16;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\FMS\src\server\File.cpp;105;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\FMS\src\server\File.cpp;110;Required;MISRA_6_4_1;Compound statement for if
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\FMS\src\server\FileFactory.cpp;41;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\FMS\src\server\FileFactory.cpp;42;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\FMS\src\server\FileFactory.cpp;43;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\FMS\src\server\FileFactory.cpp;44;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\TMS\src\cli\get_job_info.cpp;51;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\IMS\src\sed\imssed.cpp;122;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\IMS\src\sed\imssed.cpp;127;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\FMS\src\cli\list_file_transfers.cpp;111;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\UMS\src\server\ListCommandsServer.hpp;205;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\UMS\src\server\ListCommandsServer.hpp;234;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\IMS\src\cli\restart.cpp;32;Required;MISRA_0_1_1;Unreachable code
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\IMS\src\cli\set_system_threshold.cpp;39;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\IMS\src\server\data\export\shell\ShellExporter.cpp;107;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\IMS\src\server\data\export\shell\ShellExporter.cpp;109;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\IMS\src\server\data\export\shell\ShellExporter.cpp;111;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\IMS\src\server\data\export\shell\ShellExporter.cpp;113;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\IMS\src\server\controller\logTool\ToolFactory.cpp;5;Required;MISRA_0_1_3;Unused variables
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\IMS\src\server\controller\logTool\ToolFactory.cpp;25;Required;MISRA_6_4_5;Throw or break in switch clauses
+C:\DemoSQuoRE\C++\SysFera\VISHNU\VISHNU_1.2.2\UMS\src\cli\utils.cpp;490;Required;MISRA_0_1_3;Unused variables

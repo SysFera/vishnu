@@ -1,0 +1,92 @@
+
+    <html>
+    <head>
+    <title>Quality Report - VISHNU_1_2_2</title>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="include/logiscope.css" type="text/css" />
+
+<SCRIPT LANGUAGE='JavaScript' type="text/javascript">
+var menu=new CreerMenu("#FFFFFF","#FFFFFF","include/dyn03.gif","include/dyn04.gif","include/dyn02.gif","include/dyn05.gif",18);
+menu.AddRub("<B>Application</B>","O","");
+menu.AddLien("Application factor level","VISHNU_1_2_2quality_main.html#factorapplicationLevel");
+menu.AddLien("Application criteria level","VISHNU_1_2_2quality_main.html#criteriaapplicationLevel");
+menu.AddLien("Application metric level","VISHNU_1_2_2quality_main.html#metricapplicationLevel");
+menu.AddRub("<B>Modules</B>","N","");
+menu.AddLien("Modules factor level","VISHNU_1_2_2quality_main.html#factormoduleLevel");
+menu.AddLien("Modules criteria level","VISHNU_1_2_2quality_main.html#criteriamoduleLevel");
+menu.AddLien("Modules metric level","VISHNU_1_2_2quality_main.html#metricmoduleLevel");
+menu.AddRub("<B>Classes</B>","N","");
+menu.AddLien("Classes factor level","VISHNU_1_2_2quality_main.html#factorclassLevel");
+menu.AddLien("Classes criteria level","VISHNU_1_2_2quality_main.html#criteriaclassLevel");
+menu.AddLien("Classes metric level","VISHNU_1_2_2quality_main.html#metricclassLevel");
+menu.AddRub("<B>Functions & Methods</B>","N","");
+menu.AddLien("Functions factor level","VISHNU_1_2_2quality_main.html#factorfunctionLevel");
+menu.AddLien("Functions criteria level","VISHNU_1_2_2quality_main.html#criteriafunctionLevel");
+menu.AddLien("Functions metric level","VISHNU_1_2_2quality_main.html#metricfunctionLevel");
+menu.AddRub("<B>Details</B>","N","");
+menu.AddLien("details_source_file_list_level","VISHNU_1_2_2quality_main.html#FileList");
+function CreerMenu(ColFerme,ColOuvert,imgO,imgF,imgOption,imgOptionFin,hauteur) {
+	this.nb_rub=0;
+	this.colF=ColFerme;
+	this.colO=ColOuvert;
+	this.imgO=imgO;
+	this.imgF=imgF;
+	this.imgOpt=imgOption;
+	this.imgOptFin=imgOptionFin;
+	this.hauteur=hauteur;
+	this.AddRub=AddRubrique;
+	this.AddLien=AddLink;
+	this.Aff=AffMenu;
+}
+
+function AddRubrique(txt,aff,page) {
+	var rub = new Object;
+	rub.txt=txt;
+	rub.aff=aff;
+	rub.page=page;
+	rub.nb_lien=0;
+	this[this.nb_rub]=rub;
+	this.nb_rub++;
+}
+
+function AddLink(txt,page) {
+	var no_rub = this.nb_rub-1;
+	var no_lien= this[no_rub].nb_lien;
+	var lien = new Object;
+		lien.txt=txt;
+		lien.page=page;
+	this[no_rub][no_lien]=lien;
+	this[no_rub].nb_lien++;
+}
+
+function dM(txt) { parent.frames[0].document.write(txt) }
+function AffImg(img) {
+	dM("<IMG SRC='"+img+"' height='"+parent.menu.hauteur+"' BORDER=0 ALT='' ALIGN='top' vspace=0>");
+}
+
+function AffMenu() {
+	for(var i=0;i<this.nb_rub;i++) {
+		if (this[i].aff=="N") {
+			AffImg(this.imgF);
+			dM("<A class=menu HREF='javascript:ClicRub("+i+")' color='0C0C00'>");
+			dM(this[i].txt+"</A><BR>");
+		} else {
+			AffImg(this.imgO);
+			dM("<A class=menu HREF='javascript:ClicRub("+i+")'>");
+			dM(this[i].txt+"</A><BR>");
+			for(var j=0;j<this[i].nb_lien;j++) {
+			if (j==this[i].nb_lien-1) {AffImg(this.imgOptFin);} 
+			else  {AffImg(this.imgOpt);}
+				dM("<A class=menu target='right' HREF='"+this[i][j].page+"'>");
+				dM(this[i][j].txt+"</A><BR>");		
+			}
+		}
+	}
+}
+</SCRIPT>
+</HEAD>
+<frameset cols="200,*" border="0" framespacing="0" frameborder="NO">
+    <frame name="left" noresize src="VISHNU_1_2_2quality_left.html">
+    <frame name="right" src="VISHNU_1_2_2quality_main.html">
+</frameset>
+</HTML>
