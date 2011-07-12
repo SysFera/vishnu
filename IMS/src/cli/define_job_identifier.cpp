@@ -1,9 +1,8 @@
 /**
- * \file set_update_frequency.cpp
- * This file defines the VISHNU command to get the metric history
+ * \file define_job_identifier.cpp
+ * This file defines the VISHNU command to define the job identifier
  * \author Coulomb Kevin (kevin.coulomb@sysfera.com)
  */
-
 
 #include "CLICmd.hpp"
 #include "utilVishnu.hpp"
@@ -14,55 +13,25 @@
 #include "sessionUtils.hpp"
 
 #include "GenericCli.hpp"
+#include "defineIdentifierUtils.hpp"
 
 using namespace std;
 using namespace vishnu;
-
-
-struct JobIdentifierFunc {
-
-  std::string mjobFormat;
-
-  JobIdentifierFunc(const std::string& jobFormat):
-   mjobFormat(jobFormat)
-  {};
-
-  int operator()(std::string sessionKey) {
-    return defineJobIdentifier(sessionKey, mjobFormat);
-  }
-};
-
 
 int main (int argc, char* argv[]){
   
   /******* Parsed value containers ****************/
   string dietConfig;
-  string jobFormat;
+  string newJobFormat;
 
-
-  /**************** Describe options *************/
-  boost::shared_ptr<Options> opt(new Options(argv[0]));
-
-  // Environement option
-  opt->add("dietConfig,c",
-           "The diet config file",
-           ENV,
-           dietConfig);
-
-  // All cli obligatory parameters
-  opt->add("format,f",
-	   "The id of the machine on which the format of the job must be defined",
-	   HIDDEN,
-	   jobFormat,1);
-  opt->setPosition("format",1);
+  boost::shared_ptr<Options> opt(makeDefineIdentifierOptions(argv[0], dietConfig, newJobFormat));
 
   bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, argc, argv, "format");
 
   //call of the api function
-  JobIdentifierFunc jobIdFunc(jobFormat);
+  DefineIdentifierFunc<JOB> jobIdFunc(newJobFormat);
   return GenericCli().run(jobIdFunc, dietConfig, argc, argv);
  
 }
-
