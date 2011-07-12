@@ -24,21 +24,6 @@ using namespace vishnu;
 
 using namespace FMS_Data;
 
-struct RemoveFileFunc {
-
-  std::string mpath;
-  RmFileOptions moptions;
-  RemoveFileFunc(const std::string& path,const RmFileOptions& options):mpath(path),moptions(options){}
-
-  int operator()(std::string sessionKey) {
-
-    int res=removeFile(sessionKey,mpath,moptions);
-    
-    return res;
-  }
-};
-
-
 int main (int ac, char* av[]){
   
 
@@ -48,7 +33,6 @@ int main (int ac, char* av[]){
 
   /********** EMF data ************/
   FMS_Data::RmFileOptions rmFileOptions;
-
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],dietConfig,path));
@@ -66,7 +50,7 @@ int main (int ac, char* av[]){
     rmFileOptions.setIsRecursive(true);
   }
 
-  RemoveFileFunc apiFunc(path,rmFileOptions);
+  FileActionFunc<REMOVEFILE> apiFunc(path,rmFileOptions);
   return GenericCli().run(apiFunc, dietConfig, ac, av);
 
 }

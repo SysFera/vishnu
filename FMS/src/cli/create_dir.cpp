@@ -22,21 +22,6 @@ namespace po = boost::program_options;
 using namespace std;
 using namespace vishnu;
 
-struct CreateDirFunc {
-
-  std::string mpath;
-
-  CreateDirFunc(const std::string& path):mpath(path){}
-
-  int operator()(std::string sessionKey) {
-
-    int res = createDir(sessionKey,mpath);
-
-    return res;
-  }
-};
-
-
 int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
@@ -44,13 +29,9 @@ int main (int argc, char* argv[]){
   string path;
 
   //buid options and parse 
-
   ParseRemoteCommandOptions (argc,argv,dietConfig,path);
-  CreateDirFunc apiFunc(path);
+  
+  FileActionFunc<CREATEDIR> apiFunc(path);
   return GenericCli().run(apiFunc, dietConfig, argc, argv);
 
-
-
 }
-
-
