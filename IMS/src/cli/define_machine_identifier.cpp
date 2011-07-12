@@ -1,6 +1,6 @@
 /**
- * \file set_update_frequency.cpp
- * This file defines the VISHNU command to get the metric history
+ * \file define_machine_identifier.cpp
+ * This file defines the VISHNU command to define the machine identifier
  * \author Coulomb Kevin (kevin.coulomb@sysfera.com)
  */
 
@@ -14,53 +14,25 @@
 #include "sessionUtils.hpp"
 
 #include "GenericCli.hpp"
+#include "defineIdentifierUtils.hpp"
 
 using namespace std;
 using namespace vishnu;
-
-struct MachineIdentifierFunc {
-
-  std::string mmachineFormat;
-
-  MachineIdentifierFunc(const std::string& machineFormat):
-   mmachineFormat(machineFormat)
-  {};
-
-  int operator()(std::string sessionKey) {
-    return defineMachineIdentifier(sessionKey, mmachineFormat);
-  }
-};
-
 
 int main (int argc, char* argv[]){
   
   /******* Parsed value containers ****************/
   string dietConfig;
-  string machineFormat;
+  string newMachineFormat;
 
-  /**************** Describe options *************/
-  boost::shared_ptr<Options> opt(new Options(argv[0]));
-
-  // Environement option
-  opt->add("dietConfig,c",
-           "The diet config file",
-           ENV,
-           dietConfig);
-
-  // All cli obligatory parameters
-  opt->add("format,f",
-	   "The id of the machine on which the machine format must be defined",
-	   HIDDEN,
-	   machineFormat,1);
-  opt->setPosition("format",1);
+  boost::shared_ptr<Options> opt(makeDefineIdentifierOptions(argv[0], dietConfig, newMachineFormat));
 
   bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, argc, argv, "format");
 
   //call of the api function
-  MachineIdentifierFunc jobIdFunc(machineFormat);
-  return GenericCli().run(jobIdFunc, dietConfig, argc, argv); 
+  DefineIdentifierFunc<MACHINE> machineIdFunc(newMachineFormat);
+  return GenericCli().run(machineIdFunc, dietConfig, argc, argv); 
 
 }
-
