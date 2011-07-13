@@ -194,7 +194,7 @@
           <para>[DIET_USERGUIDE] DIET User Guide : guide de l'utilisateur DIET (nom du projet OpenSource de l'application SysFera-DS)</para>
         </listitem>
         <listitem>
-          <para>[VISHNU_USERGUIDE] VISHNU User Guide : guide de l'utilisateur VISHNU.</para>
+          <para>[VISHNU_USERMANUAL] VISHNU User Manual : guide de l'utilisateur VISHNU.</para>
         </listitem>
       </itemizedlist>
     </section>
@@ -203,16 +203,16 @@
       <para>
 	<itemizedlist>
           <listitem>
-            <para>Client FMS : Cela désigne les classes intermédiaires permettant un accès à distance aux services du SeD FMS. </para>
+            <para>Client FMS : Cela désigne les programmes permettant un accès à distance aux services du SeD FMS. </para>
           </listitem>
           <listitem>
-            <para>Client IMS : Cela désigne les classes intermédiaires permettant un accès à distance aux services du SeD IMS. </para>
+            <para>Client IMS : Cela désigne les programmes permettant un accès à distance aux services du SeD IMS. </para>
           </listitem>
           <listitem>
-            <para>Client TMS : Cela désigne les classes intermédiaires permettant un accès à distance aux services du SeD TMS. </para>
+            <para>Client TMS : Cela désigne les programmes permettant un accès à distance aux services du SeD TMS. </para>
           </listitem>
           <listitem>
-            <para>Client UMS : Cela désigne les classes intermédiaires permettant un accès à distance aux services du SeD UMS. </para>
+            <para>Client UMS : Cela désigne les programmes permettant un accès à distance aux services du SeD UMS. </para>
           </listitem>
           <listitem>
             <para>Préfrontale : Cela désigne une machine mise avant la(les) frontale(s) des calculateurs. </para>
@@ -224,14 +224,10 @@
             <para>SeD TMS : Cela désigne le programme contenant et exécutant les services du module TMS. </para>
           </listitem>
           <listitem>
-            <para>SeD UMS : Cela désigne le programme contenant et exécutant les services du module UMS.
-	      Une seule instance est nécessaire pour faire tourner VISHNU. </para>
+            <para>SeD UMS : Cela désigne le programme contenant et exécutant les services du module UMS. </para>
           </listitem>
           <listitem>
-            <para>Sysfera-DS : Middleware open source développé par SysFera. </para>
-          </listitem>
-          <listitem>
-            <para>Se référer au glossaire du document [ARCH] pour des définitions additionnelles.</para>
+            <para>Sysfera-DS : Intergiciel open source développé par SysFera. </para>
           </listitem>
         </itemizedlist>
       </para>
@@ -239,6 +235,10 @@
   </chapter>
   <chapter>
     <title>Installation à partir des sources</title>
+    <section>
+      <title>Objectifs</title>
+      <para> Ce chapitre va présenter comment installer VISHNU à partir des sources. Il expliquera comment installer les serveurs et/ou les clients (l'installation d'un serveur implique l'installation du client associé). Le module UMS est nécessaire pour tout les autres modules, sinon n'importe quel module peut être installé sur une machine donnée sans dépendance des autres, et cela n'empêche pas d'utiliser les services même si les serveurs sont sur des machines différentes. Toutefois, pour que IMS puis faire du délestage sur une machine, il faut que les modules concernés par le délestage soient compilés avec IMS sur la machine en question. </para>
+    </section>
     <section>
       <title>Prérequis</title>
       <para>Les logiciels suivants doivent être installés sur le système, avec les fichiers de développement (paquets -dev):</para>
@@ -257,9 +257,6 @@
             </listitem>
             <listitem>
               <para>OMNIORB version 4.1.4</para>
-            </listitem>
-            <listitem>
-              <para>PGSQL-API (api PostGreSQL) version 8.0 minimum</para>
             </listitem>
             <listitem>
               <para>libcrypt</para>
@@ -295,6 +292,12 @@
             <listitem>
               <para>Python version 2.x x>=5</para>
             </listitem>
+            <listitem>
+              <para>PGSQL-API (api PostGreSQL) version 8.0 minimum</para>
+            </listitem>
+            <listitem>
+              <para>MYSQL-API (api MySQL) version 5.1 minimum</para>
+            </listitem>
           </itemizedlist>
         </listitem>
       </itemizedlist>
@@ -312,7 +315,7 @@
           </listitem>
           <listitem>
             <para>
-	      CLIENT_ONLY, qui permet de ne compiler que les éléments clients si le flag est activé (OFF par défaut).
+	      CLIENT_ONLY, qui permet de ne compiler que les clients si le flag est activé (OFF par défaut). Sinon les clients et les serveurs sont compilés.
 	    </para>
           </listitem>
           <listitem>
@@ -376,31 +379,39 @@
       <itemizedlist>
         <listitem>
           <para>1. créer un répertoire build à la racine du projet et se placer dedans</para>
-        </listitem>
-        <listitem>
-          <para>$ mkdir build</para>
-        </listitem>
-        <listitem>
-          <para>$ cd build</para>
+          <itemizedlist>
+            <listitem>
+              <para>$ <emphasis role="bold">mkdir build</emphasis></para>
+            </listitem>
+            <listitem>
+              <para>$ <emphasis role="bold">cd build</emphasis></para>
+            </listitem>
+          </itemizedlist>
         </listitem>
         <listitem>
           <para>2. générer le Makefile</para>
-        </listitem>
-        <listitem>
-          <para>$ cmake -DENABLE_PYTHON=ON -DENABLE_SWIG=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu/
-	    -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DVISHNU_USE_TORQUE=0N -DTORQUE_DIR=/opt/torque ..</para>
+          <itemizedlist>
+            <listitem>
+              <para>$ <emphasis role="bold">cmake -DENABLE_PYTHON=ON -DENABLE_SWIG=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu/ </emphasis></para>
+              <para> <emphasis role="bold">-DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DVISHNU_USE_TORQUE=0N -DTORQUE_DIR=/opt/torque ..</emphasis></para>
+            </listitem>
+          </itemizedlist>
         </listitem>
         <listitem>
           <para>3. lancer la compilation avec 2 jobs</para>
-        </listitem>
-        <listitem>
-          <para>$ make -j 2</para>
+          <itemizedlist>
+            <listitem>
+              <para>$ <emphasis role="bold">make -j 2</emphasis></para>
+            </listitem>
+          </itemizedlist>
         </listitem>
         <listitem>
           <para>4. installation (en mode super-utilisateur)</para>
-        </listitem>
-        <listitem>
-          <para># make install</para>
+          <itemizedlist>
+            <listitem>
+              <para># <emphasis role="bold">make install</emphasis></para>
+            </listitem>
+          </itemizedlist>
         </listitem>
       </itemizedlist>
       <para><emphasis role="bold">Note</emphasis>: pensez à ajouter le répertoire d'installation dans le $PATH
@@ -602,7 +613,8 @@
       <para>Les modules peuvent être lancés soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration.</para>
       <para><emphasis role="bold">NOTE: l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
       <para><emphasis role="bold">NOTE: Il est préférable d'éviter de lancer le même SeD sur la même machine.</emphasis></para>
-      <para><emphasis role="bold">NOTE: Chaque machine doit posséder un utilisateur 'vishnu' pouvant se connecter sur n'importe quelle autre machine. Cet utilisateur sera utilisé pour le redémarrage automatique des SeD.</emphasis></para>
+      <para><emphasis role="bold">NOTE: Il existe un bug connu sur debian (entre autre) avec boost file system, utilisé par VISHNU. Le rapport de bug est ici et le bug est actuellement ouvert: https://svn.boost.org/trac/boost/ticket/4688. Si lors du lancement d'un SeD, le message d'erreur suivant apparait : std::runtime_error: locale::facet::_S_create_c_locale name not valid, faire un &quot;export LANG=C&quot; et cela devrait régler le problème.</emphasis></para>
+      <para><emphasis role="bold">NOTE: L'utilisateur VISHNU 'root' doit avoir un local accompte sur chaque machine ou il y a un serveur IMS. Le compte UNIX correspondant sera utilisé pour le redémarrage automatique des SeD.</emphasis></para>
       <para>Pour mieux comprendre l'architecture de déploiement, se référer au document [ARCH], le chapitre 4, 'Technical Architecture'.</para>
       <orderedlist>
         <listitem>
@@ -615,7 +627,7 @@
           <para> Lancer le log service de DIET sur la machine préfrontale. La commande est 'LogCentral --config config.cfg' avec config.cfg un fichier de configuration pour le log central. </para>
         </listitem>
         <listitem>
-          <para> Lancer le MA avec son fichier de configuration : 'dietAgent config.cfg'. Voir la figure 4.1 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
+          <para> Lancer le MA avec son fichier de configuration : 'dietAgent config.cfg'. Voir le paragraphe 6.3 pour avoir un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
             <itemizedlist>
               <listitem>
                 <para> 'traceLevel = 0' : Le niveau de verbosité du master agent, cette valeur peut être entre 0 et 10 compris. </para>
@@ -630,11 +642,11 @@
           </para>
         </listitem>
         <listitem>
-          <para>Lancer le SeD UMS avec 'umssed ~/ums_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.2 pour un exemple de configuration. Les paramètres à fournir correspondent à:
+          <para>Lancer le SeD UMS avec 'umssed ~/ums_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.5 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à:
             <itemizedlist>
               <listitem>
                 <para>
-                  'dietConfigFile=/usr/local/etc/SeD.cfg' : le chemin jusqu'au fichier de configuration DIET du SeD. Voir la figure 4.2 pour un exemple de configuration. Ce fichier peut par exemple contenir les 2 lignes suivantes :
+                  'dietConfigFile=/usr/local/etc/SeD.cfg' : le chemin jusqu'au fichier de configuration DIET du SeD. Voir le paragraphe 6.4 pour un exemple de configuration. Ce fichier peut par exemple contenir les 2 lignes suivantes :
                   <itemizedlist>
                     <listitem>
                       <para>'traceLevel = 0' : Le niveau de verbosité du SeD UMS, ce niveau peut être entre 0 (minimum) et 10 compris.</para>
@@ -686,7 +698,7 @@
 	  </para>
         </listitem>
         <listitem>
-          <para>Lancer le SeD TMS sur la machine hôte de Torque. La commande de lancement est : 'tmssed ~/tms_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.3 pour un exemple de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
+          <para>Lancer le SeD TMS sur la machine hôte de Torque. La commande de lancement est : 'tmssed ~/tms_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.6 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
 	    <itemizedlist>
               <listitem>
                 <para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des jobs.</para>
@@ -701,11 +713,11 @@
 	  </para>
         </listitem>
         <listitem>
-          <para>Lancer le SeD IMS sur toutes les machines à monitorer. La commande de lancement est : 'imssed ~/ims_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.3 pour un exemple de configuration. Les paramètres à fournir correspondent à ceux de UMS.
+          <para>Lancer le SeD IMS sur toutes les machines à monitorer. La commande de lancement est : 'imssed ~/ims_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.5 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS.
 	  </para>
         </listitem>
         <listitem>
-          <para>Lancer le SeD FMS. La commande de lancement est : 'fmssed ~/fms_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.3 pour un exemple de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
+          <para>Lancer le SeD FMS. La commande de lancement est : 'fmssed ~/fms_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.7 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
 	    <itemizedlist>
               <listitem>
                 <para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des transferts de fichiers.</para>
@@ -744,8 +756,8 @@
               </listitem>
               <listitem>
                 <para>
-		  forwarder2.cfg : fichier de configuration (voir la figure 4.3 pour un exemple de configuration) contenant des règles appliquées aux
-		  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de la figure 4.3, les
+		  forwarder2.cfg : fichier de configuration (voir le paragraphe 6.8 pour un exemple de configuration) contenant des règles appliquées aux
+		  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de le paragraphe 6.8, les
 		  règles utilisées sont:
 		  <itemizedlist>
                     <listitem>
@@ -831,8 +843,8 @@
               </listitem>
               <listitem>
                 <para>
-		  logforwarder2.cfg : fichier de configuration (voir la figure 4.3 pour un exemple de configuration) contenant des règles appliquées aux
-		  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de la figure 4.3, les
+		  logforwarder2.cfg : fichier de configuration (voir le paragraphe 6.8 pour un exemple de fichier de configuration) contenant des règles appliquées aux
+		  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de le paragraphe 6.8, les
 		  règles utilisées sont:
 		  <itemizedlist>
                     <listitem>
@@ -911,7 +923,7 @@
           <para> Lancer le log service de DIET sur la machine préfrontale. La commande est 'LogCentral --config config.cfg' avec config.cfg un fichier de configuration pour le log central. </para>
         </listitem>
         <listitem>
-          <para> Lancer le MA avec son fichier de configuration sur le même réseau que le service de nommage : 'dietAgent config.cfg'. Voir la figure 4.2 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
+          <para> Lancer le MA avec son fichier de configuration sur le même réseau que le service de nommage : 'dietAgent config.cfg'. Voir le paragraphe 6.3 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
 	    <itemizedlist>
               <listitem>
                 <para> 'traceLevel = 0' : Le niveau de verbosité du master agent, cette valeur peut être entre 0 et 10 compris. </para>
@@ -1015,6 +1027,18 @@
       </programlisting>
     </section>
     <section>
+      <title>Exemple de fichier du LogCentral </title>
+      <programlisting>
+	# an empty configuration file for LogService
+	[General]
+	
+	[DynamicTagList]
+	[StaticTagList]
+	[UniqueTagList]
+	[VolatileTagList]
+      </programlisting>
+    </section>
+    <section>
       <title>Configuration de l'envoi des emails par VISHNU</title>
       <para>Le processus UMS SeD utilise le fichier 'sendmail.py' (fourni dans l'installation VISHNU, dans le sous-répertoire sbin/)
 	pour envoyer des emails aux utilisateurs lors de certaines opérations. Ce fichier peut être modifié par l'administrateur afin
@@ -1090,7 +1114,7 @@
       <orderedlist>
         <listitem>
           <para>
-	    Une fois que la plateforme a été installée, se mettre sur un poste client avec VISHNU d'installé. Se référer au document [VISHNU_USERGUIDE]
+	    Une fois que la plateforme a été installée, se mettre sur un poste client avec VISHNU d'installé. Se référer au document [VISHNU_USERMANUAL]
 	    pour l'installation de la partie client.
 	  </para>
         </listitem>
@@ -1102,17 +1126,18 @@
         </listitem>
         <listitem>
           <para>
-	    Lancer la commande dans le shell 'vishnu_connect user', ou user représente un nom d'utilisateur dans la DB
+	    Lancer la commande dans le shell 'vishnu_connect user', ou user représente un nom d'utilisateur dans la base de données vishnu
 	  </para>
         </listitem>
         <listitem>
           <para>
-	    Taper le mot de passe 'password', correspondant à l'utilisateur 'user'
+	    Taper le mot de passe associé correspondant à l'utilisateur 'user'
 	  </para>
         </listitem>
         <listitem>
           <para>
-	    Sur le client, un affichage doit signaler que le service a réussi. Dans le terminal ou le SeD UMS a été lancé et dans le terminal ou le MA tourne, selon le niveau de verbosité, plus ou moins d'informations, concernant le service effectué, doivent apparaitre.
+	    Sur le client, un affichage doit signaler que le service a réussi. Dans le terminal ou le SeD UMS a été lancé et dans le terminal ou le MA tourne, selon le niveau de verbosité, plus ou moins d'informations, concernant le service effectué, doivent apparaitre. Le message affiché contient au moins une ligne similaire :
+	    <emphasis role="bold">sessionId: root-2011-Jul-11-14:22:14.403491:86690</emphasis>, qui indique l'identifiant de la session ouverte.
 	  </para>
         </listitem>
         <listitem>
@@ -1436,6 +1461,11 @@ and password are sent to the user by email.</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To add the user Jean DUPONT as a simple user and with the mail dupont@gmail.com:</para>
+        <para>vishnu_add_user Jean DUPONT 0 dupont@gmail.com</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -1551,6 +1581,11 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To update the mail adress of a user user_1 to jdupont@gmail.com:</para>
+        <para>vishnu_update_user -m jdupont@gmail.com user_1</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -1620,6 +1655,11 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>Tu delete the user user_1:</para>
+        <para>vishnu_delete_user user_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1691,6 +1731,11 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To reset the password of the user user_1:</para>
+        <para>vishnu_reset_password user_1</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -1747,6 +1792,11 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To save the current configuration:</para>
+        <para>vishnu_save_configuration</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1811,6 +1861,11 @@ After restoring, the vishnu database is re-initialized.</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To restore the configuration in /tmp/toto.cfg:</para>
+        <para>vishnu_restore_configuration /tmp/toto.cfg</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1887,6 +1942,11 @@ have to add it to the authorized keys of their own account on the machine.</para
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To add the machine perceval in paris with the description in french &quot;ceci est une description&quot;  with the public key in /tmp/key.pub:</para>
+        <para>vishnu_add_machine perceval paris fr /tmp/key.pub &quot;ceci est une description&quot;</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -2001,6 +2061,11 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To change the name of the machine whose id is machine_1 to provencal:</para>
+        <para>vishnu_update_machine machine_1 -n provencal</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -2066,6 +2131,11 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To delete the machine machine_1:</para>
+        <para>vishnu_delete_machine machine_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -2138,6 +2208,11 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To list all the users:</para>
+        <para>vishnu_list_users</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -2217,6 +2292,11 @@ that option using the vishnu_configure_option command.</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To configure the option VISHNU_TIMEOUT with the value 42:</para>
+        <para>vishnu_configure_default_option VISHNU_TIMEOUT 42</para>
       </refsect1>
     </refentry>
   </reference>
@@ -4209,6 +4289,11 @@ that option using the vishnu_configure_option command.</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To get the list of the vishnu processes that are running and monitored on machine_1:</para>
+        <para>vishnu_get_processes -p machine_1</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -4277,6 +4362,11 @@ that option using the vishnu_configure_option command.</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To set the diskspace size to 300 on machine_1:</para>
+        <para>vishnu_set_system_info -d 300 machine_1</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -4331,6 +4421,11 @@ that option using the vishnu_configure_option command.</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To set a threshold of type use of the CPU(value=1) of value 99% on machine_1 and handled by the user admin_1:</para>
+        <para>vishnu_set_system_threshold 99 machine_1 1 admin_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4401,6 +4496,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To get all the thresholds:</para>
+        <para>vishnu_get_system_threshold</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -4464,6 +4564,11 @@ $TYPE: The 'U' symb to remind it is a user id</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To define the format to user_$CPT:</para>
+        <para>vishnu_define_user_identifier user_\$CPT</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4529,6 +4634,11 @@ $TYPE: The 'M' symb to remind it is a machine id</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To define the format to machine_$CPT:</para>
+        <para>vishnu_define_machine_identifier machine_\$CPT</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -4589,6 +4699,11 @@ $TYPE: The 'J' symb to remind it is a job id</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To define the format to job_$CPT:</para>
+        <para>vishnu_define_job_identifier job_\$CPT</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4651,6 +4766,11 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To define the format to transfer_$CPT:</para>
+        <para>vishnu_define_transfer_identifier transfer_\$CPT</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -4712,6 +4832,11 @@ SOFT   = 2</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To make a hard load shedding on machine_1:</para>
+        <para>vishnu_load_shed machine_1 1</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -4765,6 +4890,11 @@ SOFT   = 2</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To set the frequency to 100:</para>
+        <para>vishnu_set_update_frequency 100</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4822,6 +4952,11 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To stop the UMS process on machine_1:</para>
+        <para>vishnu_stop UMS machine_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4891,6 +5026,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (UMS), 2 (
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To restart using the configuration file ums.cfg an UMS sed on machine_1:</para>
+        <para>vishnu_restart -v /tmp/ums.cfg -t 1 machine_1</para>
       </refsect1>
     </refentry>
   </reference>

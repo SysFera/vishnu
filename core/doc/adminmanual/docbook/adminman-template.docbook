@@ -184,7 +184,7 @@
           <para>[DIET_USERGUIDE] DIET User Guide : guide de l'utilisateur DIET (nom du projet OpenSource de l'application SysFera-DS)</para>
         </listitem>
         <listitem>
-          <para>[VISHNU_USERGUIDE] VISHNU User Guide : guide de l'utilisateur VISHNU.</para>
+          <para>[VISHNU_USERMANUAL] VISHNU User Manual : guide de l'utilisateur VISHNU.</para>
         </listitem>
       </itemizedlist>
     </section>
@@ -193,16 +193,16 @@
       <para>
 	<itemizedlist>
 	  <listitem>
-	    <para>Client FMS : Cela désigne les classes intermédiaires permettant un accès à distance aux services du SeD FMS. </para>
+	    <para>Client FMS : Cela désigne les programmes permettant un accès à distance aux services du SeD FMS. </para>
 	  </listitem>
 	  <listitem>
-	    <para>Client IMS : Cela désigne les classes intermédiaires permettant un accès à distance aux services du SeD IMS. </para>
+	    <para>Client IMS : Cela désigne les programmes permettant un accès à distance aux services du SeD IMS. </para>
 	  </listitem>
 	  <listitem>
-	    <para>Client TMS : Cela désigne les classes intermédiaires permettant un accès à distance aux services du SeD TMS. </para>
+	    <para>Client TMS : Cela désigne les programmes permettant un accès à distance aux services du SeD TMS. </para>
 	  </listitem>
 	  <listitem>
-	    <para>Client UMS : Cela désigne les classes intermédiaires permettant un accès à distance aux services du SeD UMS. </para>
+	    <para>Client UMS : Cela désigne les programmes permettant un accès à distance aux services du SeD UMS. </para>
 	  </listitem>
 	  <listitem>
 	    <para>Préfrontale : Cela désigne une machine mise avant la(les) frontale(s) des calculateurs. </para>
@@ -214,21 +214,21 @@
 	    <para>SeD TMS : Cela désigne le programme contenant et exécutant les services du module TMS. </para>
 	  </listitem>
 	  <listitem>
-	    <para>SeD UMS : Cela désigne le programme contenant et exécutant les services du module UMS.
-	      Une seule instance est nécessaire pour faire tourner VISHNU. </para>
+	    <para>SeD UMS : Cela désigne le programme contenant et exécutant les services du module UMS. </para>
 	  </listitem>
 	  <listitem>
-	    <para>Sysfera-DS : Middleware open source développé par SysFera. </para>
+	    <para>Sysfera-DS : Intergiciel open source développé par SysFera. </para>
 	  </listitem>
-          <listitem>
-            <para>Se référer au glossaire du document [ARCH] pour des définitions additionnelles.</para>
-          </listitem>
 	</itemizedlist>
       </para>
     </section>  <!-- Glossaire -->
   </chapter><!-- end Definition -->
   <chapter>
     <title>Installation à partir des sources</title>
+    <section>
+      <title>Objectifs</title>
+      <para> Ce chapitre va présenter comment installer VISHNU à partir des sources. Il expliquera comment installer les serveurs et/ou les clients (l'installation d'un serveur implique l'installation du client associé). Le module UMS est nécessaire pour tout les autres modules, sinon n'importe quel module peut être installé sur une machine donnée sans dépendance des autres, et cela n'empêche pas d'utiliser les services même si les serveurs sont sur des machines différentes. Toutefois, pour que IMS puis faire du délestage sur une machine, il faut que les modules concernés par le délestage soient compilés avec IMS sur la machine en question. </para>
+    </section>
     <section>
       <title>Prérequis</title>
       <para>Les logiciels suivants doivent être installés sur le système, avec les fichiers de développement (paquets -dev):</para>
@@ -247,9 +247,6 @@
             </listitem>
             <listitem>
               <para>OMNIORB version 4.1.4</para>
-            </listitem>
-            <listitem>
-              <para>PGSQL-API (api PostGreSQL) version 8.0 minimum</para>
             </listitem>
             <listitem>
               <para>libcrypt</para>
@@ -285,6 +282,12 @@
             <listitem>
               <para>Python version 2.x x>=5</para>
             </listitem>
+            <listitem>
+              <para>PGSQL-API (api PostGreSQL) version 8.0 minimum</para>
+            </listitem>
+            <listitem>
+              <para>MYSQL-API (api MySQL) version 5.1 minimum</para>
+            </listitem>
           </itemizedlist>
         </listitem>
       </itemizedlist>
@@ -302,7 +305,7 @@
 	  </listitem>
 	  <listitem>
 	    <para>
-	      CLIENT_ONLY, qui permet de ne compiler que les éléments clients si le flag est activé (OFF par défaut).
+	      CLIENT_ONLY, qui permet de ne compiler que les clients si le flag est activé (OFF par défaut). Sinon les clients et les serveurs sont compilés.
 	    </para>
 	  </listitem>
 	  <listitem>
@@ -364,16 +367,29 @@
 	Python puis l'installer dans le répertoire /opt/vishnu sous *nix:
       </para>
       <itemizedlist>
-	<listitem><para>1. créer un répertoire build à la racine du projet et se placer dedans</para></listitem>
-	<listitem><para>$ mkdir build</para></listitem>
-	<listitem><para>$ cd build</para></listitem>
-	<listitem><para>2. générer le Makefile</para></listitem>
-	<listitem><para>$ cmake -DENABLE_PYTHON=ON -DENABLE_SWIG=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu/
-	    -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DVISHNU_USE_TORQUE=0N -DTORQUE_DIR=/opt/torque ..</para></listitem>
-	<listitem><para>3. lancer la compilation avec 2 jobs</para></listitem>
-	<listitem><para>$ make -j 2</para></listitem>
-	<listitem><para>4. installation (en mode super-utilisateur)</para></listitem>
-	<listitem><para># make install</para></listitem>
+	<listitem><para>1. créer un répertoire build à la racine du projet et se placer dedans</para>
+	  <itemizedlist>
+	    <listitem><para>$ <emphasis role="bold">mkdir build</emphasis></para></listitem>
+	    <listitem><para>$ <emphasis role="bold">cd build</emphasis></para></listitem>
+	  </itemizedlist>
+	</listitem>
+	<listitem><para>2. générer le Makefile</para>
+	  <itemizedlist>
+	    <listitem><para>$ <emphasis role="bold">cmake -DENABLE_PYTHON=ON -DENABLE_SWIG=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu/ </emphasis></para>
+	      <para> <emphasis role="bold">-DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DVISHNU_USE_TORQUE=0N -DTORQUE_DIR=/opt/torque ..</emphasis></para></listitem>
+	  </itemizedlist>
+	</listitem>
+	<listitem><para>3. lancer la compilation avec 2 jobs</para>
+	  <itemizedlist>
+	    <listitem><para>$ <emphasis role="bold">make -j 2</emphasis></para></listitem>
+	  </itemizedlist>
+	</listitem>	
+	<listitem><para>4. installation (en mode super-utilisateur)</para>
+	  <itemizedlist>
+	    <listitem><para># <emphasis role="bold">make install</emphasis></para>
+	    </listitem>
+	  </itemizedlist>
+	</listitem>
       </itemizedlist>
       <para><emphasis role="bold">Note</emphasis>: pensez à ajouter le répertoire d'installation dans le $PATH
 	utilisateur pour avoir accès à la commande.</para>
@@ -541,7 +557,8 @@
       <para>Les modules peuvent être lancés soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration.</para>
       <para><emphasis role="bold">NOTE: l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
       <para><emphasis role="bold">NOTE: Il est préférable d'éviter de lancer le même SeD sur la même machine.</emphasis></para>
-      <para><emphasis role="bold">NOTE: Chaque machine doit posséder un utilisateur 'vishnu' pouvant se connecter sur n'importe quelle autre machine. Cet utilisateur sera utilisé pour le redémarrage automatique des SeD.</emphasis></para>
+      <para><emphasis role="bold">NOTE: Il existe un bug connu sur debian (entre autre) avec boost file system, utilisé par VISHNU. Le rapport de bug est ici et le bug est actuellement ouvert: https://svn.boost.org/trac/boost/ticket/4688. Si lors du lancement d'un SeD, le message d'erreur suivant apparait : std::runtime_error: locale::facet::_S_create_c_locale name not valid, faire un "export LANG=C" et cela devrait régler le problème.</emphasis></para>
+      <para><emphasis role="bold">NOTE: L'utilisateur VISHNU 'root' doit avoir un local accompte sur chaque machine ou il y a un serveur IMS. Le compte UNIX correspondant sera utilisé pour le redémarrage automatique des SeD.</emphasis></para>
       <para>Pour mieux comprendre l'architecture de déploiement, se référer au document [ARCH], le chapitre 4, 'Technical Architecture'.</para>
       <orderedlist>
 	<listitem>
@@ -554,7 +571,7 @@
           <para> Lancer le log service de DIET sur la machine préfrontale. La commande est 'LogCentral --config config.cfg' avec config.cfg un fichier de configuration pour le log central. </para>
 	</listitem>
 	<listitem>
-          <para> Lancer le MA avec son fichier de configuration : 'dietAgent config.cfg'. Voir la figure 4.1 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
+          <para> Lancer le MA avec son fichier de configuration : 'dietAgent config.cfg'. Voir le paragraphe 6.3 pour avoir un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
             <itemizedlist>
 	      <listitem>
 		<para> 'traceLevel = 0' : Le niveau de verbosité du master agent, cette valeur peut être entre 0 et 10 compris. </para>
@@ -569,11 +586,11 @@
           </para>
 	</listitem>
 	<listitem>
-          <para>Lancer le SeD UMS avec 'umssed ~/ums_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.2 pour un exemple de configuration. Les paramètres à fournir correspondent à:
+          <para>Lancer le SeD UMS avec 'umssed ~/ums_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.5 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à:
             <itemizedlist>
 	      <listitem>
 		<para>
-                  'dietConfigFile=/usr/local/etc/SeD.cfg' : le chemin jusqu'au fichier de configuration DIET du SeD. Voir la figure 4.2 pour un exemple de configuration. Ce fichier peut par exemple contenir les 2 lignes suivantes :
+                  'dietConfigFile=/usr/local/etc/SeD.cfg' : le chemin jusqu'au fichier de configuration DIET du SeD. Voir le paragraphe 6.4 pour un exemple de configuration. Ce fichier peut par exemple contenir les 2 lignes suivantes :
                   <itemizedlist>
                     <listitem>
 		      <para>'traceLevel = 0' : Le niveau de verbosité du SeD UMS, ce niveau peut être entre 0 (minimum) et 10 compris.</para>
@@ -625,7 +642,7 @@
 	  </para>
 	</listitem>
 	<listitem>
-          <para>Lancer le SeD TMS sur la machine hôte de Torque. La commande de lancement est : 'tmssed ~/tms_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.3 pour un exemple de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
+          <para>Lancer le SeD TMS sur la machine hôte de Torque. La commande de lancement est : 'tmssed ~/tms_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.6 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
 	    <itemizedlist>
 	      <listitem>
 		<para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des jobs.</para>
@@ -640,11 +657,11 @@
 	  </para>
 	</listitem>
 	<listitem>
-	  <para>Lancer le SeD IMS sur toutes les machines à monitorer. La commande de lancement est : 'imssed ~/ims_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.3 pour un exemple de configuration. Les paramètres à fournir correspondent à ceux de UMS.
+	  <para>Lancer le SeD IMS sur toutes les machines à monitorer. La commande de lancement est : 'imssed ~/ims_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.5 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS.
 	  </para>
 	</listitem>
   <listitem>
-          <para>Lancer le SeD FMS. La commande de lancement est : 'fmssed ~/fms_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.3 pour un exemple de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
+          <para>Lancer le SeD FMS. La commande de lancement est : 'fmssed ~/fms_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.7 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
 	    <itemizedlist>
 	      <listitem>
 		<para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des transferts de fichiers.</para>
@@ -680,8 +697,8 @@
 		  forwarder2 : nom qui identifie le démon forwarder sur ce réseau
 	      </para></listitem>
 	      <listitem><para>
-		  forwarder2.cfg : fichier de configuration (voir la figure 4.3 pour un exemple de configuration) contenant des règles appliquées aux
-		  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de la figure 4.3, les
+		  forwarder2.cfg : fichier de configuration (voir le paragraphe 6.8 pour un exemple de configuration) contenant des règles appliquées aux
+		  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de le paragraphe 6.8, les
 		  règles utilisées sont:
 		  <itemizedlist>
 		    <listitem>
@@ -748,8 +765,8 @@
 		  logforwarder2 : nom qui identifie le démon forwarder sur ce réseau
 	      </para></listitem>
 	      <listitem><para>
-		  logforwarder2.cfg : fichier de configuration (voir la figure 4.3 pour un exemple de configuration) contenant des règles appliquées aux
-		  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de la figure 4.3, les
+		  logforwarder2.cfg : fichier de configuration (voir le paragraphe 6.8 pour un exemple de fichier de configuration) contenant des règles appliquées aux
+		  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de le paragraphe 6.8, les
 		  règles utilisées sont:
 		  <itemizedlist>
 		    <listitem>
@@ -812,7 +829,7 @@
 	  <para> Lancer le log service de DIET sur la machine préfrontale. La commande est 'LogCentral --config config.cfg' avec config.cfg un fichier de configuration pour le log central. </para>
 	</listitem>
 	<listitem>
-	  <para> Lancer le MA avec son fichier de configuration sur le même réseau que le service de nommage : 'dietAgent config.cfg'. Voir la figure 4.2 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
+	  <para> Lancer le MA avec son fichier de configuration sur le même réseau que le service de nommage : 'dietAgent config.cfg'. Voir le paragraphe 6.3 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
 	    <itemizedlist>
 	      <listitem>
 		<para> 'traceLevel = 0' : Le niveau de verbosité du master agent, cette valeur peut être entre 0 et 10 compris. </para>
@@ -916,6 +933,18 @@
       </programlisting>
     </section>
     <section>
+      <title>Exemple de fichier du LogCentral </title>
+      <programlisting>
+	# an empty configuration file for LogService
+	[General]
+	
+	[DynamicTagList]
+	[StaticTagList]
+	[UniqueTagList]
+	[VolatileTagList]
+      </programlisting>
+    </section>
+    <section>
       <title>Configuration de l'envoi des emails par VISHNU</title>
       <para>Le processus UMS SeD utilise le fichier 'sendmail.py' (fourni dans l'installation VISHNU, dans le sous-répertoire sbin/)
 	pour envoyer des emails aux utilisateurs lors de certaines opérations. Ce fichier peut être modifié par l'administrateur afin
@@ -991,7 +1020,7 @@
       <orderedlist>
 	<listitem>
 	  <para>
-	    Une fois que la plateforme a été installée, se mettre sur un poste client avec VISHNU d'installé. Se référer au document [VISHNU_USERGUIDE]
+	    Une fois que la plateforme a été installée, se mettre sur un poste client avec VISHNU d'installé. Se référer au document [VISHNU_USERMANUAL]
 	    pour l'installation de la partie client.
 	  </para>
 	</listitem>
@@ -1003,17 +1032,18 @@
 	</listitem>
 	<listitem>
 	  <para>
-	    Lancer la commande dans le shell 'vishnu_connect user', ou user représente un nom d'utilisateur dans la DB
+	    Lancer la commande dans le shell 'vishnu_connect user', ou user représente un nom d'utilisateur dans la base de données vishnu
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	    Taper le mot de passe 'password', correspondant à l'utilisateur 'user'
+	    Taper le mot de passe associé correspondant à l'utilisateur 'user'
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	    Sur le client, un affichage doit signaler que le service a réussi. Dans le terminal ou le SeD UMS a été lancé et dans le terminal ou le MA tourne, selon le niveau de verbosité, plus ou moins d'informations, concernant le service effectué, doivent apparaitre.
+	    Sur le client, un affichage doit signaler que le service a réussi. Dans le terminal ou le SeD UMS a été lancé et dans le terminal ou le MA tourne, selon le niveau de verbosité, plus ou moins d'informations, concernant le service effectué, doivent apparaitre. Le message affiché contient au moins une ligne similaire :
+	    <emphasis role="bold">sessionId: root-2011-Jul-11-14:22:14.403491:86690</emphasis>, qui indique l'identifiant de la session ouverte.
 	  </para>
 	</listitem>
 	<listitem>
