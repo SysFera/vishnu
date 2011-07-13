@@ -170,7 +170,7 @@
       </itemizedlist>
     </para>
     <section>
-      <title> Installation procedure </title>
+      <title> Installation procedure of the clients </title>
       <para> 
 	This section details the main steps of the installation process, including the installation requirements [D1.1b]. VISHNU is based on SysFera-DS software
 	which must be installed before.
@@ -225,20 +225,26 @@
               <para>> make &amp;&amp; make install</para>
             </listitem>
             <listitem>
-              <para> <emphasis role="bold">To compile the UMS package : </emphasis></para>
-              <para>> cmake -DCOMPILE_UMS=ON  -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
-            </listitem>
-            <listitem>
-              <para> <emphasis role="bold">To compile the TMS package : </emphasis></para>
-              <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
-            </listitem>
-            <listitem>
-              <para> <emphasis role="bold">To compile the FMS package : </emphasis></para>
-              <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_FMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
-            </listitem>
-            <listitem>
-              <para> <emphasis role="bold">To compile the IMS package : </emphasis></para>
-              <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DCOMPILE_FMS=ON -DCOMPILE_IMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
+              <para>The module for each client can be built using the '-DCOMPILE_*MS=ON' flag. These are some commande line examples on how to build the clients</para>
+              <itemizedlist>
+                <listitem>
+                  <para> <emphasis role="bold">To compile the UMS package : </emphasis></para>
+                  <para>> cmake -DCOMPILE_UMS=ON  -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
+                </listitem>
+                <listitem>
+                  <para> <emphasis role="bold">To compile the TMS package : </emphasis></para>
+                  <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
+                </listitem>
+                <listitem>
+                  <para> <emphasis role="bold">To compile the FMS package : </emphasis></para>
+                  <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_FMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
+                </listitem>
+                <listitem>
+                  <para> <emphasis role="bold">To compile the IMS package : </emphasis></para>
+                  <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DCOMPILE_FMS=ON -DCOMPILE_IMS=ON </para>
+                  <para> -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
+                </listitem>
+              </itemizedlist>
             </listitem>
           </itemizedlist>
 	</para>
@@ -248,8 +254,8 @@
       </section>
     </section>
     <section>
-      <title> Sofware usage description </title>
-      <para><emphasis role="bold">WARNING: The lists are INOUT parameters, the results are appended, they do not overwrite the existing list.</emphasis></para>
+      <title> Software usage description </title>
+      <para><emphasis role="bold">WARNING: The lists are INOUT parameters, the results are appended, they do not overwrite the existing list. Moreover, the get function on the lists do not check the bounds, it is like using the [] operator.</emphasis></para>
       <section>
         <title> UMS package </title>
         <section>
@@ -601,6 +607,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To connect the user user_1:</para>
+        <para>vishnu_connect user_1</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -675,6 +686,11 @@ session that was opened on another client system.</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To reconnect the user user_1 to the session S01:</para>
+        <para>vishnu_reconnect user_1 S01</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -738,6 +754,11 @@ the session (e.g., job submission or file transfers). After the session is close
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To close the current session:</para>
+        <para>vishnu_close</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -791,6 +812,11 @@ the session (e.g., job submission or file transfers). After the session is close
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To change the password of the user user_1:</para>
+        <para>vishnu_change_password user_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -878,6 +904,11 @@ homeDirectory path .</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To add a local accout to the user user_1 on machine_1 with the login toto with the public key in .ssh/id_dsa.pub:</para>
+        <para>vishnu_add_local_account user_1 machine_1 toto /home/toto/.ssh/id_dsa.pub /home/toto</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -974,6 +1005,11 @@ homeDirectory path .</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To change the account login to toto2 for the user user_1 on machine_1:</para>
+        <para>vishnu_update_local_account user_1 machine_1 -l toto2</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -1035,6 +1071,11 @@ homeDirectory path .</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To delete the local account of the user user_1 on machine_1:</para>
+        <para>vishnu_delete_local_account user_1 machine_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1119,6 +1160,11 @@ local configurations related to your VISHNU account. </para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To list all the local accounts:</para>
+        <para>vishnu_list_local_accounts -a</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1205,6 +1251,11 @@ for other VISHNU commands.</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To list all the machines:</para>
+        <para>vishnu_list_machines -a</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1301,6 +1352,11 @@ for other VISHNU commands.</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To see the own history of commands of a user:</para>
+        <para>vishnu_list_history_cmd</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -1389,6 +1445,11 @@ for other VISHNU commands.</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To list all the options of the user:</para>
+        <para>vishnu_list_options -a</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1522,6 +1583,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To list all opened the sessions of the user user_1:</para>
+        <para>vishnu_list_session -u user_1</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -1599,6 +1665,11 @@ opened the session).</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To set the value of the option VISHNU_TIMEOUT to the value 69:</para>
+        <para>vishnu_configure_option VISHNU_TIMEOUT 69</para>
       </refsect1>
     </refentry>
   </reference>
@@ -1733,6 +1804,11 @@ opened the session).</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To submit on machine_1 the job in the script toto:</para>
+        <para>vishnu_submit_job machine_1 toto</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -1798,6 +1874,11 @@ opened the session).</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To get the info on the job J_1 on machine_1:</para>
+        <para>vishnu_get_job_info machine_1 J_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1866,6 +1947,11 @@ opened the session).</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To get the progress of the job J_1 on machine_1:</para>
+        <para>vishnu_get_job_progress machine_1 -i J_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1939,6 +2025,11 @@ opened the session).</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To list the queues available on machine_1:</para>
+        <para>vishnu_list_queues machine_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -2064,6 +2155,11 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To list the jobs on machine_1:</para>
+        <para>vishnu_list_jobs machine_1</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -2149,6 +2245,11 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To get the output of the job J_1 on machine_1:</para>
+        <para>vishnu_get_job_output machine_1 J_1</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -2225,6 +2326,11 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To get the completed job on machine_1:</para>
+        <para>vishnu_get_completed_jobs_output machine_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -2303,6 +2409,11 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To cancel the submission of the job J_1 on machine_1:</para>
+        <para>vishnu_cancel_job machine_1 J_1</para>
       </refsect1>
     </refentry>
   </reference>
@@ -2399,6 +2510,11 @@ values can be obtained using the vishnu_list_machine command)</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To create the file toto on machine_1:</para>
+        <para>vishnu_create_file machine_1:/tmp/toto</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -2490,6 +2606,11 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To create the repository toto on machine_1:</para>
+        <para>vishnu_create_dir machine_1:/tmp/toto</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -2589,6 +2710,11 @@ values can be obtained using the vishnu_list_machine command)</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To remove the file toto on machine_1:</para>
+        <para>vishnu_remove_file machine_1:/tmp/toto </para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -2680,6 +2806,11 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To remove the repository toto on machine_1:</para>
+        <para>vishnu_remove_dir machine_1:/tmp/toto</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -2773,6 +2904,11 @@ values can be obtained using the vishnu_list_machine command)</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To change the group owner to  test of the file toto on machine_1:</para>
+        <para>vishnu_ch_owner test machine_1:/tmp/toto</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -2865,6 +3001,11 @@ The mode parameter is the same value as for the unix chmod command.</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To change the access rights on file toto on machine_1 to all rights:</para>
+        <para>vishnu_ch_mod 777 machine_1:/tmp/toto</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -2966,6 +3107,11 @@ values can be obtained using the vishnu_list_machine command).
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To visualize the 3 first line on the file toto on machine_1:</para>
+        <para>vishnu_head_of_file -n 3 machine_1:/tmp/toto</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -3066,6 +3212,11 @@ values can be obtained using the vishnu_list_machine command).
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To vizualize the 3 last lines of the file toto on machine_1:</para>
+        <para>vishnu_tail_of_file -n 3 machine_1:/tmp/toto</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -3158,6 +3309,11 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To view the content of the file toto on machine_1:</para>
+        <para>vishnu_content_of_file machine_1:/tmp/toto</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -3264,6 +3420,11 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To display the content of the toto repository on machine_1:</para>
+        <para> vishnu_list_dir machine_1:/tmp/toto</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -3379,6 +3540,11 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To copy the file toto from machine_1 to machine_2 home directory: </para>
+        <para>vishnu_copy_file machine_1:/tmp/toto machine_2:/home/vishnu/</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -3496,6 +3662,11 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To copy using an asynchrone method the file toto from machine_1 to machine_2 home directory: </para>
+        <para>vishnu_copy_async_file machine_1:/tmp/toto machine_2:/home/vishnu/</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -3610,6 +3781,11 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To move the file toto from machine_1 to machine_2 home directory: </para>
+        <para>vishnu_move_file machine_1:/tmp/toto machine_2:/home/vishnu/</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -3727,6 +3903,11 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To move using an asynchronous method the file toto from machine_1 to machine_2 home directory: </para>
+        <para>vishnu_move_async_file machine_1:/tmp/toto machine_2:/home/vishnu/</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -3838,6 +4019,11 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To stop the file transfers on machine_1:</para>
+        <para>vishnu_stop_file_transfer -m machine_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -3959,6 +4145,11 @@ The value must be an integer. Predefined values are: 0 (INPROGRESS), 1 (COMPLETE
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To list the file transfers on machine_1 for the user user_1:</para>
+        <para>vishnu_list_file_transfers -m machine_1 -u user_1</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -4052,6 +4243,11 @@ values can be obtained using the vishnu_list_machine command).
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To get the data concerning the file toto on machine_1:</para>
+        <para>vishnu_get_file_info machine_1:/tmp/toto</para>
+      </refsect1>
     </refentry>
   </reference>
   <reference>
@@ -4133,6 +4329,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (SHELL).</
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To export the commands made during the session with id S01 in the file toto:</para>
+        <para>vishnu_export_commands S01 /tmp/toto</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -4209,6 +4410,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To get the current values of the metrics on machine_1:</para>
+        <para>vishnu_get_metric_current_value machine_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4298,6 +4504,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To get the history of the metrics on machine_1:</para>
+        <para>vishnu_get_metric_history machine_1</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -4362,6 +4573,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To get the update frequency:</para>
+        <para>vishnu_get_update_frequency</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4434,6 +4650,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example:">
+        <title>EXAMPLE:</title>
+        <para>To get all the system info for all the machine:</para>
+        <para>vishnu_get_system_info</para>
       </refsect1>
     </refentry>
   </reference>
