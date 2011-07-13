@@ -168,7 +168,7 @@
     </para>
     
     <section>
-      <title> Installation procedure </title>
+      <title> Installation procedure of the clients </title>
       
       <para> 
 	This section details the main steps of the installation process, including the installation requirements [D1.1b]. VISHNU is based on SysFera-DS software
@@ -228,23 +228,29 @@
 	      <para>> cmake -DCLIENT_ONLY=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu .. </para>
 	      <para>> make &amp;&amp; make install</para>
 	    </listitem>
-	    
+
 	    <listitem>
-	      <para> <emphasis role="bold">To compile the UMS package : </emphasis></para>
-	      <para>> cmake -DCOMPILE_UMS=ON  -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para> 
-	    </listitem>
-	    
-	    <listitem>
-	      <para> <emphasis role="bold">To compile the TMS package : </emphasis></para>
-	      <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
-	    </listitem>
-	    <listitem>
-	      <para> <emphasis role="bold">To compile the FMS package : </emphasis></para>
-	      <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_FMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
-	    </listitem>
-	    <listitem>
-	      <para> <emphasis role="bold">To compile the IMS package : </emphasis></para>
-	      <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DCOMPILE_FMS=ON -DCOMPILE_IMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
+	      <para>The module for each client can be built using the '-DCOMPILE_*MS=ON' flag. These are some commande line examples on how to build the clients</para>
+	      <itemizedlist>		
+		<listitem>
+		  <para> <emphasis role="bold">To compile the UMS package : </emphasis></para>
+		  <para>> cmake -DCOMPILE_UMS=ON  -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para> 
+		</listitem>
+		
+		<listitem>
+		  <para> <emphasis role="bold">To compile the TMS package : </emphasis></para>
+		  <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
+		</listitem>
+		<listitem>
+		  <para> <emphasis role="bold">To compile the FMS package : </emphasis></para>
+		  <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_FMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
+		</listitem>
+		<listitem>
+		  <para> <emphasis role="bold">To compile the IMS package : </emphasis></para>
+		  <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DCOMPILE_FMS=ON -DCOMPILE_IMS=ON </para>
+		  <para> -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
+		</listitem>
+	      </itemizedlist>
 	    </listitem>
 	  </itemizedlist>
 	</para>
@@ -258,7 +264,7 @@
     </section>
     
     <section>
-      <title> Sofware usage description </title>
+      <title> Software usage description </title>
       <para><emphasis role="bold">WARNING: The lists are INOUT parameters, the results are appended, they do not overwrite the existing list. Moreover, the get function on the lists do not check the bounds, it is like using the [] operator.</emphasis></para>
       <section><!-- UMS Package -->
 	<title> UMS package </title> 

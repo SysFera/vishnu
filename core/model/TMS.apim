@@ -9,6 +9,7 @@
       <ports name="options" dataType="//@modules.0/@typeList/@types.1" description="Is an instance of the class SubmitOptions. Each optionnal value is associated to a set operation (e.g: setNbCpu(...)) in the class SubmitOptions.  If no set operation is not called on the instance object  options, the job is submitted with the options defined in the scriptFilePath. Otherewise the job is submitted with the optionnal values set by the options object and optionnal values defined in the scriptFilePath, but optionnal values set by SubmitOptions object take precedence over those in scriptFilePath. With in the object options or within the scriptFilePath, the last occurance of an optionnal value takes precedence over earlier occurance." optional="true" shortOptionLetter=""/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.0"/>
       <details key="description" value="This command is used to submit a job to the specific batch scheduler associated to a machine. It allows describing a job in a script, using either the batch scheduler's directives or VISHNU's generic directives for all batch schedulers."/>
+      <details key="exCLI" value="To submit on machine_1 the job in the script toto:&#xA;vishnu_submit_job machine_1 toto"/>
     </services>
     <services name="getJobInfo" description="gets information on a job from its id" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_PERMISSION_DENIED VISHNU_OK ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
@@ -17,6 +18,7 @@
       <ports name="jobInfos" direction="OUT" dataType="//@modules.0/@typeList/@types.3" description="The resulting information on the job"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.2"/>
       <details key="description" value="This command allows getting information about a specific job. It can return the job's status, for example."/>
+      <details key="exCLI" value="To get the info on the job J_1 on machine_1:&#xA;vishnu_get_job_info machine_1 J_1"/>
     </services>
     <services name="getJobProgress" description="gets the progression status of jobs" resultCodes="VISHNU_OK ERRCODE_UNKNOWN_MACHINE ERRCODE_SESSIONKEY_EXPIRED ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
@@ -27,6 +29,7 @@
       <ports name="options" dataType="//@modules.0/@typeList/@types.4" description="Is an object containing the available options jobs for progression ." optional="true"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.7"/>
       <details key="description" value="This command allows getting the progression status of a job based on the wall-clock time specified."/>
+      <details key="exCLI" value="To get the progress of the job J_1 on machine_1:&#xA;vishnu_get_job_progress machine_1 -i J_1"/>
     </services>
     <services name="listQueues" description="gets queues information" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_PERMISSION_DENIED VISHNU_OK ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
@@ -36,6 +39,7 @@
         <dataType href="TMS_Internal.apim#//@typeList/@types.0"/>
       </ports>
       <details key="description" value="This command displays the status of the queues of a specific machine's batch scheduler."/>
+      <details key="exCLI" value="To list the queues available on machine_1:&#xA;vishnu_list_queues machine_1"/>
     </services>
     <services name="listJobs" description="gets a list of all submitted jobs" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_PERMISSION_DENIED VISHNU_OK ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
@@ -44,6 +48,7 @@
       <ports name="options" dataType="//@modules.0/@typeList/@types.2" description="Additional options for jobs listing" optional="true"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.3"/>
       <details key="description" value="This command allows displaying the jobs submitted on a specific machine's batch scheduler."/>
+      <details key="exCLI" value="To list the jobs on machine_1:&#xA;vishnu_list_jobs machine_1"/>
     </services>
     <services name="getJobOutput" description="gets standard output and error output files of a job given its id" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_SESSIONKEY_EXPIRED VISHNU_OK ERRCODE_PERMISSION_DENIED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_JOB_IS_NOT_TERMINATED ERRCODE_SSH ERRCODE_ALREADY_DOWNLOADED">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
@@ -53,6 +58,7 @@
       <ports name="outDir" dataType="//@typeList/@types.0" description="The output directory where the files will be stored (default is current directory)" optional="true" shortOptionLetter="o" longOptionName="" defaultValueLiteral="string()"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.4"/>
       <details key="description" value="This command allows getting a job's output files."/>
+      <details key="exCLI" value="To get the output of the job J_1 on machine_1:&#xA;vishnu_get_job_output machine_1 J_1"/>
     </services>
     <services name="getCompletedJobsOutput" description="gets standard output and error output files of completed jobs (applies only once for each job)" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_SESSIONKEY_EXPIRED VISHNU_OK ERRCODE_PERMISSION_DENIED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_SSH">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
@@ -61,6 +67,7 @@
       <ports name="outDir" dataType="//@typeList/@types.0" description="Specifies the output directory where the files will be stored (by default, the current directory)." optional="true" shortOptionLetter="o" longOptionName="" defaultValueLiteral="string()"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.5"/>
       <details key="description" value="This command allows getting the output files of all the completed jobs."/>
+      <details key="exCLI" value="To get the completed job on machine_1:&#xA;vishnu_get_completed_jobs_output machine_1"/>
     </services>
     <services name="cancelJob" description="cancels a job from its id" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_PERMISSION_DENIED VISHNU_OK ERRCODE_SESSIONKEY_EXPIRED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_ALREADY_CANCELED ERRCODE_ALREADY_TERMINATED ERRCODE_SSH">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
@@ -68,6 +75,7 @@
       <ports name="jobId" dataType="//@typeList/@types.0" description="The Id of the job"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.1"/>
       <details key="description" value="This command allows canceling a job submitted on a specific machine's batch scheduler."/>
+      <details key="exCLI" value="To cancel the submission of the job J_1 on machine_1:&#xA;vishnu_cancel_job machine_1 J_1&#xA;"/>
     </services>
     <typeList>
       <types name="ListJobs">
