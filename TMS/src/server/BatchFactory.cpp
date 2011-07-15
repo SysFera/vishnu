@@ -53,13 +53,6 @@ BatchFactory::getBatchServerInstance(BatchType batchType) {
 }
 
 /**
- * \brief Function to free a batchServer instance.
- */
-void BatchFactory::freeBatchServerInstance() {
-   delete mbatchServer;
-}
-
-/**
  * \brief Destructor
  */
 BatchFactory::~BatchFactory() {

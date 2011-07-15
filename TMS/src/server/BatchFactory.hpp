@@ -37,11 +37,6 @@ class BatchFactory
     BatchServer*
     getBatchServerInstance(BatchType batchType);
 
-    /**
-     * \brief Function to free a batchServer instance.
-     */
-    void freeBatchServerInstance();
-
   private :
     
     /**
