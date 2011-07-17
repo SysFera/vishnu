@@ -172,7 +172,7 @@
     <section>
       <title> Installation procedure of the clients </title>
       <para> 
-	This section details the main steps of the installation process, including the installation requirements [D1.1b]. VISHNU is based on SysFera-DS software
+	This section details the main steps of the installation process for the clients, including the installation requirements [D1.1b]. VISHNU is based on SysFera-DS software
 	which must be installed before.
       </para>
       <para> <emphasis role="bold">Installation requirements:</emphasis></para>
@@ -256,6 +256,7 @@
     <section>
       <title> Software usage description </title>
       <para><emphasis role="bold">WARNING: The lists are INOUT parameters, the results are appended, they do not overwrite the existing list. Moreover, the get function on the lists do not check the bounds, it is like using the [] operator.</emphasis></para>
+      <para>VISHNU is composed of 4 main packages, one that deals with the users and the machine (UMS), one that deals with the batch schedulers (TMS), one that deals with the files management (FMS) and one that handle the information of the system (IMS). These clients can be installed alltogether or just one or two. Please contact your VISHNU admin to know the corresponding servers you can have before installing the client. It is important to note that the client can be installed without the server being on the platform, the call will end up with an exception and the message &quot;Vishnu not available&quot;. Below each package will be describe to show the services it offers to the user.</para>
       <section>
         <title> UMS package </title>
         <section>
@@ -275,7 +276,7 @@
         <section>
           <title> Reconnection to VISHNU </title>
           <para>
-	    Reconnection is done using the <emphasis role="bold">vishnu_reconnect</emphasis> command. This command allows using an existing session that was previously opened but not closed. It makes it possible to simultaneously use the same session in different shell terminals.
+	    Reconnection is done using the <emphasis role="bold">vishnu_reconnect</emphasis> command. This command allows using an existing session that was previously opened but not closed. It makes it possible to simultaneously use the same session in different shell terminals. A session is what authentifies a user once he has connected. The user does not need password or username when authenticated to use vishnu. Moreover, the session contains the commands made by a user, so he can retrieve the sequence of commands made in a previous work session.
 	  </para>
         </section>
         <section>
