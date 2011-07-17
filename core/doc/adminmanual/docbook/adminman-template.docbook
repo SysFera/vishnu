@@ -95,6 +95,14 @@
             configuration de UMS, IMS et FMS .</para>
         </revdescription>
       </revision>
+      <revision>
+        <revnumber>10</revnumber>
+        <date>13/07/2011</date>
+        <authorinitials>K.COULOMB</authorinitials>
+        <revdescription>
+          <para>Mise à jour du document suites aux premiers retours .</para>
+        </revdescription>
+      </revision>
 
     </revhistory>
   </info>
@@ -149,7 +157,7 @@
       <itemizedlist>
 	<listitem>
 	  <para>DB : Base de données: elle est centralisée et utilisée pour sauvegarder toutes les données manipulées
-	    par le module UMS. Cette base de données sera considérée comme étant de type PostgreSQL dans ce document.</para>
+	    par les divers modules.</para>
 	</listitem>
 	<listitem>
 	  <para>FMS : File Management Service</para>
@@ -227,7 +235,7 @@
     <title>Installation à partir des sources</title>
     <section>
       <title>Objectifs</title>
-      <para> Ce chapitre va présenter comment installer VISHNU à partir des sources. Il expliquera comment installer les serveurs et/ou les clients (l'installation d'un serveur implique l'installation du client associé). Le module UMS est nécessaire pour tout les autres modules, sinon n'importe quel module peut être installé sur une machine donnée sans dépendance des autres, et cela n'empêche pas d'utiliser les services même si les serveurs sont sur des machines différentes. Toutefois, pour que IMS puis faire du délestage sur une machine, il faut que les modules concernés par le délestage soient compilés avec IMS sur la machine en question. </para>
+      <para> Ce chapitre va présenter comment installer VISHNU à partir des sources. Il expliquera comment installer les serveurs et/ou les clients (l'installation d'un serveur implique l'installation du client associé). Le module UMS est nécessaire pour tout les autres modules, sinon n'importe quel module peut être installé sur une machine donnée sans dépendance des autres, et cela n'empêche pas d'utiliser les services même si les serveurs sont sur des machines différentes. Toutefois, pour que IMS puisse faire du délestage sur une machine, il faut que les modules concernés (TMS et/ou FMS) par le délestage soient installés avec IMS sur la machine en question. </para>
     </section>
     <section>
       <title>Prérequis</title>
@@ -282,13 +290,20 @@
             <listitem>
               <para>Python version 2.x x>=5</para>
             </listitem>
-            <listitem>
-              <para>PGSQL-API (api PostGreSQL) version 8.0 minimum</para>
-            </listitem>
-            <listitem>
-              <para>MYSQL-API (api MySQL) version 5.1 minimum</para>
-            </listitem>
           </itemizedlist>
+          <itemizedlist>
+            <listitem>
+	      <para>Base de données, à mettre sur les machines avec des serveurs, au choix : </para>
+              <itemizedlist>
+		<listitem>
+		  <para>PGSQL-API (api PostGreSQL) version 8.0 minimum</para>
+		</listitem>
+		<listitem>
+		  <para>MYSQL-API (api MySQL) version 5.1 minimum</para>
+		</listitem>
+              </itemizedlist>
+	    </listitem>
+	  </itemizedlist>
         </listitem>
       </itemizedlist>
     </section><!-- end prerequis -->
@@ -399,7 +414,7 @@
 
   <chapter>
     <title>Configuration de la base de données</title>
-    <para>Les fichiers de configuration de la DB sont disponibles dans le répertoire core/database du package d'installation VISHNU.</para>
+    <para>Les fichiers de configuration de la DB sont disponibles dans le répertoire core/database du package d'installation VISHNU. Les seules bases de données actuellement supportées sont PostgreSQL et MySQL. Les bases de type Oracle ne sont pas supportées. Lors de l'installation toutes les machines doivent avoir soit PostgreSQL, soit MySQL, mais pas certaines machines une base et d'autres une autre, cela ne fonctionnerait pas.</para>
     <section>
       <title>Utilisation d'une base de données PostGreSQL</title>
       <para>Pour une installation d'une nouvelle base de données, les scripts 'postgre_create.sql' et 'database_init.sql' doivent être utilisés par l'administrateur de la DB.</para>
@@ -422,10 +437,11 @@
             et vérifier que la variable JAVA_HOME est bien définie et contient le répertoire racine de l'installation de java.</para>
         </listitem>
 	<listitem>
-	  <para>Installer les modules désirés avec l'option -DENABLE_JAVA=ON.</para>
+	  <para>Installer les modules désirés avec les options -DENABLE_JAVA=ON et -DENABLE_SWIG (<emphasis role="bold">Note</emphasis> :
+            Ce pré-requis est optionnel car les jars sont déjà fournis dans la distribution des web services).</para>
 	</listitem>
         <listitem>
-          <para>Installer <emphasis role="bold">Maven 2</emphasis> pour compiler les jars ( <emphasis role="bold">Note</emphasis> :
+          <para>Installer <emphasis role="bold">Maven 2</emphasis> pour compiler les jars (<emphasis role="bold">Note</emphasis> :
             Ce pré-requis est optionnel car les jars sont déjà fournis dans la distribution des web services.
             Par ailleurs la compilation avec maven nécessite une connexion internet).</para>
         </listitem>
@@ -554,7 +570,7 @@
     <title>Déploiement de VISHNU</title>
     <section>
       <title>Lancement sur un même réseau</title>
-      <para>Les modules peuvent être lancés soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration.</para>
+      <para>Les modules peuvent être lancés soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration. Le déploiement se fera en suivant la configuration montrée sur la figure 4.1 du document [ARCH]. Pour simplier les choses, on supposera que les divers éléments dans le carré "dedicated to VISHNU" vont être déployés sur la même machine que l'on va nommer <emphasis role="bold">préfrontale</emphasis>.</para>
       <para><emphasis role="bold">NOTE: l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
       <para><emphasis role="bold">NOTE: Il est préférable d'éviter de lancer le même SeD sur la même machine.</emphasis></para>
       <para><emphasis role="bold">NOTE: Il existe un bug connu sur debian (entre autre) avec boost file system, utilisé par VISHNU. Le rapport de bug est ici et le bug est actuellement ouvert: https://svn.boost.org/trac/boost/ticket/4688. Si lors du lancement d'un SeD, le message d'erreur suivant apparait : std::runtime_error: locale::facet::_S_create_c_locale name not valid, faire un "export LANG=C" et cela devrait régler le problème.</emphasis></para>
@@ -565,13 +581,13 @@
           <para> Avoir une base de données PostGreSQL accessible et initialisée (tables créées et premières données créées). Des scripts SQL sont fournis pour cela. Avoir la base PostGreSQL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base).</para>
 	</listitem>
 	<listitem>
-          <para> Lancer le service de nommage CORBA sur la machine préfrontale. La commande est 'omniNames -start' pour la première fois, sinon 'omniNames' suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
+          <para> Lancer le service de nommage CORBA sur la machine préfrontale. La commande est <emphasis role="bold">omniNames -start</emphasis> pour la première fois, sinon <emphasis role="bold">omniNames</emphasis> suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
 	</listitem>
 	<listitem>
-          <para> Lancer le log service de DIET sur la machine préfrontale. La commande est 'LogCentral --config config.cfg' avec config.cfg un fichier de configuration pour le log central. </para>
+          <para> Lancer le log service de DIET sur la machine préfrontale. La commande est <emphasis role="bold">LogCentral --config config.cfg</emphasis> avec config.cfg un fichier de configuration pour le log central. </para>
 	</listitem>
 	<listitem>
-          <para> Lancer le MA avec son fichier de configuration : 'dietAgent config.cfg'. Voir le paragraphe 6.3 pour avoir un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
+          <para> Lancer le MA avec son fichier de configuration sur la machine préfrontale : <emphasis role="bold">dietAgent config.cfg</emphasis>. Voir le paragraphe 6.3 pour avoir un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
             <itemizedlist>
 	      <listitem>
 		<para> 'traceLevel = 0' : Le niveau de verbosité du master agent, cette valeur peut être entre 0 et 10 compris. </para>
@@ -580,13 +596,13 @@
 		<para> 'agentType = DIET_MASTER_AGENT' : Le type de l'agent, l'autre type disponible est DIET_LOCAL_AGENT mais dans notre cas il faut DIET_MASTER_AGENT.</para>
 	      </listitem>
 	      <listitem>
-		<para> 'name = MA0' : Le nom que l'on veut donner à l'agent.</para>
+		<para> 'name = MA0' : Le nom que l'on veut donner à l'agent, par exemple on le nomme MA0 ici.</para>
 	      </listitem>
             </itemizedlist>
           </para>
 	</listitem>
 	<listitem>
-          <para>Lancer le SeD UMS avec 'umssed ~/ums_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.5 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à:
+          <para>Lancer le SeD UMS sur la préfrontale avec la commande <emphasis role="bold">umssed ~/ums_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.5 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à:
             <itemizedlist>
 	      <listitem>
 		<para>
@@ -596,7 +612,7 @@
 		      <para>'traceLevel = 0' : Le niveau de verbosité du SeD UMS, ce niveau peut être entre 0 (minimum) et 10 compris.</para>
                     </listitem>
                     <listitem>
-		      <para> 'parentName = MA0' : Le nom du MA auquel le SeD UMS doit se lier. Ce doit être exactement le même nom que celui donné au même dans le champs 'name' du MA en question.</para>
+		      <para> 'parentName = MA0' : Le nom du MA auquel le SeD UMS doit se lier. Ce doit être exactement le même nom que celui donné au même dans le champs 'name' du MA en question, sur cet exemple c'est MA0.</para>
                     </listitem>
                     <listitem>
 		      <para> 'useLogService = 1' : Pour utiliser le service de log dans DIET (sinon les SeD n'émettent aucun message).</para>
@@ -642,7 +658,7 @@
 	  </para>
 	</listitem>
 	<listitem>
-          <para>Lancer le SeD TMS sur la machine hôte de Torque. La commande de lancement est : 'tmssed ~/tms_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.6 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
+          <para>Lancer le SeD TMS sur la machine hôte de Torque. La commande de lancement est : <emphasis role="bold">tmssed ~/tms_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.6 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
 	    <itemizedlist>
 	      <listitem>
 		<para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des jobs.</para>
@@ -657,11 +673,11 @@
 	  </para>
 	</listitem>
 	<listitem>
-	  <para>Lancer le SeD IMS sur toutes les machines à monitorer. La commande de lancement est : 'imssed ~/ims_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.5 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS.
+	  <para>Lancer le SeD IMS sur toutes la machine préfrontale. La commande de lancement est : <emphasis role="bold">imssed ~/ims_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.5 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS. Il faut noter que IMS doit être lancé sur toutes les machines à monitorer.
 	  </para>
 	</listitem>
   <listitem>
-          <para>Lancer le SeD FMS. La commande de lancement est : 'fmssed ~/fms_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.7 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
+          <para>Lancer le SeD FMS sur une machine (sur la figure exemple 4.1 elle est différente de la préfrontale et de la machine avec le batch, mais cela peut être n'importe laquelle). La commande de lancement est : <emphasis role="bold">fmssed ~/fms_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.7 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
 	    <itemizedlist>
 	      <listitem>
 		<para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des transferts de fichiers.</para>
@@ -671,7 +687,7 @@
 	</listitem>
   <listitem>
 	  <para>
-	    Les modules de VISHNU sont prêts à être utilisés. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen des commandes UMS et TMS (voir le manuel de l'utilisateur VISHNU).
+	    Les modules de VISHNU sont prêts à être utilisés. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen des commandes UMS, TMS, FMS et IMS (voir le manuel de l'utilisateur VISHNU pour plus d'informations sur les commandes utilisateurs disponibles).
 	  </para>
 	</listitem>
       </orderedlist>
@@ -679,19 +695,18 @@
     <section>
       <title>Lancement sur plusieurs réseaux</title>
       <para>Un module VISHNU peut être lancé soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration.
-	On suppose dans la suite que le MA est sur le même réseau que l'omniNames et le SeD sur un autre réseau, séparés par un pare-feu</para>
+	Pour le déploiement on se base sur le modèle de la figure 4.2 du document [ARCH] en supposant pour simplifier que sur un réseau tout est lancé sur la même machine et que les réseaux "Network C" et "Network D" sont confondus (pas de forwarder à mettre entre eux).</para>
       <para><emphasis role="bold">NOTE: l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
-      <para>Pour une vue générale de l'architecture du système VISHNU, se référer au document [ARCH], chapitre 4 ('Technical Architecture').</para>
       <orderedlist>
 	<listitem>
 	  <para> Avoir une base de données PostgreSQL accessible et initialisée (tables créées et premières données créées). Des scripts SQL sont fournis pour cela. Avoir la base PostGreSQL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base).</para>
 	</listitem>
 	<listitem>
-	  <para> Lancer le service de nommage CORBA sur la machine préfrontale sur les deux réseaux. La commande est 'omniNames -start' pour la première fois, sinon 'omniNames' suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
+	  <para> Lancer le service de nommage CORBA sur les différents réseaux. La commande est <emphasis role="bold">omniNames -start</emphasis> pour la première fois, sinon <emphasis role="bold">omniNames</emphasis> suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
 	</listitem>
 	<listitem>
-	  <para> Lancer un démon forwarder sur le reseau 2 :  </para>
-	  <para>dietForwarder --name forwarder2 --net-config forwarder2.cfg
+	  <para> Lancer un démon forwarder sur le reseau 2 (Network B):  </para>
+	  <para><emphasis role="bold">dietForwarder --name forwarder2 --net-config forwarder2.cfg</emphasis>
 	    <itemizedlist>
 	      <listitem><para>
 		  forwarder2 : nom qui identifie le démon forwarder sur ce réseau
@@ -717,11 +732,11 @@
 	  </para>
 	</listitem>
 	<listitem>
-	  <para> Lancer un démon forwarder sur le reseau 1: </para>
-	  <para>dietForwarder -C--peer-name forwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name forwarder
+	  <para> Lancer un démon forwarder sur le reseau 1 (network C): </para>
+	  <para><emphasis role="bold">dietForwarder -C--peer-name forwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name forwarder
 	    --net-config forwarder1.cfg
 	    --remote-host localhost
-	    --ssh-login login
+	    --ssh-login login</emphasis>
 	  </para>
 	  <para>
 	    <itemizedlist>
@@ -758,8 +773,8 @@
 	    la passphrase est demandée et la connexion ssh s'établit.</para>
 	</listitem>
 	<listitem>
-	  <para> Lancer un démon forwarder pour le log service sur le reseau 2 :  </para>
-	  <para>logForwarder --name logforwarder2 --net-config logforwarder2.cfg
+	  <para> Lancer un démon forwarder pour le log service sur le reseau 2 (network B):  </para>
+	  <para><emphasis role="bold">logForwarder --name logforwarder2 --net-config logforwarder2.cfg</emphasis>
 	    <itemizedlist>
 	      <listitem><para>
 		  logforwarder2 : nom qui identifie le démon forwarder sur ce réseau
@@ -785,11 +800,11 @@
 	  </para>
 	</listitem>
 	<listitem>
-	  <para> Lancer un démon log forwarder sur le reseau 1: </para>
-	  <para>logForwarder -C--peer-name logforwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name logforwarder
+	  <para> Lancer un démon log forwarder sur le reseau 1 (network C): </para>
+	  <para><emphasis role="bold">logForwarder -C--peer-name logforwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name logforwarder
 	    --net-config logforwarder1.cfg
 	    --remote-host localhost
-	    --ssh-login login
+	    --ssh-login login</emphasis>
 	  </para>
 	  <para>
 	    <itemizedlist>
@@ -826,10 +841,10 @@
 	    la passphrase est demandée et la connexion ssh s'établit.</para>
 	</listitem>
 	<listitem>
-	  <para> Lancer le log service de DIET sur la machine préfrontale. La commande est 'LogCentral --config config.cfg' avec config.cfg un fichier de configuration pour le log central. </para>
+	  <para> Lancer le log service de DIET sur la machine du network B. La commande est <emphasis role="bold">LogCentral --config config.cfg</emphasis> avec config.cfg un fichier de configuration pour le log central. </para>
 	</listitem>
 	<listitem>
-	  <para> Lancer le MA avec son fichier de configuration sur le même réseau que le service de nommage : 'dietAgent config.cfg'. Voir le paragraphe 6.3 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
+	  <para> Lancer le MA avec son fichier de configuration sur le réseau network B : <emphasis role="bold">dietAgent config.cf</emphasis>. Voir le paragraphe 6.3 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
 	    <itemizedlist>
 	      <listitem>
 		<para> 'traceLevel = 0' : Le niveau de verbosité du master agent, cette valeur peut être entre 0 et 10 compris. </para>
@@ -838,18 +853,18 @@
 		<para> 'agentType = DIET_MASTER_AGENT' : Le type de l'agent, l'autre type disponible est DIET_LOCAL_AGENT mais dans notre cas il faut DIET_MASTER_AGENT.</para>
 	      </listitem>
 	      <listitem>
-		<para> 'name = MA0' : Le nom que l'on veut donner à l'agent.</para>
+		<para> 'name = MA0' : Le nom que l'on veut donner à l'agent, dans notre exemple on va l'appeller MA0.</para>
 	      </listitem>
 	    </itemizedlist>
 	  </para>
 	</listitem>
 	<listitem>
-	  <para>Lancer le SeD, par exemple un UMS sur l'autre sous réseau. Un exemple de commande de lancement est : './umssed ~/ums_sed.cfg'. Se référer au chapitre de déploiement pour le contenu du fichier, c'est le même à utiliser que dans un déploiement sur un seul réseau.
+	  <para>Lancer le SeD, par exemple un UMS sur le réseau network C. Un exemple de commande de lancement est : <emphasis role="bold">umssed ~/ums_sed.cfg</emphasis>. Se référer au chapitre de déploiement pour le contenu du fichier, c'est le même à utiliser que dans un déploiement sur un seul réseau.
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	    Le module, ici UMS, de VISHNU est prêt à être utilisé. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen de clients UMS.
+	    Le module, ici UMS, de VISHNU est prêt à être utilisé. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen de clients UMS. Si le client est encore sur un autre réseau il faudra mettre la paire de dietForwarder entre le réseau client et l'un des réseaux connecté à la hierarchie déployée.
 	  </para>
 	</listitem>
       </orderedlist>
