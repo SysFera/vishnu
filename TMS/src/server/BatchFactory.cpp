@@ -56,5 +56,7 @@ BatchFactory::getBatchServerInstance(BatchType batchType) {
  * \brief Destructor
  */
 BatchFactory::~BatchFactory() {
-
+  if(mbatchServer!=NULL) {
+    delete mbatchServer;
+  }
 }
