@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<book label="UMS.apim#MAN(admin);UMS.apim#CPP(admin);UMS.apim#PYTHON(admin);FMS.apim#MAN(admin);FMS.apim#CPP(admin);FMS.apim#PYTHON(admin);IMS.apim#MAN(admin);IMS.apim#CPP(admin);IMS.apim#PYTHON(admin)" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
+<book label="UMS.apim#MAN(admin);UMS.apim#CPP(admin);UMS.apim#PYTHON(admin);IMS.apim#MAN(admin);IMS.apim#CPP(admin);IMS.apim#PYTHON(admin)" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
   <!--<book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">-->
   <info>
     <title>VISHNU - Le guide de l'administrateur</title>
@@ -574,7 +574,7 @@
       <para><emphasis role="bold">NOTE: l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
       <para><emphasis role="bold">NOTE: Il est préférable d'éviter de lancer le même SeD sur la même machine.</emphasis></para>
       <para><emphasis role="bold">NOTE: Il existe un bug connu sur debian (entre autre) avec boost file system, utilisé par VISHNU. Le rapport de bug est ici et le bug est actuellement ouvert: https://svn.boost.org/trac/boost/ticket/4688. Si lors du lancement d'un SeD, le message d'erreur suivant apparait : std::runtime_error: locale::facet::_S_create_c_locale name not valid, faire un "export LANG=C" et cela devrait régler le problème.</emphasis></para>
-      <para><emphasis role="bold">NOTE: L'utilisateur VISHNU 'root' doit avoir un local accompte sur chaque machine ou il y a un serveur IMS. Le compte UNIX correspondant sera utilisé pour le redémarrage automatique des SeD.</emphasis></para>
+      <para><emphasis role="bold">NOTE: L'utilisateur VISHNU 'root' doit avoir un compte local sur chaque machine ou il y a un serveur IMS. Le compte UNIX correspondant sera utilisé pour le redémarrage automatique des SeD.</emphasis></para>
       <para>Pour mieux comprendre l'architecture de déploiement, se référer au document [ARCH], le chapitre 4, 'Technical Architecture'.</para>
       <orderedlist>
 	<listitem>
@@ -602,7 +602,7 @@
           </para>
 	</listitem>
 	<listitem>
-          <para>Lancer le SeD UMS sur la préfrontale avec la commande <emphasis role="bold">umssed ~/ums_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.5 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à:
+          <para>Lancer le SeD UMS sur la préfrontale avec la commande <emphasis role="bold">umssed ~/ums_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.5 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à :
             <itemizedlist>
 	      <listitem>
 		<para>
@@ -658,7 +658,7 @@
 	  </para>
 	</listitem>
 	<listitem>
-          <para>Lancer le SeD TMS sur la machine hôte de Torque. La commande de lancement est : <emphasis role="bold">tmssed ~/tms_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.6 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
+          <para>Lancer le SeD TMS sur la machine hôte de Torque. La commande de lancement est : <emphasis role="bold">tmssed ~/tms_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.6 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus :
 	    <itemizedlist>
 	      <listitem>
 		<para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des jobs.</para>
@@ -677,7 +677,7 @@
 	  </para>
 	</listitem>
   <listitem>
-          <para>Lancer le SeD FMS sur une machine (sur la figure exemple 4.1 elle est différente de la préfrontale et de la machine avec le batch, mais cela peut être n'importe laquelle). La commande de lancement est : <emphasis role="bold">fmssed ~/fms_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.7 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
+          <para>Lancer le SeD FMS sur une machine (sur la figure exemple 4.1 elle est différente de la préfrontale et de la machine avec le batch, mais cela peut être n'importe laquelle). La commande de lancement est : <emphasis role="bold">fmssed ~/fms_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.7 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus :
 	    <itemizedlist>
 	      <listitem>
 		<para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des transferts de fichiers.</para>
@@ -696,7 +696,7 @@
       <title>Lancement sur plusieurs réseaux</title>
       <para>Un module VISHNU peut être lancé soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration.
 	Pour le déploiement on se base sur le modèle de la figure 4.2 du document [ARCH] en supposant pour simplifier que sur un réseau tout est lancé sur la même machine et que les réseaux "Network C" et "Network D" sont confondus (pas de forwarder à mettre entre eux).</para>
-      <para><emphasis role="bold">NOTE: l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
+      <para><emphasis role="bold">NOTE : l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
       <orderedlist>
 	<listitem>
 	  <para> Avoir une base de données PostgreSQL accessible et initialisée (tables créées et premières données créées). Des scripts SQL sont fournis pour cela. Avoir la base PostGreSQL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base).</para>
@@ -705,7 +705,7 @@
 	  <para> Lancer le service de nommage CORBA sur les différents réseaux. La commande est <emphasis role="bold">omniNames -start</emphasis> pour la première fois, sinon <emphasis role="bold">omniNames</emphasis> suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
 	</listitem>
 	<listitem>
-	  <para> Lancer un démon forwarder sur le reseau 2 (Network B):  </para>
+	  <para> Lancer un démon forwarder sur le reseau 2 (Network B) :  </para>
 	  <para><emphasis role="bold">dietForwarder --name forwarder2 --net-config forwarder2.cfg</emphasis>
 	    <itemizedlist>
 	      <listitem><para>
@@ -714,7 +714,7 @@
 	      <listitem><para>
 		  forwarder2.cfg : fichier de configuration (voir le paragraphe 6.8 pour un exemple de configuration) contenant des règles appliquées aux
 		  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de le paragraphe 6.8, les
-		  règles utilisées sont:
+		  règles utilisées sont :
 		  <itemizedlist>
 		    <listitem>
 		      <para> une règle 'accept' correspondant au filtre sur la source des connections acceptées. '.*' signifie les connections provenant
@@ -732,7 +732,7 @@
 	  </para>
 	</listitem>
 	<listitem>
-	  <para> Lancer un démon forwarder sur le reseau 1 (network C): </para>
+	  <para> Lancer un démon forwarder sur le reseau 1 (network C) : </para>
 	  <para><emphasis role="bold">dietForwarder -C--peer-name forwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name forwarder
 	    --net-config forwarder1.cfg
 	    --remote-host localhost
@@ -773,7 +773,7 @@
 	    la passphrase est demandée et la connexion ssh s'établit.</para>
 	</listitem>
 	<listitem>
-	  <para> Lancer un démon forwarder pour le log service sur le reseau 2 (network B):  </para>
+	  <para> Lancer un démon forwarder pour le log service sur le reseau 2 (network B) :  </para>
 	  <para><emphasis role="bold">logForwarder --name logforwarder2 --net-config logforwarder2.cfg</emphasis>
 	    <itemizedlist>
 	      <listitem><para>
@@ -782,7 +782,7 @@
 	      <listitem><para>
 		  logforwarder2.cfg : fichier de configuration (voir le paragraphe 6.8 pour un exemple de fichier de configuration) contenant des règles appliquées aux
 		  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de le paragraphe 6.8, les
-		  règles utilisées sont:
+		  règles utilisées sont :
 		  <itemizedlist>
 		    <listitem>
 		      <para> une règle 'accept' correspondant au filtre sur la source des connections acceptées. '.*' signifie les connections provenant
@@ -800,7 +800,7 @@
 	  </para>
 	</listitem>
 	<listitem>
-	  <para> Lancer un démon log forwarder sur le reseau 1 (network C): </para>
+	  <para> Lancer un démon log forwarder sur le reseau 1 (network C) : </para>
 	  <para><emphasis role="bold">logForwarder -C--peer-name logforwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name logforwarder
 	    --net-config logforwarder1.cfg
 	    --remote-host localhost
@@ -965,7 +965,7 @@
 	pour envoyer des emails aux utilisateurs lors de certaines opérations. Ce fichier peut être modifié par l'administrateur afin
 	de s'adapter à la méthode d'envoi d'email propre au serveur sur lequel est installé le SeD. Par défaut, la configuration
 	fournie se connecte sur le serveur SMTP de 'localhost' sur le port 25, sans authentification.</para>
-      <para>Les paramètres suivants peuvent être configurés dans le script sendmail.py:</para>
+      <para>Les paramètres suivants peuvent être configurés dans le script sendmail.py :</para>
       <informaltable>
 	<tgroup cols="2">
 	  <colspec colwidth="2cm"/>
@@ -1007,9 +1007,9 @@
       <para>
         Toutes les commandes éxécutées par le SeD FMS sont lancées via ssh
         sous le nom de l'utilisateur ayant émis la requête. Les services FMS
-        sont de deux types: il y a ceux qui n'impliquent qu'une machine
-        distante: Exemple getFilesInfo,listDir,etc.. et ceux qui impliquent au
-        moins deux machines distantes: machine source et destination pour les transferts de fichiers. 
+        sont de deux types : il y a ceux qui n'impliquent qu'une machine
+        distante : Exemple getFilesInfo,listDir,etc.. et ceux qui impliquent au
+        moins deux machines distantes : machine source et destination pour les transferts de fichiers. 
         <itemizedlist>
           <listitem>
             <para> Dans le premier cas le SeD se connecte sur la machine distante et
@@ -1091,7 +1091,7 @@
 	    La mise à jour d'un utilisateur ne peut être faite que par un administrateur. Cette mise à jour se fait avec un appel à la commande 'vishnu_update_user' et permet de modifier les paramètres de l'ajout (nom, prénom, statut, couriel).
 	    Il faut avoir l'identifiant de l'utilisateur (généré lors de la création de l'utilisateur) pour le désigner lors de la mise à jour.
 	  </para>
-	  <para>Note: le changement du statut d'un utilisateur à l'état "INACTIVE" correspond à un blocage de son compte.</para>
+	  <para>Note : le changement du statut d'un utilisateur à l'état "INACTIVE" correspond à un blocage de son compte.</para>
 	</listitem>
 	<listitem>
 	  <para>
@@ -1120,11 +1120,11 @@
 	  <para>
 	    La mise à jour d'une machine se fait à l'aide de la commande 'vishnu_update_machine' et permet de modifier les paramètres mis lors de l'ajout de la machine. Il faut utiliser l'identifiant de la machine pour l'identifier lors de la mise à jour.
 	  </para>
-	  <para>Note: le changement du statut d'une machine à l'état "INACTIVE" correspond à un blocage de la machine. Cela rend la machine inaccessible aux utilisateurs de VISHNU mais toujours visible pour les administrateurs.</para>
+	  <para>Note : le changement du statut d'une machine à l'état "INACTIVE" correspond à un blocage de la machine. Cela rend la machine inaccessible aux utilisateurs de VISHNU mais toujours visible pour les administrateurs.</para>
 	</listitem>
 	<listitem>
 	  <para>
-	    La suppression d'une machine se fait à l'aide de la commande 'vishnu_delete_machine' avec l'identifiant de la machine à supprimer. Cela supprime la machine de la base de données, ainsi que toutes les informations qui y sont attachées (Attention: cette commande est irréversible).
+	    La suppression d'une machine se fait à l'aide de la commande 'vishnu_delete_machine' avec l'identifiant de la machine à supprimer. Cela supprime la machine de la base de données, ainsi que toutes les informations qui y sont attachées (Attention : cette commande est irréversible).
 	  </para>
 	</listitem>
 	<listitem>
