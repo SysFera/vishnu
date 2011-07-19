@@ -1,48 +1,10 @@
+#include "slurm-submit.h"
 
-#if HAVE_CONFIG_H
-#  include "config.h"
-#endif
-
-#include <pwd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/param.h>               /* MAXPATHLEN */
-#include <fcntl.h>
-
-#include <slurm/slurm.h>
-
-#include <slurm/slurm.h>
-#include "env.h"
-#include "plugstack.h"
-#include "read_config.h"
-#include "slurm_rlimits_info.h"
-#include "xstring.h"
-#include "xmalloc.h"
-
-#include "opt.h"
-#include "mult_cluster.h"
-
-#define MAX_RETRIES 15
-
-static void  _env_merge_filter(job_desc_msg_t *desc);
-static int   _fill_job_desc_from_opts(job_desc_msg_t *desc);
-static void *_get_script_buffer(const char *filename, int *size);
-static char *_script_wrap(char *command_string);
-static void  _set_exit_code(void);
-static void  _set_prio_process_env(void);
-static int   _set_rlimit_env(void);
-static void  _set_spank_env(void);
-static void  _set_submit_dir_env(void);
-static int   _set_umask_env(void);
-
-int main(int argc, char *argv[])
+int slurm_submit(int argc, char *argv[], submit_response_msg_t* *resp)
 {
 	log_options_t logopt = LOG_OPTS_STDERR_ONLY;
 	job_desc_msg_t desc;
-	submit_response_msg_t *resp;
+	//submit_response_msg_t *resp;
 	char *script_name;
 	void *script_body;
 	int script_size = 0;
@@ -122,7 +84,7 @@ int main(int argc, char *argv[])
 	if (sbatch_set_first_avail_cluster(&desc) != SLURM_SUCCESS)
 		exit(error_exit);
 
-	while (slurm_submit_batch_job(&desc, &resp) < 0) {
+	while (slurm_submit_batch_job(&desc, &(*resp)) < 0) {
 		static char *msg;
 
 		if (errno == ESLURM_ERROR_ON_DESC_TO_RECORD_COPY)
@@ -149,13 +111,13 @@ int main(int argc, char *argv[])
 		sleep (++retries);
         }
 
-	printf("Submitted batch job %u", resp->job_id);
+	printf("Submitted batch job %u", (*resp)->job_id);
 	if (working_cluster_rec)
 		printf(" on cluster %s", working_cluster_rec->name);
 	printf("\n");
 
 	xfree(desc.script);
-	slurm_free_submit_response_response_msg(resp);
+	slurm_free_submit_response_response_msg(*resp);
 	return 0;
 }
 
