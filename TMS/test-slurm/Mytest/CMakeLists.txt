@@ -19,11 +19,11 @@ include_directories(
   /home/traore/VishnuProject/vishnu/TMS/test-slurm/Mytest/utils-slurm
 )
 
-add_executable(slurm-submit
-  slurm-submit.c
+add_executable(test-slurm-submit
+  test-slurm-submit
 )
 
-target_link_libraries(slurm-submit
+target_link_libraries(test-slurm-submit
  ${SLURM_DIR}
  utils-slurm
 )

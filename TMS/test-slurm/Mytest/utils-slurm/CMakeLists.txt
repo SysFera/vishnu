@@ -33,7 +33,8 @@ include_directories(
 
 add_library(utils-slurm STATIC 
   opt.c
-  mult_cluster.c 
+  mult_cluster.c
+  slurm-submit.c 
 )
 
 message("slurm lib dir: "${SLURM_LIB})
