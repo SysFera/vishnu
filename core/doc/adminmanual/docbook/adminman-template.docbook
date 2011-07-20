@@ -274,7 +274,10 @@
               <para>Torque API v3.2.6</para>
             </listitem>
             <listitem>
-              <para>ou IBM LoadLeveler API</para>
+              <para>IBM LoadLeveler API</para>
+            </listitem>
+            <listitem>
+              <para>ou SLURM API v2.2.1</para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -331,7 +334,7 @@
 	  <listitem>
 	    <para>
 	      COMPILE_TMS, compile le module TMS si le flag est activé (OFF par défaut). Si ON, COMPILE_UMS doit aussi être à ON et
-              l'une des options VISHNU_USE_TORQUE ou VISHNU_USE_LOADLEVELER doit être à ON.
+              l'une des options VISHNU_USE_TORQUE, VISHNU_USE_LOADLEVELER ou VISHNU_USE_SLURM doit être à ON.
 	    </para>
 	  </listitem>
 	  <listitem>
@@ -375,6 +378,11 @@
 	      VISHNU_USE_TORQUE, compile le SeD TMS pour torque (OFF par défaut).
 	    </para>
 	  </listitem>
+    <listitem>
+      <para>
+        VISHNU_USE_SLURM, compile le SeD TMS pour SLURM (OFF par défaut).
+      </para>
+    </listitem>
 	</itemizedlist>
       </para>
       <para>
@@ -672,6 +680,28 @@
 	    </itemizedlist>
 	  </para>
 	</listitem>
+
+ <listitem>
+    <para>
+      Sur la machine hôte de SLURM, lancer les serveurs <emphasis>slurmd, slurmctld</emphasis> et <emphasis>slurmdbd</emphasis>.
+    </para>
+  </listitem>
+  <listitem>
+          <para>Lancer le SeD TMS sur la machine hôte de SLURM. La commande de lancement est : <emphasis role="bold">tmssed ~/tms_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.6 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus :
+      <itemizedlist>
+        <listitem>
+    <para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des jobs.</para>
+        </listitem>
+        <listitem>
+    <para>'batchSchedulerType=SLURM' : Le type du batch scheduler utilisé.</para>
+        </listitem>
+        <listitem>
+    <para>'vishnuMachineId=machine_2' : L'identifiant VISHNU de la machine ou le SeD TMS est lancé (obtenu en utilisant la commande vishnu_list_machines).</para>
+        </listitem>
+      </itemizedlist>
+    </para>
+  </listitem> 
+
 	<listitem>
 	  <para>Lancer le SeD IMS sur toutes la machine préfrontale. La commande de lancement est : <emphasis role="bold">imssed ~/ims_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.5 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS. Il faut noter que IMS doit être lancé sur toutes les machines à monitorer.
 	  </para>
@@ -916,7 +946,8 @@
 	sendmailScriptPath=/usr/local/sbin/sendmail.py
 	vishnuMachineId=machine_1
 	# Configuration propres à TMS
-	batchSchedulerType=TORQUE
+	# batchSchedulerType=SLURM si le batchScheduler est de type SLURM
+  batchSchedulerType=TORQUE
 	intervalMonitor = 1
       </programlisting>
     </section>
