@@ -314,7 +314,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="acLogin" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
-        <details key="content" value="accLogin represents the login of the user on the associated machine"/>
+        <details key="content" value="acLogin represents the login of the user on the associated machine"/>
         <details key="shortOption" value="l"/>
       </eAnnotations>
     </eStructuralFeatures>
