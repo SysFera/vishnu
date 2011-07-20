@@ -37,6 +37,11 @@ class BatchFactory
     BatchServer*
     getBatchServerInstance(BatchType batchType);
 
+    /**
+     * \brief Function to delete a batchServer.
+     */
+    void deleteBatchServerInstance();
+
   private :
     
     /**
