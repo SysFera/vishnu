@@ -11,6 +11,7 @@
 #include "utils.hpp"
 #include "connectUtils.hpp"
 #include "sessionUtils.hpp"
+#include "utilVishnu.hpp"
 #include<boost/bind.hpp>
 
 #include "GenericCli.hpp"

@@ -9,6 +9,7 @@
 #include "Options.hpp"
 #include "cliUtil.hpp"
 #include "utils.hpp"
+#include "utilVishnu.hpp"
 #include <boost/bind.hpp>
 
 using namespace vishnu;
