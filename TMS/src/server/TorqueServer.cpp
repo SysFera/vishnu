@@ -73,7 +73,6 @@ TorqueServer::submit(const char* scriptPath,
   }
 
   int connect = cnt2server(serverOut);
-  std::cerr << "******* connect = " << connect << std::endl;
   if (connect <= 0) {
     std::ostringstream connect_error;
     connect_error << "TORQUE ERROR: pbs_submit: cannot connect to server ";
@@ -92,7 +91,6 @@ TorqueServer::submit(const char* scriptPath,
                           scriptTmp, destination, NULL);
 
   if (jobId == NULL) {
-    std::cerr << "******* jobId is NULL ...." << std::endl;
     std::ostringstream submit_error;     
     char* errmsg = pbs_geterrmsg(connect);
 

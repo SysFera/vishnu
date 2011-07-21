@@ -53,10 +53,13 @@ BatchFactory::getBatchServerInstance(BatchType batchType) {
 }
 
 /**
+ * \brief Function to delete a batchServer.
+ */
+void BatchFactory::deleteBatchServerInstance() {
+   delete mbatchServer;
+}
+/**
  * \brief Destructor
  */
 BatchFactory::~BatchFactory() {
-  if(mbatchServer!=NULL) {
-    delete mbatchServer;
-  }
 }

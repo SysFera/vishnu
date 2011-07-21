@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <book
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" label="UMS.apim#MAN(admin);UMS.apim#CPP(admin);UMS.apim#PYTHON(admin);FMS.apim#MAN(admin);FMS.apim#CPP(admin);FMS.apim#PYTHON(admin);IMS.apim#MAN(admin);IMS.apim#CPP(admin);IMS.apim#PYTHON(admin)">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" label="UMS.apim#MAN(admin);UMS.apim#CPP(admin);UMS.apim#PYTHON(admin);IMS.apim#MAN(admin);IMS.apim#CPP(admin);IMS.apim#PYTHON(admin)">
   <info>
     <author>
       <personname>
@@ -284,7 +284,10 @@
               <para>Torque API v3.2.6</para>
             </listitem>
             <listitem>
-              <para>ou IBM LoadLeveler API</para>
+              <para>IBM LoadLeveler API</para>
+            </listitem>
+            <listitem>
+              <para>ou SLURM API v2.2.1</para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -330,7 +333,7 @@
           <listitem>
             <para>
 	      COMPILE_TMS, compile le module TMS si le flag est activé (OFF par défaut). Si ON, COMPILE_UMS doit aussi être à ON et
-              l'une des options VISHNU_USE_TORQUE ou VISHNU_USE_LOADLEVELER doit être à ON.
+              l'une des options VISHNU_USE_TORQUE, VISHNU_USE_LOADLEVELER ou VISHNU_USE_SLURM doit être à ON.
 	    </para>
           </listitem>
           <listitem>
@@ -373,6 +376,11 @@
             <para>
 	      VISHNU_USE_TORQUE, compile le SeD TMS pour torque (OFF par défaut).
 	    </para>
+          </listitem>
+          <listitem>
+            <para>
+        VISHNU_USE_SLURM, compile le SeD TMS pour SLURM (OFF par défaut).
+      </para>
           </listitem>
         </itemizedlist>
       </para>
@@ -621,7 +629,7 @@
       <para><emphasis role="bold">NOTE: l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
       <para><emphasis role="bold">NOTE: Il est préférable d'éviter de lancer le même SeD sur la même machine.</emphasis></para>
       <para><emphasis role="bold">NOTE: Il existe un bug connu sur debian (entre autre) avec boost file system, utilisé par VISHNU. Le rapport de bug est ici et le bug est actuellement ouvert: https://svn.boost.org/trac/boost/ticket/4688. Si lors du lancement d'un SeD, le message d'erreur suivant apparait : std::runtime_error: locale::facet::_S_create_c_locale name not valid, faire un &quot;export LANG=C&quot; et cela devrait régler le problème.</emphasis></para>
-      <para><emphasis role="bold">NOTE: L'utilisateur VISHNU 'root' doit avoir un local accompte sur chaque machine ou il y a un serveur IMS. Le compte UNIX correspondant sera utilisé pour le redémarrage automatique des SeD.</emphasis></para>
+      <para><emphasis role="bold">NOTE: L'utilisateur VISHNU 'root' doit avoir un compte local sur chaque machine ou il y a un serveur IMS. Le compte UNIX correspondant sera utilisé pour le redémarrage automatique des SeD.</emphasis></para>
       <para>Pour mieux comprendre l'architecture de déploiement, se référer au document [ARCH], le chapitre 4, 'Technical Architecture'.</para>
       <orderedlist>
         <listitem>
@@ -653,7 +661,7 @@
           </para>
         </listitem>
         <listitem>
-          <para>Lancer le SeD UMS sur la préfrontale avec la commande <emphasis role="bold">umssed ~/ums_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.5 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à:
+          <para>Lancer le SeD UMS sur la préfrontale avec la commande <emphasis role="bold">umssed ~/ums_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.5 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à :
             <itemizedlist>
               <listitem>
                 <para>
@@ -710,7 +718,7 @@
         </listitem>
         <listitem>
           <para>Lancer le SeD TMS sur la machine hôte de Torque. La commande de lancement est : <emphasis
-                role="bold">tmssed ~/tms_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.6 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
+                role="bold">tmssed ~/tms_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.6 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus :
 	    <itemizedlist>
               <listitem>
                 <para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des jobs.</para>
@@ -725,13 +733,34 @@
 	  </para>
         </listitem>
         <listitem>
+          <para>
+      Sur la machine hôte de SLURM, lancer les serveurs <emphasis>slurmd, slurmctld</emphasis> et <emphasis>slurmdbd</emphasis>.
+    </para>
+        </listitem>
+        <listitem>
+          <para>Lancer le SeD TMS sur la machine hôte de SLURM. La commande de lancement est : <emphasis
+                role="bold">tmssed ~/tms_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.6 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus :
+      <itemizedlist>
+              <listitem>
+                <para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des jobs.</para>
+              </listitem>
+              <listitem>
+                <para>'batchSchedulerType=SLURM' : Le type du batch scheduler utilisé.</para>
+              </listitem>
+              <listitem>
+                <para>'vishnuMachineId=machine_2' : L'identifiant VISHNU de la machine ou le SeD TMS est lancé (obtenu en utilisant la commande vishnu_list_machines).</para>
+              </listitem>
+            </itemizedlist>
+    </para>
+        </listitem>
+        <listitem>
           <para>Lancer le SeD IMS sur toutes la machine préfrontale. La commande de lancement est : <emphasis
                 role="bold">imssed ~/ims_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.5 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS. Il faut noter que IMS doit être lancé sur toutes les machines à monitorer.
 	  </para>
         </listitem>
         <listitem>
           <para>Lancer le SeD FMS sur une machine (sur la figure exemple 4.1 elle est différente de la préfrontale et de la machine avec le batch, mais cela peut être n'importe laquelle). La commande de lancement est : <emphasis
-                role="bold">fmssed ~/fms_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.7 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
+                role="bold">fmssed ~/fms_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.7 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus :
 	    <itemizedlist>
               <listitem>
                 <para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des transferts de fichiers.</para>
@@ -750,7 +779,7 @@
       <title>Lancement sur plusieurs réseaux</title>
       <para>Un module VISHNU peut être lancé soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration.
 	Pour le déploiement on se base sur le modèle de la figure 4.2 du document [ARCH] en supposant pour simplifier que sur un réseau tout est lancé sur la même machine et que les réseaux &quot;Network C&quot; et &quot;Network D&quot; sont confondus (pas de forwarder à mettre entre eux).</para>
-      <para><emphasis role="bold">NOTE: l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
+      <para><emphasis role="bold">NOTE : l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
       <orderedlist>
         <listitem>
           <para> Avoir une base de données PostgreSQL accessible et initialisée (tables créées et premières données créées). Des scripts SQL sont fournis pour cela. Avoir la base PostGreSQL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base).</para>
@@ -761,7 +790,7 @@
                 role="bold">omniNames</emphasis> suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
         </listitem>
         <listitem>
-          <para> Lancer un démon forwarder sur le reseau 2 (Network B):  </para>
+          <para> Lancer un démon forwarder sur le reseau 2 (Network B) :  </para>
           <para><emphasis role="bold">dietForwarder --name forwarder2 --net-config forwarder2.cfg</emphasis>
 	    <itemizedlist>
               <listitem>
@@ -773,7 +802,7 @@
                 <para>
 		  forwarder2.cfg : fichier de configuration (voir le paragraphe 6.8 pour un exemple de configuration) contenant des règles appliquées aux
 		  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de le paragraphe 6.8, les
-		  règles utilisées sont:
+		  règles utilisées sont :
 		  <itemizedlist>
                     <listitem>
                       <para> une règle 'accept' correspondant au filtre sur la source des connections acceptées. '.*' signifie les connections provenant
@@ -791,7 +820,7 @@
 	  </para>
         </listitem>
         <listitem>
-          <para> Lancer un démon forwarder sur le reseau 1 (network C): </para>
+          <para> Lancer un démon forwarder sur le reseau 1 (network C) : </para>
           <para><emphasis role="bold">dietForwarder -C--peer-name forwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name forwarder
 	    --net-config forwarder1.cfg
 	    --remote-host localhost
@@ -848,7 +877,7 @@
 	    la passphrase est demandée et la connexion ssh s'établit.</para>
         </listitem>
         <listitem>
-          <para> Lancer un démon forwarder pour le log service sur le reseau 2 (network B):  </para>
+          <para> Lancer un démon forwarder pour le log service sur le reseau 2 (network B) :  </para>
           <para><emphasis role="bold">logForwarder --name logforwarder2 --net-config logforwarder2.cfg</emphasis>
 	    <itemizedlist>
               <listitem>
@@ -860,7 +889,7 @@
                 <para>
 		  logforwarder2.cfg : fichier de configuration (voir le paragraphe 6.8 pour un exemple de fichier de configuration) contenant des règles appliquées aux
 		  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de le paragraphe 6.8, les
-		  règles utilisées sont:
+		  règles utilisées sont :
 		  <itemizedlist>
                     <listitem>
                       <para> une règle 'accept' correspondant au filtre sur la source des connections acceptées. '.*' signifie les connections provenant
@@ -878,7 +907,7 @@
 	  </para>
         </listitem>
         <listitem>
-          <para> Lancer un démon log forwarder sur le reseau 1 (network C): </para>
+          <para> Lancer un démon log forwarder sur le reseau 1 (network C) : </para>
           <para><emphasis role="bold">logForwarder -C--peer-name logforwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name logforwarder
 	    --net-config logforwarder1.cfg
 	    --remote-host localhost
@@ -1013,7 +1042,8 @@
 	sendmailScriptPath=/usr/local/sbin/sendmail.py
 	vishnuMachineId=machine_1
 	# Configuration propres à TMS
-	batchSchedulerType=TORQUE
+	# batchSchedulerType=SLURM si le batchScheduler est de type SLURM
+  batchSchedulerType=TORQUE
 	intervalMonitor = 1
       </programlisting>
     </section>
@@ -1062,7 +1092,7 @@
 	pour envoyer des emails aux utilisateurs lors de certaines opérations. Ce fichier peut être modifié par l'administrateur afin
 	de s'adapter à la méthode d'envoi d'email propre au serveur sur lequel est installé le SeD. Par défaut, la configuration
 	fournie se connecte sur le serveur SMTP de 'localhost' sur le port 25, sans authentification.</para>
-      <para>Les paramètres suivants peuvent être configurés dans le script sendmail.py:</para>
+      <para>Les paramètres suivants peuvent être configurés dans le script sendmail.py :</para>
       <informaltable>
         <tgroup cols="2">
           <colspec colwidth="2cm"/>
@@ -1104,9 +1134,9 @@
       <para>
         Toutes les commandes éxécutées par le SeD FMS sont lancées via ssh
         sous le nom de l'utilisateur ayant émis la requête. Les services FMS
-        sont de deux types: il y a ceux qui n'impliquent qu'une machine
-        distante: Exemple getFilesInfo,listDir,etc.. et ceux qui impliquent au
-        moins deux machines distantes: machine source et destination pour les transferts de fichiers. 
+        sont de deux types : il y a ceux qui n'impliquent qu'une machine
+        distante : Exemple getFilesInfo,listDir,etc.. et ceux qui impliquent au
+        moins deux machines distantes : machine source et destination pour les transferts de fichiers. 
         <itemizedlist>
           <listitem>
             <para> Dans le premier cas le SeD se connecte sur la machine distante et
@@ -1188,7 +1218,7 @@
 	    La mise à jour d'un utilisateur ne peut être faite que par un administrateur. Cette mise à jour se fait avec un appel à la commande 'vishnu_update_user' et permet de modifier les paramètres de l'ajout (nom, prénom, statut, couriel).
 	    Il faut avoir l'identifiant de l'utilisateur (généré lors de la création de l'utilisateur) pour le désigner lors de la mise à jour.
 	  </para>
-          <para>Note: le changement du statut d'un utilisateur à l'état &quot;INACTIVE&quot; correspond à un blocage de son compte.</para>
+          <para>Note : le changement du statut d'un utilisateur à l'état &quot;INACTIVE&quot; correspond à un blocage de son compte.</para>
         </listitem>
         <listitem>
           <para>
@@ -1217,11 +1247,11 @@
           <para>
 	    La mise à jour d'une machine se fait à l'aide de la commande 'vishnu_update_machine' et permet de modifier les paramètres mis lors de l'ajout de la machine. Il faut utiliser l'identifiant de la machine pour l'identifier lors de la mise à jour.
 	  </para>
-          <para>Note: le changement du statut d'une machine à l'état &quot;INACTIVE&quot; correspond à un blocage de la machine. Cela rend la machine inaccessible aux utilisateurs de VISHNU mais toujours visible pour les administrateurs.</para>
+          <para>Note : le changement du statut d'une machine à l'état &quot;INACTIVE&quot; correspond à un blocage de la machine. Cela rend la machine inaccessible aux utilisateurs de VISHNU mais toujours visible pour les administrateurs.</para>
         </listitem>
         <listitem>
           <para>
-	    La suppression d'une machine se fait à l'aide de la commande 'vishnu_delete_machine' avec l'identifiant de la machine à supprimer. Cela supprime la machine de la base de données, ainsi que toutes les informations qui y sont attachées (Attention: cette commande est irréversible).
+	    La suppression d'une machine se fait à l'aide de la commande 'vishnu_delete_machine' avec l'identifiant de la machine à supprimer. Cela supprime la machine de la base de données, ainsi que toutes les informations qui y sont attachées (Attention : cette commande est irréversible).
 	  </para>
         </listitem>
         <listitem>
@@ -1479,11 +1509,6 @@ and password are sent to the user by email.</para>
           </varlistentry>
         </variablelist>
       </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To add the user Jean DUPONT as a simple user and with the mail dupont@gmail.com:</para>
-        <para>vishnu_add_user Jean DUPONT 0 dupont@gmail.com</para>
-      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -1599,11 +1624,6 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
           </varlistentry>
         </variablelist>
       </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To update the mail adress of a user user_1 to jdupont@gmail.com:</para>
-        <para>vishnu_update_user -m jdupont@gmail.com user_1</para>
-      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -1673,11 +1693,6 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
             <listitem/>
           </varlistentry>
         </variablelist>
-      </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>Tu delete the user user_1:</para>
-        <para>vishnu_delete_user user_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1749,11 +1764,6 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
           </varlistentry>
         </variablelist>
       </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To reset the password of the user user_1:</para>
-        <para>vishnu_reset_password user_1</para>
-      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -1810,11 +1820,6 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
             <listitem/>
           </varlistentry>
         </variablelist>
-      </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To save the current configuration:</para>
-        <para>vishnu_save_configuration</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1879,11 +1884,6 @@ After restoring, the vishnu database is re-initialized.</para>
             <listitem/>
           </varlistentry>
         </variablelist>
-      </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To restore the configuration in /tmp/toto.cfg:</para>
-        <para>vishnu_restore_configuration /tmp/toto.cfg</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1960,11 +1960,6 @@ have to add it to the authorized keys of their own account on the machine.</para
             <listitem/>
           </varlistentry>
         </variablelist>
-      </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To add the machine perceval in paris with the description in french &quot;ceci est une description&quot;  with the public key in /tmp/key.pub:</para>
-        <para>vishnu_add_machine perceval paris fr /tmp/key.pub &quot;ceci est une description&quot;</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -2079,11 +2074,6 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
           </varlistentry>
         </variablelist>
       </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To change the name of the machine whose id is machine_1 to provencal:</para>
-        <para>vishnu_update_machine machine_1 -n provencal</para>
-      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -2149,11 +2139,6 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
             <listitem/>
           </varlistentry>
         </variablelist>
-      </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To delete the machine machine_1:</para>
-        <para>vishnu_delete_machine machine_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -2226,11 +2211,6 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
             <listitem/>
           </varlistentry>
         </variablelist>
-      </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To list all the users:</para>
-        <para>vishnu_list_users</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -2310,11 +2290,6 @@ that option using the vishnu_configure_option command.</para>
             <listitem/>
           </varlistentry>
         </variablelist>
-      </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To configure the option VISHNU_TIMEOUT with the value 42:</para>
-        <para>vishnu_configure_default_option VISHNU_TIMEOUT 42</para>
       </refsect1>
     </refentry>
   </reference>
@@ -3223,15 +3198,15 @@ that option using the vishnu_configure_option command.</para>
     <title>UMS Python API Reference</title>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.addUser</refentrytitle>
+        <refentrytitle>VISHNU_UMS.addUser</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.addUser</refname>
+        <refname>VISHNU_UMS.addUser</refname>
         <refpurpose>adds a new VISHNU user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.addUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>User <parameter>newUser</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.addUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>User <parameter>newUser</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3325,15 +3300,15 @@ and password are sent to the user by email.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.updateUser</refentrytitle>
+        <refentrytitle>VISHNU_UMS.updateUser</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.updateUser</refname>
+        <refname>VISHNU_UMS.updateUser</refname>
         <refpurpose>updates the user information except the userId and the password</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.updateUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>User <parameter>user</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.updateUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>User <parameter>user</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3424,15 +3399,15 @@ and password are sent to the user by email.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.deleteUser</refentrytitle>
+        <refentrytitle>VISHNU_UMS.deleteUser</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.deleteUser</refname>
+        <refname>VISHNU_UMS.deleteUser</refname>
         <refpurpose>removes a user from VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.deleteUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.deleteUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3515,15 +3490,15 @@ and password are sent to the user by email.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.resetPassword</refentrytitle>
+        <refentrytitle>VISHNU_UMS.resetPassword</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.resetPassword</refname>
+        <refname>VISHNU_UMS.resetPassword</refname>
         <refpurpose>resets the password of a user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.resetPassword</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>tmpPassword</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.resetPassword</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>tmpPassword</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3612,15 +3587,15 @@ and password are sent to the user by email.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.saveConfiguration</refentrytitle>
+        <refentrytitle>VISHNU_UMS.saveConfiguration</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.saveConfiguration</refname>
+        <refname>VISHNU_UMS.saveConfiguration</refname>
         <refpurpose>saves the configuration of VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.saveConfiguration</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Configuration <parameter>configuration</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.saveConfiguration</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Configuration <parameter>configuration</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3691,15 +3666,15 @@ and password are sent to the user by email.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.restoreConfiguration</refentrytitle>
+        <refentrytitle>VISHNU_UMS.restoreConfiguration</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.restoreConfiguration</refname>
+        <refname>VISHNU_UMS.restoreConfiguration</refname>
         <refpurpose>restores the configuration of VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.restoreConfiguration</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>filePath</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.restoreConfiguration</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>filePath</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3776,15 +3751,15 @@ After restoring, the vishnu database is re-initialized.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.addMachine</refentrytitle>
+        <refentrytitle>VISHNU_UMS.addMachine</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.addMachine</refname>
+        <refname>VISHNU_UMS.addMachine</refname>
         <refpurpose>adds a new machine in VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.addMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Machine <parameter>newMachine</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.addMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Machine <parameter>newMachine</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3871,15 +3846,15 @@ have to add it to the authorized keys of their own account on the machine.</para
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.updateMachine</refentrytitle>
+        <refentrytitle>VISHNU_UMS.updateMachine</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.updateMachine</refname>
+        <refname>VISHNU_UMS.updateMachine</refname>
         <refpurpose>updates machine description</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.updateMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Machine <parameter>machine</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.updateMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Machine <parameter>machine</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3962,15 +3937,15 @@ have to add it to the authorized keys of their own account on the machine.</para
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.deleteMachine</refentrytitle>
+        <refentrytitle>VISHNU_UMS.deleteMachine</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.deleteMachine</refname>
+        <refname>VISHNU_UMS.deleteMachine</refname>
         <refpurpose>removes a machine from VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.deleteMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.deleteMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4049,15 +4024,15 @@ have to add it to the authorized keys of their own account on the machine.</para
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.listUsers</refentrytitle>
+        <refentrytitle>VISHNU_UMS.listUsers</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.listUsers</refname>
+        <refname>VISHNU_UMS.listUsers</refname>
         <refpurpose>lists VISHNU users</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listUsers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers <parameter>listuser</parameter></paramdef><paramdef>string <parameter>userIdOption = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listUsers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers <parameter>listuser</parameter></paramdef><paramdef>string <parameter>userIdOption = string()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4142,15 +4117,15 @@ have to add it to the authorized keys of their own account on the machine.</para
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.configureDefaultOption</refentrytitle>
+        <refentrytitle>VISHNU_UMS.configureDefaultOption</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.configureDefaultOption</refname>
+        <refname>VISHNU_UMS.configureDefaultOption</refname>
         <refpurpose>configures a default option value</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.configureDefaultOption</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>OptionValue <parameter>optionValue</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.configureDefaultOption</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>OptionValue <parameter>optionValue</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4242,15 +4217,6 @@ that option using the vishnu_configure_option command.</para>
     </refentry>
   </reference>
   <reference>
-    <title>FMS Command reference</title>
-  </reference>
-  <reference>
-    <title>FMS C++ API Reference</title>
-  </reference>
-  <reference>
-    <title>FMS Python API Reference</title>
-  </reference>
-  <reference>
     <title>IMS Command reference</title>
     <refentry>
       <refmeta>
@@ -4306,11 +4272,6 @@ that option using the vishnu_configure_option command.</para>
             <listitem/>
           </varlistentry>
         </variablelist>
-      </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To get the list of the vishnu processes that are running and monitored on machine_1:</para>
-        <para>vishnu_get_processes -p machine_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4380,11 +4341,6 @@ that option using the vishnu_configure_option command.</para>
           </varlistentry>
         </variablelist>
       </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To set the diskspace size to 300 on machine_1:</para>
-        <para>vishnu_set_system_info -d 300 machine_1</para>
-      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -4439,11 +4395,6 @@ that option using the vishnu_configure_option command.</para>
             <listitem/>
           </varlistentry>
         </variablelist>
-      </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To set a threshold of type use of the CPU(value=1) of value 99% on machine_1 and handled by the user admin_1:</para>
-        <para>vishnu_set_system_threshold 99 machine_1 1 admin_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4514,11 +4465,6 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
           </varlistentry>
         </variablelist>
       </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To get all the thresholds:</para>
-        <para>vishnu_get_system_threshold</para>
-      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -4582,11 +4528,6 @@ $TYPE: The 'U' symb to remind it is a user id</para>
             <listitem/>
           </varlistentry>
         </variablelist>
-      </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To define the format to user_$CPT:</para>
-        <para>vishnu_define_user_identifier user_\$CPT</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4652,11 +4593,6 @@ $TYPE: The 'M' symb to remind it is a machine id</para>
           </varlistentry>
         </variablelist>
       </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To define the format to machine_$CPT:</para>
-        <para>vishnu_define_machine_identifier machine_\$CPT</para>
-      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -4717,11 +4653,6 @@ $TYPE: The 'J' symb to remind it is a job id</para>
             <listitem/>
           </varlistentry>
         </variablelist>
-      </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To define the format to job_$CPT:</para>
-        <para>vishnu_define_job_identifier job_\$CPT</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4784,11 +4715,6 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
           </varlistentry>
         </variablelist>
       </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To define the format to transfer_$CPT:</para>
-        <para>vishnu_define_transfer_identifier transfer_\$CPT</para>
-      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -4850,11 +4776,6 @@ SOFT   = 2</para>
           </varlistentry>
         </variablelist>
       </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To make a hard load shedding on machine_1:</para>
-        <para>vishnu_load_shed machine_1 1</para>
-      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -4908,11 +4829,6 @@ SOFT   = 2</para>
             <listitem/>
           </varlistentry>
         </variablelist>
-      </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To set the frequency to 100:</para>
-        <para>vishnu_set_update_frequency 100</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4970,11 +4886,6 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
             <listitem/>
           </varlistentry>
         </variablelist>
-      </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To stop the UMS process on machine_1:</para>
-        <para>vishnu_stop UMS machine_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -5044,11 +4955,6 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (UMS), 2 (
             <listitem/>
           </varlistentry>
         </variablelist>
-      </refsect1>
-      <refsect1 id="example:">
-        <title>EXAMPLE:</title>
-        <para>To restart using the configuration file ums.cfg an UMS sed on machine_1:</para>
-        <para>vishnu_restart -v /tmp/ums.cfg -t 1 machine_1</para>
       </refsect1>
     </refentry>
   </reference>
@@ -5700,15 +5606,15 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
     <title>IMS Python API Reference</title>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.getProcesses</refentrytitle>
+        <refentrytitle>VISHNU_UMS.getProcesses</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.getProcesses</refname>
+        <refname>VISHNU_UMS.getProcesses</refname>
         <refpurpose>displays the list of the VISHNU processes running on machines</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.getProcesses</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListProcesses <parameter>process</parameter></paramdef><paramdef>ProcessOp <parameter>options = ProcessOp()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.getProcesses</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListProcesses <parameter>process</parameter></paramdef><paramdef>ProcessOp <parameter>options = ProcessOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5761,15 +5667,15 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.setSystemInfo</refentrytitle>
+        <refentrytitle>VISHNU_UMS.setSystemInfo</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.setSystemInfo</refname>
+        <refname>VISHNU_UMS.setSystemInfo</refname>
         <refpurpose>updates the system information of a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.setSystemInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>SystemInfo <parameter>systemInfo</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.setSystemInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>SystemInfo <parameter>systemInfo</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5820,15 +5726,15 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.setSystemThreshold</refentrytitle>
+        <refentrytitle>VISHNU_UMS.setSystemThreshold</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.setSystemThreshold</refname>
+        <refname>VISHNU_UMS.setSystemThreshold</refname>
         <refpurpose>sets a threshold on a machine of a system</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.setSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Threshold <parameter>threshold</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.setSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Threshold <parameter>threshold</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5879,15 +5785,15 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.getSystemThreshold</refentrytitle>
+        <refentrytitle>VISHNU_UMS.getSystemThreshold</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.getSystemThreshold</refname>
+        <refname>VISHNU_UMS.getSystemThreshold</refname>
         <refpurpose>gets a system threshold on a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.getSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListThreshold <parameter>value</parameter></paramdef><paramdef>ThresholdOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.getSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListThreshold <parameter>value</parameter></paramdef><paramdef>ThresholdOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5945,15 +5851,15 @@ Each time a threshold is reached, a mail is sent. So checking the values of the 
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.defineUserIdentifier</refentrytitle>
+        <refentrytitle>VISHNU_UMS.defineUserIdentifier</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.defineUserIdentifier</refname>
+        <refname>VISHNU_UMS.defineUserIdentifier</refname>
         <refpurpose>defines the shape of the identifiers automatically generated for the users</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.defineUserIdentifier</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.defineUserIdentifier</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -6014,15 +5920,15 @@ $TYPE: The 'U' symb to remind it is a user id</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.defineMachineIdentifier</refentrytitle>
+        <refentrytitle>VISHNU_UMS.defineMachineIdentifier</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.defineMachineIdentifier</refname>
+        <refname>VISHNU_UMS.defineMachineIdentifier</refname>
         <refpurpose>defines the shape of the identifiers automatically generated for the machines</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.defineMachineIdentifier</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.defineMachineIdentifier</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -6083,15 +5989,15 @@ $TYPE: The 'M' symb to remind it is a machine id</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.defineJobIdentifier</refentrytitle>
+        <refentrytitle>VISHNU_UMS.defineJobIdentifier</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.defineJobIdentifier</refname>
+        <refname>VISHNU_UMS.defineJobIdentifier</refname>
         <refpurpose>defines the shape of the identifiers automatically generated for the jobs</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.defineJobIdentifier</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.defineJobIdentifier</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -6149,15 +6055,15 @@ $TYPE: The 'J' symb to remind it is a job id</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.defineTransferIdentifier</refentrytitle>
+        <refentrytitle>VISHNU_UMS.defineTransferIdentifier</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.defineTransferIdentifier</refname>
+        <refname>VISHNU_UMS.defineTransferIdentifier</refname>
         <refpurpose>defines the shape of the identifiers automatically generated for the file transfers</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.defineTransferIdentifier</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.defineTransferIdentifier</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -6215,15 +6121,15 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.loadShed</refentrytitle>
+        <refentrytitle>VISHNU_UMS.loadShed</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.loadShed</refname>
+        <refname>VISHNU_UMS.loadShed</refname>
         <refpurpose>sheds load on a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.loadShed</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>LoadShedType <parameter>loadShedType</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.loadShed</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>LoadShedType <parameter>loadShedType</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -6279,7 +6185,7 @@ SOFT   = 2</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>IMSVishnuException(&quot;If a component is unavailable&quot; [301])</term>
+            <term>UMSVishnuException(&quot;If a component is unavailable&quot; [301])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -6287,15 +6193,15 @@ SOFT   = 2</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.setUpdateFrequency</refentrytitle>
+        <refentrytitle>VISHNU_UMS.setUpdateFrequency</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.setUpdateFrequency</refname>
+        <refname>VISHNU_UMS.setUpdateFrequency</refname>
         <refpurpose>sets the update frequency of the IMS tables</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.setUpdateFrequency</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>int <parameter>freq</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.setUpdateFrequency</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>int <parameter>freq</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -6346,15 +6252,15 @@ SOFT   = 2</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.stop</refentrytitle>
+        <refentrytitle>VISHNU_UMS.stop</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.stop</refname>
+        <refname>VISHNU_UMS.stop</refname>
         <refpurpose>To stop (and do not try to relaunch) a SeD</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.stop</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Process <parameter>process</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.stop</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Process <parameter>process</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -6408,15 +6314,15 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.restart</refentrytitle>
+        <refentrytitle>VISHNU_UMS.restart</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.restart</refname>
+        <refname>VISHNU_UMS.restart</refname>
         <refpurpose>To restart a SeD or a MA</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.restart</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>RestartOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.restart</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>RestartOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>

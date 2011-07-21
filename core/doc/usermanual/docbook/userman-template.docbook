@@ -61,6 +61,13 @@
 	<revdescription>
 	  <para> Added TMS generic script example.</para></revdescription>
       </revision>
+   <revision>
+	<revnumber>5</revnumber>
+	<date>18/07/2011</date>
+	<authorinitials>SysFera</authorinitials>
+	<revdescription>
+	  <para> Add the CLI examples and fix some mistakes..</para></revdescription>
+      </revision>
     </revhistory>
     
     <copyright>
@@ -140,7 +147,7 @@
             <para>[D1.1b]: VISHNU "Spécifications techniques des besoins"</para>
           </listitem>
           <listitem>
-            <para>[DIETMAN]: DIET User's Manual v2.6 (available with the DIET distribution at http://graal.ens-lyon.fr/~diet)</para>
+            <para>[DIETMAN]: DIET User's Manual v2.7 (available with the DIET distribution at http://graal.ens-lyon.fr/~diet)</para>
           </listitem>
       </itemizedlist></para>
     </section>
@@ -259,14 +266,17 @@
       
       <section>
 	<title> From binaries package </title>
+	<para>Assuming the dependencies are installed (omniorb, diet, boost).
+	Download the vishnu-client_*_i386.deb, where * stands for the VISHNU version and install it (dpkg -i vishnu_client_*_i386.deb). Then, if the DIET hierarchy is already running and accessible from the client, one can uses VISHNU. All the services are available in the debian packages.
+	</para>
       </section>   
       
     </section>
     
     <section>
       <title> Software usage description </title>
-      <para><emphasis role="bold">WARNING: The lists are INOUT parameters, the results are appended, they do not overwrite the existing list. Moreover, the get function on the lists do not check the bounds, it is like using the [] operator.</emphasis></para>
       <para>VISHNU is composed of 4 main packages, one that deals with the users and the machine (UMS), one that deals with the batch schedulers (TMS), one that deals with the files management (FMS) and one that handle the information of the system (IMS). These clients can be installed alltogether or just one or two. Please contact your VISHNU admin to know the corresponding servers you can have before installing the client. It is important to note that the client can be installed without the server being on the platform, the call will end up with an exception and the message "Vishnu not available". Below each package will be describe to show the services it offers to the user.</para>
+      <para><emphasis role="bold">WARNING: The lists are INOUT parameters, the results are appended, they do not overwrite the existing list. Moreover, the get function on the lists do not check the bounds, it is like using the [] operator.</emphasis></para>
       <section><!-- UMS Package -->
 	<title> UMS package </title> 
 	
@@ -371,7 +381,7 @@
 	  <para>
 	    To submit a job, via VISHNU, to the batch scheduler of a specific machine, the user needs: an active VISHNU session, 
 	    a local user configuration registered on VISHNU that corresponds to an existing UNIX account on the specified machine and a script that describes 
-	    the job to submit. In the current implementation of VISHNU, it is possible to use the directives for two batch schedulers: TORQUE and LoadLeveler.
+	    the job to submit. In the current implementation of VISHNU, it is possible to use the directives for two batch schedulers: TORQUE, LoadLeveler and SLURM.
 	    In order to use the same script on different batch schedulers, a generic script with generic VISHNU directives is used.
 	    The <emphasis role="bold">vishnu_submit_job</emphasis> command allows a user to submit a job in the shell terminal.
 	    To obtain information on a job, the user can use the <emphasis role="bold">vishnu_get_job_info</emphasis> or 
@@ -416,7 +426,7 @@
 	      </itemizedlist>
 	    </para>
 	    <para>
-        It is important to note that the user can also add directives specific to a batch scheduler (TORQUE or LoadLeveler). Such specific directives must be added directly after the generic directives. Here is an example:
+        It is important to note that the user can also add directives specific to a batch scheduler (TORQUE, LoadLeveler or SLURM). Such specific directives must be added directly after the generic directives. Here is an example:
       </para>
       <programlisting>
         #!/bin/sh
@@ -426,12 +436,18 @@
         #% vishnu_error=/path/to/jobError
         #% vishnu_wallclocklimit=2:40:5
         #This line is a comment
-        #The following lines are torque specific section
+        #The following lines are TORQUE specific section
         #PBS -l ncpus=1
         #PBS -l mem=50
-        #The following lines are loadleveler specific section
+        #The following lines are LOADLEVELER specific section
         #@ notify_user=user@mail
         #@ cpu_limit=2
+        #The following lines are SLURM specific section
+        #SBATCH -J myFristJob
+        #SBATCH -o myJob-%J.out
+        #SBATCH -e myJob-%J.err
+        #SBATCH -t 01:02:20
+        #SBATCH -p myFavoritePartition
       </programlisting>
     </section> 
   </section>
