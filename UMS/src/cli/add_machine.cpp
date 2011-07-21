@@ -9,6 +9,7 @@
 #include "cliUtil.hpp"
 #include "machineUtils.hpp"
 #include "sessionUtils.hpp"
+#include "utilVishnu.hpp"
 #include <boost/bind.hpp>
 
 #include "GenericCli.hpp"
