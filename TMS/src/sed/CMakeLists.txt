@@ -24,6 +24,8 @@ include_directories(
   ${UTILS_TORQUE_DIR}
   ${SERVER_SOURCE_DIR}
   ${SED_SOURCE_DIR}
+  ${SLURM_TORQUE_DIR}
+  ${SLURM_INCLUDE_DIR}
 )
 
 add_executable(tmssed

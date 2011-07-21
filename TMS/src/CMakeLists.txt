@@ -3,6 +3,7 @@ if (NOT CLIENT_ONLY)
   add_subdirectory(server)
   add_subdirectory(utils_torque)
   add_subdirectory(slave)
+  add_subdirectory(slurm_parser)
 endif (NOT CLIENT_ONLY)
 
 add_subdirectory(api)
