@@ -3,7 +3,7 @@
 #
 
 find_path(TORQUE_INCLUDE_DIR
-  NAMES pbs_ifl.h pbs_error.h
+  pbs_ifl.h
   paths
 	${TORQUE_DIR}/include
 	$ENV{TORQUE_DIR}/include
@@ -24,7 +24,7 @@ find_library(TORQUE_LIB
 
 if (TORQUE_INCLUDE_DIR AND  TORQUE_LIB)
   set(TORQUE_FOUND "Yes")
-  mark_as_advanced(TORQUE_DIR)
+  mark_as_advanced(TORQUE_INCLUDE_DIR)
   mark_as_advanced(TORQUE_LIB)
 endif(TORQUE_INCLUDE_DIR AND TORQUE_LIB)
 
