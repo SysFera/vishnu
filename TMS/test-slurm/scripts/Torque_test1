@@ -1,0 +1,25 @@
+#!/bin/sh
+#nbjobsparam=15
+#PBS -N  sequentiel
+# PBS -l  walltime=10:00:00
+# PBS -q second_queue 
+# PBS -q first_queue
+# PBS -l walltime=1:50:10
+# PBS -l walltime=1::2
+# PBS -l nodes=1:ppn=2, walltime=10:00:00
+# PBS -l nodes=1 
+# PBS -l mem=500
+#PBS -l ncpus=1
+# Un cas d'erreur
+# Un autre cas d'erreur
+# PBS -la mem=500 
+# cas d'erreur en anglais i'am 
+ceci est # un commentaire
+#sleep 1 
+sleep 30
+ls /home/traore/VishnuProject/vishnu/TMS
+#/home/traore/TEST/fibo_calc2 43 
+
+qsdfer/papa
+
+
