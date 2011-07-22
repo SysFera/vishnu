@@ -1,568 +1,773 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title></title><meta name="generator" content="DocBook XSL Stylesheets V1.75.2" /></head><body><div xml:lang="fr-FR" class="article" lang="fr-FR"><div class="titlepage"><hr /></div><div class="toc"><p><b>Table des matières</b></p><dl><dt><span class="sect1"><a href="#id3030508">        Présentation du document</a></span></dt><dd><dl><dt><span class="sect2"><a href="#id3030512">        Objectifs du document</a></span></dt><dt><span class="sect2"><a href="#id3030564">        Structure du document</a></span></dt><dt><span class="sect2"><a href="#id3030589">        Glossaire, abréviations et acronymes</a></span></dt></dl></dd><dt><span class="sect1"><a href="#id3035471">  Environnements et outils de tests</a></span></dt><dd><dl><dt><span class="sect2"><a href="#id3035475"> Environnements de tests</a></span></dt><dt><span class="sect2"><a href="#id3035598"> Outils de tests </a></span></dt></dl></dd><dt><span class="sect1"><a href="#id3030959">  Cycle de vie du test</a></span></dt><dt><span class="sect1"><a href="#id3030979"> Liste des tests</a></span></dt><dd><dl><dt><span class="sect2"><a href="#id3030983">        Tests fonctionnels</a></span></dt><dt><span class="sect2"><a href="#id3081656"> Tests de stress        </a></span></dt><dt><span class="sect2"><a href="#id3081847"> Contrôle des performances</a></span></dt><dt><span class="sect2"><a href="#id3082206"> Tests de charge</a></span></dt><dt><span class="sect2"><a href="#id3082353"></a></span></dt><dt><span class="sect2"><a href="#id3082355"> Contrôle de la qualité du code</a></span></dt><dt><span class="sect2"><a href="#id3082602">  Tests de compilation et d'installation</a></span></dt><dt><span class="sect2"><a href="#id3082853"></a></span></dt><dt><span class="sect2"><a href="#id3082856"> Contrôle de la documentation utilisateur</a></span></dt></dl></dd></dl></div><div class="informaltable"><table border="1"><colgroup><col /><col /></colgroup><tbody><tr><td>
-               <p>
-                  <img src="embedded:images1" height="206" />VISHNU_D4_1b-TMS-PlanTests</p>
-            </td><td>
-               <p>Politique de tests du module TMS</p>
-            </td></tr></tbody></table></div><p></p><p></p><p></p><p></p><p>PROJET VISHNU</p><p></p><p>DOCUMENTS DE REFERENCE</p><p></p><p></p><p></p><p></p><p>PLAN</p><p>DE</p><p></p><p>TESTS</p><p></p><p></p><p></p><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /></colgroup><tbody><tr><td>
-               <p>Ref. document</p>
-            </td><td>
-               <p>VISHNU_D4_1b-TMS-PlanTests</p>
-            </td></tr><tr><td>
-               <p>Objet du document</p>
-            </td><td>
-               <p>Référentiel du plan de tests du module TMS du projet Vishnu</p>
-            </td></tr><tr><td>
-               <p></p>
-            </td><td>
-               <p></p>
-            </td></tr></tbody></table></div><p></p><p>TABLE DES REVISIONS</p><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /><col /></colgroup><tbody><tr><td>
-               <p>Version</p>
-            </td><td>
-               <p>Date</p>
-            </td><td>
-               <p>Modifications</p>
-            </td><td>
-               <p>Auteur</p>
-            </td></tr><tr><td>
-               <p>V1.0</p>
-            </td><td>
-               <p>21/03/11</p>
-            </td><td>
-               <p>Version initiale</p>
-            </td><td>
-               <p>Benjamin Isnard, Daouda Traoré, Eugène Pamba Capo-Chichi</p>
-            </td></tr></tbody></table></div><p></p><p>VALIDATION DU DOCUMENT</p><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /></colgroup><tbody><tr><td>
-               <p>Date</p>
-            </td><td>
-               <p>Personne</p>
-            </td></tr><tr><td>
-               <p></p>
-            </td><td>
-               <p></p>
-            </td></tr><tr><td>
-               <p></p>
-            </td><td>
-               <p></p>
-            </td></tr></tbody></table></div><p></p><p>REFERENCES</p><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /></colgroup><tbody><tr><td>
-               <p>Ref. document</p>
-            </td><td>
-               <p>Description</p>
-            </td></tr><tr><td>
-               <p>VISHNU_D1_1e-POL-TESTS</p>
-            </td><td>
-               <p>Politique de tests du projet VISHNU </p>
-            </td></tr><tr><td>
-               <p>VISHNU_D1_1a-SPECSGEN</p>
-            </td><td>
-               <p>Spécifications générales du projet VISHNU</p>
-            </td></tr><tr><td>
-               <p>VISHNU_D1_1b-STB</p>
-            </td><td>
-               <p>Spécifications Techniques des besoins</p>
-            </td></tr><tr><td>
-               <p>VISHNU_D1_1g-ARCH</p>
-            </td><td>
-               <p>VISHNU Technical  Architecture</p>
-            </td></tr></tbody></table></div><p></p><div class="sect1" title="        Présentation du document"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id3030508"></a>        Présentation du document</h2></div></div></div><div class="sect2" title="        Objectifs du document"><div class="titlepage"><div><div><h3 class="title"><a id="id3030512"></a>        Objectifs du document</h3></div></div></div><p>Les objectifs de ce document sont les suivants :</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Présenter les fonctionnalités du module TMS à tester.</p></li><li class="listitem"><p>Présenter les différents types de tests  permettant  de valider les cas d'utilisation de chaque fonctionnalité du module TMS.</p></li><li class="listitem"><p>Présenter les méthodes et outils utilisés pour ces tests.</p></li><li class="listitem"><p>Donner des détails de l'environnement de test</p></li></ol></div></div><div class="sect2" title="        Structure du document"><div class="titlepage"><div><div><h3 class="title"><a id="id3030564"></a>        Structure du document</h3></div></div></div><p>Le chapitre 1 présente le document.</p><p>Le chapitre 2 présente les environnements et outils de tests.</p><p>La chapitre 3 décrit la liste des tests qui s'appliquent aux fonctionnalités à tester.</p><p>La chapitre 4 présente les outils utilisés pour ces tests.</p></div><div class="sect2" title="        Glossaire, abréviations et acronymes"><div class="titlepage"><div><div><h3 class="title"><a id="id3030589"></a>        Glossaire, abréviations et acronymes</h3></div></div></div><div class="sect3" title="        Glossaire"><div class="titlepage"><div><div><h4 class="title"><a id="id3030593"></a>        Glossaire</h4></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Script de test : c'est un programme qui contient les instructions permettant de réaliser les tests.</p></li><li class="listitem"><p>Certificat : correspond à la « session key » définie dans [SPECSGEN].</p></li></ol></div></div><div class="sect3" title="        Acronymes"><div class="titlepage"><div><div><h4 class="title"><a id="id3030623"></a>        Acronymes</h4></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>STB : Spécification Technique des Besoins</p></li><li class="listitem"><p>DSG : Document de Spécification générale</p></li><li class="listitem"><p>DSD : Document de Spécification Détaillées</p></li><li class="listitem"><p>API : Application Programming Interface (Interface de programmation d'applications)</p></li><li class="listitem"><p>MPI : Message Passing Interface</p></li><li class="listitem"><p>Batch Scheduler : outil logiciel effectuant la gestion des ressources informatiques dans des supercalculateurs ou dans des grappes de serveurs informatiques. Ces outils permettent aux utilisateurs d'effectuer des réservations de ces ressources pour un temps donné.</p></li></ol></div></div><div class="sect3" title="        Abréviations"><div class="titlepage"><div><div><h4 class="title"><a id="id3035430"></a>        Abréviations</h4></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Id.         Identifiant</p></li><li class="listitem"><p>Réf.        Référence</p></li><li class="listitem"><p>Rel.#        Numéro de release/version</p></li><li class="listitem"><p>Resp.        Responsable(s)</p></li></ol></div></div></div></div><div class="sect1" title="  Environnements et outils de tests"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id3035471"></a>  Environnements et outils de tests</h2></div></div></div><div class="sect2" title=" Environnements de tests"><div class="titlepage"><div><div><h3 class="title"><a id="id3035475"></a> Environnements de tests</h3></div></div></div><p>Pour ces tests, nous allons utiliser les deux environnements de tests suivants avec des systèmes dédiés aux tests:</p><p></p><p>Environnement 1 :</p><p></p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Système d'exploitation : c'est le système Linux décrit dans [STB] qui sera installé sur toutes les machines clientes et serveurs.</p></li><li class="listitem"><p>Nombre de machines clientes : une machine cliente décrite dans [STB] pour pouvoir lancer des tests à distance (selon le cas de test).</p></li><li class="listitem"><p> Nombre de machines serveurs : un serveur TMS sur une machine sur laquelle est installée un gestionnaire de ressources Torque  [ARCH] .</p></li><li class="listitem"><p>Un serveur SysFera-DS dédié décrit dans [ARCH].</p></li></ol></div><p></p><p>Environnement 2 :</p><p></p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Système d'exploitation : c'est le système Linux décrit dans [STB] qui sera installé sur toutes les machines clientes et serveurs.</p></li><li class="listitem"><p>Nombre de machines clientes : une machine cliente décrite dans [STB] pour pouvoir lancer des tests à distance (selon le cas de test).</p></li><li class="listitem"><p> Nombre de machines serveurs:  un serveur TMS  sur une machine sur laquelle est installée un gestionnaire de ressources LoadLeveler [ARCH]. </p></li><li class="listitem"><p>Un serveur SysFera-DS dédié décrit dans [ARCH].</p></li></ol></div><p></p></div><div class="sect2" title=" Outils de tests"><div class="titlepage"><div><div><h3 class="title"><a id="id3035598"></a> Outils de tests </h3></div></div></div><p>Les outils suivants seront utilisés pour les tests :</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Hudson (serveur d'intégration)  sera utilisé pour les tests d'intégration continue (compilation, installation).</p></li><li class="listitem"><p>La librairie Boost test sera utilisée pour la réalisation des tests unitaires en C++.</p></li><li class="listitem"><p>Le framework JUnit sera utilisé pour  la réalisation des tests unitaires en JAVA.</p></li><li class="listitem"><p>Des scripts Python seront utilisés pour la réalisation des tests unitaires en Python.</p></li><li class="listitem"><p>Des scripts SHELL BASH seront utilisés pour la réalisation des tests unitaires de la ligne de commande.</p></li><li class="listitem"><p>Squore et Logiscope seront utilisés pour la qualité du code.</p></li><li class="listitem"><p>Valgrind sera utilisé pour la détection de fuite mémoire.</p></li></ol></div></div></div><div class="sect1" title="  Cycle de vie du test"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id3030959"></a>  Cycle de vie du test</h2></div></div></div><p>Le schéma suivant donne une vue d'ensemble du plan de test sur des cas de tests à réaliser jusqu'à la rédaction du  </p><p>rapport de tests :</p><p></p><p></p><p></p></div><div class="sect1" title=" Liste des tests"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id3030979"></a> Liste des tests</h2></div></div></div><div class="sect2" title="        Tests fonctionnels"><div class="titlepage"><div><div><h3 class="title"><a id="id3030983"></a>        Tests fonctionnels</h3></div></div></div><p>Les tests fonctionnels ou tests de boites noires permettent à partir des données en entrée d'observer les réactions du logiciel à tester.</p><p>Les fonctionnalités  sont classées par catégories de tests :</p><p></p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Catégorie 1 : regroupe les fonctionnalités permettant de soumettre une action au serveur TMS: vishnu_submit_job, vishnu_cancel_job, vishnu_set_machine_refresh_period.</p></li><li class="listitem"><p>Catégorie 2 : regroupe les fonctionnalités permettant de solliciter des informations du serveur TMS: vishnu_get_job_info, vishnu_get_job_progress, vishnu_get_job_out_put, vishnu_get_all_jobs_out_put, vishnu_get_machine_refresh_period, vishnu_list_queues, vishnu_list_jobs.</p></li></ol></div><p>Chaque test fonctionnel sera réalisé en utilisant chacune des interfaces d'accès suivantes : fonctions API/C++ et API/Python, ligne de commande utilisateur et API web services.</p><p>Nous allons dans cette section présenter les différentes stratégies de tests en utilisant des programmes exécutables ou des fonctions de l'API TMS puis en observant les résultats obtenus. Les deux conditions à vérifier sont :</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Est ce que le programme réalise les fonctions attendues en accord avec les spécifications?</p></li><li class="listitem"><p>Est ce que le programme fonctionne correctement ?</p></li></ol></div><div class="sect3" title=" Identifiant de tests"><div class="titlepage"><div><div><h4 class="title"><a id="id3031083"></a> Identifiant de tests</h4></div></div></div><p>Les identifiants des tests sont de la forme: &lt;ID DSG&gt;-[B|E]:&lt;NOM_TEST&gt;-&lt;INTERFACE&gt; où 'ID DSG' est l'identifiant du cas d'utilisation dans le document [SDG] , 'B' la séquence de base (exécution du cas d'utilisation avec des paramètres valides), 'E' la séquence d'exception (comportement du cas d'utilisation en cas d'erreurs),  'NOM_TEST' le nom du test décrit dans [SDG] et 'INTERFACE' les différents codes des interfaces utilisées par VISHNU : fonctions API/C++(CPP), API/Python (PY), ligne de commande utilisateur (CLI) et API web services  (WS).  L'absence du code de l'interface signifie que le test s'applique à toutes les interfaces précédentes.</p><p>Il faut noter que les tests avec des paramètres corrects sont effectués dans une session active avec un mode de fermeture à la déconnexion (CLOSE_ON_DISCONNECT) et un certificat de session valide.</p></div><div class="sect3" title="   Tests de la Catégorie 1"><div class="titlepage"><div><div><h4 class="title"><a id="id3031112"></a>   Tests de la Catégorie 1</h4></div></div></div><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /></colgroup><tbody><tr><td>
-               <p>Identifiant de tests</p>
-            </td><td>
-               <p>Actions</p>
-            </td><td>
-               <p>Résultats</p>
-            </td><td>
-               <p>Considérations particulières</p>
-            </td></tr><tr><td>
-               <p>T1.1-B:submit a job </p>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont corrects.</p></li><li class="listitem"><p>Lancer  la commande vishnu_submit_job avec l'identifiant de la machine sur laquelle le job sera soumis et  le chemin vers le script contenant les caractéristiques du job. </p></li><li class="listitem"><p>Si l'identifiant de machine et le script sont valides, un identifiant du job généré par VISHNU et le chemin jusqu'au résultats du job sont retournés .</p></li><li class="listitem"><p>Lancer la commande vishnu_list_jobs et vérifier que </p><p>l'identifiant du job est bien présent dans la liste.</p></li></ol></div>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-            </td><td>
-               <p>Le script soumis doit  respecter les directives du Batch scheduler utilisé.</p>
-            </td></tr><tr><td>
-               <p>T1.1-E1:submit a job T1.1-E2 : submit a job</p>
-               <p>T1.1-E3 : submit a job</p>
-               <p>T1.1-E4 : submit a job</p>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont incorrects.</p></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer la commande vishnu_submit_job avec le cas de test (E1, E2, E3 ou E4) et vérifier que son exécution échoue avec le message correspondant.</p><p></p></li></ol></div>
-               <p></p>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <p></p>
-            </td><td>
-               <p></p>
-            </td></tr><tr><td>
-               <p>T2.2-B:cancel a job </p>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont corrects.</p></li><li class="listitem"><p>Lancer  la commande vishnu_cancel_job avec l'identifiant de la machine sur laquelle le job sera annulé et  l'identifiant du job à annuler.</p></li><li class="listitem"><p>Lancer  la commande vishnu_get_job_info avec les paramètres précédents (l'identifiant de la machine sur laquelle le job a été annulé et  l'identifiant du job annulé) et vérifier que son exécution échoue. </p></li></ol></div>
-               <p></p>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-            </td><td>
-               <p></p>
-            </td></tr><tr><td>
-               <p></p>
-               <p>T2.2-E1:cancel a job </p>
-               <p>T2.2-E2:cancel a job</p>
-               <p>T2.2-E3:cancel a job</p>
-               <p>T2.2-E4:cancel a job</p>
-               <p></p>
-            </td><td>
-               <p></p>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont incorrects.</p></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer la commande vishnu_cancel_job avec le cas de test (E1, E2, E3 ou E4) et vérifier que son exécution échoue avec le message d'erreur correspondant.</p></li></ol></div>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-            </td><td>
-               <p></p>
-            </td></tr><tr><td>
-               <p>TA1-B:set machine refresh period </p>
-               <p></p>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont corrects et l'utilisateur est un administrateur du système VISHNU.</p></li><li class="listitem"><p>Lancer  la commande vishnu_get_machine_refresh_period avec l'identifiant de la machine dont l'administrateur souhaite obtenir la période de rafraichissement.</p></li><li class="listitem"><p>Lancer  la commande vishnu_set_machine_refresh_period avec l'identifiant de la machine sur laquelle la période de rafraichissement sera appliquée et le nouveau délai de rafraichissement.</p></li><li class="listitem"><p>Faire  vishnu_get_machine_refresh_period avec l'identifiant de la machine dont la période a été modifiée et vérifier que le nouveau délai de rafraichissement a été bien pris en compte.</p></li><li class="listitem"><p>Lancer le cas de test T1.2-B en vérifiant que la fréquence de mise à jour des résultats de jobs correspond à la valeur définie à l'étape 3.</p></li></ol></div>
-            </td><td>
-               <p>Une nouvelle période de rafraichissement est attribuée au système.</p>
-            </td><td>
-               <p>L'utilisateur qui exécute les commandes doit être un administrateur du système VISHNU</p>
-            </td></tr><tr><td>
-               <p>TA1-E1:set machine refresh period</p>
-               <p>TA1-E2:set machine refresh period</p>
-               <p>TA1-E3:set machine refresh period  </p>
-               <p>TA1-E4:set machine refresh period  </p>
-               <p></p>
-               <p></p>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont incorrects.</p></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer  vishnu_set_machine_refresh_period avec le cas de test (E1, E2, E3 ou E4) et vérifier que son exécution échoue avec le message d'erreur correspondant.</p></li></ol></div>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-            </td><td>
-               <p></p>
-            </td></tr><tr><td>
-               <p></p>
-            </td><td class="auto-generated"> </td><td class="auto-generated"> </td><td class="auto-generated"> </td></tr></tbody></table></div><p></p></div><div class="sect3" title="  Tests de la catégorie 2"><div class="titlepage"><div><div><h4 class="title"><a id="id3080271"></a>  Tests de la catégorie 2</h4></div></div></div><p></p><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /><col /></colgroup><tbody><tr><td>
-               <p>Identifiant de tests</p>
-            </td><td>
-               <p>Actions</p>
-            </td><td>
-               <p>Résultats</p>
-            </td><td>
-               <p>Considérations particulières</p>
-            </td></tr><tr><td>
-               <p>T2.1-B:get job information</p>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont corrects.</p></li><li class="listitem"><p>Lancer  la commande vishnu_list_jobs avec l'option -i suivie de l'identifiant du job généré par VISHNU et  l'identifiant de la machine sur laquelle le job a été soumis.</p></li><li class="listitem"><p>Lancer  la commande vishnu_get_job_info avec l'identifiant de la machine sur laquelle le job a été soumis et l'identifiant du job généré par VISHNU.</p></li><li class="listitem"><p>Comparer les résultats des commandes précédentes et vérifier qu'ils sont identiques.</p><p></p></li></ol></div>
-            </td><td>
-               <p>- les informations correspondant au job sont retournées.</p>
-            </td><td>
-               <p></p>
-            </td></tr><tr><td>
-               <p>T2.1-E1:get job information</p>
-               <p>T2.1-E2:get job information</p>
-               <p>T2.1-E3:get job information</p>
-               <p></p>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont incorrects.</p><p></p></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer le commande vishnu_get_job_info avec le cas de test (E1, E2 ou E3) et vérifier que son exécution échoue avec le message d'erreur correspondant.</p></li></ol></div>
-               <p></p>
-            </td><td>
-               <p>- Un message d'erreur correspondant au cas d'erreur est affiché </p>
-            </td><td>
-               <p></p>
-            </td></tr><tr><td>
-               <p>T2.5-B1:get jobs progression</p>
-               <p>T2.5-B2:get jobs progression</p>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont corrects.</p></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Vérifier qu'aucun job n'est soumis ou en cours d'exécution  sinon les annuler à l'aide de vishnu_cancel_job.</p></li><li class="listitem"><p>Lancer  successivement vishnu_submit_job avec l'identifiant de la machine sur laquelle le job sera soumis et  le chemin vers le script contenant les caractéristiques du job puis conserver les identifiants de job retournés par le système.</p></li></ol></div>
-               <p>Pour le cas B1 :</p>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer la commande vishnu_get_job_progress avec le même identifiant de machine que précédemment.</p></li><li class="listitem"><p>Vérifier que les progressions des deux jobs lancés précédemment sont retournées par VISHNU.</p></li><li class="listitem"><p>Répéter la commande précédente jusqu'à ce que la progression soit de 100% pour chacun des jobs</p></li><li class="listitem"><p>Faire vishnu_get_job_out_put avec l'identifiant de la machine sur laquelle les deux jobs ont été soumis et l'identifiant de chaque job et vérifier que le résultat de chacun des jobs est bien retourné.</p></li></ol></div>
-               <p>Pour le cas B2 :</p>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer la commande vishnu_get_job_progress  avec l'option -i  suivie d'un identifiant de job généré par VISHNU et  l'identifiant de la machine sur laquelle le job a été soumis.</p></li><li class="listitem"><p>Répéter la commande précédente jusqu'à ce que la progression du job soit de 100% .</p></li><li class="listitem"><p>Faire vishnu_get_job_out_put avec l'identifiant de la machine sur laquelle le job a été soumis et l'identifiant du job et vérifier que le résultat job est bien retourné.</p></li></ol></div>
-            </td><td>
-               <p>- La progression du job est retournée par le système</p>
-            </td><td>
-               <p></p>
-            </td></tr><tr><td>
-               <p>T2.5-E1:get jobs progression</p>
-               <p>T2.5-E2:get jobs progression</p>
-               <p>T2.5-E3:get jobs progression</p>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont incorrects</p></li></ol></div>
-               <p></p>
-               <p>Pour le cas B1 et B2:</p>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <p>Pour le cas B2 :</p>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer vishnu_get_job_progress avec les paramètres correspondant à chaque cas et vérifier que l'exécution de la commande échoue avec le message d'erreur correspondant.</p><p></p></li></ol></div>
-            </td><td>
-               <p>- Un message correspondant au code d'erreur est affiché</p>
-            </td><td>
-               <p></p>
-            </td></tr><tr><td>
-               <p>T2.6-B:get job outputs synchronously</p>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont corrects.</p></li><li class="listitem"><p>Lancer  vishnu_submit_job avec l'identifiant de la machine sur laquelle le job sera soumis et  le chemin vers le script contenant les caractéristiques du job et conserver l'identifiant du job retourné par le système.</p></li><li class="listitem"><p>Attendre pendant une durée égale au temps d'exécution du job défini dans le script.</p></li><li class="listitem"><p>Faire vishnu_get_job_out_put avec l'identifiant de la machine sur laquelle le job a été soumis et l'identifiant du job et vérifier que le résultat job est bien retourné dans les chemins spécifiés dans le scripts de soumission.</p></li></ol></div>
-            </td><td>
-               <p>- Les résultats de job sont récupérés.</p>
-            </td><td>
-               <p></p>
-            </td></tr><tr><td>
-               <p>T2.6-E1:get job outputs synchronously</p>
-               <p>T2.6-E2:get job outputs synchronously</p>
-               <p>T2.6-E3:get job outputs synchronously</p>
-               <p></p>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont incorrects</p><p></p></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li><li class="listitem"><p>Lancer le programme vishnu_get_job_out_put avec le cas de test (E1, E2 ou E3) et vérifier que son exécution échoue avec le message d'erreur correspondant.</p><p></p></li></ol></div>
-               <p></p>
-            </td><td>
-               <p>- Un message correspondant au cas d'erreur est affiché</p>
-            </td><td>
-               <p></p>
-            </td></tr><tr><td>
-               <p>T1.2-B : get job outputs asynchronously</p>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont corrects.</p></li><li class="listitem"><p>Vérifier qu'aucun job n'est soumis ou en cours d'exécution sinon les annuler à l'aide de vishnu_cancel_job. </p></li><li class="listitem"><p>Lancer deux fois la commande vishnu_submit_job avec l'identifiant de la machine sur laquelle le job sera soumis et  le chemin vers le script contenant les caractéristiques du job dont les chemins « outputPath » et « errorPath » et le temps d'exécution de chacun des jobs . Dans le script du premier job, le temps d'exécution estimé est d'une minute et dans le script du second job, il  est de deux minutes.</p></li><li class="listitem"><p>Lancer la commande vishnu_get_all_jobs_out_put </p></li><li class="listitem"><p>Une minute après le lancement de la commande   vishnu_get_all_jobs_out_put vérifier que les résultats du premier job ont été bien rapatriés dans les chemins spécifiés dans le script de soumission.</p></li><li class="listitem"><p>Deux minutes après le lancement de la commande   vishnu_get_all_jobs_out_put vérifier que les résultats du second job ont été bien rapatriés dans les chemins spécifiés dans le script de soumission.</p></li></ol></div>
-            </td><td>
-               <p>- Les résultats des deux jobs soumis sont rapatriés.</p>
-            </td><td>
-               <p>La période de rafraichissement est d'une minute.</p>
-            </td></tr><tr><td>
-               <p>T1.2-E1 : get job outputs asynchronously</p>
-               <p>T1.2-E2 : get job outputs</p>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont incorrects</p><p></p></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li><li class="listitem"><p>Lancer la commande vishnu_get_all_jobs_out_put avec le cas de test (E1 ou E2) et vérifier que son exécution échoue avec le message d'erreur correspondant.</p></li></ol></div>
-            </td><td>
-               <p>- Le message d'erreur correspondant au cas d'erreur est affiché</p>
-            </td><td>
-               <p></p>
-            </td></tr><tr><td>
-               <p>T2.7-B:get machine refresh period</p>
-            </td><td>
-               <p></p>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont corrects.</p></li><li class="listitem"><p>Lancer  la commande vishnu_set_machine_refresh_period avec l'identifiant de la machine sur laquelle la période de rafraichissement sera appliquée et le nouveau délai de rafraichissement.</p></li><li class="listitem"><p>Lancer  la commande vishnu_get_machine_refresh_period avec l'identifiant de la machine utilisée précédemment et vérifier que la valeur est bien celle qui a été attribuée.</p></li><li class="listitem"><p>Répéter l'étape 1 avec un délai de rafraichissement différent de celui qui précède puis faire l'étape 2.</p></li></ol></div>
-            </td><td>
-               <p>- Le délai de rafraichissement est retourné.</p>
-            </td><td>
-               <p></p>
-            </td></tr><tr><td>
-               <p>T2.7-E1:get machine refresh period</p>
-               <p>T2.7-E2:get machine refresh period</p>
-               <p></p>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont incorrects.</p><p></p></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li><li class="listitem"><p>Lancer la commande vishnu_get_machine_refresh_period avec le cas de test (E1 ou E2) et vérifier que son exécution échoue avec le message d'erreur correspondant.</p><p></p></li></ol></div>
-            </td><td>
-               <p>- Un message correspondant au cas d'erreur est affiché</p>
-            </td><td>
-               <p></p>
-            </td></tr><tr><td>
-               <p>T2.3-B:list job queues</p>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont corrects.</p></li><li class="listitem"><p>Lancer la commande vishnu_list_queues avec l'identifiant de la machine rattachée au Batch scheduler dont les queues seront listées et conserver la liste des queues.</p></li><li class="listitem"><p>Se connecter au Batch scheduler associé à la machine précédente.</p><p></p></li></ol></div>
-               <p>      Cas 1 : le Batch scheduler est Torque </p>
-               <p>     - Lancer la commande qstat -Q et vérifier que la liste des        queues obtenue est la même que celle qui précède.  </p>
-               <p></p>
-               <p>      Cas 2 : le Batch  scheduler est LoadLeveler</p>
-               <p>     - Lancer la commande llclass et vérifier que la liste des queues obtenue est la même que celle qui précède.</p>
-               <p></p>
-            </td><td>
-               <p>- Les queues du Batch scheduler sont listées.</p>
-            </td><td>
-               <p></p>
-            </td></tr><tr><td>
-               <p>T2.3-E1:list job queues</p>
-               <p>T2.3-E2:list job queues</p>
-               <p></p>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : paramètres sont incorrects.</p><p></p></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li><li class="listitem"><p>Lancer la commande vishnu_list_queues avec le cas de test (E1 ou E2) et vérifier que son exécution échoue avec le message d'erreur correspondant.</p><p></p></li></ol></div>
-            </td><td>
-               <p>- Un message correspondant au cas d'erreur est affiché</p>
-            </td><td>
-               <p></p>
-            </td></tr><tr><td>
-               <p>T2.4-B:list jobs</p>
-               <p></p>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont corrects.</p><p></p></li><li class="listitem"><p>Vérifier qu'aucun job n'est soumis ou en cours d'exécution sinon les annuler à l'aide de vishnu_cancel_job. </p></li><li class="listitem"><p>Lancer cinq fois vishnu_submit_job avec l'identifiant de la machine sur laquelle le job sera soumis et  le chemin vers le script contenant les caractéristiques du job puis conserver les</p><p>identifiants des jobs.</p></li><li class="listitem"><p>Lancer la commande vishnu_list_jobs et vérifier que les cinq jobs précédents sont affichés.</p></li></ol></div>
-            </td><td>
-               <p>Les jobs soumis sont affichés.</p>
-            </td><td>
-               <p></p>
-            </td></tr><tr><td>
-               <p>T2.4-E1:list jobs</p>
-               <p>T2.4-E2:list jobs</p>
-            </td><td>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont incorrects.</p><p></p></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer la commande vishnu_list_jobs avec le cas de test (E1  ou E2) et vérifier que son exécution échoue avec le message d'erreur correspondant.</p></li></ol></div>
-            </td><td>
-               <p>- Un message correspondant au cas d'erreur est affiché</p>
-            </td><td>
-               <p></p>
-            </td></tr></tbody></table></div><p></p></div></div><div class="sect2" title=" Tests de stress       "><div class="titlepage"><div><div><h3 class="title"><a id="id3081656"></a> Tests de stress        </h3></div></div></div><div class="sect3" title=" Présentation"><div class="titlepage"><div><div><h4 class="title"><a id="id3081660"></a> Présentation</h4></div></div></div><p>Ces tests permettent de vérifier que la cible de test peut réussir à basculer et être récupérée pour différents dysfonctionnements matériels, logiciels ou réseaux sans qu'il y ait perte de données. Ils vérifient que lorsqu'une défaillance survient un système alternatif ou un système de sauvegarde prends le relai correctement sans perte de données ou de transactions.</p></div><div class="sect3" title=" Environnement des tests"><div class="titlepage"><div><div><h4 class="title"><a id="id3081677"></a> Environnement des tests</h4></div></div></div><p>Nous utiliserons l'environnement de test 1 décrit dans le chapitre 2.</p></div><div class="sect3" title=" Identifiants de tests"><div class="titlepage"><div><div><h4 class="title"><a id="id3081686"></a> Identifiants de tests</h4></div></div></div><p>Les identifiants des tests sont de la forme: STR-&lt;Element stressé&gt;-&lt;Type de stress&gt;.</p></div><div class="sect3" title=" Liste des tests"><div class="titlepage"><div><div><h4 class="title"><a id="id3081694"></a> Liste des tests</h4></div></div></div><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /></colgroup><tbody><tr><td>
-               <p>Identifiant de tests</p>
-            </td><td>
-               <p>Technique</p>
-            </td><td>
-               <p>Critère de complétion</p>
-            </td></tr><tr><td>
-               <p>STR-SERV-DOWN</p>
-               <p></p>
-            </td><td>
-               <p>- Lancer la commande vishnu_submit_job</p>
-               <p>- Arrêter le serveur TMS après l'exécution de la commande</p>
-               <p>- Redémarrer le serveur TMS</p>
-               <p>- Lancer la commande vishnu_cancel_job</p>
-               <p></p>
-            </td><td>
-               <p>- Terminaison normale de la commande vishnu_cancel_job</p>
-            </td></tr><tr><td>
-               <p>STR-AGENT-DOWN</p>
-               <p></p>
-            </td><td>
-               <p>- Lancer la commande vishnu_submit_job</p>
-               <p>- Arrêter l'agent SysFera-DS après l'exécution de la commande</p>
-               <p>- Redémarrer l'agent SysFera-DS</p>
-               <p>- Lancer la commande vishnu_cancel_job</p>
-            </td><td>
-               <p>- Terminaison normale de la commande vishnu_cancel_job</p>
-            </td></tr><tr><td>
-               <p>STR-BATCH-DOWN</p>
-            </td><td>
-               <p>- Arrêter le Batch scheduler</p>
-               <p>- Lancer la commande vishnu_submit_job</p>
-            </td><td>
-               <p>- Une erreur due à une indisponibilité du Batch scheduler est retournée par le système.</p>
-            </td></tr></tbody></table></div><div class="sect4"><div class="titlepage"><div><div><h5 class="title"><a id="id3081845"></a></h5></div></div></div></div></div></div><div class="sect2" title=" Contrôle des performances"><div class="titlepage"><div><div><h3 class="title"><a id="id3081847"></a> Contrôle des performances</h3></div></div></div><div class="sect3" title=" Présentation"><div class="titlepage"><div><div><h4 class="title"><a id="id3081851"></a> Présentation</h4></div></div></div><p>Ces tests ont pour objectif de vérifier que les exigences de performance quantifiées sont effectivement satisfaites. </p></div><div class="sect3" title=" Environnement de tests"><div class="titlepage"><div><div><h4 class="title"><a id="id3081861"></a> Environnement de tests</h4></div></div></div><p>Nous utiliserons l'environnement de test 1 décrit dans le chapitre 2.</p></div><div class="sect3" title=" Identifiants des tests"><div class="titlepage"><div><div><h4 class="title"><a id="id3081870"></a> Identifiants des tests</h4></div></div></div><p>Les identifiants des tests sont de la forme: CDP-&lt;ID STB&gt;-[NomdeCommande|IdentifiantDeTest] où 'ID STB' est l'identifiant de l'exigence spécifiée dans le document [STB] au paragraphe « performances, fiabilité et robustesse ». </p></div><div class="sect3" title=" Liste des tests"><div class="titlepage"><div><div><h4 class="title"><a id="id3081885"></a> Liste des tests</h4></div></div></div><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /></colgroup><tbody><tr><td>
-               <p>Identifiant de tests</p>
-            </td><td>
-               <p>Technique</p>
-            </td><td>
-               <p> Critère de completion</p>
-            </td></tr><tr><td>
-               <p>CDP-3.1-submit a job</p>
-            </td><td>
-               <p>Cas 1 :Batch scheduler Torque</p>
-               <p>- Lancer une commande 'ssh &lt;host&gt; qsub' sur une machine serveur en mesurant le temps de réponse (temps de référence)</p>
-               <p></p>
-               <p>Cas 2 :Batch scheduler LoadLeveler</p>
-               <p>Lancer une commande 'ssh &lt;host&gt; llsubmit' sur une machine serveur en mesurant le temps de réponse (temps de référence)</p>
-               <p></p>
-               <p>- Lancer la commande vishnu_submit_job en mesurant le temps de réponse</p>
-            </td><td>
-               <p>temps inférieur au temps de référence (valeur moyenne sur 10 itérations)</p>
-            </td></tr><tr><td>
-               <p>CDP-3.1-cancel a job</p>
-            </td><td>
-               <p>Cas 1 :Batch scheduler Torque</p>
-               <p>- Lancer une commande 'ssh &lt;host&gt; qdel' sur une machine serveur en mesurant le temps de réponse (temps de référence)</p>
-               <p></p>
-               <p>Cas 2 :Batch scheduler LoadLeveler</p>
-               <p>Lancer une commande 'ssh &lt;host&gt; llcancel' sur une machine serveur en mesurant le temps de réponse (temps de référence)</p>
-               <p></p>
-               <p>- Lancer la commande vishnu_cancel_job en mesurant le temps de réponse</p>
-            </td><td>
-               <p>temps inférieur au temps de référence (valeur moyenne sur 10 itérations)</p>
-            </td></tr><tr><td>
-               <p>CDP-3.1-list jobs</p>
-            </td><td>
-               <p>Cas 1 :Batch scheduler Torque</p>
-               <p>- Lancer une commande 'ssh &lt;host&gt; qstat' sur une machine serveur en mesurant le temps de réponse (temps de référence)</p>
-               <p></p>
-               <p>Cas 2 :Batch scheduler LoadLeveler</p>
-               <p>Lancer une commande 'ssh &lt;host&gt; llq' sur une machine serveur en mesurant le temps de réponse (temps de référence)</p>
-               <p></p>
-               <p>- Lancer la commande vishnu_list_jobs en mesurant le temps de réponse temps de réponse  (temps de référence).</p>
-               <p></p>
-            </td><td>
-               <p>temps inférieur au temps de référence (valeur moyenne sur 10 itérations)</p>
-            </td></tr><tr><td>
-               <p>CDP-3.2.1-list job queues</p>
-            </td><td>
-               <p>Cas 1 :Batch scheduler Torque</p>
-               <p>- Lancer une commande 'ssh &lt;host&gt; qstat -Q' sur une machine serveur en mesurant le temps de réponse (temps de référence)</p>
-               <p></p>
-               <p>Cas 2 :Batch scheduler LoadLeveler</p>
-               <p>Lancer une commande 'ssh &lt;host&gt; llclass' sur une machine serveur en mesurant le temps de réponse (temps de référence)</p>
-               <p></p>
-               <p>- Lancer la commande vishnu_list_queues en mesurant le temps de réponse</p>
-            </td><td>
-               <p>temps inférieur au temps de référence (valeur moyenne sur 10 itérations)</p>
-            </td></tr><tr><td>
-               <p>CDP-3.2.2-submit a job</p>
-            </td><td>
-               <p>- Lancer le serveur TMS</p>
-            </td><td>
-               <p>Consommation CPU inférieure à 10%.</p>
-            </td></tr><tr><td>
-               <p>CDP-MemServer</p>
-            </td><td>
-               <p>- Lancer le serveur TMS</p>
-               <p>- Laisser le serveur fonctionner sans utiliser les services pendant 24h</p>
-               <p>- Vérifier que l'espace mémoire consommé par le processus serveur n'a pas augmenté.</p>
-            </td><td>
-               <p>Consommation mémoire constante.</p>
-            </td></tr></tbody></table></div><p></p></div></div><div class="sect2" title=" Tests de charge"><div class="titlepage"><div><div><h3 class="title"><a id="id3082206"></a> Tests de charge</h3></div></div></div><div class="sect3" title=" Présentation"><div class="titlepage"><div><div><h4 class="title"><a id="id3082209"></a> Présentation</h4></div></div></div><p>Les tests de charge ont pour objectif de vérifier que les exigences de capacité du système sont vérifiées.</p></div><div class="sect3" title=" Environnement de tests"><div class="titlepage"><div><div><h4 class="title"><a id="id3082219"></a> Environnement de tests</h4></div></div></div><p></p><p>Nous utiliserons l'environnement de test 1 décrit dans le chapitre 2.</p><p></p><p>Par ailleurs, les requêtes envoyées en simultané seront en fait envoyées par une seule machine cliente avec un programme de synchronisation (MPI).</p></div><div class="sect3" title=" Identifiants de tests"><div class="titlepage"><div><div><h4 class="title"><a id="id3082241"></a> Identifiants de tests</h4></div></div></div><p>Les identifiants des tests sont de la forme: LOAD-&lt;ID STB&gt;-[NomdeCommande|IdentifiantDeTest] où 'ID STB' est l'identifiant de l'exigence spécifiée dans le document [STB]. </p></div><div class="sect3" title=" Liste des tests"><div class="titlepage"><div><div><h4 class="title"><a id="id3082253"></a> Liste des tests</h4></div></div></div><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /></colgroup><tbody><tr><td>
-               <p>Identifiant de tests</p>
-            </td><td>
-               <p>Technique</p>
-            </td><td>
-               <p>Résultats attendus</p>
-            </td></tr><tr><td>
-               <p>LOAD-2.1-submit a job</p>
-            </td><td>
-               <p>- Lancer  100 commandes vishnu_submit_job simultanées</p>
-            </td><td>
-               <p>- Terminaison normale de toutes les commandes</p>
-               <p>- Etat normal du serveur TMS</p>
-            </td></tr><tr><td>
-               <p>LOAD-2.1-list jobs,</p>
-               <p>LOAD-2.1-list job queues,</p>
-            </td><td>
-               <p>- Lancer 100 commandes vishnu_list_jobs/ vishnu_list_queues simultanées</p>
-            </td><td>
-               <p>- Terminaison normale de toutes les commandes</p>
-               <p>- Etat normal du serveur TMS</p>
-            </td></tr></tbody></table></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="id3082353"></a></h3></div></div></div></div><div class="sect2" title=" Contrôle de la qualité du code"><div class="titlepage"><div><div><h3 class="title"><a id="id3082355"></a> Contrôle de la qualité du code</h3></div></div></div><div class="sect3" title=" Présentation"><div class="titlepage"><div><div><h4 class="title"><a id="id3082359"></a> Présentation</h4></div></div></div><p>L'objectif de ces tests est de vérifier que le code source (C/C++ ou Java) respecte les contraintes de qualité logiciel fixées dans les spécifications et le cahier des charges.</p></div><div class="sect3" title=" Identifiants des tests"><div class="titlepage"><div><div><h4 class="title"><a id="id3082372"></a> Identifiants des tests</h4></div></div></div><p>Les identifiants des tests sont de la forme: [IdentifiantDeTest]-[IdentifiantDesModules] où les identifiants sont les suivants:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Identifiants de tests</p></li><li class="listitem"><p>Identifiants de modules</p></li></ol></div></div><div class="sect3" title=" Liste des tests"><div class="titlepage"><div><div><h4 class="title"><a id="id3082403"></a> Liste des tests</h4></div></div></div><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /></colgroup><tbody><tr><td>
-               <p>Identifiant de tests</p>
-            </td><td>
-               <p>Technique</p>
-            </td><td>
-               <p>Résultats attendus</p>
-            </td></tr><tr><td>
-               <p>CRP-CSC</p>
-            </td><td>
-               <p>Audit du code C/C++ avec l'outil LOGISCOPE</p>
-            </td><td>
-               <p>Le code respecte toutes les règles de codage de catégorie «REQUIRED » spécifiées pour le projet [SCL] sauf dérogation clairement documentée dans le code. </p>
-            </td></tr><tr><td>
-               <p>CRP-JSC</p>
-            </td><td>
-               <p>Audit du code Java avec l'outil LOGISCOPE</p>
-            </td><td>
-               <p>Le code respecte toutes les règles de codage de catégorie «REQUIRED » spécifiées pour le projet [SCL] sauf dérogation clairement documentée dans le code. </p>
-            </td></tr><tr><td>
-               <p>MCC-CSC</p>
-            </td><td>
-               <p>Audit du code C/C++ avec l'outil SQUORE</p>
-            </td><td>
-               <p>Pas plus de 1% de composants classés « A risque » </p>
-            </td></tr><tr><td>
-               <p>MCC-JSC</p>
-            </td><td>
-               <p>Audit du code Java avec l'outil SQUORE</p>
-            </td><td>
-               <p>Pas plus de 1% de composants classés « A risque » </p>
-            </td></tr><tr><td>
-               <p>DDC-CSC</p>
-            </td><td>
-               <p>Audit du code C/C++ avec l'outil  SQUORE</p>
-            </td><td>
-               <p>Moins de 10% de code dupliqué. </p>
-            </td></tr><tr><td>
-               <p>DDC-JSC</p>
-            </td><td>
-               <p>Audit du code Java avec l'outil SQUORE</p>
-            </td><td>
-               <p>Moins de 10% de code dupliqué. </p>
-            </td></tr></tbody></table></div><p></p><p></p></div></div><div class="sect2" title="  Tests de compilation et d'installation"><div class="titlepage"><div><div><h3 class="title"><a id="id3082602"></a>  Tests de compilation et d'installation</h3></div></div></div><div class="sect3" title=" Présentation"><div class="titlepage"><div><div><h4 class="title"><a id="id3082606"></a> Présentation</h4></div></div></div><p>La compilation des différents exécutables et librairies composant le module TMS sera réalisée par un serveur d'intégration continue (du type HUDSON).</p><p>Par ailleurs les tests d'installation ont pour objectif de valider la procédure d'installation de l'ensemble des différents composants d'une plateforme VISHNU (clients, serveurs, agents SysFera-DS).</p></div><div class="sect3" title=" Environnement des tests"><div class="titlepage"><div><div><h4 class="title"><a id="id3082628"></a> Environnement des tests</h4></div></div></div><p>Nous utiliserons l'environnement de test décrit dans le chapitre 2.</p></div><div class="sect3" title=" Liste des tests"><div class="titlepage"><div><div><h4 class="title"><a id="id3082636"></a> Liste des tests</h4></div></div></div><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /></colgroup><tbody><tr><td>
-               <p>Identifiant de tests</p>
-            </td><td>
-               <p>Technique</p>
-            </td><td>
-               <p>Résultats attendus</p>
-            </td></tr><tr><td>
-               <p>COMP-CSC</p>
-            </td><td>
-               <p>Compilation du code C/C++ avec l'outil GCC/CMake</p>
-            </td><td>
-               <p>Compilation correcte de tous les exécutables</p>
-            </td></tr><tr><td>
-               <p>INS-SERVER-PGSQL</p>
-               <p>INS-SERVER-ORACLE</p>
-            </td><td>
-               <p>Installation des différents éléments serveur de la plateforme VISHNU</p>
-               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>serveur de calcul</p></li><li class="listitem"><p>serveur de stockage</p></li><li class="listitem"><p>serveur dédié VISHNU</p></li><li class="listitem"><p>serveur de base de données</p></li></ol></div>
-            </td><td>
-               <p>- Tous les processus démarrés et operationnels</p>
-               <p>- Documentation disponible (pages man)</p>
-            </td></tr><tr><td>
-               <p>INS-CLI</p>
-            </td><td>
-               <p>Installation du client VISHNU en ligne de commande</p>
-            </td><td>
-               <p>- Toutes les commandes installées</p>
-               <p>- Documentation disponible (pages man)</p>
-            </td></tr><tr><td>
-               <p>INS-PGAPI</p>
-            </td><td>
-               <p>Installation des librairies API VISHNU (C++ et Python)</p>
-            </td><td>
-               <p>- Librairie C++ installée</p>
-               <p>- Librairie Python installée et pouvant être chargée dans l'interpréteur Python 2.x</p>
-            </td></tr><tr><td>
-               <p>INS-WSAPI</p>
-            </td><td>
-               <p>Installation des services web VISHNU sur le serveur JBoss</p>
-            </td><td>
-               <p>- Services operationnels (contrôle via la console webservices de JBoss)</p>
-            </td></tr></tbody></table></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="id3082853"></a></h3></div></div></div></div><div class="sect2" title=" Contrôle de la documentation utilisateur"><div class="titlepage"><div><div><h3 class="title"><a id="id3082856"></a> Contrôle de la documentation utilisateur</h3></div></div></div><div class="sect3" title=" Présentation"><div class="titlepage"><div><div><h4 class="title"><a id="id3082860"></a> Présentation</h4></div></div></div><p>L'objectif est de vérifier que la documentation utilisateur permet à l'utilisateur de comprendre et d'utiliser les fonctions spécifiées .</p></div><div class="sect3" title=" Liste des tests"><div class="titlepage"><div><div><h4 class="title"><a id="id3082871"></a> Liste des tests</h4></div></div></div><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /></colgroup><tbody><tr><td>
-               <p>Identifiant de tests</p>
-            </td><td>
-               <p>Technique</p>
-            </td><td>
-               <p>Résultats attendus</p>
-            </td></tr><tr><td>
-               <p>CDU-MAN</p>
-            </td><td>
-               <p>Vérifier les pages de manuel attachées à chaque commande</p>
-            </td><td>
-               <p>Toutes les pages de manuel contiennent toutes les informations nécessaires à l'utilisateur pour utiliser les commandes.</p>
-            </td></tr><tr><td>
-               <p>CDU-USERGUIDE</p>
-            </td><td>
-               <p>Suivre le guide de l'utilisateur </p>
-            </td><td>
-               <p>Le guide permet une prise en main rapide des fonctions du logiciel</p>
-            </td></tr></tbody></table></div><p></p></div></div></div><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /><col /></colgroup><tbody><tr><td>
-               <p>SysFera</p>
-               <p>13 av. Einstein</p>
-               <p>69100 Villeurbanne</p>
-            </td><td>
-               <p></p>
-            </td><td>
-               <p>Tel. + 33 (0)4 72 72 88 50</p>
-               <p>Fax + 33 (0)4 72 72 80 80</p>
-               <p>contact@sysfera.com</p>
-               <p>www.sysfera.com</p>
-            </td><td>
-               <p>1|16</p>
-            </td></tr></tbody></table></div><p></p></div></body></html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title></title><meta name="generator" content="DocBook XSL Stylesheets V1.75.2" /><meta name="keywords" content="" /></head><body><div xml:lang="fr-FR" class="book" lang="fr-FR"><div class="titlepage"><div><div><h1 class="title"><a id="id267531"></a> </h1></div></div><hr /></div><div class="toc"><p><b>Table des matières</b></p><dl><dt><span class="chapter"><a href="#id267566">1. Présentation du document</a></span></dt><dd><dl><dt><span class="section"><a href="#id267572">Objectifs du document</a></span></dt><dt><span class="section"><a href="#id301603">Structure du document</a></span></dt><dt><span class="section"><a href="#id266049">Glossaire, abréviations et acronymes</a></span></dt><dd><dl><dt><span class="section"><a href="#id266055">Glossaire</a></span></dt><dt><span class="section"><a href="#id266091">Acronymes</a></span></dt><dt><span class="section"><a href="#id266772">Abréviations</a></span></dt></dl></dd></dl></dd><dt><span class="chapter"><a href="#id266811">2. Environnements et outils de tests</a></span></dt><dd><dl><dt><span class="section"><a href="#id266817">Environnements de tests</a></span></dt><dt><span class="section"><a href="#id266389">Outils de tests </a></span></dt></dl></dd><dt><span class="chapter"><a href="#id266469">3. Cycle de vie du test</a></span></dt><dt><span class="chapter"><a href="#id290784">4. Liste des tests</a></span></dt><dd><dl><dt><span class="section"><a href="#id297204">Tests fonctionnels</a></span></dt><dd><dl><dt><span class="section"><a href="#id311036">Identifiant de tests</a></span></dt><dt><span class="section"><a href="#id311065">Tests de la Catégorie 1</a></span></dt><dt><span class="section"><a href="#id311790">Tests de la catégorie 2</a></span></dt></dl></dd><dt><span class="section"><a href="#id313391">Tests de stress</a></span></dt><dd><dl><dt><span class="section"><a href="#id313396">Présentation</a></span></dt><dt><span class="section"><a href="#id313411">Environnement des tests</a></span></dt><dt><span class="section"><a href="#id313422">Identifiants de tests</a></span></dt><dt><span class="section"><a href="#id313432">Liste des tests</a></span></dt></dl></dd><dt><span class="section"><a href="#id313668">Contrôle des performances</a></span></dt><dd><dl><dt><span class="section"><a href="#id313673">Présentation</a></span></dt><dt><span class="section"><a href="#id313685">Environnement de tests</a></span></dt><dt><span class="section"><a href="#id313696">Identifiants des tests</a></span></dt><dt><span class="section"><a href="#id313710">Liste des tests</a></span></dt></dl></dd><dt><span class="section"><a href="#id314280">Tests de charge</a></span></dt><dd><dl><dt><span class="section"><a href="#id314285">Présentation</a></span></dt><dt><span class="section"><a href="#id314297">Environnement de tests</a></span></dt><dt><span class="section"><a href="#id314313">Identifiants de tests</a></span></dt><dt><span class="section"><a href="#id314326">Liste des tests</a></span></dt></dl></dd><dt><span class="section"><a href="#id314492"></a></span></dt><dt><span class="section"><a href="#id314497">Contrôle de la qualité du code</a></span></dt><dd><dl><dt><span class="section"><a href="#id314503">Présentation</a></span></dt><dt><span class="section"><a href="#id314516">Identifiants des tests</a></span></dt><dt><span class="section"><a href="#id314584">Liste des tests</a></span></dt></dl></dd><dt><span class="section"><a href="#id314892">Tests de compilation et d'installation</a></span></dt><dd><dl><dt><span class="section"><a href="#id314898">Présentation</a></span></dt><dt><span class="section"><a href="#id314917">Environnement des tests</a></span></dt><dt><span class="section"><a href="#id314928">Liste des tests</a></span></dt></dl></dd><dt><span class="section"><a href="#id315238"></a></span></dt><dt><span class="section"><a href="#id315244">Contrôle de la documentation utilisateur</a></span></dt><dd><dl><dt><span class="section"><a href="#id315250">Présentation</a></span></dt><dt><span class="section"><a href="#id315262">Liste des tests</a></span></dt></dl></dd></dl></dd></dl></div><div class="list-of-figures"><p><b>Liste des illustrations</b></p><dl><dt>3.1. <a href="#refIllustration0"></a></dt></dl></div><div class="chapter" title="Chapitre 1. Présentation du document"><div class="titlepage"><div><div><h2 class="title"><a id="id267566"></a>Chapitre 1. Présentation du document</h2></div></div></div><div class="toc"><p><b>Table des matières</b></p><dl><dt><span class="section"><a href="#id267572">Objectifs du document</a></span></dt><dt><span class="section"><a href="#id301603">Structure du document</a></span></dt><dt><span class="section"><a href="#id266049">Glossaire, abréviations et acronymes</a></span></dt><dd><dl><dt><span class="section"><a href="#id266055">Glossaire</a></span></dt><dt><span class="section"><a href="#id266091">Acronymes</a></span></dt><dt><span class="section"><a href="#id266772">Abréviations</a></span></dt></dl></dd></dl></div><div class="section" title="Objectifs du document"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id267572"></a>Objectifs du document</h2></div></div></div><p>Les objectifs de ce document sont les suivants :</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Présenter les fonctionnalités du module TMS à tester.</p></li><li class="listitem"><p>Présenter les différents types de tests permettant de valider les cas d'utilisation de chaque fonctionnalité du module TMS.</p></li><li class="listitem"><p>Présenter les méthodes et outils utilisés pour ces tests.</p></li><li class="listitem"><p>Donner des détails de l'environnement de test</p></li></ul></div></div><div class="section" title="Structure du document"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id301603"></a>Structure du document</h2></div></div></div><p>Le chapitre 1 présente le document.</p><p>Le chapitre 2 présente les environnements et outils de tests.</p><p>La chapitre 3 décrit la liste des tests qui s'appliquent aux fonctionnalités à tester.</p><p>La chapitre 4 présente les outils utilisés pour ces tests.</p></div><div class="section" title="Glossaire, abréviations et acronymes"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id266049"></a>Glossaire, abréviations et acronymes</h2></div></div></div><div class="section" title="Glossaire"><div class="titlepage"><div><div><h3 class="title"><a id="id266055"></a>Glossaire</h3></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p><span class="strong"><strong>Script de test</strong></span> : c'est un programme qui contient les instructions permettant de réaliser les tests.</p></li><li class="listitem"><p><span class="strong"><strong>Certificat</strong></span> : correspond à la « <span class="emphasis"><em>session key »</em></span> définie dans [SPECSGEN].</p></li></ul></div></div><div class="section" title="Acronymes"><div class="titlepage"><div><div><h3 class="title"><a id="id266091"></a>Acronymes</h3></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>STB : Spécification Technique des Besoins</p></li><li class="listitem"><p>DSG : Document de Spécification générale</p></li><li class="listitem"><p>DSD : Document de Spécification Détaillées</p></li><li class="listitem"><p>API : Application Programming Interface (Interface de programmation d'applications)</p></li><li class="listitem"><p>MPI : Message Passing Interface</p></li><li class="listitem"><p>Batch Scheduler : outil logiciel effectuant la gestion des ressources informatiques dans des supercalculateurs ou dans des grappes de serveurs informatiques. Ces outils permettent aux utilisateurs d'effectuer des réservations de ces ressources pour un temps donné.</p></li></ul></div></div><div class="section" title="Abréviations"><div class="titlepage"><div><div><h3 class="title"><a id="id266772"></a>Abréviations</h3></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Id. Identifiant</p></li><li class="listitem"><p>Réf.Référence</p></li><li class="listitem"><p>Rel.#Numéro de release/version</p></li><li class="listitem"><p>Resp.Responsable(s)</p></li></ul></div></div></div></div><div class="chapter" title="Chapitre 2. Environnements et outils de tests"><div class="titlepage"><div><div><h2 class="title"><a id="id266811"></a>Chapitre 2. Environnements et outils de tests</h2></div></div></div><div class="toc"><p><b>Table des matières</b></p><dl><dt><span class="section"><a href="#id266817">Environnements de tests</a></span></dt><dt><span class="section"><a href="#id266389">Outils de tests </a></span></dt></dl></div><div class="section" title="Environnements de tests"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id266817"></a>Environnements de tests</h2></div></div></div><p>Pour ces tests, nous allons utiliser les trois environnements de tests suivants avec des systèmes dédiés aux tests:</p><p>Environnement 1 :</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Système d'exploitation : c'est le système Linux décrit dans [STB] qui sera installé sur toutes les machines clientes et serveurs.</p></li><li class="listitem"><p>Nombre de machines clientes : une machine cliente décrite dans [STB] pour pouvoir lancer des tests à distance (selon le cas de test).</p></li><li class="listitem"><p>Nombre de machines serveurs : un serveur TMS sur une machine sur laquelle est installée un gestionnaire de ressources Torque [ARCH] .</p></li><li class="listitem"><p>Un serveur SysFera-DS dédié décrit dans [ARCH].</p></li></ul></div><p>Environnement 2 :</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Système d'exploitation : c'est le système Linux décrit dans [STB] qui sera installé sur toutes les machines clientes et serveurs.</p></li><li class="listitem"><p>Nombre de machines clientes : une machine cliente décrite dans [STB] pour pouvoir lancer des tests à distance (selon le cas de test).</p></li><li class="listitem"><p>Nombre de machines serveurs: un serveur TMS sur une machine sur laquelle est installée un gestionnaire de ressources LoadLeveler [ARCH]. </p></li><li class="listitem"><p>Un serveur SysFera-DS dédié décrit dans [ARCH].</p></li></ul></div><p>Environnement 3 :</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Système d'exploitation : c'est le système Linux décrit dans [STB] qui sera installé sur toutes les machines clientes et serveurs.</p></li><li class="listitem"><p>Nombre de machines clientes : une machine cliente décrite dans [STB] pour pouvoir lancer des tests à distance (selon le cas de test).</p></li><li class="listitem"><p>Nombre de machines serveurs: un serveur TMS sur une machine sur laquelle est installée un gestionnaire de ressources SLURM [ARCH]. </p></li><li class="listitem"><p>Un serveur SysFera-DS dédié décrit dans [ARCH].</p></li></ul></div></div><div class="section" title="Outils de tests"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id266389"></a>Outils de tests </h2></div></div></div><p>Les outils suivants seront utilisés pour les tests :</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Hudson (serveur d'intégration) sera utilisé pour les tests d'intégration continue (compilation, installation).</p></li><li class="listitem"><p>La librairie Boost test sera utilisée pour la réalisation des tests unitaires <span class="emphasis"><em>en C++.</em></span></p></li><li class="listitem"><p>Le framework JUnit sera utilisé pour la réalisation des tests unitaires<span class="emphasis"><em> en JAVA.</em></span></p></li><li class="listitem"><p>Des scripts Python seront utilisés pour la réalisation des tests unitaires<span class="emphasis"><em> en Python.</em></span></p></li><li class="listitem"><p>Des scripts SHELL BASH seront utilisés pour la réalisation des tests unitaires<span class="emphasis"><em> de la ligne de commande.</em></span></p></li><li class="listitem"><p>Squore et Logiscope seront utilisés pour la qualité du code.</p></li><li class="listitem"><p>Valgrind sera utilisé pour la détection de fuite mémoire.</p></li></ul></div></div></div><div class="chapter" title="Chapitre 3. Cycle de vie du test"><div class="titlepage"><div><div><h2 class="title"><a id="id266469"></a>Chapitre 3. Cycle de vie du test</h2></div></div></div><p>Le schéma suivant donne une vue d'ensemble du plan de test sur des cas de tests à réaliser jusqu'à la rédaction du </p><p>rapport de tests :</p><div class="figure"><a id="refIllustration0"></a><p class="title"><b>Figure 3.1. </b></p><div class="figure-contents"><div class="mediaobject"><img src="images/img001.jpg" /></div></div></div><br class="figure-break" /><p></p></div><div class="chapter" title="Chapitre 4. Liste des tests"><div class="titlepage"><div><div><h2 class="title"><a id="id290784"></a>Chapitre 4. Liste des tests</h2></div></div></div><div class="toc"><p><b>Table des matières</b></p><dl><dt><span class="section"><a href="#id297204">Tests fonctionnels</a></span></dt><dd><dl><dt><span class="section"><a href="#id311036">Identifiant de tests</a></span></dt><dt><span class="section"><a href="#id311065">Tests de la Catégorie 1</a></span></dt><dt><span class="section"><a href="#id311790">Tests de la catégorie 2</a></span></dt></dl></dd><dt><span class="section"><a href="#id313391">Tests de stress</a></span></dt><dd><dl><dt><span class="section"><a href="#id313396">Présentation</a></span></dt><dt><span class="section"><a href="#id313411">Environnement des tests</a></span></dt><dt><span class="section"><a href="#id313422">Identifiants de tests</a></span></dt><dt><span class="section"><a href="#id313432">Liste des tests</a></span></dt></dl></dd><dt><span class="section"><a href="#id313668">Contrôle des performances</a></span></dt><dd><dl><dt><span class="section"><a href="#id313673">Présentation</a></span></dt><dt><span class="section"><a href="#id313685">Environnement de tests</a></span></dt><dt><span class="section"><a href="#id313696">Identifiants des tests</a></span></dt><dt><span class="section"><a href="#id313710">Liste des tests</a></span></dt></dl></dd><dt><span class="section"><a href="#id314280">Tests de charge</a></span></dt><dd><dl><dt><span class="section"><a href="#id314285">Présentation</a></span></dt><dt><span class="section"><a href="#id314297">Environnement de tests</a></span></dt><dt><span class="section"><a href="#id314313">Identifiants de tests</a></span></dt><dt><span class="section"><a href="#id314326">Liste des tests</a></span></dt></dl></dd><dt><span class="section"><a href="#id314492"></a></span></dt><dt><span class="section"><a href="#id314497">Contrôle de la qualité du code</a></span></dt><dd><dl><dt><span class="section"><a href="#id314503">Présentation</a></span></dt><dt><span class="section"><a href="#id314516">Identifiants des tests</a></span></dt><dt><span class="section"><a href="#id314584">Liste des tests</a></span></dt></dl></dd><dt><span class="section"><a href="#id314892">Tests de compilation et d'installation</a></span></dt><dd><dl><dt><span class="section"><a href="#id314898">Présentation</a></span></dt><dt><span class="section"><a href="#id314917">Environnement des tests</a></span></dt><dt><span class="section"><a href="#id314928">Liste des tests</a></span></dt></dl></dd><dt><span class="section"><a href="#id315238"></a></span></dt><dt><span class="section"><a href="#id315244">Contrôle de la documentation utilisateur</a></span></dt><dd><dl><dt><span class="section"><a href="#id315250">Présentation</a></span></dt><dt><span class="section"><a href="#id315262">Liste des tests</a></span></dt></dl></dd></dl></div><div class="section" title="Tests fonctionnels"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id297204"></a>Tests fonctionnels</h2></div></div></div><p>Les tests fonctionnels ou tests de boites noires permettent à partir des données en entrée d'observer les réactions du logiciel à tester.</p><p>Les fonctionnalités sont classées par catégories de tests :</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Catégorie 1 : regroupe les fonctionnalités permettant de soumettre une action au serveur TMS:<span class="emphasis"><em> vishnu_submit_job, vishnu_cancel_job, vishnu_set_machine_refresh_period.</em></span></p></li><li class="listitem"><p>Catégorie 2 : regroupe les fonctionnalités permettant de solliciter des informations du serveur TMS: <span class="emphasis"><em>vishnu_get_job_info, vishnu_get_job_progress, vishnu_get_job_out_put, vishnu_get_all_jobs_out_put, vishnu_get_machine_refresh_period, vishnu_list_queues, vishnu_list_jobs.</em></span></p></li></ul></div><p>Chaque test fonctionnel sera réalisé en utilisant chacune des interfaces d'accès suivantes : <span class="emphasis"><em>fonctions API/C++ et API/Python, ligne de commande utilisateur et API web services.</em></span></p><p>Nous allons dans cette section présenter les différentes stratégies de tests en utilisant des programmes exécutables ou des fonctions de l'API TMS puis en observant les résultats obtenus. Les deux conditions à vérifier sont :</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Est ce que le programme réalise les fonctions attendues en accord avec les spécifications?</p></li><li class="listitem"><p>Est ce que le programme fonctionne correctement ?</p></li></ul></div><div class="section" title="Identifiant de tests"><div class="titlepage"><div><div><h3 class="title"><a id="id311036"></a>Identifiant de tests</h3></div></div></div><p>Les identifiants des tests sont de la forme: &lt;ID DSG&gt;-[B|E]:&lt;NOM_TEST&gt;-&lt;INTERFACE&gt; où 'ID DSG' est l'identifiant du cas d'utilisation dans le document [SDG] , 'B' la séquence de base (exécution du cas d'utilisation avec des paramètres valides), 'E' la séquence d'exception (comportement du cas d'utilisation en cas d'erreurs), 'NOM_TEST' le nom du test décrit dans [SDG] et 'INTERFACE' les différents codes des interfaces utilisées par VISHNU : <span class="emphasis"><em>fonctions API/C++(CPP), API/Python (PY), ligne de commande utilisateur (CLI) et API web services</em></span> (WS). L'absence du code de l'interface signifie que le test s'applique à toutes les interfaces précédentes.</p><p>Il faut noter que les tests avec des paramètres corrects sont effectués dans une session active avec un mode de fermeture à la déconnexion (CLOSE_ON_DISCONNECT) et un certificat de session valide.</p></div><div class="section" title="Tests de la Catégorie 1"><div class="titlepage"><div><div><h3 class="title"><a id="id311065"></a>Tests de la Catégorie 1</h3></div></div></div><div class="informaltable"><table border="1"><colgroup><col width="2.9cm" /><col width="9cm" /><col width="3.2cm" /><col width="2cm" /></colgroup><tbody><tr><td>
+                  
+                  
+                  
+                  <p>Identifiant de tests</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Actions</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Résultats</p>
+                </td><td>
+                  
+                  <p>Considérations particulières</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>T1.1-B:submit a job </p>
+                </td><td>
+                  
+                  
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p><span class="strong"><strong>Cas de test</strong></span> : les paramètres sont corrects.</p></li><li class="listitem"><p>Lancer la commande <span class="emphasis"><em>vishnu_submit_job</em></span><span class="emphasis"><em> </em></span>avec l'identifiant de la machine sur laquelle le job sera soumis et le chemin vers le script contenant les caractéristiques du job. </p></li><li class="listitem"><p>Si l'identifiant de machine et le script sont valides, un identifiant du job généré par VISHNU et le chemin jusqu'au résultats du job sont retournés .</p></li><li class="listitem"><p>Lancer la commande <span class="emphasis"><em>vishnu_list_jobs</em></span> et vérifier que </p><p>l'identifiant du job est bien présent dans la liste.</p></li></ol></div>
+                </td><td>
+                  
+                  
+                  <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><div class="orderedlist"><ol class="orderedlist" start="5" type="1"></ol></div></li></ul></div>
+                </td><td align="left">
+                  
+                  
+                  
+                  <p>Le script soumis doit respecter les directives du Batch scheduler utilisé.</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>T1.1-E1:submit a job </p>
+                  <p class="lineBreak">T1.1-E2 : submit a job</p>
+                  <p>T1.1-E3 : submit a job</p>
+                  <p>T1.1-E4 : submit a job</p>
+                </td><td>
+                  
+                  
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p><span class="strong"><strong>Cas de test </strong></span>: les paramètres sont incorrects.</p></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Cas E1 : le certificat de session n'est pas enregistré dans VISHNU ou il a expiré</p></li></ul></div></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Cas E2 : l'identifiant de la machine n'est pas enregistré dans VISHNU </p></li></ul></div></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Cas E3 : une option inconnue ou une erreur de syntaxe est introduite dans le script de soumission</p></li></ul></div></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Cas E4 : le chemin jusqu'au script est incorrect</p></li></ul></div></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer la commande <span class="emphasis"><em>vishnu_submit_job </em></span>avec le cas de test (E1, E2, E3 ou E4) et vérifier que son exécution échoue avec le message correspondant.</p><p></p></li></ol></div>
+                </td><td>
+                  
+                  
+                  <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><div class="orderedlist"><ol class="orderedlist" start="2" type="1"></ol></div></li></ul></div>
+                </td><td>
+                  
+                  
+                  
+                </td></tr><tr><td>
+                  
+                  
+                  <p>T2.2-B:cancel a job </p>
+                </td><td>
+                  
+                  
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p><span class="strong"><strong>Cas de test </strong></span>: les paramètres sont corrects.</p></li><li class="listitem"><p>Lancer la commande <span class="emphasis"><em>vishnu_cancel_job</em></span><span class="emphasis"><em> </em></span>avec l'identifiant de la machine sur laquelle le job sera annulé et l'identifiant du job à annuler.</p></li><li class="listitem"><p>Lancer la commande <span class="emphasis"><em>vishnu_get_job_info</em></span><span class="emphasis"><em> </em></span>avec les paramètres précédents (l'identifiant de la machine sur laquelle le job a été annulé et l'identifiant du job annulé) et vérifier que son exécution échoue.<span class="emphasis"><em> </em></span></p></li></ol></div>
+                </td><td>
+                  
+                  
+                  <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><div class="orderedlist"><ol class="orderedlist" start="4" type="1"></ol></div></li></ul></div>
+                </td><td>
+                  
+                  
+                  
+                </td></tr><tr><td>
+                  
+                  
+                  <p>T2.2-E1:cancel a job </p>
+                  <p>T2.2-E2:cancel a job</p>
+                  <p>T2.2-E3:cancel a job</p>
+                  <p>T2.2-E4:cancel a job</p>
+                </td><td align="justify">
+                  
+                  
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p><span class="strong"><strong>Cas de test : </strong></span>les paramètres sont incorrects.</p></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Cas E1 : le certificat de session n'est pas enregistré dans VISHNU ou il a expiré</p></li><li class="listitem"><p>Cas E2 : l'identifiant de la machine n'est pas enregistré dans VISHNU </p></li></ul></div></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Cas E3 : l'identifiant de job n'est pas enregistré dans VISHNU</p></li></ul></div></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Cas E4 : la commande est lancée par un utilisateur autre que celui qui a soumis le job et qui n'est pas administrateur. </p></li></ul></div></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><div class="itemizedlist"><ul class="itemizedlist" type="disc"></ul></div></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer la commande <span class="emphasis"><em>vishnu_cancel_job </em></span>avec le cas de test (E1, E2, E3 ou E4) et vérifier que son exécution échoue avec le message d'erreur correspondant.</p></li></ol></div>
+                </td><td>
+                  
+                  
+                  <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><div class="orderedlist"><ol class="orderedlist" start="2" type="1"><li class="listitem"><p>- Le message d'erreur correspondant au cas de test est affiché</p></li></ol></div></li></ul></div>
+                </td><td>
+                  
+                  
+                  
+                </td></tr></tbody></table></div></div><div class="section" title="Tests de la catégorie 2"><div class="titlepage"><div><div><h3 class="title"><a id="id311790"></a>Tests de la catégorie 2</h3></div></div></div><div class="informaltable"><table border="1"><colgroup><col width="2.9cm" /><col width="9.699999999999999cm" /><col width="2.2cm" /><col width="2.3cm" /></colgroup><tbody><tr><td>
+                  
+                  
+                  
+                  <p>Identifiant de tests</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Actions</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Résultats</p>
+                </td><td>
+                  
+                  <p>Considérations particulières</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>T2.1-B:get job information</p>
+                </td><td>
+                  
+                  
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p><span class="strong"><strong>Cas de test </strong></span>: les paramètres sont corrects.</p></li><li class="listitem"><p><span class="emphasis"><em>Lancer la commande</em></span><span class="emphasis"><em> </em></span><span class="emphasis"><em>vishnu_list_jobs</em></span><span class="emphasis"><em> </em></span>avec l'option -<span class="emphasis"><em>i</em></span> suivie de l'identifiant du job généré par VISHNU et l'identifiant de la machine sur laquelle le job a été soumis.</p></li><li class="listitem"><p><span class="emphasis"><em>Lancer la commande</em></span><span class="emphasis"><em> </em></span><span class="emphasis"><em>vishnu_get_job_info</em></span><span class="emphasis"><em> </em></span>avec l'identifiant de la machine sur laquelle le job a été soumis et l'identifiant du job généré par VISHNU.</p></li><li class="listitem"><p>Comparer les résultats des commandes précédentes et vérifier qu'ils sont identiques.</p><p></p></li></ol></div>
+                </td><td>
+                  
+                  
+                  <p>- les informations correspondant au job sont retournées.</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Les commandes doivent être lancées avant la fin d'exécution du job.</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>T2.1-E1:get job information</p>
+                  <p>T2.1-E2:get job information</p>
+                  <p>T2.1-E3:get job information</p>
+                </td><td>
+                  
+                  
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p><span class="strong"><strong>Cas de test</strong></span> : les paramètres sont incorrects.</p><p></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Cas E1 : le certificat de session n'est pas enregistré dans VISHNU ou il a expiré</p></li><li class="listitem"><p>Cas E2 : l'identifiant de la machine n'est pas enregistré dans VISHNU</p></li></ul></div></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Cas E3 : l'identifiant du job n'est pas enregistré dans VISHNU</p></li></ul></div></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><div class="itemizedlist"><ul class="itemizedlist" type="disc"></ul></div></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer le commande <span class="emphasis"><em>vishnu_get_job_info</em></span> avec le cas de test (E1, E2 ou E3) et vérifier que son exécution échoue avec le message d'erreur correspondant.</p></li></ol></div>
+                </td><td>
+                  
+                  
+                  <p>- Un message d'erreur correspondant au cas d'erreur est affiché </p>
+                </td><td>
+                  
+                  
+                  
+                </td></tr><tr><td>
+                  
+                  
+                  <p>T2.5-B:get jobs progression</p>
+                </td><td>
+                  
+                  
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer<span class="emphasis"><em> vishnu_submit_job </em></span>avec l'identifiant de la machine sur laquelle le job sera soumis et le chemin vers le script contenant les caractéristiques du job puis conserver les identifiants de job retournés par le système.</p></li><li class="listitem"><p>Lancer la commande <span class="emphasis"><em>vishnu_get_job_progress </em></span>avec l'option <span class="emphasis"><em>-i</em></span> suivie d'un identifiant de job généré par VISHNU et l'identifiant de la machine sur laquelle le job a été soumis.</p></li><li class="listitem"><p>Répéter la commande précédente jusqu'à ce que la progression du job soit positive.</p></li><li class="listitem"><p>Faire <span class="emphasis"><em>vishnu_get_job_out_put </em></span>avec l'identifiant de la machine sur laquelle le job a été soumis et l'identifiant du job et vérifier que le résultat job est bien retourné.</p></li></ol></div>
+                </td><td>
+                  
+                  
+                  <p>- La progression du job est retournée par le système</p>
+                </td><td>
+                  
+                  
+                  
+                </td></tr><tr><td>
+                  
+                  
+                  <p>T2.5-E1:get jobs progression</p>
+                  <p>T2.5-E2:get jobs progression</p>
+                  <p>T2.5-E3:get jobs progression</p>
+                </td><td>
+                  
+                  
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p><span class="strong"><strong>Cas de test</strong></span> : les paramètres sont incorrects</p><p></p></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Cas E1 : le certificat de session n'est pas enregistré dans VISHNU ou il a expiré</p></li><li class="listitem"><p>Cas E2 : l'identifiant de la machine n'est pas enregistré dans VISHNU</p></li><li class="listitem"><p>Cas E3 : l'identifiant du job n'est pas enregistré dans VISHNU</p></li></ul></div></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer <span class="emphasis"><em>vishnu_get_job_progress</em></span> avec les paramètres correspondant à chaque cas et vérifier que l'exécution de la commande échoue avec le message d'erreur correspondant.</p><p></p></li></ol></div>
+                </td><td>
+                  
+                  
+                  <p>- Un message correspondant au code d'erreur est affiché</p>
+                </td><td>
+                  
+                  
+                  
+                </td></tr><tr><td>
+                  
+                  
+                  <p>T2.6-B:get one job output </p>
+                </td><td>
+                  
+                  
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p><span class="strong"><strong>Cas de test </strong></span>: les paramètres sont corrects.</p></li><li class="listitem"><p>Lancer<span class="emphasis"><em> vishnu_submit_job </em></span>avec l'identifiant de la machine sur laquelle le job sera soumis et le chemin vers le script contenant les caractéristiques du job et conserver l'identifiant du job retourné par le système.</p></li><li class="listitem"><p>Attendre pendant une durée égale au temps d'exécution du job défini dans le script.</p></li><li class="listitem"><p>Faire <span class="emphasis"><em>vishnu_get_job_out_put </em></span>avec l'identifiant de la machine sur laquelle le job a été soumis et l'identifiant du job et vérifier que le résultat job est bien retourné dans les chemins spécifiés dans le scripts de soumission.</p></li></ol></div>
+                </td><td>
+                  
+                  
+                  <p>- Les résultats de job sont récupérés.</p>
+                </td><td>
+                  
+                  
+                  
+                </td></tr><tr><td>
+                  
+                  
+                  <p>T2.6-E1:get one job output </p>
+                  <p>T2.6-E2:get one job output </p>
+                  <p>T2.6-E3:get one job output </p>
+                </td><td>
+                  
+                  
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p><span class="strong"><strong>Cas de test</strong></span> : les paramètres sont incorrects</p><p></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Cas E1 : le certificat de session n'est pas enregistré dans VISHNU ou il a expiré</p></li><li class="listitem"><p>Cas E2 : l'identifiant de la machine n'est pas enregistré dans VISHNU</p></li></ul></div></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Cas E3 : la progression du job n'est pas de 100%</p></li></ul></div></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><div class="itemizedlist"><ul class="itemizedlist" type="disc"></ul></div></li><li class="listitem"><p>Lancer le programme <span class="emphasis"><em>vishnu_get_job_out_put</em></span> avec le cas de test (E1, E2 ou E3) et vérifier que son exécution échoue avec le message d'erreur correspondant.</p><p></p></li></ol></div>
+                </td><td>
+                  
+                  
+                  <p>- Un message correspondant au cas d'erreur est affiché</p>
+                </td><td>
+                  
+                  
+                  
+                </td></tr><tr><td>
+                  
+                  
+                  <p>T2.7-B : Get all completed jobs outputs </p>
+                </td><td>
+                  
+                  
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p><span class="strong"><strong>Cas de test </strong></span>: les paramètres sont corrects.</p></li><li class="listitem"><p>Vérifier qu'aucun job n'est soumis ou en cours d'exécution sinon les annuler à l'aide de <span class="emphasis"><em>vishnu_cancel_job</em></span>. </p></li><li class="listitem"><p>Lancer<span class="emphasis"><em> </em></span>deux fois la commande<span class="emphasis"><em> vishnu_submit_job </em></span>avec l'identifiant de la machine sur laquelle le job sera soumis et le chemin vers le script contenant les caractéristiques du job dont les chemins « <span class="emphasis"><em>outputPath »</em></span> et « <span class="emphasis"><em>errorPath » </em></span>et le temps d'exécution de chacun des jobs . Dans le script du premier job, le temps d'exécution estimé est d'une minute et dans le script du second job, il est de deux minutes.</p></li><li class="listitem"><p>Lancer la commande <span class="emphasis"><em>vishnu_get_all_jobs_out_put</em></span> </p></li><li class="listitem"><p>Une minute après le lancement de la commande <span class="emphasis"><em>vishnu_get_all_jobs_out_put</em></span> vérifier que les résultats du premier job ont été bien rapatriés dans les chemins spécifiés dans le script de soumission.</p></li><li class="listitem"><p>Deux minutes après le lancement de la commande <span class="emphasis"><em>vishnu_get_all_jobs_out_put</em></span> vérifier que les résultats du second job ont été bien rapatriés dans les chemins spécifiés dans le script de soumission.</p></li></ol></div>
+                </td><td>
+                  
+                  
+                  <p>- Les résultats des deux jobs soumis sont rapatriés.</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>La période de rafraichissement est d'une minute.</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>T2.7-E1 :Get all completed jobs outputs </p>
+                  <p>T2.7-E2 : Get all completed jobs outputs </p>
+                </td><td>
+                  
+                  
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p><span class="strong"><strong>Cas de test</strong></span> : les paramètres sont incorrects</p><p></p></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Cas E1 : le certificat de session n'est pas enregistré dans VISHNU ou il a expiré</p></li><li class="listitem"><p>Cas E2 : l'identifiant de la machine n'est pas enregistré dans VISHNU</p></li></ul></div></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><div class="itemizedlist"><ul class="itemizedlist" type="disc"></ul></div></li><li class="listitem"><p>Lancer la commande<span class="emphasis"><em> vishnu_get_all_jobs_out_put</em></span> avec le cas de test (E1 ou E2) et vérifier que son exécution échoue avec le message d'erreur correspondant.</p></li></ol></div>
+                </td><td>
+                  
+                  
+                  <p>- Le message d'erreur correspondant au cas d'erreur est affiché</p>
+                </td><td>
+                  
+                  
+                  
+                </td></tr><tr><td>
+                  
+                  
+                  <p>T2.3-B:list job queues</p>
+                </td><td>
+                  
+                  
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p><span class="strong"><strong>Cas de test </strong></span>: les paramètres sont corrects.</p></li><li class="listitem"><p>Lancer la commande <span class="emphasis"><em>vishnu_list_queues </em></span>avec l'identifiant de la machine rattachée au Batch scheduler dont les queues seront listées et conserver la liste des queues.</p></li><li class="listitem"><p>Se connecter au Batch scheduler associé à la machine précédente.</p><p></p></li></ol></div>
+                  <p><span class="strong"><strong>Cas 1 : </strong></span>le Batch scheduler est Torque </p>
+                  <p>- Lancer la commande <span class="emphasis"><em>qstat -Q </em></span>et vérifier que la liste des queues obtenue est la même que celle qui précède. </p>
+                  <p><span class="strong"><strong>Cas 2 : </strong></span>le Batch scheduler est LoadLeveler</p>
+                  <p>- Lancer la commande <span class="emphasis"><em>llclass </em></span>et vérifier que la liste des queues obtenue est la même que celle qui précède.</p>
+                  <p><span class="strong"><strong>Cas </strong></span><span class="strong"><strong>3</strong></span><span class="strong"><strong> : </strong></span>le Batch scheduler est SLURM </p>
+                  <p>- Lancer la commande <span class="strong"><strong>scontrol </strong></span><span class="strong"><strong>show</strong></span><span class="strong"><strong> partition</strong></span><span class="emphasis"><em> </em></span>et vérifier que la liste des queues obtenue est la même que celle qui précède. </p>
+                </td><td>
+                  
+                  
+                  <p>- Les queues du Batch scheduler sont listées.</p>
+                </td><td>
+                  
+                  
+                  
+                </td></tr><tr><td>
+                  
+                  
+                  <p>T2.3-E1:list job queues</p>
+                  <p>T2.3-E2:list job queues</p>
+                </td><td>
+                  
+                  
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p><span class="strong"><strong>Cas de test</strong></span> : paramètres sont incorrects.</p><p></p></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Cas E1 : le certificat de session n'est pas enregistré dans VISHNU ou il a expiré</p></li><li class="listitem"><p>Cas E2 : l'identifiant de la machine n'est pas enregistré dans VISHNU</p></li></ul></div></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><div class="itemizedlist"><ul class="itemizedlist" type="disc"></ul></div></li><li class="listitem"><p>Lancer la commande <span class="emphasis"><em>vishnu_list_queues</em></span> avec le cas de test (E1 ou E2) et vérifier que son exécution échoue avec le message d'erreur correspondant.</p><p></p></li></ol></div>
+                </td><td>
+                  
+                  
+                  <p>- Un message correspondant au cas d'erreur est affiché</p>
+                </td><td>
+                  
+                  
+                  
+                </td></tr><tr><td>
+                  
+                  
+                  <p>T2.4-B:list jobs</p>
+                </td><td>
+                  
+                  
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p><span class="strong"><strong>Cas de test</strong></span> : les paramètres sont corrects.</p><p></p></li><li class="listitem"><p>Vérifier qu'aucun job n'est soumis ou en cours d'exécution sinon les annuler à l'aide de <span class="emphasis"><em>vishnu_cancel_job</em></span>. </p></li><li class="listitem"><p>Lancer<span class="emphasis"><em> </em></span>cinq fois<span class="emphasis"><em> vishnu_submit_job </em></span>avec l'identifiant de la machine sur laquelle le job sera soumis et le chemin vers le script contenant les caractéristiques du job puis conserver les</p><p>identifiants des jobs.</p></li><li class="listitem"><p>Lancer la commande <span class="emphasis"><em>vishnu_list_jobs</em></span> et vérifier que les cinq jobs précédents sont affichés.</p></li></ol></div>
+                </td><td>
+                  
+                  
+                  <p>Les jobs soumis sont affichés.</p>
+                </td><td>
+                  
+                  
+                  
+                </td></tr><tr><td>
+                  
+                  
+                  <p>T2.4-E1:list jobs</p>
+                  <p>T2.4-E2:list jobs</p>
+                </td><td>
+                  
+                  
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p><span class="strong"><strong>Cas de test</strong></span> : les paramètres sont incorrects.</p><p></p></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Cas E1 : le certificat de session n'est pas enregistré dans VISHNU ou il a expiré</p></li><li class="listitem"><p>Cas E2 : l'identifiant de la machine n'est pas enregistré dans VISHNU</p><p></p></li></ul></div></li></ol></div>
+                  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer la commande <span class="emphasis"><em>vishnu_list_jobs</em></span> avec le cas de test (E1 ou E2) et vérifier que son exécution échoue avec le message d'erreur correspondant.</p></li></ol></div>
+                </td><td>
+                  
+                  
+                  <p>- Un message correspondant au cas d'erreur est affiché</p>
+                </td><td>
+                  
+                  
+                  
+                </td></tr></tbody></table></div></div></div><div class="section" title="Tests de stress"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id313391"></a>Tests de stress</h2></div></div></div><div class="section" title="Présentation"><div class="titlepage"><div><div><h3 class="title"><a id="id313396"></a>Présentation</h3></div></div></div><p>Ces tests permettent de vérifier que la cible de test peut réussir à basculer et être récupérée pour différents dysfonctionnements matériels, logiciels ou réseaux sans qu'il y ait perte de données. Ils vérifient que lorsqu'une défaillance survient un système alternatif ou un système de sauvegarde prends le relai correctement sans perte de données ou de transactions.</p></div><div class="section" title="Environnement des tests"><div class="titlepage"><div><div><h3 class="title"><a id="id313411"></a>Environnement des tests</h3></div></div></div><p>Nous utiliserons l'environnement de test 1 décrit dans le chapitre 2.</p></div><div class="section" title="Identifiants de tests"><div class="titlepage"><div><div><h3 class="title"><a id="id313422"></a>Identifiants de tests</h3></div></div></div><p>Les identifiants des tests sont de la forme: STR-&lt;Element stressé&gt;-&lt;Type de stress&gt;.</p></div><div class="section" title="Liste des tests"><div class="titlepage"><div><div><h3 class="title"><a id="id313432"></a>Liste des tests</h3></div></div></div><div class="informaltable"><table border="1"><colgroup><col width="4.3cm" /><col width="6.9cm" /><col width="5.9cm" /></colgroup><tbody><tr><td>
+                  
+                  
+                  
+                  <p>Identifiant de tests</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Technique</p>
+                </td><td>
+                  
+                  <p>Critère de complétion</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>STR-SERV-DOWN</p>
+                </td><td>
+                  
+                  
+                  <p>- Lancer la commande <span class="emphasis"><em>vishnu_submit_job</em></span></p>
+                  <p>- Arrêter le serveur TMS après l'exécution de la commande</p>
+                  <p>- Redémarrer le serveur TMS</p>
+                  <p>- Lancer la commande <span class="emphasis"><em>vishnu_cancel_job</em></span></p>
+                </td><td>
+                  
+                  
+                  
+                  <p>- Terminaison normale de la commande <span class="emphasis"><em>vishnu_cancel_job</em></span></p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>STR-AGENT-DOWN</p>
+                </td><td>
+                  
+                  
+                  <p>- Lancer la commande <span class="emphasis"><em>vishnu_submit_job</em></span></p>
+                  <p>- Arrêter l'agent SysFera-DS après l'exécution de la commande</p>
+                  <p>- Redémarrer l'agent SysFera-DS</p>
+                  <p>- Lancer la commande <span class="emphasis"><em>vishnu_cancel_job</em></span></p>
+                </td><td>
+                  
+                  
+                  
+                  <p>- Terminaison normale de la commande <span class="emphasis"><em>vishnu_cancel_job</em></span></p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>STR-BATCH-DOWN</p>
+                </td><td>
+                  
+                  
+                  <p>- Arrêter le Batch scheduler</p>
+                  <p>- Lancer la commande <span class="emphasis"><em>vishnu_submit_job</em></span></p>
+                </td><td>
+                  
+                  
+                  
+                  <p>- Une erreur due à une indisponibilité du Batch scheduler est retournée par le système.</p>
+                </td></tr></tbody></table></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="id313661"></a></h4></div></div></div></div></div></div><div class="section" title="Contrôle des performances"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id313668"></a>Contrôle des performances</h2></div></div></div><div class="section" title="Présentation"><div class="titlepage"><div><div><h3 class="title"><a id="id313673"></a>Présentation</h3></div></div></div><p>Ces tests ont pour objectif de vérifier que les exigences de performance quantifiées sont effectivement satisfaites. </p></div><div class="section" title="Environnement de tests"><div class="titlepage"><div><div><h3 class="title"><a id="id313685"></a>Environnement de tests</h3></div></div></div><p>Nous utiliserons l'environnement de test 1 décrit dans le chapitre 2.</p></div><div class="section" title="Identifiants des tests"><div class="titlepage"><div><div><h3 class="title"><a id="id313696"></a>Identifiants des tests</h3></div></div></div><p>Les identifiants des tests sont de la forme: CDP-&lt;ID STB&gt;-[NomdeCommande|IdentifiantDeTest] où 'ID STB' est l'identifiant de l'exigence spécifiée dans le document [STB] au paragraphe « performances, fiabilité et robustesse ». </p></div><div class="section" title="Liste des tests"><div class="titlepage"><div><div><h3 class="title"><a id="id313710"></a>Liste des tests</h3></div></div></div><div class="informaltable"><table border="1"><colgroup><col width="5.2cm" /><col width="6.6cm" /><col width="5.3cm" /></colgroup><tbody><tr><td>
+                  
+                  
+                  
+                  <p>Identifiant de tests</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Technique</p>
+                </td><td>
+                  
+                  <p>Critère de completion</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>CDP-3.1-submit a job</p>
+                </td><td>
+                  
+                  
+                  <p><span class="strong"><strong>Cas 1</strong></span> :Batch scheduler Torque</p>
+                  <p>- Lancer une commande <span class="emphasis"><em>'ssh &lt;host&gt; qsub'</em></span> sur une machine serveur en mesurant le temps de réponse (temps de référence)</p>
+                  <p><span class="strong"><strong>Cas 2</strong></span> :Batch scheduler LoadLeveler</p>
+                  <p>Lancer une commande <span class="emphasis"><em>'ssh &lt;host&gt; </em></span><span class="emphasis"><em>llsubmit'</em></span> sur une machine serveur en mesurant le temps de réponse (temps de référence)</p>
+                  <p><span class="strong"><strong>Cas </strong></span><span class="strong"><strong>3</strong></span> :Batch scheduler SLURM</p>
+                  <p>Lancer une commande <span class="emphasis"><em>'ssh &lt;host&gt; </em></span><span class="emphasis"><em>sbatch</em></span><span class="emphasis"><em>'</em></span> sur une machine serveur en mesurant le temps de réponse (temps de référence)</p>
+                  <p>- Lancer la commande <span class="emphasis"><em>vishnu_submit_job</em></span><span class="strong"><strong> </strong></span>en mesurant le temps de réponse</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>temps inférieur au temps de référence (valeur moyenne sur 10 itérations)</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>CDP-3.1-cancel a job</p>
+                </td><td>
+                  
+                  
+                  <p><span class="strong"><strong>Cas 1</strong></span> :Batch scheduler Torque</p>
+                  <p>- Lancer une commande <span class="emphasis"><em>'ssh &lt;host&gt; qdel'</em></span> sur une machine serveur en mesurant le temps de réponse (temps de référence)</p>
+                  <p><span class="strong"><strong>Cas 2</strong></span> :Batch scheduler LoadLeveler</p>
+                  <p>Lancer une commande <span class="emphasis"><em>'ssh &lt;host&gt; llcancel'</em></span> sur une machine serveur en mesurant le temps de réponse (temps de référence)</p>
+                  <p><span class="strong"><strong>Cas </strong></span><span class="strong"><strong>3</strong></span> :Batch scheduler SLURM</p>
+                  <p>Lancer une commande <span class="emphasis"><em>'ssh &lt;host&gt; </em></span><span class="emphasis"><em>s</em></span><span class="emphasis"><em>c</em></span><span class="emphasis"><em>ancel</em></span><span class="emphasis"><em>'</em></span> sur une machine serveur en mesurant le temps de réponse (temps de référence)</p>
+                  <p>- Lancer la commande <span class="emphasis"><em>vishnu_cancel_job</em></span><span class="strong"><strong> </strong></span>en mesurant le temps de réponse</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>temps inférieur au temps de référence (valeur moyenne sur 10 itérations)</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>CDP-3.1-list jobs</p>
+                </td><td>
+                  
+                  
+                  <p><span class="strong"><strong>Cas 1</strong></span> :Batch scheduler Torque</p>
+                  <p>- Lancer une commande <span class="emphasis"><em>'ssh &lt;host&gt; qstat'</em></span> sur une machine serveur en mesurant le temps de réponse (temps de référence)</p>
+                  <p><span class="strong"><strong>Cas 2</strong></span> :Batch scheduler LoadLeveler</p>
+                  <p>Lancer une commande <span class="emphasis"><em>'ssh &lt;host&gt; llq'</em></span> sur une machine serveur en mesurant le temps de réponse (temps de référence)</p>
+                  <p><span class="strong"><strong>Cas </strong></span><span class="strong"><strong>3</strong></span> :Batch scheduler SLURM</p>
+                  <p>Lancer une commande <span class="emphasis"><em>'ssh &lt;host&gt; </em></span><span class="emphasis"><em>squeue</em></span><span class="emphasis"><em>'</em></span> sur une machine serveur en mesurant le temps de réponse (temps de référence)</p>
+                  <p>- Lancer la commande <span class="emphasis"><em>vishnu_list_jobs</em></span><span class="strong"><strong> </strong></span>en mesurant le temps de réponse temps de réponse (temps de référence).</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>temps inférieur au temps de référence (valeur moyenne sur 10 itérations)</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>CDP-3.2.1-list job queues</p>
+                </td><td>
+                  
+                  
+                  <p><span class="strong"><strong>Cas 1</strong></span> :Batch scheduler Torque</p>
+                  <p>- Lancer une commande <span class="emphasis"><em>'ssh &lt;host&gt; qstat -Q'</em></span> sur une machine serveur en mesurant le temps de réponse (temps de référence)</p>
+                  <p><span class="strong"><strong>Cas 2</strong></span> :Batch scheduler LoadLeveler</p>
+                  <p>Lancer une commande <span class="emphasis"><em>'ssh &lt;host&gt; llclass'</em></span> sur une machine serveur en mesurant le temps de réponse (temps de référence)</p>
+                  <p><span class="strong"><strong>Cas </strong></span><span class="strong"><strong>3</strong></span> :Batch scheduler SLURM</p>
+                  <p>Lancer une commande <span class="emphasis"><em>'ssh &lt;host&gt; </em></span><span class="emphasis"><em>scontrol show partition</em></span><span class="emphasis"><em>'</em></span> sur une machine serveur en mesurant le temps de réponse (temps de référence)</p>
+                  <p>- Lancer la commande <span class="emphasis"><em>vishnu_list_queues</em></span><span class="strong"><strong> </strong></span>en mesurant le temps de réponse</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>temps inférieur au temps de référence (valeur moyenne sur 10 itérations)</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>CDP-3.2.2-submit a job</p>
+                </td><td>
+                  
+                  
+                  <p>- Lancer le serveur TMS</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Consommation CPU inférieure à 10%.</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>CDP-MemServer</p>
+                </td><td>
+                  
+                  
+                  <p>- Lancer le serveur TMS</p>
+                  <p>- Laisser le serveur fonctionner sans utiliser les services pendant 24h</p>
+                  <p>- Vérifier que l'espace mémoire consommé par le processus serveur n'a pas augmenté.</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Consommation mémoire constante.</p>
+                </td></tr></tbody></table></div></div></div><div class="section" title="Tests de charge"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id314280"></a>Tests de charge</h2></div></div></div><div class="section" title="Présentation"><div class="titlepage"><div><div><h3 class="title"><a id="id314285"></a>Présentation</h3></div></div></div><p>Les tests de charge ont pour objectif de vérifier que les exigences de capacité du système sont vérifiées.</p></div><div class="section" title="Environnement de tests"><div class="titlepage"><div><div><h3 class="title"><a id="id314297"></a>Environnement de tests</h3></div></div></div><p>Nous utiliserons l'environnement de test 1 et 3 décrit dans le chapitre 2.</p><p>Par ailleurs, les requêtes envoyées en simultané seront en fait envoyées par une seule machine cliente avec un programme de synchronisation (MPI).</p></div><div class="section" title="Identifiants de tests"><div class="titlepage"><div><div><h3 class="title"><a id="id314313"></a>Identifiants de tests</h3></div></div></div><p>Les identifiants des tests sont de la forme: LOAD-&lt;ID STB&gt;-[NomdeCommande|IdentifiantDeTest] où 'ID STB' est l'identifiant de l'exigence spécifiée dans le document [STB]. </p></div><div class="section" title="Liste des tests"><div class="titlepage"><div><div><h3 class="title"><a id="id314326"></a>Liste des tests</h3></div></div></div><div class="informaltable"><table border="1"><colgroup><col width="5.4cm" /><col width="6cm" /><col width="5.7cm" /></colgroup><tbody><tr><td>
+                  
+                  
+                  
+                  <p>Identifiant de tests</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Technique</p>
+                </td><td>
+                  
+                  <p>Résultats attendus</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>LOAD-2.1-submit a job</p>
+                </td><td>
+                  
+                  
+                  <p>- Lancer 100 commandes <span class="emphasis"><em>vishnu_submit_job</em></span> simultanées</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>- Terminaison normale de toutes les commandes</p>
+                  <p>- Etat normal du serveur TMS</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>LOAD-2.1-list jobs,</p>
+                  <p>LOAD-2.1-list job queues,</p>
+                </td><td>
+                  
+                  
+                  <p>- Lancer 100 commandes <span class="emphasis"><em>vishnu_list_jobs/ vishnu_list_queues</em></span> simultanées</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>- Terminaison normale de toutes les commandes</p>
+                  <p>- Etat normal du serveur TMS</p>
+                </td></tr></tbody></table></div></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id314492"></a></h2></div></div></div></div><div class="section" title="Contrôle de la qualité du code"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id314497"></a>Contrôle de la qualité du code</h2></div></div></div><div class="section" title="Présentation"><div class="titlepage"><div><div><h3 class="title"><a id="id314503"></a>Présentation</h3></div></div></div><p>L'objectif de ces tests est de vérifier que le code source (C/C++ ou Java) respecte les contraintes de qualité logiciel fixées dans les spécifications et le cahier des charges.</p></div><div class="section" title="Identifiants des tests"><div class="titlepage"><div><div><h3 class="title"><a id="id314516"></a>Identifiants des tests</h3></div></div></div><p>Les identifiants des tests sont de la forme: [IdentifiantDeTest]-[IdentifiantDesModules] où les identifiants sont les suivants:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Identifiants de tests</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p>CRP: Conformité aux Règles de Programmation</p></li><li class="listitem"><p>MCC: Mesure de la Complexité du Code</p></li><li class="listitem"><p>DDC: Détection de Duplication du Code</p></li></ul></div></li><li class="listitem"><p>Identifiants de modules</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p>CSC : C/C++ source code</p></li><li class="listitem"><p>JSC : Java source code</p></li></ul></div></li></ul></div></div><div class="section" title="Liste des tests"><div class="titlepage"><div><div><h3 class="title"><a id="id314584"></a>Liste des tests</h3></div></div></div><div class="informaltable"><table border="1"><colgroup><col width="4.4cm" /><col width="6.3cm" /><col width="6.4cm" /></colgroup><tbody><tr><td>
+                  
+                  
+                  
+                  <p>Identifiant de tests</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Technique</p>
+                </td><td>
+                  
+                  <p>Résultats attendus</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>CRP-CSC</p>
+                </td><td>
+                  
+                  
+                  <p>Audit du code C/C++ avec l'outil LOGISCOPE</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Le code respecte toutes les règles de codage de catégorie «REQUIRED » spécifiées pour le projet [SCL] sauf dérogation clairement documentée dans le code. </p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>CRP-JSC</p>
+                </td><td>
+                  
+                  
+                  <p>Audit du code Java avec l'outil LOGISCOPE</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Le code respecte toutes les règles de codage de catégorie «REQUIRED » spécifiées pour le projet [SCL] sauf dérogation clairement documentée dans le code. </p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>MCC-CSC</p>
+                </td><td>
+                  
+                  
+                  <p>Audit du code C/C++ avec l'outil SQUORE</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Pas plus de 1% de composants classés « A risque » </p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>MCC-JSC</p>
+                </td><td>
+                  
+                  
+                  <p>Audit du code Java avec l'outil SQUORE</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Pas plus de 1% de composants classés « A risque » </p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>DDC-CSC</p>
+                </td><td>
+                  
+                  
+                  <p>Audit du code C/C++ avec l'outil SQUORE</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Moins de 10% de code dupliqué. </p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>DDC-JSC</p>
+                </td><td>
+                  
+                  
+                  <p>Audit du code Java avec l'outil SQUORE</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Moins de 10% de code dupliqué. </p>
+                </td></tr></tbody></table></div></div></div><div class="section" title="Tests de compilation et d'installation"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id314892"></a>Tests de compilation et d'installation</h2></div></div></div><div class="section" title="Présentation"><div class="titlepage"><div><div><h3 class="title"><a id="id314898"></a>Présentation</h3></div></div></div><p>La compilation des différents exécutables et librairies composant le module TMS sera réalisée par un serveur d'intégration continue (du type HUDSON).</p><p>Par ailleurs les tests d'installation ont pour objectif de valider la procédure d'installation de l'ensemble des différents composants d'une plateforme VISHNU (clients, serveurs, agents SysFera-DS).</p></div><div class="section" title="Environnement des tests"><div class="titlepage"><div><div><h3 class="title"><a id="id314917"></a>Environnement des tests</h3></div></div></div><p>Nous utiliserons l'environnement de test décrit dans le chapitre 2.</p></div><div class="section" title="Liste des tests"><div class="titlepage"><div><div><h3 class="title"><a id="id314928"></a>Liste des tests</h3></div></div></div><div class="informaltable"><table border="1"><colgroup><col width="4.4cm" /><col width="6.3cm" /><col width="6.4cm" /></colgroup><tbody><tr><td>
+                  
+                  
+                  
+                  <p>Identifiant de tests</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Technique</p>
+                </td><td>
+                  
+                  <p>Résultats attendus</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>COMP-CSC</p>
+                </td><td>
+                  
+                  
+                  <p>Compilation du code C/C++ avec l'outil GCC/CMake</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Compilation correcte de tous les exécutables</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>INS-SERVER-PGSQL</p>
+                  <p>INS-SERVER-ORACLE</p>
+                </td><td>
+                  
+                  
+                  <p>Installation des différents éléments serveur de la plateforme VISHNU</p>
+                  <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>serveur de calcul</p></li><li class="listitem"><p>serveur de stockage</p></li><li class="listitem"><p>serveur dédié VISHNU</p></li><li class="listitem"><p>serveur de base de données</p></li></ul></div>
+                </td><td>
+                  
+                  
+                  
+                  <p>- Tous les processus démarrés et operationnels</p>
+                  <p>- Documentation disponible (pages man)</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>INS-CLI</p>
+                </td><td>
+                  
+                  
+                  <p>Installation du client VISHNU en ligne de commande</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>- Toutes les commandes installées</p>
+                  <p>- Documentation disponible (pages man)</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>INS-PGAPI</p>
+                </td><td>
+                  
+                  
+                  <p>Installation des librairies API VISHNU (C++ et Python)</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>- Librairie C++ installée</p>
+                  <p>- Librairie Python installée et pouvant être chargée dans l'interpréteur Python 2.x</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>INS-WSAPI</p>
+                </td><td>
+                  
+                  
+                  <p>Installation des services web VISHNU sur le serveur JBoss</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>- Services operationnels (contrôle via la console webservices de JBoss)</p>
+                </td></tr></tbody></table></div></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id315238"></a></h2></div></div></div></div><div class="section" title="Contrôle de la documentation utilisateur"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id315244"></a>Contrôle de la documentation utilisateur</h2></div></div></div><div class="section" title="Présentation"><div class="titlepage"><div><div><h3 class="title"><a id="id315250"></a>Présentation</h3></div></div></div><p>L'objectif est de vérifier que la documentation utilisateur permet à l'utilisateur de comprendre et d'utiliser les fonctions spécifiées .</p></div><div class="section" title="Liste des tests"><div class="titlepage"><div><div><h3 class="title"><a id="id315262"></a>Liste des tests</h3></div></div></div><div class="informaltable"><table border="1"><colgroup><col width="4.4cm" /><col width="6.3cm" /><col width="6.4cm" /></colgroup><tbody><tr><td>
+                  
+                  
+                  
+                  <p>Identifiant de tests</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Technique</p>
+                </td><td>
+                  
+                  <p>Résultats attendus</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>CDU-MAN</p>
+                </td><td>
+                  
+                  
+                  <p>Vérifier les pages de manuel attachées à chaque commande</p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Toutes les pages de manuel contiennent toutes les informations nécessaires à l'utilisateur pour utiliser les commandes.</p>
+                </td></tr><tr><td>
+                  
+                  
+                  <p>CDU-USERGUIDE</p>
+                </td><td>
+                  
+                  
+                  <p>Suivre le guide de l'utilisateur </p>
+                </td><td>
+                  
+                  
+                  
+                  <p>Le guide permet une prise en main rapide des fonctions du logiciel</p>
+                </td></tr></tbody></table></div></div></div></div></div></body></html>

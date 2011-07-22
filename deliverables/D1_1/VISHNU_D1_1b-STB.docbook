@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<book xmlns="http://docbook.org/ns/docbook" version="5.0">
+<book
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <info>
     <author>
       <personname>
@@ -36,6 +37,22 @@
         <revdescription>
               
             <para>Version du livrable</para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>03</revnumber>
+        <date>18/01/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+              
+            <para>Ajout de SWIG,Python,Java dans §3.1.</para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>04</revnumber>
+        <date>22/07/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+              
+            <para>Prise en compte de SLURM.</para></revdescription>
       </revision>
     </revhistory>
   </info>
@@ -381,7 +398,7 @@ de SHA-1.</para>
             <row>
               <entry><para>1.2.6</para></entry>
               <entry><para>Logiciels de gestion de jobs batch supportés</para></entry>
-              <entry><para>- Torque </para><para>- IBM LoadLeveler</para></entry>
+              <entry><para>- Torque </para><para>- IBM LoadLeveler</para><para>- SLURM</para></entry>
             </row>
             <row>
               <entry><para>1.2.7</para></entry>
@@ -646,7 +663,7 @@ de SHA-1.</para>
             <row>
               <entry><para>2.4</para></entry>
               <entry><para>Librairies des Batch schedulers</para></entry>
-              <entry><para>Torque API / LoadLeveler API</para></entry>
+              <entry><para>Torque API, LoadLeveler API  et SLURM API</para></entry>
             </row>
             <row>
               <entry><para>2.5</para></entry>
@@ -682,6 +699,21 @@ de SHA-1.</para>
               <entry><para>3.2</para></entry>
               <entry><para>GCC</para></entry>
               <entry><para>GCC v4.4.3 minimum (Janvier 2010)</para></entry>
+            </row>
+            <row>
+              <entry><para>3.3</para></entry>
+              <entry><para>SWIG</para></entry>
+              <entry><para>SWIG v1.3.40 minimum</para></entry>
+            </row>
+            <row>
+              <entry><para>3.4</para></entry>
+              <entry><para>Python</para></entry>
+              <entry><para>Python v2.5 minimum</para></entry>
+            </row>
+            <row>
+              <entry><para>3.5</para></entry>
+              <entry><para>Java</para></entry>
+              <entry><para>JDK 1.6 minimum</para></entry>
             </row>
           </tbody>
         </tgroup>
