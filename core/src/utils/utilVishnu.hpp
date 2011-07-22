@@ -29,7 +29,8 @@ namespace bfs=boost::filesystem;
 typedef enum {
   TORQUE = 0,/*!< For TORQUE batch type */
   LOADLEVELER = 1,/*!< For LOADLEVELER batch type */
-  UNDEFINED = 2 /*!< IF batch type is not defined*/
+  SLURM = 2, /*!< For SLURM batch type */
+  UNDEFINED = 3 /*!< IF batch type is not defined*/
 } BatchType;
 
 

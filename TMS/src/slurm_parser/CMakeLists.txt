@@ -8,13 +8,13 @@ if (VISHNU_USE_SLURM)
     ${SLURM_PARSER_DIR}
     )
 
-  add_library(utils-slurm STATIC 
+  add_library(slurm-parser STATIC 
     opt.c
     mult_cluster.c
     slurm-submit.c 
     )
 
-  target_link_libraries(utils-slurm
+  target_link_libraries(slurm-parser
     ${SLURM_LIB}
     ${SLURM_STATIC_LIB}
     pthread
