@@ -56,7 +56,7 @@ class SlurmServer : public BatchServer
     /**
      * \brief Function to get the start time of the job
      * \param jobId the identifier of the job 
-     * \return 0 if the job is unknown or server not  unavailable
+     * \return 0 if the job is unknown 
      */
     time_t 
     getJobStartTime(const std::string& jobId);
@@ -93,7 +93,7 @@ class SlurmServer : public BatchServer
      * \return VISHNU state 
      */
     int
-    convertSlurmStateToVishnuState(std::string state); 
+    convertSlurmStateToVishnuState(const uint16_t& state); 
 
     /**
      * \brief Function to convert the Slurm priority into VISHNU priority
@@ -101,15 +101,23 @@ class SlurmServer : public BatchServer
      * \return VISHNU state 
      */
     int
-    convertSlurmPrioToVishnuPrio(const int& prio); 
+    convertSlurmPrioToVishnuPrio(const uint32_t& prio); 
 
     /**
      * \brief Function To fill the info concerning a job
      * \param job: The job to fill
-     * \param p: The batch status structure containing the job info
+     * \param jobId: The identifier of the job to load
      */
     void
-    fillJobInfo(TMS_Data::Job &job);
+    fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId);
+
+    /**
+     * \brief Function To convert vishnu job Id to slurm job Id 
+     * \param jobId: vishnu job Id
+     * \return the converted slurm job id
+     */  
+    uint32_t
+    convertToSlurmJobId(const std::string& jobId);
 
     /**
      * \brief ListQueues returned
