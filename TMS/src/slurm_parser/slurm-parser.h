@@ -39,6 +39,6 @@ static int   _set_rlimit_env(void);
 static void  _set_spank_env(void);
 static void  _set_submit_dir_env(void);
 static int   _set_umask_env(void);
-int slurm_submit(int argc, char *argv[], submit_response_msg_t* *resp);
+int slurm_parse_script(int argc, char *argv[], job_desc_msg_t *desc);
 
 #endif /*__SLURM_AUTHENTICATION_H__*/
