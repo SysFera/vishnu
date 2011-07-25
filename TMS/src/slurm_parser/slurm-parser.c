@@ -1,10 +1,10 @@
-#include "slurm-submit.h"
+#include "slurm-parser.h"
 
-int slurm_submit(int argc, char *argv[], submit_response_msg_t* *resp)
+int slurm_parse_script(int argc, char *argv[], job_desc_msg_t *desc)
 {
 	log_options_t logopt = LOG_OPTS_STDERR_ONLY;
-	job_desc_msg_t desc;
-	//submit_response_msg_t *resp;
+	
+  //submit_response_msg_t *resp;
 	char *script_name;
 	void *script_body;
 	int script_size = 0;
@@ -65,59 +65,18 @@ int slurm_submit(int argc, char *argv[], submit_response_msg_t* *resp)
 	_set_spank_env();
 	_set_submit_dir_env();
 	_set_umask_env();
-	slurm_init_job_desc_msg(&desc);
-	if (_fill_job_desc_from_opts(&desc) == -1) {
+	slurm_init_job_desc_msg(&(*desc));
+	if (_fill_job_desc_from_opts(&(*desc)) == -1) {
 		exit(error_exit);
 	}
 
-	desc.script = (char *)script_body;
-
-  fprintf(stdout, "script_name=%s\n", script_name);
-  fprintf(stdout, "xbasename (script_name)=%s\n", xbasename(script_name));
-  fprintf(stdout, "opt.script_argc =%d\n", opt.script_argc);
-  fprintf(stdout, "desc.script = %s\n", desc.script);
-  fprintf(stdout, "opt.user = %s,  desc.user_id = %d, desc. group_id=%d\n", opt.user, desc.user_id, desc.group_id);
-  fprintf(stdout, "desc.std_out = %s, desc.std_err = %s\n", desc.std_out, desc.std_err);
+	(*desc).script = (char *)script_body;
 
 	/* If can run on multiple clusters find the earliest run time
 	 * and run it there */
-	if (sbatch_set_first_avail_cluster(&desc) != SLURM_SUCCESS)
+	if (sbatch_set_first_avail_cluster(&(*desc)) != SLURM_SUCCESS)
 		exit(error_exit);
 
-	while (slurm_submit_batch_job(&desc, &(*resp)) < 0) {
-		static char *msg;
-
-		if (errno == ESLURM_ERROR_ON_DESC_TO_RECORD_COPY)
-			msg = "Slurm job queue full, sleeping and retrying.";
-		else if (errno == ESLURM_NODES_BUSY) {
-			msg = "Job step creation temporarily disabled, "
-			      "retrying";
-		} else if (errno == EAGAIN) {
-			msg = "Slurm temporarily unable to accept job, "
-			      "sleeping and retrying.";
-		} else
-			msg = NULL;
-		if ((msg == NULL) || (retries >= MAX_RETRIES)) {
-			error("Batch job submission failed: %m");
-			exit(error_exit);
-		}
-
-		if (retries)
-			debug("%s", msg);
-		else if (errno == ESLURM_NODES_BUSY)
-			info("%s", msg); /* Not an error, powering up nodes */
-		else
-			error("%s", msg);
-		sleep (++retries);
-        }
-
-	printf("Submitted batch job %u", (*resp)->job_id);
-	if (working_cluster_rec)
-		printf(" on cluster %s", working_cluster_rec->name);
-	printf("\n");
-
-	xfree(desc.script);
-	slurm_free_submit_response_response_msg(*resp);
 	return 0;
 }
 
@@ -378,7 +337,6 @@ static void _set_submit_dir_env(void)
 		error("unable to set SLURM_SUBMIT_DIR in environment");
 		return;
 	}
-	debug("propagating SUBMIT_DIR=%s", buf);
 }
 
 /* Set SLURM_UMASK environment variable with current state */
@@ -399,7 +357,6 @@ static int _set_umask_env(void)
 		error ("unable to set SLURM_UMASK in environment");
 		return SLURM_FAILURE;
 	}
-	debug ("propagating UMASK=%s", mask_char);
 	return SLURM_SUCCESS;
 }
 
@@ -428,7 +385,6 @@ static void  _set_prio_process_env(void)
 		return;
 	}
 
-	debug ("propagating SLURM_PRIO_PROCESS=%d", retval);
 }
 
 /*
@@ -619,7 +575,6 @@ static int _set_rlimit_env(void)
 			continue;
 		}
 
-		debug ("propagating RLIMIT_%s=%lu", rli->name, cur);
 	}
 
 	/*
