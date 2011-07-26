@@ -8,7 +8,6 @@ int slurm_parse_script(int argc, char *argv[], job_desc_msg_t *desc)
 	char *script_name;
 	void *script_body;
 	int script_size = 0;
-	int retries = 0;
 
 	log_init(xbasename(argv[0]), logopt, 0, NULL);
 
