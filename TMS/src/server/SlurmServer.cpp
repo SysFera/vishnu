@@ -560,9 +560,6 @@ SlurmServer::listQueues(const std::string& OptqueueName) {
   partition_info_t *partition = NULL;
   int res;
 
-  int nbRunningJobs = 0; 
-  int nbJobsInQueue = 0;
-
   res = slurm_load_partitions((time_t)NULL, &allPartition, 1);
   if (res) {
     char* errorMsg = slurm_strerror(res);
@@ -585,7 +582,6 @@ SlurmServer::listQueues(const std::string& OptqueueName) {
   for (int i = 0; i < allPartition->record_count; i++) {
 
     if(OptqueueName.size()!=0) {
-      int j = 0;
       for (int j = 0; j < allPartition->record_count; j++) {
         if(OptqueueName.compare(std::string(partition[j].name))==0) {
           OptQueueNameFound = true;  
