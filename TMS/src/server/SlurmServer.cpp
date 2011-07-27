@@ -33,6 +33,7 @@ using namespace vishnu;
  * \brief Constructor
  */
 SlurmServer::SlurmServer():BatchServer() {
+  msymbolMap["\%j"] = "";
 }
 
 /**
@@ -110,22 +111,55 @@ SlurmServer::submit(const char* scriptPath,
     //parses the scripthPath and sets the options values
     slurm_parse_script(argc, argv, &desc);
 
-    submit_response_msg_t *resp;
-    //To submit the job
-    if(slurm_submit_batch_job(&desc, &(resp)) < 0) {
-      std::cerr << "Under construction............" << std::endl;
-    }
-
+    //get the slurm treated symbols
+    std::map<std::string, std::string>::const_iterator iter;
+    std::map<std::string, std::string>::const_iterator end=msymbolMap.end();
+    std::string vishnuTreatedSymbols;
     
-    uint32_t jobId = resp->job_id;
+    std::string symbol;
+    bool Tosubmit = true;
+    if(SlurmServer::containsAnExcludedSlurmSymbols(desc.std_out, symbol)){
+      std::cerr << "VISHNU can't treats in your job output path the following sumbol: " << symbol << std::endl;
+      for(iter=msymbolMap.begin(); iter!=end; ++iter) {
+        vishnuTreatedSymbols+=iter->first[0]+symbol.substr(1,symbol.size()-2)+iter->first[1]+" ";
+      }
+      std::cerr << "*****The only SLURM symbols treated by VISHNU are: " << vishnuTreatedSymbols << std::endl;
+      std::cerr << "*****Replace your symbols by the following sumbols: "<< vishnuTreatedSymbols << std::endl;
+      Tosubmit = false;
+    }
+    symbol="";
+    if(Tosubmit && SlurmServer::containsAnExcludedSlurmSymbols(desc.std_err, symbol)){
+      std::cerr << "VISHNU can't treats in your job error path the following sumbol: " << symbol << std::endl;
+      vishnuTreatedSymbols="";
+      for(iter=msymbolMap.begin(); iter!=end; ++iter) {
+        vishnuTreatedSymbols+=iter->first[0]+symbol.substr(1,symbol.size()-2)+iter->first[1]+" ";
+      }
+      std::cerr << "*****The only SLURM symbols treated by VISHNU are: " << vishnuTreatedSymbols << std::endl;
+      std::cerr << "*****Replace your symbols by the following sumbols: " << vishnuTreatedSymbols << std::endl;
+      Tosubmit = false;
+    }
+  
+    uint32_t jobId = 0;
     std::string jobOutputPath ;
     std::string jobErrorPath;
-    std::stringstream os;
-    if(desc.std_out!=NULL) {
-      jobOutputPath = desc.std_out;
-    }
-    if(desc.std_err!=NULL) {
-      jobErrorPath = desc.std_err;
+    std::stringstream os; 
+    submit_response_msg_t *resp;
+    if(Tosubmit) {
+      //To submit the job
+      if(slurm_submit_batch_job(&desc, &(resp)) < 0) {
+        std::cerr << "Under construction............" << std::endl;
+      }
+
+      jobId = resp->job_id;
+      jobOutputPath ;
+      jobErrorPath;
+      os;
+      if(desc.std_out!=NULL) {
+        jobOutputPath = desc.std_out;
+      }
+      if(desc.std_err!=NULL) {
+        jobErrorPath = desc.std_err;
+      }
     }
     os << jobId << " " << jobOutputPath << " " << jobErrorPath;
     char* jobInfoStr = const_cast<char*>(strdup(os.str().c_str()));
@@ -134,8 +168,9 @@ SlurmServer::submit(const char* scriptPath,
     close(pipeJobInfofd[1]);
     
     xfree(desc.script);
-    slurm_free_submit_response_response_msg(resp); 
-    
+    if(Tosubmit) {
+      slurm_free_submit_response_response_msg(resp); 
+    }
     exit(EXIT_SUCCESS);
   
   } else { /* Parent reads from pipe */
@@ -215,11 +250,11 @@ SlurmServer::submit(const char* scriptPath,
     fillJobInfo(job, jobId);
    
     if(jobOutputPath.size()!=0) {
-      replaceSymbolInToJobPath(jobOutputPath, "\%J", jobIdStr);
+      replaceSymbolInToJobPath(jobOutputPath);
       job.setOutputPath(jobOutputPath);
     }
     if(jobErrorPath.size()!=0) {
-      replaceSymbolInToJobPath(jobErrorPath, "\%J", jobIdStr);
+      replaceSymbolInToJobPath(jobErrorPath);
       job.setErrorPath(jobErrorPath);
     }
 
@@ -233,34 +268,97 @@ SlurmServer::submit(const char* scriptPath,
 /**
  * \brief Function to replace slurm job identifer symbol by its real value in to a path
  * \param path The path containing the job symbol
- * \param symbol The symbol to replace
- * \param value The value to attribute at the symbol
  */
-void SlurmServer::replaceSymbolInToJobPath(std::string& path, 
-    const std::string& symbol, 
-    const std::string& value) {
+void SlurmServer::replaceSymbolInToJobPath(std::string& path) {
 
-  //find the symbol position
-  size_t pos = path.find(symbol);
-  while(pos!=std::string::npos) {
-    //remove the symbol identifier
-    path.erase(pos, symbol.size());
-    //insert the correspondant value of the symbol
-    path.insert(pos, value);
-    //Pass to the next symbol
-    pos = path.find(symbol);
-  }
+  static const int SLURM_MAX_WIDTH = 10;//This value may be change for later version of SLURM
+  //actual version of slurm is 2.2.1
 
-  //Find the symbol in to lower case
-  std::string symbolInToLowerCase(symbol);
-  //convert the symbol in to lower case
-  std::transform(symbol.begin(), symbol.end(), symbolInToLowerCase.begin(), ::tolower);
-  pos = path.find(symbolInToLowerCase);
-  while(pos!=std::string::npos) {
-    path.erase(pos, symbolInToLowerCase.size());
-    path.insert(pos, value);
-    pos = path.find(symbolInToLowerCase);
+  std::string widthStr;
+  int width;
+  std::ostringstream os;
+
+  std::map<std::string, std::string>::const_iterator iter;
+  std::map<std::string, std::string>::const_iterator end=msymbolMap.end();
+
+  for(iter=msymbolMap.begin(); iter!=end; ++iter) {
+    //find the symbol position 
+    size_t pos0 = path.find((iter->first)[0]);
+    size_t pos1 = path.find((iter->first)[1], pos0);
+    while(pos0!=std::string::npos && pos1!=std::string::npos) {
+      widthStr = path.substr(pos0+1, pos1-pos0-1);
+      if(widthStr.size()==0) {
+        path.erase(pos0, 2);//remove symbol[0]+symbol[1]
+        path.insert(pos0, iter->second);
+      } else if(widthStr.find_first_not_of("0123456789")==std::string::npos) {
+        width = vishnu::convertToInt(widthStr);  
+        if(width > SLURM_MAX_WIDTH) {
+          width = SLURM_MAX_WIDTH;
+        }
+        //remove the symbol identifier
+        std::cout << "widthStr.size()=" << widthStr.size() << std::endl;
+        path.erase(pos0, widthStr.size()+2);//remove symbol[0]+width+symbol[1]
+        os << setfill('0') << setw(width) << iter->second;
+        path.insert(pos0, os.str()); 
+      } else {
+        if((widthStr.substr(0,1)).find_first_not_of("0123456789")==std::string::npos){
+          path.erase(pos0, 1);//remove symbol[0]
+        }
+      }
+      //Pass to the next symbol
+      pos0 = path.find(iter->first[0], pos0+1);
+      pos1 = path.find(iter->first[1],pos0);
+      os.str("");
+    }
   }
+}
+
+/**
+ * \brief Function to cheick if a path contains an excluded slurm symbol by vishnu
+ * \param path The path to check
+ * \param symbol The excluded symbol
+ * \return true if the path contain an exlude symbol
+ */
+bool SlurmServer::containsAnExcludedSlurmSymbols(const std::string& path, std::string& symbol) {
+
+  std::vector<std::string> excludedSymbols;
+  excludedSymbols.push_back("\%t");
+  excludedSymbols.push_back("\%n");
+  excludedSymbols.push_back("\%N");
+  excludedSymbols.push_back("\%J");
+  excludedSymbols.push_back("\%s");
+  
+
+  std::vector<std::string>::const_iterator iter;
+  std::vector<std::string>::const_iterator end=excludedSymbols.end();
+  bool ret = false;
+  std::string widthStr;
+  for(iter=excludedSymbols.begin(); iter!=end; ++iter) {
+    //find the symbol position 
+    size_t pos0 = path.find((*iter)[0]);
+    size_t pos1 = path.find((*iter)[1], pos0);
+    while(pos0!=std::string::npos && pos1!=std::string::npos) {
+      widthStr = path.substr(pos0+1, pos1-pos0-1);
+      if(widthStr.size()==0) {
+        ret = true;
+        symbol = *iter;
+        break;
+      } else if(widthStr.find_first_not_of("0123456789")==std::string::npos) {
+        ret = true;
+        symbol = (*iter)[0]+widthStr+(*iter)[1];
+        break;
+      } else {
+        if((widthStr.substr(0,1)).find_first_not_of("0123456789")==std::string::npos){
+          static_cast<std::string>(path).erase(pos0, 1);//remove symbol[0]
+          ret = false;
+        }
+      }
+      //Pass to the next symbol
+      pos0 = path.find((*iter)[0], pos0+1);
+      pos1 = path.find((*iter)[1],pos0);
+    }
+  }
+  return ret;
 }
 
 /**
@@ -370,7 +468,9 @@ SlurmServer::getJobState(const std::string& jobId) {
     job_info_t slurmJobInfo = job_buffer_ptr->job_array[0];
     state = convertSlurmStateToVishnuState(slurmJobInfo.job_state);
   } else {
-    state = -1;
+    if(res==SLURM_PROTOCOL_SOCKET_IMPL_TIMEOUT || res==SLURM_PROTOCOL_VERSION_ERROR) {
+      state = -1;
+    }
   }
 
   if(job_buffer_ptr!=NULL) {
@@ -505,6 +605,23 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId){
     job.setMemLimit(slurmJobInfo.pn_min_memory);
     job.setNbCpus(slurmJobInfo.num_cpus);
     job.setNbNodes(slurmJobInfo.num_nodes);
+
+    //fill the msymbol map
+    msymbolMap["\%j"] = vishnu::convertToString(jobId);
+    //msymbolMap["\%J"] = vishnu::convertToString(jobId);
+    /*if(slurmJobInfo.stepid != NO_VAL){
+     msymbolMap["\%J"] = jobId+"."+std::string(slurmJobInfo.stepid);
+     //msymbolMap["\%s"] = slurmJobInfo.stepid; not available in vishnu
+    }*/
+    sleep(3);
+    if(slurmJobInfo.nodes!=NULL) {
+      //msymbolMap["\%n"] = 
+      //msymbolMap["\%N"] = slurmJobInfo.nodes;
+       
+      std::cout << "********nodes=" << slurmJobInfo.nodes << std::endl;
+    }
+    //msymbolMap["\%t"] = 
+
   } else {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: slurm_load_jobs error");
   }
