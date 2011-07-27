@@ -120,6 +120,26 @@ class SlurmServer : public BatchServer
     convertToSlurmJobId(const std::string& jobId);
 
     /**
+     * \brief Function to compute the number of running and waiting jobs of each queue 
+     * \param run contains the number of running jobs of each queue 
+     * \param que contains the number of waiting jobs of each queue
+     * \return non zero if error
+     */
+    int
+    computeNbRunJobsAndQueueJobs(std::map<std::string, int>& run,
+          std::map<std::string, int>& que);
+
+    /**
+     * \brief Function to replace slurm job identifer symbol by its real value in to a path
+     * \param path The path containing the job symbol
+     * \param symbol The symbol to replace
+     * \param value The value to attribute at the symbol
+     */
+    void replaceSymbolInToJobPath(std::string& path, 
+        const std::string& symbol, 
+        const std::string& value); 
+
+    /**
      * \brief ListQueues returned
      */
     TMS_Data::ListQueues_ptr mlistQueues; 
