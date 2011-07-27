@@ -9,9 +9,12 @@
 #include <vector>
 #include <sstream>
 #include <algorithm>
+#include <limits>
+
 #include <unistd.h>
 #include <pwd.h>
 #include <grp.h>
+
 
 extern "C" {
 #include <slurm.h> //Slurm includes
@@ -78,14 +81,14 @@ SlurmServer::submit(const char* scriptPath,
     close(pipeErrorfd[1]);
   }
 
-  int pipeJobIdfd[2];
-  if(pipe(pipeJobIdfd)) {
+  int pipeJobInfofd[2];
+  if(pipe(pipeJobInfofd)) {
     perror("pipe");
     exit(EXIT_FAILURE);
     close(pipeErrorfd[0]);
     close(pipeErrorfd[1]);
-    close(pipeJobIdfd[0]);
-    close(pipeJobIdfd[1]);
+    close(pipeJobInfofd[0]);
+    close(pipeJobInfofd[1]);
   }
 
   pid_t pid = fork();
@@ -115,12 +118,20 @@ SlurmServer::submit(const char* scriptPath,
 
     
     uint32_t jobId = resp->job_id;
+    std::string jobOutputPath ;
+    std::string jobErrorPath;
     std::stringstream os;
-    os << jobId;
-    char* jobIdStr = const_cast<char*>(strdup(os.str().c_str()));
-    close(pipeJobIdfd[0]);
-    write(pipeJobIdfd[1], jobIdStr, strlen(jobIdStr));
-    close(pipeJobIdfd[1]);
+    if(desc.std_out!=NULL) {
+      jobOutputPath = desc.std_out;
+    }
+    if(desc.std_err!=NULL) {
+      jobErrorPath = desc.std_err;
+    }
+    os << jobId << " " << jobOutputPath << " " << jobErrorPath;
+    char* jobInfoStr = const_cast<char*>(strdup(os.str().c_str()));
+    close(pipeJobInfofd[0]);
+    write(pipeJobInfofd[1], jobInfoStr, strlen(jobInfoStr));
+    close(pipeJobInfofd[1]);
     
     xfree(desc.script);
     slurm_free_submit_response_response_msg(resp); 
@@ -131,7 +142,7 @@ SlurmServer::submit(const char* scriptPath,
 
     close(pipeErrorfd[1]); /* Close unused write end */
     close(pipeOutfd[1]); /* Close unused write end */
-    close(pipeJobIdfd[1]); /* Close unused write end */
+    close(pipeJobInfofd[1]); /* Close unused write end */
     char c;
 
     std::string output;
@@ -149,11 +160,11 @@ SlurmServer::submit(const char* scriptPath,
     close(pipeErrorfd[0]);
 
     //To get the jobId
-    std::string jobIdStr;
-    while(read(pipeJobIdfd[0], &c, 1)) {
-      jobIdStr +=c;
+    std::string jobInfoStr;
+    while(read(pipeJobInfofd[0], &c, 1)) {
+      jobInfoStr +=c;
     }
-    close(pipeJobIdfd[0]);
+    close(pipeJobInfofd[0]);
     wait(NULL);                /* Wait for child */
     
     if(output.size()!=0) {
@@ -171,16 +182,85 @@ SlurmServer::submit(const char* scriptPath,
 
       throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: "+std::string(errorMsg));
       std::cout << "TEST*****: " << errorMsg << std::endl;
-    } 
-    cout << "++++++++++JobIdValue = " << jobIdStr << std::endl;
+    }
+    
+    std::istringstream is(jobInfoStr);
+    cout << "++++++++++jobInfoStr = " << jobInfoStr << std::endl;
+    std::vector<std::string> JobInfoTokens;
+    std::copy(istream_iterator<std::string>(is), istream_iterator<std::string>(), back_inserter(JobInfoTokens));
+    
+    std::vector<std::string>::const_iterator iter = JobInfoTokens.begin();
+    std::vector<std::string>::const_iterator end = JobInfoTokens.end();
+    std::string jobIdStr;
+    std::string jobOutputPath;
+    std::string jobErrorPath;
+    if(iter!=end) {
+      jobIdStr = *iter;
+      ++iter;
+    }
+    if(iter!=end) {
+      jobOutputPath = *iter;
+      ++iter;
+    }
+    if(iter!=end) {
+      jobErrorPath = *iter;
+      ++iter;
+    }
+    cout << "++++++++++JobIdValue    = " << jobIdStr << std::endl;
+    cout << "++++++++++Before JobOutputPath = " << jobOutputPath << std::endl;
+    cout << "++++++++++Before jobErrorPath  = " << jobErrorPath << std::endl;
 
     uint32_t jobId = convertToSlurmJobId(jobIdStr);
-      
+    //To fill the vishnu job structure 
     fillJobInfo(job, jobId);
-    
+   
+    if(jobOutputPath.size()!=0) {
+      replaceSymbolInToJobPath(jobOutputPath, "\%J", jobIdStr);
+      job.setOutputPath(jobOutputPath);
+    }
+    if(jobErrorPath.size()!=0) {
+      replaceSymbolInToJobPath(jobErrorPath, "\%J", jobIdStr);
+      job.setErrorPath(jobErrorPath);
+    }
+
+    cout << "++++++++++After JobOutputPath = " << job.getOutputPath() << std::endl;
+    cout << "++++++++++After jobErrorPath  = " << job.getErrorPath() << std::endl;
     return 0;
   }
   
+}
+
+/**
+ * \brief Function to replace slurm job identifer symbol by its real value in to a path
+ * \param path The path containing the job symbol
+ * \param symbol The symbol to replace
+ * \param value The value to attribute at the symbol
+ */
+void SlurmServer::replaceSymbolInToJobPath(std::string& path, 
+    const std::string& symbol, 
+    const std::string& value) {
+
+  //find the symbol position
+  size_t pos = path.find(symbol);
+  while(pos!=std::string::npos) {
+    //remove the symbol identifier
+    path.erase(pos, symbol.size());
+    //insert the correspondant value of the symbol
+    path.insert(pos, value);
+    //Pass to the next symbol
+    pos = path.find(symbol);
+  }
+
+  //Find the symbol in to lower case
+  std::string symbolInToLowerCase(symbol);
+  //convert the symbol in to lower case
+  std::transform(symbol.begin(), symbol.end(), symbolInToLowerCase.begin(), ::tolower);
+  pos = path.find(symbolInToLowerCase);
+  while(pos!=std::string::npos) {
+    path.erase(pos, symbolInToLowerCase.size());
+    path.insert(pos, value);
+    pos = path.find(symbolInToLowerCase);
+  }
 }
 
 /**
@@ -338,21 +418,21 @@ SlurmServer::convertSlurmStateToVishnuState(const uint16_t& state) {
 
   int res = 0;
   switch(state) {
-    case JOB_PENDING:JOB_SUSPENDED:
-                     res = 3;//WAITING
-                     break;
+    case JOB_PENDING:case JOB_SUSPENDED:
+      res = 3;//WAITING
+      break;
     case JOB_RUNNING:
-                     res = 4;//RUNNING
-                     break;
+      res = 4;//RUNNING
+      break;
     case JOB_COMPLETE:case JOB_FAILED:case JOB_NODE_FAIL:case JOB_TIMEOUT:
-                     res = 5; //TERMINATED
-                     break;
+      res = 5; //TERMINATED
+      break;
     case JOB_CANCELLED:
-                     res = 6;
-                     break;
+      res = 6; //CANCELLED
+      break;
     default:
-                     res = 5;
-                     break;
+      res = 5;
+      break;
   }
   return res;
 }
@@ -395,8 +475,8 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId){
    
     job_info_t slurmJobInfo = job_buffer_ptr->job_array[0];
     job.setJobId(vishnu::convertToString(jobId));
-    //job.setOutputPath(std::string(std::string(llJobInfo.step_list[0]->iwd)+"/"+(llJobInfo.step_list[0])->out)) ;
-    //job.setErrorPath(std::string(std::string(llJobInfo.step_list[0]->iwd)+"/"+(llJobInfo.step_list[0])->err));
+    job.setOutputPath(std::string(slurmJobInfo.work_dir)+"/slurm-"+convertToString(jobId)+".out");//default path
+    job.setErrorPath(std::string(slurmJobInfo.work_dir)+"/slurm-"+convertToString(jobId)+".out");//default path
     job.setStatus(convertSlurmStateToVishnuState(slurmJobInfo.job_state));
     if(slurmJobInfo.name!=NULL) {
       job.setJobName(slurmJobInfo.name);
@@ -413,7 +493,10 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId){
     if(slurmJobInfo.partition!=NULL) {
       job.setJobQueue(slurmJobInfo.partition);
     }
-    job.setWallClockLimit(slurmJobInfo.time_limit);
+    //Here we multiplie the time_limit by 60 because SLURM time_limit is in minutes
+    if(slurmJobInfo.time_limit < std::numeric_limits<uint32_t>::max()) {
+      job.setWallClockLimit(60*(slurmJobInfo.time_limit));
+    }
     job.setEndDate(slurmJobInfo.end_time);
     if(slurmJobInfo.comment!=NULL) {
       job.setJobDescription(slurmJobInfo.comment);
@@ -432,6 +515,38 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId){
 
 }
 
+/**
+ * \brief Function to compute the number of running and waiting jobs of each queue 
+ * \param run contains the number of running jobs of each queue 
+ * \param que contains the number of waiting jobs of each queue
+ * \return non zero if error
+ */
+int
+SlurmServer::computeNbRunJobsAndQueueJobs(std::map<std::string, int>& run,
+                                       std::map<std::string, int>& que) {
+
+  job_info_msg_t * allJobs = NULL;
+  int res = slurm_load_jobs((time_t)NULL, &allJobs, 1);
+
+  if(!res) {
+    job_info_t *job = NULL;
+    job = allJobs->job_array;
+    for (int i = 0; i < allJobs->record_count; i++) {
+      switch(job[i].job_state) {
+        case JOB_PENDING: case JOB_SUSPENDED:
+          que[job[i].partition]++;
+          break;
+        case JOB_RUNNING:
+          run[job[i].partition]++;
+          break;
+        default:
+         break;
+      }
+    } 
+  } 
+
+ return res;
+}
 
 /**
  * \brief Function to request the status of queues 
@@ -441,21 +556,93 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId){
 TMS_Data::ListQueues*
 SlurmServer::listQueues(const std::string& OptqueueName) { 
 
-  std::string errorMsg;
+  partition_info_msg_t *allPartition = NULL;
+  partition_info_t *partition = NULL;
+  int res;
 
+  res = slurm_load_partitions((time_t)NULL, &allPartition, 1);
+  if (res) {
+    char* errorMsg = slurm_strerror(res);
+    if(errorMsg!=NULL) {
+      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: "+std::string(errorMsg));
+    } else {
+      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: Unknown error");
+    }
+  }
 
-  int nbRunningJobs = 0; 
-  int nbJobsInQueue = 0;
+  std::map<std::string, int> run;
+  std::map<std::string, int> que;
+  computeNbRunJobsAndQueueJobs(run, que);
 
   TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
   mlistQueues = ecoreFactory->createListQueues();
+  
+  partition = allPartition->partition_array;
+  bool OptQueueNameFound = false;
+  for (int i = 0; i < allPartition->record_count; i++) {
 
-  {
+    if(OptqueueName.size()!=0) {
+      for (int j = 0; j < allPartition->record_count; j++) {
+        if(OptqueueName.compare(std::string(partition[j].name))==0) {
+          OptQueueNameFound = true;  
+          i = j;
+          break;
+        }
+      }
+      if(!OptQueueNameFound){
+        throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "Unknown queue name"+OptqueueName);
+      }
+    }
+
     TMS_Data::Queue_ptr queue = ecoreFactory->createQueue();
+    //Set the queue state
+    switch(partition[i].state_up) { 
+      case PARTITION_DOWN: 
+        queue->setState(0);
+        break;
+      case PARTITION_INACTIVE:
+        queue->setState(1);
+        break;
+      case PARTITION_UP:case PARTITION_DRAIN:
+        queue->setState(2);
+        break;
+      default:
+        queue->setState(0);
+        break;
+    }
+
+    if (run.count(partition[i].name)) {
+      queue->setNbRunningJobs(run[partition[i].name]);
+    }
+    if (que.count(partition[i].name)) {
+      queue->setNbJobsInQueue(que[partition[i].name]);
+    }
+
+    queue->setName(partition[i].name); 
+    queue->setPriority(convertSlurmPrioToVishnuPrio(partition[i].priority));
+
+    //Here we multiplie the max_time by 60 because SLURM max_time in minutes
+    if(partition[i].max_time < std::numeric_limits<uint32_t>::max()) {
+        queue->setWallTime(60*partition[i].max_time);
+    }
+    queue->setMemory(-1);//UNDEFINED in SLURM
+    queue->setDescription("");//UNDEFINED in SLURM    
+    queue->setMaxProcCpu(partition[i].total_cpus);
+    queue->setMaxJobCpu(partition[i].total_cpus);
+    queue->setNode(partition[i].total_nodes);
+
     // Adding created queue to the list
     mlistQueues->getQueues().push_back(queue);
+
+    if(OptQueueNameFound) {
+      i = allPartition->record_count;
+    }
   }
+
   mlistQueues->setNbQueues(mlistQueues->getQueues().size());
+
+  slurm_free_partition_info_msg(allPartition);
+  
   return mlistQueues;
 }
 
