@@ -4,8 +4,6 @@
 #include "UserServer.hpp"
 #include "IMSVishnuException.hpp"
 #include "DIET_server.h"
-// For gethostname
-#include <unistd.h>
 #include "controller/process/ProcessCtl.hpp"
 
 using namespace vishnu;
@@ -81,11 +79,12 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	log += "Connexion of the component with the name : " + string(msg[i].componentName) + " and the message ->" + string(msg[i].msg) + "<- ";
 
 	// Initializing the corresponding process
-	p->setProcessName(string(msg[i].componentName));
+	//	p->setProcessName(string(msg[i].componentName));
+
 	try{
 	  p->setMachineId(mmid);
 	}catch(IMSVishnuException& e){
-	  log.append("Machine " + string(msg[i].componentName) + " is not registered as a server");
+	  log.append("Machine " + string(mmid) + " is not registered as a server");
 	  ofstream dest(mfilename.c_str(),ios::app);
 	  dest << log << endl;
 	  dest.close();
@@ -98,7 +97,6 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	  }
 
 	  // Connect the sed
-	  mproc.connectProcess(p);
 
 	  // Looking in the list of services of the sed to authentify it
 	  for (unsigned int j = 0 ; j < service_number ; j++) {
@@ -157,7 +155,7 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	  free(tab);
 	}catch ( SystemException& e){
 	  throw (e);
-	}
+	} 
 	ofstream dest(mfilename.c_str(),ios::app);
 	dest << log << endl;
 	dest.close();
@@ -201,9 +199,11 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	  // If local proc to restart
 	  if (p->getMachineId().compare(mmid)==0){
 	    ctl.restart(&resOp, p->getMachineId(), false);
+	    mproc.setRestarted(p);
 	  } else { // Else if ims down and i am elected to relaunch it
 	    if (ctl.isIMSSeD(p->getDietId()) && elect()) {
 	      ctl.restart(&resOp, p->getMachineId(), false);
+	      mproc.setRestarted(p);
 	    }
 	  }
 	} catch (SystemException& e) {
@@ -212,11 +212,7 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
       } catch(SystemException& e){
 	throw (e);
       }// end catch
-      try {
-	mproc.setRestarted(p);
-      } catch (SystemException& e) {
-	log.append(e.what());
-      }
+
       ofstream dest(mfilename.c_str(),ios::app);
       dest << log << endl;
       dest.close();
