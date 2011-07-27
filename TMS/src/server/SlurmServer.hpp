@@ -143,6 +143,8 @@ class SlurmServer : public BatchServer
      */
     bool containsAnExcludedSlurmSymbols(const std::string& path, std::string& symbol);
 
+    void checkSLURMOutPutPath(char*& path, bool& sumitIsPossible, const std::string& pathInfo="job output path");
+ 
     /**
      * \brief ListQueues returned
      */

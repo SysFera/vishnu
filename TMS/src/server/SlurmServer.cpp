@@ -34,6 +34,7 @@ using namespace vishnu;
  */
 SlurmServer::SlurmServer():BatchServer() {
   msymbolMap["\%j"] = "";
+  msymbolMap["\%J"] = "";
 }
 
 /**
@@ -110,35 +111,14 @@ SlurmServer::submit(const char* scriptPath,
     job_desc_msg_t desc;
     //parses the scripthPath and sets the options values
     slurm_parse_script(argc, argv, &desc);
-
-    //get the slurm treated symbols
-    std::map<std::string, std::string>::const_iterator iter;
-    std::map<std::string, std::string>::const_iterator end=msymbolMap.end();
-    std::string vishnuTreatedSymbols;
     
-    std::string symbol;
-    bool Tosubmit = true;
-    if(SlurmServer::containsAnExcludedSlurmSymbols(desc.std_out, symbol)){
-      std::cerr << "VISHNU can't treats in your job output path the following sumbol: " << symbol << std::endl;
-      for(iter=msymbolMap.begin(); iter!=end; ++iter) {
-        vishnuTreatedSymbols+=iter->first[0]+symbol.substr(1,symbol.size()-2)+iter->first[1]+" ";
-      }
-      std::cerr << "*****The only SLURM symbols treated by VISHNU are: " << vishnuTreatedSymbols << std::endl;
-      std::cerr << "*****Replace your symbols by the following sumbols: "<< vishnuTreatedSymbols << std::endl;
-      Tosubmit = false;
+    bool Tosubmit=true; 
+    //Check the job output and error path 
+    checkSLURMOutPutPath(desc.std_out, Tosubmit);
+    if(Tosubmit) {
+      checkSLURMOutPutPath(desc.std_err, Tosubmit, "job error path");
     }
-    symbol="";
-    if(Tosubmit && SlurmServer::containsAnExcludedSlurmSymbols(desc.std_err, symbol)){
-      std::cerr << "VISHNU can't treats in your job error path the following sumbol: " << symbol << std::endl;
-      vishnuTreatedSymbols="";
-      for(iter=msymbolMap.begin(); iter!=end; ++iter) {
-        vishnuTreatedSymbols+=iter->first[0]+symbol.substr(1,symbol.size()-2)+iter->first[1]+" ";
-      }
-      std::cerr << "*****The only SLURM symbols treated by VISHNU are: " << vishnuTreatedSymbols << std::endl;
-      std::cerr << "*****Replace your symbols by the following sumbols: " << vishnuTreatedSymbols << std::endl;
-      Tosubmit = false;
-    }
-  
+
     uint32_t jobId = 0;
     std::string jobOutputPath ;
     std::string jobErrorPath;
@@ -265,6 +245,32 @@ SlurmServer::submit(const char* scriptPath,
   
 }
 
+
+void SlurmServer::checkSLURMOutPutPath(char*& path, bool& sumitIsPossible, const std::string& pathInfo) {
+
+  if(path!=NULL) {
+    //get the slurm treated symbols
+    std::map<std::string, std::string>::const_iterator iter;
+    std::map<std::string, std::string>::const_iterator end=msymbolMap.end();
+    std::string vishnuTreatedSymbols;
+
+    std::string symbol;
+    sumitIsPossible = true;
+    if(containsAnExcludedSlurmSymbols(path, symbol)){
+      std::cerr << "VISHNU can't treats in your " << pathInfo << " the following sumbol: " << symbol << std::endl;
+      for(iter=msymbolMap.begin(); iter!=end; ++iter) {
+        if(iter!=msymbolMap.begin()) {
+          vishnuTreatedSymbols+=" or ";
+        }
+        vishnuTreatedSymbols+=iter->first[0]+symbol.substr(1,symbol.size()-2)+iter->first[1];
+      }
+      std::cerr << "*****The only SLURM symbols treated by VISHNU are: " << vishnuTreatedSymbols << std::endl;
+      std::cerr << "*****Replace your symbols by the following sumbols: "<< vishnuTreatedSymbols << std::endl;
+      sumitIsPossible = false;
+    }
+  }
+}
+
 /**
  * \brief Function to replace slurm job identifer symbol by its real value in to a path
  * \param path The path containing the job symbol
@@ -325,7 +331,6 @@ bool SlurmServer::containsAnExcludedSlurmSymbols(const std::string& path, std::s
   excludedSymbols.push_back("\%t");
   excludedSymbols.push_back("\%n");
   excludedSymbols.push_back("\%N");
-  excludedSymbols.push_back("\%J");
   excludedSymbols.push_back("\%s");
   
 
@@ -608,20 +613,15 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId){
 
     //fill the msymbol map
     msymbolMap["\%j"] = vishnu::convertToString(jobId);
-    //msymbolMap["\%J"] = vishnu::convertToString(jobId);
-    /*if(slurmJobInfo.stepid != NO_VAL){
-     msymbolMap["\%J"] = jobId+"."+std::string(slurmJobInfo.stepid);
-     //msymbolMap["\%s"] = slurmJobInfo.stepid; not available in vishnu
-    }*/
-    sleep(3);
-    if(slurmJobInfo.nodes!=NULL) {
+    msymbolMap["\%J"] = vishnu::convertToString(jobId);
+    /*if(slurmJobInfo.nodes!=NULL) {
       //msymbolMap["\%n"] = 
       //msymbolMap["\%N"] = slurmJobInfo.nodes;
        
       std::cout << "********nodes=" << slurmJobInfo.nodes << std::endl;
     }
     //msymbolMap["\%t"] = 
-
+    */
   } else {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: slurm_load_jobs error");
   }
