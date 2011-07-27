@@ -25,7 +25,6 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI) {
   string login;
   string hostname;
 
-
   // If call made by the api check admin
   if (isAPI) {
     if (!muser.isAdmin()) {
@@ -33,6 +32,7 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI) {
     }
   }
 
+  // Getting the distants parameters (host and login)
   try  {
     mp.getHost(machineTo, hostname, login);
   } catch (VishnuException &e) {
@@ -40,6 +40,7 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI) {
     return;
   }
 
+  // Converting to the stringified type of sed
   switch(mop.getSedType()) {
   case 1 : // UMS
     type = "UMS";
@@ -57,10 +58,13 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI) {
     throw SystemException(ERRCODE_SYSTEM, "Unknown component to restart, type "+string(convertToString(mop.getSedType()))+" is unknown");
     break;
   }
+
+  // Creating the process
   proc.setProcessName(type);
   proc.setMachineId(machineTo);
   proc.setScript(mop.getVishnuConf());
-  // If process not to be restarted
+
+  // If process not to be restarted (when stopped vith a vishnu_stop vall before)
   if (mp.checkStopped(machineTo, type)) {
     throw SystemException(ERRCODE_SYSTEM, "No sed of type "+type+" running or down on machine "+machineTo+", cannot restart it ");
   }
@@ -76,19 +80,33 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI) {
 
   boost::to_lower(type);
   type += "sed";
-  createFile (cmd, &proc, false);
-  cmd += type;
-  cmd += " /tmp/vishnu_restart&";
-  string dcmd = "ssh "+login+"@"+hostname+" `"+cmd+"`";
-  switch(fork()) {
-  case 0 :
-    system(dcmd.c_str());
-    break;
-  case -1:
-    throw SystemException(ERRCODE_SYSTEM, "Failed to restart process "+type);
-  default :
-    break;
-  }
+
+  // The sequence of commands :
+  // * Create vishnu conf script locally
+  // * Set the rights to 777
+  // * Copy on the machine to restart
+  // * Create the script to launch the sed
+  // * Set the rights to 777
+  // * Copy on the machine to restart
+  // * SSH and exec the script launching the sed with the generated conf file
+  
+  // This complicated scheme is used because a fork duplicate the sockets, and a fork exec would kill the database connexions of the sed
+  
+  // This part of the code is dirty but functionnal, make it better when it will be possible
+  // TODO clean the code using the diet syntax with the | ssh -q
+  string tmp = "";
+  tmp = " echo \" ";
+  tmp += proc.getScript();
+  tmp += "\" > /tmp/vishnu_restart ; ";
+  tmp += " chmod 777 /tmp/vishnu_restart; ";
+  tmp += " scp /tmp/vishnu_restart "+login+"@"+hostname+":/tmp ;";
+  tmp += " echo \"#!/bin/sh \\nsource ~/.bashrc ; \\nnohup "+type+" /tmp/vishnu_restart 1>/dev/null 2>/dev/null </dev/null  & \" > /tmp/script.sh; ";
+  tmp += " chmod 777 /tmp/script.sh; ";
+  tmp += " scp /tmp/script.sh "+login+"@"+hostname+":/tmp ;";
+  tmp += " ssh "+login+"@"+hostname+" \"/tmp/script.sh \";";
+
+  string dcmd = tmp;
+  system(dcmd.c_str());
 }
 
 void
@@ -177,20 +195,15 @@ ProcessCtl::stopAll() {
 
 void 
 ProcessCtl::createFile(string& cmd, IMS_Data::Process_ptr p, bool loc) {
-  cmd = "echo ";
-  // If not local, need to protect the echoed string with the '\"' symbol
-  if (!loc) {
-    cmd += "\"";
-  } else {
-    cmd += "\"";
-  }
+//  cmd = "echo ";
+//  cmd += "\"";
+//  cmd += p->getScript();
+//  cmd += "\"";
+//  cmd += " > /tmp/vishnu_restart; source ~/.bashrc; ";
+
+  cmd = "( /bin/echo \" echo \\\" ";
+  //  string tmp = p->getScript();
   cmd += p->getScript();
-  // If not local, need to protect the echoed string with the '\"' symbol
-  if (!loc) {
-    cmd += "\"";
-  } else {
-    cmd += "\"";
-  }
-  cmd += " > /tmp/vishnu_restart; source ~/.bashrc; ";
+  cmd += "\\\" > /tmp/vishnu_restart \"; ";
 }
 
