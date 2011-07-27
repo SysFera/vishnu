@@ -132,17 +132,26 @@ class SlurmServer : public BatchServer
     /**
      * \brief Function to replace slurm job identifer symbol by its real value in to a path
      * \param path The path containing the job symbol
-     * \param symbol The symbol to replace
-     * \param value The value to attribute at the symbol
      */
-    void replaceSymbolInToJobPath(std::string& path, 
-        const std::string& symbol, 
-        const std::string& value); 
+    void replaceSymbolInToJobPath(std::string& path); 
+
+    /**
+     * \brief Function to cheick if a path contains an excluded slurm symbol by vishnu
+     * \param path The path to check
+     * \param symbol The excluded symbol
+     * \return true if the path contain an exlude symbol
+     */
+    bool containsAnExcludedSlurmSymbols(const std::string& path, std::string& symbol);
 
     /**
      * \brief ListQueues returned
      */
-    TMS_Data::ListQueues_ptr mlistQueues; 
+    TMS_Data::ListQueues_ptr mlistQueues;
+
+    /**
+     * \brief msymbolMap contains the slurm partern symbols of job output and error path
+     */
+    std::map<std::string, std::string> msymbolMap; 
 };
 
 #endif
