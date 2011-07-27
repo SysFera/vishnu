@@ -168,6 +168,18 @@
   $result = SWIG_Python_AppendOutput($result, o);
 }
 
+
+%typemap(in, numinputs=0) std::string& sshPublicKey (std::string temp) {
+  $1 = &temp;
+}
+
+%typemap(argout) std::string& sshPublicKey {
+  PyObject *o = PyString_FromString($1->c_str());
+  std::cout << "Valeur de l'objet" << $1->c_str() << std::endl;
+  $result = SWIG_Python_AppendOutput($result, o);
+}
+
+
 // Exception rule for user exception
 %typemap (throws) UserException{
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UserException,SWIG_POINTER_OWN), "UserException", SWIGTYPE_p_UserException); SWIG_fail;
