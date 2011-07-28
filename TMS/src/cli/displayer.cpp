@@ -75,7 +75,11 @@ displayJob(TMS_Data::Job& j){
   cout << " Wall clock limit     : " << convertWallTimeToString(j.getWallClockLimit()) << endl;
   cout << " Group name           : " << j.getGroupName() << endl;
   cout << " Description          : " << j.getJobDescription() << endl;
-  cout << " Max memory           : " << j.getMemLimit() << endl;
+  if(j.getMemLimit() > 0) {
+    cout << " Max memory           : " << j.getMemLimit() << endl;
+  } else {
+    cout << " Max memory           : UNDEFINED" << endl;
+  }
   cout << " Nodes                : " << j.getNbNodes() << endl;
   cout << " CPU/Node             : " << j.getNbNodesAndCpuPerNode() << endl;
   cout << endl;
