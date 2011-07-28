@@ -1,41 +1,3 @@
-/*****************************************************************************\
- *  opt.c - options processing for sbatch
- *****************************************************************************
- *  Copyright (C) 2002-2007 The Regents of the University of California.
- *  Copyright (C) 2008-2010 Lawrence Livermore National Security.
- *  Produced at Lawrence Livermore National Laboratory (cf, DISCLAIMER).
- *  Written by Mark Grondona <grondona1@llnl.gov>, et. al.
- *  CODE-OCEC-09-009. All rights reserved.
- *
- *  This file is part of SLURM, a resource management program.
- *  For details, see <https://computing.llnl.gov/linux/slurm/>.
- *  Please also read the included file: DISCLAIMER.
- *
- *  SLURM is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free
- *  Software Foundation; either version 2 of the License, or (at your option)
- *  any later version.
- *
- *  In addition, as a special exception, the copyright holders give permission
- *  to link the code of portions of this program with the OpenSSL library under
- *  certain conditions as described in each individual source file, and
- *  distribute linked combinations including the two. You must obey the GNU
- *  General Public License in all respects for all of the code used other than
- *  OpenSSL. If you modify file(s) with this exception, you may extend this
- *  exception to your version of the file(s), but you are not obligated to do
- *  so. If you do not wish to do so, delete this exception statement from your
- *  version.  If you delete this exception statement from all source files in
- *  the program, then also delete it here.
- *
- *  SLURM is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- *  FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
- *  details.
- *
- *  You should have received a copy of the GNU General Public License along
- *  with SLURM; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA.
-\*****************************************************************************/
 
 #if HAVE_CONFIG_H
 #  include "config.h"
@@ -74,7 +36,6 @@
 #include <sys/utsname.h>
 
 #include "list.h"
-#include "log.h"
 #include "parse_time.h"
 #include "plugstack.h"
 #include "proc_args.h"
@@ -180,8 +141,6 @@ typedef struct env_vars env_vars_t;
 /* Get a decimal integer from arg */
 static int  _get_int(const char *arg, const char *what);
 
-static void  _help(void);
-
 /* fill in default options  */
 static void _opt_default(void);
 
@@ -195,9 +154,6 @@ static void _opt_pbs_batch_script(const char *file, const void *body, int size);
 static void _opt_env(void);
 static void _proc_get_user_env(char *val);
 
-/* list known options and their settings  */
-static void  _opt_list(void);
-
 /* verify options sanity  */
 static bool _opt_verify(void);
 
@@ -205,7 +161,6 @@ static void _process_env_var(env_vars_t *e, const char *val);
 
 static uint16_t _parse_pbs_mail_type(const char *arg);
 
-static void  _usage(void);
 static  void _fullpath(char **filename, const char *cwd);
 static void _set_options(int argc, char **argv);
 static void _set_pbs_options(int argc, char **argv);
@@ -659,7 +614,6 @@ static struct option long_options[] = {
 	{"error",         required_argument, 0, 'e'},
 	{"nodefile",      required_argument, 0, 'F'},
 	{"geometry",      required_argument, 0, 'g'},
-	{"help",          no_argument,       0, 'h'},
 	{"hold",          no_argument,       0, 'H'}, /* undocumented */
 	{"input",         required_argument, 0, 'i'},
 	{"immediate",     no_argument,       0, 'I'},
@@ -679,9 +633,6 @@ static struct option long_options[] = {
 	{"no-rotate",     no_argument,       0, 'R'},
 	{"share",         no_argument,       0, 's'},
 	{"time",          required_argument, 0, 't'},
-	{"usage",         no_argument,       0, 'u'},
-	{"verbose",       no_argument,       0, 'v'},
-	{"version",       no_argument,       0, 'V'},
 	{"nodelist",      required_argument, 0, 'w'},
 	{"exclude",       required_argument, 0, 'x'},
 	{"acctg-freq",    required_argument, 0, LONG_OPT_ACCTG_FREQ},
@@ -741,7 +692,7 @@ static struct option long_options[] = {
 };
 
 static char *opt_string =
-	"+bA:B:c:C:d:D:e:F:g:hHi:IJ:kL:m:M:n:N:o:Op:P:QRst:uU:vVw:x:";
+	"+bA:B:c:C:d:D:e:F:g:Hi:IJ:kL:m:M:n:N:o:Op:P:QRst:U:w:x:";
 
 
 /*
@@ -785,22 +736,8 @@ char *process_options_first_pass(int argc, char **argv)
 				"information\n");
 			exit(error_exit);
 			break;
-		case 'h':
-			_help();
-			exit(0);
-			break;
 		case 'Q':
 			opt.quiet++;
-			break;
-		case 'u':
-			_usage();
-			exit(0);
-		case 'v':
-			opt.verbose++;
-			break;
-		case 'V':
-			print_slurm_version();
-			exit(0);
 			break;
 		case LONG_OPT_WRAP:
 			opt.wrap = xstrdup(optarg);
@@ -869,9 +806,6 @@ int process_options_second_pass(int argc, char *argv[], const char *file,
 
 	if (!_opt_verify())
 		exit(error_exit);
-
-	if (opt.verbose > 3)
-		_opt_list();
 
 	return 1;
 
@@ -1186,9 +1120,6 @@ static void _set_options(int argc, char **argv)
 			if (verify_geometry(optarg, opt.geometry))
 				exit(error_exit);
 			break;
-		case 'h':
-			_help();
-			exit(0);
 		case 'H':
 			opt.hold = true;
 			break;
@@ -1279,16 +1210,6 @@ static void _set_options(int argc, char **argv)
 		case 't':
 			xfree(opt.time_limit_str);
 			opt.time_limit_str = xstrdup(optarg);
-			break;
-		case 'u':
-			_usage();
-			exit(0);
-		case 'v':
-			opt.verbose++;
-			break;
-		case 'V':
-			print_slurm_version();
-			exit(0);
 			break;
 		case 'w':
 			xfree(opt.nodelist);
@@ -2563,283 +2484,4 @@ static void _fullpath(char **filename, const char *cwd)
 	xstrcat(ptr, *filename);
 	xfree(*filename);
 	*filename = ptr;
-}
-
-#define tf_(b) (b == true) ? "true" : "false"
-
-static void _opt_list()
-{
-	char *str;
-
-	info("defined options for program `%s'", opt.progname);
-	info("----------------- ---------------------");
-
-	info("user              : `%s'", opt.user);
-	info("uid               : %ld", (long) opt.uid);
-	info("gid               : %ld", (long) opt.gid);
-	info("cwd               : %s", opt.cwd);
-	info("ntasks            : %d %s", opt.ntasks,
-		opt.ntasks_set ? "(set)" : "(default)");
-	info("cpus_per_task     : %d %s", opt.cpus_per_task,
-		opt.cpus_set ? "(set)" : "(default)");
-	if (opt.max_nodes) {
-		info("nodes             : %d-%d",
-		     opt.min_nodes, opt.max_nodes);
-	} else {
-		info("nodes             : %d %s", opt.min_nodes,
-			opt.nodes_set ? "(set)" : "(default)");
-	}
-	info("jobid             : %u %s", opt.jobid,
-		opt.jobid_set ? "(set)" : "(default)");
-	info("partition         : %s",
-		opt.partition == NULL ? "default" : opt.partition);
-	info("job name          : `%s'", opt.job_name);
-	info("reservation       : `%s'", opt.reservation);
-	info("wckey             : `%s'", opt.wckey);
-	info("distribution      : %s",
-	     format_task_dist_states(opt.distribution));
-	if(opt.distribution == SLURM_DIST_PLANE)
-		info("plane size        : %u", opt.plane_size);
-	info("verbose           : %d", opt.verbose);
-	info("immediate         : %s", tf_(opt.immediate));
-	if (opt.requeue != NO_VAL)
-		info("requeue           : %u", opt.requeue);
-	info("overcommit        : %s", tf_(opt.overcommit));
-	if (opt.time_limit == INFINITE)
-		info("time_limit        : INFINITE");
-	else if (opt.time_limit != NO_VAL)
-		info("time_limit        : %d", opt.time_limit);
-	if (opt.time_min != NO_VAL)
-		info("time_min          : %d", opt.time_min);
-	if (opt.nice)
-		info("nice              : %d", opt.nice);
-	info("account           : %s", opt.account);
-	info("comment           : %s", opt.comment);
-	info("dependency        : %s", opt.dependency);
-	if (opt.gres)
-		info("gres              : %s", opt.gres);
-	info("qos               : %s", opt.qos);
-	str = print_constraints();
-	info("constraints       : %s", str);
-	xfree(str);
-	if (opt.conn_type != (uint16_t) NO_VAL)
-		info("conn_type         : %u", opt.conn_type);
-	str = print_geometry(opt.geometry);
-	info("geometry          : %s", str);
-	xfree(str);
-	info("reboot            : %s", opt.reboot ? "no" : "yes");
-	info("rotate            : %s", opt.no_rotate ? "yes" : "no");
-	info("network           : %s", opt.network);
-
-#ifdef HAVE_BGL
-	if (opt.blrtsimage)
-		info("BlrtsImage        : %s", opt.blrtsimage);
-#endif
-	if (opt.linuximage)
-#ifdef HAVE_BGL
-		info("LinuxImage        : %s", opt.linuximage);
-#else
-		info("CnloadImage       : %s", opt.linuximage);
-#endif
-	if (opt.mloaderimage)
-		info("MloaderImage      : %s", opt.mloaderimage);
-	if (opt.ramdiskimage)
-#ifdef HAVE_BGL
-		info("RamDiskImage      : %s", opt.ramdiskimage);
-#else
-		info("IoloadImage       : %s", opt.ramdiskimage);
-#endif
-	if (opt.begin) {
-		char time_str[32];
-		slurm_make_time_str(&opt.begin, time_str, sizeof(time_str));
-		info("begin             : %s", time_str);
-	}
-	info("mail_type         : %s", print_mail_type(opt.mail_type));
-	info("mail_user         : %s", opt.mail_user);
-	info("sockets-per-node  : %d", opt.sockets_per_node);
-	info("cores-per-socket  : %d", opt.cores_per_socket);
-	info("threads-per-core  : %d", opt.threads_per_core);
-	info("ntasks-per-node   : %d", opt.ntasks_per_node);
-	info("ntasks-per-socket : %d", opt.ntasks_per_socket);
-	info("ntasks-per-core   : %d", opt.ntasks_per_core);
-	info("cpu_bind          : %s",
-	     opt.cpu_bind == NULL ? "default" : opt.cpu_bind);
-	info("mem_bind          : %s",
-	     opt.mem_bind == NULL ? "default" : opt.mem_bind);
-	info("plane_size        : %u", opt.plane_size);
-	info("propagate         : %s",
-	     opt.propagate == NULL ? "NONE" : opt.propagate);
-	str = print_commandline(opt.script_argc, opt.script_argv);
-	info("remote command    : `%s'", str);
-	xfree(str);
-
-}
-
-static void _usage(void)
-{
- 	printf(
-"Usage: sbatch [-N nnodes] [-n ntasks]\n"
-"              [-c ncpus] [-r n] [-p partition] [--hold] [-t minutes]\n"
-"              [-D path] [--immediate] [--no-kill] [--overcommit]\n"
-"              [--input file] [--output file] [--error file]\n"
-"              [--time-min=minutes] [--licenses=names] [--clusters=cluster_names]\n"
-"              [--workdir=directory] [--share] [-m dist] [-J jobname]\n"
-"              [--jobid=id] [--verbose] [--gid=group] [--uid=user] [-W sec] \n"
-"              [--contiguous] [--mincpus=n] [--mem=MB] [--tmp=MB] [-C list]\n"
-"              [--account=name] [--dependency=type:jobid] [--comment=name]\n"
-#ifdef HAVE_BG		/* Blue gene specific options */
-"              [--geometry=XxYxZ] [--conn-type=type] [--no-rotate] [ --reboot]\n"
-#ifdef HAVE_BGL
-"              [--blrts-image=path] [--linux-image=path]\n"
-"              [--mloader-image=path] [--ramdisk-image=path]\n"
-#else
-"              [--cnload-image=path]\n"
-"              [--mloader-image=path] [--ioload-image=path]\n"
-#endif
-#endif
-"              [--mail-type=type] [--mail-user=user][--nice[=value]]\n"
-"              [--requeue] [--no-requeue] [--ntasks-per-node=n] [--propagate]\n"
-"              [--nodefile=file] [--nodelist=hosts] [--exclude=hosts]\n"
-"              [--network=type] [--mem-per-cpu=MB] [--qos=qos] [--gres=list]\n"
-"              [--cpu_bind=...] [--mem_bind=...] [--reservation=name]\n"
-"              [--export[=names]] executable [args...]\n");
-}
-
-static void _help(void)
-{
-	slurm_ctl_conf_t *conf;
-
-        printf (
-"Usage: sbatch [OPTIONS...] executable [args...]\n"
-"\n"
-"Parallel run options:\n"
-"  -A, --account=name          charge job to specified account\n"
-"      --begin=time            defer job until HH:MM MM/DD/YY\n"
-"  -c, --cpus-per-task=ncpus   number of cpus required per task\n"
-"      --comment=name          arbitrary comment\n"
-"  -d, --dependency=type:jobid defer job until condition on jobid is satisfied\n"
-"  -D, --workdir=directory     set working directory for batch script\n"
-"  -e, --error=err             file for batch script's standard error\n"
-"      --export[=names]        specify environment variables to export\n"
-"      --get-user-env          load environment from local cluster\n"
-"      --gid=group_id          group ID to run job as (user root only)\n"
-"      --gres=list             required generic resources\n"
-"  -H, --hold                  submit job in held state\n"
-"  -i, --input=in              file for batch script's standard input\n"
-"  -I, --immediate             exit if resources are not immediately available\n"
-"      --jobid=id              run under already allocated job\n"
-"  -J, --job-name=jobname      name of job\n"
-"  -k, --no-kill               do not kill job on node failure\n"
-"  -L, --licenses=names        required license, comma separated\n"
-"  -m, --distribution=type     distribution method for processes to nodes\n"
-"                              (type = block|cyclic|arbitrary)\n"
-"  -M, --clusters=names        Comma separated list of clusters to issue\n"
-"                              commands to.  Default is current cluster.\n"
-"                              Name of 'all' will submit to run on all clusters.\n"
-"      --mail-type=type        notify on state change: BEGIN, END, FAIL or ALL\n"
-"      --mail-user=user        who to send email notification for job state\n"
-"                              changes\n"
-"  -n, --ntasks=ntasks         number of tasks to run\n"
-"      --nice[=value]          decrease secheduling priority by value\n"
-"      --no-requeue            if set, do not permit the job to be requeued\n"
-"      --ntasks-per-node=n     number of tasks to invoke on each node\n"
-"  -N, --nodes=N               number of nodes on which to run (N = min[-max])\n"
-"  -o, --output=out            file for batch script's standard output\n"
-"  -O, --overcommit            overcommit resources\n"
-"  -p, --partition=partition   partition requested\n"
-"      --propagate[=rlimits]   propagate all [or specific list of] rlimits\n"
-"      --qos=qos               quality of service\n"
-"  -Q, --quiet                 quiet mode (suppress informational messages)\n"
-"      --requeue               if set, permit the job to be requeued\n"
-"  -t, --time=minutes          time limit\n"
-"      --time-min=minutes      minimum time limit (if distinct)\n"
-"  -s, --share                 share nodes with other jobs\n"
-"      --uid=user_id           user ID to run job as (user root only)\n"
-"  -v, --verbose               verbose mode (multiple -v's increase verbosity)\n"
-"\n"
-"Constraint options:\n"
-"      --contiguous            demand a contiguous range of nodes\n"
-"  -C, --constraint=list       specify a list of constraints\n"
-"  -F, --nodefile=filename     request a specific list of hosts\n"
-"      --mem=MB                minimum amount of real memory\n"
-"      --mincpus=n             minimum number of logical processors (threads) per node\n"
-"      --reservation=name      allocate resources from named reservation\n"
-"      --tmp=MB                minimum amount of temporary disk\n"
-"  -w, --nodelist=hosts...     request a specific list of hosts\n"
-"  -x, --exclude=hosts...      exclude a specific list of hosts\n"
-"\n"
-"Consumable resources related options:\n"
-"      --exclusive             allocate nodes in exclusive mode when\n"
-"                              cpu consumable resource is enabled\n"
-"      --mem-per-cpu=MB        maximum amount of real memory per allocated\n"
-"                              cpu required by the job.\n"
-"                              --mem >= --mem-per-cpu if --mem is specified.\n"
-"\n"
-"Affinity/Multi-core options: (when the task/affinity plugin is enabled)\n"
-"  -B  --extra-node-info=S[:C[:T]]            Expands to:\n"
-"       --sockets-per-node=S   number of sockets per node to allocate\n"
-"       --cores-per-socket=C   number of cores per socket to allocate\n"
-"       --threads-per-core=T   number of threads per core to allocate\n"
-"                              each field can be 'min' or wildcard '*'\n"
-"                              total cpus requested = (N x S x C x T)\n"
-"\n"
-"      --ntasks-per-core=n     number of tasks to invoke on each core\n"
-"      --ntasks-per-socket=n   number of tasks to invoke on each socket\n");
-	conf = slurm_conf_lock();
-	if (conf->task_plugin != NULL
-	    && strcasecmp(conf->task_plugin, "task/affinity") == 0) {
-		printf(
-"      --cpu_bind=             Bind tasks to CPUs\n"
-"                              (see \"--cpu_bind=help\" for options)\n"
-"      --hint=                 Bind tasks according to application hints\n"
-"                              (see \"--hint=help\" for options)\n"
-"      --mem_bind=             Bind memory to locality domains (ldom)\n"
-"                              (see \"--mem_bind=help\" for options)\n");
-	}
-	slurm_conf_unlock();
-
-	spank_print_options(stdout, 6, 30);
-
-	printf("\n"
-#ifdef HAVE_AIX				/* AIX/Federation specific options */
-"AIX related options:\n"
-"      --network=type          communication protocol to be used\n"
-"\n"
-#endif
-#ifdef HAVE_BG				/* Blue gene specific options */
-"Blue Gene related options:\n"
-"  -g, --geometry=XxYxZ        geometry constraints of the job\n"
-"  -R, --no-rotate             disable geometry rotation\n"
-"      --reboot                reboot block before starting job\n"
-"      --conn-type=type        constraint on type of connection, MESH or TORUS\n"
-"                              if not set, then tries to fit TORUS else MESH\n"
-#ifndef HAVE_BGL
-"                              If wanting to run in HTC mode (only for 1\n"
-"                              midplane and below).  You can use HTC_S for\n"
-"                              SMP, HTC_D for Dual, HTC_V for\n"
-"                              virtual node mode, and HTC_L for Linux mode.\n"
-"      --cnload-image=path     path to compute node image for bluegene block.  Default if not set\n"
-"      --mloader-image=path    path to mloader image for bluegene block.  Default if not set\n"
-"      --ioload-image=path     path to ioload image for bluegene block.  Default if not set\n"
-#else
-"      --blrts-image=path      path to blrts image for bluegene block.  Default\n"
-"                              if not set\n"
-"      --linux-image=path      path to linux image for bluegene block.  Default\n"
-"                              if not set\n"
-"      --mloader-image=path    path to mloader image for bluegene block.\n"
-"                              Default if not set\n"
-"      --ramdisk-image=path    path to ramdisk image for bluegene block.\n"
-"                              Default if not set\n"
-#endif
-#endif
-"\n"
-"Help options:\n"
-"  -h, --help                  show this help message\n"
-"  -u, --usage                 display brief usage message\n"
-"\n"
-"Other options:\n"
-"  -V, --version               output version information and exit\n"
-"\n"
-		);
-
 }
