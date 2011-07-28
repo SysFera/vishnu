@@ -245,7 +245,13 @@ SlurmServer::submit(const char* scriptPath,
   
 }
 
-
+/**
+ * \brief Function to check if slurm path syntax is correct
+ * \param path the path to check
+ * \param sumitIsPossible The flag that authorise the job submission if the path is correct
+ * \param pathInfo The information on path to print
+ * \return prints an error message on standard error
+ */
 void SlurmServer::checkSLURMOutPutPath(char*& path, bool& sumitIsPossible, const std::string& pathInfo) {
 
   if(path!=NULL) {
@@ -301,8 +307,6 @@ void SlurmServer::replaceSymbolInToJobPath(std::string& path) {
         if(width > SLURM_MAX_WIDTH) {
           width = SLURM_MAX_WIDTH;
         }
-        //remove the symbol identifier
-        std::cout << "widthStr.size()=" << widthStr.size() << std::endl;
         path.erase(pos0, widthStr.size()+2);//remove symbol[0]+width+symbol[1]
         os << setfill('0') << setw(width) << iter->second;
         path.insert(pos0, os.str()); 
@@ -607,21 +611,15 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId){
       job.setJobDescription(slurmJobInfo.comment);
     }
     job.setJobPrio(convertSlurmPrioToVishnuPrio(slurmJobInfo.priority));
-    job.setMemLimit(slurmJobInfo.pn_min_memory);
-    job.setNbCpus(slurmJobInfo.num_cpus);
-    job.setNbNodes(slurmJobInfo.num_nodes);
-
+    uint32_t nbCpus = slurmJobInfo.num_cpus;
+    uint32_t nbNodes = slurmJobInfo.num_nodes;
+    job.setNbCpus(nbCpus);
+    job.setNbNodes(nbNodes);
+    job.setNbNodesAndCpuPerNode(convertToString(nbNodes)+":"+convertToString(nbCpus));
+ 
     //fill the msymbol map
     msymbolMap["\%j"] = vishnu::convertToString(jobId);
     msymbolMap["\%J"] = vishnu::convertToString(jobId);
-    /*if(slurmJobInfo.nodes!=NULL) {
-      //msymbolMap["\%n"] = 
-      //msymbolMap["\%N"] = slurmJobInfo.nodes;
-       
-      std::cout << "********nodes=" << slurmJobInfo.nodes << std::endl;
-    }
-    //msymbolMap["\%t"] = 
-    */
   } else {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: slurm_load_jobs error");
   }

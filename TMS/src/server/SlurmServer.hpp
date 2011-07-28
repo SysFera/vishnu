@@ -143,6 +143,13 @@ class SlurmServer : public BatchServer
      */
     bool containsAnExcludedSlurmSymbols(const std::string& path, std::string& symbol);
 
+    /**
+     * \brief Function to check if slurm path syntax is correct
+     * \param path the path to check
+     * \param sumitIsPossible The flag that authorise the job submission if the path is correct
+     * \param pathInfo The information on path to print
+     * \return prints an error message on standard error
+     */
     void checkSLURMOutPutPath(char*& path, bool& sumitIsPossible, const std::string& pathInfo="job output path");
  
     /**
