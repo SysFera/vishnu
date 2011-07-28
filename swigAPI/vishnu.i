@@ -11,6 +11,14 @@
  // Include for exception handling
 %include "exception.i"
 
+
+ // Added to make the mapping between std::exception and the python Exception class
+ // Otherwise the VishnuException class inherits the _object class and the vishnu exception
+ // Are not seen as real python exception (if not catched -> finally pops bad exception)
+#ifdef SWIGPYTHON
+%exceptionclass VishnuException;
+#endif SWIGPYTHON
+
 // this includes the typemaps for STL strings
 %include "std_string.i"
 %include "std_except.i"
@@ -230,6 +238,16 @@
 #ifdef COMPILE_UMS
 %include "api_ums.hpp"
 #endif
+
+ // Added to make the mapping between std::exception and the python Exception class
+ // Otherwise the VishnuException class inherits the _object class and the vishnu exception
+ // Are not seen as real python exception (if not catched -> finally pops bad exception)
+ // Keep there and not before, otherwize non exception classes also inherith from Exception and not _object in python
+//#ifdef SWIGPYTHON
+//%clearexceptionclass;
+//%exceptionclass;
+//#endif SWIGPYTHON
+
 
 #ifdef SWIGPYTHON
 %include "VishnuException.hpp"
