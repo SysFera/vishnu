@@ -1,5 +1,5 @@
 /*****************************************************************************\
- *  eio.h Event-based I/O for slurm
+ *  src/common/eio.h Event-based I/O for slurm
  *****************************************************************************
  *  Copyright (C) 2002 The Regents of the University of California.
  *  Produced at Lawrence Livermore National Laboratory (cf, DISCLAIMER).
