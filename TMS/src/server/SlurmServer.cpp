@@ -18,12 +18,13 @@
 
 extern "C" {
 #include <slurm.h> //Slurm includes
-#include "slurm-parser.h"
+#include "slurm_parser.h"
 }
 
 #include "SlurmServer.hpp"
 #include "BatchServer.hpp"
 #include "TMSVishnuException.hpp"
+#include "UMSVishnuException.hpp"
 #include "utilVishnu.hpp"
 
 using namespace std;
@@ -47,16 +48,13 @@ SlurmServer::SlurmServer():BatchServer() {
  */
 int 
 SlurmServer::submit(const char* scriptPath, 
-                    const TMS_Data::SubmitOptions& options, 
-                    TMS_Data::Job& job, char** envp) {
+    const TMS_Data::SubmitOptions& options, 
+    TMS_Data::Job& job, char** envp) {
 
   std::vector<std::string> cmdsOptions;
-  //processes the options
+  //processes the vishnu options
   processOptions(options, cmdsOptions);
 
-  std::cout << "*******cmdsOptions content**** " << std::endl;
-  std::copy(cmdsOptions.begin(), cmdsOptions.end(), ostream_iterator<std::string>(cout, " "));
-  std::cout << std::endl;
   int argc = cmdsOptions.size()+2;
   char* argv[argc];
   argv[0] = (char*) "vishnu_submit_job";
@@ -65,195 +63,98 @@ SlurmServer::submit(const char* scriptPath,
     argv[i+1] = const_cast<char*>(cmdsOptions[i].c_str());
   }
 
-  std::cout << "*******argv content**** " << std::endl;
-  std::copy(argv, argv+argc, ostream_iterator<char*>(cout, " "));
-  std::cout << std::endl;
+  job_desc_msg_t desc;
+  //parses the scripthPath and sets the options values
+  slurm_parse_script(argc, argv, &desc);
 
-  int pipeErrorfd[2];
-  if(pipe(pipeErrorfd)) {
-    perror("pipe");
-    exit(EXIT_FAILURE);
-  }
-
-  int pipeOutfd[2];
-  if(pipe(pipeOutfd)) {
-    perror("pipe");
-    exit(EXIT_FAILURE);
-    close(pipeErrorfd[0]);
-    close(pipeErrorfd[1]);
-  }
-
-  int pipeJobInfofd[2];
-  if(pipe(pipeJobInfofd)) {
-    perror("pipe");
-    exit(EXIT_FAILURE);
-    close(pipeErrorfd[0]);
-    close(pipeErrorfd[1]);
-    close(pipeJobInfofd[0]);
-    close(pipeJobInfofd[1]);
-  }
-
-  pid_t pid = fork();
-  if (pid == -1) {
-    perror("fork");
-    exit(EXIT_FAILURE);
-  }
-
-  if(pid==0) { /* Child writes to pipe */
-    close(pipeErrorfd[0]); /* Close unused read end */
-    close(pipeOutfd[0]); /* Close unused read end */
-
-    dup2(pipeErrorfd[1], 2);
-    dup2(pipeOutfd[1], 1);
-
-    close(pipeErrorfd[1]);
-    close(pipeOutfd[1]);
-    job_desc_msg_t desc;
-    //parses the scripthPath and sets the options values
-    slurm_parse_script(argc, argv, &desc);
-    
-    bool Tosubmit=true; 
-    //Check the job output and error path 
-    checkSLURMOutPutPath(desc.std_out, Tosubmit);
-    if(Tosubmit) {
-      checkSLURMOutPutPath(desc.std_err, Tosubmit, "job error path");
-    }
-
-    uint32_t jobId = 0;
-    std::string jobOutputPath ;
-    std::string jobErrorPath;
-    std::stringstream os; 
-    submit_response_msg_t *resp;
-    if(Tosubmit) {
-      //To submit the job
-      if(slurm_submit_batch_job(&desc, &(resp)) < 0) {
-        std::cerr << "Under construction............" << std::endl;
-      }
-
-      jobId = resp->job_id;
-      jobOutputPath ;
-      jobErrorPath;
-      os;
-      if(desc.std_out!=NULL) {
-        jobOutputPath = desc.std_out;
-      }
-      if(desc.std_err!=NULL) {
-        jobErrorPath = desc.std_err;
-      }
-    }
-    os << jobId << " " << jobOutputPath << " " << jobErrorPath;
-    char* jobInfoStr = const_cast<char*>(strdup(os.str().c_str()));
-    close(pipeJobInfofd[0]);
-    write(pipeJobInfofd[1], jobInfoStr, strlen(jobInfoStr));
-    close(pipeJobInfofd[1]);
-    
+  std::string errorMsg;
+  //Check the job output path 
+  errorMsg = checkSLURMOutPutPath(desc.std_out);
+  if(errorMsg.size()!=0) {
     xfree(desc.script);
-    if(Tosubmit) {
-      slurm_free_submit_response_response_msg(resp); 
-    }
-    exit(EXIT_SUCCESS);
-  
-  } else { /* Parent reads from pipe */
-
-    close(pipeErrorfd[1]); /* Close unused write end */
-    close(pipeOutfd[1]); /* Close unused write end */
-    close(pipeJobInfofd[1]); /* Close unused write end */
-    char c;
-
-    std::string output;
-    //To get the output message
-    while(read(pipeOutfd[0], &c, 1)){
-      output +=c;
-    }
-    close(pipeOutfd[0]);
-
-    //To get the stderr message
-    std::string errorMsg;
-    while(read(pipeErrorfd[0], &c, 1)){
-      errorMsg +=c;
-    }
-    close(pipeErrorfd[0]);
-
-    //To get the jobId
-    std::string jobInfoStr;
-    while(read(pipeJobInfofd[0], &c, 1)) {
-      jobInfoStr +=c;
-    }
-    close(pipeJobInfofd[0]);
-    wait(NULL);                /* Wait for child */
-    
-    if(output.size()!=0) {
-      std::cout <<  output << std::endl;
-    }
-
-    //To raise an exception if error message size is not empty
-    if(errorMsg.size()!=0) {
-      size_t size = errorMsg.size();
-      string toFind("error:");
-      size_t pos = errorMsg.find(toFind);
-      if(pos!=string::npos){
-        errorMsg = errorMsg.substr(pos+toFind.size()+1, size-pos-1);
-      }
-
-      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: "+std::string(errorMsg));
-      std::cout << "TEST*****: " << errorMsg << std::endl;
-    }
-    
-    std::istringstream is(jobInfoStr);
-    cout << "++++++++++jobInfoStr = " << jobInfoStr << std::endl;
-    std::vector<std::string> JobInfoTokens;
-    std::copy(istream_iterator<std::string>(is), istream_iterator<std::string>(), back_inserter(JobInfoTokens));
-    
-    std::vector<std::string>::const_iterator iter = JobInfoTokens.begin();
-    std::vector<std::string>::const_iterator end = JobInfoTokens.end();
-    std::string jobIdStr;
-    std::string jobOutputPath;
-    std::string jobErrorPath;
-    if(iter!=end) {
-      jobIdStr = *iter;
-      ++iter;
-    }
-    if(iter!=end) {
-      jobOutputPath = *iter;
-      ++iter;
-    }
-    if(iter!=end) {
-      jobErrorPath = *iter;
-      ++iter;
-    }
-    cout << "++++++++++JobIdValue    = " << jobIdStr << std::endl;
-    cout << "++++++++++Before JobOutputPath = " << jobOutputPath << std::endl;
-    cout << "++++++++++Before jobErrorPath  = " << jobErrorPath << std::endl;
-
-    uint32_t jobId = convertToSlurmJobId(jobIdStr);
-    //To fill the vishnu job structure 
-    fillJobInfo(job, jobId);
-   
-    if(jobOutputPath.size()!=0) {
-      replaceSymbolInToJobPath(jobOutputPath);
-      job.setOutputPath(jobOutputPath);
-    }
-    if(jobErrorPath.size()!=0) {
-      replaceSymbolInToJobPath(jobErrorPath);
-      job.setErrorPath(jobErrorPath);
-    }
-
-    cout << "++++++++++After JobOutputPath = " << job.getOutputPath() << std::endl;
-    cout << "++++++++++After jobErrorPath  = " << job.getErrorPath() << std::endl;
-    return 0;
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, errorMsg);
   }
-  
+  //Check the job error path
+  errorMsg = checkSLURMOutPutPath(desc.std_err, "job error path");
+  if(errorMsg.size()!=0) {
+    xfree(desc.script);
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, errorMsg);
+  }
+
+  uint32_t jobId = 0;
+  std::string jobOutputPath ;
+  std::string jobErrorPath;
+  submit_response_msg_t *resp;
+  int retries = 0;
+  int VISHNU_MAX_RETRIES = 10;
+  int res = 0;
+  //To submit the job
+  while((res=slurm_submit_batch_job(&desc, &(resp))) < 0) {
+
+    if (errno == ESLURM_ERROR_ON_DESC_TO_RECORD_COPY)
+      errorMsg = "Slurm job queue full, sleeping and retrying.";
+    else if (errno == ESLURM_NODES_BUSY) {
+      errorMsg = "Job step creation temporarily disabled, retrying";
+    } else if (errno == EAGAIN) {
+      errorMsg = "Slurm temporarily unable to accept job, sleeping and retrying.";
+    } else
+      errorMsg ="";
+    if ((errorMsg == "") || (retries >= VISHNU_MAX_RETRIES)) {
+      errorMsg = "Batch job submission failed:"+std::string(slurm_strerror(res));
+    }
+
+    if (retries || errno == ESLURM_NODES_BUSY) {
+      std::cout << errorMsg << std::endl;
+    } else {
+      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: "+errorMsg);
+    }
+    sleep (++retries);
+  }
+
+  jobId = resp->job_id;
+  jobOutputPath ;
+  jobErrorPath;
+  if(desc.std_out!=NULL) {
+    jobOutputPath = desc.std_out;
+  }
+  if(desc.std_err!=NULL) {
+    jobErrorPath = desc.std_err;
+  }
+
+  cout << "++++++++++JobIdValue    = " << jobId << std::endl;
+  cout << "++++++++++Before JobOutputPath = " << jobOutputPath << std::endl;
+  cout << "++++++++++Before jobErrorPath  = " << jobErrorPath << std::endl;
+
+  //To fill the vishnu job structure 
+  fillJobInfo(job, jobId);
+
+  if(jobOutputPath.size()!=0) {
+    replaceSymbolInToJobPath(jobOutputPath);
+    job.setOutputPath(jobOutputPath);
+  }
+  if(jobErrorPath.size()!=0) {
+    replaceSymbolInToJobPath(jobErrorPath);
+    job.setErrorPath(jobErrorPath);
+  }
+
+  cout << "++++++++++After JobOutputPath = " << job.getOutputPath() << std::endl;
+  cout << "++++++++++After jobErrorPath  = " << job.getErrorPath() << std::endl;
+
+  xfree(desc.script);
+  slurm_free_submit_response_response_msg(resp);
+
+  return 0;
 }
 
 /**
  * \brief Function to check if slurm path syntax is correct
  * \param path the path to check
- * \param sumitIsPossible The flag that authorise the job submission if the path is correct
  * \param pathInfo The information on path to print
- * \return prints an error message on standard error
+ * \return an error message
  */
-void SlurmServer::checkSLURMOutPutPath(char*& path, bool& sumitIsPossible, const std::string& pathInfo) {
+std::string SlurmServer::checkSLURMOutPutPath(char*& path, const std::string& pathInfo) {
 
+  string errorMsg;
   if(path!=NULL) {
     //get the slurm treated symbols
     std::map<std::string, std::string>::const_iterator iter;
@@ -261,20 +162,22 @@ void SlurmServer::checkSLURMOutPutPath(char*& path, bool& sumitIsPossible, const
     std::string vishnuTreatedSymbols;
 
     std::string symbol;
-    sumitIsPossible = true;
     if(containsAnExcludedSlurmSymbols(path, symbol)){
-      std::cerr << "VISHNU can't treats in your " << pathInfo << " the following sumbol: " << symbol << std::endl;
+      ostringstream osStr;
+      osStr << "VISHNU can't treats in your " << pathInfo << " the following sumbol: " << symbol << std::endl;
+
       for(iter=msymbolMap.begin(); iter!=end; ++iter) {
         if(iter!=msymbolMap.begin()) {
           vishnuTreatedSymbols+=" or ";
         }
         vishnuTreatedSymbols+=iter->first[0]+symbol.substr(1,symbol.size()-2)+iter->first[1];
       }
-      std::cerr << "*****The only SLURM symbols treated by VISHNU are: " << vishnuTreatedSymbols << std::endl;
-      std::cerr << "*****Replace your symbols by the following sumbols: "<< vishnuTreatedSymbols << std::endl;
-      sumitIsPossible = false;
+      osStr << "*****The only SLURM symbols treated by VISHNU are: " << vishnuTreatedSymbols << std::endl;
+      osStr << "*****Replace your symbols by the following sumbols: "<< vishnuTreatedSymbols << std::endl;
+      errorMsg = osStr.str();
     }
   }
+  return errorMsg;
 }
 
 /**
@@ -416,7 +319,8 @@ SlurmServer::processOptions(const TMS_Data::SubmitOptions& options,
     if(posNbNodes!=std::string::npos) {
       std::string nbNodes = NbNodesAndCpuPerNode.substr(0, posNbNodes);
       std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1); 
-      cmdsOptions.push_back("--nodes="+nbNodes+" --mincpus="+cpuPerNode);
+      cmdsOptions.push_back("--nodes="+nbNodes);
+      cmdsOptions.push_back("--mincpus="+cpuPerNode);
     }
   }
 
