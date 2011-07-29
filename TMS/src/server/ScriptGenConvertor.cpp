@@ -62,7 +62,7 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mendScript="";
 
   } else if(mbatchType==SLURM) {
-    std::cerr << "SLURM under contruction!!!!!!!!!" << std::endl;
+    std::cerr << "ScriptGenConvertor::ScriptGenConvertor: SLURM under contruction!!!!!!!!!" << std::endl;
   } else {
     std::cerr << "Unknown Batch type " << std::endl;
   }

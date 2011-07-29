@@ -1,4 +1,5 @@
-#include "slurm-parser.h"
+
+#include "slurm_parser.h"
 
 int slurm_parse_script(int argc, char *argv[], job_desc_msg_t *desc)
 {
@@ -569,7 +570,7 @@ static int _set_rlimit_env(void)
 			format = "%lu";
 
 		if (setenvf (NULL, name, format, cur) < 0) {
-			error ("unable to set %s in environment", name);
+			error( "unable to set %s in environment", name);
 			rc = SLURM_FAILURE;
 			continue;
 		}

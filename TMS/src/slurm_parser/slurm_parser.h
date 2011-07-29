@@ -1,6 +1,6 @@
 
-#ifndef __SLURM_SUBMIT_H__
-#define __SLURM_SUBMIT_H__
+#ifndef __SLURM_PARSER_H__
+#define __SLURM_PARSER_H__
 
 
 #if HAVE_CONFIG_H
