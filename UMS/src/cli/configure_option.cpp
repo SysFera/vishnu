@@ -1,6 +1,7 @@
 #include "configureOptionUtils.hpp"
 #include "cliUtil.hpp"
 #include "utils.hpp"
+#include "utilVishnu.hpp"
 
 namespace po = boost::program_options;
 

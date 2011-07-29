@@ -33,31 +33,25 @@ struct HeadOfFileFunc {
 
   int operator()(std::string sessionKey) {
 
-    string contentOfFile;
+    string contentOfHeadOfFile;
 
-    int res=headOfFile(sessionKey,mpath,contentOfFile, mhofOptions);
-    cout << contentOfFile << "\n"; 
+    int res=headOfFile(sessionKey,mpath,contentOfHeadOfFile, mhofOptions);
+    cout << contentOfHeadOfFile << "\n"; 
     return res;
   }
 };
 
-
-
 int main (int ac, char* av[]){
-
 
   /******* Parsed value containers ****************/
   string dietConfig;
   string path;
 
   /********** EMF data ************/
-
   HeadOfFileOptions hofOptions;
 
   /******** Callback functions ******************/
-
   boost::function1<void,int> fNline(boost::bind(&FMS_Data::HeadOfFileOptions::setNline,boost::ref(hofOptions),_1));
-
 
   boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],dietConfig,path));
 

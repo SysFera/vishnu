@@ -1,6 +1,6 @@
 /**
- * \file set_update_frequency.cpp
- * This file defines the VISHNU command to get the metric history
+ * \file define_transfer_identifier.cpp
+ * This file defines the VISHNU command to define the file transfer identifier
  * \author Coulomb Kevin (kevin.coulomb@sysfera.com)
  */
 
@@ -14,52 +14,25 @@
 #include "sessionUtils.hpp"
 
 #include "GenericCli.hpp"
+#include "defineIdentifierUtils.hpp"
 
 using namespace std;
 using namespace vishnu;
-
-struct TransferIdentifierFunc {
-
-  std::string mtransfertFormat;
-
-  TransferIdentifierFunc(const std::string& transfertFormat):
-   mtransfertFormat(transfertFormat)
-  {};
-
-  int operator()(std::string sessionKey) {
-    return defineTransferIdentifier(sessionKey, mtransfertFormat);
-  }
-};
-
 
 int main (int argc, char* argv[]){
   
   /******* Parsed value containers ****************/
   string dietConfig;
-  string transfertFormat;
+  string newTransfertFormat;
 
-  /**************** Describe options *************/
-  boost::shared_ptr<Options> opt(new Options(argv[0]));
+  boost::shared_ptr<Options> opt(makeDefineIdentifierOptions(argv[0], dietConfig, newTransfertFormat));
 
-  // Environement option
-  opt->add("dietConfig,c",
-           "The diet config file",
-           ENV,
-           dietConfig);
-
-  // All cli obligatory parameters
-  opt->add("format,f",
-	   "The id of the machine on which the format of the file transfers must be defined",
-	   HIDDEN,
-	   transfertFormat,1);
-  opt->setPosition("format",1);
- 
   bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, argc, argv, "format");
 
   //call of the api function
-  TransferIdentifierFunc jobIdFunc(transfertFormat);
-  return GenericCli().run(jobIdFunc, dietConfig, argc, argv);
+  DefineIdentifierFunc<TRANSFER> transferIdFunc(newTransfertFormat);
+  return GenericCli().run(transferIdFunc, dietConfig, argc, argv);
 
 }

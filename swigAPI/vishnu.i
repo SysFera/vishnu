@@ -11,10 +11,23 @@
  // Include for exception handling
 %include "exception.i"
 
+
+ // Added to make the mapping between std::exception and the python Exception class
+ // Otherwise the VishnuException class inherits the _object class and the vishnu exception
+ // Are not seen as real python exception (if not catched -> finally pops bad exception)
+#ifdef SWIGPYTHON
+%exceptionclass VishnuException;
+#endif SWIGPYTHON
+
 // this includes the typemaps for STL strings
 %include "std_string.i"
 %include "std_except.i"
 %include "std_vector.i"
+// fix compilation with GCC 4.6
+%{
+#include <cstddef>
+%}
+
 
 // Keep in separated files and before includes, all module need their own eobject in java
 %include "ecore/EObject.hpp"
@@ -163,6 +176,18 @@
   $result = SWIG_Python_AppendOutput($result, o);
 }
 
+
+%typemap(in, numinputs=0) std::string& sshPublicKey (std::string temp) {
+  $1 = &temp;
+}
+
+%typemap(argout) std::string& sshPublicKey {
+  PyObject *o = PyString_FromString($1->c_str());
+  std::cout << "Valeur de l'objet" << $1->c_str() << std::endl;
+  $result = SWIG_Python_AppendOutput($result, o);
+}
+
+
 // Exception rule for user exception
 %typemap (throws) UserException{
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UserException,SWIG_POINTER_OWN), "UserException", SWIGTYPE_p_UserException); SWIG_fail;
@@ -213,6 +238,16 @@
 #ifdef COMPILE_UMS
 %include "api_ums.hpp"
 #endif
+
+ // Added to make the mapping between std::exception and the python Exception class
+ // Otherwise the VishnuException class inherits the _object class and the vishnu exception
+ // Are not seen as real python exception (if not catched -> finally pops bad exception)
+ // Keep there and not before, otherwize non exception classes also inherith from Exception and not _object in python
+//#ifdef SWIGPYTHON
+//%clearexceptionclass;
+//%exceptionclass;
+//#endif SWIGPYTHON
+
 
 #ifdef SWIGPYTHON
 %include "VishnuException.hpp"

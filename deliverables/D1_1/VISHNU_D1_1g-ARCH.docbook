@@ -43,7 +43,15 @@
         <revdescription>
           <para>In §3.4, added flows COS and OSS</para>
         </revdescription>
-        </revision>
+      </revision>
+      <revision>
+        <revnumber>4</revnumber>
+        <date>22/07/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Added SLURM</para>
+        </revdescription>
+      </revision>
       </revhistory>
     </info>
   <chapter>
@@ -363,7 +371,7 @@
         <itemizedlist>
           <listitem>
             <para><emphasis role="bold">Computing server</emphasis>: a server that provides computing services to the user through a batch scheduler software
-            like LoadLeveler or Torque. In the case of a cluster, the computing server is also known as the gateway server.</para>
+            like LoadLeveler, Torque or SLURM. In the case of a cluster, the computing server is also known as the gateway server.</para>
           </listitem>
           <listitem>
              <para><emphasis role="bold">Database Server (DBS)</emphasis>: represents a database server used by VISHNU.</para>
@@ -444,7 +452,7 @@
         connected with the corresponding server component through the SysFera-DS Middleware. The server components handle data items that
         belong to different inter-related databases, each managing a specific kind of data (a more detailed description of the databases is
         provided in section 3.2). The TMS and FMS Server components also handle some specific interaction with external entities: the
-        batch schedulers (LoadLeveler or Torque) for the management of jobs on clusters or supercomputers, and the SCP and RSYNC programs
+        batch schedulers (LoadLeveler, Torque or SLURM) for the management of jobs on clusters or supercomputers, and the SCP and RSYNC programs
         of the underlying Linux system for the transfer of files between two storage servers or between a client system and a storage server.
        </para>
        <figure>
@@ -824,7 +832,7 @@
                        </para></listitem>
           <listitem><para> The submit function program contacts the selected machine and sends all input data (sessionKey, machineId, scriptPath and options) and waits for the output values : a valid output valid or a VISHNU exception. The machineId is valid if it exists in the vishnu Data Base and if the submit job owner has an account on this machine. </para></listitem>
           <listitem><para> The TMS server launched on the selected machine receives the input values, checks the validity of the sessionKey and machineId by contacting the VISHNU Database.  </para></listitem>
-          <listitem><para> If the two values are valid, the TMS server calls the underlying batch scheduler API submit function (llsubmit(...)  for the LoadLeveler scheduler, pbs_submit for TORQUE scheduler).</para></listitem>
+          <listitem><para> If the two values are valid, the TMS server calls the underlying batch scheduler API submit function (llsubmit(...)  for the LoadLeveler scheduler, pbs_submit(...) for Torque scheduler, slurm_submit_batch_job(...) for SLURM scheduler).</para></listitem>
           <listitem><para> If the job was performed successfully, the TMS creates a vishnu jobId and sends it back to the user.</para></listitem>
          </itemizedlist>
        </para>

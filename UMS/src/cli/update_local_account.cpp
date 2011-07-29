@@ -10,6 +10,7 @@
 #include "utils.hpp"
 #include "localAccountUtils.hpp"
 #include "sessionUtils.hpp"
+#include "utilVishnu.hpp"
 #include <boost/bind.hpp>
 #include "GenericCli.hpp"
 

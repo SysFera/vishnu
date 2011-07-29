@@ -108,7 +108,6 @@ int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
   string dietConfig;
-  string sessionKey;
   string statusStr;
   int status;
 
