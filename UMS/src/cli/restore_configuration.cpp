@@ -9,6 +9,7 @@
 #include "cliUtil.hpp"
 #include "utils.hpp"
 #include "sessionUtils.hpp"
+#include "utilVishnu.hpp"
 #include "GenericCli.hpp"
 
 namespace po = boost::program_options;

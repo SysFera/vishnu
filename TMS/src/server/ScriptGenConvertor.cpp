@@ -61,6 +61,8 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[torqueSec]         = "";
     mendScript="";
 
+  } else if(mbatchType==SLURM) {
+    std::cerr << "SLURM under contruction!!!!!!!!!" << std::endl;
   } else {
     std::cerr << "Unknown Batch type " << std::endl;
   }

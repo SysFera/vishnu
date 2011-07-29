@@ -1,0 +1,13 @@
+.big    {font-size: 26px; font-weight: bold;  font-family:arial,sans-serif;color:#FFFFFF; }
+.txt	{font-size: 12px;font-weight: bolder; font-family:arial,sans-serif;}
+.menu	{font-size: 12px;font-weight: regular; font-family:arial,sans-serif;}
+p		{font-size: 12px;font-weight: regular; font-family:arial,sans-serif;}
+h1		{font-size: 24px; font-weight: bold;  font-family:arial,sans-serif;}
+h2		{font-size: 22px; font-family:arial,sans-serif; color:#000045; }
+h3		{font-size: 18px; font-family:arial,sans-serif; color:#000045; }
+tr		{font-size: 12px;font-weight: regular; font-family:arial,sans-serif;}
+td		{font-size: 12px;font-weight: regular; font-family:arial,sans-serif;}
+li		{font-size: 12px;font-weight: regular; font-family:arial,sans-serif;}
+th		{font-size: 12px;font-weight: bold; font-family:arial,sans-serif;}
+caption	{font-size: 12px;font-weight: bold;  font-style: italic; font-family:arial,sans-serif;}
+pre		{font-size: 10px;font-weight: regular;  font-family:courier;}

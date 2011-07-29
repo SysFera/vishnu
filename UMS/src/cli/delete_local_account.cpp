@@ -9,6 +9,7 @@
 #include "utils.hpp"
 #include "sessionUtils.hpp"
 #include "connectUtils.hpp"
+#include "utilVishnu.hpp"
 
 #include "GenericCli.hpp"
 

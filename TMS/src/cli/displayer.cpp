@@ -61,21 +61,25 @@ displayJob(TMS_Data::Job& j){
     pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(j.getSubmitDate()));
     cout << " Submit date          : " << boost::posix_time::to_simple_string(pt) << endl;
   } else  {
-    cout << " Submit date          : --- " << endl;
+    cout << " Submit date          : UNDEFINED" << endl;
   }
 
   if(j.getEndDate() > 0) {
     pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(j.getEndDate()));
     cout << " End date             : " << boost::posix_time::to_simple_string(pt) << endl;
   } else {
-    cout << " End date             : --- " << endl;
+    cout << " End date             : UNDEFINED" << endl;
   }
   cout << " Owner                : " << j.getOwner() << endl;
   cout << " Queue                : " << j.getJobQueue() << endl;
   cout << " Wall clock limit     : " << convertWallTimeToString(j.getWallClockLimit()) << endl;
   cout << " Group name           : " << j.getGroupName() << endl;
   cout << " Description          : " << j.getJobDescription() << endl;
-  cout << " Max memory           : " << j.getMemLimit() << endl;
+  if(j.getMemLimit() > 0) {
+    cout << " Max memory           : " << j.getMemLimit() << endl;
+  } else {
+    cout << " Max memory           : UNDEFINED" << endl;
+  }
   cout << " Nodes                : " << j.getNbNodes() << endl;
   cout << " CPU/Node             : " << j.getNbNodesAndCpuPerNode() << endl;
   cout << endl;
@@ -109,15 +113,15 @@ displayProgress(Progression& p){
   cout << " Wall time : " << convertWallTimeToString(p.getWallTime()) << endl;
   if(p.getStartTime() > 0) {
     pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(p.getStartTime()));
-    cout << " Start time: " << boost::posix_time::to_simple_string(pt) << endl;
+    cout << "Start time : " << boost::posix_time::to_simple_string(pt) << endl;
   } else {
-    cout << " Start time: ---" << endl;
+    cout << "Start time : UNDEFINED" << endl;
   }
   if(p.getEndTime() > 0) {
     pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(p.getEndTime()));
     cout << " End time  : " << boost::posix_time::to_simple_string(pt) << endl;
   } else {
-    cout << " End time  : ---" << endl;
+    cout << " End time  : UNDEFINED" << endl;
   }
   cout << " Percent   : " << p.getPercent() << "%" << endl;
   cout << " Status    : " << convertJobStateToString(p.getStatus()) << endl;
@@ -159,33 +163,37 @@ displayQueue(Queue& q){
   cout << " ------------------------ " << endl;
   cout << " Name        : " << q.getName() << endl;
   if(q.getMaxJobCpu() > 0) {
-    cout << " Max job cpu : " << q.getMaxJobCpu() << endl;
+  cout << "Max job cpu  : " << q.getMaxJobCpu() << endl;
   } else {
-    cout << " Max job cpu : --- " << endl;
+  cout << "Max job cpu  : UNDEFINED " << endl;
   }
   if(q.getMaxProcCpu() > 0) {
-    cout << " Max proc cpu: " << q.getMaxProcCpu() << endl;
+  cout << "Max proc cpu : " << q.getMaxProcCpu() << endl;
   } else {
-    cout << " Max proc cpu: --- " << endl;
+  cout << "Max proc cpu : UNDEFINED " << endl;
   }
   if(q.getMemory() > 0) {
-    cout << " Memory      : " << q.getMemory() << endl;
+  cout << " Memory      : " << q.getMemory() << endl;
   } else {
-    cout << " Memory      : --- " << endl;
+  cout << " Memory      : UNDEFINED " << endl;
   }
+  if(q.getWallTime() > 0) {
   cout << " Wall time   : " << convertWallTimeToString(q.getWallTime()) << endl;
-  if(q.getNode() > 0) {
-    cout << " Node        : " << q.getNode() << endl;
   } else {
-    cout << " Node        : --- " << endl;
+  cout << " Wall time   : UNDEFINED " << endl;
   }
-  cout << " Running jobs: " << q.getNbRunningJobs() << endl;
-  cout << " Job in queue: " << q.getNbJobsInQueue() << endl;
+  if(q.getNode() > 0) {
+  cout << " Node        : " << q.getNode() << endl;
+  } else {
+  cout << " Node        : UNDEFINED  " << endl;
+  }
+  cout << "Running jobs : " << q.getNbRunningJobs() << endl;
+  cout << "Job in queue : " << q.getNbJobsInQueue() << endl;
   int state = q.getState();
   std::string stateStr = (state==1?"STARTED":(state==2?"RUNNING":"NOT_STARTED"));
-  cout << " State       : " << stateStr << endl;
-  cout << " Priority    : " << q.getPriority() << "(" << convertJobPriorityToString(q.getPriority()) << ")" << endl;
-  cout << " Description : " << q.getDescription() << endl;
+  cout << "State        : " << stateStr << endl;
+  cout << "Priority     : " << q.getPriority() << "(" << convertJobPriorityToString(q.getPriority()) << ")" << endl;
+  cout << "Description  : " << q.getDescription() << endl;
 }
 
 /**

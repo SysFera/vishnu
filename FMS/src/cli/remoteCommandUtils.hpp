@@ -78,7 +78,53 @@ opt->add("path,p",
 bool isEmpty;
 GenericCli().processListOpt( opt, isEmpty,argc,argv,"path");
 
-
-
 }
+
+/**
+ * \brief  A define type
+ */
+
+typedef enum{
+  CREATEFILE,
+  CREATEDIR,
+  REMOVEFILE,
+  REMOVEDIR
+} FileActionType;
+
+/**
+ * \brief A functor to handle file action (create/remove) api function
+ */
+template<FileActionType fileActionType>
+struct FileActionFunc {
+
+  std::string mpath;
+  RmFileOptions moptions;
+
+  FileActionFunc(const std::string& path):mpath(path){}
+  FileActionFunc(const std::string& path,const RmFileOptions& options):mpath(path),moptions(options){}
+
+  int operator()(std::string sessionKey) {
+
+    int res = -1;
+    switch(fileActionType) {
+      case CREATEFILE:
+        res = createFile(sessionKey,mpath);
+        break;
+      case CREATEDIR:
+        res = createDir(sessionKey,mpath);
+        break;
+      case REMOVEFILE:
+        res = removeFile(sessionKey,mpath,moptions);
+        break;
+      case REMOVEDIR:
+        res = removeDir(sessionKey,mpath);
+        break;
+      default:
+        break;
+    }
+
+    return res;
+  }
+};
+
 #endif

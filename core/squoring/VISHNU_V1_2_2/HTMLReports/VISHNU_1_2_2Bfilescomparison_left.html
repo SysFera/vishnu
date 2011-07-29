@@ -1,0 +1,59 @@
+
+    <html>
+    <head>
+    <title>Similar Files Report - VISHNU_1_2_2B</title>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="include/logiscope.css" type="text/css" />
+
+<SCRIPT LANGUAGE="JavaScript" type="text/javascript">
+function ClicRub(nu_rub) {
+with(parent) {
+	if (menu[nu_rub].page!="") {parent.frames[1].window.location=menu[nu_rub].page}
+	else
+	 {
+		if (menu[nu_rub].aff=="O") {menu[nu_rub].aff="N"}
+		else {
+			menu[nu_rub].aff="O";
+		}
+	}
+}
+if (parent.menu[nu_rub].nb_lien>0) {window.location=document.location;}
+}
+
+function dM(txt) { document.write(txt) }
+function AffImg(img) {
+	dM("<IMG SRC='"+img+"' height='"+parent.menu.hauteur+"' BORDER=0 ALT='' ALIGN='top' vspace=0>");
+}
+function Aff(men) {
+	for(var i=0;i<men.nb_rub;i++) {
+		if (men[i].aff=="N") {
+			AffImg(men.imgF);
+			dM("<A class=menu HREF='javascript:ClicRub("+i+")' color='#0C0C00'>");
+			dM(men[i].txt+"</A><BR>");
+		} else {
+			AffImg(men.imgO);
+			dM("<A class=menu HREF='javascript:ClicRub("+i+")'>");
+			dM(men[i].txt+"</A><BR>");
+			for(var j=0;j<men[i].nb_lien;j++) {
+			if (j==men[i].nb_lien-1) {AffImg(men.imgOptFin);} 
+			else  {AffImg(men.imgOpt);}
+				dM("<A class=menu target='right' HREF='"+men[i][j].page+"'>");
+				dM(men[i][j].txt+"</A><BR>");	
+			}
+		}
+	}
+}
+</SCRIPT>
+</HEAD>
+
+<BODY bgcolor="#002654" text="FFFFFF" alink="FFFFFF" link="FFFFFF" vlink="FFFFFF" >
+<center><IMG SRC="include/logo.jpg" ALT=""></center><br>
+<IMG SRC="include/logiscope.jpg"  ALT="">
+<p>
+<p>
+<p>
+<SCRIPT type="text/JavaScript">
+	Aff(parent.menu);
+</SCRIPT>
+</body>
+</html>

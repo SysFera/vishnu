@@ -31,10 +31,10 @@ struct TailOfFileFunc {
 
   int operator()(std::string sessionKey) {
 
-    string contentOfFile;
+    string contentOfTailOfFile;
 
-    int res=tailOfFile(sessionKey,mpath,contentOfFile, mtofOptions);
-    cout << contentOfFile << "\n"; 
+    int res=tailOfFile(sessionKey,mpath,contentOfTailOfFile, mtofOptions);
+    cout << contentOfTailOfFile << "\n"; 
     return res;
   }
 };
@@ -43,21 +43,16 @@ struct TailOfFileFunc {
 int main (int ac, char* av[]){
   
   /******* Parsed value containers ****************/
-
   string dietConfig;
   string path;
 
   /********** EMF data ************/
-  
   TailOfFileOptions tofOptions;
   
   /******** Callback functions ******************/
-
   boost::function1<void,int> fNline(boost::bind(&FMS_Data::TailOfFileOptions::setNline,boost::ref(tofOptions),_1));
-     
   
   /**************** Describe options *************/
-  
   boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],dietConfig,path));
  
   opt->add("nline,n",
