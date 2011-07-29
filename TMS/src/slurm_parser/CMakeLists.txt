@@ -11,7 +11,7 @@ if (VISHNU_USE_SLURM)
   add_library(utils-slurm
     opt.c
     mult_cluster.c
-    slurm-parser.c 
+    slurm_parser.c 
     )
 
   target_link_libraries(utils-slurm 
