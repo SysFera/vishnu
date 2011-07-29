@@ -28,6 +28,7 @@ option(COMPILE_FMS "compile the module FMS")
 option(COMPILE_IMS "compile the module IMS")
 option(VISHNU_USE_TORQUE   "Build VISHNU with Torque support...")
 option(VISHNU_USE_LOADLEVELER   "Build VISHNU with LoadLeveler support...")
+option(VISHNU_USE_SLURM   "Build VISHNU with SLURM support...")
 
 if (COMPILE_UMS AND COMPILE_TMS AND COMPILE_FMS AND COMPILE_IMS)
   set(COMPILE_ALL_MODULES 1)
@@ -117,8 +118,8 @@ if (ENABLE_MYSQL)
 endif (ENABLE_MYSQL)
 
 
-if (COMPILE_TMS AND NOT CLIENT_ONLY AND NOT VISHNU_USE_LOADLEVELER AND NOT VISHNU_USE_TORQUE)
-   message(FATAL_ERROR "You MUST set either VISHNU_USE_TORQUE or VISHNU_USE_LOADLEVELER when compiling TMS server")
+if (COMPILE_TMS AND NOT CLIENT_ONLY AND NOT VISHNU_USE_LOADLEVELER AND NOT VISHNU_USE_TORQUE AND NOT VISHNU_USE_SLURM)
+   message(FATAL_ERROR "You MUST set either VISHNU_USE_TORQUE or VISHNU_USE_LOADLEVELER or VISHNU_USE_SLURM when compiling TMS server")
 endif()
 
 if (COMPILE_TMS)
@@ -146,6 +147,7 @@ if (VISHNU_USE_TORQUE)
 endif (VISHNU_USE_TORQUE)
 
 if (VISHNU_USE_LOADLEVELER)
+
   add_definitions(-DHAVE_LOADLEVELER)
 
   find_package(LOADLEVELER)
@@ -159,6 +161,22 @@ if (VISHNU_USE_LOADLEVELER)
     set(LOADLEVELER_DIR "" cache path "LOADLEVELER installation path")
   endif(LOADLEVELER_FOUND)
 endif (VISHNU_USE_LOADLEVELER)
+
+if (VISHNU_USE_SLURM)
+
+  add_definitions(-DHAVE_SLURM)
+
+  find_package(SLURM)
+  if (SLURM_FOUND)
+  else (SLURM_FOUND)
+    message("SLURM installation was not found. Define the SLURM_DIR variable to continue.")
+    message("     - You can define a SLURM_DIR environment variable")
+    message("     - You can pass it as argument to cmake:")
+    message("       $ cmake <source root directory> -DSLURM_DIR:PATH=/path/to/SLURM")
+    message("     - You can use the ccmake GUI")
+    set(SLURM_DIR "" cache path "SLURM installation path")
+  endif(SLURM_FOUND)
+endif (VISHNU_USE_SLURM)
 
 if(COMPILE_IMS AND NOT CLIENT_ONLY)
   find_package(LOGSERVICE REQUIRED)
@@ -207,6 +225,7 @@ set(TMS_CLI_SOURCE_DIR ${VISHNU_SOURCE_DIR}/TMS/src/cli)
 set(TMS_SED_SOURCE_DIR ${VISHNU_SOURCE_DIR}/TMS/src/sed)
 set(TMS_UTILS_DIR ${VISHNU_SOURCE_DIR}/TMS/src/utils/)
 set(UTILS_TORQUE_DIR ${VISHNU_SOURCE_DIR}/TMS/src/utils_torque/)
+set(SLURM_PARSER_DIR ${VISHNU_SOURCE_DIR}/TMS/src/slurm_parser/)
 
 #IMS
 set(IMS_EMF_DATA_DIR ${VISHNU_SOURCE_DIR}/IMS/src/utils/emfdata)

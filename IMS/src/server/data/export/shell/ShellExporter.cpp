@@ -102,16 +102,28 @@ ShellExporter::isAllowed(string oldSession, UserServer muser) {
 
 string
 ShellExporter::getMapperName(int type) {
+  string shellMapperName;
   switch (type) {
   case UMS:
-    return UMSSHELLMAPPERNAME;
+     shellMapperName = UMSSHELLMAPPERNAME;
+     break;
   case TMS:
-    return TMSSHELLMAPPERNAME;
+     shellMapperName = TMSSHELLMAPPERNAME;
+     break;
   case FMS:
-    return FMSSHELLMAPPERNAME;
+     shellMapperName = FMSSHELLMAPPERNAME;
+     break;
   case IMS:
-    return IMSSHELLMAPPERNAME;
+     shellMapperName = IMSSHELLMAPPERNAME;
+     break;
   default:
+     shellMapperName = "UNKNOWNMAPPER";
+     break;
+  }
+
+  if(shellMapperName.compare("UNKNOWNMAPPER")!=0) {
+    return shellMapperName;
+  } else {
     throw IMSVishnuException(ERRCODE_INVEXPORT, "Cannot find mapper");
   }
 }

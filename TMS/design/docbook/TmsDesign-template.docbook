@@ -27,11 +27,19 @@
         </revdescription>
       </revision>
       <revision>
-        <revnumber>05</revnumber>
+        <revnumber>2</revnumber>
         <date>20/05/2011</date>
         <authorinitials>SysFera</authorinitials>
         <revdescription>
           <para>Modified description of section dedicated to Job Owner and Identifier (section 2.3). Added TMS submitJob sequence diagram (three figures added). Modified TMS Client Class Diagram, TMS Server Class Diagram. Modified TMS Client Side Components, TMS Server Side Components. Added TMS Monitor Daemon description in the definitions of components in section 2.1. Added TMS Monitor Daemon component in TMS Server Side Components. Modified exceptions list of all services in internal API specification chapter. Modified jobSubmit, jobOutputGetResult, jobOutputGetCompletedJobs services in internal API specification chapter.</para>
+        </revdescription>
+      </revision>
+     <revision>
+        <revnumber>3</revnumber>
+        <date>21/07/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+         <para>Added SLURM batch scheduler </para>  
         </revdescription>
       </revision>
       </revhistory>
@@ -199,6 +207,10 @@ in the Vishnu Database.
             </para>
           </listitem>
           <listitem>
+            <para><emphasis role="bold">SLURM API </emphasis> is the C API provided by the SLURM batch scheduler..
+            </para>
+          </listitem>
+          <listitem>
             <para><emphasis role="bold">Vishnu Database</emphasis> stores all data manipulated by the TMS Server.
             </para>
           </listitem>
@@ -240,23 +252,32 @@ in the Vishnu Database.
           <listitem>
             <para>Sysfera-DS Server libraries </para>
           </listitem>
-           <listitem>
-            <para>IBM LoadLeveler library</para>
-           </listitem>
-           <listitem>
-            <para>Torque library</para>
-          </listitem>
-        </itemizedlist>
+          <listitem>
+            <para>At least one of the following libraries:
+              <itemizedlist>
+                <listitem>
+                 <para>IBM LoadLeveler library</para>
+                </listitem>
+                <listitem>
+                 <para>Torque library</para>
+                </listitem>
+                <listitem>
+                 <para>SLURM library</para>
+               </listitem>
+             </itemizedlist> 
+           </para>
+           </listitem>    
+          </itemizedlist>
       </section>
     </section>
     <section>
         <title>Job owner and identifier</title>
-        <para> Each TMS server process runs using a specific local system account dedicated to VISHNU. To allow TMS server to submit job under user local account on the machine on which TMS server runs, TMS server calls an other service et asks the executor of the service to submit the job. We call this service executor  <emphasis>tmsSlave</emphasis>.  <emphasis>tmsSlave</emphasis> uses <emphasis>ssh executable command</emphasis> by switching the local system account dedicated to VISHNU to user local account, and after connexion on the user local account it calls the underlying batch scheduler API (LoadLeveler or Torque API). For example a job submitted by user jdupond on a machine dedicated to LoadLeveler will be visible as a job with identifier "hostname.344.0" and owner "jdupond". 
+        <para> Each TMS server process runs using a specific local system account dedicated to VISHNU. To allow TMS server to submit job under user local account on the machine on which TMS server runs, TMS server calls an other service et asks the executor of the service to submit the job. We call this service executor  <emphasis>tmsSlave</emphasis>.  <emphasis>tmsSlave</emphasis> uses <emphasis>ssh executable command</emphasis> by switching the local system account dedicated to VISHNU to user local account, and after connexion on the user local account it calls the underlying batch scheduler API (LoadLeveler or Torque or SLURM API). For example a job submitted by user jdupond on a machine dedicated to LoadLeveler will be visible as a job with identifier "hostname.344.0" and owner "jdupond". 
          From the VISHNU user point of view, the job owner corresponds of user job owner on the submitted machine and the  job identifier will be hidden and replaced by the generate global job identifier by VISHNU. For example the previous job will be visible in VISHNU as job "JOB_6767" and userId "jdupond".</para>
        <para>This data translation is entirely transparent to the VISHNU user and simplifies job management. </para>
        <para>This <emphasis>tmsSlave</emphasis> is used only by two services: <emphasis>submitJob</emphasis> service and <emphasis>cancelJob</emphasis> service. </para>
 
-       <para>The figures 2.1, 2.2 and 2.3 shows the diagram sequence of TMS submitJob using <emphasis>tmsSlave</emphasis>. </para>
+       <para>The figures 2.1, 2.2 and 2.3 show the diagram sequence of TMS submitJob using <emphasis>tmsSlave</emphasis>. </para>
 
         <figure>
           <title>TMS submitJob sequence: first sequence</title>
@@ -324,7 +345,7 @@ in the Vishnu Database.
 
       <section>
         <title>TMS server-side components</title>
-        <para>This diagram highlights the TMS server side components. Two services among all the services of the TMS internal API are shown here for example. These services are consumed by the TMS Client component through the SysFera-DS API. All the interfaces of the TMS Server component are shown. The TMS Server component uses the Torque and IBM LoadLeveler API as underlying batch sheduler.</para>
+        <para>This diagram highlights the TMS server side components. Two services among all the services of the TMS internal API are shown here for example. These services are consumed by the TMS Client component through the SysFera-DS API. All the interfaces of the TMS Server component are shown. The TMS Server component uses the Torque, SLURM and IBM LoadLeveler API as underlying batch sheduler.</para>
    
         <itemizedlist>
           <listitem>

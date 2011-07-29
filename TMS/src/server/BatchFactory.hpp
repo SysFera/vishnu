@@ -38,9 +38,9 @@ class BatchFactory
     getBatchServerInstance(BatchType batchType);
 
     /**
-     * \brief Function to free a batchServer instance.
+     * \brief Function to delete a batchServer.
      */
-    void freeBatchServerInstance();
+    void deleteBatchServerInstance();
 
   private :
     
