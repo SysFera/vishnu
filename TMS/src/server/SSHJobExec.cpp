@@ -127,9 +127,8 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
   stderrFilePath = TMS_SERVER_FILES_DIR+"/stderrFilePathXXXXXX";
   vishnu::createTmpFile(const_cast<char*>(stderrFilePath.c_str()));
   cmd << " 2> " << stderrFilePath;
-
-  if(system((cmd.str()).c_str())) {
-    std::cerr << "can't execute " << cmd.str() << std::endl;
+  int ret;
+  if((ret=system((cmd.str()).c_str()))) {
     vishnu::deleteFile(jobSerializedPath.c_str());
     vishnu::deleteFile(submitOptionsSerializedPath.c_str());
     vishnu::deleteFile(jobUpdateSerializedPath.c_str());
@@ -140,6 +139,9 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
       if(merrorInfo.find("password")!=std::string::npos) {
         merrorInfo.append("  You must copy the VISHNU publickey in your authorized_keys file.");
       }
+    }
+    if((WEXITSTATUS(ret)==1)&&(mbatchType==SLURM)) {//ATTENTION: 1 corresponds of the error_exit value in ../slurm_parser/opt.c
+      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: "+merrorInfo);
     }
     vishnu::deleteFile(stderrFilePath.c_str());
     throw SystemException(ERRCODE_SSH, merrorInfo);

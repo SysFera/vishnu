@@ -81,26 +81,13 @@ bool verify_hint(const char *arg, int *min_sockets, int *min_cores,
 /* parse the mail type */
 uint16_t parse_mail_type(const char *arg);
 
-/* print the mail type */
-char *print_mail_type(const uint16_t type);
-
 /* search PATH to confirm the access of the given command */
 char *search_path(char *cwd, char *cmd, bool check_current_dir,
 		  int access_mode);
-
-/* helper function for printing options */
-char *print_commandline(const int script_argc, char **script_argv);
-
-/* helper function for printing geometry option */
-char *print_geometry(const uint16_t *geometry);
 
 /* Translate a signal option string "--signal=<int>[@<time>]" into
  * it's warn_signal and warn_time components.
  * RET 0 on success, -1 on failure */
 int get_signal_opts(char *optarg, uint16_t *warn_signal, uint16_t *warn_time);
-
-/* Convert a signal name to it's numeric equivalent.
- * Return 0 on failure */
-int sig_name2num(char *signal_name);
 
 #endif /* !_PROC_ARGS_H */

@@ -148,9 +148,9 @@ class SlurmServer : public BatchServer
      * \param path the path to check
      * \param sumitIsPossible The flag that authorise the job submission if the path is correct
      * \param pathInfo The information on path to print
-     * \return prints an error message on standard error
+     * \return an error message
      */
-    void checkSLURMOutPutPath(char*& path, bool& sumitIsPossible, const std::string& pathInfo="job output path");
+    std::string checkSLURMOutPutPath(char*& path, const std::string& pathInfo="job output path");
  
     /**
      * \brief ListQueues returned
