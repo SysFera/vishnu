@@ -86,21 +86,23 @@ SlurmServer::submit(const char* scriptPath,
   std::string jobErrorPath;
   submit_response_msg_t *resp;
   int retries = 0;
-  int VISHNU_MAX_RETRIES = 10;
+  int VISHNU_MAX_RETRIES = 5;
   int res = 0;
   //To submit the job
   while((res=slurm_submit_batch_job(&desc, &(resp))) < 0) {
 
-    if (errno == ESLURM_ERROR_ON_DESC_TO_RECORD_COPY)
+    if (errno == ESLURM_ERROR_ON_DESC_TO_RECORD_COPY) {
       errorMsg = "Slurm job queue full, sleeping and retrying.";
-    else if (errno == ESLURM_NODES_BUSY) {
+    } else if (errno == ESLURM_NODES_BUSY) {
       errorMsg = "Job step creation temporarily disabled, retrying";
     } else if (errno == EAGAIN) {
       errorMsg = "Slurm temporarily unable to accept job, sleeping and retrying.";
-    } else
+    } else {
       errorMsg ="";
+    }
     if ((errorMsg == "") || (retries >= VISHNU_MAX_RETRIES)) {
-      errorMsg = "Batch job submission failed:"+std::string(slurm_strerror(res));
+      errorMsg = "Batch job submission failed: "+std::string(slurm_strerror(errno));
+      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: "+errorMsg);
     }
 
     if (retries || errno == ESLURM_NODES_BUSY) {
