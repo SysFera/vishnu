@@ -487,8 +487,6 @@ operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
    size_t maxCommandIdSize = std::string("CommandId").size();
    size_t maxCommandDescSize = std::string("Vishnu Command").size();
    size_t maxStatusSize = std::string("Status").size()+1;
-   boost::posix_time::ptime pt;
-
 
    for(unsigned int i = 0; i < lsCommand.getCommands().size(); i++) {
 

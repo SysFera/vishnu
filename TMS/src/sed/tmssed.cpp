@@ -70,7 +70,7 @@ int main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
     if (batchTypeStr == "TORQUE") {
 #ifndef HAVE_TORQUE
-      std::cerr << "Error: can't initialize TORQUE batch type because this server has not compiled with torque library" << std::endl;
+      std::cerr << "Error: can't initialize TORQUE batch type because this server has not compiled with TORQUE library" << std::endl;
       exit(1);
 #endif
       batchType = TORQUE;
@@ -80,8 +80,14 @@ int main(int argc, char* argv[], char* envp[]) {
       exit(1);
 #endif
       batchType = LOADLEVELER;
+    } else if (batchTypeStr == "SLURM") { 
+#ifndef HAVE_SLURM
+      std::cerr << "Error: can't initialize SLURM batch type because this server has not compiled with SLURM library" << std::endl;
+      exit(1);
+#endif
+      batchType = SLURM;
     } else {
-      std::cerr << "Error: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVELER')" << std::endl;
+      std::cerr << "Error: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVELER' or 'SLURM')" << std::endl;
       exit(1);
     }
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, machineId);

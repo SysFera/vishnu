@@ -12,7 +12,9 @@
 #ifdef HAVE_LOADLEVELER
 #include "LLServer.hpp"
 #endif
-
+#ifdef HAVE_SLURM
+#include "SlurmServer.hpp"
+#endif
 
 /**
  * \brief Constructor
@@ -44,6 +46,13 @@ BatchFactory::getBatchServerInstance(BatchType batchType) {
       mbatchServer = NULL;
 #endif
       break;
+    case SLURM:
+#ifdef HAVE_SLURM
+      mbatchServer = new SlurmServer();
+#else
+      mbatchServer = NULL;
+#endif
+      break;
     default:
       mbatchServer = NULL;
       break;
@@ -53,15 +62,13 @@ BatchFactory::getBatchServerInstance(BatchType batchType) {
 }
 
 /**
- * \brief Function to free a batchServer instance.
+ * \brief Function to delete a batchServer.
  */
-void BatchFactory::freeBatchServerInstance() {
+void BatchFactory::deleteBatchServerInstance() {
    delete mbatchServer;
 }
-
 /**
  * \brief Destructor
  */
 BatchFactory::~BatchFactory() {
-
 }

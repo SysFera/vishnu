@@ -29,7 +29,7 @@ struct RestartFunc {
   {};
 
   int operator()(std::string sessionKey) {
-    return restart(sessionKey, mmachineId, mrestartOp);;
+    return restart(sessionKey, mmachineId, mrestartOp);
   }
 };
 

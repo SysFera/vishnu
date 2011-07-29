@@ -24,6 +24,8 @@ include_directories(
   ${UTILS_TORQUE_DIR}
   ${SERVER_SOURCE_DIR}
   ${SED_SOURCE_DIR}
+  ${SLURM_PARSER_DIR}
+  ${SLURM_INCLUDE_DIR}
 )
 
 add_executable(tmssed
@@ -37,6 +39,7 @@ target_link_libraries(tmssed
   ${DIET_SERVER_LIBRARIES}
   ${Boost_LIBRARIES}
   ${TORQUE_LIB}
+  ${SLURM_LIB}
   emf4cpp-TMS_Data
   register-vishnu
   exception-vishnu
