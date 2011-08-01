@@ -61,6 +61,8 @@ public:
 
     virtual void insert_at(size_t _pos, T* _obj) = 0;
 
+    virtual T* at(size_t _index) const = 0;
+
     virtual T* get(size_t _index) const = 0;
 
     virtual void push_back(T* _obj) = 0;
@@ -107,6 +109,13 @@ public:
     virtual T* get(size_t _index) const
     {
         return _cast< Q, T >::do_cast(m_delegate[_index]);
+    }
+
+    virtual T* at(size_t _index) const
+    {
+	if (_index<this->size())
+	    return _cast< Q, T >::do_cast(m_delegate[_index]);
+	return NULL;
     }
 
     virtual void insert_at(size_t _pos, T* _obj)
