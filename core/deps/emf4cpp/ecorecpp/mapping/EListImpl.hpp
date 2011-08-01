@@ -41,13 +41,6 @@ public:
         return m_content[_index];
     }
 
-    virtual T* at(size_t _index) const
-    {
-	if (_index<this->size()) 
-	    return m_content[_index];
-	return NULL;
-    }
-
     virtual void insert_at(size_t _pos, T* _obj)
     {
         m_content[_pos] = _obj;
