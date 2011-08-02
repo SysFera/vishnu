@@ -87,9 +87,8 @@ SlurmServer::submit(const char* scriptPath,
   submit_response_msg_t *resp;
   int retries = 0;
   int VISHNU_MAX_RETRIES = 5;
-  int res = 0;
   //To submit the job
-  while((res=slurm_submit_batch_job(&desc, &(resp))) < 0) {
+  while(slurm_submit_batch_job(&desc, &(resp)) < 0) {
 
     if (errno == ESLURM_ERROR_ON_DESC_TO_RECORD_COPY) {
       errorMsg = "Slurm job queue full, sleeping and retrying.";
