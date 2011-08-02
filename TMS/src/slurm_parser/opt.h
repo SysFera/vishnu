@@ -10,9 +10,11 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "macros.h" /* true and false */
-#include "env.h"
+//#include "macros.h" /* true and false */
+//#include "env.h"
 #include "slurmdb_defs.h"
+
+#include <slurm.h>
 
 #ifndef SYSTEM_DIMENSIONS
 #  define SYSTEM_DIMENSIONS 1
@@ -57,11 +59,11 @@ typedef struct sbatch_options {
 	int  time_min;		/* --min-time 	(int minutes)	*/
 	char *time_min_str;	/* --min-time (string)		*/
 	char *partition;	/* --partition=n,   -p n   	*/
-	enum task_dist_states
-	        distribution;	/* --distribution=, -m dist	*/
-        uint32_t plane_size;    /* lllp distribution -> plane_size for
-				 * when -m plane=<# of lllp per
-				 * plane> */
+  enum task_dist_states
+    distribution;	/* --distribution=, -m dist	*/
+  uint32_t plane_size;    /* lllp distribution -> plane_size for
+                           * when -m plane=<# of lllp per
+                           * plane> */
 	char *job_name;		/* --job-name=,     -J name	*/
 	unsigned int jobid;     /* --jobid=jobid                */
 	bool jobid_set;		/* true of jobid explicitly set */
