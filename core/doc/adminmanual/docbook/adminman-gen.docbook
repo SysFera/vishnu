@@ -1509,6 +1509,11 @@ and password are sent to the user by email.</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To add the user Jean DUPONT as a simple user and with the mail dupont@gmail.com:</para>
+        <para>vishnu_add_user Jean DUPONT 0 dupont@gmail.com</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -1624,6 +1629,11 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To update the mail adress of a user user_1 to jdupont@gmail.com:</para>
+        <para>vishnu_update_user -m jdupont@gmail.com user_1</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -1693,6 +1703,11 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>Tu delete the user user_1:</para>
+        <para>vishnu_delete_user user_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1764,6 +1779,11 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To reset the password of the user user_1:</para>
+        <para>vishnu_reset_password user_1</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -1820,6 +1840,11 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To save the current configuration:</para>
+        <para>vishnu_save_configuration</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1884,6 +1909,11 @@ After restoring, the vishnu database is re-initialized.</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To restore the configuration in /tmp/toto.cfg:</para>
+        <para>vishnu_restore_configuration /tmp/toto.cfg</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1960,6 +1990,11 @@ have to add it to the authorized keys of their own account on the machine.</para
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To add the machine perceval in paris with the description in french &quot;ceci est une description&quot;  with the public key in /tmp/key.pub:</para>
+        <para>vishnu_add_machine perceval paris fr /tmp/key.pub &quot;ceci est une description&quot;</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -2074,6 +2109,11 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To change the name of the machine whose id is machine_1 to provencal:</para>
+        <para>vishnu_update_machine machine_1 -n provencal</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -2139,6 +2179,11 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To delete the machine machine_1:</para>
+        <para>vishnu_delete_machine machine_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -2211,6 +2256,11 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To list all the users:</para>
+        <para>vishnu_list_users</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -2290,6 +2340,11 @@ that option using the vishnu_configure_option command.</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To configure the option VISHNU_TIMEOUT with the value 42:</para>
+        <para>vishnu_configure_default_option VISHNU_TIMEOUT 42</para>
       </refsect1>
     </refentry>
   </reference>
@@ -3198,15 +3253,15 @@ that option using the vishnu_configure_option command.</para>
     <title>UMS Python API Reference</title>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.addUser</refentrytitle>
+        <refentrytitle>VISHNU.addUser</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.addUser</refname>
+        <refname>VISHNU.addUser</refname>
         <refpurpose>adds a new VISHNU user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.addUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>User <parameter>newUser</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.addUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>User <parameter>newUser</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3241,6 +3296,7 @@ and password are sent to the user by email.</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -3300,15 +3356,15 @@ and password are sent to the user by email.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.updateUser</refentrytitle>
+        <refentrytitle>VISHNU.updateUser</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.updateUser</refname>
+        <refname>VISHNU.updateUser</refname>
         <refpurpose>updates the user information except the userId and the password</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.updateUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>User <parameter>user</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.updateUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>User <parameter>user</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3340,6 +3396,7 @@ and password are sent to the user by email.</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -3399,15 +3456,15 @@ and password are sent to the user by email.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.deleteUser</refentrytitle>
+        <refentrytitle>VISHNU.deleteUser</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.deleteUser</refname>
+        <refname>VISHNU.deleteUser</refname>
         <refpurpose>removes a user from VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.deleteUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.deleteUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3439,6 +3496,7 @@ and password are sent to the user by email.</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -3490,15 +3548,15 @@ and password are sent to the user by email.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.resetPassword</refentrytitle>
+        <refentrytitle>VISHNU.resetPassword</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.resetPassword</refname>
+        <refname>VISHNU.resetPassword</refname>
         <refpurpose>resets the password of a user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.resetPassword</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>tmpPassword</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, tmpPassword=VISHNU.resetPassword</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3536,6 +3594,12 @@ and password are sent to the user by email.</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry>
+            <term><emphasis>tmpPassword(string)</emphasis></term>
+            <listitem>
+              <para>The temporary password generated by VISHNU</para>
+            </listitem>
+          </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -3587,15 +3651,15 @@ and password are sent to the user by email.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.saveConfiguration</refentrytitle>
+        <refentrytitle>VISHNU.saveConfiguration</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.saveConfiguration</refname>
+        <refname>VISHNU.saveConfiguration</refname>
         <refpurpose>saves the configuration of VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.saveConfiguration</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Configuration <parameter>configuration</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.saveConfiguration</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Configuration <parameter>configuration</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3627,6 +3691,7 @@ and password are sent to the user by email.</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -3666,15 +3731,15 @@ and password are sent to the user by email.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.restoreConfiguration</refentrytitle>
+        <refentrytitle>VISHNU.restoreConfiguration</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.restoreConfiguration</refname>
+        <refname>VISHNU.restoreConfiguration</refname>
         <refpurpose>restores the configuration of VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.restoreConfiguration</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>filePath</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.restoreConfiguration</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>filePath</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3712,6 +3777,7 @@ After restoring, the vishnu database is re-initialized.</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -3751,15 +3817,15 @@ After restoring, the vishnu database is re-initialized.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.addMachine</refentrytitle>
+        <refentrytitle>VISHNU.addMachine</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.addMachine</refname>
+        <refname>VISHNU.addMachine</refname>
         <refpurpose>adds a new machine in VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.addMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Machine <parameter>newMachine</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.addMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Machine <parameter>newMachine</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3795,6 +3861,7 @@ have to add it to the authorized keys of their own account on the machine.</para
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -3846,15 +3913,15 @@ have to add it to the authorized keys of their own account on the machine.</para
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.updateMachine</refentrytitle>
+        <refentrytitle>VISHNU.updateMachine</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.updateMachine</refname>
+        <refname>VISHNU.updateMachine</refname>
         <refpurpose>updates machine description</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.updateMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Machine <parameter>machine</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.updateMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Machine <parameter>machine</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3886,6 +3953,7 @@ have to add it to the authorized keys of their own account on the machine.</para
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -3937,15 +4005,15 @@ have to add it to the authorized keys of their own account on the machine.</para
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.deleteMachine</refentrytitle>
+        <refentrytitle>VISHNU.deleteMachine</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.deleteMachine</refname>
+        <refname>VISHNU.deleteMachine</refname>
         <refpurpose>removes a machine from VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.deleteMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.deleteMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3977,6 +4045,7 @@ have to add it to the authorized keys of their own account on the machine.</para
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -4024,15 +4093,15 @@ have to add it to the authorized keys of their own account on the machine.</para
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.listUsers</refentrytitle>
+        <refentrytitle>VISHNU.listUsers</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.listUsers</refname>
+        <refname>VISHNU.listUsers</refname>
         <refpurpose>lists VISHNU users</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listUsers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers <parameter>listuser</parameter></paramdef><paramdef>string <parameter>userIdOption = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listUsers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers <parameter>listuser</parameter></paramdef><paramdef>string <parameter>userIdOption = string()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4070,6 +4139,7 @@ have to add it to the authorized keys of their own account on the machine.</para
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -4117,15 +4187,15 @@ have to add it to the authorized keys of their own account on the machine.</para
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.configureDefaultOption</refentrytitle>
+        <refentrytitle>VISHNU.configureDefaultOption</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.configureDefaultOption</refname>
+        <refname>VISHNU.configureDefaultOption</refname>
         <refpurpose>configures a default option value</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.configureDefaultOption</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>OptionValue <parameter>optionValue</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.configureDefaultOption</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>OptionValue <parameter>optionValue</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4162,6 +4232,7 @@ that option using the vishnu_configure_option command.</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -4273,6 +4344,11 @@ that option using the vishnu_configure_option command.</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To get the list of the vishnu processes that are running and monitored on machine_1:</para>
+        <para>vishnu_get_processes -p machine_1</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -4341,6 +4417,11 @@ that option using the vishnu_configure_option command.</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To set the diskspace size to 300 on machine_1:</para>
+        <para>vishnu_set_system_info -d 300 machine_1</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -4395,6 +4476,11 @@ that option using the vishnu_configure_option command.</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To set a threshold of type use of the CPU(value=1) of value 99% on machine_1 and handled by the user admin_1:</para>
+        <para>vishnu_set_system_threshold 99 machine_1 1 admin_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4465,6 +4551,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To get all the thresholds:</para>
+        <para>vishnu_get_system_threshold</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -4528,6 +4619,11 @@ $TYPE: The 'U' symb to remind it is a user id</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To define the format to user_$CPT:</para>
+        <para>vishnu_define_user_identifier user_\$CPT</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4593,6 +4689,11 @@ $TYPE: The 'M' symb to remind it is a machine id</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To define the format to machine_$CPT:</para>
+        <para>vishnu_define_machine_identifier machine_\$CPT</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -4653,6 +4754,11 @@ $TYPE: The 'J' symb to remind it is a job id</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To define the format to job_$CPT:</para>
+        <para>vishnu_define_job_identifier job_\$CPT</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4715,6 +4821,11 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To define the format to transfer_$CPT:</para>
+        <para>vishnu_define_transfer_identifier transfer_\$CPT</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -4776,6 +4887,11 @@ SOFT   = 2</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To make a hard load shedding on machine_1:</para>
+        <para>vishnu_load_shed machine_1 1</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -4829,6 +4945,11 @@ SOFT   = 2</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To set the frequency to 100:</para>
+        <para>vishnu_set_update_frequency 100</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4886,6 +5007,11 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To stop the UMS process on machine_1:</para>
+        <para>vishnu_stop UMS machine_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4955,6 +5081,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (UMS), 2 (
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To restart using the configuration file ums.cfg an UMS sed on machine_1:</para>
+        <para>vishnu_restart -v /tmp/ums.cfg -t 1 machine_1</para>
       </refsect1>
     </refentry>
   </reference>
@@ -5606,15 +5737,15 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
     <title>IMS Python API Reference</title>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.getProcesses</refentrytitle>
+        <refentrytitle>VISHNU.getProcesses</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.getProcesses</refname>
+        <refname>VISHNU.getProcesses</refname>
         <refpurpose>displays the list of the VISHNU processes running on machines</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.getProcesses</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListProcesses <parameter>process</parameter></paramdef><paramdef>ProcessOp <parameter>options = ProcessOp()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getProcesses</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListProcesses <parameter>process</parameter></paramdef><paramdef>ProcessOp <parameter>options = ProcessOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5652,6 +5783,7 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -5667,15 +5799,15 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.setSystemInfo</refentrytitle>
+        <refentrytitle>VISHNU.setSystemInfo</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.setSystemInfo</refname>
+        <refname>VISHNU.setSystemInfo</refname>
         <refpurpose>updates the system information of a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.setSystemInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>SystemInfo <parameter>systemInfo</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.setSystemInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>SystemInfo <parameter>systemInfo</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5707,6 +5839,7 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -5726,15 +5859,15 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.setSystemThreshold</refentrytitle>
+        <refentrytitle>VISHNU.setSystemThreshold</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.setSystemThreshold</refname>
+        <refname>VISHNU.setSystemThreshold</refname>
         <refpurpose>sets a threshold on a machine of a system</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.setSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Threshold <parameter>threshold</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.setSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Threshold <parameter>threshold</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5766,6 +5899,7 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -5785,15 +5919,15 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.getSystemThreshold</refentrytitle>
+        <refentrytitle>VISHNU.getSystemThreshold</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.getSystemThreshold</refname>
+        <refname>VISHNU.getSystemThreshold</refname>
         <refpurpose>gets a system threshold on a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.getSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListThreshold <parameter>value</parameter></paramdef><paramdef>ThresholdOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListThreshold <parameter>value</parameter></paramdef><paramdef>ThresholdOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5832,6 +5966,7 @@ Each time a threshold is reached, a mail is sent. So checking the values of the 
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -5851,15 +5986,15 @@ Each time a threshold is reached, a mail is sent. So checking the values of the 
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.defineUserIdentifier</refentrytitle>
+        <refentrytitle>VISHNU.defineUserIdentifier</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.defineUserIdentifier</refname>
+        <refname>VISHNU.defineUserIdentifier</refname>
         <refpurpose>defines the shape of the identifiers automatically generated for the users</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.defineUserIdentifier</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.defineUserIdentifier</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5901,6 +6036,7 @@ $TYPE: The 'U' symb to remind it is a user id</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -5920,15 +6056,15 @@ $TYPE: The 'U' symb to remind it is a user id</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.defineMachineIdentifier</refentrytitle>
+        <refentrytitle>VISHNU.defineMachineIdentifier</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.defineMachineIdentifier</refname>
+        <refname>VISHNU.defineMachineIdentifier</refname>
         <refpurpose>defines the shape of the identifiers automatically generated for the machines</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.defineMachineIdentifier</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.defineMachineIdentifier</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5970,6 +6106,7 @@ $TYPE: The 'M' symb to remind it is a machine id</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -5989,15 +6126,15 @@ $TYPE: The 'M' symb to remind it is a machine id</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.defineJobIdentifier</refentrytitle>
+        <refentrytitle>VISHNU.defineJobIdentifier</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.defineJobIdentifier</refname>
+        <refname>VISHNU.defineJobIdentifier</refname>
         <refpurpose>defines the shape of the identifiers automatically generated for the jobs</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.defineJobIdentifier</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.defineJobIdentifier</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -6036,6 +6173,7 @@ $TYPE: The 'J' symb to remind it is a job id</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -6055,15 +6193,15 @@ $TYPE: The 'J' symb to remind it is a job id</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.defineTransferIdentifier</refentrytitle>
+        <refentrytitle>VISHNU.defineTransferIdentifier</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.defineTransferIdentifier</refname>
+        <refname>VISHNU.defineTransferIdentifier</refname>
         <refpurpose>defines the shape of the identifiers automatically generated for the file transfers</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.defineTransferIdentifier</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.defineTransferIdentifier</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -6102,6 +6240,7 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -6121,15 +6260,15 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.loadShed</refentrytitle>
+        <refentrytitle>VISHNU.loadShed</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.loadShed</refname>
+        <refname>VISHNU.loadShed</refname>
         <refpurpose>sheds load on a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.loadShed</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>LoadShedType <parameter>loadShedType</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.loadShed</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>LoadShedType <parameter>loadShedType</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -6170,6 +6309,7 @@ SOFT   = 2</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -6185,7 +6325,7 @@ SOFT   = 2</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;If a component is unavailable&quot; [301])</term>
+            <term>IMSVishnuException(&quot;If a component is unavailable&quot; [301])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -6193,15 +6333,15 @@ SOFT   = 2</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.setUpdateFrequency</refentrytitle>
+        <refentrytitle>VISHNU.setUpdateFrequency</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.setUpdateFrequency</refname>
+        <refname>VISHNU.setUpdateFrequency</refname>
         <refpurpose>sets the update frequency of the IMS tables</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.setUpdateFrequency</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>int <parameter>freq</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.setUpdateFrequency</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>int <parameter>freq</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -6233,6 +6373,7 @@ SOFT   = 2</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -6252,15 +6393,15 @@ SOFT   = 2</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.stop</refentrytitle>
+        <refentrytitle>VISHNU.stop</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.stop</refname>
+        <refname>VISHNU.stop</refname>
         <refpurpose>To stop (and do not try to relaunch) a SeD</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.stop</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Process <parameter>process</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.stop</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Process <parameter>process</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -6295,6 +6436,7 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -6314,15 +6456,15 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU_UMS.restart</refentrytitle>
+        <refentrytitle>VISHNU.restart</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU_UMS.restart</refname>
+        <refname>VISHNU.restart</refname>
         <refpurpose>To restart a SeD or a MA</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.restart</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>RestartOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.restart</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>RestartOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -6360,6 +6502,7 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
