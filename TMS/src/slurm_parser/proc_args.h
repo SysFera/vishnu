@@ -13,22 +13,6 @@
 #include "macros.h" /* true and false */
 #include "env.h"
 
-
-#define format_task_dist_states(t) (t == SLURM_DIST_BLOCK) ? "block" :   \
-		                 (t == SLURM_DIST_CYCLIC) ? "cyclic" : \
-		                 (t == SLURM_DIST_PLANE) ? "plane" : \
-		                 (t == SLURM_DIST_CYCLIC_CYCLIC) ? "cyclic:cyclic" : \
-		                 (t == SLURM_DIST_CYCLIC_BLOCK) ? "cyclic:block" : \
-		                 (t == SLURM_DIST_BLOCK_CYCLIC) ? "block:cyclic" : \
-		                 (t == SLURM_DIST_BLOCK_BLOCK) ? "block:block" : \
-			         (t == SLURM_DIST_ARBITRARY) ? "arbitrary" : \
-			         "unknown"
-
-
-
-/* print the available gres options */
-void print_gres_help(void);
-
 /* verify the requested distribution type */
 task_dist_states_t verify_dist_type(const char *arg, uint32_t *plane_size);
 

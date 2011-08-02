@@ -42,7 +42,9 @@ extern time_t parse_time(char *time_str, int past);
  */
 extern int time_str2mins(char *string);
 
+#if 0
 /* used to get a 2 char abbriviated month name from int 0-11 */
 extern char *mon_abbr(int mon);
+#endif
 
 #endif
