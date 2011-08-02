@@ -16,10 +16,10 @@
 #include <sys/param.h>               /* MAXPATHLEN */
 #include <fcntl.h>
 
-#include <slurm/slurm.h>
-#include "env.h"
+#include <slurm.h>
+//#include "env.h"
 #include "plugstack.h"
-#include "read_config.h"
+//#include "read_config.h"
 #include "slurm_rlimits_info.h"
 #include "xstring.h"
 #include "xmalloc.h"

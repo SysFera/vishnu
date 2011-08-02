@@ -1,42 +1,3 @@
-/*****************************************************************************\
- *  src/slurmd/slurmstepd/slurmstepd_job.h  slurmd_job_t definition
- *  $Id: slurmstepd_job.h 21024 2010-08-26 21:54:00Z jette $
- *****************************************************************************
- *  Copyright (C) 2002-2007 The Regents of the University of California.
- *  Copyright (C) 2008-2010 Lawrence Livermore National Security.
- *  Produced at Lawrence Livermore National Laboratory (cf, DISCLAIMER).
- *  Written by Mark Grondona <mgrondona@llnl.gov>.
- *  CODE-OCEC-09-009. All rights reserved.
- *
- *  This file is part of SLURM, a resource management program.
- *  For details, see <https://computing.llnl.gov/linux/slurm/>.
- *  Please also read the included file: DISCLAIMER.
- *
- *  SLURM is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free
- *  Software Foundation; either version 2 of the License, or (at your option)
- *  any later version.
- *
- *  In addition, as a special exception, the copyright holders give permission
- *  to link the code of portions of this program with the OpenSSL library under
- *  certain conditions as described in each individual source file, and
- *  distribute linked combinations including the two. You must obey the GNU
- *  General Public License in all respects for all of the code used other than
- *  OpenSSL. If you modify file(s) with this exception, you may extend this
- *  exception to your version of the file(s), but you are not obligated to do
- *  so. If you do not wish to do so, delete this exception statement from your
- *  version.  If you delete this exception statement from all source files in
- *  the program, then also delete it here.
- *
- *  SLURM is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- *  FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
- *  details.
- *
- *  You should have received a copy of the GNU General Public License along
- *  with SLURM; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA.
-\*****************************************************************************/
 
 #ifndef _SLURMSTEPD_JOB_H
 #define _SLURMSTEPD_JOB_H
@@ -47,16 +8,16 @@
 
 #include <pwd.h>
 
+#include <slurm.h>
+
 #include "macros.h"
 #include "slurm_protocol_api.h"
-#include "slurm_protocol_defs.h"
-#include "list.h"
 #include "eio.h"
-#include "switch.h"
 #include "env.h"
 #include "io_hdr.h"
 #include "job_options.h"
 #include "stepd_api.h"
+
 
 #ifndef MAXHOSTNAMELEN
 #define MAXHOSTNAMELEN	64
@@ -207,37 +168,5 @@ typedef struct slurmd_job {
 	List           job_gres_list;	/* Needed by GRES plugin */
 	List           step_gres_list;	/* Needed by GRES plugin */
 } slurmd_job_t;
-
-
-slurmd_job_t * job_create(launch_tasks_request_msg_t *msg);
-slurmd_job_t * job_batch_job_create(batch_job_launch_msg_t *msg);
-
-void job_kill(slurmd_job_t *job, int signal);
-
-void job_destroy(slurmd_job_t *job);
-
-struct srun_info * srun_info_create(slurm_cred_t *cred, slurm_addr_t *respaddr,
-				    slurm_addr_t *ioaddr);
-
-void  srun_info_destroy(struct srun_info *srun);
-
-slurmd_task_info_t * task_info_create(int taskid, int gtaskid,
-				      char *ifname, char *ofname, char *efname);
-
-/*
- *  Return a task info structure corresponding to pid.
- *   We inline it here so that it can be included from plugstack.c
- *   without undefined symbol warnings.
- */
-static inline slurmd_task_info_t *
-job_task_info_by_pid (slurmd_job_t *job, pid_t pid)
-{
-	int i;
-	for (i = 0; i < job->node_tasks; i++) {
-		if (job->task[i]->pid == pid)
-			return (job->task[i]);
-	}
-	return (NULL);
-}
 
 #endif /* !_SLURMSTEPD_JOB_H */
