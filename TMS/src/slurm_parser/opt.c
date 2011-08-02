@@ -36,13 +36,15 @@
 #include <sys/utsname.h>
 
 #include "list.h"
+#include "hostlist.h"
 #include "parse_time.h"
 #include "plugstack.h"
 #include "proc_args.h"
-#include "read_config.h" /* contains getnodename() */
 #include "slurm_protocol_api.h"
 #include "slurm_resource_info.h"
 #include "slurm_rlimits_info.h"
+
+//#include "vishnu_slurm_util.h"
 #include "uid.h"
 #include "xmalloc.h"
 #include "xstring.h"
@@ -692,7 +694,7 @@ static struct option long_options[] = {
 };
 
 static char *opt_string =
-	"+bA:B:c:C:d:D:e:F:g:Hi:IJ:kL:m:M:n:N:o:Op:P:QRst:U:w:x:";
+	"+bA:B:c:C:d:D:e:F:g:hHi:IJ:kL:m:M:n:N:o:Op:P:QRst:uU:vVw:x:";
 
 
 /*
@@ -730,31 +732,32 @@ char *process_options_first_pass(int argc, char **argv)
 
 	while((opt_char = getopt_long(argc, argv, opt_string,
 				      optz, &option_index)) != -1) {
-		switch (opt_char) {
-		case '?':
-			fprintf(stderr, "Try \"sbatch --help\" for more "
-				"information\n");
-			exit(error_exit);
-			break;
-		case 'Q':
-			opt.quiet++;
-			break;
-		case LONG_OPT_WRAP:
-			opt.wrap = xstrdup(optarg);
-			break;
-		default:
-			/* will be parsed in second pass function */
-			break;
-		}
-	}
+    switch (opt_char) {
+      case '?':
+        fprintf(stderr, "Try \"sbatch --help\" for more "
+            "information\n");
+        exit(error_exit);
+        break;
+      case 'h':
+        break;	
+      case 'Q':
+        break;
+      case 'u':
+        break;
+      case 'v':
+        break;
+      case 'V':
+        break;
+      case LONG_OPT_WRAP:
+        break;
+      default:
+        /* will be parsed in second pass function */
+        break;
+    }
+  }
 	xfree(str);
 	spank_option_table_destroy(optz);
 
-	if (argc > optind && opt.wrap != NULL) {
-		error("Script arguments are not permitted with the"
-		      " --wrap option.");
-		exit(error_exit);
-	}
 	if (argc > optind) {
 		int i;
 		char **leftover;
@@ -1120,7 +1123,9 @@ static void _set_options(int argc, char **argv)
 			if (verify_geometry(optarg, opt.geometry))
 				exit(error_exit);
 			break;
-		case 'H':
+    case 'h':
+      break;
+    case 'H':
 			opt.hold = true;
 			break;
 		case 'i':
@@ -1211,6 +1216,12 @@ static void _set_options(int argc, char **argv)
 			xfree(opt.time_limit_str);
 			opt.time_limit_str = xstrdup(optarg);
 			break;
+    case 'u':
+      break;
+    case 'v':
+      break;
+    case 'V':
+      break;
 		case 'w':
 			xfree(opt.nodelist);
 			opt.nodelist = xstrdup(optarg);
@@ -1230,18 +1241,18 @@ static void _set_options(int argc, char **argv)
 			if (!_valid_node_list(&opt.exc_nodes))
 				exit(error_exit);
 			break;
-		case LONG_OPT_CONT:
-			opt.contiguous = true;
-			break;
-                case LONG_OPT_EXCLUSIVE:
-                        opt.shared = 0;
-                        break;
-                case LONG_OPT_CPU_BIND:
-			if (slurm_verify_cpu_bind(optarg, &opt.cpu_bind,
-						  &opt.cpu_bind_type))
-				exit(error_exit);
-			break;
-		case LONG_OPT_MEM_BIND:
+    case LONG_OPT_CONT:
+      opt.contiguous = true;
+      break;
+    case LONG_OPT_EXCLUSIVE:
+      opt.shared = 0;
+      break;
+    case LONG_OPT_CPU_BIND:
+      if (slurm_verify_cpu_bind(optarg, &opt.cpu_bind,
+            &opt.cpu_bind_type))
+        exit(error_exit);
+      break;
+    case LONG_OPT_MEM_BIND:
 			if (slurm_verify_mem_bind(optarg, &opt.mem_bind,
 						  &opt.mem_bind_type))
 				exit(error_exit);
@@ -1525,9 +1536,8 @@ static void _set_options(int argc, char **argv)
 		case LONG_OPT_GRES:
 			if (!strcasecmp(optarg, "help") ||
 			    !strcasecmp(optarg, "list")) {
-				print_gres_help();
-				exit(0);
-			}
+			 break;
+      }
 			xfree(opt.gres);
 			opt.gres = xstrdup(optarg);
 			break;
@@ -2397,50 +2407,6 @@ extern int   spank_unset_job_env(const char *name)
 	}
 
 	return 0;	/* not found */
-}
-
-/* helper function for printing options
- *
- * warning: returns pointer to memory allocated on the stack.
- */
-static char *print_constraints()
-{
-	char *buf = xstrdup("");
-
-	if (opt.mincpus > 0)
-		xstrfmtcat(buf, "mincpus=%d ", opt.mincpus);
-
-	if (opt.minsockets > 0)
-		xstrfmtcat(buf, "minsockets=%d ", opt.minsockets);
-
-	if (opt.mincores > 0)
-		xstrfmtcat(buf, "mincores=%d ", opt.mincores);
-
-	if (opt.minthreads > 0)
-		xstrfmtcat(buf, "minthreads=%d ", opt.minthreads);
-
-	if (opt.realmem > 0)
-		xstrfmtcat(buf, "mem=%dM ", opt.realmem);
-
-	if (opt.mem_per_cpu > 0)
-		xstrfmtcat(buf, "mem-per-cpu=%dM ", opt.mem_per_cpu);
-
-	if (opt.tmpdisk > 0)
-		xstrfmtcat(buf, "tmp=%ld ", opt.tmpdisk);
-
-	if (opt.contiguous == true)
-		xstrcat(buf, "contiguous ");
-
-	if (opt.nodelist != NULL)
-		xstrfmtcat(buf, "nodelist=%s ", opt.nodelist);
-
-	if (opt.exc_nodes != NULL)
-		xstrfmtcat(buf, "exclude=%s ", opt.exc_nodes);
-
-	if (opt.constraints != NULL)
-		xstrfmtcat(buf, "constraints=`%s' ", opt.constraints);
-
-	return buf;
 }
 
 /*

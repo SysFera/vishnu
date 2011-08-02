@@ -15,21 +15,24 @@
 #  include <inttypes.h>
 #endif				/*  HAVE_CONFIG_H */
 
-#include <slurm/slurm.h>
-#include <slurm/slurmdb.h>
+#include <slurm.h>
+#include <slurmdb.h>
 #include <sys/wait.h>
 
-#include "bitstring.h"
-#include "job_options.h"
-#include "list.h"
-#include "macros.h"
-#include "slurm_cred.h"
+//#include "bitstring.h"
+//#include "job_options.h"
+//#include "list.h"
+//#include "macros.h"
+//#include "slurm_cred.h"
 #include "slurm_protocol_common.h"
-#include "slurm_step_layout.h"
-#include "switch.h"
+//#include "slurm_step_layout.h"
+//#include "switch.h"
 #include "xassert.h"
-#include "slurmdb_defs.h"
+//#include "slurmdb_defs.h"
 #include "working_cluster.h"
+
+//FIXME
+#if 0
 
 #define MAX_SLURM_NAME 64
 #define FORWARD_INIT 0xfffe
@@ -118,6 +121,7 @@ enum suspend_opts {
 	SUSPEND_JOB,		/* Suspend a job now */
 	RESUME_JOB		/* Resume a job now */
 };
+#endif
 
 /*
  * SLURM Message types
@@ -276,9 +280,12 @@ typedef enum {
 
 } slurm_msg_type_t;
 
+//FIXME
+#if 0
 typedef enum {
 	CREDENTIAL1
 } slurm_credential_type_t;
+#endif
 
 /*****************************************************************************\
  * core api configuration struct
@@ -325,10 +332,13 @@ typedef struct forward_struct {
 	List ret_list;
 } forward_struct_t;
 
+//FIXME
+#if 0
 typedef struct slurm_protocol_config {
 	slurm_addr_t primary_controller;
 	slurm_addr_t secondary_controller;
 } slurm_protocol_config_t;
+#endif 
 
 typedef struct slurm_msg {
 	slurm_addr_t address;
@@ -350,6 +360,8 @@ typedef struct slurm_msg {
 	List ret_list;
 } slurm_msg_t;
 
+//FIXME
+#if 0
 typedef struct ret_data_info {
 	uint16_t type; /* really a slurm_msg_type_t but needs to be
 			* this way for packing purposes.  message type */
@@ -636,10 +648,15 @@ typedef struct task_user_managed_io_msg {
 
 typedef struct partition_info partition_desc_msg_t;
 
+#endif
+
+
 typedef struct return_code_msg {
 	uint32_t return_code;
 } return_code_msg_t;
 
+//FIXME
+#if 0
 /* Note: We include the node list here for reliable cleanup on XCPU systems.
  *
  * Note: We include select_jobinfo here in addition to the job launch
@@ -698,6 +715,8 @@ typedef struct reattach_tasks_response_msg {
 	char     **executable_names; /* array of length "ntasks"    */
 } reattach_tasks_response_msg_t;
 
+#endif
+
 typedef struct batch_job_launch_msg {
 	uint32_t job_id;
 	uint32_t step_id;
@@ -734,6 +753,8 @@ typedef struct batch_job_launch_msg {
 	uint32_t spank_job_env_size;	/* size of spank_job_env */
 } batch_job_launch_msg_t;
 
+//FIXME
+#if 0
 typedef struct job_id_request_msg {
 	uint32_t job_pid;	/* local process_id of a job */
 } job_id_request_msg_t;
@@ -824,6 +845,8 @@ typedef struct pty_winsz {
 	uint16_t rows;
 } pty_winsz_t;
 
+#endif
+
 typedef struct will_run_response_msg {
 	uint32_t job_id;	/* ID of job to start */
 	char *node_list;	/* nodes where job will start */
@@ -832,6 +855,8 @@ typedef struct will_run_response_msg {
 	time_t start_time;	/* time when job will start */
 } will_run_response_msg_t;
 
+//FIXME
+#if 0
 /*****************************************************************************\
  * Slurm API Message Types
 \*****************************************************************************/
@@ -901,7 +926,13 @@ extern int slurm_sort_char_list_desc(char *name_a, char *name_b);
 /* free message functions */
 inline void slurm_free_checkpoint_tasks_msg(checkpoint_tasks_msg_t * msg);
 inline void slurm_free_last_update_msg(last_update_msg_t * msg);
+
+#endif
+
 inline void slurm_free_return_code_msg(return_code_msg_t * msg);
+
+//FIXME
+#if 0
 inline void slurm_free_job_alloc_info_msg(job_alloc_info_msg_t * msg);
 inline void slurm_free_job_info_request_msg(job_info_request_msg_t *msg);
 inline void slurm_free_job_step_info_request_msg(
@@ -955,8 +986,8 @@ inline void
 slurm_free_complete_job_allocation_msg(complete_job_allocation_msg_t * msg);
 inline void
 slurm_free_complete_batch_script_msg(complete_batch_script_msg_t * msg);
-inline void
-slurm_free_launch_tasks_request_msg(launch_tasks_request_msg_t * msg);
+//inline void
+//slurm_free_launch_tasks_request_msg(launch_tasks_request_msg_t * msg);
 inline void
 slurm_free_launch_tasks_response_msg(launch_tasks_response_msg_t * msg);
 inline void slurm_free_task_user_managed_io_stream_msg(
@@ -1003,7 +1034,13 @@ void slurm_free_partition_info_msg(partition_info_msg_t * msg);
 void slurm_free_partition_info_members(partition_info_t * part);
 void slurm_free_reservation_info_msg(reserve_info_msg_t * msg);
 void slurm_free_get_kvs_msg(kvs_get_msg_t *msg);
+
+#endif
+
 void slurm_free_will_run_response_msg(will_run_response_msg_t *msg);
+
+//FIXME
+#if 0
 void slurm_free_reserve_info_members(reserve_info_t * resv);
 void slurm_free_topo_info_msg(topo_info_response_msg_t *msg);
 inline void slurm_free_file_bcast_msg(file_bcast_msg_t *msg);
@@ -1050,6 +1087,11 @@ char *trigger_type(uint32_t trig_type);
 
 /* user needs to xfree after */
 extern char *reservation_flags_string(uint16_t flags);
+
+#endif
+
+//FIMXE
+#if 0
 
 #define safe_read(fd, buf, size) do {					\
 		int remaining = size;					\
@@ -1101,5 +1143,8 @@ extern char *reservation_flags_string(uint16_t flags);
 			}						\
 		}							\
 	} while (0)
+
+#endif
+
 
 #endif
