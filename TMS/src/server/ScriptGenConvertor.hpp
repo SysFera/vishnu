@@ -44,6 +44,7 @@ static const std::string mem                 = prefix+"_memory";
 static const std::string cpuTime             = prefix+"_cputime";
 static const std::string loadLevelerSec      = "loadleveler_sec";
 static const std::string torqueSec           = "torque_sec";
+static const std::string slurmSec            = "slurm_sec";
 static const std::string commandSec          = "command_sec";
 
 /**
