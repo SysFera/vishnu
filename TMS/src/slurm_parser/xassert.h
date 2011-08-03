@@ -6,8 +6,6 @@
 #  include "config.h"
 #endif
 
-#include "macros.h"
-
 #ifdef NDEBUG
 
 #  define xassert(expr)	((void) (0))
