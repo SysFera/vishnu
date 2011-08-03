@@ -64,7 +64,6 @@ int JobServer::submitJob(const std::string& scriptContent,
   scriptPath = strdup("/tmp/job_scriptXXXXXX");
 
   std::string convertedScript;
-  std::cout << "***************BEFORE*******\n" << scriptContent << std::endl;
   boost::shared_ptr<ScriptGenConvertor> scriptConvertor(vishnuScriptGenConvertor(mbatchType, scriptContent));
   if(scriptConvertor->scriptIsGeneric()) {
     std::string genScript = scriptConvertor->getConvertedScript();
@@ -72,8 +71,6 @@ int JobServer::submitJob(const std::string& scriptContent,
   } else {
     convertedScript = scriptContent;
   }
-
-  std::cout << "**************AFTER********\n" << convertedScript << std::endl;
 
   vishnu::createTmpFile(scriptPath, convertedScript);
 
