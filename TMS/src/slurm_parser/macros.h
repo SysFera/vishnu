@@ -10,15 +10,8 @@
 #  include <stddef.h>	/* for NULL */
 #endif
 
-//#if HAVE_STDBOOL_H
 #include <stdbool.h>
-/*#else
-typedef enum {false, true} bool;
-#endif*/ /* !HAVE_STDBOOL_H */
-
-//#if HAVE_PTHREAD_H
-#  include <pthread.h>
-//#endif
+#include <pthread.h>
 
 #include <errno.h>              /* for errno   */
 #include "log.h"	/* for error() */

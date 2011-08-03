@@ -17,10 +17,7 @@
 #include <fcntl.h>
 
 #include <slurm.h>
-//#include "env.h"
-#include "plugstack.h"
-//#include "read_config.h"
-#include "slurm_rlimits_info.h"
+#include "slurm_internal_types.h"
 #include "xstring.h"
 #include "xmalloc.h"
 

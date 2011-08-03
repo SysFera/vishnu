@@ -6,8 +6,6 @@
 #  include <sys/types.h>
 #endif
 
-#include "macros.h"
-
 #define xmalloc(__sz) \
 	slurm_xmalloc (__sz, __FILE__, __LINE__, __CURRENT_FUNC__)
 
