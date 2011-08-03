@@ -62,7 +62,24 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mendScript="";
 
   } else if(mbatchType==SLURM) {
-    std::cerr << "ScriptGenConvertor::ScriptGenConvertor: SLURM under contruction!!!!!!!!!" << std::endl;
+
+    mconversionTable[group]             = "#SBATCH --gid=";
+    mconversionTable[jobName]           = "#SBATCH -J ";
+    mconversionTable[jobOutput]         = "#SBATCH -o ";
+    mconversionTable[jobError]          = "#SBATCH -e ";
+    mconversionTable[jobWallClockLimit] = "#SBATCH -t ";
+    mconversionTable[workingDir]        = "#SBATCH -D ";
+    mconversionTable[notify_user]       = "#SBATCH --mail-type=END --mail-user=";
+    mconversionTable[nodes]             = "#SBATCH -N ";
+    mconversionTable[queue]             = "#SBATCH -p ";
+    mconversionTable[priority]          = "#SBATCH --nice=" ;
+    mconversionTable[mem]               = "#SBATCH --mem=";
+    mconversionTable[cpuTime]           = "#SBATCH --mincpus=";
+    mconversionTable[slurmSec]          = "";
+    mconversionTable[commandSec]        = "";
+    mconversionTable[torqueSec]         = "";
+    mendScript="";
+
   } else {
     std::cerr << "Unknown Batch type " << std::endl;
   }
@@ -118,6 +135,9 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
 
     getline(imscriptGenContent, line);
 
+    size_t escapePos = line.find("\\");
+    std::cout << "escapePos=" << escapePos << std::endl;
+
     numline +=1;
 
     /*search # character*/
@@ -133,7 +153,7 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
 
       else {
 
-        key="command_sec";
+        key=commandSec;
 
         mjobDescriptor.push_back (make_pair(key,line));
 
@@ -149,7 +169,7 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
 
       if (mbatchType==LOADLEVELER){
 
-        key="loadleveler_sec"; 
+        key=loadLevelerSec;; 
         mjobDescriptor.push_back (make_pair(key,line));
       }
       else{
@@ -161,7 +181,21 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
 
       if (mbatchType==TORQUE){
 
-        key="torque_sec";
+        key=torqueSec;
+
+        mjobDescriptor.push_back (make_pair(key,line));
+      }
+      else {
+
+        continue;
+      }
+    }
+    // SLURM
+    if(ba::starts_with(line,"#SBATCH")){
+
+      if (mbatchType==SLURM){
+
+        key=slurmSec;
 
         mjobDescriptor.push_back (make_pair(key,line));
       }
@@ -170,10 +204,11 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
         continue;
       }
     } 
+
     // SHEBANG
     if(ba::starts_with(line,"#!")){
 
-      key="command_sec";
+      key=commandSec;
       mjobDescriptor.push_back (make_pair(key,line));
     }
 
@@ -228,9 +263,9 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
     iter = std::find(mtableOfSymbols.begin(), mtableOfSymbols.end(), key_tolower);
     if(iter==mtableOfSymbols.end()) {
       cerr << std::endl;
-      cerr << "Error : Invalid argument " << key_tolower << " at line " << numline << " in your script mscriptGenContent" << std::endl;
+      cerr << "Error : Invalid argument " << key_tolower << " at line " << numline << " in your script file" << std::endl;
       ostringstream os_error;
-      os_error << "Error : Invalid argument " << key_tolower << " at line " << numline << " in your script mscriptGenContent" << std::endl;
+      os_error << "Error : Invalid argument " << key_tolower << " at line " << numline << " in your script file" << std::endl;
       errorMessage = os_error.str();
       return -1;
     }
