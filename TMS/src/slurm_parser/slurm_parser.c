@@ -1,4 +1,7 @@
 
+
+#include <string.h>
+
 #include "slurm_parser.h"
 
 int slurm_parse_script(int argc, char *argv[], job_desc_msg_t *desc)

@@ -10,9 +10,8 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-//#include "macros.h" /* true and false */
-//#include "env.h"
-#include "slurmdb_defs.h"
+#include "slurm_internal_api.h"
+#include "slurm_internal_types.h"
 
 #include <slurm.h>
 

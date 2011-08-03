@@ -35,16 +35,6 @@
 #include <sys/types.h>
 #include <sys/utsname.h>
 
-#include "list.h"
-#include "hostlist.h"
-#include "parse_time.h"
-#include "plugstack.h"
-#include "proc_args.h"
-#include "slurm_protocol_api.h"
-#include "slurm_resource_info.h"
-#include "slurm_rlimits_info.h"
-
-//#include "vishnu_slurm_util.h"
 #include "uid.h"
 #include "xmalloc.h"
 #include "xstring.h"

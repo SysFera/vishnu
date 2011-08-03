@@ -13,9 +13,6 @@
 #include <syslog.h>
 #include <stdio.h>
 
-#include "macros.h"
-#include "cbuf.h"
-
 /* supported syslog facilities and levels */
 typedef enum {
 	SYSLOG_FACILITY_DAEMON = 	LOG_DAEMON,
