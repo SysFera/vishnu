@@ -122,10 +122,6 @@ SlurmServer::submit(const char* scriptPath,
     jobErrorPath = desc.std_err;
   }
 
-  cout << "++++++++++JobIdValue    = " << jobId << std::endl;
-  cout << "++++++++++Before JobOutputPath = " << jobOutputPath << std::endl;
-  cout << "++++++++++Before jobErrorPath  = " << jobErrorPath << std::endl;
-
   //To fill the vishnu job structure 
   fillJobInfo(job, jobId);
 
@@ -137,9 +133,6 @@ SlurmServer::submit(const char* scriptPath,
     replaceSymbolInToJobPath(jobErrorPath);
     job.setErrorPath(jobErrorPath);
   }
-
-  cout << "++++++++++After JobOutputPath = " << job.getOutputPath() << std::endl;
-  cout << "++++++++++After jobErrorPath  = " << job.getErrorPath() << std::endl;
 
   xfree(desc.script);
   slurm_free_submit_response_response_msg(resp);

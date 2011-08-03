@@ -130,88 +130,81 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
 
   std::vector<std::string>::iterator iter; 
   int numline = 0;
+  std::string tmpLine="";
+  size_t escapePos;
+  bool escapeFound = false;
 
   while(!imscriptGenContent.eof()) {
 
     getline(imscriptGenContent, line);
 
-    size_t escapePos = line.find("\\");
-    std::cout << "escapePos=" << escapePos << std::endl;
-
     numline +=1;
+    //Treating of the escape character int the script content
+    if(ba::ends_with(ba::erase_all_copy(line, " "),"\\")){
+      escapePos = line.rfind("\\");
+      if(escapePos!=std::string::npos) {
+        tmpLine += line.substr(0, escapePos);
+        escapeFound = true;
+        continue;
+      }
+    }
+
+    if(escapeFound) {
+      tmpLine +=line;
+      line = tmpLine;
+      escapeFound = false;
+      tmpLine = "";
+    }
 
     /*search # character*/
     pos = line.find('#');
 
     if(pos == string::npos) {
-
       linebuf=ba::erase_all_copy(line," ");
-
       if(linebuf.empty()) {
         continue;
-      }
-
-      else {
-
+      } else {
         key=commandSec;
-
         mjobDescriptor.push_back (make_pair(key,line));
-
       }
     }
 
-    line = line.erase(0, pos); // supprime les tous les caractères jusqu'au # (exclu)
+    line = line.erase(0, pos); // erase all character until # (excluded)
 
-    // traiter les directives spécifiques ici
-
+    // treats the specific directives here
     // LOADLEVELER
     if(ba::starts_with( ba::erase_all_copy(line," "),"#@")){
-
       if (mbatchType==LOADLEVELER){
-
         key=loadLevelerSec;; 
         mjobDescriptor.push_back (make_pair(key,line));
-      }
-      else{
+      } else{
         continue;
       }
     } 
     // TORQUE
     if(ba::starts_with(line,"#PBS")){
-
       if (mbatchType==TORQUE){
-
         key=torqueSec;
-
         mjobDescriptor.push_back (make_pair(key,line));
-      }
-      else {
-
+      } else {
         continue;
       }
     }
     // SLURM
     if(ba::starts_with(line,"#SBATCH")){
-
       if (mbatchType==SLURM){
-
         key=slurmSec;
-
         mjobDescriptor.push_back (make_pair(key,line));
-      }
-      else {
-
+      } else {
         continue;
       }
     } 
 
     // SHEBANG
     if(ba::starts_with(line,"#!")){
-
       key=commandSec;
       mjobDescriptor.push_back (make_pair(key,line));
     }
-
 
     /*remove % character*/
     if(!ba::starts_with(ba::erase_all_copy(line," "),"#%")){
@@ -221,7 +214,6 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
     pos = line.find('%');
 
     if(pos == string::npos) {
-
       continue;
     }
     line = line.erase(0, pos+1);
@@ -229,9 +221,7 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
     /* Extract key, value*/
     pos = line.find('=');
     if(pos == string::npos) {
-
       ba::erase_all(line, " ");
-
       if (line.empty()) {
         continue;
       }
