@@ -3,7 +3,7 @@
 #include "xmalloc.h"
 #include "xstring.h"
 
-#include "slurmdb.h"
+#include "slurm/slurmdb.h"
 #include "list.h"
 #include "opt.h"
 
