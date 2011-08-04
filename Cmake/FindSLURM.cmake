@@ -3,13 +3,13 @@
 #
 
 find_path(SLURM_INCLUDE_DIR
-  slurm.h
+  slurm/slurm.h
   paths
-	${SLURM_DIR}/include/slurm
-	$ENV{SLURM_DIR}/include/slurm
-	/usr/include/slurm
-	/usr/local/include/slurm
-	/opt/local/include/slurm
+	${SLURM_DIR}/include
+	$ENV{SLURM_DIR}/include
+	/usr/include
+	/usr/local/include
+	/opt/local/include
   ${SLURM_DIR}/include
   $ENV{SLURM_DIR}/include
   /usr/include

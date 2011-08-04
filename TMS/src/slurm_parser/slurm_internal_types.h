@@ -7,8 +7,8 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "slurm.h"
-#include "slurmdb.h"
+#include "slurm/slurm.h"
+#include "slurm/slurmdb.h"
 
 #include "list.h"
 #include "macros.h"
@@ -299,7 +299,7 @@ typedef struct slurmd_job {
 typedef int32_t slurm_fd_t ;
 
 /* this is the slurm equivalent of the BSD sockets sockaddr
- * also defined in slurm/slurm.h for users */
+ * also defined in slurm/slurm/slurm.h for users */
 #ifndef __slurm_addr_t_defined
 #  define  __slurm_addr_t_defined
    typedef struct sockaddr_in slurm_addr_t ;
