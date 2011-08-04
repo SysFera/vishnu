@@ -17,7 +17,7 @@
 
 
 extern "C" {
-#include <slurm.h> //Slurm includes
+#include <slurm/slurm.h> //Slurm includes
 #include "slurm_parser.h"
 }
 

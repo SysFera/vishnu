@@ -13,7 +13,7 @@
 #include "slurm_internal_api.h"
 #include "slurm_internal_types.h"
 
-#include <slurm.h>
+#include <slurm/slurm.h>
 
 #ifndef SYSTEM_DIMENSIONS
 #  define SYSTEM_DIMENSIONS 1

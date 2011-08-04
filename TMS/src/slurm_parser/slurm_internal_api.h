@@ -2,8 +2,8 @@
 #ifndef _VISHNU_SLURM_UTIL_H
 #define _VISHNU_SLURM_UTIL_H
 
-#include "slurm.h"
-#include "slurmdb.h"
+#include "slurm/slurm.h"
+#include "slurm/slurmdb.h"
 
 #include "slurm_internal_types.h"
 
