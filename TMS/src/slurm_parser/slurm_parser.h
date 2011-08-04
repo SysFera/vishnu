@@ -16,7 +16,7 @@
 #include <sys/param.h>               /* MAXPATHLEN */
 #include <fcntl.h>
 
-#include <slurm.h>
+#include <slurm/slurm.h>
 #include "slurm_internal_types.h"
 #include "xstring.h"
 #include "xmalloc.h"
