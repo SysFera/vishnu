@@ -16,9 +16,10 @@ find_library(LOADLEVELER_LIB
   llapi 
   paths
 	${LOADLEVELER_DIR}/lib
-        $ENV{LOADLEVELER_DIR}/lib
+  $ENV{LOADLEVELER_DIR}/lib
 	/usr/lib
 	/usr/local/lib
+  /opt/local/lib
 )
 
 
