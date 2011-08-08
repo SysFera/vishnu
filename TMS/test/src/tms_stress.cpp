@@ -11,7 +11,7 @@ using namespace vishnu;
 
 void stress(int cpt,const string& sessionKey, const string& machineId ){
 
-  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+  const std::string scriptFilePath=TMSSCRIPTPATH;
 
   string dietClientConfigPath = CONFIG_DIR + string("/client_testing.cfg");
 
