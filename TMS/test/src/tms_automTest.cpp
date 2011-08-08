@@ -65,7 +65,7 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_normal_call)
   try {
     //Setting submitjob parameters
 
-    const std::string scriptFilePath= TMSSCRIPTSPATH "/torque_script";
+    const std::string scriptFilePath= TMSSCRIPTPATH;
     Job jobInfo;
     SubmitOptions subOptions;
 
@@ -107,7 +107,7 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_sessionKey)
 
   //Setting submitjob parameters
 
-  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+  const std::string scriptFilePath=TMSSCRIPTPATH;
   Job jobInfo;
   SubmitOptions subOptions;
   BOOST_CHECK_THROW(submitJob("bad sessionKey", machineId, scriptFilePath, jobInfo,subOptions) ,VishnuException );
@@ -134,7 +134,7 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_machineId)
 
   //Setting submitjob parameters
 
-  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+  const std::string scriptFilePath=TMSSCRIPTPATH;
   Job jobInfo;
   SubmitOptions subOptions;
   BOOST_CHECK_THROW( submitJob(sessionKey, "bad machineId", scriptFilePath, jobInfo,subOptions),VishnuException );
@@ -225,7 +225,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
   try {
     //Setting submitjob parameters
 
-    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    const std::string scriptFilePath=TMSSCRIPTPATH;
     Job jobInfo;
     SubmitOptions options;
 
@@ -276,7 +276,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_sessionKey)
   try {
     //Setting submitjob parameters
 
-    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    const std::string scriptFilePath=TMSSCRIPTPATH;
     Job jobInfo;
     SubmitOptions options;
 
@@ -319,7 +319,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_machineId)
   try {
     //Setting submitjob parameters
 
-    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    const std::string scriptFilePath=TMSSCRIPTPATH;
     Job jobInfo;
     SubmitOptions options;
 
@@ -404,7 +404,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_userId)
   try {
     //Setting submitjob parameters
 
-    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    const std::string scriptFilePath=TMSSCRIPTPATH;
     Job jobInfo;
     SubmitOptions options;
 
@@ -474,7 +474,7 @@ BOOST_AUTO_TEST_CASE( get_job_information_normal_call)
   try {
     //Setting submitjob parameters
 
-    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    const std::string scriptFilePath=TMSSCRIPTPATH;
     Job jobInfo;
     SubmitOptions options;
 
@@ -523,7 +523,7 @@ BOOST_AUTO_TEST_CASE( get_job_information_bad_sessionKey)
   try {
     //Setting submitjob parameters
 
-    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    const std::string scriptFilePath=TMSSCRIPTPATH;
     Job jobInfo;
     SubmitOptions options;
 
@@ -569,7 +569,7 @@ BOOST_AUTO_TEST_CASE( get_job_information_bad_machineId)
   try {
     //Setting submitjob parameters
 
-    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    const std::string scriptFilePath=TMSSCRIPTPATH;
     Job jobInfo;
     SubmitOptions options;
 
@@ -645,7 +645,7 @@ BOOST_AUTO_TEST_CASE( list_job_normal_call)
   try {
     //Setting submitjob parameters
 
-    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    const std::string scriptFilePath=TMSSCRIPTPATH;
     Job firstJob;
     SubmitOptions options;
 
@@ -729,7 +729,7 @@ BOOST_AUTO_TEST_CASE( list_job_bad_sessionKey)
   try {
     //Setting submitjob parameters
 
-    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    const std::string scriptFilePath=TMSSCRIPTPATH;
     Job jobInfo;
     SubmitOptions options;
 
@@ -776,7 +776,7 @@ BOOST_AUTO_TEST_CASE( list_job_bad_machineId)
   try {
     //Setting submitjob parameters
 
-    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    const std::string scriptFilePath=TMSSCRIPTPATH;
     Job jobInfo;
     SubmitOptions options;
 
@@ -833,7 +833,7 @@ BOOST_AUTO_TEST_CASE( get_job_output_normal_call)
   try {
     //Setting submitjob parameters
 
-    const std::string scriptFilePath=TMSSCRIPTSPATH "/fast_torque_script";
+    const std::string scriptFilePath=TMSFASTSCRIPTPATH;
     Job jobInfo;
     SubmitOptions options;
 
@@ -898,7 +898,7 @@ BOOST_AUTO_TEST_CASE( get_job_output_bad_sessionKey)
   try {
     //Setting submitjob parameters
 
-    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    const std::string scriptFilePath=TMSSCRIPTPATH;
     Job jobInfo;
     SubmitOptions options;
 
@@ -942,7 +942,7 @@ BOOST_AUTO_TEST_CASE( get_job_output_bad_machineId)
   try {
     //Setting submitjob parameters
 
-    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    const std::string scriptFilePath=TMSSCRIPTPATH;
     Job jobInfo;
     SubmitOptions options;
 
@@ -985,7 +985,7 @@ BOOST_AUTO_TEST_CASE( get_job_output_unterminated)
   try {
     //Setting submitjob parameters
 
-    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    const std::string scriptFilePath=TMSSCRIPTPATH;
     Job jobInfo;
     SubmitOptions options;
 
@@ -1041,7 +1041,7 @@ BOOST_AUTO_TEST_CASE( get_completed_jobs_output_normal_call)
 
     //Setting submitjob parameters
 
-    const std::string scriptFilePath=TMSSCRIPTSPATH "/fast_torque_script";
+    const std::string scriptFilePath=TMSFASTSCRIPTPATH;
     Job jobInfo;
     SubmitOptions options;
 
@@ -1114,7 +1114,7 @@ BOOST_AUTO_TEST_CASE( get_completed_job_output_bad_sessionKey)
   try {
     //Setting submitjob parameters
 
-    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    const std::string scriptFilePath=TMSSCRIPTPATH;
     Job jobInfo;
     SubmitOptions options;
 
@@ -1158,7 +1158,7 @@ BOOST_AUTO_TEST_CASE( get_completed_job_output_bad_machineId)
   try {
     //Setting submitjob parameters
 
-    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    const std::string scriptFilePath=TMSSCRIPTPATH;
     Job jobInfo;
     SubmitOptions options;
 
@@ -1215,7 +1215,7 @@ BOOST_AUTO_TEST_CASE( get_jobs_progression_normal_call)
   try {
     //Setting submitjob parameters
 
-    const std::string scriptFilePath=TMSSCRIPTSPATH "/fast_torque_script";
+    const std::string scriptFilePath=TMSFASTSCRIPTPATH;
     Job jobInfo;
     SubmitOptions options;
 
@@ -1253,21 +1253,21 @@ BOOST_AUTO_TEST_CASE( get_jobs_progression_normal_call)
       getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
     }
 
-
-
     ListProgression jobRunningProgress;
 
+    bpt::seconds sleepTime(2);
+    boost::this_thread::sleep(sleepTime);
     BOOST_CHECK_EQUAL( getJobProgress(sessionKey,machineId,jobRunningProgress, pgOptions),0);
 
-
     // Check the success of the get jobs progression function
-
-    BOOST_CHECK( jobRunningProgress.getProgress().get(0)->getPercent()>0);
-
+    BOOST_CHECK( (jobRunningProgress.getProgress().get(0))->getPercent() > 0);
 
     BOOST_TEST_MESSAGE( "jobRunningProgress.getProgress().get(0)->getPercent():" << jobRunningProgress.getProgress().get(0)->getPercent() << "\n");
 
     BOOST_TEST_MESSAGE("*********************** get jobs progression: normal call ok!!!!*****************************" << " \n");
+    
+    //  Clean up: delete the submitted job
+    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
     BOOST_CHECK(false);
@@ -1335,7 +1335,7 @@ BOOST_AUTO_TEST_SUITE( list_job_queues )
 
   //list job queues : normal call
 
-
+#if 0
 BOOST_AUTO_TEST_CASE( list_job_queues_normal_call)
 {
 
@@ -1390,7 +1390,7 @@ BOOST_AUTO_TEST_CASE( list_job_queues_normal_call)
     BOOST_CHECK(false);
   }
 }
-
+#endif
 
 //------------------------------------------------------------------------------------------------------------------------
 //  get Jobs progression: bad parameters : bad sessionKey

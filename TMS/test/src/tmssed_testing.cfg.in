@@ -6,6 +6,6 @@ databaseHost=@TEST_DB_HOST@
 databaseName=@TEST_DB_NAME@
 databaseUserName=@TEST_DB_LOGIN@
 databaseUserPassword=@TEST_DB_PASSWORD@
-batchSchedulerType=TORQUE
+batchSchedulerType=@TEST_BATCH_TYPE@
 vishnuMachineId=machine_1
 intervalMonitor=1
