@@ -166,7 +166,7 @@
 #  define slurm_attr_init(attr)                                               \
      _STMT_START {                                                            \
 	if (pthread_attr_init(attr))                                          \
-		fatal("pthread_attr_init: %m");                               \
+		slurm_fatal("pthread_attr_init: %m");                               \
 	/* we want 1:1 threads if there is a choice */                        \
 	if (pthread_attr_setscope(attr, PTHREAD_SCOPE_SYSTEM))                \
 		error("pthread_attr_setscope: %m");                           \
@@ -177,7 +177,7 @@
 #  define slurm_attr_init(attr)                                               \
      _STMT_START {                                                            \
         if (pthread_attr_init(attr))                                          \
-                fatal("pthread_attr_init: %m");                               \
+                slurm_fatal("pthread_attr_init: %m");                               \
         if (pthread_attr_setstacksize(attr, 1024*1024))                       \
                 error("pthread_attr_setstacksize: %m");                       \
      } _STMT_END

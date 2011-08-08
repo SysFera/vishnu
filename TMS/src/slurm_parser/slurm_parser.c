@@ -1,4 +1,7 @@
 
+#include <sys/wait.h>
+#include <netinet/in.h>
+#include <sys/types.h>
 
 #include <string.h>
 
@@ -13,9 +16,10 @@ int slurm_parse_script(int argc, char *argv[], job_desc_msg_t *desc)
 	void *script_body;
 	int script_size = 0;
 
-	log_init(xbasename(argv[0]), logopt, 0, NULL);
+	slurm_log_init(slurm_xbasename(argv[0]), logopt, 0, NULL);
 
 	_set_exit_code();
+#if 0
 	if (spank_init_allocator() < 0) {
 		error("Failed to intialize plugin stack");
 		exit(error_exit);
@@ -25,14 +29,15 @@ int slurm_parse_script(int argc, char *argv[], job_desc_msg_t *desc)
 	 */
 	if (atexit((void (*) (void)) spank_fini) < 0)
 		error("Failed to register atexit handler for plugins: %m");
+#endif
 
 	script_name = process_options_first_pass(argc, argv);
 	/* reinit log with new verbosity (if changed by command line) */
-	if (opt.verbose || opt.quiet) {
-		logopt.stderr_level += opt.verbose;
+	if (opt.slurm_verbose || opt.quiet) {
+		logopt.stderr_level += opt.slurm_verbose;
 		logopt.stderr_level -= opt.quiet;
 		logopt.prefix_level = 1;
-		log_alter(logopt, 0, NULL);
+		slurm_log_alter(logopt, 0, NULL);
 	}
 
 	if (opt.wrap != NULL) {
@@ -46,26 +51,33 @@ int slurm_parse_script(int argc, char *argv[], job_desc_msg_t *desc)
 	if (process_options_second_pass(
 				(argc - opt.script_argc),
 				argv,
-				script_name ? xbasename (script_name) : "stdin",
+				script_name ? slurm_xbasename (script_name) : "stdin",
 				script_body, script_size) < 0) {
 		error("sbatch parameter parsing");
 		exit(error_exit);
 	}
 
+#if 0
 	if (spank_init_post_opt() < 0) {
 		error("Plugin stack post-option processing failed");
 		exit(error_exit);
 	}
+#endif
 
+//FIXME
+#if 0
 	if (opt.get_user_env_time < 0) {
 		/* Moab does not propage the user's resource limits, so
 		 * slurmd determines the values at the same time that it
 		 * gets the user's default environment variables. */
 		(void) _set_rlimit_env();
 	}
+#endif 
 
 	_set_prio_process_env();
-	_set_spank_env();
+#if 0
+  _set_spank_env();
+#endif
 	_set_submit_dir_env();
 	_set_umask_env();
 	slurm_init_job_desc_msg(&(*desc));
@@ -77,9 +89,10 @@ int slurm_parse_script(int argc, char *argv[], job_desc_msg_t *desc)
 
 	/* If can run on multiple clusters find the earliest run time
 	 * and run it there */
-	if (sbatch_set_first_avail_cluster(&(*desc)) != SLURM_SUCCESS)
+#if 0
+  if (sbatch_set_first_avail_cluster(&(*desc)) != SLURM_SUCCESS)
 		exit(error_exit);
-
+#endif
 	return 0;
 }
 
@@ -90,12 +103,12 @@ static void _env_merge_filter(job_desc_msg_t *desc)
 	int i, len;
 	char *save_env[2] = { NULL, NULL }, *tmp, *tok, *last = NULL;
 
-	tmp = xstrdup(opt.export_env);
+	tmp = slurm_xstrdup(opt.export_env);
 	tok = strtok_r(tmp, ",", &last);
 	while (tok) {
 		if (strchr(tok, '=')) {
 			save_env[0] = tok;
-			env_array_merge(&desc->environment,
+			slurm_env_array_merge(&desc->environment,
 					(const char **)save_env);
 		} else {
 			len = strlen(tok);
@@ -104,7 +117,7 @@ static void _env_merge_filter(job_desc_msg_t *desc)
 				    (environ[i][len] != '='))
 					continue;
 				save_env[0] = environ[i];
-				env_array_merge(&desc->environment,
+				slurm_env_array_merge(&desc->environment,
 						(const char **)save_env);
 				break;
 			}
@@ -126,11 +139,11 @@ static int _fill_job_desc_from_opts(job_desc_msg_t *desc)
 	desc->immediate = opt.immediate;
 	desc->gres = opt.gres;
 	if (opt.job_name != NULL)
-		desc->name = xstrdup(opt.job_name);
+		desc->name = slurm_xstrdup(opt.job_name);
 	else
-		desc->name = xstrdup("sbatch");
-	desc->reservation  = xstrdup(opt.reservation);
-	desc->wckey  = xstrdup(opt.wckey);
+		desc->name = slurm_xstrdup("sbatch");
+	desc->reservation  = slurm_xstrdup(opt.reservation);
+	desc->wckey  = slurm_xstrdup(opt.wckey);
 
 	desc->req_nodes = opt.nodelist;
 	desc->exc_nodes = opt.exc_nodes;
@@ -138,7 +151,7 @@ static int _fill_job_desc_from_opts(job_desc_msg_t *desc)
 	if (opt.min_nodes)
 		desc->min_nodes = opt.min_nodes;
 	if (opt.licenses)
-		desc->licenses = xstrdup(opt.licenses);
+		desc->licenses = slurm_xstrdup(opt.licenses);
 	if (opt.max_nodes)
 		desc->max_nodes = opt.max_nodes;
 	if (opt.ntasks_per_node)
@@ -146,7 +159,7 @@ static int _fill_job_desc_from_opts(job_desc_msg_t *desc)
 	desc->user_id = opt.uid;
 	desc->group_id = opt.gid;
 	if (opt.dependency)
-		desc->dependency = xstrdup(opt.dependency);
+		desc->dependency = slurm_xstrdup(opt.dependency);
 
 	if (opt.cpu_bind)
 		desc->cpu_bind       = opt.cpu_bind;
@@ -165,19 +178,20 @@ static int _fill_job_desc_from_opts(job_desc_msg_t *desc)
 		desc->nice = NICE_OFFSET + opt.nice;
 	desc->mail_type = opt.mail_type;
 	if (opt.mail_user)
-		desc->mail_user = xstrdup(opt.mail_user);
+		desc->mail_user = slurm_xstrdup(opt.mail_user);
 	if (opt.begin)
 		desc->begin_time = opt.begin;
 	if (opt.account)
-		desc->account = xstrdup(opt.account);
+		desc->account = slurm_xstrdup(opt.account);
 	if (opt.comment)
-		desc->comment = xstrdup(opt.comment);
+		desc->comment = slurm_xstrdup(opt.comment);
 	if (opt.qos)
-		desc->qos = xstrdup(opt.qos);
+		desc->qos = slurm_xstrdup(opt.qos);
 
 	if (opt.hold)
 		desc->priority     = 0;
 
+#if 0
 	if ((int)opt.geometry[0] > 0) {
 		int i;
 		int dims = slurmdb_setup_cluster_dims();
@@ -185,6 +199,7 @@ static int _fill_job_desc_from_opts(job_desc_msg_t *desc)
 		for (i=0; i<dims; i++)
 			desc->geometry[i] = opt.geometry[i];
 	}
+#endif
 
 	if (opt.conn_type != (uint16_t) NO_VAL)
 		desc->conn_type = opt.conn_type;
@@ -193,13 +208,13 @@ static int _fill_job_desc_from_opts(job_desc_msg_t *desc)
 	if (opt.no_rotate)
 		desc->rotate = 0;
 	if (opt.blrtsimage)
-		desc->blrtsimage = xstrdup(opt.blrtsimage);
+		desc->blrtsimage = slurm_xstrdup(opt.blrtsimage);
 	if (opt.linuximage)
-		desc->linuximage = xstrdup(opt.linuximage);
+		desc->linuximage = slurm_xstrdup(opt.linuximage);
 	if (opt.mloaderimage)
-		desc->mloaderimage = xstrdup(opt.mloaderimage);
+		desc->mloaderimage = slurm_xstrdup(opt.mloaderimage);
 	if (opt.ramdiskimage)
-		desc->ramdiskimage = xstrdup(opt.ramdiskimage);
+		desc->ramdiskimage = slurm_xstrdup(opt.ramdiskimage);
 
 	/* job constraints */
 	if (opt.mincpus > -1)
@@ -250,28 +265,28 @@ static int _fill_job_desc_from_opts(job_desc_msg_t *desc)
 
 	desc->environment = NULL;
 	if (opt.export_env == NULL) {
-		env_array_merge(&desc->environment, (const char **)environ);
+		slurm_env_array_merge(&desc->environment, (const char **)environ);
 	} else if (!strcasecmp(opt.export_env, "ALL")) {
-		env_array_merge(&desc->environment, (const char **)environ);
+		slurm_env_array_merge(&desc->environment, (const char **)environ);
 	} else if (!strcasecmp(opt.export_env, "NONE")) {
-		desc->environment = env_array_create();
+		desc->environment = slurm_env_array_create();
 		opt.get_user_env_time = 0;
 	} else {
 		_env_merge_filter(desc);
 		opt.get_user_env_time = 0;
 	}
 	if (opt.get_user_env_time >= 0) {
-		env_array_overwrite(&desc->environment,
+		slurm_env_array_overwrite(&desc->environment,
 				    "SLURM_GET_USER_ENV", "1");
 	}
 
 	if(opt.distribution == SLURM_DIST_ARBITRARY) {
-		env_array_overwrite_fmt(&desc->environment,
+		slurm_env_array_overwrite_fmt(&desc->environment,
 					"SLURM_ARBITRARY_NODELIST",
 					"%s", desc->req_nodes);
 	}
 
-	desc->env_size = envcount(desc->environment);
+	desc->env_size = envcount2(desc->environment);
 	desc->argv = opt.script_argv;
 	desc->argc = opt.script_argc;
 	desc->std_err  = opt.efname;
@@ -288,10 +303,12 @@ static int _fill_job_desc_from_opts(job_desc_msg_t *desc)
 	desc->ckpt_dir = opt.ckpt_dir;
 	desc->ckpt_interval = (uint16_t)opt.ckpt_interval;
 
+#if 0
 	if (opt.spank_job_env_size) {
 		desc->spank_job_env      = opt.spank_job_env;
 		desc->spank_job_env_size = opt.spank_job_env_size;
 	}
+#endif
 
 	return 0;
 }
@@ -310,6 +327,7 @@ static void _set_exit_code(void)
 	}
 }
 
+#if 0
 /* Propagate SPANK environment via SLURM_SPANK_ environment variables */
 static void _set_spank_env(void)
 {
@@ -322,6 +340,7 @@ static void _set_spank_env(void)
 		}
 	}
 }
+#endif
 
 /* Set SLURM_SUBMIT_DIR environment variable with current state */
 static void _set_submit_dir_env(void)
@@ -491,7 +510,7 @@ static void *_get_script_buffer(const char *filename, int *size)
 	if (script_size == 0) {
 		error("Batch script is empty!");
 		goto fail;
-	} else if (xstring_is_whitespace(buf)) {
+	} else if (slurm_xstring_is_whitespace(buf)) {
 		error("Batch script contains only whitespace!");
 		goto fail;
 	} else if (!has_shebang(buf, script_size)) {
@@ -531,6 +550,8 @@ static char *_script_wrap(char *command_string)
 	return script;
 }
 
+//FIXME
+#if 0
 /* Set SLURM_RLIMIT_* environment variables with current resource
  * limit values, reset RLIMIT_NOFILE to maximum possible value */
 static int _set_rlimit_env(void)
@@ -539,14 +560,14 @@ static int _set_rlimit_env(void)
 	struct rlimit        rlim[1];
 	unsigned long        cur;
 	char                 name[64], *format;
-	slurm_rlimits_info_t *rli;
+	slurm_rlimits_slurm_info_t *rli;
 
 	/* Load default limits to be propagated from slurm.conf */
 	slurm_conf_lock();
 	slurm_conf_unlock();
 
 	/* Modify limits with any command-line options */
-	if (opt.propagate && parse_rlimits( opt.propagate, PROPAGATE_RLIMITS)){
+	if (opt.propagate && parse_rlimits2( opt.propagate, PROPAGATE_RLIMITS)){
 		error("--propagate=%s is not valid.", opt.propagate);
 		exit(error_exit);
 	}
@@ -594,3 +615,4 @@ static int _set_rlimit_env(void)
 
 	return rc;
 }
+#endif

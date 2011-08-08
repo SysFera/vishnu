@@ -103,23 +103,23 @@ typedef struct {
  * example:
  *
  * To initialize log module to print fatal messages to stderr, and
- * all messages up to and including info() to syslog:
+ * all messages up to and including slurm_info() to syslog:
  *
  * log_options_t logopts = LOG_OPTS_INITIALIZER;
  * logopts.stderr_level  = LOG_LEVEL_FATAL;
  * logopts.syslog_level  = LOG_LEVEL_INFO;
  *
- * rc = log_init(argv[0], logopts, SYSLOG_FACILITY_DAEMON, NULL);
+ * rc = slurm_log_init(argv[0], logopts, SYSLOG_FACILITY_DAEMON, NULL);
  *
  * log function automatically takes the basename() of argv0.
  */
-int log_init(char *argv0, log_options_t opts,
+int slurm_log_init(char *argv0, log_options_t opts,
 	      log_facility_t fac, char *logfile);
 
 /*
  * initialize scheduler log module (called only once)
  */
-int sched_log_init(char *argv0, log_options_t opts, log_facility_t fac,
+int sched_slurm_log_init(char *argv0, log_options_t opts, log_facility_t fac,
 		   char *logfile);
 
 /* Write to scheduler log */
@@ -142,19 +142,19 @@ void log_fini(void);
  */
 void sched_log_fini(void);
 
-/* Alter log facility, options are like log_init() above, except that
+/* Alter log facility, options are like slurm_log_init() above, except that
  * an argv0 argument is not passed.
  *
  * This function may be called multiple times.
  */
-int log_alter(log_options_t opts, log_facility_t fac, char *logfile);
+int slurm_log_alter(log_options_t opts, log_facility_t fac, char *logfile);
 
-/* Sched alter log facility, options are like sched_log_init() above,
+/* Sched alter log facility, options are like sched_slurm_log_init() above,
  * except that an argv0 argument is not passed.
  *
  * This function may be called multiple times.
  */
-int sched_log_alter(log_options_t opts, log_facility_t fac, char *logfile);
+int sched_slurm_log_alter(log_options_t opts, log_facility_t fac, char *logfile);
 
 /* Set prefix for log file entries
  * (really only useful for slurmd at this point)
@@ -199,15 +199,15 @@ void log_flush(void);
  * "%T" => strftime "%a %d %b %Y %H:%M:%S %z" (rfc822 date/time)
  */
 
-/* fatal() aborts program unless NDEBUG defined
+/* slurm_fatal() aborts program unless NDEBUG defined
  * error() returns SLURM_ERROR
  */
-void	fatal(const char *, ...) __attribute__ ((format (printf, 1, 2)));
+void	slurm_fatal(const char *, ...) __attribute__ ((format (printf, 1, 2)));
 int	error(const char *, ...) __attribute__ ((format (printf, 1, 2)));
-void	info(const char *, ...) __attribute__ ((format (printf, 1, 2)));
-void	verbose(const char *, ...) __attribute__ ((format (printf, 1, 2)));
+void	slurm_info(const char *, ...) __attribute__ ((format (printf, 1, 2)));
+void	slurm_verbose(const char *, ...) __attribute__ ((format (printf, 1, 2)));
 void	debug(const char *, ...) __attribute__ ((format (printf, 1, 2)));
-void	debug2(const char *, ...) __attribute__ ((format (printf, 1, 2)));
+void	slurm_debug2(const char *, ...) __attribute__ ((format (printf, 1, 2)));
 void	debug3(const char *, ...) __attribute__ ((format (printf, 1, 2)));
 /*
  * Debug levels higher than debug3 are not written to stderr in the
@@ -217,10 +217,10 @@ void	debug4(const char *, ...) __attribute__ ((format (printf, 1, 2)));
 void	debug5(const char *, ...) __attribute__ ((format (printf, 1, 2)));
 
 void	dump_cleanup_list(void);
-void	fatal_add_cleanup(void (*proc) (void *), void *context);
-void	fatal_add_cleanup_job(void (*proc) (void *), void *context);
-void	fatal_remove_cleanup(void (*proc) (void *context), void *context);
-void	fatal_remove_cleanup_job(void (*proc) (void *context), void *context);
-void	fatal_cleanup(void);
+void	slurm_fatal_add_cleanup(void (*proc) (void *), void *context);
+void	slurm_fatal_add_cleanup_job(void (*proc) (void *), void *context);
+void	slurm_fatal_remove_cleanup(void (*proc) (void *context), void *context);
+void	slurm_fatal_remove_cleanup_job(void (*proc) (void *context), void *context);
+void	slurm_fatal_cleanup(void);
 
 #endif /* !_LOG_H */
