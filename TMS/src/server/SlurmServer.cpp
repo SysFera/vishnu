@@ -63,6 +63,8 @@ SlurmServer::submit(const char* scriptPath,
     argv[i+1] = const_cast<char*>(cmdsOptions[i].c_str());
   }
 
+  std::cout << "******************vishnu_submit_job**************" << std::endl;
+  std::copy(cmdsOptions.begin(), cmdsOptions.end(), ostream_iterator<std::string>(cout, " "));
   job_desc_msg_t desc;
   //parses the scripthPath and sets the options values
   slurm_parse_script(argc, argv, &desc);

@@ -1,4 +1,4 @@
-/* From the autoconf info document, required for AIX */
+/* From the autoconf slurm_info document, required for AIX */
 #if HAVE_CONFIG_H
 #  include "config.h"
 #  if (!HAVE_MALLOC)

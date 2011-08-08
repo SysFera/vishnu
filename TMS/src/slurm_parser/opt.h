@@ -11,7 +11,6 @@
 #include <unistd.h>
 
 #include "slurm_internal_api.h"
-#include "slurm_internal_types.h"
 
 #include <slurm/slurm.h>
 
@@ -52,7 +51,7 @@ typedef struct sbatch_options {
 	char *cpu_bind;		/* binding map for map/mask_cpu */
 	mem_bind_type_t mem_bind_type; /* --mem_bind=		*/
 	char *mem_bind;		/* binding map for map/mask_mem	*/
-	bool extra_set;		/* true if extra node info explicitly set */
+	bool extra_set;		/* true if extra node slurm_info explicitly set */
 	int  time_limit;	/* --time,   -t	(int minutes)	*/
 	char *time_limit_str;	/* --time,   -t (string)	*/
 	int  time_min;		/* --min-time 	(int minutes)	*/
@@ -87,7 +86,7 @@ typedef struct sbatch_options {
 	char *licenses;		/* --licenses, -L		*/
 	char *network;		/* --network=			*/
 	int  quiet;
-	int  verbose;
+	int  slurm_verbose;
 	uint16_t wait_all_nodes;  /* --wait-nodes-ready=val	*/
 	char *wrap;
 
@@ -142,7 +141,7 @@ extern int error_exit;
  * process_options_first_pass()
  *
  * In this first pass we only look at the command line options, and we
- * will only handle a few options (help, usage, quiet, verbose, version),
+ * will only handle a few options (help, usage, quiet, slurm_verbose, version),
  * and look for the script name and arguments (if provided).
  *
  * We will parse the environment variable options, batch script options,
