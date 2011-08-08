@@ -17,9 +17,10 @@ find_library(TORQUE_LIB
   torque 
   paths
 	${TORQUE_DIR}/lib
-        $ENV{TORQUE_DIR}/lib
+  $ENV{TORQUE_DIR}/lib
 	/usr/lib
 	/usr/local/lib
+  /opt/local/lib
 )
 
 if (TORQUE_INCLUDE_DIR AND  TORQUE_LIB)

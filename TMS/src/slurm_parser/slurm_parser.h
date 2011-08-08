@@ -15,14 +15,13 @@
 #include <sys/stat.h>
 #include <sys/param.h>               /* MAXPATHLEN */
 #include <fcntl.h>
+#include <signal.h>
 
 #include <slurm/slurm.h>
-#include "slurm_internal_types.h"
 #include "xstring.h"
 #include "xmalloc.h"
 
 #include "opt.h"
-#include "mult_cluster.h"
 
 #define MAX_RETRIES 15
 
@@ -33,7 +32,9 @@ static char *_script_wrap(char *command_string);
 static void  _set_exit_code(void);
 static void  _set_prio_process_env(void);
 static int   _set_rlimit_env(void);
+#if 0
 static void  _set_spank_env(void);
+#endif
 static void  _set_submit_dir_env(void);
 static int   _set_umask_env(void);
 int slurm_parse_script(int argc, char *argv[], job_desc_msg_t *desc);

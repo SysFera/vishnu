@@ -1,10 +1,8 @@
 
+
 #ifndef _XASSERT_H
 #define _XASSERT_H	1
 
-#if HAVE_CONFIG_H
-#  include "config.h"
-#endif
 
 #ifdef NDEBUG
 
@@ -14,15 +12,14 @@
 
 #  define xassert(__ex)  _STMT_START { \
      (__ex) ? ((void)0) : \
-     __xassert_failed(__STRING(__ex), __FILE__,  __LINE__, __CURRENT_FUNC__);\
+     slurm_xassert_failed(__STRING(__ex), __FILE__,  __LINE__, __CURRENT_FUNC__);\
      } _STMT_END
 
 /*  This prints the assertion failed message to the slurm log facility
  *  (see log.h) and aborts the calling program
  *  (messages go to stderr if log is not initialized)
  */
-extern void __xassert_failed(char *, const char *, int, const char *)
-	    __NORETURN_ATTR;
+void slurm_xassert_failed(char *, const char *, int, const char *);
 
 #endif /* NDEBUG. */
 
