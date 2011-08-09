@@ -290,7 +290,7 @@ if (BUILD_TESTING)
   set( TEST_OMNINAMES_CFG_IP "127.0.0.1" CACHE STRING " The omniorb cfg ip for tests")
   set( TMS_FAST_SCRIPT_PATH ${VISHNU_SOURCE_DIR}/TMS/test/src/scripts/fast_torque_script CACHE STRING " The path to the fast script to submit")
   set( TMS_SCRIPT_PATH ${VISHNU_SOURCE_DIR}/TMS/test/src/scripts/torque_script CACHE STRING " The path to the script to submit")
-
+  set( TEST_CONFIG_DIR ${VISHNU_SOURCE_DIR}/TMS/test/src/scripts/ CACHE PATH "Tests configuration directory")
 
   mark_as_advanced(TEST_DB_TYPE)
   mark_as_advanced(TEST_DB_HOST)
