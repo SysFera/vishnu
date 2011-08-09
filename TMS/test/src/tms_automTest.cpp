@@ -160,8 +160,15 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_script_content)
   string machineId="machine_1";
 
   //Setting submitjob parameters
-
-  const std::string scriptFilePath="/home/ibrahima/Brouillon/bad_torque_script";
+  std::string scriptFilePath;
+  if(BATCHTYPE=="TORQUE") {
+    scriptFilePath=TMSCONFIGDIR "/bad_torque_script";
+  } else if(BATCHTYPE=="SLURM") {
+    scriptFilePath=TMSCONFIGDIR "/bad_slurm_script";
+  } else {
+    scriptFilePath=TMSCONFIGDIR "/bad_unknow_batch_type_script";
+  }
+  
   Job jobInfo;
   SubmitOptions options;
 
@@ -1335,29 +1342,44 @@ BOOST_AUTO_TEST_SUITE( list_job_queues )
 
   //list job queues : normal call
 
-#if 0
 BOOST_AUTO_TEST_CASE( list_job_queues_normal_call)
 {
 
   BOOST_TEST_MESSAGE("\n \n Testing normal execution of the list job queues function corresponding to use case T2.3 \n" );
 
-
-  VishnuConnexion vc("root","vishnu_user");
-
-  // get the session key and the machine identifier
-
-  string sessionKey=vc.getConnexion();
-
-  string machineId="machine_1";
-  // create queues
-  std::ostringstream createCommand;
-  createCommand << "qmgr";
-  createCommand << " " << TMSBATCHHOSTNAME << " < " << TMSSCRIPTSPATH << "/config_queues_test.cfg >/dev/null";
-  system(createCommand.str().c_str());
-
-  ListQueues listofQueues;
-
   try {
+
+    VishnuConnexion vc("root","vishnu_user");
+
+    // get the session key and the machine identifier
+
+    string sessionKey=vc.getConnexion();
+
+    string machineId="machine_1";
+    // create queues
+    std::ostringstream createCommand;
+    if(BATCHTYPE=="TORQUE") {
+      createCommand << "qmgr";
+      createCommand << " " << TMSBATCHHOSTNAME << " < " << TMSCONFIGDIR << "/config_queues_test.cfg >/dev/null";
+      if(system(createCommand.str().c_str())) {
+       throw UserException(ERRCODE_INVALID_PARAM, "TORQUE: error during creation of queues");
+      }
+    } else if(BATCHTYPE=="SLURM") {
+      createCommand << "scontrol create partition=" << "test_queue1";
+      if(system(createCommand.str().c_str())) {
+        throw UserException(ERRCODE_INVALID_PARAM, "SLURM: error during creation of partition test_queue1");
+      }
+      createCommand.str("");
+      createCommand << "scontrol create partition=" << "test_queue2";
+      if(system(createCommand.str().c_str())) {
+        throw UserException(ERRCODE_INVALID_PARAM, "SLURM: error during creation of partition test_queue2");
+      }
+    } else {
+      throw UserException(ERRCODE_INVALID_PARAM, "Unknown Batch Type");
+    }
+
+    ListQueues listofQueues;
+
     BOOST_CHECK_EQUAL( listQueues(sessionKey, machineId, listofQueues),0);
     bool success = false;
     string name;
@@ -1370,9 +1392,7 @@ BOOST_AUTO_TEST_CASE( list_job_queues_normal_call)
 
 
     for (int i=0; i< listofQueues.getQueues().size(); ++i){
-
       name=listofQueues.getQueues().get(i)->getName();
-
       if (name=="test_queue1" || name == "test_queue2"){
         success =true ;
       }
@@ -1381,16 +1401,30 @@ BOOST_AUTO_TEST_CASE( list_job_queues_normal_call)
     //Delete the precedent created queues
     // create queues
     ostringstream delCommand;
-    delCommand << "qmgr";
-    delCommand << " " << TMSBATCHHOSTNAME <<  " < " << TMSSCRIPTSPATH << "/config_clean_queues.cfg >/dev/null";
-    system(delCommand.str().c_str());
-    //BOOST_TEST_MESSAGE("*********************** list job queues: normal call ok!!!!*****************************" << " \n");
+    if(BATCHTYPE=="TORQUE") {
+      delCommand << "qmgr";
+      delCommand << " " << TMSBATCHHOSTNAME <<  " < " << TMSCONFIGDIR << "/config_clean_queues.cfg >/dev/null";
+      if(system(delCommand.str().c_str())){
+        throw UserException(ERRCODE_INVALID_PARAM, "TORQUE: error during deletion of queues");
+      }
+    } else if(BATCHTYPE=="SLURM") {
+      delCommand << "scontrol delete partition=" << "test_queue1";
+      if(system(delCommand.str().c_str())){
+        throw UserException(ERRCODE_INVALID_PARAM, "SLURM: error during deletion of partition test_queue1");
+      }
+      delCommand.str("");
+      delCommand << "scontrol delete partition=" << "test_queue2";
+      if(system(delCommand.str().c_str())){
+        throw UserException(ERRCODE_INVALID_PARAM, "SLURM: error during deletion of partition test_queue2");
+      }
+    }
+
+    BOOST_TEST_MESSAGE("*********************** list job queues: normal call ok!!!!*****************************" << " \n");
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
     BOOST_CHECK(false);
   }
 }
-#endif
 
 //------------------------------------------------------------------------------------------------------------------------
 //  get Jobs progression: bad parameters : bad sessionKey
