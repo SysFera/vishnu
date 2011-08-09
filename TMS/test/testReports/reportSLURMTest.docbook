@@ -709,9 +709,11 @@ same conditions as regards security.</para>
 	  </tbody>    
       </tgroup>
       </informaltable>
-  </chapter>
+      <para> <emphasis role = "bold"> LOAD-2.1-submitJob </emphasis>: To allow 100 simultaneous ssh connexion, we have changed
+        the default value of  <emphasis>MaxStartups</emphasis> to 
+                <emphasis>50:50:200</emphasis> in /etc/ssh/sshd_config. </para>
+    </chapter>
   
-    
   <chapter>
     <title>Performance tests </title>
     
