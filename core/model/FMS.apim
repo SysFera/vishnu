@@ -121,14 +121,14 @@
       <details key="description" value="Initiates a move of a file or directory from the location given by the src parameter to the location given by the dest parameter.&#xA;The src parameter must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command) or 'path' only if the file is on the local system.&#xA;The dest parameter must be provided in a similar way. Note that one of the two locations at least must be a remote location,&#xA;i.e. a local move cannot be handled by this command.&#xA;The command listFileTransfers can be used to check the status of the transfer after it is initiated, using the transfer id as the identifier.&#xA;"/>
       <details key="exCLI" value="To move using an asynchronous method the file toto from machine_1 to machine_2 home directory: &#xA;vishnu_move_async_file machine_1:/tmp/toto machine_2:/home/vishnu/"/>
     </services>
-    <services name="stopFileTransfer" description="stops an execution of a set of file transfers." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DB_ERROR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
+    <services name="stopFileTransfer" description="stops an execution of a set of file transfers." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DB_ERROR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK ERRCODE_UNKNOWN_USERID">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.10" description="The stop file transfer command options" optional="true" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.14"/>
       <details key="description" value="Cancels a file or directory transfer that has been initiated using a vishnu asynchronous copy or move file command.&#xA;The command listFileTransfers can be used to check the status of the transfer after it has been cancelled, using the transfer id as the identifier.&#xA;"/>
       <details key="exCLI" value="To stop the file transfers on machine_1:&#xA;vishnu_stop_file_transfer -m machine_1"/>
     </services>
-    <services name="listFileTransfers" description="displays the history of all file transfers submitted by User." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DB_ERROR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
+    <services name="listFileTransfers" description="displays the history of all file transfers submitted by User." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DB_ERROR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK ERRCODE_UNKNOWN_USERID">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="fileTransferList" direction="OUT" description="The file transfer list" longOptionName="">
         <dataType href="FMS_Internal.apim#//@modules.0/@typeList/@types.16"/>
@@ -226,6 +226,7 @@
       <resultCodes name="ERRCODE_INVALID_PATH" description="The path provided is invalid." value="201"/>
       <resultCodes name="ERRCODE_RUNTIME_ERROR" description="Runtime error" value="202"/>
       <resultCodes name="ERRCODE_UNKNOWN_FILE_TRANSFER" description="The transfer id ins unknown" value="203"/>
+      <resultCodes name="ERRCODE_UNKNOWN_USERID" description="The userId is unknown" value="21" diagnostic=""/>
     </resultCodeList>
   </modules>
   <envVariableList>
