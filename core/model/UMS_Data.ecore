@@ -424,7 +424,7 @@
         <details key="shortOption" value="u"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="listAllmachine" eType="ecore:EDataType Ecore.ecore#//EBoolean"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="listAllMachine" eType="ecore:EDataType Ecore.ecore#//EBoolean"
         defaultValueLiteral="false">
       <eAnnotations source="Description">
         <details key="content" value="is an option for listing all VISHNU machines"/>
