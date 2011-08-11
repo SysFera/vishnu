@@ -64,12 +64,12 @@ bool get_resource_arg_range2(const char *arg, const char *what, int* min,
   }
 
   if (((*p != '\0') && (*p != '-')) || (result <= 0L)) {
-    error ("Invalid numeric value \"%s\" for %s.", arg, what);
+    slurm_error ("Invalid numeric value \"%s\" for %s.", arg, what);
     if (isFatal)
       exit(1);
     return false;
   } else if (result > INT_MAX) {
-    error ("Numeric argument (%ld) to big for %s.", result, what);
+    slurm_error ("Numeric argument (%ld) to big for %s.", result, what);
     if (isFatal)
       exit(1);
     return false;
@@ -91,12 +91,12 @@ bool get_resource_arg_range2(const char *arg, const char *what, int* min,
   }
 
   if (((*p != '\0') && (*p != '-')) || (result <= 0L)) {
-    error ("Invalid numeric value \"%s\" for %s.", arg, what);
+    slurm_error ("Invalid numeric value \"%s\" for %s.", arg, what);
     if (isFatal)
       exit(1);
     return false;
   } else if (result > INT_MAX) {
-    error ("Numeric argument (%ld) to big for %s.", result, what);
+    slurm_error ("Numeric argument (%ld) to big for %s.", result, what);
     if (isFatal)
       exit(1);
     return false;
@@ -271,7 +271,7 @@ bool verify_node_count2(const char *arg, int *min_nodes, int *max_nodes)
     min_str = slurm_xstrndup(arg, ptr-arg);
     *min_nodes = _str_to_nodes2(min_str, &leftover);
     if (!slurm_xstring_is_whitespace(leftover)) {
-      error("\"%s\" is not a valid node count", min_str);
+      slurm_error("\"%s\" is not a valid node count", min_str);
       xfree(min_str);
       return false;
     }
@@ -282,7 +282,7 @@ bool verify_node_count2(const char *arg, int *min_nodes, int *max_nodes)
     max_str = slurm_xstrndup(ptr+1, strlen(arg)-((ptr+1)-arg));
     *max_nodes = _str_to_nodes2(max_str, &leftover);
     if (!slurm_xstring_is_whitespace(leftover)) {
-      error("\"%s\" is not a valid node count", max_str);
+      slurm_error("\"%s\" is not a valid node count", max_str);
       xfree(max_str);
       return false;
     }
@@ -290,18 +290,18 @@ bool verify_node_count2(const char *arg, int *min_nodes, int *max_nodes)
   } else {
     *min_nodes = *max_nodes = _str_to_nodes2(arg, &leftover);
     if (!slurm_xstring_is_whitespace(leftover)) {
-      error("\"%s\" is not a valid node count", arg);
+      slurm_error("\"%s\" is not a valid node count", arg);
       return false;
     }
     if (*min_nodes == 0) {
       /* whitespace does not a valid node count make */
-      error("\"%s\" is not a valid node count", arg);
+      slurm_error("\"%s\" is not a valid node count", arg);
       return false;
     }
   }
 
   if ((*max_nodes != 0) && (*max_nodes < *min_nodes)) {
-    error("Maximum node count %d is less than"
+    slurm_error("Maximum node count %d is less than"
         " minimum node count %d",
         *max_nodes, *min_nodes);
     return false;
@@ -363,7 +363,7 @@ bool verify_hint2(const char *arg, int *min_sockets, int *min_cores,
       *min_threads = 1;
       *cpu_bind_type |= CPU_BIND_TO_THREADS;
     } else {
-      error("unrecognized --hint argument \"%s\", "
+      slurm_error("unrecognized --hint argument \"%s\", "
           "see --hint=help", tok);
       xfree(buf);
       return 1;
@@ -492,7 +492,7 @@ _create_path_list2(void)
 
   c = getenv("PATH");
   if (!c) {
-    error("No PATH environment variable");
+    slurm_error("No PATH environment variable");
     return l;
   }
   path = slurm_xstrdup(c);

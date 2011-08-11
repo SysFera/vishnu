@@ -76,27 +76,6 @@ typedef struct {
 #define SCHEDLOG_OPTS_INITIALIZER	\
 	{ LOG_LEVEL_QUIET, LOG_LEVEL_QUIET, LOG_LEVEL_QUIET, 0, 1 }
 
-#define MAKE_TIMESTAMP(timestamp_buf, timestamp_fmt) {	\
-	time_t timestamp_t = time(NULL);           \
-	struct tm timestamp_tm;	                \
-	if (!localtime_r(&timestamp_t, &timestamp_tm))\
-		fprintf(stderr, "localtime_r() failed\n"); \
-	strftime(timestamp_buf, sizeof(timestamp_buf), \
-		 timestamp_fmt, &timestamp_tm); \
-}
-
-
-#define RFC822_TIMESTAMP(timestamp_buf) \
-	MAKE_TIMESTAMP(timestamp_buf, "%a %d %b %Y %H:%M:%S %z");
-
-#ifdef USE_ISO_8601
-#define LOG_TIMESTAMP(timestamp_buf)			\
-	MAKE_TIMESTAMP(timestamp_buf, "%Y-%m-%dT%T");
-#else
-#define LOG_TIMESTAMP(timestamp_buf)		\
-	MAKE_TIMESTAMP(timestamp_buf, "%b %d %T");
-#endif
-
 /*
  * initialize log module (called only once)
  *
@@ -117,75 +96,6 @@ int slurm_log_init(char *argv0, log_options_t opts,
 	      log_facility_t fac, char *logfile);
 
 /*
- * initialize scheduler log module (called only once)
- */
-int sched_slurm_log_init(char *argv0, log_options_t opts, log_facility_t fac,
-		   char *logfile);
-
-/* Write to scheduler log */
-void schedlog(const char *fmt, ...);
-
-/* reinitialize log module.
- * Keep same log options as previously initialized log, but reinit mutex
- * that protects the log. This call is needed after a fork() in a threaded
- * program
- */
-void log_reinit(void);
-
-/*
- * Close log and free associated memory
- */
-void log_fini(void);
-
-/*
- * Close scheduler log and free associated memory
- */
-void sched_log_fini(void);
-
-/* Alter log facility, options are like slurm_log_init() above, except that
- * an argv0 argument is not passed.
- *
- * This function may be called multiple times.
- */
-int slurm_log_alter(log_options_t opts, log_facility_t fac, char *logfile);
-
-/* Sched alter log facility, options are like sched_slurm_log_init() above,
- * except that an argv0 argument is not passed.
- *
- * This function may be called multiple times.
- */
-int sched_slurm_log_alter(log_options_t opts, log_facility_t fac, char *logfile);
-
-/* Set prefix for log file entries
- * (really only useful for slurmd at this point)
- */
-void log_set_fpfx(char *pfx);
-
-/*
- * (re)set argv0 string prepended to all log messages
- */
-void log_set_argv0(char *pfx);
-
-/* grab the FILE * of the current logfile (or stderr if not logging to
- * a file)
- */
-FILE *log_fp(void);
-
-/*
- * Buffered log functions:
- *
- * log_has_data() returns true if there is data in the
- * internal log buffer
- */
-bool log_has_data(void);
-
-/*
- * log_flush() attempts to flush all data in the internal
- * log buffer to the appropriate output stream.
- */
-void log_flush(void);
-
-/*
  * the following log a message to the log facility at the appropriate level:
  *
  * Messages do not need a newline!
@@ -202,25 +112,11 @@ void log_flush(void);
 /* slurm_fatal() aborts program unless NDEBUG defined
  * error() returns SLURM_ERROR
  */
-void	slurm_fatal(const char *, ...) __attribute__ ((format (printf, 1, 2)));
-int	error(const char *, ...) __attribute__ ((format (printf, 1, 2)));
-void	slurm_info(const char *, ...) __attribute__ ((format (printf, 1, 2)));
-void	slurm_verbose(const char *, ...) __attribute__ ((format (printf, 1, 2)));
-void	debug(const char *, ...) __attribute__ ((format (printf, 1, 2)));
-void	slurm_debug2(const char *, ...) __attribute__ ((format (printf, 1, 2)));
-void	debug3(const char *, ...) __attribute__ ((format (printf, 1, 2)));
-/*
- * Debug levels higher than debug3 are not written to stderr in the
- * slurmstepd process after stderr is connected back to the client (srun).
- */
-void	debug4(const char *, ...) __attribute__ ((format (printf, 1, 2)));
-void	debug5(const char *, ...) __attribute__ ((format (printf, 1, 2)));
-
-void	dump_cleanup_list(void);
-void	slurm_fatal_add_cleanup(void (*proc) (void *), void *context);
-void	slurm_fatal_add_cleanup_job(void (*proc) (void *), void *context);
-void	slurm_fatal_remove_cleanup(void (*proc) (void *context), void *context);
-void	slurm_fatal_remove_cleanup_job(void (*proc) (void *context), void *context);
-void	slurm_fatal_cleanup(void);
+void	slurm_fatal(const char *, ...);
+int	slurm_error(const char *, ...);
+void	slurm_info(const char *, ...);
+void	slurm_verbose(const char *, ...) ;
+void	slurm_debug(const char *, ...) ;
+void	slurm_debug2(const char *, ...);
 
 #endif /* !_LOG_H */

@@ -141,6 +141,7 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
       }
     }
     if((WEXITSTATUS(ret)==1)&&(mbatchType==SLURM)) {//ATTENTION: 1 corresponds of the error_exit value in ../slurm_parser/opt.c
+      merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
       throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: "+merrorInfo);
     }
     vishnu::deleteFile(stderrFilePath.c_str());
