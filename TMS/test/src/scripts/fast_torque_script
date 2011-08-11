@@ -1,6 +1,6 @@
 #!/bin/sh
 #PBS -N  sequentiel
-#PBS -l walltime=00:15:00
+#PBS -l walltime=00:02:07
 #PBS -q second_queue
 echo "Queue name: " $PBS_O_QUEUE
 echo "Server Name: " $PBS_SERVER
