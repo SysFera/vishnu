@@ -14,11 +14,6 @@
 
 #include <slurm/slurm.h>
 
-#ifndef SYSTEM_DIMENSIONS
-#  define SYSTEM_DIMENSIONS 1
-#endif
-
-
 typedef struct sbatch_options {
 	List clusters; /* cluster to run this on. */
 	char *progname;		/* argv[0] of this program or   */
@@ -162,12 +157,5 @@ char *process_options_first_pass(int argc, char **argv);
  */
 int process_options_second_pass(int argc, char *argv[], const char *file,
 				const void *script_body, int script_size);
-
-/* external functions available for SPANK plugins to modify the environment
- * exported to the SLURM Prolog and Epilog programs */
-extern char *spank_get_job_env(const char *name);
-extern int   spank_set_job_env(const char *name, const char *value,
-			       int overwrite);
-extern int   spank_unset_job_env(const char *name);
 
 #endif	/* _HAVE_OPT_H */
