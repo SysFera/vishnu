@@ -11,7 +11,6 @@ int slurm_parse_script(int argc, char *argv[], job_desc_msg_t *desc)
 {
 	log_options_t logopt = LOG_OPTS_STDERR_ONLY;
 	
-  //submit_response_msg_t *resp;
 	char *script_name;
 	void *script_body;
 	int script_size = 0;
@@ -19,65 +18,21 @@ int slurm_parse_script(int argc, char *argv[], job_desc_msg_t *desc)
 	slurm_log_init(slurm_xbasename(argv[0]), logopt, 0, NULL);
 
 	_set_exit_code();
-#if 0
-	if (spank_init_allocator() < 0) {
-		error("Failed to intialize plugin stack");
-		exit(error_exit);
-	}
-
-	/* Be sure to call spank_fini when sbatch exits
-	 */
-	if (atexit((void (*) (void)) spank_fini) < 0)
-		error("Failed to register atexit handler for plugins: %m");
-#endif
-
 	script_name = process_options_first_pass(argc, argv);
-	/* reinit log with new verbosity (if changed by command line) */
-	if (opt.slurm_verbose || opt.quiet) {
-		logopt.stderr_level += opt.slurm_verbose;
-		logopt.stderr_level -= opt.quiet;
-		logopt.prefix_level = 1;
-		slurm_log_alter(logopt, 0, NULL);
-	}
+  script_body = _get_script_buffer(script_name, &script_size);
 
-	if (opt.wrap != NULL) {
-		script_body = _script_wrap(opt.wrap);
-	} else {
-		script_body = _get_script_buffer(script_name, &script_size);
-	}
-	if (script_body == NULL)
-		exit(error_exit);
+  if (script_body == NULL)
+    exit(error_exit);
 
-	if (process_options_second_pass(
+  if (process_options_second_pass(
 				(argc - opt.script_argc),
-				argv,
-				script_name ? slurm_xbasename (script_name) : "stdin",
+				argv, slurm_xbasename(script_name),
 				script_body, script_size) < 0) {
-		error("sbatch parameter parsing");
+		error("submit parameter parsing");
 		exit(error_exit);
 	}
-
-#if 0
-	if (spank_init_post_opt() < 0) {
-		error("Plugin stack post-option processing failed");
-		exit(error_exit);
-	}
-#endif
-
-//FIXME
-#if 0
-	if (opt.get_user_env_time < 0) {
-		/* Moab does not propage the user's resource limits, so
-		 * slurmd determines the values at the same time that it
-		 * gets the user's default environment variables. */
-		(void) _set_rlimit_env();
-	}
-#endif 
 
 	_set_prio_process_env();
-#if 0
-  _set_spank_env();
-#endif
 	_set_submit_dir_env();
 	_set_umask_env();
 	slurm_init_job_desc_msg(&(*desc));
@@ -87,12 +42,6 @@ int slurm_parse_script(int argc, char *argv[], job_desc_msg_t *desc)
 
 	(*desc).script = (char *)script_body;
 
-	/* If can run on multiple clusters find the earliest run time
-	 * and run it there */
-#if 0
-  if (sbatch_set_first_avail_cluster(&(*desc)) != SLURM_SUCCESS)
-		exit(error_exit);
-#endif
 	return 0;
 }
 
@@ -190,16 +139,6 @@ static int _fill_job_desc_from_opts(job_desc_msg_t *desc)
 
 	if (opt.hold)
 		desc->priority     = 0;
-
-#if 0
-	if ((int)opt.geometry[0] > 0) {
-		int i;
-		int dims = slurmdb_setup_cluster_dims();
-
-		for (i=0; i<dims; i++)
-			desc->geometry[i] = opt.geometry[i];
-	}
-#endif
 
 	if (opt.conn_type != (uint16_t) NO_VAL)
 		desc->conn_type = opt.conn_type;
@@ -303,13 +242,6 @@ static int _fill_job_desc_from_opts(job_desc_msg_t *desc)
 	desc->ckpt_dir = opt.ckpt_dir;
 	desc->ckpt_interval = (uint16_t)opt.ckpt_interval;
 
-#if 0
-	if (opt.spank_job_env_size) {
-		desc->spank_job_env      = opt.spank_job_env;
-		desc->spank_job_env_size = opt.spank_job_env_size;
-	}
-#endif
-
 	return 0;
 }
 
@@ -326,21 +258,6 @@ static void _set_exit_code(void)
 			error_exit = i;
 	}
 }
-
-#if 0
-/* Propagate SPANK environment via SLURM_SPANK_ environment variables */
-static void _set_spank_env(void)
-{
-	int i;
-
-	for (i=0; i<opt.spank_job_env_size; i++) {
-		if (setenvfs("SLURM_SPANK_%s", opt.spank_job_env[i]) < 0) {
-			error("unable to set %s in environment",
-			      opt.spank_job_env[i]);
-		}
-	}
-}
-#endif
 
 /* Set SLURM_SUBMIT_DIR environment variable with current state */
 static void _set_submit_dir_env(void)
@@ -536,83 +453,3 @@ fail:
 	*size = 0;
 	return NULL;
 }
-
-/* Wrap a single command string in a simple shell script */
-static char *_script_wrap(char *command_string)
-{
-	char *script = NULL;
-
-	xstrcat(script, "#!/bin/sh\n");
-	xstrcat(script, "# This script was created by sbatch --wrap.\n\n");
-	xstrcat(script, command_string);
-	xstrcat(script, "\n");
-
-	return script;
-}
-
-//FIXME
-#if 0
-/* Set SLURM_RLIMIT_* environment variables with current resource
- * limit values, reset RLIMIT_NOFILE to maximum possible value */
-static int _set_rlimit_env(void)
-{
-	int                  rc = SLURM_SUCCESS;
-	struct rlimit        rlim[1];
-	unsigned long        cur;
-	char                 name[64], *format;
-	slurm_rlimits_slurm_info_t *rli;
-
-	/* Load default limits to be propagated from slurm.conf */
-	slurm_conf_lock();
-	slurm_conf_unlock();
-
-	/* Modify limits with any command-line options */
-	if (opt.propagate && parse_rlimits2( opt.propagate, PROPAGATE_RLIMITS)){
-		error("--propagate=%s is not valid.", opt.propagate);
-		exit(error_exit);
-	}
-
-	for (rli = get_slurm_rlimits_info(); rli->name != NULL; rli++ ) {
-
-		if (rli->propagate_flag != PROPAGATE_RLIMITS)
-			continue;
-
-		if (getrlimit (rli->resource, rlim) < 0) {
-			error ("getrlimit (RLIMIT_%s): %m", rli->name);
-			rc = SLURM_FAILURE;
-			continue;
-		}
-
-		cur = (unsigned long) rlim->rlim_cur;
-		snprintf(name, sizeof(name), "SLURM_RLIMIT_%s", rli->name);
-		if (opt.propagate && rli->propagate_flag == PROPAGATE_RLIMITS)
-			/*
-			 * Prepend 'U' to indicate user requested propagate
-			 */
-			format = "U%lu";
-		else
-			format = "%lu";
-
-		if (setenvf (NULL, name, format, cur) < 0) {
-			error( "unable to set %s in environment", name);
-			rc = SLURM_FAILURE;
-			continue;
-		}
-
-	}
-
-	/*
-	 *  Now increase NOFILE to the max available for this srun
-	 */
-	if (getrlimit (RLIMIT_NOFILE, rlim) < 0)
-	 	return (error ("getrlimit (RLIMIT_NOFILE): %m"));
-
-	if (rlim->rlim_cur < rlim->rlim_max) {
-		rlim->rlim_cur = rlim->rlim_max;
-		if (setrlimit (RLIMIT_NOFILE, rlim) < 0)
-			return (error("Unable to increase max no. files: %m"));
-	}
-
-	return rc;
-}
-#endif

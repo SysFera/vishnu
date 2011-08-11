@@ -126,8 +126,8 @@ class SlurmServer : public BatchServer
      * \return non zero if error
      */
     int
-    computeNbRunJobsAndQueueJobs(std::map<std::string, int>& run,
-          std::map<std::string, int>& que);
+    computeNbRunJobsAndQueueJobs(std::map<std::string, size_t>& run,
+          std::map<std::string, size_t>& que);
 
     /**
      * \brief Function to replace slurm job identifer symbol by its real value in to a path
