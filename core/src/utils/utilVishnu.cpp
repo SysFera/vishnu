@@ -484,16 +484,16 @@ void vishnu::createTmpFile(char* fileName, const std::string& file_content) {
   int  file_descriptor = mkstemp( fileName ) ;
   size_t file_size = file_content.size();
   if( file_descriptor == -1 ) {
-    throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::createTmpFile: Cannot create new tmp file");
+    throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: Cannot create new tmp file");
   }
 
   if(fchmod(file_descriptor, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH )!=0) {
-     throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::createTmpFile: reading or writing rights have"
+     throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: reading or writing rights have"
                                            " not been change on the path. This can lead to an error");
   }
 
   if( write(file_descriptor, file_content.c_str(), file_size) != file_size ) {
-    throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::createTmpFile: Cannot write the content int to"
+    throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: Cannot write the content int to"
                                           "  new created file");
   }
 
@@ -508,11 +508,11 @@ void vishnu::createTmpFile(char* fileName) {
 
   int  file_descriptor = mkstemp( fileName ) ;
   if( file_descriptor == -1 ) {
-    throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::createTmpFile: Cannot create new tmp file");
+    throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: Cannot create new tmp file");
   }
 
   if(fchmod(file_descriptor, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH ) !=0) {
-     throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::createTmpFile: reading or writing rights have not been"
+     throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: reading or writing rights have not been"
                                            "  change on the path. This can lead to an error");
   }
 

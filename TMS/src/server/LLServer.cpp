@@ -426,8 +426,8 @@ LLServer::listQueues(const std::string& optQueueName) {
   TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
   mlistQueues = ecoreFactory->createListQueues();
  
-  std::map<std::string, int> run;
-  std::map<std::string, int> que;
+  std::map<std::string, size_t> run;
+  std::map<std::string, size_t> que;
   computeNbRunJobsAndQueueJobs(run, que);
 
   while(queryInfos)
@@ -494,8 +494,8 @@ LLServer::listQueues(const std::string& optQueueName) {
  * \return raises an exception on error
  */
 int 
-LLServer::computeNbRunJobsAndQueueJobs(std::map<std::string, int>& run, 
-                                       std::map<std::string, int>& que) {
+LLServer::computeNbRunJobsAndQueueJobs(std::map<std::string, size_t>& run, 
+                                       std::map<std::string, size_t>& que) {
 
   LL_element *queryObject;
   LL_element *queryInfos;
