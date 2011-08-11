@@ -246,7 +246,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
     BOOST_CHECK_EQUAL(cancelJob(sessionKey, machineId, jobInfo.getJobId()),0  );
 
     // wait a few seconds and check the success of cancelling job
-    bpt::seconds sleepTime(2);
+    bpt::seconds sleepTime(4);
     boost::this_thread::sleep(sleepTime);
 
     Job job;
