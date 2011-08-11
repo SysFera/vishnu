@@ -28,7 +28,7 @@ int slurm_parse_script(int argc, char *argv[], job_desc_msg_t *desc)
 				(argc - opt.script_argc),
 				argv, slurm_xbasename(script_name),
 				script_body, script_size) < 0) {
-		error("submit parameter parsing");
+		slurm_error("submit parameter parsing");
 		exit(error_exit);
 	}
 
@@ -253,7 +253,7 @@ static void _set_exit_code(void)
 	if (val) {
 		i = atoi(val);
 		if (i == 0)
-			error("SLURM_EXIT_ERROR has zero value");
+			slurm_error("SLURM_EXIT_ERROR has zero value");
 		else
 			error_exit = i;
 	}
@@ -268,12 +268,12 @@ static void _set_submit_dir_env(void)
 		return;
 
 	if ((getcwd(buf, MAXPATHLEN)) == NULL) {
-		error("getcwd failed: %m");
+		slurm_error("getcwd failed: %m");
 		exit(error_exit);
 	}
 
 	if (setenvf(NULL, "SLURM_SUBMIT_DIR", "%s", buf) < 0) {
-		error("unable to set SLURM_SUBMIT_DIR in environment");
+		slurm_error("unable to set SLURM_SUBMIT_DIR in environment");
 		return;
 	}
 }
@@ -293,7 +293,7 @@ static int _set_umask_env(void)
 	sprintf(mask_char, "0%d%d%d",
 		((mask>>6)&07), ((mask>>3)&07), mask&07);
 	if (setenvf(NULL, "SLURM_UMASK", "%s", mask_char) < 0) {
-		error ("unable to set SLURM_UMASK in environment");
+		slurm_error ("unable to set SLURM_UMASK in environment");
 		return SLURM_FAILURE;
 	}
 	return SLURM_SUCCESS;
@@ -314,13 +314,13 @@ static void  _set_prio_process_env(void)
 
 	if ((retval = getpriority (PRIO_PROCESS, 0)) == -1)  {
 		if (errno) {
-			error ("getpriority(PRIO_PROCESS): %m");
+			slurm_error ("getpriority(PRIO_PROCESS): %m");
 			return;
 		}
 	}
 
 	if (setenvf (NULL, "SLURM_PRIO_PROCESS", "%d", retval) < 0) {
-		error ("unable to set SLURM_PRIO_PROCESS in environment");
+		slurm_error ("unable to set SLURM_PRIO_PROCESS in environment");
 		return;
 	}
 
@@ -398,7 +398,7 @@ static void *_get_script_buffer(const char *filename, int *size)
 	} else {
 		fd = open(filename, O_RDONLY);
 		if (fd == -1) {
-			error("Unable to open file %s", filename);
+			slurm_error("Unable to open file %s", filename);
 			goto fail;
 		}
 	}
@@ -425,24 +425,24 @@ static void *_get_script_buffer(const char *filename, int *size)
 	 * Finally we perform some sanity tests on the script.
 	 */
 	if (script_size == 0) {
-		error("Batch script is empty!");
+		slurm_error("Batch script is empty!");
 		goto fail;
 	} else if (slurm_xstring_is_whitespace(buf)) {
-		error("Batch script contains only whitespace!");
+		slurm_error("Batch script contains only whitespace!");
 		goto fail;
 	} else if (!has_shebang(buf, script_size)) {
-		error("This does not look like a batch script.  The first");
-		error("line must start with #! followed by the path"
+		slurm_error("This does not look like a batch script.  The first");
+		slurm_error("line must start with #! followed by the path"
 		      " to an interpreter.");
-		error("For instance: #!/bin/sh");
+		slurm_error("For instance: #!/bin/sh");
 		goto fail;
 	} else if (contains_null_char(buf, script_size)) {
-		error("The SLURM controller does not allow scripts that");
-		error("contain a NULL character '\\0'.");
+		slurm_error("The SLURM controller does not allow scripts that");
+		slurm_error("contain a NULL character '\\0'.");
 		goto fail;
 	} else if (contains_dos_linebreak(buf, script_size)) {
-		error("Batch script contains DOS line breaks (\\r\\n)");
-		error("instead of expected UNIX line breaks (\\n).");
+		slurm_error("Batch script contains DOS line breaks (\\r\\n)");
+		slurm_error("instead of expected UNIX line breaks (\\n).");
 		goto fail;
 	}
 

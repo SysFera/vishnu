@@ -228,7 +228,7 @@ static void _opt_default()
 	opt.gid = getgid();
 
 	if ((getcwd(buf, MAXPATHLEN)) == NULL) {
-		error("getcwd failed: %m");
+		slurm_error("getcwd failed: %m");
 		exit(error_exit);
 	}
 	opt.cwd = slurm_xstrdup(buf);
@@ -357,7 +357,7 @@ static void _set_distribution(task_dist_states_t distribution,
 			*lllp_dist = "block";
 			break;
 		default:
-			error("unknown dist, type %d", distribution);
+			slurm_error("unknown dist, type %d", distribution);
 			break;
 		}
 	}
@@ -460,7 +460,7 @@ _process_env_var(env_vars_t *e, const char *val)
 		if (val != NULL) {
 			*((int *) e->arg) = (int) strtol(val, &end, 10);
 			if (!(end && *end == '\0')) {
-				error("%s=%s invalid. ignoring...",
+				slurm_error("%s=%s invalid. ignoring...",
 				      e->var, val);
 			}
 		}
@@ -488,7 +488,7 @@ _process_env_var(env_vars_t *e, const char *val)
 		if (val != NULL) {
 			opt.slurm_verbose = (int) strtol(val, &end, 10);
 			if (!(end && *end == '\0'))
-				error("%s=%s invalid", e->var, val);
+				slurm_error("%s=%s invalid", e->var, val);
 		}
 		break;
 
@@ -508,7 +508,7 @@ _process_env_var(env_vars_t *e, const char *val)
 		opt.distribution = verify_dist_type2(val,
 						    &opt.plane_size);
 		if (opt.distribution == SLURM_DIST_UNKNOWN)
-			error("distribution type `%s' is invalid", val);
+			slurm_error("distribution type `%s' is invalid", val);
 		break;
 
 	case OPT_NODES:
@@ -516,8 +516,9 @@ _process_env_var(env_vars_t *e, const char *val)
 						   &opt.min_nodes,
 						   &opt.max_nodes );
 		if (opt.nodes_set == false) {
-			error("\"%s=%s\" -- invalid node count. ignoring...",
+			slurm_error("\"%s=%s\" -- invalid node count.",
 			      e->var, val);
+      exit(error_exit);
 		}
 		break;
 
@@ -530,12 +531,6 @@ _process_env_var(env_vars_t *e, const char *val)
 		break;
 
 	case OPT_GEOMETRY:
-#if 0
-    if (verify_geometry2(val, opt.geometry)) {
-			error("\"%s=%s\" -- invalid geometry, ignoring...",
-			      e->var, val);
-		}
-#endif
 		break;
 
 	case OPT_EXCLUSIVE:
@@ -552,7 +547,7 @@ _process_env_var(env_vars_t *e, const char *val)
 		else if ((val[0] == 't') || (val[0] == 'T'))
 			opt.open_mode = OPEN_MODE_TRUNCATE;
 		else
-			error("Invalid SBATCH_OPEN_MODE: %s. Ignored", val);
+			slurm_error("Invalid SBATCH_OPEN_MODE: %s. Ignored", val);
 		break;
 
 	case OPT_NO_REQUEUE:
@@ -569,7 +564,7 @@ _process_env_var(env_vars_t *e, const char *val)
 	case OPT_SIGNAL:
 		if (get_signal_opts2((char *)val, &opt.warn_signal,
 				    &opt.warn_time)) {
-			error("Invalid signal specification: %s", val);
+			slurm_error("Invalid signal specification: %s", val);
 			exit(error_exit);
 		}
 		break;
@@ -939,7 +934,7 @@ static void _opt_batch_script(const char * file, const void *body, int size)
 		else if (!strncmp(line, magic_word2, magic_word_len2)) {
 			ptr = line + magic_word_len2;
 			if (!warned) {
-				error("Change from #SLURM to #SBATCH in your "
+				slurm_error("Change from #SLURM to #SBATCH in your "
 				      "script and verify the options are "
 				      "valid in SLURM sbatch");
 				warned = 1;
@@ -1031,7 +1026,7 @@ static void _set_options(int argc, char **argv)
 				      long_options, &option_index)) != -1) {
 		switch (opt_char) {
 		case '?':
-			error("Consult \"SLURM manual reference\" for more slurm_information");
+			slurm_error("Consult \"SLURM manual reference\" for more slurm_information");
 			exit(error_exit);
 			break;
 		case 'A':
@@ -1052,7 +1047,7 @@ static void _set_options(int argc, char **argv)
 						&opt.cpu_bind_type);
 
 			if (opt.extra_set == false) {
-				error("invalid resource allocation -B `%s'",
+				slurm_error("invalid resource allocation -B `%s'",
 					optarg);
 				exit(error_exit);
 			}
@@ -1088,7 +1083,7 @@ static void _set_options(int argc, char **argv)
 				opt.nodelist = slurm_xstrdup(tmp);
 				free(tmp);
 			} else {
-				error("\"%s\" is not a valid node file",
+				slurm_error("\"%s\" is not a valid node file",
 				      optarg);
 				exit(error_exit);
 			}
@@ -1125,7 +1120,7 @@ static void _set_options(int argc, char **argv)
 			opt.distribution = verify_dist_type2(optarg,
 							    &opt.plane_size);
 			if (opt.distribution == SLURM_DIST_UNKNOWN) {
-				error("distribution type `%s' "
+				slurm_error("distribution type `%s' "
 				      "is not recognized", optarg);
 				exit(error_exit);
 			}
@@ -1146,7 +1141,7 @@ static void _set_options(int argc, char **argv)
 						  &opt.min_nodes,
 						  &opt.max_nodes);
 			if (opt.nodes_set == false) {
-				error("invalid node count `%s'",
+				slurm_error("invalid node count `%s'",
 				      optarg);
 				exit(error_exit);
 			}
@@ -1227,7 +1222,7 @@ static void _set_options(int argc, char **argv)
 		case LONG_OPT_MINCPU:
 			opt.mincpus = _get_int(optarg, "mincpus");
 			if (opt.mincpus < 0) {
-				error("invalid mincpus constraint %s",
+				slurm_error("invalid mincpus constraint %s",
 				      optarg);
 				exit(error_exit);
 			}
@@ -1237,7 +1232,7 @@ static void _set_options(int argc, char **argv)
 				"cores-per-socket");
 			opt.cores_per_socket = _get_int(optarg, "mincores");
 			if (opt.cores_per_socket < 0) {
-				error("invalid mincores constraint %s",
+				slurm_error("invalid mincores constraint %s",
 				      optarg);
 				exit(error_exit);
 			}
@@ -1247,7 +1242,7 @@ static void _set_options(int argc, char **argv)
 				"sockets-per-node");
 			opt.sockets_per_node = _get_int(optarg, "minsockets");
 			if (opt.sockets_per_node < 0) {
-				error("invalid minsockets constraint %s",
+				slurm_error("invalid minsockets constraint %s",
 				      optarg);
 				exit(error_exit);
 			}
@@ -1257,7 +1252,7 @@ static void _set_options(int argc, char **argv)
 				"threads-per-core");
 			opt.threads_per_core = _get_int(optarg, "minthreads");
 			if (opt.threads_per_core < 0) {
-				error("invalid minthreads constraint %s",
+				slurm_error("invalid minthreads constraint %s",
 				      optarg);
 				exit(error_exit);
 			}
@@ -1265,7 +1260,7 @@ static void _set_options(int argc, char **argv)
 		case LONG_OPT_MEM:
 			opt.realmem = (int) str_to_mbytes2(optarg);
 			if (opt.realmem < 0) {
-				error("invalid memory constraint %s",
+				slurm_error("invalid memory constraint %s",
 				      optarg);
 				exit(error_exit);
 			}
@@ -1273,7 +1268,7 @@ static void _set_options(int argc, char **argv)
 		case LONG_OPT_MEM_PER_CPU:
 			opt.mem_per_cpu = (int) str_to_mbytes2(optarg);
 			if (opt.mem_per_cpu < 0) {
-				error("invalid memory constraint %s",
+				slurm_error("invalid memory constraint %s",
 				      optarg);
 				exit(error_exit);
 			}
@@ -1281,7 +1276,7 @@ static void _set_options(int argc, char **argv)
 		case LONG_OPT_TMP:
 			opt.tmpdisk = str_to_mbytes2(optarg);
 			if (opt.tmpdisk < 0) {
-				error("invalid tmp value %s", optarg);
+				slurm_error("invalid tmp value %s", optarg);
 				exit(error_exit);
 			}
 			break;
@@ -1291,21 +1286,21 @@ static void _set_options(int argc, char **argv)
 			break;
 		case LONG_OPT_UID:
 			if (opt.euid != (uid_t) -1) {
-				error("duplicate --uid option");
+				slurm_error("duplicate --uid option");
 				exit(error_exit);
 			}
 			if (uid_from_string (optarg, &opt.euid) < 0) {
-				error("--uid=\"%s\" invalid", optarg);
+				slurm_error("--uid=\"%s\" invalid", optarg);
 				exit(error_exit);
 			}
 			break;
 		case LONG_OPT_GID:
 			if (opt.egid != (gid_t) -1) {
-				error("duplicate --gid option");
+				slurm_error("duplicate --gid option");
 				exit(error_exit);
 			}
 			if (gid_from_string (optarg, &opt.egid) < 0) {
-				error("--gid=\"%s\" invalid", optarg);
+				slurm_error("--gid=\"%s\" invalid", optarg);
 				exit(error_exit);
 			}
 			break;
@@ -1314,14 +1309,14 @@ static void _set_options(int argc, char **argv)
 		case LONG_OPT_BEGIN:
 			opt.begin = parse_time2(optarg, 0);
 			if (opt.begin == 0) {
-				error("Invalid time specification %s", optarg);
+				slurm_error("Invalid time specification %s", optarg);
 				exit(error_exit);
 			}
 			break;
 		case LONG_OPT_MAIL_TYPE:
 			opt.mail_type |= parse_mail_type2(optarg);
 			if (opt.mail_type == 0) {
-				error("--mail-type=%s invalid", optarg);
+				slurm_error("--mail-type=%s invalid", optarg);
 				exit(error_exit);
 			}
 			break;
@@ -1335,7 +1330,7 @@ static void _set_options(int argc, char **argv)
 			else
 				opt.nice = 100;
 			if (abs(opt.nice) > NICE_OFFSET) {
-				error("Invalid nice value, must be between "
+				slurm_error("Invalid nice value, must be between "
 				      "-%d and %d", NICE_OFFSET, NICE_OFFSET);
 				exit(error_exit);
 			}
@@ -1343,7 +1338,7 @@ static void _set_options(int argc, char **argv)
 				uid_t my_uid = getuid();
 				if ((my_uid != 0) &&
 				    (my_uid != slurm_get_slurm_user_id())) {
-					error("Nice value must be "
+					slurm_error("Nice value must be "
 					      "non-negative, value ignored");
 					opt.nice = 0;
 				}
@@ -1452,7 +1447,7 @@ static void _set_options(int argc, char **argv)
 			else if ((optarg[0] == 't') || (optarg[0] == 'T'))
 				opt.open_mode = OPEN_MODE_TRUNCATE;
 			else {
-				error("Invalid --open-mode argument: %s. "
+				slurm_error("Invalid --open-mode argument: %s. "
 				      "Ignored", optarg);
 			}
 			break;
@@ -1489,7 +1484,7 @@ static void _set_options(int argc, char **argv)
 		case LONG_OPT_SIGNAL:
 			if (get_signal_opts2(optarg, &opt.warn_signal,
 					    &opt.warn_time)) {
-				error("Invalid signal specification: %s",
+				slurm_error("Invalid signal specification: %s",
 				      optarg);
 				exit(error_exit);
 			}
@@ -1519,7 +1514,7 @@ static void _set_options(int argc, char **argv)
 	}
 
 	if (optind < argc) {
-		error("Invalid argument: %s", argv[optind]);
+		slurm_error("Invalid argument: %s", argv[optind]);
 		exit(error_exit);
 	}
 
@@ -1618,7 +1613,7 @@ static void _set_pbs_options(int argc, char **argv)
 		case 'm':
 			opt.mail_type |= _parse_pbs_mail_type(optarg);
 			if ((opt.mail_type == 0) && strcasecmp(optarg, "n")) {
-				error("-m=%s invalid", optarg);
+				slurm_error("-m=%s invalid", optarg);
 				exit(error_exit);
 			}
 			break;
@@ -1643,7 +1638,7 @@ static void _set_pbs_options(int argc, char **argv)
 			else
 				opt.nice = 100;
 			if (abs(opt.nice) > NICE_OFFSET) {
-				error("Invalid nice value, must be between "
+				slurm_error("Invalid nice value, must be between "
 				      "-%d and %d", NICE_OFFSET, NICE_OFFSET);
 				exit(error_exit);
 			}
@@ -1669,14 +1664,14 @@ static void _set_pbs_options(int argc, char **argv)
 		case 'z':
 			break;
 		default:
-			error("Unrecognized command line parameter %c",
+			slurm_error("Unrecognized command line parameter %c",
 			      opt_char);
 			exit(error_exit);
 		}
 	}
 
 	if (optind < argc) {
-		error("Invalid argument: %s", argv[optind]);
+		slurm_error("Invalid argument: %s", argv[optind]);
 		exit(error_exit);
 	}
 }
@@ -1799,7 +1794,7 @@ static void _parse_pbs_resource_list(char *rl)
 			i+=5;
 			temp = _get_pbs_option_value(rl, &i);
 			if (!temp) {
-				error("No value given for cput");
+				slurm_error("No value given for cput");
 				exit(error_exit);
 			}
 			xfree(opt.time_limit_str);
@@ -1811,7 +1806,7 @@ static void _parse_pbs_resource_list(char *rl)
 			i+=5;
 			temp = _get_pbs_option_value(rl, &i);
 			if(!temp) {
-				error("No value given for file");
+				slurm_error("No value given for file");
 				exit(error_exit);
 			}
 			end = strlen(temp) - 1;
@@ -1824,7 +1819,7 @@ static void _parse_pbs_resource_list(char *rl)
 			}
 			opt.tmpdisk = str_to_mbytes2(temp);
 			if (opt.tmpdisk < 0) {
-				error("invalid tmp value %s", temp);
+				slurm_error("invalid tmp value %s", temp);
 				exit(error_exit);
 			}
 			xfree(temp);
@@ -1837,7 +1832,7 @@ static void _parse_pbs_resource_list(char *rl)
 			i+=4;
 			temp = _get_pbs_option_value(rl, &i);
 			if(!temp) {
-				error("No value given for mem");
+				slurm_error("No value given for mem");
 				exit(error_exit);
 			}
 			end = strlen(temp) - 1;
@@ -1850,7 +1845,7 @@ static void _parse_pbs_resource_list(char *rl)
 			}
 			opt.realmem = (int) str_to_mbytes2(temp);
 			if (opt.realmem < 0) {
-				error("invalid memory constraint %s", temp);
+				slurm_error("invalid memory constraint %s", temp);
 				exit(error_exit);
 			}
 
@@ -1863,7 +1858,7 @@ static void _parse_pbs_resource_list(char *rl)
 			else
 				opt.nice = 100;
 			if (abs(opt.nice) > NICE_OFFSET) {
-				error("Invalid nice value, must be between "
+				slurm_error("Invalid nice value, must be between "
 				      "-%d and %d", NICE_OFFSET, NICE_OFFSET);
 				exit(error_exit);
 			}
@@ -1872,7 +1867,7 @@ static void _parse_pbs_resource_list(char *rl)
 			i+=6;
 			temp = _get_pbs_option_value(rl, &i);
 			if(!temp) {
-				error("No value given for nodes");
+				slurm_error("No value given for nodes");
 				exit(error_exit);
 			}
 			_parse_pbs_nodes_opts(temp);
@@ -1887,7 +1882,7 @@ static void _parse_pbs_resource_list(char *rl)
 			i+=6;
 			temp = _get_pbs_option_value(rl, &i);
 			if(!temp) {
-				error("No value given for pcput");
+				slurm_error("No value given for pcput");
 				exit(error_exit);
 			}
 			xfree(opt.time_limit_str);
@@ -1909,7 +1904,7 @@ static void _parse_pbs_resource_list(char *rl)
 			i+=9;
 			temp = _get_pbs_option_value(rl, &i);
 			if(!temp) {
-				error("No value given for walltime");
+				slurm_error("No value given for walltime");
 				exit(error_exit);
 			}
 			xfree(opt.time_limit_str);
@@ -1930,7 +1925,7 @@ static bool _opt_verify(void)
 	char *dist = NULL, *lllp_dist = NULL;
 
 	if (opt.quiet && opt.slurm_verbose) {
-		error ("don't specify both --slurm_verbose (-v) and --quiet (-Q)");
+		slurm_error ("don't specify both --slurm_verbose (-v) and --quiet (-Q)");
 		verified = false;
 	}
 
@@ -1953,49 +1948,49 @@ static bool _opt_verify(void)
 
 	/* check for realistic arguments */
 	if (opt.ntasks <= 0) {
-		error("invalid number of tasks (-n %d)", opt.ntasks);
+		slurm_error("invalid number of tasks (-n %d)", opt.ntasks);
 		verified = false;
 	}
 
 	if (opt.cpus_per_task <= 0) {
-		error("invalid number of cpus per task (-c %d)",
+		slurm_error("invalid number of cpus per task (-c %d)",
 		      opt.cpus_per_task);
 		verified = false;
 	}
 
 	if ((opt.min_nodes < 0) || (opt.max_nodes < 0) ||
 	    (opt.max_nodes && (opt.min_nodes > opt.max_nodes))) {
-		error("invalid number of nodes (-N %d-%d)",
+		slurm_error("invalid number of nodes (-N %d-%d)",
 		      opt.min_nodes, opt.max_nodes);
 		verified = false;
 	}
 
 #ifdef HAVE_BGL
 	if (opt.blrtsimage && strchr(opt.blrtsimage, ' ')) {
-		error("invalid BlrtsImage given '%s'", opt.blrtsimage);
+		slurm_error("invalid BlrtsImage given '%s'", opt.blrtsimage);
 		verified = false;
 	}
 #endif
 
 	if (opt.linuximage && strchr(opt.linuximage, ' ')) {
 #ifdef HAVE_BGL
-		error("invalid LinuxImage given '%s'", opt.linuximage);
+		slurm_error("invalid LinuxImage given '%s'", opt.linuximage);
 #else
-		error("invalid CnloadImage given '%s'", opt.linuximage);
+		slurm_error("invalid CnloadImage given '%s'", opt.linuximage);
 #endif
 		verified = false;
 	}
 
 	if (opt.mloaderimage && strchr(opt.mloaderimage, ' ')) {
-		error("invalid MloaderImage given '%s'", opt.mloaderimage);
+		slurm_error("invalid MloaderImage given '%s'", opt.mloaderimage);
 		verified = false;
 	}
 
 	if (opt.ramdiskimage && strchr(opt.ramdiskimage, ' ')) {
 #ifdef HAVE_BGL
-		error("invalid RamDiskImage given '%s'", opt.ramdiskimage);
+		slurm_error("invalid RamDiskImage given '%s'", opt.ramdiskimage);
 #else
-		error("invalid IoloadImage given '%s'", opt.ramdiskimage);
+		slurm_error("invalid IoloadImage given '%s'", opt.ramdiskimage);
 #endif
 		verified = false;
 	}
@@ -2027,7 +2022,7 @@ static bool _opt_verify(void)
 				     opt.ntasks/opt.plane_size, opt.min_nodes,
 				     (opt.min_nodes-1)*opt.plane_size, opt.ntasks);
 #endif
-				error("Too few processes for the requested "
+				slurm_error("Too few processes for the requested "
 				      "{plane,node} distribution");
 				exit(error_exit);
 			}
@@ -2037,18 +2032,18 @@ static bool _opt_verify(void)
 	_set_distribution(opt.distribution, &dist, &lllp_dist);
 	if(dist)
 		if (setenvf(NULL, "SLURM_DISTRIBUTION", "%s", dist)) {
-			error("Can't set SLURM_DISTRIBUTION env variable");
+			slurm_error("Can't set SLURM_DISTRIBUTION env variable");
 		}
 
 	if(opt.distribution == SLURM_DIST_PLANE)
 		if (setenvf(NULL, "SLURM_DIST_PLANESIZE", "%d",
 			    opt.plane_size)) {
-			error("Can't set SLURM_DIST_PLANESIZE env variable");
+			slurm_error("Can't set SLURM_DIST_PLANESIZE env variable");
 		}
 
 	if(lllp_dist)
 		if (setenvf(NULL, "SLURM_DIST_LLLP", "%s", lllp_dist)) {
-			error("Can't set SLURM_DIST_LLLP env variable");
+			slurm_error("Can't set SLURM_DIST_LLLP env variable");
 		}
 
 	/* bound threads/cores from ntasks_cores/sockets */
@@ -2126,11 +2121,11 @@ static bool _opt_verify(void)
 			}
 			opt.distribution = SLURM_DIST_ARBITRARY;
 			if (!_valid_node_list(&opt.nodelist)) {
-				error("Failure getting NodeNames from "
+				slurm_error("Failure getting NodeNames from "
 				      "hostfile");
 				exit(error_exit);
 			} else {
-				debug("loaded nodes (%s) from hostfile",
+				slurm_debug("loaded nodes (%s) from hostfile",
 				      opt.nodelist);
 			}
 		}
@@ -2160,7 +2155,7 @@ static bool _opt_verify(void)
 	if (opt.time_limit_str) {
 		opt.time_limit = time_str2mins2(opt.time_limit_str);
 		if ((opt.time_limit < 0) && (opt.time_limit != INFINITE)) {
-			error("Invalid time limit specification");
+			slurm_error("Invalid time limit specification");
 			exit(error_exit);
 		}
 		if (opt.time_limit == 0)
@@ -2169,7 +2164,7 @@ static bool _opt_verify(void)
 	if (opt.time_min_str) {
 		opt.time_min = time_str2mins2(opt.time_min_str);
 		if ((opt.time_min < 0) && (opt.time_min != INFINITE)) {
-			error("Invalid time-min specification");
+			slurm_error("Invalid time-min specification");
 			exit(error_exit);
 		}
 		if (opt.time_min == 0)
@@ -2180,7 +2175,7 @@ static bool _opt_verify(void)
 		opt.ckpt_interval = time_str2mins2(opt.ckpt_interval_str);
 		if ((opt.ckpt_interval < 0) &&
 		    (opt.ckpt_interval != INFINITE)) {
-			error("Invalid checkpoint interval specification");
+			slurm_error("Invalid checkpoint interval specification");
 			exit(error_exit);
 		}
 	}
@@ -2277,98 +2272,6 @@ static uint16_t _parse_pbs_mail_type(const char *arg)
 	return rc;
 }
 
-/* Functions used by SPANK plugins to read and write job environment
- * variables for use within job's Prolog and/or Epilog */
-extern char *spank_get_job_env(const char *name)
-{
-	int i, len;
-	char *tmp_str = NULL;
-
-	if ((name == NULL) || (name[0] == '\0') ||
-	    (strchr(name, (int)'=') != NULL)) {
-		slurm_seterrno(EINVAL);
-		return NULL;
-	}
-
-	xstrcat(tmp_str, name);
-	xstrcat(tmp_str, "=");
-	len = strlen(tmp_str);
-
-	for (i=0; i<opt.spank_job_env_size; i++) {
-		if (strncmp(opt.spank_job_env[i], tmp_str, len))
-			continue;
-		xfree(tmp_str);
-		return (opt.spank_job_env[i] + len);
-	}
-
-	return NULL;
-}
-
-extern int   spank_set_job_env(const char *name, const char *value,
-			       int overwrite)
-{
-	int i, len;
-	char *tmp_str = NULL;
-
-	if ((name == NULL) || (name[0] == '\0') ||
-	    (strchr(name, (int)'=') != NULL)) {
-		slurm_seterrno(EINVAL);
-		return -1;
-	}
-
-	xstrcat(tmp_str, name);
-	xstrcat(tmp_str, "=");
-	len = strlen(tmp_str);
-	xstrcat(tmp_str, value);
-
-	for (i=0; i<opt.spank_job_env_size; i++) {
-		if (strncmp(opt.spank_job_env[i], tmp_str, len))
-			continue;
-		if (overwrite) {
-			xfree(opt.spank_job_env[i]);
-			opt.spank_job_env[i] = tmp_str;
-		} else
-			xfree(tmp_str);
-		return 0;
-	}
-
-	/* Need to add an entry */
-	opt.spank_job_env_size++;
-	xrealloc(opt.spank_job_env, sizeof(char *) * opt.spank_job_env_size);
-	opt.spank_job_env[i] = tmp_str;
-	return 0;
-}
-
-extern int   spank_unset_job_env(const char *name)
-{
-	int i, j, len;
-	char *tmp_str = NULL;
-
-	if ((name == NULL) || (name[0] == '\0') ||
-	    (strchr(name, (int)'=') != NULL)) {
-		slurm_seterrno(EINVAL);
-		return -1;
-	}
-
-	xstrcat(tmp_str, name);
-	xstrcat(tmp_str, "=");
-	len = strlen(tmp_str);
-
-	for (i=0; i<opt.spank_job_env_size; i++) {
-		if (strncmp(opt.spank_job_env[i], tmp_str, len))
-			continue;
-		xfree(opt.spank_job_env[i]);
-		for (j=(i+1); j<opt.spank_job_env_size; i++, j++)
-			opt.spank_job_env[i] = opt.spank_job_env[j];
-		opt.spank_job_env_size--;
-		if (opt.spank_job_env_size == 0)
-			xfree(opt.spank_job_env);
-		return 0;
-	}
-
-	return 0;	/* not found */
-}
-
 /*
  *  Get a decimal integer from arg.
  *
@@ -2382,12 +2285,12 @@ _get_int(const char *arg, const char *what)
 	long int result = strtol(arg, &p, 10);
 
 	if ((*p != '\0') || (result < 0L)) {
-		error ("Invalid numeric value \"%s\" for %s.", arg, what);
+		slurm_error ("Invalid numeric value \"%s\" for %s.", arg, what);
 		exit(error_exit);
 	}
 
 	if (result > INT_MAX) {
-		error ("Numeric argument (%ld) to big for %s.", result, what);
+		slurm_error ("Numeric argument (%ld) to big for %s.", result, what);
 	}
 
 	return (int) result;
