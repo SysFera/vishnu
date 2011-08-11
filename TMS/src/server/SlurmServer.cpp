@@ -63,10 +63,8 @@ SlurmServer::submit(const char* scriptPath,
     argv[i+1] = const_cast<char*>(cmdsOptions[i].c_str());
   }
 
-  std::cout << "******************vishnu_submit_job**************" << std::endl;
-  std::copy(cmdsOptions.begin(), cmdsOptions.end(), ostream_iterator<std::string>(cout, " "));
-  job_desc_msg_t desc;
-  //parses the scripthPath and sets the options values
+  job_desc_msg_t desc; //The slurm job descriptor
+  //parse the scripthPath and sets the options values
   slurm_parse_script(argc, argv, &desc);
 
   std::string errorMsg;
@@ -114,7 +112,6 @@ SlurmServer::submit(const char* scriptPath,
     sleep (++retries);
   }
 
-  jobId = resp->job_id;
   jobOutputPath ;
   jobErrorPath;
   if(desc.std_out!=NULL) {
@@ -124,7 +121,8 @@ SlurmServer::submit(const char* scriptPath,
     jobErrorPath = desc.std_err;
   }
 
-  //To fill the vishnu job structure 
+  jobId = resp->job_id;
+  //Fill the vishnu job structure 
   fillJobInfo(job, jobId);
 
   if(jobOutputPath.size()!=0) {
@@ -144,7 +142,7 @@ SlurmServer::submit(const char* scriptPath,
 
 /**
  * \brief Function to check if slurm path syntax is correct
- * \param path the path to check
+ * \param path The path to check
  * \param pathInfo The information on path to print
  * \return an error message
  */
@@ -226,7 +224,7 @@ void SlurmServer::replaceSymbolInToJobPath(std::string& path) {
  * \brief Function to cheick if a path contains an excluded slurm symbol by vishnu
  * \param path The path to check
  * \param symbol The excluded symbol
- * \return true if the path contain an exlude symbol
+ * \return true if the path contain an exluded symbol
  */
 bool SlurmServer::containsAnExcludedSlurmSymbols(const std::string& path, std::string& symbol) {
 
@@ -352,7 +350,7 @@ SlurmServer::cancel(const char* jobId) {
     if(errorMsg!=NULL) {
       throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: "+std::string(errorMsg));
     } else {
-      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: Unknown error");
+      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: SlurmServer::cancel: Unknown error");
     }
   } 
   return 0;
@@ -503,7 +501,7 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId){
       job.setJobQueue(slurmJobInfo.partition);
     }
     //Here we multiplie the time_limit by 60 because SLURM time_limit is in minutes
-    if(slurmJobInfo.time_limit < std::numeric_limits<uint32_t>::max()) {
+    if(slurmJobInfo.time_limit < ((std::numeric_limits<uint32_t>::max())/60)) {
       job.setWallClockLimit(60*(slurmJobInfo.time_limit));
     }
     job.setEndDate(slurmJobInfo.end_time);
@@ -521,7 +519,7 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId){
     msymbolMap["\%j"] = vishnu::convertToString(jobId);
     msymbolMap["\%J"] = vishnu::convertToString(jobId);
   } else {
-    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: slurm_load_jobs error");
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: SlurmServer::fillJobInfo: slurm_load_jobs error");
   }
 
   if(job_buffer_ptr!=NULL) {
@@ -537,8 +535,8 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId){
  * \return non zero if error
  */
 int
-SlurmServer::computeNbRunJobsAndQueueJobs(std::map<std::string, int>& run,
-                                       std::map<std::string, int>& que) {
+SlurmServer::computeNbRunJobsAndQueueJobs(std::map<std::string, size_t>& run,
+                                       std::map<std::string, size_t>& que) {
 
   job_info_msg_t * allJobs = NULL;
   int res = slurm_load_jobs((time_t)NULL, &allJobs, 1);
@@ -546,7 +544,7 @@ SlurmServer::computeNbRunJobsAndQueueJobs(std::map<std::string, int>& run,
   if(!res) {
     job_info_t *job = NULL;
     job = allJobs->job_array;
-    for (int i = 0; i < allJobs->record_count; i++) {
+    for (uint32_t i = 0; i < allJobs->record_count; i++) {
       switch(job[i].job_state) {
         case JOB_PENDING: case JOB_SUSPENDED:
           que[job[i].partition]++;
@@ -581,12 +579,12 @@ SlurmServer::listQueues(const std::string& OptqueueName) {
     if(errorMsg!=NULL) {
       throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: "+std::string(errorMsg));
     } else {
-      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: Unknown error");
+      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: SlurmServer::listQueues: Unknown error");
     }
   }
 
-  std::map<std::string, int> run;
-  std::map<std::string, int> que;
+  std::map<std::string, size_t> run;
+  std::map<std::string, size_t> que;
   computeNbRunJobsAndQueueJobs(run, que);
 
   TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
@@ -594,10 +592,10 @@ SlurmServer::listQueues(const std::string& OptqueueName) {
   
   partition = allPartition->partition_array;
   bool OptQueueNameFound = false;
-  for (int i = 0; i < allPartition->record_count; i++) {
+  for (uint32_t i = 0; i < allPartition->record_count; i++) {
 
     if(OptqueueName.size()!=0) {
-      for (int j = 0; j < allPartition->record_count; j++) {
+      for (uint32_t j = 0; j < allPartition->record_count; j++) {
         if(OptqueueName.compare(std::string(partition[j].name))==0) {
           OptQueueNameFound = true;  
           i = j;
@@ -637,7 +635,7 @@ SlurmServer::listQueues(const std::string& OptqueueName) {
     queue->setPriority(convertSlurmPrioToVishnuPrio(partition[i].priority));
 
     //Here we multiplie the max_time by 60 because SLURM max_time in minutes
-    if(partition[i].max_time < std::numeric_limits<uint32_t>::max()) {
+    if(partition[i].max_time < ((std::numeric_limits<uint32_t>::max())/60)) {
         queue->setWallTime(60*partition[i].max_time);
     }
     queue->setMemory(-1);//UNDEFINED in SLURM
@@ -656,8 +654,10 @@ SlurmServer::listQueues(const std::string& OptqueueName) {
 
   mlistQueues->setNbQueues(mlistQueues->getQueues().size());
 
-  slurm_free_partition_info_msg(allPartition);
-  
+  if(allPartition!=NULL) {
+    slurm_free_partition_info_msg(allPartition);
+  }
+
   return mlistQueues;
 }
 

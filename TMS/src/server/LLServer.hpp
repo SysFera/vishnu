@@ -123,8 +123,8 @@ private:
    * \return raises an exception on error
    */
   int 
-  computeNbRunJobsAndQueueJobs(std::map<std::string, int>& run, 
-                               std::map<std::string, int>& que);
+  computeNbRunJobsAndQueueJobs(std::map<std::string, size_t>& run, 
+                               std::map<std::string, size_t>& que);
   /**
    * \brief ListQueues returned
    */
