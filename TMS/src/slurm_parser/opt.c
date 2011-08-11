@@ -581,12 +581,6 @@ _process_env_var(env_vars_t *e, const char *val)
 		break;
 	case OPT_CLUSTERS:
      slurm_addto_char_list(opt.clusters, (char *)val);
-#if 0
-     if (!(opt.clusters = slurmdb_get_info_cluster((char *)val))) {
-			error("'%s' invalid entry for --clusters", val);
-			exit(1);
-		}
-#endif
 		break;
 	default:
 		/* do nothing */
@@ -712,15 +706,6 @@ char *process_options_first_pass(int argc, char **argv)
 	int opt_char, option_index = 0;
 	char *str = NULL;
 
-#if  0
-	struct option *optz = spank_option_table_create(long_options);
-
-	if (!optz) {
-		error("Unable to create options table");
-		exit(error_exit);
-	}
-#endif
-
 	/* initialize option defaults */
 	_opt_default();
 
@@ -731,7 +716,7 @@ char *process_options_first_pass(int argc, char **argv)
 				      long_options, &option_index)) != -1) {
     switch (opt_char) {
       case '?':
-        fprintf(stderr, "Try \"sbatch --help\" for more "
+        fprintf(stderr, "Consult \"SLURM manual reference \" for more "
             "slurm_information\n");
         exit(error_exit);
         break;
@@ -753,9 +738,6 @@ char *process_options_first_pass(int argc, char **argv)
     }
   }
 	xfree(str);
-#if 0
-  spank_option_table_destroy(optz);
-#endif
 
 	if (argc > optind) {
 		int i;
@@ -959,7 +941,7 @@ static void _opt_batch_script(const char * file, const void *body, int size)
 			if (!warned) {
 				error("Change from #SLURM to #SBATCH in your "
 				      "script and verify the options are "
-				      "valid in sbatch");
+				      "valid in SLURM sbatch");
 				warned = 1;
 			}
 		} else {
@@ -1044,21 +1026,12 @@ static void _set_options(int argc, char **argv)
 	int opt_char, option_index = 0, max_val = 0;
 	char *tmp;
 
-#if 0
-	struct option *optz = spank_option_table_create(long_options);
-
-	if (!optz) {
-		error("Unable to create options table");
-		exit(error_exit);
-	}
-#endif
-
 	optind = 0;
 	while((opt_char = getopt_long(argc, argv, opt_string,
 				      long_options, &option_index)) != -1) {
 		switch (opt_char) {
 		case '?':
-			error("Try \"sbatch --help\" for more slurm_information");
+			error("Consult \"SLURM manual reference\" for more slurm_information");
 			exit(error_exit);
 			break;
 		case 'A':
@@ -1121,10 +1094,6 @@ static void _set_options(int argc, char **argv)
 			}
 			break;
       case 'g':
-#if 0
-			if (verify_geometry2(optarg, opt.geometry))
-				exit(error_exit);
-#endif
 			break;
     case 'h':
       break;
@@ -1165,14 +1134,6 @@ static void _set_options(int argc, char **argv)
 			if (opt.clusters)
 				slurm_list_destroy(opt.clusters);
         slurm_addto_char_list(opt.clusters, optarg);
-#if 0
-			if (!(opt.clusters =
-			      slurmdb_get_info_cluster(optarg))) {
-				error("'%s' invalid entry for --clusters",
-				      optarg);
-				exit(1);
-			}
-#endif
 			break;
 		case 'n':
 			opt.ntasks_set = true;
@@ -1349,7 +1310,6 @@ static void _set_options(int argc, char **argv)
 			}
 			break;
 		case LONG_OPT_CONNTYPE:
-			//opt.conn_type = verify_conn_type(optarg);
 			break;
 		case LONG_OPT_BEGIN:
 			opt.begin = parse_time2(optarg, 0);
@@ -1479,7 +1439,6 @@ static void _set_options(int argc, char **argv)
 			opt.reboot = true;
 			break;
 		case LONG_OPT_WRAP:
-			/* handled in process_options_first_pass() */
 			break;
 		case LONG_OPT_GET_USER_ENV:
 			if (optarg)
@@ -1555,13 +1514,6 @@ static void _set_options(int argc, char **argv)
 			opt.export_env = slurm_xstrdup(optarg);
 			break;
 		default:
-#if 0
-			if (spank_process_option (opt_char, optarg) < 0) {
-				error("Unrecognized command line parameter %c",
-				      opt_char);
-				exit(error_exit);
-			}
-#endif
       break;
 		}
 	}
@@ -1571,9 +1523,6 @@ static void _set_options(int argc, char **argv)
 		exit(error_exit);
 	}
 
-#if 0
-	spank_option_table_destroy (optz);
-#endif
 }
 
 static void _proc_get_user_env(char *optarg)

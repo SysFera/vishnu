@@ -129,7 +129,6 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
   cmd << " 2> " << stderrFilePath;
   int ret;
   if((ret=system((cmd.str()).c_str()))) {
-    std::cerr << "Can't execute " << cmd.str() << std::endl;
     vishnu::deleteFile(jobSerializedPath.c_str());
     vishnu::deleteFile(submitOptionsSerializedPath.c_str());
     vishnu::deleteFile(jobUpdateSerializedPath.c_str());
