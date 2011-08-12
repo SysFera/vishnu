@@ -1,0 +1,348 @@
+\hypertarget{classTransferExec}{
+\section{TransferExec Class Reference}
+\label{classTransferExec}\index{TransferExec@{TransferExec}}
+}
+
+
+A useful class to perform a transfer command.  
+
+
+
+
+{\ttfamily \#include $<$FileTransferServer.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classTransferExec_a0afdf6581b6d116af3de73f974495225}{TransferExec} (const \hyperlink{classSessionServer}{SessionServer} \&sessionServer, const std::string \&srcUser, const std::string \&srcMachineName, const std::string \&srcPath, const std::string \&srcUserKey, const std::string \&destUser, const std::string \&destMachineName, const std::string \&destPath, const std::string \&transferId)
+\begin{DoxyCompactList}\small\item\em A constructor by value. \item\end{DoxyCompactList}\item 
+const int \& \hyperlink{classTransferExec_a070847f49ab5d470cac426008bc39071}{getLastExecStatus} () const 
+\begin{DoxyCompactList}\small\item\em Get the last execution return value. \item\end{DoxyCompactList}\item 
+const \hyperlink{classSessionServer}{SessionServer} \& \hyperlink{classTransferExec_a237bc0bbb31f9d96df632b095d85ba6a}{getSessionServer} () const 
+\begin{DoxyCompactList}\small\item\em Get the session server object. \item\end{DoxyCompactList}\item 
+const std::string \& \hyperlink{classTransferExec_aad69ff9ce3ed081962399adcbe423917}{getSrcUser} () const 
+\begin{DoxyCompactList}\small\item\em Get the source user. \item\end{DoxyCompactList}\item 
+const std::string \& \hyperlink{classTransferExec_a8d0cca50b2d2900583d7343b5f3cb9b0}{getSrcMachineName} () const 
+\begin{DoxyCompactList}\small\item\em Get the source machine name. \item\end{DoxyCompactList}\item 
+const std::string \& \hyperlink{classTransferExec_a7425cefb19935efa54276203ce40bfd0}{getSrcPath} () const 
+\begin{DoxyCompactList}\small\item\em Get the source file path. \item\end{DoxyCompactList}\item 
+const std::string \& \hyperlink{classTransferExec_a9281e3a4b3a8cb09470bcddb5fb9c3be}{getSrcUserKey} () const 
+\begin{DoxyCompactList}\small\item\em Get the source user private key path. \item\end{DoxyCompactList}\item 
+const std::string \& \hyperlink{classTransferExec_afe64c0f5f647578942db241ad830584f}{getDestUser} () const 
+\begin{DoxyCompactList}\small\item\em Get the destination user. \item\end{DoxyCompactList}\item 
+const std::string \& \hyperlink{classTransferExec_aae14f691285e71b2e949484accc9c5a2}{getDestMachineName} () const 
+\begin{DoxyCompactList}\small\item\em Get the destination machine name. \item\end{DoxyCompactList}\item 
+const std::string \& \hyperlink{classTransferExec_a272346c2e9436ee54fed818b6db6698a}{getDestPath} () const 
+\begin{DoxyCompactList}\small\item\em Get the destination file path. \item\end{DoxyCompactList}\item 
+const std::string \& \hyperlink{classTransferExec_a9f3567ec4e70971624e3e2b4281bdd5c}{getTransferId} () const 
+\begin{DoxyCompactList}\small\item\em Get the transfer identifier. \item\end{DoxyCompactList}\item 
+const int \& \hyperlink{classTransferExec_a41b8794625e6ec9d2e8ebcccddfa3a5b}{getProcessId} () const 
+\begin{DoxyCompactList}\small\item\em Get the process identifier. \item\end{DoxyCompactList}\item 
+\hypertarget{classTransferExec_acb9e636d549a5555ab434dce1ff59077}{
+void \hyperlink{classTransferExec_acb9e636d549a5555ab434dce1ff59077}{setProcessId} (const int \&processId) const }
+\label{classTransferExec_acb9e636d549a5555ab434dce1ff59077}
+
+\begin{DoxyCompactList}\small\item\em Update the process identifier. \item\end{DoxyCompactList}\item 
+\hypertarget{classTransferExec_a75a2d426509b3c63f2a8f0a658d9596f}{
+void \hyperlink{classTransferExec_a75a2d426509b3c63f2a8f0a658d9596f}{updatePid} (const int \&pid) const }
+\label{classTransferExec_a75a2d426509b3c63f2a8f0a658d9596f}
+
+\begin{DoxyCompactList}\small\item\em Update the process identifier in database. \item\end{DoxyCompactList}\item 
+\hypertarget{classTransferExec_ac345dea738495067a0e10c8cc6ee1874}{
+void \hyperlink{classTransferExec_ac345dea738495067a0e10c8cc6ee1874}{setLastExecStatus} (const int \&status) const }
+\label{classTransferExec_ac345dea738495067a0e10c8cc6ee1874}
+
+\begin{DoxyCompactList}\small\item\em Update the last execution return value. \item\end{DoxyCompactList}\item 
+std::pair$<$ std::string, std::string $>$ \hyperlink{classTransferExec_a661a194a292e717664ae1145f5a151d3}{exec} (const std::string \&cmd) const 
+\begin{DoxyCompactList}\small\item\em To perform a the transfer command. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classTransferExec_a8e8934cb19b7b68568b9801e304ee905}{
+int \hyperlink{classTransferExec_a8e8934cb19b7b68568b9801e304ee905}{mlastExecStatus}}
+\label{classTransferExec_a8e8934cb19b7b68568b9801e304ee905}
+
+\begin{DoxyCompactList}\small\item\em The last execution return value. \item\end{DoxyCompactList}\item 
+\hypertarget{classTransferExec_a1458626695da2b79f45f0e6bcfac06c0}{
+int \hyperlink{classTransferExec_a1458626695da2b79f45f0e6bcfac06c0}{mprocessId}}
+\label{classTransferExec_a1458626695da2b79f45f0e6bcfac06c0}
+
+\begin{DoxyCompactList}\small\item\em The last execution process identifier. \item\end{DoxyCompactList}\item 
+\hypertarget{classTransferExec_afc57a81e071be05043a20982d002bb90}{
+std::string \hyperlink{classTransferExec_afc57a81e071be05043a20982d002bb90}{mtransferId}}
+\label{classTransferExec_afc57a81e071be05043a20982d002bb90}
+
+\begin{DoxyCompactList}\small\item\em The file transfer identifier. \item\end{DoxyCompactList}\item 
+\hypertarget{classTransferExec_a450071a97b63dcfb399ef999bda746e3}{
+\hyperlink{classSessionServer}{SessionServer} \hyperlink{classTransferExec_a450071a97b63dcfb399ef999bda746e3}{msessionServer}}
+\label{classTransferExec_a450071a97b63dcfb399ef999bda746e3}
+
+\begin{DoxyCompactList}\small\item\em The session server object. \item\end{DoxyCompactList}\item 
+\hypertarget{classTransferExec_aa1baf1be0da772754962d0e05e9b285a}{
+std::string \hyperlink{classTransferExec_aa1baf1be0da772754962d0e05e9b285a}{msrcUser}}
+\label{classTransferExec_aa1baf1be0da772754962d0e05e9b285a}
+
+\begin{DoxyCompactList}\small\item\em The source user. \item\end{DoxyCompactList}\item 
+\hypertarget{classTransferExec_a1649933e19f5ae326c94e6b19c817b5a}{
+std::string \hyperlink{classTransferExec_a1649933e19f5ae326c94e6b19c817b5a}{msrcMachineName}}
+\label{classTransferExec_a1649933e19f5ae326c94e6b19c817b5a}
+
+\begin{DoxyCompactList}\small\item\em The source machineName. \item\end{DoxyCompactList}\item 
+\hypertarget{classTransferExec_af56644183b7d35fd54f47fba51e3842c}{
+std::string \hyperlink{classTransferExec_af56644183b7d35fd54f47fba51e3842c}{msrcPath}}
+\label{classTransferExec_af56644183b7d35fd54f47fba51e3842c}
+
+\begin{DoxyCompactList}\small\item\em The source file path. \item\end{DoxyCompactList}\item 
+\hypertarget{classTransferExec_a899cd8a5d337ea443b1abbfa379edda8}{
+std::string \hyperlink{classTransferExec_a899cd8a5d337ea443b1abbfa379edda8}{msrcUserKey}}
+\label{classTransferExec_a899cd8a5d337ea443b1abbfa379edda8}
+
+\begin{DoxyCompactList}\small\item\em The source user private key path. \item\end{DoxyCompactList}\item 
+\hypertarget{classTransferExec_a5106751108f182c2b7f96e1dee457025}{
+std::string \hyperlink{classTransferExec_a5106751108f182c2b7f96e1dee457025}{mdestUser}}
+\label{classTransferExec_a5106751108f182c2b7f96e1dee457025}
+
+\begin{DoxyCompactList}\small\item\em The destination user. \item\end{DoxyCompactList}\item 
+\hypertarget{classTransferExec_a46cc3000f197ba4e8d86e847ab57b204}{
+std::string \hyperlink{classTransferExec_a46cc3000f197ba4e8d86e847ab57b204}{mdestMachineName}}
+\label{classTransferExec_a46cc3000f197ba4e8d86e847ab57b204}
+
+\begin{DoxyCompactList}\small\item\em The destination machine name. \item\end{DoxyCompactList}\item 
+\hypertarget{classTransferExec_aa0f810bf6c0a6d4682bffab9c7fae5ec}{
+std::string \hyperlink{classTransferExec_aa0f810bf6c0a6d4682bffab9c7fae5ec}{mdestPath}}
+\label{classTransferExec_aa0f810bf6c0a6d4682bffab9c7fae5ec}
+
+\begin{DoxyCompactList}\small\item\em The destination file path. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A useful class to perform a transfer command. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classTransferExec_a0afdf6581b6d116af3de73f974495225}{
+\index{TransferExec@{TransferExec}!TransferExec@{TransferExec}}
+\index{TransferExec@{TransferExec}!TransferExec@{TransferExec}}
+\subsubsection[{TransferExec}]{\setlength{\rightskip}{0pt plus 5cm}TransferExec::TransferExec (
+\begin{DoxyParamCaption}
+\item[{const {\bf SessionServer} \&}]{ sessionServer, }
+\item[{const std::string \&}]{ srcUser, }
+\item[{const std::string \&}]{ srcMachineName, }
+\item[{const std::string \&}]{ srcPath, }
+\item[{const std::string \&}]{ srcUserKey, }
+\item[{const std::string \&}]{ destUser, }
+\item[{const std::string \&}]{ destMachineName, }
+\item[{const std::string \&}]{ destPath, }
+\item[{const std::string \&}]{ transferId}
+\end{DoxyParamCaption}
+)}}
+\label{classTransferExec_a0afdf6581b6d116af3de73f974495225}
+
+
+A constructor by value. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionServer}]a session server object \item[{\em srcUser}]the source user \item[{\em srcMachineName}]the source machine name \item[{\em srcPath}]the source file path \item[{\em srcUserKey}]the source user private key path \item[{\em destUser}]the destination user \item[{\em destMachineName}]the destination machine name \item[{\em destPath}]the destination file path \item[{\em transferId}]The transfer identifier \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classTransferExec_a661a194a292e717664ae1145f5a151d3}{
+\index{TransferExec@{TransferExec}!exec@{exec}}
+\index{exec@{exec}!TransferExec@{TransferExec}}
+\subsubsection[{exec}]{\setlength{\rightskip}{0pt plus 5cm}std::pair$<$std::string, std::string$>$ TransferExec::exec (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ cmd}
+\end{DoxyParamCaption}
+) const}}
+\label{classTransferExec_a661a194a292e717664ae1145f5a151d3}
+
+
+To perform a the transfer command. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em cmd}]the transfer command to perform \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The command output or error 
+\end{DoxyReturn}
+\hypertarget{classTransferExec_aae14f691285e71b2e949484accc9c5a2}{
+\index{TransferExec@{TransferExec}!getDestMachineName@{getDestMachineName}}
+\index{getDestMachineName@{getDestMachineName}!TransferExec@{TransferExec}}
+\subsubsection[{getDestMachineName}]{\setlength{\rightskip}{0pt plus 5cm}const std::string\& TransferExec::getDestMachineName (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classTransferExec_aae14f691285e71b2e949484accc9c5a2}
+
+
+Get the destination machine name. 
+
+\begin{DoxyReturn}{Returns}
+the destination machine name 
+\end{DoxyReturn}
+\hypertarget{classTransferExec_a272346c2e9436ee54fed818b6db6698a}{
+\index{TransferExec@{TransferExec}!getDestPath@{getDestPath}}
+\index{getDestPath@{getDestPath}!TransferExec@{TransferExec}}
+\subsubsection[{getDestPath}]{\setlength{\rightskip}{0pt plus 5cm}const std::string\& TransferExec::getDestPath (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classTransferExec_a272346c2e9436ee54fed818b6db6698a}
+
+
+Get the destination file path. 
+
+\begin{DoxyReturn}{Returns}
+the destination file path 
+\end{DoxyReturn}
+\hypertarget{classTransferExec_afe64c0f5f647578942db241ad830584f}{
+\index{TransferExec@{TransferExec}!getDestUser@{getDestUser}}
+\index{getDestUser@{getDestUser}!TransferExec@{TransferExec}}
+\subsubsection[{getDestUser}]{\setlength{\rightskip}{0pt plus 5cm}const std::string\& TransferExec::getDestUser (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classTransferExec_afe64c0f5f647578942db241ad830584f}
+
+
+Get the destination user. 
+
+\begin{DoxyReturn}{Returns}
+the destination user 
+\end{DoxyReturn}
+\hypertarget{classTransferExec_a070847f49ab5d470cac426008bc39071}{
+\index{TransferExec@{TransferExec}!getLastExecStatus@{getLastExecStatus}}
+\index{getLastExecStatus@{getLastExecStatus}!TransferExec@{TransferExec}}
+\subsubsection[{getLastExecStatus}]{\setlength{\rightskip}{0pt plus 5cm}const int\& TransferExec::getLastExecStatus (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classTransferExec_a070847f49ab5d470cac426008bc39071}
+
+
+Get the last execution return value. 
+
+\begin{DoxyReturn}{Returns}
+the last execution return value 
+\end{DoxyReturn}
+\hypertarget{classTransferExec_a41b8794625e6ec9d2e8ebcccddfa3a5b}{
+\index{TransferExec@{TransferExec}!getProcessId@{getProcessId}}
+\index{getProcessId@{getProcessId}!TransferExec@{TransferExec}}
+\subsubsection[{getProcessId}]{\setlength{\rightskip}{0pt plus 5cm}const int\& TransferExec::getProcessId (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classTransferExec_a41b8794625e6ec9d2e8ebcccddfa3a5b}
+
+
+Get the process identifier. 
+
+\begin{DoxyReturn}{Returns}
+the process identifier 
+\end{DoxyReturn}
+\hypertarget{classTransferExec_a237bc0bbb31f9d96df632b095d85ba6a}{
+\index{TransferExec@{TransferExec}!getSessionServer@{getSessionServer}}
+\index{getSessionServer@{getSessionServer}!TransferExec@{TransferExec}}
+\subsubsection[{getSessionServer}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf SessionServer}\& TransferExec::getSessionServer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classTransferExec_a237bc0bbb31f9d96df632b095d85ba6a}
+
+
+Get the session server object. 
+
+\begin{DoxyReturn}{Returns}
+the session server object 
+\end{DoxyReturn}
+\hypertarget{classTransferExec_a8d0cca50b2d2900583d7343b5f3cb9b0}{
+\index{TransferExec@{TransferExec}!getSrcMachineName@{getSrcMachineName}}
+\index{getSrcMachineName@{getSrcMachineName}!TransferExec@{TransferExec}}
+\subsubsection[{getSrcMachineName}]{\setlength{\rightskip}{0pt plus 5cm}const std::string\& TransferExec::getSrcMachineName (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classTransferExec_a8d0cca50b2d2900583d7343b5f3cb9b0}
+
+
+Get the source machine name. 
+
+\begin{DoxyReturn}{Returns}
+the source machine name 
+\end{DoxyReturn}
+\hypertarget{classTransferExec_a7425cefb19935efa54276203ce40bfd0}{
+\index{TransferExec@{TransferExec}!getSrcPath@{getSrcPath}}
+\index{getSrcPath@{getSrcPath}!TransferExec@{TransferExec}}
+\subsubsection[{getSrcPath}]{\setlength{\rightskip}{0pt plus 5cm}const std::string\& TransferExec::getSrcPath (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classTransferExec_a7425cefb19935efa54276203ce40bfd0}
+
+
+Get the source file path. 
+
+\begin{DoxyReturn}{Returns}
+the source file path 
+\end{DoxyReturn}
+\hypertarget{classTransferExec_aad69ff9ce3ed081962399adcbe423917}{
+\index{TransferExec@{TransferExec}!getSrcUser@{getSrcUser}}
+\index{getSrcUser@{getSrcUser}!TransferExec@{TransferExec}}
+\subsubsection[{getSrcUser}]{\setlength{\rightskip}{0pt plus 5cm}const std::string\& TransferExec::getSrcUser (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classTransferExec_aad69ff9ce3ed081962399adcbe423917}
+
+
+Get the source user. 
+
+\begin{DoxyReturn}{Returns}
+the source user 
+\end{DoxyReturn}
+\hypertarget{classTransferExec_a9281e3a4b3a8cb09470bcddb5fb9c3be}{
+\index{TransferExec@{TransferExec}!getSrcUserKey@{getSrcUserKey}}
+\index{getSrcUserKey@{getSrcUserKey}!TransferExec@{TransferExec}}
+\subsubsection[{getSrcUserKey}]{\setlength{\rightskip}{0pt plus 5cm}const std::string\& TransferExec::getSrcUserKey (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classTransferExec_a9281e3a4b3a8cb09470bcddb5fb9c3be}
+
+
+Get the source user private key path. 
+
+\begin{DoxyReturn}{Returns}
+the source user private key path 
+\end{DoxyReturn}
+\hypertarget{classTransferExec_a9f3567ec4e70971624e3e2b4281bdd5c}{
+\index{TransferExec@{TransferExec}!getTransferId@{getTransferId}}
+\index{getTransferId@{getTransferId}!TransferExec@{TransferExec}}
+\subsubsection[{getTransferId}]{\setlength{\rightskip}{0pt plus 5cm}const std::string\& TransferExec::getTransferId (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classTransferExec_a9f3567ec4e70971624e3e2b4281bdd5c}
+
+
+Get the transfer identifier. 
+
+\begin{DoxyReturn}{Returns}
+the file transfer identifier 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+FMS/src/server/\hyperlink{FileTransferServer_8hpp}{FileTransferServer.hpp}\end{DoxyCompactItemize}

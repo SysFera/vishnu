@@ -1,0 +1,93 @@
+\hypertarget{classToolFactory}{
+\section{ToolFactory Class Reference}
+\label{classToolFactory}\index{ToolFactory@{ToolFactory}}
+}
+
+
+Factory to generate tools.  
+
+
+
+
+{\ttfamily \#include $<$ToolFactory.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classLogTool}{LogTool} $\ast$ \hyperlink{classToolFactory_a1142003b41b2c25bd52c26c9044424ab}{getTool} (int type, int argc, char $\ast$$\ast$argv, string mid)
+\begin{DoxyCompactList}\small\item\em To get a tool of type 'type'. \item\end{DoxyCompactList}\item 
+\hypertarget{classToolFactory_a9ef12e4b45da9e15ccabf48a3d3909b9}{
+\hyperlink{classToolFactory_a9ef12e4b45da9e15ccabf48a3d3909b9}{$\sim$ToolFactory} ()}
+\label{classToolFactory_a9ef12e4b45da9e15ccabf48a3d3909b9}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classToolFactory}{ToolFactory} $\ast$ \hyperlink{classToolFactory_afdefb798d41d16f626cfe22fd7e1a9fe}{getInstance} ()
+\begin{DoxyCompactList}\small\item\em To get the singleton instance. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classToolFactory_a1e4e3a92631af6443e633cdc10cfbe9f}{
+\hyperlink{classToolFactory_a1e4e3a92631af6443e633cdc10cfbe9f}{ToolFactory} ()}
+\label{classToolFactory_a1e4e3a92631af6443e633cdc10cfbe9f}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classToolFactory_a94615959c6938ef017dd1ac42ca4d3cc}{
+static \hyperlink{classToolFactory}{ToolFactory} $\ast$ \hyperlink{classToolFactory_a94615959c6938ef017dd1ac42ca4d3cc}{mfact}}
+\label{classToolFactory_a94615959c6938ef017dd1ac42ca4d3cc}
+
+\begin{DoxyCompactList}\small\item\em The singleton instance. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Factory to generate tools. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classToolFactory_afdefb798d41d16f626cfe22fd7e1a9fe}{
+\index{ToolFactory@{ToolFactory}!getInstance@{getInstance}}
+\index{getInstance@{getInstance}!ToolFactory@{ToolFactory}}
+\subsubsection[{getInstance}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf ToolFactory}$\ast$ ToolFactory::getInstance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classToolFactory_afdefb798d41d16f626cfe22fd7e1a9fe}
+
+
+To get the singleton instance. 
+
+\begin{DoxyReturn}{Returns}
+The only instance of the factory 
+\end{DoxyReturn}
+\hypertarget{classToolFactory_a1142003b41b2c25bd52c26c9044424ab}{
+\index{ToolFactory@{ToolFactory}!getTool@{getTool}}
+\index{getTool@{getTool}!ToolFactory@{ToolFactory}}
+\subsubsection[{getTool}]{\setlength{\rightskip}{0pt plus 5cm}{\bf LogTool}$\ast$ ToolFactory::getTool (
+\begin{DoxyParamCaption}
+\item[{int}]{ type, }
+\item[{int}]{ argc, }
+\item[{char $\ast$$\ast$}]{ argv, }
+\item[{string}]{ mid}
+\end{DoxyParamCaption}
+)}}
+\label{classToolFactory_a1142003b41b2c25bd52c26c9044424ab}
+
+
+To get a tool of type 'type'. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em type,:}]The type of the tool to create \item[{\em argc,:}]Argc from main \item[{\em argv,:}]Argv from main \item[{\em mid,:}]The machine id the log tool will run \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The created tool 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+IMS/src/server/controller/logTool/\hyperlink{ToolFactory_8hpp}{ToolFactory.hpp}\end{DoxyCompactItemize}

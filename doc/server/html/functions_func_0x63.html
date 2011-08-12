@@ -72,6 +72,7 @@
 : <a class="el" href="classBatchServer.html#af40bbd83fa2bd1f1720e29800227cdb0">BatchServer</a>
 , <a class="el" href="classLLServer.html#ac547f34f2fcdfb1a8950de77fd8377e1">LLServer</a>
 , <a class="el" href="classTorqueServer.html#a18f3c5c500957a5a14f64f3c34252ae5">TorqueServer</a>
+, <a class="el" href="classSlurmServer.html#a5965b0689881cee596641c47135357e7">SlurmServer</a>
 </li>
 <li>cancelFMS()
 : <a class="el" href="classProcessCtlProxy.html#a5826e2e3351f9adb6d0332c97e8c89f2">ProcessCtlProxy</a>
@@ -118,6 +119,9 @@
 <li>checkSessionId()
 : <a class="el" href="classQueryServer.html#aab30c247fe7f71f28ef30d28d78b23e2">QueryServer&lt; QueryParameters, ListObject &gt;</a>
 </li>
+<li>checkSLURMOutPutPath()
+: <a class="el" href="classSlurmServer.html#a6c33cb8cae0ca873cd8b59fe5df85634">SlurmServer</a>
+</li>
 <li>checkSshParams()
 : <a class="el" href="classSSHJobExec.html#a259bd8021df6638c9dff43ebe416f25d">SSHJobExec</a>
 </li>
@@ -140,11 +144,11 @@
 , <a class="el" href="classFileTransferServer.html#af0dbce6cdaeaf7fd5df4cd19c9b51222">FileTransferServer</a>
 </li>
 <li>chgrp()
-: <a class="el" href="classRemoteFileProxy.html#aa531dc112c82a1a60e09006a940638f1">RemoteFileProxy</a>
+: <a class="el" href="classFileProxy.html#ab2917ca9b79dd0eb7ab1c26d70e70987">FileProxy</a>
+, <a class="el" href="classLocalFileProxy.html#a10dde3f07320a91da934b90b26150dee">LocalFileProxy</a>
+, <a class="el" href="classRemoteFileProxy.html#aa531dc112c82a1a60e09006a940638f1">RemoteFileProxy</a>
 , <a class="el" href="classFile.html#ac49c7da7767921e6c97263ecc30cede6">File</a>
 , <a class="el" href="classSSHFile.html#aa0b50bce63279fd0c1e14e7b9058b900">SSHFile</a>
-, <a class="el" href="classFileProxy.html#ab2917ca9b79dd0eb7ab1c26d70e70987">FileProxy</a>
-, <a class="el" href="classLocalFileProxy.html#a10dde3f07320a91da934b90b26150dee">LocalFileProxy</a>
 </li>
 <li>chmod()
 : <a class="el" href="classFileProxy.html#aff09861e6910e2d2d11c6971426cbf84">FileProxy</a>
@@ -174,13 +178,14 @@
 : <a class="el" href="classCommandServer.html#aa15f07a3768c8b15ace8b470d3ff9b34">CommandServer</a>
 </li>
 <li>computeNbRunJobsAndQueueJobs()
-: <a class="el" href="classLLServer.html#af3ed7ec67ee318e43b9b8bb771cbc479">LLServer</a>
+: <a class="el" href="classLLServer.html#a3a9587a14a7cfb5e308b0f8173649cf9">LLServer</a>
+, <a class="el" href="classSlurmServer.html#a2b7eabbb5025b76e1828001d946a267e">SlurmServer</a>
 </li>
 <li>Configuration()
 : <a class="el" href="classConfiguration.html#a779947337bf652f0e773cb29f37f14ba">Configuration</a>
 </li>
 <li>ConfigurationProxy()
-: <a class="el" href="classConfigurationProxy.html#a43efe8fc92cd6fa8bf44528b689654c6">ConfigurationProxy</a>
+: <a class="el" href="classConfigurationProxy.html#ad017715ce1a21c5c552a12214890ae03">ConfigurationProxy</a>
 </li>
 <li>ConfigurationServer()
 : <a class="el" href="classConfigurationServer.html#a56576161624c4cb62b332079efc733b9">ConfigurationServer</a>
@@ -189,15 +194,15 @@
 : <a class="el" href="classOptionValueProxy.html#a2d4ef21b234a046918844158a5c9197f">OptionValueProxy</a>
 </li>
 <li>configureOption()
-: <a class="el" href="classOptionValueProxy.html#ae6db8f1eb397361e86a37c45afca234f">OptionValueProxy</a>
-, <a class="el" href="classOptionValueServer.html#afe5c33ad15ac74fe72690c8d54302729">OptionValueServer</a>
+: <a class="el" href="classOptionValueServer.html#afe5c33ad15ac74fe72690c8d54302729">OptionValueServer</a>
+, <a class="el" href="classOptionValueProxy.html#ae6db8f1eb397361e86a37c45afca234f">OptionValueProxy</a>
 </li>
 <li>connect()
 : <a class="el" href="classPOSTGREDatabase.html#a758b0d66ddda58296932242533000846">POSTGREDatabase</a>
-, <a class="el" href="classSessionProxy.html#a43aac256a75c6edafc54a796e149a2f0">SessionProxy</a>
-, <a class="el" href="classOracleDatabase.html#a4a93e348aa699fb34d62edc64dc8d5fd">OracleDatabase</a>
 , <a class="el" href="classDatabase.html#aed0ada648871f841cfbe08bc1ee1bf92">Database</a>
 , <a class="el" href="classMYSQLDatabase.html#a3e0dc34a2b20ff76e5fa39cbe340c5d7">MYSQLDatabase</a>
+, <a class="el" href="classOracleDatabase.html#a4a93e348aa699fb34d62edc64dc8d5fd">OracleDatabase</a>
+, <a class="el" href="classSessionProxy.html#a43aac256a75c6edafc54a796e149a2f0">SessionProxy</a>
 </li>
 <li>connectProcess()
 : <a class="el" href="classProcessServer.html#affb3bba539691ff8e05890a9a98cea7a">ProcessServer</a>
@@ -211,6 +216,9 @@
 <li>contains()
 : <a class="el" href="classMapperRegistry.html#a396daab59d9e55eaafcdbcbdfcf6ef71">MapperRegistry</a>
 </li>
+<li>containsAnExcludedSlurmSymbols()
+: <a class="el" href="classSlurmServer.html#a81c65cc4a6b83c291b5ec2c8ca028169">SlurmServer</a>
+</li>
 <li>convertBatchTypeToString()
 : <a class="el" href="classSSHJobExec.html#a7299a222321c1ca1e32db976b1df79a2">SSHJobExec</a>
 </li>
@@ -223,11 +231,20 @@
 <li>convertLLStateToVishnuState()
 : <a class="el" href="classLLServer.html#a0691e56eda4540ad4379a60ce1e5f3f5">LLServer</a>
 </li>
+<li>convertSlurmPrioToVishnuPrio()
+: <a class="el" href="classSlurmServer.html#a307212f4e936651b7c9f98c6878ff94c">SlurmServer</a>
+</li>
+<li>convertSlurmStateToVishnuState()
+: <a class="el" href="classSlurmServer.html#a294e9fcc0e094584645838773a5f454e">SlurmServer</a>
+</li>
 <li>convertTorquePrioToVishnuPrio()
 : <a class="el" href="classTorqueServer.html#a2427d2d3c69cf28f779d22396383e4d4">TorqueServer</a>
 </li>
 <li>convertTorqueStateToVishnuState()
 : <a class="el" href="classTorqueServer.html#a5fb51c751187a2bd49598aee2b0e3b18">TorqueServer</a>
+</li>
+<li>convertToSlurmJobId()
+: <a class="el" href="classSlurmServer.html#a395cdd78cbe080d1834b403f3712402a">SlurmServer</a>
 </li>
 <li>convertToTimeType()
 : <a class="el" href="classJobServer.html#a01467503a79019299b03e3903cb334c6">JobServer</a>
@@ -247,15 +264,15 @@
 </li>
 <li>cp()
 : <a class="el" href="classLocalFileProxy.html#a262f742c0188d1eccd0eb16a2eca72b8">LocalFileProxy</a>
-, <a class="el" href="classRemoteFileProxy.html#a17ea6be4c77a0779317c69b0eb21b793">RemoteFileProxy</a>
-, <a class="el" href="classSSHFile.html#af656c34ec5d57decce27bbe82eba0b3f">SSHFile</a>
-, <a class="el" href="classFile.html#a29eed199fb54187949ecd0cb5828a376">File</a>
 , <a class="el" href="classFileProxy.html#a857ef4fd0f9b469e0d6edb8a7b932f18">FileProxy</a>
+, <a class="el" href="classFile.html#a29eed199fb54187949ecd0cb5828a376">File</a>
+, <a class="el" href="classSSHFile.html#af656c34ec5d57decce27bbe82eba0b3f">SSHFile</a>
+, <a class="el" href="classRemoteFileProxy.html#a17ea6be4c77a0779317c69b0eb21b793">RemoteFileProxy</a>
 </li>
 <li>cpAsync()
-: <a class="el" href="classRemoteFileProxy.html#a28406e593498d4cf3fd525de930410a2">RemoteFileProxy</a>
+: <a class="el" href="classFileProxy.html#afb7956f9e460ebf18622e5240f4f9dbf">FileProxy</a>
 , <a class="el" href="classLocalFileProxy.html#a8edb18eefdde2d0daea34aca515579fb">LocalFileProxy</a>
-, <a class="el" href="classFileProxy.html#afb7956f9e460ebf18622e5240f4f9dbf">FileProxy</a>
+, <a class="el" href="classRemoteFileProxy.html#a28406e593498d4cf3fd525de930410a2">RemoteFileProxy</a>
 </li>
 <li>createDatabaseInstance()
 : <a class="el" href="classDbFactory.html#a89ba3d52c600515207220dc16f2a9563">DbFactory</a>
@@ -265,7 +282,7 @@
 </li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jul 8 2011 10:36:04 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Aug 12 2011 16:48:13 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

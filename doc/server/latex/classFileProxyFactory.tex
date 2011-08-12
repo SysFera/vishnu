@@ -1,0 +1,50 @@
+\hypertarget{classFileProxyFactory}{
+\section{FileProxyFactory Class Reference}
+\label{classFileProxyFactory}\index{FileProxyFactory@{FileProxyFactory}}
+}
+
+
+A factory class for the FileProxys classes.  
+
+
+
+
+{\ttfamily \#include $<$FileProxyFactory.hpp$>$}
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classFileProxy}{FileProxy} $\ast$ \hyperlink{classFileProxyFactory_ac433a4aa79e178202b7bb841a9b22054}{getFileProxy} (const \hyperlink{classSessionProxy}{SessionProxy} \&sessionProxy, const std::string \&path, const std::string \&user=\char`\"{}\char`\"{})
+\begin{DoxyCompactList}\small\item\em The factory function. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A factory class for the FileProxys classes. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classFileProxyFactory_ac433a4aa79e178202b7bb841a9b22054}{
+\index{FileProxyFactory@{FileProxyFactory}!getFileProxy@{getFileProxy}}
+\index{getFileProxy@{getFileProxy}!FileProxyFactory@{FileProxyFactory}}
+\subsubsection[{getFileProxy}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf FileProxy}$\ast$ FileProxyFactory::getFileProxy (
+\begin{DoxyParamCaption}
+\item[{const {\bf SessionProxy} \&}]{ sessionProxy, }
+\item[{const std::string \&}]{ path, }
+\item[{const std::string \&}]{ user = {\ttfamily \char`\"{}\char`\"{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFileProxyFactory_ac433a4aa79e178202b7bb841a9b22054}
+
+
+The factory function. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionProxy}]the session proxy object \item[{\em path}]the path of the file to build \item[{\em user}]the owner of the file \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a new file proxy object 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+FMS/src/client/\hyperlink{FileProxyFactory_8hpp}{FileProxyFactory.hpp}\end{DoxyCompactItemize}

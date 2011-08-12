@@ -1,0 +1,175 @@
+\hypertarget{classThresholdServer}{
+\section{ThresholdServer Class Reference}
+\label{classThresholdServer}\index{ThresholdServer@{ThresholdServer}}
+}
+
+
+Server that link the thresholds and the database.  
+
+
+
+
+{\ttfamily \#include $<$ThresholdServer.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classThresholdServer_a14f5953a7fd2d049e01b949dd1c98369}{ThresholdServer} (const \hyperlink{classUserServer}{UserServer} session)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hyperlink{classThresholdServer_a068807807db72b6e7b1be4578773e70c}{ThresholdServer} (const \hyperlink{classUserServer}{UserServer} session, IMS\_\-Data::ThresholdOp op)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classThresholdServer_a39a35ed3f8dd28befff922f9e04cce2f}{
+\hyperlink{classThresholdServer_a39a35ed3f8dd28befff922f9e04cce2f}{$\sim$ThresholdServer} ()}
+\label{classThresholdServer_a39a35ed3f8dd28befff922f9e04cce2f}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\item 
+void \hyperlink{classThresholdServer_af2ced48c09e928b0385cfa21e3f15e4b}{setThreshold} (IMS\_\-Data::Threshold\_\-ptr tree)
+\begin{DoxyCompactList}\small\item\em To set a threshold. \item\end{DoxyCompactList}\item 
+IMS\_\-Data::ListThreshold\_\-ptr \hyperlink{classThresholdServer_a8b0a922ae428b6de5f2940d889801b6e}{getThreshold} ()
+\begin{DoxyCompactList}\small\item\em To get the thresholds. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classThresholdServer_a22403dda97498796a2aaa4c7d7763153}{getUserAndMachine} (IMS\_\-Data::Threshold\_\-ptr tree, string \&nuid, string \&nmid)
+\begin{DoxyCompactList}\small\item\em To get the numerical userid and numerical machineid corresponding to a threshold. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classThresholdServer_af68236fde6dce7aab91703c0b544eb86}{checkExist} (IMS\_\-Data::Threshold\_\-ptr tree)
+\begin{DoxyCompactList}\small\item\em Check if a threshold of this type on this machine is already defined. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classThresholdServer_ac1ed99060b6e380f0af59a0cf6bba8b0}{
+int \hyperlink{classThresholdServer_ac1ed99060b6e380f0af59a0cf6bba8b0}{mvishnuId}}
+\label{classThresholdServer_ac1ed99060b6e380f0af59a0cf6bba8b0}
+
+\begin{DoxyCompactList}\small\item\em The id of vishnu. \item\end{DoxyCompactList}\item 
+\hypertarget{classThresholdServer_ad1abdd98731b3d43dba1e0b76047f9db}{
+\hyperlink{classUserServer}{UserServer} \hyperlink{classThresholdServer_ad1abdd98731b3d43dba1e0b76047f9db}{msession}}
+\label{classThresholdServer_ad1abdd98731b3d43dba1e0b76047f9db}
+
+\begin{DoxyCompactList}\small\item\em The session. \item\end{DoxyCompactList}\item 
+\hypertarget{classThresholdServer_ac65b529dbcbad7dbf9acdc667ef5536f}{
+\hyperlink{classDatabase}{Database} $\ast$ \hyperlink{classThresholdServer_ac65b529dbcbad7dbf9acdc667ef5536f}{mdatabase}}
+\label{classThresholdServer_ac65b529dbcbad7dbf9acdc667ef5536f}
+
+\begin{DoxyCompactList}\small\item\em An instance of vishnu database. \item\end{DoxyCompactList}\item 
+\hypertarget{classThresholdServer_adab9ee2e62cc42e228f5fc59b3149c97}{
+IMS\_\-Data::ThresholdOp \hyperlink{classThresholdServer_adab9ee2e62cc42e228f5fc59b3149c97}{mop}}
+\label{classThresholdServer_adab9ee2e62cc42e228f5fc59b3149c97}
+
+\begin{DoxyCompactList}\small\item\em Option for getting sysinfo. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Server that link the thresholds and the database. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classThresholdServer_a14f5953a7fd2d049e01b949dd1c98369}{
+\index{ThresholdServer@{ThresholdServer}!ThresholdServer@{ThresholdServer}}
+\index{ThresholdServer@{ThresholdServer}!ThresholdServer@{ThresholdServer}}
+\subsubsection[{ThresholdServer}]{\setlength{\rightskip}{0pt plus 5cm}ThresholdServer::ThresholdServer (
+\begin{DoxyParamCaption}
+\item[{const {\bf UserServer}}]{ session}
+\end{DoxyParamCaption}
+)}}
+\label{classThresholdServer_a14f5953a7fd2d049e01b949dd1c98369}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em session,:}]A session to use for the call \end{DoxyParams}
+\hypertarget{classThresholdServer_a068807807db72b6e7b1be4578773e70c}{
+\index{ThresholdServer@{ThresholdServer}!ThresholdServer@{ThresholdServer}}
+\index{ThresholdServer@{ThresholdServer}!ThresholdServer@{ThresholdServer}}
+\subsubsection[{ThresholdServer}]{\setlength{\rightskip}{0pt plus 5cm}ThresholdServer::ThresholdServer (
+\begin{DoxyParamCaption}
+\item[{const {\bf UserServer}}]{ session, }
+\item[{IMS\_\-Data::ThresholdOp}]{ op}
+\end{DoxyParamCaption}
+)}}
+\label{classThresholdServer_a068807807db72b6e7b1be4578773e70c}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em session,:}]A session to use for the call \item[{\em op,:}]The option of the threshold \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classThresholdServer_af68236fde6dce7aab91703c0b544eb86}{
+\index{ThresholdServer@{ThresholdServer}!checkExist@{checkExist}}
+\index{checkExist@{checkExist}!ThresholdServer@{ThresholdServer}}
+\subsubsection[{checkExist}]{\setlength{\rightskip}{0pt plus 5cm}bool ThresholdServer::checkExist (
+\begin{DoxyParamCaption}
+\item[{IMS\_\-Data::Threshold\_\-ptr}]{ tree}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classThresholdServer_af68236fde6dce7aab91703c0b544eb86}
+
+
+Check if a threshold of this type on this machine is already defined. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em tree,:}]The threshold \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the threshold already exist in the database 
+\end{DoxyReturn}
+\hypertarget{classThresholdServer_a8b0a922ae428b6de5f2940d889801b6e}{
+\index{ThresholdServer@{ThresholdServer}!getThreshold@{getThreshold}}
+\index{getThreshold@{getThreshold}!ThresholdServer@{ThresholdServer}}
+\subsubsection[{getThreshold}]{\setlength{\rightskip}{0pt plus 5cm}IMS\_\-Data::ListThreshold\_\-ptr ThresholdServer::getThreshold (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classThresholdServer_a8b0a922ae428b6de5f2940d889801b6e}
+
+
+To get the thresholds. 
+
+\begin{DoxyReturn}{Returns}
+A list of thresholds 
+\end{DoxyReturn}
+\hypertarget{classThresholdServer_a22403dda97498796a2aaa4c7d7763153}{
+\index{ThresholdServer@{ThresholdServer}!getUserAndMachine@{getUserAndMachine}}
+\index{getUserAndMachine@{getUserAndMachine}!ThresholdServer@{ThresholdServer}}
+\subsubsection[{getUserAndMachine}]{\setlength{\rightskip}{0pt plus 5cm}void ThresholdServer::getUserAndMachine (
+\begin{DoxyParamCaption}
+\item[{IMS\_\-Data::Threshold\_\-ptr}]{ tree, }
+\item[{string \&}]{ nuid, }
+\item[{string \&}]{ nmid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classThresholdServer_a22403dda97498796a2aaa4c7d7763153}
+
+
+To get the numerical userid and numerical machineid corresponding to a threshold. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em tree,:}]The threshold \item[{\em nuid,:}]The numerical user id (out) \item[{\em nmid,:}]The numerical machine id (out) \end{DoxyParams}
+\hypertarget{classThresholdServer_af2ced48c09e928b0385cfa21e3f15e4b}{
+\index{ThresholdServer@{ThresholdServer}!setThreshold@{setThreshold}}
+\index{setThreshold@{setThreshold}!ThresholdServer@{ThresholdServer}}
+\subsubsection[{setThreshold}]{\setlength{\rightskip}{0pt plus 5cm}void ThresholdServer::setThreshold (
+\begin{DoxyParamCaption}
+\item[{IMS\_\-Data::Threshold\_\-ptr}]{ tree}
+\end{DoxyParamCaption}
+)}}
+\label{classThresholdServer_af2ced48c09e928b0385cfa21e3f15e4b}
+
+
+To set a threshold. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em tree,:}]A threshold \end{DoxyParams}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+IMS/src/server/data/\hyperlink{ThresholdServer_8hpp}{ThresholdServer.hpp}\end{DoxyCompactItemize}
