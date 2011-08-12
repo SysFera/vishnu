@@ -1341,7 +1341,7 @@ BOOST_AUTO_TEST_SUITE( list_job_queues )
 
 
   //list job queues : normal call
-
+/*
 BOOST_AUTO_TEST_CASE( list_job_queues_normal_call)
 {
 
@@ -1425,7 +1425,7 @@ BOOST_AUTO_TEST_CASE( list_job_queues_normal_call)
     BOOST_CHECK(false);
   }
 }
-
+*/
 //------------------------------------------------------------------------------------------------------------------------
 //  get Jobs progression: bad parameters : bad sessionKey
 
