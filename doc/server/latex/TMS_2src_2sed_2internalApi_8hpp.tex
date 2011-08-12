@@ -1,0 +1,221 @@
+\hypertarget{TMS_2src_2sed_2internalApi_8hpp}{
+\section{TMS/src/sed/internalApi.hpp File Reference}
+\label{TMS_2src_2sed_2internalApi_8hpp}\index{TMS/src/sed/internalApi.hpp@{TMS/src/sed/internalApi.hpp}}
+}
+
+
+This file presents the the implementation of the TMS internalAPI.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{TMS_2src_2sed_2internalApi_8hpp_a1b8f7a717abcc86cc1046437b943fec9}{solveSubmitJob} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the jobSubmit service. \item\end{DoxyCompactList}\item 
+int \hyperlink{TMS_2src_2sed_2internalApi_8hpp_a19e4dedfb7ee135d7ac6a5420c4e0775}{solveCancelJob} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the jobCancel service. \item\end{DoxyCompactList}\item 
+int \hyperlink{TMS_2src_2sed_2internalApi_8hpp_ab68914b58a36e2c5d66e81799f2287ca}{solveJobInfo} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the jobInfo service. \item\end{DoxyCompactList}\item 
+{\footnotesize template$<$class QueryParameters , class List , class QueryType $>$ }\\int \hyperlink{TMS_2src_2sed_2internalApi_8hpp_ad02f5cf6a8cb234a05e8882088659815}{solveGenerique} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the generic query service. \item\end{DoxyCompactList}\item 
+int \hyperlink{TMS_2src_2sed_2internalApi_8hpp_a95e0dcbff0bc81ef4fda446b4b83f38e}{solveGetListOfJobs} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the getListOfJobs service. \item\end{DoxyCompactList}\item 
+int \hyperlink{TMS_2src_2sed_2internalApi_8hpp_a428b27fab3fb07b208f651e3888feaad}{solveGetListOfJobsProgression} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the getJobsProgression service. \item\end{DoxyCompactList}\item 
+int \hyperlink{TMS_2src_2sed_2internalApi_8hpp_a76dc1b8228ea545e28fe48809ee8d35b}{solveListOfQueues} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the getListOfQueues service. \item\end{DoxyCompactList}\item 
+int \hyperlink{TMS_2src_2sed_2internalApi_8hpp_a7ee588827f346528ab3e956ae4f8537c}{solveJobOutPutGetResult} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the jobOutPutGetResult service. \item\end{DoxyCompactList}\item 
+int \hyperlink{TMS_2src_2sed_2internalApi_8hpp_a4450dc0282a86c7cfddca95a5b744a4e}{solveJobOutPutGetCompletedJobs} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the jobOutputGetCompletedJobs service. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file presents the the implementation of the TMS internalAPI. \begin{DoxyAuthor}{Author}
+Daouda Traore (\href{mailto:daouda.traore@sysfera.com}{\tt daouda.traore@sysfera.com}) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+April 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\hypertarget{TMS_2src_2sed_2internalApi_8hpp_a19e4dedfb7ee135d7ac6a5420c4e0775}{
+\index{TMS/src/sed/internalApi.hpp@{TMS/src/sed/internalApi.hpp}!solveCancelJob@{solveCancelJob}}
+\index{solveCancelJob@{solveCancelJob}!TMS/src/sed/internalApi.hpp@{TMS/src/sed/internalApi.hpp}}
+\subsubsection[{solveCancelJob}]{\setlength{\rightskip}{0pt plus 5cm}int solveCancelJob (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{TMS_2src_2sed_2internalApi_8hpp_a19e4dedfb7ee135d7ac6a5420c4e0775}
+
+
+Function to solve the jobCancel service. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{TMS_2src_2sed_2internalApi_8hpp_ad02f5cf6a8cb234a05e8882088659815}{
+\index{TMS/src/sed/internalApi.hpp@{TMS/src/sed/internalApi.hpp}!solveGenerique@{solveGenerique}}
+\index{solveGenerique@{solveGenerique}!TMS/src/sed/internalApi.hpp@{TMS/src/sed/internalApi.hpp}}
+\subsubsection[{solveGenerique}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters , class List , class QueryType $>$ int solveGenerique (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{TMS_2src_2sed_2internalApi_8hpp_ad02f5cf6a8cb234a05e8882088659815}
+
+
+Function to solve the generic query service. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error
+\end{DoxyReturn}
+Function to solve the service solveGenerique.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the service succeeds or an error code otherwise 
+\end{DoxyReturn}
+\hypertarget{TMS_2src_2sed_2internalApi_8hpp_a95e0dcbff0bc81ef4fda446b4b83f38e}{
+\index{TMS/src/sed/internalApi.hpp@{TMS/src/sed/internalApi.hpp}!solveGetListOfJobs@{solveGetListOfJobs}}
+\index{solveGetListOfJobs@{solveGetListOfJobs}!TMS/src/sed/internalApi.hpp@{TMS/src/sed/internalApi.hpp}}
+\subsubsection[{solveGetListOfJobs}]{\setlength{\rightskip}{0pt plus 5cm}int solveGetListOfJobs (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{TMS_2src_2sed_2internalApi_8hpp_a95e0dcbff0bc81ef4fda446b4b83f38e}
+
+
+Function to solve the getListOfJobs service. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{TMS_2src_2sed_2internalApi_8hpp_a428b27fab3fb07b208f651e3888feaad}{
+\index{TMS/src/sed/internalApi.hpp@{TMS/src/sed/internalApi.hpp}!solveGetListOfJobsProgression@{solveGetListOfJobsProgression}}
+\index{solveGetListOfJobsProgression@{solveGetListOfJobsProgression}!TMS/src/sed/internalApi.hpp@{TMS/src/sed/internalApi.hpp}}
+\subsubsection[{solveGetListOfJobsProgression}]{\setlength{\rightskip}{0pt plus 5cm}int solveGetListOfJobsProgression (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{TMS_2src_2sed_2internalApi_8hpp_a428b27fab3fb07b208f651e3888feaad}
+
+
+Function to solve the getJobsProgression service. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{TMS_2src_2sed_2internalApi_8hpp_ab68914b58a36e2c5d66e81799f2287ca}{
+\index{TMS/src/sed/internalApi.hpp@{TMS/src/sed/internalApi.hpp}!solveJobInfo@{solveJobInfo}}
+\index{solveJobInfo@{solveJobInfo}!TMS/src/sed/internalApi.hpp@{TMS/src/sed/internalApi.hpp}}
+\subsubsection[{solveJobInfo}]{\setlength{\rightskip}{0pt plus 5cm}int solveJobInfo (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{TMS_2src_2sed_2internalApi_8hpp_ab68914b58a36e2c5d66e81799f2287ca}
+
+
+Function to solve the jobInfo service. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{TMS_2src_2sed_2internalApi_8hpp_a4450dc0282a86c7cfddca95a5b744a4e}{
+\index{TMS/src/sed/internalApi.hpp@{TMS/src/sed/internalApi.hpp}!solveJobOutPutGetCompletedJobs@{solveJobOutPutGetCompletedJobs}}
+\index{solveJobOutPutGetCompletedJobs@{solveJobOutPutGetCompletedJobs}!TMS/src/sed/internalApi.hpp@{TMS/src/sed/internalApi.hpp}}
+\subsubsection[{solveJobOutPutGetCompletedJobs}]{\setlength{\rightskip}{0pt plus 5cm}int solveJobOutPutGetCompletedJobs (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{TMS_2src_2sed_2internalApi_8hpp_a4450dc0282a86c7cfddca95a5b744a4e}
+
+
+Function to solve the jobOutputGetCompletedJobs service. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{TMS_2src_2sed_2internalApi_8hpp_a7ee588827f346528ab3e956ae4f8537c}{
+\index{TMS/src/sed/internalApi.hpp@{TMS/src/sed/internalApi.hpp}!solveJobOutPutGetResult@{solveJobOutPutGetResult}}
+\index{solveJobOutPutGetResult@{solveJobOutPutGetResult}!TMS/src/sed/internalApi.hpp@{TMS/src/sed/internalApi.hpp}}
+\subsubsection[{solveJobOutPutGetResult}]{\setlength{\rightskip}{0pt plus 5cm}int solveJobOutPutGetResult (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{TMS_2src_2sed_2internalApi_8hpp_a7ee588827f346528ab3e956ae4f8537c}
+
+
+Function to solve the jobOutPutGetResult service. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{TMS_2src_2sed_2internalApi_8hpp_a76dc1b8228ea545e28fe48809ee8d35b}{
+\index{TMS/src/sed/internalApi.hpp@{TMS/src/sed/internalApi.hpp}!solveListOfQueues@{solveListOfQueues}}
+\index{solveListOfQueues@{solveListOfQueues}!TMS/src/sed/internalApi.hpp@{TMS/src/sed/internalApi.hpp}}
+\subsubsection[{solveListOfQueues}]{\setlength{\rightskip}{0pt plus 5cm}int solveListOfQueues (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{TMS_2src_2sed_2internalApi_8hpp_a76dc1b8228ea545e28fe48809ee8d35b}
+
+
+Function to solve the getListOfQueues service. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{TMS_2src_2sed_2internalApi_8hpp_a1b8f7a717abcc86cc1046437b943fec9}{
+\index{TMS/src/sed/internalApi.hpp@{TMS/src/sed/internalApi.hpp}!solveSubmitJob@{solveSubmitJob}}
+\index{solveSubmitJob@{solveSubmitJob}!TMS/src/sed/internalApi.hpp@{TMS/src/sed/internalApi.hpp}}
+\subsubsection[{solveSubmitJob}]{\setlength{\rightskip}{0pt plus 5cm}int solveSubmitJob (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{TMS_2src_2sed_2internalApi_8hpp_a1b8f7a717abcc86cc1046437b943fec9}
+
+
+Function to solve the jobSubmit service. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}

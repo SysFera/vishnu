@@ -1,0 +1,112 @@
+\hypertarget{classExportServer}{
+\section{ExportServer Class Reference}
+\label{classExportServer}\index{ExportServer@{ExportServer}}
+}
+
+
+Superclass to export in various formats.  
+
+
+
+
+{\ttfamily \#include $<$ExportServer.hpp$>$}
+
+Inheritance diagram for ExportServer:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classExportServer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classExportServer_ac42e32c2e2b06e6d5f2cf3a56c9161e4}{ExportServer} (\hyperlink{classUserServer}{UserServer} u, IMS\_\-Data::ExportOp op)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classExportServer_a99b953bd9791e9671224a4cb93fc2afa}{
+\hyperlink{classExportServer_a99b953bd9791e9671224a4cb93fc2afa}{$\sim$ExportServer} ()}
+\label{classExportServer_a99b953bd9791e9671224a4cb93fc2afa}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classExportServer_acb16e159a3c1b7113b97699ce522d350}{exporte} (string oldSession, string \&content)=0
+\begin{DoxyCompactList}\small\item\em To export the commands made in the oldSession in the file filename with the options op. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classExportServer_a494a243f2b86350d2b76b1b5643c3116}{
+virtual string \hyperlink{classExportServer_a494a243f2b86350d2b76b1b5643c3116}{getMapperName} (int type)=0}
+\label{classExportServer_a494a243f2b86350d2b76b1b5643c3116}
+
+\begin{DoxyCompactList}\small\item\em To get the name of the mapper for the shell. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classExportServer_a32a72db97a80e0a6c8e30eb2dfa780fd}{
+\hyperlink{classUserServer}{UserServer} \hyperlink{classExportServer_a32a72db97a80e0a6c8e30eb2dfa780fd}{muser}}
+\label{classExportServer_a32a72db97a80e0a6c8e30eb2dfa780fd}
+
+\begin{DoxyCompactList}\small\item\em The user. \item\end{DoxyCompactList}\item 
+\hypertarget{classExportServer_a0ba380ea5eb3d4b2958241983dfd5ab5}{
+IMS\_\-Data::ExportOp \hyperlink{classExportServer_a0ba380ea5eb3d4b2958241983dfd5ab5}{mop}}
+\label{classExportServer_a0ba380ea5eb3d4b2958241983dfd5ab5}
+
+\begin{DoxyCompactList}\small\item\em Optiosn for the export. \item\end{DoxyCompactList}\item 
+\hypertarget{classExportServer_afbf336d9b71aa42c9135c2d5f65c3200}{
+\hyperlink{classDatabase}{Database} $\ast$ \hyperlink{classExportServer_afbf336d9b71aa42c9135c2d5f65c3200}{mdatabase}}
+\label{classExportServer_afbf336d9b71aa42c9135c2d5f65c3200}
+
+\begin{DoxyCompactList}\small\item\em The datase. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Superclass to export in various formats. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classExportServer_ac42e32c2e2b06e6d5f2cf3a56c9161e4}{
+\index{ExportServer@{ExportServer}!ExportServer@{ExportServer}}
+\index{ExportServer@{ExportServer}!ExportServer@{ExportServer}}
+\subsubsection[{ExportServer}]{\setlength{\rightskip}{0pt plus 5cm}ExportServer::ExportServer (
+\begin{DoxyParamCaption}
+\item[{{\bf UserServer}}]{ u, }
+\item[{IMS\_\-Data::ExportOp}]{ op}
+\end{DoxyParamCaption}
+)}}
+\label{classExportServer_ac42e32c2e2b06e6d5f2cf3a56c9161e4}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em u,:}]The user server \item[{\em op,:}]\hyperlink{classOptions}{Options} to restart \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classExportServer_acb16e159a3c1b7113b97699ce522d350}{
+\index{ExportServer@{ExportServer}!exporte@{exporte}}
+\index{exporte@{exporte}!ExportServer@{ExportServer}}
+\subsubsection[{exporte}]{\setlength{\rightskip}{0pt plus 5cm}virtual int ExportServer::exporte (
+\begin{DoxyParamCaption}
+\item[{string}]{ oldSession, }
+\item[{string \&}]{ content}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classExportServer_acb16e159a3c1b7113b97699ce522d350}
+
+
+To export the commands made in the oldSession in the file filename with the options op. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em oldSession,:}]Session id of the old session to export \item[{\em content,:}]The content of the export (OUT) \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Return if the export was a SUCCESS 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classShellExporter_a6170de97246f7e2ad1c7fb61d7850e90}{ShellExporter}.
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+IMS/src/server/data/\hyperlink{ExportServer_8hpp}{ExportServer.hpp}\end{DoxyCompactItemize}

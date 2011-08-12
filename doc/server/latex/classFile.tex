@@ -1,0 +1,1127 @@
+\hypertarget{classFile}{
+\section{File Class Reference}
+\label{classFile}\index{File@{File}}
+}
+
+
+Main \hyperlink{classFile}{File} class. Encapsulates all the files attributes. Defines the common operation on files (local or remote).  
+
+
+
+
+{\ttfamily \#include $<$File.hpp$>$}
+
+Inheritance diagram for File:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classFile}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classFile_a6b5e0e4ca04b9983349e02866ff1c659}{TransferType} \{ \hyperlink{classFile_a6b5e0e4ca04b9983349e02866ff1c659a9269c2b4253efd45676b11ad9e963d38}{undefined} = -\/1, 
+\hyperlink{classFile_a6b5e0e4ca04b9983349e02866ff1c659a82cfd632fe096ab570cd8f64b69e4df5}{copy}, 
+\hyperlink{classFile_a6b5e0e4ca04b9983349e02866ff1c659a00895022294873a8ad0b1030e2b5d1ea}{move}
+ \}
+\begin{DoxyCompactList}\small\item\em The file transfer type. \item\end{DoxyCompactList}\item 
+enum \hyperlink{classFile_a4295512b0ee27752fb5ee313155499cc}{TransferMode} \{ \hyperlink{classFile_a4295512b0ee27752fb5ee313155499cca8c6ef20805ae2b316a75d1e6921c01b8}{sync}, 
+\hyperlink{classFile_a4295512b0ee27752fb5ee313155499ccaad05772127fa058068c3ec4574cbd180}{async}
+ \}
+\begin{DoxyCompactList}\small\item\em The file transfer mode. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classFile_ae039af5807fc385f41b60644725d15d0}{
+\hyperlink{classFile_ae039af5807fc385f41b60644725d15d0}{File} ()}
+\label{classFile_ae039af5807fc385f41b60644725d15d0}
+
+\begin{DoxyCompactList}\small\item\em The default constructor. \item\end{DoxyCompactList}\item 
+\hyperlink{classFile_a0b5d680c3ef10d1ffc746e67eda2e9ba}{File} (const \hyperlink{classSessionServer}{SessionServer} \&sessionServer, const std::string \&path)
+\begin{DoxyCompactList}\small\item\em Another constructor taking two parameters. \item\end{DoxyCompactList}\item 
+\hyperlink{classFile_a59bf1e7bb0c6b8dd83dccef6b942a0f9}{File} (const \hyperlink{classFile}{File} \&file)
+\begin{DoxyCompactList}\small\item\em Another constructor by reference. \item\end{DoxyCompactList}\item 
+\hypertarget{classFile_a313b1c0dbd15632f3e884639bb0bfa34}{
+virtual \hyperlink{classFile_a313b1c0dbd15632f3e884639bb0bfa34}{$\sim$File} ()}
+\label{classFile_a313b1c0dbd15632f3e884639bb0bfa34}
+
+\begin{DoxyCompactList}\small\item\em The default destructor. \item\end{DoxyCompactList}\item 
+const \hyperlink{classSessionServer}{SessionServer} \& \hyperlink{classFile_a14e2bccf57139fadba914845580f2e46}{getSession} () const 
+\begin{DoxyCompactList}\small\item\em To get session server object. \item\end{DoxyCompactList}\item 
+const FileStat \& \hyperlink{classFile_aff72a878b41f2fd26ddda0d135edc69a}{getFileStat} () const 
+\begin{DoxyCompactList}\small\item\em To get the inode information of the file. \item\end{DoxyCompactList}\item 
+const std::string \& \hyperlink{classFile_a08ef1d4b24ca67e1c31b998cadef786a}{getPath} () const 
+\begin{DoxyCompactList}\small\item\em To get the path of the file. \item\end{DoxyCompactList}\item 
+const std::string \& \hyperlink{classFile_aa079a0e4cc3565d80e3c5781d71a1347}{getOwner} () const 
+\begin{DoxyCompactList}\small\item\em To get the name of the file owner. \item\end{DoxyCompactList}\item 
+const std::string \& \hyperlink{classFile_ae1a82572536ad97f17e0bd29523738ad}{getGroup} () const 
+\begin{DoxyCompactList}\small\item\em To get the group name of the file owner. \item\end{DoxyCompactList}\item 
+const std::string \& \hyperlink{classFile_a36b7d04d96fb8a3231835beccd613a9b}{getHost} () const 
+\begin{DoxyCompactList}\small\item\em To get the host in which the file is located. \item\end{DoxyCompactList}\item 
+mode\_\-t \hyperlink{classFile_a3f9864e22e0eec72e1b4884c2779100f}{getPerms} () const 
+\begin{DoxyCompactList}\small\item\em To get the file access permissions. \item\end{DoxyCompactList}\item 
+uid\_\-t \hyperlink{classFile_a328160d52f616869a8994d6d0a85f8a6}{getUid} () const 
+\begin{DoxyCompactList}\small\item\em To get the identifier of the file owner. \item\end{DoxyCompactList}\item 
+gid\_\-t \hyperlink{classFile_ac608e5021f47b280aa00229e34f19d28}{getGid} () const 
+\begin{DoxyCompactList}\small\item\em To get the group identifier of the file owner. \item\end{DoxyCompactList}\item 
+\hyperlink{File_8hpp_aaf19f83503293d8d9fb6c5f7607cb5ee}{file\_\-size\_\-t} \hyperlink{classFile_a96ab72424a4cab2a671892bc2cd22982}{getSize} () const 
+\begin{DoxyCompactList}\small\item\em To get the size of the file. \item\end{DoxyCompactList}\item 
+time\_\-t \hyperlink{classFile_ae5b150a9c6382290f8a491514cd56477}{getAtime} () const 
+\begin{DoxyCompactList}\small\item\em To get the last access time of the file. \item\end{DoxyCompactList}\item 
+time\_\-t \hyperlink{classFile_a204776a581f17a1885da8558b1ee68ec}{getMtime} () const 
+\begin{DoxyCompactList}\small\item\em To get the last modification time of the file. \item\end{DoxyCompactList}\item 
+time\_\-t \hyperlink{classFile_a44da403de6230a3a06acb9adbb0d63c9}{getCtime} () const 
+\begin{DoxyCompactList}\small\item\em To get the last change time of the file. \item\end{DoxyCompactList}\item 
+FileType \hyperlink{classFile_ad83dca0e922f784eba36047e7f47fad7}{getType} () const 
+\begin{DoxyCompactList}\small\item\em To get the file type. \item\end{DoxyCompactList}\item 
+\hyperlink{File_8hpp_aaa08d9ac47a1aad716e3941312603212}{file\_\-host\_\-t} \hyperlink{classFile_a52ba4dce39f96117d09a5b52c97c57a5}{getHostType} () const 
+\begin{DoxyCompactList}\small\item\em To get the host type of the file. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classFile_a44ecfb6abf4c56065e773785787f2fb0}{exists} () const 
+\begin{DoxyCompactList}\small\item\em To check if the file exists. \item\end{DoxyCompactList}\item 
+virtual bool \hyperlink{classFile_aac96e148c3f4e1271ed40fee9a88be77}{isUpToDate} () const =0
+\begin{DoxyCompactList}\small\item\em To check if the file information is up to date. \item\end{DoxyCompactList}\item 
+\hypertarget{classFile_a55331b760dc854b4a056c2d76dc03c9f}{
+virtual void \hyperlink{classFile_a55331b760dc854b4a056c2d76dc03c9f}{getInfos} () const =0}
+\label{classFile_a55331b760dc854b4a056c2d76dc03c9f}
+
+\begin{DoxyCompactList}\small\item\em To get the file inode information. \item\end{DoxyCompactList}\item 
+\hyperlink{classFile}{File} \& \hyperlink{classFile_a157cbcdf7a17fca90a48a0402becd296}{operator=} (const \hyperlink{classFile}{File} \&file)
+\begin{DoxyCompactList}\small\item\em The assignment operator. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classFile_ac8357818462f976167486bb90bd7488a}{operator==} (const \hyperlink{classFile}{File} \&file)
+\begin{DoxyCompactList}\small\item\em The comparison operator. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classFile_a7ee45a77fb229db0af307cbcbaf6a51e}{operator$<$} (const \hyperlink{classFile}{File} \&file)
+\begin{DoxyCompactList}\small\item\em The less than operator. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classFile_ac49c7da7767921e6c97263ecc30cede6}{chgrp} (const std::string \&group)=0
+\begin{DoxyCompactList}\small\item\em To update the group of the file. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classFile_a8d5f8ed5b3d4750df415e3f6207157fe}{chmod} (const mode\_\-t mode)=0
+\begin{DoxyCompactList}\small\item\em To update the new file access permissions. \item\end{DoxyCompactList}\item 
+virtual std::string \hyperlink{classFile_ab6b6465dcf91dca981e9925459744496}{head} (const HeadOfFileOptions \&options)=0
+\begin{DoxyCompactList}\small\item\em To get the first lines of the file. \item\end{DoxyCompactList}\item 
+virtual std::string \hyperlink{classFile_ab42e1acabd8cf2126590b268adb60952}{tail} (const TailOfFileOptions \&options)=0
+\begin{DoxyCompactList}\small\item\em To get the last lines of the file. \item\end{DoxyCompactList}\item 
+virtual std::string \hyperlink{classFile_a4b5a13754b6a7a77b50b18ffdeb496b4}{getContent} ()=0
+\begin{DoxyCompactList}\small\item\em To get the content of the file. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classFile_ad61fdb89f84856e17abb7b7f537cd4f3}{mkfile} (const mode\_\-t mode=defaultFileAccessMode)=0
+\begin{DoxyCompactList}\small\item\em To create a new file. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classFile_a44f6ee1c94813f1b4b6f8cca880a3dce}{mkdir} (const mode\_\-t mode=defaultDirectoryAccessMode)=0
+\begin{DoxyCompactList}\small\item\em To create a new directory. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classFile_ab293f14b29c227c87ae03ad2ce3e605b}{rm} (bool isRecursive=false)=0
+\begin{DoxyCompactList}\small\item\em To remove a file. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classFile_a7789c3c8671dbdff8b8dfe2cabeaf433}{rmdir} ()=0
+\begin{DoxyCompactList}\small\item\em To remove an empty directory. \item\end{DoxyCompactList}\item 
+virtual std::list$<$ std::string $>$ \hyperlink{classFile_a8f0d0fb350e9587914c648597ebf7343}{ls} (const LsDirOptions \&options) const =0
+\begin{DoxyCompactList}\small\item\em To list the content of a directory. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classFile_a29eed199fb54187949ecd0cb5828a376}{cp} (const std::string \&path, const CpFileOptions \&options)=0
+\begin{DoxyCompactList}\small\item\em To copy the file. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classFile_acc9987632d392f01748ea4f58455c4d0}{mv} (const std::string \&path, const CpFileOptions \&options)=0
+\begin{DoxyCompactList}\small\item\em To move the file. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std::string \hyperlink{classFile_ab91c3d08d46d0d2dac03cce0e912add5}{extHost} (const std::string \&path)
+\begin{DoxyCompactList}\small\item\em a useful function to extract the host name from path \item\end{DoxyCompactList}\item 
+static std::string \hyperlink{classFile_aec682e21e601fd41e09a612485e94e27}{extName} (const std::string \&path)
+\begin{DoxyCompactList}\small\item\em a useful function to extract the file path name from the complete path \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classFile_ace8ab8b98c3435c79106e6eb4346ae83}{setPath} (const std::string \&path)
+\begin{DoxyCompactList}\small\item\em To update the path of the file. \item\end{DoxyCompactList}\item 
+void \hyperlink{classFile_a1dab18179bdfb51685bbdfdd67bda920}{setHost} (const std::string \&host)
+\begin{DoxyCompactList}\small\item\em To update the host of the file. \item\end{DoxyCompactList}\item 
+void \hyperlink{classFile_a7a2722df520658d92911cce52e3b7a77}{setOwner} (const std::string \&owner) const 
+\begin{DoxyCompactList}\small\item\em To update the name of the file owner. \item\end{DoxyCompactList}\item 
+void \hyperlink{classFile_aabc387f38012568f3939c453c6088f34}{setGroup} (const std::string \&group) const 
+\begin{DoxyCompactList}\small\item\em To update the group of the file owner. \item\end{DoxyCompactList}\item 
+void \hyperlink{classFile_a0897fa173d69a732771fab5d1291bfa1}{setPerms} (const mode\_\-t perms) const 
+\begin{DoxyCompactList}\small\item\em To update the access permissions of the file. \item\end{DoxyCompactList}\item 
+void \hyperlink{classFile_a2510d79e08b9bce8bcbb4dbab3948ff6}{setUid} (const uid\_\-t uid) const 
+\begin{DoxyCompactList}\small\item\em To update the identifier of the file owner. \item\end{DoxyCompactList}\item 
+void \hyperlink{classFile_a45b2b29b558a910648ac4077a7c26aae}{setGid} (const gid\_\-t gid) const 
+\begin{DoxyCompactList}\small\item\em To update the group identifier of the file owner. \item\end{DoxyCompactList}\item 
+void \hyperlink{classFile_a468b86e87c939649a4ec0939bd8cafa0}{setSize} (const \hyperlink{File_8hpp_aaf19f83503293d8d9fb6c5f7607cb5ee}{file\_\-size\_\-t} size) const 
+\begin{DoxyCompactList}\small\item\em To update the size of the file. \item\end{DoxyCompactList}\item 
+void \hyperlink{classFile_a066d14d55524520404641b26027ca815}{setAtime} (const time\_\-t atime) const 
+\begin{DoxyCompactList}\small\item\em To update the last access time of the file. \item\end{DoxyCompactList}\item 
+void \hyperlink{classFile_a3d419f6b7306952fdc0b73093ce7920c}{setMtime} (const time\_\-t mtime) const 
+\begin{DoxyCompactList}\small\item\em To update the last modification time of the file. \item\end{DoxyCompactList}\item 
+void \hyperlink{classFile_aaa8808f7df137f5460f2a06835b65930}{setCtime} (const time\_\-t ctime) const 
+\begin{DoxyCompactList}\small\item\em To update the last change time of the file. \item\end{DoxyCompactList}\item 
+void \hyperlink{classFile_a590877c07f2214045644e7daa77ca7bc}{setType} (const \hyperlink{File_8hpp_af728de96ee6e62d6340d3dba27941ec3}{file\_\-type\_\-t} type) const 
+\begin{DoxyCompactList}\small\item\em To update the file type. \item\end{DoxyCompactList}\item 
+void \hyperlink{classFile_a3dc1f3dc8c88a37d5b99499e4db75c3b}{exists} (const bool \hyperlink{classFile_a7551ebf856afc07947078a4cb3a2823f}{exist}) const 
+\begin{DoxyCompactList}\small\item\em To updata the file existence flag. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classFile_a3c516ac09d966688dbc4793cfe42d987}{
+std::string \hyperlink{classFile_a3c516ac09d966688dbc4793cfe42d987}{mhost}}
+\label{classFile_a3c516ac09d966688dbc4793cfe42d987}
+
+\begin{DoxyCompactList}\small\item\em The host of the file. \item\end{DoxyCompactList}\item 
+\hypertarget{classFile_a7551ebf856afc07947078a4cb3a2823f}{
+bool \hyperlink{classFile_a7551ebf856afc07947078a4cb3a2823f}{exist}}
+\label{classFile_a7551ebf856afc07947078a4cb3a2823f}
+
+\begin{DoxyCompactList}\small\item\em To check if the file exists. \item\end{DoxyCompactList}\item 
+\hypertarget{classFile_ac0f421b885f7ffe4ffaa18e9150f273a}{
+\hyperlink{classSessionServer}{SessionServer} \hyperlink{classFile_ac0f421b885f7ffe4ffaa18e9150f273a}{msessionServer}}
+\label{classFile_ac0f421b885f7ffe4ffaa18e9150f273a}
+
+\begin{DoxyCompactList}\small\item\em The session object server. \item\end{DoxyCompactList}\item 
+\hypertarget{classFile_a840df2f237869227454169e3c006e36a}{
+FileStat \hyperlink{classFile_a840df2f237869227454169e3c006e36a}{mfileStat}}
+\label{classFile_a840df2f237869227454169e3c006e36a}
+
+\begin{DoxyCompactList}\small\item\em The inode information of the file. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Main \hyperlink{classFile}{File} class. Encapsulates all the files attributes. Defines the common operation on files (local or remote). 
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classFile_a4295512b0ee27752fb5ee313155499cc}{
+\index{File@{File}!TransferMode@{TransferMode}}
+\index{TransferMode@{TransferMode}!File@{File}}
+\subsubsection[{TransferMode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf File::TransferMode}}}
+\label{classFile_a4295512b0ee27752fb5ee313155499cc}
+
+
+The file transfer mode. 
+
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{sync@{sync}!File@{File}}\index{File@{File}!sync@{sync}}\item[{\em 
+\hypertarget{classFile_a4295512b0ee27752fb5ee313155499cca8c6ef20805ae2b316a75d1e6921c01b8}{
+sync}
+\label{classFile_a4295512b0ee27752fb5ee313155499cca8c6ef20805ae2b316a75d1e6921c01b8}
+}]a synchronous file transfer \index{async@{async}!File@{File}}\index{File@{File}!async@{async}}\item[{\em 
+\hypertarget{classFile_a4295512b0ee27752fb5ee313155499ccaad05772127fa058068c3ec4574cbd180}{
+async}
+\label{classFile_a4295512b0ee27752fb5ee313155499ccaad05772127fa058068c3ec4574cbd180}
+}]an asynchronous file transfer \end{description}
+\end{Desc}
+
+\hypertarget{classFile_a6b5e0e4ca04b9983349e02866ff1c659}{
+\index{File@{File}!TransferType@{TransferType}}
+\index{TransferType@{TransferType}!File@{File}}
+\subsubsection[{TransferType}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf File::TransferType}}}
+\label{classFile_a6b5e0e4ca04b9983349e02866ff1c659}
+
+
+The file transfer type. 
+
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{undefined@{undefined}!File@{File}}\index{File@{File}!undefined@{undefined}}\item[{\em 
+\hypertarget{classFile_a6b5e0e4ca04b9983349e02866ff1c659a9269c2b4253efd45676b11ad9e963d38}{
+undefined}
+\label{classFile_a6b5e0e4ca04b9983349e02866ff1c659a9269c2b4253efd45676b11ad9e963d38}
+}]undefined file transfer type \index{copy@{copy}!File@{File}}\index{File@{File}!copy@{copy}}\item[{\em 
+\hypertarget{classFile_a6b5e0e4ca04b9983349e02866ff1c659a82cfd632fe096ab570cd8f64b69e4df5}{
+copy}
+\label{classFile_a6b5e0e4ca04b9983349e02866ff1c659a82cfd632fe096ab570cd8f64b69e4df5}
+}]a copy file transfer \index{move@{move}!File@{File}}\index{File@{File}!move@{move}}\item[{\em 
+\hypertarget{classFile_a6b5e0e4ca04b9983349e02866ff1c659a00895022294873a8ad0b1030e2b5d1ea}{
+move}
+\label{classFile_a6b5e0e4ca04b9983349e02866ff1c659a00895022294873a8ad0b1030e2b5d1ea}
+}]a move file transfer \end{description}
+\end{Desc}
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classFile_a0b5d680c3ef10d1ffc746e67eda2e9ba}{
+\index{File@{File}!File@{File}}
+\index{File@{File}!File@{File}}
+\subsubsection[{File}]{\setlength{\rightskip}{0pt plus 5cm}File::File (
+\begin{DoxyParamCaption}
+\item[{const {\bf SessionServer} \&}]{ sessionServer, }
+\item[{const std::string \&}]{ path}
+\end{DoxyParamCaption}
+)}}
+\label{classFile_a0b5d680c3ef10d1ffc746e67eda2e9ba}
+
+
+Another constructor taking two parameters. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionServer}]the session object server \item[{\em path}]the path of the file \end{DoxyParams}
+\hypertarget{classFile_a59bf1e7bb0c6b8dd83dccef6b942a0f9}{
+\index{File@{File}!File@{File}}
+\index{File@{File}!File@{File}}
+\subsubsection[{File}]{\setlength{\rightskip}{0pt plus 5cm}File::File (
+\begin{DoxyParamCaption}
+\item[{const {\bf File} \&}]{ file}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
+\label{classFile_a59bf1e7bb0c6b8dd83dccef6b942a0f9}
+
+
+Another constructor by reference. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em file}]the other file \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classFile_ac49c7da7767921e6c97263ecc30cede6}{
+\index{File@{File}!chgrp@{chgrp}}
+\index{chgrp@{chgrp}!File@{File}}
+\subsubsection[{chgrp}]{\setlength{\rightskip}{0pt plus 5cm}virtual int File::chgrp (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ group}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classFile_ac49c7da7767921e6c97263ecc30cede6}
+
+
+To update the group of the file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em group}]the new group \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the command succeeds, an error code otherwise 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classSSHFile_aa0b50bce63279fd0c1e14e7b9058b900}{SSHFile}.
+
+\hypertarget{classFile_a8d5f8ed5b3d4750df415e3f6207157fe}{
+\index{File@{File}!chmod@{chmod}}
+\index{chmod@{chmod}!File@{File}}
+\subsubsection[{chmod}]{\setlength{\rightskip}{0pt plus 5cm}virtual int File::chmod (
+\begin{DoxyParamCaption}
+\item[{const mode\_\-t}]{ mode}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classFile_a8d5f8ed5b3d4750df415e3f6207157fe}
+
+
+To update the new file access permissions. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em mode}]the new file access permissions \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the command succeeds, an error code otherwise 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classSSHFile_a8a8a8991bac15f105f5bb144c63999b3}{SSHFile}.
+
+\hypertarget{classFile_a29eed199fb54187949ecd0cb5828a376}{
+\index{File@{File}!cp@{cp}}
+\index{cp@{cp}!File@{File}}
+\subsubsection[{cp}]{\setlength{\rightskip}{0pt plus 5cm}virtual int File::cp (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ path, }
+\item[{const CpFileOptions \&}]{ options}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classFile_a29eed199fb54187949ecd0cb5828a376}
+
+
+To copy the file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em path}]the copy destination \item[{\em options}]the copy options \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the command succeeds, an error code otherwise 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classSSHFile_af656c34ec5d57decce27bbe82eba0b3f}{SSHFile}.
+
+\hypertarget{classFile_a3dc1f3dc8c88a37d5b99499e4db75c3b}{
+\index{File@{File}!exists@{exists}}
+\index{exists@{exists}!File@{File}}
+\subsubsection[{exists}]{\setlength{\rightskip}{0pt plus 5cm}void File::exists (
+\begin{DoxyParamCaption}
+\item[{const bool}]{ exist}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classFile_a3dc1f3dc8c88a37d5b99499e4db75c3b}
+
+
+To updata the file existence flag. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em exist}]the new file existence flag \end{DoxyParams}
+\hypertarget{classFile_a44ecfb6abf4c56065e773785787f2fb0}{
+\index{File@{File}!exists@{exists}}
+\index{exists@{exists}!File@{File}}
+\subsubsection[{exists}]{\setlength{\rightskip}{0pt plus 5cm}bool File::exists (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classFile_a44ecfb6abf4c56065e773785787f2fb0}
+
+
+To check if the file exists. 
+
+\begin{DoxyReturn}{Returns}
+true if the file exists, false otherwise 
+\end{DoxyReturn}
+\hypertarget{classFile_ab91c3d08d46d0d2dac03cce0e912add5}{
+\index{File@{File}!extHost@{extHost}}
+\index{extHost@{extHost}!File@{File}}
+\subsubsection[{extHost}]{\setlength{\rightskip}{0pt plus 5cm}static std::string File::extHost (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ path}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFile_ab91c3d08d46d0d2dac03cce0e912add5}
+
+
+a useful function to extract the host name from path 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em path}]the file path \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the host name 
+\end{DoxyReturn}
+\hypertarget{classFile_aec682e21e601fd41e09a612485e94e27}{
+\index{File@{File}!extName@{extName}}
+\index{extName@{extName}!File@{File}}
+\subsubsection[{extName}]{\setlength{\rightskip}{0pt plus 5cm}static std::string File::extName (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ path}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFile_aec682e21e601fd41e09a612485e94e27}
+
+
+a useful function to extract the file path name from the complete path 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em path}]the complete file path \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the file path 
+\end{DoxyReturn}
+\hypertarget{classFile_ae5b150a9c6382290f8a491514cd56477}{
+\index{File@{File}!getAtime@{getAtime}}
+\index{getAtime@{getAtime}!File@{File}}
+\subsubsection[{getAtime}]{\setlength{\rightskip}{0pt plus 5cm}time\_\-t File::getAtime (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classFile_ae5b150a9c6382290f8a491514cd56477}
+
+
+To get the last access time of the file. 
+
+\begin{DoxyReturn}{Returns}
+the last file access time 
+\end{DoxyReturn}
+\hypertarget{classFile_a4b5a13754b6a7a77b50b18ffdeb496b4}{
+\index{File@{File}!getContent@{getContent}}
+\index{getContent@{getContent}!File@{File}}
+\subsubsection[{getContent}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string File::getContent (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classFile_a4b5a13754b6a7a77b50b18ffdeb496b4}
+
+
+To get the content of the file. 
+
+\begin{DoxyReturn}{Returns}
+the content of the file 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classSSHFile_a1aa5ce33bac38cb9c0370a45b2733e56}{SSHFile}.
+
+\hypertarget{classFile_a44da403de6230a3a06acb9adbb0d63c9}{
+\index{File@{File}!getCtime@{getCtime}}
+\index{getCtime@{getCtime}!File@{File}}
+\subsubsection[{getCtime}]{\setlength{\rightskip}{0pt plus 5cm}time\_\-t File::getCtime (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classFile_a44da403de6230a3a06acb9adbb0d63c9}
+
+
+To get the last change time of the file. 
+
+\begin{DoxyReturn}{Returns}
+the last change time 
+\end{DoxyReturn}
+\hypertarget{classFile_aff72a878b41f2fd26ddda0d135edc69a}{
+\index{File@{File}!getFileStat@{getFileStat}}
+\index{getFileStat@{getFileStat}!File@{File}}
+\subsubsection[{getFileStat}]{\setlength{\rightskip}{0pt plus 5cm}const FileStat\& File::getFileStat (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classFile_aff72a878b41f2fd26ddda0d135edc69a}
+
+
+To get the inode information of the file. 
+
+\begin{DoxyReturn}{Returns}
+the file inode information 
+\end{DoxyReturn}
+\hypertarget{classFile_ac608e5021f47b280aa00229e34f19d28}{
+\index{File@{File}!getGid@{getGid}}
+\index{getGid@{getGid}!File@{File}}
+\subsubsection[{getGid}]{\setlength{\rightskip}{0pt plus 5cm}gid\_\-t File::getGid (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classFile_ac608e5021f47b280aa00229e34f19d28}
+
+
+To get the group identifier of the file owner. 
+
+\begin{DoxyReturn}{Returns}
+the group identifier of the file owner 
+\end{DoxyReturn}
+\hypertarget{classFile_ae1a82572536ad97f17e0bd29523738ad}{
+\index{File@{File}!getGroup@{getGroup}}
+\index{getGroup@{getGroup}!File@{File}}
+\subsubsection[{getGroup}]{\setlength{\rightskip}{0pt plus 5cm}const std::string\& File::getGroup (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classFile_ae1a82572536ad97f17e0bd29523738ad}
+
+
+To get the group name of the file owner. 
+
+\begin{DoxyReturn}{Returns}
+the group name 
+\end{DoxyReturn}
+\hypertarget{classFile_a36b7d04d96fb8a3231835beccd613a9b}{
+\index{File@{File}!getHost@{getHost}}
+\index{getHost@{getHost}!File@{File}}
+\subsubsection[{getHost}]{\setlength{\rightskip}{0pt plus 5cm}const std::string\& File::getHost (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classFile_a36b7d04d96fb8a3231835beccd613a9b}
+
+
+To get the host in which the file is located. 
+
+\begin{DoxyReturn}{Returns}
+the host of the file 
+\end{DoxyReturn}
+\hypertarget{classFile_a52ba4dce39f96117d09a5b52c97c57a5}{
+\index{File@{File}!getHostType@{getHostType}}
+\index{getHostType@{getHostType}!File@{File}}
+\subsubsection[{getHostType}]{\setlength{\rightskip}{0pt plus 5cm}{\bf file\_\-host\_\-t} File::getHostType (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classFile_a52ba4dce39f96117d09a5b52c97c57a5}
+
+
+To get the host type of the file. 
+
+\begin{DoxyReturn}{Returns}
+the file host type 
+\end{DoxyReturn}
+\hypertarget{classFile_a204776a581f17a1885da8558b1ee68ec}{
+\index{File@{File}!getMtime@{getMtime}}
+\index{getMtime@{getMtime}!File@{File}}
+\subsubsection[{getMtime}]{\setlength{\rightskip}{0pt plus 5cm}time\_\-t File::getMtime (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classFile_a204776a581f17a1885da8558b1ee68ec}
+
+
+To get the last modification time of the file. 
+
+\begin{DoxyReturn}{Returns}
+the last modification time 
+\end{DoxyReturn}
+\hypertarget{classFile_aa079a0e4cc3565d80e3c5781d71a1347}{
+\index{File@{File}!getOwner@{getOwner}}
+\index{getOwner@{getOwner}!File@{File}}
+\subsubsection[{getOwner}]{\setlength{\rightskip}{0pt plus 5cm}const std::string\& File::getOwner (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classFile_aa079a0e4cc3565d80e3c5781d71a1347}
+
+
+To get the name of the file owner. 
+
+\begin{DoxyReturn}{Returns}
+the file owner name 
+\end{DoxyReturn}
+\hypertarget{classFile_a08ef1d4b24ca67e1c31b998cadef786a}{
+\index{File@{File}!getPath@{getPath}}
+\index{getPath@{getPath}!File@{File}}
+\subsubsection[{getPath}]{\setlength{\rightskip}{0pt plus 5cm}const std::string\& File::getPath (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classFile_a08ef1d4b24ca67e1c31b998cadef786a}
+
+
+To get the path of the file. 
+
+\begin{DoxyReturn}{Returns}
+the file path 
+\end{DoxyReturn}
+\hypertarget{classFile_a3f9864e22e0eec72e1b4884c2779100f}{
+\index{File@{File}!getPerms@{getPerms}}
+\index{getPerms@{getPerms}!File@{File}}
+\subsubsection[{getPerms}]{\setlength{\rightskip}{0pt plus 5cm}mode\_\-t File::getPerms (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classFile_a3f9864e22e0eec72e1b4884c2779100f}
+
+
+To get the file access permissions. 
+
+\begin{DoxyReturn}{Returns}
+the file access permissions 
+\end{DoxyReturn}
+\hypertarget{classFile_a14e2bccf57139fadba914845580f2e46}{
+\index{File@{File}!getSession@{getSession}}
+\index{getSession@{getSession}!File@{File}}
+\subsubsection[{getSession}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf SessionServer}\& File::getSession (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classFile_a14e2bccf57139fadba914845580f2e46}
+
+
+To get session server object. 
+
+\begin{DoxyReturn}{Returns}
+the session in which the file was created 
+\end{DoxyReturn}
+\hypertarget{classFile_a96ab72424a4cab2a671892bc2cd22982}{
+\index{File@{File}!getSize@{getSize}}
+\index{getSize@{getSize}!File@{File}}
+\subsubsection[{getSize}]{\setlength{\rightskip}{0pt plus 5cm}{\bf file\_\-size\_\-t} File::getSize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classFile_a96ab72424a4cab2a671892bc2cd22982}
+
+
+To get the size of the file. 
+
+\begin{DoxyReturn}{Returns}
+the file size 
+\end{DoxyReturn}
+\hypertarget{classFile_ad83dca0e922f784eba36047e7f47fad7}{
+\index{File@{File}!getType@{getType}}
+\index{getType@{getType}!File@{File}}
+\subsubsection[{getType}]{\setlength{\rightskip}{0pt plus 5cm}FileType File::getType (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classFile_ad83dca0e922f784eba36047e7f47fad7}
+
+
+To get the file type. 
+
+\begin{DoxyReturn}{Returns}
+the file type 
+\end{DoxyReturn}
+\hypertarget{classFile_a328160d52f616869a8994d6d0a85f8a6}{
+\index{File@{File}!getUid@{getUid}}
+\index{getUid@{getUid}!File@{File}}
+\subsubsection[{getUid}]{\setlength{\rightskip}{0pt plus 5cm}uid\_\-t File::getUid (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classFile_a328160d52f616869a8994d6d0a85f8a6}
+
+
+To get the identifier of the file owner. 
+
+\begin{DoxyReturn}{Returns}
+the identifier of the file owner 
+\end{DoxyReturn}
+\hypertarget{classFile_ab6b6465dcf91dca981e9925459744496}{
+\index{File@{File}!head@{head}}
+\index{head@{head}!File@{File}}
+\subsubsection[{head}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string File::head (
+\begin{DoxyParamCaption}
+\item[{const HeadOfFileOptions \&}]{ options}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classFile_ab6b6465dcf91dca981e9925459744496}
+
+
+To get the first lines of the file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em options}]the options object \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the first lines of the file 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classSSHFile_a6dd61931bed51f7a61183ef73beb3d6f}{SSHFile}.
+
+\hypertarget{classFile_aac96e148c3f4e1271ed40fee9a88be77}{
+\index{File@{File}!isUpToDate@{isUpToDate}}
+\index{isUpToDate@{isUpToDate}!File@{File}}
+\subsubsection[{isUpToDate}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool File::isUpToDate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classFile_aac96e148c3f4e1271ed40fee9a88be77}
+
+
+To check if the file information is up to date. 
+
+\begin{DoxyReturn}{Returns}
+true if the file is already updated, false otherwise 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classSSHFile_a61ad8e108ad9027310e010ab5ab96ca9}{SSHFile}.
+
+\hypertarget{classFile_a8f0d0fb350e9587914c648597ebf7343}{
+\index{File@{File}!ls@{ls}}
+\index{ls@{ls}!File@{File}}
+\subsubsection[{ls}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::list$<$std::string$>$ File::ls (
+\begin{DoxyParamCaption}
+\item[{const LsDirOptions \&}]{ options}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classFile_a8f0d0fb350e9587914c648597ebf7343}
+
+
+To list the content of a directory. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em options}]the list options \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the content of the directory 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classSSHFile_ab51fb59a5b81be660ca9a39b74591b14}{SSHFile}.
+
+\hypertarget{classFile_a44f6ee1c94813f1b4b6f8cca880a3dce}{
+\index{File@{File}!mkdir@{mkdir}}
+\index{mkdir@{mkdir}!File@{File}}
+\subsubsection[{mkdir}]{\setlength{\rightskip}{0pt plus 5cm}virtual int File::mkdir (
+\begin{DoxyParamCaption}
+\item[{const mode\_\-t}]{ mode = {\ttfamily defaultDirectoryAccessMode}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classFile_a44f6ee1c94813f1b4b6f8cca880a3dce}
+
+
+To create a new directory. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em mode}]the access permission of the directory \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the command succeeds, an error code otherwise 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classSSHFile_abceada8383b3731fa3c3a99650928311}{SSHFile}.
+
+\hypertarget{classFile_ad61fdb89f84856e17abb7b7f537cd4f3}{
+\index{File@{File}!mkfile@{mkfile}}
+\index{mkfile@{mkfile}!File@{File}}
+\subsubsection[{mkfile}]{\setlength{\rightskip}{0pt plus 5cm}virtual int File::mkfile (
+\begin{DoxyParamCaption}
+\item[{const mode\_\-t}]{ mode = {\ttfamily defaultFileAccessMode}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classFile_ad61fdb89f84856e17abb7b7f537cd4f3}
+
+
+To create a new file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em mode}]the access permission of the file \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the command succeeds, an error code otherwise 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classSSHFile_aae0e9486c370a13469ec72cbb503638c}{SSHFile}.
+
+\hypertarget{classFile_acc9987632d392f01748ea4f58455c4d0}{
+\index{File@{File}!mv@{mv}}
+\index{mv@{mv}!File@{File}}
+\subsubsection[{mv}]{\setlength{\rightskip}{0pt plus 5cm}virtual int File::mv (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ path, }
+\item[{const CpFileOptions \&}]{ options}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classFile_acc9987632d392f01748ea4f58455c4d0}
+
+
+To move the file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em path}]the move destination \item[{\em options}]the move options \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the command succeeds, an error code otherwise 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classSSHFile_a1d803bcc5945bb06ae7434868c34baac}{SSHFile}.
+
+\hypertarget{classFile_a7ee45a77fb229db0af307cbcbaf6a51e}{
+\index{File@{File}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!File@{File}}
+\subsubsection[{operator$<$}]{\setlength{\rightskip}{0pt plus 5cm}bool File::operator$<$ (
+\begin{DoxyParamCaption}
+\item[{const {\bf File} \&}]{ file}
+\end{DoxyParamCaption}
+)}}
+\label{classFile_a7ee45a77fb229db0af307cbcbaf6a51e}
+
+
+The less than operator. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em file}]the file to compare with \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the left hand side file path is less than the right side file 
+\end{DoxyReturn}
+\hypertarget{classFile_a157cbcdf7a17fca90a48a0402becd296}{
+\index{File@{File}!operator=@{operator=}}
+\index{operator=@{operator=}!File@{File}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf File}\& File::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf File} \&}]{ file}
+\end{DoxyParamCaption}
+)}}
+\label{classFile_a157cbcdf7a17fca90a48a0402becd296}
+
+
+The assignment operator. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em file}]the object to assign \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new assigned file 
+\end{DoxyReturn}
+\hypertarget{classFile_ac8357818462f976167486bb90bd7488a}{
+\index{File@{File}!operator==@{operator==}}
+\index{operator==@{operator==}!File@{File}}
+\subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}bool File::operator== (
+\begin{DoxyParamCaption}
+\item[{const {\bf File} \&}]{ file}
+\end{DoxyParamCaption}
+)}}
+\label{classFile_ac8357818462f976167486bb90bd7488a}
+
+
+The comparison operator. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em file}]the file to compare with \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the two files have the same complete path 
+\end{DoxyReturn}
+\hypertarget{classFile_ab293f14b29c227c87ae03ad2ce3e605b}{
+\index{File@{File}!rm@{rm}}
+\index{rm@{rm}!File@{File}}
+\subsubsection[{rm}]{\setlength{\rightskip}{0pt plus 5cm}virtual int File::rm (
+\begin{DoxyParamCaption}
+\item[{bool}]{ isRecursive = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classFile_ab293f14b29c227c87ae03ad2ce3e605b}
+
+
+To remove a file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em isRecursive}]to remove directory \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the command succeeds, an error code otherwise 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classSSHFile_a6070540c48390c4b75134229cdfd147d}{SSHFile}.
+
+\hypertarget{classFile_a7789c3c8671dbdff8b8dfe2cabeaf433}{
+\index{File@{File}!rmdir@{rmdir}}
+\index{rmdir@{rmdir}!File@{File}}
+\subsubsection[{rmdir}]{\setlength{\rightskip}{0pt plus 5cm}virtual int File::rmdir (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classFile_a7789c3c8671dbdff8b8dfe2cabeaf433}
+
+
+To remove an empty directory. 
+
+\begin{DoxyReturn}{Returns}
+0 if the command succeeds, an error code otherwise 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classSSHFile_a2e11320295a5f9a70286e4e24c2c106c}{SSHFile}.
+
+\hypertarget{classFile_a066d14d55524520404641b26027ca815}{
+\index{File@{File}!setAtime@{setAtime}}
+\index{setAtime@{setAtime}!File@{File}}
+\subsubsection[{setAtime}]{\setlength{\rightskip}{0pt plus 5cm}void File::setAtime (
+\begin{DoxyParamCaption}
+\item[{const time\_\-t}]{ atime}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classFile_a066d14d55524520404641b26027ca815}
+
+
+To update the last access time of the file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em atime}]the new access time \end{DoxyParams}
+\hypertarget{classFile_aaa8808f7df137f5460f2a06835b65930}{
+\index{File@{File}!setCtime@{setCtime}}
+\index{setCtime@{setCtime}!File@{File}}
+\subsubsection[{setCtime}]{\setlength{\rightskip}{0pt plus 5cm}void File::setCtime (
+\begin{DoxyParamCaption}
+\item[{const time\_\-t}]{ ctime}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classFile_aaa8808f7df137f5460f2a06835b65930}
+
+
+To update the last change time of the file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em ctime}]the new change time \end{DoxyParams}
+\hypertarget{classFile_a45b2b29b558a910648ac4077a7c26aae}{
+\index{File@{File}!setGid@{setGid}}
+\index{setGid@{setGid}!File@{File}}
+\subsubsection[{setGid}]{\setlength{\rightskip}{0pt plus 5cm}void File::setGid (
+\begin{DoxyParamCaption}
+\item[{const gid\_\-t}]{ gid}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classFile_a45b2b29b558a910648ac4077a7c26aae}
+
+
+To update the group identifier of the file owner. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em gid}]the new group identifier \end{DoxyParams}
+\hypertarget{classFile_aabc387f38012568f3939c453c6088f34}{
+\index{File@{File}!setGroup@{setGroup}}
+\index{setGroup@{setGroup}!File@{File}}
+\subsubsection[{setGroup}]{\setlength{\rightskip}{0pt plus 5cm}void File::setGroup (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ group}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classFile_aabc387f38012568f3939c453c6088f34}
+
+
+To update the group of the file owner. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em group}]the new group \end{DoxyParams}
+\hypertarget{classFile_a1dab18179bdfb51685bbdfdd67bda920}{
+\index{File@{File}!setHost@{setHost}}
+\index{setHost@{setHost}!File@{File}}
+\subsubsection[{setHost}]{\setlength{\rightskip}{0pt plus 5cm}void File::setHost (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ host}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classFile_a1dab18179bdfb51685bbdfdd67bda920}
+
+
+To update the host of the file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em host}]the new host \end{DoxyParams}
+\hypertarget{classFile_a3d419f6b7306952fdc0b73093ce7920c}{
+\index{File@{File}!setMtime@{setMtime}}
+\index{setMtime@{setMtime}!File@{File}}
+\subsubsection[{setMtime}]{\setlength{\rightskip}{0pt plus 5cm}void File::setMtime (
+\begin{DoxyParamCaption}
+\item[{const time\_\-t}]{ mtime}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classFile_a3d419f6b7306952fdc0b73093ce7920c}
+
+
+To update the last modification time of the file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em mtime}]the new modofocation time \end{DoxyParams}
+\hypertarget{classFile_a7a2722df520658d92911cce52e3b7a77}{
+\index{File@{File}!setOwner@{setOwner}}
+\index{setOwner@{setOwner}!File@{File}}
+\subsubsection[{setOwner}]{\setlength{\rightskip}{0pt plus 5cm}void File::setOwner (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ owner}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classFile_a7a2722df520658d92911cce52e3b7a77}
+
+
+To update the name of the file owner. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em owner}]the new owner \end{DoxyParams}
+\hypertarget{classFile_ace8ab8b98c3435c79106e6eb4346ae83}{
+\index{File@{File}!setPath@{setPath}}
+\index{setPath@{setPath}!File@{File}}
+\subsubsection[{setPath}]{\setlength{\rightskip}{0pt plus 5cm}void File::setPath (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ path}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classFile_ace8ab8b98c3435c79106e6eb4346ae83}
+
+
+To update the path of the file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em path}]the new path \end{DoxyParams}
+\hypertarget{classFile_a0897fa173d69a732771fab5d1291bfa1}{
+\index{File@{File}!setPerms@{setPerms}}
+\index{setPerms@{setPerms}!File@{File}}
+\subsubsection[{setPerms}]{\setlength{\rightskip}{0pt plus 5cm}void File::setPerms (
+\begin{DoxyParamCaption}
+\item[{const mode\_\-t}]{ perms}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classFile_a0897fa173d69a732771fab5d1291bfa1}
+
+
+To update the access permissions of the file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em perms}]the new access permissions \end{DoxyParams}
+\hypertarget{classFile_a468b86e87c939649a4ec0939bd8cafa0}{
+\index{File@{File}!setSize@{setSize}}
+\index{setSize@{setSize}!File@{File}}
+\subsubsection[{setSize}]{\setlength{\rightskip}{0pt plus 5cm}void File::setSize (
+\begin{DoxyParamCaption}
+\item[{const {\bf file\_\-size\_\-t}}]{ size}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classFile_a468b86e87c939649a4ec0939bd8cafa0}
+
+
+To update the size of the file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em size}]the new size \end{DoxyParams}
+\hypertarget{classFile_a590877c07f2214045644e7daa77ca7bc}{
+\index{File@{File}!setType@{setType}}
+\index{setType@{setType}!File@{File}}
+\subsubsection[{setType}]{\setlength{\rightskip}{0pt plus 5cm}void File::setType (
+\begin{DoxyParamCaption}
+\item[{const {\bf file\_\-type\_\-t}}]{ type}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classFile_a590877c07f2214045644e7daa77ca7bc}
+
+
+To update the file type. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em type}]the new file type \end{DoxyParams}
+\hypertarget{classFile_a2510d79e08b9bce8bcbb4dbab3948ff6}{
+\index{File@{File}!setUid@{setUid}}
+\index{setUid@{setUid}!File@{File}}
+\subsubsection[{setUid}]{\setlength{\rightskip}{0pt plus 5cm}void File::setUid (
+\begin{DoxyParamCaption}
+\item[{const uid\_\-t}]{ uid}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classFile_a2510d79e08b9bce8bcbb4dbab3948ff6}
+
+
+To update the identifier of the file owner. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em uid}]the new owner identifier \end{DoxyParams}
+\hypertarget{classFile_ab42e1acabd8cf2126590b268adb60952}{
+\index{File@{File}!tail@{tail}}
+\index{tail@{tail}!File@{File}}
+\subsubsection[{tail}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string File::tail (
+\begin{DoxyParamCaption}
+\item[{const TailOfFileOptions \&}]{ options}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classFile_ab42e1acabd8cf2126590b268adb60952}
+
+
+To get the last lines of the file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em options}]the options object \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the last lines of the file 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classSSHFile_a29bb48719424956f73ddd3eee8dc8090}{SSHFile}.
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+FMS/src/server/\hyperlink{File_8hpp}{File.hpp}\end{DoxyCompactItemize}
