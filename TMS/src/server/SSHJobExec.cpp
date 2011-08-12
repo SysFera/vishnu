@@ -133,6 +133,7 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
     vishnu::deleteFile(submitOptionsSerializedPath.c_str());
     vishnu::deleteFile(jobUpdateSerializedPath.c_str());
     vishnu::deleteFile(errorPath.c_str());
+    vishnu::deleteFile(script_path.c_str());
     boost::filesystem::path stderrFile(stderrFilePath.c_str());
     if(!boost::filesystem::is_empty(stderrFile)) {
       merrorInfo = vishnu::get_file_content(stderrFilePath);
@@ -142,6 +143,7 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
     }
     if((WEXITSTATUS(ret)==1)&&(mbatchType==SLURM)) {//ATTENTION: 1 corresponds of the error_exit value in ../slurm_parser/opt.c
       merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
+      vishnu::deleteFile(stderrFilePath.c_str());
       throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: "+merrorInfo);
     }
     vishnu::deleteFile(stderrFilePath.c_str());
