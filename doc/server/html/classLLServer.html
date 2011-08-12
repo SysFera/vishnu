@@ -79,8 +79,8 @@ Private Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to convert the LL state into VISHNU state.  <a href="#a0691e56eda4540ad4379a60ce1e5f3f5"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLLServer.html#a8649f7c42ad24f66215a63d12e2d54a6">convertLLPrioToVishnuPrio</a> (const int &amp;prio)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to convert the LL priority into VISHNU priority.  <a href="#a8649f7c42ad24f66215a63d12e2d54a6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLLServer.html#af3ed7ec67ee318e43b9b8bb771cbc479">computeNbRunJobsAndQueueJobs</a> (std::map&lt; std::string, int &gt; &amp;run, std::map&lt; std::string, int &gt; &amp;que)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to compute the number of running and waiting jobs of each queue.  <a href="#af3ed7ec67ee318e43b9b8bb771cbc479"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLLServer.html#a3a9587a14a7cfb5e308b0f8173649cf9">computeNbRunJobsAndQueueJobs</a> (std::map&lt; std::string, size_t &gt; &amp;run, std::map&lt; std::string, size_t &gt; &amp;que)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to compute the number of running and waiting jobs of each queue.  <a href="#a3a9587a14a7cfb5e308b0f8173649cf9"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a753c355ca93eb090880be918d1b54bf6"></a><!-- doxytag: member="LLServer::mlistQueues" ref="a753c355ca93eb090880be918d1b54bf6" args="" -->
@@ -119,20 +119,20 @@ TMS_Data::ListQueues_ptr&nbsp;</td><td class="memItemRight" valign="bottom"><a c
 
 </div>
 </div>
-<a class="anchor" id="af3ed7ec67ee318e43b9b8bb771cbc479"></a><!-- doxytag: member="LLServer::computeNbRunJobsAndQueueJobs" ref="af3ed7ec67ee318e43b9b8bb771cbc479" args="(std::map&lt; std::string, int &gt; &amp;run, std::map&lt; std::string, int &gt; &amp;que)" -->
+<a class="anchor" id="a3a9587a14a7cfb5e308b0f8173649cf9"></a><!-- doxytag: member="LLServer::computeNbRunJobsAndQueueJobs" ref="a3a9587a14a7cfb5e308b0f8173649cf9" args="(std::map&lt; std::string, size_t &gt; &amp;run, std::map&lt; std::string, size_t &gt; &amp;que)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int LLServer::computeNbRunJobsAndQueueJobs </td>
           <td>(</td>
-          <td class="paramtype">std::map&lt; std::string, int &gt; &amp;&nbsp;</td>
+          <td class="paramtype">std::map&lt; std::string, size_t &gt; &amp;&nbsp;</td>
           <td class="paramname"> <em>run</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::map&lt; std::string, int &gt; &amp;&nbsp;</td>
+          <td class="paramtype">std::map&lt; std::string, size_t &gt; &amp;&nbsp;</td>
           <td class="paramname"> <em>que</em></td><td>&nbsp;</td>
         </tr>
         <tr>
@@ -428,7 +428,7 @@ TMS_Data::ListQueues_ptr&nbsp;</td><td class="memItemRight" valign="bottom"><a c
 <li>TMS/src/server/<a class="el" href="LLServer_8hpp_source.html">LLServer.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jul 8 2011 10:36:07 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Aug 12 2011 16:48:16 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

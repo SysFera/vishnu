@@ -1,0 +1,161 @@
+\hypertarget{classProcessCtlProxy}{
+\section{ProcessCtlProxy Class Reference}
+\label{classProcessCtlProxy}\index{ProcessCtlProxy@{ProcessCtlProxy}}
+}
+
+
+\hyperlink{classProcessCtlProxy}{ProcessCtlProxy} class implementation.  
+
+
+
+
+{\ttfamily \#include $<$ProcessCtlProxy.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classProcessCtlProxy_a726d138d35f547346f473108a39db1cd}{ProcessCtlProxy} (const \hyperlink{classSessionProxy}{SessionProxy} \&session)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hyperlink{classProcessCtlProxy_ab74b057a3798343c8b9949eb1c44a095}{ProcessCtlProxy} (const \hyperlink{classSessionProxy}{SessionProxy} \&session, const std::string \&machineId)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+int \hyperlink{classProcessCtlProxy_a817d9c7c6e578c490fb743e0958882ad}{restart} (const IMS\_\-Data::RestartOp \&options)
+\begin{DoxyCompactList}\small\item\em Function to to restart a SeD or a MA. \item\end{DoxyCompactList}\item 
+int \hyperlink{classProcessCtlProxy_af11106aa5267bf0d97a9fa9bb30b2272}{stop} (IMS\_\-Data::Process process)
+\begin{DoxyCompactList}\small\item\em Function to get the refresh period. \item\end{DoxyCompactList}\item 
+int \hyperlink{classProcessCtlProxy_a389d2701b7cad8691b21d800c47588c5}{loadShed} (IMS\_\-Data::LoadShedType loadShedType)
+\begin{DoxyCompactList}\small\item\em Function to get the refresh period. \item\end{DoxyCompactList}\item 
+\hypertarget{classProcessCtlProxy_a6b2c7409567c7b4662bedab034cc2f17}{
+\hyperlink{classProcessCtlProxy_a6b2c7409567c7b4662bedab034cc2f17}{$\sim$ProcessCtlProxy} ()}
+\label{classProcessCtlProxy_a6b2c7409567c7b4662bedab034cc2f17}
+
+\begin{DoxyCompactList}\small\item\em Destructor, raises an exception on error. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classProcessCtlProxy_a5826e2e3351f9adb6d0332c97e8c89f2}{
+void \hyperlink{classProcessCtlProxy_a5826e2e3351f9adb6d0332c97e8c89f2}{cancelFMS} ()}
+\label{classProcessCtlProxy_a5826e2e3351f9adb6d0332c97e8c89f2}
+
+\begin{DoxyCompactList}\small\item\em Call the FMS sed to cancel all. \item\end{DoxyCompactList}\item 
+\hypertarget{classProcessCtlProxy_a79cbdebd633a37d70386416e2798e7b0}{
+void \hyperlink{classProcessCtlProxy_a79cbdebd633a37d70386416e2798e7b0}{cancelTMS} ()}
+\label{classProcessCtlProxy_a79cbdebd633a37d70386416e2798e7b0}
+
+\begin{DoxyCompactList}\small\item\em Call the TMS sed to cancel all. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classProcessCtlProxy_a8a4480638a2a953c0ce6bd92aa617f8c}{
+\hyperlink{classSessionProxy}{SessionProxy} \hyperlink{classProcessCtlProxy_a8a4480638a2a953c0ce6bd92aa617f8c}{msessionProxy}}
+\label{classProcessCtlProxy_a8a4480638a2a953c0ce6bd92aa617f8c}
+
+\begin{DoxyCompactList}\small\item\em The object to manipulate the session data. \item\end{DoxyCompactList}\item 
+\hypertarget{classProcessCtlProxy_a61e502eebb092ace3e8c5613130e3ac0}{
+std::string \hyperlink{classProcessCtlProxy_a61e502eebb092ace3e8c5613130e3ac0}{mmachineId}}
+\label{classProcessCtlProxy_a61e502eebb092ace3e8c5613130e3ac0}
+
+\begin{DoxyCompactList}\small\item\em The id of the machine. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classProcessCtlProxy}{ProcessCtlProxy} class implementation. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classProcessCtlProxy_a726d138d35f547346f473108a39db1cd}{
+\index{ProcessCtlProxy@{ProcessCtlProxy}!ProcessCtlProxy@{ProcessCtlProxy}}
+\index{ProcessCtlProxy@{ProcessCtlProxy}!ProcessCtlProxy@{ProcessCtlProxy}}
+\subsubsection[{ProcessCtlProxy}]{\setlength{\rightskip}{0pt plus 5cm}ProcessCtlProxy::ProcessCtlProxy (
+\begin{DoxyParamCaption}
+\item[{const {\bf SessionProxy} \&}]{ session}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
+\label{classProcessCtlProxy_a726d138d35f547346f473108a39db1cd}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em session}]The object which encapsulates the session information \end{DoxyParams}
+\hypertarget{classProcessCtlProxy_ab74b057a3798343c8b9949eb1c44a095}{
+\index{ProcessCtlProxy@{ProcessCtlProxy}!ProcessCtlProxy@{ProcessCtlProxy}}
+\index{ProcessCtlProxy@{ProcessCtlProxy}!ProcessCtlProxy@{ProcessCtlProxy}}
+\subsubsection[{ProcessCtlProxy}]{\setlength{\rightskip}{0pt plus 5cm}ProcessCtlProxy::ProcessCtlProxy (
+\begin{DoxyParamCaption}
+\item[{const {\bf SessionProxy} \&}]{ session, }
+\item[{const std::string \&}]{ machineId}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
+\label{classProcessCtlProxy_ab74b057a3798343c8b9949eb1c44a095}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em session}]The object which encapsulates the session information \item[{\em machineId}]The id of the machine \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classProcessCtlProxy_a389d2701b7cad8691b21d800c47588c5}{
+\index{ProcessCtlProxy@{ProcessCtlProxy}!loadShed@{loadShed}}
+\index{loadShed@{loadShed}!ProcessCtlProxy@{ProcessCtlProxy}}
+\subsubsection[{loadShed}]{\setlength{\rightskip}{0pt plus 5cm}int ProcessCtlProxy::loadShed (
+\begin{DoxyParamCaption}
+\item[{IMS\_\-Data::LoadShedType}]{ loadShedType}
+\end{DoxyParamCaption}
+)}}
+\label{classProcessCtlProxy_a389d2701b7cad8691b21d800c47588c5}
+
+
+Function to get the refresh period. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em loadShedType}]the type of the load shedding mode (SOFT or HARD) \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classProcessCtlProxy_a817d9c7c6e578c490fb743e0958882ad}{
+\index{ProcessCtlProxy@{ProcessCtlProxy}!restart@{restart}}
+\index{restart@{restart}!ProcessCtlProxy@{ProcessCtlProxy}}
+\subsubsection[{restart}]{\setlength{\rightskip}{0pt plus 5cm}int ProcessCtlProxy::restart (
+\begin{DoxyParamCaption}
+\item[{const IMS\_\-Data::RestartOp \&}]{ options}
+\end{DoxyParamCaption}
+)}}
+\label{classProcessCtlProxy_a817d9c7c6e578c490fb743e0958882ad}
+
+
+Function to to restart a SeD or a MA. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em options}]the options for the restart \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classProcessCtlProxy_af11106aa5267bf0d97a9fa9bb30b2272}{
+\index{ProcessCtlProxy@{ProcessCtlProxy}!stop@{stop}}
+\index{stop@{stop}!ProcessCtlProxy@{ProcessCtlProxy}}
+\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}int ProcessCtlProxy::stop (
+\begin{DoxyParamCaption}
+\item[{IMS\_\-Data::Process}]{ process}
+\end{DoxyParamCaption}
+)}}
+\label{classProcessCtlProxy_af11106aa5267bf0d97a9fa9bb30b2272}
+
+
+Function to get the refresh period. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em process}]The data structure containing information about the process to stop \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+IMS/src/client/\hyperlink{ProcessCtlProxy_8hpp}{ProcessCtlProxy.hpp}\end{DoxyCompactItemize}

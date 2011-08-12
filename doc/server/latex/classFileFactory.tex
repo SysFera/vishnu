@@ -1,0 +1,146 @@
+\hypertarget{classFileFactory}{
+\section{FileFactory Class Reference}
+\label{classFileFactory}\index{FileFactory@{FileFactory}}
+}
+
+
+A factory class for the Files classes.  
+
+
+
+
+{\ttfamily \#include $<$FileFactory.hpp$>$}
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classFileFactory_af2d30140299b916e71242d9f502ee49e}{setSSHServer} (const std::string \&\hyperlink{classFileFactory_a61ce1e766e2bb232e87409a245519d92}{sshServer})
+\begin{DoxyCompactList}\small\item\em Update a ssh server host. \item\end{DoxyCompactList}\item 
+static void \hyperlink{classFileFactory_a53b0aa4df40e44e7ef2d7b2e618e69a4}{setSSHPort} (const unsigned int \hyperlink{classFileFactory_a6922ca90dccd07b6532f4e5b41a5af62}{sshPort})
+\begin{DoxyCompactList}\small\item\em Update a ssh port. \item\end{DoxyCompactList}\item 
+static void \hyperlink{classFileFactory_a58947a53e9d878bad0586f028df7375b}{setSSHCommand} (const std::string \&\hyperlink{classFileFactory_ab422f5811ac3c7ebc908fef58a2fbfe3}{sshCommand})
+\begin{DoxyCompactList}\small\item\em Update a ssh command path. \item\end{DoxyCompactList}\item 
+static void \hyperlink{classFileFactory_ab2acfafdd415b00e9eca6e4e97440a74}{setSCPCommand} (const std::string \&\hyperlink{classFileFactory_a7784b65fe8efa6fbb1370516fefbdc7a}{scpCommand})
+\begin{DoxyCompactList}\small\item\em Update a scp command path. \item\end{DoxyCompactList}\item 
+static \hyperlink{classFile}{File} $\ast$ \hyperlink{classFileFactory_a198b53121ac8988aeb90a2e309ef767d}{getFileServer} (const \hyperlink{classSessionServer}{SessionServer} \&sessionServer, const std::string \&path, const std::string \&user, const std::string \&key)
+\begin{DoxyCompactList}\small\item\em Get the ssh file implementation. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classFileFactory_a61ce1e766e2bb232e87409a245519d92}{
+static std::string \hyperlink{classFileFactory_a61ce1e766e2bb232e87409a245519d92}{sshServer}}
+\label{classFileFactory_a61ce1e766e2bb232e87409a245519d92}
+
+\begin{DoxyCompactList}\small\item\em The ssh host server. \item\end{DoxyCompactList}\item 
+\hypertarget{classFileFactory_a6922ca90dccd07b6532f4e5b41a5af62}{
+static unsigned int \hyperlink{classFileFactory_a6922ca90dccd07b6532f4e5b41a5af62}{sshPort}}
+\label{classFileFactory_a6922ca90dccd07b6532f4e5b41a5af62}
+
+\begin{DoxyCompactList}\small\item\em The ssh port. \item\end{DoxyCompactList}\item 
+\hypertarget{classFileFactory_ab422f5811ac3c7ebc908fef58a2fbfe3}{
+static std::string \hyperlink{classFileFactory_ab422f5811ac3c7ebc908fef58a2fbfe3}{sshCommand}}
+\label{classFileFactory_ab422f5811ac3c7ebc908fef58a2fbfe3}
+
+\begin{DoxyCompactList}\small\item\em The ssh command path. \item\end{DoxyCompactList}\item 
+\hypertarget{classFileFactory_a7784b65fe8efa6fbb1370516fefbdc7a}{
+static std::string \hyperlink{classFileFactory_a7784b65fe8efa6fbb1370516fefbdc7a}{scpCommand}}
+\label{classFileFactory_a7784b65fe8efa6fbb1370516fefbdc7a}
+
+\begin{DoxyCompactList}\small\item\em The scp command path. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A factory class for the Files classes. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classFileFactory_a198b53121ac8988aeb90a2e309ef767d}{
+\index{FileFactory@{FileFactory}!getFileServer@{getFileServer}}
+\index{getFileServer@{getFileServer}!FileFactory@{FileFactory}}
+\subsubsection[{getFileServer}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf File}$\ast$ FileFactory::getFileServer (
+\begin{DoxyParamCaption}
+\item[{const {\bf SessionServer} \&}]{ sessionServer, }
+\item[{const std::string \&}]{ path, }
+\item[{const std::string \&}]{ user, }
+\item[{const std::string \&}]{ key}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFileFactory_a198b53121ac8988aeb90a2e309ef767d}
+
+
+Get the ssh file implementation. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionServer}]the session server object \item[{\em path}]the path of the file \item[{\em user}]the file user \item[{\em key}]the ssh private key path \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new built file 
+\end{DoxyReturn}
+\hypertarget{classFileFactory_ab2acfafdd415b00e9eca6e4e97440a74}{
+\index{FileFactory@{FileFactory}!setSCPCommand@{setSCPCommand}}
+\index{setSCPCommand@{setSCPCommand}!FileFactory@{FileFactory}}
+\subsubsection[{setSCPCommand}]{\setlength{\rightskip}{0pt plus 5cm}static void FileFactory::setSCPCommand (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ scpCommand}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFileFactory_ab2acfafdd415b00e9eca6e4e97440a74}
+
+
+Update a scp command path. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em scpCommand}]the new scp command path \end{DoxyParams}
+\hypertarget{classFileFactory_a58947a53e9d878bad0586f028df7375b}{
+\index{FileFactory@{FileFactory}!setSSHCommand@{setSSHCommand}}
+\index{setSSHCommand@{setSSHCommand}!FileFactory@{FileFactory}}
+\subsubsection[{setSSHCommand}]{\setlength{\rightskip}{0pt plus 5cm}static void FileFactory::setSSHCommand (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sshCommand}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFileFactory_a58947a53e9d878bad0586f028df7375b}
+
+
+Update a ssh command path. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sshCommand}]the new ssh command path \end{DoxyParams}
+\hypertarget{classFileFactory_a53b0aa4df40e44e7ef2d7b2e618e69a4}{
+\index{FileFactory@{FileFactory}!setSSHPort@{setSSHPort}}
+\index{setSSHPort@{setSSHPort}!FileFactory@{FileFactory}}
+\subsubsection[{setSSHPort}]{\setlength{\rightskip}{0pt plus 5cm}static void FileFactory::setSSHPort (
+\begin{DoxyParamCaption}
+\item[{const unsigned int}]{ sshPort}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFileFactory_a53b0aa4df40e44e7ef2d7b2e618e69a4}
+
+
+Update a ssh port. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sshPort}]the new ssh port \end{DoxyParams}
+\hypertarget{classFileFactory_af2d30140299b916e71242d9f502ee49e}{
+\index{FileFactory@{FileFactory}!setSSHServer@{setSSHServer}}
+\index{setSSHServer@{setSSHServer}!FileFactory@{FileFactory}}
+\subsubsection[{setSSHServer}]{\setlength{\rightskip}{0pt plus 5cm}static void FileFactory::setSSHServer (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sshServer}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFileFactory_af2d30140299b916e71242d9f502ee49e}
+
+
+Update a ssh server host. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sshServer}]the new ssh server host \end{DoxyParams}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+FMS/src/server/\hyperlink{FileFactory_8hpp}{FileFactory.hpp}\end{DoxyCompactItemize}

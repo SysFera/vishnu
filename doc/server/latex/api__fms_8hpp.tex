@@ -1,0 +1,71 @@
+\hypertarget{api__fms_8hpp}{
+\section{FMS/src/api/api\_\-fms.hpp File Reference}
+\label{api__fms_8hpp}\index{FMS/src/api/api\_\-fms.hpp@{FMS/src/api/api\_\-fms.hpp}}
+}
+
+
+This file contains the VISHNU api functions for FMS package.  
+
+
+{\ttfamily \#include $<$string$>$}\par
+{\ttfamily \#include \char`\"{}UserException.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}SystemException.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}UMSVishnuException.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}FMSVishnuException.hpp\char`\"{}}\par
+{\ttfamily \#include $<$sys/types.h$>$}\par
+{\ttfamily \#include $<$FMS\_\-Data.hpp$>$}\par
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespacevishnu}{vishnu}
+
+
+\begin{DoxyCompactList}\small\item\em This naspace contains utils functions of the vishnu system. \item\end{DoxyCompactList}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{namespacevishnu_a7719eac49c7e537d743d0dbcb4bdb627}{vishnu::createFile} (const string \&sessionKey, const string \&path)  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em create a new remote file \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a1dd41a50658d5aa0cdb4b46a654359e7}{vishnu::chGrp} (const string \&sessionKey, const string \&group, const string \&path)  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em change the group of a file \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a88fa0cf47d649d26a520b6d84be734d0}{vishnu::chMod} (const string \&sessionKey, const mode\_\-t \&mode, const string \&path)  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em change the permissions of a file \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a9c08b2960915cf530451df2c7e0d2316}{vishnu::copyFile} (const string \&sessionKey, const string \&src, const string \&dest, const CpFileOptions \&options=CpFileOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em copy the file \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_aa1f91396026194dd4f815035ec6b1f64}{vishnu::copyAsyncFile} (const string \&sessionKey, const string \&src, const string \&dest, FileTransfer \&transferInfo, const CpFileOptions \&options=CpFileOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em copy the file in a asynchronous mode \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a2ce4c436458a99e531b2a2fe55c60854}{vishnu::headOfFile} (const string \&sessionKey, const string \&path, string \&contentOfFile, const HeadOfFileOptions \&options=HeadOfFileOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em get the first lines of a file \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a626981a5333a6cf9980ecab82a130fe5}{vishnu::contentOfFile} (const string \&sessionKey, const string \&path, string \&contentOfFile)  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em get the content of a file \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_abcd5b8873e7974f79f3325cd187ade2d}{vishnu::listDir} (const string \&sessionKey, const string \&path, StringList \&dirContent, const LsDirOptions \&options=LsDirOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em get the list of files and subdirectories of a directory \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ac5cba7c19df7cf1661a792e9d7c49c82}{vishnu::createDir} (const string \&sessionKey, const string \&path)  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em create a directory \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_aab0a15fe913c3cfb7f1ba8416b21f116}{vishnu::moveFile} (const string \&sessionKey, const string \&src, const string \&dest, const CpFileOptions \&options=CpFileOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em move a file \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a1611f0d2a0056ab1c373211a5911b669}{vishnu::moveAsyncFile} (const string \&sessionKey, const string \&src, const string \&dest, FileTransfer \&transferInfo, const CpFileOptions \&options=CpFileOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em move a file in a asynchronous mode \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_aa524b5e536bf51e3ac68ec06ee429691}{vishnu::removeFile} (const string \&sessionKey, const string \&path, const RmFileOptions \&options=RmFileOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)
+\item 
+int \hyperlink{namespacevishnu_a23105333be3ff847f7c274f6372364bc}{vishnu::removeDir} (const string \&sessionKey, const string \&path)  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em remove a directory \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_aa8c92237272b5c0e92360f617a2a4edc}{vishnu::tailOfFile} (const string \&sessionKey, const string \&path, string \&contentOfFile, const TailOfFileOptions \&options=TailOfFileOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em get the last lines of a file \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a3da75d7c75b5d6a58112f62c5b3eeae0}{vishnu::getFileInfo} (const string \&sessionKey, const string \&path, FileStat \&filesInfo)  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em obtain informations about a file \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ac7f9c1d4391157b7dddaab5051fd44a8}{vishnu::stopFileTransfer} (const string \&sessionKey, const StopTransferOptions \&options=StopTransferOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em cancel a file transfer \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a5159cd0b198000c690a1e9f88abb1329}{vishnu::listFileTransfers} (const string \&sessionKey, FileTransferList \&fileTransferList, const LsTransferOptions \&options=LsTransferOptions())  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em List file transfers. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file contains the VISHNU api functions for FMS package. \begin{DoxyAuthor}{Author}
+Ibrahima Cisse (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sysfera.com}) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+MAY 2011 
+\end{DoxyDate}

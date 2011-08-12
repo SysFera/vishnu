@@ -1,0 +1,99 @@
+\hypertarget{classObjectIdServer}{
+\section{ObjectIdServer Class Reference}
+\label{classObjectIdServer}\index{ObjectIdServer@{ObjectIdServer}}
+}
+
+
+Class that implements the object id format server.  
+
+
+
+
+{\ttfamily \#include $<$ObjectIdServer.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classObjectIdServer_a1abd00e57190f773dd902da86796ded1}{
+\hyperlink{classObjectIdServer_a1abd00e57190f773dd902da86796ded1}{ObjectIdServer} (const \hyperlink{classUserServer}{UserServer} session)}
+\label{classObjectIdServer_a1abd00e57190f773dd902da86796ded1}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classObjectIdServer_a393451d822bad59db4d6d8e4c5b30042}{
+\hyperlink{classObjectIdServer_a393451d822bad59db4d6d8e4c5b30042}{$\sim$ObjectIdServer} ()}
+\label{classObjectIdServer_a393451d822bad59db4d6d8e4c5b30042}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classObjectIdServer_a5f8fd253e9944db4debe189ab1eb14fa}{
+void \hyperlink{classObjectIdServer_a5f8fd253e9944db4debe189ab1eb14fa}{setUID} (string fmt)}
+\label{classObjectIdServer_a5f8fd253e9944db4debe189ab1eb14fa}
+
+\begin{DoxyCompactList}\small\item\em To set the format of a user. \item\end{DoxyCompactList}\item 
+\hypertarget{classObjectIdServer_a06e46159c9f152bbb83d3382f11dff3b}{
+void \hyperlink{classObjectIdServer_a06e46159c9f152bbb83d3382f11dff3b}{setFID} (string fmt)}
+\label{classObjectIdServer_a06e46159c9f152bbb83d3382f11dff3b}
+
+\begin{DoxyCompactList}\small\item\em To set the format of a file transfer. \item\end{DoxyCompactList}\item 
+\hypertarget{classObjectIdServer_a9031c571c75348149c32631091b0d2f4}{
+void \hyperlink{classObjectIdServer_a9031c571c75348149c32631091b0d2f4}{setTID} (string fmt)}
+\label{classObjectIdServer_a9031c571c75348149c32631091b0d2f4}
+
+\begin{DoxyCompactList}\small\item\em To set the format of a task. \item\end{DoxyCompactList}\item 
+\hypertarget{classObjectIdServer_af23fa4159483ad6ec2b652360fa30944}{
+void \hyperlink{classObjectIdServer_af23fa4159483ad6ec2b652360fa30944}{setMID} (string fmt)}
+\label{classObjectIdServer_af23fa4159483ad6ec2b652360fa30944}
+
+\begin{DoxyCompactList}\small\item\em To set the format of a machine. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classObjectIdServer_aca4b3a6b6ac76ce51b72332ead290783}{containCpt} (string fmt)
+\begin{DoxyCompactList}\small\item\em Test if fmt contains '\$CPT' as a substring. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classObjectIdServer_ae6bbd68d6467eebcc03d4f8186a5a6bf}{
+int \hyperlink{classObjectIdServer_ae6bbd68d6467eebcc03d4f8186a5a6bf}{mvishnuId}}
+\label{classObjectIdServer_ae6bbd68d6467eebcc03d4f8186a5a6bf}
+
+\begin{DoxyCompactList}\small\item\em The id of vishnu. \item\end{DoxyCompactList}\item 
+\hypertarget{classObjectIdServer_a91265e74fb54703ae8a6d9e808008348}{
+\hyperlink{classDatabase}{Database} $\ast$ \hyperlink{classObjectIdServer_a91265e74fb54703ae8a6d9e808008348}{mdatabase}}
+\label{classObjectIdServer_a91265e74fb54703ae8a6d9e808008348}
+
+\begin{DoxyCompactList}\small\item\em An instance of vishnu database. \item\end{DoxyCompactList}\item 
+\hypertarget{classObjectIdServer_a1212edbf78054facded05afeeb323531}{
+\hyperlink{classUserServer}{UserServer} \hyperlink{classObjectIdServer_a1212edbf78054facded05afeeb323531}{msession}}
+\label{classObjectIdServer_a1212edbf78054facded05afeeb323531}
+
+\begin{DoxyCompactList}\small\item\em The session. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class that implements the object id format server. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classObjectIdServer_aca4b3a6b6ac76ce51b72332ead290783}{
+\index{ObjectIdServer@{ObjectIdServer}!containCpt@{containCpt}}
+\index{containCpt@{containCpt}!ObjectIdServer@{ObjectIdServer}}
+\subsubsection[{containCpt}]{\setlength{\rightskip}{0pt plus 5cm}bool ObjectIdServer::containCpt (
+\begin{DoxyParamCaption}
+\item[{string}]{ fmt}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classObjectIdServer_aca4b3a6b6ac76ce51b72332ead290783}
+
+
+Test if fmt contains '\$CPT' as a substring. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em fmt,:}]The format string to test \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the string fmt contains the '\$cpt' substring 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+IMS/src/server/data/\hyperlink{ObjectIdServer_8hpp}{ObjectIdServer.hpp}\end{DoxyCompactItemize}

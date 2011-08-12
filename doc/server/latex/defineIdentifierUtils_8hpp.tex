@@ -1,0 +1,67 @@
+\hypertarget{defineIdentifierUtils_8hpp}{
+\section{IMS/src/cli/defineIdentifierUtils.hpp File Reference}
+\label{defineIdentifierUtils_8hpp}\index{IMS/src/cli/defineIdentifierUtils.hpp@{IMS/src/cli/defineIdentifierUtils.hpp}}
+}
+
+
+This file declare useful functions and types for the VISHNU define identifier command.  
+
+
+{\ttfamily \#include $<$iostream$>$}\par
+{\ttfamily \#include $<$boost/shared\_\-ptr.hpp$>$}\par
+{\ttfamily \#include $<$ecore.hpp$>$}\par
+{\ttfamily \#include $<$ecorecpp.hpp$>$}\par
+{\ttfamily \#include \char`\"{}IMS\_\-Data.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}utilVishnu.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}cliError.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}cliUtil.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}CLICmd.hpp\char`\"{}}\par
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structDefineIdentifierFunc}{DefineIdentifierFunc$<$ defineIdentifierType $>$}
+\begin{DoxyCompactList}\small\item\em A functor to handle define identifier api function. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{defineIdentifierUtils_8hpp_a21347a51252870e2fc99214cca928e3f}{DefineIdentifierType} \{ {\bfseries JOB}, 
+{\bfseries MACHINE}, 
+{\bfseries TRANSFER}, 
+{\bfseries USER}
+ \}
+\begin{DoxyCompactList}\small\item\em A define type. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+boost::shared\_\-ptr$<$ \hyperlink{classOptions}{Options} $>$ \hyperlink{defineIdentifierUtils_8hpp_a1caacafedc5110f4dad4eb4605db9868}{makeDefineIdentifierOptions} (string pgName, string \&dietConfig, string \&newFormat)
+\begin{DoxyCompactList}\small\item\em To build options for the VISHNU copy of file command. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file declare useful functions and types for the VISHNU define identifier command. \begin{DoxyAuthor}{Author}
+Daouda Traoré (\href{mailto:daouda.traore@sysfera.com}{\tt daouda.traore@sysfera.com}) 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\hypertarget{defineIdentifierUtils_8hpp_a1caacafedc5110f4dad4eb4605db9868}{
+\index{defineIdentifierUtils.hpp@{defineIdentifierUtils.hpp}!makeDefineIdentifierOptions@{makeDefineIdentifierOptions}}
+\index{makeDefineIdentifierOptions@{makeDefineIdentifierOptions}!defineIdentifierUtils.hpp@{defineIdentifierUtils.hpp}}
+\subsubsection[{makeDefineIdentifierOptions}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<${\bf Options}$>$ makeDefineIdentifierOptions (
+\begin{DoxyParamCaption}
+\item[{string}]{ pgName, }
+\item[{string \&}]{ dietConfig, }
+\item[{string \&}]{ newFormat}
+\end{DoxyParamCaption}
+)}}
+\label{defineIdentifierUtils_8hpp_a1caacafedc5110f4dad4eb4605db9868}
+
+
+To build options for the VISHNU copy of file command. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pgName}]The name of the command \item[{\em dietConfig}]Represents the VISHNU config file \item[{\em newFormat}]Represents the new format to use \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The built option 
+\end{DoxyReturn}
