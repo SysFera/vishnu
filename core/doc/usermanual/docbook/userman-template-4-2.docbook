@@ -2,8 +2,7 @@
 <?xml-stylesheet type="text/xsl"
         href="http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl"?>
 
-<!--;TMS.apim#MAN(user);UMS.apim#CPP(user);TMS.apim#CPP(user);UMS.apim#PYTHON(user);TMS.apim#PYTHON(user) -->
-<book label="UMS.apim#MAN(user);TMS.apim#MAN(user);FMS.apim#MAN(user);IMS.apim#MAN(user);UMS.apim#CPP(user);TMS.apim#CPP(user);FMS.apim#CPP(user);IMS.apim#CPP(user);UMS.apim#PYTHON(user);TMS.apim#PYTHON(user);FMS.apim#PYTHON(user);IMS.apim#PYTHON(user)" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
+<book label="UMS.apim#MAN(user);TMS.apim#MAN(user);UMS.apim#CPP(user);TMS.apim#CPP(user);UMS.apim#PYTHON(user);TMS.apim#PYTHON(user)" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
   <info>
     <title>User Manual</title>
     <productname>VISHNU</productname>
@@ -45,24 +44,16 @@
 	  
 	  <para> Added details concerning the TMS package.</para></revdescription>
       </revision>
-      <revision>
-	<revnumber>3</revnumber>
-	<date>15/06/2011</date>
-	<authorinitials>SysFera</authorinitials>
-	<revdescription>
-	  
-	  <para> Added details concerning the IMS and FMS package.</para></revdescription>
-      </revision>
    
    <revision>
-	<revnumber>4</revnumber>
+	<revnumber>3</revnumber>
 	<date>28/06/2011</date>
 	<authorinitials>SysFera</authorinitials>
 	<revdescription>
 	  <para> Added TMS generic script example.</para></revdescription>
       </revision>
    <revision>
-	<revnumber>5</revnumber>
+	<revnumber>4</revnumber>
 	<date>18/07/2011</date>
 	<authorinitials>SysFera</authorinitials>
 	<revdescription>
@@ -70,7 +61,7 @@
   </revision>
 
   <revision>
-    <revnumber>6</revnumber>
+    <revnumber>5</revnumber>
     <date>11/08/2011</date>
     <authorinitials>SysFera</authorinitials>
     <revdescription>
@@ -138,13 +129,13 @@
           <para>Chapter 2 describes the VISHNU software (installation procedure, usage description and troubleshooting).</para>
         </listitem>
         	<listitem>
-          <para>Chapter 3, Chapter 4, Chapter 5 and Chapter 6 contain the VISHNU commands reference respectively for UMS, TMS, FMS and IMS package.</para>
+          <para>Chapter 3 and Chapter 4 contain the VISHNU commands reference respectively for UMS and TMS.</para>
         </listitem>
 	<listitem>
-          <para>Chapter 7, Chapter 8, Chapter 9 and Chapter 10 contain the C++ API reference respectively for UMS, TMS, FMS and IMS package.</para>
+          <para>Chapter 5 and Chapter 6 contain the C++ API reference respectively for UMS and TMS.</para>
         </listitem>
 	<listitem>
-          <para>Chapter 11, Chapter 12, Chapter 13 and Chapter 14 contain the Python API reference respectively for UMS, TMS, FMS and IMS package.</para>
+          <para>Chapter 7 and Chapter 8 contain the Python API reference respectively for UMS and TMS.</para>
         </listitem>
       </itemizedlist>
     </section>
@@ -256,15 +247,6 @@
 		<listitem>
 		  <para> <emphasis role="bold">To compile the TMS package : </emphasis></para>
 		  <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
-		</listitem>
-		<listitem>
-		  <para> <emphasis role="bold">To compile the FMS package : </emphasis></para>
-		  <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_FMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
-		</listitem>
-		<listitem>
-		  <para> <emphasis role="bold">To compile the IMS package : </emphasis></para>
-		  <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DCOMPILE_FMS=ON -DCOMPILE_IMS=ON </para>
-		  <para> -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
 		</listitem>
 	      </itemizedlist>
 	    </listitem>
@@ -488,54 +470,6 @@
 	</section> 
       </section>
       
-      <section> <!-- FMS description-->
-	<title> FMS package </title>
-	<section>
-	  <title>Create and remove file or directories</title>
-	  <para>
-            The user can create (or remove) a regular file located in a remote host by using the command <emphasis role="bold">vishnu_create_file</emphasis> ( or <emphasis role="bold">vishnu_remove_file</emphasis>). He can also create (or remove) directory located in a remote host by using the command <emphasis role="bold">vishnu_create_dir</emphasis> ( or <emphasis role="bold">vishnu_remove_dir</emphasis>).
-	  </para>
-	</section>
-	<section>
-	  <title>Get file information</title>
-	  <para>Several services are available to get file information. The user can get the first ( or last lines) of a given remote file by using the command <emphasis role="bold">vishnu_head_of_file</emphasis> ( or <emphasis role="bold">vishnu_tail_of_file</emphasis>). He can also get the entire content of a remote file (or remote directory) with the command <emphasis role="bold">vishnu_content_of_file</emphasis>  (or <emphasis role="bold">vishnu_list__dir</emphasis>).</para> 
-	</section>
-	<section>
-	  <title>Modify files properties </title>
-	  <para> The commands <emphasis role="bold">vishnu_ch_grp</emphasis> and
-            <emphasis role="bold">vishnu_ch_mod</emphasis>  allow the user to change respectively the group and the access permissions of remote file.</para>
-	</section>
-	<section>
-	  <title>Perform file transfer </title>
-	  <para> The user can submit a file transfer in many ways:
-            <itemizedlist>
-              <listitem><para> copy (or move) file between two hosts by the commands <emphasis role="bold">vishnu_copy_file</emphasis> (or <emphasis role="bold">vishnu_move_file</emphasis>) </para>
-              </listitem>
-              <listitem><para> copy  (or move) file between two hosts in asynchronous way by the commands <emphasis role="bold">vishnu_copy_async_file</emphasis> (or <emphasis role="bold">vishnu_move_async_file</emphasis>) </para> </listitem>
-	      <listitem><para> list or (cancel) file transfers by the commands <emphasis role="bold">vishnu_list_file_transfers</emphasis> (<emphasis role="bold">vishnu_stop_file_transfers</emphasis>) </para>
-              </listitem>
-            </itemizedlist>
-	  </para>
-	</section>
-	</section>
-	
-	<section> <!-- IMS description-->
-	  <title> IMS package </title>
-	  <section>
-	    <title>Export of commands</title>
-	    <para>
-	      The user can export the commands made during a session in shell format. The file must have been created before the call, the file will contain a shell script that can be executed. For safety reasons, the connect and change password cannot be in the file. Thus, to execute the shell script, the connect command must be added after the first line of the file that declares the shell format.
-	    </para>
-	  </section>
-	  <section>
-	    <title>Get system information</title>
-	    <para>The get system information is to get information about a machine of the system. It can give information about the memory and/or diskspace available on the machine.</para>
-	  </section>
-	  <section>
-	    <title>Get the metric </title>
-	    <para>The user can get the current metrics on a machine or the history of the metrics on a machine to know the evolution of the metric. The user can choose to get the metrics of a specific type (parameters are 1, 2, 3 respectively free CPUload, free diskspace and free memory). Note, when getting the history of metrics, by default, only the first 1000 results are gotten. This is to avoid having to much results with a single command (the metric table may be filled very fastly).</para>
-	  </section>    
-	</section>
       <section>
 	<title> Troubleshooting functions </title>
 	<para> The <emphasis role = "italic">"There is no session in this terminal"</emphasis> error can be solved by connecting to VISHNU using 

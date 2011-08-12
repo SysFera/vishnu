@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<book label="UMS.apim#MAN(admin);UMS.apim#CPP(admin);UMS.apim#PYTHON(admin);IMS.apim#MAN(admin);IMS.apim#CPP(admin);IMS.apim#PYTHON(admin)" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
+<book label="UMS.apim#MAN(admin);UMS.apim#CPP(admin);UMS.apim#PYTHON(admin)" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
   <!--<book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">-->
   <info>
     <title>VISHNU - Le guide de l'administrateur</title>
@@ -61,42 +61,27 @@
           <para>Ajout du parametre de configuration dbConnectionsNb.</para>
         </revdescription>
       </revision>
-      <revision>
-        <revnumber>6</revnumber>
-        <date>10/06/2011</date>
-        <authorinitials>K.COULOMB</authorinitials>
-        <revdescription>
-          <para>Documentation pour IMS.</para>
-        </revdescription>
-      </revision>
-   <revision>
-        <revnumber>7</revnumber>
-        <date>15/06/2011</date>
-        <authorinitials>I.CISSE</authorinitials>
-        <revdescription>
-          <para>Documentation pour FMS.</para>
-        </revdescription>
-      </revision>
     <revision>
-        <revnumber>8</revnumber>
+        <revnumber>6</revnumber>
         <date>22/06/2011</date>
         <authorinitials>B.ISNARD</authorinitials>
         <revdescription>
           <para>Ajout de l'option ENABLE_SWIG.</para>
         </revdescription>
       </revision>
-      
-      <revision>
-        <revnumber>9</revnumber>
+
+     <revision>
+        <revnumber>7</revnumber>
         <date>24/06/2011</date>
         <authorinitials>I.CISSE</authorinitials>
         <revdescription>
-          <para>Ajout de l'option vishnuMachineId dans les fichiers de
-            configuration de UMS, IMS et FMS .</para>
+          <para>Ajout de l'option vishnuMachineId dans le fichier de
+            configuration de UMS.</para>
         </revdescription>
       </revision>
+       
       <revision>
-        <revnumber>10</revnumber>
+        <revnumber>8</revnumber>
         <date>13/07/2011</date>
         <authorinitials>K.COULOMB</authorinitials>
         <revdescription>
@@ -105,7 +90,7 @@
       </revision>
      
       <revision>
-      <revnumber>11</revnumber>
+      <revnumber>9</revnumber>
       <date>11/08/2011</date>
       <authorinitials>D.TRAORE</authorinitials>
       <revdescription>
@@ -169,12 +154,6 @@
 	    par les divers modules.</para>
 	</listitem>
 	<listitem>
-	  <para>FMS : File Management Service</para>
-	</listitem>
-	<listitem>
-	  <para>IMS : Information Management Service</para>
-	</listitem>
-	<listitem>
 	  <para> MA : "Master Agent": élément de Sysfera-DS distribuant les requêtes entre les clients et les services désirés.</para>
 	</listitem>
 	<listitem>
@@ -210,12 +189,6 @@
       <para>
 	<itemizedlist>
 	  <listitem>
-	    <para>Client FMS : Cela désigne les programmes permettant un accès à distance aux services du SeD FMS. </para>
-	  </listitem>
-	  <listitem>
-	    <para>Client IMS : Cela désigne les programmes permettant un accès à distance aux services du SeD IMS. </para>
-	  </listitem>
-	  <listitem>
 	    <para>Client TMS : Cela désigne les programmes permettant un accès à distance aux services du SeD TMS. </para>
 	  </listitem>
 	  <listitem>
@@ -223,9 +196,6 @@
 	  </listitem>
 	  <listitem>
 	    <para>Préfrontale : Cela désigne une machine mise avant la(les) frontale(s) des calculateurs. </para>
-	  </listitem>
-	  <listitem>
-	    <para>SeD IMS : Cela désigne le programme contenant et exécutant les services du module IMS. </para>
 	  </listitem>
 	  <listitem>
 	    <para>SeD TMS : Cela désigne le programme contenant et exécutant les services du module TMS. </para>
@@ -244,7 +214,7 @@
     <title>Installation à partir des sources</title>
     <section>
       <title>Objectifs</title>
-      <para> Ce chapitre va présenter comment installer VISHNU à partir des sources. Il expliquera comment installer les serveurs et/ou les clients (l'installation d'un serveur implique l'installation du client associé). Le module UMS est nécessaire pour tout les autres modules, sinon n'importe quel module peut être installé sur une machine donnée sans dépendance des autres, et cela n'empêche pas d'utiliser les services même si les serveurs sont sur des machines différentes. Toutefois, pour que IMS puisse faire du délestage sur une machine, il faut que les modules concernés (TMS et/ou FMS) par le délestage soient installés avec IMS sur la machine en question. </para>
+      <para> Ce chapitre va présenter comment installer VISHNU à partir des sources. Il expliquera comment installer les serveurs et/ou les clients (l'installation d'un serveur implique l'installation du client associé). Le module UMS est nécessaire pour le module TMS, sinon n'importe quel module peut être installé sur une machine donnée sans dépendance des autres, et cela n'empêche pas d'utiliser les services même si les serveurs sont sur des machines différentes. </para>
     </section>
     <section>
       <title>Prérequis</title>
@@ -348,17 +318,6 @@
 	  </listitem>
 	  <listitem>
 	    <para>
-	      COMPILE_IMS, compile le module IMS si le flag est activé (OFF par défaut). Si ON, COMPILE_UMS, COMPILE_TMS et
-	      COMPILE_FMS doivent aussi être à ON.
-	    </para>
-	  </listitem>
-	  <listitem>
-	    <para>
-	      COMPILE_FMS, compile le module FMS si le flag est activé (OFF par défaut). Si ON, COMPILE_UMS doit aussi être à ON.
-	    </para>
-	  </listitem>
-	  <listitem>
-	    <para>
 	      COMPILE_UMS, compile le module UMS si le flag est activé (OFF par défaut).
 	    </para>
 	  </listitem>
@@ -374,7 +333,7 @@
 	  </listitem>
     <listitem>
       <para>
-        ENABLE_SWIG, qui permet d'activer la generation du code des adapteurs Python et Java (OFF par défaut). Cette option doit obligatoirement être activée si on choisit de ne pas compiler tous les modules VISHNU c'est-à-dire si au moins l'une des options COMPILE_UMS, COMPILE_TMS, COMPILE_FMS ou COMPILE_IMS est à OFF. Si l'option ENABLE_SWIG est activée, le package SWIG (voir paragraphe 'Prérequis') est nécessaire pour compiler.
+        ENABLE_SWIG, qui permet d'activer la generation du code des adapteurs Python et Java (OFF par défaut). Cette option doit obligatoirement être activée si on choisit de ne pas compiler tous les modules VISHNU c'est-à-dire si au moins l'une des options COMPILE_UMS, COMPILE_TMS est à OFF. Si l'option ENABLE_SWIG est activée, le package SWIG (voir paragraphe 'Prérequis') est nécessaire pour compiler.
       </para>
     </listitem>
 	  <listitem>
@@ -591,7 +550,6 @@
       <para><emphasis role="bold">NOTE: l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
       <para><emphasis role="bold">NOTE: Il est préférable d'éviter de lancer le même SeD sur la même machine.</emphasis></para>
       <para><emphasis role="bold">NOTE: Il existe un bug connu sur debian (entre autre) avec boost file system, utilisé par VISHNU. Le rapport de bug est ici et le bug est actuellement ouvert: https://svn.boost.org/trac/boost/ticket/4688. Si lors du lancement d'un SeD, le message d'erreur suivant apparait : std::runtime_error: locale::facet::_S_create_c_locale name not valid, faire un "export LANG=C" et cela devrait régler le problème.</emphasis></para>
-      <para><emphasis role="bold">NOTE: L'utilisateur VISHNU 'root' doit avoir un compte local sur chaque machine ou il y a un serveur IMS. Le compte UNIX correspondant sera utilisé pour le redémarrage automatique des SeD.</emphasis></para>
       <para>Pour mieux comprendre l'architecture de déploiement, se référer au document [ARCH], le chapitre 4, 'Technical Architecture'.</para>
       <orderedlist>
 	<listitem>
@@ -711,22 +669,9 @@
     </para>
   </listitem> 
 
-	<listitem>
-	  <para>Lancer le SeD IMS sur toutes la machine préfrontale. La commande de lancement est : <emphasis role="bold">imssed ~/ims_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.5 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS. Il faut noter que IMS doit être lancé sur toutes les machines à monitorer.
-	  </para>
-	</listitem>
-  <listitem>
-          <para>Lancer le SeD FMS sur une machine (sur la figure exemple 4.1 elle est différente de la préfrontale et de la machine avec le batch, mais cela peut être n'importe laquelle). La commande de lancement est : <emphasis role="bold">fmssed ~/fms_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.7 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus :
-	    <itemizedlist>
-	      <listitem>
-		<para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des transferts de fichiers.</para>
-	      </listitem>
-	    </itemizedlist>
-	  </para>
-	</listitem>
   <listitem>
 	  <para>
-	    Les modules de VISHNU sont prêts à être utilisés. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen des commandes UMS, TMS, FMS et IMS (voir le manuel de l'utilisateur VISHNU pour plus d'informations sur les commandes utilisateurs disponibles).
+	    Les modules de VISHNU sont prêts à être utilisés. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen des commandes UMS, TMS (voir le manuel de l'utilisateur VISHNU pour plus d'informations sur les commandes utilisateurs disponibles).
 	  </para>
 	</listitem>
       </orderedlist>
@@ -961,23 +906,6 @@
       </programlisting>
     </section>
     <section>
-      <title>Exemple de fichier de configuration d'un SeD FMS </title>
-      <programlisting>
-	# Configuration of the VISHNU FMS SeD
-	dietConfigFile=/usr/local/etc/SeD.cfg
-	vishnuId=1
-	databaseType=postgresql
-	databaseHost=localhost
-	databaseName=vishnu
-	databaseUserName=vishnu_user
-	databaseUserPassword=vishnu_user
-	databaseConnectionsNb=5
-	vishnuMachineId=machine_1
-	# Configuration propres à FMS
-	intervalMonitor = 1
-      </programlisting>
-    </section>
-    <section>
       <title>Exemple de fichier d'un forwarder </title>
       <programlisting>
 	# accept everything from everyone
@@ -1042,34 +970,6 @@
 	</tgroup>
       </informaltable>
     </section>
-    <section>
-      <title>Configuration des clés privées/publiques ssh requises pour FMS</title>
-      <para>
-        Toutes les commandes éxécutées par le SeD FMS sont lancées via ssh
-        sous le nom de l'utilisateur ayant émis la requête. Les services FMS
-        sont de deux types : il y a ceux qui n'impliquent qu'une machine
-        distante : Exemple getFilesInfo,listDir,etc.. et ceux qui impliquent au
-        moins deux machines distantes : machine source et destination pour les transferts de fichiers. 
-        <itemizedlist>
-          <listitem>
-            <para> Dans le premier cas le SeD se connecte sur la machine distante et
-              effectue la commande. Par conséquent la clé publique du SeD doit
-              être ajoutée au fichier authorized_keys ($HOME/.ssh/authorized_keys) de l'utilisateur de la machine distante 
-              concernée.</para>
-          </listitem>
-          <listitem>
-            <para> Dans le second cas, deux connexions ssh sont nécessaires. Le SeD se connecte sur la machine source et
-              lance le transfert (seconde connexion) vers la machine destination. Par conséquent la clé publique du SeD doit
-              être ajoutée au fichier authorized_key de la machine source pour
-              permettre la première connexion puis sur la machine destination pour permettre la seconde connexion. Il n'est pas nécessaire qu'il y ait un autre couple de clés entre la machine source et destination grâce au mécanisme d'agent forwarding (fonctionnalité de ssh).   </para>
-          </listitem>
-        </itemizedlist>
-        En somme, il est alors obligatoire que la clé publique du SeD soit ajoutée à tous les comptes utilisateurs des machines impliquées
-        par les requêtes FMS. Toutes les clés protégées par des passphrases
-        devront être stockées par un agent ssh pour permettre les
-        authentifications automatiques.
-      </para>
-    </section> 
     <section>
       <title>Test d'exécution d'un service depuis une machine client par shell</title>
       <orderedlist>
@@ -1151,7 +1051,7 @@
       </orderedlist>
     </section>
     <section>
-      <title>Gestion des machines (UMS+IMS)</title>
+      <title>Gestion des machines (UMS)</title>
       <orderedlist>
 	<listitem>
 	  <para>L'ajout d'une machine se fait à l'aide de la commande 'vishnu_add_machine'. Cette commande prend en paramètre le nom de la machine, le site ou elle se trouve, le language de la description qui sera donnée pour la machine, le fichier contenant la clé publique et la description. Ces paramètres sont obligatoires, en passant par le shell, la description n'a pas besoin d'être fournie en paramètre mais elle est alors demandée à l'administrateur avant d'ajouter la machine. A la fin de l'ajout, l'identifiant généré pour la machine est renvoyé.</para>
@@ -1170,11 +1070,6 @@
 	<listitem>
 	  <para>
 	    Les utilisateurs peuvent lister les machines, mais un administrateur a en plus une option qui est l'identifiant d'un utilisateur. Ceci lui permet de lister les machines sur lesquelles l'utilisateur a un compte VISHNU.
-	  </para>
-	</listitem>
-	<listitem>
-	  <para>
-	    La mise à jour d'informations système d'une machine se fait à l'aide de la commande 'vishnu_set_system_info' et permet d'ajouter ou modifier des informations système d'une machine. Il faut utiliser l'identifiant de la machine pour l'identifier lors de la mise à jour.
 	  </para>
 	</listitem>
       </orderedlist>
@@ -1201,7 +1096,7 @@
       </orderedlist>
     </section>
     <section>
-      <title>Options propres à l'administrateur dans les commandes utilisateurs(UMS+FMS)</title>
+      <title>Options propres à l'administrateur dans les commandes utilisateurs(UMS)</title>
       <orderedlist>
 	<listitem>
 	  <para>Dans la fonction 'vishnu_connect', un administrateur peut donner l'identifiant d'un utilisateur pour se connecter sous le nom de cet utilisateur dans VISHNU.</para>
@@ -1226,118 +1121,8 @@
 	    Dans la fonction 'vishnu_list_sessions', l'administrateur peut lister les toutes les sessions de tous les utilisateurs ou les sessions d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur, ou les sessions sur une machine particulière en fournissant l'identifiant de la machine.
 	  </para>
 	</listitem>
-<listitem>
-	  <para>
-	    Dans la fonction 'vishnu_list_file_transfers', l'administrateur peut lister tous les transferts de fichiers de tous les utilisateurs ou ceux  d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur, ou lister les transferts impliquant une machine particulière (qui peut être source ou destination du transfert) en fournissant l'identifiant de la machine.
-	  </para>
-	</listitem>
-<listitem>
-	  <para>
-	    Dans la fonction 'vishnu_stop_file_transfers', l'administrateur peut annuler tous les transferts de fichiers de tous les utilisateurs ou ceux  d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur, ou annuler les transferts impliquant une machine particulière (qui peut être source ou destination du transfert) en fournissant l'identifiant de la machine.
-	  </para>
-	</listitem>
 
 </orderedlist>
-    </section>
-    <section>
-      <title>Gestion des processus VISHNU et délestage (IMS)</title>
-      <itemizedlist>
-	<listitem>
-	  <para>L'administrateur peut lister les processus VISHNU, sur toute la plateforme ou sur une machine particulière.
-	    Fonction associée : vishnu_get_processes.</para>
-	</listitem>
-	<listitem>
-	  <para>L'administrateur peut arrêter un processus VISHNU, ce processus ne sera pas redémarrer automatiquement.
-	    Attention : l'administrateur doit avoir un compte sur la machine
-	    Fonction associée : vishnu_stop </para>
-	</listitem>
-	<listitem>
-	  <para>L'administrateur peut redémarrer un processus VISHNU sur une machine, ce processus doit avoir déjà tourné
-	    pour VISHNU sur cette machine et l'administrateur doit avoir un compte sur la machine.
-	    Fonction associée : vishnu_restart </para>
-	</listitem>
-	<listitem>
-	  <para>L'administrateur peut délester une machine selon deux modes. Dans le mode HARD, tout les processus VISHNU
-	    de la machine sont arretés. Dans le mode SOFT, seul FMS et TMS sont touchés, on arrête tout leurs transferts
-	    et jobs en cours.
-	    Fonction associée : vishnu_load_shed </para>
-	</listitem>
-      </itemizedlist>
-    </section>
-    <section>
-      <title>Surveillance de l'état des machines (IMS)</title>
-      <itemizedlist>
-	<listitem>
-	  <para> Un administrateur peut fixer la fréquence de mise à jour de l'enregistrement de l'état des machines.
-	    Fonction associée : vishnu_set_update_frequency</para>
-	</listitem>
-	<listitem>
-	  <para> Un administrateur peut obtenir la fréquence de mise à jour de l'enregistrement de l'état des machines.
-	    Fonction associée : vishnu_get_update_frequency</para>
-	</listitem>
-	<listitem>
-	  <para> Un administrateur peut fixer un seuil sur une machine. Ce seuil peut être l'utilisation du CPU, la
-	    mémoire libre restante ou l'espace disque restant. Lors de l'enregistrement de l'état d'une machine,
-	    si un seuil est atteint sur cette machine, l'administrateur est notifié par mail de ce dépassement.
-	    Fonction associée : vishnu_set_threshold</para>
-	</listitem>
-	<listitem>
-	  <para> Un administrateur peut obtenir les seuils fixés sur une machine. Pour plus d'informations sur les seuils
-	    voir la partie pour fixer les seuils ci-dessus.
-	    Fonction associée : vishnu_get_threshold</para>
-	</listitem>
-      </itemizedlist>
-    </section>
-    <section>
-      <title>Définition des formats des identifiants (IMS)</title>
-      <itemizedlist>
-	<listitem>
-	  <para>
-	    Un administrateur peut fixer le format des identifiants VISHNU automatiquement générés pour les utilisateurs,
-	    les machines, les jobs soumis aux batchs scheduler et les transferts de fichiers. Ces identifiants peuvent contenir
-	    plusieurs variables :
-	    <itemizedlist>
-	      <listitem>
-		<para>
-		  '$DAY' : Variable qui sera remplacée par le jour de création (1-31)
-		</para>
-	      </listitem>
-	      <listitem>
-		<para>
-		  '$MONTH' : Variable qui sera remplacée par le mois de création (1-12)
-		</para>
-	      </listitem>
-	      <listitem>
-		<para>
-		  '$YEAR' :  Variable qui sera remplacé par l'année de création (0-99)
-		</para>
-	      </listitem>
-	      <listitem>
-		<para>
-		  '$CPT' : Variable compteur qui est automatiquement incrémentée
-		</para>
-	      </listitem>
-	      <listitem>
-		<para>
-		  '$SITE' : Pour les utilisateurs ou machine, une information sur le lieu
-		</para>
-	      </listitem>
-	      <listitem>
-		<para>
-		  '$UNAME' : Pour les utilisateurs, variable remplacée par le nom de l'utilisateur
-		</para>
-	      </listitem>
-	      <listitem>
-		<para>
-		  '$MANAME' : Pour les machines, variable remplacée par le nom de la machine
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	    Attention la variable conteur est obligatoire pour éviter la génération d'un identifiant déjà existant.
-	    Fonctions associées : define_file_format, define_machine_format, define_task_format, define_user_format.
-	  </para>
-	</listitem>
-      </itemizedlist>
     </section>
   </chapter><!-- End administration -->
 </book>
