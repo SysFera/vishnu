@@ -132,6 +132,7 @@ cp -r TMS/src/sed $path/TMS/src
 cp -r TMS/src/server $path/TMS/src
 cp -r TMS/src/utils_torque $path/TMS/src
 cp -r TMS/src/slave $path/TMS/src
+cp -r TMS/src/slurm_parser $path/TMS/src
 
 # Copy tests
 mkdir $path/TMS/test
