@@ -69,6 +69,20 @@
         <revdescription>
 	  <para> Added TMS generic script example.</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>5</revnumber>
+        <date>18/07/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+	  <para> Add the CLI examples and fix some mistakes..</para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>6</revnumber>
+        <date>11/08/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+      <para>Added SLURM batch scheduler </para></revdescription>
+      </revision>
     </revhistory>
     <copyright>
       <year>2011</year>
@@ -145,7 +159,7 @@
             <para>[D1.1b]: VISHNU &quot;Spécifications techniques des besoins&quot;</para>
           </listitem>
           <listitem>
-            <para>[DIETMAN]: DIET User's Manual v2.6 (available with the DIET distribution at http://graal.ens-lyon.fr/~diet)</para>
+            <para>[DIETMAN]: DIET User's Manual v2.7 (available with the DIET distribution at http://graal.ens-lyon.fr/~diet)</para>
           </listitem>
         </itemizedlist></para>
     </section>
@@ -170,9 +184,9 @@
       </itemizedlist>
     </para>
     <section>
-      <title> Installation procedure </title>
+      <title> Installation procedure of the clients </title>
       <para> 
-	This section details the main steps of the installation process, including the installation requirements [D1.1b]. VISHNU is based on SysFera-DS software
+	This section details the main steps of the installation process for the clients, including the installation requirements [D1.1b]. VISHNU is based on SysFera-DS software
 	which must be installed before.
       </para>
       <para> <emphasis role="bold">Installation requirements:</emphasis></para>
@@ -225,31 +239,41 @@
               <para>> make &amp;&amp; make install</para>
             </listitem>
             <listitem>
-              <para> <emphasis role="bold">To compile the UMS package : </emphasis></para>
-              <para>> cmake -DCOMPILE_UMS=ON  -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
-            </listitem>
-            <listitem>
-              <para> <emphasis role="bold">To compile the TMS package : </emphasis></para>
-              <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
-            </listitem>
-            <listitem>
-              <para> <emphasis role="bold">To compile the FMS package : </emphasis></para>
-              <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_FMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
-            </listitem>
-            <listitem>
-              <para> <emphasis role="bold">To compile the IMS package : </emphasis></para>
-              <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DCOMPILE_FMS=ON -DCOMPILE_IMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
+              <para>The module for each client can be built using the '-DCOMPILE_*MS=ON' flag. These are some commande line examples on how to build the clients</para>
+              <itemizedlist>
+                <listitem>
+                  <para> <emphasis role="bold">To compile the UMS package : </emphasis></para>
+                  <para>> cmake -DCOMPILE_UMS=ON  -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
+                </listitem>
+                <listitem>
+                  <para> <emphasis role="bold">To compile the TMS package : </emphasis></para>
+                  <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
+                </listitem>
+                <listitem>
+                  <para> <emphasis role="bold">To compile the FMS package : </emphasis></para>
+                  <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_FMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
+                </listitem>
+                <listitem>
+                  <para> <emphasis role="bold">To compile the IMS package : </emphasis></para>
+                  <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DCOMPILE_FMS=ON -DCOMPILE_IMS=ON </para>
+                  <para> -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
+                </listitem>
+              </itemizedlist>
             </listitem>
           </itemizedlist>
 	</para>
       </section>
       <section>
         <title> From binaries package </title>
+        <para>Assuming the dependencies are installed (omniorb, diet, boost).
+	Download the vishnu-client_*_i386.deb, where * stands for the VISHNU version and install it (dpkg -i vishnu_client_*_i386.deb). Then, if the DIET hierarchy is already running and accessible from the client, one can uses VISHNU. All the services are available in the debian packages.
+	</para>
       </section>
     </section>
     <section>
-      <title> Sofware usage description </title>
-      <para><emphasis role="bold">WARNING: The lists are INOUT parameters, the results are appended, they do not overwrite the existing list.</emphasis></para>
+      <title> Software usage description </title>
+      <para>VISHNU is composed of 4 main packages, one that deals with the users and the machine (UMS), one that deals with the batch schedulers (TMS), one that deals with the files management (FMS) and one that handle the information of the system (IMS). These clients can be installed alltogether or just one or two. Please contact your VISHNU admin to know the corresponding servers you can have before installing the client. It is important to note that the client can be installed without the server being on the platform, the call will end up with an exception and the message &quot;Vishnu not available&quot;. Below each package will be describe to show the services it offers to the user.</para>
+      <para><emphasis role="bold">WARNING: The lists are INOUT parameters, the results are appended, they do not overwrite the existing list. Moreover, the get function on the lists do not check the bounds, it is like using the [] operator.</emphasis></para>
       <section>
         <title> UMS package </title>
         <section>
@@ -269,7 +293,7 @@
         <section>
           <title> Reconnection to VISHNU </title>
           <para>
-	    Reconnection is done using the <emphasis role="bold">vishnu_reconnect</emphasis> command. This command allows using an existing session that was previously opened but not closed. It makes it possible to simultaneously use the same session in different shell terminals.
+	    Reconnection is done using the <emphasis role="bold">vishnu_reconnect</emphasis> command. This command allows using an existing session that was previously opened but not closed. It makes it possible to simultaneously use the same session in different shell terminals. A session is what authentifies a user once he has connected. The user does not need password or username when authenticated to use vishnu. Moreover, the session contains the commands made by a user, so he can retrieve the sequence of commands made in a previous work session.
 	  </para>
         </section>
         <section>
@@ -344,7 +368,7 @@
           <para>
 	    To submit a job, via VISHNU, to the batch scheduler of a specific machine, the user needs: an active VISHNU session, 
 	    a local user configuration registered on VISHNU that corresponds to an existing UNIX account on the specified machine and a script that describes 
-	    the job to submit. In the current implementation of VISHNU, it is possible to use the directives for two batch schedulers: TORQUE and LoadLeveler.
+	    the job to submit. In the current implementation of VISHNU, it is possible to use the directives for two batch schedulers: TORQUE, LoadLeveler and SLURM.
 	    In order to use the same script on different batch schedulers, a generic script with generic VISHNU directives is used.
 	    The <emphasis role="bold">vishnu_submit_job</emphasis> command allows a user to submit a job in the shell terminal.
 	    To obtain information on a job, the user can use the <emphasis role="bold">vishnu_get_job_info</emphasis> or 
@@ -390,7 +414,7 @@
               </itemizedlist>
 	    </para>
             <para>
-        It is important to note that the user can also add directives specific to a batch scheduler (TORQUE or LoadLeveler). Such specific directives must be added directly after the generic directives. Here is an example:
+        It is important to note that the user can also add directives specific to a batch scheduler (TORQUE, LoadLeveler or SLURM). Such specific directives must be added directly after the generic directives. Here is an example:
       </para>
             <programlisting>
         #!/bin/sh
@@ -400,12 +424,18 @@
         #% vishnu_error=/path/to/jobError
         #% vishnu_wallclocklimit=2:40:5
         #This line is a comment
-        #The following lines are torque specific section
+        #The following lines are TORQUE specific section
         #PBS -l ncpus=1
         #PBS -l mem=50
-        #The following lines are loadleveler specific section
+        #The following lines are LOADLEVELER specific section
         #@ notify_user=user@mail
         #@ cpu_limit=2
+        #The following lines are SLURM specific section
+        #SBATCH -J myFristJob
+        #SBATCH -o myJob-%j.out
+        #SBATCH -e myJob-%j.err
+        #SBATCH -t 01:02:20
+        #SBATCH -p myFavoritePartition
       </programlisting>
           </section>
         </section>
@@ -912,7 +942,7 @@ homeDirectory path .</para>
           <varlistentry>
             <term><option>-l <replaceable>acLogin</replaceable></option></term>
             <listitem>
-              <para>accLogin represents the login of the user on the associated machine.</para>
+              <para>acLogin represents the login of the user on the associated machine.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -8480,15 +8510,15 @@ Please note that retrieving these values uses some valuable system ressources an
     <title>UMS Python API Reference</title>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.connect</refentrytitle>
+        <refentrytitle>VISHNU_UMS.connect</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.connect</refname>
+        <refname>VISHNU_UMS.connect</refname>
         <refpurpose>opens a session</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.connect</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef><paramdef>ConnectOptions <parameter>options = ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.connect</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef><paramdef>ConnectOptions <parameter>options = ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -8596,15 +8626,15 @@ completed and until the session is either manually or automatically closed.</par
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.reconnect</refentrytitle>
+        <refentrytitle>VISHNU_UMS.reconnect</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.reconnect</refname>
+        <refname>VISHNU_UMS.reconnect</refname>
         <refpurpose>reconnects to a session that is still active</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.reconnect</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>string <parameter>sessionId</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.reconnect</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>string <parameter>sessionId</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -8713,15 +8743,15 @@ session that was opened on another client system.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.close</refentrytitle>
+        <refentrytitle>VISHNU_UMS.close</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.close</refname>
+        <refname>VISHNU_UMS.close</refname>
         <refpurpose>closes the session</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.close</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.close</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -8792,15 +8822,15 @@ the session (e.g., job submission or file transfers). After the session is close
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.changePassword</refentrytitle>
+        <refentrytitle>VISHNU_UMS.changePassword</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.changePassword</refname>
+        <refname>VISHNU_UMS.changePassword</refname>
         <refpurpose>changes the password</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.changePassword</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>string <parameter>passwordNew</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.changePassword</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>string <parameter>passwordNew</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -8877,15 +8907,15 @@ the session (e.g., job submission or file transfers). After the session is close
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.addLocalAccount</refentrytitle>
+        <refentrytitle>VISHNU_UMS.addLocalAccount</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.addLocalAccount</refname>
+        <refname>VISHNU_UMS.addLocalAccount</refname>
         <refpurpose>adds a new local user configuration </refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.addLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>LocalAccount <parameter>newAccount</parameter></paramdef><paramdef>string <parameter>sshPublicKey</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.addLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>LocalAccount <parameter>newAccount</parameter></paramdef><paramdef>string <parameter>sshPublicKey</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -8989,15 +9019,15 @@ homeDirectory path .</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.updateLocalAccount</refentrytitle>
+        <refentrytitle>VISHNU_UMS.updateLocalAccount</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.updateLocalAccount</refname>
+        <refname>VISHNU_UMS.updateLocalAccount</refname>
         <refpurpose>updates a local user configuration</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.updateLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>LocalAccount <parameter>LocalAccUpd</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.updateLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>LocalAccount <parameter>LocalAccUpd</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -9084,15 +9114,15 @@ homeDirectory path .</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.deleteLocalAccount</refentrytitle>
+        <refentrytitle>VISHNU_UMS.deleteLocalAccount</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.deleteLocalAccount</refname>
+        <refname>VISHNU_UMS.deleteLocalAccount</refname>
         <refpurpose>removes a local user configuration (for a given user on a given machine) from VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.deleteLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.deleteLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -9173,15 +9203,15 @@ homeDirectory path .</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.listLocalAccounts</refentrytitle>
+        <refentrytitle>VISHNU_UMS.listLocalAccounts</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.listLocalAccounts</refname>
+        <refname>VISHNU_UMS.listLocalAccounts</refname>
         <refpurpose>lists the local user configurations</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listLocalAccounts</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts <parameter>listLocalAcct</parameter></paramdef><paramdef>ListLocalAccOptions <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listLocalAccounts</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts <parameter>listLocalAcct</parameter></paramdef><paramdef>ListLocalAccOptions <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -9265,15 +9295,15 @@ local configurations related to your VISHNU account. </para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.listMachines</refentrytitle>
+        <refentrytitle>VISHNU_UMS.listMachines</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.listMachines</refname>
+        <refname>VISHNU_UMS.listMachines</refname>
         <refpurpose>lists the machines that are accessible through VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listMachines</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines <parameter>listMachine</parameter></paramdef><paramdef>ListMachineOptions <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listMachines</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines <parameter>listMachine</parameter></paramdef><paramdef>ListMachineOptions <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -9359,15 +9389,15 @@ for other VISHNU commands.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.listHistoryCmd</refentrytitle>
+        <refentrytitle>VISHNU_UMS.listHistoryCmd</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.listHistoryCmd</refname>
+        <refname>VISHNU_UMS.listHistoryCmd</refname>
         <refpurpose>lists the commands</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listHistoryCmd</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListCommands <parameter>listCommands</parameter></paramdef><paramdef>ListCmdOptions <parameter>options = ListCmdOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listHistoryCmd</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListCommands <parameter>listCommands</parameter></paramdef><paramdef>ListCmdOptions <parameter>options = ListCmdOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -9448,15 +9478,15 @@ for other VISHNU commands.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.listOptions</refentrytitle>
+        <refentrytitle>VISHNU_UMS.listOptions</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.listOptions</refname>
+        <refname>VISHNU_UMS.listOptions</refname>
         <refpurpose>lists the options of the user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listOptions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListOptionsValues <parameter>listOptValues</parameter></paramdef><paramdef>ListOptOptions <parameter>options = ListOptOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listOptions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListOptionsValues <parameter>listOptValues</parameter></paramdef><paramdef>ListOptOptions <parameter>options = ListOptOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -9545,15 +9575,15 @@ for other VISHNU commands.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.listSessions</refentrytitle>
+        <refentrytitle>VISHNU_UMS.listSessions</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.listSessions</refname>
+        <refname>VISHNU_UMS.listSessions</refname>
         <refpurpose>lists all sessions of the user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listSessions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListSessions <parameter>listsession</parameter></paramdef><paramdef>ListSessionOptions <parameter>options = ListSessionOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listSessions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListSessions <parameter>listsession</parameter></paramdef><paramdef>ListSessionOptions <parameter>options = ListSessionOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -9641,15 +9671,15 @@ The session's status is either 0 (inactive) or 1 (active).</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.configureOption</refentrytitle>
+        <refentrytitle>VISHNU_UMS.configureOption</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.configureOption</refname>
+        <refname>VISHNU_UMS.configureOption</refname>
         <refpurpose>configures an option of the user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.configureOption</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>OptionValue <parameter>optionValue</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.configureOption</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>OptionValue <parameter>optionValue</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -9740,15 +9770,15 @@ opened the session).</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.vishnuInitialize</refentrytitle>
+        <refentrytitle>VISHNU_UMS.vishnuInitialize</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.vishnuInitialize</refname>
+        <refname>VISHNU_UMS.vishnuInitialize</refname>
         <refpurpose>initializes VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.vishnuInitialize</function></funcdef><paramdef>string <parameter>configPath</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.vishnuInitialize</function></funcdef><paramdef>string <parameter>configPath</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -9793,15 +9823,15 @@ opened the session).</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.vishnuFinalize</refentrytitle>
+        <refentrytitle>VISHNU_UMS.vishnuFinalize</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.vishnuFinalize</refname>
+        <refname>VISHNU_UMS.vishnuFinalize</refname>
         <refpurpose>allows a user to go out properly from VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.vishnuFinalize</function></funcdef><paramdef/></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.vishnuFinalize</function></funcdef><paramdef/></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -9838,15 +9868,15 @@ opened the session).</para>
     <title>TMS Python API Reference</title>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.submitJob</refentrytitle>
+        <refentrytitle>VISHNU_UMS.submitJob</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.submitJob</refname>
+        <refname>VISHNU_UMS.submitJob</refname>
         <refpurpose>submits a job on a machine through the use of a script (scriptFilePath)</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.submitJob</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>scriptFilePath</parameter></paramdef><paramdef>Job <parameter>jobInfo</parameter></paramdef><paramdef>SubmitOptions <parameter>options = SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.submitJob</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>scriptFilePath</parameter></paramdef><paramdef>Job <parameter>jobInfo</parameter></paramdef><paramdef>SubmitOptions <parameter>options = SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -9935,15 +9965,15 @@ opened the session).</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;Permission denied&quot; [104])</term>
+            <term>UMSVishnuException(&quot;Permission denied&quot; [104])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -9951,15 +9981,15 @@ opened the session).</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.getJobInfo</refentrytitle>
+        <refentrytitle>VISHNU_UMS.getJobInfo</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.getJobInfo</refname>
+        <refname>VISHNU_UMS.getJobInfo</refname>
         <refpurpose>gets information on a job from its id</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.getJobInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef><paramdef>Job <parameter>jobInfos</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.getJobInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef><paramdef>Job <parameter>jobInfos</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -10038,15 +10068,15 @@ opened the session).</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;Permission denied&quot; [104])</term>
+            <term>UMSVishnuException(&quot;Permission denied&quot; [104])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -10054,15 +10084,15 @@ opened the session).</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.getJobProgress</refentrytitle>
+        <refentrytitle>VISHNU_UMS.getJobProgress</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.getJobProgress</refname>
+        <refname>VISHNU_UMS.getJobProgress</refname>
         <refpurpose>gets the progression status of jobs</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.getJobProgress</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListProgression <parameter>listProgress</parameter></paramdef><paramdef>ProgressOptions <parameter>options = ProgressOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.getJobProgress</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListProgression <parameter>listProgress</parameter></paramdef><paramdef>ProgressOptions <parameter>options = ProgressOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -10145,15 +10175,15 @@ opened the session).</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.listQueues</refentrytitle>
+        <refentrytitle>VISHNU_UMS.listQueues</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.listQueues</refname>
+        <refname>VISHNU_UMS.listQueues</refname>
         <refpurpose>gets queues information</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listQueues</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListQueues <parameter>listofQueues</parameter></paramdef><paramdef>string <parameter>queueName = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listQueues</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListQueues <parameter>listofQueues</parameter></paramdef><paramdef>string <parameter>queueName = string()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -10232,15 +10262,15 @@ opened the session).</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;Permission denied&quot; [104])</term>
+            <term>UMSVishnuException(&quot;Permission denied&quot; [104])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -10248,15 +10278,15 @@ opened the session).</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.listJobs</refentrytitle>
+        <refentrytitle>VISHNU_UMS.listJobs</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.listJobs</refname>
+        <refname>VISHNU_UMS.listJobs</refname>
         <refpurpose>gets a list of all submitted jobs</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listJobs</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListJobs <parameter>listOfJobs</parameter></paramdef><paramdef>ListJobsOptions <parameter>options = ListJobsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listJobs</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListJobs <parameter>listOfJobs</parameter></paramdef><paramdef>ListJobsOptions <parameter>options = ListJobsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -10335,15 +10365,15 @@ opened the session).</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;Permission denied&quot; [104])</term>
+            <term>UMSVishnuException(&quot;Permission denied&quot; [104])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -10351,15 +10381,15 @@ opened the session).</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.getJobOutput</refentrytitle>
+        <refentrytitle>VISHNU_UMS.getJobOutput</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.getJobOutput</refname>
+        <refname>VISHNU_UMS.getJobOutput</refname>
         <refpurpose>gets standard output and error output files of a job given its id</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.getJobOutput</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef><paramdef>JobResult <parameter>outputInfo</parameter></paramdef><paramdef>string <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.getJobOutput</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef><paramdef>JobResult <parameter>outputInfo</parameter></paramdef><paramdef>string <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -10444,23 +10474,23 @@ opened the session).</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;Permission denied&quot; [104])</term>
+            <term>UMSVishnuException(&quot;Permission denied&quot; [104])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;The job is not terminated&quot; [107])</term>
+            <term>UMSVishnuException(&quot;The job is not terminated&quot; [107])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;The job is already downloaded&quot; [108])</term>
+            <term>UMSVishnuException(&quot;The job is already downloaded&quot; [108])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -10468,15 +10498,15 @@ opened the session).</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.getCompletedJobsOutput</refentrytitle>
+        <refentrytitle>VISHNU_UMS.getCompletedJobsOutput</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.getCompletedJobsOutput</refname>
+        <refname>VISHNU_UMS.getCompletedJobsOutput</refname>
         <refpurpose>gets standard output and error output files of completed jobs (applies only once for each job)</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.getCompletedJobsOutput</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListJobResults <parameter>listOfResults</parameter></paramdef><paramdef>string <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.getCompletedJobsOutput</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListJobResults <parameter>listOfResults</parameter></paramdef><paramdef>string <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -10555,15 +10585,15 @@ opened the session).</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;Permission denied&quot; [104])</term>
+            <term>UMSVishnuException(&quot;Permission denied&quot; [104])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -10571,15 +10601,15 @@ opened the session).</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.cancelJob</refentrytitle>
+        <refentrytitle>VISHNU_UMS.cancelJob</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.cancelJob</refname>
+        <refname>VISHNU_UMS.cancelJob</refname>
         <refpurpose>cancels a job from its id</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.cancelJob</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.cancelJob</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -10652,23 +10682,23 @@ opened the session).</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;Permission denied&quot; [104])</term>
+            <term>UMSVishnuException(&quot;Permission denied&quot; [104])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;The job is already terminated&quot; [105])</term>
+            <term>UMSVishnuException(&quot;The job is already terminated&quot; [105])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>TMSVishnuException(&quot;The job is already canceled&quot; [106])</term>
+            <term>UMSVishnuException(&quot;The job is already canceled&quot; [106])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -10679,15 +10709,15 @@ opened the session).</para>
     <title>FMS Python API Reference</title>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.createFile</refentrytitle>
+        <refentrytitle>VISHNU_UMS.createFile</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.createFile</refname>
+        <refname>VISHNU_UMS.createFile</refname>
         <refpurpose>creates  files on  remote machines.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.createFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.createFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -10768,15 +10798,15 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <term>UMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <term>UMSVishnuException(&quot;Runtime error&quot; [202])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>UMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -10784,15 +10814,15 @@ values can be obtained using the vishnu_list_machine command)</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.createDir</refentrytitle>
+        <refentrytitle>VISHNU_UMS.createDir</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.createDir</refname>
+        <refname>VISHNU_UMS.createDir</refname>
         <refpurpose>creates directories on remote machines.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.createDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.createDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -10873,15 +10903,15 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <term>UMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <term>UMSVishnuException(&quot;Runtime error&quot; [202])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>UMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -10889,15 +10919,15 @@ values can be obtained using the vishnu_list_machine command)</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.removeFile</refentrytitle>
+        <refentrytitle>VISHNU_UMS.removeFile</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.removeFile</refname>
+        <refname>VISHNU_UMS.removeFile</refname>
         <refpurpose>removes files from  remote hosts.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.removeFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>RmFileOptions <parameter>options = RmFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.removeFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>RmFileOptions <parameter>options = RmFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -10984,15 +11014,15 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <term>UMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <term>UMSVishnuException(&quot;Runtime error&quot; [202])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>UMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11000,15 +11030,15 @@ values can be obtained using the vishnu_list_machine command)</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.removeDir</refentrytitle>
+        <refentrytitle>VISHNU_UMS.removeDir</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.removeDir</refname>
+        <refname>VISHNU_UMS.removeDir</refname>
         <refpurpose>removes  directories (and subdirectories) from  remote machines.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.removeDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.removeDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -11089,15 +11119,15 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <term>UMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <term>UMSVishnuException(&quot;Runtime error&quot; [202])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>UMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11105,15 +11135,15 @@ values can be obtained using the vishnu_list_machine command)</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.chGrp</refentrytitle>
+        <refentrytitle>VISHNU_UMS.chGrp</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.chGrp</refname>
+        <refname>VISHNU_UMS.chGrp</refname>
         <refpurpose>changes group owner of  remote files/directories. </refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.chGrp</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>group</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.chGrp</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>group</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -11200,15 +11230,15 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <term>UMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <term>UMSVishnuException(&quot;Runtime error&quot; [202])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>UMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11216,15 +11246,15 @@ values can be obtained using the vishnu_list_machine command)</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.chMod</refentrytitle>
+        <refentrytitle>VISHNU_UMS.chMod</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.chMod</refname>
+        <refname>VISHNU_UMS.chMod</refname>
         <refpurpose>changes  access rights of remote files/directories.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.chMod</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>mode_t <parameter>mode</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.chMod</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>mode_t <parameter>mode</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -11312,15 +11342,15 @@ The mode parameter is the same value as for the unix chmod command.</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <term>UMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <term>UMSVishnuException(&quot;Runtime error&quot; [202])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>UMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11328,15 +11358,15 @@ The mode parameter is the same value as for the unix chmod command.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.headOfFile</refentrytitle>
+        <refentrytitle>VISHNU_UMS.headOfFile</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.headOfFile</refname>
+        <refname>VISHNU_UMS.headOfFile</refname>
         <refpurpose>displays a few first lines of  files located on  remote machines.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.headOfFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>string <parameter>fileContent</parameter></paramdef><paramdef>HeadOfFileOptions <parameter>options = HeadOfFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.headOfFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>string <parameter>fileContent</parameter></paramdef><paramdef>HeadOfFileOptions <parameter>options = HeadOfFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -11430,15 +11460,15 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <term>UMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <term>UMSVishnuException(&quot;Runtime error&quot; [202])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>UMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11446,15 +11476,15 @@ values can be obtained using the vishnu_list_machine command).
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.tailOfFile</refentrytitle>
+        <refentrytitle>VISHNU_UMS.tailOfFile</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.tailOfFile</refname>
+        <refname>VISHNU_UMS.tailOfFile</refname>
         <refpurpose>displays a few last lines of  files located on remote machines</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.tailOfFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>string <parameter>fileContent</parameter></paramdef><paramdef>TailOfFileOptions <parameter>options = TailOfFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.tailOfFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>string <parameter>fileContent</parameter></paramdef><paramdef>TailOfFileOptions <parameter>options = TailOfFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -11548,15 +11578,15 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <term>UMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <term>UMSVishnuException(&quot;Runtime error&quot; [202])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>UMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11564,15 +11594,15 @@ values can be obtained using the vishnu_list_machine command).
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.contentOfFile</refentrytitle>
+        <refentrytitle>VISHNU_UMS.contentOfFile</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.contentOfFile</refname>
+        <refname>VISHNU_UMS.contentOfFile</refname>
         <refpurpose>displays content  of  files located on remote machines</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.contentOfFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>string <parameter>fileContent</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.contentOfFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>string <parameter>fileContent</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -11660,15 +11690,15 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <term>UMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <term>UMSVishnuException(&quot;Runtime error&quot; [202])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>UMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11676,15 +11706,15 @@ values can be obtained using the vishnu_list_machine command).
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.listDir</refentrytitle>
+        <refentrytitle>VISHNU_UMS.listDir</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.listDir</refname>
+        <refname>VISHNU_UMS.listDir</refname>
         <refpurpose>displays  the content of a remote directory. </refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>StringList <parameter>dirContent</parameter></paramdef><paramdef>LsDirOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>StringList <parameter>dirContent</parameter></paramdef><paramdef>LsDirOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -11778,15 +11808,15 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <term>UMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <term>UMSVishnuException(&quot;Runtime error&quot; [202])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>UMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11794,15 +11824,15 @@ values can be obtained using the vishnu_list_machine command).
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.copyFile</refentrytitle>
+        <refentrytitle>VISHNU_UMS.copyFile</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.copyFile</refname>
+        <refname>VISHNU_UMS.copyFile</refname>
         <refpurpose>executes a synchronous copy of file.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.copyFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>CpFileOptions <parameter>options = CpFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.copyFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>CpFileOptions <parameter>options = CpFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -11898,15 +11928,15 @@ i.e. a local copy cannot be handled by this command.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <term>UMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <term>UMSVishnuException(&quot;Runtime error&quot; [202])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>UMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11914,15 +11944,15 @@ i.e. a local copy cannot be handled by this command.
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.copyAsyncFile</refentrytitle>
+        <refentrytitle>VISHNU_UMS.copyAsyncFile</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.copyAsyncFile</refname>
+        <refname>VISHNU_UMS.copyAsyncFile</refname>
         <refpurpose>executes an asynchronous copy of file.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.copyAsyncFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>FileTransfer <parameter>transferInfo</parameter></paramdef><paramdef>CpFileOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.copyAsyncFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>FileTransfer <parameter>transferInfo</parameter></paramdef><paramdef>CpFileOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -12025,15 +12055,15 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <term>UMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <term>UMSVishnuException(&quot;Runtime error&quot; [202])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>UMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -12041,15 +12071,15 @@ The command listFileTransfers can be used to check the status of the transfer af
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.moveFile</refentrytitle>
+        <refentrytitle>VISHNU_UMS.moveFile</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.moveFile</refname>
+        <refname>VISHNU_UMS.moveFile</refname>
         <refpurpose>executes a synchronous move of file.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.moveFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>CpFileOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.moveFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>CpFileOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -12145,15 +12175,15 @@ i.e. a local move cannot be handled by this command.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <term>UMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <term>UMSVishnuException(&quot;Runtime error&quot; [202])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>UMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -12161,15 +12191,15 @@ i.e. a local move cannot be handled by this command.
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.moveAsyncFile</refentrytitle>
+        <refentrytitle>VISHNU_UMS.moveAsyncFile</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.moveAsyncFile</refname>
+        <refname>VISHNU_UMS.moveAsyncFile</refname>
         <refpurpose>executes an asynchronous move of file.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.moveAsyncFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>FileTransfer <parameter>transferInfo</parameter></paramdef><paramdef>CpFileOptions <parameter>options = CpFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.moveAsyncFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>FileTransfer <parameter>transferInfo</parameter></paramdef><paramdef>CpFileOptions <parameter>options = CpFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -12272,15 +12302,15 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <term>UMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <term>UMSVishnuException(&quot;Runtime error&quot; [202])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>UMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -12288,15 +12318,15 @@ The command listFileTransfers can be used to check the status of the transfer af
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.stopFileTransfer</refentrytitle>
+        <refentrytitle>VISHNU_UMS.stopFileTransfer</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.stopFileTransfer</refname>
+        <refname>VISHNU_UMS.stopFileTransfer</refname>
         <refpurpose>stops an execution of a set of file transfers.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.stopFileTransfer</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>StopTransferOptions <parameter>options = StopTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.stopFileTransfer</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>StopTransferOptions <parameter>options = StopTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -12377,15 +12407,15 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <term>UMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <term>UMSVishnuException(&quot;Runtime error&quot; [202])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>UMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -12393,15 +12423,15 @@ The command listFileTransfers can be used to check the status of the transfer af
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.listFileTransfers</refentrytitle>
+        <refentrytitle>VISHNU_UMS.listFileTransfers</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.listFileTransfers</refname>
+        <refname>VISHNU_UMS.listFileTransfers</refname>
         <refpurpose>displays the history of all file transfers submitted by User.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listFileTransfers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>FileTransferList <parameter>fileTransferList</parameter></paramdef><paramdef>LsTransferOptions <parameter>options = LsTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listFileTransfers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>FileTransferList <parameter>fileTransferList</parameter></paramdef><paramdef>LsTransferOptions <parameter>options = LsTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -12488,15 +12518,15 @@ using a vishnu synchronous or asynchronous copy or move file command.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <term>UMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <term>UMSVishnuException(&quot;Runtime error&quot; [202])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>UMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -12504,15 +12534,15 @@ using a vishnu synchronous or asynchronous copy or move file command.
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.getFileInfo</refentrytitle>
+        <refentrytitle>VISHNU_UMS.getFileInfo</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.getFileInfo</refname>
+        <refname>VISHNU_UMS.getFileInfo</refname>
         <refpurpose>displays the information  of  files.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.getFileInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>FileStat <parameter>filesinfo</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.getFileInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>FileStat <parameter>filesinfo</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -12600,15 +12630,15 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <term>UMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <term>UMSVishnuException(&quot;Runtime error&quot; [202])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>UMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -12619,15 +12649,15 @@ values can be obtained using the vishnu_list_machine command).
     <title>IMS Python API Reference</title>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.exportCommands</refentrytitle>
+        <refentrytitle>VISHNU_UMS.exportCommands</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.exportCommands</refname>
+        <refname>VISHNU_UMS.exportCommands</refname>
         <refpurpose>exports all the commands made by a user during a session</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.exportCommands</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>oldSessionId</parameter></paramdef><paramdef>string <parameter>filename</parameter></paramdef><paramdef>ExportOp <parameter>options = ExportOp()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.exportCommands</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>oldSessionId</parameter></paramdef><paramdef>string <parameter>filename</parameter></paramdef><paramdef>ExportOp <parameter>options = ExportOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -12706,15 +12736,15 @@ The access to other user's sessions is only permitted to administrators.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.getMetricCurrentValue</refentrytitle>
+        <refentrytitle>VISHNU_UMS.getMetricCurrentValue</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.getMetricCurrentValue</refname>
+        <refname>VISHNU_UMS.getMetricCurrentValue</refname>
         <refpurpose>displays the current values of system metrics</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.getMetricCurrentValue</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListMetric <parameter>metricValue</parameter></paramdef><paramdef>CurMetricOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.getMetricCurrentValue</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListMetric <parameter>metricValue</parameter></paramdef><paramdef>CurMetricOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -12792,15 +12822,15 @@ Please note that retrieving these values uses some valuable system ressources an
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.getMetricHistory</refentrytitle>
+        <refentrytitle>VISHNU_UMS.getMetricHistory</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.getMetricHistory</refname>
+        <refname>VISHNU_UMS.getMetricHistory</refname>
         <refpurpose>displays the history of values of a system metric</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.getMetricHistory</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListMetric <parameter>metricValues</parameter></paramdef><paramdef>MetricHistOp <parameter>options = MetricHistOp()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.getMetricHistory</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListMetric <parameter>metricValues</parameter></paramdef><paramdef>MetricHistOp <parameter>options = MetricHistOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -12875,15 +12905,15 @@ Please note that retrieving these values uses some valuable system ressources an
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.getUpdateFrequency</refentrytitle>
+        <refentrytitle>VISHNU_UMS.getUpdateFrequency</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.getUpdateFrequency</refname>
+        <refname>VISHNU_UMS.getUpdateFrequency</refname>
         <refpurpose>gets the update frequency of the IMS database</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.getUpdateFrequency</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>int <parameter>freq</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.getUpdateFrequency</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>int <parameter>freq</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -12946,15 +12976,15 @@ Please note that retrieving these values uses some valuable system ressources an
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.getSystemInfo</refentrytitle>
+        <refentrytitle>VISHNU_UMS.getSystemInfo</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.getSystemInfo</refname>
+        <refname>VISHNU_UMS.getSystemInfo</refname>
         <refpurpose>To get the system info on a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.getSystemInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListSysInfo <parameter>res</parameter></paramdef><paramdef>SysInfoOp <parameter>options = SysInfoOp()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.getSystemInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListSysInfo <parameter>res</parameter></paramdef><paramdef>SysInfoOp <parameter>options = SysInfoOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
