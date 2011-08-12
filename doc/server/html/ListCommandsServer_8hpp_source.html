@@ -184,48 +184,50 @@
 <a name="l00203"></a>00203          <span class="keywordflow">break</span>;
 <a name="l00204"></a>00204       <span class="keywordflow">default</span>:
 <a name="l00205"></a>00205          cmd = <span class="stringliteral">&quot;Unknown Command&quot;</span>;
-<a name="l00206"></a>00206     }
-<a name="l00207"></a>00207     <span class="keywordflow">return</span> cmd;
-<a name="l00208"></a>00208   }
-<a name="l00209"></a>00209 
-<a name="l00216"></a>00216   std::string
-<a name="l00217"></a><a class="code" href="classListCommandsServer.html#a6ce3767fe37e769c0e3402ed0574dbb8">00217</a>   <a class="code" href="classListCommandsServer.html#a6ce3767fe37e769c0e3402ed0574dbb8" title="To convert the command type to the corresponding Mapper name.">convertypetoMapperName</a>(<a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532" title="The type of the command.">CmdType</a> type) {
-<a name="l00218"></a>00218 
-<a name="l00219"></a>00219     std::string mapperName;
-<a name="l00220"></a>00220     <span class="keywordflow">switch</span>(type) {
-<a name="l00221"></a>00221       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532aef0c4900387b5f9b2dd3b69461496076">UMS</a> :
-<a name="l00222"></a>00222          mapperName = UMSMAPPERNAME;
-<a name="l00223"></a>00223          <span class="keywordflow">break</span>;
-<a name="l00224"></a>00224       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532ac3d2bb0714b1648919ed78505187593e">TMS</a> :
-<a name="l00225"></a>00225          mapperName = TMSMAPPERNAME;
-<a name="l00226"></a>00226          <span class="keywordflow">break</span>;
-<a name="l00227"></a>00227       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532a704905f0ffb93e17cd67290254367070">FMS</a> :
-<a name="l00228"></a>00228          mapperName = FMSMAPPERNAME;
-<a name="l00229"></a>00229          <span class="keywordflow">break</span>;
-<a name="l00230"></a>00230       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532a018268bc806e44e84514c2c4f8cb7e71">IMS</a> :
-<a name="l00231"></a>00231          mapperName = IMSMAPPERNAME;
-<a name="l00232"></a>00232          <span class="keywordflow">break</span>;
-<a name="l00233"></a>00233       <span class="keywordflow">default</span>:
-<a name="l00234"></a>00234          mapperName = <span class="stringliteral">&quot;Uknown Mapper Name&quot;</span>;
-<a name="l00235"></a>00235     }
-<a name="l00236"></a>00236     <span class="keywordflow">return</span> mapperName;
-<a name="l00237"></a>00237   }
-<a name="l00238"></a>00238 
-<a name="l00243"></a><a class="code" href="classListCommandsServer.html#afad26228bcf19880e8280e2bf5a54cad">00243</a>   <a class="code" href="classListCommandsServer.html#afad26228bcf19880e8280e2bf5a54cad" title="Destructor, raises an exception on error.">~ListCommandsServer</a>()
-<a name="l00244"></a>00244   {
-<a name="l00245"></a>00245   }
-<a name="l00246"></a>00246 
-<a name="l00247"></a>00247   <span class="keyword">private</span>:
+<a name="l00206"></a>00206          <span class="keywordflow">break</span>;
+<a name="l00207"></a>00207     }
+<a name="l00208"></a>00208     <span class="keywordflow">return</span> cmd;
+<a name="l00209"></a>00209   }
+<a name="l00210"></a>00210 
+<a name="l00217"></a>00217   std::string
+<a name="l00218"></a><a class="code" href="classListCommandsServer.html#a6ce3767fe37e769c0e3402ed0574dbb8">00218</a>   <a class="code" href="classListCommandsServer.html#a6ce3767fe37e769c0e3402ed0574dbb8" title="To convert the command type to the corresponding Mapper name.">convertypetoMapperName</a>(<a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532" title="The type of the command.">CmdType</a> type) {
+<a name="l00219"></a>00219 
+<a name="l00220"></a>00220     std::string mapperName;
+<a name="l00221"></a>00221     <span class="keywordflow">switch</span>(type) {
+<a name="l00222"></a>00222       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532aef0c4900387b5f9b2dd3b69461496076">UMS</a> :
+<a name="l00223"></a>00223          mapperName = UMSMAPPERNAME;
+<a name="l00224"></a>00224          <span class="keywordflow">break</span>;
+<a name="l00225"></a>00225       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532ac3d2bb0714b1648919ed78505187593e">TMS</a> :
+<a name="l00226"></a>00226          mapperName = TMSMAPPERNAME;
+<a name="l00227"></a>00227          <span class="keywordflow">break</span>;
+<a name="l00228"></a>00228       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532a704905f0ffb93e17cd67290254367070">FMS</a> :
+<a name="l00229"></a>00229          mapperName = FMSMAPPERNAME;
+<a name="l00230"></a>00230          <span class="keywordflow">break</span>;
+<a name="l00231"></a>00231       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532a018268bc806e44e84514c2c4f8cb7e71">IMS</a> :
+<a name="l00232"></a>00232          mapperName = IMSMAPPERNAME;
+<a name="l00233"></a>00233          <span class="keywordflow">break</span>;
+<a name="l00234"></a>00234       <span class="keywordflow">default</span>:
+<a name="l00235"></a>00235          mapperName = <span class="stringliteral">&quot;Uknown Mapper Name&quot;</span>;
+<a name="l00236"></a>00236          <span class="keywordflow">break</span>;
+<a name="l00237"></a>00237     }
+<a name="l00238"></a>00238     <span class="keywordflow">return</span> mapperName;
+<a name="l00239"></a>00239   }
+<a name="l00240"></a>00240 
+<a name="l00245"></a><a class="code" href="classListCommandsServer.html#afad26228bcf19880e8280e2bf5a54cad">00245</a>   <a class="code" href="classListCommandsServer.html#afad26228bcf19880e8280e2bf5a54cad" title="Destructor, raises an exception on error.">~ListCommandsServer</a>()
+<a name="l00246"></a>00246   {
+<a name="l00247"></a>00247   }
 <a name="l00248"></a>00248 
-<a name="l00250"></a>00250   <span class="comment">// Attributes</span>
-<a name="l00252"></a>00252 <span class="comment"></span>
-<a name="l00256"></a><a class="code" href="classListCommandsServer.html#a4587e9f6bf59c8fe3bc0b9635e8880fd">00256</a>   std::string <a class="code" href="classListCommandsServer.html#a4587e9f6bf59c8fe3bc0b9635e8880fd" title="The name of the ListCommandsServer command line.">mcommandName</a>;
-<a name="l00257"></a>00257 };
-<a name="l00258"></a>00258 
-<a name="l00259"></a>00259 <span class="preprocessor">#endif</span>
+<a name="l00249"></a>00249   <span class="keyword">private</span>:
+<a name="l00250"></a>00250 
+<a name="l00252"></a>00252   <span class="comment">// Attributes</span>
+<a name="l00254"></a>00254 <span class="comment"></span>
+<a name="l00258"></a><a class="code" href="classListCommandsServer.html#a4587e9f6bf59c8fe3bc0b9635e8880fd">00258</a>   std::string <a class="code" href="classListCommandsServer.html#a4587e9f6bf59c8fe3bc0b9635e8880fd" title="The name of the ListCommandsServer command line.">mcommandName</a>;
+<a name="l00259"></a>00259 };
+<a name="l00260"></a>00260 
+<a name="l00261"></a>00261 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jul 8 2011 10:36:03 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Aug 12 2011 16:48:13 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

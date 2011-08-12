@@ -1,0 +1,126 @@
+\hypertarget{FMSDisplayer_8hpp}{
+\section{FMS/src/cli/FMSDisplayer.hpp File Reference}
+\label{FMSDisplayer_8hpp}\index{FMS/src/cli/FMSDisplayer.hpp@{FMS/src/cli/FMSDisplayer.hpp}}
+}
+{\ttfamily \#include \char`\"{}api\_\-fms.hpp\char`\"{}}\par
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+std::ostream \& \hyperlink{FMSDisplayer_8hpp_a2652177774dc672c2e999a86cbb2dbaf}{operator$<$$<$} (std::ostream \&os, FileStat \&fileStat)
+\begin{DoxyCompactList}\small\item\em Helper function to display the information of a file. \item\end{DoxyCompactList}\item 
+std::ostream \& \hyperlink{FMSDisplayer_8hpp_aee23b52efb7648777a0e6915c6ddcd5a}{operator$<$$<$} (std::ostream \&os, FileTransfer \&fileTransfer)
+\begin{DoxyCompactList}\small\item\em Helper function to display the information of a file. \item\end{DoxyCompactList}\item 
+std::ostream \& \hyperlink{FMSDisplayer_8hpp_a37cc088e73bc26a3a2aab6b89674b476}{operator$<$$<$} (std::ostream \&os, FileTransferList \&fileTransferlist)
+\begin{DoxyCompactList}\small\item\em Helper function to display the information of a file. \item\end{DoxyCompactList}\item 
+std::ostream \& \hyperlink{FMSDisplayer_8hpp_a06826cc375b7a8069227e118b08c9798}{operator$<$$<$} (std::ostream \&os, StringList \&stringList)
+\begin{DoxyCompactList}\small\item\em Helper function to display the information of a file. \item\end{DoxyCompactList}\item 
+string \hyperlink{FMSDisplayer_8hpp_aab63eb08edc8e026a47a03391b397e1b}{ConvertModeToString} (const mode\_\-t \&mode)
+\begin{DoxyCompactList}\small\item\em function to convert mode value to string \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file defines the VISHNU FMS FMSDisplayer functions \begin{DoxyAuthor}{Author}
+Daouda Traore (\href{mailto:daouda.traore@sysfera.com}{\tt daouda.traore@sysfera.com}) 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\hypertarget{FMSDisplayer_8hpp_aab63eb08edc8e026a47a03391b397e1b}{
+\index{FMSDisplayer.hpp@{FMSDisplayer.hpp}!ConvertModeToString@{ConvertModeToString}}
+\index{ConvertModeToString@{ConvertModeToString}!FMSDisplayer.hpp@{FMSDisplayer.hpp}}
+\subsubsection[{ConvertModeToString}]{\setlength{\rightskip}{0pt plus 5cm}string ConvertModeToString (
+\begin{DoxyParamCaption}
+\item[{const mode\_\-t \&}]{ mode}
+\end{DoxyParamCaption}
+)}}
+\label{FMSDisplayer_8hpp_aab63eb08edc8e026a47a03391b397e1b}
+
+
+function to convert mode value to string 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em mode}]The mode value to convert \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+converted mode value 
+\end{DoxyReturn}
+\hypertarget{FMSDisplayer_8hpp_aee23b52efb7648777a0e6915c6ddcd5a}{
+\index{FMSDisplayer.hpp@{FMSDisplayer.hpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!FMSDisplayer.hpp@{FMSDisplayer.hpp}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std::ostream \&}]{ os, }
+\item[{FileTransfer \&}]{ fileTransfer}
+\end{DoxyParamCaption}
+)}}
+\label{FMSDisplayer_8hpp_aee23b52efb7648777a0e6915c6ddcd5a}
+
+
+Helper function to display the information of a file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em os,:}]The output stream in which the list will be printed \item[{\em fileTransfer,:}]The content of a file transfer \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream in which the list of users has been printed 
+\end{DoxyReturn}
+\hypertarget{FMSDisplayer_8hpp_a06826cc375b7a8069227e118b08c9798}{
+\index{FMSDisplayer.hpp@{FMSDisplayer.hpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!FMSDisplayer.hpp@{FMSDisplayer.hpp}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std::ostream \&}]{ os, }
+\item[{StringList \&}]{ stringList}
+\end{DoxyParamCaption}
+)}}
+\label{FMSDisplayer_8hpp_a06826cc375b7a8069227e118b08c9798}
+
+
+Helper function to display the information of a file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em os,:}]The output stream in which the list will be printed \item[{\em stringList,:}]The content of the directory \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream in which the list of users has been printed 
+\end{DoxyReturn}
+\hypertarget{FMSDisplayer_8hpp_a37cc088e73bc26a3a2aab6b89674b476}{
+\index{FMSDisplayer.hpp@{FMSDisplayer.hpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!FMSDisplayer.hpp@{FMSDisplayer.hpp}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std::ostream \&}]{ os, }
+\item[{FileTransferList \&}]{ fileTransferlist}
+\end{DoxyParamCaption}
+)}}
+\label{FMSDisplayer_8hpp_a37cc088e73bc26a3a2aab6b89674b476}
+
+
+Helper function to display the information of a file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em os,:}]The output stream in which the list will be printed \item[{\em fileTransferlist,:}]The file transfer list \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream in which the list of users has been printed 
+\end{DoxyReturn}
+\hypertarget{FMSDisplayer_8hpp_a2652177774dc672c2e999a86cbb2dbaf}{
+\index{FMSDisplayer.hpp@{FMSDisplayer.hpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!FMSDisplayer.hpp@{FMSDisplayer.hpp}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std::ostream \&}]{ os, }
+\item[{FileStat \&}]{ fileStat}
+\end{DoxyParamCaption}
+)}}
+\label{FMSDisplayer_8hpp_a2652177774dc672c2e999a86cbb2dbaf}
+
+
+Helper function to display the information of a file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em os}]The output stream in which the list will be printed \item[{\em fileStat}]The inode information \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream in which the list of users has been printed 
+\end{DoxyReturn}

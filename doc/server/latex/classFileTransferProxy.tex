@@ -1,0 +1,219 @@
+\hypertarget{classFileTransferProxy}{
+\section{FileTransferProxy Class Reference}
+\label{classFileTransferProxy}\index{FileTransferProxy@{FileTransferProxy}}
+}
+
+
+A proxy class to handle file transfer.  
+
+
+
+
+{\ttfamily \#include $<$FileTransferProxy.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classFileTransferProxy_ab1b4391127778b89aa9f4d09ecea60ba}{FileTransferProxy} (const std::string \&sessionKey)
+\begin{DoxyCompactList}\small\item\em A constructor with one parameter. \item\end{DoxyCompactList}\item 
+\hyperlink{classFileTransferProxy_a16fe987d0edac5921bff6913099aa5c5}{FileTransferProxy} (const std::string \&sessionKey, const std::string \&srcFilePath, const std::string \&destFilePath)
+\begin{DoxyCompactList}\small\item\em Another constructor with parameters. \item\end{DoxyCompactList}\item 
+int \hyperlink{classFileTransferProxy_a3260414718394057da542686e5cddda3}{addCpThread} (const FMS\_\-Data::CpFileOptions \&options)
+\begin{DoxyCompactList}\small\item\em Add a new copy file thread. \item\end{DoxyCompactList}\item 
+int \hyperlink{classFileTransferProxy_a37685d93ddfef009ee4ea0e8925cd265}{addMvThread} (const FMS\_\-Data::CpFileOptions \&options)
+\begin{DoxyCompactList}\small\item\em Add a new move file thread. \item\end{DoxyCompactList}\item 
+int \hyperlink{classFileTransferProxy_a787ee7b8a04b450a0e11fea0d4cf9bb4}{addCpAsyncThread} (const FMS\_\-Data::CpFileOptions \&options)
+\begin{DoxyCompactList}\small\item\em Add a new asynchronous copy file thread. \item\end{DoxyCompactList}\item 
+int \hyperlink{classFileTransferProxy_a42b158cebb919a88d00d3c21c2c22093}{addMvAsyncThread} (const FMS\_\-Data::CpFileOptions \&options)
+\begin{DoxyCompactList}\small\item\em Add a new asynchronous move file thread. \item\end{DoxyCompactList}\item 
+int \hyperlink{classFileTransferProxy_a286ffeb697841c8dc6d246ca268c4169}{stopThread} (const FMS\_\-Data::StopTransferOptions \&options)
+\begin{DoxyCompactList}\small\item\em Stop a file transfer. \item\end{DoxyCompactList}\item 
+const FMS\_\-Data::FileTransfer \& \hyperlink{classFileTransferProxy_a3eddf1b31232a81c9bcc1aa721e09727}{getFileTransfer} () const 
+\begin{DoxyCompactList}\small\item\em Get The file transfer information. \item\end{DoxyCompactList}\item 
+\hypertarget{classFileTransferProxy_a669be94976afddcb94ac7a1ede281b8a}{
+\hyperlink{classFileTransferProxy_a669be94976afddcb94ac7a1ede281b8a}{$\sim$FileTransferProxy} ()}
+\label{classFileTransferProxy_a669be94976afddcb94ac7a1ede281b8a}
+
+\begin{DoxyCompactList}\small\item\em The default destructor. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classFileTransferProxy_a5a3760aa18079a96642078aea984a28d}{
+std::string \hyperlink{classFileTransferProxy_a5a3760aa18079a96642078aea984a28d}{msessionKey}}
+\label{classFileTransferProxy_a5a3760aa18079a96642078aea984a28d}
+
+\begin{DoxyCompactList}\small\item\em The session key. \item\end{DoxyCompactList}\item 
+\hypertarget{classFileTransferProxy_a2dc123643d24f601cb55fe1a45e087cd}{
+std::string \hyperlink{classFileTransferProxy_a2dc123643d24f601cb55fe1a45e087cd}{msrcFilePath}}
+\label{classFileTransferProxy_a2dc123643d24f601cb55fe1a45e087cd}
+
+\begin{DoxyCompactList}\small\item\em The source file path. \item\end{DoxyCompactList}\item 
+\hypertarget{classFileTransferProxy_a41dd18ac80e4bb253797e0df85d81730}{
+std::string \hyperlink{classFileTransferProxy_a41dd18ac80e4bb253797e0df85d81730}{mdestFilePath}}
+\label{classFileTransferProxy_a41dd18ac80e4bb253797e0df85d81730}
+
+\begin{DoxyCompactList}\small\item\em The destination file path. \item\end{DoxyCompactList}\item 
+\hypertarget{classFileTransferProxy_a34e37989dbb445cdf3c51d1de30b4853}{
+FMS\_\-Data::FileTransfer \hyperlink{classFileTransferProxy_a34e37989dbb445cdf3c51d1de30b4853}{mtransferInfo}}
+\label{classFileTransferProxy_a34e37989dbb445cdf3c51d1de30b4853}
+
+\begin{DoxyCompactList}\small\item\em The file transfer information. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A proxy class to handle file transfer. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classFileTransferProxy_ab1b4391127778b89aa9f4d09ecea60ba}{
+\index{FileTransferProxy@{FileTransferProxy}!FileTransferProxy@{FileTransferProxy}}
+\index{FileTransferProxy@{FileTransferProxy}!FileTransferProxy@{FileTransferProxy}}
+\subsubsection[{FileTransferProxy}]{\setlength{\rightskip}{0pt plus 5cm}FileTransferProxy::FileTransferProxy (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
+\label{classFileTransferProxy_ab1b4391127778b89aa9f4d09ecea60ba}
+
+
+A constructor with one parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]The session key \end{DoxyParams}
+\hypertarget{classFileTransferProxy_a16fe987d0edac5921bff6913099aa5c5}{
+\index{FileTransferProxy@{FileTransferProxy}!FileTransferProxy@{FileTransferProxy}}
+\index{FileTransferProxy@{FileTransferProxy}!FileTransferProxy@{FileTransferProxy}}
+\subsubsection[{FileTransferProxy}]{\setlength{\rightskip}{0pt plus 5cm}FileTransferProxy::FileTransferProxy (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{const std::string \&}]{ srcFilePath, }
+\item[{const std::string \&}]{ destFilePath}
+\end{DoxyParamCaption}
+)}}
+\label{classFileTransferProxy_a16fe987d0edac5921bff6913099aa5c5}
+
+
+Another constructor with parameters. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]The session key \item[{\em srcFilePath}]The source file path \item[{\em destFilePath}]The destination file path \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classFileTransferProxy_a787ee7b8a04b450a0e11fea0d4cf9bb4}{
+\index{FileTransferProxy@{FileTransferProxy}!addCpAsyncThread@{addCpAsyncThread}}
+\index{addCpAsyncThread@{addCpAsyncThread}!FileTransferProxy@{FileTransferProxy}}
+\subsubsection[{addCpAsyncThread}]{\setlength{\rightskip}{0pt plus 5cm}int FileTransferProxy::addCpAsyncThread (
+\begin{DoxyParamCaption}
+\item[{const FMS\_\-Data::CpFileOptions \&}]{ options}
+\end{DoxyParamCaption}
+)}}
+\label{classFileTransferProxy_a787ee7b8a04b450a0e11fea0d4cf9bb4}
+
+
+Add a new asynchronous copy file thread. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em options}]the copy options \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the function succeeds or an error code otherwise 
+\end{DoxyReturn}
+\hypertarget{classFileTransferProxy_a3260414718394057da542686e5cddda3}{
+\index{FileTransferProxy@{FileTransferProxy}!addCpThread@{addCpThread}}
+\index{addCpThread@{addCpThread}!FileTransferProxy@{FileTransferProxy}}
+\subsubsection[{addCpThread}]{\setlength{\rightskip}{0pt plus 5cm}int FileTransferProxy::addCpThread (
+\begin{DoxyParamCaption}
+\item[{const FMS\_\-Data::CpFileOptions \&}]{ options}
+\end{DoxyParamCaption}
+)}}
+\label{classFileTransferProxy_a3260414718394057da542686e5cddda3}
+
+
+Add a new copy file thread. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em options}]the copy options \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the function succeeds or an error code otherwise 
+\end{DoxyReturn}
+\hypertarget{classFileTransferProxy_a42b158cebb919a88d00d3c21c2c22093}{
+\index{FileTransferProxy@{FileTransferProxy}!addMvAsyncThread@{addMvAsyncThread}}
+\index{addMvAsyncThread@{addMvAsyncThread}!FileTransferProxy@{FileTransferProxy}}
+\subsubsection[{addMvAsyncThread}]{\setlength{\rightskip}{0pt plus 5cm}int FileTransferProxy::addMvAsyncThread (
+\begin{DoxyParamCaption}
+\item[{const FMS\_\-Data::CpFileOptions \&}]{ options}
+\end{DoxyParamCaption}
+)}}
+\label{classFileTransferProxy_a42b158cebb919a88d00d3c21c2c22093}
+
+
+Add a new asynchronous move file thread. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em options}]the move options \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the function succeeds or an error code otherwise 
+\end{DoxyReturn}
+\hypertarget{classFileTransferProxy_a37685d93ddfef009ee4ea0e8925cd265}{
+\index{FileTransferProxy@{FileTransferProxy}!addMvThread@{addMvThread}}
+\index{addMvThread@{addMvThread}!FileTransferProxy@{FileTransferProxy}}
+\subsubsection[{addMvThread}]{\setlength{\rightskip}{0pt plus 5cm}int FileTransferProxy::addMvThread (
+\begin{DoxyParamCaption}
+\item[{const FMS\_\-Data::CpFileOptions \&}]{ options}
+\end{DoxyParamCaption}
+)}}
+\label{classFileTransferProxy_a37685d93ddfef009ee4ea0e8925cd265}
+
+
+Add a new move file thread. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em options}]the move file options \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the function succeeds or an error code otherwise 
+\end{DoxyReturn}
+\hypertarget{classFileTransferProxy_a3eddf1b31232a81c9bcc1aa721e09727}{
+\index{FileTransferProxy@{FileTransferProxy}!getFileTransfer@{getFileTransfer}}
+\index{getFileTransfer@{getFileTransfer}!FileTransferProxy@{FileTransferProxy}}
+\subsubsection[{getFileTransfer}]{\setlength{\rightskip}{0pt plus 5cm}const FMS\_\-Data::FileTransfer\& FileTransferProxy::getFileTransfer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classFileTransferProxy_a3eddf1b31232a81c9bcc1aa721e09727}
+
+
+Get The file transfer information. 
+
+\begin{DoxyReturn}{Returns}
+The file transfer information 
+\end{DoxyReturn}
+\hypertarget{classFileTransferProxy_a286ffeb697841c8dc6d246ca268c4169}{
+\index{FileTransferProxy@{FileTransferProxy}!stopThread@{stopThread}}
+\index{stopThread@{stopThread}!FileTransferProxy@{FileTransferProxy}}
+\subsubsection[{stopThread}]{\setlength{\rightskip}{0pt plus 5cm}int FileTransferProxy::stopThread (
+\begin{DoxyParamCaption}
+\item[{const FMS\_\-Data::StopTransferOptions \&}]{ options}
+\end{DoxyParamCaption}
+)}}
+\label{classFileTransferProxy_a286ffeb697841c8dc6d246ca268c4169}
+
+
+Stop a file transfer. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em options}]The stop options \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the function succeeds or an error code otherwise 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+FMS/src/client/\hyperlink{FileTransferProxy_8hpp}{FileTransferProxy.hpp}\end{DoxyCompactItemize}

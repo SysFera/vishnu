@@ -1,0 +1,72 @@
+\hypertarget{api__ims_8hpp}{
+\section{IMS/src/api/api\_\-ims.hpp File Reference}
+\label{api__ims_8hpp}\index{IMS/src/api/api\_\-ims.hpp@{IMS/src/api/api\_\-ims.hpp}}
+}
+
+
+This file contains the VISHNU api functions for IMS package.  
+
+
+{\ttfamily \#include $<$iostream$>$}\par
+{\ttfamily \#include $<$string$>$}\par
+{\ttfamily \#include \char`\"{}UserException.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}SystemException.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}UMSVishnuException.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}IMS\_\-Data.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}IMSVishnuException.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}api\_\-ums.hpp\char`\"{}}\par
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespacevishnu}{vishnu}
+
+
+\begin{DoxyCompactList}\small\item\em This naspace contains utils functions of the vishnu system. \item\end{DoxyCompactList}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{namespacevishnu_ac6b5cc01ba9509aa07b89dd69ada02fa}{vishnu::exportCommands} (const string sessionKey, const string oldSessionId, string filename, IMS\_\-Data::ExportOp op)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em To export the commands made during a session in a format. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ad83c65006cee9dbbd73881089cc1f441}{vishnu::getMetricCurrentValue} (const string sessionKey, string machineId, IMS\_\-Data::ListMetric \&val, IMS\_\-Data::CurMetricOp op)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em To get the current value of a metric. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_aaec1e90bd62e865d63ed47dc7b2e7638}{vishnu::getMetricHistory} (const string sessionKey, string machineId, IMS\_\-Data::ListMetric \&list, IMS\_\-Data::MetricHistOp op)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em To get the values of the metrics on a machine. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a9ab3615d929a06aa5e1feca1be9e49d9}{vishnu::getProcesses} (const string sessionKey, IMS\_\-Data::ListProcesses \&list, IMS\_\-Data::ProcessOp op)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em To get the running vishnu processes. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a3b056eb0ec0ad9a7ac591ece3cac3dbd}{vishnu::setSystemInfo} (const string sessionKey, IMS\_\-Data::SystemInfo sys)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em To set system information about a machine. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_abdf98c34bf2ad136aa4e2cf2d8611cf0}{vishnu::setSystemThreshold} (const string sessionKey, IMS\_\-Data::Threshold threshold)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em To set a threshold. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a19659b2087323b8bd44940afae500a98}{vishnu::getSystemThreshold} (const string sessionKey, IMS\_\-Data::ListThreshold \&list, IMS\_\-Data::ThresholdOp op)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em To get a set of thresholds on the system. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a6388e9aa2c64ef4dfeee9a253dfc2d55}{vishnu::defineUserIdentifier} (const string sessionKey, string fmt)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em To define the format of the user id automatically generated in VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ae271c5ecdd758dcc4bee27ba2b9c8a3c}{vishnu::defineMachineIdentifier} (const string sessionKey, string fmt)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em To define the format of the machine id automatically generated in VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a1b44c77d6bccf4fd886be4028f27bb73}{vishnu::defineJobIdentifier} (const string sessionKey, string fmt)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em To define the format of the job id automatically generated in VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_adc1d08f000cf50058dd8b0688ea7fb1f}{vishnu::defineTransferIdentifier} (const string sessionKey, string fmt)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em To define the format of the file transfer id automatically generated in VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ab088d903ec32abcb3ad6f1d2336c04ac}{vishnu::loadShed} (const string sessionKey, string machineId, IMS\_\-Data::LoadShedType loadShedType)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em To load shed a machine. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a860094ba973969b94110555d6bb3b557}{vishnu::setUpdateFrequency} (const string sessionKey, int freq)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em To change the automatic update frequency of the machines' state. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a5b13b2b9e19299c652246a9533f92717}{vishnu::getUpdateFrequency} (const string sessionKey, int \&freq)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em To get the automatic update frequency of the machines' state. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a0a5795c2a88415d758de3a05762850ce}{vishnu::stop} (const string sessionKey, IMS\_\-Data::Process proc)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em To stop a vishnu process. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ab6cc46ec3fc97e19d7a57bcf42dee328}{vishnu::getSystemInfo} (const string sessionKey, IMS\_\-Data::ListSysInfo \&list, IMS\_\-Data::SysInfoOp op)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em To get system information about a machine. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_aa87ea9f13dc0bc74edd73e815c4bdf7c}{vishnu::restart} (const string sessionKey, string machineId, IMS\_\-Data::RestartOp op)  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em To restart a vishnu process. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file contains the VISHNU api functions for IMS package. \begin{DoxyAuthor}{Author}
+Kevin Coulonb (\href{mailto:kevin.coulomb@sysfera.com}{\tt kevin.coulomb@sysfera.com}) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+April 2011 
+\end{DoxyDate}

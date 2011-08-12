@@ -1,0 +1,522 @@
+\hypertarget{classRemoteFileProxy}{
+\section{RemoteFileProxy Class Reference}
+\label{classRemoteFileProxy}\index{RemoteFileProxy@{RemoteFileProxy}}
+}
+
+
+Class for the remote files.  
+
+
+
+
+{\ttfamily \#include $<$RemoteFileProxy.hpp$>$}
+
+Inheritance diagram for RemoteFileProxy:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classRemoteFileProxy}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classRemoteFileProxy_a7104c1f0545b44e3748147dc47d71e80}{
+\hyperlink{classRemoteFileProxy_a7104c1f0545b44e3748147dc47d71e80}{RemoteFileProxy} ()}
+\label{classRemoteFileProxy_a7104c1f0545b44e3748147dc47d71e80}
+
+\begin{DoxyCompactList}\small\item\em The default constructor. \item\end{DoxyCompactList}\item 
+\hyperlink{classRemoteFileProxy_abe7ccbed6e872df7072f2f8c93daad4a}{RemoteFileProxy} (const \hyperlink{classSessionProxy}{SessionProxy} \&sessionProxy, const std::string \&path, const std::string \&\hyperlink{classRemoteFileProxy_aa8cea3d20ace6f9402a54d4c56c93bc5}{localUser})
+\begin{DoxyCompactList}\small\item\em Another constructor taking two parameters. \item\end{DoxyCompactList}\item 
+\hyperlink{classRemoteFileProxy_af7a017d9da43872ee40e2a4f344533d1}{RemoteFileProxy} (const \hyperlink{classRemoteFileProxy}{RemoteFileProxy} \&file)
+\begin{DoxyCompactList}\small\item\em Another constructor by reference. \item\end{DoxyCompactList}\item 
+\hypertarget{classRemoteFileProxy_a2fbc018e03120c380e135a26335734b0}{
+virtual \hyperlink{classRemoteFileProxy_a2fbc018e03120c380e135a26335734b0}{$\sim$RemoteFileProxy} ()}
+\label{classRemoteFileProxy_a2fbc018e03120c380e135a26335734b0}
+
+\begin{DoxyCompactList}\small\item\em The default destructor. \item\end{DoxyCompactList}\item 
+virtual bool \hyperlink{classRemoteFileProxy_a5f7b3b9df85eb3933c9d6c145277828c}{isUpToDate} () const 
+\begin{DoxyCompactList}\small\item\em To check if the file information is up to date. \item\end{DoxyCompactList}\item 
+\hypertarget{classRemoteFileProxy_a14b443643580d08a5650c095fc80fd71}{
+virtual void \hyperlink{classRemoteFileProxy_a14b443643580d08a5650c095fc80fd71}{getInfos} () const }
+\label{classRemoteFileProxy_a14b443643580d08a5650c095fc80fd71}
+
+\begin{DoxyCompactList}\small\item\em To get the file inode information. \item\end{DoxyCompactList}\item 
+\hyperlink{classRemoteFileProxy}{RemoteFileProxy} \& \hyperlink{classRemoteFileProxy_a8f9c34f0bbf8951c33d4037096df7a54}{operator=} (const \hyperlink{classRemoteFileProxy}{RemoteFileProxy} \&file)
+\begin{DoxyCompactList}\small\item\em The assignment operator. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classRemoteFileProxy_aa531dc112c82a1a60e09006a940638f1}{chgrp} (const std::string \&group)
+\begin{DoxyCompactList}\small\item\em To update the group of the file. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classRemoteFileProxy_aab9b3e742ebbc607be68ed01f9bc8b3b}{chmod} (const mode\_\-t mode)
+\begin{DoxyCompactList}\small\item\em To update the new file access permissions. \item\end{DoxyCompactList}\item 
+virtual std::string \hyperlink{classRemoteFileProxy_af0b29be33b052dfa085bdbd3636ee0c5}{head} (const HeadOfFileOptions \&options)
+\begin{DoxyCompactList}\small\item\em To get the first lines of the file. \item\end{DoxyCompactList}\item 
+virtual std::string \hyperlink{classRemoteFileProxy_a45f18885dee050419b72e36283031bdb}{tail} (const TailOfFileOptions \&options)
+\begin{DoxyCompactList}\small\item\em To get the last lines of the file. \item\end{DoxyCompactList}\item 
+virtual std::string \hyperlink{classRemoteFileProxy_a45994a64cf7d8f649707087eedb3466e}{getContent} ()
+\begin{DoxyCompactList}\small\item\em To get the content of the file. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classRemoteFileProxy_a3306f92d078a55a0435d4b921b24ed38}{mkfile} (const mode\_\-t mode=defaultFileAccessMode)
+\begin{DoxyCompactList}\small\item\em To create a new file. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classRemoteFileProxy_a9bb2fa125b4b0cc7819bbf77d2bb46ee}{mkdir} (const mode\_\-t mode=defaultDirectoryAccessMode)
+\begin{DoxyCompactList}\small\item\em To create a new directory. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classRemoteFileProxy_a8e849fd6f8d78e14114e14a2eaacb75a}{rm} (const RmFileOptions \&options)
+\begin{DoxyCompactList}\small\item\em To remove a file. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classRemoteFileProxy_abfde4c2173294f6dfd5958a8b6c88cdb}{rmdir} ()
+\begin{DoxyCompactList}\small\item\em To remove an empty directory. \item\end{DoxyCompactList}\item 
+virtual std::list$<$ std::string $>$ \hyperlink{classRemoteFileProxy_af85a6a1f46e0335640b47df4d2c7093a}{ls} (const LsDirOptions \&options) const 
+\begin{DoxyCompactList}\small\item\em To list the content of a directory. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classRemoteFileProxy_a17ea6be4c77a0779317c69b0eb21b793}{cp} (const std::string \&dest, const CpFileOptions \&options)
+\begin{DoxyCompactList}\small\item\em To copy the file. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classRemoteFileProxy_ad8e194507f9506d72932cd25d27b673b}{mv} (const std::string \&dest, const CpFileOptions \&options)
+\begin{DoxyCompactList}\small\item\em To move the file. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classRemoteFileProxy_a28406e593498d4cf3fd525de930410a2}{cpAsync} (const std::string \&dest, const CpFileOptions \&options, FileTransfer \&fileTransfer)
+\begin{DoxyCompactList}\small\item\em To copy the file in asynchronous mode. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classRemoteFileProxy_ace1b3e6ecdd19b1da0e8074ae3034f89}{mvAsync} (const std::string \&dest, const CpFileOptions \&options, FileTransfer \&fileTransfer)
+\begin{DoxyCompactList}\small\item\em To move the file in asynchronous mode. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class TypeOfOption $>$ }\\int \hyperlink{classRemoteFileProxy_ad0032944be978d1878dd79ec307cd977}{transferFile} (const std::string \&dest, const TypeOfOption \&options, const std::string \&serviceName, FileTransfer \&fileTransfer)
+\begin{DoxyCompactList}\small\item\em A generic class to handle a local to remote file transfer. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classRemoteFileProxy_ab48880af100db748f7d6c69693286e13}{
+bool \hyperlink{classRemoteFileProxy_ab48880af100db748f7d6c69693286e13}{upToDate}}
+\label{classRemoteFileProxy_ab48880af100db748f7d6c69693286e13}
+
+\begin{DoxyCompactList}\small\item\em A flag to store the file information state. \item\end{DoxyCompactList}\item 
+\hypertarget{classRemoteFileProxy_aa8cea3d20ace6f9402a54d4c56c93bc5}{
+std::string \hyperlink{classRemoteFileProxy_aa8cea3d20ace6f9402a54d4c56c93bc5}{localUser}}
+\label{classRemoteFileProxy_aa8cea3d20ace6f9402a54d4c56c93bc5}
+
+\begin{DoxyCompactList}\small\item\em The local user. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class for the remote files. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classRemoteFileProxy_abe7ccbed6e872df7072f2f8c93daad4a}{
+\index{RemoteFileProxy@{RemoteFileProxy}!RemoteFileProxy@{RemoteFileProxy}}
+\index{RemoteFileProxy@{RemoteFileProxy}!RemoteFileProxy@{RemoteFileProxy}}
+\subsubsection[{RemoteFileProxy}]{\setlength{\rightskip}{0pt plus 5cm}RemoteFileProxy::RemoteFileProxy (
+\begin{DoxyParamCaption}
+\item[{const {\bf SessionProxy} \&}]{ sessionProxy, }
+\item[{const std::string \&}]{ path, }
+\item[{const std::string \&}]{ localUser}
+\end{DoxyParamCaption}
+)}}
+\label{classRemoteFileProxy_abe7ccbed6e872df7072f2f8c93daad4a}
+
+
+Another constructor taking two parameters. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionProxy}]the session object proxy \item[{\em path}]the path of the file \item[{\em localUser}]the local user of the file \end{DoxyParams}
+\hypertarget{classRemoteFileProxy_af7a017d9da43872ee40e2a4f344533d1}{
+\index{RemoteFileProxy@{RemoteFileProxy}!RemoteFileProxy@{RemoteFileProxy}}
+\index{RemoteFileProxy@{RemoteFileProxy}!RemoteFileProxy@{RemoteFileProxy}}
+\subsubsection[{RemoteFileProxy}]{\setlength{\rightskip}{0pt plus 5cm}RemoteFileProxy::RemoteFileProxy (
+\begin{DoxyParamCaption}
+\item[{const {\bf RemoteFileProxy} \&}]{ file}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
+\label{classRemoteFileProxy_af7a017d9da43872ee40e2a4f344533d1}
+
+
+Another constructor by reference. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em file}]the other file \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classRemoteFileProxy_aa531dc112c82a1a60e09006a940638f1}{
+\index{RemoteFileProxy@{RemoteFileProxy}!chgrp@{chgrp}}
+\index{chgrp@{chgrp}!RemoteFileProxy@{RemoteFileProxy}}
+\subsubsection[{chgrp}]{\setlength{\rightskip}{0pt plus 5cm}virtual int RemoteFileProxy::chgrp (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ group}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classRemoteFileProxy_aa531dc112c82a1a60e09006a940638f1}
+
+
+To update the group of the file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em group}]the new group \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the command succeeds, an error code otherwise 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classFileProxy_ab2917ca9b79dd0eb7ab1c26d70e70987}{FileProxy}.
+
+\hypertarget{classRemoteFileProxy_aab9b3e742ebbc607be68ed01f9bc8b3b}{
+\index{RemoteFileProxy@{RemoteFileProxy}!chmod@{chmod}}
+\index{chmod@{chmod}!RemoteFileProxy@{RemoteFileProxy}}
+\subsubsection[{chmod}]{\setlength{\rightskip}{0pt plus 5cm}virtual int RemoteFileProxy::chmod (
+\begin{DoxyParamCaption}
+\item[{const mode\_\-t}]{ mode}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classRemoteFileProxy_aab9b3e742ebbc607be68ed01f9bc8b3b}
+
+
+To update the new file access permissions. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em mode}]the new file access permissions \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the command succeeds, an error code otherwise 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classFileProxy_aff09861e6910e2d2d11c6971426cbf84}{FileProxy}.
+
+\hypertarget{classRemoteFileProxy_a17ea6be4c77a0779317c69b0eb21b793}{
+\index{RemoteFileProxy@{RemoteFileProxy}!cp@{cp}}
+\index{cp@{cp}!RemoteFileProxy@{RemoteFileProxy}}
+\subsubsection[{cp}]{\setlength{\rightskip}{0pt plus 5cm}virtual int RemoteFileProxy::cp (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ dest, }
+\item[{const CpFileOptions \&}]{ options}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classRemoteFileProxy_a17ea6be4c77a0779317c69b0eb21b793}
+
+
+To copy the file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em dest}]the copy destination \item[{\em options}]the copy options \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the command succeeds, an error code otherwise 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classFileProxy_a857ef4fd0f9b469e0d6edb8a7b932f18}{FileProxy}.
+
+\hypertarget{classRemoteFileProxy_a28406e593498d4cf3fd525de930410a2}{
+\index{RemoteFileProxy@{RemoteFileProxy}!cpAsync@{cpAsync}}
+\index{cpAsync@{cpAsync}!RemoteFileProxy@{RemoteFileProxy}}
+\subsubsection[{cpAsync}]{\setlength{\rightskip}{0pt plus 5cm}virtual int RemoteFileProxy::cpAsync (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ dest, }
+\item[{const CpFileOptions \&}]{ options, }
+\item[{FileTransfer \&}]{ fileTransfer}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classRemoteFileProxy_a28406e593498d4cf3fd525de930410a2}
+
+
+To copy the file in asynchronous mode. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em dest}]the copy destination \item[{\em options}]the copy options \item[{\em fileTransfer}]information about the transfer like its identifier \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the command succeeds, an error code otherwise 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classFileProxy_afb7956f9e460ebf18622e5240f4f9dbf}{FileProxy}.
+
+\hypertarget{classRemoteFileProxy_a45994a64cf7d8f649707087eedb3466e}{
+\index{RemoteFileProxy@{RemoteFileProxy}!getContent@{getContent}}
+\index{getContent@{getContent}!RemoteFileProxy@{RemoteFileProxy}}
+\subsubsection[{getContent}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string RemoteFileProxy::getContent (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classRemoteFileProxy_a45994a64cf7d8f649707087eedb3466e}
+
+
+To get the content of the file. 
+
+\begin{DoxyReturn}{Returns}
+the content of the file 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classFileProxy_abcee2624975ecc29a47d45e50aedc807}{FileProxy}.
+
+\hypertarget{classRemoteFileProxy_af0b29be33b052dfa085bdbd3636ee0c5}{
+\index{RemoteFileProxy@{RemoteFileProxy}!head@{head}}
+\index{head@{head}!RemoteFileProxy@{RemoteFileProxy}}
+\subsubsection[{head}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string RemoteFileProxy::head (
+\begin{DoxyParamCaption}
+\item[{const HeadOfFileOptions \&}]{ options}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classRemoteFileProxy_af0b29be33b052dfa085bdbd3636ee0c5}
+
+
+To get the first lines of the file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em options}]the options object \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the first lines of the file 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classFileProxy_ab17f4181ff6209f1e45de5d51bb0a3e1}{FileProxy}.
+
+\hypertarget{classRemoteFileProxy_a5f7b3b9df85eb3933c9d6c145277828c}{
+\index{RemoteFileProxy@{RemoteFileProxy}!isUpToDate@{isUpToDate}}
+\index{isUpToDate@{isUpToDate}!RemoteFileProxy@{RemoteFileProxy}}
+\subsubsection[{isUpToDate}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool RemoteFileProxy::isUpToDate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classRemoteFileProxy_a5f7b3b9df85eb3933c9d6c145277828c}
+
+
+To check if the file information is up to date. 
+
+\begin{DoxyReturn}{Returns}
+true if the file is already updated, false otherwise 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classFileProxy_afae6e6254e95a89c0629d80136e3cc29}{FileProxy}.
+
+\hypertarget{classRemoteFileProxy_af85a6a1f46e0335640b47df4d2c7093a}{
+\index{RemoteFileProxy@{RemoteFileProxy}!ls@{ls}}
+\index{ls@{ls}!RemoteFileProxy@{RemoteFileProxy}}
+\subsubsection[{ls}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::list$<$std::string$>$ RemoteFileProxy::ls (
+\begin{DoxyParamCaption}
+\item[{const LsDirOptions \&}]{ options}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classRemoteFileProxy_af85a6a1f46e0335640b47df4d2c7093a}
+
+
+To list the content of a directory. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em options}]the list options \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the content of the directory 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classFileProxy_a11fcbc5ab2a937ee670b9e608ad69cb2}{FileProxy}.
+
+\hypertarget{classRemoteFileProxy_a9bb2fa125b4b0cc7819bbf77d2bb46ee}{
+\index{RemoteFileProxy@{RemoteFileProxy}!mkdir@{mkdir}}
+\index{mkdir@{mkdir}!RemoteFileProxy@{RemoteFileProxy}}
+\subsubsection[{mkdir}]{\setlength{\rightskip}{0pt plus 5cm}virtual int RemoteFileProxy::mkdir (
+\begin{DoxyParamCaption}
+\item[{const mode\_\-t}]{ mode = {\ttfamily defaultDirectoryAccessMode}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classRemoteFileProxy_a9bb2fa125b4b0cc7819bbf77d2bb46ee}
+
+
+To create a new directory. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em mode}]the access permission of the directory \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the command succeeds, an error code otherwise 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classFileProxy_ae177e3649ea348c0975f6aeb4f45bd1f}{FileProxy}.
+
+\hypertarget{classRemoteFileProxy_a3306f92d078a55a0435d4b921b24ed38}{
+\index{RemoteFileProxy@{RemoteFileProxy}!mkfile@{mkfile}}
+\index{mkfile@{mkfile}!RemoteFileProxy@{RemoteFileProxy}}
+\subsubsection[{mkfile}]{\setlength{\rightskip}{0pt plus 5cm}virtual int RemoteFileProxy::mkfile (
+\begin{DoxyParamCaption}
+\item[{const mode\_\-t}]{ mode = {\ttfamily defaultFileAccessMode}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classRemoteFileProxy_a3306f92d078a55a0435d4b921b24ed38}
+
+
+To create a new file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em mode}]the access permission of the file \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the command succeeds, an error code otherwise 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classFileProxy_a23a6d0ddfc62d7df31cc677adddd58d8}{FileProxy}.
+
+\hypertarget{classRemoteFileProxy_ad8e194507f9506d72932cd25d27b673b}{
+\index{RemoteFileProxy@{RemoteFileProxy}!mv@{mv}}
+\index{mv@{mv}!RemoteFileProxy@{RemoteFileProxy}}
+\subsubsection[{mv}]{\setlength{\rightskip}{0pt plus 5cm}virtual int RemoteFileProxy::mv (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ dest, }
+\item[{const CpFileOptions \&}]{ options}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classRemoteFileProxy_ad8e194507f9506d72932cd25d27b673b}
+
+
+To move the file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em dest}]the move destination \item[{\em options}]the move options \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the command succeeds, an error code otherwise 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classFileProxy_ac5ad61b772170696f71f37d784b59fa5}{FileProxy}.
+
+\hypertarget{classRemoteFileProxy_ace1b3e6ecdd19b1da0e8074ae3034f89}{
+\index{RemoteFileProxy@{RemoteFileProxy}!mvAsync@{mvAsync}}
+\index{mvAsync@{mvAsync}!RemoteFileProxy@{RemoteFileProxy}}
+\subsubsection[{mvAsync}]{\setlength{\rightskip}{0pt plus 5cm}virtual int RemoteFileProxy::mvAsync (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ dest, }
+\item[{const CpFileOptions \&}]{ options, }
+\item[{FileTransfer \&}]{ fileTransfer}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classRemoteFileProxy_ace1b3e6ecdd19b1da0e8074ae3034f89}
+
+
+To move the file in asynchronous mode. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em dest}]the move destination \item[{\em options}]the move options \item[{\em fileTransfer}]information about the transfer like its identifier \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the command succeeds, an error code otherwise 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classFileProxy_a70e2f40c0b15d3640d631f914a2e627b}{FileProxy}.
+
+\hypertarget{classRemoteFileProxy_a8f9c34f0bbf8951c33d4037096df7a54}{
+\index{RemoteFileProxy@{RemoteFileProxy}!operator=@{operator=}}
+\index{operator=@{operator=}!RemoteFileProxy@{RemoteFileProxy}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf RemoteFileProxy}\& RemoteFileProxy::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf RemoteFileProxy} \&}]{ file}
+\end{DoxyParamCaption}
+)}}
+\label{classRemoteFileProxy_a8f9c34f0bbf8951c33d4037096df7a54}
+
+
+The assignment operator. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em file}]the object to assign \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new assigned file 
+\end{DoxyReturn}
+\hypertarget{classRemoteFileProxy_a8e849fd6f8d78e14114e14a2eaacb75a}{
+\index{RemoteFileProxy@{RemoteFileProxy}!rm@{rm}}
+\index{rm@{rm}!RemoteFileProxy@{RemoteFileProxy}}
+\subsubsection[{rm}]{\setlength{\rightskip}{0pt plus 5cm}virtual int RemoteFileProxy::rm (
+\begin{DoxyParamCaption}
+\item[{const RmFileOptions \&}]{ options}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classRemoteFileProxy_a8e849fd6f8d78e14114e14a2eaacb75a}
+
+
+To remove a file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em options}]the remove file options \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the command succeeds, an error code otherwise 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classFileProxy_ac1f6106e6b799eb2118a9badaca68176}{FileProxy}.
+
+\hypertarget{classRemoteFileProxy_abfde4c2173294f6dfd5958a8b6c88cdb}{
+\index{RemoteFileProxy@{RemoteFileProxy}!rmdir@{rmdir}}
+\index{rmdir@{rmdir}!RemoteFileProxy@{RemoteFileProxy}}
+\subsubsection[{rmdir}]{\setlength{\rightskip}{0pt plus 5cm}virtual int RemoteFileProxy::rmdir (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classRemoteFileProxy_abfde4c2173294f6dfd5958a8b6c88cdb}
+
+
+To remove an empty directory. 
+
+\begin{DoxyReturn}{Returns}
+0 if the command succeeds, an error code otherwise 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classFileProxy_a7d2495abbcfab9828df3c11815db1866}{FileProxy}.
+
+\hypertarget{classRemoteFileProxy_a45f18885dee050419b72e36283031bdb}{
+\index{RemoteFileProxy@{RemoteFileProxy}!tail@{tail}}
+\index{tail@{tail}!RemoteFileProxy@{RemoteFileProxy}}
+\subsubsection[{tail}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string RemoteFileProxy::tail (
+\begin{DoxyParamCaption}
+\item[{const TailOfFileOptions \&}]{ options}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classRemoteFileProxy_a45f18885dee050419b72e36283031bdb}
+
+
+To get the last lines of the file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em options}]the options object \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the last lines of the file 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classFileProxy_a95ac84bd106d6699252bf558ec4b4b71}{FileProxy}.
+
+\hypertarget{classRemoteFileProxy_ad0032944be978d1878dd79ec307cd977}{
+\index{RemoteFileProxy@{RemoteFileProxy}!transferFile@{transferFile}}
+\index{transferFile@{transferFile}!RemoteFileProxy@{RemoteFileProxy}}
+\subsubsection[{transferFile}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class TypeOfOption $>$ int RemoteFileProxy::transferFile (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ dest, }
+\item[{const TypeOfOption \&}]{ options, }
+\item[{const std::string \&}]{ serviceName, }
+\item[{FileTransfer \&}]{ fileTransfer}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classRemoteFileProxy_ad0032944be978d1878dd79ec307cd977}
+
+
+A generic class to handle a local to remote file transfer. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em dest}]the destination \item[{\em options}]the transfer options \item[{\em serviceName}]the name of the service \item[{\em fileTransfer}]information about the transfer \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the function succeeds or an error code otherwise 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+FMS/src/client/\hyperlink{RemoteFileProxy_8hpp}{RemoteFileProxy.hpp}\end{DoxyCompactItemize}

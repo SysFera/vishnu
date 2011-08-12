@@ -146,7 +146,6 @@ class SlurmServer : public BatchServer
     /**
      * \brief Function to check if slurm path syntax is correct
      * \param path the path to check
-     * \param sumitIsPossible The flag that authorise the job submission if the path is correct
      * \param pathInfo The information on path to print
      * \return an error message
      */

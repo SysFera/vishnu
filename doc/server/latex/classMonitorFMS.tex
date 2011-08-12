@@ -1,0 +1,106 @@
+\hypertarget{classMonitorFMS}{
+\section{MonitorFMS Class Reference}
+\label{classMonitorFMS}\index{MonitorFMS@{MonitorFMS}}
+}
+
+
+This class describes the FMS Monitor.  
+
+
+
+
+{\ttfamily \#include $<$MonitorFMS.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classMonitorFMS_ae070dde72ea132d5e40fdd3529ecb2b2}{MonitorFMS} (int interval=1)
+\begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
+\hypertarget{classMonitorFMS_af760fb718e4800208a0d675bade9e5da}{
+\hyperlink{classMonitorFMS_af760fb718e4800208a0d675bade9e5da}{$\sim$MonitorFMS} ()}
+\label{classMonitorFMS_af760fb718e4800208a0d675bade9e5da}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\item 
+void \hyperlink{classMonitorFMS_a93ee1d437459fe2753114afb13466e2f}{init} (int vishnuId, \hyperlink{classDbConfiguration}{DbConfiguration} dbConfig)
+\begin{DoxyCompactList}\small\item\em To initialize the FMS monitor with individual parameters instead of configuration file. \item\end{DoxyCompactList}\item 
+int \hyperlink{classMonitorFMS_aa24d91ad05db4db09be6ea4fae2d05d1}{run} ()
+\begin{DoxyCompactList}\small\item\em To launch the FMS Monitor. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classMonitorFMS_ac92b831e3b109fe4b5aee603b4f110cf}{
+int \hyperlink{classMonitorFMS_ac92b831e3b109fe4b5aee603b4f110cf}{minterval}}
+\label{classMonitorFMS_ac92b831e3b109fe4b5aee603b4f110cf}
+
+\begin{DoxyCompactList}\small\item\em The interval in seconds to check the database. \item\end{DoxyCompactList}\item 
+\hypertarget{classMonitorFMS_a3b603f8f1d59926c26ceea911346d0eb}{
+\hyperlink{classDatabase}{Database} $\ast$ \hyperlink{classMonitorFMS_a3b603f8f1d59926c26ceea911346d0eb}{mdatabaseVishnu}}
+\label{classMonitorFMS_a3b603f8f1d59926c26ceea911346d0eb}
+
+\begin{DoxyCompactList}\small\item\em An instance of vishnu database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class describes the FMS Monitor. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classMonitorFMS_ae070dde72ea132d5e40fdd3529ecb2b2}{
+\index{MonitorFMS@{MonitorFMS}!MonitorFMS@{MonitorFMS}}
+\index{MonitorFMS@{MonitorFMS}!MonitorFMS@{MonitorFMS}}
+\subsubsection[{MonitorFMS}]{\setlength{\rightskip}{0pt plus 5cm}MonitorFMS::MonitorFMS (
+\begin{DoxyParamCaption}
+\item[{int}]{ interval = {\ttfamily 1}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
+\label{classMonitorFMS_ae070dde72ea132d5e40fdd3529ecb2b2}
+
+
+Constructor, raises an exception on error. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em interval}]The interval in seconds to check the database \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classMonitorFMS_a93ee1d437459fe2753114afb13466e2f}{
+\index{MonitorFMS@{MonitorFMS}!init@{init}}
+\index{init@{init}!MonitorFMS@{MonitorFMS}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}void MonitorFMS::init (
+\begin{DoxyParamCaption}
+\item[{int}]{ vishnuId, }
+\item[{{\bf DbConfiguration}}]{ dbConfig}
+\end{DoxyParamCaption}
+)}}
+\label{classMonitorFMS_a93ee1d437459fe2753114afb13466e2f}
+
+
+To initialize the FMS monitor with individual parameters instead of configuration file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em vishnuId}]The password of the root user vishnu\_\-user for the connection with the database \item[{\em dbConfig}]The configuration of the database \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an execption 
+\end{DoxyReturn}
+\hypertarget{classMonitorFMS_aa24d91ad05db4db09be6ea4fae2d05d1}{
+\index{MonitorFMS@{MonitorFMS}!run@{run}}
+\index{run@{run}!MonitorFMS@{MonitorFMS}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}int MonitorFMS::run (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classMonitorFMS_aa24d91ad05db4db09be6ea4fae2d05d1}
+
+
+To launch the FMS Monitor. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+FMS/src/sed/\hyperlink{MonitorFMS_8hpp}{MonitorFMS.hpp}\end{DoxyCompactItemize}

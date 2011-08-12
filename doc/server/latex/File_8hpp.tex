@@ -1,0 +1,132 @@
+\hypertarget{File_8hpp}{
+\section{FMS/src/server/File.hpp File Reference}
+\label{File_8hpp}\index{FMS/src/server/File.hpp@{FMS/src/server/File.hpp}}
+}
+{\ttfamily \#include $<$string$>$}\par
+{\ttfamily \#include $<$list$>$}\par
+{\ttfamily \#include $<$sys/types.h$>$}\par
+{\ttfamily \#include $<$sys/stat.h$>$}\par
+{\ttfamily \#include \char`\"{}SessionServer.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}FMS\_\-Data\_\-forward.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}FMS\_\-Data.hpp\char`\"{}}\par
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classFile}{File}
+\begin{DoxyCompactList}\small\item\em Main \hyperlink{classFile}{File} class. Encapsulates all the files attributes. Defines the common operation on files (local or remote). \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Defines}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{File_8hpp_af0f599acff588732a85f29cc4c8e5176}{
+\#define \hyperlink{File_8hpp_af0f599acff588732a85f29cc4c8e5176}{STAT}(path, buf)~stat64((path), (buf))}
+\label{File_8hpp_af0f599acff588732a85f29cc4c8e5176}
+
+\begin{DoxyCompactList}\small\item\em The default defintion of stat function. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{File_8hpp_a853fd83b86085f557206559182c9518e}{
+typedef struct stat64 \hyperlink{File_8hpp_a853fd83b86085f557206559182c9518e}{file\_\-stat\_\-t}}
+\label{File_8hpp_a853fd83b86085f557206559182c9518e}
+
+\begin{DoxyCompactList}\small\item\em The stat structure differs depending on the system type. BSD file systems used the same structure for large and small partition type. \item\end{DoxyCompactList}\item 
+\hypertarget{File_8hpp_aaf19f83503293d8d9fb6c5f7607cb5ee}{
+typedef off64\_\-t \hyperlink{File_8hpp_aaf19f83503293d8d9fb6c5f7607cb5ee}{file\_\-size\_\-t}}
+\label{File_8hpp_aaf19f83503293d8d9fb6c5f7607cb5ee}
+
+\begin{DoxyCompactList}\small\item\em A defintion of object size type. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{File_8hpp_af728de96ee6e62d6340d3dba27941ec3}{file\_\-type\_\-t} \{ \par
+\hyperlink{File_8hpp_af728de96ee6e62d6340d3dba27941ec3a879965b9f596d9c46dc07872284703f1}{block}, 
+\hyperlink{File_8hpp_af728de96ee6e62d6340d3dba27941ec3afa40ef3af4fea0001b535318130960b2}{character}, 
+\hyperlink{File_8hpp_af728de96ee6e62d6340d3dba27941ec3ab64bbe89326b6104d2edba94eca48bae}{directory}, 
+\hyperlink{File_8hpp_af728de96ee6e62d6340d3dba27941ec3a1bf492169c147e72dfadf45cd846414c}{symboliclink}, 
+\par
+\hyperlink{File_8hpp_af728de96ee6e62d6340d3dba27941ec3a62ec37e27b8d99ebca933411fb1c488c}{sckt}, 
+\hyperlink{File_8hpp_af728de96ee6e62d6340d3dba27941ec3a9e156eec2a182827f5e360b477c2c627}{fifo}, 
+\hyperlink{File_8hpp_af728de96ee6e62d6340d3dba27941ec3a040a9ec6d2966f099fd3214b8ac4fef3}{regular}
+ \}
+\begin{DoxyCompactList}\small\item\em \hyperlink{classFile}{File} type enumeration. \item\end{DoxyCompactList}\item 
+enum \hyperlink{File_8hpp_aaa08d9ac47a1aad716e3941312603212}{file\_\-host\_\-t} \{ \hyperlink{File_8hpp_aaa08d9ac47a1aad716e3941312603212a140dc6ce49ef5aee319af1854c3dad23}{local}, 
+\hyperlink{File_8hpp_aaa08d9ac47a1aad716e3941312603212afcf00f740c40cfca071f907d32575168}{remote}
+ \}
+\begin{DoxyCompactList}\small\item\em \hyperlink{classFile}{File} \char`\"{}locality\char`\"{} enumeration. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file declares a server class to handle a file \begin{DoxyAuthor}{Author}
+Daouda Traore (\href{mailto:daouda.traore@sysfera.com}{\tt daouda.traore@sysfera.com}) 
+
+Ibrahima Cisse (\href{mailto:irahima.cisse@sysfera.com}{\tt irahima.cisse@sysfera.com}) 
+\end{DoxyAuthor}
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{File_8hpp_aaa08d9ac47a1aad716e3941312603212}{
+\index{File.hpp@{File.hpp}!file\_\-host\_\-t@{file\_\-host\_\-t}}
+\index{file\_\-host\_\-t@{file\_\-host\_\-t}!File.hpp@{File.hpp}}
+\subsubsection[{file\_\-host\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf file\_\-host\_\-t}}}
+\label{File_8hpp_aaa08d9ac47a1aad716e3941312603212}
+
+
+\hyperlink{classFile}{File} \char`\"{}locality\char`\"{} enumeration. 
+
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{local@{local}!File.hpp@{File.hpp}}\index{File.hpp@{File.hpp}!local@{local}}\item[{\em 
+\hypertarget{File_8hpp_aaa08d9ac47a1aad716e3941312603212a140dc6ce49ef5aee319af1854c3dad23}{
+local}
+\label{File_8hpp_aaa08d9ac47a1aad716e3941312603212a140dc6ce49ef5aee319af1854c3dad23}
+}]a local file \index{remote@{remote}!File.hpp@{File.hpp}}\index{File.hpp@{File.hpp}!remote@{remote}}\item[{\em 
+\hypertarget{File_8hpp_aaa08d9ac47a1aad716e3941312603212afcf00f740c40cfca071f907d32575168}{
+remote}
+\label{File_8hpp_aaa08d9ac47a1aad716e3941312603212afcf00f740c40cfca071f907d32575168}
+}]a remote file \end{description}
+\end{Desc}
+
+\hypertarget{File_8hpp_af728de96ee6e62d6340d3dba27941ec3}{
+\index{File.hpp@{File.hpp}!file\_\-type\_\-t@{file\_\-type\_\-t}}
+\index{file\_\-type\_\-t@{file\_\-type\_\-t}!File.hpp@{File.hpp}}
+\subsubsection[{file\_\-type\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf file\_\-type\_\-t}}}
+\label{File_8hpp_af728de96ee6e62d6340d3dba27941ec3}
+
+
+\hyperlink{classFile}{File} type enumeration. 
+
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{block@{block}!File.hpp@{File.hpp}}\index{File.hpp@{File.hpp}!block@{block}}\item[{\em 
+\hypertarget{File_8hpp_af728de96ee6e62d6340d3dba27941ec3a879965b9f596d9c46dc07872284703f1}{
+block}
+\label{File_8hpp_af728de96ee6e62d6340d3dba27941ec3a879965b9f596d9c46dc07872284703f1}
+}]a block \index{character@{character}!File.hpp@{File.hpp}}\index{File.hpp@{File.hpp}!character@{character}}\item[{\em 
+\hypertarget{File_8hpp_af728de96ee6e62d6340d3dba27941ec3afa40ef3af4fea0001b535318130960b2}{
+character}
+\label{File_8hpp_af728de96ee6e62d6340d3dba27941ec3afa40ef3af4fea0001b535318130960b2}
+}]a character \index{directory@{directory}!File.hpp@{File.hpp}}\index{File.hpp@{File.hpp}!directory@{directory}}\item[{\em 
+\hypertarget{File_8hpp_af728de96ee6e62d6340d3dba27941ec3ab64bbe89326b6104d2edba94eca48bae}{
+directory}
+\label{File_8hpp_af728de96ee6e62d6340d3dba27941ec3ab64bbe89326b6104d2edba94eca48bae}
+}]a directory \index{symboliclink@{symboliclink}!File.hpp@{File.hpp}}\index{File.hpp@{File.hpp}!symboliclink@{symboliclink}}\item[{\em 
+\hypertarget{File_8hpp_af728de96ee6e62d6340d3dba27941ec3a1bf492169c147e72dfadf45cd846414c}{
+symboliclink}
+\label{File_8hpp_af728de96ee6e62d6340d3dba27941ec3a1bf492169c147e72dfadf45cd846414c}
+}]a symbolic link \index{sckt@{sckt}!File.hpp@{File.hpp}}\index{File.hpp@{File.hpp}!sckt@{sckt}}\item[{\em 
+\hypertarget{File_8hpp_af728de96ee6e62d6340d3dba27941ec3a62ec37e27b8d99ebca933411fb1c488c}{
+sckt}
+\label{File_8hpp_af728de96ee6e62d6340d3dba27941ec3a62ec37e27b8d99ebca933411fb1c488c}
+}]a socket \index{fifo@{fifo}!File.hpp@{File.hpp}}\index{File.hpp@{File.hpp}!fifo@{fifo}}\item[{\em 
+\hypertarget{File_8hpp_af728de96ee6e62d6340d3dba27941ec3a9e156eec2a182827f5e360b477c2c627}{
+fifo}
+\label{File_8hpp_af728de96ee6e62d6340d3dba27941ec3a9e156eec2a182827f5e360b477c2c627}
+}]a fifo \index{regular@{regular}!File.hpp@{File.hpp}}\index{File.hpp@{File.hpp}!regular@{regular}}\item[{\em 
+\hypertarget{File_8hpp_af728de96ee6e62d6340d3dba27941ec3a040a9ec6d2966f099fd3214b8ac4fef3}{
+regular}
+\label{File_8hpp_af728de96ee6e62d6340d3dba27941ec3a040a9ec6d2966f099fd3214b8ac4fef3}
+}]a regular file \end{description}
+\end{Desc}
+

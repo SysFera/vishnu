@@ -97,12 +97,33 @@ typedef enum{
 template<FileActionType fileActionType>
 struct FileActionFunc {
 
+  /**
+   * \brief The path to treat 
+   */
   std::string mpath;
+  /**
+   * \brief The file transfer options 
+   */
   RmFileOptions moptions;
 
+  /**
+   * \param path The path to treat
+   * \brief Constructor
+   */
   FileActionFunc(const std::string& path):mpath(path){}
+
+  /**
+   * \param path The path to treat
+   * \param options The file transfer option
+   * \brief Constructor
+   */
   FileActionFunc(const std::string& path,const RmFileOptions& options):mpath(path),moptions(options){}
 
+  /**
+   * \brief To execute the FileAction operation
+   * \param sessionKey The identifier of the session
+   * \return non-zero on error
+   */
   int operator()(std::string sessionKey) {
 
     int res = -1;
