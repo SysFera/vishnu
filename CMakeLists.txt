@@ -10,7 +10,7 @@ set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Cmake)
 set (MANDIR /usr/share/man CACHE string "the man path")
 
-set( VISHNU_VERSION "1.2.2" CACHE STRING " the version of the source ")
+set( VISHNU_VERSION "1.2.3" CACHE STRING " the version of the source ")
 
 # Options set to ON by default
 option(BUILD_SHARED_LIBS "disable shared libraries usage" ON)
