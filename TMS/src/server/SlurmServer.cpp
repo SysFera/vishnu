@@ -295,7 +295,22 @@ SlurmServer::processOptions(const TMS_Data::SubmitOptions& options,
   }
   if(options.getWallTime()!=-1) {
     cmdsOptions.push_back("-t"); 
-    cmdsOptions.push_back(vishnu::convertWallTimeToString(options.getWallTime()));
+    std::string timeStr = vishnu::convertWallTimeToString(options.getWallTime());
+    size_t pos = timeStr.rfind(":");
+    int i=0;
+    while(pos!=std::string::npos){
+      i++;
+      if(i==3) {
+        timeStr = timeStr.replace(pos, 1, "-");
+        break;
+      }
+      if(pos==0) {
+        break;
+      } else {
+        pos = timeStr.rfind(":", pos-1);
+      }
+    }
+    cmdsOptions.push_back(timeStr);
   }
   if(options.getNbCpu()!=-1) {
     std::ostringstream os_str;
