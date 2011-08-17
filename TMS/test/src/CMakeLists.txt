@@ -50,7 +50,7 @@ configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/tmssed_testing.cfg.in
 
 include(TMSTestingMacros)
 tms_test_setup()
-tms_test(tms_automTest)
+tms_test(tms_automTest1)
 tms_test(tms_automTest2)
 tms_test(tms_automTest3)
 tms_test(tms_automTest4)
