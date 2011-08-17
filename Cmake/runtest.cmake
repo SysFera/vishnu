@@ -11,9 +11,12 @@ set (ENV{PATH} "$ENV{OMNIORB4_DIR}/bin:$PATH")
 
 execute_process( COMMAND export )
 
-execute_process( COMMAND ${BIN_PATH}/${TEST_PROG}
-  --report_format=xml
-  --report_level=detailed
-  #OUTPUT_FILE "${REPORT_PATH}/${TEST_PROG}.xml"
-  ERROR_FILE "${REPORT_PATH}/${TEST_PROG}.xml"
+execute_process( COMMAND ${BIN_PATH}/${TEST_PROG} 
+  --result_code=no
+  --report_level=no
+  --log_format=xml
+  --log_level=test_suite
+  --log_sink=${REPORT_PATH}/${TEST_PROG}.xml
+  OUTPUT_QUIET
+  ERROR_QUIET
 )
