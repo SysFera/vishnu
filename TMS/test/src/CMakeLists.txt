@@ -51,6 +51,13 @@ configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/tmssed_testing.cfg.in
 include(TMSTestingMacros)
 tms_test_setup()
 tms_test(tms_automTest)
+tms_test(tms_automTest2)
+tms_test(tms_automTest3)
+tms_test(tms_automTest4)
+tms_test(tms_automTest5)
+tms_test(tms_automTest6)
+tms_test(tms_automTest7)
+tms_test(tms_automTest8)
 
 add_executable(tms_stresser
  tms_stress.cpp)
