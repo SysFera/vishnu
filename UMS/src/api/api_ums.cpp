@@ -688,7 +688,7 @@ vishnu::listUsers(const std::string& sessionKey,
   SessionProxy sessionProxy(sessionKey);
   QueryProxy<std::string, UMS_Data::ListUsers> query(userIdOption, sessionProxy, "userList");
 
-  UMS_Data::ListUsers* listUsers_ptr = query.listWithParamsString();
+  UMS_Data::ListUsers* listUsers_ptr = query.list();
 
   if(listUsers_ptr!=NULL) {
     UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();

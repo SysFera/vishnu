@@ -226,7 +226,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   QueryProxy<std::string, TMS_Data::ListQueues>
     query(queueName, sessionProxy, serviceName, machineId);
 
-  TMS_Data::ListQueues* listQueues_ptr = query.listWithParamsString();
+  TMS_Data::ListQueues* listQueues_ptr = query.list();
 
   if(listQueues_ptr != NULL) {
     TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
