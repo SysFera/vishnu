@@ -28,6 +28,41 @@
 #include "ListUsers.hpp"
 
 /**
+ * \class SerializeAdaptor
+ * \brief SerializeAdaptor class implementation
+ */
+template <class Object>
+struct SerializeAdaptor {
+
+  /**
+   * \brief Function to convert an object type to string 
+   * \param object The Object to convert
+   */
+  static std::string serialize(const Object& object) {
+    ::ecorecpp::serializer::serializer _ser;
+    return  _ser.serialize_str(const_cast<Object*>(&object));
+  }
+
+}; 
+
+/**
+ * \class SerializeAdaptor
+ * \brief Specialization in std::string of the SerializeAdaptor
+ */
+template <>
+struct SerializeAdaptor<std::string> {
+
+  /**
+   * \brief Function to convert an object type to string
+   * \param object The Object to convert
+   */
+  static std::string serialize(const std::string& object) {
+    return  object;
+  }
+
+};
+
+/**
  * \class QueryProxy
  * \brief QueryProxy class implementation
  */
@@ -80,14 +115,7 @@ class QueryProxy
      */
     ListObject*
     list();
-    /**
-     * \brief Function to list QueryProxy information where QueryParameters type is string
-     * \fn  ListObject* listWithParamsString()
-     * \return The pointer to the ListOject containing list information
-     * \return raises an exception on error
-     */
-    ListObject*
-    listWithParamsString();
+    
     /**
      * \fn ~QueryProxy()
      * \brief Destructor, raises an exception on error
@@ -211,12 +239,9 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
   }
 
   sessionKey = msessionProxy.getSessionKey();
+  queryParmetersToString =  SerializeAdaptor<QueryParameters>::serialize(mparameters); 
 
-  ::ecorecpp::serializer::serializer _ser;
-  //To serialize the mparameters object in to queryParmetersToString
-  queryParmetersToString =  _ser.serialize_str(const_cast<QueryParameters_ptr>(&mparameters));
   //IN Parameters
-
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
       msg += "with sessionKey parameter "+sessionKey;
       raiseDietMsgException(msg);
@@ -287,99 +312,6 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
   parseEmfObject(std::string(listObjectInString), mlistObject, "Error by receiving List object serialized");
 
   return mlistObject;
-}
-
-/**
- * \brief Function to list QueryProxy information where QueryParameters type is string
- * \fn  ListObject* QueryProxy<QueryParameters, ListObject>::listWithParamsString()
- * \return The pointer to the ListOject containing list information
- * \return raises an exception on error
- */
-  template <class QueryParameters, class ListObject>
-ListObject* QueryProxy<QueryParameters, ListObject>::listWithParamsString()
-{
-  diet_profile_t* profile = NULL;
-  char* listObjectInString;
-  char* errorInfo;
-  std::string msg = "call of function diet_string_set is rejected ";
-
-  if (mmachineId.size() != 0) {
-    profile = diet_profile_alloc(mserviceName.c_str(), 2, 2, 4);
-  } else {
-    profile = diet_profile_alloc(mserviceName.c_str(), 1, 1, 3);
-  }
-
-   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), strdup((msessionProxy.getSessionKey()).c_str()), DIET_VOLATILE)) {
-    msg += "with sessionKey parameter "+msessionProxy.getSessionKey();
-    raiseDietMsgException(msg);
-  }
-
-   //If the query uses the machineId (machineId not null)
-  if (mmachineId.size() != 0) {
-    //IN Parameters
-    if(diet_string_set(diet_parameter(profile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
-      msg += "with machineId parameter "+mmachineId;
-      raiseDietMsgException(msg);
-    }
-
-    if(diet_string_set(diet_parameter(profile,2), strdup(mparameters.c_str()), DIET_VOLATILE)) {
-      msg += "with with mparameters parameter "+mparameters;
-      raiseDietMsgException(msg);
-    }
-
-    //OUT Parameters
-    diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
-    diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
-
-    if(!diet_call(profile)) {
-      if(diet_string_get(diet_parameter(profile,3), &listObjectInString, NULL)){
-        msg += "by receiving listObjectInString message";
-        raiseDietMsgException(msg);
-      }
-      if(diet_string_get(diet_parameter(profile,4), &errorInfo, NULL)){
-        msg += "by receiving errorInfo message";
-        raiseDietMsgException(msg);
-      }
-    }
-    else {
-      raiseDietMsgException("DIET call failure");
-    }
-  } else {
-
-  //IN Parameters
-  if(diet_string_set(diet_parameter(profile,1), strdup(mparameters.c_str()), DIET_VOLATILE)) {
-    msg += "with mparameters parameter "+mparameters;
-    raiseDietMsgException(msg);
-  }
-
-  //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
-
-  if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), &listObjectInString, NULL)){
-      msg += "by receiving listObjectInString message";
-      raiseDietMsgException(msg);
-    }
-    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
-      msg += "by receiving errorInfo message";
-      raiseDietMsgException(msg);
-    }
-  }
-  else {
-    raiseDietMsgException("DIET call failure");
-  }
-  }
-
-  /*To check the receiving message error*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
-
-  //To parse ListUsers object serialized
-  parseEmfObject(std::string(listObjectInString), mlistObject, "Error by receiving ListUsers object serialized");
-
-  return mlistObject;
-
 }
 
 /**
