@@ -3,7 +3,6 @@
 #define _VISHNU_SLURM_UTIL_H
 
 #include "slurm/slurm.h"
-#include "slurm/slurmdb.h"
 
 ////////////////////////////////SLURM PROC ARG UTILITY FUNCTION///////////////////////////
 /*
