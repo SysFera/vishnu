@@ -16,16 +16,10 @@
 #include <sys/types.h>
 
 #include "slurm/slurm.h"
-#include "slurm/slurmdb.h"
-//#include "xassert.h"
 #include "xmalloc.h"
 #include "xstring.h"
 #include "slurm_internal_api.h"
 
-
-////////////////////////////////SLURM slurmdb_defs////////////////////////
-//slurmdb_cluster_rec_t *working_cluster_rec = NULL;
-//#define ENV_BUFSIZE (256 * 1024)
 
 ////////////////////////////////SLURM PROC ARG UTILITY FUNCTION///////////////////////////
 /*
