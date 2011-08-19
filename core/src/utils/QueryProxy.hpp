@@ -10,22 +10,8 @@
 #include <string>
 #include <iostream>
 
-#include "UMSVishnuException.hpp"
 #include "utilsClient.hpp"
-
 #include "SessionProxy.hpp"
-#include "Session.hpp"
-#include "ListCmdOptions.hpp"
-#include "ListCommands.hpp"
-#include "ListLocalAccOptions.hpp"
-#include "ListLocalAccounts.hpp"
-#include "ListMachineOptions.hpp"
-#include "ListMachines.hpp"
-#include "ListOptionsValues.hpp"
-#include "ListOptOptions.hpp"
-#include "ListSessionOptions.hpp"
-#include "ListSessions.hpp"
-#include "ListUsers.hpp"
 
 /**
  * \class SerializeAdaptor
