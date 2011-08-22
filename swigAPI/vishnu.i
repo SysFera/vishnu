@@ -165,16 +165,16 @@
 #ifdef SWIGPYTHON
 
 // Remove output parameters from the command
-%typemap(in, numinputs=0) UMS_Data::Session& session(UMS_Data::Session temp) {
-  $1 = &temp;
-}
-
-
-// Add the output parameters to the result
-%typemap(argout) UMS_Data::Session& session {
-  PyObject *o = PyString_FromString($1->getSessionKey().c_str());
-  $result = SWIG_Python_AppendOutput($result, o);
-}
+//%typemap(in, numinputs=0) UMS_Data::Session& session(UMS_Data::Session temp) {
+//  $1 = &temp;
+//}
+//
+//
+//// Add the output parameters to the result
+//%typemap(argout) UMS_Data::Session& session {
+//  PyObject *o = PyString_FromString($1->getSessionKey().c_str());
+//  $result = SWIG_Python_AppendOutput($result, o);
+//}
 
 
 %typemap(in, numinputs=0) std::string& sshPublicKey (std::string temp) {
