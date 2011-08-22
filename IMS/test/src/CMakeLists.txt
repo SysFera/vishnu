@@ -87,7 +87,19 @@ configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/imssed_testing.cfg.in
 
 include(IMSTestingMacros)
 ims_test_setup()
-ims_test(ims_automTest)
+ims_test(ims_automTest1)
+ims_test(ims_automTest2)
+ims_test(ims_automTest3)
+ims_test(ims_automTest4)
+ims_test(ims_automTest5)
+ims_test(ims_automTest6)
+ims_test(ims_automTest7)
+ims_test(ims_automTest8)
+ims_test(ims_automTest9)
+ims_test(ims_automTest10)
+ims_test(ims_automTest11)
+ims_test(ims_automTest12)
+ims_test(ims_automTest13)
 
 add_executable(ims_stresser
  ims_stress.cpp)
