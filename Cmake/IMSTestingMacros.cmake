@@ -74,22 +74,47 @@ macro( ims_test NAME )
       test-utils
       ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
-    # test executable installation has not been tested yet -sic-
-    # install( TARGETS ${NAME} DESTINATION bin )
-    add_test( ${NAME} ${BIN_DIR}/${NAME} )
+    file(READ "${NAME}.cpp" content)
+    # TODO: fix this crazyness as soon as CMake to provides a proper way to
+    # extract data with regex
+    ## first get test suite name (should be the same as ${TEST_NAME} !!)
+    string(REGEX MATCHALL
+      "BOOST_FIXTURE_TEST_SUITE\\([a-zA-Z0-9_]*, [a-zA-Z0-9_]*\\)"
+      res_int ${content})
+    string(REGEX REPLACE
+      "BOOST_FIXTURE_TEST_SUITE\\(([a-zA-Z0-9_]*), [a-zA-Z0-9_]*\\)"
+      "\\1/"
+      testsuite ${res_int})
+    ## removed commented case tests
+    # TODO: fix this if test case is not commented out as coding standards
+    # request, this will fail
+    # CMake regex engine seems to have some failures ...
+    string(REGEX REPLACE
+      "(//|/*) BOOST_AUTO_TEST_CASE\\([a-zA-Z0-9_]*\\)" "\\1"
+      content ${content})
+    ## then test case names
+    string(REGEX MATCHALL "BOOST_AUTO_TEST_CASE\\([a-zA-Z0-9_]*\\)"
+      res_int ${content})
+    # tricks: i add a ";" at the end, so that i can get a proper list
+    string(REGEX REPLACE "BOOST_AUTO_TEST_CASE\\(([a-zA-Z0-9_]*)\\)" "\\1;"
+      tests ${res_int})
+ 
+    foreach(loop_var ${tests})
+      add_test("${testsuite}${loop_var}" "${BIN_DIR}/${NAME}"
+        "--run_test=${testsuite}${loop_var}")
+      # prevent Boost.Test to catch unrelated exceptions
+      set_property(TEST "${testsuite}${loop_var}"
+        PROPERTY ENVIRONMENT "BOOST_TEST_CATCH_SYSTEM_ERRORS=no;")
+      # just make sure that our test are run in a serial fashion
+      set_property(TEST "${testsuite}${loop_var}" PROPERTY RUN_SERIAL ON)
+    endforeach()
 
-    # prevent Boost.Test to catch unrelated exceptions
-    set_property( TEST ${NAME}
-      PROPERTY ENVIRONMENT "BOOST_TEST_CATCH_SYSTEM_ERRORS=no;" )
-    # just make sure that our test are run in a serial fashion
-    set_property( TEST ${NAME} PROPERTY RUN_SERIAL ON )
-
-    #
+    # generate XML reports
     add_custom_target( ${NAME}-xml
         COMMAND ${CMAKE_COMMAND}
         -DTEST_PROG=${NAME}
         -DBIN_PATH=${BIN_DIR}
-	-DVISHNU_CONFIG=${UMS_TEST_DIR}/client.cfg
+        -DVISHNU_CONFIG=${PROJECT_BINARY_DIR}/test_files/cfg/client_testing.cfg
         -DREPORT_PATH=${REPORT_OUTPUT_PATH}
         -P ${PROJECT_SOURCE_DIR}/Cmake/runtest.cmake )
       add_dependencies( ims_test-xml ${NAME}-xml )
