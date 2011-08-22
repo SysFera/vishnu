@@ -575,7 +575,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     string formatJob = "JTEST_$CPT";
     string formatFileTransfer = "FTTEST_$CPT";
     //Job
-    const std::string scriptFilePath= TMSSCRIPTSPATH "/torque_script";
+    const std::string scriptFilePath= TMSSCRIPTPATH;
     SubmitOptions subOptions;
 
     try {
@@ -904,7 +904,7 @@ BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
     //Set loadShedType to 2: SOFT
     IMS_Data::LoadShedType loadShedType = 2;
     //Job
-    const std::string scriptFilePath= TMSSCRIPTSPATH "/torque_script";
+    const std::string scriptFilePath= TMSSCRIPTPATH;
     Job jobInfo1;
     Job jobInfo2;
     SubmitOptions subOptions;
