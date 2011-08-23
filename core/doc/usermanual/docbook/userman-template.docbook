@@ -77,6 +77,14 @@
       <para>Added SLURM batch scheduler </para></revdescription>
   </revision> 
 
+  <revision>
+    <revnumber>7</revnumber>
+    <date>23/08/2011</date>
+    <authorinitials>SysFera</authorinitials>
+    <revdescription>
+      <para>Add the only one local account per machine warning. Add a reference to VISHNU_API </para></revdescription>
+  </revision> 
+
     </revhistory>
 
     <copyright>
@@ -158,6 +166,9 @@
           <listitem>
             <para>[DIETMAN]: DIET User's Manual v2.7 (available with the DIET distribution at http://graal.ens-lyon.fr/~diet)</para>
           </listitem>
+        <listitem>
+          <para>[VISHNU_API] VISHNU API : Document that contain the VISHNU API description and all the datatypes used..</para>
+        </listitem>
       </itemizedlist></para>
     </section>
   </chapter>
@@ -285,6 +296,7 @@
     <section>
       <title> Software usage description </title>
       <para>VISHNU is composed of 4 main packages, one that deals with the users and the machine (UMS), one that deals with the batch schedulers (TMS), one that deals with the files management (FMS) and one that handle the information of the system (IMS). These clients can be installed alltogether or just one or two. Please contact your VISHNU admin to know the corresponding servers you can have before installing the client. It is important to note that the client can be installed without the server being on the platform, the call will end up with an exception and the message "Vishnu not available". Below each package will be describe to show the services it offers to the user.</para>
+      <para>More information about the datatypes can be found in the [VISHNU_API] document.</para>
       <para><emphasis role="bold">WARNING: The lists are INOUT parameters, the results are appended, they do not overwrite the existing list. Moreover, the get function on the lists do not check the bounds, it is like using the [] operator.</emphasis></para>
       <section><!-- UMS Package -->
 	<title> UMS package </title> 
@@ -349,6 +361,7 @@
 	      required to create a new local user configuration is: the userId, the machineId, the login of the UNIX account on the specified machine,
 	      the absolute path to the user's private SSH key (used for file transfers) and the home directory path. 
 	    </para>   
+	    <para><emphasis role = "bold">Warning: </emphasis>A unix login can only have one local account on a machine</para>
 	    <para>  
 	      The ssh public key of the machine 
 	      named <emphasis role="italic">&quot;userId-machineId&quot;</emphasis> is returned and stored in the $HOME/.vishnu/localAccountPublicKey/ directory
