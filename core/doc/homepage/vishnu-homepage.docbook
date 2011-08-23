@@ -3,7 +3,7 @@
   <info>
     <title>Vishnu Home Page</title>
     <productname>VISHNU</productname>
-    <releaseinfo>Version 1.2.1</releaseinfo>
+    <releaseinfo>Version 1.2.3</releaseinfo>
     <date>June 28, 2011</date>
     <author>
       <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
@@ -27,6 +27,14 @@
 	<authorinitials>SysFera</authorinitials>
 	<revdescription>
 	  <para>First version</para>
+        </revdescription>
+      </revision>
+      <revision>
+	<revnumber>1</revnumber>
+	<date>23/08/2011</date>
+	<authorinitials>SysFera</authorinitials>
+	<revdescription>
+	  <para>Update for release 1.2.3</para>
         </revdescription>
       </revision>
     </revhistory>
@@ -96,6 +104,12 @@
       <title>Change log</title>
       <itemizedlist>
 	<listitem>
+          <para>V1.2.3 (23/08/2011): Fix some bugs and add SLURM support.</para>
+        </listitem>
+	<listitem>
+          <para>V1.2.2 (21/07/2011): Fix some bugs.</para>
+        </listitem>
+	<listitem>
           <para>V1.2.1 (24/06/2011): Fix problems with DNS resolution of VISHNU hosts.</para>
         </listitem>
         <listitem>
@@ -152,7 +166,10 @@
               <para>Torque API v3.2.6</para>
             </listitem>
             <listitem>
-              <para>OR IBM LoadLeveler API</para>
+              <para>IBM LoadLeveler API</para>
+            </listitem>
+            <listitem>
+              <para>OR SLURM API v2.2.1</para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -165,14 +182,14 @@
         <listitem>
           <para>VISHNU packages</para>
           <itemizedlist>
-            <listitem><para>libvishnu_1.2.0-1_i386.deb<ulink url="libvishnu_1.2.0-1_i386.deb">[download]</ulink></para></listitem>
-            <listitem><para>libvishnu-dev_1.2.0-1_i386.deb<ulink url="libvishnu-dev_1.2.0-1_i386.deb">[download]</ulink></para></listitem>
-            <listitem><para>vishnu-client_1.2.0-1_i386.deb<ulink url="vishnu-client_1.2.0-1_i386.deb">[download]</ulink></para></listitem>
-            <listitem><para>vishnu-doc_1.2.0-1_all.deb<ulink url="vishnu-doc_1.2.0-1_all.deb">[download]</ulink></para></listitem>
-            <listitem><para>vishnu-server-fms_1.2.0-1_i386.deb<ulink url="vishnu-server-fms_1.2.0-1_i386.deb">[download]</ulink></para></listitem>
-            <listitem><para>vishnu-server-ims_1.2.0-1_i386.deb<ulink url="vishnu-server-ims_1.2.0-1_i386.deb">[download]</ulink></para></listitem>
-            <listitem><para>vishnu-server-tms_1.2.0-1_i386.deb<ulink url="vishnu-server-tms_1.2.0-1_i386.deb">[download]</ulink></para></listitem>
-            <listitem><para>vishnu-server-ums_1.2.0-1_i386.deb<ulink url="vishnu-server-ums_1.2.0-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>libvishnu_1.2.3-1_i386.deb<ulink url="libvishnu_1.2.3-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>libvishnu-dev_1.2.3-1_i386.deb<ulink url="libvishnu-dev_1.2.3-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>vishnu-client_1.2.3-1_i386.deb<ulink url="vishnu-client_1.2.3-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>vishnu-doc_1.2.3-1_all.deb<ulink url="vishnu-doc_1.2.3-1_all.deb">[download]</ulink></para></listitem>
+            <listitem><para>vishnu-server-fms_1.2.3-1_i386.deb<ulink url="vishnu-server-fms_1.2.3-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>vishnu-server-ims_1.2.3-1_i386.deb<ulink url="vishnu-server-ims_1.2.3-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>vishnu-server-tms_1.2.3-1_i386.deb<ulink url="vishnu-server-tms_1.2.3-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>vishnu-server-ums_1.2.3-1_i386.deb<ulink url="vishnu-server-ums_1.2.3-1_i386.deb">[download]</ulink></para></listitem>
           </itemizedlist>
         </listitem>
         <listitem>
@@ -193,7 +210,7 @@
     <section>
       <title>Install from source</title>
       <para>VISHNU must be compiled with G++ (4.4.3 or greater) and CMake (2.8 or greater).</para>
-      <para>Source tarball: VISHNU_V1.2.1.tgz <ulink url="VISHNU_V1.2.1.tgz">[download]</ulink> (added on 28th June 2011)</para>
+      <para>Source tarball: VISHNU_V1.2.3.tgz <ulink url="VISHNU_V1.2.3.tgz">[download]</ulink> (added on 28th June 2011)</para>
     </section>
     <section>
       <title>Launch the VISHNU platform</title>
