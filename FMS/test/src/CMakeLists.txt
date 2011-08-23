@@ -53,21 +53,38 @@ configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/fmssed_testing.cfg.in
 
 include(FMSTestingMacros)
 fms_test_setup()
-fms_test(fms_automTest)
+fms_test(fms_automTest1)
+fms_test(fms_automTest2)
+fms_test(fms_automTest3)
+fms_test(fms_automTest4)
+fms_test(fms_automTest5)
+fms_test(fms_automTest6)
+fms_test(fms_automTest7)
+fms_test(fms_automTest8)
+fms_test(fms_automTest9)
+fms_test(fms_automTest10)
+fms_test(fms_automTest11)
+fms_test(fms_automTest12)
+fms_test(fms_automTest13)
+fms_test(fms_automTest14)
+fms_test(fms_automTest15)
+fms_test(fms_automTest16)
 
- add_executable(fms_stresser
+
+
+add_executable(fms_stresser
   fms_stress.cpp)
 
- target_link_libraries( fms_stresser
+target_link_libraries( fms_stresser
   ${DIET_CLIENT_LIB}
-   ${DIET_SERVER_LIB}
-   ${LIBPQ_LIB}
-   ${Boost_LIBRARIES}
-   emf4cpp-UMS_Data
-   emf4cpp-FMS_Data
-   database-vishnu
-     exception-vishnu
-     vishnu-ums-api
-     vishnu-fms-api)
+  ${DIET_SERVER_LIB}
+  ${LIBPQ_LIB}
+  ${Boost_LIBRARIES}
+  emf4cpp-UMS_Data
+  emf4cpp-FMS_Data
+  database-vishnu
+  exception-vishnu
+  vishnu-ums-api
+  vishnu-fms-api)
 
 add_subdirectory( sql )
