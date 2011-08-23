@@ -111,7 +111,13 @@
       <revdescription>
         <para>Prise en compte du gestionnaire de resources SLURM</para></revdescription>
       </revision>
-
+      <revision>
+      <revnumber>12</revnumber>
+      <date>23/08/2011</date>
+      <authorinitials>K.COULOMB</authorinitials>
+      <revdescription>
+        <para>Add link to websites on how to install postgresql/mysql databases. Remove useless text about upgrading mysql tables (because implemented when database already fixed). Add reference to VISHNU_API</para></revdescription>
+      </revision>
 
     </revhistory>
   </info>
@@ -202,6 +208,9 @@
         </listitem>
         <listitem>
           <para>[VISHNU_USERMANUAL] VISHNU User Manual : guide de l'utilisateur VISHNU.</para>
+        </listitem>
+        <listitem>
+          <para>[VISHNU_API] VISHNU API : API VISHNU contenant les signatures et la définition des objets.</para>
         </listitem>
       </itemizedlist>
     </section>
@@ -434,13 +443,14 @@
     <para>Les fichiers de configuration de la DB sont disponibles dans le répertoire core/database du package d'installation VISHNU. Les seules bases de données actuellement supportées sont PostgreSQL et MySQL. Les bases de type Oracle ne sont pas supportées. Lors de l'installation toutes les machines doivent avoir soit PostgreSQL, soit MySQL, mais pas certaines machines une base et d'autres une autre, cela ne fonctionnerait pas.</para>
     <section>
       <title>Utilisation d'une base de données PostGreSQL</title>
+      <para>Un guide pour installer une base PostGreSLQ peut être trouvé à cette addresse : <emphasis role="bold">http://beuss.developpez.com/tutoriels/postgres/install/</emphasis></para>
       <para>Pour une installation d'une nouvelle base de données, les scripts 'postgre_create.sql' et 'database_init.sql' doivent être utilisés par l'administrateur de la DB.</para>
       <para>Pour la mise à jour de la base de données lors d'un passage de la release VISHNU précédente à la nouvelle release VISHNU, les scripts 'postgre_update.sql' et 'database_update.sql' doivent être utilisés par l'administrateur de la DB. Le détail des numéros de release est indiqué dans les commentaires au début du script.</para>
     </section>
     <section>
       <title>Utilisation d'une base de données MySQL</title>
+      <para>Un guide pour installer une base MySQL peut être trouvé à cette adresse : <emphasis role="bold"> http://dev.mysql.com/doc/refman/5.0/fr/unix-post-installation.html</emphasis></para>
       <para>Pour une installation d'une nouvelle base de données, les scripts 'mysql_create.sql' et 'database_init.sql' doivent être utilisés par l'administrateur de la DB.</para>
-      <para>Pour la mise à jour de la base de données lors d'un passage de la release VISHNU précédente à la nouvelle release VISHNU, les scripts 'postgre_update.sql' et 'mysql_update.sql' doivent être utilisés par l'administrateur de la DB. Le détail des numéros de release est indiqué dans les commentaires au début du script.</para>
     </section>
   </chapter>
 
@@ -1117,6 +1127,7 @@
 	Le module UMS correspond à la gestion des utilisateurs et des machines de VISHNU. Il permet aussi de sauvegarder la configuration de VISHNU à chaud et de la restaurer si besoin est.
 	Dans toute la suite du chapitre, on supposera que l'utilisateur est déjà connecté avec un compte administrateur de VISHNU pour pouvoir réaliser ces manipulations. De plus, on présentera l'utilisation des commandes depuis le shell, mais cela reste valable depuis les API Python ou C++.
       </para>
+      <para>L'API est disponible dans le document [VISHNU_API]</para>
     </section>
     <section>
       <title>Gestion des utilisateurs (UMS)</title>
