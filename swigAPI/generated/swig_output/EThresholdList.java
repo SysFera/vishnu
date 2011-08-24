@@ -43,6 +43,11 @@ public class EThresholdList {
     VISHNUJNI.EThresholdList_insert_at(swigCPtr, this, _pos, Threshold.getCPtr(_obj), _obj);
   }
 
+  public Threshold at(long _index) {
+    long cPtr = VISHNUJNI.EThresholdList_at(swigCPtr, this, _index);
+    return (cPtr == 0) ? null : new Threshold(cPtr, false);
+  }
+
   public Threshold get(long _index) {
     long cPtr = VISHNUJNI.EThresholdList_get(swigCPtr, this, _index);
     return (cPtr == 0) ? null : new Threshold(cPtr, false);

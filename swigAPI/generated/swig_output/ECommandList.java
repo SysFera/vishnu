@@ -43,6 +43,11 @@ public class ECommandList {
     VISHNUJNI.ECommandList_insert_at(swigCPtr, this, _pos, Command.getCPtr(_obj), _obj);
   }
 
+  public Command at(long _index) {
+    long cPtr = VISHNUJNI.ECommandList_at(swigCPtr, this, _index);
+    return (cPtr == 0) ? null : new Command(cPtr, false);
+  }
+
   public Command get(long _index) {
     long cPtr = VISHNUJNI.ECommandList_get(swigCPtr, this, _index);
     return (cPtr == 0) ? null : new Command(cPtr, false);

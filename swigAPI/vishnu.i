@@ -7,6 +7,10 @@
  */
 
 %module VISHNU
+// fix compilation with GCC 4.6
+%{
+#include <cstddef>
+%}
 
  // Include for exception handling
 %include "exception.i"
@@ -23,10 +27,6 @@
 %include "std_string.i"
 %include "std_except.i"
 %include "std_vector.i"
-// fix compilation with GCC 4.6
-%{
-#include <cstddef>
-%}
 
 
 // Keep in separated files and before includes, all module need their own eobject in java

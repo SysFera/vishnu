@@ -43,6 +43,11 @@ public class EMachineList {
     VISHNUJNI.EMachineList_insert_at(swigCPtr, this, _pos, Machine.getCPtr(_obj), _obj);
   }
 
+  public Machine at(long _index) {
+    long cPtr = VISHNUJNI.EMachineList_at(swigCPtr, this, _index);
+    return (cPtr == 0) ? null : new Machine(cPtr, false);
+  }
+
   public Machine get(long _index) {
     long cPtr = VISHNUJNI.EMachineList_get(swigCPtr, this, _index);
     return (cPtr == 0) ? null : new Machine(cPtr, false);

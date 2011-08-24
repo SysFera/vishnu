@@ -43,6 +43,11 @@ public class EOptionList {
     VISHNUJNI.EOptionList_insert_at(swigCPtr, this, _pos, OptionValue.getCPtr(_obj), _obj);
   }
 
+  public OptionValue at(long _index) {
+    long cPtr = VISHNUJNI.EOptionList_at(swigCPtr, this, _index);
+    return (cPtr == 0) ? null : new OptionValue(cPtr, false);
+  }
+
   public OptionValue get(long _index) {
     long cPtr = VISHNUJNI.EOptionList_get(swigCPtr, this, _index);
     return (cPtr == 0) ? null : new OptionValue(cPtr, false);

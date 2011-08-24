@@ -43,6 +43,11 @@ public class EProcessesList {
     VISHNUJNI.EProcessesList_insert_at(swigCPtr, this, _pos, Process.getCPtr(_obj), _obj);
   }
 
+  public Process at(long _index) {
+    long cPtr = VISHNUJNI.EProcessesList_at(swigCPtr, this, _index);
+    return (cPtr == 0) ? null : new Process(cPtr, false);
+  }
+
   public Process get(long _index) {
     long cPtr = VISHNUJNI.EProcessesList_get(swigCPtr, this, _index);
     return (cPtr == 0) ? null : new Process(cPtr, false);

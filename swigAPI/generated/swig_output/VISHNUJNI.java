@@ -916,6 +916,7 @@ class VISHNUJNI {
   public final static native void EListPtr_reset__SWIG_1(long jarg1, EListPtr jarg1_, long jarg2);
   public final static native void ESessionList_insert_all(long jarg1, ESessionList jarg1_, long jarg2, ESessionList jarg2_);
   public final static native void ESessionList_insert_at(long jarg1, ESessionList jarg1_, long jarg2, long jarg3, Session jarg3_);
+  public final static native long ESessionList_at(long jarg1, ESessionList jarg1_, long jarg2);
   public final static native long ESessionList_get(long jarg1, ESessionList jarg1_, long jarg2);
   public final static native void ESessionList_push_back(long jarg1, ESessionList jarg1_, long jarg2, Session jarg2_);
   public final static native long ESessionList_size(long jarg1, ESessionList jarg1_);
@@ -923,6 +924,7 @@ class VISHNUJNI {
   public final static native void delete_ESessionList(long jarg1);
   public final static native void EUserList_insert_all(long jarg1, EUserList jarg1_, long jarg2, EUserList jarg2_);
   public final static native void EUserList_insert_at(long jarg1, EUserList jarg1_, long jarg2, long jarg3, User jarg3_);
+  public final static native long EUserList_at(long jarg1, EUserList jarg1_, long jarg2);
   public final static native long EUserList_get(long jarg1, EUserList jarg1_, long jarg2);
   public final static native void EUserList_push_back(long jarg1, EUserList jarg1_, long jarg2, User jarg2_);
   public final static native long EUserList_size(long jarg1, EUserList jarg1_);
@@ -930,6 +932,7 @@ class VISHNUJNI {
   public final static native void delete_EUserList(long jarg1);
   public final static native void EMachineList_insert_all(long jarg1, EMachineList jarg1_, long jarg2, EMachineList jarg2_);
   public final static native void EMachineList_insert_at(long jarg1, EMachineList jarg1_, long jarg2, long jarg3, Machine jarg3_);
+  public final static native long EMachineList_at(long jarg1, EMachineList jarg1_, long jarg2);
   public final static native long EMachineList_get(long jarg1, EMachineList jarg1_, long jarg2);
   public final static native void EMachineList_push_back(long jarg1, EMachineList jarg1_, long jarg2, Machine jarg2_);
   public final static native long EMachineList_size(long jarg1, EMachineList jarg1_);
@@ -937,6 +940,7 @@ class VISHNUJNI {
   public final static native void delete_EMachineList(long jarg1);
   public final static native void ELocalAccList_insert_all(long jarg1, ELocalAccList jarg1_, long jarg2, ELocalAccList jarg2_);
   public final static native void ELocalAccList_insert_at(long jarg1, ELocalAccList jarg1_, long jarg2, long jarg3, LocalAccount jarg3_);
+  public final static native long ELocalAccList_at(long jarg1, ELocalAccList jarg1_, long jarg2);
   public final static native long ELocalAccList_get(long jarg1, ELocalAccList jarg1_, long jarg2);
   public final static native void ELocalAccList_push_back(long jarg1, ELocalAccList jarg1_, long jarg2, LocalAccount jarg2_);
   public final static native long ELocalAccList_size(long jarg1, ELocalAccList jarg1_);
@@ -944,6 +948,7 @@ class VISHNUJNI {
   public final static native void delete_ELocalAccList(long jarg1);
   public final static native void ECommandList_insert_all(long jarg1, ECommandList jarg1_, long jarg2, ECommandList jarg2_);
   public final static native void ECommandList_insert_at(long jarg1, ECommandList jarg1_, long jarg2, long jarg3, Command jarg3_);
+  public final static native long ECommandList_at(long jarg1, ECommandList jarg1_, long jarg2);
   public final static native long ECommandList_get(long jarg1, ECommandList jarg1_, long jarg2);
   public final static native void ECommandList_push_back(long jarg1, ECommandList jarg1_, long jarg2, Command jarg2_);
   public final static native long ECommandList_size(long jarg1, ECommandList jarg1_);
@@ -951,6 +956,7 @@ class VISHNUJNI {
   public final static native void delete_ECommandList(long jarg1);
   public final static native void EOptionList_insert_all(long jarg1, EOptionList jarg1_, long jarg2, EOptionList jarg2_);
   public final static native void EOptionList_insert_at(long jarg1, EOptionList jarg1_, long jarg2, long jarg3, OptionValue jarg3_);
+  public final static native long EOptionList_at(long jarg1, EOptionList jarg1_, long jarg2);
   public final static native long EOptionList_get(long jarg1, EOptionList jarg1_, long jarg2);
   public final static native void EOptionList_push_back(long jarg1, EOptionList jarg1_, long jarg2, OptionValue jarg2_);
   public final static native long EOptionList_size(long jarg1, EOptionList jarg1_);
@@ -958,6 +964,7 @@ class VISHNUJNI {
   public final static native void delete_EOptionList(long jarg1);
   public final static native void EJobList_insert_all(long jarg1, EJobList jarg1_, long jarg2, EJobList jarg2_);
   public final static native void EJobList_insert_at(long jarg1, EJobList jarg1_, long jarg2, long jarg3, Job jarg3_);
+  public final static native long EJobList_at(long jarg1, EJobList jarg1_, long jarg2);
   public final static native long EJobList_get(long jarg1, EJobList jarg1_, long jarg2);
   public final static native void EJobList_push_back(long jarg1, EJobList jarg1_, long jarg2, Job jarg2_);
   public final static native long EJobList_size(long jarg1, EJobList jarg1_);
@@ -965,6 +972,7 @@ class VISHNUJNI {
   public final static native void delete_EJobList(long jarg1);
   public final static native void EProgressionList_insert_all(long jarg1, EProgressionList jarg1_, long jarg2, EProgressionList jarg2_);
   public final static native void EProgressionList_insert_at(long jarg1, EProgressionList jarg1_, long jarg2, long jarg3, Progression jarg3_);
+  public final static native long EProgressionList_at(long jarg1, EProgressionList jarg1_, long jarg2);
   public final static native long EProgressionList_get(long jarg1, EProgressionList jarg1_, long jarg2);
   public final static native void EProgressionList_push_back(long jarg1, EProgressionList jarg1_, long jarg2, Progression jarg2_);
   public final static native long EProgressionList_size(long jarg1, EProgressionList jarg1_);
@@ -972,6 +980,7 @@ class VISHNUJNI {
   public final static native void delete_EProgressionList(long jarg1);
   public final static native void EQueueList_insert_all(long jarg1, EQueueList jarg1_, long jarg2, EQueueList jarg2_);
   public final static native void EQueueList_insert_at(long jarg1, EQueueList jarg1_, long jarg2, long jarg3, Queue jarg3_);
+  public final static native long EQueueList_at(long jarg1, EQueueList jarg1_, long jarg2);
   public final static native long EQueueList_get(long jarg1, EQueueList jarg1_, long jarg2);
   public final static native void EQueueList_push_back(long jarg1, EQueueList jarg1_, long jarg2, Queue jarg2_);
   public final static native long EQueueList_size(long jarg1, EQueueList jarg1_);
@@ -979,6 +988,7 @@ class VISHNUJNI {
   public final static native void delete_EQueueList(long jarg1);
   public final static native void EJobResultList_insert_all(long jarg1, EJobResultList jarg1_, long jarg2, EJobResultList jarg2_);
   public final static native void EJobResultList_insert_at(long jarg1, EJobResultList jarg1_, long jarg2, long jarg3, JobResult jarg3_);
+  public final static native long EJobResultList_at(long jarg1, EJobResultList jarg1_, long jarg2);
   public final static native long EJobResultList_get(long jarg1, EJobResultList jarg1_, long jarg2);
   public final static native void EJobResultList_push_back(long jarg1, EJobResultList jarg1_, long jarg2, JobResult jarg2_);
   public final static native long EJobResultList_size(long jarg1, EJobResultList jarg1_);
@@ -986,6 +996,7 @@ class VISHNUJNI {
   public final static native void delete_EJobResultList(long jarg1);
   public final static native void EMetricList_insert_all(long jarg1, EMetricList jarg1_, long jarg2, EMetricList jarg2_);
   public final static native void EMetricList_insert_at(long jarg1, EMetricList jarg1_, long jarg2, long jarg3, Metric jarg3_);
+  public final static native long EMetricList_at(long jarg1, EMetricList jarg1_, long jarg2);
   public final static native long EMetricList_get(long jarg1, EMetricList jarg1_, long jarg2);
   public final static native void EMetricList_push_back(long jarg1, EMetricList jarg1_, long jarg2, Metric jarg2_);
   public final static native long EMetricList_size(long jarg1, EMetricList jarg1_);
@@ -993,6 +1004,7 @@ class VISHNUJNI {
   public final static native void delete_EMetricList(long jarg1);
   public final static native void EProcessesList_insert_all(long jarg1, EProcessesList jarg1_, long jarg2, EProcessesList jarg2_);
   public final static native void EProcessesList_insert_at(long jarg1, EProcessesList jarg1_, long jarg2, long jarg3, Process jarg3_);
+  public final static native long EProcessesList_at(long jarg1, EProcessesList jarg1_, long jarg2);
   public final static native long EProcessesList_get(long jarg1, EProcessesList jarg1_, long jarg2);
   public final static native void EProcessesList_push_back(long jarg1, EProcessesList jarg1_, long jarg2, Process jarg2_);
   public final static native long EProcessesList_size(long jarg1, EProcessesList jarg1_);
@@ -1000,6 +1012,7 @@ class VISHNUJNI {
   public final static native void delete_EProcessesList(long jarg1);
   public final static native void ESysInfoList_insert_all(long jarg1, ESysInfoList jarg1_, long jarg2, ESysInfoList jarg2_);
   public final static native void ESysInfoList_insert_at(long jarg1, ESysInfoList jarg1_, long jarg2, long jarg3, SystemInfo jarg3_);
+  public final static native long ESysInfoList_at(long jarg1, ESysInfoList jarg1_, long jarg2);
   public final static native long ESysInfoList_get(long jarg1, ESysInfoList jarg1_, long jarg2);
   public final static native void ESysInfoList_push_back(long jarg1, ESysInfoList jarg1_, long jarg2, SystemInfo jarg2_);
   public final static native long ESysInfoList_size(long jarg1, ESysInfoList jarg1_);
@@ -1007,6 +1020,7 @@ class VISHNUJNI {
   public final static native void delete_ESysInfoList(long jarg1);
   public final static native void EThresholdList_insert_all(long jarg1, EThresholdList jarg1_, long jarg2, EThresholdList jarg2_);
   public final static native void EThresholdList_insert_at(long jarg1, EThresholdList jarg1_, long jarg2, long jarg3, Threshold jarg3_);
+  public final static native long EThresholdList_at(long jarg1, EThresholdList jarg1_, long jarg2);
   public final static native long EThresholdList_get(long jarg1, EThresholdList jarg1_, long jarg2);
   public final static native void EThresholdList_push_back(long jarg1, EThresholdList jarg1_, long jarg2, Threshold jarg2_);
   public final static native long EThresholdList_size(long jarg1, EThresholdList jarg1_);
@@ -1014,6 +1028,7 @@ class VISHNUJNI {
   public final static native void delete_EThresholdList(long jarg1);
   public final static native void EFileTransferList_insert_all(long jarg1, EFileTransferList jarg1_, long jarg2, EFileTransferList jarg2_);
   public final static native void EFileTransferList_insert_at(long jarg1, EFileTransferList jarg1_, long jarg2, long jarg3, FileTransfer jarg3_);
+  public final static native long EFileTransferList_at(long jarg1, EFileTransferList jarg1_, long jarg2);
   public final static native long EFileTransferList_get(long jarg1, EFileTransferList jarg1_, long jarg2);
   public final static native void EFileTransferList_push_back(long jarg1, EFileTransferList jarg1_, long jarg2, FileTransfer jarg2_);
   public final static native long EFileTransferList_size(long jarg1, EFileTransferList jarg1_);
@@ -1021,6 +1036,7 @@ class VISHNUJNI {
   public final static native void delete_EFileTransferList(long jarg1);
   public final static native void EFileStatList_insert_all(long jarg1, EFileStatList jarg1_, long jarg2, EFileStatList jarg2_);
   public final static native void EFileStatList_insert_at(long jarg1, EFileStatList jarg1_, long jarg2, long jarg3, FileStat jarg3_);
+  public final static native long EFileStatList_at(long jarg1, EFileStatList jarg1_, long jarg2);
   public final static native long EFileStatList_get(long jarg1, EFileStatList jarg1_, long jarg2);
   public final static native void EFileStatList_push_back(long jarg1, EFileStatList jarg1_, long jarg2, FileStat jarg2_);
   public final static native long EFileStatList_size(long jarg1, EFileStatList jarg1_);
@@ -1058,10 +1074,10 @@ class VISHNUJNI {
   public final static native int configureDefaultOption(String jarg1, long jarg2, OptionValue jarg2_) throws InternalUMSException;
   public final static native int listSessions__SWIG_0(String jarg1, long jarg2, ListSessions jarg2_, long jarg3, ListSessionOptions jarg3_) throws InternalUMSException;
   public final static native int listSessions__SWIG_1(String jarg1, long jarg2, ListSessions jarg2_) throws InternalUMSException;
-  public final static native int listLocalAccount__SWIG_0(String jarg1, long jarg2, ListLocalAccounts jarg2_, long jarg3, ListLocalAccOptions jarg3_) throws InternalUMSException;
-  public final static native int listLocalAccount__SWIG_1(String jarg1, long jarg2, ListLocalAccounts jarg2_) throws InternalUMSException;
-  public final static native int listMachine__SWIG_0(String jarg1, long jarg2, ListMachines jarg2_, long jarg3, ListMachineOptions jarg3_) throws InternalUMSException;
-  public final static native int listMachine__SWIG_1(String jarg1, long jarg2, ListMachines jarg2_) throws InternalUMSException;
+  public final static native int listLocalAccounts__SWIG_0(String jarg1, long jarg2, ListLocalAccounts jarg2_, long jarg3, ListLocalAccOptions jarg3_) throws InternalUMSException;
+  public final static native int listLocalAccounts__SWIG_1(String jarg1, long jarg2, ListLocalAccounts jarg2_) throws InternalUMSException;
+  public final static native int listMachines__SWIG_0(String jarg1, long jarg2, ListMachines jarg2_, long jarg3, ListMachineOptions jarg3_) throws InternalUMSException;
+  public final static native int listMachines__SWIG_1(String jarg1, long jarg2, ListMachines jarg2_) throws InternalUMSException;
   public final static native int listHistoryCmd__SWIG_0(String jarg1, long jarg2, ListCommands jarg2_, long jarg3, ListCmdOptions jarg3_) throws InternalUMSException;
   public final static native int listHistoryCmd__SWIG_1(String jarg1, long jarg2, ListCommands jarg2_) throws InternalUMSException;
   public final static native int listOptions__SWIG_0(String jarg1, long jarg2, ListOptionsValues jarg2_, long jarg3, ListOptOptions jarg3_) throws InternalUMSException;
@@ -1123,7 +1139,7 @@ class VISHNUJNI {
   public final static native int removeDir(String jarg1, String jarg2) throws InternalFMSException;
   public final static native int tailOfFile__SWIG_0(String jarg1, String jarg2, java.lang.String[] jarg3, long jarg4, TailOfFileOptions jarg4_) throws InternalFMSException;
   public final static native int tailOfFile__SWIG_1(String jarg1, String jarg2, java.lang.String[] jarg3) throws InternalFMSException;
-  public final static native int getFilesInfo(String jarg1, String jarg2, long jarg3, FileStat jarg3_) throws InternalFMSException;
+  public final static native int getFileInfo(String jarg1, String jarg2, long jarg3, FileStat jarg3_) throws InternalFMSException;
   public final static native int stopFileTransfer__SWIG_0(String jarg1, long jarg2, StopTransferOptions jarg2_) throws InternalFMSException;
   public final static native int stopFileTransfer__SWIG_1(String jarg1) throws InternalFMSException;
   public final static native int listFileTransfers__SWIG_0(String jarg1, long jarg2, FileTransferList jarg2_, long jarg3, LsTransferOptions jarg3_) throws InternalFMSException;

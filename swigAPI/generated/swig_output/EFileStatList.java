@@ -43,6 +43,11 @@ public class EFileStatList {
     VISHNUJNI.EFileStatList_insert_at(swigCPtr, this, _pos, FileStat.getCPtr(_obj), _obj);
   }
 
+  public FileStat at(long _index) {
+    long cPtr = VISHNUJNI.EFileStatList_at(swigCPtr, this, _index);
+    return (cPtr == 0) ? null : new FileStat(cPtr, false);
+  }
+
   public FileStat get(long _index) {
     long cPtr = VISHNUJNI.EFileStatList_get(swigCPtr, this, _index);
     return (cPtr == 0) ? null : new FileStat(cPtr, false);
