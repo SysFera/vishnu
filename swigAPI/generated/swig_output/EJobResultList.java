@@ -43,6 +43,11 @@ public class EJobResultList {
     VISHNUJNI.EJobResultList_insert_at(swigCPtr, this, _pos, JobResult.getCPtr(_obj), _obj);
   }
 
+  public JobResult at(long _index) {
+    long cPtr = VISHNUJNI.EJobResultList_at(swigCPtr, this, _index);
+    return (cPtr == 0) ? null : new JobResult(cPtr, false);
+  }
+
   public JobResult get(long _index) {
     long cPtr = VISHNUJNI.EJobResultList_get(swigCPtr, this, _index);
     return (cPtr == 0) ? null : new JobResult(cPtr, false);

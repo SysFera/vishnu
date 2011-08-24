@@ -43,6 +43,11 @@ public class ELocalAccList {
     VISHNUJNI.ELocalAccList_insert_at(swigCPtr, this, _pos, LocalAccount.getCPtr(_obj), _obj);
   }
 
+  public LocalAccount at(long _index) {
+    long cPtr = VISHNUJNI.ELocalAccList_at(swigCPtr, this, _index);
+    return (cPtr == 0) ? null : new LocalAccount(cPtr, false);
+  }
+
   public LocalAccount get(long _index) {
     long cPtr = VISHNUJNI.ELocalAccList_get(swigCPtr, this, _index);
     return (cPtr == 0) ? null : new LocalAccount(cPtr, false);

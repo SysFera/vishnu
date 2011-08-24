@@ -228,6 +228,9 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 
 
 
+#include <cstddef>
+
+
 SWIGINTERN void SWIG_JavaException(JNIEnv *jenv, int code, const char *msg) {
   SWIG_JavaExceptionCodes exception_code = SWIG_JavaUnknownError;
   switch(code) {
@@ -14110,6 +14113,23 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ES
 }
 
 
+SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ESessionList_1at(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  jlong jresult = 0 ;
+  ecorecpp::mapping::EList< ::UMS_Data::Session > *arg1 = (ecorecpp::mapping::EList< ::UMS_Data::Session > *) 0 ;
+  size_t arg2 ;
+  ::UMS_Data::Session *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ecorecpp::mapping::EList< ::UMS_Data::Session > **)&jarg1; 
+  arg2 = (size_t)jarg2; 
+  result = (::UMS_Data::Session *)((ecorecpp::mapping::EList< ::UMS_Data::Session > const *)arg1)->at(arg2);
+  *(::UMS_Data::Session **)&jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ESessionList_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   jlong jresult = 0 ;
   ecorecpp::mapping::EList< ::UMS_Data::Session > *arg1 = (ecorecpp::mapping::EList< ::UMS_Data::Session > *) 0 ;
@@ -14208,6 +14228,23 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EU
   arg2 = (size_t)jarg2; 
   arg3 = *(UMS_Data::User **)&jarg3; 
   (arg1)->insert_at(arg2,arg3);
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EUserList_1at(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  jlong jresult = 0 ;
+  ecorecpp::mapping::EList< ::UMS_Data::User > *arg1 = (ecorecpp::mapping::EList< ::UMS_Data::User > *) 0 ;
+  size_t arg2 ;
+  ::UMS_Data::User *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ecorecpp::mapping::EList< ::UMS_Data::User > **)&jarg1; 
+  arg2 = (size_t)jarg2; 
+  result = (::UMS_Data::User *)((ecorecpp::mapping::EList< ::UMS_Data::User > const *)arg1)->at(arg2);
+  *(::UMS_Data::User **)&jresult = result; 
+  return jresult;
 }
 
 
@@ -14312,6 +14349,23 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EM
 }
 
 
+SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EMachineList_1at(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  jlong jresult = 0 ;
+  ecorecpp::mapping::EList< ::UMS_Data::Machine > *arg1 = (ecorecpp::mapping::EList< ::UMS_Data::Machine > *) 0 ;
+  size_t arg2 ;
+  ::UMS_Data::Machine *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ecorecpp::mapping::EList< ::UMS_Data::Machine > **)&jarg1; 
+  arg2 = (size_t)jarg2; 
+  result = (::UMS_Data::Machine *)((ecorecpp::mapping::EList< ::UMS_Data::Machine > const *)arg1)->at(arg2);
+  *(::UMS_Data::Machine **)&jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EMachineList_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   jlong jresult = 0 ;
   ecorecpp::mapping::EList< ::UMS_Data::Machine > *arg1 = (ecorecpp::mapping::EList< ::UMS_Data::Machine > *) 0 ;
@@ -14410,6 +14464,23 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EL
   arg2 = (size_t)jarg2; 
   arg3 = *(UMS_Data::LocalAccount **)&jarg3; 
   (arg1)->insert_at(arg2,arg3);
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ELocalAccList_1at(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  jlong jresult = 0 ;
+  ecorecpp::mapping::EList< ::UMS_Data::LocalAccount > *arg1 = (ecorecpp::mapping::EList< ::UMS_Data::LocalAccount > *) 0 ;
+  size_t arg2 ;
+  ::UMS_Data::LocalAccount *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ecorecpp::mapping::EList< ::UMS_Data::LocalAccount > **)&jarg1; 
+  arg2 = (size_t)jarg2; 
+  result = (::UMS_Data::LocalAccount *)((ecorecpp::mapping::EList< ::UMS_Data::LocalAccount > const *)arg1)->at(arg2);
+  *(::UMS_Data::LocalAccount **)&jresult = result; 
+  return jresult;
 }
 
 
@@ -14514,6 +14585,23 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EC
 }
 
 
+SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ECommandList_1at(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  jlong jresult = 0 ;
+  ecorecpp::mapping::EList< ::UMS_Data::Command > *arg1 = (ecorecpp::mapping::EList< ::UMS_Data::Command > *) 0 ;
+  size_t arg2 ;
+  ::UMS_Data::Command *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ecorecpp::mapping::EList< ::UMS_Data::Command > **)&jarg1; 
+  arg2 = (size_t)jarg2; 
+  result = (::UMS_Data::Command *)((ecorecpp::mapping::EList< ::UMS_Data::Command > const *)arg1)->at(arg2);
+  *(::UMS_Data::Command **)&jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ECommandList_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   jlong jresult = 0 ;
   ecorecpp::mapping::EList< ::UMS_Data::Command > *arg1 = (ecorecpp::mapping::EList< ::UMS_Data::Command > *) 0 ;
@@ -14612,6 +14700,23 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EO
   arg2 = (size_t)jarg2; 
   arg3 = *(UMS_Data::OptionValue **)&jarg3; 
   (arg1)->insert_at(arg2,arg3);
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EOptionList_1at(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  jlong jresult = 0 ;
+  ecorecpp::mapping::EList< ::UMS_Data::OptionValue > *arg1 = (ecorecpp::mapping::EList< ::UMS_Data::OptionValue > *) 0 ;
+  size_t arg2 ;
+  ::UMS_Data::OptionValue *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ecorecpp::mapping::EList< ::UMS_Data::OptionValue > **)&jarg1; 
+  arg2 = (size_t)jarg2; 
+  result = (::UMS_Data::OptionValue *)((ecorecpp::mapping::EList< ::UMS_Data::OptionValue > const *)arg1)->at(arg2);
+  *(::UMS_Data::OptionValue **)&jresult = result; 
+  return jresult;
 }
 
 
@@ -14716,6 +14821,23 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EJ
 }
 
 
+SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EJobList_1at(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  jlong jresult = 0 ;
+  ecorecpp::mapping::EList< ::TMS_Data::Job > *arg1 = (ecorecpp::mapping::EList< ::TMS_Data::Job > *) 0 ;
+  size_t arg2 ;
+  ::TMS_Data::Job *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ecorecpp::mapping::EList< ::TMS_Data::Job > **)&jarg1; 
+  arg2 = (size_t)jarg2; 
+  result = (::TMS_Data::Job *)((ecorecpp::mapping::EList< ::TMS_Data::Job > const *)arg1)->at(arg2);
+  *(::TMS_Data::Job **)&jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EJobList_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   jlong jresult = 0 ;
   ecorecpp::mapping::EList< ::TMS_Data::Job > *arg1 = (ecorecpp::mapping::EList< ::TMS_Data::Job > *) 0 ;
@@ -14814,6 +14936,23 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EP
   arg2 = (size_t)jarg2; 
   arg3 = *(TMS_Data::Progression **)&jarg3; 
   (arg1)->insert_at(arg2,arg3);
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EProgressionList_1at(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  jlong jresult = 0 ;
+  ecorecpp::mapping::EList< ::TMS_Data::Progression > *arg1 = (ecorecpp::mapping::EList< ::TMS_Data::Progression > *) 0 ;
+  size_t arg2 ;
+  ::TMS_Data::Progression *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ecorecpp::mapping::EList< ::TMS_Data::Progression > **)&jarg1; 
+  arg2 = (size_t)jarg2; 
+  result = (::TMS_Data::Progression *)((ecorecpp::mapping::EList< ::TMS_Data::Progression > const *)arg1)->at(arg2);
+  *(::TMS_Data::Progression **)&jresult = result; 
+  return jresult;
 }
 
 
@@ -14918,6 +15057,23 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EQ
 }
 
 
+SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EQueueList_1at(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  jlong jresult = 0 ;
+  ecorecpp::mapping::EList< ::TMS_Data::Queue > *arg1 = (ecorecpp::mapping::EList< ::TMS_Data::Queue > *) 0 ;
+  size_t arg2 ;
+  ::TMS_Data::Queue *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ecorecpp::mapping::EList< ::TMS_Data::Queue > **)&jarg1; 
+  arg2 = (size_t)jarg2; 
+  result = (::TMS_Data::Queue *)((ecorecpp::mapping::EList< ::TMS_Data::Queue > const *)arg1)->at(arg2);
+  *(::TMS_Data::Queue **)&jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EQueueList_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   jlong jresult = 0 ;
   ecorecpp::mapping::EList< ::TMS_Data::Queue > *arg1 = (ecorecpp::mapping::EList< ::TMS_Data::Queue > *) 0 ;
@@ -15016,6 +15172,23 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EJ
   arg2 = (size_t)jarg2; 
   arg3 = *(TMS_Data::JobResult **)&jarg3; 
   (arg1)->insert_at(arg2,arg3);
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EJobResultList_1at(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  jlong jresult = 0 ;
+  ecorecpp::mapping::EList< ::TMS_Data::JobResult > *arg1 = (ecorecpp::mapping::EList< ::TMS_Data::JobResult > *) 0 ;
+  size_t arg2 ;
+  ::TMS_Data::JobResult *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ecorecpp::mapping::EList< ::TMS_Data::JobResult > **)&jarg1; 
+  arg2 = (size_t)jarg2; 
+  result = (::TMS_Data::JobResult *)((ecorecpp::mapping::EList< ::TMS_Data::JobResult > const *)arg1)->at(arg2);
+  *(::TMS_Data::JobResult **)&jresult = result; 
+  return jresult;
 }
 
 
@@ -15120,6 +15293,23 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EM
 }
 
 
+SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EMetricList_1at(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  jlong jresult = 0 ;
+  ecorecpp::mapping::EList< ::IMS_Data::Metric > *arg1 = (ecorecpp::mapping::EList< ::IMS_Data::Metric > *) 0 ;
+  size_t arg2 ;
+  ::IMS_Data::Metric *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ecorecpp::mapping::EList< ::IMS_Data::Metric > **)&jarg1; 
+  arg2 = (size_t)jarg2; 
+  result = (::IMS_Data::Metric *)((ecorecpp::mapping::EList< ::IMS_Data::Metric > const *)arg1)->at(arg2);
+  *(::IMS_Data::Metric **)&jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EMetricList_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   jlong jresult = 0 ;
   ecorecpp::mapping::EList< ::IMS_Data::Metric > *arg1 = (ecorecpp::mapping::EList< ::IMS_Data::Metric > *) 0 ;
@@ -15218,6 +15408,23 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EP
   arg2 = (size_t)jarg2; 
   arg3 = *(IMS_Data::Process **)&jarg3; 
   (arg1)->insert_at(arg2,arg3);
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EProcessesList_1at(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  jlong jresult = 0 ;
+  ecorecpp::mapping::EList< ::IMS_Data::Process > *arg1 = (ecorecpp::mapping::EList< ::IMS_Data::Process > *) 0 ;
+  size_t arg2 ;
+  ::IMS_Data::Process *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ecorecpp::mapping::EList< ::IMS_Data::Process > **)&jarg1; 
+  arg2 = (size_t)jarg2; 
+  result = (::IMS_Data::Process *)((ecorecpp::mapping::EList< ::IMS_Data::Process > const *)arg1)->at(arg2);
+  *(::IMS_Data::Process **)&jresult = result; 
+  return jresult;
 }
 
 
@@ -15322,6 +15529,23 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ES
 }
 
 
+SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ESysInfoList_1at(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  jlong jresult = 0 ;
+  ecorecpp::mapping::EList< ::IMS_Data::SystemInfo > *arg1 = (ecorecpp::mapping::EList< ::IMS_Data::SystemInfo > *) 0 ;
+  size_t arg2 ;
+  ::IMS_Data::SystemInfo *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ecorecpp::mapping::EList< ::IMS_Data::SystemInfo > **)&jarg1; 
+  arg2 = (size_t)jarg2; 
+  result = (::IMS_Data::SystemInfo *)((ecorecpp::mapping::EList< ::IMS_Data::SystemInfo > const *)arg1)->at(arg2);
+  *(::IMS_Data::SystemInfo **)&jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ESysInfoList_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   jlong jresult = 0 ;
   ecorecpp::mapping::EList< ::IMS_Data::SystemInfo > *arg1 = (ecorecpp::mapping::EList< ::IMS_Data::SystemInfo > *) 0 ;
@@ -15420,6 +15644,23 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ET
   arg2 = (size_t)jarg2; 
   arg3 = *(IMS_Data::Threshold **)&jarg3; 
   (arg1)->insert_at(arg2,arg3);
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EThresholdList_1at(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  jlong jresult = 0 ;
+  ecorecpp::mapping::EList< ::IMS_Data::Threshold > *arg1 = (ecorecpp::mapping::EList< ::IMS_Data::Threshold > *) 0 ;
+  size_t arg2 ;
+  ::IMS_Data::Threshold *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ecorecpp::mapping::EList< ::IMS_Data::Threshold > **)&jarg1; 
+  arg2 = (size_t)jarg2; 
+  result = (::IMS_Data::Threshold *)((ecorecpp::mapping::EList< ::IMS_Data::Threshold > const *)arg1)->at(arg2);
+  *(::IMS_Data::Threshold **)&jresult = result; 
+  return jresult;
 }
 
 
@@ -15524,6 +15765,23 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EF
 }
 
 
+SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EFileTransferList_1at(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  jlong jresult = 0 ;
+  ecorecpp::mapping::EList< ::FMS_Data::FileTransfer > *arg1 = (ecorecpp::mapping::EList< ::FMS_Data::FileTransfer > *) 0 ;
+  size_t arg2 ;
+  ::FMS_Data::FileTransfer *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ecorecpp::mapping::EList< ::FMS_Data::FileTransfer > **)&jarg1; 
+  arg2 = (size_t)jarg2; 
+  result = (::FMS_Data::FileTransfer *)((ecorecpp::mapping::EList< ::FMS_Data::FileTransfer > const *)arg1)->at(arg2);
+  *(::FMS_Data::FileTransfer **)&jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EFileTransferList_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   jlong jresult = 0 ;
   ecorecpp::mapping::EList< ::FMS_Data::FileTransfer > *arg1 = (ecorecpp::mapping::EList< ::FMS_Data::FileTransfer > *) 0 ;
@@ -15622,6 +15880,23 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EF
   arg2 = (size_t)jarg2; 
   arg3 = *(FMS_Data::FileStat **)&jarg3; 
   (arg1)->insert_at(arg2,arg3);
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EFileStatList_1at(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  jlong jresult = 0 ;
+  ecorecpp::mapping::EList< ::FMS_Data::FileStat > *arg1 = (ecorecpp::mapping::EList< ::FMS_Data::FileStat > *) 0 ;
+  size_t arg2 ;
+  ::FMS_Data::FileStat *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ecorecpp::mapping::EList< ::FMS_Data::FileStat > **)&jarg1; 
+  arg2 = (size_t)jarg2; 
+  result = (::FMS_Data::FileStat *)((ecorecpp::mapping::EList< ::FMS_Data::FileStat > const *)arg1)->at(arg2);
+  *(::FMS_Data::FileStat **)&jresult = result; 
+  return jresult;
 }
 
 
@@ -17130,7 +17405,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_li
 }
 
 
-SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_listLocalAccount_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_) {
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_listLocalAccounts_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_) {
   jint jresult = 0 ;
   std::string *arg1 = 0 ;
   UMS_Data::ListLocalAccounts *arg2 = 0 ;
@@ -17162,7 +17437,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_li
   } 
   {
     try {
-      result = (int)vishnu::listLocalAccount((std::string const &)*arg1,*arg2,(UMS_Data::ListLocalAccOptions const &)*arg3);
+      result = (int)vishnu::listLocalAccounts((std::string const &)*arg1,*arg2,(UMS_Data::ListLocalAccOptions const &)*arg3);
     }
     catch(UserException &_e) {
       {
@@ -17190,7 +17465,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_li
 }
 
 
-SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_listLocalAccount_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_) {
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_listLocalAccounts_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_) {
   jint jresult = 0 ;
   std::string *arg1 = 0 ;
   UMS_Data::ListLocalAccounts *arg2 = 0 ;
@@ -17215,7 +17490,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_li
   } 
   {
     try {
-      result = (int)vishnu::listLocalAccount((std::string const &)*arg1,*arg2);
+      result = (int)vishnu::listLocalAccounts((std::string const &)*arg1,*arg2);
     }
     catch(UserException &_e) {
       {
@@ -17243,7 +17518,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_li
 }
 
 
-SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_listMachine_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_) {
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_listMachines_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_) {
   jint jresult = 0 ;
   std::string *arg1 = 0 ;
   UMS_Data::ListMachines *arg2 = 0 ;
@@ -17275,7 +17550,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_li
   } 
   {
     try {
-      result = (int)vishnu::listMachine((std::string const &)*arg1,*arg2,(UMS_Data::ListMachineOptions const &)*arg3);
+      result = (int)vishnu::listMachines((std::string const &)*arg1,*arg2,(UMS_Data::ListMachineOptions const &)*arg3);
     }
     catch(UserException &_e) {
       {
@@ -17303,7 +17578,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_li
 }
 
 
-SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_listMachine_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_) {
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_listMachines_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_) {
   jint jresult = 0 ;
   std::string *arg1 = 0 ;
   UMS_Data::ListMachines *arg2 = 0 ;
@@ -17328,7 +17603,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_li
   } 
   {
     try {
-      result = (int)vishnu::listMachine((std::string const &)*arg1,*arg2);
+      result = (int)vishnu::listMachines((std::string const &)*arg1,*arg2);
     }
     catch(UserException &_e) {
       {
@@ -22353,7 +22628,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ta
 }
 
 
-SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_getFilesInfo(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_) {
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_getFileInfo(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_) {
   jint jresult = 0 ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -22388,7 +22663,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ge
   } 
   {
     try {
-      result = (int)vishnu::getFilesInfo((std::string const &)*arg1,(std::string const &)*arg2,*arg3);
+      result = (int)vishnu::getFileInfo((std::string const &)*arg1,(std::string const &)*arg2,*arg3);
     }
     catch(UMSVishnuException &_e) {
       {

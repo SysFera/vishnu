@@ -43,6 +43,11 @@ public class ESysInfoList {
     VISHNUJNI.ESysInfoList_insert_at(swigCPtr, this, _pos, SystemInfo.getCPtr(_obj), _obj);
   }
 
+  public SystemInfo at(long _index) {
+    long cPtr = VISHNUJNI.ESysInfoList_at(swigCPtr, this, _index);
+    return (cPtr == 0) ? null : new SystemInfo(cPtr, false);
+  }
+
   public SystemInfo get(long _index) {
     long cPtr = VISHNUJNI.ESysInfoList_get(swigCPtr, this, _index);
     return (cPtr == 0) ? null : new SystemInfo(cPtr, false);

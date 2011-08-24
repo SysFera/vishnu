@@ -93,20 +93,20 @@ public class VISHNU {
     return VISHNUJNI.listSessions__SWIG_1(sessionKey, ListSessions.getCPtr(listSession), listSession);
   }
 
-  public static int listLocalAccount(String sessionKey, ListLocalAccounts listLocalAcc, ListLocalAccOptions options) throws InternalUMSException {
-    return VISHNUJNI.listLocalAccount__SWIG_0(sessionKey, ListLocalAccounts.getCPtr(listLocalAcc), listLocalAcc, ListLocalAccOptions.getCPtr(options), options);
+  public static int listLocalAccounts(String sessionKey, ListLocalAccounts listLocalAcc, ListLocalAccOptions options) throws InternalUMSException {
+    return VISHNUJNI.listLocalAccounts__SWIG_0(sessionKey, ListLocalAccounts.getCPtr(listLocalAcc), listLocalAcc, ListLocalAccOptions.getCPtr(options), options);
   }
 
-  public static int listLocalAccount(String sessionKey, ListLocalAccounts listLocalAcc) throws InternalUMSException {
-    return VISHNUJNI.listLocalAccount__SWIG_1(sessionKey, ListLocalAccounts.getCPtr(listLocalAcc), listLocalAcc);
+  public static int listLocalAccounts(String sessionKey, ListLocalAccounts listLocalAcc) throws InternalUMSException {
+    return VISHNUJNI.listLocalAccounts__SWIG_1(sessionKey, ListLocalAccounts.getCPtr(listLocalAcc), listLocalAcc);
   }
 
-  public static int listMachine(String sessionKey, ListMachines listMachine, ListMachineOptions options) throws InternalUMSException {
-    return VISHNUJNI.listMachine__SWIG_0(sessionKey, ListMachines.getCPtr(listMachine), listMachine, ListMachineOptions.getCPtr(options), options);
+  public static int listMachines(String sessionKey, ListMachines listMachine, ListMachineOptions options) throws InternalUMSException {
+    return VISHNUJNI.listMachines__SWIG_0(sessionKey, ListMachines.getCPtr(listMachine), listMachine, ListMachineOptions.getCPtr(options), options);
   }
 
-  public static int listMachine(String sessionKey, ListMachines listMachine) throws InternalUMSException {
-    return VISHNUJNI.listMachine__SWIG_1(sessionKey, ListMachines.getCPtr(listMachine), listMachine);
+  public static int listMachines(String sessionKey, ListMachines listMachine) throws InternalUMSException {
+    return VISHNUJNI.listMachines__SWIG_1(sessionKey, ListMachines.getCPtr(listMachine), listMachine);
   }
 
   public static int listHistoryCmd(String sessionKey, ListCommands listCommands, ListCmdOptions options) throws InternalUMSException {
@@ -353,8 +353,8 @@ public class VISHNU {
     return VISHNUJNI.tailOfFile__SWIG_1(sessionKey, path, contentOfFile);
   }
 
-  public static int getFilesInfo(String sessionKey, String path, FileStat filesInfo) throws InternalFMSException {
-    return VISHNUJNI.getFilesInfo(sessionKey, path, FileStat.getCPtr(filesInfo), filesInfo);
+  public static int getFileInfo(String sessionKey, String path, FileStat filesInfo) throws InternalFMSException {
+    return VISHNUJNI.getFileInfo(sessionKey, path, FileStat.getCPtr(filesInfo), filesInfo);
   }
 
   public static int stopFileTransfer(String sessionKey, StopTransferOptions options) throws InternalFMSException {

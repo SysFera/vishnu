@@ -43,6 +43,11 @@ public class EJobList {
     VISHNUJNI.EJobList_insert_at(swigCPtr, this, _pos, Job.getCPtr(_obj), _obj);
   }
 
+  public Job at(long _index) {
+    long cPtr = VISHNUJNI.EJobList_at(swigCPtr, this, _index);
+    return (cPtr == 0) ? null : new Job(cPtr, false);
+  }
+
   public Job get(long _index) {
     long cPtr = VISHNUJNI.EJobList_get(swigCPtr, this, _index);
     return (cPtr == 0) ? null : new Job(cPtr, false);

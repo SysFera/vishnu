@@ -43,6 +43,11 @@ public class ESessionList {
     VISHNUJNI.ESessionList_insert_at(swigCPtr, this, _pos, Session.getCPtr(_obj), _obj);
   }
 
+  public Session at(long _index) {
+    long cPtr = VISHNUJNI.ESessionList_at(swigCPtr, this, _index);
+    return (cPtr == 0) ? null : new Session(cPtr, false);
+  }
+
   public Session get(long _index) {
     long cPtr = VISHNUJNI.ESessionList_get(swigCPtr, this, _index);
     return (cPtr == 0) ? null : new Session(cPtr, false);
