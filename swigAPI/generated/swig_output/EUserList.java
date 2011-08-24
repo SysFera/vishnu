@@ -43,6 +43,11 @@ public class EUserList {
     VISHNUJNI.EUserList_insert_at(swigCPtr, this, _pos, User.getCPtr(_obj), _obj);
   }
 
+  public User at(long _index) {
+    long cPtr = VISHNUJNI.EUserList_at(swigCPtr, this, _index);
+    return (cPtr == 0) ? null : new User(cPtr, false);
+  }
+
   public User get(long _index) {
     long cPtr = VISHNUJNI.EUserList_get(swigCPtr, this, _index);
     return (cPtr == 0) ? null : new User(cPtr, false);
