@@ -94,8 +94,6 @@ macro( fms_test NAME )
     string(REGEX REPLACE "BOOST_AUTO_TEST_CASE\\(([a-zA-Z0-9_]*)\\)" "\\1;"
       tests ${res_int})
 
-    message(WARNING "=${tests}=")
-
     foreach(loop_var ${tests})
       add_test("${testsuite}${loop_var}" "${BIN_DIR}/${NAME}"
         "--run_test=${testsuite}${loop_var}")
