@@ -110,7 +110,8 @@ macro( ims_test NAME )
     endforeach()
 
     # generate XML reports
-    add_custom_target( ${NAME}-xml
+    if(ENABLE_REPORTS)
+      add_custom_target( ${NAME}-xml
         COMMAND ${CMAKE_COMMAND}
         -DTEST_PROG=${NAME}
         -DBIN_PATH=${BIN_DIR}
@@ -119,6 +120,7 @@ macro( ims_test NAME )
         -P ${PROJECT_SOURCE_DIR}/Cmake/runtest.cmake )
       add_dependencies( ims_test-xml ${NAME}-xml )
     endif()
+  endif()
 endmacro()
 
 #############################################################################
