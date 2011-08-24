@@ -43,6 +43,11 @@ public class EFileTransferList {
     VISHNUJNI.EFileTransferList_insert_at(swigCPtr, this, _pos, FileTransfer.getCPtr(_obj), _obj);
   }
 
+  public FileTransfer at(long _index) {
+    long cPtr = VISHNUJNI.EFileTransferList_at(swigCPtr, this, _index);
+    return (cPtr == 0) ? null : new FileTransfer(cPtr, false);
+  }
+
   public FileTransfer get(long _index) {
     long cPtr = VISHNUJNI.EFileTransferList_get(swigCPtr, this, _index);
     return (cPtr == 0) ? null : new FileTransfer(cPtr, false);

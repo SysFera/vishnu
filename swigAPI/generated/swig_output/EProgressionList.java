@@ -43,6 +43,11 @@ public class EProgressionList {
     VISHNUJNI.EProgressionList_insert_at(swigCPtr, this, _pos, Progression.getCPtr(_obj), _obj);
   }
 
+  public Progression at(long _index) {
+    long cPtr = VISHNUJNI.EProgressionList_at(swigCPtr, this, _index);
+    return (cPtr == 0) ? null : new Progression(cPtr, false);
+  }
+
   public Progression get(long _index) {
     long cPtr = VISHNUJNI.EProgressionList_get(swigCPtr, this, _index);
     return (cPtr == 0) ? null : new Progression(cPtr, false);

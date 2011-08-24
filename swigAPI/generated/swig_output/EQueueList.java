@@ -43,6 +43,11 @@ public class EQueueList {
     VISHNUJNI.EQueueList_insert_at(swigCPtr, this, _pos, Queue.getCPtr(_obj), _obj);
   }
 
+  public Queue at(long _index) {
+    long cPtr = VISHNUJNI.EQueueList_at(swigCPtr, this, _index);
+    return (cPtr == 0) ? null : new Queue(cPtr, false);
+  }
+
   public Queue get(long _index) {
     long cPtr = VISHNUJNI.EQueueList_get(swigCPtr, this, _index);
     return (cPtr == 0) ? null : new Queue(cPtr, false);

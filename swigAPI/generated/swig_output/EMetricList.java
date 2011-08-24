@@ -43,6 +43,11 @@ public class EMetricList {
     VISHNUJNI.EMetricList_insert_at(swigCPtr, this, _pos, Metric.getCPtr(_obj), _obj);
   }
 
+  public Metric at(long _index) {
+    long cPtr = VISHNUJNI.EMetricList_at(swigCPtr, this, _index);
+    return (cPtr == 0) ? null : new Metric(cPtr, false);
+  }
+
   public Metric get(long _index) {
     long cPtr = VISHNUJNI.EMetricList_get(swigCPtr, this, _index);
     return (cPtr == 0) ? null : new Metric(cPtr, false);

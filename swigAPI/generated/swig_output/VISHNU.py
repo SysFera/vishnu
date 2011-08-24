@@ -1886,6 +1886,7 @@ class ESessionList(_object):
     __repr__ = _swig_repr
     def insert_all(self, *args): return _VISHNU.ESessionList_insert_all(self, *args)
     def insert_at(self, *args): return _VISHNU.ESessionList_insert_at(self, *args)
+    def at(self, *args): return _VISHNU.ESessionList_at(self, *args)
     def get(self, *args): return _VISHNU.ESessionList_get(self, *args)
     def push_back(self, *args): return _VISHNU.ESessionList_push_back(self, *args)
     def size(self): return _VISHNU.ESessionList_size(self)
@@ -1904,6 +1905,7 @@ class EUserList(_object):
     __repr__ = _swig_repr
     def insert_all(self, *args): return _VISHNU.EUserList_insert_all(self, *args)
     def insert_at(self, *args): return _VISHNU.EUserList_insert_at(self, *args)
+    def at(self, *args): return _VISHNU.EUserList_at(self, *args)
     def get(self, *args): return _VISHNU.EUserList_get(self, *args)
     def push_back(self, *args): return _VISHNU.EUserList_push_back(self, *args)
     def size(self): return _VISHNU.EUserList_size(self)
@@ -1922,6 +1924,7 @@ class EMachineList(_object):
     __repr__ = _swig_repr
     def insert_all(self, *args): return _VISHNU.EMachineList_insert_all(self, *args)
     def insert_at(self, *args): return _VISHNU.EMachineList_insert_at(self, *args)
+    def at(self, *args): return _VISHNU.EMachineList_at(self, *args)
     def get(self, *args): return _VISHNU.EMachineList_get(self, *args)
     def push_back(self, *args): return _VISHNU.EMachineList_push_back(self, *args)
     def size(self): return _VISHNU.EMachineList_size(self)
@@ -1940,6 +1943,7 @@ class ELocalAccList(_object):
     __repr__ = _swig_repr
     def insert_all(self, *args): return _VISHNU.ELocalAccList_insert_all(self, *args)
     def insert_at(self, *args): return _VISHNU.ELocalAccList_insert_at(self, *args)
+    def at(self, *args): return _VISHNU.ELocalAccList_at(self, *args)
     def get(self, *args): return _VISHNU.ELocalAccList_get(self, *args)
     def push_back(self, *args): return _VISHNU.ELocalAccList_push_back(self, *args)
     def size(self): return _VISHNU.ELocalAccList_size(self)
@@ -1958,6 +1962,7 @@ class ECommandList(_object):
     __repr__ = _swig_repr
     def insert_all(self, *args): return _VISHNU.ECommandList_insert_all(self, *args)
     def insert_at(self, *args): return _VISHNU.ECommandList_insert_at(self, *args)
+    def at(self, *args): return _VISHNU.ECommandList_at(self, *args)
     def get(self, *args): return _VISHNU.ECommandList_get(self, *args)
     def push_back(self, *args): return _VISHNU.ECommandList_push_back(self, *args)
     def size(self): return _VISHNU.ECommandList_size(self)
@@ -1976,6 +1981,7 @@ class EOptionList(_object):
     __repr__ = _swig_repr
     def insert_all(self, *args): return _VISHNU.EOptionList_insert_all(self, *args)
     def insert_at(self, *args): return _VISHNU.EOptionList_insert_at(self, *args)
+    def at(self, *args): return _VISHNU.EOptionList_at(self, *args)
     def get(self, *args): return _VISHNU.EOptionList_get(self, *args)
     def push_back(self, *args): return _VISHNU.EOptionList_push_back(self, *args)
     def size(self): return _VISHNU.EOptionList_size(self)
@@ -1994,6 +2000,7 @@ class EJobList(_object):
     __repr__ = _swig_repr
     def insert_all(self, *args): return _VISHNU.EJobList_insert_all(self, *args)
     def insert_at(self, *args): return _VISHNU.EJobList_insert_at(self, *args)
+    def at(self, *args): return _VISHNU.EJobList_at(self, *args)
     def get(self, *args): return _VISHNU.EJobList_get(self, *args)
     def push_back(self, *args): return _VISHNU.EJobList_push_back(self, *args)
     def size(self): return _VISHNU.EJobList_size(self)
@@ -2012,6 +2019,7 @@ class EProgressionList(_object):
     __repr__ = _swig_repr
     def insert_all(self, *args): return _VISHNU.EProgressionList_insert_all(self, *args)
     def insert_at(self, *args): return _VISHNU.EProgressionList_insert_at(self, *args)
+    def at(self, *args): return _VISHNU.EProgressionList_at(self, *args)
     def get(self, *args): return _VISHNU.EProgressionList_get(self, *args)
     def push_back(self, *args): return _VISHNU.EProgressionList_push_back(self, *args)
     def size(self): return _VISHNU.EProgressionList_size(self)
@@ -2030,6 +2038,7 @@ class EQueueList(_object):
     __repr__ = _swig_repr
     def insert_all(self, *args): return _VISHNU.EQueueList_insert_all(self, *args)
     def insert_at(self, *args): return _VISHNU.EQueueList_insert_at(self, *args)
+    def at(self, *args): return _VISHNU.EQueueList_at(self, *args)
     def get(self, *args): return _VISHNU.EQueueList_get(self, *args)
     def push_back(self, *args): return _VISHNU.EQueueList_push_back(self, *args)
     def size(self): return _VISHNU.EQueueList_size(self)
@@ -2048,6 +2057,7 @@ class EJobResultList(_object):
     __repr__ = _swig_repr
     def insert_all(self, *args): return _VISHNU.EJobResultList_insert_all(self, *args)
     def insert_at(self, *args): return _VISHNU.EJobResultList_insert_at(self, *args)
+    def at(self, *args): return _VISHNU.EJobResultList_at(self, *args)
     def get(self, *args): return _VISHNU.EJobResultList_get(self, *args)
     def push_back(self, *args): return _VISHNU.EJobResultList_push_back(self, *args)
     def size(self): return _VISHNU.EJobResultList_size(self)
@@ -2066,6 +2076,7 @@ class EMetricList(_object):
     __repr__ = _swig_repr
     def insert_all(self, *args): return _VISHNU.EMetricList_insert_all(self, *args)
     def insert_at(self, *args): return _VISHNU.EMetricList_insert_at(self, *args)
+    def at(self, *args): return _VISHNU.EMetricList_at(self, *args)
     def get(self, *args): return _VISHNU.EMetricList_get(self, *args)
     def push_back(self, *args): return _VISHNU.EMetricList_push_back(self, *args)
     def size(self): return _VISHNU.EMetricList_size(self)
@@ -2084,6 +2095,7 @@ class EProcessesList(_object):
     __repr__ = _swig_repr
     def insert_all(self, *args): return _VISHNU.EProcessesList_insert_all(self, *args)
     def insert_at(self, *args): return _VISHNU.EProcessesList_insert_at(self, *args)
+    def at(self, *args): return _VISHNU.EProcessesList_at(self, *args)
     def get(self, *args): return _VISHNU.EProcessesList_get(self, *args)
     def push_back(self, *args): return _VISHNU.EProcessesList_push_back(self, *args)
     def size(self): return _VISHNU.EProcessesList_size(self)
@@ -2102,6 +2114,7 @@ class ESysInfoList(_object):
     __repr__ = _swig_repr
     def insert_all(self, *args): return _VISHNU.ESysInfoList_insert_all(self, *args)
     def insert_at(self, *args): return _VISHNU.ESysInfoList_insert_at(self, *args)
+    def at(self, *args): return _VISHNU.ESysInfoList_at(self, *args)
     def get(self, *args): return _VISHNU.ESysInfoList_get(self, *args)
     def push_back(self, *args): return _VISHNU.ESysInfoList_push_back(self, *args)
     def size(self): return _VISHNU.ESysInfoList_size(self)
@@ -2120,6 +2133,7 @@ class EThresholdList(_object):
     __repr__ = _swig_repr
     def insert_all(self, *args): return _VISHNU.EThresholdList_insert_all(self, *args)
     def insert_at(self, *args): return _VISHNU.EThresholdList_insert_at(self, *args)
+    def at(self, *args): return _VISHNU.EThresholdList_at(self, *args)
     def get(self, *args): return _VISHNU.EThresholdList_get(self, *args)
     def push_back(self, *args): return _VISHNU.EThresholdList_push_back(self, *args)
     def size(self): return _VISHNU.EThresholdList_size(self)
@@ -2138,6 +2152,7 @@ class EFileTransferList(_object):
     __repr__ = _swig_repr
     def insert_all(self, *args): return _VISHNU.EFileTransferList_insert_all(self, *args)
     def insert_at(self, *args): return _VISHNU.EFileTransferList_insert_at(self, *args)
+    def at(self, *args): return _VISHNU.EFileTransferList_at(self, *args)
     def get(self, *args): return _VISHNU.EFileTransferList_get(self, *args)
     def push_back(self, *args): return _VISHNU.EFileTransferList_push_back(self, *args)
     def size(self): return _VISHNU.EFileTransferList_size(self)
@@ -2156,6 +2171,7 @@ class EFileStatList(_object):
     __repr__ = _swig_repr
     def insert_all(self, *args): return _VISHNU.EFileStatList_insert_all(self, *args)
     def insert_at(self, *args): return _VISHNU.EFileStatList_insert_at(self, *args)
+    def at(self, *args): return _VISHNU.EFileStatList_at(self, *args)
     def get(self, *args): return _VISHNU.EFileStatList_get(self, *args)
     def push_back(self, *args): return _VISHNU.EFileStatList_push_back(self, *args)
     def size(self): return _VISHNU.EFileStatList_size(self)
@@ -2288,7 +2304,7 @@ vishnuInitialize = _VISHNU.vishnuInitialize
 def vishnuFinalize():
   return _VISHNU.vishnuFinalize()
 vishnuFinalize = _VISHNU.vishnuFinalize
-class VishnuException(_object):
+class VishnuException(Exception):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, VishnuException, name, value)
     __swig_getmethods__ = {}
@@ -2326,13 +2342,13 @@ def listSessions(*args):
   return _VISHNU.listSessions(*args)
 listSessions = _VISHNU.listSessions
 
-def listLocalAccount(*args):
-  return _VISHNU.listLocalAccount(*args)
-listLocalAccount = _VISHNU.listLocalAccount
+def listLocalAccounts(*args):
+  return _VISHNU.listLocalAccounts(*args)
+listLocalAccounts = _VISHNU.listLocalAccounts
 
-def listMachine(*args):
-  return _VISHNU.listMachine(*args)
-listMachine = _VISHNU.listMachine
+def listMachines(*args):
+  return _VISHNU.listMachines(*args)
+listMachines = _VISHNU.listMachines
 
 def listHistoryCmd(*args):
   return _VISHNU.listHistoryCmd(*args)
@@ -2612,9 +2628,9 @@ def removeDir(*args):
   return _VISHNU.removeDir(*args)
 removeDir = _VISHNU.removeDir
 
-def getFilesInfo(*args):
-  return _VISHNU.getFilesInfo(*args)
-getFilesInfo = _VISHNU.getFilesInfo
+def getFileInfo(*args):
+  return _VISHNU.getFileInfo(*args)
+getFileInfo = _VISHNU.getFileInfo
 
 
 def submitJob(*args):
