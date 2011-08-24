@@ -20,6 +20,7 @@
 #ifndef ECORECPP_MAPPING_ANY_HPP
 #define ECORECPP_MAPPING_ANY_HPP
 
+#include <cstddef>
 #include <stdexcept>
 #include <string>
 
