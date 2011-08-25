@@ -63,15 +63,12 @@ macro( ims_test NAME )
       ${DIET_SERVER_LIB}
       ${LIBPQ_LIB}
       ${Boost_LIBRARIES}
-      emf4cpp-UMS_Data
-      emf4cpp-TMS_Data
-      emf4cpp-IMS_Data
-      database-vishnu
-      exception-vishnu
-      vishnu-ims-api
-      vishnu-tms-api
-      vishnu-ums-api
-      test-utils
+      vishnu-core
+      crypt
+      vishnu-ims-client
+      vishnu-tms-client
+      vishnu-ums-client
+      vishnu-test
       ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
     file(READ "${NAME}.cpp" content)
