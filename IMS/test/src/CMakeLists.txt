@@ -7,7 +7,7 @@ include_directories(
   ${UMS_DATA_DIR}
   ${IMS_DATA_DIR}
   ${TMS_DATA_DIR}
-  ${API_SOURCE_DIR}
+  ${UMS_API_SOURCE_DIR}
   ${TMS_API_SOURCE_DIR}
   ${IMS_API_SOURCE_DIR}
   ${CLIENT_PROXY_SOURCE_DIR}
@@ -109,11 +109,9 @@ target_link_libraries( ims_stresser
   ${DIET_SERVER_LIB}
   ${LIBPQ_LIB}
   ${Boost_LIBRARIES}
-  emf4cpp-UMS_Data
-  emf4cpp-IMS_Data
-  database-vishnu
-  exception-vishnu
-  vishnu-ums-api
-  vishnu-ims-api)
+  vishnu-core
+  crypt
+  vishnu-ums-client
+  vishnu-ims-client)
 
 add_subdirectory( sql )

@@ -6,7 +6,7 @@ include_directories(
   ${FMS_EMF_DATA_DIR}
   ${UMS_DATA_DIR}
   ${FMS_DATA_DIR}
-  ${API_SOURCE_DIR}
+  ${UMS_API_SOURCE_DIR}
   ${FMS_API_SOURCE_DIR}
 #   ${CLIENT_PROXY_SOURCE_DIR}
 #   ${FMS_CLIENT_PROXY_SOURCE_DIR}
@@ -80,11 +80,9 @@ target_link_libraries( fms_stresser
   ${DIET_SERVER_LIB}
   ${LIBPQ_LIB}
   ${Boost_LIBRARIES}
-  emf4cpp-UMS_Data
-  emf4cpp-FMS_Data
-  database-vishnu
-  exception-vishnu
-  vishnu-ums-api
-  vishnu-fms-api)
+  vishnu-core
+  crypt
+  vishnu-ums-client
+  vishnu-fms-client)
 
 add_subdirectory( sql )

@@ -1,3 +1,4 @@
+
 ###############################################################################
 # ums_test_setup: macro that setup our test environment
 # it add a test-xml target
@@ -6,7 +7,7 @@
 macro( ums_test_setup )
   enable_testing()
   # add a test-xml targets that allows us to generate Boost.Test xml reports
-  add_custom_target( test-xml )
+  add_custom_target( ums_test-xml )
   include(CTest)
 
   file( MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/reports )
@@ -55,10 +56,10 @@ macro( ums_test NAME )
       ${DIET_SERVER_LIB}
       ${LIBPQ_LIB}
       ${Boost_LIBRARIES}
-      database-vishnu
-      exception-vishnu
-      vishnu-ums-api
-      test-utils
+      vishnu-core
+      crypt
+      vishnu-ums-client
+      vishnu-test
       ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
     # test executable installation has not been tested yet -sic-
