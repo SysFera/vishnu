@@ -280,6 +280,7 @@ add_library(vishnu-core ${config_SRCS}
   ${IMS_Data_SRCS}
   ${FMS_Data_SRCS}
 )
+install(TARGETS vishnu-core DESTINATION lib)
 install(FILES ${exception_HEADERS} DESTINATION include)
 
 if(NOT CLIENT_ONLY)
@@ -304,5 +305,6 @@ if(NOT CLIENT_ONLY)
   endif()
 
   add_library(vishnu-core-server ${database_SRCS} ${utils_server_SRCS})
+  install(TARGETS vishnu-core-server DESTINATION lib)
   target_link_libraries(vishnu-core-server ${DB_LIBS})
 endif()
