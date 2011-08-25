@@ -7,7 +7,7 @@ link_directories(
 include_directories(
   ${DIET_INCLUDE_DIR}
   ${EMF_DATA_DIR}
-  ${UMS_DATA_DIR}
+  ${UMS_EMF_DATA_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
   ${DATA_BASE_INCLUDE_DIR}
