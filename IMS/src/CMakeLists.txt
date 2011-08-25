@@ -78,4 +78,6 @@ if(NOT CLIENT_ONLY)
     vishnu-ums-server
     emf4cpp-vishnu
     crypt)
+
+  install(TARGETS imssed DESTINATION sbin)
 endif (NOT CLIENT_ONLY)  
