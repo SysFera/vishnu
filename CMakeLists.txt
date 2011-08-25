@@ -89,6 +89,7 @@ if (ENABLE_POSTGRESQL)
     message("     - You can use the ccmake GUI")
     set(POSTGRESQL_DIR "" cache path "POSTGRESQL installation path")
   endif(POSTGRESQL_FOUND)
+  set(DATABASE_LIBS ${DATABASE_LIBS} ${POSTGRESQL_LIB})
 endif (ENABLE_POSTGRESQL)
 
 if (ENABLE_ORACLE)
@@ -117,6 +118,7 @@ if (ENABLE_MYSQL)
     message("     - You can use the ccmake GUI")
     set(MYSQL_DIR "" cache path "MYSQL installation path")
   endif(MYSQL_FOUND)
+  set(DATABASE_LIBS ${DATABASE_LIBS} ${MYSQL_LIB})
 endif (ENABLE_MYSQL)
 
 
