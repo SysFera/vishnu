@@ -1,4 +1,10 @@
 +--------------+
+| VISHNU 1.2.3 |
++--------------+
+
+* Ajout du support du batch scheduler slurm
+
++--------------+
 | VISHNU 1.2.2 |
 +--------------+
 
