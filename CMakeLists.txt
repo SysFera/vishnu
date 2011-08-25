@@ -204,20 +204,19 @@ set(DATA_BASE_INCLUDE_DIR ${VISHNU_SOURCE_DIR}/core/src/database)
 set(REGISTRY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/registry)
 set(UTILVISHNU_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/utils)
 set(CONFIG_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/config)
+set(EMF_DATA_DIR ${VISHNU_SOURCE_DIR}/core/src/emfdata)
 
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/vishnu_version.hpp.in
     ${UTILVISHNU_SOURCE_DIR}/vishnu_version.hpp )
 #UMS
-set(EMF_DATA_DIR ${VISHNU_SOURCE_DIR}/UMS/src/utils/emfdata)
-set(UMS_DATA_DIR ${VISHNU_SOURCE_DIR}/UMS/src/utils/emfdata/UMS_Data)
-set(CLIENT_PROXY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/client)
-set(SERVER_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/server)
-set(API_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/api)
-set(SED_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/sed)
+set(UMS_EMF_DATA_DIR ${EMF_DATA_DIR}/UMS_Data)
+set(UMS_CLIENT_PROXY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/client)
+set(UMS_SERVER_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/server)
+set(UMS_API_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/api)
+set(UMS_SED_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/sed)
 
 #TMS
-set(TMS_EMF_DATA_DIR ${VISHNU_SOURCE_DIR}/TMS/src/utils/emfdata)
-set(TMS_DATA_DIR ${VISHNU_SOURCE_DIR}/UMS/src/utils/emfdata/TMS_Data)
+set(TMS_EMF_DATA_DIR ${EMF_DATA_DIR}/TMS_Data)
 set(TMS_CLIENT_PROXY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/TMS/src/client)
 set(TMS_SERVER_SOURCE_DIR ${VISHNU_SOURCE_DIR}/TMS/src/server)
 set(TMS_API_SOURCE_DIR ${VISHNU_SOURCE_DIR}/TMS/src/api)
@@ -228,8 +227,7 @@ set(UTILS_TORQUE_DIR ${VISHNU_SOURCE_DIR}/TMS/src/utils_torque/)
 set(SLURM_PARSER_DIR ${VISHNU_SOURCE_DIR}/TMS/src/slurm_parser/)
 
 #IMS
-set(IMS_EMF_DATA_DIR ${VISHNU_SOURCE_DIR}/IMS/src/utils/emfdata)
-set(IMS_DATA_DIR ${VISHNU_SOURCE_DIR}/IMS/src/utils/emfdata/IMS_Data)
+set(IMS_EMF_DATA_DIR ${EMF_DATA_DIR}/IMS_Data)
 set(IMS_CLIENT_PROXY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/IMS/src/client)
 set(IMS_SERVER_SOURCE_DIR ${VISHNU_SOURCE_DIR}/IMS/src/server)
 set(IMS_API_SOURCE_DIR ${VISHNU_SOURCE_DIR}/IMS/src/api)
@@ -237,8 +235,7 @@ set(IMS_SED_SOURCE_DIR ${VISHNU_SOURCE_DIR}/IMS/src/sed)
 set(IMS_UTIL_DIR ${VISHNU_SOURCE_DIR}/IMS/src/utils)
 
 #FMS
-set(FMS_EMF_DATA_DIR ${VISHNU_SOURCE_DIR}/UMS/src/utils/emfdata)
-set(FMS_DATA_DIR ${VISHNU_SOURCE_DIR}/UMS/src/utils/emfdata/FMS_Data)
+set(FMS_EMF_DATA_DIR ${EMF_DATA_DIR}/FMS_Data)
 set(FMS_CLIENT_PROXY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/FMS/src/client)
 set(FMS_SERVER_SOURCE_DIR ${VISHNU_SOURCE_DIR}/FMS/src/server)
 set(FMS_API_SOURCE_DIR ${VISHNU_SOURCE_DIR}/FMS/src/api)
@@ -262,7 +259,7 @@ set(CMAKE_INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib
 set(TESTVISHNU_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/test/src)
 
 add_subdirectory(core/src)
-add_subdirectory(core/deps/emf4cpp)
+add_subdirectory(core/deps)
 
 if (DEBUG_TESTS)
   add_definitions( -DDEBUG_TESTS )
