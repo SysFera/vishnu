@@ -67,6 +67,7 @@ if(NOT CLIENT_ONLY)
   add_executable(umssed ${sed_SRCS})
   target_link_libraries(umssed ${DIET_SERVER_LIBRARIES}
     ${Boost_LIBRARIES}
+    ${DATABASE_LIBS}
     vishnu-core
     vishnu-core-server
     vishnu-ums-server
