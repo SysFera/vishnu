@@ -309,4 +309,6 @@ if(NOT CLIENT_ONLY)
   set_target_properties(vishnu-core-server PROPERTIES VERSION ${VISHNU_VERSION})
   install(TARGETS vishnu-core-server DESTINATION lib)
   target_link_libraries(vishnu-core-server ${DB_LIBS})
+
+  install(FILES utils/sendmail.py DESTINATION sbin)
 endif()
