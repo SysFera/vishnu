@@ -22,6 +22,7 @@ set(api_SRCS api/api_ums.cpp)
 set(api_HEADERS api/api_ums.hpp)
 
 add_library(vishnu-ums-client ${client_SRCS} ${cli_SRCS} ${api_SRCS})
+set_target_properties(vishnu-ums-client PROPERTIES VERSION ${VISHNU_VERSION})
 target_link_libraries(vishnu-ums-client
   ${DIET_CLIENT_LIBRARIES}
   ${Boost_LIBRARIES}
@@ -64,6 +65,7 @@ if(NOT CLIENT_ONLY)
     server/ListUsersServer.cpp)
 
   add_library(vishnu-ums-server ${server_SRCS})
+  set_target_properties(vishnu-ums-server PROPERTIES VERSION ${VISHNU_VERSION})
   install(TARGETS vishnu-ums-server DESTINATION lib)
   add_executable(umssed ${sed_SRCS})
   target_link_libraries(umssed ${DIET_SERVER_LIBRARIES}

@@ -281,6 +281,7 @@ add_library(vishnu-core ${config_SRCS}
   ${FMS_Data_SRCS}
 )
 install(TARGETS vishnu-core DESTINATION lib)
+set_target_properties(vishnu-core PROPERTIES VERSION ${VISHNU_VERSION})
 install(FILES ${exception_HEADERS} DESTINATION include)
 
 if(NOT CLIENT_ONLY)
@@ -305,6 +306,7 @@ if(NOT CLIENT_ONLY)
   endif()
 
   add_library(vishnu-core-server ${database_SRCS} ${utils_server_SRCS})
+  set_target_properties(vishnu-core-server PROPERTIES VERSION ${VISHNU_VERSION})
   install(TARGETS vishnu-core-server DESTINATION lib)
   target_link_libraries(vishnu-core-server ${DB_LIBS})
 endif()

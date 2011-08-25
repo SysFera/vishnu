@@ -23,6 +23,7 @@ set(api_SRCS api/api_ims.cpp)
 set(api_HEADERS api/api_ims.hpp)
 
 add_library(vishnu-ims-client ${client_SRCS} ${cli_SRCS} ${api_SRCS})
+set_target_properties(vishnu-ims-client PROPERTIES VERSION ${VISHNU_VERSION})
 target_link_libraries(vishnu-ims-client
   ${DIET_CLIENT_LIBRARIES}
   ${Boost_LIBRARIES}
