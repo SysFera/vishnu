@@ -4,7 +4,7 @@ include_directories(
   ${DIET_INCLUDE_DIR}
   ${EMF_DATA_DIR}
   ${UMS_DATA_DIR}
-  ${API_SOURCE_DIR}
+  ${UMS_API_SOURCE_DIR}
   ${CLIENT_PROXY_SOURCE_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
@@ -44,19 +44,19 @@ configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/umssed_testing.cfg.in
 
 include(UMSTestingMacros)
 ums_test_setup()
-ums_test(automTest)
+ums_test(ums_automTest)
 
-add_executable(stresser
+add_executable(ums_stresser
   stress.cpp)
 
-target_link_libraries( stresser
+target_link_libraries(ums_stresser
   ${DIET_CLIENT_LIB}
   ${DIET_SERVER_LIB}
   ${LIBPQ_LIB}
   ${Boost_LIBRARIES}
-  database-vishnu
-  exception-vishnu
-  vishnu-ums-api
+  vishnu-core
+  vishnu-ums-client
+  crypt
   ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
 add_subdirectory( sql )
