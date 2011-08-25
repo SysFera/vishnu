@@ -64,6 +64,7 @@ if(NOT CLIENT_ONLY)
     server/ListUsersServer.cpp)
 
   add_library(vishnu-ums-server ${server_SRCS})
+  install(TARGETS vishnu-ums-server DESTINATION lib)
   add_executable(umssed ${sed_SRCS})
   target_link_libraries(umssed ${DIET_SERVER_LIBRARIES}
     ${Boost_LIBRARIES}

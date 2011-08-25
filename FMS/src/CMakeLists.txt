@@ -64,6 +64,7 @@ if(NOT CLIENT_ONLY)
     server/RsyncCommand.cpp)
 
   add_executable(fmssed ${sed_SRCS} ${server_SRCS})
+  install(TARGETS fmssed DESTINATION sbin)
   target_link_libraries(fmssed ${DIET_SERVER_LIBRARIES}
     ${LOG_LIBRARY}
     ${DATABASE_LIBS}
