@@ -15,13 +15,13 @@ if (VISHNU_USE_TORQUE)
 endif(VISHNU_USE_TORQUE)
 
 if(VISHNU_USE_LOADLEVELER)
-  set(LOADLEVELERSERVER LLServer.cpp)
+  set(LOADLEVELERSERVER server/LLServer.cpp)
   set(LOADLEVELER_ALL_INCLUDE_DIR ${LOADLEVELER_INCLUDE_DIR})
   set(LOADLEVELER_ALL_LIB_DIR ${LOADLEVELER_LIB})
 endif(VISHNU_USE_LOADLEVELER) 
 
 if (VISHNU_USE_SLURM)
-  set(SLURMSERVER slurm_parser/SlurmServer.cpp
+  set(SLURMSERVER server/SlurmServer.cpp
     slurm_parser/opt.c
     slurm_parser/slurm_internal_api.c
     slurm_parser/uid.c
