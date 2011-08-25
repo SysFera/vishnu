@@ -129,4 +129,5 @@ include_directories(
 )
 
 add_library(emf4cpp-vishnu ${ecore_SRCS} ${ecorecpp_SRCS})
+set_target_properties(emf4cpp-vishnu PROPERTIES VERSION ${VISHNU_VERSION})
 install(TARGETS emf4cpp-vishnu DESTINATION lib)

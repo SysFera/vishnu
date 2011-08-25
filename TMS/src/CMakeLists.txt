@@ -24,6 +24,7 @@ target_link_libraries(vishnu-tms-client
   vishnu-core)
 
 install(TARGETS vishnu-tms-client DESTINATION lib)
+set_target_properties(vishnu-tms-client PROPERTIES VERSION ${VISHNU_VERSION})
 install(FILES ${api_HEADERS} DESTINATION include)
 
 
@@ -71,6 +72,7 @@ if (NOT CLIENT_ONLY)
     server/ScriptGenConvertor.cpp)
 
   add_library(vishnu-tms-server ${server_SRCS})
+  set_target_properties(vishnu-tms-server PROPERTIES VERSION ${VISHNU_VERSION})
   target_link_libraries(vishnu-tms-server ${USED_BATCH_LIB})
   install(TARGETS vishnu-tms-server DESTINATION lib)
   add_executable(tmssed ${sed_SRCS})
