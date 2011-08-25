@@ -33,10 +33,9 @@ target_link_libraries(tmsSlave
   ${Boost_LIBRARIES}
   ${TORQUE_LIB}
   emf4cpp-TMS_Data
-  register-vishnu
   exception-vishnu
-  utils-vishnu
-  utils-server
+  vishnu-core-server
+  vishnu-core
   tms-server
 )
 

@@ -44,7 +44,7 @@ target_link_libraries(tmssed
   exception-vishnu
   vishnu-core
   vishnu-core-server
-  ums-server
+  vishnu-ums-server
   tms-server
 )
 
