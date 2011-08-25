@@ -83,7 +83,7 @@ target_link_libraries(tms-server
   ${USED_BATCH_LIB}
   emf4cpp-TMS_Data
   exception-vishnu
-  ums-server
+  vishnu-ums-server
   vishnu-core
   vishnu-core-server
 )
