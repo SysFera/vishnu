@@ -29,6 +29,9 @@ target_link_libraries(vishnu-ims-client
   emf4cpp-vishnu
   vishnu-core
   crypt)
+if(COMPILE_FMS)
+  target_link_libraries(vishnu-ims-client vishnu-fms-client)
+endif()
 
 install(TARGETS vishnu-ims-client DESTINATION lib)
 install(FILES {api_HEADERS} DESTINATION include)
