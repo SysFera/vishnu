@@ -17,6 +17,7 @@ set(api_SRCS api/api_fms.cpp)
 set(api_HEADERS api/api_fms.hpp)
 
 add_library(vishnu-fms-client ${client_SRCS} ${api_SRCS})
+SET_TARGET_PROPERTIES(vishnu-fms-client PROPERTIES VERSION ${VISHNU_VERSION})
 target_link_libraries(vishnu-fms-client
   ${DIET_CLIENT_LIBRARIES}
   ${Boost_LIBRARIES}
