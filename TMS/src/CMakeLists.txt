@@ -22,7 +22,8 @@ target_link_libraries(vishnu-tms-client
   ${DIET_CLIENT_LIBRARIES}
   ${Boost_LIBRARIES}
   emf4cpp-vishnu
-  vishnu-core)
+  vishnu-core
+  crypt)
 
 install(TARGETS vishnu-tms-client DESTINATION lib)
 set_target_properties(vishnu-tms-client PROPERTIES VERSION ${VISHNU_VERSION})
@@ -47,6 +48,7 @@ if (NOT CLIENT_ONLY)
     ${Boost_LIBRARIES}
     ${DATABASE_LIBS}
     vishnu-core
+    crypt
     vishnu-core-server
     vishnu-ums-server
     vishnu-tms-server
@@ -75,6 +77,7 @@ if (NOT CLIENT_ONLY)
     ${Boost_LIBRARIES}
     ${DATABASE_LIBS}
     vishnu-core
+    crypt
     vishnu-core-server
     vishnu-ums-server
     vishnu-tms-server
