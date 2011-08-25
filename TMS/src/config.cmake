@@ -27,7 +27,7 @@ if (VISHNU_USE_SLURM)
     slurm_parser/uid.c
     slurm_parser/slurm_parser.c)
   set(SLURM_ALL_INCLUDE_DIR ${SLURM_INCLUDE_DIR}  ${SLURM_PARSER_DIR})
-  set(SLURM_ALL_LIB_DIR ${SLURM_LIB}  utils-slurm)
+  set(SLURM_ALL_LIB_DIR ${SLURM_LIB})
 endif(VISHNU_USE_SLURM)
 
 set(UsedBatchServer ${TORQUESERVER}  ${LOADLEVELERSERVER}  ${SLURMSERVER})
