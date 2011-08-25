@@ -16,25 +16,17 @@ find_path(MYSQL_INCLUDE_DIR
 )
 
 find_library(MYSQL_LIB
-  mysql
-  paths
+  NAMES mysql mysqlclient
+  PATHS
   ${MYSQL_DIR}
   ${MYSQL_DIR}/lib
   $ENV{MYSQL_DIR}/lib
   /usr/lib
+  /usr/lib64
   /usr/local/lib
+  /usr/local/lib64
+  PATH_SUFFIXES mysql
 )
-if (NOT MYSQL_LIB)
-  find_library(MYSQL_LIB
-  mysqlclient
-  paths
-  ${MYSQL_DIR}
-  ${MYSQL_DIR}/lib
-  $ENV{MYSQL_DIR}/lib
-  /usr/lib
-  /usr/local/lib
-)
-endif (NOT MYSQL_LIB)
 
 if (MYSQL_INCLUDE_DIR)
   set(MYSQL_FOUND TRUE CACHE BOOL ${MYSQL_FOUND_STRING} FORCE)
