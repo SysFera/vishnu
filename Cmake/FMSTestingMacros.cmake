@@ -60,13 +60,11 @@ macro( fms_test NAME )
       ${DIET_SERVER_LIB}
       ${LIBPQ_LIB}
       ${Boost_LIBRARIES}
-      emf4cpp-UMS_Data
-      emf4cpp-FMS_Data
-      database-vishnu
-      exception-vishnu
-      vishnu-fms-api
-      vishnu-ums-api
-      test-utils
+      vishnu-core
+      crypt
+      vishnu-fms-client
+      vishnu-ums-client
+      vishnu-test
       ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
     file(READ "${NAME}.cpp" content)
