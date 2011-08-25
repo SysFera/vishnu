@@ -34,7 +34,7 @@ if(COMPILE_FMS)
 endif()
 
 install(TARGETS vishnu-ims-client DESTINATION lib)
-install(FILES {api_HEADERS} DESTINATION include)
+install(FILES ${api_HEADERS} DESTINATION include)
 
 ## client CLI
 add_subdirectory(cli)

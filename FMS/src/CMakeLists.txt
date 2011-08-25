@@ -28,7 +28,7 @@ target_link_libraries(vishnu-fms-client
 add_subdirectory(cli)
 
 install(TARGETS vishnu-fms-client DESTINATION lib)
-install(FILES {api_HEADERS} DESTINATION include)
+install(FILES ${api_HEADERS} DESTINATION include)
 
 if(NOT CLIENT_ONLY)
   include_directories(${DATA_BASE_INCLUDE_DIR}

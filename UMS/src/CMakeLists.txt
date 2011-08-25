@@ -29,7 +29,7 @@ target_link_libraries(vishnu-ums-client
   vishnu-core)
 
 install(TARGETS vishnu-ums-client DESTINATION lib)
-install(FILES {api_HEADERS} DESTINATION include)
+install(FILES ${api_HEADERS} DESTINATION include)
 
 ## client CLI
 add_subdirectory(cli)
