@@ -4,22 +4,23 @@
 
 find_path(TORQUE_INCLUDE_DIR
   pbs_ifl.h
-  paths
-	${TORQUE_DIR}/include
-	$ENV{TORQUE_DIR}/include
-	/usr/include
-	/usr/local/include
-	/opt/local/include
+  PATHS
+  ${TORQUE_DIR}/include
+  $ENV{TORQUE_DIR}/include
+  /usr/include
+  /usr/local/include
+  /opt/local/include
+  PATH_SUFFIXES torque
 )
 
 
 find_library(TORQUE_LIB
   torque 
   paths
-	${TORQUE_DIR}/lib
+  ${TORQUE_DIR}/lib
   $ENV{TORQUE_DIR}/lib
-	/usr/lib
-	/usr/local/lib
+  /usr/lib
+  /usr/local/lib
   /opt/local/lib
 )
 
