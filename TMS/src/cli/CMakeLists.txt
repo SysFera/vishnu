@@ -1,4 +1,3 @@
-
 link_directories(${Boost_LIBRARY_DIRS}
                   ${TMS_CLI_SOURCE_DIR}
                   ${CLI_SOURCE_DIR}
@@ -15,15 +14,12 @@ include_directories(${Boost_INCLUDE_DIRS}
                     ${VISHNU_EXCEPTION_INCLUDE_DIR}
                     ${TMS_CLI_SOURCE_DIR}
                     ${UTILVISHNU_SOURCE_DIR}
-		    ${API_SOURCE_DIR}
-		    ${CLIENT_PROXY_SOURCE_DIR}
+		    ${UMS_API_SOURCE_DIR}
+		    ${UMS_CLIENT_PROXY_SOURCE_DIR}
 		    ${EMF_DATA_DIR}
 		    ${UMS_DATA_DIR}
                   )
 
-add_library(tms-utils-cli
-	    displayer
- )
 #declare all command lines provided
 
 set(ALLCLI 
@@ -44,40 +40,24 @@ set (CMDPREFIX vishnu_)
 
 macro(genCli NAME )
 
-  set(source_files ${NAME}
-      )
-
+  set(source_files ${NAME})
   set(CMDNAME ${CMDPREFIX}${NAME})
-
   #Configuration de l'executable
-  add_executable (${CMDNAME}
-                  ${source_files}
-                  )
+  add_executable (${CMDNAME} ${source_files})
 
   #Configuration de l'edition de liens
   target_link_libraries(${CMDNAME}
                         ${Boost_LIBRARIES}
-                        ${VISHNU_EXCEPTION_LIB}
-                        tms-utils-cli
-                        utils-vishnu
-                        vishnu-tms-api
-                        vishnu-ums-api
-                        crypt
-                        -pthread
-                        )
-  install_targets(/bin/
-                  ${CMDNAME}
-                )
+                        vishnu-core
+                        vishnu-ums-client
+                        vishnu-tms-client
+                        crypt)
+  install(TARGETS ${CMDNAME} DESTINATION bin)
 
 endmacro(genCli)
 
 #Loop over all command lines to generate them
-
 foreach(cli ${ALLCLI})
-
-genCli(${cli})
-
+  genCli(${cli})
 endforeach(cli)
-
-install( TARGETS tms-utils-cli DESTINATION lib )
 
