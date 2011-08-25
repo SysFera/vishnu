@@ -182,20 +182,17 @@ if(COMPILE_IMS AND NOT CLIENT_ONLY)
   find_package(LOGSERVICE REQUIRED)
 endif(COMPILE_IMS AND NOT CLIENT_ONLY)
 
-find_package(
-	Boost
-	1.45
-	REQUIRED program_options date_time thread filesystem system unit_test_framework serialization random
-)
+find_package(Boost 1.45
+	REQUIRED program_options date_time thread filesystem system unit_test_framework serialization random)
 
-find_package( Threads )
-if( THREADS_FOUND )
-  set( THREADS_LIB ${CMAKE_THREAD_LIBS_INIT} )
+find_package(Threads)
+if(THREADS_FOUND)
+  set(THREADS_LIB ${CMAKE_THREAD_LIBS_INIT})
 endif()
 
-set( Boost_LIBRARIES ${Boost_LIBRARIES} ${THREADS_LIB} )
+set(Boost_LIBRARIES ${Boost_LIBRARIES} ${THREADS_LIB})
 
-add_definitions( "-DBOOST_FILESYSTEM_VERSION=3" )
+add_definitions("-DBOOST_FILESYSTEM_VERSION=3")
 
 #Core
 set(EMF4CPP_INCLUDE_DIR ${VISHNU_SOURCE_DIR}/core/deps/emf4cpp)
