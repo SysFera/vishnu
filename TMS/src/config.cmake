@@ -12,6 +12,9 @@ if (VISHNU_USE_TORQUE)
   set(TORQUESERVER server/TorqueServer.cpp utils_torque/pbs_sub.c)
   set(TORQUE_ALL_INCLUDE_DIR ${TORQUE_INCLUDE_DIR}  ${UTILS_TORQUE_DIR})
   set(TORQUE_ALL_LIB_DIR ${TORQUE_LIB})
+  configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/utils_torque/pbs_server_config.h.in
+    ${CMAKE_CURRENT_SOURCE_DIR}/utils_torque/pbs_server_config.h)
 endif(VISHNU_USE_TORQUE)
 
 if(VISHNU_USE_LOADLEVELER)
