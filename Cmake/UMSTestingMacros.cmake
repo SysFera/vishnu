@@ -80,7 +80,7 @@ macro( ums_test NAME )
 	-DVISHNU_CONFIG=${UMS_TEST_DIR}/client.cfg
         -DREPORT_PATH=${REPORT_OUTPUT_PATH}
         -P ${PROJECT_SOURCE_DIR}/Cmake/runtest.cmake )
-      add_dependencies( test-xml ${NAME}-xml )
+      add_dependencies( ums_test-xml ${NAME}-xml )
     endif()
 endmacro()
 
