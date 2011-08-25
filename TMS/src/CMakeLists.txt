@@ -40,12 +40,6 @@ if (NOT CLIENT_ONLY)
     ${FMS_SERVER_SOURCE_DIR}
     ${USED_BATCH_INCLUDE_DIR})
   
-  if(VISHNU_USE_TORQUE)
-    configure_file(
-      ${CMAKE_CURRENT_SOURCE_DIR}/utils_torque/pbs_server_config.h.in
-      ${CMAKE_CURRENT_SOURCE_DIR}/utils_torque/pbs_server_config.h)
-  endif()
-
   set(slave_SRCS slave/slave.cpp)
   add_executable(tmsSlave ${slave_SRCS})
   target_link_libraries(tmsSlave
@@ -87,11 +81,5 @@ if (NOT CLIENT_ONLY)
     ${USED_BATCH_LIB})
   install(TARGETS tmsSlave DESTINATION sbin) 
   install(TARGETS tmssed DESTINATION sbin)
-#  target_link_libraries(tmsSlave)
-#  add_subdirectory(sed)
-#  add_subdirectory(server)
-#  add_subdirectory(utils_torque)
-#  add_subdirectory(slave)
-#  add_subdirectory(slurm_parser)
 endif (NOT CLIENT_ONLY)
 
