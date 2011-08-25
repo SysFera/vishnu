@@ -23,6 +23,10 @@ target_link_libraries(vishnu-tms-client
   emf4cpp-vishnu
   vishnu-core)
 
+install(TARGETS vishnu-tms-client DESTINATION lib)
+install(FILES ${api_HEADERS} DESTINATION include)
+
+
 add_subdirectory(cli)
 
 if (NOT CLIENT_ONLY)
@@ -68,6 +72,7 @@ if (NOT CLIENT_ONLY)
 
   add_library(vishnu-tms-server ${server_SRCS})
   target_link_libraries(vishnu-tms-server ${USED_BATCH_LIB})
+  install(TARGETS vishnu-tms-server DESTINATION lib)
   add_executable(tmssed ${sed_SRCS})
   target_link_libraries(tmssed ${DIET_SERVER_LIBRARIES}
     ${Boost_LIBRARIES}
