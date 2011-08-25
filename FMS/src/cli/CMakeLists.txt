@@ -1,4 +1,3 @@
-
 link_directories(${Boost_LIBRARY_DIRS}
   ${FMS_CLI_SOURCE_DIR}
   ${CLI_SOURCE_DIR}
@@ -15,15 +14,12 @@ include_directories(${Boost_INCLUDE_DIRS}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
   ${FMS_CLI_SOURCE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
-  ${API_SOURCE_DIR}
+  ${UMS_API_SOURCE_DIR}
   ${CLIENT_PROXY_SOURCE_DIR}
   ${EMF_DATA_DIR}
   ${UMS_DATA_DIR}
   )
 
-#add_library(tms-utils-cli
-#  FMSDisplayer
-# )
 #declare all command lines provided
 
 set(ALLCLI 
@@ -47,16 +43,13 @@ set(ALLCLI
   )
 
 #set the prefix of command
-set (CMDPREFIX vishnu_)
+set(CMDPREFIX vishnu_)
 
 # macro to generate all command lines
 
 macro(genCli NAME )
 
-  set(source_files ${NAME}
-      cmdArgs
-      FMSDisplayer 
-     )
+  set(source_files ${NAME} cmdArgs.cpp FMSDisplayer.cpp)
 
   set(CMDNAME ${CMDPREFIX}${NAME})
 
@@ -69,23 +62,14 @@ macro(genCli NAME )
   target_link_libraries(${CMDNAME}
     ${Boost_LIBRARIES}
     ${VISHNU_EXCEPTION_LIB}
-    utils-vishnu
-    vishnu-fms-api
-    vishnu-ums-api
-    -pthread
-    )
-  install_targets(/bin/
-    ${CMDNAME}
-    )
-
+    vishnu-fms-client
+    vishnu-ums-client)
+  install(TARGETS ${CMDNAME} DESTINATION bin)
 endmacro(genCli)
 
 #Loop over all command lines to generate them
-
 foreach(cli ${ALLCLI})
-
   genCli(${cli})
-
 endforeach(cli)
 
 #install( TARGETS tms-utils-cli DESTINATION lib )

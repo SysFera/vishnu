@@ -1,10 +1,77 @@
-if (NOT CLIENT_ONLY)
-  add_subdirectory(sed)
-  add_subdirectory(server)
-endif (NOT CLIENT_ONLY)
+include_directories(client api
+  ${EMF4CPP_INCLUDE_DIR}
+  ${EMF_DATA_DIR} 
+  ${UMS_EMF_DATA_DIR}
+  ${FMS_EMF_DATA_DIR}
+  ${UMS_CLIENT_PROXY_SOURCE_DIR}
+  ${UTILVISHNU_SOURCE_DIR}
+  ${VISHNU_EXCEPTION_INCLUDE_DIR})
 
-#add_subdirectory(utils)
-add_subdirectory(api)
-add_subdirectory(client)
+set(client_SRCS client/FileProxy
+  client/LocalFileProxy
+  client/RemoteFileProxy
+  client/FileProxyFactory
+  client/FileTransferProxy)
+
+set(api_SRCS api/api_fms.cpp)
+set(api_HEADERS api/api_fms.hpp)
+
+add_library(vishnu-fms-client ${client_SRCS} ${api_SRCS})
+target_link_libraries(vishnu-fms-client
+  ${DIET_CLIENT_LIBRARIES}
+  ${Boost_LIBRARIES}
+  emf4cpp-vishnu
+  vishnu-core
+  crypt)
+
+## client CLI
 add_subdirectory(cli)
-#
+
+install(TARGETS vishnu-fms-client DESTINATION lib)
+install(FILES {api_HEADERS} DESTINATION include)
+
+if(NOT CLIENT_ONLY)
+  include_directories(${DATA_BASE_INCLUDE_DIR}
+    ${CONFIG_SOURCE_DIR}
+    ${REGISTRY_SOURCE_DIR}
+    ${UMS_SERVER_SOURCE_DIR}
+    ${FMS_SERVER_SOURCE_DIR})
+
+  set(sed_SRCS sed/fmssed.cpp
+    sed/ServerFMS.cpp
+    sed/internalApiFMS.cpp
+    sed/getInfosSrv.cpp
+    sed/getContentSrv.cpp
+    sed/headSrv.cpp
+    sed/tailSrv.cpp
+    sed/mkdirSrv.cpp
+    sed/mkfileSrv.cpp
+    sed/rmdirSrv.cpp
+    sed/rmfileSrv.cpp
+    sed/chgrpSrv.cpp
+    sed/chmodSrv.cpp
+    sed/lsSrv.cpp
+    sed/transferSrv.cpp
+    sed/MonitorFMS.cpp)
+
+  set(server_SRCS
+    server/File
+    server/SSHFile
+    server/FileFactory
+    server/FileTransferCommand
+    server/FileTransferServer
+    server/ScpCommand
+    server/RsyncCommand)
+
+  add_executable(fmssed ${sed_SRCS} ${server_SRCS})
+  target_link_libraries(fmssed ${DIET_SERVER_LIBRARIES}
+    ${LOG_LIBRARY}
+    ${DATABASE_LIBS}
+    ${Boost_LIBRARIES}
+    vishnu-core
+    vishnu-core-server
+    vishnu-ums-server
+    emf4cpp-vishnu
+    crypt)
+
+endif()
