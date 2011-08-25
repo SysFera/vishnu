@@ -36,4 +36,4 @@ configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/diet_config_tests.h.in
 
 include_directories( ${PROJECT_BINARY_DIR}/include/ )
 
-add_library( test-utils STATIC utils.cpp )
+add_library(vishnu-test utils.cpp)
