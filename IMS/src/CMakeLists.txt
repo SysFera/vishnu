@@ -36,7 +36,7 @@ install(FILES {api_HEADERS} DESTINATION include)
 ## client CLI
 add_subdirectory(cli)
 
-if (NOT CLIENT_ONLY)
+if(NOT CLIENT_ONLY)
   include_directories(${DATA_BASE_INCLUDE_DIR}
     ${CONFIG_SOURCE_DIR}
     ${REGISTRY_SOURCE_DIR}
@@ -68,6 +68,7 @@ if (NOT CLIENT_ONLY)
   add_executable(imssed ${sed_SRCS} ${server_SRCS})
   target_link_libraries(imssed ${DIET_SERVER_LIBRARIES}
     ${LOG_LIBRARY}
+    ${DATABASE_LIBS}
     ${Boost_LIBRARIES}
     vishnu-core
     vishnu-core-server
