@@ -208,7 +208,7 @@ set(CONFIG_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/config)
 set(EMF_DATA_DIR ${VISHNU_SOURCE_DIR}/core/src/emfdata)
 
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/vishnu_version.hpp.in
-    ${UTILVISHNU_SOURCE_DIR}/vishnu_version.hpp )
+    ${PROJECT_BINARY_DIR}/vishnu_version.hpp )
 #UMS
 set(UMS_EMF_DATA_DIR ${EMF_DATA_DIR}/UMS_Data)
 set(UMS_CLIENT_PROXY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/client)
