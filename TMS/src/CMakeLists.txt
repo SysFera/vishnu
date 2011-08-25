@@ -1,4 +1,5 @@
 include_directories(client api
+  ${OMNIORB4_INCLUDE_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${EMF_DATA_DIR} 
   ${UMS_EMF_DATA_DIR}
