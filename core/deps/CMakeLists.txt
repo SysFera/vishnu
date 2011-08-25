@@ -124,5 +124,9 @@ set(ecorecpp_HEADERS
   emf4cpp/ecorecpp/util/debug.hpp
   emf4cpp/ecorecpp/util/print.hpp)
 
+include_directories(
+  ${EMF4CPP_INCLUDE_DIR}
+)
+
 add_library(emf4cpp-vishnu ${ecore_SRCS} ${ecorecpp_SRCS})
 install(TARGETS emf4cpp-vishnu DESTINATION lib)
