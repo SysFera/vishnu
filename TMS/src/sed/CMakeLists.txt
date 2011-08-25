@@ -9,7 +9,7 @@ include_directories(
   ${TMS_EMF_DATA_DIR}
   ${TMS_DATA_DIR}
   ${EMF_DATA_DIR}
-  ${UMS_DATA_DIR}
+  ${UMS_EMF_DATA_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
   ${CONFIG_SOURCE_DIR}
@@ -22,7 +22,7 @@ include_directories(
   ${TMS_UTILS_DIR}
   ${TORQUE_INCLUDE_DIR}
   ${UTILS_TORQUE_DIR}
-  ${SERVER_SOURCE_DIR}
+  ${UMS_SERVER_SOURCE_DIR}
   ${SED_SOURCE_DIR}
   ${SLURM_PARSER_DIR}
   ${SLURM_INCLUDE_DIR}
@@ -41,12 +41,9 @@ target_link_libraries(tmssed
   ${TORQUE_LIB}
   ${SLURM_LIB}
   emf4cpp-TMS_Data
-  register-vishnu
   exception-vishnu
-  database-vishnu
-  config-vishnu
-  utils-vishnu
-  utils-server
+  vishnu-core
+  vishnu-core-server
   ums-server
   tms-server
 )
