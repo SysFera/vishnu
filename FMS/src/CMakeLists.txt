@@ -55,13 +55,13 @@ if(NOT CLIENT_ONLY)
     sed/MonitorFMS.cpp)
 
   set(server_SRCS
-    server/File
-    server/SSHFile
-    server/FileFactory
-    server/FileTransferCommand
-    server/FileTransferServer
-    server/ScpCommand
-    server/RsyncCommand)
+    server/File.cpp
+    server/SSHFile.cpp
+    server/FileFactory.cpp
+    server/FileTransferCommand.cpp
+    server/FileTransferServer.cpp
+    server/ScpCommand.cpp
+    server/RsyncCommand.cpp)
 
   add_executable(fmssed ${sed_SRCS} ${server_SRCS})
   target_link_libraries(fmssed ${DIET_SERVER_LIBRARIES}
