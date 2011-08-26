@@ -148,6 +148,11 @@ values can be obtained using the vishnu_list_machine command)</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To create the file toto on machine_1:</para>
+        <para>vishnu_create_file machine_1:/tmp/toto</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -239,6 +244,11 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To create the repository toto on machine_1:</para>
+        <para>vishnu_create_dir machine_1:/tmp/toto</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -338,6 +348,11 @@ values can be obtained using the vishnu_list_machine command)</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To remove the file toto on machine_1:</para>
+        <para>vishnu_remove_file machine_1:/tmp/toto </para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -429,6 +444,11 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To remove the repository toto on machine_1:</para>
+        <para>vishnu_remove_dir machine_1:/tmp/toto</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -522,6 +542,11 @@ values can be obtained using the vishnu_list_machine command)</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To change the group owner to  test of the file toto on machine_1:</para>
+        <para>vishnu_ch_owner test machine_1:/tmp/toto</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -614,6 +639,11 @@ The mode parameter is the same value as for the unix chmod command.</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To change the access rights on file toto on machine_1 to all rights:</para>
+        <para>vishnu_ch_mod 777 machine_1:/tmp/toto</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -715,6 +745,11 @@ values can be obtained using the vishnu_list_machine command).
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To visualize the 3 first line on the file toto on machine_1:</para>
+        <para>vishnu_head_of_file -n 3 machine_1:/tmp/toto</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -815,6 +850,11 @@ values can be obtained using the vishnu_list_machine command).
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To vizualize the 3 last lines of the file toto on machine_1:</para>
+        <para>vishnu_tail_of_file -n 3 machine_1:/tmp/toto</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -907,6 +947,11 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To view the content of the file toto on machine_1:</para>
+        <para>vishnu_content_of_file machine_1:/tmp/toto</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1013,6 +1058,11 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To display the content of the toto repository on machine_1:</para>
+        <para> vishnu_list_dir machine_1:/tmp/toto</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1128,6 +1178,11 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To copy the file toto from machine_1 to machine_2 home directory: </para>
+        <para>vishnu_copy_file machine_1:/tmp/toto machine_2:/home/vishnu/</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1245,6 +1300,11 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To copy using an asynchrone method the file toto from machine_1 to machine_2 home directory: </para>
+        <para>vishnu_copy_async_file machine_1:/tmp/toto machine_2:/home/vishnu/</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -1359,6 +1419,11 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To move the file toto from machine_1 to machine_2 home directory: </para>
+        <para>vishnu_move_file machine_1:/tmp/toto machine_2:/home/vishnu/</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1476,6 +1541,11 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To move using an asynchronous method the file toto from machine_1 to machine_2 home directory: </para>
+        <para>vishnu_move_async_file machine_1:/tmp/toto machine_2:/home/vishnu/</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -1555,6 +1625,10 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
+            <term>&quot;The userId is unknown&quot; [21]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
@@ -1587,6 +1661,11 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To stop the file transfers on machine_1:</para>
+        <para>vishnu_stop_file_transfer -m machine_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1675,6 +1754,10 @@ The value must be an integer. Predefined values are: 0 (INPROGRESS), 1 (COMPLETE
             <listitem/>
           </varlistentry>
           <varlistentry>
+            <term>&quot;The userId is unknown&quot; [21]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
@@ -1707,6 +1790,11 @@ The value must be an integer. Predefined values are: 0 (INPROGRESS), 1 (COMPLETE
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To list the file transfers on machine_1 for the user user_1:</para>
+        <para>vishnu_list_file_transfers -m machine_1 -u user_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1800,6 +1888,11 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To get the data concerning the file toto on machine_1:</para>
+        <para>vishnu_get_file_info machine_1:/tmp/toto</para>
       </refsect1>
     </refentry>
   </reference>
@@ -3320,6 +3413,10 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
+            <term>&quot;The userId is unknown&quot; [21]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
@@ -3417,6 +3514,10 @@ using a vishnu synchronous or asynchronous copy or move file command.
           </varlistentry>
           <varlistentry>
             <term>&quot;Undefined configuration parameter&quot; [12]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The userId is unknown&quot; [21]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3568,7 +3669,7 @@ values can be obtained using the vishnu_list_machine command).
         <refpurpose>creates  files on  remote machines.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.createFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.createFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3602,6 +3703,7 @@ values can be obtained using the vishnu_list_machine command)</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -3673,7 +3775,7 @@ values can be obtained using the vishnu_list_machine command)</para>
         <refpurpose>creates directories on remote machines.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.createDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.createDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3707,6 +3809,7 @@ values can be obtained using the vishnu_list_machine command)</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -3778,7 +3881,7 @@ values can be obtained using the vishnu_list_machine command)</para>
         <refpurpose>removes files from  remote hosts.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.removeFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>RmFileOptions <parameter>options = RmFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.removeFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>RmFileOptions <parameter>options = RmFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3818,6 +3921,7 @@ values can be obtained using the vishnu_list_machine command)</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -3889,7 +3993,7 @@ values can be obtained using the vishnu_list_machine command)</para>
         <refpurpose>removes  directories (and subdirectories) from  remote machines.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.removeDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.removeDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3923,6 +4027,7 @@ values can be obtained using the vishnu_list_machine command)</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -3994,7 +4099,7 @@ values can be obtained using the vishnu_list_machine command)</para>
         <refpurpose>changes group owner of  remote files/directories. </refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.chGrp</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>group</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.chGrp</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>group</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4034,6 +4139,7 @@ values can be obtained using the vishnu_list_machine command)</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -4105,7 +4211,7 @@ values can be obtained using the vishnu_list_machine command)</para>
         <refpurpose>changes  access rights of remote files/directories.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.chMod</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>mode_t <parameter>mode</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.chMod</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>mode_t <parameter>mode</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4146,6 +4252,7 @@ The mode parameter is the same value as for the unix chmod command.</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -4217,7 +4324,7 @@ The mode parameter is the same value as for the unix chmod command.</para>
         <refpurpose>displays a few first lines of  files located on  remote machines.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.headOfFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>string <parameter>fileContent</parameter></paramdef><paramdef>HeadOfFileOptions <parameter>options = HeadOfFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, fileContent=VISHNU.headOfFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>HeadOfFileOptions <parameter>options = HeadOfFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4262,6 +4369,12 @@ values can be obtained using the vishnu_list_machine command).
             <term><emphasis>errorCode (integer)</emphasis></term>
             <listitem>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>fileContent(string)</emphasis></term>
+            <listitem>
+              <para>The first &quot;nLine&quot; lines of the file</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -4335,7 +4448,7 @@ values can be obtained using the vishnu_list_machine command).
         <refpurpose>displays a few last lines of  files located on remote machines</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.tailOfFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>string <parameter>fileContent</parameter></paramdef><paramdef>TailOfFileOptions <parameter>options = TailOfFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, fileContent=VISHNU.tailOfFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>TailOfFileOptions <parameter>options = TailOfFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4380,6 +4493,12 @@ values can be obtained using the vishnu_list_machine command).
             <term><emphasis>errorCode (integer)</emphasis></term>
             <listitem>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>fileContent(string)</emphasis></term>
+            <listitem>
+              <para>The last &quot;nLine&quot; lines of the file</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -4453,7 +4572,7 @@ values can be obtained using the vishnu_list_machine command).
         <refpurpose>displays content  of  files located on remote machines</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.contentOfFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>string <parameter>fileContent</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, fileContent=VISHNU.contentOfFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4492,6 +4611,12 @@ values can be obtained using the vishnu_list_machine command).
             <term><emphasis>errorCode (integer)</emphasis></term>
             <listitem>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>fileContent(string)</emphasis></term>
+            <listitem>
+              <para>The content of the file</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -4565,7 +4690,7 @@ values can be obtained using the vishnu_list_machine command).
         <refpurpose>displays  the content of a remote directory. </refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>StringList <parameter>dirContent</parameter></paramdef><paramdef>LsDirOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>StringList <parameter>dirContent</parameter></paramdef><paramdef>LsDirOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4612,6 +4737,7 @@ values can be obtained using the vishnu_list_machine command).
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -4683,7 +4809,7 @@ values can be obtained using the vishnu_list_machine command).
         <refpurpose>executes a synchronous copy of file.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.copyFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>CpFileOptions <parameter>options = CpFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.copyFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>CpFileOptions <parameter>options = CpFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4732,6 +4858,7 @@ i.e. a local copy cannot be handled by this command.
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -4803,7 +4930,7 @@ i.e. a local copy cannot be handled by this command.
         <refpurpose>executes an asynchronous copy of file.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.copyAsyncFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>FileTransfer <parameter>transferInfo</parameter></paramdef><paramdef>CpFileOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.copyAsyncFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>FileTransfer <parameter>transferInfo</parameter></paramdef><paramdef>CpFileOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4859,6 +4986,7 @@ The command listFileTransfers can be used to check the status of the transfer af
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -4930,7 +5058,7 @@ The command listFileTransfers can be used to check the status of the transfer af
         <refpurpose>executes a synchronous move of file.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.moveFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>CpFileOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.moveFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>CpFileOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4979,6 +5107,7 @@ i.e. a local move cannot be handled by this command.
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -5050,7 +5179,7 @@ i.e. a local move cannot be handled by this command.
         <refpurpose>executes an asynchronous move of file.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.moveAsyncFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>FileTransfer <parameter>transferInfo</parameter></paramdef><paramdef>CpFileOptions <parameter>options = CpFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.moveAsyncFile</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>src</parameter></paramdef><paramdef>string <parameter>dest</parameter></paramdef><paramdef>FileTransfer <parameter>transferInfo</parameter></paramdef><paramdef>CpFileOptions <parameter>options = CpFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5106,6 +5235,7 @@ The command listFileTransfers can be used to check the status of the transfer af
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -5177,7 +5307,7 @@ The command listFileTransfers can be used to check the status of the transfer af
         <refpurpose>stops an execution of a set of file transfers.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.stopFileTransfer</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>StopTransferOptions <parameter>options = StopTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.stopFileTransfer</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>StopTransferOptions <parameter>options = StopTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5211,6 +5341,7 @@ The command listFileTransfers can be used to check the status of the transfer af
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -5235,6 +5366,10 @@ The command listFileTransfers can be used to check the status of the transfer af
           </varlistentry>
           <varlistentry>
             <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The userId is unknown&quot; [21])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -5282,7 +5417,7 @@ The command listFileTransfers can be used to check the status of the transfer af
         <refpurpose>displays the history of all file transfers submitted by User.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listFileTransfers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>FileTransferList <parameter>fileTransferList</parameter></paramdef><paramdef>LsTransferOptions <parameter>options = LsTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listFileTransfers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>FileTransferList <parameter>fileTransferList</parameter></paramdef><paramdef>LsTransferOptions <parameter>options = LsTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5322,6 +5457,7 @@ using a vishnu synchronous or asynchronous copy or move file command.
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -5346,6 +5482,10 @@ using a vishnu synchronous or asynchronous copy or move file command.
           </varlistentry>
           <varlistentry>
             <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The userId is unknown&quot; [21])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -5393,7 +5533,7 @@ using a vishnu synchronous or asynchronous copy or move file command.
         <refpurpose>displays the information  of  files.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.getFileInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>FileStat <parameter>filesinfo</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getFileInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>FileStat <parameter>filesinfo</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5434,6 +5574,7 @@ values can be obtained using the vishnu_list_machine command).
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
