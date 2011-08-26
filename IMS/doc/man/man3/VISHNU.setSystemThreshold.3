@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: VISHNU.setSystemThreshold
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
 .\"      Date: June 2011
 .\"    Manual: IMS Python API Reference
 .\"    Source: VISHNU 1.2
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.setSystemThreshold \- sets a threshold on a machine of a system
 .SH "SYNOPSIS"
-.HP \w'VISHNU\&.setSystemThreshold('u
-.BI "VISHNU\&.setSystemThreshold(string\ " "sessionKey" ", Threshold\ " "threshold" ");"
+.HP \w'ret=VISHNU\&.setSystemThreshold('u
+.BI "ret=VISHNU\&.setSystemThreshold(string\ " "sessionKey" ", Threshold\ " "threshold" ");"
 .SH "DESCRIPTION"
 .PP
 This function allows an administrator to set a threshold\&. Each time an IMS server records the state of a machine, it checks the values defined, if a threshold is reached (over a use of the cpu or under the free memory or diskspace available), the administrator responsible for the threshold will receive an mail\&. These threshold will help the administrator to be aware of critical situations on a machine\&. Warning, a mail is sent for each time the threshold is reached, if a value swings around a threshold, the administrator may receive lots of emails depending on the update frequency\&.
@@ -51,6 +51,9 @@ Input argument\&. The threshold to set\&.
 \fIerrorCode (integer)\fR
 .RS 4
 Output parameter\&. Contains 0 on success and the error code on failure\&.
+.RE
+.PP
+.RS 4
 .RE
 .SH "EXCEPTIONS"
 .PP
