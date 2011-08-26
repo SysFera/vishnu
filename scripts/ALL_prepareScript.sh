@@ -82,6 +82,8 @@ cp core/test/cfgs/*cfg.in $path/core/test/cfgs/
 cp -r core/test/third-party $path/core/test
 cp core/doc/usermanual/dockbook/userman-gen.docbook.pdf $path/core/doc/vishnu-userman.pdf
 cp core/doc/usermanual/dockbook/adminman-gen.docbook.pdf $path/core/doc/vishnu-adminman.pdf
+cp core/doc/usermanual/dockbook/userman-gen.docbook $path/core/doc/vishnu-userman.docbook
+cp core/doc/usermanual/dockbook/adminman-gen.docbook $path/core/doc/vishnu-adminman.docbook
 
 # dependency of emf
 mkdir $path/core/deps
