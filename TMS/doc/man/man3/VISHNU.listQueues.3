@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: VISHNU.listQueues
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
 .\"      Date: February 2011
 .\"    Manual: TMS Python API Reference
 .\"    Source: VISHNU 1.2
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.listQueues \- gets queues information
 .SH "SYNOPSIS"
-.HP \w'VISHNU\&.listQueues('u
-.BI "VISHNU\&.listQueues(string\ " "sessionKey" ", string\ " "machineId" ", ListQueues\ " "listofQueues" ", string\ " "queueName\ =\ string()" ");"
+.HP \w'ret=VISHNU\&.listQueues('u
+.BI "ret=VISHNU\&.listQueues(string\ " "sessionKey" ", string\ " "machineId" ", ListQueues\ " "listofQueues" ", string\ " "queueName\ =\ string()" ");"
 .SH "DESCRIPTION"
 .PP
 This command displays the status of the queues of a specific machine\*(Aqs batch scheduler\&.
@@ -61,6 +61,9 @@ Input argument\&. If it is given, listQueues gives information only of this queu
 \fIerrorCode (integer)\fR
 .RS 4
 Output parameter\&. Contains 0 on success and the error code on failure\&.
+.RE
+.PP
+.RS 4
 .RE
 .SH "EXCEPTIONS"
 .PP

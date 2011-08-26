@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: VISHNU.getMetricHistory
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
 .\"      Date: June 2011
 .\"    Manual: IMS Python API Reference
 .\"    Source: VISHNU 1.2
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.getMetricHistory \- displays the history of values of a system metric
 .SH "SYNOPSIS"
-.HP \w'VISHNU\&.getMetricHistory('u
-.BI "VISHNU\&.getMetricHistory(string\ " "sessionKey" ", string\ " "machineId" ", ListMetric\ " "metricValues" ", MetricHistOp\ " "options\ =\ MetricHistOp()" ");"
+.HP \w'ret=VISHNU\&.getMetricHistory('u
+.BI "ret=VISHNU\&.getMetricHistory(string\ " "sessionKey" ", string\ " "machineId" ", ListMetric\ " "metricValues" ", MetricHistOp\ " "options\ =\ MetricHistOp()" ");"
 .SH "DESCRIPTION"
 .PP
 Displays the chronological list of values of the metrics on the system identified by the machineId argument\&. Using the options it is possible to specify a type of metric and the starting and ending dates of the desired monitoring period\&. Note that some data will be available only if the required VISHNU agent (IMS server) has been running locally on the machine during the specified period\&.
@@ -61,6 +61,9 @@ Input argument\&. The optional fields for the metric history\&.
 \fIerrorCode (integer)\fR
 .RS 4
 Output parameter\&. Contains 0 on success and the error code on failure\&.
+.RE
+.PP
+.RS 4
 .RE
 .SH "EXCEPTIONS"
 .PP

@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: VISHNU.getProcesses
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
 .\"      Date: June 2011
 .\"    Manual: IMS Python API Reference
 .\"    Source: VISHNU 1.2
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.getProcesses \- displays the list of the VISHNU processes running on machines
 .SH "SYNOPSIS"
-.HP \w'VISHNU\&.getProcesses('u
-.BI "VISHNU\&.getProcesses(string\ " "sessionKey" ", ListProcesses\ " "process" ", ProcessOp\ " "options\ =\ ProcessOp()" ");"
+.HP \w'ret=VISHNU\&.getProcesses('u
+.BI "ret=VISHNU\&.getProcesses(string\ " "sessionKey" ", ListProcesses\ " "process" ", ProcessOp\ " "options\ =\ ProcessOp()" ");"
 .SH "DESCRIPTION"
 .PP
 This command with restricted access is used to get the list of VISHNU server processes that are running on the infrastructure or on a single machine\&. The results contain both the VISHNU identifier of the process and the DIET underlying middleware identifier\&.
@@ -56,6 +56,9 @@ Input argument\&. The options to search for the processes\&.
 \fIerrorCode (integer)\fR
 .RS 4
 Output parameter\&. Contains 0 on success and the error code on failure\&.
+.RE
+.PP
+.RS 4
 .RE
 .SH "EXCEPTIONS"
 .PP

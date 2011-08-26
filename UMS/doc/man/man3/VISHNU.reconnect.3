@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: VISHNU.reconnect
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
 .\"      Date: February 2011
 .\"    Manual: UMS Python API Reference
 .\"    Source: VISHNU 1.2
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.reconnect \- reconnects to a session that is still active
 .SH "SYNOPSIS"
-.HP \w'VISHNU\&.reconnect('u
-.BI "VISHNU\&.reconnect(string\ " "userId" ", string\ " "password" ", string\ " "sessionId" ", Session\ " "session" ");"
+.HP \w'ret=VISHNU\&.reconnect('u
+.BI "ret=VISHNU\&.reconnect(string\ " "userId" ", string\ " "password" ", string\ " "sessionId" ", Session\ " "session" ");"
 .SH "DESCRIPTION"
 .PP
 This command allows you to resume a session that has been opened previously and that has not yet been closed\&. You can disconnect from a session without closing it (for example if there are running commands in that session) by setting the session\*(Aqs close policy (at connection time) to CLOSE_ON_TIMEOUT\&. As sessions are linked to a specific client system, you cannot reconnect to a session that was opened on another client system\&.
@@ -63,9 +63,7 @@ Output argument\&. The session object containing session information\&.
 Output parameter\&. Contains 0 on success and the error code on failure\&.
 .RE
 .PP
-\fIsessionKey (string)\fR
 .RS 4
-Output parameter\&. Contains the session key\&.
 .RE
 .SH "EXCEPTIONS"
 .PP
