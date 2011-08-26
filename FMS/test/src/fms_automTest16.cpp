@@ -222,10 +222,14 @@ BOOST_AUTO_TEST_CASE(CancelFileTransfer_Base)
     stopOpts.setTransferId(transferInfo.getTransferId());
     BOOST_REQUIRE( stopFileTransfer(sessionKey, stopOpts) == 0 );
     // Check
+    transferOpts.setTransferId(transferInfo.getTransferId());
+    BOOST_REQUIRE(listFileTransfers(sessionKey, transferList, transferOpts) == 0);
+    BOOST_CHECK_EQUAL(transferList.getFileTransfers().get(0)->getStatus(), STATUS_CANCELED);
     bool isRemoteCopyFound1 = isFoundInDir(sessionKey, baseDirFullPath1, newFileName);
-    BOOST_CHECK(isRemoteCopyFound1);
     // Cleanup
-    BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
+    if(isRemoteCopyFound1) {
+      BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
+    }
     vishnu::deleteFile(localFilePath.c_str());
 
   } catch (VishnuException& e) {
