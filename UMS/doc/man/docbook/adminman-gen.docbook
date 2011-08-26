@@ -138,6 +138,11 @@ and password are sent to the user by email.</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To add the user Jean DUPONT as a simple user and with the mail dupont@gmail.com:</para>
+        <para>vishnu_add_user Jean DUPONT 0 dupont@gmail.com</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -253,6 +258,11 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To update the mail adress of a user user_1 to jdupont@gmail.com:</para>
+        <para>vishnu_update_user -m jdupont@gmail.com user_1</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -322,6 +332,11 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>Tu delete the user user_1:</para>
+        <para>vishnu_delete_user user_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -393,6 +408,11 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To reset the password of the user user_1:</para>
+        <para>vishnu_reset_password user_1</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -449,6 +469,11 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To save the current configuration:</para>
+        <para>vishnu_save_configuration</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -513,6 +538,11 @@ After restoring, the vishnu database is re-initialized.</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To restore the configuration in /tmp/toto.cfg:</para>
+        <para>vishnu_restore_configuration /tmp/toto.cfg</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -589,6 +619,11 @@ have to add it to the authorized keys of their own account on the machine.</para
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To add the machine perceval in paris with the description in french &quot;ceci est une description&quot;  with the public key in /tmp/key.pub:</para>
+        <para>vishnu_add_machine perceval paris fr /tmp/key.pub &quot;ceci est une description&quot;</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -703,6 +738,11 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To change the name of the machine whose id is machine_1 to provencal:</para>
+        <para>vishnu_update_machine machine_1 -n provencal</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -768,6 +808,11 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To delete the machine machine_1:</para>
+        <para>vishnu_delete_machine machine_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -840,6 +885,11 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To list all the users:</para>
+        <para>vishnu_list_users</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -919,6 +969,11 @@ that option using the vishnu_configure_option command.</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To configure the option VISHNU_TIMEOUT with the value 42:</para>
+        <para>vishnu_configure_default_option VISHNU_TIMEOUT 42</para>
       </refsect1>
     </refentry>
   </reference>
@@ -1835,7 +1890,7 @@ that option using the vishnu_configure_option command.</para>
         <refpurpose>adds a new VISHNU user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.addUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>User <parameter>newUser</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.addUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>User <parameter>newUser</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -1870,6 +1925,7 @@ and password are sent to the user by email.</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -1937,7 +1993,7 @@ and password are sent to the user by email.</para>
         <refpurpose>updates the user information except the userId and the password</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.updateUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>User <parameter>user</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.updateUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>User <parameter>user</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -1969,6 +2025,7 @@ and password are sent to the user by email.</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -2036,7 +2093,7 @@ and password are sent to the user by email.</para>
         <refpurpose>removes a user from VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.deleteUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.deleteUser</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2068,6 +2125,7 @@ and password are sent to the user by email.</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -2127,7 +2185,7 @@ and password are sent to the user by email.</para>
         <refpurpose>resets the password of a user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.resetPassword</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>tmpPassword</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, tmpPassword=VISHNU.resetPassword</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2163,6 +2221,12 @@ and password are sent to the user by email.</para>
             <term><emphasis>errorCode (integer)</emphasis></term>
             <listitem>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>tmpPassword(string)</emphasis></term>
+            <listitem>
+              <para>The temporary password generated by VISHNU</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2224,7 +2288,7 @@ and password are sent to the user by email.</para>
         <refpurpose>saves the configuration of VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.saveConfiguration</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Configuration <parameter>configuration</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.saveConfiguration</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Configuration <parameter>configuration</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2256,6 +2320,7 @@ and password are sent to the user by email.</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -2303,7 +2368,7 @@ and password are sent to the user by email.</para>
         <refpurpose>restores the configuration of VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.restoreConfiguration</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>filePath</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.restoreConfiguration</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>filePath</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2341,6 +2406,7 @@ After restoring, the vishnu database is re-initialized.</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -2388,7 +2454,7 @@ After restoring, the vishnu database is re-initialized.</para>
         <refpurpose>adds a new machine in VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.addMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Machine <parameter>newMachine</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.addMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Machine <parameter>newMachine</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2424,6 +2490,7 @@ have to add it to the authorized keys of their own account on the machine.</para
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -2483,7 +2550,7 @@ have to add it to the authorized keys of their own account on the machine.</para
         <refpurpose>updates machine description</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.updateMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Machine <parameter>machine</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.updateMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Machine <parameter>machine</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2515,6 +2582,7 @@ have to add it to the authorized keys of their own account on the machine.</para
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -2574,7 +2642,7 @@ have to add it to the authorized keys of their own account on the machine.</para
         <refpurpose>removes a machine from VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.deleteMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.deleteMachine</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2606,6 +2674,7 @@ have to add it to the authorized keys of their own account on the machine.</para
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -2661,7 +2730,7 @@ have to add it to the authorized keys of their own account on the machine.</para
         <refpurpose>lists VISHNU users</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listUsers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers <parameter>listuser</parameter></paramdef><paramdef>string <parameter>userIdOption = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listUsers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers <parameter>listuser</parameter></paramdef><paramdef>string <parameter>userIdOption = string()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2699,6 +2768,7 @@ have to add it to the authorized keys of their own account on the machine.</para
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -2754,7 +2824,7 @@ have to add it to the authorized keys of their own account on the machine.</para
         <refpurpose>configures a default option value</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.configureDefaultOption</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>OptionValue <parameter>optionValue</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.configureDefaultOption</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>OptionValue <parameter>optionValue</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2791,6 +2861,7 @@ that option using the vishnu_configure_option command.</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
