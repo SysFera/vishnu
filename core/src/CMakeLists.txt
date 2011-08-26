@@ -1,7 +1,7 @@
 include_directories(${Boost_INCLUDE_DIRS} config exception utils emfdata
   ../deps/emf4cpp ${UMS_SERVER_SOURCE_DIR} ${TMS_SERVER_SOURCE_DIR}
   ${IMS_SERVER_SOURCE_DIR} ${FMS_SERVER_SOURCE_DIR}
-  )
+  ${PROJECT_BINARY_DIR})
 
 #################### config ###################################################
 set(config_SRCS config/CommonParser.cpp
@@ -309,4 +309,6 @@ if(NOT CLIENT_ONLY)
   set_target_properties(vishnu-core-server PROPERTIES VERSION ${VISHNU_VERSION})
   install(TARGETS vishnu-core-server DESTINATION lib)
   target_link_libraries(vishnu-core-server ${DB_LIBS})
+
+  install(FILES utils/sendmail.py DESTINATION sbin)
 endif()
