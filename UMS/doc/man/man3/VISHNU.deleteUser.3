@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: VISHNU.deleteUser
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
 .\"      Date: February 2011
 .\"    Manual: UMS Python API Reference
 .\"    Source: VISHNU 1.2
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.deleteUser \- removes a user from VISHNU
 .SH "SYNOPSIS"
-.HP \w'VISHNU\&.deleteUser('u
-.BI "VISHNU\&.deleteUser(string\ " "sessionKey" ", string\ " "userId" ");"
+.HP \w'ret=VISHNU\&.deleteUser('u
+.BI "ret=VISHNU\&.deleteUser(string\ " "sessionKey" ", string\ " "userId" ");"
 .SH "DESCRIPTION"
 .PP
 This command allows an admin to delete a user from VISHNU\&. When a user is deleted from VISHNU all of her/his information are deleted from VISHNU\&. However, it is not possible to delete the VISHNU root user\&.
@@ -51,6 +51,9 @@ Input argument\&. UserId represents the VISHNU user identifier of the user who w
 \fIerrorCode (integer)\fR
 .RS 4
 Output parameter\&. Contains 0 on success and the error code on failure\&.
+.RE
+.PP
+.RS 4
 .RE
 .SH "EXCEPTIONS"
 .PP

@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: VISHNU.setSystemInfo
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
 .\"      Date: June 2011
 .\"    Manual: IMS Python API Reference
 .\"    Source: VISHNU 1.2
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.setSystemInfo \- updates the system information of a machine
 .SH "SYNOPSIS"
-.HP \w'VISHNU\&.setSystemInfo('u
-.BI "VISHNU\&.setSystemInfo(string\ " "sessionKey" ", SystemInfo\ " "systemInfo" ");"
+.HP \w'ret=VISHNU\&.setSystemInfo('u
+.BI "ret=VISHNU\&.setSystemInfo(string\ " "sessionKey" ", SystemInfo\ " "systemInfo" ");"
 .SH "DESCRIPTION"
 .PP
 This command with restricted access is used to set system information on a machine in the VISHNU database\&. The machine must first be registered using the UMS "addMachine" call\&. Using the machine identifier, information such as the total memory and available diskspace on the machine can be added\&.
@@ -51,6 +51,9 @@ Input argument\&. Contains system information to store in Vishnu database\&.
 \fIerrorCode (integer)\fR
 .RS 4
 Output parameter\&. Contains 0 on success and the error code on failure\&.
+.RE
+.PP
+.RS 4
 .RE
 .SH "EXCEPTIONS"
 .PP

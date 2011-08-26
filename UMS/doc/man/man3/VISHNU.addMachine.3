@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: VISHNU.addMachine
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
 .\"      Date: February 2011
 .\"    Manual: UMS Python API Reference
 .\"    Source: VISHNU 1.2
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.addMachine \- adds a new machine in VISHNU
 .SH "SYNOPSIS"
-.HP \w'VISHNU\&.addMachine('u
-.BI "VISHNU\&.addMachine(string\ " "sessionKey" ", Machine\ " "newMachine" ");"
+.HP \w'ret=VISHNU\&.addMachine('u
+.BI "ret=VISHNU\&.addMachine(string\ " "sessionKey" ", Machine\ " "newMachine" ");"
 .SH "DESCRIPTION"
 .PP
 This command allows an admin to add a new machine in VISHNU\&. Several machine information are mandatory such as: name, site, language and the public ssh key of the VISHNU system account on the machine\&. This public key will be provided automatically to all new VISHNU users who will have to add it to the authorized keys of their own account on the machine\&.
@@ -51,6 +51,9 @@ Input/Output argument\&. Is an object which encapsulates the information of the 
 \fIerrorCode (integer)\fR
 .RS 4
 Output parameter\&. Contains 0 on success and the error code on failure\&.
+.RE
+.PP
+.RS 4
 .RE
 .SH "EXCEPTIONS"
 .PP

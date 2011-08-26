@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: VISHNU.restart
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
 .\"      Date: June 2011
 .\"    Manual: IMS Python API Reference
 .\"    Source: VISHNU 1.2
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.restart \- To restart a SeD or a MA
 .SH "SYNOPSIS"
-.HP \w'VISHNU\&.restart('u
-.BI "VISHNU\&.restart(string\ " "sessionKey" ", string\ " "machineId" ", RestartOp\ " "options" ");"
+.HP \w'ret=VISHNU\&.restart('u
+.BI "ret=VISHNU\&.restart(string\ " "sessionKey" ", string\ " "machineId" ", RestartOp\ " "options" ");"
 .SH "DESCRIPTION"
 .PP
 This function allows an admin to restart a VISHNU server on a machine\&. Warning when restarting a server, first it is tried to stop it, so if one is running it is stopped and then another is restarted\&.
@@ -56,6 +56,9 @@ Input argument\&. The option for the restart\&.
 \fIerrorCode (integer)\fR
 .RS 4
 Output parameter\&. Contains 0 on success and the error code on failure\&.
+.RE
+.PP
+.RS 4
 .RE
 .SH "EXCEPTIONS"
 .PP

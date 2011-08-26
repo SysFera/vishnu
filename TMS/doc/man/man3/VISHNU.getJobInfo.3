@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: VISHNU.getJobInfo
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
 .\"      Date: February 2011
 .\"    Manual: TMS Python API Reference
 .\"    Source: VISHNU 1.2
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.getJobInfo \- gets information on a job from its id
 .SH "SYNOPSIS"
-.HP \w'VISHNU\&.getJobInfo('u
-.BI "VISHNU\&.getJobInfo(string\ " "sessionKey" ", string\ " "machineId" ", string\ " "jobId" ", Job\ " "jobInfos" ");"
+.HP \w'ret=VISHNU\&.getJobInfo('u
+.BI "ret=VISHNU\&.getJobInfo(string\ " "sessionKey" ", string\ " "machineId" ", string\ " "jobId" ", Job\ " "jobInfos" ");"
 .SH "DESCRIPTION"
 .PP
 This command allows getting information about a specific job\&. It can return the job\*(Aqs status, for example\&.
@@ -61,6 +61,9 @@ Output argument\&. The resulting information on the job\&.
 \fIerrorCode (integer)\fR
 .RS 4
 Output parameter\&. Contains 0 on success and the error code on failure\&.
+.RE
+.PP
+.RS 4
 .RE
 .SH "EXCEPTIONS"
 .PP

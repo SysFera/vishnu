@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: VISHNU.close
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
 .\"      Date: February 2011
 .\"    Manual: UMS Python API Reference
 .\"    Source: VISHNU 1.2
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.close \- closes the session
 .SH "SYNOPSIS"
-.HP \w'VISHNU\&.close('u
-.BI "VISHNU\&.close(string\ " "sessionKey" ");"
+.HP \w'ret=VISHNU\&.close('u
+.BI "ret=VISHNU\&.close(string\ " "sessionKey" ");"
 .SH "DESCRIPTION"
 .PP
 This command closes the session that is currently active in the terminal\&. It will return an error if there are still some active requests that were been submitted by the user during the session (e\&.g\&., job submission or file transfers)\&. After the session is closed, it cannot be re\-opened\&.
@@ -46,6 +46,9 @@ Input argument\&. The sessionKey is the encrypted identifier of the session gene
 \fIerrorCode (integer)\fR
 .RS 4
 Output parameter\&. Contains 0 on success and the error code on failure\&.
+.RE
+.PP
+.RS 4
 .RE
 .SH "EXCEPTIONS"
 .PP
