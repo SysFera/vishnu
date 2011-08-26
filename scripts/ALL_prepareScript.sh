@@ -54,6 +54,7 @@ cp core/database/postgre_update.sql $path/core/database/
 cp core/database/mysql_create.sql $path/core/database/
 
 # Copy core sources
+mkdir $path/core/doc
 mkdir $path/core/src/
 mkdir $path/core/src/config
 mkdir $path/core/src/database
@@ -79,6 +80,8 @@ cp core/test/src/*pp $path/core/test/src/
 cp core/test/src/*h.in $path/core/test/src/
 cp core/test/cfgs/*cfg.in $path/core/test/cfgs/
 cp -r core/test/third-party $path/core/test
+cp core/doc/usermanual/dockbook/userman-gen.docbook.pdf $path/core/doc/vishnu-userman.pdf
+cp core/doc/usermanual/dockbook/adminman-gen.docbook.pdf $path/core/doc/vishnu-adminman.pdf
 
 # dependency of emf
 mkdir $path/core/deps
