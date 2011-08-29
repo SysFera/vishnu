@@ -80,10 +80,10 @@ cp core/test/src/*pp $path/core/test/src/
 cp core/test/src/*h.in $path/core/test/src/
 cp core/test/cfgs/*cfg.in $path/core/test/cfgs/
 cp -r core/test/third-party $path/core/test
-cp core/doc/usermanual/dockbook/userman-gen.docbook.pdf $path/core/doc/vishnu-userman.pdf
-cp core/doc/usermanual/dockbook/adminman-gen.docbook.pdf $path/core/doc/vishnu-adminman.pdf
-cp core/doc/usermanual/dockbook/userman-gen.docbook $path/core/doc/vishnu-userman.docbook
-cp core/doc/usermanual/dockbook/adminman-gen.docbook $path/core/doc/vishnu-adminman.docbook
+cp core/doc/usermanual/docbook/userman-gen.docbook.pdf $path/core/doc/vishnu-userman.pdf
+cp core/doc/adminmanual/docbook/adminman-gen.docbook.pdf $path/core/doc/vishnu-adminman.pdf
+cp core/doc/usermanual/docbook/userman-gen.docbook $path/core/doc/vishnu-userman.docbook
+cp core/doc/adminmanual/docbook/adminman-gen.docbook $path/core/doc/vishnu-adminman.docbook
 
 # dependency of emf
 mkdir $path/core/deps
