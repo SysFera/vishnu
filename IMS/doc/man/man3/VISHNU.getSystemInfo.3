@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: VISHNU.getSystemInfo
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
 .\"      Date: June 2011
 .\"    Manual: IMS Python API Reference
 .\"    Source: VISHNU 1.2
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.getSystemInfo \- To get the system info on a machine
 .SH "SYNOPSIS"
-.HP \w'VISHNU\&.getSystemInfo('u
-.BI "VISHNU\&.getSystemInfo(string\ " "sessionKey" ", ListSysInfo\ " "res" ", SysInfoOp\ " "options\ =\ SysInfoOp()" ");"
+.HP \w'ret=VISHNU\&.getSystemInfo('u
+.BI "ret=VISHNU\&.getSystemInfo(string\ " "sessionKey" ", ListSysInfo\ " "res" ", SysInfoOp\ " "options\ =\ SysInfoOp()" ");"
 .SH "DESCRIPTION"
 .PP
 This function allows a user to get system information about a machine\&. A system information describes a machine\&. The option is the machine id (if no machine id, the information for all the machines are given)
@@ -56,6 +56,9 @@ Input argument\&. Optional field for system information\&.
 \fIerrorCode (integer)\fR
 .RS 4
 Output parameter\&. Contains 0 on success and the error code on failure\&.
+.RE
+.PP
+.RS 4
 .RE
 .SH "EXCEPTIONS"
 .PP

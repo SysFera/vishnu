@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: VISHNU.connect
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
 .\"      Date: February 2011
 .\"    Manual: UMS Python API Reference
 .\"    Source: VISHNU 1.2
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.connect \- opens a session
 .SH "SYNOPSIS"
-.HP \w'VISHNU\&.connect('u
-.BI "VISHNU\&.connect(string\ " "userId" ", string\ " "password" ", Session\ " "session" ", ConnectOptions\ " "options\ =\ ConnectOptions()" ");"
+.HP \w'ret=VISHNU\&.connect('u
+.BI "ret=VISHNU\&.connect(string\ " "userId" ", string\ " "password" ", Session\ " "session" ", ConnectOptions\ " "options\ =\ ConnectOptions()" ");"
 .SH "DESCRIPTION"
 .PP
 Opening a VISHNU session is the first step before using any other VISHNU command\&. This command authenticates you\&. You must have been registered in the VISHNU system by an administrator\&. It also creates a session that remains open after the command is completed and until the session is either manually or automatically closed\&.
@@ -63,9 +63,7 @@ Input argument\&. Options is an object which encapsulates the options available 
 Output parameter\&. Contains 0 on success and the error code on failure\&.
 .RE
 .PP
-\fIsessionKey (string)\fR
 .RS 4
-Output parameter\&. Contains the session key\&.
 .RE
 .SH "EXCEPTIONS"
 .PP
