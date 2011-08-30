@@ -1,4 +1,12 @@
 +--------------+
+| VISHNU 1.2.4 |
++--------------+
+
+* Mise à jour de la doc
+* Correctifs de typographie
+* Correctif dans l'API python pour le connect/reconnect
+
++--------------+
 | VISHNU 1.2.3 |
 +--------------+
 
