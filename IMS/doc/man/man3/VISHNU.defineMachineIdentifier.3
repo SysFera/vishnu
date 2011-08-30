@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: VISHNU.defineMachineIdentifier
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
 .\"      Date: June 2011
 .\"    Manual: IMS Python API Reference
 .\"    Source: VISHNU 1.2
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.defineMachineIdentifier \- defines the shape of the identifiers automatically generated for the machines
 .SH "SYNOPSIS"
-.HP \w'VISHNU\&.defineMachineIdentifier('u
-.BI "VISHNU\&.defineMachineIdentifier(string\ " "sessionKey" ", string\ " "format" ");"
+.HP \w'ret=VISHNU\&.defineMachineIdentifier('u
+.BI "ret=VISHNU\&.defineMachineIdentifier(string\ " "sessionKey" ", string\ " "format" ");"
 .SH "DESCRIPTION"
 .PP
 This function allows an administrator to define the format of the identifier that will be automatically generated for the machines\&. Once the format is defined, each time a machine is added, the format will be used to define its identifier\&. The format can contain various variables, a variable is preceded by the \*(Aq$\*(Aq symbol\&. Moreover, the counter variable \*(Aq$CPT\*(Aq MUST be present in the format, otherwise it will be rejected\&. The available variables are: $CPT: a counter $MANAME: The hostname of the machine $NAME: The hostname of the machine $DAY: The day the machine is added $MONTH: The month the machine is added $YEAR: The year the machine is added $SITE: The site the machine is $TYPE: The \*(AqM\*(Aq symb to remind it is a machine id
@@ -51,6 +51,9 @@ Input argument\&. The new format to use\&.
 \fIerrorCode (integer)\fR
 .RS 4
 Output parameter\&. Contains 0 on success and the error code on failure\&.
+.RE
+.PP
+.RS 4
 .RE
 .SH "EXCEPTIONS"
 .PP

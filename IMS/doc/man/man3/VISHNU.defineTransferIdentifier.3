@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: VISHNU.defineTransferIdentifier
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
 .\"      Date: June 2011
 .\"    Manual: IMS Python API Reference
 .\"    Source: VISHNU 1.2
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.defineTransferIdentifier \- defines the shape of the identifiers automatically generated for the file transfers
 .SH "SYNOPSIS"
-.HP \w'VISHNU\&.defineTransferIdentifier('u
-.BI "VISHNU\&.defineTransferIdentifier(string\ " "sessionKey" ", string\ " "format" ");"
+.HP \w'ret=VISHNU\&.defineTransferIdentifier('u
+.BI "ret=VISHNU\&.defineTransferIdentifier(string\ " "sessionKey" ", string\ " "format" ");"
 .SH "DESCRIPTION"
 .PP
 This function allows an administrator to define the format of the identifier that will be automatically generated for the file transfers\&. Once the format is defined, each time a file transfer is done, the format will be used to define its identifier\&. The format can contain various variables, a variable is preceded by the \*(Aq$\*(Aq symbol\&. Moreover, the counter variable \*(Aq$CPT\*(Aq MUST be present in the format, otherwise it will be rejected\&. The available variables are: $CPT: a counter $DAY: The day the file transfer is done $MONTH: The month the file transfer is done $YEAR: The year the file transfer is done $TYPE: The \*(AqF\*(Aq symb to remind it is a file transfer id
@@ -51,6 +51,9 @@ Input argument\&. The new format to use\&.
 \fIerrorCode (integer)\fR
 .RS 4
 Output parameter\&. Contains 0 on success and the error code on failure\&.
+.RE
+.PP
+.RS 4
 .RE
 .SH "EXCEPTIONS"
 .PP

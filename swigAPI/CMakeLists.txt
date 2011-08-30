@@ -79,6 +79,7 @@ set(SWIG_LINK_LIB
   ${SWIG_LINK_LIB}
   emf4cpp-vishnu
   vishnu-core
+  vishnu-ums-client
   ${DIET_CLIENT_LIB} )
 
 if(COMPILE_TMS)
