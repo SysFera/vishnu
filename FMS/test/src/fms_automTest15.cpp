@@ -198,7 +198,7 @@ BOOST_AUTO_TEST_CASE(AsyncMoveFile_Base)
 
   try {
     FileTransfer transferInfo;
-    createFile<10>(localFilePath);
+    createFile<1000>(localFilePath);
     // local to remote
     BOOST_MESSAGE("Checking local to remote move");
     BOOST_REQUIRE( moveAsyncFile(sessionKey, localFilePath, baseDirFullPath1, transferInfo) == 0);
