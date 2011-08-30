@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: VISHNU.chGrp
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
 .\"      Date: June 2011
 .\"    Manual: FMS Python API Reference
 .\"    Source: VISHNU 1.2
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.chGrp \- changes group owner of remote files/directories\&.
 .SH "SYNOPSIS"
-.HP \w'VISHNU\&.chGrp('u
-.BI "VISHNU\&.chGrp(string\ " "sessionKey" ", string\ " "group" ", string\ " "path" ");"
+.HP \w'ret=VISHNU\&.chGrp('u
+.BI "ret=VISHNU\&.chGrp(string\ " "sessionKey" ", string\ " "group" ", string\ " "path" ");"
 .SH "DESCRIPTION"
 .PP
 Changes the group attribute of a file or directory at the location given by the path parameter\&. The path must be provided in the form \*(Aqmachine_id:path\*(Aq (the machine_id values can be obtained using the vishnu_list_machine command)
@@ -56,6 +56,9 @@ Input argument\&. The file/directory following the pattern [host:]file path\&.
 \fIerrorCode (integer)\fR
 .RS 4
 Output parameter\&. Contains 0 on success and the error code on failure\&.
+.RE
+.PP
+.RS 4
 .RE
 .SH "EXCEPTIONS"
 .PP

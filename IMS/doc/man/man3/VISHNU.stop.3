@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: VISHNU.stop
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
 .\"      Date: June 2011
 .\"    Manual: IMS Python API Reference
 .\"    Source: VISHNU 1.2
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.stop \- To stop (and do not try to relaunch) a SeD
 .SH "SYNOPSIS"
-.HP \w'VISHNU\&.stop('u
-.BI "VISHNU\&.stop(string\ " "sessionKey" ", Process\ " "process" ");"
+.HP \w'ret=VISHNU\&.stop('u
+.BI "ret=VISHNU\&.stop(string\ " "sessionKey" ", Process\ " "process" ");"
 .SH "DESCRIPTION"
 .PP
 This function allows an admin to stop a VISHNU server on a machine\&. The stopped process will not be restarted automatically\&. The important parameters in the process are the names and the machine\&. The processName must be UMS, TMS, IMS or FMS , in upper case\&.
@@ -51,6 +51,9 @@ Input argument\&. The process to stop and do not try to restart anymore\&.
 \fIerrorCode (integer)\fR
 .RS 4
 Output parameter\&. Contains 0 on success and the error code on failure\&.
+.RE
+.PP
+.RS 4
 .RE
 .SH "EXCEPTIONS"
 .PP
