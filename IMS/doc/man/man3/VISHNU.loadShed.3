@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: VISHNU.loadShed
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
 .\"      Date: June 2011
 .\"    Manual: IMS Python API Reference
 .\"    Source: VISHNU 1.2
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.loadShed \- sheds load on a machine
 .SH "SYNOPSIS"
-.HP \w'VISHNU\&.loadShed('u
-.BI "VISHNU\&.loadShed(string\ " "sessionKey" ", string\ " "machineId" ", LoadShedType\ " "loadShedType" ");"
+.HP \w'ret=VISHNU\&.loadShed('u
+.BI "ret=VISHNU\&.loadShed(string\ " "sessionKey" ", string\ " "machineId" ", LoadShedType\ " "loadShedType" ");"
 .SH "DESCRIPTION"
 .PP
 This function allows an administrator to shed load on a machine\&. Two modes are available: SOFT mode will cancel all the submitted jobs and file transfers for all VISHNU users (Note that jobs and file transfers not initiated through VISHNU will not be impacted)\&. HARD mode will additionally stop all the VISHNU processes on the machine\&. If a user without administrator rights uses this function, all the user\*(Aqs jobs and file transfers will be cancelled on the machine\&. In the HARD mode, the stopped processes will not be automatically restarted\&. Type values: HARD = 1 SOFT = 2
@@ -56,6 +56,9 @@ Input argument\&. Selects a load shedding mode (SOFT: stops all services and the
 \fIerrorCode (integer)\fR
 .RS 4
 Output parameter\&. Contains 0 on success and the error code on failure\&.
+.RE
+.PP
+.RS 4
 .RE
 .SH "EXCEPTIONS"
 .PP

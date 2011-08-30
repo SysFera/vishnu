@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: VISHNU.configureDefaultOption
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
 .\"      Date: February 2011
 .\"    Manual: UMS Python API Reference
 .\"    Source: VISHNU 1.2
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.configureDefaultOption \- configures a default option value
 .SH "SYNOPSIS"
-.HP \w'VISHNU\&.configureDefaultOption('u
-.BI "VISHNU\&.configureDefaultOption(string\ " "sessionKey" ", OptionValue\ " "optionValue" ");"
+.HP \w'ret=VISHNU\&.configureDefaultOption('u
+.BI "ret=VISHNU\&.configureDefaultOption(string\ " "sessionKey" ", OptionValue\ " "optionValue" ");"
 .SH "DESCRIPTION"
 .PP
 Options in VISHNU corresponds to parameters of some VISHNU commands (e\&.g\&. the close policy for vishnu_connect) that can be preset in the user configuration stored by the VISHNU system\&. This command allows an administrator to configure the default value of an option; this is the value that will be applied when the user has no configuration defined for that option using the vishnu_configure_option command\&.
@@ -51,6 +51,9 @@ Input argument\&. The optionValue is an object which encapsulates the option inf
 \fIerrorCode (integer)\fR
 .RS 4
 Output parameter\&. Contains 0 on success and the error code on failure\&.
+.RE
+.PP
+.RS 4
 .RE
 .SH "EXCEPTIONS"
 .PP

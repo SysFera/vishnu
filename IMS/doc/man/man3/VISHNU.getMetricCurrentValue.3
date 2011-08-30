@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: VISHNU.getMetricCurrentValue
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
 .\"      Date: June 2011
 .\"    Manual: IMS Python API Reference
 .\"    Source: VISHNU 1.2
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.getMetricCurrentValue \- displays the current values of system metrics
 .SH "SYNOPSIS"
-.HP \w'VISHNU\&.getMetricCurrentValue('u
-.BI "VISHNU\&.getMetricCurrentValue(string\ " "sessionKey" ", string\ " "machineId" ", ListMetric\ " "metricValue" ", CurMetricOp\ " "options" ");"
+.HP \w'ret=VISHNU\&.getMetricCurrentValue('u
+.BI "ret=VISHNU\&.getMetricCurrentValue(string\ " "sessionKey" ", string\ " "machineId" ", ListMetric\ " "metricValue" ", CurMetricOp\ " "options" ");"
 .SH "DESCRIPTION"
 .PP
 Displays the current values of the monitored metrics on the system identified by the machineId argument : cpuload, free diskspace and free memory\&. The units of displayed values are percentages for cpuload and Megabytes (Mb) for diskspace and memory\&. The provided values are always standard integers (no float values)\&. Please note that retrieving these values uses some valuable system ressources and should not occur too frequently to avoid an impact on system performance\&.
@@ -61,6 +61,9 @@ Input argument\&. The options for the current metric value\&.
 \fIerrorCode (integer)\fR
 .RS 4
 Output parameter\&. Contains 0 on success and the error code on failure\&.
+.RE
+.PP
+.RS 4
 .RE
 .SH "EXCEPTIONS"
 .PP

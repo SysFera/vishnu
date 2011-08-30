@@ -157,6 +157,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To connect the user user_1:</para>
+        <para>vishnu_connect user_1</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -231,6 +236,11 @@ session that was opened on another client system.</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To reconnect the user user_1 to the session S01:</para>
+        <para>vishnu_reconnect user_1 S01</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -294,6 +304,11 @@ the session (e.g., job submission or file transfers). After the session is close
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To close the current session:</para>
+        <para>vishnu_close</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -347,6 +362,11 @@ the session (e.g., job submission or file transfers). After the session is close
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To change the password of the user user_1:</para>
+        <para>vishnu_change_password user_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -435,6 +455,11 @@ homeDirectory path .</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To add a local accout to the user user_1 on machine_1 with the login toto with the public key in .ssh/id_dsa.pub:</para>
+        <para>vishnu_add_local_account user_1 machine_1 toto /home/toto/.ssh/id_dsa.pub /home/toto</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -468,7 +493,7 @@ homeDirectory path .</para>
           <varlistentry>
             <term><option>-l <replaceable>acLogin</replaceable></option></term>
             <listitem>
-              <para>accLogin represents the login of the user on the associated machine.</para>
+              <para>acLogin represents the login of the user on the associated machine.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -529,6 +554,11 @@ homeDirectory path .</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To change the account login to toto2 for the user user_1 on machine_1:</para>
+        <para>vishnu_update_local_account user_1 machine_1 -l toto2</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -591,6 +621,11 @@ homeDirectory path .</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To delete the local account of the user user_1 on machine_1:</para>
+        <para>vishnu_delete_local_account user_1 machine_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -676,6 +711,11 @@ local configurations related to your VISHNU account. </para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To list all the local accounts:</para>
+        <para>vishnu_list_local_accounts -a</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -716,7 +756,7 @@ for other VISHNU commands.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><option>-a <replaceable>listAllmachine</replaceable></option></term>
+            <term><option>-a <replaceable>listAllMachine</replaceable></option></term>
             <listitem>
               <para>is an option for listing all VISHNU machines.</para>
             </listitem>
@@ -761,6 +801,11 @@ for other VISHNU commands.</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To list all the machines:</para>
+        <para>vishnu_list_machines -a</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -857,6 +902,11 @@ for other VISHNU commands.</para>
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To see the own history of commands of a user:</para>
+        <para>vishnu_list_history_cmd</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -945,6 +995,11 @@ for other VISHNU commands.</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To list all the options of the user:</para>
+        <para>vishnu_list_options -a</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1078,6 +1133,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
           </varlistentry>
         </variablelist>
       </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To list all opened the sessions of the user user_1:</para>
+        <para>vishnu_list_session -u user_1</para>
+      </refsect1>
     </refentry>
     <refentry>
       <refmeta>
@@ -1155,6 +1215,11 @@ opened the session).</para>
             <listitem/>
           </varlistentry>
         </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To set the value of the option VISHNU_TIMEOUT to the value 69:</para>
+        <para>vishnu_configure_option VISHNU_TIMEOUT 69</para>
       </refsect1>
     </refentry>
   </reference>
@@ -2351,7 +2416,7 @@ opened the session).</para>
         <refpurpose>opens a session</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.connect</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef><paramdef>ConnectOptions <parameter>options = ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.connect</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef><paramdef>ConnectOptions <parameter>options = ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2398,12 +2463,7 @@ completed and until the session is either manually or automatically closed.</par
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
-          <varlistentry>
-            <term><emphasis>sessionKey (string)</emphasis></term>
-            <listitem>
-              <para>Output parameter. Contains the session key.</para>
-            </listitem>
-          </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -2467,7 +2527,7 @@ completed and until the session is either manually or automatically closed.</par
         <refpurpose>reconnects to a session that is still active</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.reconnect</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>string <parameter>sessionId</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.reconnect</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>string <parameter>sessionId</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2515,12 +2575,7 @@ session that was opened on another client system.</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
-          <varlistentry>
-            <term><emphasis>sessionKey (string)</emphasis></term>
-            <listitem>
-              <para>Output parameter. Contains the session key.</para>
-            </listitem>
-          </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -2584,7 +2639,7 @@ session that was opened on another client system.</para>
         <refpurpose>closes the session</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.close</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.close</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2612,6 +2667,7 @@ the session (e.g., job submission or file transfers). After the session is close
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -2663,7 +2719,7 @@ the session (e.g., job submission or file transfers). After the session is close
         <refpurpose>changes the password</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.changePassword</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>string <parameter>passwordNew</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.changePassword</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>string <parameter>passwordNew</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2701,6 +2757,7 @@ the session (e.g., job submission or file transfers). After the session is close
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -2748,7 +2805,7 @@ the session (e.g., job submission or file transfers). After the session is close
         <refpurpose>adds a new local user configuration </refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.addLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>LocalAccount <parameter>newAccount</parameter></paramdef><paramdef>string <parameter>sshPublicKey</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, sshPublicKey=VISHNU.addLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>LocalAccount <parameter>newAccount</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2787,6 +2844,12 @@ homeDirectory path .</para>
             <term><emphasis>errorCode (integer)</emphasis></term>
             <listitem>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>sshPublicKey(string)</emphasis></term>
+            <listitem>
+              <para>The SSH public key generated by VISHNU for accessing a local account</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2860,7 +2923,7 @@ homeDirectory path .</para>
         <refpurpose>updates a local user configuration</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.updateLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>LocalAccount <parameter>LocalAccUpd</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.updateLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>LocalAccount <parameter>LocalAccUpd</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2892,6 +2955,7 @@ homeDirectory path .</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -2955,7 +3019,7 @@ homeDirectory path .</para>
         <refpurpose>removes a local user configuration (for a given user on a given machine) from VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.deleteLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.deleteLocalAccount</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2993,6 +3057,7 @@ homeDirectory path .</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -3044,7 +3109,7 @@ homeDirectory path .</para>
         <refpurpose>lists the local user configurations</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listLocalAccounts</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts <parameter>listLocalAcct</parameter></paramdef><paramdef>ListLocalAccOptions <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listLocalAccounts</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts <parameter>listLocalAcct</parameter></paramdef><paramdef>ListLocalAccOptions <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3085,6 +3150,7 @@ local configurations related to your VISHNU account. </para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -3136,7 +3202,7 @@ local configurations related to your VISHNU account. </para>
         <refpurpose>lists the machines that are accessible through VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listMachines</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines <parameter>listMachine</parameter></paramdef><paramdef>ListMachineOptions <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listMachines</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines <parameter>listMachine</parameter></paramdef><paramdef>ListMachineOptions <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3179,6 +3245,7 @@ for other VISHNU commands.</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -3230,7 +3297,7 @@ for other VISHNU commands.</para>
         <refpurpose>lists the commands</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listHistoryCmd</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListCommands <parameter>listCommands</parameter></paramdef><paramdef>ListCmdOptions <parameter>options = ListCmdOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listHistoryCmd</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListCommands <parameter>listCommands</parameter></paramdef><paramdef>ListCmdOptions <parameter>options = ListCmdOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3268,6 +3335,7 @@ for other VISHNU commands.</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -3319,7 +3387,7 @@ for other VISHNU commands.</para>
         <refpurpose>lists the options of the user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listOptions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListOptionsValues <parameter>listOptValues</parameter></paramdef><paramdef>ListOptOptions <parameter>options = ListOptOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listOptions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListOptionsValues <parameter>listOptValues</parameter></paramdef><paramdef>ListOptOptions <parameter>options = ListOptOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3357,6 +3425,7 @@ for other VISHNU commands.</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -3416,7 +3485,7 @@ for other VISHNU commands.</para>
         <refpurpose>lists all sessions of the user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.listSessions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListSessions <parameter>listsession</parameter></paramdef><paramdef>ListSessionOptions <parameter>options = ListSessionOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listSessions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListSessions <parameter>listsession</parameter></paramdef><paramdef>ListSessionOptions <parameter>options = ListSessionOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3457,6 +3526,7 @@ The session's status is either 0 (inactive) or 1 (active).</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -3512,7 +3582,7 @@ The session's status is either 0 (inactive) or 1 (active).</para>
         <refpurpose>configures an option of the user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.configureOption</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>OptionValue <parameter>optionValue</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.configureOption</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>OptionValue <parameter>optionValue</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3548,6 +3618,7 @@ opened the session).</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -3611,7 +3682,7 @@ opened the session).</para>
         <refpurpose>initializes VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.vishnuInitialize</function></funcdef><paramdef>string <parameter>configPath</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.vishnuInitialize</function></funcdef><paramdef>string <parameter>configPath</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3637,6 +3708,7 @@ opened the session).</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
@@ -3664,7 +3736,7 @@ opened the session).</para>
         <refpurpose>allows a user to go out properly from VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU.vishnuFinalize</function></funcdef><paramdef/></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.vishnuFinalize</function></funcdef><paramdef/></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3679,6 +3751,7 @@ opened the session).</para>
               <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
+          <varlistentry/>
         </variablelist>
       </refsect1>
       <refsect1 id="exceptions">
