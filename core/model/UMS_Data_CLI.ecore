@@ -60,7 +60,7 @@
         defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="shortOption" value="m"/>
-        <details key="content" value="represents the updated email adress of the user"/>
+        <details key="content" value="represents the updated email address of the user"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="ecore:EEnum UMS_Data.ecore#//StatusType"
