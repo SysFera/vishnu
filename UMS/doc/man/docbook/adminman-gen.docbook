@@ -74,7 +74,7 @@ same conditions as regards security.</para>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
         <para>This command allows an admin to add a new user in VISHNU. 
-Several user information are necessary such as: lastname, firtsname and email adress. 
+Several user information are necessary such as: lastname, firtsname and email address. 
 The admin also gives a VISHNU privilege to the new user and a new userId 
 and password are sent to the user by email.</para>
       </refsect1>
@@ -197,7 +197,7 @@ The value must be an integer. Predefined values are: 0 (USER), 1 (ADMIN).</para>
           <varlistentry>
             <term><option>-m <replaceable>email</replaceable></option></term>
             <listitem>
-              <para>represents the updated email adress of the user.</para>
+              <para>represents the updated email address of the user.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -260,7 +260,7 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
       </refsect1>
       <refsect1 id="example">
         <title>EXAMPLE</title>
-        <para>To update the mail adress of a user user_1 to jdupont@gmail.com:</para>
+        <para>To update the mail address of a user user_1 to jdupont@gmail.com:</para>
         <para>vishnu_update_user -m jdupont@gmail.com user_1</para>
       </refsect1>
     </refentry>
@@ -994,7 +994,7 @@ that option using the vishnu_configure_option command.</para>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
         <para>This command allows an admin to add a new user in VISHNU. 
-Several user information are necessary such as: lastname, firtsname and email adress. 
+Several user information are necessary such as: lastname, firtsname and email address. 
 The admin also gives a VISHNU privilege to the new user and a new userId 
 and password are sent to the user by email.</para>
       </refsect1>
@@ -1895,7 +1895,7 @@ that option using the vishnu_configure_option command.</para>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
         <para>This command allows an admin to add a new user in VISHNU. 
-Several user information are necessary such as: lastname, firtsname and email adress. 
+Several user information are necessary such as: lastname, firtsname and email address. 
 The admin also gives a VISHNU privilege to the new user and a new userId 
 and password are sent to the user by email.</para>
       </refsect1>
