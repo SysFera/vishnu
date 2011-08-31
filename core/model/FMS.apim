@@ -77,7 +77,7 @@
     <services name="listDir" description="displays  the content of a remote directory. " resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to list following the pattern  [host:]directory path" longOptionName=""/>
-      <ports name="dirContent" direction="OUT" dataType="//@modules.0/@typeList/@types.4" description="The content of the directory  (only files names with short format, all files informations with long format)." longOptionName=""/>
+      <ports name="dirContent" direction="OUT" dataType="//@modules.0/@typeList/@types.4" description="The content of the directory  (only files names with short format, all files information with long format)." longOptionName="" defaultValueLiteral=""/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.6" description="List of options for the listDir command" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.9"/>
       <details key="description" value="Displays the content of a directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>
