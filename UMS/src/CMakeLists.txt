@@ -1,4 +1,9 @@
-include_directories(client api)
+include_directories(client api
+  ${EMF4CPP_INCLUDE_DIR}
+  ${EMF_DATA_DIR}
+  ${UMS_EMF_DATA_DIR}
+  ${VISHNU_EXCEPTION_INCLUDE_DIR}
+  ${UTILVISHNU_SOURCE_DIR})
 
 set(client_SRCS client/SessionProxy.cpp
   client/UserProxy.cpp
@@ -38,17 +43,12 @@ add_subdirectory(cli)
 if(NOT CLIENT_ONLY)
   include_directories(
   ${DIET_INCLUDE_DIR}
-  ${EMF_DATA_DIR}
-  ${UMS_EMF_DATA_DIR}
-  ${EMF4CPP_INCLUDE_DIR}
-  ${VISHNU_EXCEPTION_INCLUDE_DIR}
   ${CONFIG_SOURCE_DIR}
   ${POSTGRESQL_INCLUDE_DIR}
   ${DATA_BASE_INCLUDE_DIR}
   ${UMS_SERVER_SOURCE_DIR}
   ${Boost_INCLUDE_DIRS}
-  ${REGISTRY_SOURCE_DIR}
-  ${UTILVISHNU_SOURCE_DIR})
+  ${REGISTRY_SOURCE_DIR})
 
   set(sed_SRCS sed/umssed.cpp
     sed/ServerUMS.cpp
