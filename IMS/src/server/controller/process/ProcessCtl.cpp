@@ -192,18 +192,3 @@ ProcessCtl::stopAll() {
 
 }
 
-
-void 
-ProcessCtl::createFile(string& cmd, IMS_Data::Process_ptr p, bool loc) {
-//  cmd = "echo ";
-//  cmd += "\"";
-//  cmd += p->getScript();
-//  cmd += "\"";
-//  cmd += " > /tmp/vishnu_restart; source ~/.bashrc; ";
-
-  cmd = "( /bin/echo \" echo \\\" ";
-  //  string tmp = p->getScript();
-  cmd += p->getScript();
-  cmd += "\\\" > /tmp/vishnu_restart \"; ";
-}
-

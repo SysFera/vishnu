@@ -49,7 +49,7 @@ MapperRegistry::removeMapper(string s){
 Mapper*
 MapperRegistry::getMapper(const string& s) {
   map<string, Mapper*>::const_iterator it;
-  for (it = mmapper.begin() ; it != mmapper.end() ; it++){
+  for (it = mmapper.begin() ; it != mmapper.end() ; ++it){
     if (s.compare(it->first)==0){
       return it->second;
     }
@@ -65,7 +65,7 @@ MapperRegistry::getMapper(const string& s) {
 bool
 MapperRegistry::contains(string s){
   map<string, Mapper*>::const_iterator it = mmapper.begin();
-  for ( ; it != mmapper.end() ; it++){
+  for ( ; it != mmapper.end() ; ++it){
     if (s.compare(it->first)==0){
       return true;
     }
@@ -75,6 +75,6 @@ MapperRegistry::contains(string s){
 
 void MapperRegistry::display(){
   map<string, Mapper*>::const_iterator it;
-  for (it = mmapper.begin() ; it != mmapper.end() ; it++){
+  for (it = mmapper.begin() ; it != mmapper.end() ; ++it){
   }
 }

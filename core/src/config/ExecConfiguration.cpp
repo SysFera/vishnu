@@ -59,7 +59,7 @@ ExecConfiguration::scriptToString(){
   string res;
   for (map<string, string>::iterator it = mconfig.begin();
        it != mconfig.end();
-       it++){
+       ++it){
     res += it->first;
     res += "=";
     res += it->second;

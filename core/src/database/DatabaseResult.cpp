@@ -12,7 +12,9 @@
 * \fn DatabaseResult()
 * \brief Constructor, raises an exception on error
 */
-DatabaseResult:: DatabaseResult(std::vector<std::vector<std::string> > res, std::vector<std::string> namesAttributes) {
+DatabaseResult:: DatabaseResult(std::vector<std::vector<std::string> > res, std::vector<std::string> namesAttributes){
+  fields  = 0;
+  tuples  = 0;
   results = res;
   attributesNames = namesAttributes;
 }
@@ -38,7 +40,7 @@ DatabaseResult::print() {
       tmp.clear();
       tmp = results[i];
 
-      for(ii=tmp.begin();ii!=tmp.end();ii++){
+      for(ii=tmp.begin();ii!=tmp.end();++ii){
         std::cout << *ii <<"  ";
       }
       std::cout << std::endl;
@@ -59,36 +61,16 @@ void
 DatabaseResult::printAttributesNames() {
   std::vector<std::string>::iterator ii;
 
-  for(ii=attributesNames.begin();ii!=attributesNames.end();ii++) {
+  for(ii=attributesNames.begin();ii!=attributesNames.end();++ii) {
     std::cout << *ii <<"  ";
   }
   std::cout << std::endl;
 }
 /**
-* \brief To set the number of tuples
-* \fn setNbTuples(int nbtuples)
-* \param nbtuples The number of tuples
-* \return 0 on success, an error code otherwise
-*/
-void
-DatabaseResult::setNbTuples(size_t nbtuples) {
-  tuples=nbtuples;
-}
-/**
-* \brief To set the number of fields
-* \fn setNbFields(size_t nbfields)
-* \param nbtuples The number of fields
-* \return 0 on success, an error code otherwise
-*/
-void
-DatabaseResult::setNbFields(size_t nbfields) {
-  fields=nbfields;
-}
-  /**
-   * \brief To get the number of tuples
-   * \fn size_t getNbTuples()
-   * \return 0 on success, an error code otherwise
-   */
+ * \brief To get the number of tuples
+ * \fn size_t getNbTuples()
+ * \return 0 on success, an error code otherwise
+ */
 size_t
 DatabaseResult::getNbTuples() const{
 return results.size();
