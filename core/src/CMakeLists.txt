@@ -1,7 +1,8 @@
 include_directories(${Boost_INCLUDE_DIRS} config exception utils emfdata
   ../deps/emf4cpp ${UMS_SERVER_SOURCE_DIR} ${TMS_SERVER_SOURCE_DIR}
   ${IMS_SERVER_SOURCE_DIR} ${FMS_SERVER_SOURCE_DIR}
-  ${PROJECT_BINARY_DIR})
+  ${PROJECT_BINARY_DIR}
+  ${POSTGRESQL_INCLUDE_DIR})
 
 #################### config ###################################################
 set(config_SRCS config/CommonParser.cpp
