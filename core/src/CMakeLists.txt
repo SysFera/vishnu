@@ -1,4 +1,5 @@
-include_directories(${Boost_INCLUDE_DIRS} config exception utils emfdata
+include_directories(${Boost_INCLUDE_DIRS}
+  config exception utils emfdata database
   ../deps/emf4cpp ${UMS_SERVER_SOURCE_DIR} ${TMS_SERVER_SOURCE_DIR}
   ${IMS_SERVER_SOURCE_DIR} ${FMS_SERVER_SOURCE_DIR}
   ${PROJECT_BINARY_DIR}
@@ -286,7 +287,6 @@ set_target_properties(vishnu-core PROPERTIES VERSION ${VISHNU_VERSION})
 install(FILES ${exception_HEADERS} DESTINATION include)
 
 if(NOT CLIENT_ONLY)
-  include_directories(database)
   set(database_SRCS 
     database/DbConfiguration.cpp
     database/DbFactory.cpp
