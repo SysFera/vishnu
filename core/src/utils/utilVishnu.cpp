@@ -71,7 +71,7 @@ vishnu::convertToInt(std::string val) {
  */
 
 std::string
-vishnu::cryptPassword(const std::string& salt, const std::string password) {
+vishnu::cryptPassword(const std::string& salt, const std::string& password) {
 
   std::string saltTmp="$6$"+salt+"$";
   std::string encryptedPassword=crypt(password.c_str(),saltTmp.c_str());
@@ -214,7 +214,7 @@ vishnu::boostMoveFile(const std::string& src, const std::string& dest, const std
  * \param value The value to check
  * \return raises an exception on error
  */
-bool vishnu::isNumericalValue(const std::string value) {
+bool vishnu::isNumericalValue(const std::string& value) {
   if(value.size()==0) {
     throw UserException(ERRCODE_INVALID_PARAM, ("Invalid numerical value: The given value is empty"));
   }
@@ -414,7 +414,7 @@ vishnu::checkJobNbNodesAndNbCpuPerNode(const std::string& nbNodesAndCpuPerNode) 
       } else {
         throw UserException(ERRCODE_INVALID_PARAM, ("Invalid NbNodesAndNbCpuPerNode value: "+nbNodesAndCpuPerNode));
       }
-    } catch(UserException ue) {
+    } catch(UserException& ue) {
       throw UserException(ERRCODE_INVALID_PARAM, ("Invalid NbNodesAndNbCpuPerNode value: "+nbNodesAndCpuPerNode));
     }
   }
@@ -488,11 +488,13 @@ void vishnu::createTmpFile(char* fileName, const std::string& file_content) {
   }
 
   if(fchmod(file_descriptor, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH )!=0) {
-     throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: reading or writing rights have"
+    close(file_descriptor); 
+    throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: reading or writing rights have"
                                            " not been change on the path. This can lead to an error");
   }
 
   if( write(file_descriptor, file_content.c_str(), file_size) != file_size ) {
+    close(file_descriptor);
     throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: Cannot write the content int to"
                                           "  new created file");
   }
@@ -512,6 +514,7 @@ void vishnu::createTmpFile(char* fileName) {
   }
 
   if(fchmod(file_descriptor, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH ) !=0) {
+     close(file_descriptor);
      throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: reading or writing rights have not been"
                                            "  change on the path. This can lead to an error");
   }
