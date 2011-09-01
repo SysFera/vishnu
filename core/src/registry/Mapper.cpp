@@ -6,6 +6,7 @@ Mapper::Mapper(MapperRegistry* reg){
 }
 
 Mapper::Mapper(){
+  mreg = NULL;
   pthread_mutex_init(&mutex, NULL);
 }
 

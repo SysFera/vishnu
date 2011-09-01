@@ -15,6 +15,8 @@ VishnuException::VishnuException(){
 }
 
 VishnuException::VishnuException(const VishnuException& e){
+  mp = std::map<int, std::string>();
+  mfullMsg = "";
   mmsgc = e.getMsgComp();
   mtype = e.getTypeI();
   mval  = e.getMsgI();
