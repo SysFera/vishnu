@@ -54,7 +54,7 @@ def send_mail(options, args):
         s = smtplib.SMTP()
         s.set_debuglevel(options.use_debug)
         s.connect(options.host, options.port)
-        # check if we use authentification
+        # check if we use authentication
         if options.use_ssl:
             s.starttls()
         s.ehlo(options.sender)
