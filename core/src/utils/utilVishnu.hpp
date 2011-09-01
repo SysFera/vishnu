@@ -90,7 +90,7 @@ namespace vishnu {
    * \return The crypted password
    */
   std::string
-  cryptPassword(const std::string& salt, const std::string password) ;
+  cryptPassword(const std::string& salt, const std::string& password) ;
 
   /**
   * \brief Function to get a random number
@@ -141,7 +141,7 @@ namespace vishnu {
    * \param value The value to check
    * \return raises an exception on error
    */
-  bool isNumericalValue(const std::string value);
+  bool isNumericalValue(const std::string& value);
 
   /**
    * \brief Function a given walltime into string
