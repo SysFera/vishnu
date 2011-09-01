@@ -97,26 +97,6 @@ private :
    * \brief The attributes names
    */
   std::vector<std::string> attributesNames;
-  /////////////////////////////////
-  // Functions
-  /////////////////////////////////
-  
-  /**
-   * \brief To set the number of tuples 
-   * \fn void setNbTuples(size_t nbtuples)
-   * \param nbtuples The number of tuples
-   * \return 0 on success, an error code otherwise
-   */
-  void 
-  setNbTuples(size_t nbtuples);
-  /**
-   * \brief To set the number of fields 
-   * \fn void setNbFields(size_t nbfields)
-   * \param nbfields The number of fields
-   */
-  void 
-  setNbFields(size_t nbfields);
-  
 };
 
 #endif // DATABASERESULT
