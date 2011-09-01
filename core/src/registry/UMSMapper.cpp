@@ -67,7 +67,7 @@ UMSMapper::unregisterMapper(){
 int
 UMSMapper::getCommand(const int& key,string& command){
   map<int, string>::const_iterator it;
-  for (it = mmap.begin() ; it != mmap.end() ; it++){
+  for (it = mmap.begin() ; it != mmap.end() ; ++it){
     if (key == it->first){
       command = it->second;
       return 0;
@@ -79,7 +79,7 @@ UMSMapper::getCommand(const int& key,string& command){
 int
 UMSMapper::getKey(const string& command, int& key){
   map<int, string>::const_iterator it;
-  for (it = mmap.begin() ; it != mmap.end() ; it++){
+  for (it = mmap.begin() ; it != mmap.end() ; ++it){
     if (command.compare(it->second)==0){
       key = it->first;
       return 0;
@@ -137,7 +137,7 @@ UMSMapper::decode (const string& msg){
   findSeparator(msg, separatorPos);
 
   // Getting function code
-  if(separatorPos.size()>0){
+  if(!separatorPos.empty()){
     func = msg.substr(0, separatorPos.at(0));
   }else{
     func = msg;
