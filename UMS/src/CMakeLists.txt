@@ -1,4 +1,5 @@
 include_directories(client api
+  ${DIET_INCLUDE_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${EMF_DATA_DIR}
   ${UMS_EMF_DATA_DIR}
@@ -42,7 +43,6 @@ add_subdirectory(cli)
 
 if(NOT CLIENT_ONLY)
   include_directories(
-  ${DIET_INCLUDE_DIR}
   ${CONFIG_SOURCE_DIR}
   ${POSTGRESQL_INCLUDE_DIR}
   ${DATA_BASE_INCLUDE_DIR}
