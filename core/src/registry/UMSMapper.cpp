@@ -256,7 +256,7 @@ string
 UMSMapper::decodeDelUser(vector<int> separator, const string& msg){
   string res = string("");
   res += (mmap.find(VISHNU_DELETE_VISHNU_USER))->second;
-  if (separator.size()>0){
+  if (!separator.empty()){
     res += " ";
     res += msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
   }
