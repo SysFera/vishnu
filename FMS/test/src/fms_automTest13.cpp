@@ -57,8 +57,8 @@ static const string sep = ":";
 static const string slash = "/";
 static const string machineId1 = "machine_1"; // name is TEST_FMS_HOST1 set in cmake
 static const string machineId2 = "machine_2"; // name is TEST_FMS_HOST2 set in cmake
-static const string newFileName = "FMS_test_file"+userLogin;
-static const string newDirName = "FMS_test_dir"+userLogin;
+static const string newFileName = "FMS_test_file";
+static const string newDirName = "FMS_test_dir";
 // local
 static const string localDir = FMSWORKINGDIR;
 static const string localFilePath = localDir + slash + newFileName;
