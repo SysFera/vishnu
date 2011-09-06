@@ -40,7 +40,7 @@ MetricServer::~MetricServer(){
 }
 
 void
-MetricServer::setUpFreq(unsigned int freq){
+MetricServer::setUpFreq(int freq){
   if (!msession.isAdmin()){
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "set update frequency is an admin function. A user cannot call it");
   }
