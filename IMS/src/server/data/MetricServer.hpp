@@ -50,7 +50,7 @@ public:
    * \param freq: The new frequency value
    */
   void
-  setUpFreq(unsigned int freq);
+  setUpFreq(int freq);
   /**
    * \brief Update the mfreq member with the value from the database
    * \return The new mfreq value
