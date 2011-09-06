@@ -331,7 +331,7 @@ public:
     // launch SeD
     const bp::child c = bp::create_child(exec, args, ctx);
     processSeD.reset(utils::copy_child(c));
-    boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
+    boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME*2));
     BOOST_TEST_MESSAGE( "== Test setup [END]: launching "
                         << name << " ==" );
   }
@@ -352,7 +352,7 @@ public:
                             << name << " ==" );
       }
     }
-    boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
+    boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME*2));
     BOOST_TEST_MESSAGE( "== Test teardown [END]: Stopping "
                         << name << " ==" );
   }
