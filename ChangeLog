@@ -5,6 +5,7 @@
 * Mise à jour de la doc
 * Correctifs de typographie
 * Correctif dans l'API python pour le connect/reconnect
+* Correctifs des bugs au niveau des fonctions setUpdateFrequency et getProcesses
 
 +--------------+
 | VISHNU 1.2.3 |
