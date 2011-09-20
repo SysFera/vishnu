@@ -217,7 +217,7 @@ LLServer::getJobState(const std::string& jobId) {
   // Set the type of query
   queryObject = ll_query(JOBS);
   if(!queryObject) {
-    return -1;
+    return 5;
   }
 
   char* IDlist[2];
@@ -228,16 +228,16 @@ LLServer::getJobState(const std::string& jobId) {
   rc = ll_set_request(queryObject, QUERY_STEPID, IDlist, ALL_DATA);
 
   if(rc) {
-    return -1;
+    return 5;
   }
   if(queryObject==NULL) {
-    return -1;
+    return 5;
   }
 
   // Calling to get the results
   queryInfos = ll_get_objs(queryObject, LL_CM, NULL, &objCount, &errCode);
   if(queryInfos==NULL) {
-    return -1;
+    return 5;
   }
 
   while(queryInfos)
@@ -298,7 +298,7 @@ LLServer::getJobState(const std::string& jobId) {
     }
     queryInfos = ll_next_obj(queryObject);
   }
- return -1; 
+ return 5; 
 }
 
 /**
