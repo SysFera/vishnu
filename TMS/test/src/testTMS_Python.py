@@ -38,13 +38,15 @@ def displayListJ(lij):
     displayJob(lij.getJobs().get(i), i)
     print " "
 
-VISHNU.vishnuInitialize("/home/keo/Bureau/client.cfg")
+VISHNU.vishnuInitialize("/home/traore/MYCONFIGFILES/client.cfg")
 
 j = VISHNU.Job()
 op = VISHNU.SubmitOptions()
-mid = "machine_1"
-path = "/home/keo/Bureau/launched"
-r, k = VISHNU.connect("root", "vishnu_user")
+mid = "MA_4"
+path = "/home/traore/VishnuProject/vishnu/TMS/test/src/scripts/torque_script"
+sess = VISHNU.Session()
+r = VISHNU.connect("root", "vishnu_user", sess)
+k = sess.getSessionKey()
 q = VISHNU.ListQueues()
 opp = VISHNU.ProgressOptions()
 li = VISHNU.ListProgression()
