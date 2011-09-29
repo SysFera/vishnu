@@ -273,18 +273,6 @@ protected:
         throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
       }
     }
-  /**
-   * \brief Function to check if a given queue exists
-   * \param queueName the name of the queue
-   */
-  void
-    checkQueueName(std::string queueName) {
-      std::string sqlJobRequest = "SELECT numjobid from job where jobQueue='"+queueName+"'";
-      boost::scoped_ptr<DatabaseResult> result (mdatabaseVishnu->getResult(sqlJobRequest.c_str()));
-      if(result->getNbTuples() == 0) {
-        throw UserException(ERRCODE_INVALID_PARAM, "This queue name is unknwon");
-      }
-    }
  
 protected:
 
