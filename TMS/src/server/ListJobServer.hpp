@@ -13,9 +13,13 @@
 #include <list>
 #include <iostream>
 #include "boost/date_time/posix_time/posix_time.hpp"
+
+
 #include "QueryServer.hpp"
 #include "SessionServer.hpp"
 #include "TMS_Data.hpp"
+#include "BatchServer.hpp"
+#include "BatchFactory.hpp"
 
 /**
  * \class ListJobServer
@@ -115,9 +119,11 @@ public:
 
     //To check if the queue is defined
     if (options->getQueue().size() != 0) {
-      //To check if the queue exists
-      checkQueueName(options->getQueue());
-      //To add the jobId on the request
+      BatchFactory factory;
+      BatchType batchType  = ServerTMS::getInstance()->getBatchType();
+      boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType));
+      batchServer->listQueues(options->getQueue()); //raise an exception if options->getQueue does not exist
+ 
       addOptionRequest("jobQueue", options->getQueue(), sqlRequest);
     }
   }
