@@ -259,8 +259,8 @@ TMS_Data::Job JobServer::getJobInfo() {
   std::vector<std::string>::iterator  iter;
   time_t submitDate;
   time_t endDate;
-  std::string sqlRequest = "SELECT vsessionid, submitMachineId, submitMachineName, jobId, jobName, jobPath, errorPath,"
-                                "outputPath, jobPrio, nbCpus, jobWorkingDir, status, submitDate, endDate, owner,"
+  std::string sqlRequest = "SELECT vsessionid, submitMachineId, submitMachineName, jobId, jobName, jobPath,"
+                                "outputPath, errorPath, jobPrio, nbCpus, jobWorkingDir, status, submitDate, endDate, owner,"
                                 "jobQueue,wallClockLimit, groupName, jobDescription, memLimit, nbNodes, "
                                 "nbNodesAndCpuPerNode from job, vsession "
                                 "where vsession.numsessionid=job.vsession_numsessionid "
