@@ -6,7 +6,9 @@
 * Correctifs de typographie
 * Correctif dans l'API python pour le connect/reconnect
 * Correctifs des bugs au niveau des fonctions setUpdateFrequency et getProcesses
-
+* Correctifs du bug vishnu_list_jobs avec l'option du nom de la queue
+* Correctifs du bug vishnu_get_job_info inversant les champs outputPath et errorPath
+* Correctifs du bug:  les jobs soumis restent en statut RUNNING (avec le batch LOADLEVELER)
 +--------------+
 | VISHNU 1.2.3 |
 +--------------+
