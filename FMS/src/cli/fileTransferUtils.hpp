@@ -98,13 +98,13 @@ makeTransferCommandOptions(string pgName,
       ENV,
       trCmdStr);
 
-  opt->add("src, s",
+  opt->add("src,s",
       "The source file to copy following the pattern [host:]file path.",
       HIDDEN,
       src,1);
   opt->setPosition("src",1);
 
-  opt->add("dest, d",
+  opt->add("dest,d",
       "The path of the destination file.",
       HIDDEN,
       dest,1);
