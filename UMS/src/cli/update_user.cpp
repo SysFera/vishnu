@@ -50,15 +50,18 @@ int main (int ac, char* av[]){
 
   boost::function1<void,string> fUserId( boost::bind(&UMS_Data::User::setUserId,boost::ref(upUser),_1));
   boost::function1<void,UMS_Data::PrivilegeType> fPrivilege( boost::bind(&UMS_Data::User::setPrivilege,boost::ref(upUser),_1));
+  boost::function1<void,UMS_Data::StatusType> fStatus( boost::bind(&UMS_Data::User::setStatus,boost::ref(upUser),_1));
   boost::function1<void,string> fFirstname( boost::bind(&UMS_Data::User::setFirstname,boost::ref(upUser),_1));
   boost::function1<void,string> fLastname( boost::bind(&UMS_Data::User::setLastname,boost::ref(upUser),_1));
   boost::function1<void,string> fEmail( boost::bind(&UMS_Data::User::setEmail,boost::ref(upUser),_1));
 
   /**************** Describe options *************/
-
   boost::shared_ptr<Options>opt= makeUserOptions(av[0],dietConfig,fPrivilege,fFirstname, fLastname,fEmail);
-
-
+ 
+  opt->add("status,s",
+           "the status of the user (active or inactive)",
+           CONFIG,
+           fStatus);
 
   opt->add("userId,u",
            "represents the VISHNU user identifier",
