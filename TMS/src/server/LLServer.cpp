@@ -119,27 +119,18 @@ LLServer::processOptions(const char* scriptPath,
       insertOptionLine(optionLineToInsert, content);
     }
     if(options.getNbCpu()!=-1) {
-      std::ostringstream os_str;
-      os_str << options.getNbCpu();
-      optionLineToInsert ="# @ job_type=parallel \n # @ min_processors="+os_str.str()+"\n";
-      insertOptionLine(optionLineToInsert, content);
+       throw UserException(ERRCODE_INVALID_PARAM, "Invalid option: this option is not implemented for the LoadLeveler batch scheduler because\n"
+                                                  "the number of cpu is fixed by the LoadLeveler class. Set the correct class that have at least the number\n"
+                                                   "of cpus that you want.");
     }
     if(options.getMemory()!=-1) {
-      std::ostringstream os_str;
-      os_str << options.getMemory();
-      optionLineToInsert ="# @ data_limit="+os_str.str()+"mb\n"; 
-      insertOptionLine(optionLineToInsert, content);
+      throw UserException(ERRCODE_INVALID_PARAM, "Invalid option: this option is not implemented for the LoadLeveler batch scheduler");
     }
     if(options.getNbNodesAndCpuPerNode()!="") {
-      std::string NbNodesAndCpuPerNode = options.getNbNodesAndCpuPerNode();
-      size_t posNbNodes = NbNodesAndCpuPerNode.find(":");
-      if(posNbNodes!=std::string::npos) {
-        std::string nbNodes = NbNodesAndCpuPerNode.substr(0, posNbNodes);
-        std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1); 
-        optionLineToInsert ="# @ job_type=parallel \n # @ node="+nbNodes+"\n";  
-        optionLineToInsert +="# @ min_processors="+cpuPerNode+"\n";
-        insertOptionLine(optionLineToInsert, content);
-      }
+       throw UserException(ERRCODE_INVALID_PARAM, "Invalid option: this option is not implemented for the LoadLeveler batch scheduler because\n"
+                                                  "the number of cpu is fixed by the LoadLeveler class. Set the correct class that have at least the number\n"
+                                                  "of cpus and the nodes that you want.");
+      
     }
 
     if(optionLineToInsert.size()!=0) {
