@@ -14,7 +14,7 @@ set( VISHNU_VERSION "1.2.4" CACHE STRING " the version of the source ")
 
 # Options set to ON by default
 option(BUILD_SHARED_LIBS "disable shared libraries usage" ON)
-option(ENABLE_POSTGRESQL "compile with postgresql support" ON)
+option(ENABLE_POSTGRESQL "compile with postgresql support" OFF)
 option(COMPILE_UMS "compile the module UMS" ON)
 
 # Options set to OFF by default

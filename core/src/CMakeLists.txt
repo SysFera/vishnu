@@ -285,6 +285,7 @@ add_library(vishnu-core ${config_SRCS}
 install(TARGETS vishnu-core DESTINATION lib)
 set_target_properties(vishnu-core PROPERTIES VERSION ${VISHNU_VERSION})
 install(FILES ${exception_HEADERS} DESTINATION include)
+target_link_libraries(vishnu-core ${Boost_LIBRARIES})
 
 if(NOT CLIENT_ONLY)
   set(database_SRCS 
