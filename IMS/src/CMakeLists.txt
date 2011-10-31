@@ -73,6 +73,7 @@ if(NOT CLIENT_ONLY)
     server/data/ThresholdServer.cpp)
 
   add_executable(imssed ${sed_SRCS} ${server_SRCS})
+
   target_link_libraries(imssed ${DIET_SERVER_LIBRARIES}
     ${LOG_LIBRARY}
     ${DATABASE_LIBS}
