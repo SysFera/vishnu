@@ -17,6 +17,12 @@ batch scheduler stays in status RUNNING
 queue name returns [this queue name is unknown] while 
 this queue exists.
 
+* Fixed bugzilla #262 there was a mismatch on the jobs state through web
+service interface
+
+* Fixed bugzilla #263 where the value of the nbQueue parameter is not 
+returned through web service interface.  
+
 * Fixed bugzilla #264 where vishnu_get_job_info reverses
 the jobOutputPath and jobErrorPath
 
