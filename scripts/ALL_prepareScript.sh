@@ -442,7 +442,7 @@ cd $path
 cd ..
 
 # Archive to send
-tar -czvf vishnu_v${NO_VERSION}.tgz vishnu_$NO_VERSION >/dev/null
+tar -czvf vishnu_v${NO_VERSION}.tgz VISHNU_$NO_VERSION >/dev/null
 
 # Moving archive in /tmp
 mv vishnu_v${NO_VERSION}.tgz /tmp/
