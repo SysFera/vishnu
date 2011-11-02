@@ -14,7 +14,20 @@ set( VISHNU_VERSION "1.2.4" CACHE STRING " the version of the source ")
 
 # Options set to ON by default
 option(BUILD_SHARED_LIBS "disable shared libraries usage" ON)
-option(ENABLE_POSTGRESQL "compile with postgresql support" OFF)
+
+find_package(POSTGRESQL)
+if (POSTGRESQL_FOUND)
+  option(ENABLE_POSTGRESQL "compile with postgresql support" ON)
+else (POSTGRESQL_FOUND)
+  option(ENABLE_POSTGRESQL "compile with postgresql support" OFF)
+  find_package(MYSQL)
+  if (MYSQL_FOUND)
+    option(ENABLE_MYSQL "compile with mysql support" ON)
+  else (MYSQL_FOUND)
+    option(ENABLE_MYSQL "compile with mysql support" OFF)
+  endif(MYSQL_FOUND)
+endif(POSTGRESQL_FOUND)
+# COMPILE_UMS option set to ON by default
 option(COMPILE_UMS "compile the module UMS" ON)
 
 # Options set to OFF by default
@@ -26,8 +39,8 @@ option(ENABLE_MYSQL "compile with the mysql support.")
 option(COMPILE_TMS "compile the module TMS")
 option(COMPILE_FMS "compile the module FMS")
 option(COMPILE_IMS "compile the module IMS")
-option(VISHNU_USE_TORQUE   "Build VISHNU with Torque support...")
 option(VISHNU_USE_LOADLEVELER   "Build VISHNU with LoadLeveler support...")
+option(VISHNU_USE_TORQUE   "Build VISHNU with Torque support...")
 option(VISHNU_USE_SLURM   "Build VISHNU with SLURM support...")
 
 if (COMPILE_UMS AND COMPILE_TMS AND COMPILE_FMS AND COMPILE_IMS)
@@ -90,6 +103,7 @@ if (ENABLE_POSTGRESQL)
     set(POSTGRESQL_DIR "" cache path "POSTGRESQL installation path")
   endif(POSTGRESQL_FOUND)
   set(DATABASE_LIBS ${DATABASE_LIBS} ${POSTGRESQL_LIB})
+  set(DATABASE_INCLUDE_DIR ${DATABASE_INCLUDE_DIR} ${POSTGRESQL_INCLUDE_DIR})
 endif (ENABLE_POSTGRESQL)
 
 if (ENABLE_ORACLE)
@@ -119,8 +133,12 @@ if (ENABLE_MYSQL)
     set(MYSQL_DIR "" cache path "MYSQL installation path")
   endif(MYSQL_FOUND)
   set(DATABASE_LIBS ${DATABASE_LIBS} ${MYSQL_LIB})
+  set(DATABASE_INCLUDE_DIR ${DATABASE_INCLUDE_DIR} ${POSTGRESQL_INCLUDE_DIR})
 endif (ENABLE_MYSQL)
 
+if (NOT CLIENT_ONLY AND NOT ENABLE_POSTGRESQL  AND NOT ENABLE_MYSQL)
+   message(FATAL_ERROR  "You MUST set either ENABLE_POSTGRESQL or ENABLE_MYSQL")
+endif()
 
 if (COMPILE_TMS AND NOT CLIENT_ONLY AND NOT VISHNU_USE_LOADLEVELER AND NOT VISHNU_USE_TORQUE AND NOT VISHNU_USE_SLURM)
    message(FATAL_ERROR "You MUST set either VISHNU_USE_TORQUE or VISHNU_USE_LOADLEVELER or VISHNU_USE_SLURM when compiling TMS server")

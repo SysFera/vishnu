@@ -3,7 +3,7 @@ include_directories(${Boost_INCLUDE_DIRS}
   ../deps/emf4cpp ${UMS_SERVER_SOURCE_DIR} ${TMS_SERVER_SOURCE_DIR}
   ${IMS_SERVER_SOURCE_DIR} ${FMS_SERVER_SOURCE_DIR}
   ${PROJECT_BINARY_DIR}
-  ${POSTGRESQL_INCLUDE_DIR})
+  ${DATABASE_INCLUDE_DIR})
 
 #################### config ###################################################
 set(config_SRCS config/CommonParser.cpp
@@ -298,13 +298,13 @@ if(NOT CLIENT_ONLY)
   if(MYSQL_FOUND AND ENABLE_MYSQL)
     set(database_SRCS ${database_SRCS} database/MYSQLDatabase.cpp)
     include_directories(${MYSQL_INCLUDE_DIR})
-    set(DB_LIBS ${MYSQL_LIB})
+    set(DB_LIBS ${DATABASE_LIBS})
   endif()
    
   if(POSTGRESQL_FOUND AND ENABLE_POSTGRESQL)
     set(database_SRCS ${database_SRCS} database/POSTGREDatabase.cpp)
-    include_directories(${POSTGRESQL_INCLUDE_DIR})
-    set(DB_LIBS ${POSTGRESQL_LIB})
+    include_directories(${DATABASE_INCLUDE_DIR})
+    set(DB_LIBS ${DATABASE_LIBS})
   endif()
 
   add_library(vishnu-core-server ${database_SRCS} ${utils_server_SRCS})
