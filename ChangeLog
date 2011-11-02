@@ -10,6 +10,7 @@
 * Correctifs du bug vishnu_get_job_info inversant les champs outputPath et errorPath
 * Correctifs du bug:  les jobs soumis restent en statut RUNNING (avec le batch LOADLEVELER)
 * Correctifs du bug: Gel d'un utilisateur impossible via ligne de commande
+* Correctifs du bug: Compilation failed sous ubuntu 11.10
 +--------------+
 | VISHNU 1.2.3 |
 +--------------+
