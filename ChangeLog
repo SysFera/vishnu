@@ -1,21 +1,45 @@
 +--------------+
+| VISHNU 1.2.5 |
++--------------+
+
+* Modified python API of the function connect/reconnect
+
+* Fixed bugzilla #252 where with the MYSQL Database no error is returned 
+by the function setUpdateFrequence if a negative value is given
+
+* Fixed bugzilla #253 where the getProcesses returns an empty list
+while there is running vishnu processes
+
+* Fixed bugzilla #255 where the submitted jobs under LoadLeveler
+batch scheduler stays in status RUNNING
+
+* Fixed bugzilla #261 where vishnu_list_jobs filtered by 
+queue name returns [this queue name is unknown] while 
+this queue exists.
+
+* Fixed bugzilla #264 where vishnu_get_job_info reverses
+the jobOutputPath and jobErrorPath
+
+* Fixed bugzilla #266 where in vishnu_update_user the 
+option -s was missing
+
+* Fixed bugzilla #268 where the compilation failed on ubuntu 11.10
+
+* Updated of CMakeList.txt for automatically set default value of the
+datase library.
+
++--------------+
 | VISHNU 1.2.4 |
 +--------------+
 
-* Mise à jour de la doc
-* Correctifs de typographie
-* Correctif dans l'API python pour le connect/reconnect
-* Correctifs des bugs au niveau des fonctions setUpdateFrequency et getProcesses
-* Correctifs du bug vishnu_list_jobs avec l'option du nom de la queue
-* Correctifs du bug vishnu_get_job_info inversant les champs outputPath et errorPath
-* Correctifs du bug:  les jobs soumis restent en statut RUNNING (avec le batch LOADLEVELER)
-* Correctifs du bug: Gel d'un utilisateur impossible via ligne de commande
-* Correctifs du bug: Compilation failed sous ubuntu 11.10
+* updated of the documentation
+* modified python API of the function connect/reconnect
+
 +--------------+
 | VISHNU 1.2.3 |
 +--------------+
 
-* Ajout du support du batch scheduler slurm
+* Added support for SLURM batch scheduler
 
 +--------------+
 | VISHNU 1.2.2 |
