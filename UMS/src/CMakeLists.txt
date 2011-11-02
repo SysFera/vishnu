@@ -44,7 +44,7 @@ add_subdirectory(cli)
 if(NOT CLIENT_ONLY)
   include_directories(
   ${CONFIG_SOURCE_DIR}
-  ${POSTGRESQL_INCLUDE_DIR}
+  ${DATABASE_INCLUDE_DIR}
   ${DATA_BASE_INCLUDE_DIR}
   ${UMS_SERVER_SOURCE_DIR}
   ${Boost_INCLUDE_DIRS}
@@ -67,13 +67,15 @@ if(NOT CLIENT_ONLY)
   add_library(vishnu-ums-server ${server_SRCS})
   set_target_properties(vishnu-ums-server PROPERTIES VERSION ${VISHNU_VERSION})
   install(TARGETS vishnu-ums-server DESTINATION lib)
-target_link_libraries(vishnu-ums-server vishnu-core vishnu-core-server )
 
+  target_link_libraries(vishnu-ums-server vishnu-core vishnu-core-server)
+  
   add_executable(umssed ${sed_SRCS})
   target_link_libraries(umssed ${DIET_SERVER_LIBRARIES}
     vishnu-ums-server
     emf4cpp-vishnu
     crypt)
+
   install(TARGETS umssed DESTINATION sbin)
 endif()
 
