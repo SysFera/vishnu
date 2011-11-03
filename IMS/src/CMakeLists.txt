@@ -37,8 +37,8 @@ if(COMPILE_FMS)
   target_link_libraries(vishnu-ims-client vishnu-fms-client)
 endif()
 
-install(TARGETS vishnu-ims-client DESTINATION lib)
-install(FILES ${api_HEADERS} DESTINATION include)
+install(TARGETS vishnu-ims-client DESTINATION ${LIB_INSTALL_DIR})
+install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
 
 ## client CLI
 add_subdirectory(cli)
@@ -83,5 +83,5 @@ if(NOT CLIENT_ONLY)
     emf4cpp-vishnu
     crypt)
 
-  install(TARGETS imssed DESTINATION sbin)
+  install(TARGETS imssed DESTINATION ${SBIN_INSTALL_DIR})
 endif (NOT CLIENT_ONLY)  

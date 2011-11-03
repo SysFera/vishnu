@@ -64,7 +64,7 @@ macro(genCli NAME )
     ${VISHNU_EXCEPTION_LIB}
     vishnu-fms-client
     vishnu-ums-client)
-  install(TARGETS ${CMDNAME} DESTINATION bin)
+  install(TARGETS ${CMDNAME} DESTINATION ${BIN_INSTALL_DIR})
 endmacro(genCli)
 
 #Loop over all command lines to generate them
@@ -72,5 +72,4 @@ foreach(cli ${ALLCLI})
   genCli(${cli})
 endforeach(cli)
 
-#install( TARGETS tms-utils-cli DESTINATION lib )
 
