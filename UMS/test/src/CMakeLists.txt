@@ -17,27 +17,27 @@ include_directories(
   )
 
 # Standard VISHNU TESTS variables
-file( TO_NATIVE_PATH "${TEST_SQL_PATH}" TESTSQLPATH )
-file( TO_NATIVE_PATH "${TEST_CONFIG_PATH}" TESTCONFIGPATH )
-file( TO_NATIVE_PATH "${TEST_BIN_PATH}" TESTBINPATH)
+file(TO_NATIVE_PATH "${TEST_SQL_PATH}" TESTSQLPATH)
+file(TO_NATIVE_PATH "${TEST_CONFIG_PATH}" TESTCONFIGPATH)
+file(TO_NATIVE_PATH "${TEST_BIN_PATH}" TESTBINPATH)
 
 set (TEST_DIET_SED_CONFIG "${TEST_CONFIG_PATH}/SeD_testing.cfg")
-file( TO_NATIVE_PATH ${TEST_DIET_SED_CONFIG} DIETSEDCONF)
+file(TO_NATIVE_PATH ${TEST_DIET_SED_CONFIG} DIETSEDCONF)
 # Path to the VISHNU UMS SeD configuration
 set (TEST_UMS_SED_CONFIG "${TEST_CONFIG_PATH}/umssed_testing.cfg")
-file ( TO_NATIVE_PATH ${TEST_UMS_SED_CONFIG} UMSSEDCONF)
+file (TO_NATIVE_PATH ${TEST_UMS_SED_CONFIG} UMSSEDCONF)
 
 # Specific to UMS
 # Path to the sendmail script (used for umssed_testing.cfg)
 set (TEST_SENDMAIL_SCRIPT "${UTILVISHNU_SOURCE_DIR}/sendmail.py" CACHE FILEPATH "Path to the sendmail script used for tests")
 mark_as_advanced(TEST_SENDMAIL_SCRIPT)
-file ( TO_NATIVE_PATH ${TEST_SENDMAIL_SCRIPT} SENDMAILPY)
+file (TO_NATIVE_PATH ${TEST_SENDMAIL_SCRIPT} SENDMAILPY)
 
 # Create header for VISHNU UMS tests
-configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/UMS_testconfig.h.in
-  ${PROJECT_BINARY_DIR}/include/UMS_testconfig.h )
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/UMS_testconfig.h.in
+  ${PROJECT_BINARY_DIR}/include/UMS_testconfig.h)
 # Create configuration for VISHNU UMS SeD
-configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/umssed_testing.cfg.in
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/umssed_testing.cfg.in
   ${TEST_CONFIG_PATH}/umssed_testing.cfg
 )
 
@@ -59,4 +59,4 @@ target_link_libraries(ums_stresser
   crypt
   ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
-add_subdirectory( sql )
+add_subdirectory(sql)
