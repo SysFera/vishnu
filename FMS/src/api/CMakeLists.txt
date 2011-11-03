@@ -1,9 +1,9 @@
 
-LINK_DIRECTORIES(
+link_directories(
  ${VISHNU_EXCEPTION_INCLUDE_DIR}
 )
 
-INCLUDE_DIRECTORIES(
+include_directories(
   .
   ${DIET_INCLUDE_DIR}
   ${EMF_DATA_DIR}
@@ -19,12 +19,12 @@ INCLUDE_DIRECTORIES(
   ${API_SOURCE_DIR}
 )
 
-ADD_LIBRARY(
+add_library(
 vishnu-fms-api api_fms.cpp
 )
-SET_TARGET_PROPERTIES(vishnu-fms-api PROPERTIES COMPILE_FLAGS "-fPIC")
+set_target_properties(vishnu-fms-api PROPERTIES COMPILE_FLAGS "-fPIC")
 
-TARGET_LINK_LIBRARIES(vishnu-fms-api
+target_link_libraries(vishnu-fms-api
   ${DIET_CLIENT_LIBRARIES}
   ${Boost_LIBRARIES}
   emf4cpp-FMS_Data
@@ -35,6 +35,6 @@ TARGET_LINK_LIBRARIES(vishnu-fms-api
 )
 
 
-INSTALL( TARGETS vishnu-fms-api DESTINATION lib )
-INSTALL( FILES api_fms.hpp DESTINATION include)
+install(TARGETS vishnu-fms-api DESTINATION ${LIB_INSTALl_DIR})
+install(FILES api_fms.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
 

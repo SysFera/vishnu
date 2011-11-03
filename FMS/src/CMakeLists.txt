@@ -29,8 +29,8 @@ target_link_libraries(vishnu-fms-client
 ## client CLI
 add_subdirectory(cli)
 
-install(TARGETS vishnu-fms-client DESTINATION lib)
-install(FILES ${api_HEADERS} DESTINATION include)
+install(TARGETS vishnu-fms-client DESTINATION ${LIB_INSTALL_DIR})
+install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
 
 if(NOT CLIENT_ONLY)
   include_directories(${DATA_BASE_INCLUDE_DIR}
@@ -66,7 +66,7 @@ if(NOT CLIENT_ONLY)
     server/RsyncCommand.cpp)
 
   add_executable(fmssed ${sed_SRCS} ${server_SRCS})
-  install(TARGETS fmssed DESTINATION sbin)
+  install(TARGETS fmssed DESTINATION ${SBIN_INSTALL_DIR})
   target_link_libraries(fmssed ${DIET_SERVER_LIBRARIES}
     ${LOG_LIBRARY}
     ${DATABASE_LIBS}

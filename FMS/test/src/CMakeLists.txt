@@ -21,33 +21,33 @@ include_directories(
   )
 
 # Standard VISHNU TESTS variables
-file( TO_NATIVE_PATH "${TEST_SQL_PATH}" TESTSQLPATH )
-file( TO_NATIVE_PATH "${TEST_CONFIG_PATH}" TESTCONFIGPATH )
-file( TO_NATIVE_PATH "${TEST_BIN_PATH}" TESTBINPATH)
+file(TO_NATIVE_PATH "${TEST_SQL_PATH}" TESTSQLPATH)
+file(TO_NATIVE_PATH "${TEST_CONFIG_PATH}" TESTCONFIGPATH)
+file(TO_NATIVE_PATH "${TEST_BIN_PATH}" TESTBINPATH)
 
 set (TEST_DIET_SED_CONFIG "${TEST_CONFIG_PATH}/SeD_testing.cfg")
-file( TO_NATIVE_PATH ${TEST_DIET_SED_CONFIG} DIETSEDCONF)
+file(TO_NATIVE_PATH ${TEST_DIET_SED_CONFIG} DIETSEDCONF)
 # Path to the VISHNU UMS SeD configuration
 set (TEST_FMS_SED_CONFIG "${TEST_CONFIG_PATH}/fmssed_testing.cfg")
-file ( TO_NATIVE_PATH ${TEST_FMS_SED_CONFIG} FMSSEDCONF)
+file (TO_NATIVE_PATH ${TEST_FMS_SED_CONFIG} FMSSEDCONF)
 
 # Specific to FMS
-set( TEST_FMS_HOST1 "localhost" CACHE STRING " hostname of file server 1")
-set( TEST_FMS_HOST2 "localhost" CACHE STRING " hostname of file server 2")
-set( TEST_FMS_DIR1 "/tmp" CACHE STRING "directory for file tests on server 1")
-set( TEST_FMS_DIR2 "/tmp" CACHE STRING "directory for file tests on server 2")
-mark_as_advanced( TEST_FMS_HOST1 )
-mark_as_advanced( TEST_FMS_HOST2 )
-mark_as_advanced( TEST_FMS_DIR1 )
-mark_as_advanced( TEST_FMS_DIR2 )
-file( TO_NATIVE_PATH ${TEST_FMS_DIR1} FMSDIR1)
-file( TO_NATIVE_PATH ${TEST_FMS_DIR2} FMSDIR2)
+set(TEST_FMS_HOST1 "localhost" CACHE STRING " hostname of file server 1")
+set(TEST_FMS_HOST2 "localhost" CACHE STRING " hostname of file server 2")
+set(TEST_FMS_DIR1 "/tmp" CACHE STRING "directory for file tests on server 1")
+set(TEST_FMS_DIR2 "/tmp" CACHE STRING "directory for file tests on server 2")
+mark_as_advanced(TEST_FMS_HOST1)
+mark_as_advanced(TEST_FMS_HOST2)
+mark_as_advanced(TEST_FMS_DIR1)
+mark_as_advanced(TEST_FMS_DIR2)
+file(TO_NATIVE_PATH ${TEST_FMS_DIR1} FMSDIR1)
+file(TO_NATIVE_PATH ${TEST_FMS_DIR2} FMSDIR2)
 
 # Create header for VISHNU FMS tests
-configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/FMS_testconfig.h.in
-  ${PROJECT_BINARY_DIR}/include/FMS_testconfig.h )
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/FMS_testconfig.h.in
+  ${PROJECT_BINARY_DIR}/include/FMS_testconfig.h)
 # Create configuration for VISHNU FMS SeD
-configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/fmssed_testing.cfg.in
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/fmssed_testing.cfg.in
   ${TEST_CONFIG_PATH}/fmssed_testing.cfg
 )
 
@@ -75,7 +75,7 @@ fms_test(fms_automTest16)
 add_executable(fms_stresser
   fms_stress.cpp)
 
-target_link_libraries( fms_stresser
+target_link_libraries(fms_stresser
   ${DIET_CLIENT_LIB}
   ${DIET_SERVER_LIB}
   ${LIBPQ_LIB}
@@ -85,4 +85,4 @@ target_link_libraries( fms_stresser
   vishnu-ums-client
   vishnu-fms-client)
 
-add_subdirectory( sql )
+add_subdirectory(sql)
