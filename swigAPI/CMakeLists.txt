@@ -113,7 +113,7 @@ if(ENABLE_SWIG)
     set_target_properties(${SWIG_MODULE_VISHNU_REAL_NAME} PROPERTIES COMPILE_FLAGS "-fPIC")
     swig_link_libraries(VISHNU ${PYTHON_LIBRARIES} ${SWIG_LINK_LIB})
 
-    install( TARGETS ${SWIG_MODULE_VISHNU_REAL_NAME} DESTINATION lib )
+    install(TARGETS ${SWIG_MODULE_VISHNU_REAL_NAME} DESTINATION ${LIB_INSTALL_DIR})
   endif(ENABLE_PYTHON)
 
   ## JAVA MODULE
@@ -123,10 +123,10 @@ if(ENABLE_SWIG)
     set_target_properties(${SWIG_MODULE_VISHNU_REAL_NAME} PROPERTIES COMPILE_FLAGS "-fPIC")
     swig_link_libraries(VISHNU ${JAVA_LIBRARIES} ${SWIG_LINK_LIB})
 
-    install(TARGETS ${SWIG_MODULE_VISHNU_REAL_NAME} DESTINATION lib)
+    install(TARGETS ${SWIG_MODULE_VISHNU_REAL_NAME} DESTINATION ${LIB_INSTALL_DIR})
   endif(ENABLE_JAVA)
 
-  install(DIRECTORY ${CMAKE_SWIG_OUTDIR} DESTINATION lib)
+  install(DIRECTORY ${CMAKE_SWIG_OUTDIR} DESTINATION ${LIB_INSTALL_DIR})
 
 else(ENABLE_SWIG)
 # Use pre-generated wrappers
@@ -135,10 +135,10 @@ else(ENABLE_SWIG)
     set_target_properties(VISHNU PROPERTIES COMPILE_FLAGS "-fPIC")
     target_link_libraries(VISHNU ${JAVA_LIBRARIES} ${SWIG_LINK_LIB})
 
-    install(TARGETS VISHNU DESTINATION lib)
+    install(TARGETS VISHNU DESTINATION ${LIB_INSTALL_DIR})
     file(GLOB JAVAFILES "${CMAKE_CURRENT_SOURCE_DIR}/generated/swig_output/*.java")
     foreach(javafile ${JAVAFILES})
-      install(FILES ${javafile} DESTINATION lib/swig_output)
+      install(FILES ${javafile} DESTINATION ${LIB_INSTALL_DIR}/swig_output)
     endforeach(javafile)
   endif(ENABLE_JAVA)
   
@@ -148,8 +148,8 @@ else(ENABLE_SWIG)
     set_target_properties(_VISHNU PROPERTIES PREFIX "")
     target_link_libraries(_VISHNU ${PYTHON_LIBRARIES} ${SWIG_LINK_LIB})
 
-    install(TARGETS _VISHNU DESTINATION lib RENAME _VISHNU.so)
-    install(FILES generated/swig_output/VISHNU.py DESTINATION lib/swig_output)
+    install(TARGETS _VISHNU DESTINATION ${LIB_INSTALL_DIR} RENAME _VISHNU.so)
+    install(FILES generated/swig_output/VISHNU.py DESTINATION ${LIB_INSTALL_DIR}/swig_output)
   endif(ENABLE_PYTHON)
 
 endif(ENABLE_SWIG)
