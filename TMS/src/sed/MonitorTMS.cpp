@@ -115,7 +115,8 @@ MonitorTMS::run() {
     sleep(minterval);
 
   } catch (VishnuException& e) {
-    ; // do nothing
+    cerr << e.buildExceptionString() << endl;
+    sleep(minterval);
   }
   return 0;
 }
