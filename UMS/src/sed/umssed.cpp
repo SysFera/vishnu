@@ -83,6 +83,9 @@ int main(int argc, char* argv[], char* envp[]) {
   } catch (UserException& e) {
     std::cerr << e.what() << std::endl;
     exit(1);
+  }catch (std::exception& e) {
+    std::cerr << argv[0] << " : "<< e.what() << std::endl;
+    exit(1);
   }
 
 
