@@ -40,7 +40,7 @@ macro(genCli NAME )
     ${VISHNU_EXCEPTION_LIB}
     vishnu-ums-client
     crypt)
-  install(TARGETS ${CMDNAME} DESTINATION bin)
+  install(TARGETS ${CMDNAME} DESTINATION ${BIN_INSTALL_DIR})
 endmacro(genCli)
 
 #Loop over all command lines to generate them
