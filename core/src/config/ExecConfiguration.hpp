@@ -70,7 +70,7 @@ public:
    * \brief Initialize from a file
    * \param filePath  full path of the configuration filePath
    */
-  void initFromFile(std::string filePath) throw (UserException);
+  void initFromFile(std::string filePath) throw (UserException,std::exception);
 
   /**
    * \brief Get the value of a configuration parameter

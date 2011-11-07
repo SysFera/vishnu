@@ -26,7 +26,7 @@ ExecConfiguration::ExecConfiguration()
  * \brief Initialize from a file
  * \param filePath  full path of the configuration filePath
  */
-void ExecConfiguration::initFromFile(std::string filePath) throw (UserException)
+void ExecConfiguration::initFromFile(std::string filePath) throw (UserException, std::exception)
 {
   FileParser fileParser;
   fileParser.parseFile(filePath);
