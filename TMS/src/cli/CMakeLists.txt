@@ -52,7 +52,7 @@ macro(genCli NAME )
                         vishnu-ums-client
                         vishnu-tms-client
                         crypt)
-  install(TARGETS ${CMDNAME} DESTINATION bin)
+  install(TARGETS ${CMDNAME} DESTINATION ${BIN_INSTALL_DIR})
 
 endmacro(genCli)
 

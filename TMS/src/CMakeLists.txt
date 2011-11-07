@@ -26,9 +26,9 @@ target_link_libraries(vishnu-tms-client
   vishnu-core
   crypt)
 
-install(TARGETS vishnu-tms-client DESTINATION lib)
+install(TARGETS vishnu-tms-client DESTINATION ${LIB_INSTALL_DIR})
 set_target_properties(vishnu-tms-client PROPERTIES VERSION ${VISHNU_VERSION})
-install(FILES ${api_HEADERS} DESTINATION include)
+install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
 
 
 add_subdirectory(cli)
@@ -72,7 +72,7 @@ if (NOT CLIENT_ONLY)
   add_library(vishnu-tms-server ${server_SRCS})
   set_target_properties(vishnu-tms-server PROPERTIES VERSION ${VISHNU_VERSION})
   target_link_libraries(vishnu-tms-server ${USED_BATCH_LIB} vishnu-ums-server)
-  install(TARGETS vishnu-tms-server DESTINATION lib)
+  install(TARGETS vishnu-tms-server DESTINATION ${LIB_INSTALL_DIR})
   add_executable(tmssed ${sed_SRCS})
   target_link_libraries(tmssed ${DIET_SERVER_LIBRARIES}
     ${Boost_LIBRARIES}
@@ -84,7 +84,7 @@ if (NOT CLIENT_ONLY)
     vishnu-tms-server
     emf4cpp-vishnu
     ${USED_BATCH_LIB})
-  install(TARGETS tmsSlave DESTINATION sbin) 
-  install(TARGETS tmssed DESTINATION sbin)
+  install(TARGETS tmsSlave DESTINATION ${SBIN_INSTALL_DIR}) 
+  install(TARGETS tmssed DESTINATION ${SBIN_INSTALL_DIR})
 endif (NOT CLIENT_ONLY)
 

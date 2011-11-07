@@ -21,7 +21,7 @@ cmake_minimum_required(VERSION 2.6)
 
 project(emf4cpp-FMS_Data CXX)
 
-FILE(GLOB CMAKES "${CMAKE_CURRENT_SOURCE_DIR}/*.cmake")
+file(GLOB CMAKES "${CMAKE_CURRENT_SOURCE_DIR}/*.cmake")
 
 foreach(cmake ${CMAKES})
   include(${cmake})

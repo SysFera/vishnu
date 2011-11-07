@@ -35,8 +35,8 @@ target_link_libraries(vishnu-ums-client
   emf4cpp-vishnu
   vishnu-core)
 
-install(TARGETS vishnu-ums-client DESTINATION lib)
-install(FILES ${api_HEADERS} DESTINATION include)
+install(TARGETS vishnu-ums-client DESTINATION ${LIB_INSTALL_DIR})
+install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
 
 ## client CLI
 add_subdirectory(cli)
@@ -66,7 +66,7 @@ if(NOT CLIENT_ONLY)
 
   add_library(vishnu-ums-server ${server_SRCS})
   set_target_properties(vishnu-ums-server PROPERTIES VERSION ${VISHNU_VERSION})
-  install(TARGETS vishnu-ums-server DESTINATION lib)
+  install(TARGETS vishnu-ums-server DESTINATION ${LIB_INSTALL_DIR})
 
   target_link_libraries(vishnu-ums-server vishnu-core vishnu-core-server)
   
@@ -76,6 +76,6 @@ if(NOT CLIENT_ONLY)
     emf4cpp-vishnu
     crypt)
 
-  install(TARGETS umssed DESTINATION sbin)
+  install(TARGETS umssed DESTINATION ${SBIN_INSTALL_DIR})
 endif()
 

@@ -8,7 +8,6 @@ cmake_minimum_required(VERSION 2.6)
 project(VISHNU)
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Cmake)
-set (MANDIR /usr/share/man CACHE string "the man path")
 
 set( VISHNU_VERSION "1.2.5" CACHE STRING " the version of the source ")
 
@@ -225,8 +224,8 @@ set(UTILVISHNU_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/utils)
 set(CONFIG_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/config)
 set(EMF_DATA_DIR ${VISHNU_SOURCE_DIR}/core/src/emfdata)
 
-configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/vishnu_version.hpp.in
-    ${PROJECT_BINARY_DIR}/vishnu_version.hpp )
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/vishnu_version.hpp.in
+    ${PROJECT_BINARY_DIR}/vishnu_version.hpp)
 #UMS
 set(UMS_EMF_DATA_DIR ${EMF_DATA_DIR}/UMS_Data)
 set(UMS_CLIENT_PROXY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/client)
@@ -266,7 +265,7 @@ set(FMS_UTIL_DIR ${VISHNU_SOURCE_DIR}/FMS/src/utils)
 # gather executables and libraries under one roof
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
-set( BIN_DIR ${EXECUTABLE_OUTPUT_PATH} )
+set(BIN_DIR ${EXECUTABLE_OUTPUT_PATH})
 
 # ---------------- SET THE LINKER SEARCH PATH (RPATH) ----------------------
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH ON
@@ -277,38 +276,54 @@ set(CMAKE_INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib
 # for testing
 set(TESTVISHNU_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/test/src)
 
+# installation customization hooks
+# manage lib/lib64 install issue
+set(LIB_SUFFIX "" CACHE STRING "Define suffix of lib directory name (32/64)")
+set(LIB_INSTALL_DIR "lib${LIB_SUFFIX}"
+  CACHE INTERNAL "Directory where libraries will be installed")
+set(BIN_INSTALL_DIR "bin"
+  CACHE INTERNAL "Directory where binaries will be installed")
+set(SBIN_INSTALL_DIR "sbin"
+  CACHE INTERNAL "Directory where privilegied binaries will be installed")
+set(INCLUDE_INSTALL_DIR "include"
+  CACHE INTERNAL "Directory where includes will be installed")
+set(MAN_INSTALL_DIR "share/man"
+  CACHE INTERNAL "Directory where man pages will be installed")
+set(CMAKE_MOD_INSTALL_DIR "share/cmake/Modules"
+  CACHE INTERNAL "Directory where cmake modules will be installed")
+
 add_subdirectory(core/src)
 add_subdirectory(core/deps)
 
 if (DEBUG_TESTS)
-  add_definitions( -DDEBUG_TESTS )
+  add_definitions(-DDEBUG_TESTS)
 endif (DEBUG_TESTS)
 
 if (BUILD_TESTING)
-  add_definitions( -DBUILD_TESTING )
+  add_definitions(-DBUILD_TESTING)
   
-  set( TEST_DB_TYPE "postgresql" CACHE STRING "Type of the test database")
-  set( TEST_DB_HOST "localhost" CACHE STRING "Hostname of the test database server")
-  set( TEST_DB_NAME "vishnu" CACHE STRING "Database name of the test database")
-  set( TEST_DB_LOGIN "vishnu" CACHE STRING "Login for the test database")
-  set( TEST_DB_PASSWORD "vishnu" CACHE STRING "Password for the test database")
-  set( TEST_USER_LOGIN "vishnu" CACHE STRING "Login for local account used for tests")
-  set( TEST_ROOT_LOGIN "vishnu" CACHE STRING "Vishnu root login for local account used for tests")
-  set( TEST_ADMIN_LOGIN "vishnu" CACHE STRING "Vishnu admin login for local account used for tests")
-  set( TEST_USER_SSHKEY "$HOME/.ssh/id_rsa" CACHE STRING "Private key path for local account used for tests")
-  set( TEST_ROOT_SSHKEY "$HOME/.ssh/id_rsa" CACHE STRING "Private key path for local account used for tests")
-  set( TEST_ADMIN_SSHKEY "$HOME/.ssh/id_rsa" CACHE STRING "Private key path for local account used for tests")
-  set( TEST_BATCH_SERVER_HOSTNAME "localhost" CACHE STRING " local hostname used for tests")
-  set( TEST_BATCH_TYPE "TORQUE" CACHE STRING " batch scheduler type")
-  set( TEST_WORKING_DIR ${PROJECT_BINARY_DIR}/test_files CACHE PATH "Tests working directory")
-  set( TEST_LOCAL_HOSTNAME "localhost" CACHE STRING " local hostname used for tests")
-  set( TEST_REMOTE_HOSTNAME "remoteHostname" CACHE STRING " remote hostname used for tests")
-  set( TEST_OMNINAMES_CFG_IP "127.0.0.1" CACHE STRING " The omniorb cfg ip for tests")
-  set( TEST_TMS_FAST_SCRIPT_NAME fast_torque_script CACHE STRING " The name of the fast script to submit")
-  set( TMS_FAST_SCRIPT_PATH ${VISHNU_SOURCE_DIR}/TMS/test/src/scripts CACHE STRING " The path to the fast script to submit")
-  set( TEST_TMS_SCRIPT_NAME torque_script CACHE STRING " The name of the script to submit")
-  set( TMS_SCRIPT_PATH ${VISHNU_SOURCE_DIR}/TMS/test/src/scripts CACHE STRING " The path to the script to submit")
-  set( TEST_CONFIG_DIR ${VISHNU_SOURCE_DIR}/TMS/test/src/scripts/ CACHE PATH "Tests configuration directory")
+  set(TEST_DB_TYPE "postgresql" CACHE STRING "Type of the test database")
+  set(TEST_DB_HOST "localhost" CACHE STRING "Hostname of the test database server")
+  set(TEST_DB_NAME "vishnu" CACHE STRING "Database name of the test database")
+  set(TEST_DB_LOGIN "vishnu" CACHE STRING "Login for the test database")
+  set(TEST_DB_PASSWORD "vishnu" CACHE STRING "Password for the test database")
+  set(TEST_USER_LOGIN "vishnu" CACHE STRING "Login for local account used for tests")
+  set(TEST_ROOT_LOGIN "vishnu" CACHE STRING "Vishnu root login for local account used for tests")
+  set(TEST_ADMIN_LOGIN "vishnu" CACHE STRING "Vishnu admin login for local account used for tests")
+  set(TEST_USER_SSHKEY "$HOME/.ssh/id_rsa" CACHE STRING "Private key path for local account used for tests")
+  set(TEST_ROOT_SSHKEY "$HOME/.ssh/id_rsa" CACHE STRING "Private key path for local account used for tests")
+  set(TEST_ADMIN_SSHKEY "$HOME/.ssh/id_rsa" CACHE STRING "Private key path for local account used for tests")
+  set(TEST_BATCH_SERVER_HOSTNAME "localhost" CACHE STRING " local hostname used for tests")
+  set(TEST_BATCH_TYPE "TORQUE" CACHE STRING " batch scheduler type")
+  set(TEST_WORKING_DIR ${PROJECT_BINARY_DIR}/test_files CACHE PATH "Tests working directory")
+  set(TEST_LOCAL_HOSTNAME "localhost" CACHE STRING " local hostname used for tests")
+  set(TEST_REMOTE_HOSTNAME "remoteHostname" CACHE STRING " remote hostname used for tests")
+  set(TEST_OMNINAMES_CFG_IP "127.0.0.1" CACHE STRING " The omniorb cfg ip for tests")
+  set(TEST_TMS_FAST_SCRIPT_NAME fast_torque_script CACHE STRING " The name of the fast script to submit")
+  set(TMS_FAST_SCRIPT_PATH ${VISHNU_SOURCE_DIR}/TMS/test/src/scripts CACHE STRING " The path to the fast script to submit")
+  set(TEST_TMS_SCRIPT_NAME torque_script CACHE STRING " The name of the script to submit")
+  set(TMS_SCRIPT_PATH ${VISHNU_SOURCE_DIR}/TMS/test/src/scripts CACHE STRING " The path to the script to submit")
+  set(TEST_CONFIG_DIR ${VISHNU_SOURCE_DIR}/TMS/test/src/scripts/ CACHE PATH "Tests configuration directory")
 
   mark_as_advanced(TEST_DB_TYPE)
   mark_as_advanced(TEST_DB_HOST)
@@ -328,9 +343,9 @@ if (BUILD_TESTING)
   mark_as_advanced(TEST_OMNINAMES_CFG_IP)
 
   # Common directories for tests
-  set( TEST_SQL_PATH "${PROJECT_BINARY_DIR}/test_files/sql" CACHE STRING "Contains SQL for tests")
-  set( TEST_CONFIG_PATH "${PROJECT_BINARY_DIR}/test_files/cfg" CACHE STRING "Contains configurations for tests")
-  set( TEST_BIN_PATH "${PROJECT_BINARY_DIR}/bin" CACHE STRING "Contains binaries for tests")
+  set(TEST_SQL_PATH "${PROJECT_BINARY_DIR}/test_files/sql" CACHE STRING "Contains SQL for tests")
+  set(TEST_CONFIG_PATH "${PROJECT_BINARY_DIR}/test_files/cfg" CACHE STRING "Contains configurations for tests")
+  set(TEST_BIN_PATH "${PROJECT_BINARY_DIR}/bin" CACHE STRING "Contains binaries for tests")
   mark_as_advanced(TEST_SQL_PATH)
   mark_as_advanced(TEST_CONFIG_PATH)
   mark_as_advanced(TEST_BIN_PATH)
@@ -362,10 +377,10 @@ if(COMPILE_TMS)
 endif (COMPILE_TMS)
 
 if(COMPILE_IMS)
-  add_definitions( -DCOMPILE_IMS)
-  add_definitions( -DUSE_LOG_SERVICE)
-  ADD_DEFINITIONS( -DHAVE_ALT_BATCH )
-  ADD_DEFINITIONS( -DHAVE_CORI )
+  add_definitions(-DCOMPILE_IMS)
+  add_definitions(-DUSE_LOG_SERVICE)
+  add_definitions(-DHAVE_ALT_BATCH)
+  add_definitions(-DHAVE_CORI)
   add_subdirectory(IMS/src)
   add_subdirectory(IMS/doc/man)
   if (BUILD_TESTING)
