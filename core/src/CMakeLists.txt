@@ -282,9 +282,9 @@ add_library(vishnu-core ${config_SRCS}
   ${IMS_Data_SRCS}
   ${FMS_Data_SRCS}
 )
-install(TARGETS vishnu-core DESTINATION lib)
+install(TARGETS vishnu-core DESTINATION ${LIB_INSTALL_DIR})
 set_target_properties(vishnu-core PROPERTIES VERSION ${VISHNU_VERSION})
-install(FILES ${exception_HEADERS} DESTINATION include)
+install(FILES ${exception_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
 target_link_libraries(vishnu-core ${Boost_LIBRARIES})
 
 if(NOT CLIENT_ONLY)
@@ -309,8 +309,8 @@ if(NOT CLIENT_ONLY)
 
   add_library(vishnu-core-server ${database_SRCS} ${utils_server_SRCS})
   set_target_properties(vishnu-core-server PROPERTIES VERSION ${VISHNU_VERSION})
-  install(TARGETS vishnu-core-server DESTINATION lib)
+  install(TARGETS vishnu-core-server DESTINATION ${LIB_INSTALL_DIR})
   target_link_libraries(vishnu-core-server ${DB_LIBS})
 
-  install(FILES utils/sendmail.py DESTINATION sbin)
+  install(PROGRAMS utils/sendmail.py DESTINATION ${SBIN_INSTALL_DIR})
 endif()
