@@ -9,7 +9,7 @@ cvs -d <login>@graal.ens-lyon.fr:/home/CVS/graal/ co -d <destination_name> GRAAL
 * Aller dans le dépot DIET
 * Recompiler DIET avec les options suivantes:
  DIET_USE_ALT_BATCH = ON
- DIET_USE_CORI = ON
+ DIET_USE_CORI = ON  (uniquement DIET <= 2.7.x)
  DIET_USE_LOG = ON
 * Si le log service n'est pas trouvé, remplir $log_include_dir avec le repertoire d'installation et $log_library avec <install>/lib/libLogForwarderUtils.so
 * Compiler et installer DIET
