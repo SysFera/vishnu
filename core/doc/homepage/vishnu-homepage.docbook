@@ -3,7 +3,7 @@
   <info>
     <title>Vishnu Home Page</title>
     <productname>VISHNU</productname>
-    <releaseinfo>Version 1.2.4</releaseinfo>
+    <releaseinfo>Version 1.2.5</releaseinfo>
     <date>June 28, 2011</date>
     <author>
       <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
@@ -43,6 +43,14 @@
 	<authorinitials>SysFera</authorinitials>
 	<revdescription>
 	  <para>Update for release 1.2.4, new debian packages and new names</para>
+        </revdescription>
+      </revision>
+      <revision>
+	<revnumber>2</revnumber>
+	<date>07/11/2011</date>
+	<authorinitials>SysFera</authorinitials>
+	<revdescription>
+	  <para>Update for release 1.2.5</para>
         </revdescription>
       </revision>
     </revhistory>
@@ -111,6 +119,9 @@
     <section>
       <title>Change log</title>
       <itemizedlist>
+	<listitem>
+          <para>V1.2.5 (07/11/2011): Fix bugs.</para>
+        </listitem>
 	<listitem>
           <para>V1.2.4 (31/08/2011): Change python API for connect/reconnect, fix typo problems.</para>
         </listitem>
@@ -193,26 +204,26 @@
         <listitem>
           <para>VISHNU packages</para>
           <itemizedlist>
-            <listitem><para>libvishnu-core1.2.4_1.2.4-1_i386.deb<ulink url="libvishnu-core1.2.4_1.2.4-1_i386.deb">[download]</ulink></para></listitem>
-            <listitem><para>libvishnu-core-server1.2.4_1.2.4-1_i386.deb<ulink url="libvishnu-core-server1.2.4_1.2.4-1_i386.deb">[download]</ulink></para></listitem>
-            <listitem><para>libvishnu-core1.2.4-dev_1.2.4-1_i386.deb<ulink url="libvishnu-core1.2.4-dev_1.2.4-1_i386.deb">[download]</ulink></para></listitem>
-            <listitem><para>libvishnu-core-server1.2.4-dev_1.2.4-1_i386.deb<ulink url="libvishnu-core-server1.2.4-dev_1.2.4-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>libvishnu-core1.2.5_1.2.5-1_i386.deb<ulink url="libvishnu-core1.2.5_1.2.5-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>libvishnu-core-server1.2.5_1.2.5-1_i386.deb<ulink url="libvishnu-core-server1.2.5_1.2.5-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>libvishnu-core1.2.5-dev_1.2.5-1_i386.deb<ulink url="libvishnu-core1.2.5-dev_1.2.5-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>libvishnu-core-server1.2.5-dev_1.2.5-1_i386.deb<ulink url="libvishnu-core-server1.2.5-dev_1.2.5-1_i386.deb">[download]</ulink></para></listitem>
 
-            <listitem><para>libvishnu-ims-client1.2.4-dev_1.2.4-1_i386.deb<ulink url="libvishnu-ims-client1.2.4-dev_1.2.4-1_i386.deb">[download]</ulink></para></listitem>
-            <listitem><para>libvishnu-fms-client1.2.4-dev_1.2.4-1_i386.deb<ulink url="libvishnu-fms-client1.2.4-dev_1.2.4-1_i386.deb">[download]</ulink></para></listitem>
-            <listitem><para>libvishnu-ums-client1.2.4-dev_1.2.4-1_i386.deb<ulink url="libvishnu-ums-client1.2.4-dev_1.2.4-1_i386.deb">[download]</ulink></para></listitem>
-            <listitem><para>libvishnu-tms-client1.2.4-dev_1.2.4-1_i386.deb<ulink url="libvishnu-tms-client1.2.4-dev_1.2.4-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>libvishnu-ims-client1.2.5-dev_1.2.5-1_i386.deb<ulink url="libvishnu-ims-client1.2.5-dev_1.2.5-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>libvishnu-fms-client1.2.5-dev_1.2.5-1_i386.deb<ulink url="libvishnu-fms-client1.2.5-dev_1.2.5-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>libvishnu-ums-client1.2.5-dev_1.2.5-1_i386.deb<ulink url="libvishnu-ums-client1.2.5-dev_1.2.5-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>libvishnu-tms-client1.2.5-dev_1.2.5-1_i386.deb<ulink url="libvishnu-tms-client1.2.5-dev_1.2.5-1_i386.deb">[download]</ulink></para></listitem>
 
-            <listitem><para>libvishnu-ums-server1.2.4-dev_1.2.4-1_i386.deb<ulink url="libvishnu-ums-server1.2.4-dev_1.2.4-1_i386.deb">[download]</ulink></para></listitem>
-            <listitem><para>libvishnu-tms-server1.2.4-dev_1.2.4-1_i386.deb<ulink url="libvishnu-tms-server1.2.4-dev_1.2.4-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>libvishnu-ums-server1.2.5-dev_1.2.5-1_i386.deb<ulink url="libvishnu-ums-server1.2.5-dev_1.2.5-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>libvishnu-tms-server1.2.5-dev_1.2.5-1_i386.deb<ulink url="libvishnu-tms-server1.2.5-dev_1.2.5-1_i386.deb">[download]</ulink></para></listitem>
 
 
-            <listitem><para>vishnu-client_1.2.4-1_i386.deb<ulink url="vishnu-client_1.2.4-1_i386.deb">[download]</ulink></para></listitem>
-            <listitem><para>vishnu-doc_1.2.4-1_all.deb<ulink url="vishnu-doc_1.2.4-1_all.deb">[download]</ulink></para></listitem>
-            <listitem><para>vishnu-server-fms_1.2.4-1_i386.deb<ulink url="vishnu-server-fms_1.2.4-1_i386.deb">[download]</ulink></para></listitem>
-            <listitem><para>vishnu-server-ims_1.2.4-1_i386.deb<ulink url="vishnu-server-ims_1.2.4-1_i386.deb">[download]</ulink></para></listitem>
-            <listitem><para>vishnu-server-tms_1.2.4-1_i386.deb<ulink url="vishnu-server-tms_1.2.4-1_i386.deb">[download]</ulink></para></listitem>
-            <listitem><para>vishnu-server-ums_1.2.4-1_i386.deb<ulink url="vishnu-server-ums_1.2.4-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>vishnu-client_1.2.5-1_i386.deb<ulink url="vishnu-client_1.2.5-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>vishnu-doc_1.2.5-1_all.deb<ulink url="vishnu-doc_1.2.5-1_all.deb">[download]</ulink></para></listitem>
+            <listitem><para>vishnu-server-fms_1.2.5-1_i386.deb<ulink url="vishnu-server-fms_1.2.5-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>vishnu-server-ims_1.2.5-1_i386.deb<ulink url="vishnu-server-ims_1.2.5-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>vishnu-server-tms_1.2.5-1_i386.deb<ulink url="vishnu-server-tms_1.2.5-1_i386.deb">[download]</ulink></para></listitem>
+            <listitem><para>vishnu-server-ums_1.2.5-1_i386.deb<ulink url="vishnu-server-ums_1.2.5-1_i386.deb">[download]</ulink></para></listitem>
           </itemizedlist>
         </listitem>
         <listitem>
@@ -248,7 +259,7 @@
     <section>
       <title>Install from source</title>
       <para>VISHNU must be compiled with G++ (4.4.3 or greater) and CMake (2.8 or greater).</para>
-      <para>Source tarball: vishnu_v1.2.4.tgz <ulink url="vishnu_v1.2.4.tgz">[download]</ulink> (added on 28th June 2011)</para>
+      <para>Source tarball: vishnu_v1.2.5.tgz <ulink url="vishnu_v1.2.5.tgz">[download]</ulink> (added on 28th June 2011)</para>
     </section>
     <section>
       <title>Launch the VISHNU platform</title>
