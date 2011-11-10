@@ -224,11 +224,11 @@
         <listitem>
           <para>i386 (32 bits) for fedora 15</para>
           <itemizedlist>
-            <listitem><para>sysfera-ds-all-f15-sid-i386.tar.gz<ulink url="sysfera-ds-all-15-i386.tar.gz">[download]</ulink></para></listitem>
+            <listitem><para>sysfera-ds-all-f15-sid-i386.tar.gz<ulink url="sysfera-ds-all-f15-i386.tar.gz">[download]</ulink></para></listitem>
           </itemizedlist>
           <para>x86_64 (64 bits) for fedora 15</para>
           <itemizedlist>
-            <listitem><para>sysfera-ds-all-f15-sid-amd64.tar.gz<ulink url="sysfera-ds-all-15-amd64.tar.gz">[download]</ulink></para></listitem>
+            <listitem><para>sysfera-ds-all-f15-sid-amd64.tar.gz<ulink url="sysfera-ds-all-f15-x86_64.tar.gz">[download]</ulink></para></listitem>
           </itemizedlist>
           <para>Sources for fedora 15</para>
           <itemizedlist>
@@ -236,11 +236,11 @@
           </itemizedlist>            
           <para>i386 (32 bits) for fedora 16</para>
           <itemizedlist>
-            <listitem><para>sysfera-ds-all-f16-sid-i386.tar.gz<ulink url="sysfera-ds-all-16-i386.tar.gz">[download]</ulink></para></listitem>
+            <listitem><para>sysfera-ds-all-f16-sid-i386.tar.gz<ulink url="sysfera-ds-all-f16-i386.tar.gz">[download]</ulink></para></listitem>
           </itemizedlist>
           <para>x86_64 (64 bits) for fedora 16</para>
           <itemizedlist>
-            <listitem><para>sysfera-ds-all-f16-sid-amd64.tar.gz<ulink url="sysfera-ds-all-16-amd64.tar.gz">[download]</ulink></para></listitem>
+            <listitem><para>sysfera-ds-all-f16-sid-amd64.tar.gz<ulink url="sysfera-ds-all-f16-x86_64.tar.gz">[download]</ulink></para></listitem>
           </itemizedlist>
           <para>Sources for fedora 16</para>
           <itemizedlist>
