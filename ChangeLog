@@ -34,6 +34,10 @@ option -s was missing
 * Updated of CMakeList.txt for automatically set default value of the
 datase library.
 
+* Fixed bugzilla #280 where the umssed segfault on changePassword with userId empty 
+
+
+
 +--------------+
 | VISHNU 1.2.4 |
 +--------------+
