@@ -381,7 +381,7 @@ UserServer::init(){
   std::string sessionState;
 
   //if userId and password have not been defined
-  if ((muser.getUserId().size() == 0) && (muser.getUserId().size() == 0)) {
+  if ((muser.getUserId().size() == 0) && (muser.getPassword().size() == 0)) {
     //To get the users_numuserid by using the sessionServer
     numUser =
     msessionServer->getAttribut("where"
@@ -637,11 +637,11 @@ UserServer::getMailContent(const UMS_Data::User& user, bool flagAdduser) {
 }
 
 /**
-* \brief Function to get the user account login 
+* \brief Function to get the user account login
 * \param machineId The machine identifier of machine on which the user have a account
-* \return the user account login 
+* \return the user account login
 */
-std::string 
+std::string
 UserServer::getUserAccountLogin(const std::string& machineId) {
 
   init();
