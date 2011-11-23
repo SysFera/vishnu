@@ -372,7 +372,6 @@ solveUserPasswordChange(diet_profile_t* pb) {
   UserServer userServer = UserServer(std::string(userId), std::string(password));
 
   try {
-    userServer.init();
     userServer.changePassword(std::string(newPassword));
     //OUT Parameter
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
