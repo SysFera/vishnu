@@ -42,8 +42,16 @@ SysInfoServer::getSysInfo() {
 	results = result->get(i);
 	iter = results.begin();
 	IMS_Data::SystemInfo_ptr sys = ecoreFactory->createSystemInfo();
-	sys->setDiskSpace(convertToInt(*(iter+4)));
-	sys->setMemory(convertToInt(*(iter+5)));
+        if ((*(iter+4)).empty()) {
+          sys->setDiskSpace(-1);
+        } else {
+          sys->setDiskSpace(convertToInt(*(iter+4)));
+        }
+        if ((*(iter+5)).empty()) {
+          sys->setMemory(-1);
+        } else {
+          sys->setMemory(convertToInt(*(iter+5)));
+        }
 	sys->setMachineId(*(iter+7));
 	mlistObject->getSysInfo().push_back(sys);
       }
