@@ -33,18 +33,18 @@ namespace bfs=boost::filesystem; // an alias for boost filesystem namespace
  * \param date The date to convert
  * \return The converted value
  */
-long long 
+long long
 vishnu::convertToTimeType(std::string date) {
-  if(date.size()==0 || 
+  if(date.size()==0 ||
      // For mysql, the empty date is 0000-00-00, not empty, need this test to avoid problem in ptime
      date.find("0000-00-00")!=std::string::npos) {
     return 0;
   }
-  
+
   boost::posix_time::ptime pt(time_from_string(date));
   boost::posix_time::ptime epoch(boost::gregorian::date(1970,1,1));
   time_duration::sec_type time = (pt - epoch).total_seconds();
-  
+
   return (long long) time_t(time);
 }
 
@@ -199,7 +199,7 @@ vishnu::boostMoveFile(const std::string& src, const std::string& dest, const std
       bfs::path completePath(fileDestPath / fileNewPath.filename());
       if(bfs::exists(completePath)){
          bfs::remove(completePath);
-      } 
+      }
       boost::filesystem3::copy(filePath, completePath);
       bfs::remove(filePath);
     }
@@ -361,7 +361,7 @@ long vishnu::convertStringToWallTime(const std::string& walltime) {
   } else {
     throw UserException(ERRCODE_INVALID_PARAM, ("Invalid walltime value: The given value is empty"));
   }
-  
+
 }
 
 /**
@@ -401,7 +401,6 @@ vishnu::checkJobNbNodesAndNbCpuPerNode(const std::string& nbNodesAndCpuPerNode) 
 
   if(nbNodesAndCpuPerNode.size()!=0) {
     size_t posNbNodes;
-    size_t posCpuPerNode;
     try {
       posNbNodes = nbNodesAndCpuPerNode.find(":");
       if(posNbNodes!=std::string::npos) {
@@ -409,7 +408,7 @@ vishnu::checkJobNbNodesAndNbCpuPerNode(const std::string& nbNodesAndCpuPerNode) 
         std::string nbNodes = nbNodesAndCpuPerNode.substr(0, posNbNodes);
         isNumericalValue(nbNodes);
 
-        std::string cpuPerNode = nbNodesAndCpuPerNode.substr(posNbNodes+1, posCpuPerNode);
+        std::string cpuPerNode = nbNodesAndCpuPerNode.substr(posNbNodes+1);
         isNumericalValue(cpuPerNode);
       } else {
         throw UserException(ERRCODE_INVALID_PARAM, ("Invalid NbNodesAndNbCpuPerNode value: "+nbNodesAndCpuPerNode));
@@ -488,7 +487,7 @@ void vishnu::createTmpFile(char* fileName, const std::string& file_content) {
   }
 
   if(fchmod(file_descriptor, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH )!=0) {
-    close(file_descriptor); 
+    close(file_descriptor);
     throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: reading or writing rights have"
                                            " not been change on the path. This can lead to an error");
   }
