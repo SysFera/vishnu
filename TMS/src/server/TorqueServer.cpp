@@ -507,7 +507,13 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
           if (pos_found != string::npos){
             tmp = str.substr(0, pos_found);
             node = tmp;
-            nodeAndCpu = str;
+            tmp = str.substr(pos_found); 
+            pos_found = tmp.find("=");
+            if(pos_found!=string::npos) {
+              nodeAndCpu = node+":"+tmp.substr(pos_found+1);
+            } else {
+              nodeAndCpu = str;
+            }
           }
           else{
             node = str;
