@@ -282,9 +282,84 @@ add_library(vishnu-core ${config_SRCS}
   ${IMS_Data_SRCS}
   ${FMS_Data_SRCS}
 )
+
+set(EMF-ECORE-HEADERS
+  ${EMF4CPP_INCLUDE_DIR}/ecore/EAnnotation.hpp
+  ${EMF4CPP_INCLUDE_DIR}/ecore/EAttribute.hpp
+  ${EMF4CPP_INCLUDE_DIR}/ecore/EClass.hpp
+  ${EMF4CPP_INCLUDE_DIR}/ecore/EClassifier.hpp
+  ${EMF4CPP_INCLUDE_DIR}/ecore/EcoreFactory.hpp
+  ${EMF4CPP_INCLUDE_DIR}/ecore/EcorePackage.hpp
+  ${EMF4CPP_INCLUDE_DIR}/ecore/EDataType.hpp
+  ${EMF4CPP_INCLUDE_DIR}/ecore/EEnum.hpp
+  ${EMF4CPP_INCLUDE_DIR}/ecore/EEnumLiteral.hpp
+  ${EMF4CPP_INCLUDE_DIR}/ecore/EFactory.hpp
+  ${EMF4CPP_INCLUDE_DIR}/ecore/EGenericType.hpp
+  ${EMF4CPP_INCLUDE_DIR}/ecore/EModelElement.hpp
+  ${EMF4CPP_INCLUDE_DIR}/ecore/ENamedElement.hpp
+  ${EMF4CPP_INCLUDE_DIR}/ecore/EObject.hpp
+  ${EMF4CPP_INCLUDE_DIR}/ecore/EOperation.hpp
+  ${EMF4CPP_INCLUDE_DIR}/ecore/EPackage.hpp
+  ${EMF4CPP_INCLUDE_DIR}/ecore/EParameter.hpp
+  ${EMF4CPP_INCLUDE_DIR}/ecore/EReference.hpp
+  ${EMF4CPP_INCLUDE_DIR}/ecore/EStringToStringMapEntry.hpp
+  ${EMF4CPP_INCLUDE_DIR}/ecore/EStructuralFeature.hpp
+  ${EMF4CPP_INCLUDE_DIR}/ecore/ETypedElement.hpp
+  ${EMF4CPP_INCLUDE_DIR}/ecore/ETypeParameter.hpp
+)
+
+set(EMF-ECORECPP-HEADERS
+   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/mapping_forward.hpp
+   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/mapping.hpp
+   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/MetaModelRepository.hpp
+   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/notify_forward.hpp
+   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/notify.hpp
+)
+
+set(EMF-ECORECPP-MAPPING-HEADERS
+   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/mapping/any.hpp
+   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/mapping/any_traits.hpp
+   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/mapping/EList.hpp
+   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/mapping/EListImpl.hpp
+   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/mapping/list.hpp
+   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/mapping/out_ptr.hpp
+   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/mapping/set_traits.hpp
+   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/mapping/string_traits.hpp
+   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/mapping/type_traits.hpp
+)
+
+set(EMF-ECORECPP-NOTIFY-HEADERS
+   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/notify/Adapter.hpp
+   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/notify/Notification.hpp
+   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/notify/Notifier.hpp
+)
+
 install(TARGETS vishnu-core DESTINATION ${LIB_INSTALL_DIR})
 set_target_properties(vishnu-core PROPERTIES VERSION ${VISHNU_VERSION})
 install(FILES ${exception_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
+
+install(FILES emfdata/UMS_Data.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
+install(FILES emfdata/UMS_Data_forward.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
+install(FILES ${UMS_Data_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/UMS_Data)
+
+install(FILES emfdata/TMS_Data.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
+install(FILES emfdata/TMS_Data_forward.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
+install(FILES ${TMS_Data_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/TMS_Data)
+
+install(FILES emfdata/FMS_Data.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
+install(FILES emfdata/FMS_Data_forward.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
+install(FILES ${FMS_Data_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/FMS_Data)
+
+install(FILES emfdata/IMS_Data.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
+install(FILES emfdata/IMS_Data_forward.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
+install(FILES ${IMS_Data_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/IMS_Data)
+
+install(FILES ${EMF-ECORE-HEADERS}  DESTINATION ${INCLUDE_INSTALL_DIR}/ecore)
+install(FILES ${EMF-ECORECPP-HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/ecorecpp)
+install(FILES ${EMF-ECORECPP-MAPPING-HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/ecorecpp/mapping)
+install(FILES ${EMF-ECORECPP-NOTIFY-HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/ecorecpp/notify)
+install(FILES ${EMF4CPP_INCLUDE_DIR}/ecore_forward.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
+
 target_link_libraries(vishnu-core ${Boost_LIBRARIES})
 
 if(NOT CLIENT_ONLY)
