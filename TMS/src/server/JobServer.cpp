@@ -13,6 +13,8 @@
 #include "DbFactory.hpp"
 #include "ScriptGenConvertor.hpp"
 
+#include "Env.hpp"
+
 using namespace std;
 /**
  * \param sessionServer The object which encapsulates the session information
@@ -55,13 +57,16 @@ int JobServer::submitJob(const std::string& scriptContent,
   std::string machineName = machineServer.getMachineName();
   delete machine;
 
-  replaceEnvVariables(const_cast<std::string&>(scriptContent));
-  replaceAllOccurences(const_cast<std::string&>(scriptContent), "$VISHNU_SUBMIT_MACHINE_NAME", machineName);
-  replaceAllOccurences(const_cast<std::string&>(scriptContent), "${VISHNU_SUBMIT_MACHINE_NAME}", machineName);
+  #if 0
+  Env env(mbatchType);
+  env.replaceEnvVariables(const_cast<std::string&>(scriptContent));
+  env.replaceAllOccurences(const_cast<std::string&>(scriptContent), "$VISHNU_SUBMIT_MACHINE_NAME", machineName);
+  env.replaceAllOccurences(const_cast<std::string&>(scriptContent), "${VISHNU_SUBMIT_MACHINE_NAME}", machineName);
 
   std::cout << "++++++++++++++++++++++BEGIN++++++++++++++++" << std::endl;
   std::cout << scriptContent << std::endl;
   std::cout << "++++++++++++++++++++++END++++++++++++++++" << std::endl;
+  #endif
 
   std::string jobSerialized ;
   std::string submitOptionsSerialized;
@@ -366,110 +371,6 @@ long long JobServer::convertToTimeType(std::string date) {
 
 }
 
-void JobServer::replaceAllOccurences(std::string& scriptContent,
-    const std::string& oldValue,
-    const std::string& newValue) {
-
-  size_t pos = scriptContent.find(oldValue);
-  while(pos!=std::string::npos) {
-    scriptContent.replace(pos, oldValue.size(), newValue, 0, newValue.size());
-    pos = scriptContent.find(oldValue, pos+newValue.size());
-  }
-
-}
-
-/*
-*/
-void JobServer::replaceEnvVariables(std::string& scriptContent) {
-
-  size_t pos;
-  std::istringstream is(scriptContent);
-  std::string line;
-  ostringstream osNumNodes; 
-  ostringstream osCpuPerNode;
-  bool numNodesFound = false;
-  bool cpuPerNodeFound = false;
- 
-  switch(mbatchType) {
-
-    case TORQUE:
- 
-      //To replace VISHNU_JOB_ID
-      replaceAllOccurences(scriptContent, "VISHNU_JOB_ID", "PBS_JOBID");
-      //To replace VISHNU_JOB_NAME
-      replaceAllOccurences(scriptContent, "VISHNU_JOB_NAME", "PBS_JOBNAME");
-      //To replace VISHNU_JOB_NODEFILE
-      replaceAllOccurences(scriptContent, "VISHNU_JOB_NODEFILE", "PBS_NODEFILE");
-      //To replace VISHNU_JOB_NODELIST
-      replaceAllOccurences(scriptContent, "$VISHNU_JOB_NODELIST", "\"$(cat $PBS_NODEFILE)\"");
-      replaceAllOccurences(scriptContent, "${VISHNU_JOB_NODELIST}", "\"$(cat $PBS_NODEFILE)\"");
-     
-      while(!is.eof()) {
-
-        getline(is, line);
-        pos = line.find("#PBS");
-        if(pos!=std::string::npos) {
-          if(line.find("-l", pos)!=std::string::npos){
-            size_t pos2 = line.find("nodes=", pos);
-            if(pos2!=std::string::npos) {
-              numNodesFound = true;
-              std::string nbNodes = line.substr(pos2+std::string("nodes=").size());
-              istringstream is(nbNodes);
-              int value;
-              is >> value;
-              osNumNodes.str("");
-              osNumNodes << value;
-
-              if(line.find(":", pos)!=std::string::npos){
-                pos2 = line.find("ppn=", pos);
-                if(pos2!=std::string::npos) {
-                  cpuPerNodeFound = true;
-                  std::string nbNodes = line.substr(pos2+std::string("ppn=").size());
-                  istringstream is(nbNodes);
-                  osCpuPerNode.str("");
-                  is >> value;
-                  osCpuPerNode << value;
-                }
-              } else {
-                 cpuPerNodeFound =  false;
-              }
-            }
-          }
-        }
-      }
-
-      if(numNodesFound) {
-        replaceAllOccurences(scriptContent, "$VISHNU_JOB_NUM_NODES", osNumNodes.str());
-        replaceAllOccurences(scriptContent, "${VISHNU_JOB_NUM_NODES}", osNumNodes.str());
-      } else {
-        replaceAllOccurences(scriptContent, "$VISHNU_JOB_NUM_NODES", "");
-        replaceAllOccurences(scriptContent, "${VISHNU_JOB_NUM_NODES}", "");
-      }
-
-      if(cpuPerNodeFound) {
-        replaceAllOccurences(scriptContent, "$VISHNU_JOB_CPUS_PER_NODE", osCpuPerNode.str());
-        replaceAllOccurences(scriptContent, "${VISHNU_JOB_CPUS_PER_NODE}", osCpuPerNode.str());
-      } else {
-        replaceAllOccurences(scriptContent, "$VISHNU_JOB_CPUS_PER_NODE", "");
-        replaceAllOccurences(scriptContent, "${VISHNU_JOB_CPUS_PER_NODE}", "");
-      }
-      
-      break;
-
-    case LOADLEVELER:
-      break;
-    case SLURM:
-      replaceAllOccurences(scriptContent, "VISHNU_JOB_ID", "SLURM_JOB_ID");
-      replaceAllOccurences(scriptContent, "VISHNU_JOB_NAME", "SLURM_JOB_NAME");
-      replaceAllOccurences(scriptContent, "VISHNU_JOB_NODELIST", "SLURM_JOB_NODELIST");
-      replaceAllOccurences(scriptContent, "VISHNU_JOB_NUM_NODES", "SLURM_JOB_NUM_NODES");
-      replaceAllOccurences(scriptContent, "VISHNU_JOB_CPUS_PER_NODE", "SLURM_JOB_CPUS_PER_NODE");
-      break;
-    default:
-      break;
-
-  }
-}
 
 /**
  * \brief Destructor

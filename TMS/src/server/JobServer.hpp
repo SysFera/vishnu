@@ -87,16 +87,6 @@ public:
    */
   long long convertToTimeType(std::string date);  
 
-  /*
-  */
-  void replaceAllOccurences(std::string& scriptContent,
-      const std::string& oldValue,
-      const std::string& newValue);
-
-  /*
-  */
-  void replaceEnvVariables(std::string& scriptContent);
-
   /**
    * \brief job data structure 
    */ 
