@@ -67,7 +67,8 @@ if (NOT CLIENT_ONLY)
     server/BatchFactory.cpp
     server/ListQueuesServer.cpp
     server/JobOutputServer.cpp
-    server/ScriptGenConvertor.cpp)
+    server/ScriptGenConvertor.cpp
+    server/Env.cpp)
 
   add_library(vishnu-tms-server ${server_SRCS})
   set_target_properties(vishnu-tms-server PROPERTIES VERSION ${VISHNU_VERSION})
