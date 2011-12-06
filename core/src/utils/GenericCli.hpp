@@ -60,12 +60,18 @@ class GenericCli {
           // DIET call 
           if(false==sessionKey.empty()){
             printSessionKeyMessage();
+            
             //call of the api fuction
-            function(sessionKey);
+            int ret =function(sessionKey);
 
-            printSuccessMessage(); 
+            if (!ret){
+            printSuccessMessage();
+            } 
+            return ret;
 
           }
+          errorUsage(av[0],"cannot retrieve sessionKey");
+
         } catch(VishnuException& e){// catch all Vishnu runtime error
           std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
           errorUsage(av[0], msg,EXECERROR);
