@@ -830,27 +830,23 @@ int RemoteFileProxy::transferFile(const std::string& dest,
   string destHost = FileProxy::extHost(dest);
   string localUser = "";
   bfs::path destPath(FileProxy::extName(dest));
-  if(destHost.compare("localhost")==0){
-    
-  // get the destination full qualified host name 
-    
-    destHost =vishnu::getLocalMachineName("22");
-    
-    uid_t uid = getuid();
-    struct passwd*  pw = getpwuid(uid);
-    localUser = pw->pw_name;
+ 
+ if (destHost.compare("localhost") == 0) {
 
-    
-    destPath = bfs::current_path().string();
-  
-    if(dest.compare(".")!=0){
-      destPath/= FileProxy::extName(dest);
-    }
+	  // The destination is local:  get its full qualified host name 
 
-    if (ba::starts_with(dest,"/")  ){
-      destPath=dest;
-    }
+	  destHost =vishnu::getLocalMachineName("22");
 
+	  uid_t uid = getuid();
+	  struct passwd*  pw = getpwuid(uid);
+	  localUser = pw->pw_name;
+
+	  if(dest.compare(".")==0){
+		  destPath=bfs::current_path();
+	  }
+
+// build a complete local path
+	  bfs::system_complete(destPath);
 
   }   
 
