@@ -210,3 +210,20 @@ void POSTGREDatabase::releaseConnexion(int pos){
   }
   mpool[pos].mused = false;
 }
+
+int
+POSTGREDatabase::startTransaction(){
+// TODO
+  return 0;
+}
+
+void
+POSTGREDatabase::endTransaction(int transactionID) {
+// TODO
+}
+
+void
+POSTGREDatabase::cancelTransaction(int transactionID) {
+// TODO
+}
+

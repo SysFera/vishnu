@@ -348,6 +348,13 @@ vishnu::getObjectId(int vishnuId,
   std::string idGenerated;
 
   std::string vishnuIdString = convertToString(vishnuId);
+
+// Start transaction
+  DbFactory factory;
+  Database *databaseVishnu;
+  databaseVishnu = factory.getDatabaseInstance();
+  int ret = databaseVishnu->startTransaction();
+
   //To get the counter
   int counter = convertToInt(getAttrVishnu(counterName, vishnuIdString));
   //To get the formatiduser
@@ -359,12 +366,15 @@ vishnu::getObjectId(int vishnuId,
 
     if (idGenerated.size() != 0) {
       incrementCpt(counterName, counter);
+      databaseVishnu->endTransaction(ret);
     } else {
+      databaseVishnu->cancelTransaction(ret);
       SystemException e (ERRCODE_SYSTEM, "There is a problem during the id generation with the format:"+ formatName);
       throw e;
     }
 
   } else {
+    databaseVishnu->cancelTransaction(ret);
     SystemException e (ERRCODE_SYSTEM, "The format "+ formatName +" is undefined");
     throw e;
   }
