@@ -4,7 +4,6 @@
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
-
 #include "CLICmd.hpp"
 #include "utilVishnu.hpp"
 #include "cliError.hpp"
@@ -38,9 +37,6 @@ struct ChangeFileModeFunc {
 };
 
 
-
-
-
 int main (int argc, char* argv[]){
   
 
@@ -49,8 +45,8 @@ int main (int argc, char* argv[]){
   string path;
   mode_t  mode;
 
-
   /**************** Describe options *************/
+
   boost::shared_ptr<Options> opt=processOpt(argv[0], dietConfig);
 
   opt->add("mode,m",
