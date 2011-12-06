@@ -74,6 +74,24 @@ public :
    */
   DbConfiguration::db_type_t
   getDbType() { return DbConfiguration::POSTGRESQL; };
+/**
+ * \brief Start a transaction
+ * \return The transaction ID
+ */
+  virtual int
+  startTransaction();
+/**
+ * \brief End a transaction
+ * \param transactionID: The ID of the transaction
+ */
+  virtual void
+  endTransaction(int transactionID);
+/**
+ * \brief Cancel a transaction
+ * \param transactionID: The ID of the transaction
+ */
+  virtual void
+  cancelTransaction(int transactionID) ;
 
 private :
 

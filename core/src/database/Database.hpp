@@ -55,6 +55,24 @@ public :
    * \brief Destructor, raises an exception on error
    */
 virtual ~Database();
+/**
+ * \brief Start a transaction
+ * \return The transaction ID
+ */
+  virtual int
+  startTransaction() = 0;
+/**
+ * \brief End a transaction
+ * \param transactionID: The ID of the transaction
+ */
+  virtual void
+  endTransaction(int transactionID) = 0;
+/**
+ * \brief Cancel a transaction
+ * \param transactionID: The ID of the transaction
+ */
+  virtual void
+  cancelTransaction(int transactionID) = 0;
 protected :
   /**
    * \fn Database()

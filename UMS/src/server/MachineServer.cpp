@@ -59,6 +59,10 @@ MachineServer::add(int vishnuId) {
     if (userServer.isAdmin()) {
 
       vishnuid = convertToString(vishnuId);
+
+// Start transaction
+      int ret = mdatabaseVishnu->startTransaction();
+
       machineCpt = convertToInt(getAttrVishnu("machinecpt", vishnuid));
 
       //To get the formatidmachine
@@ -75,6 +79,7 @@ MachineServer::add(int vishnuId) {
         //if the machine id is generated
         if (idMachineGenerated.size() != 0) {
           incrementCpt("machinecpt", machineCpt);
+          mdatabaseVishnu->endTransaction(ret);
           mmachine->setMachineId(idMachineGenerated);
 
           //if the machineId does not exist
@@ -92,16 +97,19 @@ MachineServer::add(int vishnuId) {
 
           } //if the machineId does not exist
           else {
+            mdatabaseVishnu->cancelTransaction(ret);
             UMSVishnuException e (ERRCODE_MACHINE_EXISTING);
             throw e;
           }
         }//if the machine id is generated
         else {
+          mdatabaseVishnu->cancelTransaction(ret);
           SystemException e (ERRCODE_SYSTEM, "There is a problem to parse the formatidmachine");
           throw e;
         }
       }//END if the formatidmachine is defined
       else {
+        mdatabaseVishnu->cancelTransaction(ret);
         SystemException e (ERRCODE_SYSTEM, "The formatidmachine is not defined");
         throw e;
       }
@@ -275,10 +283,10 @@ MachineServer::getPublicKey() {
 }
 
 /**
-* \brief Function to get the machine 
-* \return The name of the machine 
+* \brief Function to get the machine
+* \return The name of the machine
 */
-std::string 
+std::string
 MachineServer::getMachineName() {
 
   std::string  machineName = getAttribut("where machineid='"+getData()->getMachineId()+"'", "name");
@@ -288,12 +296,12 @@ MachineServer::getMachineName() {
 
 /**
 * \brief Function to check the machineId
-* \return raises an exception 
+* \return raises an exception
 */
 void MachineServer::checkMachine() {
 
   if(getAttribut("where machineid='"+mmachine->getMachineId()+"'").size()==0){
-    throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, mmachine->getMachineId()+" does not exist among the defined" 
+    throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, mmachine->getMachineId()+" does not exist among the defined"
                                                                  " machines by VISHNU System");
   }
   if(getAttribut("where status=1 and  machineid='"+mmachine->getMachineId()+"'").size() == 0) {

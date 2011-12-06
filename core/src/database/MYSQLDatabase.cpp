@@ -198,3 +198,57 @@ MYSQLDatabase::releaseConnection(int pos) {
   }
   mpool[pos].mused = false;
 }
+
+int
+MYSQLDatabase::startTransaction() {
+  int reqPos;
+  MYSQL* conn = getConnection(reqPos);
+  bool ret = mysql_autocommit(conn, false);
+  if (ret) {
+    releaseConnection(reqPos);
+    throw SystemException(ERRCODE_DBCONN, "Failed to start transaction");
+  }
+  // DO NOT RELEASE THE CONNECTION, KEEPING TRANSACTION
+  return reqPos;
+}
+
+void
+MYSQLDatabase::endTransaction(int transactionID) {
+  bool ret;
+  MYSQL* conn = (&(mpool[transactionID].mmysql));
+  ret = mysql_commit(conn);
+  if (ret) {
+    ret = mysql_rollback(conn);
+    if (ret) {
+      releaseConnection(transactionID);
+      throw SystemException(ERRCODE_DBCONN, "Failed to rollback and commit the transaction");
+    }
+    releaseConnection(transactionID);
+    throw SystemException(ERRCODE_DBCONN, "Failed to commit the transaction");
+  }
+  ret = mysql_autocommit(conn, false);
+  if (ret) {
+    mysql_rollback(conn);
+    if (ret) {
+      releaseConnection(transactionID);
+      throw SystemException(ERRCODE_DBCONN, "Failed to rollback and end the transaction");
+    }
+    releaseConnection(transactionID);
+    throw SystemException(ERRCODE_DBCONN, "Failed to end the transaction");
+  }
+}
+
+void
+MYSQLDatabase::cancelTransaction(int transactionID) {
+  bool ret;
+  MYSQL* conn = (&(mpool[transactionID].mmysql));
+  ret = mysql_rollback(conn);
+  if (ret) {
+    releaseConnection(transactionID);
+    throw SystemException(ERRCODE_DBCONN, "Failed to cancel the transaction");
+  }
+  releaseConnection(transactionID);
+}
+
+
+

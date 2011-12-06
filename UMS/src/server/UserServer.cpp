@@ -76,6 +76,10 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
       user->setPassword(pwd.substr(0,PASSWORD_MAX_SIZE));
 
       vishnuid = convertToString(vishnuId);
+
+// Start transaction
+      int ret = mdatabaseVishnu->startTransaction();
+
       //To get the user counter
       userCpt = convertToInt(getAttrVishnu("usercpt", vishnuid));
 
@@ -95,6 +99,7 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
         if (idUserGenerated.size() != 0) {
 
           incrementCpt("usercpt", userCpt);
+          mdatabaseVishnu->endTransaction(ret);
           user->setUserId(idUserGenerated);
           //To get the password encrypted
           passwordCrypted = vishnu::cryptPassword(user->getUserId(), user->getPassword());
@@ -115,16 +120,19 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
 
           }// END If the user to add exists
           else {
+            mdatabaseVishnu->cancelTransaction(ret);
             UMSVishnuException e (ERRCODE_USERID_EXISTING);
             throw e;
           }
         }//END if the userId is generated
         else {
+          mdatabaseVishnu->cancelTransaction(ret);
           SystemException e (ERRCODE_SYSTEM, "There is a problem to parse the formatiduser");
           throw e;
         }
       }//END if the formatiduser is defined
       else {
+        mdatabaseVishnu->cancelTransaction(ret);
         SystemException e (ERRCODE_SYSTEM, "The formatiduser is not defined");
         throw e;
       }
@@ -637,11 +645,11 @@ UserServer::getMailContent(const UMS_Data::User& user, bool flagAdduser) {
 }
 
 /**
-* \brief Function to get the user account login 
+* \brief Function to get the user account login
 * \param machineId The machine identifier of machine on which the user have a account
-* \return the user account login 
+* \return the user account login
 */
-std::string 
+std::string
 UserServer::getUserAccountLogin(const std::string& machineId) {
 
   init();
