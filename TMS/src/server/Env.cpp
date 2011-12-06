@@ -28,62 +28,17 @@ void Env::replaceAllOccurences(std::string& scriptContent,
 }
 
 
-void Env::getTorqueNumNodesAndCpuPerNode(std::string& scriptContent,
-                                         std::string& numNodes, 
-                                         std::string& cpuPerNode) {
+void Env::getTorqueNumNodes(std::string& scriptContent) {
 
-  numNodes="";
-  cpuPerNode="";
+  size_t pos = scriptContent.find("VISHNU_JOB_NUM_NODES");
+  if(pos!=std::string::npos) {
+    pos = scriptContent.rfind("\n", pos-1);
+    std::string tmp = "NBNODES=\"$(cat  $PBS_NODEFILE | wc -l)\" \n";
+    scriptContent.insert(pos+1, tmp);
+    replaceAllOccurences(scriptContent, "$VISHNU_JOB_NUM_NODES", "$NBNODES");
+    replaceAllOccurences(scriptContent, "${VISHNU_JOB_NUM_NODES}", "$NBNODES");
+  }
   
-  std::string line;
-  std::ostringstream osNumNodes;
-  std::ostringstream osCpuPerNode;
-  bool numNodesFound = false;
-  bool cpuPerNodeFound = false;
-  size_t pos;
-  std::istringstream is(scriptContent);
-  
-  while(!is.eof()) {
-
-    getline(is, line);
-    pos = line.find("#PBS");
-    if(pos!=std::string::npos) {
-      if(line.find("-l", pos)!=std::string::npos){
-        size_t pos2 = line.find("nodes=", pos);
-        if(pos2!=std::string::npos) {
-          numNodesFound = true;
-          std::string nbNodes = line.substr(pos2+std::string("nodes=").size());
-          std::istringstream is(nbNodes);
-          int value;
-          is >> value;
-          osNumNodes.str("");
-          osNumNodes << value;
-
-          if(line.find(":", pos)!=std::string::npos){
-            pos2 = line.find("ppn=", pos);
-            if(pos2!=std::string::npos) {
-              cpuPerNodeFound = true;
-              std::string nbNodes = line.substr(pos2+std::string("ppn=").size());
-              std::istringstream is(nbNodes);
-              osCpuPerNode.str("");
-              is >> value;
-              osCpuPerNode << value;
-            }
-          } else {
-            cpuPerNodeFound =  false;
-          }
-        }
-      }
-    }
-  }
-
-  if(numNodesFound) { 
-    numNodes = osNumNodes.str();
-  }
-
-  if(cpuPerNodeFound) { 
-    cpuPerNode =  osCpuPerNode.str();
-  }
 }
 
 /*
@@ -92,7 +47,7 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
 
   std::string numNodes;
   std::string cpuPerNode;
-
+  size_t pos;
   switch(mbatchType) {
 
     case TORQUE:
@@ -107,24 +62,35 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
       replaceAllOccurences(scriptContent, "$VISHNU_JOB_NODELIST", "\"$(cat $PBS_NODEFILE)\"");
       replaceAllOccurences(scriptContent, "${VISHNU_JOB_NODELIST}", "\"$(cat $PBS_NODEFILE)\"");
 
-      getTorqueNumNodesAndCpuPerNode(scriptContent, numNodes, cpuPerNode);
-      replaceAllOccurences(scriptContent, "$VISHNU_JOB_NUM_NODES", numNodes);
-      replaceAllOccurences(scriptContent, "${VISHNU_JOB_NUM_NODES}", numNodes);
-
-      replaceAllOccurences(scriptContent, "$VISHNU_JOB_CPUS_PER_NODE", cpuPerNode);
-      replaceAllOccurences(scriptContent, "${VISHNU_JOB_CPUS_PER_NODE}", cpuPerNode);
+      getTorqueNumNodes(scriptContent);
 
       break;
 
     case LOADLEVELER:
+      replaceAllOccurences(scriptContent, "VISHNU_JOB_ID", "LOADL_STEP_ID"); 
+      replaceAllOccurences(scriptContent, "VISHNU_JOB_NAME", "LOADL_JOB_NAME"); 
+      replaceAllOccurences(scriptContent, "VISHNU_JOB_NODEFILE", "LOADL_HOSTFILE"); 
       break;
     case SLURM:
       replaceAllOccurences(scriptContent, "VISHNU_JOB_ID", "SLURM_JOB_ID");
       replaceAllOccurences(scriptContent, "VISHNU_JOB_NAME", "SLURM_JOB_NAME");
-      replaceAllOccurences(scriptContent, "VISHNU_JOB_NODELIST", "SLURM_JOB_NODELIST");
       replaceAllOccurences(scriptContent, "VISHNU_JOB_NUM_NODES", "SLURM_JOB_NUM_NODES");
-      replaceAllOccurences(scriptContent, "VISHNU_JOB_CPUS_PER_NODE", "SLURM_JOB_CPUS_PER_NODE");
-      break;
+      //replaceAllOccurences(scriptContent, "VISHNU_JOB_CPUS_PER_NODE", "SLURM_JOB_CPUS_PER_NODE");
+      
+      pos = scriptContent.find("VISHNU_JOB_NODEFILE");
+      if(pos!=std::string::npos) {
+        std::string fileName = std::string(getenv("HOME"))+"/NODELIST_XXXXXX";
+        vishnu::createTmpFile(const_cast<char*>(fileName.c_str()));
+        pos = scriptContent.rfind("\n", pos-1);
+        scriptContent.insert(pos+1, "echo $SLURM_JOB_NODELIST > "+fileName+"\n");
+        std::string tmp = "echo $SLURM_JOB_NODELIST > "+fileName+"\n";
+        scriptContent.insert(pos+1+tmp.size(), "sed -i 's/,/\\n/g' "+fileName+"\n");
+        replaceAllOccurences(scriptContent, "$VISHNU_JOB_NODEFILE", fileName);
+        replaceAllOccurences(scriptContent, "${VISHNU_JOB_NODEFILE}", fileName);
+
+      }
+
+     break;
     default:
       break;
 

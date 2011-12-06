@@ -37,9 +37,7 @@ public:
 
 private:
 
-  void getTorqueNumNodesAndCpuPerNode(std::string& scriptContent,
-                                           std::string& numNodes,
-                                           std::string& cpuPerNode); 
+  void getTorqueNumNodes(std::string& scriptContent);
   /**
    * \brief The type of the batch scheduler 
    */
