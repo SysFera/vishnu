@@ -47,8 +47,9 @@ int main (int ac, char* av[]){
            sessionId,1);
 
   opt->setPosition("sessionId",1);
-
-
+ 
+  
+  opt->add("password,w","To give the password ",CONFIG,password );
 
   try {
 
@@ -67,7 +68,14 @@ int main (int ac, char* av[]){
 
 
     //Fix me
-    password=vishnu::takePassword("Password: ");
+   
+   if(0==opt->count("password")){
+
+    password= vishnu::takePassword("password: ");
+    
+    }
+   
+   // password=vishnu::takePassword("Password: ");
 
 
     /************** Call UMS reconnect service *******************************/
@@ -84,13 +92,12 @@ int main (int ac, char* av[]){
 
     }
 
-
     reconnect(userId, password, sessionId, session);
-   
 
     // store the session information
 
-    storeLastSession(session.getSessionKey(),session.getClosePolicy(),getppid());
+    //storeLastSession(session.getSessionKey(),session.getClosePolicy(),getppid());
+    storeLastSession(session,getppid());
     
     printSuccessMessage();
 

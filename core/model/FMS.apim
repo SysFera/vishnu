@@ -210,6 +210,9 @@
       <types name="RmFileOptions" description="the remove file command options">
         <ECoreType xsi:type="ecore:EClass" href="FMS_Data.ecore#//RmFileOptions"/>
       </types>
+      <types name="CreateDirOptions" description="the create directory command options">
+        <ECoreType xsi:type="ecore:EClass" href="FMS_Data.ecore#//CreateDirOptions"/>
+      </types>
     </typeList>
     <resultCodeList>
       <resultCodes name="VISHNU_OK" description="The service has been performed succesfully."/>

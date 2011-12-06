@@ -70,8 +70,6 @@ bool LocalFileProxy::isUpToDate() const {
 }
 
 
-
-
 /* Copy the local file to remote destination. */
 /* The function proceed to the file copy by itself if the
  * destination is a local path. Otherwise it calls the DIET service.
@@ -84,7 +82,7 @@ int LocalFileProxy::transferFile(const string& dest,
 
   string host = FileProxy::extHost(dest);
   
-  bfs::path localFullPath(bfs::current_path().string());
+  bfs::path localFullPath(bfs::system_complete(bfs::path(getPath())));
   
   // get the source full qualified host name 
 
@@ -94,10 +92,6 @@ int LocalFileProxy::transferFile(const string& dest,
   struct passwd*  pw = getpwuid(uid);
   char* localUser = pw->pw_name;
   
-  if(getPath().compare(".")!=0){
-    localFullPath/= getPath(); 
-  }
-
 
   char *optionsToString = NULL; 
   char *fileTransferInString = NULL;
@@ -118,12 +112,6 @@ int LocalFileProxy::transferFile(const string& dest,
     profile = diet_profile_alloc(const_cast<char*>(serviceName.c_str()), 5, 5, 7);
   }
   
-
-  if (ba::starts_with(getPath(),"/")  ){
-
-    localFullPath=getPath();
-
-  }
 
 
   //IN Parameters  
