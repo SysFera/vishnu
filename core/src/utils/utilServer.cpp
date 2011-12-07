@@ -356,16 +356,16 @@ vishnu::getObjectId(int vishnuId,
   int ret = databaseVishnu->startTransaction();
 
   //To get the counter
-  int counter = convertToInt(getAttrVishnu(counterName, vishnuIdString));
+  int counter = convertToInt(getAttrVishnu(counterName, vishnuIdString, ret));
   //To get the formatiduser
-  std::string format = getAttrVishnu(formatName, vishnuIdString).c_str();
+  std::string format = getAttrVishnu(formatName, vishnuIdString, ret).c_str();
 
   if (format.size() != 0) {
     idGenerated =
     getGeneratedName(format.c_str(), counter, type, stringforgeneration);
 
     if (idGenerated.size() != 0) {
-      incrementCpt(counterName, counter);
+      incrementCpt(counterName, counter, ret);
       databaseVishnu->endTransaction(ret);
     } else {
       databaseVishnu->cancelTransaction(ret);
