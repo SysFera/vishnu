@@ -226,7 +226,7 @@ MYSQLDatabase::endTransaction(int transactionID) {
     releaseConnection(transactionID);
     throw SystemException(ERRCODE_DBCONN, "Failed to commit the transaction");
   }
-  ret = mysql_autocommit(conn, false);
+  ret = mysql_autocommit(conn, true);
   if (ret) {
     mysql_rollback(conn);
     if (ret) {
@@ -245,8 +245,10 @@ MYSQLDatabase::cancelTransaction(int transactionID) {
   ret = mysql_rollback(conn);
   if (ret) {
     releaseConnection(transactionID);
+    ret = mysql_autocommit(conn, true);
     throw SystemException(ERRCODE_DBCONN, "Failed to cancel the transaction");
   }
+  ret = mysql_autocommit(conn, true);
   releaseConnection(transactionID);
 }
 
