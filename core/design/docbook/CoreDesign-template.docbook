@@ -52,6 +52,14 @@
           <para>Added SLURM</para>
         </revdescription>
       </revision>
+      <revision>
+        <revnumber>5</revnumber>
+        <date>07/12/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Added GoDIET deployment section and updated pictures (change ORACLE by MYSQL).</para>
+        </revdescription>
+      </revision>
       </revhistory>
     </info>
   <chapter>
@@ -314,7 +322,7 @@
               </row>
               <row>
                 <entry><para>Database system</para></entry>
-                <entry><para>VISHNU will use either a PostgreSQL 8.x or Oracle 11g database server.</para></entry>
+                <entry><para>VISHNU will use either a PostgreSQL 8.x or MySQL v5.1.49 database server.</para></entry>
               </row>
               <row>
                 <entry><para>Architecture choices</para></entry>
@@ -615,7 +623,7 @@
               <entry>VSD</entry>
               <entry>VISHNU VSS</entry>
               <entry>Database server</entry>
-              <entry>Oracle SQL*Net (1521/tcp) or PostgreSQL (5432/tcp)</entry>
+              <entry>MySQL SQL*Net (1521/tcp) or PostgreSQL (5432/tcp)</entry>
               <entry>11kB/request</entry>
               <entry>Database connection</entry>
             </row>
@@ -748,7 +756,7 @@
     <title>Technical architecture</title>
     <para>This chapter describes the deployment aspects of a VISHNU System. The first section presents a typical deployment
       of VISHNU on a single network. The second section presents a more complex deployment of VISHNU where the systems involved
-      are located on different networks isolated by firewalls.</para>
+      are located on different networks isolated by firewalls. The third section presents the deployement of Vishnu thanks to GoDiet tool.</para>
     <section>
       <title>Technical architecture diagram</title>
        <para>The Figure 4.1 shows a VISHNU system deployed on a set of hosts where each class of VSS and VBS is running
@@ -789,7 +797,7 @@
 	 communications are as described in §4.1.</para>
        <para>The startup and termination phases are identical to the architecture of §4.1., the SysFera-DS Forwarders being started and managed
          by the VISHNU Admin Server.</para>
-       <figure>
+       <figure id="vishnu_overview_firewall">
           <title>VISHNU Technical architecture with firewalls diagram</title>
           <mediaobject>
             <imageobject>
@@ -800,6 +808,22 @@
         </figure>
     </section>
     
+    <section>
+      <title>Technical architecture of VISHNU deployment</title>
+      <para>The figure <xref linkend="architecture_godiet"/> presents a VISHNU deployement process with GoDiet tool. Network D have been splitted to detail
+	  the process of infrastructure access with multi-hop. GoDiet use SSH and NetCat to execute remote program ( OmniNames, MA, SeDs ... ) and access resources which are not directly reachable.
+       </para>
+       
+       <figure id="architecture_godiet">
+          <title>VISHNU deployment with GoDiet</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/godiet_architecture.png"
+                  align="center" scale="90"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+    </section>
   </chapter><!-- PART 3 : TECHNICAL ARCHITECTURE -->
   
   <chapter><!-- PART 4 : MODULES ARCHITECTURE -->
