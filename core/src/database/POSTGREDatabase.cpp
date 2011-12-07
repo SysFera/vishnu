@@ -18,7 +18,7 @@ using namespace std;
  * \return raises an exception on error
  */
 int
-POSTGREDatabase::process(std::string request){
+POSTGREDatabase::process(std::string request, int transacId){
 
   PGresult* res;
   int reqPos;
@@ -132,7 +132,7 @@ POSTGREDatabase::disconnect(){
  * \return An object which encapsulates the database results
  */
 DatabaseResult*
-POSTGREDatabase::getResult(std::string request) {
+POSTGREDatabase::getResult(std::string request, int transacId) {
 
   PGresult* res;
   std::vector<std::vector<std::string> > results;

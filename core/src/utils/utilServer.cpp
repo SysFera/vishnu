@@ -297,7 +297,7 @@ vishnu::getGeneratedName (const char* format, int cpt, IdType type,
  * \return the corresponding attribut
  */
 std::string
-vishnu::getAttrVishnu(std::string attrname, std::string vishnuid) {
+vishnu::getAttrVishnu(std::string attrname, std::string vishnuid, int transacId) {
 
   DbFactory factory;
   Database *databaseVishnu;
@@ -305,7 +305,7 @@ vishnu::getAttrVishnu(std::string attrname, std::string vishnuid) {
   std::string sqlCommand("SELECT "+attrname+" FROM vishnu where vishnuid="+vishnuid);
 
   databaseVishnu = factory.getDatabaseInstance();
-  boost::scoped_ptr<DatabaseResult> result(databaseVishnu->getResult(sqlCommand.c_str()));
+  boost::scoped_ptr<DatabaseResult> result(databaseVishnu->getResult(sqlCommand.c_str(), transacId));
   return result->getFirstElement();
 
 }
@@ -317,7 +317,7 @@ vishnu::getAttrVishnu(std::string attrname, std::string vishnuid) {
  * \return raises an exception
  */
 void
-vishnu::incrementCpt(std::string cptName, int cpt) {
+vishnu::incrementCpt(std::string cptName, int cpt, int transacId) {
 
   DbFactory factory;
   Database *databaseVishnu;
@@ -327,7 +327,7 @@ vishnu::incrementCpt(std::string cptName, int cpt) {
   std::string sqlCommand("UPDATE vishnu set "+cptName+"="+vishnu::convertToString(cpt));
 
   databaseVishnu = factory.getDatabaseInstance();
-  databaseVishnu->process(sqlCommand.c_str());
+  databaseVishnu->process(sqlCommand.c_str(), transacId);
 
 }
 

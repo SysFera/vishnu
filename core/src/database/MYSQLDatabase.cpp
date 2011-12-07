@@ -17,9 +17,16 @@ string dbErrorMsg(MYSQL *conn) {
 }
 
 int
-MYSQLDatabase::process(string request){
+MYSQLDatabase::process(string request, int transacId){
   int reqPos;
-  MYSQL* conn = getConnection(reqPos);
+  MYSQL* conn = NULL;
+  if (transacId==-1) {
+    conn = getConnection(reqPos);
+  } else {
+    reqPos = -1;
+    conn = (&(mpool[transacId].mmysql));
+  }
+
   int res;
   if (request.empty()) {
     throw SystemException(ERRCODE_DBERR, "Empty SQL query");
@@ -120,13 +127,19 @@ MYSQLDatabase::disconnect(){
 
 /**
  * \brief To get the result of the latest request (if any result)
- * \fn DatabaseResult* getResult(string request)
+ * \param transacId the id of the transaction if one is used
  * \return The result of the latest request
  */
 DatabaseResult*
-MYSQLDatabase::getResult(string request) {
+MYSQLDatabase::getResult(string request, int transacId) {
   int reqPos;
-  MYSQL* conn = getConnection(reqPos);
+  MYSQL* conn = NULL;
+  if (transacId==-1) {
+    conn = getConnection(reqPos);
+  } else {
+    reqPos = -1;
+    conn = (&(mpool[transacId].mmysql));
+  }
   // Execute the SQL query
   if ((mysql_real_query(conn, request.c_str (), request.length())) != 0) {
     releaseConnection(reqPos);
@@ -192,6 +205,9 @@ MYSQLDatabase::getConnection(int& id){
 
 void
 MYSQLDatabase::releaseConnection(int pos) {
+  if (pos==-1){
+    return;
+  }
   int ret = pthread_mutex_unlock(&(mpool[pos].mmutex));
   if (ret) {
     throw SystemException(ERRCODE_DBCONN, "Cannot release connection lock");
