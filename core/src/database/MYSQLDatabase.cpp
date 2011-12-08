@@ -7,6 +7,7 @@
 #include "MYSQLDatabase.hpp"
 #include "SystemException.hpp"
 #include "utilVishnu.hpp"
+#include "errmsg.h"
 
 using namespace std;
 using namespace vishnu;
@@ -39,11 +40,27 @@ MYSQLDatabase::process(string request, int transacId){
 
   res=mysql_real_query(conn, request.c_str (), request.length());
 
-  if (res) {
-    // Could not execute the query
-    releaseConnection(reqPos);
-    throw SystemException(ERRCODE_DBERR, "P-Query error" + dbErrorMsg(conn));
+  if (res == CR_SERVER_GONE_ERROR) {
+// try to reinitialise the socket
+    if (mysql_real_connect(&(mpool[reqPos].mmysql),
+                           mconfig.getDbHost().c_str(),
+                           mconfig.getDbUserName().c_str(),
+                           mconfig.getDbUserPassword().c_str(),
+                           mconfig.getDbName().c_str(),
+                           mconfig.getDbPort(),
+                           NULL,
+                           CLIENT_MULTI_STATEMENTS) ==NULL) {
+      throw SystemException(ERRCODE_DBERR, "Cannot reconnect to the DB"
+                            + dbErrorMsg(&(mpool[reqPos].mmysql)));
+    }
+    res=mysql_real_query(conn, request.c_str (), request.length());
+    if (res) {
+      // Could not execute the query
+      releaseConnection(reqPos);
+      throw SystemException(ERRCODE_DBERR, "P-Query error" + dbErrorMsg(conn));
+    }
   }
+
   // Due to CLIENT_MULTI_STATEMENTS option, results must always be retrieved
   // process each statement result
   do {
@@ -134,6 +151,7 @@ DatabaseResult*
 MYSQLDatabase::getResult(string request, int transacId) {
   int reqPos;
   MYSQL* conn = NULL;
+  int res;
   if (transacId==-1) {
     conn = getConnection(reqPos);
   } else {
@@ -141,10 +159,29 @@ MYSQLDatabase::getResult(string request, int transacId) {
     conn = (&(mpool[transacId].mmysql));
   }
   // Execute the SQL query
-  if ((mysql_real_query(conn, request.c_str (), request.length())) != 0) {
-    releaseConnection(reqPos);
-    throw SystemException(ERRCODE_DBERR, "S-Query error" + dbErrorMsg(conn));
+  if ((res=mysql_real_query(conn, request.c_str (), request.length())) != 0) {
+
+    if (res == CR_SERVER_GONE_ERROR) {
+// try to reinitialise the socket
+      if (mysql_real_connect(&(mpool[reqPos].mmysql),
+                             mconfig.getDbHost().c_str(),
+                             mconfig.getDbUserName().c_str(),
+                             mconfig.getDbUserPassword().c_str(),
+                             mconfig.getDbName().c_str(),
+                             mconfig.getDbPort(),
+                             NULL,
+                             CLIENT_MULTI_STATEMENTS) ==NULL) {
+        throw SystemException(ERRCODE_DBERR, "Cannot reconnect to the DB"
+                              + dbErrorMsg(&(mpool[reqPos].mmysql)));
+      }
+      res=mysql_real_query(conn, request.c_str (), request.length());
+      if (res) {
+        releaseConnection(reqPos);
+        throw SystemException(ERRCODE_DBERR, "S-Query error" + dbErrorMsg(conn));
+      }
+    }
   }
+
   // Get the result handle (does not fetch data from the server)
   MYSQL_RES *result = mysql_use_result(conn);
   if (result == 0) {
@@ -220,13 +257,13 @@ MYSQLDatabase::startTransaction() {
   int reqPos;
   MYSQL* conn = getConnection(reqPos);
   bool ret = mysql_autocommit(conn, false);
-  std::cout << "Starting a transaction " << std::endl;
+  std::cout << "Starting a transaction with ret=" << ret << std::endl;
   if (ret) {
     releaseConnection(reqPos);
     throw SystemException(ERRCODE_DBCONN, "Failed to start transaction");
   }
   // DO NOT RELEASE THE CONNECTION, KEEPING TRANSACTION
-  std::cout << "Transaction created " << std::endl;
+  std::cout << "Transaction created :" << reqPos << std::endl;
   return reqPos;
 }
 
@@ -265,6 +302,7 @@ MYSQLDatabase::endTransaction(int transactionID) {
     releaseConnection(transactionID);
     throw SystemException(ERRCODE_DBCONN, "Failed to end the transaction");
   }
+  releaseConnection(transactionID);
   std::cout << "Ended " << std::endl;
 }
 
