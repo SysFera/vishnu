@@ -40,6 +40,7 @@
 #include "FMS_Data/HeadOfFileOptions.hpp"
 #include "FMS_Data/TailOfFileOptions.hpp"
 #include "FMS_Data/RmFileOptions.hpp"
+#include "FMS_Data/CreateDirOptions.hpp"
 
 // Package & Factory
 #include "FMS_Data/FMS_DataPackage.hpp"

@@ -110,6 +110,11 @@ namespace FMS_Data
          * \return Pointer to the object
          */
         virtual RmFileOptions_ptr createRmFileOptions();
+        /**
+         * \brief Creates a new object of class CreateDirOptions
+         * \return Pointer to the object
+         */
+        virtual CreateDirOptions_ptr createCreateDirOptions();
 
         /**
          * \brief To create an object of a given class (reflective API)

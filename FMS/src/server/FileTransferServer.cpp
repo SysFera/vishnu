@@ -315,7 +315,9 @@ void FileTransferServer::move(const TransferExec& transferExec, const std::strin
     boost::scoped_ptr<File> file (FileFactory::getFileServer( transferExec.getSessionServer(),transferExec.getSrcPath(),
           transferExec.getSrcUser(),transferExec.getSrcUserKey() ) ) ;
     try{
-      file->rm(true);
+      FMS_Data::RmFileOptions options;
+      options.setIsRecursive("true");
+      file->rm(options);
     }catch(VishnuException& err){
       updateStatus(3,transferExec.getTransferId(),err.what());
       transferExec.setLastExecStatus(1);

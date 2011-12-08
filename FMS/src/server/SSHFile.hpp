@@ -44,7 +44,7 @@
 /**
  * \brief An alias of mkdir command 
  */
-#define MKDIRCMD "mkdir -m "
+#define MKDIRCMD "mkdir "
 /**
  * \brief An alias of touch command 
  */
@@ -147,7 +147,7 @@ class SSHFile : public File {
     mutable std::string merror;
   public:
 
-    /**
+    /*ù
      * \brief The dafault constructor
      */
 
@@ -255,13 +255,13 @@ class SSHFile : public File {
      * \param mode the access permission of the directory
      * \return 0 if the command succeeds, an error code otherwise
      */ 
-    virtual int mkdir(const mode_t mode);
+    virtual int mkdir(const CreateDirOptions& options);
     /**
      * \brief To remove a file
      * \param isRecursive To remove directory
      * \return 0 if the command succeeds, an error code otherwise
      */ 
-    virtual int rm(bool isRecursive=false);
+    virtual int rm(const FMS_Data::RmFileOptions& options);
     /**
      * \brief To remove an empty directory
      * \return 0 if the command succeeds, an error code otherwise

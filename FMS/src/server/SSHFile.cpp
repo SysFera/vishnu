@@ -277,7 +277,7 @@ int SSHFile::mkfile(const mode_t mode) {
 
 
 /* Create a directory through ssh. */
-int SSHFile::mkdir(const mode_t mode) {
+int SSHFile::mkdir(const CreateDirOptions& options) {
   ostringstream os;
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
               sshPublicKey, sshPrivateKey);
@@ -286,7 +286,11 @@ int SSHFile::mkdir(const mode_t mode) {
   if (exists()){
     throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" already exists");
   }
-  os << oct << mode;
+  //os << oct << mode;
+  if (options.isIsRecursive() ) {
+    os << " -p " ;
+  }
+  
   mkdirResult = ssh.exec(MKDIRCMD+os.str()+" "+getPath());
   if (mkdirResult.second.length()!=0) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error creating "+getPath()+": "+mkdirResult.second);
@@ -298,7 +302,7 @@ int SSHFile::mkdir(const mode_t mode) {
 
 
 /* Remove the file through ssh. */
-int SSHFile::rm(bool isRecursive) {
+int SSHFile::rm(const RmFileOptions& options) {
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
               sshPublicKey, sshPrivateKey);
   pair<string,string> rmResult;
@@ -306,7 +310,7 @@ int SSHFile::rm(bool isRecursive) {
   if (!exists()){
     throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
   }
-  if(isRecursive) {
+  if(options.isIsRecursive() ) {
     rmResult = ssh.exec(RMRCMD+getPath());
   } else {
     rmResult = ssh.exec(RMCMD+getPath());
@@ -423,8 +427,9 @@ int SSHFile::mv(const string& dest, const CpFileOptions& options){
 
 
   cp(dest,tmpOptions);
-
-  int result=rm(true);
+  RmFileOptions rmOptions;
+  rmOptions.setIsRecursive("true");
+  int result=rm(rmOptions);
 
   return result;
 }

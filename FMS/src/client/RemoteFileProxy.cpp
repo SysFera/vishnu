@@ -477,15 +477,17 @@ int RemoteFileProxy::mkfile(const mode_t mode) {
  * If something goes wrong, throw a raiseDietMsgException containing
  * the error message.
  */
-int RemoteFileProxy::mkdir(const mode_t mode) {
+int RemoteFileProxy::mkdir(const CreateDirOptions& options) {
   diet_profile_t* mkdirProfile;
   char* errMsg;
+ char* optionsToString=NULL;
   std::string serviceName("DirCreate");
 
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  mkdirProfile = diet_profile_alloc(serviceName.c_str(), 3, 3, 4);
+  //mkdirProfile = diet_profile_alloc(serviceName.c_str(), 3, 3, 4);
+  mkdirProfile = diet_profile_alloc(serviceName.c_str(), 4, 4, 5);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
@@ -513,13 +515,18 @@ int RemoteFileProxy::mkdir(const mode_t mode) {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  diet_string_set(diet_parameter(mkdirProfile, 4), NULL, DIET_VOLATILE);
+  ::ecorecpp::serializer::serializer _ser;
+  //To serialize the options object in to optionsInString
+  optionsToString =  strdup(_ser.serialize_str(const_cast<CreateDirOptions*>(&options)).c_str());
+  
+  diet_string_set(diet_parameter(mkdirProfile,4 ), optionsToString, DIET_VOLATILE);
+  diet_string_set(diet_parameter(mkdirProfile, 5), NULL, DIET_VOLATILE);
 
   if (diet_call(mkdirProfile)){
     raiseDietMsgException("Error calling DIET service");
   }
 
-  if(diet_string_get(diet_parameter(mkdirProfile, 4), &errMsg, NULL)){
+  if(diet_string_get(diet_parameter(mkdirProfile, 5), &errMsg, NULL)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }

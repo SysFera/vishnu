@@ -116,7 +116,7 @@ class LocalFileProxy : public FileProxy {
      * \param mode the access permission of the directory
      * \return 0 if the command succeeds, an error code otherwise
      */ 
-    virtual int mkdir(const mode_t mode=defaultDirectoryAccessMode) {return 0; }
+    virtual int mkdir(const CreateDirOptions& options) {return 0; }
     /**
      * \brief To remove a file
        * \param options the remove file options  

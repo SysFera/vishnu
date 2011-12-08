@@ -64,7 +64,7 @@ class GenericCli {
             //call of the api fuction
             int ret =function(sessionKey);
 
-            if (!ret){
+            if (CLI_SUCCESS == ret){
             printSuccessMessage();
             } 
             return ret;
@@ -113,9 +113,12 @@ class GenericCli {
           }
 
           //call of the api fuction
-          function();
+          int ret =function();
 
-          printSuccessMessage(); 
+          if (CLI_SUCCESS == ret) {
+            printSuccessMessage(); 
+        }
+        return ret;
 
         } catch(VishnuException& e){// catch all Vishnu runtime error
           std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
@@ -150,6 +153,7 @@ class GenericCli {
 
         if (ret != CLI_SUCCESS){
           helpUsage(*opt,"[option] "+signature);
+          std::cerr << "ret = " << ret << "\n";
           exit(ret);
         }
 
@@ -163,6 +167,7 @@ class GenericCli {
       }
       catch(po::error& e){ // catch all other bad parameter errors
         helpUsage(*opt,"[option] "+signature);
+        std::cout << " ++++ in processListOpt: err= " << e.what()<<" \n";
         exit(CLI_ERROR_INVALID_PARAMETER);
       }
       catch(std::exception& e){// catch all std runtime error
