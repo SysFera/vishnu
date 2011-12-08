@@ -81,13 +81,13 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
       int ret = mdatabaseVishnu->startTransaction();
 
       //To get the user counter
-      userCpt = convertToInt(getAttrVishnu("usercpt", vishnuid, ret));
+//      userCpt = convertToInt(getAttrVishnu("usercpt", vishnuid, ret));
       incrementCpt("usercpt", userCpt, ret);
       userCpt = convertToInt(getAttrVishnu("usercpt", vishnuid, ret));
       mdatabaseVishnu->endTransaction(ret);
 
       //To get the formatiduser
-      formatiduser = getAttrVishnu("formatiduser", vishnuid, ret).c_str();
+      formatiduser = getAttrVishnu("formatiduser", vishnuid).c_str();
 
       //if the formatiduser is defined
       if (formatiduser.size() != 0) {

@@ -324,7 +324,7 @@ vishnu::incrementCpt(std::string cptName, int cpt, int transacId) {
 
   cpt = cpt+1;
 
-  std::string sqlCommand("UPDATE vishnu set "+cptName+"="+vishnu::convertToString(cpt));
+  std::string sqlCommand("UPDATE vishnu set vishnu."+cptName+"=["+cptName+"]+1");
 
   databaseVishnu = factory.getDatabaseInstance();
   databaseVishnu->process(sqlCommand.c_str(), transacId);
@@ -356,12 +356,12 @@ vishnu::getObjectId(int vishnuId,
   int ret = databaseVishnu->startTransaction();
 
   //To get the counter
-  int counter = convertToInt(getAttrVishnu(counterName, vishnuIdString, ret));
+  int counter;// = convertToInt(getAttrVishnu(counterName, vishnuIdString, ret));
   incrementCpt(counterName, counter, ret);
   counter = convertToInt(getAttrVishnu(counterName, vishnuIdString, ret));
   databaseVishnu->endTransaction(ret);
   //To get the formatiduser
-  std::string format = getAttrVishnu(formatName, vishnuIdString, ret).c_str();
+  std::string format = getAttrVishnu(formatName, vishnuIdString).c_str();
 
   if (format.size() != 0) {
     idGenerated =
