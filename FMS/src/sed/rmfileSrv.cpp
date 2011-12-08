@@ -86,7 +86,7 @@ int solveRemoveFile(diet_profile_t* profile) {
  if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr )) {
       throw SystemException(ERRCODE_INVDATA, "solve_remove_file: RmFileOptions object is not well built");
     }
-    file->rm(options_ptr->isIsRecursive());
+    file->rm(*options_ptr);
      //To register the command
     sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
     } catch (VishnuException& err) {

@@ -361,13 +361,13 @@ class File {
        * \param mode the access permission of the directory
        * \return 0 if the command succeeds, an error code otherwise
        */ 
-      virtual int mkdir(const mode_t mode=defaultDirectoryAccessMode) = 0;
+      virtual int mkdir(const CreateDirOptions& options) = 0;
       /**
        * \brief To remove a file
        * \param isRecursive to remove directory
        * \return 0 if the command succeeds, an error code otherwise
        */ 
-    virtual int rm(bool isRecursive=false) = 0;
+    virtual int rm(const FMS_Data::RmFileOptions& options) = 0;
       /**
        * \brief To remove an empty directory
        * \return 0 if the command succeeds, an error code otherwise

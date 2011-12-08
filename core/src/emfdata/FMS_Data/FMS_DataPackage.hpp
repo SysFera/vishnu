@@ -54,79 +54,84 @@ namespace FMS_Data
         static const int CPFILEOPTIONS = 0;
 
         /**
+         * \brief Constant for CreateDirOptions class
+         */
+        static const int CREATEDIROPTIONS = 1;
+
+        /**
          * \brief Constant for FileStat class
          */
-        static const int FILESTAT = 1;
+        static const int FILESTAT = 2;
 
         /**
          * \brief Constant for FileStatList class
          */
-        static const int FILESTATLIST = 2;
+        static const int FILESTATLIST = 3;
 
         /**
          * \brief Constant for FileTransfer class
          */
-        static const int FILETRANSFER = 3;
+        static const int FILETRANSFER = 4;
 
         /**
          * \brief Constant for FileTransferList class
          */
-        static const int FILETRANSFERLIST = 4;
+        static const int FILETRANSFERLIST = 5;
 
         /**
          * \brief Constant for FileType class
          */
-        static const int FILETYPE = 5;
+        static const int FILETYPE = 6;
 
         /**
          * \brief Constant for HeadOfFileOptions class
          */
-        static const int HEADOFFILEOPTIONS = 6;
+        static const int HEADOFFILEOPTIONS = 7;
 
         /**
          * \brief Constant for LsDirOptions class
          */
-        static const int LSDIROPTIONS = 7;
+        static const int LSDIROPTIONS = 8;
 
         /**
          * \brief Constant for LsTransferOptions class
          */
-        static const int LSTRANSFEROPTIONS = 8;
+        static const int LSTRANSFEROPTIONS = 9;
 
         /**
          * \brief Constant for MvFileOptions class
          */
-        static const int MVFILEOPTIONS = 9;
+        static const int MVFILEOPTIONS = 10;
 
         /**
          * \brief Constant for RmFileOptions class
          */
-        static const int RMFILEOPTIONS = 10;
+        static const int RMFILEOPTIONS = 11;
 
         /**
          * \brief Constant for Status class
          */
-        static const int STATUS = 11;
+        static const int STATUS = 12;
 
         /**
          * \brief Constant for StopTransferOptions class
          */
-        static const int STOPTRANSFEROPTIONS = 12;
+        static const int STOPTRANSFEROPTIONS = 13;
 
         /**
          * \brief Constant for StringList class
          */
-        static const int STRINGLIST = 13;
+        static const int STRINGLIST = 14;
 
         /**
          * \brief Constant for TailOfFileOptions class
          */
-        static const int TAILOFFILEOPTIONS = 14;
+        static const int TAILOFFILEOPTIONS = 15;
 
         /**
          * \brief Constant for TransferCommand class
          */
-        static const int TRANSFERCOMMAND = 15;
+        static const int TRANSFERCOMMAND = 16;
 
         /**
          * \brief Constant for STRINGLIST__STRINGS feature
@@ -333,6 +338,11 @@ namespace FMS_Data
          */
         static const int RMFILEOPTIONS__ISRECURSIVE = 40;
 
+        /**
+         * \brief Constant for CREATEDIROPTIONS__ISRECURSIVE feature
+         */
+        static const int CREATEDIROPTIONS__ISRECURSIVE = 41;
+
         // EClassifiers methods
 
         /**
@@ -430,6 +440,12 @@ namespace FMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EClass_ptr getRmFileOptions();
+
+        /**
+         * \brief Returns the reflective object for class CreateDirOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EClass_ptr getCreateDirOptions();
 
         // EStructuralFeatures methods
 
@@ -679,6 +695,12 @@ namespace FMS_Data
          */
         virtual ::ecore::EAttribute_ptr getRmFileOptions__isRecursive();
 
+        /**
+         * \brief Returns the reflective object for feature isRecursive of class CreateDirOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getCreateDirOptions__isRecursive();
+
     protected:
 
         /**
@@ -754,6 +776,11 @@ namespace FMS_Data
          * \brief The instance for the class RmFileOptions
          */
         ::ecore::EClass_ptr m_RmFileOptionsEClass;
+
+        /**
+         * \brief The instance for the class CreateDirOptions
+         */
+        ::ecore::EClass_ptr m_CreateDirOptionsEClass;
 
         // EEnuminstances 
 
@@ -981,6 +1008,11 @@ namespace FMS_Data
          * \brief The instance for the feature isRecursive of class RmFileOptions
          */
         ::ecore::EAttribute_ptr m_RmFileOptions__isRecursive;
+
+        /**
+         * \brief The instance for the feature isRecursive of class CreateDirOptions
+         */
+        ::ecore::EAttribute_ptr m_CreateDirOptions__isRecursive;
 
     };
 

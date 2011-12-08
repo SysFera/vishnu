@@ -223,10 +223,9 @@ getLastSession(const std::string& terminal){
 
   if(allSessions.empty()){
 
-    //std::cerr <<"There is no open session in this terminal\n";
-
-    throw (UserException(CLI_ERROR_NO_SESSION,"There is no open session in this terminal"));
-   // exit (CLI_ERROR_NO_SESSION);
+    std::cerr <<"There is no open session in this terminal\n";
+  
+    exit (CLI_ERROR_NO_SESSION);
 
   }
 

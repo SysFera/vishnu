@@ -50,7 +50,7 @@ int main (int ac, char* av[]){
     rmFileOptions.setIsRecursive(true);
   }
 
-  FileActionFunc<REMOVEFILE> apiFunc(path,rmFileOptions);
+  FileActionFunc<REMOVEFILE,FMS_Data::RmFileOptions> apiFunc(path,rmFileOptions);
   return GenericCli().run(apiFunc, dietConfig, ac, av);
 
 }

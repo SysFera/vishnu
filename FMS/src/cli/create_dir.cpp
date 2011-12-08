@@ -21,17 +21,36 @@ namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
+using namespace FMS_Data;
 
-int main (int argc, char* argv[]){
-
-  /******* Parsed value containers ****************/
+int main (int ac, char* av[]){
+  
+ /******* Parsed value containers ****************/
   string dietConfig;
   string path;
 
-  //buid options and parse 
-  ParseRemoteCommandOptions (argc,argv,dietConfig,path);
+  /********** EMF data ************/
+  FMS_Data::CreateDirOptions mkdirOptions;
+
+  /**************** Describe options *************/
+  boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],dietConfig,path));
+
+  opt->add("isRecursive,p",
+      "It specifies when the make directory command is recursive (make the parent directory if needed) or not.",
+      CONFIG);
   
-  FileActionFunc<CREATEDIR> apiFunc(path);
-  return GenericCli().run(apiFunc, dietConfig, argc, argv);
+  bool isEmpty;
+  std::cout << "in create_dir\n";  
+  GenericCli().processListOpt( opt, isEmpty,ac,av," path");
+ 
+  // Parse the cli and setting the options found
+
+  if(opt->count("isRecursive")){
+    std::cout << "+++++ recursive option on\n" ;
+    mkdirOptions.setIsRecursive(true);
+  } 
+  
+  FileActionFunc<CREATEDIR,FMS_Data::CreateDirOptions> apiFunc(path,mkdirOptions);
+  return GenericCli().run(apiFunc, dietConfig, ac, av);
 
 }

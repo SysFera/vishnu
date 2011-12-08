@@ -131,7 +131,7 @@ class RemoteFileProxy : public FileProxy {
      * \param mode the access permission of the directory
      * \return 0 if the command succeeds, an error code otherwise
      */ 
-    virtual int mkdir(const mode_t mode=defaultDirectoryAccessMode);
+    virtual int mkdir(const CreateDirOptions& options);
 
     /**
      * \brief To remove a file

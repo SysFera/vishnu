@@ -6,13 +6,13 @@
 #ifndef ERRORCLI_HPP
 #define ERRORCLI_HPP
 
-// RESERVED CODES FROM 11 TO 19
+// RESERVED CODES FROM 401 TO 405 
 
-static const int CLI_ERROR_NO_SESSION = 11;
-static const int CLI_ERROR_INVALID_PARAMETER = 12;
-static const int CLI_ERROR_MISSING_PARAMETER = 13;
-static const int CLI_ERROR_DIET = 14;
-static const int CLI_ERROR_RUNTIME = 15;
+static const int CLI_ERROR_NO_SESSION =401;
+static const int CLI_ERROR_INVALID_PARAMETER =402;
+static const int CLI_ERROR_MISSING_PARAMETER = 403;
+static const int CLI_ERROR_DIET = 404;
+static const int CLI_ERROR_RUNTIME = 405;
 static const int CLI_SUCCESS = 0;
 
 

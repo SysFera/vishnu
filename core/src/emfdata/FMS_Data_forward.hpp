@@ -106,6 +106,10 @@ namespace FMS_Data
     class RmFileOptions;
     typedef RmFileOptions* RmFileOptions_ptr;
 
+    // CreateDirOptions
+    class CreateDirOptions;
+    typedef CreateDirOptions* CreateDirOptions_ptr;
+
     // Package & Factory
     class FMS_DataFactory;
     typedef FMS_DataFactory * FMS_DataFactory_ptr;

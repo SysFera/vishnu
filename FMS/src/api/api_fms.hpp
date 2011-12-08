@@ -120,7 +120,7 @@ namespace vishnu{
    * \param path: the directory path using host:path format
    * \return 0 if everything is OK, another value otherwise
    */
-  int createDir(const string& sessionKey,const string& path)
+  int createDir(const string& sessionKey,const string& path,const CreateDirOptions& options= CreateDirOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**

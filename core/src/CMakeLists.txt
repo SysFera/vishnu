@@ -251,7 +251,10 @@ set(FMS_Data_SRCS
   emfdata/FMS_Data/TailOfFileOptions.cpp
   emfdata/FMS_Data/TailOfFileOptionsImpl.cpp
   emfdata/FMS_Data/RmFileOptions.cpp
-  emfdata/FMS_Data/RmFileOptionsImpl.cpp)
+  emfdata/FMS_Data/RmFileOptionsImpl.cpp
+  emfdata/FMS_Data/CreateDirOptions.cpp
+  emfdata/FMS_Data/CreateDirOptionsImpl.cpp
+    )
    
 set(FMS_Data_HEADERS
   emfdata/FMS_Data.hpp
@@ -270,7 +273,9 @@ set(FMS_Data_HEADERS
   emfdata/FMS_Data/FileTransferList.hpp
   emfdata/FMS_Data/HeadOfFileOptions.hpp
   emfdata/FMS_Data/TailOfFileOptions.hpp
-  emfdata/FMS_Data/RmFileOptions.hpp)
+  emfdata/FMS_Data/RmFileOptions.hpp
+  emfdata/FMS_Data/CreateDirOptions.hpp
+  )
 
 
 add_library(vishnu-core ${config_SRCS}

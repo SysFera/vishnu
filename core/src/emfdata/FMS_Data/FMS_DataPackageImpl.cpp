@@ -315,6 +315,17 @@ FMS_DataPackage::FMS_DataPackage()
     m_RmFileOptionsEClass->getEStructuralFeatures().push_back(
             m_RmFileOptions__isRecursive);
 
+    // CreateDirOptions
+    m_CreateDirOptionsEClass = new ::ecore::EClass();
+    m_CreateDirOptionsEClass->setClassifierID(CREATEDIROPTIONS);
+    m_CreateDirOptionsEClass->setEPackage(this);
+    getEClassifiers().push_back(m_CreateDirOptionsEClass);
+    m_CreateDirOptions__isRecursive = new ::ecore::EAttribute();
+    m_CreateDirOptions__isRecursive->setFeatureID(
+            ::FMS_Data::FMS_DataPackage::CREATEDIROPTIONS__ISRECURSIVE);
+    m_CreateDirOptionsEClass->getEStructuralFeatures().push_back(
+            m_CreateDirOptions__isRecursive);
+
     // Create enums
 
     m_FileTypeEEnum = new ::ecore::EEnum();
@@ -964,6 +975,24 @@ FMS_DataPackage::FMS_DataPackage()
     m_RmFileOptions__isRecursive->setUnique(true);
     m_RmFileOptions__isRecursive->setDerived(false);
     m_RmFileOptions__isRecursive->setOrdered(true);
+    // CreateDirOptions
+    m_CreateDirOptionsEClass->setName("CreateDirOptions");
+    m_CreateDirOptionsEClass->setAbstract(false);
+    m_CreateDirOptionsEClass->setInterface(false);
+    m_CreateDirOptions__isRecursive->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEBoolean());
+    m_CreateDirOptions__isRecursive->setName("isRecursive");
+    m_CreateDirOptions__isRecursive->setDefaultValueLiteral("false");
+    m_CreateDirOptions__isRecursive->setLowerBound(0);
+    m_CreateDirOptions__isRecursive->setUpperBound(1);
+    m_CreateDirOptions__isRecursive->setTransient(false);
+    m_CreateDirOptions__isRecursive->setVolatile(false);
+    m_CreateDirOptions__isRecursive->setChangeable(true);
+    m_CreateDirOptions__isRecursive->setUnsettable(false);
+    m_CreateDirOptions__isRecursive->setID(false);
+    m_CreateDirOptions__isRecursive->setUnique(true);
+    m_CreateDirOptions__isRecursive->setDerived(false);
+    m_CreateDirOptions__isRecursive->setOrdered(true);
 
     // TODO: Initialize data types
 
@@ -1197,6 +1226,10 @@ FMS_DataPackage::FMS_DataPackage()
 {
     return m_RmFileOptionsEClass;
 }
+::ecore::EClass_ptr FMS_DataPackage::getCreateDirOptions()
+{
+    return m_CreateDirOptionsEClass;
+}
 
 ::ecore::EAttribute_ptr FMS_DataPackage::getStringList__strings()
 {
@@ -1361,5 +1394,9 @@ FMS_DataPackage::FMS_DataPackage()
 ::ecore::EAttribute_ptr FMS_DataPackage::getRmFileOptions__isRecursive()
 {
     return m_RmFileOptions__isRecursive;
+}
+::ecore::EAttribute_ptr FMS_DataPackage::getCreateDirOptions__isRecursive()
+{
+    return m_CreateDirOptions__isRecursive;
 }
 
