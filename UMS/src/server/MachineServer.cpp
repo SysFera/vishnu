@@ -65,6 +65,7 @@ MachineServer::add(int vishnuId) {
 
       machineCpt = convertToInt(getAttrVishnu("machinecpt", vishnuid, ret));
       incrementCpt("machinecpt", machineCpt, ret);
+      mdatabaseVishnu->flush(ret);
       machineCpt = convertToInt(getAttrVishnu("machinecpt", vishnuid, ret));
 
       //To get the formatidmachine
