@@ -83,8 +83,8 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
       //To get the user counter
       userCpt = convertToInt(getAttrVishnu("usercpt", vishnuid, ret));
       incrementCpt("usercpt", userCpt, ret);
-      mdatabaseVishnu->flush(ret);
       userCpt = convertToInt(getAttrVishnu("usercpt", vishnuid, ret));
+      mdatabaseVishnu->endTransaction(ret);
 
       //To get the formatiduser
       formatiduser = getAttrVishnu("formatiduser", vishnuid, ret).c_str();
@@ -101,7 +101,6 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
         //if the userId is generated
         if (idUserGenerated.size() != 0) {
 
-          mdatabaseVishnu->endTransaction(ret);
           user->setUserId(idUserGenerated);
           //To get the password encrypted
           passwordCrypted = vishnu::cryptPassword(user->getUserId(), user->getPassword());
@@ -122,19 +121,16 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
 
           }// END If the user to add exists
           else {
-            mdatabaseVishnu->cancelTransaction(ret);
             UMSVishnuException e (ERRCODE_USERID_EXISTING);
             throw e;
           }
         }//END if the userId is generated
         else {
-          mdatabaseVishnu->cancelTransaction(ret);
           SystemException e (ERRCODE_SYSTEM, "There is a problem to parse the formatiduser");
           throw e;
         }
       }//END if the formatiduser is defined
       else {
-        mdatabaseVishnu->cancelTransaction(ret);
         SystemException e (ERRCODE_SYSTEM, "The formatiduser is not defined");
         throw e;
       }

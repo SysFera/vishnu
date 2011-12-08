@@ -62,10 +62,10 @@ MachineServer::add(int vishnuId) {
 
 // Start transaction
       int ret = mdatabaseVishnu->startTransaction();
-
       machineCpt = convertToInt(getAttrVishnu("machinecpt", vishnuid, ret));
       incrementCpt("machinecpt", machineCpt, ret);
-      mdatabaseVishnu->flush(ret);
+      machineCpt = convertToInt(getAttrVishnu("machinecpt", vishnuid, ret));
+      mdatabaseVishnu->endTransaction(ret);
       machineCpt = convertToInt(getAttrVishnu("machinecpt", vishnuid, ret));
 
       //To get the formatidmachine
@@ -81,7 +81,6 @@ MachineServer::add(int vishnuId) {
 
         //if the machine id is generated
         if (idMachineGenerated.size() != 0) {
-          mdatabaseVishnu->endTransaction(ret);
           mmachine->setMachineId(idMachineGenerated);
 
           //if the machineId does not exist
@@ -99,19 +98,16 @@ MachineServer::add(int vishnuId) {
 
           } //if the machineId does not exist
           else {
-            mdatabaseVishnu->cancelTransaction(ret);
             UMSVishnuException e (ERRCODE_MACHINE_EXISTING);
             throw e;
           }
         }//if the machine id is generated
         else {
-          mdatabaseVishnu->cancelTransaction(ret);
           SystemException e (ERRCODE_SYSTEM, "There is a problem to parse the formatidmachine");
           throw e;
         }
       }//END if the formatidmachine is defined
       else {
-        mdatabaseVishnu->cancelTransaction(ret);
         SystemException e (ERRCODE_SYSTEM, "The formatidmachine is not defined");
         throw e;
       }
