@@ -227,3 +227,8 @@ POSTGREDatabase::cancelTransaction(int transactionID) {
 // TODO
 }
 
+void
+POSTGREDatabase::flush(int transactionID){
+// TODO
+}
+

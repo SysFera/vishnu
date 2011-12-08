@@ -75,6 +75,12 @@ virtual ~Database();
  */
   virtual void
   cancelTransaction(int transactionID) = 0;
+/**
+ * \brief To commit a transaction
+ * \param transactionID: The ID of the transaction
+ */
+  virtual void
+  flush(int transactionID) = 0;
 protected :
   /**
    * \fn Database()

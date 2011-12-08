@@ -329,4 +329,12 @@ MYSQLDatabase::cancelTransaction(int transactionID) {
 }
 
 
+void
+MYSQLDatabase::flush(int transactionID){
+  bool ret;
+  MYSQL* conn = (&(mpool[transactionID].mmysql));
+  std::cout << "Ending a transaction number " << transactionID << std::endl;
+  ret = mysql_commit(conn);
+  std::cout << "Commited with ret=" << ret << std::endl;
+}
 

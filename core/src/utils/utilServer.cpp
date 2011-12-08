@@ -358,6 +358,7 @@ vishnu::getObjectId(int vishnuId,
   //To get the counter
   int counter = convertToInt(getAttrVishnu(counterName, vishnuIdString, ret));
   incrementCpt(counterName, counter, ret);
+  databaseVishnu->flush(ret);
   counter = convertToInt(getAttrVishnu(counterName, vishnuIdString, ret));
   //To get the formatiduser
   std::string format = getAttrVishnu(formatName, vishnuIdString, ret).c_str();

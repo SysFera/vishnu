@@ -76,6 +76,12 @@ public :
  */
   virtual void
   cancelTransaction(int transactionID);
+/**
+ * \brief To commit a transaction
+ * \param transactionID: The ID of the transaction
+ */
+  virtual void
+  flush(int transactionID);
 
 private :
   /**
