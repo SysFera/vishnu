@@ -220,11 +220,13 @@ MYSQLDatabase::startTransaction() {
   int reqPos;
   MYSQL* conn = getConnection(reqPos);
   bool ret = mysql_autocommit(conn, false);
+  std::cout << "Starting a transaction " << std::endl;
   if (ret) {
     releaseConnection(reqPos);
     throw SystemException(ERRCODE_DBCONN, "Failed to start transaction");
   }
   // DO NOT RELEASE THE CONNECTION, KEEPING TRANSACTION
+  std::cout << "Transaction created " << std::endl;
   return reqPos;
 }
 
@@ -232,39 +234,59 @@ void
 MYSQLDatabase::endTransaction(int transactionID) {
   bool ret;
   MYSQL* conn = (&(mpool[transactionID].mmysql));
+  std::cout << "Ending a transaction number " << transactionID << std::endl;
   ret = mysql_commit(conn);
+  std::cout << "Commited with ret=" << ret << std::endl;
   if (ret) {
+    std::cout << "Rollbacking " << std::endl;
     ret = mysql_rollback(conn);
     if (ret) {
+      std::cout << "Rollback failed " << std::endl;
       releaseConnection(transactionID);
       throw SystemException(ERRCODE_DBCONN, "Failed to rollback and commit the transaction");
     }
+    std::cout << "Releasing " << transactionID << std::endl;
     releaseConnection(transactionID);
     throw SystemException(ERRCODE_DBCONN, "Failed to commit the transaction");
   }
+  std::cout << "Autocommited" << ret << std::endl;
   ret = mysql_autocommit(conn, true);
+  std::cout << "Autocommited with ret=" << ret << std::endl;
   if (ret) {
-    mysql_rollback(conn);
+    std::cout << "Rollbacking " << std::endl;
+    ret = mysql_rollback(conn);
+    std::cout << "Rollbacked with ret=" << ret << std::endl;
     if (ret) {
+      std::cout << "Rollback failed, releasing " << transactionID << std::endl;
       releaseConnection(transactionID);
       throw SystemException(ERRCODE_DBCONN, "Failed to rollback and end the transaction");
     }
+    std::cout << "Releasing " << transactionID << std::endl;
     releaseConnection(transactionID);
     throw SystemException(ERRCODE_DBCONN, "Failed to end the transaction");
   }
+  std::cout << "Ended " << std::endl;
 }
 
 void
 MYSQLDatabase::cancelTransaction(int transactionID) {
   bool ret;
   MYSQL* conn = (&(mpool[transactionID].mmysql));
+  std::cout << "Canceling a transaction number " << transactionID << std::endl;
   ret = mysql_rollback(conn);
+  std::cout << "Rollbacked with ret=" << ret << std::endl;
   if (ret) {
+    std::cout << "Rollback failed, releasing " << transactionID << std::endl;
     releaseConnection(transactionID);
+    std::cout << "Autocommiting" << std::endl;
     ret = mysql_autocommit(conn, true);
+    std::cout << "Autocommited" << ret << std::endl;
     throw SystemException(ERRCODE_DBCONN, "Failed to cancel the transaction");
   }
+  std::cout << "Autocommiting" << std::endl;
   ret = mysql_autocommit(conn, true);
+  std::cout << "Autocommiting" << ret << std::endl;
+  std::cout << "Releasing " << transactionID << std::endl;
   releaseConnection(transactionID);
 }
 
