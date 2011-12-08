@@ -64,6 +64,8 @@ MachineServer::add(int vishnuId) {
       int ret = mdatabaseVishnu->startTransaction();
 
       machineCpt = convertToInt(getAttrVishnu("machinecpt", vishnuid, ret));
+      incrementCpt("machinecpt", machineCpt, ret);
+      machineCpt = convertToInt(getAttrVishnu("machinecpt", vishnuid, ret));
 
       //To get the formatidmachine
       formatidmachine = getAttrVishnu("formatidmachine", vishnuid, ret);
@@ -78,7 +80,6 @@ MachineServer::add(int vishnuId) {
 
         //if the machine id is generated
         if (idMachineGenerated.size() != 0) {
-          incrementCpt("machinecpt", machineCpt, ret);
           mdatabaseVishnu->endTransaction(ret);
           mmachine->setMachineId(idMachineGenerated);
 
