@@ -82,6 +82,8 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
 
       //To get the user counter
       userCpt = convertToInt(getAttrVishnu("usercpt", vishnuid, ret));
+      incrementCpt("usercpt", userCpt, ret);
+      userCpt = convertToInt(getAttrVishnu("usercpt", vishnuid, ret));
 
       //To get the formatiduser
       formatiduser = getAttrVishnu("formatiduser", vishnuid, ret).c_str();
@@ -98,7 +100,6 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
         //if the userId is generated
         if (idUserGenerated.size() != 0) {
 
-          incrementCpt("usercpt", userCpt, ret);
           mdatabaseVishnu->endTransaction(ret);
           user->setUserId(idUserGenerated);
           //To get the password encrypted
