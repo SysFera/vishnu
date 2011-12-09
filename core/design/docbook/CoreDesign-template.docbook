@@ -810,16 +810,38 @@
     
     <section>
       <title>Technical architecture of VISHNU deployment</title>
-      <para>The figure <xref linkend="architecture_godiet"/> presents a VISHNU deployement process with GoDiet tool. Network D have been splitted to detail
-	  the process of infrastructure access with multi-hop. GoDiet use SSH and NetCat to execute remote program ( OmniNames, MA, SeDs ... ) and access resources which are not directly reachable.
-       </para>
+
+<para>GoDiet is a cross-platform tool that helps you automate ad-hoc deployment and management procedures for a Diet platform. It manages the creation of configuration files, the staging of files, the launch of software components, the monitoring and the reporting. GoDiet is ex-
+tremely useful for large deployments on a complex physical infrastructure. The main features
+are :
+<itemizedlist>
+<listitem><para>
+Complete running application customization. Infrastructure agnostic approach;
+</para></listitem>
+<listitem><para>
+command-line interface;
+</para></listitem>
+<listitem><para>
+distributed command execution via SSH;
+</para></listitem>
+<listitem><para>
+templated based configuration files;
+</para></listitem>
+<listitem><para>
+handling of complex physical infrastructure, with firewalls and multiple local- and wide-area networks.
+</para></listitem>
+</itemizedlist>
+<para>The figure <xref linkend="architecture_godiet"/> presents a VISHNU deployement process with GoDiet tool. Network D have been splitted to detail
+ the process of infrastructure access with multi-hop. GoDiet use SSH and NetCat to execute remote program ( OmniNames, MA, SeDs ... ) and to access resources which are not directly reachable.
+</para>
+</para>
        
        <figure id="architecture_godiet">
           <title>VISHNU deployment with GoDiet</title>
           <mediaobject>
             <imageobject>
-              <imagedata fileref="images/png/godiet_architecture.png"
-                  align="center" scale="90"/>
+              <imagedata fileref="images/png/godiet_deployment.png"
+                  align="center" scale="85"/>
             </imageobject>
           </mediaobject>
         </figure>
