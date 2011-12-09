@@ -324,7 +324,7 @@ vishnu::incrementCpt(std::string cptName, int cpt, int transacId) {
 
   cpt = cpt+1;
 
-  std::string sqlCommand("UPDATE vishnu set vishnu."+cptName+"=["+cptName+"]+1");
+  std::string sqlCommand("UPDATE vishnu set "+cptName+"="+cptName+"+1");
 
   databaseVishnu = factory.getDatabaseInstance();
   databaseVishnu->process(sqlCommand.c_str(), transacId);
