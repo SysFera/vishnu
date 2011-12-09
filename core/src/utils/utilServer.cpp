@@ -349,6 +349,10 @@ vishnu::getObjectId(int vishnuId,
 
   std::string vishnuIdString = convertToString(vishnuId);
 
+  pthread_mutex_t mutex;
+  pthread_mutex_init(&(mutex), NULL);
+  pthread_mutex_lock(&(mutex));
+
 // Start transaction
   DbFactory factory;
   Database *databaseVishnu;
@@ -371,13 +375,16 @@ vishnu::getObjectId(int vishnuId,
 //      incrementCpt(counterName, counter, ret);
     } else {
       SystemException e (ERRCODE_SYSTEM, "There is a problem during the id generation with the format:"+ formatName);
+      pthread_mutex_unlock(&(mutex));
       throw e;
     }
 
   } else {
+    pthread_mutex_unlock(&(mutex));
     SystemException e (ERRCODE_SYSTEM, "The format "+ formatName +" is undefined");
     throw e;
   }
+  pthread_mutex_unlock(&(mutex));
   return idGenerated;
 }
 /**
