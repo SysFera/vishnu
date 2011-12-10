@@ -18,7 +18,7 @@
 #include "QueryProxy.hpp"
 #include "UtilsProxy.hpp"
 #include "utilVishnu.hpp"
-
+#include "NetrcReader.hpp"
 
 using namespace std;
 
@@ -44,15 +44,28 @@ vishnu::connect(const string& userId,
     throw UMSVishnuException(ERRCODE_UNKNOWN_CLOSURE_MODE, "Invalid ClosePolicy value: its value must be 0, 1 or 2");
   }
 
-  std::string encryptedPassword = vishnu::cryptPassword(userId, password);
+  string connectLogin;
+  string connectPassword;
 
-  UserProxy userProxy(userId, encryptedPassword);
+  //If the userId and the password is undefined the netrc file is used
+  if ((userId.empty()) && (password.empty())) {
+    NetrcReader netrcReader;
+    netrcReader.read(connectLogin, connectPassword);
+  } else {
+   connectLogin = userId;
+   connectPassword = password;
+  }
+
+  std::string encryptedPassword = vishnu::cryptPassword(connectLogin, connectPassword);
+
+  UserProxy userProxy(connectLogin, encryptedPassword);
   SessionProxy sessionProxy;
   int res = sessionProxy.connect(userProxy, connectOpt);
 
   session = sessionProxy.getData();
 
   return res;
+
 }
 
 /**
@@ -71,9 +84,21 @@ vishnu::reconnect(const string& userId,
                                             throw(UserException, SystemException)
 {
 
-  std::string encryptedPassword = vishnu::cryptPassword(userId, password);
+  string connectLogin;
+  string connectPassword;
 
-  UserProxy userProxy(userId, encryptedPassword);
+  //If the userId and the password is undefined the netrc file is used
+  if ((userId.empty()) && (password.empty())) {
+    NetrcReader netrcReader;
+    netrcReader.read(connectLogin, connectPassword);
+  } else {
+   connectLogin = userId;
+   connectPassword = password;
+  }
+
+  std::string encryptedPassword = vishnu::cryptPassword(connectLogin, connectPassword);
+
+  UserProxy userProxy(connectLogin, encryptedPassword);
   session.setSessionId(sessionId);
   SessionProxy sessionProxy(session);
 
@@ -104,7 +129,7 @@ vishnu::close(const string&  sessionKey)
  * \return raises an exception on error
  */
 int
-vishnu::addUser(const string& sessionKey, UMS_Data::User& newUser) 
+vishnu::addUser(const string& sessionKey, UMS_Data::User& newUser)
                                                                  throw(UserException, SystemException)
 {
 
@@ -236,8 +261,8 @@ vishnu::addMachine(const std::string& sessionKey,
 
   checkIfTextIsEmpty(newMachine.getName(), "The machine name is empty", ERRCODE_INVALID_PARAM);
   checkIfTextIsEmpty(newMachine.getSite(), "The machine site is empty", ERRCODE_INVALID_PARAM);
-  checkIfTextIsEmpty(newMachine.getLanguage(), "The machine language is empty", ERRCODE_INVALID_PARAM); 
-  checkIfTextIsEmpty(newMachine.getSshPublicKey(), "The machine sshPublicKeyFile is empty", ERRCODE_INVALID_PARAM); 
+  checkIfTextIsEmpty(newMachine.getLanguage(), "The machine language is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newMachine.getSshPublicKey(), "The machine sshPublicKeyFile is empty", ERRCODE_INVALID_PARAM);
   checkIfTextIsEmpty(newMachine.getMachineDescription(), "The machine description is empty", ERRCODE_INVALID_PARAM);
 
   SessionProxy sessionProxy(sessionKey);
@@ -712,7 +737,7 @@ vishnu::listUsers(const std::string& sessionKey,
  * \return an error code
  */
 int
-vishnu::vishnuInitialize(char* cfg, int argc, char** argv) 
+vishnu::vishnuInitialize(char* cfg, int argc, char** argv)
 {
 
   return UtilsProxy(cfg, argc, argv).initialize();
@@ -723,7 +748,7 @@ vishnu::vishnuInitialize(char* cfg, int argc, char** argv)
  * \return an error code
  */
 void
-vishnu::vishnuFinalize() 
+vishnu::vishnuFinalize()
 {
 
   UtilsProxy().finalize();
@@ -736,7 +761,7 @@ vishnu::vishnuFinalize()
  * \return an error code
  */
 int
-vishnu::restore(const std::string& filePath) 
+vishnu::restore(const std::string& filePath)
 {
 
   UtilsProxy utilsProxy(filePath) ;
