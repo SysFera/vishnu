@@ -623,7 +623,7 @@
               <entry>VSD</entry>
               <entry>VISHNU VSS</entry>
               <entry>Database server</entry>
-              <entry>MySQL SQL*Net (1521/tcp) or PostgreSQL (5432/tcp)</entry>
+              <entry>MySQL (3306/tcp) or PostgreSQL (5432/tcp)</entry>
               <entry>11kB/request</entry>
               <entry>Database connection</entry>
             </row>
