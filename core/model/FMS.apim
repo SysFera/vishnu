@@ -78,7 +78,7 @@
     <services name="listDir" description="displays  the content of a remote directory. " resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to list following the pattern  [host:]directory path" longOptionName=""/>
-      <ports name="dirContent" direction="OUT" description="The content of the directory  (only files names with short format, all files information with long format)." longOptionName="" defaultValueLiteral="">
+      <ports name="dirContent" direction="OUT" description="The content of the directory." longOptionName="" defaultValueLiteral="">
         <dataType href="FMS_Internal.apim#//@modules.0/@typeList/@types.17"/>
       </ports>
       <ports name="options" dataType="//@modules.0/@typeList/@types.6" description="List of options for the listDir command" longOptionName=""/>
