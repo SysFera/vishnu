@@ -260,5 +260,136 @@ void SubmitOptions::setErrorPath(::ecore::EString const& _errorPath)
 #endif
 }
 
+::ecore::EString const& SubmitOptions::getMailNotification() const
+{
+    return m_mailNotification;
+}
+
+void SubmitOptions::setMailNotification(
+        ::ecore::EString const& _mailNotification)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_mailNotification = m_mailNotification;
+#endif
+    m_mailNotification = _mailNotification;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__mailNotification(),
+                _old_mailNotification,
+                m_mailNotification
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EString const& SubmitOptions::getMailNotifyUser() const
+{
+    return m_mailNotifyUser;
+}
+
+void SubmitOptions::setMailNotifyUser(::ecore::EString const& _mailNotifyUser)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_mailNotifyUser = m_mailNotifyUser;
+#endif
+    m_mailNotifyUser = _mailNotifyUser;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__mailNotifyUser(),
+                _old_mailNotifyUser,
+                m_mailNotifyUser
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EString const& SubmitOptions::getGroup() const
+{
+    return m_group;
+}
+
+void SubmitOptions::setGroup(::ecore::EString const& _group)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_group = m_group;
+#endif
+    m_group = _group;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__group(),
+                _old_group,
+                m_group
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EString const& SubmitOptions::getWorkingDir() const
+{
+    return m_workingDir;
+}
+
+void SubmitOptions::setWorkingDir(::ecore::EString const& _workingDir)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_workingDir = m_workingDir;
+#endif
+    m_workingDir = _workingDir;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__workingDir(),
+                _old_workingDir,
+                m_workingDir
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EString const& SubmitOptions::getCpuTime() const
+{
+    return m_cpuTime;
+}
+
+void SubmitOptions::setCpuTime(::ecore::EString const& _cpuTime)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_cpuTime = m_cpuTime;
+#endif
+    m_cpuTime = _cpuTime;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__cpuTime(),
+                _old_cpuTime,
+                m_cpuTime
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
 // References
 

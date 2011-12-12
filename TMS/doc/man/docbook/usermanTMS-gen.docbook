@@ -76,6 +76,11 @@ same conditions as regards security.</para>
               choice="opt"><option>-N <replaceable>nbNodesAndCpuPerNode</replaceable></option></arg><arg
               choice="opt"><option>-o <replaceable>outputPath</replaceable></option></arg><arg
               choice="opt"><option>-e <replaceable>errorPath</replaceable></option></arg><arg
+              choice="opt"><option>-M <replaceable>mailNotification</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>mailNotifyUser</replaceable></option></arg><arg
+              choice="opt"><option>-g <replaceable>group</replaceable></option></arg><arg
+              choice="opt"><option>-D <replaceable>workingDir</replaceable></option></arg><arg
+              choice="opt"><option>-T <replaceable>cpuTime</replaceable></option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
@@ -139,6 +144,72 @@ same conditions as regards security.</para>
               <para>Assigns the path and file for job error.</para>
             </listitem>
           </varlistentry>
+          <varlistentry>
+            <term><option>-M <replaceable>mailNotification</replaceable></option></term>
+            <listitem>
+              <para>Assigns the notification type of the job. Valid type values are BEGIN, END, ERROR, and ALL (any state change)..</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-u <replaceable>mailNotifyUser</replaceable></option></term>
+            <listitem>
+              <para>The name of user to receive email notification of state changes as defined by the option mailNotification. The default value is the submitting user..</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-g <replaceable>group</replaceable></option></term>
+            <listitem>
+              <para>Assigns a job group name..</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-D <replaceable>workingDir</replaceable></option></term>
+            <listitem>
+              <para>Assigns a job remote working dir..</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-T <replaceable>cpuTime</replaceable></option></term>
+            <listitem>
+              <para>Assigns a job cpu limit time..</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="job output environment variables">
+        <title>JOB OUTPUT ENVIRONMENT VARIABLES</title>
+        <para>The VISHNU Job Manager set the following variables in the environment of the batch script.</para>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_BATCHJOB_ID</envar></term>
+            <listitem>
+              <para>Set the  identifier assigned to the job by the batch system.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><envar>VISHNU_BATCHJOB_NAME</envar></term>
+            <listitem>
+              <para>Set the name of the job.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><envar>VISHNU_SUBMIT_MACHINE_NAME</envar></term>
+            <listitem>
+              <para>Set  the name of the machine on which the job has been submitted.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><envar>VISHNU_BATCHJOB_NODEFILE</envar></term>
+            <listitem>
+              <para>Set the name of the file contain the list of nodes assigned to the job.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><envar>VISHNU_BATCHJOB_NUM_NODES</envar></term>
+            <listitem>
+              <para>Set the total number of nodes in the job's resource allocation.</para>
+            </listitem>
+          </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="environment">
@@ -147,7 +218,7 @@ same conditions as regards security.</para>
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -226,7 +297,7 @@ same conditions as regards security.</para>
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -311,7 +382,7 @@ same conditions as regards security.</para>
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -377,7 +448,7 @@ same conditions as regards security.</para>
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -506,7 +577,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -584,7 +655,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -674,7 +745,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -749,7 +820,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU..</para>
             </listitem>
           </varlistentry>
         </variablelist>

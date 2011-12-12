@@ -119,17 +119,17 @@ LLServer::processOptions(const char* scriptPath,
       insertOptionLine(optionLineToInsert, content);
     }
     if(options.getNbCpu()!=-1) {
-       throw UserException(ERRCODE_INVALID_PARAM, "Invalid option: this option is not implemented for the LoadLeveler batch scheduler because\n"
-                                                  "the number of cpu is fixed by the LoadLeveler class. Set the correct class that have at least the number\n"
-                                                   "of cpus that you want.");
+      optionLineToInsert ="# @ resources = ConsumableCpus("+vishnu::convertToString(options.getNbCpu())+"\n";
     }
     if(options.getMemory()!=-1) {
-      throw UserException(ERRCODE_INVALID_PARAM, "Invalid option: this option is not implemented for the LoadLeveler batch scheduler");
+      if(options.getNbCpu()!=-1) {
+        optionLineToInsert = "# @ resources = ConsumableCpus("+vishnu::convertToString(options.getNbCpu());
+        optionLineToInsert =" ConsumableMemory("+vishnu::convertToString(options.getNbCpu())+" mb\n";
+      } else {
+        optionLineToInsert ="# @ resources = ConsumableMemory("+vishnu::convertToString(options.getNbCpu())+" mb\n";
+      }
     }
     if(options.getNbNodesAndCpuPerNode()!="") {
-       throw UserException(ERRCODE_INVALID_PARAM, "Invalid option: this option is not implemented for the LoadLeveler batch scheduler because\n"
-                                                  "the number of cpu is fixed by the LoadLeveler class. Set the correct class that have at least the number\n"
-                                                  "of cpus and the nodes that you want.");
       
     }
 

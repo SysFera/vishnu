@@ -602,7 +602,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
           <varlistentry>
             <term><envar>VISHNU_CLOSE_POLICY</envar></term>
             <listitem>
-              <para>The value of this environment variable represents the session close policy. Overriden by the -p option.</para>
+              <para>The value of this environment variable represents the session close policy. Overridden by the -p option.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -943,7 +943,7 @@ homeDirectory path .</para>
       </refsect1>
       <refsect1 id="example">
         <title>EXAMPLE</title>
-        <para>To add a local accout to the user user_1 on machine_1 with the login toto with the public key in .ssh/id_dsa.pub:</para>
+        <para>To add a local account to the user user_1 on machine_1 with the login toto with the public key in .ssh/id_dsa.pub:</para>
         <para>vishnu_add_local_account user_1 machine_1 toto /home/toto/.ssh/id_dsa.pub /home/toto</para>
       </refsect1>
     </refentry>
@@ -1730,6 +1730,11 @@ opened the session).</para>
               choice="opt"><option>-N <replaceable>nbNodesAndCpuPerNode</replaceable></option></arg><arg
               choice="opt"><option>-o <replaceable>outputPath</replaceable></option></arg><arg
               choice="opt"><option>-e <replaceable>errorPath</replaceable></option></arg><arg
+              choice="opt"><option>-M <replaceable>mailNotification</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>mailNotifyUser</replaceable></option></arg><arg
+              choice="opt"><option>-g <replaceable>group</replaceable></option></arg><arg
+              choice="opt"><option>-D <replaceable>workingDir</replaceable></option></arg><arg
+              choice="opt"><option>-T <replaceable>cpuTime</replaceable></option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
@@ -1793,6 +1798,72 @@ opened the session).</para>
               <para>Assigns the path and file for job error.</para>
             </listitem>
           </varlistentry>
+          <varlistentry>
+            <term><option>-M <replaceable>mailNotification</replaceable></option></term>
+            <listitem>
+              <para>Assigns the notification type of the job. Valid type values are BEGIN, END, ERROR, and ALL (any state change)..</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-u <replaceable>mailNotifyUser</replaceable></option></term>
+            <listitem>
+              <para>The name of user to receive email notification of state changes as defined by the option mailNotification. The default value is the submitting user..</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-g <replaceable>group</replaceable></option></term>
+            <listitem>
+              <para>Assigns a job group name..</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-D <replaceable>workingDir</replaceable></option></term>
+            <listitem>
+              <para>Assigns a job remote working dir..</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-T <replaceable>cpuTime</replaceable></option></term>
+            <listitem>
+              <para>Assigns a job cpu limit time..</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="job output environment variables">
+        <title>JOB OUTPUT ENVIRONMENT VARIABLES</title>
+        <para>The VISHNU Job Manager set the following variables in the environment of the batch script.</para>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_BATCHJOB_ID</envar></term>
+            <listitem>
+              <para>Set the  identifier assigned to the job by the batch system.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><envar>VISHNU_BATCHJOB_NAME</envar></term>
+            <listitem>
+              <para>Set the name of the job.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><envar>VISHNU_SUBMIT_MACHINE_NAME</envar></term>
+            <listitem>
+              <para>Set  the name of the machine on which the job has been submitted.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><envar>VISHNU_BATCHJOB_NODEFILE</envar></term>
+            <listitem>
+              <para>Set the name of the file contain the list of nodes assigned to the job.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><envar>VISHNU_BATCHJOB_NUM_NODES</envar></term>
+            <listitem>
+              <para>Set the total number of nodes in the job's resource allocation.</para>
+            </listitem>
+          </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="environment">
@@ -1801,7 +1872,7 @@ opened the session).</para>
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1880,7 +1951,7 @@ opened the session).</para>
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1965,7 +2036,7 @@ opened the session).</para>
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2031,7 +2102,7 @@ opened the session).</para>
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2160,7 +2231,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2238,7 +2309,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2328,7 +2399,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2403,7 +2474,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -3516,7 +3587,7 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
           <varlistentry>
             <term><envar>VISHNU_TRANSFER_CMD</envar></term>
             <listitem>
-              <para>It specifies the command to use for all file transfers by default. It takes its values in the set {SCP,RSYNC}.. Overriden by the -c option.</para>
+              <para>It specifies the command to use for all file transfers by default. It takes its values in the set {SCP,RSYNC}.. Overridden by the -c option.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -3637,7 +3708,7 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
           <varlistentry>
             <term><envar>VISHNU_TRANSFER_CMD</envar></term>
             <listitem>
-              <para>It specifies the command to use for all file transfers by default. It takes its values in the set {SCP,RSYNC}.. Overriden by the -c option.</para>
+              <para>It specifies the command to use for all file transfers by default. It takes its values in the set {SCP,RSYNC}.. Overridden by the -c option.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -3757,7 +3828,7 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
           <varlistentry>
             <term><envar>VISHNU_TRANSFER_CMD</envar></term>
             <listitem>
-              <para>It specifies the command to use for all file transfers by default. It takes its values in the set {SCP,RSYNC}.. Overriden by the -c option.</para>
+              <para>It specifies the command to use for all file transfers by default. It takes its values in the set {SCP,RSYNC}.. Overridden by the -c option.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -3878,7 +3949,7 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
           <varlistentry>
             <term><envar>VISHNU_TRANSFER_CMD</envar></term>
             <listitem>
-              <para>It specifies the command to use for all file transfers by default. It takes its values in the set {SCP,RSYNC}.. Overriden by the -c option.</para>
+              <para>It specifies the command to use for all file transfers by default. It takes its values in the set {SCP,RSYNC}.. Overridden by the -c option.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -5584,7 +5655,7 @@ for other VISHNU commands.</para>
           <varlistentry>
             <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>Input argument. Allows to list a specific option or all default options values or for an admin to list options of a specific user.</para>
+              <para>Input argument. Allows the user to list a specific option or all default options values or for an admin to list options of a specific user.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -5931,7 +6002,7 @@ opened the session).</para>
           <varlistentry>
             <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>Input argument. Is an instance of the class SubmitOptions. Each optionnal value is associated to a set operation (e.g: setNbCpu(...)) in the class SubmitOptions.  If no set operation is not called on the instance object  options, the job is submitted with the options defined in the scriptFilePath. Otherewise the job is submitted with the optionnal values set by the options object and optionnal values defined in the scriptFilePath, but optionnal values set by SubmitOptions object take precedence over those in scriptFilePath. With in the object options or within the scriptFilePath, the last occurance of an optionnal value takes precedence over earlier occurance..</para>
+              <para>Input argument. Is an instance of the class SubmitOptions. Each optional value is associated to a set operation (e.g: setNbCpu(...)) in the class SubmitOptions.  If no set operation is not called on the instance object  options, the job is submitted with the options defined in the scriptFilePath. Otherewise the job is submitted with the optional values set by the options object and optional values defined in the scriptFilePath, but optional values set by SubmitOptions object take precedence over those in scriptFilePath. With in the object options or within the scriptFilePath, the last occurance of an optional value takes precedence over earlier occurance..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -7573,7 +7644,7 @@ values can be obtained using the vishnu_list_machine command).
           <varlistentry>
             <term><emphasis>dirContent</emphasis></term>
             <listitem>
-              <para>Output argument. The content of the directory  (only files names with short format, all files informations with long format)..</para>
+              <para>Output argument. The content of the directory  (only files names with short format, all files information with long format)..</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -9756,7 +9827,7 @@ for other VISHNU commands.</para>
           <varlistentry>
             <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>Input argument. Allows to list a specific option or all default options values or for an admin to list options of a specific user.</para>
+              <para>Input argument. Allows the user to list a specific option or all default options values or for an admin to list options of a specific user.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -10163,7 +10234,7 @@ opened the session).</para>
           <varlistentry>
             <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>Input argument. Is an instance of the class SubmitOptions. Each optionnal value is associated to a set operation (e.g: setNbCpu(...)) in the class SubmitOptions.  If no set operation is not called on the instance object  options, the job is submitted with the options defined in the scriptFilePath. Otherewise the job is submitted with the optionnal values set by the options object and optionnal values defined in the scriptFilePath, but optionnal values set by SubmitOptions object take precedence over those in scriptFilePath. With in the object options or within the scriptFilePath, the last occurance of an optionnal value takes precedence over earlier occurance..</para>
+              <para>Input argument. Is an instance of the class SubmitOptions. Each optional value is associated to a set operation (e.g: setNbCpu(...)) in the class SubmitOptions.  If no set operation is not called on the instance object  options, the job is submitted with the options defined in the scriptFilePath. Otherewise the job is submitted with the optional values set by the options object and optional values defined in the scriptFilePath, but optional values set by SubmitOptions object take precedence over those in scriptFilePath. With in the object options or within the scriptFilePath, the last occurance of an optional value takes precedence over earlier occurance..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -12024,7 +12095,7 @@ values can be obtained using the vishnu_list_machine command).
           <varlistentry>
             <term><emphasis>dirContent</emphasis></term>
             <listitem>
-              <para>Output argument. The content of the directory  (only files names with short format, all files informations with long format)..</para>
+              <para>Output argument. The content of the directory  (only files names with short format, all files information with long format)..</para>
             </listitem>
           </varlistentry>
           <varlistentry>

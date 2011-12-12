@@ -30,13 +30,13 @@ void Env::replaceAllOccurences(std::string& scriptContent,
 
 void Env::getTorqueNumNodes(std::string& scriptContent) {
 
-  size_t pos = scriptContent.find("VISHNU_JOB_NUM_NODES");
+  size_t pos = scriptContent.find("VISHNU_BATCHJOB_NUM_NODES");
   if(pos!=std::string::npos) {
     pos = scriptContent.rfind("\n", pos-1);
     std::string tmp = "NBNODES=\"$(cat  $PBS_NODEFILE | wc -l)\" \n";
     scriptContent.insert(pos+1, tmp);
-    replaceAllOccurences(scriptContent, "$VISHNU_JOB_NUM_NODES", "$NBNODES");
-    replaceAllOccurences(scriptContent, "${VISHNU_JOB_NUM_NODES}", "$NBNODES");
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$NBNODES");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$NBNODES");
   }
   
 }
@@ -52,32 +52,31 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
 
     case TORQUE:
 
-      //To replace VISHNU_JOB_ID
-      replaceAllOccurences(scriptContent, "VISHNU_JOB_ID", "PBS_JOBID");
-      //To replace VISHNU_JOB_NAME
-      replaceAllOccurences(scriptContent, "VISHNU_JOB_NAME", "PBS_JOBNAME");
-      //To replace VISHNU_JOB_NODEFILE
-      replaceAllOccurences(scriptContent, "VISHNU_JOB_NODEFILE", "PBS_NODEFILE");
-      //To replace VISHNU_JOB_NODELIST
-      replaceAllOccurences(scriptContent, "$VISHNU_JOB_NODELIST", "\"$(cat $PBS_NODEFILE)\"");
-      replaceAllOccurences(scriptContent, "${VISHNU_JOB_NODELIST}", "\"$(cat $PBS_NODEFILE)\"");
-
+      //To replace VISHNU_BATCHJOB_ID
+      replaceAllOccurences(scriptContent, "VISHNU_BATCHJOB_ID", "PBS_JOBID");
+      //To replace VISHNU_BATCHJOB_NAME
+      replaceAllOccurences(scriptContent, "VISHNU_BATCHJOB_NAME", "PBS_JOBNAME");
+      //To replace VISHNU_BATCHJOB_NODEFILE
+      replaceAllOccurences(scriptContent, "VISHNU_BATCHJOB_NODEFILE", "PBS_NODEFILE");
+      //To replace VISHNU_BATCHJOB_NODEFILE
+      replaceAllOccurences(scriptContent, "VISHNU_BATCHJOB_NODEFILE", "PBS_NODEFILE");
+      //To replace VISHNU_BATCHJOB_NUM_NODES
       getTorqueNumNodes(scriptContent);
 
       break;
 
     case LOADLEVELER:
-      replaceAllOccurences(scriptContent, "VISHNU_JOB_ID", "LOADL_STEP_ID"); 
-      replaceAllOccurences(scriptContent, "VISHNU_JOB_NAME", "LOADL_JOB_NAME"); 
-      replaceAllOccurences(scriptContent, "VISHNU_JOB_NODEFILE", "LOADL_HOSTFILE"); 
+      replaceAllOccurences(scriptContent, "VISHNU_BATCHJOB_ID", "LOADL_STEP_ID"); 
+      replaceAllOccurences(scriptContent, "VISHNU_BATCHJOB_NAME", "LOADL_JOB_NAME"); 
+      replaceAllOccurences(scriptContent, "VISHNU_BATCHJOB_NODEFILE", "LOADL_HOSTFILE"); 
       break;
     case SLURM:
-      replaceAllOccurences(scriptContent, "VISHNU_JOB_ID", "SLURM_JOB_ID");
-      replaceAllOccurences(scriptContent, "VISHNU_JOB_NAME", "SLURM_JOB_NAME");
-      replaceAllOccurences(scriptContent, "VISHNU_JOB_NUM_NODES", "SLURM_JOB_NUM_NODES");
+      replaceAllOccurences(scriptContent, "VISHNU_BATCHJOB_ID", "SLURM_JOB_ID");
+      replaceAllOccurences(scriptContent, "VISHNU_BATCHJOB_NAME", "SLURM_JOB_NAME");
+      replaceAllOccurences(scriptContent, "VISHNU_BATCHJOB_NUM_NODES", "SLURM_JOB_NUM_NODES");
       //replaceAllOccurences(scriptContent, "VISHNU_JOB_CPUS_PER_NODE", "SLURM_JOB_CPUS_PER_NODE");
       
-      pos = scriptContent.find("VISHNU_JOB_NODEFILE");
+      pos = scriptContent.find("VISHNU_BATCHJOB_NODEFILE");
       if(pos!=std::string::npos) {
         std::string fileName = std::string(getenv("HOME"))+"/NODELIST_XXXXXX";
         vishnu::createTmpFile(const_cast<char*>(fileName.c_str()));
@@ -85,8 +84,8 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
         scriptContent.insert(pos+1, "echo $SLURM_JOB_NODELIST > "+fileName+"\n");
         std::string tmp = "echo $SLURM_JOB_NODELIST > "+fileName+"\n";
         scriptContent.insert(pos+1+tmp.size(), "sed -i 's/,/\\n/g' "+fileName+"\n");
-        replaceAllOccurences(scriptContent, "$VISHNU_JOB_NODEFILE", fileName);
-        replaceAllOccurences(scriptContent, "${VISHNU_JOB_NODEFILE}", fileName);
+        replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", fileName);
+        replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", fileName);
 
       }
 
