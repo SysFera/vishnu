@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: vishnu_submit_job
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
 .\"      Date: February 2011
 .\"    Manual: TMS Command reference
 .\"    Source: VISHNU 1.2
@@ -31,7 +31,7 @@
 vishnu_submit_job \- submits a job on a machine through the use of a script (scriptFilePath)
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_submit_job\fR\ 'u
-\fBvishnu_submit_job\fR [\fB\-h\fR] [\fB\-n\ \fR\fB\fIname\fR\fR] [\fB\-q\ \fR\fB\fIqueue\fR\fR] [\fB\-t\ \fR\fB\fIwallTime\fR\fR] [\fB\-m\ \fR\fB\fImemory\fR\fR] [\fB\-P\ \fR\fB\fInbCpu\fR\fR] [\fB\-N\ \fR\fB\fInbNodesAndCpuPerNode\fR\fR] [\fB\-o\ \fR\fB\fIoutputPath\fR\fR] [\fB\-e\ \fR\fB\fIerrorPath\fR\fR] \fImachineId\fR \fIscriptFilePath\fR
+\fBvishnu_submit_job\fR [\fB\-h\fR] [\fB\-n\ \fR\fB\fIname\fR\fR] [\fB\-q\ \fR\fB\fIqueue\fR\fR] [\fB\-t\ \fR\fB\fIwallTime\fR\fR] [\fB\-m\ \fR\fB\fImemory\fR\fR] [\fB\-P\ \fR\fB\fInbCpu\fR\fR] [\fB\-N\ \fR\fB\fInbNodesAndCpuPerNode\fR\fR] [\fB\-o\ \fR\fB\fIoutputPath\fR\fR] [\fB\-e\ \fR\fB\fIerrorPath\fR\fR] [\fB\-M\ \fR\fB\fImailNotification\fR\fR] [\fB\-u\ \fR\fB\fImailNotifyUser\fR\fR] [\fB\-g\ \fR\fB\fIgroup\fR\fR] [\fB\-D\ \fR\fB\fIworkingDir\fR\fR] [\fB\-T\ \fR\fB\fIcpuTime\fR\fR] \fImachineId\fR \fIscriptFilePath\fR
 .SH "DESCRIPTION"
 .PP
 This command is used to submit a job to the specific batch scheduler associated to a machine\&. It allows describing a job in a script, using either the batch scheduler\*(Aqs directives or VISHNU\*(Aqs generic directives for all batch schedulers\&.
@@ -81,11 +81,64 @@ Assigns the path and file for job output\&.
 .RS 4
 Assigns the path and file for job error\&.
 .RE
+.PP
+\fB\-M \fR\fB\fImailNotification\fR\fR
+.RS 4
+Assigns the notification type of the job\&. Valid type values are BEGIN, END, ERROR, and ALL (any state change)\&.\&.
+.RE
+.PP
+\fB\-u \fR\fB\fImailNotifyUser\fR\fR
+.RS 4
+The name of user to receive email notification of state changes as defined by the option mailNotification\&. The default value is the submitting user\&.\&.
+.RE
+.PP
+\fB\-g \fR\fB\fIgroup\fR\fR
+.RS 4
+Assigns a job group name\&.\&.
+.RE
+.PP
+\fB\-D \fR\fB\fIworkingDir\fR\fR
+.RS 4
+Assigns a job remote working dir\&.\&.
+.RE
+.PP
+\fB\-T \fR\fB\fIcpuTime\fR\fR
+.RS 4
+Assigns a job cpu limit time\&.\&.
+.RE
+.SH "JOB OUTPUT ENVIRONMENT VARIABLES"
+.PP
+The VISHNU Job Manager set the following variables in the environment of the batch script\&.
+.PP
+\fBVISHNU_BATCHJOB_ID\fR
+.RS 4
+Set the identifier assigned to the job by the batch system\&.
+.RE
+.PP
+\fBVISHNU_BATCHJOB_NAME\fR
+.RS 4
+Set the name of the job\&.
+.RE
+.PP
+\fBVISHNU_SUBMIT_MACHINE_NAME\fR
+.RS 4
+Set the name of the machine on which the job has been submitted\&.
+.RE
+.PP
+\fBVISHNU_BATCHJOB_NODEFILE\fR
+.RS 4
+Set the name of the file contain the list of nodes assigned to the job\&.
+.RE
+.PP
+\fBVISHNU_BATCHJOB_NUM_NODES\fR
+.RS 4
+Set the total number of nodes in the job\*(Aqs resource allocation\&.
+.RE
 .SH "ENVIRONMENT"
 .PP
 \fBVISHNU_CONFIG_FILE\fR
 .RS 4
-Contains the path to the local configuration file for VISHNU\&.
+Contains the path to the local configuration file for VISHNU\&.\&.
 .RE
 .SH "DIAGNOSTICS"
 .PP
