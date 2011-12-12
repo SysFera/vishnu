@@ -100,6 +100,36 @@ void SubmitOptions::_initialize()
                 m_errorPath);
     }
         return _any;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__MAILNOTIFICATION:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_mailNotification);
+    }
+        return _any;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__MAILNOTIFYUSER:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_mailNotifyUser);
+    }
+        return _any;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__GROUP:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_group);
+    }
+        return _any;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__WORKINGDIR:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_workingDir);
+    }
+        return _any;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CPUTIME:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_cpuTime);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -158,6 +188,36 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
                 m_errorPath);
     }
         return;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__MAILNOTIFICATION:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_mailNotification);
+    }
+        return;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__MAILNOTIFYUSER:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_mailNotifyUser);
+    }
+        return;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__GROUP:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_group);
+    }
+        return;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__WORKINGDIR:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_workingDir);
+    }
+        return;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CPUTIME:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_cpuTime);
+    }
+        return;
 
     }
     throw "Error";
@@ -188,6 +248,21 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__ERRORPATH:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_errorPath);
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__MAILNOTIFICATION:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_mailNotification);
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__MAILNOTIFYUSER:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_mailNotifyUser);
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__GROUP:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_group);
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__WORKINGDIR:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_workingDir);
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CPUTIME:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_cpuTime);
 
     }
     throw "Error";

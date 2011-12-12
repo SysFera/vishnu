@@ -158,6 +158,61 @@ namespace TMS_Data
          **/
         void setErrorPath(::ecore::EString const& _errorPath);
 
+        /**
+         * \brief To get the mailNotification
+         * \return The mailNotification attribute value
+         **/
+        ::ecore::EString const& getMailNotification() const;
+        /**
+         * \brief To set the mailNotification
+         * \param _mailNotification The mailNotification value
+         **/
+        void setMailNotification(::ecore::EString const& _mailNotification);
+
+        /**
+         * \brief To get the mailNotifyUser
+         * \return The mailNotifyUser attribute value
+         **/
+        ::ecore::EString const& getMailNotifyUser() const;
+        /**
+         * \brief To set the mailNotifyUser
+         * \param _mailNotifyUser The mailNotifyUser value
+         **/
+        void setMailNotifyUser(::ecore::EString const& _mailNotifyUser);
+
+        /**
+         * \brief To get the group
+         * \return The group attribute value
+         **/
+        ::ecore::EString const& getGroup() const;
+        /**
+         * \brief To set the group
+         * \param _group The group value
+         **/
+        void setGroup(::ecore::EString const& _group);
+
+        /**
+         * \brief To get the workingDir
+         * \return The workingDir attribute value
+         **/
+        ::ecore::EString const& getWorkingDir() const;
+        /**
+         * \brief To set the workingDir
+         * \param _workingDir The workingDir value
+         **/
+        void setWorkingDir(::ecore::EString const& _workingDir);
+
+        /**
+         * \brief To get the cpuTime
+         * \return The cpuTime attribute value
+         **/
+        ::ecore::EString const& getCpuTime() const;
+        /**
+         * \brief To set the cpuTime
+         * \param _cpuTime The cpuTime value
+         **/
+        void setCpuTime(::ecore::EString const& _cpuTime);
+
         // References
 
 
@@ -198,6 +253,16 @@ namespace TMS_Data
         ::ecore::EString m_outputPath;
 
         ::ecore::EString m_errorPath;
+
+        ::ecore::EString m_mailNotification;
+
+        ::ecore::EString m_mailNotifyUser;
+
+        ::ecore::EString m_group;
+
+        ::ecore::EString m_workingDir;
+
+        ::ecore::EString m_cpuTime;
 
         // References
 

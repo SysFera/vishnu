@@ -13,7 +13,8 @@ set(client_SRCS client/SessionProxy.cpp
   client/ConfigurationProxy.cpp
   client/OptionValueProxy.cpp
   client/utilsClient.cpp
-  client/UtilsProxy.cpp)
+  client/UtilsProxy.cpp
+  client/NetrcReader.cpp)
 
 set(cli_SRCS cli/utils
   cli/daemon_cleaner
@@ -69,7 +70,7 @@ if(NOT CLIENT_ONLY)
   install(TARGETS vishnu-ums-server DESTINATION ${LIB_INSTALL_DIR})
 
   target_link_libraries(vishnu-ums-server vishnu-core vishnu-core-server)
-  
+
   add_executable(umssed ${sed_SRCS})
   target_link_libraries(umssed ${DIET_SERVER_LIBRARIES}
     vishnu-ums-server

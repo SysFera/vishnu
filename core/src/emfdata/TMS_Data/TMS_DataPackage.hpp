@@ -294,189 +294,214 @@ namespace TMS_Data
         static const int SUBMITOPTIONS__ERRORPATH = 33;
 
         /**
+         * \brief Constant for SUBMITOPTIONS__MAILNOTIFICATION feature
+         */
+        static const int SUBMITOPTIONS__MAILNOTIFICATION = 34;
+
+        /**
+         * \brief Constant for SUBMITOPTIONS__MAILNOTIFYUSER feature
+         */
+        static const int SUBMITOPTIONS__MAILNOTIFYUSER = 35;
+
+        /**
+         * \brief Constant for SUBMITOPTIONS__GROUP feature
+         */
+        static const int SUBMITOPTIONS__GROUP = 36;
+
+        /**
+         * \brief Constant for SUBMITOPTIONS__WORKINGDIR feature
+         */
+        static const int SUBMITOPTIONS__WORKINGDIR = 37;
+
+        /**
+         * \brief Constant for SUBMITOPTIONS__CPUTIME feature
+         */
+        static const int SUBMITOPTIONS__CPUTIME = 38;
+
+        /**
          * \brief Constant for LISTJOBSOPTIONS__JOBID feature
          */
-        static const int LISTJOBSOPTIONS__JOBID = 34;
+        static const int LISTJOBSOPTIONS__JOBID = 39;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__NBCPU feature
          */
-        static const int LISTJOBSOPTIONS__NBCPU = 35;
+        static const int LISTJOBSOPTIONS__NBCPU = 40;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__FROMSUBMITDATE feature
          */
-        static const int LISTJOBSOPTIONS__FROMSUBMITDATE = 36;
+        static const int LISTJOBSOPTIONS__FROMSUBMITDATE = 41;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__TOSUBMITDATE feature
          */
-        static const int LISTJOBSOPTIONS__TOSUBMITDATE = 37;
+        static const int LISTJOBSOPTIONS__TOSUBMITDATE = 42;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__OWNER feature
          */
-        static const int LISTJOBSOPTIONS__OWNER = 38;
+        static const int LISTJOBSOPTIONS__OWNER = 43;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__STATUS feature
          */
-        static const int LISTJOBSOPTIONS__STATUS = 39;
+        static const int LISTJOBSOPTIONS__STATUS = 44;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__PRIORITY feature
          */
-        static const int LISTJOBSOPTIONS__PRIORITY = 40;
+        static const int LISTJOBSOPTIONS__PRIORITY = 45;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__QUEUE feature
          */
-        static const int LISTJOBSOPTIONS__QUEUE = 41;
+        static const int LISTJOBSOPTIONS__QUEUE = 46;
 
         /**
          * \brief Constant for PROGRESSOPTIONS__JOBID feature
          */
-        static const int PROGRESSOPTIONS__JOBID = 42;
+        static const int PROGRESSOPTIONS__JOBID = 47;
 
         /**
          * \brief Constant for PROGRESSOPTIONS__JOBOWNER feature
          */
-        static const int PROGRESSOPTIONS__JOBOWNER = 43;
+        static const int PROGRESSOPTIONS__JOBOWNER = 48;
 
         /**
          * \brief Constant for LISTPROGRESSION__NBJOBS feature
          */
-        static const int LISTPROGRESSION__NBJOBS = 44;
+        static const int LISTPROGRESSION__NBJOBS = 49;
 
         /**
          * \brief Constant for LISTPROGRESSION__PROGRESS feature
          */
-        static const int LISTPROGRESSION__PROGRESS = 45;
+        static const int LISTPROGRESSION__PROGRESS = 50;
 
         /**
          * \brief Constant for PROGRESSION__JOBID feature
          */
-        static const int PROGRESSION__JOBID = 46;
+        static const int PROGRESSION__JOBID = 51;
 
         /**
          * \brief Constant for PROGRESSION__JOBNAME feature
          */
-        static const int PROGRESSION__JOBNAME = 47;
+        static const int PROGRESSION__JOBNAME = 52;
 
         /**
          * \brief Constant for PROGRESSION__WALLTIME feature
          */
-        static const int PROGRESSION__WALLTIME = 48;
+        static const int PROGRESSION__WALLTIME = 53;
 
         /**
          * \brief Constant for PROGRESSION__STARTTIME feature
          */
-        static const int PROGRESSION__STARTTIME = 49;
+        static const int PROGRESSION__STARTTIME = 54;
 
         /**
          * \brief Constant for PROGRESSION__ENDTIME feature
          */
-        static const int PROGRESSION__ENDTIME = 50;
+        static const int PROGRESSION__ENDTIME = 55;
 
         /**
          * \brief Constant for PROGRESSION__PERCENT feature
          */
-        static const int PROGRESSION__PERCENT = 51;
+        static const int PROGRESSION__PERCENT = 56;
 
         /**
          * \brief Constant for PROGRESSION__STATUS feature
          */
-        static const int PROGRESSION__STATUS = 52;
+        static const int PROGRESSION__STATUS = 57;
 
         /**
          * \brief Constant for LISTQUEUES__NBQUEUES feature
          */
-        static const int LISTQUEUES__NBQUEUES = 53;
+        static const int LISTQUEUES__NBQUEUES = 58;
 
         /**
          * \brief Constant for LISTQUEUES__QUEUES feature
          */
-        static const int LISTQUEUES__QUEUES = 54;
+        static const int LISTQUEUES__QUEUES = 59;
 
         /**
          * \brief Constant for QUEUE__NAME feature
          */
-        static const int QUEUE__NAME = 55;
+        static const int QUEUE__NAME = 60;
 
         /**
          * \brief Constant for QUEUE__MAXJOBCPU feature
          */
-        static const int QUEUE__MAXJOBCPU = 56;
+        static const int QUEUE__MAXJOBCPU = 61;
 
         /**
          * \brief Constant for QUEUE__MAXPROCCPU feature
          */
-        static const int QUEUE__MAXPROCCPU = 57;
+        static const int QUEUE__MAXPROCCPU = 62;
 
         /**
          * \brief Constant for QUEUE__MEMORY feature
          */
-        static const int QUEUE__MEMORY = 58;
+        static const int QUEUE__MEMORY = 63;
 
         /**
          * \brief Constant for QUEUE__WALLTIME feature
          */
-        static const int QUEUE__WALLTIME = 59;
+        static const int QUEUE__WALLTIME = 64;
 
         /**
          * \brief Constant for QUEUE__NODE feature
          */
-        static const int QUEUE__NODE = 60;
+        static const int QUEUE__NODE = 65;
 
         /**
          * \brief Constant for QUEUE__NBRUNNINGJOBS feature
          */
-        static const int QUEUE__NBRUNNINGJOBS = 61;
+        static const int QUEUE__NBRUNNINGJOBS = 66;
 
         /**
          * \brief Constant for QUEUE__NBJOBSINQUEUE feature
          */
-        static const int QUEUE__NBJOBSINQUEUE = 62;
+        static const int QUEUE__NBJOBSINQUEUE = 67;
 
         /**
          * \brief Constant for QUEUE__STATE feature
          */
-        static const int QUEUE__STATE = 63;
+        static const int QUEUE__STATE = 68;
 
         /**
          * \brief Constant for QUEUE__PRIORITY feature
          */
-        static const int QUEUE__PRIORITY = 64;
+        static const int QUEUE__PRIORITY = 69;
 
         /**
          * \brief Constant for QUEUE__DESCRIPTION feature
          */
-        static const int QUEUE__DESCRIPTION = 65;
+        static const int QUEUE__DESCRIPTION = 70;
 
         /**
          * \brief Constant for JOBRESULT__JOBID feature
          */
-        static const int JOBRESULT__JOBID = 66;
+        static const int JOBRESULT__JOBID = 71;
 
         /**
          * \brief Constant for JOBRESULT__OUTPUTPATH feature
          */
-        static const int JOBRESULT__OUTPUTPATH = 67;
+        static const int JOBRESULT__OUTPUTPATH = 72;
 
         /**
          * \brief Constant for JOBRESULT__ERRORPATH feature
          */
-        static const int JOBRESULT__ERRORPATH = 68;
+        static const int JOBRESULT__ERRORPATH = 73;
 
         /**
          * \brief Constant for LISTJOBRESULTS__NBJOBS feature
          */
-        static const int LISTJOBRESULTS__NBJOBS = 69;
+        static const int LISTJOBRESULTS__NBJOBS = 74;
 
         /**
          * \brief Constant for LISTJOBRESULTS__RESULTS feature
          */
-        static const int LISTJOBRESULTS__RESULTS = 70;
+        static const int LISTJOBRESULTS__RESULTS = 75;
 
         // EClassifiers methods
 
@@ -776,6 +801,36 @@ namespace TMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EAttribute_ptr getSubmitOptions__errorPath();
+
+        /**
+         * \brief Returns the reflective object for feature mailNotification of class SubmitOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getSubmitOptions__mailNotification();
+
+        /**
+         * \brief Returns the reflective object for feature mailNotifyUser of class SubmitOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getSubmitOptions__mailNotifyUser();
+
+        /**
+         * \brief Returns the reflective object for feature group of class SubmitOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getSubmitOptions__group();
+
+        /**
+         * \brief Returns the reflective object for feature workingDir of class SubmitOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getSubmitOptions__workingDir();
+
+        /**
+         * \brief Returns the reflective object for feature cpuTime of class SubmitOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getSubmitOptions__cpuTime();
 
         /**
          * \brief Returns the reflective object for feature jobId of class ListJobsOptions
@@ -1261,6 +1316,31 @@ namespace TMS_Data
          * \brief The instance for the feature errorPath of class SubmitOptions
          */
         ::ecore::EAttribute_ptr m_SubmitOptions__errorPath;
+
+        /**
+         * \brief The instance for the feature mailNotification of class SubmitOptions
+         */
+        ::ecore::EAttribute_ptr m_SubmitOptions__mailNotification;
+
+        /**
+         * \brief The instance for the feature mailNotifyUser of class SubmitOptions
+         */
+        ::ecore::EAttribute_ptr m_SubmitOptions__mailNotifyUser;
+
+        /**
+         * \brief The instance for the feature group of class SubmitOptions
+         */
+        ::ecore::EAttribute_ptr m_SubmitOptions__group;
+
+        /**
+         * \brief The instance for the feature workingDir of class SubmitOptions
+         */
+        ::ecore::EAttribute_ptr m_SubmitOptions__workingDir;
+
+        /**
+         * \brief The instance for the feature cpuTime of class SubmitOptions
+         */
+        ::ecore::EAttribute_ptr m_SubmitOptions__cpuTime;
 
         /**
          * \brief The instance for the feature jobId of class ListJobsOptions
