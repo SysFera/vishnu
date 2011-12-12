@@ -196,6 +196,31 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__ERRORPATH);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
             m_SubmitOptions__errorPath);
+    m_SubmitOptions__mailNotification = new ::ecore::EAttribute();
+    m_SubmitOptions__mailNotification->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__MAILNOTIFICATION);
+    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
+            m_SubmitOptions__mailNotification);
+    m_SubmitOptions__mailNotifyUser = new ::ecore::EAttribute();
+    m_SubmitOptions__mailNotifyUser->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__MAILNOTIFYUSER);
+    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
+            m_SubmitOptions__mailNotifyUser);
+    m_SubmitOptions__group = new ::ecore::EAttribute();
+    m_SubmitOptions__group->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__GROUP);
+    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
+            m_SubmitOptions__group);
+    m_SubmitOptions__workingDir = new ::ecore::EAttribute();
+    m_SubmitOptions__workingDir->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__WORKINGDIR);
+    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
+            m_SubmitOptions__workingDir);
+    m_SubmitOptions__cpuTime = new ::ecore::EAttribute();
+    m_SubmitOptions__cpuTime->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CPUTIME);
+    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
+            m_SubmitOptions__cpuTime);
 
     // ListJobsOptions
     m_ListJobsOptionsEClass = new ::ecore::EClass();
@@ -934,6 +959,76 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__errorPath->setUnique(true);
     m_SubmitOptions__errorPath->setDerived(false);
     m_SubmitOptions__errorPath->setOrdered(true);
+    m_SubmitOptions__mailNotification->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_SubmitOptions__mailNotification->setName("mailNotification");
+    m_SubmitOptions__mailNotification->setDefaultValueLiteral("");
+    m_SubmitOptions__mailNotification->setLowerBound(0);
+    m_SubmitOptions__mailNotification->setUpperBound(1);
+    m_SubmitOptions__mailNotification->setTransient(false);
+    m_SubmitOptions__mailNotification->setVolatile(false);
+    m_SubmitOptions__mailNotification->setChangeable(true);
+    m_SubmitOptions__mailNotification->setUnsettable(false);
+    m_SubmitOptions__mailNotification->setID(false);
+    m_SubmitOptions__mailNotification->setUnique(true);
+    m_SubmitOptions__mailNotification->setDerived(false);
+    m_SubmitOptions__mailNotification->setOrdered(true);
+    m_SubmitOptions__mailNotifyUser->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_SubmitOptions__mailNotifyUser->setName("mailNotifyUser");
+    m_SubmitOptions__mailNotifyUser->setDefaultValueLiteral("");
+    m_SubmitOptions__mailNotifyUser->setLowerBound(0);
+    m_SubmitOptions__mailNotifyUser->setUpperBound(1);
+    m_SubmitOptions__mailNotifyUser->setTransient(false);
+    m_SubmitOptions__mailNotifyUser->setVolatile(false);
+    m_SubmitOptions__mailNotifyUser->setChangeable(true);
+    m_SubmitOptions__mailNotifyUser->setUnsettable(false);
+    m_SubmitOptions__mailNotifyUser->setID(false);
+    m_SubmitOptions__mailNotifyUser->setUnique(true);
+    m_SubmitOptions__mailNotifyUser->setDerived(false);
+    m_SubmitOptions__mailNotifyUser->setOrdered(true);
+    m_SubmitOptions__group->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_SubmitOptions__group->setName("group");
+    m_SubmitOptions__group->setDefaultValueLiteral("");
+    m_SubmitOptions__group->setLowerBound(0);
+    m_SubmitOptions__group->setUpperBound(1);
+    m_SubmitOptions__group->setTransient(false);
+    m_SubmitOptions__group->setVolatile(false);
+    m_SubmitOptions__group->setChangeable(true);
+    m_SubmitOptions__group->setUnsettable(false);
+    m_SubmitOptions__group->setID(false);
+    m_SubmitOptions__group->setUnique(true);
+    m_SubmitOptions__group->setDerived(false);
+    m_SubmitOptions__group->setOrdered(true);
+    m_SubmitOptions__workingDir->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_SubmitOptions__workingDir->setName("workingDir");
+    m_SubmitOptions__workingDir->setDefaultValueLiteral("");
+    m_SubmitOptions__workingDir->setLowerBound(0);
+    m_SubmitOptions__workingDir->setUpperBound(1);
+    m_SubmitOptions__workingDir->setTransient(false);
+    m_SubmitOptions__workingDir->setVolatile(false);
+    m_SubmitOptions__workingDir->setChangeable(true);
+    m_SubmitOptions__workingDir->setUnsettable(false);
+    m_SubmitOptions__workingDir->setID(false);
+    m_SubmitOptions__workingDir->setUnique(true);
+    m_SubmitOptions__workingDir->setDerived(false);
+    m_SubmitOptions__workingDir->setOrdered(true);
+    m_SubmitOptions__cpuTime->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_SubmitOptions__cpuTime->setName("cpuTime");
+    m_SubmitOptions__cpuTime->setDefaultValueLiteral("");
+    m_SubmitOptions__cpuTime->setLowerBound(0);
+    m_SubmitOptions__cpuTime->setUpperBound(1);
+    m_SubmitOptions__cpuTime->setTransient(false);
+    m_SubmitOptions__cpuTime->setVolatile(false);
+    m_SubmitOptions__cpuTime->setChangeable(true);
+    m_SubmitOptions__cpuTime->setUnsettable(false);
+    m_SubmitOptions__cpuTime->setID(false);
+    m_SubmitOptions__cpuTime->setUnique(true);
+    m_SubmitOptions__cpuTime->setDerived(false);
+    m_SubmitOptions__cpuTime->setOrdered(true);
     // ListJobsOptions
     m_ListJobsOptionsEClass->setName("ListJobsOptions");
     m_ListJobsOptionsEClass->setAbstract(false);
@@ -1620,10 +1715,10 @@ TMS_DataPackage::TMS_DataPackage()
 
     {
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // ALREADY_DOWNLOAD
-        _el->setName("ALREADY_DOWNLOAD");
+        // ALREADY_DOWNLOADED
+        _el->setName("ALREADY_DOWNLOADED");
         _el->setValue(7);
-        _el->setLiteral("ALREADY_DOWNLOAD");
+        _el->setLiteral("ALREADY_DOWNLOADED");
         _el->setEEnum(m_JobStatusEEnum);
         m_JobStatusEEnum->getELiterals().push_back(_el);
     }
@@ -1925,6 +2020,26 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__errorPath()
 {
     return m_SubmitOptions__errorPath;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__mailNotification()
+{
+    return m_SubmitOptions__mailNotification;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__mailNotifyUser()
+{
+    return m_SubmitOptions__mailNotifyUser;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__group()
+{
+    return m_SubmitOptions__group;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__workingDir()
+{
+    return m_SubmitOptions__workingDir;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__cpuTime()
+{
+    return m_SubmitOptions__cpuTime;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__jobId()
 {

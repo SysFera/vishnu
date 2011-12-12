@@ -598,7 +598,7 @@
                 <entry><para>email</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>m</para></entry>
-                <entry><para>represents the updated email adress of the user</para></entry>
+                <entry><para>represents the updated email address of the user</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -904,7 +904,7 @@
                 <entry><para>acLogin</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>l</para></entry>
-                <entry><para>accLogin represents the login of the user on the associated machine</para></entry>
+                <entry><para>acLogin represents the login of the user on the associated machine</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -1351,7 +1351,7 @@
                 <entry><para>NO</para></entry>
               </row>
               <row>
-                <entry><para>listAllmachine</para></entry>
+                <entry><para>listAllMachine</para></entry>
                 <entry><para>boolean</para></entry>
                 <entry><para>a</para></entry>
                 <entry><para>is an option for listing all VISHNU machines</para></entry>
@@ -1892,6 +1892,11 @@
               choice="opt"><option>-N <replaceable>nbNodesAndCpuPerNode</replaceable></option></arg><arg
               choice="opt"><option>-o <replaceable>outputPath</replaceable></option></arg><arg
               choice="opt"><option>-e <replaceable>errorPath</replaceable></option></arg><arg
+              choice="opt"><option>-M <replaceable>mailNotification</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>mailNotifyUser</replaceable></option></arg><arg
+              choice="opt"><option>-g <replaceable>group</replaceable></option></arg><arg
+              choice="opt"><option>-D <replaceable>workingDir</replaceable></option></arg><arg
+              choice="opt"><option>-T <replaceable>cpuTime</replaceable></option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -1984,6 +1989,41 @@
                 <entry><para>string</para></entry>
                 <entry><para>e</para></entry>
                 <entry><para>Assigns the path and file for job error</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>mailNotification</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>M</para></entry>
+                <entry><para>Assigns the notification type of the job. Valid type values are BEGIN, END, ERROR, and ALL (any state change).</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>mailNotifyUser</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>u</para></entry>
+                <entry><para>The name of user to receive email notification of state changes as defined by the option mailNotification. The default value is the submitting user.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>group</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>g</para></entry>
+                <entry><para>Assigns a job group name.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>workingDir</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>D</para></entry>
+                <entry><para>Assigns a job remote working dir.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>cpuTime</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>T</para></entry>
+                <entry><para>Assigns a job cpu limit time.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>

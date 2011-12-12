@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <API xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="com.sysfera.codegen.apimodel" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
   <modules name="TMS">
-    <services name="submitJob" description="submits a job on a machine through the use of a script (scriptFilePath)" resultCodes="VISHNU_OK ERRCODE_UNKNOWN_MACHINE ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_INVALID_PARAM ERRCODE_SESSIONKEY_EXPIRED ERRCODE_PERMISSION_DENIED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_SSH">
+    <services name="submitJob" description="submits a job on a machine through the use of a script (scriptFilePath)" resultCodes="VISHNU_OK ERRCODE_UNKNOWN_MACHINE ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_INVALID_PARAM ERRCODE_SESSIONKEY_EXPIRED ERRCODE_PERMISSION_DENIED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_SSH" useJobEnv="true">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="Is the id of the machine on which the job must be submitted"/>
       <ports name="scriptFilePath" dataType="//@typeList/@types.0" description="The path to the file containing the characteristics (job command, and batch scheduler directive required or optional) of the job to submit."/>
@@ -132,8 +132,15 @@
     </resultCodeList>
   </modules>
   <envVariableList>
-    <envVariables name="VISHNU_CONFIG_FILE" description="Contains the path to the local configuration file for VISHNU"/>
+    <envVariables name="VISHNU_CONFIG_FILE" description="Contains the path to the local configuration file for VISHNU."/>
   </envVariableList>
+  <jobEnvVariableList>
+    <envVariables name="VISHNU_BATCHJOB_ID" description="Set the  identifier assigned to the job by the batch system"/>
+    <envVariables name="VISHNU_BATCHJOB_NAME" description="Set the name of the job"/>
+    <envVariables name="VISHNU_SUBMIT_MACHINE_NAME" description="Set  the name of the machine on which the job has been submitted"/>
+    <envVariables name="VISHNU_BATCHJOB_NODEFILE" description="Set the name of the file contain the list of nodes assigned to the job"/>
+    <envVariables name="VISHNU_BATCHJOB_NUM_NODES" description="Set the total number of nodes in the job's resource allocation"/>
+  </jobEnvVariableList>
   <typeList>
     <types name="string" description="String standard">
       <ECoreType xsi:type="ecore:EDataType" href="Ecore.ecore#//EString"/>
