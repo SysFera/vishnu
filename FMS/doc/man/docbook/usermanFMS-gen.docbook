@@ -165,7 +165,7 @@ values can be obtained using the vishnu_list_machine command)</para>
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_create_dir</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-p</option></arg><arg choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -180,6 +180,12 @@ values can be obtained using the vishnu_list_machine command)</para>
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-p <replaceable>isRecursive</replaceable></option></term>
+            <listitem>
+              <para>It specifies when the create command is recursive (create parent directory also) or not..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2002,7 +2008,7 @@ values can be obtained using the vishnu_list_machine command)</para>
         <refpurpose>creates directories on remote machines.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::createDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::createDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>const CreateDirOptions&amp; <parameter>options = CreateDirOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2023,6 +2029,12 @@ values can be obtained using the vishnu_list_machine command)</para>
             <term><emphasis>path</emphasis></term>
             <listitem>
               <para>Input argument. The  directory to create following the pattern  [host:]directory path..</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>options</emphasis></term>
+            <listitem>
+              <para>Input argument. The create directory command options.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2806,7 +2818,7 @@ values can be obtained using the vishnu_list_machine command).
         <refpurpose>displays  the content of a remote directory. </refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>StringList&amp; <parameter>dirContent</parameter></paramdef><paramdef>const LsDirOptions&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>FileStatList&amp; <parameter>dirContent</parameter></paramdef><paramdef>const LsDirOptions&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2833,7 +2845,7 @@ values can be obtained using the vishnu_list_machine command).
           <varlistentry>
             <term><emphasis>dirContent</emphasis></term>
             <listitem>
-              <para>Output argument. The content of the directory  (only files names with short format, all files information with long format)..</para>
+              <para>Output argument. The content of the directory..</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -3775,7 +3787,7 @@ values can be obtained using the vishnu_list_machine command)</para>
         <refpurpose>creates directories on remote machines.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.createDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.createDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>CreateDirOptions <parameter>options = CreateDirOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3796,6 +3808,12 @@ values can be obtained using the vishnu_list_machine command)</para>
             <term><emphasis>path</emphasis></term>
             <listitem>
               <para>Input argument. The  directory to create following the pattern  [host:]directory path..</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>options</emphasis></term>
+            <listitem>
+              <para>Input argument. The create directory command options.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -4690,7 +4708,7 @@ values can be obtained using the vishnu_list_machine command).
         <refpurpose>displays  the content of a remote directory. </refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>StringList <parameter>dirContent</parameter></paramdef><paramdef>LsDirOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>FileStatList <parameter>dirContent</parameter></paramdef><paramdef>LsDirOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4717,7 +4735,7 @@ values can be obtained using the vishnu_list_machine command).
           <varlistentry>
             <term><emphasis>dirContent</emphasis></term>
             <listitem>
-              <para>Output argument. The content of the directory  (only files names with short format, all files information with long format)..</para>
+              <para>Output argument. The content of the directory..</para>
             </listitem>
           </varlistentry>
           <varlistentry>

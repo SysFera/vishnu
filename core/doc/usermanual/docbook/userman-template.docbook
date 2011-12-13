@@ -475,6 +475,47 @@
   </section>
 
   <section>
+    <title> JOB OUTPUT ENVIRONMENT VARIABLES </title>
+    <para> 
+      The VISHNU Job Manager set the following variables in the environment of the batch script.
+    </para>
+
+    <para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            <emphasis role="bold">VISHNU_BATCHJOB_ID</emphasis>: Set the identifier assigned to the job by the batch system.
+          </para> 
+        </listitem> 
+
+        <listitem>
+          <para>
+            <emphasis role="bold">VISHNU_BATCHJOB_NAME</emphasis>: Set the name of the job.
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            <emphasis role="bold">VISHNU_SUBMIT_MACHINE_NAME</emphasis>: Set the name of the machine on which the job has been submitted.
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            <emphasis role="bold">VISHNU_BATCHJOB_NODEFILE</emphasis>: Set the name of the file contain the list of nodes assigned to the job.
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            <emphasis role="bold">VISHNU_BATCHJOB_NUM_NODES</emphasis>: Set the total number of nodes in the job's resource allocation.
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+  </section>
+
+  <section>
     <title> Job Cancellation </title>
     <para> To cancel a job, the <emphasis role="bold">vishnu_cancel_job</emphasis> command is used with the VISHNU identifer 
       of the job to cancel. When the identifer of the job is <emphasis role="italic">all</emphasis>, all of the user's jobs are cancelled. 

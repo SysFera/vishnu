@@ -300,10 +300,11 @@
         <para>The vishnu_connect command opens a session</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_connect</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-w <replaceable>password</replaceable></option></arg><arg
               choice="opt"><option>-p <replaceable>closePolicy</replaceable></option></arg><arg
               choice="opt"><option>-d <replaceable>sessionInactivityDelay</replaceable></option></arg><arg
-              choice="opt"><option>-s <replaceable>substituteUserId</replaceable></option></arg><arg
-              choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-s <replaceable>substituteUserId</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -330,16 +331,16 @@
               <row>
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
-                <entry/>
+                <entry><para>u</para></entry>
                 <entry><para>userId represents the VISHNU user identifier</para></entry>
-                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>password</para></entry>
                 <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>password represents the password of the user, it is an interactive parameter</para></entry>
-                <entry><para>YES</para></entry>
+                <entry><para>w</para></entry>
+                <entry><para>password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc </para></entry>
+                <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>closePolicy</para></entry>
@@ -411,7 +412,9 @@
         <para>The vishnu_reconnect command reconnects to a session that is still active</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_reconnect</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>userId</replaceable></arg><arg choice="plain"><replaceable>sessionId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-w <replaceable>password</replaceable></option></arg><arg
+              choice="plain"><replaceable>sessionId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -438,16 +441,16 @@
               <row>
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
-                <entry/>
+                <entry><para>u</para></entry>
                 <entry><para>userId represents the VISHNU user identifier</para></entry>
-                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>password</para></entry>
                 <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>password represents the password of the user, it is an interactive parameter</para></entry>
-                <entry><para>YES</para></entry>
+                <entry><para>w</para></entry>
+                <entry><para>password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc </para></entry>
+                <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>sessionId</para></entry>
@@ -1760,6 +1763,19 @@
             </tbody>
           </tgroup>
         </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_current_session_id</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_current_session_id command display the session id</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_current_session_id</command><arg choice="opt"><option>-h</option></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <para>This command defines no arguments.</para>
         <para><emphasis role="bold">Environment variables</emphasis></para>
         <para>This command defines no environment variables.</para>
       </section>
@@ -3709,7 +3725,7 @@
         <para>The vishnu_create_dir command creates directories on remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_create_dir</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-p</option></arg><arg choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3739,6 +3755,13 @@
                 <entry/>
                 <entry><para>The  directory to create following the pattern  [host:]directory path.</para></entry>
                 <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>isRecursive</para></entry>
+                <entry><para>boolean</para></entry>
+                <entry><para>p</para></entry>
+                <entry><para>It specifies when the create command is recursive (create parent directory also) or not.</para></entry>
+                <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>

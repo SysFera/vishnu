@@ -452,6 +452,41 @@
           </section>
         </section>
         <section>
+          <title> JOB OUTPUT ENVIRONMENT VARIABLES </title>
+          <para> 
+      The VISHNU Job Manager set the following variables in the environment of the batch script.
+    </para>
+          <para>
+      <itemizedlist>
+              <listitem>
+                <para>
+            <emphasis role="bold">VISHNU_BATCHJOB_ID</emphasis>: Set the identifier assigned to the job by the batch system.
+          </para>
+              </listitem>
+              <listitem>
+                <para>
+            <emphasis role="bold">VISHNU_BATCHJOB_NAME</emphasis>: Set the name of the job.
+          </para>
+              </listitem>
+              <listitem>
+                <para>
+            <emphasis role="bold">VISHNU_SUBMIT_MACHINE_NAME</emphasis>: Set the name of the machine on which the job has been submitted.
+          </para>
+              </listitem>
+              <listitem>
+                <para>
+            <emphasis role="bold">VISHNU_BATCHJOB_NODEFILE</emphasis>: Set the name of the file contain the list of nodes assigned to the job.
+          </para>
+              </listitem>
+              <listitem>
+                <para>
+            <emphasis role="bold">VISHNU_BATCHJOB_NUM_NODES</emphasis>: Set the total number of nodes in the job's resource allocation.
+          </para>
+              </listitem>
+            </itemizedlist>
+    </para>
+        </section>
+        <section>
           <title> Job Cancellation </title>
           <para> To cancel a job, the <emphasis role="bold">vishnu_cancel_job</emphasis> command is used with the VISHNU identifer 
       of the job to cancel. When the identifer of the job is <emphasis role="italic">all</emphasis>, all of the user's jobs are cancelled. 
@@ -554,10 +589,11 @@
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_connect</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-w <replaceable>password</replaceable></option></arg><arg
               choice="opt"><option>-p <replaceable>closePolicy</replaceable></option></arg><arg
               choice="opt"><option>-d <replaceable>sessionInactivityDelay</replaceable></option></arg><arg
-              choice="opt"><option>-s <replaceable>substituteUserId</replaceable></option></arg><arg
-              choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-s <replaceable>substituteUserId</replaceable></option></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -573,6 +609,18 @@ completed and until the session is either manually or automatically closed.</par
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-u <replaceable>userId</replaceable></option></term>
+            <listitem>
+              <para>userId represents the VISHNU user identifier.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-w <replaceable>password</replaceable></option></term>
+            <listitem>
+              <para>password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc .</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -660,7 +708,9 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_reconnect</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>userId</replaceable></arg><arg choice="plain"><replaceable>sessionId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-w <replaceable>password</replaceable></option></arg><arg
+              choice="plain"><replaceable>sessionId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -677,6 +727,18 @@ session that was opened on another client system.</para>
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-u <replaceable>userId</replaceable></option></term>
+            <listitem>
+              <para>userId represents the VISHNU user identifier.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-w <replaceable>password</replaceable></option></term>
+            <listitem>
+              <para>password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc .</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1708,6 +1770,60 @@ opened the session).</para>
         <para>vishnu_configure_option VISHNU_TIMEOUT 69</para>
       </refsect1>
     </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_current_session_id</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_current_session_id</refname>
+        <refpurpose>display the session id</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_current_session_id</command><arg choice="opt"><option>-h</option></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This command allows to get current session identifier.</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To get the current session identifier:</para>
+        <para>vishnu_current_session_id</para>
+      </refsect1>
+    </refentry>
   </reference>
   <reference>
     <title>TMS Command reference</title>
@@ -2634,7 +2750,7 @@ values can be obtained using the vishnu_list_machine command)</para>
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_create_dir</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-p</option></arg><arg choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2649,6 +2765,12 @@ values can be obtained using the vishnu_list_machine command)</para>
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-p <replaceable>isRecursive</replaceable></option></term>
+            <listitem>
+              <para>It specifies when the create command is recursive (create parent directory also) or not..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -4785,7 +4907,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
         <refpurpose>opens a session</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::connect</function></funcdef><paramdef>const string&amp; <parameter>userId</parameter></paramdef><paramdef>const string&amp; <parameter>password</parameter></paramdef><paramdef>Session&amp; <parameter>session</parameter></paramdef><paramdef>const ConnectOptions&amp; <parameter>options = ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::connect</function></funcdef><paramdef>const string&amp; <parameter>userId = Error (Not Definide)</parameter></paramdef><paramdef>const string&amp; <parameter>password = Error (Not Definide)</parameter></paramdef><paramdef>Session&amp; <parameter>session</parameter></paramdef><paramdef>const ConnectOptions&amp; <parameter>options = ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4806,7 +4928,7 @@ completed and until the session is either manually or automatically closed.</par
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>Input argument. Password represents the password of the user.</para>
+              <para>Input argument. Password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc .</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -4884,7 +5006,7 @@ completed and until the session is either manually or automatically closed.</par
         <refpurpose>reconnects to a session that is still active</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::reconnect</function></funcdef><paramdef>const string&amp; <parameter>userId</parameter></paramdef><paramdef>const string&amp; <parameter>password</parameter></paramdef><paramdef>const string&amp; <parameter>sessionId</parameter></paramdef><paramdef>Session&amp; <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::reconnect</function></funcdef><paramdef>const string&amp; <parameter>userId = Error (Not Definide)</parameter></paramdef><paramdef>const string&amp; <parameter>password = Error (Not Definide)</parameter></paramdef><paramdef>const string&amp; <parameter>sessionId</parameter></paramdef><paramdef>Session&amp; <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4906,7 +5028,7 @@ session that was opened on another client system.</para>
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>Input argument. Password represents the password of the user.</para>
+              <para>Input argument. Password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc .</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -6813,7 +6935,7 @@ values can be obtained using the vishnu_list_machine command)</para>
         <refpurpose>creates directories on remote machines.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::createDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::createDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>const CreateDirOptions&amp; <parameter>options = CreateDirOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -6834,6 +6956,12 @@ values can be obtained using the vishnu_list_machine command)</para>
             <term><emphasis>path</emphasis></term>
             <listitem>
               <para>Input argument. The  directory to create following the pattern  [host:]directory path..</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>options</emphasis></term>
+            <listitem>
+              <para>Input argument. The create directory command options.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -7617,7 +7745,7 @@ values can be obtained using the vishnu_list_machine command).
         <refpurpose>displays  the content of a remote directory. </refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>StringList&amp; <parameter>dirContent</parameter></paramdef><paramdef>const LsDirOptions&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>FileStatList&amp; <parameter>dirContent</parameter></paramdef><paramdef>const LsDirOptions&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -7644,7 +7772,7 @@ values can be obtained using the vishnu_list_machine command).
           <varlistentry>
             <term><emphasis>dirContent</emphasis></term>
             <listitem>
-              <para>Output argument. The content of the directory  (only files names with short format, all files information with long format)..</para>
+              <para>Output argument. The content of the directory..</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -8832,7 +8960,7 @@ Please note that retrieving these values uses some valuable system ressources an
         <refpurpose>opens a session</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.connect</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef><paramdef>ConnectOptions <parameter>options = ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.connect</function></funcdef><paramdef>string <parameter/></paramdef><paramdef>string <parameter/></paramdef><paramdef>Session <parameter>session</parameter></paramdef><paramdef>ConnectOptions <parameter>options = ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -8853,7 +8981,7 @@ completed and until the session is either manually or automatically closed.</par
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>Input argument. Password represents the password of the user.</para>
+              <para>Input argument. Password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc .</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -8943,7 +9071,7 @@ completed and until the session is either manually or automatically closed.</par
         <refpurpose>reconnects to a session that is still active</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.reconnect</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>string <parameter>sessionId</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.reconnect</function></funcdef><paramdef>string <parameter/></paramdef><paramdef>string <parameter/></paramdef><paramdef>string <parameter>sessionId</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -8965,7 +9093,7 @@ session that was opened on another client system.</para>
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>Input argument. Password represents the password of the user.</para>
+              <para>Input argument. Password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc .</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -11153,7 +11281,7 @@ values can be obtained using the vishnu_list_machine command)</para>
         <refpurpose>creates directories on remote machines.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.createDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.createDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>CreateDirOptions <parameter>options = CreateDirOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -11174,6 +11302,12 @@ values can be obtained using the vishnu_list_machine command)</para>
             <term><emphasis>path</emphasis></term>
             <listitem>
               <para>Input argument. The  directory to create following the pattern  [host:]directory path..</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>options</emphasis></term>
+            <listitem>
+              <para>Input argument. The create directory command options.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -12068,7 +12202,7 @@ values can be obtained using the vishnu_list_machine command).
         <refpurpose>displays  the content of a remote directory. </refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>StringList <parameter>dirContent</parameter></paramdef><paramdef>LsDirOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>FileStatList <parameter>dirContent</parameter></paramdef><paramdef>LsDirOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -12095,7 +12229,7 @@ values can be obtained using the vishnu_list_machine command).
           <varlistentry>
             <term><emphasis>dirContent</emphasis></term>
             <listitem>
-              <para>Output argument. The content of the directory  (only files names with short format, all files information with long format)..</para>
+              <para>Output argument. The content of the directory..</para>
             </listitem>
           </varlistentry>
           <varlistentry>

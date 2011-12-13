@@ -68,10 +68,11 @@ same conditions as regards security.</para>
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_connect</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-w <replaceable>password</replaceable></option></arg><arg
               choice="opt"><option>-p <replaceable>closePolicy</replaceable></option></arg><arg
               choice="opt"><option>-d <replaceable>sessionInactivityDelay</replaceable></option></arg><arg
-              choice="opt"><option>-s <replaceable>substituteUserId</replaceable></option></arg><arg
-              choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-s <replaceable>substituteUserId</replaceable></option></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -87,6 +88,18 @@ completed and until the session is either manually or automatically closed.</par
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-u <replaceable>userId</replaceable></option></term>
+            <listitem>
+              <para>userId represents the VISHNU user identifier.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-w <replaceable>password</replaceable></option></term>
+            <listitem>
+              <para>password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc .</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -174,7 +187,9 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_reconnect</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>userId</replaceable></arg><arg choice="plain"><replaceable>sessionId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-w <replaceable>password</replaceable></option></arg><arg
+              choice="plain"><replaceable>sessionId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -191,6 +206,18 @@ session that was opened on another client system.</para>
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-u <replaceable>userId</replaceable></option></term>
+            <listitem>
+              <para>userId represents the VISHNU user identifier.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-w <replaceable>password</replaceable></option></term>
+            <listitem>
+              <para>password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc .</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1222,6 +1249,60 @@ opened the session).</para>
         <para>vishnu_configure_option VISHNU_TIMEOUT 69</para>
       </refsect1>
     </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_current_session_id</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_current_session_id</refname>
+        <refpurpose>display the session id</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_current_session_id</command><arg choice="opt"><option>-h</option></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This command allows to get current session identifier.</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To get the current session identifier:</para>
+        <para>vishnu_current_session_id</para>
+      </refsect1>
+    </refentry>
   </reference>
   <reference>
     <title>UMS C++ API Reference</title>
@@ -1235,7 +1316,7 @@ opened the session).</para>
         <refpurpose>opens a session</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::connect</function></funcdef><paramdef>const string&amp; <parameter>userId</parameter></paramdef><paramdef>const string&amp; <parameter>password</parameter></paramdef><paramdef>Session&amp; <parameter>session</parameter></paramdef><paramdef>const ConnectOptions&amp; <parameter>options = ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::connect</function></funcdef><paramdef>const string&amp; <parameter>userId = Error (Not Definide)</parameter></paramdef><paramdef>const string&amp; <parameter>password = Error (Not Definide)</parameter></paramdef><paramdef>Session&amp; <parameter>session</parameter></paramdef><paramdef>const ConnectOptions&amp; <parameter>options = ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -1256,7 +1337,7 @@ completed and until the session is either manually or automatically closed.</par
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>Input argument. Password represents the password of the user.</para>
+              <para>Input argument. Password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc .</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -1334,7 +1415,7 @@ completed and until the session is either manually or automatically closed.</par
         <refpurpose>reconnects to a session that is still active</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::reconnect</function></funcdef><paramdef>const string&amp; <parameter>userId</parameter></paramdef><paramdef>const string&amp; <parameter>password</parameter></paramdef><paramdef>const string&amp; <parameter>sessionId</parameter></paramdef><paramdef>Session&amp; <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::reconnect</function></funcdef><paramdef>const string&amp; <parameter>userId = Error (Not Definide)</parameter></paramdef><paramdef>const string&amp; <parameter>password = Error (Not Definide)</parameter></paramdef><paramdef>const string&amp; <parameter>sessionId</parameter></paramdef><paramdef>Session&amp; <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -1356,7 +1437,7 @@ session that was opened on another client system.</para>
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>Input argument. Password represents the password of the user.</para>
+              <para>Input argument. Password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc .</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -2416,7 +2497,7 @@ opened the session).</para>
         <refpurpose>opens a session</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.connect</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef><paramdef>ConnectOptions <parameter>options = ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.connect</function></funcdef><paramdef>string <parameter/></paramdef><paramdef>string <parameter/></paramdef><paramdef>Session <parameter>session</parameter></paramdef><paramdef>ConnectOptions <parameter>options = ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2437,7 +2518,7 @@ completed and until the session is either manually or automatically closed.</par
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>Input argument. Password represents the password of the user.</para>
+              <para>Input argument. Password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc .</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -2527,7 +2608,7 @@ completed and until the session is either manually or automatically closed.</par
         <refpurpose>reconnects to a session that is still active</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.reconnect</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>string <parameter>sessionId</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.reconnect</function></funcdef><paramdef>string <parameter/></paramdef><paramdef>string <parameter/></paramdef><paramdef>string <parameter>sessionId</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2549,7 +2630,7 @@ session that was opened on another client system.</para>
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>Input argument. Password represents the password of the user.</para>
+              <para>Input argument. Password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc .</para>
             </listitem>
           </varlistentry>
           <varlistentry>

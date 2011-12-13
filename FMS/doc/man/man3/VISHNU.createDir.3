@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: VISHNU.createDir
 .\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
 .\"      Date: June 2011
 .\"    Manual: FMS Python API Reference
 .\"    Source: VISHNU 1.2
@@ -31,7 +31,7 @@
 VISHNU.createDir \- creates directories on remote machines\&.
 .SH "SYNOPSIS"
 .HP \w'ret=VISHNU\&.createDir('u
-.BI "ret=VISHNU\&.createDir(string\ " "sessionKey" ", string\ " "path" ");"
+.BI "ret=VISHNU\&.createDir(string\ " "sessionKey" ", string\ " "path" ", CreateDirOptions\ " "options\ =\ CreateDirOptions()" ");"
 .SH "DESCRIPTION"
 .PP
 Creates an new directory at the location given by the path parameter\&. The path must be provided in the form \*(Aqmachine_id:path\*(Aq (the machine_id values can be obtained using the vishnu_list_machine command)
@@ -45,6 +45,11 @@ Input argument\&. The session key\&.
 \fIpath\fR
 .RS 4
 Input argument\&. The directory to create following the pattern [host:]directory path\&.\&.
+.RE
+.PP
+\fIoptions\fR
+.RS 4
+Input argument\&. The create directory command options\&.
 .RE
 .SH "RETURNED OBJECTS"
 .PP
