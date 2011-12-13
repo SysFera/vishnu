@@ -288,6 +288,39 @@ vishnu::getGeneratedName (const char* format, int cpt, IdType type,
   return res;
 }
 
+int
+vishnu::ninja(std::string counterName, std::string vishnuIdString){
+  DbFactory factory;
+  Database *databaseVishnu;
+  int ret;
+
+  std::string table;
+  std::string fields;
+  std::string val;
+
+  fields = " (updatefreq, formatiduser, formatidjob, formaidfiletransfer, formatidmachine, usercpt, jobcpt, filesubcpt, machinecpt) ";
+  val = " (1, 't', 't', 't', 't', 0, 0, 1, 1) ";
+
+  if (counterName.compare("userCpt")==0){// If user
+    table = "users";
+  } else  if (counterName.compare("jobcpt")==0){// If job
+    table = "job";
+  } else  if (counterName.compare("filesubcpt")==0){// If file transfer
+    table = "filetransfer";
+  } else  if (counterName.compare("machinecpt")==0){// If machine
+    table = "machine";
+  } else {
+    throw SystemException(ERRCODE_SYSTEM, "Invalid counter type");
+  }
+  std::string sqlCommand("INSERT INTO "+table+ fields + " values " +val);
+//  std::string getcpt("SELECT LAST_INSERT_ID() FROM vishnu");
+  databaseVishnu = factory.getDatabaseInstance();
+  int tid = databaseVishnu->startTransaction();
+  ret = databaseVishnu->generateId(table, fields, val, tid);
+  databaseVishnu->cancelTransaction(tid);
+  return ret;
+}
+
 
 /**
  * \brief Function to get information from the table vishnu
@@ -357,13 +390,11 @@ vishnu::getObjectId(int vishnuId,
   DbFactory factory;
   Database *databaseVishnu;
   databaseVishnu = factory.getDatabaseInstance();
-  int ret = databaseVishnu->startTransaction();
 
   //To get the counter
   int counter;// = convertToInt(getAttrVishnu(counterName, vishnuIdString, ret));
-  incrementCpt(counterName, counter, ret);
-  counter = convertToInt(getAttrVishnu(counterName, vishnuIdString, ret));
-  databaseVishnu->endTransaction(ret);
+  counter = ninja(counterName, vishnuIdString);
+//  databaseVishnu->endTransaction(ret);
   //To get the formatiduser
   std::string format = getAttrVishnu(formatName, vishnuIdString).c_str();
 
@@ -372,7 +403,6 @@ vishnu::getObjectId(int vishnuId,
     getGeneratedName(format.c_str(), counter, type, stringforgeneration);
 
     if (idGenerated.size() != 0) {
-//      incrementCpt(counterName, counter, ret);
     } else {
       SystemException e (ERRCODE_SYSTEM, "There is a problem during the id generation with the format:"+ formatName);
       pthread_mutex_unlock(&(mutex));

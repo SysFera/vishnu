@@ -232,3 +232,7 @@ POSTGREDatabase::flush(int transactionID){
 // TODO
 }
 
+int
+POSTGREDatabase::generateId(string table, string fields, string val, int tid) {
+// TODO
+}

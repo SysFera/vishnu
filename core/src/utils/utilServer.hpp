@@ -204,6 +204,15 @@ namespace vishnu {
 
   /**
    * \brief Function to get information from the table vishnu
+   * \param counterName the name of the counter
+   * \param vishnuid the id of the vishnu configuration
+   * \return The int counter value
+   */
+  int
+  ninja(std::string counterName, std::string vishnuId);
+
+  /**
+   * \brief Function to get information from the table vishnu
    * \param attrname the name of the attribut
    * \param vishnuid the id of the vishnu configuration
    * \param transacId the id of the transaction if one is used. -1 to ignore
