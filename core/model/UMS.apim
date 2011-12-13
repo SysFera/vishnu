@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <API xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="com.sysfera.codegen.apimodel" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
   <modules name="UMS">
-    <services name="connect" description="opens a session" resultCodes="VISHNU_OK ERRCODE_UNKNOWN_USER ERRCODE_UNKNOWN_CLOSURE_MODE ERRCODE_INCORRECT_TIMEOUT ERRCODE_UNKNOWN_USERID ERRCODE_NO_ADMIN ERRCODE_USER_LOCKED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_UNDEFINED">
-      <ports name="userId" dataType="//@typeList/@types.0" description="userId represents the VISHNU user identifier" shortOptionLetter=""/>
-      <ports name="password" dataType="//@typeList/@types.0" description="password represents the password of the user"/>
-      <ports name="session" direction="OUT" dataType="//@typeList/@types.7" description="The session object that contains the created session details" longOptionName="" defaultValueLiteral=""/>
+    <services name="connect" description="opens a session" resultCodes="VISHNU_OK ERRCODE_UNKNOWN_USER ERRCODE_UNKNOWN_CLOSURE_MODE ERRCODE_INCORRECT_TIMEOUT ERRCODE_UNKNOWN_USERID ERRCODE_NO_ADMIN ERRCODE_USER_LOCKED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_UNDEFINED" >
+      <ports name="userId" dataType="//@typeList/@types.0" description="userId represents the VISHNU user identifier" optional="true" shortOptionLetter="u"/>
+      <ports name="password" dataType="//@typeList/@types.0" description="password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc " optional="true" shortOptionLetter="w" defaultValueLiteral=""/>
+      <ports name="session" direction="OUT" dataType="//@typeList/@types.7" description="The session object that contains the created session details" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <ports name="options" dataType="//@typeList/@types.13" description="options is an object which encapsulates the options available for the connect method. It allows the user to choose the way for closing the session automatically on TIMEOUT or on DISCONNECT and the possibility for an admin to open a session as he/she was a specific user" optional="true" shortOptionLetter=""/>
       <usedServices href="UMS_Internal.apim#//@modules.0/@services.1"/>
       <details key="description" value="Opening a VISHNU session is the first step before using any other VISHNU command.&#xA;This command authenticates you. You must have been registered in the VISHNU system&#xA;by an administrator.  It also creates a session that remains open after the command is&#xA;completed and until the session is either manually or automatically closed."/>
       <details key="exCLI" value="To connect the user user_1:&#xA;vishnu_connect user_1"/>
     </services>
-    <services name="reconnect" description="reconnects to a session that is still active" resultCodes="VISHNU_OK ERRCODE_UNKNOWN_USER ERRCODE_USER_LOCKED ERRCODE_UNUSABLE_MACHINE ERRCODE_UNKNOWN_SESSION_ID ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_UNDEFINED">
-      <ports name="userId" dataType="//@typeList/@types.0" description="userId represents the VISHNU user identifier" shortOptionLetter=""/>
-      <ports name="password" dataType="//@typeList/@types.0" description="password represents the password of the user"/>
+    <services name="reconnect" description="reconnects to a session that is still active" resultCodes="VISHNU_OK ERRCODE_UNKNOWN_USER ERRCODE_USER_LOCKED ERRCODE_UNUSABLE_MACHINE ERRCODE_UNKNOWN_SESSION_ID ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_UNDEFINED" >
+      <ports name="userId" dataType="//@typeList/@types.0" description="userId represents the VISHNU user identifier" optional="true" shortOptionLetter="u"/>
+      <ports name="password" dataType="//@typeList/@types.0" description="password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc " optional="true" shortOptionLetter="w"/>
       <ports name="sessionId" dataType="//@typeList/@types.0" description="sessionId is the identifier of the session defined in the database" longOptionName=""/>
       <ports name="session" direction="OUT" dataType="//@typeList/@types.7" description="The session object containing session information" longOptionName="" defaultValueLiteral=""/>
       <usedServices href="UMS_Internal.apim#//@modules.0/@services.2"/>
@@ -197,10 +197,10 @@
     <services name="restore" description="initializes VISHNU environment for tests" isCommand="false" isFunction="false" resultCodes="VISHNU_OK ERRCODE_ROOT_USER_ONLY ERRCODE_DIET ERRCODE_DBCONN ERRCODE_DBERR ERRCODE_UNDEFINED">
       <ports name="file" dataType="//@typeList/@types.0" description="file containing a sql script to restore the database" shortOptionLetter="" envOption="VISHNU_CONFIG_FILE"/>
     </services>
-    <services name="current_session_id" description="display the session id" isFunction="false" resultCodes="VISHNU_OK CLI_ERROR_NO_SESSION">
+    <services name="currentSessionId" description="display the session id" isFunction="false" resultCodes="VISHNU_OK CLI_ERROR_NO_SESSION">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The sessionKey is the encrypted identifier of the session generated by VISHNU"/>
-      <details key="description" value="This command closes the session that is currently active in the terminal. It will return&#xA;an error if there are still some active requests that were been submitted by the user during&#xA;the session (e.g., job submission or file transfers). After the session is closed, it cannot be re-opened."/>
-      <details key="exCLI" value="To close the current session:&#xA;vishnu_close"/>
+      <details key="description" value="This command allows to get current session identifier."/>
+      <details key="exCLI" value="To get the current session identifier:&#xA;vishnu_current_session_id"/>
     </services>
     <resultCodeList>
       <resultCodes name="ERRCODE_UNKNOWN_USER" description="The user is unknown or the password is wrong" value="20" diagnostic=""/>
