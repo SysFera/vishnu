@@ -100,6 +100,16 @@ public :
  */
   virtual void
   flush(int transactionID);
+/**
+ * \brief To get a unique id
+ * \param table: The table to use to generate the id
+ * \param fields: The fields of the table
+ * \param val: The values of the fields to insert
+ * \param tid: The transaction id
+ * \return A new integer never returned by this function
+ */
+  virtual int
+  generateId(std::string table, std::string fields, std::string val, int tid);
 
 private :
 

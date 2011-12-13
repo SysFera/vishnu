@@ -5,6 +5,7 @@
  * \date 15/12/10
  */
 #include "MYSQLDatabase.hpp"
+#include <boost/scoped_ptr.hpp>
 #include "SystemException.hpp"
 #include "utilVishnu.hpp"
 #include "errmsg.h"
@@ -257,13 +258,11 @@ MYSQLDatabase::startTransaction() {
   int reqPos;
   MYSQL* conn = getConnection(reqPos);
   bool ret = mysql_autocommit(conn, false);
-  std::cout << "Starting a transaction with ret=" << ret << std::endl;
   if (ret) {
     releaseConnection(reqPos);
     throw SystemException(ERRCODE_DBCONN, "Failed to start transaction");
   }
   // DO NOT RELEASE THE CONNECTION, KEEPING TRANSACTION
-  std::cout << "Transaction created :" << reqPos << std::endl;
   return reqPos;
 }
 
@@ -271,60 +270,40 @@ void
 MYSQLDatabase::endTransaction(int transactionID) {
   bool ret;
   MYSQL* conn = (&(mpool[transactionID].mmysql));
-  std::cout << "Ending a transaction number " << transactionID << std::endl;
   ret = mysql_commit(conn);
-  std::cout << "Commited with ret=" << ret << std::endl;
   if (ret) {
-    std::cout << "Rollbacking " << std::endl;
     ret = mysql_rollback(conn);
     if (ret) {
-      std::cout << "Rollback failed " << std::endl;
       releaseConnection(transactionID);
       throw SystemException(ERRCODE_DBCONN, "Failed to rollback and commit the transaction");
     }
-    std::cout << "Releasing " << transactionID << std::endl;
     releaseConnection(transactionID);
     throw SystemException(ERRCODE_DBCONN, "Failed to commit the transaction");
   }
-  std::cout << "Autocommited" << ret << std::endl;
   ret = mysql_autocommit(conn, true);
-  std::cout << "Autocommited with ret=" << ret << std::endl;
   if (ret) {
-    std::cout << "Rollbacking " << std::endl;
     ret = mysql_rollback(conn);
-    std::cout << "Rollbacked with ret=" << ret << std::endl;
     if (ret) {
-      std::cout << "Rollback failed, releasing " << transactionID << std::endl;
       releaseConnection(transactionID);
       throw SystemException(ERRCODE_DBCONN, "Failed to rollback and end the transaction");
     }
-    std::cout << "Releasing " << transactionID << std::endl;
     releaseConnection(transactionID);
     throw SystemException(ERRCODE_DBCONN, "Failed to end the transaction");
   }
   releaseConnection(transactionID);
-  std::cout << "Ended " << std::endl;
 }
 
 void
 MYSQLDatabase::cancelTransaction(int transactionID) {
   bool ret;
   MYSQL* conn = (&(mpool[transactionID].mmysql));
-  std::cout << "Canceling a transaction number " << transactionID << std::endl;
   ret = mysql_rollback(conn);
-  std::cout << "Rollbacked with ret=" << ret << std::endl;
   if (ret) {
-    std::cout << "Rollback failed, releasing " << transactionID << std::endl;
     releaseConnection(transactionID);
-    std::cout << "Autocommiting" << std::endl;
     ret = mysql_autocommit(conn, true);
-    std::cout << "Autocommited" << ret << std::endl;
     throw SystemException(ERRCODE_DBCONN, "Failed to cancel the transaction");
   }
-  std::cout << "Autocommiting" << std::endl;
   ret = mysql_autocommit(conn, true);
-  std::cout << "Autocommiting" << ret << std::endl;
-  std::cout << "Releasing " << transactionID << std::endl;
   releaseConnection(transactionID);
 }
 
@@ -333,8 +312,28 @@ void
 MYSQLDatabase::flush(int transactionID){
   bool ret;
   MYSQL* conn = (&(mpool[transactionID].mmysql));
-  std::cout << "Ending a transaction number " << transactionID << std::endl;
   ret = mysql_commit(conn);
-  std::cout << "Commited with ret=" << ret << std::endl;
+}
+
+int
+MYSQLDatabase::generateId(string table, string fields, string val, int tid) {
+  std::string sqlCommand("INSERT INTO "+table+ fields + " values " +val);
+  std::string getcpt("SELECT LAST_INSERT_ID() FROM vishnu");
+  vector<string> results = vector<string>();
+  vector<string>::iterator iter;
+
+  try{
+    process(sqlCommand.c_str(), tid);
+    boost::scoped_ptr<DatabaseResult> result(getResult(sqlCommand.c_str(), tid));
+    if (result->getNbTuples()==0) {
+      throw SystemException(ERRCODE_DBERR, "Failure generating the id");
+    }
+    results.clear();
+    results = result->get(0);
+    iter = results.begin();
+  } catch (SystemException& e){
+    throw (e);
+  }
+  return convertToInt(*iter);
 }
 
