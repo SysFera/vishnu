@@ -298,21 +298,23 @@ vishnu::ninja(std::string counterName, std::string vishnuIdString){
   std::string fields;
   std::string val;
 
-  fields = " (updatefreq, formatiduser, formatidjob, formaidfiletransfer, formatidmachine, usercpt, jobcpt, filesubcpt, machinecpt) ";
+  fields = " (updatefreq, formatiduser, formatidjob, formatidfiletransfer, formatidmachine, usercpt, jobcpt, filesubcpt, machinecpt) ";
   val = " (1, 't', 't', 't', 't', 0, 0, 1, 1) ";
+  table = "vishnu";
 
-  if (counterName.compare("userCpt")==0){// If user
-    table = "users";
-  } else  if (counterName.compare("jobcpt")==0){// If job
-    table = "job";
-  } else  if (counterName.compare("filesubcpt")==0){// If file transfer
-    table = "filetransfer";
-  } else  if (counterName.compare("machinecpt")==0){// If machine
-    table = "machine";
-  } else {
-    throw SystemException(ERRCODE_SYSTEM, "Invalid counter type");
-  }
-  std::string sqlCommand("INSERT INTO "+table+ fields + " values " +val);
+
+//  if (counterName.compare("userCpt")==0){// If user
+//    table = "users";
+//  } else  if (counterName.compare("jobcpt")==0){// If job
+//    table = "job";
+//  } else  if (counterName.compare("filesubcpt")==0){// If file transfer
+//    table = "filetransfer";
+//  } else  if (counterName.compare("machinecpt")==0){// If machine
+//    table = "machine";
+//  } else {
+//    throw SystemException(ERRCODE_SYSTEM, "Invalid counter type");
+//  }
+//  std::string sqlCommand("INSERT INTO "+table+ fields + " values " +val);
 //  std::string getcpt("SELECT LAST_INSERT_ID() FROM vishnu");
   databaseVishnu = factory.getDatabaseInstance();
   int tid = databaseVishnu->startTransaction();

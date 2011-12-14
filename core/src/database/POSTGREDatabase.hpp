@@ -133,18 +133,16 @@ private :
 
   /**
    * \brief To get a valid connexion
-   * \fn PGconn* getConnexion(int& pos)
    * \param pos The position of the connexion gotten in the pool
    * \return A valid and free connexion
    */
-  PGconn* getConnexion(int& pos);
+  PGconn* getConnection(int& pos);
 
   /**
    * \brief To release a connexion
-   * \fn void releaseConnexion(int pos)
    * \param pos The position of the connexion to release
    */
-  void releaseConnexion(int pos);
+  void releaseConnection(int pos);
 
   /////////////////////////////////
   // Attributes
