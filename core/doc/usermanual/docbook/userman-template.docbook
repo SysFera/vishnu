@@ -43,7 +43,7 @@
 	<authorinitials>SysFera</authorinitials>
 	<revdescription>
 	  
-	  <para> Added details concerning the TMS package.</para></revdescription>
+	  <para> Add of details concerning the TMS package.</para></revdescription>
       </revision>
       <revision>
 	<revnumber>3</revnumber>
@@ -51,7 +51,7 @@
 	<authorinitials>SysFera</authorinitials>
 	<revdescription>
 	  
-	  <para> Added details concerning the IMS and FMS package.</para></revdescription>
+	  <para> Add of details concerning the IMS and FMS package.</para></revdescription>
       </revision>
    
    <revision>
@@ -59,14 +59,14 @@
 	<date>28/06/2011</date>
 	<authorinitials>SysFera</authorinitials>
 	<revdescription>
-	  <para> Added TMS generic script example.</para></revdescription>
+	  <para> Add of TMS generic script example.</para></revdescription>
       </revision>
    <revision>
 	<revnumber>5</revnumber>
 	<date>18/07/2011</date>
 	<authorinitials>SysFera</authorinitials>
 	<revdescription>
-	  <para> Add the CLI examples and fix some mistakes..</para></revdescription>
+	  <para> Add of the CLI examples and fix some mistakes..</para></revdescription>
   </revision>
 
   <revision>
@@ -74,7 +74,7 @@
     <date>11/08/2011</date>
     <authorinitials>SysFera</authorinitials>
     <revdescription>
-      <para>Added SLURM batch scheduler </para></revdescription>
+      <para>Add of SLURM batch scheduler </para></revdescription>
   </revision> 
 
   <revision>
@@ -85,6 +85,14 @@
       <para>Add the only one local account per machine warning. Add a reference to VISHNU_API </para></revdescription>
   </revision> 
 
+
+  <revision>
+    <revnumber>8</revnumber>
+    <date>14/12/2011</date>
+    <authorinitials>SysFera</authorinitials>
+    <revdescription>
+      <para>Add a section dedicated of the VISHNU Job Output Environment Variables. Add  of other syntaxes for VISHNU generic script. Update of vishnu submit job reference, vishnu connect and reconnect reference, vishnu CreateDir reference. Add of vishnu_get_current_session_id a new command line reference. </para></revdescription>
+  </revision> 
     </revhistory>
 
     <copyright>
@@ -421,26 +429,49 @@
 	    <para>  
 	      <itemizedlist>
 		<listitem>
-		  <para><emphasis role="bold">#% vishnu_group</emphasis>: specifies the group's name,</para>
+		  <para><emphasis role="bold">#% vishnu_group</emphasis>: allow to specify the group's name,</para>
 		</listitem>
 		<listitem>
-		  <para><emphasis role="bold">#% vishnu_job_name</emphasis>: specifies the job's name,</para>
+		  <para><emphasis role="bold">#% vishnu_working_dir</emphasis>: allow to specify a job remote working dir,</para>
+		</listitem>
+    <listitem>
+		  <para><emphasis role="bold">#% vishnu_job_name</emphasis>: allow to specify the job's name. Spaces are not accepted in job name,</para>
 		</listitem>
 		<listitem>
-		  <para><emphasis role="bold">#% vishnu_output</emphasis>: specifies the path of the job's ouput file,</para>
+		  <para><emphasis role="bold">#% vishnu_output</emphasis>: allow to specify the path of the job's ouput file,</para>
 		</listitem>
 		<listitem>
-		  <para><emphasis role="bold">#% vishnu_error</emphasis>: specifies the path of the file containing the problems that occured during the job's execution,</para>
+		  <para><emphasis role="bold">#% vishnu_error</emphasis>: allow to specify the path of the file containing the problems that occured during the job's execution,</para>
 		</listitem>
 		<listitem>
-		  <para><emphasis role="bold">#% vishnu_wallclocklimit</emphasis>: specifies the estimated time for the job's execution,</para>
+		  <para><emphasis role="bold">#% vishnu_wallclocklimit</emphasis>: allow to specify the estimated time for the job's execution,</para>
 		</listitem>
 		<listitem>
+		  <para><emphasis role="bold">#% vishnu_cput</emphasis>: allow to specify the job cpu limit time,</para>
+		</listitem>
+		<listitem>
+		  <para><emphasis role="bold">#% vishnu_nb_cpu</emphasis>: allow to specify the number of cpus of the job,</para>
+		</listitem>
+		<listitem>
+		  <para><emphasis role="bold">#% vishnu_nbNodesAndCpuPerNode</emphasis>: allow to specify the number of nodes and the cpu of each node. For exemple if you want to use 4 nodes and to use 3 cpus of each node, you must sepecify thes numbers by "4:3", </para>
+		</listitem>
+		<listitem>
+		  <para><emphasis role="bold">#% vishnu_memory</emphasis>: allow to specify the memory size that the job requires,</para>
+		</listitem>
+    <listitem>
+      <para><emphasis role="bold">#% vishnu_mailNotification </emphasis>: allow to specify the notification type of the job. Valid type values are BEGIN, END, ERROR, 
+        and ALL (any state change), </para>
+		</listitem>
+    <!--listitem>
 		  <para><emphasis role="bold">#% vishnu_notify_user</emphasis>: specifies the mail adress of the job's owner in order to receive a notification when the 
 		    job is completed, 
 		  </para>
+		</listitem-->
+    <listitem>
+		  <para><emphasis role="bold">#% vishnu_notify_user</emphasis>: The name of user to receive email notification of state changes as defined by the option mailNotification. The default value is the submitting user,
+		  </para>
 		</listitem>
-		<listitem>
+    <listitem>
 		  <para><emphasis role="bold">#% vishnu_queue</emphasis>: specifies the queue where the job will be submitted. It is possible to obtain a list of 
 		    the batch scheduler's queues by using the <emphasis role="bold">vishnu_list_queues</emphasis> command.
 		  </para>

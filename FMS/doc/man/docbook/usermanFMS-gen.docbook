@@ -1082,7 +1082,7 @@ values can be obtained using the vishnu_list_machine command).
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_copy_file</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-r</option></arg><arg choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
+              choice="opt"><option>-r</option></arg><arg choice="opt"><option>-t <replaceable>trCommand</replaceable></option></arg><arg
               choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
@@ -1110,7 +1110,7 @@ i.e. a local copy cannot be handled by this command.
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><option>-c <replaceable>trCommand</replaceable></option></term>
+            <term><option>-t <replaceable>trCommand</replaceable></option></term>
             <listitem>
               <para>the command to use to perform file transfer..
 The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDEFINED).</para>
@@ -1124,7 +1124,7 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
           <varlistentry>
             <term><envar>VISHNU_TRANSFER_CMD</envar></term>
             <listitem>
-              <para>It specifies the command to use for all file transfers by default. It takes its values in the set {SCP,RSYNC}.. Overridden by the -c option.</para>
+              <para>It specifies the command to use for all file transfers by default. It takes its values in the set {SCP,RSYNC}.. Overridden by the -t option.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -1202,7 +1202,7 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_copy_async_file</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-r</option></arg><arg choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
+              choice="opt"><option>-r</option></arg><arg choice="opt"><option>-t <replaceable>trCommand</replaceable></option></arg><arg
               choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
@@ -1231,7 +1231,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><option>-c <replaceable>trCommand</replaceable></option></term>
+            <term><option>-t <replaceable>trCommand</replaceable></option></term>
             <listitem>
               <para>the command to use to perform file transfer..
 The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDEFINED).</para>
@@ -1245,7 +1245,7 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
           <varlistentry>
             <term><envar>VISHNU_TRANSFER_CMD</envar></term>
             <listitem>
-              <para>It specifies the command to use for all file transfers by default. It takes its values in the set {SCP,RSYNC}.. Overridden by the -c option.</para>
+              <para>It specifies the command to use for all file transfers by default. It takes its values in the set {SCP,RSYNC}.. Overridden by the -t option.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -1323,7 +1323,7 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_move_file</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-r</option></arg><arg choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
+              choice="opt"><option>-r</option></arg><arg choice="opt"><option>-t <replaceable>trCommand</replaceable></option></arg><arg
               choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
@@ -1351,7 +1351,7 @@ i.e. a local move cannot be handled by this command.
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><option>-c <replaceable>trCommand</replaceable></option></term>
+            <term><option>-t <replaceable>trCommand</replaceable></option></term>
             <listitem>
               <para>the command to use to perform file transfer..
 The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDEFINED).</para>
@@ -1365,7 +1365,7 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
           <varlistentry>
             <term><envar>VISHNU_TRANSFER_CMD</envar></term>
             <listitem>
-              <para>It specifies the command to use for all file transfers by default. It takes its values in the set {SCP,RSYNC}.. Overridden by the -c option.</para>
+              <para>It specifies the command to use for all file transfers by default. It takes its values in the set {SCP,RSYNC}.. Overridden by the -t option.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -1443,7 +1443,7 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_move_async_file</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-r</option></arg><arg choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
+              choice="opt"><option>-r</option></arg><arg choice="opt"><option>-t <replaceable>trCommand</replaceable></option></arg><arg
               choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
@@ -1472,7 +1472,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><option>-c <replaceable>trCommand</replaceable></option></term>
+            <term><option>-t <replaceable>trCommand</replaceable></option></term>
             <listitem>
               <para>the command to use to perform file transfer..
 The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDEFINED).</para>
@@ -1486,7 +1486,7 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
           <varlistentry>
             <term><envar>VISHNU_TRANSFER_CMD</envar></term>
             <listitem>
-              <para>It specifies the command to use for all file transfers by default. It takes its values in the set {SCP,RSYNC}.. Overridden by the -c option.</para>
+              <para>It specifies the command to use for all file transfers by default. It takes its values in the set {SCP,RSYNC}.. Overridden by the -t option.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
