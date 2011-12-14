@@ -324,7 +324,7 @@ MYSQLDatabase::generateId(string table, string fields, string val, int tid) {
 
   try{
     process(sqlCommand.c_str(), tid);
-    boost::scoped_ptr<DatabaseResult> result(getResult(sqlCommand.c_str(), tid));
+    boost::scoped_ptr<DatabaseResult> result(getResult(getcpt.c_str(), tid));
     if (result->getNbTuples()==0) {
       throw SystemException(ERRCODE_DBERR, "Failure generating the id");
     }

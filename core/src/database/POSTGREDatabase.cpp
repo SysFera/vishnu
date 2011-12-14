@@ -6,8 +6,10 @@
  */
 #include <sstream>
 #include <iostream>
+#include <boost/scoped_ptr.hpp>
 #include "POSTGREDatabase.hpp"
 #include "SystemException.hpp"
+#include "utilVishnu.hpp"
 
 using namespace std;
 
@@ -22,7 +24,7 @@ POSTGREDatabase::process(std::string request, int transacId){
 
   PGresult* res;
   int reqPos;
-  PGconn* lconn = getConnexion(reqPos);
+  PGconn* lconn = getConnection(reqPos);
 
   if (PQstatus(lconn) == CONNECTION_OK) {
     res = PQexec(lconn, request.c_str());
@@ -31,16 +33,16 @@ POSTGREDatabase::process(std::string request, int transacId){
       PQclear(res);
       std::string errorMsg = std::string(PQerrorMessage(lconn));
       errorMsg.append("- Note: The process function must not be used for select request");
-      releaseConnexion(reqPos);
+      releaseConnection(reqPos);
       throw SystemException(ERRCODE_DBERR, errorMsg);
     }
     PQclear(res);
   }
   else {
-    releaseConnexion(reqPos);
+    releaseConnection(reqPos);
     throw SystemException(ERRCODE_DBCONN, std::string(PQerrorMessage(lconn)));
   }
-  releaseConnexion(reqPos);
+  releaseConnection(reqPos);
   return SUCCESS;
 }
 
@@ -142,14 +144,14 @@ POSTGREDatabase::getResult(std::string request, int transacId) {
   int i;
   int j;
   int reqPos;
-  PGconn* lconn = getConnexion(reqPos);
+  PGconn* lconn = getConnection(reqPos);
 
   if (PQstatus(lconn) == CONNECTION_OK) {
     res = PQexec(lconn, request.c_str());
 
     if (PQresultStatus(res) != PGRES_TUPLES_OK) {
       PQclear(res);
-      releaseConnexion(reqPos);
+      releaseConnection(reqPos);
       throw SystemException(ERRCODE_DBERR, std::string(PQerrorMessage(lconn)));
     }
     nFields = PQnfields(res);
@@ -164,17 +166,17 @@ POSTGREDatabase::getResult(std::string request, int transacId) {
       }
       results.push_back(tmp);
     }
-    releaseConnexion(reqPos);
+    releaseConnection(reqPos);
     PQclear(res);
   }
   else {
-    releaseConnexion(reqPos);
+    releaseConnection(reqPos);
     throw SystemException(ERRCODE_DBCONN, "The database is not connected");
   }
   return new DatabaseResult(results, attributesNames);
 }
 
-PGconn* POSTGREDatabase::getConnexion(int& id){
+PGconn* POSTGREDatabase::getConnection(int& id){
   int i = 0;
   int locked;
   // Looking for an unused connection
@@ -202,7 +204,7 @@ PGconn* POSTGREDatabase::getConnexion(int& id){
   throw SystemException(ERRCODE_DBCONN, "Unknown error, cannot get connexion on database");
 }
 
-void POSTGREDatabase::releaseConnexion(int pos){
+void POSTGREDatabase::releaseConnection(int pos){
   int ret;
   ret = pthread_mutex_unlock(&(mpool[pos].mmutex));
   if (ret) {
@@ -213,26 +215,46 @@ void POSTGREDatabase::releaseConnexion(int pos){
 
 int
 POSTGREDatabase::startTransaction(){
-// TODO
-  return 0;
+  int reqPos;
+  getConnection(reqPos);
+  process("BEGIN;", reqPos);
+  return reqPos;
 }
 
 void
 POSTGREDatabase::endTransaction(int transactionID) {
-// TODO
+  process("COMMIT;", transactionID);
+  releaseConnection(transactionID);
 }
 
 void
 POSTGREDatabase::cancelTransaction(int transactionID) {
-// TODO
+  process("ROLLBACK;", transactionID);
+  releaseConnection(transactionID);
 }
 
 void
 POSTGREDatabase::flush(int transactionID){
-// TODO
+  process("COMMIT;", transactionID);
+  releaseConnection(transactionID);
 }
 
 int
 POSTGREDatabase::generateId(string table, string fields, string val, int tid) {
-// TODO
+  std::string sqlCommand("INSERT INTO "+table+ fields + " values " +val);
+  sqlCommand += ";SELECT currval(pg_get_serial_sequence('vishnu', 'vishnuid'))";
+  vector<string> results = vector<string>();
+  vector<string>::iterator iter;
+  try{
+    boost::scoped_ptr<DatabaseResult> result(getResult(sqlCommand.c_str(), tid));
+    if (result->getNbTuples()==0) {
+      throw SystemException(ERRCODE_DBERR, "Failure generating the id");
+    }
+    results.clear();
+    results = result->get(0);
+    iter = results.begin();
+  } catch (SystemException& e){
+    throw (e);
+  }
+  return vishnu::convertToInt(*iter);
 }
