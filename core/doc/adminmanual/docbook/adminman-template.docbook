@@ -102,8 +102,7 @@
         <revdescription>
           <para>Mise à jour du document suites aux premiers retours .</para>
         </revdescription>
-      </revision>
-     
+      </revision>     
       <revision>
       <revnumber>11</revnumber>
       <date>11/08/2011</date>
@@ -116,7 +115,17 @@
       <date>23/08/2011</date>
       <authorinitials>K.COULOMB</authorinitials>
       <revdescription>
-        <para>Add link to websites on how to install postgresql/mysql databases. Remove useless text about upgrading mysql tables (because implemented when database already fixed). Add reference to VISHNU_API</para></revdescription>
+        <para>Ajout d'un lien sur des sites expliquant comment installer une base de données postgresql/mysql. Suppression des informations de mise à jour de la base (maintenant le script de création contient tout). Ajout d'une référence vers 'VISHNU_API'</para></revdescription>
+      </revision>
+
+      <revision>
+      <revnumber>13</revnumber>
+      <date>14/12/2011</date>
+      <authorinitials>K.COULOMB</authorinitials>
+      <revdescription>
+        <para>
+          Mise à jour pour les nouveaux forwarder de DIET.
+      </para></revdescription>
       </revision>
 
     </revhistory>
@@ -597,8 +606,7 @@
     <title>Déploiement de VISHNU</title>
     <section>
       <title>Lancement sur un même réseau</title>
-      <para>Les modules peuvent être lancés soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration. Le déploiement se fera en suivant la configuration montrée sur la figure 4.1 du document [ARCH]. Pour simplier les choses, on supposera que les divers éléments dans le carré "dedicated to VISHNU" vont être déployés sur la même machine que l'on va nommer <emphasis role="bold">préfrontale</emphasis>.</para>
-      <para><emphasis role="bold">NOTE: l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
+      <para>Les modules peuvent être lancés manuellement. Le déploiement se fera en suivant la configuration montrée sur la figure 4.1 du document [ARCH]. Pour simplier les choses, on supposera que les divers éléments dans le carré "dedicated to VISHNU" vont être déployés sur la même machine que l'on va nommer <emphasis role="bold">préfrontale</emphasis>.</para>
       <para><emphasis role="bold">NOTE: Il est préférable d'éviter de lancer le même SeD sur la même machine.</emphasis></para>
       <para><emphasis role="bold">NOTE: Il existe un bug connu sur debian (entre autre) avec boost file system, utilisé par VISHNU. Le rapport de bug est ici et le bug est actuellement ouvert: https://svn.boost.org/trac/boost/ticket/4688. Si lors du lancement d'un SeD, le message d'erreur suivant apparait : std::runtime_error: locale::facet::_S_create_c_locale name not valid, faire un "export LANG=C" et cela devrait régler le problème.</emphasis></para>
       <para><emphasis role="bold">NOTE: L'utilisateur VISHNU 'root' doit avoir un compte local sur chaque machine ou il y a un serveur IMS. Le compte UNIX correspondant sera utilisé pour le redémarrage automatique des SeD.</emphasis></para>
@@ -743,9 +751,8 @@
     </section>
     <section>
       <title>Lancement sur plusieurs réseaux</title>
-      <para>Un module VISHNU peut être lancé soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration.
+      <para>Un module VISHNU peut être lancé manuellement.
 	Pour le déploiement on se base sur le modèle de la figure 4.2 du document [ARCH] en supposant pour simplifier que sur un réseau tout est lancé sur la même machine et que les réseaux "Network C" et "Network D" sont confondus (pas de forwarder à mettre entre eux).</para>
-      <para><emphasis role="bold">NOTE : l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
       <orderedlist>
 	<listitem>
 	  <para> Avoir une base de données PostgreSQL accessible et initialisée (tables créées et premières données créées). Des scripts SQL sont fournis pour cela. Avoir la base PostGreSQL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base).</para>
@@ -755,43 +762,22 @@
 	</listitem>
 	<listitem>
 	  <para> Lancer un démon forwarder sur le reseau 2 (Network B) :  </para>
-	  <para><emphasis role="bold">dietForwarder --name forwarder2 --net-config forwarder2.cfg</emphasis>
+	  <para><emphasis role="bold">dietForwarder --name forwarder2</emphasis>
 	    <itemizedlist>
 	      <listitem><para>
 		  forwarder2 : nom qui identifie le démon forwarder sur ce réseau
 	      </para></listitem>
-	      <listitem><para>
-		  forwarder2.cfg : fichier de configuration (voir le paragraphe 6.8 pour un exemple de configuration) contenant des règles appliquées aux
-		  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de le paragraphe 6.8, les
-		  règles utilisées sont :
-		  <itemizedlist>
-		    <listitem>
-		      <para> une règle 'accept' correspondant au filtre sur la source des connections acceptées. '.*' signifie les connections provenant
-			de n'importe quelle adresse IP.</para>
-		    </listitem>
-		    <listitem>
-		      <para> deux règles 'reject' contenant les adresses destination à rejeter. Il est nécessaire que l'adresse IP du serveur sur lequel
-			tourne le démon forwarder soit indiquée dans une règle de ce type. Dans l'exemple le serveur ayant deux adresses IP on a
-			indiqué une règle pour chaque adresse.</para>
-		    </listitem>
-		  </itemizedlist>
-		</para>
-	      </listitem>
 	    </itemizedlist>
 	  </para>
 	</listitem>
 	<listitem>
 	  <para> Lancer un démon forwarder sur le reseau 1 (network C) : </para>
-	  <para><emphasis role="bold">dietForwarder -C--peer-name forwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name forwarder
-	    --net-config forwarder1.cfg
+	  <para><emphasis role="bold">dietForwarder --peer-name forwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name forwarder
 	    --remote-host localhost
 	    --ssh-login login</emphasis>
 	  </para>
 	  <para>
 	    <itemizedlist>
-	      <listitem><para>
-		  -C : indique que c'est ce démon forwarder qui crée le tunnel SSH.
-	      </para></listitem>
 	      <listitem><para>
 		  --peer-name : le nom donné au forwarder de l'autre coté, ici forwarder2.
 	      </para></listitem>
@@ -803,10 +789,6 @@
 	      </para></listitem>
 	      <listitem><para>
 		  --name : le nom identifiant ce démon forwarder, c'est-à-dire 'forwarder1'.
-	      </para></listitem>
-	      <listitem><para>
-		  --net-config : le fichier de configuration, ici forwarder1.cfg. Ce fichier doit contenir des règles 'reject' et 'accept' également,
-		  sur le même modèle que forwarder2.cfg.
 	      </para></listitem>
 	      <listitem><para>
 		  --remote-host : le nom de l'adresse loopback, c'est-à-dire 'localhost'.
@@ -823,43 +805,22 @@
 	</listitem>
 	<listitem>
 	  <para> Lancer un démon forwarder pour le log service sur le reseau 2 (network B) :  </para>
-	  <para><emphasis role="bold">logForwarder --name logforwarder2 --net-config logforwarder2.cfg</emphasis>
+	  <para><emphasis role="bold">logForwarder --name logforwarder2</emphasis>
 	    <itemizedlist>
 	      <listitem><para>
 		  logforwarder2 : nom qui identifie le démon forwarder sur ce réseau
 	      </para></listitem>
-	      <listitem><para>
-		  logforwarder2.cfg : fichier de configuration (voir le paragraphe 6.8 pour un exemple de fichier de configuration) contenant des règles appliquées aux
-		  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de le paragraphe 6.8, les
-		  règles utilisées sont :
-		  <itemizedlist>
-		    <listitem>
-		      <para> une règle 'accept' correspondant au filtre sur la source des connections acceptées. '.*' signifie les connections provenant
-			de n'importe quelle adresse IP.</para>
-		    </listitem>
-		    <listitem>
-		      <para> deux règles 'reject' contenant les adresses destination à rejeter. Il est nécessaire que l'adresse IP du serveur sur lequel
-			tourne le démon forwarder soit indiquée dans une règle de ce type. Dans l'exemple le serveur ayant deux adresses IP on a
-			indiqué une règle pour chaque adresse.</para>
-		    </listitem>
-		  </itemizedlist>
-		</para>
-	      </listitem>
 	    </itemizedlist>
 	  </para>
 	</listitem>
 	<listitem>
 	  <para> Lancer un démon log forwarder sur le reseau 1 (network C) : </para>
-	  <para><emphasis role="bold">logForwarder -C--peer-name logforwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name logforwarder
-	    --net-config logforwarder1.cfg
+	  <para><emphasis role="bold">logForwarder --peer-name logforwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name logforwarder
 	    --remote-host localhost
 	    --ssh-login login</emphasis>
 	  </para>
 	  <para>
 	    <itemizedlist>
-	      <listitem><para>
-		  -C : indique que c'est ce démon forwarder qui crée le tunnel SSH.
-	      </para></listitem>
 	      <listitem><para>
 		  --peer-name : le nom donné au forwarder de l'autre coté, ici forwarder2.
 	      </para></listitem>
@@ -871,10 +832,6 @@
 	      </para></listitem>
 	      <listitem><para>
 		  --name : le nom identifiant ce démon forwarder, c'est-à-dire 'forwarder1'.
-	      </para></listitem>
-	      <listitem><para>
-		  --net-config : le fichier de configuration, ici forwarder1.cfg. Ce fichier doit contenir des règles 'reject' et 'accept' également,
-		  sur le même modèle que forwarder2.cfg.
 	      </para></listitem>
 	      <listitem><para>
 		  --remote-host : le nom de l'adresse loopback, c'est-à-dire 'localhost'.
@@ -985,16 +942,6 @@
 	vishnuMachineId=machine_1
 	# Configuration propres à FMS
 	intervalMonitor = 1
-      </programlisting>
-    </section>
-    <section>
-      <title>Exemple de fichier d'un forwarder </title>
-      <programlisting>
-	# accept everything from everyone
-	accept:.*
-
-	# reject its own ip
-	reject:192\.168\.1\.6
       </programlisting>
     </section>
     <section>
