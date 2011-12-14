@@ -288,6 +288,27 @@ vishnu::getGeneratedName (const char* format, int cpt, IdType type,
   return res;
 }
 
+int
+vishnu::ninja(std::string counterName, std::string vishnuIdString){
+  DbFactory factory;
+  Database *databaseVishnu;
+  int ret;
+
+  std::string table;
+  std::string fields;
+  std::string val;
+
+  fields = " (updatefreq, formatiduser, formatidjob, formatidfiletransfer, formatidmachine, usercpt, jobcpt, filesubcpt, machinecpt) ";
+  val = " (1, 't', 't', 't', 't', 0, 0, 1, 1) ";
+  table = "vishnu";
+
+  databaseVishnu = factory.getDatabaseInstance();
+  int tid = databaseVishnu->startTransaction();
+  ret = databaseVishnu->generateId(table, fields, val, tid);
+  databaseVishnu->cancelTransaction(tid);
+  return ret;
+}
+
 
 /**
  * \brief Function to get information from the table vishnu
@@ -297,7 +318,7 @@ vishnu::getGeneratedName (const char* format, int cpt, IdType type,
  * \return the corresponding attribut
  */
 std::string
-vishnu::getAttrVishnu(std::string attrname, std::string vishnuid) {
+vishnu::getAttrVishnu(std::string attrname, std::string vishnuid, int transacId) {
 
   DbFactory factory;
   Database *databaseVishnu;
@@ -305,7 +326,7 @@ vishnu::getAttrVishnu(std::string attrname, std::string vishnuid) {
   std::string sqlCommand("SELECT "+attrname+" FROM vishnu where vishnuid="+vishnuid);
 
   databaseVishnu = factory.getDatabaseInstance();
-  boost::scoped_ptr<DatabaseResult> result(databaseVishnu->getResult(sqlCommand.c_str()));
+  boost::scoped_ptr<DatabaseResult> result(databaseVishnu->getResult(sqlCommand.c_str(), transacId));
   return result->getFirstElement();
 
 }
@@ -317,17 +338,17 @@ vishnu::getAttrVishnu(std::string attrname, std::string vishnuid) {
  * \return raises an exception
  */
 void
-vishnu::incrementCpt(std::string cptName, int cpt) {
+vishnu::incrementCpt(std::string cptName, int cpt, int transacId) {
 
   DbFactory factory;
   Database *databaseVishnu;
 
   cpt = cpt+1;
 
-  std::string sqlCommand("UPDATE vishnu set "+cptName+"="+vishnu::convertToString(cpt));
+  std::string sqlCommand("UPDATE vishnu set "+cptName+"="+cptName+"+1");
 
   databaseVishnu = factory.getDatabaseInstance();
-  databaseVishnu->process(sqlCommand.c_str());
+  databaseVishnu->process(sqlCommand.c_str(), transacId);
 
 }
 
@@ -348,8 +369,19 @@ vishnu::getObjectId(int vishnuId,
   std::string idGenerated;
 
   std::string vishnuIdString = convertToString(vishnuId);
+
+  pthread_mutex_t mutex;
+  pthread_mutex_init(&(mutex), NULL);
+  pthread_mutex_lock(&(mutex));
+
+// Start transaction
+  DbFactory factory;
+  Database *databaseVishnu;
+  databaseVishnu = factory.getDatabaseInstance();
+
   //To get the counter
-  int counter = convertToInt(getAttrVishnu(counterName, vishnuIdString));
+  int counter;
+  counter = ninja(counterName, vishnuIdString);
   //To get the formatiduser
   std::string format = getAttrVishnu(formatName, vishnuIdString).c_str();
 
@@ -358,16 +390,18 @@ vishnu::getObjectId(int vishnuId,
     getGeneratedName(format.c_str(), counter, type, stringforgeneration);
 
     if (idGenerated.size() != 0) {
-      incrementCpt(counterName, counter);
     } else {
       SystemException e (ERRCODE_SYSTEM, "There is a problem during the id generation with the format:"+ formatName);
+      pthread_mutex_unlock(&(mutex));
       throw e;
     }
 
   } else {
+    pthread_mutex_unlock(&(mutex));
     SystemException e (ERRCODE_SYSTEM, "The format "+ formatName +" is undefined");
     throw e;
   }
+  pthread_mutex_unlock(&(mutex));
   return idGenerated;
 }
 /**

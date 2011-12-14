@@ -76,8 +76,19 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
       user->setPassword(pwd.substr(0,PASSWORD_MAX_SIZE));
 
       vishnuid = convertToString(vishnuId);
+
+// Start transaction
+//      int ret = mdatabaseVishnu->startTransaction();
+      //To get the counter
+      int counter;
+      counter = ninja("userCpt", vishnuid);
+
       //To get the user counter
-      userCpt = convertToInt(getAttrVishnu("usercpt", vishnuid));
+//      userCpt = convertToInt(getAttrVishnu("usercpt", vishnuid, ret));
+//      incrementCpt("usercpt", userCpt, ret);
+//      userCpt = convertToInt(getAttrVishnu("usercpt", vishnuid, ret));
+//      mdatabaseVishnu->endTransaction(ret);
+      userCpt = counter;
 
       //To get the formatiduser
       formatiduser = getAttrVishnu("formatiduser", vishnuid).c_str();
@@ -94,7 +105,6 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
         //if the userId is generated
         if (idUserGenerated.size() != 0) {
 
-          incrementCpt("usercpt", userCpt);
           user->setUserId(idUserGenerated);
           //To get the password encrypted
           passwordCrypted = vishnu::cryptPassword(user->getUserId(), user->getPassword());

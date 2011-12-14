@@ -5,8 +5,10 @@
  * \date 15/12/10
  */
 #include "MYSQLDatabase.hpp"
+#include <boost/scoped_ptr.hpp>
 #include "SystemException.hpp"
 #include "utilVishnu.hpp"
+#include "errmsg.h"
 
 using namespace std;
 using namespace vishnu;
@@ -17,9 +19,16 @@ string dbErrorMsg(MYSQL *conn) {
 }
 
 int
-MYSQLDatabase::process(string request){
+MYSQLDatabase::process(string request, int transacId){
   int reqPos;
-  MYSQL* conn = getConnection(reqPos);
+  MYSQL* conn = NULL;
+  if (transacId==-1) {
+    conn = getConnection(reqPos);
+  } else {
+    reqPos = -1;
+    conn = (&(mpool[transacId].mmysql));
+  }
+
   int res;
   if (request.empty()) {
     releaseConnection(reqPos);
@@ -33,11 +42,27 @@ MYSQLDatabase::process(string request){
 
   res=mysql_real_query(conn, request.c_str (), request.length());
 
-  if (res) {
-    // Could not execute the query
-    releaseConnection(reqPos);
-    throw SystemException(ERRCODE_DBERR, "P-Query error" + dbErrorMsg(conn));
+  if (res == CR_SERVER_GONE_ERROR) {
+// try to reinitialise the socket
+    if (mysql_real_connect(&(mpool[reqPos].mmysql),
+                           mconfig.getDbHost().c_str(),
+                           mconfig.getDbUserName().c_str(),
+                           mconfig.getDbUserPassword().c_str(),
+                           mconfig.getDbName().c_str(),
+                           mconfig.getDbPort(),
+                           NULL,
+                           CLIENT_MULTI_STATEMENTS) ==NULL) {
+      throw SystemException(ERRCODE_DBERR, "Cannot reconnect to the DB"
+                            + dbErrorMsg(&(mpool[reqPos].mmysql)));
+    }
+    res=mysql_real_query(conn, request.c_str (), request.length());
+    if (res) {
+      // Could not execute the query
+      releaseConnection(reqPos);
+      throw SystemException(ERRCODE_DBERR, "P-Query error" + dbErrorMsg(conn));
+    }
   }
+
   // Due to CLIENT_MULTI_STATEMENTS option, results must always be retrieved
   // process each statement result
   do {
@@ -123,18 +148,44 @@ MYSQLDatabase::disconnect(){
 
 /**
  * \brief To get the result of the latest request (if any result)
- * \fn DatabaseResult* getResult(string request)
+ * \param transacId the id of the transaction if one is used
  * \return The result of the latest request
  */
 DatabaseResult*
-MYSQLDatabase::getResult(string request) {
+MYSQLDatabase::getResult(string request, int transacId) {
   int reqPos;
-  MYSQL* conn = getConnection(reqPos);
-  // Execute the SQL query
-  if ((mysql_real_query(conn, request.c_str (), request.length())) != 0) {
-    releaseConnection(reqPos);
-    throw SystemException(ERRCODE_DBERR, "S-Query error" + dbErrorMsg(conn));
+  MYSQL* conn = NULL;
+  int res;
+  if (transacId==-1) {
+    conn = getConnection(reqPos);
+  } else {
+    reqPos = -1;
+    conn = (&(mpool[transacId].mmysql));
   }
+  // Execute the SQL query
+  if ((res=mysql_real_query(conn, request.c_str (), request.length())) != 0) {
+
+    if (res == CR_SERVER_GONE_ERROR) {
+// try to reinitialise the socket
+      if (mysql_real_connect(&(mpool[reqPos].mmysql),
+                             mconfig.getDbHost().c_str(),
+                             mconfig.getDbUserName().c_str(),
+                             mconfig.getDbUserPassword().c_str(),
+                             mconfig.getDbName().c_str(),
+                             mconfig.getDbPort(),
+                             NULL,
+                             CLIENT_MULTI_STATEMENTS) ==NULL) {
+        throw SystemException(ERRCODE_DBERR, "Cannot reconnect to the DB"
+                              + dbErrorMsg(&(mpool[reqPos].mmysql)));
+      }
+      res=mysql_real_query(conn, request.c_str (), request.length());
+      if (res) {
+        releaseConnection(reqPos);
+        throw SystemException(ERRCODE_DBERR, "S-Query error" + dbErrorMsg(conn));
+      }
+    }
+  }
+
   // Get the result handle (does not fetch data from the server)
   MYSQL_RES *result = mysql_use_result(conn);
   if (result == 0) {
@@ -196,9 +247,97 @@ MYSQLDatabase::getConnection(int& id){
 
 void
 MYSQLDatabase::releaseConnection(int pos) {
+  if (pos==-1){
+    return;
+  }
   int ret = pthread_mutex_unlock(&(mpool[pos].mmutex));
   if (ret) {
     throw SystemException(ERRCODE_DBCONN, "Cannot release connection lock");
   }
   mpool[pos].mused = false;
 }
+
+int
+MYSQLDatabase::startTransaction() {
+  int reqPos;
+  MYSQL* conn = getConnection(reqPos);
+  bool ret = mysql_autocommit(conn, false);
+  if (ret) {
+    releaseConnection(reqPos);
+    throw SystemException(ERRCODE_DBCONN, "Failed to start transaction");
+  }
+  // DO NOT RELEASE THE CONNECTION, KEEPING TRANSACTION
+  return reqPos;
+}
+
+void
+MYSQLDatabase::endTransaction(int transactionID) {
+  bool ret;
+  MYSQL* conn = (&(mpool[transactionID].mmysql));
+  ret = mysql_commit(conn);
+  if (ret) {
+    ret = mysql_rollback(conn);
+    if (ret) {
+      releaseConnection(transactionID);
+      throw SystemException(ERRCODE_DBCONN, "Failed to rollback and commit the transaction");
+    }
+    releaseConnection(transactionID);
+    throw SystemException(ERRCODE_DBCONN, "Failed to commit the transaction");
+  }
+  ret = mysql_autocommit(conn, true);
+  if (ret) {
+    ret = mysql_rollback(conn);
+    if (ret) {
+      releaseConnection(transactionID);
+      throw SystemException(ERRCODE_DBCONN, "Failed to rollback and end the transaction");
+    }
+    releaseConnection(transactionID);
+    throw SystemException(ERRCODE_DBCONN, "Failed to end the transaction");
+  }
+  releaseConnection(transactionID);
+}
+
+void
+MYSQLDatabase::cancelTransaction(int transactionID) {
+  bool ret;
+  MYSQL* conn = (&(mpool[transactionID].mmysql));
+  ret = mysql_rollback(conn);
+  if (ret) {
+    releaseConnection(transactionID);
+    ret = mysql_autocommit(conn, true);
+    throw SystemException(ERRCODE_DBCONN, "Failed to cancel the transaction");
+  }
+  ret = mysql_autocommit(conn, true);
+  releaseConnection(transactionID);
+}
+
+
+void
+MYSQLDatabase::flush(int transactionID){
+  bool ret;
+  MYSQL* conn = (&(mpool[transactionID].mmysql));
+  ret = mysql_commit(conn);
+}
+
+int
+MYSQLDatabase::generateId(string table, string fields, string val, int tid) {
+  std::string sqlCommand("INSERT INTO "+table+ fields + " values " +val);
+  std::string getcpt("SELECT LAST_INSERT_ID() FROM vishnu");
+  vector<string> results = vector<string>();
+  vector<string>::iterator iter;
+
+  try{
+    process(sqlCommand.c_str(), tid);
+    boost::scoped_ptr<DatabaseResult> result(getResult(getcpt.c_str(), tid));
+    if (result->getNbTuples()==0) {
+      throw SystemException(ERRCODE_DBERR, "Failure generating the id");
+    }
+    results.clear();
+    results = result->get(0);
+    iter = results.begin();
+  } catch (SystemException& e){
+    throw (e);
+  }
+  return convertToInt(*iter);
+}
+
