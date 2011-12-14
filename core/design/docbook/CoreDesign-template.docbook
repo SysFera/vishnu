@@ -57,7 +57,7 @@
         <date>07/12/2011</date>
         <authorinitials>SysFera</authorinitials>
         <revdescription>
-          <para>Added GoDIET deployment section and updated pictures (change ORACLE by MYSQL).</para>
+          <para> Added SLURMJobScheduler on Figure 3.3 and replace of ORACLE by MYSQL on the document such as Figure 5.3 and Figure 5.6</para>
         </revdescription>
       </revision>
       </revhistory>
@@ -756,7 +756,7 @@
     <title>Technical architecture</title>
     <para>This chapter describes the deployment aspects of a VISHNU System. The first section presents a typical deployment
       of VISHNU on a single network. The second section presents a more complex deployment of VISHNU where the systems involved
-      are located on different networks isolated by firewalls. The third section presents the deployement of Vishnu thanks to GoDiet tool.</para>
+      are located on different networks isolated by firewalls.</para>
     <section>
       <title>Technical architecture diagram</title>
        <para>The Figure 4.1 shows a VISHNU system deployed on a set of hosts where each class of VSS and VBS is running
@@ -803,45 +803,6 @@
             <imageobject>
               <imagedata fileref="images/png/VISHNU Deployment Overview Diagram with firewall.png"
                   align="center" scale="40"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
-    </section>
-    
-    <section>
-      <title>Technical architecture of VISHNU deployment</title>
-
-<para>GoDiet is a cross-platform tool that helps you automate ad-hoc deployment and management procedures for a Diet platform. It manages the creation of configuration files, the staging of files, the launch of software components, the monitoring and the reporting. GoDiet is ex-
-tremely useful for large deployments on a complex physical infrastructure. The main features
-are :
-<itemizedlist>
-<listitem><para>
-Complete running application customization. Infrastructure agnostic approach;
-</para></listitem>
-<listitem><para>
-command-line interface;
-</para></listitem>
-<listitem><para>
-distributed command execution via SSH;
-</para></listitem>
-<listitem><para>
-templated based configuration files;
-</para></listitem>
-<listitem><para>
-handling of complex physical infrastructure, with firewalls and multiple local- and wide-area networks.
-</para></listitem>
-</itemizedlist>
-<para>The figure <xref linkend="architecture_godiet"/> presents a VISHNU deployement process with GoDiet tool. Network D have been splitted to detail
- the process of infrastructure access with multi-hop. GoDiet use SSH and NetCat to execute remote program ( OmniNames, MA, SeDs ... ) and to access resources which are not directly reachable.
-</para>
-</para>
-       
-       <figure id="architecture_godiet">
-          <title>VISHNU deployment with GoDiet</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/png/godiet_deployment.png"
-                  align="center" scale="85"/>
             </imageobject>
           </mediaobject>
         </figure>
