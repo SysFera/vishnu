@@ -59,7 +59,18 @@ MachineServer::add(int vishnuId) {
     if (userServer.isAdmin()) {
 
       vishnuid = convertToString(vishnuId);
-      machineCpt = convertToInt(getAttrVishnu("machinecpt", vishnuid));
+
+// Start transaction
+//      int ret = mdatabaseVishnu->startTransaction();
+//      machineCpt = convertToInt(getAttrVishnu("machinecpt", vishnuid, ret));
+//      incrementCpt("machinecpt", machineCpt, ret);
+//      machineCpt = convertToInt(getAttrVishnu("machinecpt", vishnuid, ret));
+//      mdatabaseVishnu->endTransaction(ret);
+      //To get the counter
+      int counter;
+      counter = ninja("machinecpt", vishnuid);
+
+      machineCpt = counter;
 
       //To get the formatidmachine
       formatidmachine = getAttrVishnu("formatidmachine", vishnuid);
@@ -74,7 +85,6 @@ MachineServer::add(int vishnuId) {
 
         //if the machine id is generated
         if (idMachineGenerated.size() != 0) {
-          incrementCpt("machinecpt", machineCpt);
           mmachine->setMachineId(idMachineGenerated);
 
           //if the machineId does not exist
@@ -275,10 +285,10 @@ MachineServer::getPublicKey() {
 }
 
 /**
-* \brief Function to get the machine 
-* \return The name of the machine 
+* \brief Function to get the machine
+* \return The name of the machine
 */
-std::string 
+std::string
 MachineServer::getMachineName() {
 
   std::string  machineName = getAttribut("where machineid='"+getData()->getMachineId()+"'", "name");
@@ -288,12 +298,12 @@ MachineServer::getMachineName() {
 
 /**
 * \brief Function to check the machineId
-* \return raises an exception 
+* \return raises an exception
 */
 void MachineServer::checkMachine() {
 
   if(getAttribut("where machineid='"+mmachine->getMachineId()+"'").size()==0){
-    throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, mmachine->getMachineId()+" does not exist among the defined" 
+    throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, mmachine->getMachineId()+" does not exist among the defined"
                                                                  " machines by VISHNU System");
   }
   if(getAttribut("where status=1 and  machineid='"+mmachine->getMachineId()+"'").size() == 0) {
