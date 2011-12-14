@@ -603,7 +603,7 @@
     </section>
   </chapter><!-- End WS -->
   <chapter>
-    <title>Déploiement de VISHNU</title>
+    <title>Déploiement de VISHNU </title>
     <section>
       <title>Lancement sur un même réseau</title>
       <para>Les modules peuvent être lancés manuellement. Le déploiement se fera en suivant la configuration montrée sur la figure 4.1 du document [ARCH]. Pour simplier les choses, on supposera que les divers éléments dans le carré "dedicated to VISHNU" vont être déployés sur la même machine que l'on va nommer <emphasis role="bold">préfrontale</emphasis>.</para>
@@ -750,7 +750,7 @@
       </orderedlist>
     </section>
     <section>
-      <title>Lancement sur plusieurs réseaux</title>
+      <title>Lancement sur plusieurs réseaux <emphasis role="bold">avec DIET au moins version 2.8</emphasis></title>
       <para>Un module VISHNU peut être lancé manuellement.
 	Pour le déploiement on se base sur le modèle de la figure 4.2 du document [ARCH] en supposant pour simplifier que sur un réseau tout est lancé sur la même machine et que les réseaux "Network C" et "Network D" sont confondus (pas de forwarder à mettre entre eux).</para>
       <orderedlist>
@@ -876,6 +876,180 @@
       </orderedlist>
     </section>
     <section>
+      <title>Lancement sur plusieurs réseaux <emphasis role="bold">avec DIET inférieur à la version 2.8</emphasis></title>
+      <para>Un module VISHNU peut être lancé manuellement.
+	Pour le déploiement on se base sur le modèle de la figure 4.2 du document [ARCH] en supposant pour simplifier que sur un réseau tout est lancé sur la même machine et que les réseaux "Network C" et "Network D" sont confondus (pas de forwarder à mettre entre eux).</para>
+      <orderedlist>
+	<listitem>
+	  <para> Avoir une base de données PostgreSQL accessible et initialisée (tables créées et premières données créées). Des scripts SQL sont fournis pour cela. Avoir la base PostGreSQL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base).</para>
+	</listitem>
+	<listitem>
+	  <para> Lancer le service de nommage CORBA sur les différents réseaux. La commande est <emphasis role="bold">omniNames -start</emphasis> pour la première fois, sinon <emphasis role="bold">omniNames</emphasis> suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
+	</listitem>
+	<listitem>
+	  <para> Lancer un démon forwarder sur le reseau 2 (Network B) :  </para>
+	  <para><emphasis role="bold">dietForwarder --name forwarder2 --net-config forwarder2.cfg</emphasis>
+	    <itemizedlist>
+	      <listitem><para>
+		  forwarder2 : nom qui identifie le démon forwarder sur ce réseau
+	      </para></listitem>
+              <listitem><para>
+                  forwarder2.cfg : fichier de configuration (voir le paragraphe 6.8 pour un exemple de configuration) contenant des règles appliquées aux
+                  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de le paragraphe 6.8, les
+                  règles utilisées sont :
+                  <itemizedlist>
+                    <listitem>
+                      <para> une règle 'accept' correspondant au filtre sur la source des connections acceptées. '.*' signifie les connections provenant
+                        de n'importe quelle adresse IP.</para>
+                    </listitem>
+                    <listitem>
+                      <para> deux règles 'reject' contenant les adresses destination à rejeter. Il est nécessaire que l'adresse IP du serveur sur lequel
+                        tourne le démon forwarder soit indiquée dans une règle de ce type. Dans l'exemple le serveur ayant deux adresses IP on a
+                        indiqué une règle pour chaque adresse.</para>
+                    </listitem>
+                  </itemizedlist>
+                </para>
+              </listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para> Lancer un démon forwarder sur le reseau 1 (network C) : </para>
+	  <para><emphasis role="bold">dietForwarder -C --peer-name forwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name forwarder
+	    --remote-host localhost --net-config forwarder1.cfg
+	    --ssh-login login</emphasis>
+	  </para>
+	  <para>
+	    <itemizedlist>
+              <listitem><para>
+                  -C : indique que c'est ce démon forwarder qui crée le tunnel SSH.
+              </para></listitem>
+	      <listitem><para>
+	          --net-config : le fichier de configuration, ici forwarder1.cfg. Ce fichier doit contenir des règles 'reject' et 'accept' également,
+                  sur le même modèle que forwarder2.cfg.
+              </para></listitem>
+              <listitem><para>
+	          --peer-name : le nom donné au forwarder de l'autre coté, ici forwarder2.
+	      </para></listitem>
+	      <listitem><para>
+		  --ssh-host : la nom DNS de la machine distante pour connecter le tunnel SSH.
+	      </para></listitem>
+	      <listitem><para>
+		  --remote-port : le port à utiliser pour le tunnel ssh, ici 50005.
+	      </para></listitem>
+	      <listitem><para>
+		  --name : le nom identifiant ce démon forwarder, c'est-à-dire 'forwarder1'.
+	      </para></listitem>
+	      <listitem><para>
+		  --remote-host : le nom de l'adresse loopback, c'est-à-dire 'localhost'.
+	      </para></listitem>
+	      <listitem><para>
+		  --ssh-login : le login de connection sur la machine distante.
+	      </para></listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>Si la clé ssh est accessible (le chemin par défaut est le répertoire $HOME/.ssh/) et que la clé est protégée par une passphrase,
+	    la passphrase est demandée et la connexion ssh s'établit.</para>
+	</listitem>
+	<listitem>
+	  <para> Lancer un démon forwarder pour le log service sur le reseau 2 (network B) :  </para>
+	  <para><emphasis role="bold">logForwarder --name logforwarder2 --net-config logforwarder2</emphasis>
+	    <itemizedlist>
+	      <listitem><para>
+		  logforwarder2 : nom qui identifie le démon forwarder sur ce réseau
+	      </para></listitem>
+              <listitem><para>
+                  logforwarder2.cfg : fichier de configuration (voir le paragraphe 6.8 pour un exemple de fichier de configuration) contenant des règles appliquées aux
+                  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de le paragraphe 6.8, les
+                  règles utilisées sont :
+                  <itemizedlist>
+                    <listitem>
+                      <para> une règle 'accept' correspondant au filtre sur la source des connections acceptées. '.*' signifie les connections provenant
+                        de n'importe quelle adresse IP.</para>
+                    </listitem>
+                    <listitem>
+                      <para> deux règles 'reject' contenant les adresses destination à rejeter. Il est nécessaire que l'adresse IP du serveur sur lequel
+                        tourne le démon forwarder soit indiquée dans une règle de ce type. Dans l'exemple le serveur ayant deux adresses IP on a
+                        indiqué une règle pour chaque adresse.</para>
+                    </listitem>
+                  </itemizedlist>
+                </para>
+              </listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para> Lancer un démon log forwarder sur le reseau 1 (network C) : </para>
+	  <para><emphasis role="bold">logForwarder -C --peer-name logforwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name logforwarder
+	    --remote-host localhost --net-config logforwarder1.cfg
+	    --ssh-login login</emphasis>
+	  </para>
+	  <para>
+	    <itemizedlist>
+              <listitem><para>
+                  -C : indique que c'est ce démon forwarder qui crée le tunnel SSH.
+              </para></listitem>
+	      <listitem><para>
+		  --peer-name : le nom donné au forwarder de l'autre coté, ici forwarder2.
+	      </para></listitem>
+              <listitem><para>
+                  --net-config : le fichier de configuration, ici forwarder1.cfg. Ce fichier doit contenir des règles 'reject' et 'accept' également,
+                  sur le même modèle que forwarder2.cfg.
+              </para></listitem>
+	      <listitem><para>
+		  --ssh-host : la nom DNS de la machine distante pour connecter le tunnel SSH.
+	      </para></listitem>
+	      <listitem><para>
+		  --remote-port : le port à utiliser pour le tunnel ssh, ici 50005.
+	      </para></listitem>
+	      <listitem><para>
+		  --name : le nom identifiant ce démon forwarder, c'est-à-dire 'forwarder1'.
+	      </para></listitem>
+	      <listitem><para>
+		  --remote-host : le nom de l'adresse loopback, c'est-à-dire 'localhost'.
+	      </para></listitem>
+	      <listitem><para>
+		  --ssh-login : le login de connection sur la machine distante.
+	      </para></listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>Si la clé ssh est accessible (le chemin par défaut est le répertoire $HOME/.ssh/) et que la clé est protégée par une passphrase,
+	    la passphrase est demandée et la connexion ssh s'établit.</para>
+	</listitem>
+	<listitem>
+	  <para> Lancer le log service de DIET sur la machine du network B. La commande est <emphasis role="bold">LogCentral --config config.cfg</emphasis> avec config.cfg un fichier de configuration pour le log central. </para>
+	</listitem>
+	<listitem>
+	  <para> Lancer le MA avec son fichier de configuration sur le réseau network B : <emphasis role="bold">dietAgent config.cf</emphasis>. Voir le paragraphe 6.3 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
+	    <itemizedlist>
+	      <listitem>
+		<para> 'traceLevel = 0' : Le niveau de verbosité du master agent, cette valeur peut être entre 0 et 10 compris. </para>
+	      </listitem>
+	      <listitem>
+		<para> 'agentType = DIET_MASTER_AGENT' : Le type de l'agent, l'autre type disponible est DIET_LOCAL_AGENT mais dans notre cas il faut DIET_MASTER_AGENT.</para>
+	      </listitem>
+	      <listitem>
+		<para> 'name = MA0' : Le nom que l'on veut donner à l'agent, dans notre exemple on va l'appeller MA0.</para>
+	      </listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>Lancer le SeD, par exemple un UMS sur le réseau network C. Un exemple de commande de lancement est : <emphasis role="bold">umssed ~/ums_sed.cfg</emphasis>. Se référer au chapitre de déploiement pour le contenu du fichier, c'est le même à utiliser que dans un déploiement sur un seul réseau.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Le module, ici UMS, de VISHNU est prêt à être utilisé. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen de clients UMS. Si le client est encore sur un autre réseau il faudra mettre la paire de dietForwarder entre le réseau client et l'un des réseaux connecté à la hierarchie déployée.
+	  </para>
+	</listitem>
+      </orderedlist>
+    </section>
+    <section>
       <title>Exemple de fichier de configuration d'un MA</title>
       <programlisting>
 	traceLevel = 0
@@ -942,6 +1116,16 @@
 	vishnuMachineId=machine_1
 	# Configuration propres à FMS
 	intervalMonitor = 1
+      </programlisting>
+    </section>
+    <section>
+      <title>Exemple de fichier d'un forwarder </title>
+      <programlisting>
+        # accept everything from everyone
+        accept:.*
+        
+        # reject its own ip
+        reject:192\.168\.1\.6
       </programlisting>
     </section>
     <section>
