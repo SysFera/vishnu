@@ -129,7 +129,7 @@ same conditions as regards security.</para>
           <varlistentry>
             <term><option>-N <replaceable>nbNodesAndCpuPerNode</replaceable></option></term>
             <listitem>
-              <para>The number of nodes and processors per node. For exemple if you want to use 4 nodes and to use 3 cpus of each node, you must sepecify thes numbers by &quot;4:3&quot;.</para>
+              <para>The number of nodes and processors per node. For example if you want to use 4 nodes with 3 cpus for each node, you must specify these numbers by &quot;4:3&quot;.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
