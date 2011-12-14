@@ -31,7 +31,7 @@
 vishnu_move_file \- executes a synchronous move of file\&.
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_move_file\fR\ 'u
-\fBvishnu_move_file\fR [\fB\-h\fR] [\fB\-r\fR] [\fB\-c\ \fR\fB\fItrCommand\fR\fR] \fIsrc\fR \fIdest\fR
+\fBvishnu_move_file\fR [\fB\-h\fR] [\fB\-r\fR] [\fB\-t\ \fR\fB\fItrCommand\fR\fR] \fIsrc\fR \fIdest\fR
 .SH "DESCRIPTION"
 .PP
 Move a file or directory from the location given by the src parameter to the location given by the dest parameter\&. The src parameter must be provided in the form \*(Aqmachine_id:path\*(Aq (the machine_id values can be obtained using the vishnu_list_machine command) or \*(Aqpath\*(Aq only if the file is on the local system\&. The dest parameter must be provided in a similar way\&. Note that one of the two locations at least must be a remote location, i\&.e\&. a local move cannot be handled by this command\&.
@@ -47,7 +47,7 @@ help about the command\&.
 It specifies when the copy is recursive (case of directory) or not\&.\&.
 .RE
 .PP
-\fB\-c \fR\fB\fItrCommand\fR\fR
+\fB\-t \fR\fB\fItrCommand\fR\fR
 .RS 4
 the command to use to perform file transfer\&.\&. The value must be an integer\&. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDEFINED)\&.
 .RE
@@ -55,7 +55,7 @@ the command to use to perform file transfer\&.\&. The value must be an integer\&
 .PP
 \fBVISHNU_TRANSFER_CMD\fR
 .RS 4
-It specifies the command to use for all file transfers by default\&. It takes its values in the set {SCP,RSYNC}\&.\&. Overridden by the \-c option\&.
+It specifies the command to use for all file transfers by default\&. It takes its values in the set {SCP,RSYNC}\&.\&. Overridden by the \-t option\&.
 .RE
 .PP
 \fBVISHNU_CONFIG_FILE\fR

@@ -97,7 +97,7 @@
         defaultValueLiteral="2">
       <eAnnotations source="Description">
         <details key="content" value="the command to use to perform file transfer."/>
-        <details key="shortOption" value="c"/>
+        <details key="shortOption" value="t"/>
         <details key="userOption" value="VISHNU_TRANSFER_CMD"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -128,7 +128,7 @@
         defaultValueLiteral="2">
       <eAnnotations source="Description">
         <details key="content" value="the command to use to perform file transfer."/>
-        <details key="shortOption" value="c"/>
+        <details key="shortOption" value="t"/>
         <details key="userOption" value="VISHNU_TRANSFER_CMD"/>
       </eAnnotations>
     </eStructuralFeatures>
