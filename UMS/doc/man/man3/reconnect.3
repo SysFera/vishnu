@@ -31,7 +31,7 @@
 reconnect \- reconnects to a session that is still active
 .SH "SYNOPSIS"
 .HP \w'int\ vishnu::reconnect('u
-.BI "int vishnu::reconnect(const\ string&\ " "userId\ =\ Error\ (Not\ Definide)" ", const\ string&\ " "password\ =\ Error\ (Not\ Definide)" ", const\ string&\ " "sessionId" ", Session&\ " "session" ");"
+.BI "int vishnu::reconnect(const\ string&\ " "userId" ", const\ string&\ " "password" ", const\ string&\ " "sessionId" ", Session&\ " "session" ");"
 .SH "DESCRIPTION"
 .PP
 This command allows you to resume a session that has been opened previously and that has not yet been closed\&. You can disconnect from a session without closing it (for example if there are running commands in that session) by setting the session\*(Aqs close policy (at connection time) to CLOSE_ON_TIMEOUT\&. As sessions are linked to a specific client system, you cannot reconnect to a session that was opened on another client system\&.
@@ -44,7 +44,7 @@ Input argument\&. UserId represents the VISHNU user identifier\&.
 .PP
 \fIpassword\fR
 .RS 4
-Input argument\&. Password represents the password of the user\&. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file \&.netrc \&.
+Input argument\&. Password represents the password of the user\&. If userId and password are empty, vishnu connet will read them in the user file \&.netrc located in the home of the user\&.\&.
 .RE
 .PP
 \fIsessionId\fR

@@ -91,7 +91,9 @@
     <date>14/12/2011</date>
     <authorinitials>SysFera</authorinitials>
     <revdescription>
-      <para>Add a section dedicated of the VISHNU Job Output Environment Variables. Add  of other syntaxes for VISHNU generic script. Update of vishnu submit job reference, vishnu connect and reconnect reference, vishnu CreateDir reference. Add of vishnu_get_current_session_id a new command line reference. </para></revdescription>
+      <para>Add a section dedicated of the VISHNU Job Output Environment Variables. Add  of other syntaxes for VISHNU generic script. Update of vishnu submit job reference, vishnu connect and reconnect reference, vishnu CreateDir reference. Add of vishnu_get_current_session_id a new command line reference. 
+        Add the use of the .netrc file of the connection and the reconnection.
+   </para></revdescription>
   </revision> 
     </revhistory>
 
@@ -321,14 +323,20 @@
 	  <title> Connection to VISHNU </title>
 	  <para>
 	    To connect, use the <emphasis role="bold">vishnu_connect</emphasis> command in the shell terminal (all bourne shell are supported). 
-	    The password received by email is temporary and must be changed at the first connection by using the <emphasis role = "bold"> vishnu_change_password </emphasis> command.
-	  </para>
-	</section>
+      The password received by email is temporary and must be changed at the first connection by using the <emphasis role = "bold"> vishnu_change_password </emphasis> command. It is also possible to make connection by using the .netrc file. Indeed when the userId and the password are empty, with <emphasis role = "bold"> vishnu_connect </emphasis> without parameters, the system automatically gets the login and the password from the .netrc file. A vishnu account on the .netrc file can be defined as follows: 
+    
+      </para>
+     
+      <para> <emphasis role="bold">machine</emphasis> vishnu </para> 
+      <para> <emphasis role="bold">login</emphasis> toto </para>
+      <para> <emphasis role="bold">password</emphasis> pwd </para> 
+      <para>where toto and pwd are respectively the userId and the password of a user registered in vishnu and the machine must be named <emphasis role = "bold">vishnu</emphasis>.</para>
+    </section>
 	
 	<section>
 	  <title> Reconnection to VISHNU </title>
 	  <para>
-	    Reconnection is done using the <emphasis role="bold">vishnu_reconnect</emphasis> command. This command allows using an existing session that was previously opened but not closed. It makes it possible to simultaneously use the same session in different shell terminals. A session is what authentifies a user once he has connected. The user does not need password or username when authenticated to use vishnu. Moreover, the session contains the commands made by a user, so he can retrieve the sequence of commands made in a previous work session.
+	    Reconnection is done using the <emphasis role="bold">vishnu_reconnect</emphasis> command. This command allows using an existing session that was previously opened but not closed. It makes it possible to simultaneously use the same session in different shell terminals. A session is what authentifies a user once he has connected. The user does not need password or username when authenticated to use vishnu. Moreover, the session contains the commands made by a user, so he can retrieve the sequence of commands made in a previous work session. As previously defined for the connection, the .netrc file can be used for reconnection.
 	  </para>
 	</section>
 	

@@ -113,6 +113,23 @@
             Added new error code for addLocalAccount and updateLocalAccount.
           </para></revdescription>
       </revision>
+      <revision>
+        <revnumber>10</revnumber>
+        <date>15/12/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+          
+          
+        <para>Updates of TMS:
+            Extended vishnu_submit_job options.
+          </para><para>Updates of FMS:
+            Added recursive option to vishnu_create_dir command.
+          </para><para>Updates of UMS:
+            Added vishnu_current_session_id command.
+            Added -w option to connect and reconnect command.
+          </para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -300,11 +317,11 @@
         <para>The vishnu_connect command opens a session</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_connect</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
-              choice="opt"><option>-w <replaceable>password</replaceable></option></arg><arg
               choice="opt"><option>-p <replaceable>closePolicy</replaceable></option></arg><arg
               choice="opt"><option>-d <replaceable>sessionInactivityDelay</replaceable></option></arg><arg
-              choice="opt"><option>-s <replaceable>substituteUserId</replaceable></option></arg></cmdsynopsis>
+              choice="opt"><option>-s <replaceable>substituteUserId</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-w <replaceable>password</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -329,20 +346,6 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>userId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>u</para></entry>
-                <entry><para>userId represents the VISHNU user identifier</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>password</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>w</para></entry>
-                <entry><para>password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc </para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
                 <entry><para>closePolicy</para></entry>
                 <entry><para><link linkend="SessionCloseType">SessionCloseType</link></para></entry>
                 <entry><para>p</para></entry>
@@ -361,6 +364,20 @@
                 <entry><para>string</para></entry>
                 <entry><para>s</para></entry>
                 <entry><para>is an admin option which allows an admin to open a session as if she was another user identified by her userId</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>u</para></entry>
+                <entry><para>userId represents the VISHNU user identifier</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>password</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>w</para></entry>
+                <entry><para>password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc located in the home of the user. </para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -439,6 +456,13 @@
             </thead>
             <tbody>
               <row>
+                <entry><para>sessionId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>sessionId is the identifier of the session defined in the database</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>u</para></entry>
@@ -449,15 +473,8 @@
                 <entry><para>password</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>w</para></entry>
-                <entry><para>password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc </para></entry>
+                <entry><para>password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc located in the home of the user. </para></entry>
                 <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>sessionId</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>sessionId is the identifier of the session defined in the database</para></entry>
-                <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -3760,7 +3777,7 @@
                 <entry><para>isRecursive</para></entry>
                 <entry><para>boolean</para></entry>
                 <entry><para>p</para></entry>
-                <entry><para>It specifies when the create command is recursive (create parent directory also) or not.</para></entry>
+                <entry><para>It specifies when the create command is recursive (create parent directory also) or not</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -3812,7 +3829,7 @@
                 <entry><para>isRecursive</para></entry>
                 <entry><para>boolean</para></entry>
                 <entry><para>r</para></entry>
-                <entry><para>It specifies when the remove command is recursive (case of directory) or not.</para></entry>
+                <entry><para>It specifies when the remove command is recursive (case of directory) or not</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>

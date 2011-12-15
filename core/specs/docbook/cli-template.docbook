@@ -96,7 +96,26 @@
             Added new error code for addLocalAccount and updateLocalAccount.
           </para>
         </revdescription>
-       </revision>
+      </revision>
+
+      <revision>
+        <revnumber>10</revnumber>
+        <date>15/12/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Updates of TMS:
+            Extended vishnu_submit_job options.
+          </para>
+          <para>Updates of FMS:
+            Added recursive option to vishnu_create_dir command.
+          </para>
+          <para>Updates of UMS:
+            Added vishnu_current_session_id command.
+            Added -w option to connect and reconnect command.
+          </para>
+        </revdescription>
+      </revision>
+
       </revhistory>
     </info>
   <chapter>
