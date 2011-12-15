@@ -5812,7 +5812,7 @@
             <row>
               <entry><para>nbNodesAndCpuPerNode</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>The number of nodes and processors per node. For exemple if you want to use 4 nodes and to use 3 cpus of each node, you must sepecify thes numbers by &quot;4:3&quot;</para></entry>
+              <entry><para>The number of nodes and processors per node. For example if you want to use 4 nodes with 3 cpus for each node, you must specify these numbers by &quot;4:3&quot;</para></entry>
             </row>
             <row>
               <entry><para>outputPath</para></entry>
@@ -9351,7 +9351,7 @@
               </row>
               <row>
                 <entry><para>dirContent</para></entry>
-                <entry><para><link linkend="FileStatList">FileStatList</link></para></entry>
+                <entry><para><link linkend="DirEntryList">DirEntryList</link></para></entry>
                 <entry><para>The content of the directory.</para></entry>
                 <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
@@ -9443,7 +9443,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>FileStatList&amp; <parameter>dirContent</parameter></paramdef><paramdef>const LsDirOptions&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>DirEntryList&amp; <parameter>dirContent</parameter></paramdef><paramdef>const LsDirOptions&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::copyFile</title>
@@ -10454,6 +10454,88 @@
           </tbody>
         </tgroup>
       </informaltable>
+      <para xml:id="DirEntry"><emphasis role="bold">Class FMS::DirEntry Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>path</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The path of the remote file</para></entry>
+            </row>
+            <row>
+              <entry><para>owner</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The  remote file owner's name</para></entry>
+            </row>
+            <row>
+              <entry><para>group</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The group name of the owner</para></entry>
+            </row>
+            <row>
+              <entry><para>perms</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>The protection of the remote  file</para></entry>
+            </row>
+            <row>
+              <entry><para>size</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>The size of the remote  file in bytes</para></entry>
+            </row>
+            <row>
+              <entry><para>creationTime</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The file creation time  (in remote host time)</para></entry>
+            </row>
+            <row>
+              <entry><para>type</para></entry>
+              <entry><para><link linkend="FileType">FileType</link></para></entry>
+              <entry><para>The file type</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="DirEntryList"><emphasis role="bold">Class FMS::DirEntryList Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>dirEntries</para></entry>
+              <entry><para>List of <link linkend="DirEntry">DirEntry</link></para></entry>
+              <entry><para>directory content.</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
       <para xml:id="FileStat"><emphasis role="bold">Class FMS::FileStat Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
@@ -10526,32 +10608,6 @@
               <entry><para>type</para></entry>
               <entry><para><link linkend="FileType">FileType</link></para></entry>
               <entry><para>The file type</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="FileStatList"><emphasis role="bold">Class FMS::FileStatList Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>fileStats</para></entry>
-              <entry><para>List of <link linkend="FileStat">FileStat</link></para></entry>
-              <entry><para>list of inodes.</para></entry>
             </row>
           </tbody>
         </tgroup>

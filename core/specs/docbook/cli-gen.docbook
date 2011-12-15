@@ -1990,7 +1990,7 @@
                 <entry><para>nbNodesAndCpuPerNode</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>N</para></entry>
-                <entry><para>The number of nodes and processors per node</para></entry>
+                <entry><para>The number of nodes and processors per node. For example if you want to use 4 nodes with 3 cpus for each node, you must specify these numbers by &quot;4:3&quot;</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -4189,7 +4189,7 @@
         <para>The vishnu_copy_file command executes a synchronous copy of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_copy_file</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-r</option></arg><arg choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
+              choice="opt"><option>-r</option></arg><arg choice="opt"><option>-t <replaceable>trCommand</replaceable></option></arg><arg
               choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -4238,7 +4238,7 @@
               <row>
                 <entry><para>trCommand</para></entry>
                 <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
-                <entry><para>c</para></entry>
+                <entry><para>t</para></entry>
                 <entry><para>the command to use to perform file transfer.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
@@ -4291,7 +4291,7 @@
         <para>The vishnu_copy_async_file command executes an asynchronous copy of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_copy_async_file</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-r</option></arg><arg choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
+              choice="opt"><option>-r</option></arg><arg choice="opt"><option>-t <replaceable>trCommand</replaceable></option></arg><arg
               choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -4340,7 +4340,7 @@
               <row>
                 <entry><para>trCommand</para></entry>
                 <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
-                <entry><para>c</para></entry>
+                <entry><para>t</para></entry>
                 <entry><para>the command to use to perform file transfer.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
@@ -4393,7 +4393,7 @@
         <para>The vishnu_move_file command executes a synchronous move of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_move_file</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-r</option></arg><arg choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
+              choice="opt"><option>-r</option></arg><arg choice="opt"><option>-t <replaceable>trCommand</replaceable></option></arg><arg
               choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -4442,7 +4442,7 @@
               <row>
                 <entry><para>trCommand</para></entry>
                 <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
-                <entry><para>c</para></entry>
+                <entry><para>t</para></entry>
                 <entry><para>the command to use to perform file transfer.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
@@ -4495,7 +4495,7 @@
         <para>The vishnu_move_async_file command executes an asynchronous move of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_move_async_file</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-r</option></arg><arg choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
+              choice="opt"><option>-r</option></arg><arg choice="opt"><option>-t <replaceable>trCommand</replaceable></option></arg><arg
               choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -4544,7 +4544,7 @@
               <row>
                 <entry><para>trCommand</para></entry>
                 <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
-                <entry><para>c</para></entry>
+                <entry><para>t</para></entry>
                 <entry><para>the command to use to perform file transfer.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
