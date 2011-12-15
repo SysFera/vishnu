@@ -129,7 +129,16 @@
         <date>23/08/2011</date>
         <authorinitials>K.COULOMB</authorinitials>
         <revdescription>
-        <para>Add link to websites on how to install postgresql/mysql databases. Remove useless text about upgrading mysql tables (because implemented when database already fixed). Add reference to VISHNU_API</para></revdescription>
+        <para>Ajout d'un lien sur des sites expliquant comment installer une base de données postgresql/mysql. Suppression des informations de mise à jour de la base (maintenant le script de création contient tout). Ajout d'une référence vers 'VISHNU_API'</para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>13</revnumber>
+        <date>14/12/2011</date>
+        <authorinitials>K.COULOMB</authorinitials>
+        <revdescription>
+        <para>
+          Mise à jour pour les nouveaux forwarder de DIET.
+      </para></revdescription>
       </revision>
     </revhistory>
   </info>
@@ -641,12 +650,11 @@
     </section>
   </chapter>
   <chapter>
-    <title>Déploiement de VISHNU</title>
+    <title>Déploiement de VISHNU </title>
     <section>
       <title>Lancement sur un même réseau</title>
-      <para>Les modules peuvent être lancés soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration. Le déploiement se fera en suivant la configuration montrée sur la figure 4.1 du document [ARCH]. Pour simplier les choses, on supposera que les divers éléments dans le carré &quot;dedicated to VISHNU&quot; vont être déployés sur la même machine que l'on va nommer <emphasis
+      <para>Les modules peuvent être lancés manuellement. Le déploiement se fera en suivant la configuration montrée sur la figure 4.1 du document [ARCH]. Pour simplier les choses, on supposera que les divers éléments dans le carré &quot;dedicated to VISHNU&quot; vont être déployés sur la même machine que l'on va nommer <emphasis
             role="bold">préfrontale</emphasis>.</para>
-      <para><emphasis role="bold">NOTE: l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
       <para><emphasis role="bold">NOTE: Il est préférable d'éviter de lancer le même SeD sur la même machine.</emphasis></para>
       <para><emphasis role="bold">NOTE: Il existe un bug connu sur debian (entre autre) avec boost file system, utilisé par VISHNU. Le rapport de bug est ici et le bug est actuellement ouvert: https://svn.boost.org/trac/boost/ticket/4688. Si lors du lancement d'un SeD, le message d'erreur suivant apparait : std::runtime_error: locale::facet::_S_create_c_locale name not valid, faire un &quot;export LANG=C&quot; et cela devrait régler le problème.</emphasis></para>
       <para><emphasis role="bold">NOTE: L'utilisateur VISHNU 'root' doit avoir un compte local sur chaque machine ou il y a un serveur IMS. Le compte UNIX correspondant sera utilisé pour le redémarrage automatique des SeD.</emphasis></para>
@@ -796,10 +804,9 @@
       </orderedlist>
     </section>
     <section>
-      <title>Lancement sur plusieurs réseaux</title>
-      <para>Un module VISHNU peut être lancé soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration.
+      <title>Lancement sur plusieurs réseaux <emphasis role="bold">avec DIET au moins version 2.8</emphasis></title>
+      <para>Un module VISHNU peut être lancé manuellement.
 	Pour le déploiement on se base sur le modèle de la figure 4.2 du document [ARCH] en supposant pour simplifier que sur un réseau tout est lancé sur la même machine et que les réseaux &quot;Network C&quot; et &quot;Network D&quot; sont confondus (pas de forwarder à mettre entre eux).</para>
-      <para><emphasis role="bold">NOTE : l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
       <orderedlist>
         <listitem>
           <para> Avoir une base de données PostgreSQL accessible et initialisée (tables créées et premières données créées). Des scripts SQL sont fournis pour cela. Avoir la base PostGreSQL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base).</para>
@@ -811,48 +818,24 @@
         </listitem>
         <listitem>
           <para> Lancer un démon forwarder sur le reseau 2 (Network B) :  </para>
-          <para><emphasis role="bold">dietForwarder --name forwarder2 --net-config forwarder2.cfg</emphasis>
+          <para><emphasis role="bold">dietForwarder --name forwarder2</emphasis>
 	    <itemizedlist>
               <listitem>
                 <para>
 		  forwarder2 : nom qui identifie le démon forwarder sur ce réseau
 	      </para>
               </listitem>
-              <listitem>
-                <para>
-		  forwarder2.cfg : fichier de configuration (voir le paragraphe 6.8 pour un exemple de configuration) contenant des règles appliquées aux
-		  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de le paragraphe 6.8, les
-		  règles utilisées sont :
-		  <itemizedlist>
-                    <listitem>
-                      <para> une règle 'accept' correspondant au filtre sur la source des connections acceptées. '.*' signifie les connections provenant
-			de n'importe quelle adresse IP.</para>
-                    </listitem>
-                    <listitem>
-                      <para> deux règles 'reject' contenant les adresses destination à rejeter. Il est nécessaire que l'adresse IP du serveur sur lequel
-			tourne le démon forwarder soit indiquée dans une règle de ce type. Dans l'exemple le serveur ayant deux adresses IP on a
-			indiqué une règle pour chaque adresse.</para>
-                    </listitem>
-                  </itemizedlist>
-		</para>
-              </listitem>
             </itemizedlist>
 	  </para>
         </listitem>
         <listitem>
           <para> Lancer un démon forwarder sur le reseau 1 (network C) : </para>
-          <para><emphasis role="bold">dietForwarder -C--peer-name forwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name forwarder
-	    --net-config forwarder1.cfg
+          <para><emphasis role="bold">dietForwarder --peer-name forwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name forwarder
 	    --remote-host localhost
 	    --ssh-login login</emphasis>
 	  </para>
           <para>
 	    <itemizedlist>
-              <listitem>
-                <para>
-		  -C : indique que c'est ce démon forwarder qui crée le tunnel SSH.
-	      </para>
-              </listitem>
               <listitem>
                 <para>
 		  --peer-name : le nom donné au forwarder de l'autre coté, ici forwarder2.
@@ -871,12 +854,6 @@
               <listitem>
                 <para>
 		  --name : le nom identifiant ce démon forwarder, c'est-à-dire 'forwarder1'.
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --net-config : le fichier de configuration, ici forwarder1.cfg. Ce fichier doit contenir des règles 'reject' et 'accept' également,
-		  sur le même modèle que forwarder2.cfg.
 	      </para>
               </listitem>
               <listitem>
@@ -898,48 +875,24 @@
         </listitem>
         <listitem>
           <para> Lancer un démon forwarder pour le log service sur le reseau 2 (network B) :  </para>
-          <para><emphasis role="bold">logForwarder --name logforwarder2 --net-config logforwarder2.cfg</emphasis>
+          <para><emphasis role="bold">logForwarder --name logforwarder2</emphasis>
 	    <itemizedlist>
               <listitem>
                 <para>
 		  logforwarder2 : nom qui identifie le démon forwarder sur ce réseau
 	      </para>
               </listitem>
-              <listitem>
-                <para>
-		  logforwarder2.cfg : fichier de configuration (voir le paragraphe 6.8 pour un exemple de fichier de configuration) contenant des règles appliquées aux
-		  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de le paragraphe 6.8, les
-		  règles utilisées sont :
-		  <itemizedlist>
-                    <listitem>
-                      <para> une règle 'accept' correspondant au filtre sur la source des connections acceptées. '.*' signifie les connections provenant
-			de n'importe quelle adresse IP.</para>
-                    </listitem>
-                    <listitem>
-                      <para> deux règles 'reject' contenant les adresses destination à rejeter. Il est nécessaire que l'adresse IP du serveur sur lequel
-			tourne le démon forwarder soit indiquée dans une règle de ce type. Dans l'exemple le serveur ayant deux adresses IP on a
-			indiqué une règle pour chaque adresse.</para>
-                    </listitem>
-                  </itemizedlist>
-		</para>
-              </listitem>
             </itemizedlist>
 	  </para>
         </listitem>
         <listitem>
           <para> Lancer un démon log forwarder sur le reseau 1 (network C) : </para>
-          <para><emphasis role="bold">logForwarder -C--peer-name logforwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name logforwarder
-	    --net-config logforwarder1.cfg
+          <para><emphasis role="bold">logForwarder --peer-name logforwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name logforwarder
 	    --remote-host localhost
 	    --ssh-login login</emphasis>
 	  </para>
           <para>
 	    <itemizedlist>
-              <listitem>
-                <para>
-		  -C : indique que c'est ce démon forwarder qui crée le tunnel SSH.
-	      </para>
-              </listitem>
               <listitem>
                 <para>
 		  --peer-name : le nom donné au forwarder de l'autre coté, ici forwarder2.
@@ -962,8 +915,219 @@
               </listitem>
               <listitem>
                 <para>
-		  --net-config : le fichier de configuration, ici forwarder1.cfg. Ce fichier doit contenir des règles 'reject' et 'accept' également,
-		  sur le même modèle que forwarder2.cfg.
+		  --remote-host : le nom de l'adresse loopback, c'est-à-dire 'localhost'.
+	      </para>
+              </listitem>
+              <listitem>
+                <para>
+		  --ssh-login : le login de connection sur la machine distante.
+	      </para>
+              </listitem>
+            </itemizedlist>
+	  </para>
+        </listitem>
+        <listitem>
+          <para>Si la clé ssh est accessible (le chemin par défaut est le répertoire $HOME/.ssh/) et que la clé est protégée par une passphrase,
+	    la passphrase est demandée et la connexion ssh s'établit.</para>
+        </listitem>
+        <listitem>
+          <para> Lancer le log service de DIET sur la machine du network B. La commande est <emphasis
+                role="bold">LogCentral --config config.cfg</emphasis> avec config.cfg un fichier de configuration pour le log central. </para>
+        </listitem>
+        <listitem>
+          <para> Lancer le MA avec son fichier de configuration sur le réseau network B : <emphasis
+                role="bold">dietAgent config.cf</emphasis>. Voir le paragraphe 6.3 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
+	    <itemizedlist>
+              <listitem>
+                <para> 'traceLevel = 0' : Le niveau de verbosité du master agent, cette valeur peut être entre 0 et 10 compris. </para>
+              </listitem>
+              <listitem>
+                <para> 'agentType = DIET_MASTER_AGENT' : Le type de l'agent, l'autre type disponible est DIET_LOCAL_AGENT mais dans notre cas il faut DIET_MASTER_AGENT.</para>
+              </listitem>
+              <listitem>
+                <para> 'name = MA0' : Le nom que l'on veut donner à l'agent, dans notre exemple on va l'appeller MA0.</para>
+              </listitem>
+            </itemizedlist>
+	  </para>
+        </listitem>
+        <listitem>
+          <para>Lancer le SeD, par exemple un UMS sur le réseau network C. Un exemple de commande de lancement est : <emphasis
+                role="bold">umssed ~/ums_sed.cfg</emphasis>. Se référer au chapitre de déploiement pour le contenu du fichier, c'est le même à utiliser que dans un déploiement sur un seul réseau.
+	  </para>
+        </listitem>
+        <listitem>
+          <para>
+	    Le module, ici UMS, de VISHNU est prêt à être utilisé. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen de clients UMS. Si le client est encore sur un autre réseau il faudra mettre la paire de dietForwarder entre le réseau client et l'un des réseaux connecté à la hierarchie déployée.
+	  </para>
+        </listitem>
+      </orderedlist>
+    </section>
+    <section>
+      <title>Lancement sur plusieurs réseaux <emphasis role="bold">avec DIET inférieur à la version 2.8</emphasis></title>
+      <para>Un module VISHNU peut être lancé manuellement.
+	Pour le déploiement on se base sur le modèle de la figure 4.2 du document [ARCH] en supposant pour simplifier que sur un réseau tout est lancé sur la même machine et que les réseaux &quot;Network C&quot; et &quot;Network D&quot; sont confondus (pas de forwarder à mettre entre eux).</para>
+      <orderedlist>
+        <listitem>
+          <para> Avoir une base de données PostgreSQL accessible et initialisée (tables créées et premières données créées). Des scripts SQL sont fournis pour cela. Avoir la base PostGreSQL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base).</para>
+        </listitem>
+        <listitem>
+          <para> Lancer le service de nommage CORBA sur les différents réseaux. La commande est <emphasis
+                role="bold">omniNames -start</emphasis> pour la première fois, sinon <emphasis
+                role="bold">omniNames</emphasis> suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
+        </listitem>
+        <listitem>
+          <para> Lancer un démon forwarder sur le reseau 2 (Network B) :  </para>
+          <para><emphasis role="bold">dietForwarder --name forwarder2 --net-config forwarder2.cfg</emphasis>
+	    <itemizedlist>
+              <listitem>
+                <para>
+		  forwarder2 : nom qui identifie le démon forwarder sur ce réseau
+	      </para>
+              </listitem>
+              <listitem>
+                <para>
+                  forwarder2.cfg : fichier de configuration (voir le paragraphe 6.8 pour un exemple de configuration) contenant des règles appliquées aux
+                  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de le paragraphe 6.8, les
+                  règles utilisées sont :
+                  <itemizedlist>
+                    <listitem>
+                      <para> une règle 'accept' correspondant au filtre sur la source des connections acceptées. '.*' signifie les connections provenant
+                        de n'importe quelle adresse IP.</para>
+                    </listitem>
+                    <listitem>
+                      <para> deux règles 'reject' contenant les adresses destination à rejeter. Il est nécessaire que l'adresse IP du serveur sur lequel
+                        tourne le démon forwarder soit indiquée dans une règle de ce type. Dans l'exemple le serveur ayant deux adresses IP on a
+                        indiqué une règle pour chaque adresse.</para>
+                    </listitem>
+                  </itemizedlist>
+                </para>
+              </listitem>
+            </itemizedlist>
+	  </para>
+        </listitem>
+        <listitem>
+          <para> Lancer un démon forwarder sur le reseau 1 (network C) : </para>
+          <para><emphasis role="bold">dietForwarder -C --peer-name forwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name forwarder
+	    --remote-host localhost --net-config forwarder1.cfg
+	    --ssh-login login</emphasis>
+	  </para>
+          <para>
+	    <itemizedlist>
+              <listitem>
+                <para>
+                  -C : indique que c'est ce démon forwarder qui crée le tunnel SSH.
+              </para>
+              </listitem>
+              <listitem>
+                <para>
+	          --net-config : le fichier de configuration, ici forwarder1.cfg. Ce fichier doit contenir des règles 'reject' et 'accept' également,
+                  sur le même modèle que forwarder2.cfg.
+              </para>
+              </listitem>
+              <listitem>
+                <para>
+	          --peer-name : le nom donné au forwarder de l'autre coté, ici forwarder2.
+	      </para>
+              </listitem>
+              <listitem>
+                <para>
+		  --ssh-host : la nom DNS de la machine distante pour connecter le tunnel SSH.
+	      </para>
+              </listitem>
+              <listitem>
+                <para>
+		  --remote-port : le port à utiliser pour le tunnel ssh, ici 50005.
+	      </para>
+              </listitem>
+              <listitem>
+                <para>
+		  --name : le nom identifiant ce démon forwarder, c'est-à-dire 'forwarder1'.
+	      </para>
+              </listitem>
+              <listitem>
+                <para>
+		  --remote-host : le nom de l'adresse loopback, c'est-à-dire 'localhost'.
+	      </para>
+              </listitem>
+              <listitem>
+                <para>
+		  --ssh-login : le login de connection sur la machine distante.
+	      </para>
+              </listitem>
+            </itemizedlist>
+	  </para>
+        </listitem>
+        <listitem>
+          <para>Si la clé ssh est accessible (le chemin par défaut est le répertoire $HOME/.ssh/) et que la clé est protégée par une passphrase,
+	    la passphrase est demandée et la connexion ssh s'établit.</para>
+        </listitem>
+        <listitem>
+          <para> Lancer un démon forwarder pour le log service sur le reseau 2 (network B) :  </para>
+          <para><emphasis role="bold">logForwarder --name logforwarder2 --net-config logforwarder2</emphasis>
+	    <itemizedlist>
+              <listitem>
+                <para>
+		  logforwarder2 : nom qui identifie le démon forwarder sur ce réseau
+	      </para>
+              </listitem>
+              <listitem>
+                <para>
+                  logforwarder2.cfg : fichier de configuration (voir le paragraphe 6.8 pour un exemple de fichier de configuration) contenant des règles appliquées aux
+                  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de le paragraphe 6.8, les
+                  règles utilisées sont :
+                  <itemizedlist>
+                    <listitem>
+                      <para> une règle 'accept' correspondant au filtre sur la source des connections acceptées. '.*' signifie les connections provenant
+                        de n'importe quelle adresse IP.</para>
+                    </listitem>
+                    <listitem>
+                      <para> deux règles 'reject' contenant les adresses destination à rejeter. Il est nécessaire que l'adresse IP du serveur sur lequel
+                        tourne le démon forwarder soit indiquée dans une règle de ce type. Dans l'exemple le serveur ayant deux adresses IP on a
+                        indiqué une règle pour chaque adresse.</para>
+                    </listitem>
+                  </itemizedlist>
+                </para>
+              </listitem>
+            </itemizedlist>
+	  </para>
+        </listitem>
+        <listitem>
+          <para> Lancer un démon log forwarder sur le reseau 1 (network C) : </para>
+          <para><emphasis role="bold">logForwarder -C --peer-name logforwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name logforwarder
+	    --remote-host localhost --net-config logforwarder1.cfg
+	    --ssh-login login</emphasis>
+	  </para>
+          <para>
+	    <itemizedlist>
+              <listitem>
+                <para>
+                  -C : indique que c'est ce démon forwarder qui crée le tunnel SSH.
+              </para>
+              </listitem>
+              <listitem>
+                <para>
+		  --peer-name : le nom donné au forwarder de l'autre coté, ici forwarder2.
+	      </para>
+              </listitem>
+              <listitem>
+                <para>
+                  --net-config : le fichier de configuration, ici forwarder1.cfg. Ce fichier doit contenir des règles 'reject' et 'accept' également,
+                  sur le même modèle que forwarder2.cfg.
+              </para>
+              </listitem>
+              <listitem>
+                <para>
+		  --ssh-host : la nom DNS de la machine distante pour connecter le tunnel SSH.
+	      </para>
+              </listitem>
+              <listitem>
+                <para>
+		  --remote-port : le port à utiliser pour le tunnel ssh, ici 50005.
+	      </para>
+              </listitem>
+              <listitem>
+                <para>
+		  --name : le nom identifiant ce démon forwarder, c'est-à-dire 'forwarder1'.
 	      </para>
               </listitem>
               <listitem>
@@ -1087,11 +1251,11 @@
     <section>
       <title>Exemple de fichier d'un forwarder </title>
       <programlisting>
-	# accept everything from everyone
-	accept:.*
-
-	# reject its own ip
-	reject:192\.168\.1\.6
+        # accept everything from everyone
+        accept:.*
+        
+        # reject its own ip
+        reject:192\.168\.1\.6
       </programlisting>
     </section>
     <section>
@@ -1466,7 +1630,7 @@
       <refsect1 id="description">
         <title>DESCRIPTION</title>
         <para>This command allows an admin to add a new user in VISHNU. 
-Several user information are necessary such as: lastname, firtsname and email adress. 
+Several user information are necessary such as: lastname, firtsname and email address. 
 The admin also gives a VISHNU privilege to the new user and a new userId 
 and password are sent to the user by email.</para>
       </refsect1>
@@ -1497,7 +1661,19 @@ and password are sent to the user by email.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1589,7 +1765,7 @@ The value must be an integer. Predefined values are: 0 (USER), 1 (ADMIN).</para>
           <varlistentry>
             <term><option>-m <replaceable>email</replaceable></option></term>
             <listitem>
-              <para>represents the updated email adress of the user.</para>
+              <para>represents the updated email address of the user.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -1617,7 +1793,19 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1652,7 +1840,7 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
       </refsect1>
       <refsect1 id="example">
         <title>EXAMPLE</title>
-        <para>To update the mail adress of a user user_1 to jdupont@gmail.com:</para>
+        <para>To update the mail address of a user user_1 to jdupont@gmail.com:</para>
         <para>vishnu_update_user -m jdupont@gmail.com user_1</para>
       </refsect1>
     </refentry>
@@ -1700,7 +1888,19 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1775,7 +1975,19 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1849,7 +2061,19 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1918,7 +2142,19 @@ After restoring, the vishnu database is re-initialized.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1987,7 +2223,19 @@ have to add it to the authorized keys of their own account on the machine.</para
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2105,7 +2353,19 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2180,7 +2440,19 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2257,7 +2529,19 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2333,7 +2617,19 @@ that option using the vishnu_configure_option command.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2386,7 +2682,7 @@ that option using the vishnu_configure_option command.</para>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
         <para>This command allows an admin to add a new user in VISHNU. 
-Several user information are necessary such as: lastname, firtsname and email adress. 
+Several user information are necessary such as: lastname, firtsname and email address. 
 The admin also gives a VISHNU privilege to the new user and a new userId 
 and password are sent to the user by email.</para>
       </refsect1>
@@ -3287,7 +3583,7 @@ that option using the vishnu_configure_option command.</para>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
         <para>This command allows an admin to add a new user in VISHNU. 
-Several user information are necessary such as: lastname, firtsname and email adress. 
+Several user information are necessary such as: lastname, firtsname and email address. 
 The admin also gives a VISHNU privilege to the new user and a new userId 
 and password are sent to the user by email.</para>
       </refsect1>
@@ -4363,6 +4659,22 @@ that option using the vishnu_configure_option command.</para>
             <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="example">
@@ -4436,6 +4748,22 @@ that option using the vishnu_configure_option command.</para>
             <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="example">
@@ -4494,6 +4822,22 @@ that option using the vishnu_configure_option command.</para>
           </varlistentry>
           <varlistentry>
             <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4570,6 +4914,22 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
             <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="example">
@@ -4637,6 +4997,22 @@ $TYPE: The 'U' symb to remind it is a user id</para>
           </varlistentry>
           <varlistentry>
             <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4774,6 +5150,22 @@ $TYPE: The 'J' symb to remind it is a job id</para>
             <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="example">
@@ -4840,6 +5232,22 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
             <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="example">
@@ -4900,6 +5308,22 @@ SOFT   = 2</para>
           </varlistentry>
           <varlistentry>
             <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -4965,6 +5389,22 @@ SOFT   = 2</para>
             <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="example">
@@ -5025,6 +5465,22 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
           </varlistentry>
           <varlistentry>
             <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5099,6 +5555,22 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (UMS), 2 (
           </varlistentry>
           <varlistentry>
             <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
