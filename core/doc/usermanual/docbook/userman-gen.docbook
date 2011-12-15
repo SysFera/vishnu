@@ -95,7 +95,9 @@
         <date>14/12/2011</date>
         <authorinitials>SysFera</authorinitials>
         <revdescription>
-      <para>Add a section dedicated of the VISHNU Job Output Environment Variables. Add  of other syntaxes for VISHNU generic script. Update of vishnu submit job reference, vishnu connect and reconnect reference, vishnu CreateDir reference. Add of vishnu_get_current_session_id a new command line reference. </para></revdescription>
+      <para>Add a section dedicated of the VISHNU Job Output Environment Variables. Add  of other syntaxes for VISHNU generic script. Update of vishnu submit job reference, vishnu connect and reconnect reference, vishnu CreateDir reference. Add of vishnu_get_current_session_id a new command line reference. 
+        Add the use of the .netrc file of the connection and the reconnection.
+   </para></revdescription>
       </revision>
     </revhistory>
     <copyright>
@@ -304,14 +306,21 @@
           <title> Connection to VISHNU </title>
           <para>
 	    To connect, use the <emphasis role="bold">vishnu_connect</emphasis> command in the shell terminal (all bourne shell are supported). 
-	    The password received by email is temporary and must be changed at the first connection by using the <emphasis
-                role="bold"> vishnu_change_password </emphasis> command.
-	  </para>
+      The password received by email is temporary and must be changed at the first connection by using the <emphasis
+                role="bold"> vishnu_change_password </emphasis> command. It is also possible to make connection by using the .netrc file. Indeed when the userId and the password are empty, with <emphasis
+                role="bold"> vishnu_connect </emphasis> without parameters, the system automatically gets the login and the password from the .netrc file. A vishnu account on the .netrc file can be defined as follows: 
+    
+      </para>
+          <para> <emphasis role="bold">machine</emphasis> vishnu </para>
+          <para> <emphasis role="bold">login</emphasis> toto </para>
+          <para> <emphasis role="bold">password</emphasis> pwd </para>
+          <para>where toto and pwd are respectively the userId and the password of a user registered in vishnu and the machine must be named <emphasis
+                role="bold">vishnu</emphasis>.</para>
         </section>
         <section>
           <title> Reconnection to VISHNU </title>
           <para>
-	    Reconnection is done using the <emphasis role="bold">vishnu_reconnect</emphasis> command. This command allows using an existing session that was previously opened but not closed. It makes it possible to simultaneously use the same session in different shell terminals. A session is what authentifies a user once he has connected. The user does not need password or username when authenticated to use vishnu. Moreover, the session contains the commands made by a user, so he can retrieve the sequence of commands made in a previous work session.
+	    Reconnection is done using the <emphasis role="bold">vishnu_reconnect</emphasis> command. This command allows using an existing session that was previously opened but not closed. It makes it possible to simultaneously use the same session in different shell terminals. A session is what authentifies a user once he has connected. The user does not need password or username when authenticated to use vishnu. Moreover, the session contains the commands made by a user, so he can retrieve the sequence of commands made in a previous work session. As previously defined for the connection, the .netrc file can be used for reconnection.
 	  </para>
         </section>
         <section>
@@ -614,11 +623,11 @@
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_connect</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
-              choice="opt"><option>-w <replaceable>password</replaceable></option></arg><arg
               choice="opt"><option>-p <replaceable>closePolicy</replaceable></option></arg><arg
               choice="opt"><option>-d <replaceable>sessionInactivityDelay</replaceable></option></arg><arg
-              choice="opt"><option>-s <replaceable>substituteUserId</replaceable></option></arg></cmdsynopsis>
+              choice="opt"><option>-s <replaceable>substituteUserId</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-w <replaceable>password</replaceable></option></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -634,18 +643,6 @@ completed and until the session is either manually or automatically closed.</par
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-u <replaceable>userId</replaceable></option></term>
-            <listitem>
-              <para>userId represents the VISHNU user identifier.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-w <replaceable>password</replaceable></option></term>
-            <listitem>
-              <para>password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc .</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -665,6 +662,18 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
             <term><option>-s <replaceable>substituteUserId</replaceable></option></term>
             <listitem>
               <para>is an admin option which allows an admin to open a session as if she was another user identified by her userId.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-u <replaceable>userId</replaceable></option></term>
+            <listitem>
+              <para>userId represents the VISHNU user identifier.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-w <replaceable>password</replaceable></option></term>
+            <listitem>
+              <para>password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc located in the home of the user. .</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -690,6 +699,22 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
         <title>DIAGNOSTICS</title>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
           <varlistentry>
             <term>&quot;The user is unknown or the password is wrong&quot; [20]</term>
             <listitem/>
@@ -763,7 +788,7 @@ session that was opened on another client system.</para>
           <varlistentry>
             <term><option>-w <replaceable>password</replaceable></option></term>
             <listitem>
-              <para>password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc .</para>
+              <para>password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc located in the home of the user. .</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -783,6 +808,22 @@ session that was opened on another client system.</para>
         <title>DIAGNOSTICS</title>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
           <varlistentry>
             <term>&quot;The user is unknown or the password is wrong&quot; [20]</term>
             <listitem/>
@@ -860,7 +901,19 @@ the session (e.g., job submission or file transfers). After the session is close
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -927,6 +980,22 @@ the session (e.g., job submission or file transfers). After the session is close
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The user is unknown or the password is wrong&quot; [20]</term>
             <listitem/>
           </varlistentry>
@@ -991,7 +1060,19 @@ homeDirectory path .</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1099,7 +1180,19 @@ homeDirectory path .</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1178,7 +1271,19 @@ homeDirectory path .</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1267,7 +1372,19 @@ local configurations related to your VISHNU account. </para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1358,7 +1475,19 @@ for other VISHNU commands.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1458,7 +1587,19 @@ for other VISHNU commands.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1544,7 +1685,19 @@ for other VISHNU commands.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1685,7 +1838,19 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1760,7 +1925,19 @@ opened the session).</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1838,7 +2015,15 @@ opened the session).</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2031,6 +2216,22 @@ opened the session).</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
@@ -2101,6 +2302,22 @@ opened the session).</para>
         <title>DIAGNOSTICS</title>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
           <varlistentry>
             <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
             <listitem/>
@@ -2187,6 +2404,22 @@ opened the session).</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
@@ -2252,6 +2485,22 @@ opened the session).</para>
         <title>DIAGNOSTICS</title>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
           <varlistentry>
             <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
             <listitem/>
@@ -2382,6 +2631,22 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
@@ -2461,6 +2726,22 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
         <variablelist>
           <varlistentry>
             <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2554,6 +2835,22 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
@@ -2626,6 +2923,22 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
         <variablelist>
           <varlistentry>
             <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2713,6 +3026,30 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
@@ -2722,6 +3059,26 @@ values can be obtained using the vishnu_list_machine command)</para>
           </varlistentry>
           <varlistentry>
             <term>&quot;Undefined configuration parameter&quot; [12]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The userId is unknown&quot; [21]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2753,7 +3110,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2795,7 +3152,7 @@ values can be obtained using the vishnu_list_machine command)</para>
           <varlistentry>
             <term><option>-p <replaceable>isRecursive</replaceable></option></term>
             <listitem>
-              <para>It specifies when the create command is recursive (create parent directory also) or not..</para>
+              <para>It specifies when the create command is recursive (create parent directory also) or not.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2828,6 +3185,22 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
@@ -2856,7 +3229,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2898,7 +3271,7 @@ values can be obtained using the vishnu_list_machine command)</para>
           <varlistentry>
             <term><option>-r <replaceable>isRecursive</replaceable></option></term>
             <listitem>
-              <para>It specifies when the remove command is recursive (case of directory) or not..</para>
+              <para>It specifies when the remove command is recursive (case of directory) or not.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2931,6 +3304,22 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
@@ -2959,7 +3348,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3056,7 +3445,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3153,7 +3542,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3251,7 +3640,7 @@ The mode parameter is the same value as for the unix chmod command.</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3356,7 +3745,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3461,7 +3850,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3559,7 +3948,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3670,7 +4059,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3790,7 +4179,7 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3883,6 +4272,22 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
             <listitem/>
           </varlistentry>
           <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
@@ -3911,7 +4316,7 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4031,7 +4436,7 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4152,7 +4557,7 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4273,7 +4678,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4402,7 +4807,7 @@ The value must be an integer. Predefined values are: 0 (INPROGRESS), 1 (COMPLETE
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4500,7 +4905,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4579,6 +4984,22 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (SHELL).</
           </varlistentry>
           <varlistentry>
             <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -4661,6 +5082,22 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
           </varlistentry>
           <varlistentry>
             <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -4757,6 +5194,22 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
             <listitem/>
           </varlistentry>
           <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The session key is unrecognized.&quot; [28]</term>
             <listitem/>
           </varlistentry>
@@ -4824,6 +5277,22 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
           </varlistentry>
           <varlistentry>
             <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -4904,6 +5373,22 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
             <listitem/>
           </varlistentry>
           <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The session key is unrecognized.&quot; [28]</term>
             <listitem/>
           </varlistentry>
@@ -4932,7 +5417,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
         <refpurpose>opens a session</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::connect</function></funcdef><paramdef>const string&amp; <parameter>userId = Error (Not Definide)</parameter></paramdef><paramdef>const string&amp; <parameter>password = Error (Not Definide)</parameter></paramdef><paramdef>Session&amp; <parameter>session</parameter></paramdef><paramdef>const ConnectOptions&amp; <parameter>options = ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::connect</function></funcdef><paramdef>const string&amp; <parameter>userId</parameter></paramdef><paramdef>const string&amp; <parameter>password</parameter></paramdef><paramdef>Session&amp; <parameter>session</parameter></paramdef><paramdef>const ConnectOptions&amp; <parameter>options = ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4953,7 +5438,7 @@ completed and until the session is either manually or automatically closed.</par
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>Input argument. Password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc .</para>
+              <para>Input argument. Password represents the password of the user. If userId and password are empty, vishnu connet will read them in the user file .netrc located in the home of the user..</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -5031,7 +5516,7 @@ completed and until the session is either manually or automatically closed.</par
         <refpurpose>reconnects to a session that is still active</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::reconnect</function></funcdef><paramdef>const string&amp; <parameter>userId = Error (Not Definide)</parameter></paramdef><paramdef>const string&amp; <parameter>password = Error (Not Definide)</parameter></paramdef><paramdef>const string&amp; <parameter>sessionId</parameter></paramdef><paramdef>Session&amp; <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::reconnect</function></funcdef><paramdef>const string&amp; <parameter>userId</parameter></paramdef><paramdef>const string&amp; <parameter>password</parameter></paramdef><paramdef>const string&amp; <parameter>sessionId</parameter></paramdef><paramdef>Session&amp; <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5053,7 +5538,7 @@ session that was opened on another client system.</para>
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>Input argument. Password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc .</para>
+              <para>Input argument. Password represents the password of the user. If userId and password are empty, vishnu connet will read them in the user file .netrc located in the home of the user..</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -6896,6 +7381,30 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
@@ -6913,6 +7422,10 @@ values can be obtained using the vishnu_list_machine command)</para>
           </varlistentry>
           <varlistentry>
             <term>&quot;Undefined configuration parameter&quot; [12]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The userId is unknown&quot; [21]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6944,7 +7457,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -7044,7 +7557,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -7144,7 +7657,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -7238,7 +7751,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -7338,7 +7851,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -7439,7 +7952,7 @@ The mode parameter is the same value as for the unix chmod command.</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -7546,7 +8059,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -7653,7 +8166,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -7754,7 +8267,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -7861,7 +8374,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -7970,7 +8483,7 @@ i.e. a local copy cannot be handled by this command.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -8086,7 +8599,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -8195,7 +8708,7 @@ i.e. a local move cannot be handled by this command.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -8311,7 +8824,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -8409,7 +8922,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -8513,7 +9026,7 @@ using a vishnu synchronous or asynchronous copy or move file command.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -8614,7 +9127,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -8985,7 +9498,7 @@ Please note that retrieving these values uses some valuable system ressources an
         <refpurpose>opens a session</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.connect</function></funcdef><paramdef>string <parameter/></paramdef><paramdef>string <parameter/></paramdef><paramdef>Session <parameter>session</parameter></paramdef><paramdef>ConnectOptions <parameter>options = ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.connect</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef><paramdef>ConnectOptions <parameter>options = ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -9006,7 +9519,7 @@ completed and until the session is either manually or automatically closed.</par
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>Input argument. Password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc .</para>
+              <para>Input argument. Password represents the password of the user. If userId and password are empty, vishnu connet will read them in the user file .netrc located in the home of the user..</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -9096,7 +9609,7 @@ completed and until the session is either manually or automatically closed.</par
         <refpurpose>reconnects to a session that is still active</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.reconnect</function></funcdef><paramdef>string <parameter/></paramdef><paramdef>string <parameter/></paramdef><paramdef>string <parameter>sessionId</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.reconnect</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>string <parameter>sessionId</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -9118,7 +9631,7 @@ session that was opened on another client system.</para>
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>Input argument. Password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc .</para>
+              <para>Input argument. Password represents the password of the user. If userId and password are empty, vishnu connet will read them in the user file .netrc located in the home of the user..</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -11242,6 +11755,30 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
+            <term>SystemException(&quot;A problem occurs with the database.&quot; [-9])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;User does not have permission access.&quot; [-8])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;Option unknown in the config file.&quot; [-7])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;an option or a parameter provided is invalid for this service.&quot; [-5])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;The FMS server is unavailable.&quot; [-4])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;Invalid provided machine identifier.&quot; [-3])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
@@ -11259,6 +11796,10 @@ values can be obtained using the vishnu_list_machine command)</para>
           </varlistentry>
           <varlistentry>
             <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The userId is unknown&quot; [21])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -11290,7 +11831,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11402,7 +11943,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11514,7 +12055,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11620,7 +12161,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11732,7 +12273,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11845,7 +12386,7 @@ The mode parameter is the same value as for the unix chmod command.</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -11969,7 +12510,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -12093,7 +12634,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -12211,7 +12752,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -12330,7 +12871,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -12451,7 +12992,7 @@ i.e. a local copy cannot be handled by this command.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -12579,7 +13120,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -12700,7 +13241,7 @@ i.e. a local move cannot be handled by this command.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -12828,7 +13369,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -12938,7 +13479,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -13054,7 +13595,7 @@ using a vishnu synchronous or asynchronous copy or move file command.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -13167,7 +13708,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>

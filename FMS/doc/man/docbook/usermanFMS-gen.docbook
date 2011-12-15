@@ -15,7 +15,7 @@
       </address>
     </author>
     <title>User Manual</title>
-    <date>June 2011</date>
+    <date>December 2011</date>
     <copyright>
       <year>2011</year>
       <holder>SysFera SAS</holder>
@@ -103,6 +103,30 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
@@ -112,6 +136,26 @@ values can be obtained using the vishnu_list_machine command)</para>
           </varlistentry>
           <varlistentry>
             <term>&quot;Undefined configuration parameter&quot; [12]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The userId is unknown&quot; [21]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -143,7 +187,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -185,7 +229,7 @@ values can be obtained using the vishnu_list_machine command)</para>
           <varlistentry>
             <term><option>-p <replaceable>isRecursive</replaceable></option></term>
             <listitem>
-              <para>It specifies when the create command is recursive (create parent directory also) or not..</para>
+              <para>It specifies when the create command is recursive (create parent directory also) or not.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -218,6 +262,22 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
@@ -246,7 +306,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -288,7 +348,7 @@ values can be obtained using the vishnu_list_machine command)</para>
           <varlistentry>
             <term><option>-r <replaceable>isRecursive</replaceable></option></term>
             <listitem>
-              <para>It specifies when the remove command is recursive (case of directory) or not..</para>
+              <para>It specifies when the remove command is recursive (case of directory) or not.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -321,6 +381,22 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
@@ -349,7 +425,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -446,7 +522,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -543,7 +619,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -641,7 +717,7 @@ The mode parameter is the same value as for the unix chmod command.</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -746,7 +822,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -851,7 +927,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -949,7 +1025,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1060,7 +1136,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1180,7 +1256,7 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1273,6 +1349,22 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
             <listitem/>
           </varlistentry>
           <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The user is not an administrator&quot; [25]</term>
             <listitem/>
           </varlistentry>
@@ -1301,7 +1393,7 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1421,7 +1513,7 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1542,7 +1634,7 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1663,7 +1755,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1792,7 +1884,7 @@ The value must be an integer. Predefined values are: 0 (INPROGRESS), 1 (COMPLETE
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1890,7 +1982,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1944,6 +2036,30 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;A problem occurs with the database.&quot; [-9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;User does not have permission access.&quot; [-8]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Option unknown in the config file.&quot; [-7]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [-5]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The FMS server is unavailable.&quot; [-4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Invalid provided machine identifier.&quot; [-3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
@@ -1961,6 +2077,10 @@ values can be obtained using the vishnu_list_machine command)</para>
           </varlistentry>
           <varlistentry>
             <term>&quot;Undefined configuration parameter&quot; [12]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The userId is unknown&quot; [21]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1992,7 +2112,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2092,7 +2212,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2192,7 +2312,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2286,7 +2406,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2386,7 +2506,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2487,7 +2607,7 @@ The mode parameter is the same value as for the unix chmod command.</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2594,7 +2714,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2701,7 +2821,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2802,7 +2922,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2909,7 +3029,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3018,7 +3138,7 @@ i.e. a local copy cannot be handled by this command.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3134,7 +3254,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3243,7 +3363,7 @@ i.e. a local move cannot be handled by this command.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3359,7 +3479,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3457,7 +3577,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3561,7 +3681,7 @@ using a vishnu synchronous or asynchronous copy or move file command.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3662,7 +3782,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The transfer id ins unknown&quot; [203]</term>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3723,6 +3843,30 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
+            <term>SystemException(&quot;A problem occurs with the database.&quot; [-9])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;User does not have permission access.&quot; [-8])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;Option unknown in the config file.&quot; [-7])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;an option or a parameter provided is invalid for this service.&quot; [-5])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;The FMS server is unavailable.&quot; [-4])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;Invalid provided machine identifier.&quot; [-3])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
@@ -3740,6 +3884,10 @@ values can be obtained using the vishnu_list_machine command)</para>
           </varlistentry>
           <varlistentry>
             <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The userId is unknown&quot; [21])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3771,7 +3919,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3883,7 +4031,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3995,7 +4143,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4101,7 +4249,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4213,7 +4361,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4326,7 +4474,7 @@ The mode parameter is the same value as for the unix chmod command.</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4450,7 +4598,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4574,7 +4722,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4692,7 +4840,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4811,7 +4959,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -4932,7 +5080,7 @@ i.e. a local copy cannot be handled by this command.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5060,7 +5208,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5181,7 +5329,7 @@ i.e. a local move cannot be handled by this command.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5309,7 +5457,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5419,7 +5567,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5535,7 +5683,7 @@ using a vishnu synchronous or asynchronous copy or move file command.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -5648,7 +5796,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>FMSVishnuException(&quot;The transfer id ins unknown&quot; [203])</term>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
             <listitem/>
           </varlistentry>
         </variablelist>

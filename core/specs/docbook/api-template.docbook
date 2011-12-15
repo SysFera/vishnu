@@ -126,7 +126,24 @@
             Modified API function name getFilesInfo to getFileInfo.
           </para>
         </revdescription>
-        </revision>
+      </revision>
+
+      <revision>
+        <revnumber>10</revnumber>
+        <date>15/12/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Updates of TMS:
+            Modified SubmitOptions structure.
+          </para>
+          <para>Updates of FMS:
+            Added DirEntryList and DirEntry structures.
+            Modified API function listDir.
+            Added CreateDirOptions structure.
+          </para>
+        </revdescription>
+      </revision>
+
       </revhistory>
     </info>
   <chapter>
