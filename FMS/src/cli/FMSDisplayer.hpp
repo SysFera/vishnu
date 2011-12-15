@@ -22,6 +22,38 @@ operator<<(std::ostream& os, FileStat& fileStat);
 /**
  * \brief Helper function to display the information of a file
  * \param os: The output stream in which the list will be printed 
+ * \param fileStatlist: The file info list
+ * \return The output stream in which the list of file information has been printed
+ */
+std::ostream&
+operator<<(std::ostream& os, FileStatList& fileStatlist);
+
+/**
+ * \brief Helper function to display the information of a file
+ * \param os The output stream in which the list will be printed 
+ * \param dirEntry The directory entry  information
+ * \return The output stream in which the list of users has been printed
+ */
+std::ostream&
+operator<<(std::ostream& os, DirEntry& dirEntry);
+
+/**
+ * \brief Helper function to display the information of a file
+ * \param os: The output stream in which the list will be printed 
+ * \param dirEntrylist: The file info list
+ * \return The output stream in which the list of file information has been printed
+ */
+std::ostream&
+operator<<(std::ostream& os, DirEntryList& dirEntrylist);
+
+
+
+
+
+
+/**
+ * \brief Helper function to display the information of a file
+ * \param os: The output stream in which the list will be printed 
  * \param fileTransfer: The content of a file transfer 
  * \return The output stream in which the list of users has been printed
  */
@@ -36,15 +68,6 @@ operator<<(std::ostream& os, FileTransfer& fileTransfer);
  */
 std::ostream&
 operator<<(std::ostream& os, FileTransferList& fileTransferlist);
-
-/**
- * \brief Helper function to display the information of a file
- * \param os: The output stream in which the list will be printed 
- * \param stringList: The content of the directory 
- * \return The output stream in which the list of users has been printed
- */
-std::ostream&
-operator<<(std::ostream& os, StringList& stringList);
 
 /**
  * \brief function to convert mode value to string

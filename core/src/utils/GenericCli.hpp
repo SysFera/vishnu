@@ -4,7 +4,8 @@
 
 #include "CLICmd.hpp"
 #include "utilVishnu.hpp"
-#include "cliError.hpp"
+//#include "cliError.hpp"
+#include "UserException.hpp"
 #include "cliUtil.hpp"
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
@@ -51,7 +52,7 @@ class GenericCli {
 
             errorUsage(av[0],dietErrorMsg,EXECERROR);
 
-            return  CLI_ERROR_DIET ;
+            return  ERRCODE_CLI_ERROR_DIET ;
           }
 
           // get the sessionKey
@@ -64,7 +65,7 @@ class GenericCli {
             //call of the api fuction
             int ret =function(sessionKey);
 
-            if (CLI_SUCCESS == ret){
+            if (VISHNU_OK == ret){
             printSuccessMessage();
             } 
             return ret;
@@ -82,7 +83,7 @@ class GenericCli {
           return e.getMsgI() ;
         } catch(std::exception& e){// catch all std runtime error
           errorUsage(av[0],e.what());
-          return CLI_ERROR_RUNTIME;
+          return ERRCODE_CLI_ERROR_RUNTIME;
         }
 
       }
@@ -109,13 +110,13 @@ class GenericCli {
 
             errorUsage(av[0],dietErrorMsg,EXECERROR);
 
-            return  CLI_ERROR_DIET ;
+            return  ERRCODE_CLI_ERROR_DIET ;
           }
 
           //call of the api fuction
           int ret =function();
 
-          if (CLI_SUCCESS == ret) {
+          if (VISHNU_OK == ret) {
             printSuccessMessage(); 
         }
         return ret;
@@ -126,7 +127,7 @@ class GenericCli {
           return e.getMsgI() ;
         } catch(std::exception& e){// catch all std runtime error
           errorUsage(av[0],e.what());
-          return CLI_ERROR_RUNTIME;
+          return ERRCODE_CLI_ERROR_RUNTIME;
         }
 
       }
@@ -151,7 +152,7 @@ class GenericCli {
         // Parse the cli and setting the options found
         int ret = cmd.parse(env_name_mapper());
 
-        if (ret != CLI_SUCCESS){
+        if (ret != VISHNU_OK){
           helpUsage(*opt,"[option] "+signature);
           std::cerr << "ret = " << ret << "\n";
           exit(ret);
@@ -167,12 +168,11 @@ class GenericCli {
       }
       catch(po::error& e){ // catch all other bad parameter errors
         helpUsage(*opt,"[option] "+signature);
-        std::cout << " ++++ in processListOpt: err= " << e.what()<<" \n";
-        exit(CLI_ERROR_INVALID_PARAMETER);
+        exit(ERRCODE_INVALID_PARAM);
       }
       catch(std::exception& e){// catch all std runtime error
         errorUsage(av[0],e.what());
-        exit(CLI_ERROR_INVALID_PARAMETER);
+        exit(ERRCODE_INVALID_PARAM);
       }
 
     }

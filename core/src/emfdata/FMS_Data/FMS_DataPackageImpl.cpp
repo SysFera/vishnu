@@ -326,6 +326,49 @@ FMS_DataPackage::FMS_DataPackage()
     m_CreateDirOptionsEClass->getEStructuralFeatures().push_back(
             m_CreateDirOptions__isRecursive);
 
+    // DirEntry
+    m_DirEntryEClass = new ::ecore::EClass();
+    m_DirEntryEClass->setClassifierID(DIRENTRY);
+    m_DirEntryEClass->setEPackage(this);
+    getEClassifiers().push_back(m_DirEntryEClass);
+    m_DirEntry__path = new ::ecore::EAttribute();
+    m_DirEntry__path->setFeatureID(::FMS_Data::FMS_DataPackage::DIRENTRY__PATH);
+    m_DirEntryEClass->getEStructuralFeatures().push_back(m_DirEntry__path);
+    m_DirEntry__owner = new ::ecore::EAttribute();
+    m_DirEntry__owner->setFeatureID(
+            ::FMS_Data::FMS_DataPackage::DIRENTRY__OWNER);
+    m_DirEntryEClass->getEStructuralFeatures().push_back(m_DirEntry__owner);
+    m_DirEntry__group = new ::ecore::EAttribute();
+    m_DirEntry__group->setFeatureID(
+            ::FMS_Data::FMS_DataPackage::DIRENTRY__GROUP);
+    m_DirEntryEClass->getEStructuralFeatures().push_back(m_DirEntry__group);
+    m_DirEntry__perms = new ::ecore::EAttribute();
+    m_DirEntry__perms->setFeatureID(
+            ::FMS_Data::FMS_DataPackage::DIRENTRY__PERMS);
+    m_DirEntryEClass->getEStructuralFeatures().push_back(m_DirEntry__perms);
+    m_DirEntry__size = new ::ecore::EAttribute();
+    m_DirEntry__size->setFeatureID(::FMS_Data::FMS_DataPackage::DIRENTRY__SIZE);
+    m_DirEntryEClass->getEStructuralFeatures().push_back(m_DirEntry__size);
+    m_DirEntry__creationTime = new ::ecore::EAttribute();
+    m_DirEntry__creationTime->setFeatureID(
+            ::FMS_Data::FMS_DataPackage::DIRENTRY__CREATIONTIME);
+    m_DirEntryEClass->getEStructuralFeatures().push_back(
+            m_DirEntry__creationTime);
+    m_DirEntry__type = new ::ecore::EAttribute();
+    m_DirEntry__type->setFeatureID(::FMS_Data::FMS_DataPackage::DIRENTRY__TYPE);
+    m_DirEntryEClass->getEStructuralFeatures().push_back(m_DirEntry__type);
+
+    // DirEntryList
+    m_DirEntryListEClass = new ::ecore::EClass();
+    m_DirEntryListEClass->setClassifierID(DIRENTRYLIST);
+    m_DirEntryListEClass->setEPackage(this);
+    getEClassifiers().push_back(m_DirEntryListEClass);
+    m_DirEntryList__dirEntries = new ::ecore::EReference();
+    m_DirEntryList__dirEntries->setFeatureID(
+            ::FMS_Data::FMS_DataPackage::DIRENTRYLIST__DIRENTRIES);
+    m_DirEntryListEClass->getEStructuralFeatures().push_back(
+            m_DirEntryList__dirEntries);
+
     // Create enums
 
     m_FileTypeEEnum = new ::ecore::EEnum();
@@ -993,6 +1036,124 @@ FMS_DataPackage::FMS_DataPackage()
     m_CreateDirOptions__isRecursive->setUnique(true);
     m_CreateDirOptions__isRecursive->setDerived(false);
     m_CreateDirOptions__isRecursive->setOrdered(true);
+    // DirEntry
+    m_DirEntryEClass->setName("DirEntry");
+    m_DirEntryEClass->setAbstract(false);
+    m_DirEntryEClass->setInterface(false);
+    m_DirEntry__path->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_DirEntry__path->setName("path");
+    m_DirEntry__path->setDefaultValueLiteral("");
+    m_DirEntry__path->setLowerBound(0);
+    m_DirEntry__path->setUpperBound(1);
+    m_DirEntry__path->setTransient(false);
+    m_DirEntry__path->setVolatile(false);
+    m_DirEntry__path->setChangeable(true);
+    m_DirEntry__path->setUnsettable(false);
+    m_DirEntry__path->setID(false);
+    m_DirEntry__path->setUnique(true);
+    m_DirEntry__path->setDerived(false);
+    m_DirEntry__path->setOrdered(true);
+    m_DirEntry__owner->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_DirEntry__owner->setName("owner");
+    m_DirEntry__owner->setDefaultValueLiteral("");
+    m_DirEntry__owner->setLowerBound(0);
+    m_DirEntry__owner->setUpperBound(1);
+    m_DirEntry__owner->setTransient(false);
+    m_DirEntry__owner->setVolatile(false);
+    m_DirEntry__owner->setChangeable(true);
+    m_DirEntry__owner->setUnsettable(false);
+    m_DirEntry__owner->setID(false);
+    m_DirEntry__owner->setUnique(true);
+    m_DirEntry__owner->setDerived(false);
+    m_DirEntry__owner->setOrdered(true);
+    m_DirEntry__group->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_DirEntry__group->setName("group");
+    m_DirEntry__group->setDefaultValueLiteral("");
+    m_DirEntry__group->setLowerBound(0);
+    m_DirEntry__group->setUpperBound(1);
+    m_DirEntry__group->setTransient(false);
+    m_DirEntry__group->setVolatile(false);
+    m_DirEntry__group->setChangeable(true);
+    m_DirEntry__group->setUnsettable(false);
+    m_DirEntry__group->setID(false);
+    m_DirEntry__group->setUnique(true);
+    m_DirEntry__group->setDerived(false);
+    m_DirEntry__group->setOrdered(true);
+    m_DirEntry__perms->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
+    m_DirEntry__perms->setName("perms");
+    m_DirEntry__perms->setDefaultValueLiteral("");
+    m_DirEntry__perms->setLowerBound(0);
+    m_DirEntry__perms->setUpperBound(1);
+    m_DirEntry__perms->setTransient(false);
+    m_DirEntry__perms->setVolatile(false);
+    m_DirEntry__perms->setChangeable(true);
+    m_DirEntry__perms->setUnsettable(false);
+    m_DirEntry__perms->setID(false);
+    m_DirEntry__perms->setUnique(true);
+    m_DirEntry__perms->setDerived(false);
+    m_DirEntry__perms->setOrdered(true);
+    m_DirEntry__size->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+    m_DirEntry__size->setName("size");
+    m_DirEntry__size->setDefaultValueLiteral("");
+    m_DirEntry__size->setLowerBound(0);
+    m_DirEntry__size->setUpperBound(1);
+    m_DirEntry__size->setTransient(false);
+    m_DirEntry__size->setVolatile(false);
+    m_DirEntry__size->setChangeable(true);
+    m_DirEntry__size->setUnsettable(false);
+    m_DirEntry__size->setID(false);
+    m_DirEntry__size->setUnique(true);
+    m_DirEntry__size->setDerived(false);
+    m_DirEntry__size->setOrdered(true);
+    m_DirEntry__creationTime->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_DirEntry__creationTime->setName("creationTime");
+    m_DirEntry__creationTime->setDefaultValueLiteral("");
+    m_DirEntry__creationTime->setLowerBound(0);
+    m_DirEntry__creationTime->setUpperBound(1);
+    m_DirEntry__creationTime->setTransient(false);
+    m_DirEntry__creationTime->setVolatile(false);
+    m_DirEntry__creationTime->setChangeable(true);
+    m_DirEntry__creationTime->setUnsettable(false);
+    m_DirEntry__creationTime->setID(false);
+    m_DirEntry__creationTime->setUnique(true);
+    m_DirEntry__creationTime->setDerived(false);
+    m_DirEntry__creationTime->setOrdered(true);
+    m_DirEntry__type->setEType(m_FileTypeEEnum);
+    m_DirEntry__type->setName("type");
+    m_DirEntry__type->setDefaultValueLiteral("6");
+    m_DirEntry__type->setLowerBound(0);
+    m_DirEntry__type->setUpperBound(1);
+    m_DirEntry__type->setTransient(false);
+    m_DirEntry__type->setVolatile(false);
+    m_DirEntry__type->setChangeable(true);
+    m_DirEntry__type->setUnsettable(false);
+    m_DirEntry__type->setID(false);
+    m_DirEntry__type->setUnique(true);
+    m_DirEntry__type->setDerived(false);
+    m_DirEntry__type->setOrdered(true);
+    // DirEntryList
+    m_DirEntryListEClass->setName("DirEntryList");
+    m_DirEntryListEClass->setAbstract(false);
+    m_DirEntryListEClass->setInterface(false);
+    m_DirEntryList__dirEntries->setEType(m_DirEntryEClass);
+    m_DirEntryList__dirEntries->setName("dirEntries");
+    m_DirEntryList__dirEntries->setDefaultValueLiteral("");
+    m_DirEntryList__dirEntries->setLowerBound(0);
+    m_DirEntryList__dirEntries->setUpperBound(-1);
+    m_DirEntryList__dirEntries->setTransient(false);
+    m_DirEntryList__dirEntries->setVolatile(false);
+    m_DirEntryList__dirEntries->setChangeable(true);
+    m_DirEntryList__dirEntries->setContainment(true);
+    m_DirEntryList__dirEntries->setResolveProxies(true);
+    m_DirEntryList__dirEntries->setUnique(true);
+    m_DirEntryList__dirEntries->setDerived(false);
+    m_DirEntryList__dirEntries->setOrdered(true);
 
     // TODO: Initialize data types
 
@@ -1230,6 +1391,14 @@ FMS_DataPackage::FMS_DataPackage()
 {
     return m_CreateDirOptionsEClass;
 }
+::ecore::EClass_ptr FMS_DataPackage::getDirEntry()
+{
+    return m_DirEntryEClass;
+}
+::ecore::EClass_ptr FMS_DataPackage::getDirEntryList()
+{
+    return m_DirEntryListEClass;
+}
 
 ::ecore::EAttribute_ptr FMS_DataPackage::getStringList__strings()
 {
@@ -1398,5 +1567,37 @@ FMS_DataPackage::FMS_DataPackage()
 ::ecore::EAttribute_ptr FMS_DataPackage::getCreateDirOptions__isRecursive()
 {
     return m_CreateDirOptions__isRecursive;
+}
+::ecore::EAttribute_ptr FMS_DataPackage::getDirEntry__path()
+{
+    return m_DirEntry__path;
+}
+::ecore::EAttribute_ptr FMS_DataPackage::getDirEntry__owner()
+{
+    return m_DirEntry__owner;
+}
+::ecore::EAttribute_ptr FMS_DataPackage::getDirEntry__group()
+{
+    return m_DirEntry__group;
+}
+::ecore::EAttribute_ptr FMS_DataPackage::getDirEntry__perms()
+{
+    return m_DirEntry__perms;
+}
+::ecore::EAttribute_ptr FMS_DataPackage::getDirEntry__size()
+{
+    return m_DirEntry__size;
+}
+::ecore::EAttribute_ptr FMS_DataPackage::getDirEntry__creationTime()
+{
+    return m_DirEntry__creationTime;
+}
+::ecore::EAttribute_ptr FMS_DataPackage::getDirEntry__type()
+{
+    return m_DirEntry__type;
+}
+::ecore::EReference_ptr FMS_DataPackage::getDirEntryList__dirEntries()
+{
+    return m_DirEntryList__dirEntries;
 }
 

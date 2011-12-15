@@ -115,6 +115,16 @@ namespace FMS_Data
          * \return Pointer to the object
          */
         virtual CreateDirOptions_ptr createCreateDirOptions();
+        /**
+         * \brief Creates a new object of class DirEntry
+         * \return Pointer to the object
+         */
+        virtual DirEntry_ptr createDirEntry();
+        /**
+         * \brief Creates a new object of class DirEntryList
+         * \return Pointer to the object
+         */
+        virtual DirEntryList_ptr createDirEntryList();
 
         /**
          * \brief To create an object of a given class (reflective API)

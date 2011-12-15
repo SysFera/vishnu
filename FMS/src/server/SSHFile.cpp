@@ -21,7 +21,7 @@
 #include "utilServer.hpp"
 #include <boost/scoped_ptr.hpp>
 #include "FileTransferCommand.hpp"
-
+#include <boost/date_time/time_zone_base.hpp>
 using namespace std;
 
 /* Default constructor. */
@@ -368,22 +368,29 @@ string SSHFile::tail(const TailOfFileOptions& options) {
 
 
 /* Get the files and subdirectory of this directory through ssh. */
-list<string> SSHFile::ls(const LsDirOptions& options) const {
+FMS_Data::DirEntryList* SSHFile::ls(const LsDirOptions& options) const {
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
               sshPublicKey, sshPrivateKey);
+
   pair<string,string> lsResult;
-  list<string> result;
-  
-  string lsCmd("ls ");
+
+  FMS_Data::DirEntryList* result;
+
+  FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
+  result = ecoreFactory->createDirEntryList();
+
+  string lsCmd(LSCMD);
 
   if (!exists()) {
     throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
   }
 
-
+  /*
   if (options.isLongFormat()){
     lsCmd.append("-l ");
   }
+  */
+
   if (options.isAllFiles()){
     lsCmd.append("-a ");
   }
@@ -393,18 +400,36 @@ list<string> SSHFile::ls(const LsDirOptions& options) const {
   if (lsResult.second.length()!=0){
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error listing directory: "+lsResult.second);
   }
-  istringstream is(lsResult.first);
-  char buffer[1024];
-  string line;
   
+  istringstream is(lsResult.first);
+  
+  char buffer[1024];
+  
+  string line;
+  std::cout << "in SSHFile before post traitment \n"; 
+
   while (!is.eof()) {
+   
     is.getline(buffer, 1024);
+  
     line = buffer;
-    result.push_back(line);
+    if (line.find("total") != std::string::npos || line.empty()) {
+    continue;
+    }
+
+    FMS_Data::DirEntry_ptr dirEntry = ecoreFactory->createDirEntry();
+
+  std::cout << "in SSHFile before getDirEntryFom \n"; 
+    // Get a Dir Entry struct from string 
+    File::getDirEntryFrom(line,dirEntry);
+  std::cout << "in SSHFile after getDirEntryFom \n"; 
+    // store it into list 
+    result->getDirEntries().push_back(dirEntry);
+  std::cout << "in SSHFile after result->getDirEntries().push_back(dirEntry) \n"; 
   }
+  std::cout << "in SSHFile after post traitment \n"; 
   return result;
 }
-
 
 
 /* mv the file through scp. */

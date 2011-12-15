@@ -293,32 +293,37 @@ int vishnu::contentOfFile(const string& sessionKey,const string& path, string& c
  * \param dirContent  the directory content
  * \return 0 if everything is OK, another value otherwise
  */
-int vishnu::listDir(const string& sessionKey,const string& path, StringList& dirContent,const LsDirOptions& options)
+int vishnu::listDir(const string& sessionKey,const string& path, DirEntryList& dirContent,const LsDirOptions& options)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
     //To check the remote path
     vishnu::checkRemotePath(path);
 
+    // initialize the list of file transfers
+    dirContent.getDirEntries().clear();
+
+
     SessionProxy sessionProxy(sessionKey);
 
     boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
 
-    std::list<string> tmpList(f->ls(options));
+    FMS_Data::DirEntryList* dirContent_ptr = f->ls(options);
 
-    std::list<string>::const_iterator it;
+    if(dirContent_ptr != NULL) {
+      FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
+      for(unsigned int i = 0; i < dirContent_ptr->getDirEntries().size(); i++) {
+        FMS_Data::DirEntry_ptr dirEntry = ecoreFactory->createDirEntry();
 
-    for (it =tmpList.begin();it!=tmpList.end();++it ){
-
-      dirContent.addStrings(*it);
-
+        //To copy the content and not the pointer
+        *dirEntry = *dirContent_ptr->getDirEntries().get(i);
+        dirContent.getDirEntries().push_back(dirEntry);
+      }
+      delete dirContent_ptr;
     }
-
-
     return 0;
-
   }
 
- /**
+/**
    * \brief move a file in synchronous mode
    * \param sessionKey the session key
    * \param src:   the "source" file path using host:path format

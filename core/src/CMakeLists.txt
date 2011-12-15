@@ -254,6 +254,10 @@ set(FMS_Data_SRCS
   emfdata/FMS_Data/RmFileOptionsImpl.cpp
   emfdata/FMS_Data/CreateDirOptions.cpp
   emfdata/FMS_Data/CreateDirOptionsImpl.cpp
+  emfdata/FMS_Data/DirEntry.cpp
+  emfdata/FMS_Data/DirEntryImpl.cpp
+  emfdata/FMS_Data/DirEntryList.cpp
+  emfdata/FMS_Data/DirEntryListImpl.cpp
     )
    
 set(FMS_Data_HEADERS
@@ -275,6 +279,8 @@ set(FMS_Data_HEADERS
   emfdata/FMS_Data/TailOfFileOptions.hpp
   emfdata/FMS_Data/RmFileOptions.hpp
   emfdata/FMS_Data/CreateDirOptions.hpp
+  emfdata/FMS_Data/DirEntry.hpp
+  emfdata/FMS_Data/DirEntryList.hpp
   )
 
 

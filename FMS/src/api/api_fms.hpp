@@ -111,7 +111,10 @@ namespace vishnu{
    * \param options   contains the options used to perform the service (like the long format list)
    * \return 0 if everything is OK, another value otherwise
    */
-  int listDir(const string& sessionKey,const string& path, StringList& dirContent,const LsDirOptions& options=LsDirOptions())
+ 
+  /*int listDir(const string& sessionKey,const string& path, StringList& dirContent,const LsDirOptions& options=LsDirOptions())
+    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);*/
+  int listDir(const string& sessionKey,const string& path, DirEntryList& dirContent,const LsDirOptions& options=LsDirOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**

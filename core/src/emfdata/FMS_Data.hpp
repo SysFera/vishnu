@@ -41,6 +41,8 @@
 #include "FMS_Data/TailOfFileOptions.hpp"
 #include "FMS_Data/RmFileOptions.hpp"
 #include "FMS_Data/CreateDirOptions.hpp"
+#include "FMS_Data/DirEntry.hpp"
+#include "FMS_Data/DirEntryList.hpp"
 
 // Package & Factory
 #include "FMS_Data/FMS_DataPackage.hpp"
