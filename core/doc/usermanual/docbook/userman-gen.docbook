@@ -7770,7 +7770,7 @@ values can be obtained using the vishnu_list_machine command).
         <refpurpose>displays  the content of a remote directory. </refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>FileStatList&amp; <parameter>dirContent</parameter></paramdef><paramdef>const LsDirOptions&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>DirEntryList&amp; <parameter>dirContent</parameter></paramdef><paramdef>const LsDirOptions&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -12227,7 +12227,7 @@ values can be obtained using the vishnu_list_machine command).
         <refpurpose>displays  the content of a remote directory. </refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>FileStatList <parameter>dirContent</parameter></paramdef><paramdef>LsDirOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>DirEntryList <parameter>dirContent</parameter></paramdef><paramdef>LsDirOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
