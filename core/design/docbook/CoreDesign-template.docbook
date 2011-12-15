@@ -57,7 +57,7 @@
         <date>07/12/2011</date>
         <authorinitials>SysFera</authorinitials>
         <revdescription>
-          <para> Added SLURMJobScheduler on Figure 3.3 and replace of ORACLE by MYSQL on the document such as Figure 5.3 and Figure 5.6</para>
+          <para> Added SLURMJobScheduler on Figure 3.3 and change of ORACLE to MYSQL on the document such as Figure 5.3 and Figure 5.6</para>
         </revdescription>
       </revision>
       </revhistory>
