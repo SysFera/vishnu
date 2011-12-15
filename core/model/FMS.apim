@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <API xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="com.sysfera.codegen.apimodel" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
   <modules name="FMS">
-    <services name="createFile" description="creates  files on  remote machines." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
+    <services name="createFile" description="creates  files on  remote machines.">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key." shortOptionLetter="" defaultValueLiteral=""/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file to create following the pattern  [host:]file path." longOptionName=""/>
+      <resultCodes href="#ERRCODE_INVALID_PARAM"/>
+      <resultCodes href="#ERRCODE_INVALID_PATH"/>
+      <resultCodes href="#ERRCODE_NO_ADMIN"/>
+      <resultCodes href="#ERRCODE_RUNTIME_ERROR"/>
+      <resultCodes href="#ERRCODE_SESSIONKEY_EXPIRED"/>
+      <resultCodes href="#ERRCODE_SESSIONKEY_NOT_FOUND"/>
+      <resultCodes href="#ERRCODE_UNDEFINED"/>
+      <resultCodes href="#ERRCODE_UNKNOWN_FILE_TRANSFER"/>
+      <resultCodes href="#ERRCODE_UNKNOWN_LOCAL_ACCOUNT"/>
+      <resultCodes href="#ERRCODE_UNKNOWN_MACHINE"/>
+      <resultCodes href="#VISHNU_OK"/>
+      <resultCodes href="#ERRCODE_CLI_ERROR_DIET"/>
+      <resultCodes href="#ERRCODE_CLI_ERROR_MISSING_PARAMETER"/>
+      <resultCodes href="#ERRCODE_CLI_ERROR_NO_SESSION"/>
+      <resultCodes href="#ERRCODE_CLI_ERROR_RUNTIME"/>
+      <resultCodes href="#ERRCODE_CONFIGNOTFOUND"/>
+      <resultCodes href="FMS_Internal.apim#ERRCODE_DB_ERROR"/>
+      <resultCodes href="#ERRCODE_DBERR"/>
+      <resultCodes href="#ERRCODE_DIET"/>
+      <resultCodes href="FMS_Internal.apim#ERRCODE_INVALID_CFG_FILE"/>
+      <resultCodes href="FMS_Internal.apim#ERRCODE_INVALID_MACHINE_ID"/>
+      <resultCodes href="FMS_Internal.apim#ERRCODE_INVALID_PARAMETER"/>
+      <resultCodes href="FMS_Internal.apim#ERRCODE_PERMISSION_DENIED"/>
+      <resultCodes href="FMS_Internal.apim#ERRCODE_SERVER_UNAVAILABLE"/>
+      <resultCodes href="#ERRCODE_UNKNOWN_USERID"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.0"/>
       <details key="description" value="Creates an empty file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command)"/>
       <details key="exCLI" value="To create the file toto on machine_1:&#xA;vishnu_create_file machine_1:/tmp/toto"/>
     </services>
-    <services name="createDir" description="creates directories on remote machines." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
+    <services name="createDir" description="creates directories on remote machines." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to create following the pattern  [host:]directory path." longOptionName=""/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.21" description="the create directory command options" optional="true" shortOptionLetter=""/>
@@ -16,7 +41,7 @@
       <details key="description" value="Creates an new directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command)"/>
       <details key="exCLI" value="To create the repository toto on machine_1:&#xA;vishnu_create_dir machine_1:/tmp/toto"/>
     </services>
-    <services name="removeFile" description="removes files from  remote hosts." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
+    <services name="removeFile" description="removes files from  remote hosts." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" description="The  file to remove following the pattern  [host:]file path" longOptionName="">
         <dataType href="FMS_Internal.apim#//@modules.0/@typeList/@types.0"/>
@@ -93,7 +118,7 @@
       <details key="description" value="Copy a file or directory from the location given by the src parameter to the location given by the dest parameter.&#xA;The src parameter must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command) or 'path' only if the file is on the local system.&#xA;The dest parameter must be provided in a similar way. Note that one of the two locations at least must be a remote location,&#xA;i.e. a local copy cannot be handled by this command.&#xA;"/>
       <details key="exCLI" value="To copy the file toto from machine_1 to machine_2 home directory: &#xA;vishnu_copy_file machine_1:/tmp/toto machine_2:/home/vishnu/"/>
     </services>
-    <services name="copyAsyncFile" description="executes an asynchronous copy of file." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
+    <services name="copyAsyncFile" description="executes an asynchronous copy of file." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The source file to copy following the pattern  [host:]file path" longOptionName=""/>
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file" longOptionName=""/>
@@ -234,6 +259,10 @@
       <resultCodes name="ERRCODE_RUNTIME_ERROR" description="Runtime error" value="202"/>
       <resultCodes name="ERRCODE_UNKNOWN_FILE_TRANSFER" description="The transfer id ins unknown" value="203"/>
       <resultCodes name="ERRCODE_UNKNOWN_USERID" description="The userId is unknown" value="21" diagnostic=""/>
+      <resultCodes name="ERRCODE_CLI_ERROR_NO_SESSION" description="There is no open session in this terminal" value="13" usage="CLI_ONLY" diagnostic=""/>
+      <resultCodes name="ERRCODE_CLI_ERROR_MISSING_PARAMETER" description="Missing parameters" value="14" usage="CLI_ONLY" diagnostic=""/>
+      <resultCodes name="ERRCODE_CLI_ERROR_DIET" description="Vishnu initialization failed" value="15" usage="CLI_ONLY" diagnostic=""/>
+      <resultCodes name="ERRCODE_CLI_ERROR_RUNTIME" description="Undefined error" value="16" usage="CLI_ONLY" diagnostic=""/>
     </resultCodeList>
   </modules>
   <envVariableList>

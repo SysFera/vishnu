@@ -406,7 +406,6 @@ FMS_Data::DirEntryList* SSHFile::ls(const LsDirOptions& options) const {
   char buffer[1024];
   
   string line;
-  std::cout << "in SSHFile before post traitment \n"; 
 
   while (!is.eof()) {
    
@@ -419,15 +418,11 @@ FMS_Data::DirEntryList* SSHFile::ls(const LsDirOptions& options) const {
 
     FMS_Data::DirEntry_ptr dirEntry = ecoreFactory->createDirEntry();
 
-  std::cout << "in SSHFile before getDirEntryFom \n"; 
     // Get a Dir Entry struct from string 
     File::getDirEntryFrom(line,dirEntry);
-  std::cout << "in SSHFile after getDirEntryFom \n"; 
     // store it into list 
     result->getDirEntries().push_back(dirEntry);
-  std::cout << "in SSHFile after result->getDirEntries().push_back(dirEntry) \n"; 
   }
-  std::cout << "in SSHFile after post traitment \n"; 
   return result;
 }
 
