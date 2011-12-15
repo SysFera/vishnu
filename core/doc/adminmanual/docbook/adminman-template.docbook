@@ -1200,9 +1200,18 @@
           </listitem>
           <listitem>
             <para> Dans le second cas, deux connexions ssh sont nécessaires. Le SeD se connecte sur la machine source et
-              lance le transfert (seconde connexion) vers la machine destination. Par conséquent la clé publique du SeD doit
-              être ajoutée au fichier authorized_key de la machine source pour
-              permettre la première connexion puis sur la machine destination pour permettre la seconde connexion. Il n'est pas nécessaire qu'il y ait un autre couple de clés entre la machine source et destination grâce au mécanisme d'agent forwarding (fonctionnalité de ssh).   </para>
+              lance le transfert (seconde connexion) vers la machine destination. Par conséquent:
+              <itemizedlist> 
+                <listitem>
+                  <para> la clé publique du SeD doit être ajoutée au fichier authorized_key de la machine source pour
+                    permettre la première connexion.
+                  </para>
+                </listitem>
+                <listitem>
+                  <para> La machine source source doit pouvoir se connecter sur la machine destination par ssh, avec la clé privée enregistrée dans la base de VISHNU lors de l'ajout du compte (local account) liant la machine source à VISHNU. Par ailleurs si le mécanisme d'agent forwarding (de ssh) est activée entre ces différentes machines, il n'est alors plus nécessaire qu'il y ait un autre couple de clés entre la machine source et destination. </para>
+              </listitem>
+            </itemizedlist>
+            </para>
           </listitem>
         </itemizedlist>
         En somme, il est alors obligatoire que la clé publique du SeD soit ajoutée à tous les comptes utilisateurs des machines impliquées
