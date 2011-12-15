@@ -38,12 +38,11 @@ diet_profile_desc_t* getListDirProfile() {
 /* Returns the n last lines of a file to the client application. */
 int solveListDir(diet_profile_t* profile) {
   
-  string localPath, localUser, userKey, acLogin, machineName, lsString;
-  list<string> ls;
-  list<string>::iterator it;
+  string localPath, localUser, userKey, acLogin, machineName;
+  FMS_Data::DirEntryList* ls;
 
-  char* path, *user, *host,*sessionKey, *errMsg = NULL, *result = NULL, *optionsSerialized= NULL;
-  std::string finishError ="";
+  char* path, *user, *host,*sessionKey, *errMsg = NULL, *optionsSerialized= NULL;
+  std::string finishError ="", result="";
   int mapperkey;
   std::string cmd = "";
 
@@ -93,15 +92,15 @@ int solveListDir(diet_profile_t* profile) {
     if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr )) {
       throw SystemException(ERRCODE_INVDATA, "solve_LsDir: LsDirOptions object is not well built");
     }
-
+    std::cout << "in solve_list_dir before ls \n";
     ls = file->ls(*options_ptr);
 
-    for (it=ls.begin(); it!=ls.end(); ++it) {
-      lsString+=*it+"\n";
-    }
+    std::cout << "in solve_list_dir after ls \n";
 
-    result = strdup(lsString.c_str()); 
- 
+    ::ecorecpp::serializer::serializer _ser;
+
+    result =  _ser.serialize_str(const_cast<FMS_Data::DirEntryList*>(ls));
+    
     //To register the command
     sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
 
@@ -122,7 +121,7 @@ int solveListDir(diet_profile_t* profile) {
     else {
       result = strdup("");
     }
-    diet_string_set(diet_parameter(profile, 5), result, DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile, 5),strdup(result.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(profile, 6), errMsg, DIET_VOLATILE);
     return 0;
 }

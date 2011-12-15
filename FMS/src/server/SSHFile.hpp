@@ -42,6 +42,12 @@
  */
 #define CATCMD  "cat "
 /**
+ * \brief An alias of ls command 
+ */
+//#define LSCMD  " LANG=C ls -ln --time-style=full-iso "
+#define LSCMD  " LANG=C ls -l --time-style=\"+%Y-%m-%d %H:%M:%S %:::z\"  "
+
+/**
  * \brief An alias of mkdir command 
  */
 #define MKDIRCMD "mkdir "
@@ -73,10 +79,6 @@
  * \brief An alias of mv command 
  */
 #define MVCMD    "mv "
-/**
- * \brief An alias of simple ls command 
- */
-#define LSCMD    "ls  "
 /**
  * \brief An alias of ls -a command 
  */
@@ -272,7 +274,9 @@ class SSHFile : public File {
      * \param options the list options 
      * \return the content of the directory
      */ 
-    virtual std::list<std::string> ls(const LsDirOptions& options) const;
+    //virtual std::list<std::string> ls(const LsDirOptions& options) const;
+    virtual  FMS_Data::DirEntryList*  ls(const LsDirOptions& options) const;
+    
     /**
      * \brief To copy the file 
      * \param path the copy destination

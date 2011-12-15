@@ -207,7 +207,7 @@ class FileProxy {
      * \param options the list options 
      * \return the content of the directory
      */ 
-    virtual std::list<std::string> ls(const LsDirOptions& options) const = 0; 
+    virtual FMS_Data::DirEntryList* ls(const LsDirOptions& options) const = 0; 
     /**
      * \brief To copy the file 
      * \param dest the copy destination

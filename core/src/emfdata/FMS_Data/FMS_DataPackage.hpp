@@ -59,79 +59,89 @@ namespace FMS_Data
         static const int CREATEDIROPTIONS = 1;
 
         /**
+         * \brief Constant for DirEntry class
+         */
+        static const int DIRENTRY = 2;
+
+        /**
+         * \brief Constant for DirEntryList class
+         */
+        static const int DIRENTRYLIST = 3;
+
+        /**
          * \brief Constant for FileStat class
          */
-        static const int FILESTAT = 2;
+        static const int FILESTAT = 4;
 
         /**
          * \brief Constant for FileStatList class
          */
-        static const int FILESTATLIST = 3;
+        static const int FILESTATLIST = 5;
 
         /**
          * \brief Constant for FileTransfer class
          */
-        static const int FILETRANSFER = 4;
+        static const int FILETRANSFER = 6;
 
         /**
          * \brief Constant for FileTransferList class
          */
-        static const int FILETRANSFERLIST = 5;
+        static const int FILETRANSFERLIST = 7;
 
         /**
          * \brief Constant for FileType class
          */
-        static const int FILETYPE = 6;
+        static const int FILETYPE = 8;
 
         /**
          * \brief Constant for HeadOfFileOptions class
          */
-        static const int HEADOFFILEOPTIONS = 7;
+        static const int HEADOFFILEOPTIONS = 9;
 
         /**
          * \brief Constant for LsDirOptions class
          */
-        static const int LSDIROPTIONS = 8;
+        static const int LSDIROPTIONS = 10;
 
         /**
          * \brief Constant for LsTransferOptions class
          */
-        static const int LSTRANSFEROPTIONS = 9;
+        static const int LSTRANSFEROPTIONS = 11;
 
         /**
          * \brief Constant for MvFileOptions class
          */
-        static const int MVFILEOPTIONS = 10;
+        static const int MVFILEOPTIONS = 12;
 
         /**
          * \brief Constant for RmFileOptions class
          */
-        static const int RMFILEOPTIONS = 11;
+        static const int RMFILEOPTIONS = 13;
 
         /**
          * \brief Constant for Status class
          */
-        static const int STATUS = 12;
+        static const int STATUS = 14;
 
         /**
          * \brief Constant for StopTransferOptions class
          */
-        static const int STOPTRANSFEROPTIONS = 13;
+        static const int STOPTRANSFEROPTIONS = 15;
 
         /**
          * \brief Constant for StringList class
          */
-        static const int STRINGLIST = 14;
+        static const int STRINGLIST = 16;
 
         /**
          * \brief Constant for TailOfFileOptions class
          */
-        static const int TAILOFFILEOPTIONS = 15;
+        static const int TAILOFFILEOPTIONS = 17;
 
         /**
          * \brief Constant for TransferCommand class
          */
-        static const int TRANSFERCOMMAND = 16;
+        static const int TRANSFERCOMMAND = 18;
 
         /**
          * \brief Constant for STRINGLIST__STRINGS feature
@@ -343,6 +353,46 @@ namespace FMS_Data
          */
         static const int CREATEDIROPTIONS__ISRECURSIVE = 41;
 
+        /**
+         * \brief Constant for DIRENTRY__PATH feature
+         */
+        static const int DIRENTRY__PATH = 42;
+
+        /**
+         * \brief Constant for DIRENTRY__OWNER feature
+         */
+        static const int DIRENTRY__OWNER = 43;
+
+        /**
+         * \brief Constant for DIRENTRY__GROUP feature
+         */
+        static const int DIRENTRY__GROUP = 44;
+
+        /**
+         * \brief Constant for DIRENTRY__PERMS feature
+         */
+        static const int DIRENTRY__PERMS = 45;
+
+        /**
+         * \brief Constant for DIRENTRY__SIZE feature
+         */
+        static const int DIRENTRY__SIZE = 46;
+
+        /**
+         * \brief Constant for DIRENTRY__CREATIONTIME feature
+         */
+        static const int DIRENTRY__CREATIONTIME = 47;
+
+        /**
+         * \brief Constant for DIRENTRY__TYPE feature
+         */
+        static const int DIRENTRY__TYPE = 48;
+
+        /**
+         * \brief Constant for DIRENTRYLIST__DIRENTRIES feature
+         */
+        static const int DIRENTRYLIST__DIRENTRIES = 49;
+
         // EClassifiers methods
 
         /**
@@ -446,6 +496,18 @@ namespace FMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EClass_ptr getCreateDirOptions();
+
+        /**
+         * \brief Returns the reflective object for class DirEntry
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EClass_ptr getDirEntry();
+
+        /**
+         * \brief Returns the reflective object for class DirEntryList
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EClass_ptr getDirEntryList();
 
         // EStructuralFeatures methods
 
@@ -701,6 +763,54 @@ namespace FMS_Data
          */
         virtual ::ecore::EAttribute_ptr getCreateDirOptions__isRecursive();
 
+        /**
+         * \brief Returns the reflective object for feature path of class DirEntry
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getDirEntry__path();
+
+        /**
+         * \brief Returns the reflective object for feature owner of class DirEntry
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getDirEntry__owner();
+
+        /**
+         * \brief Returns the reflective object for feature group of class DirEntry
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getDirEntry__group();
+
+        /**
+         * \brief Returns the reflective object for feature perms of class DirEntry
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getDirEntry__perms();
+
+        /**
+         * \brief Returns the reflective object for feature size of class DirEntry
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getDirEntry__size();
+
+        /**
+         * \brief Returns the reflective object for feature creationTime of class DirEntry
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getDirEntry__creationTime();
+
+        /**
+         * \brief Returns the reflective object for feature type of class DirEntry
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getDirEntry__type();
+
+        /**
+         * \brief Returns the reflective object for feature dirEntries of class DirEntryList
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EReference_ptr getDirEntryList__dirEntries();
+
     protected:
 
         /**
@@ -781,6 +891,16 @@ namespace FMS_Data
          * \brief The instance for the class CreateDirOptions
          */
         ::ecore::EClass_ptr m_CreateDirOptionsEClass;
+
+        /**
+         * \brief The instance for the class DirEntry
+         */
+        ::ecore::EClass_ptr m_DirEntryEClass;
+
+        /**
+         * \brief The instance for the class DirEntryList
+         */
+        ::ecore::EClass_ptr m_DirEntryListEClass;
 
         // EEnuminstances 
 
@@ -1013,6 +1133,46 @@ namespace FMS_Data
          * \brief The instance for the feature isRecursive of class CreateDirOptions
          */
         ::ecore::EAttribute_ptr m_CreateDirOptions__isRecursive;
+
+        /**
+         * \brief The instance for the feature path of class DirEntry
+         */
+        ::ecore::EAttribute_ptr m_DirEntry__path;
+
+        /**
+         * \brief The instance for the feature owner of class DirEntry
+         */
+        ::ecore::EAttribute_ptr m_DirEntry__owner;
+
+        /**
+         * \brief The instance for the feature group of class DirEntry
+         */
+        ::ecore::EAttribute_ptr m_DirEntry__group;
+
+        /**
+         * \brief The instance for the feature perms of class DirEntry
+         */
+        ::ecore::EAttribute_ptr m_DirEntry__perms;
+
+        /**
+         * \brief The instance for the feature size of class DirEntry
+         */
+        ::ecore::EAttribute_ptr m_DirEntry__size;
+
+        /**
+         * \brief The instance for the feature creationTime of class DirEntry
+         */
+        ::ecore::EAttribute_ptr m_DirEntry__creationTime;
+
+        /**
+         * \brief The instance for the feature type of class DirEntry
+         */
+        ::ecore::EAttribute_ptr m_DirEntry__type;
+
+        /**
+         * \brief The instance for the feature dirEntries of class DirEntryList
+         */
+        ::ecore::EReference_ptr m_DirEntryList__dirEntries;
 
     };
 

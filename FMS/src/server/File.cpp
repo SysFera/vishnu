@@ -233,6 +233,50 @@ string File::extName(const string& path) {
   return path.substr(pos+1);
 }
 
+
+int  File::getDirEntryFrom( const std::string& rawDirEntry, FMS_Data::DirEntry* dirEntry) {
+
+  StringToDirEntry stringToDirEntry (rawDirEntry);
+
+  stringToDirEntry.splitter();
+
+  dirEntry->setPath(stringToDirEntry.getPath());
+
+  dirEntry->setPerms(stringToDirEntry.getPermissions());
+
+  dirEntry->setOwner(stringToDirEntry.getOwner());
+
+  dirEntry->setGroup(stringToDirEntry.getGroup());
+
+
+  dirEntry->setSize(stringToDirEntry.getSize());
+
+  dirEntry->setCreationTime(stringToDirEntry.getDateTime() );
+
+  switch (rawDirEntry.at(0)){
+    case '-':
+      dirEntry->setType (regular);
+      break;
+    case 'b':
+      dirEntry->setType (block);
+      break;
+    case 'p':
+      dirEntry->setType (fifo);
+      break;
+    case 'd':
+      dirEntry->setType (directory);
+      break;
+    case 'l':
+      dirEntry->setType (symboliclink);
+      break;
+    case 's':
+      dirEntry->setType (sckt);
+      break;
+  }
+  return 0;
+}
+
+
 File::~File() {}
 
 

@@ -168,7 +168,8 @@ class LocalFileProxy : public FileProxy {
      * \param options the list options 
      * \return the content of the directory
      */ 
-    virtual std::list<std::string> ls(const LsDirOptions& options) const { std::list<std::string>(); }
+   // virtual std::list<std::string> ls(const LsDirOptions& options) const { std::list<std::string>(); }
+    virtual FMS_Data::DirEntryList* ls(const LsDirOptions& options) const { return NULL; }
 };
 
 #endif

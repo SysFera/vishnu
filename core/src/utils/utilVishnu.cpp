@@ -142,6 +142,58 @@ vishnu::string_to_time_t(const std::string& ts){
 }
 
 /**
+ * \brief Simple function to convert time
+ * from string format (YYYY-MM-DD H:M:S) to
+ * long integer format in seconds in utc 
+ * \param ts: the time in string format
+ * \param utcOffset: time zone in string format
+ * \return the time in long integer format in seconds
+ */
+
+
+std::time_t 
+vishnu::string_lc_to_utc_time_t(const std::string& ts,const std::string& utcOffset) {
+
+  // two aliases for convenience
+  namespace bps= boost::posix_time;
+  namespace bg=boost::gregorian;
+  namespace blt=boost::local_time;
+
+  std::cout << " convert " << ts << " " << utcOffset << " in utc time\n";
+
+  boost::local_time::time_zone_ptr tz(new boost::local_time::posix_time_zone(utcOffset));
+
+  bps::ptime t;
+
+  if (std::string::npos==ts.find(":")){
+    t=bps::ptime(bg::from_string(ts));
+
+  }
+  else{
+    t= bps::ptime (bps::time_from_string(ts));
+  }
+
+  bps::ptime epoch(bg::date(1970,1,1));
+
+  blt::local_date_time ldt(t.date(), t.time_of_day(),tz,blt::local_date_time::NOT_DATE_TIME_ON_ERROR);
+
+  bps::time_duration::sec_type x = (ldt.utc_time() - epoch).total_seconds();
+
+  return std::time_t(x);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+/**
 * \brief Simple function to read the content of the regular file
 * \param filePath: the path to the file
 * \return The content of the file

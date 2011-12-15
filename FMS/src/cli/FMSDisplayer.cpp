@@ -206,6 +206,7 @@ string convertDiffTimeToString(const long& diff) {
  * \param fstat: The inode information
  * \return The output stream in which the list of users has been printed
  */
+
 std::ostream&
 operator<<(std::ostream& os, FileStat& fileStat) {
  
@@ -219,7 +220,7 @@ operator<<(std::ostream& os, FileStat& fileStat) {
   os << setw(maxSize) << right  << "gid: " <<  fileStat.getGid() << std::endl;
   os << setw(maxSize) << right  << "size: " <<  fileStat.getSize() << std::endl;
   mode_t perms = fileStat.getPerms();
-  os << setw(maxSize) << right  << "perms: " << oct << perms;
+  os << setw(maxSize) << right  << "perms: " << oct << perms << dec ;
   os << " (" << ConvertModeToString(perms) << ")" << std::endl;
   os << setw(maxSize) << right  << "type: " << ConvertFileTypeToString(fileStat.getType()) << std::endl;
   boost::posix_time::ptime pt;
@@ -236,6 +237,64 @@ operator<<(std::ostream& os, FileStat& fileStat) {
 
 return os;
 }
+
+
+/**
+ *\brief Helper function to display the information of a file
+ *\param os: The output stream in which the list will be printed 
+ *\param fileStatlist: The file info list
+ *\return The output stream in which the list of file information has
+ *been printed
+ */
+std::ostream&
+operator<<(std::ostream& os, FileStatList& fileStatlist){
+ for (size_t i = 0 ; i < fileStatlist.getFileStats().size() ; i++){
+     os << *(fileStatlist.getFileStats().get(i));
+  }
+
+ return os;
+
+}
+
+
+std::ostream&
+operator<<(std::ostream& os, DirEntry& dirEntry) {
+ 
+  size_t maxSize = std::string("group").size()+2; 
+  os << setw(maxSize) << "------------------------------" << std::endl;
+  os << setw(maxSize) << "the file properties: " << std::endl;
+  os << setw(maxSize) << right  << "path: " << dirEntry.getPath() << std::endl;
+  os << setw(maxSize) << right  << "owner: " << dirEntry.getOwner() << std::endl;
+  os << setw(maxSize) << right  << "group: " <<  dirEntry.getGroup() << std::endl;
+  os << setw(maxSize) << right  << "size: " <<  dirEntry.getSize() << std::endl;
+  mode_t perms = dirEntry.getPerms();
+  os << setw(maxSize) << right  << "perms: " << oct << perms << dec ;
+  os << " (" << ConvertModeToString(perms) << ")" << std::endl;
+  os << setw(maxSize) << right  << "type: " << ConvertFileTypeToString(dirEntry.getType()) << std::endl;
+  os << setw(maxSize) << right  << "creation time: " << dirEntry.getCreationTime() << std::endl;
+
+return os;
+}
+
+
+
+/**
+ * \brief Helper function to display the information of a file
+ *\param os: The output stream in which the list will be printed 
+ *\param dirEntryList: The file info list
+ *\return The output stream in which the list of file information has
+ *been printed
+ *      */
+std::ostream&
+operator<<(std::ostream& os, DirEntryList& dirEntryList){
+ for (size_t i = 0 ; i < dirEntryList.getDirEntries().size() ; i++){
+     os << *(dirEntryList.getDirEntries().get(i));
+  }
+
+ return os;
+
+}
+
 
 /**
  * \brief Helper function to display the information of a file
@@ -288,20 +347,3 @@ operator<<(std::ostream& os, FileTransferList& fileTransferlist) {
  return os;
 }
 
-/**
- * \brief Helper function to display the information of a file
- * \param os: The output stream in which the list will be printed 
- * \param dirContent: The content of the directory 
- * \return The output stream in which the list of users has been printed
- */
-std::ostream&
-operator<<(std::ostream& os, StringList& dirContent) {
-
-  std::vector<std::string> dirContentvec=dirContent.getStrings();
-  std::vector<string>::const_iterator iter;
-  for (iter=dirContentvec.begin(); iter!=dirContentvec.end(); ++iter){
-    os << *iter << std::endl;
-  }
-
-  return os;
-}

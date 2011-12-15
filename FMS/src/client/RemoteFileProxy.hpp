@@ -149,8 +149,8 @@ class RemoteFileProxy : public FileProxy {
      * \param options the list options 
      * \return the content of the directory
      */ 
-    virtual std::list<std::string> ls(const LsDirOptions& options) const; 
-
+    //   virtual std::list<std::string> ls(const LsDirOptions& options) const; 
+    virtual FMS_Data::DirEntryList* ls(const LsDirOptions& options) const ;
     /**
      * \brief To copy the file 
      * \param dest the copy destination

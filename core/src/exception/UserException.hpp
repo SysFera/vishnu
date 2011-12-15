@@ -12,7 +12,10 @@
 static const int ERRCODE_INVALID_PARAM = 10;
 static const int ERRCODE_FILENOTFOUND = 11;
 static const int ERRCODE_CONFIGNOTFOUND = 12;
-
+static const int ERRCODE_CLI_ERROR_NO_SESSION =13;
+static const int ERRCODE_CLI_ERROR_MISSING_PARAMETER =14;
+static const int ERRCODE_CLI_ERROR_DIET = 15;
+static const int ERRCODE_CLI_ERROR_RUNTIME = 16;
 /**
  * \brief This class represents the exception due to a user misuse
  * \class UserException

@@ -34,7 +34,7 @@ struct ListDirFunc {
 
   int operator()(std::string sessionKey) {
 
-    StringList dirContent;
+    DirEntryList dirContent;
 
      int res= listDir(sessionKey, mpath, dirContent, moptions);
     

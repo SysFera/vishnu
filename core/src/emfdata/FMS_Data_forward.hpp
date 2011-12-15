@@ -110,6 +110,14 @@ namespace FMS_Data
     class CreateDirOptions;
     typedef CreateDirOptions* CreateDirOptions_ptr;
 
+    // DirEntry
+    class DirEntry;
+    typedef DirEntry* DirEntry_ptr;
+
+    // DirEntryList
+    class DirEntryList;
+    typedef DirEntryList* DirEntryList_ptr;
+
     // Package & Factory
     class FMS_DataFactory;
     typedef FMS_DataFactory * FMS_DataFactory_ptr;

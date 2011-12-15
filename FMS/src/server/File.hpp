@@ -16,6 +16,7 @@
 #include "SessionServer.hpp"
 #include "FMS_Data_forward.hpp"
 #include "FMS_Data.hpp"
+#include "StringToDirEntry.hh"
 using namespace FMS_Data;
 
 
@@ -378,7 +379,7 @@ class File {
        * \param options the list options 
        * \return the content of the directory
        */ 
-    virtual std::list<std::string> ls(const LsDirOptions& options) const = 0;
+    virtual FMS_Data::DirEntryList* ls(const LsDirOptions& options) const = 0;
 
       /**
        * \brief To copy the file 
@@ -407,6 +408,18 @@ class File {
      * \return the file path
      */
     static std::string extName(const std::string& path);
+
+    /**
+     * \brief a useful function to extract dirEntry data structure from a raw data provided by ls command
+     * \param rawFileStat the raw data
+     * \param dirEntry the extracted dirEntry
+     * \return 0 if evrything is Ok or an error code otherwise
+     */
+
+
+    static int getDirEntryFrom( const std::string& rawFileStat, FMS_Data::DirEntry* dirEntry);
+
+
     /**
      * \brief The file transfer type
      */
@@ -443,6 +456,9 @@ class File {
 
 
 };
+
+
+
 
 
 #endif

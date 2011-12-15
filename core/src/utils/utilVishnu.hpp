@@ -14,8 +14,10 @@
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int.hpp>
 #include <boost/random/variate_generator.hpp>
-#include "boost/date_time/posix_time/posix_time.hpp"
-#include "boost/date_time/gregorian/gregorian.hpp"
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/date_time/gregorian/gregorian.hpp>
+#include <boost/date_time/local_time/local_time.hpp>
+
 #include "FMSVishnuException.hpp"
 #include <boost/filesystem.hpp>
 using namespace boost::posix_time;
@@ -117,6 +119,19 @@ namespace vishnu {
    */
   std::time_t
   string_to_time_t(const std::string& ts);
+
+/**
+ * \brief Simple function to convert time
+ * from string format (YYYY-MM-DD H:M:S) to
+ * long integer format in seconds in utc 
+ * \param ts: the time in string format
+ * \param utcOffset: time zone in string format
+ * \return the time in long integer format in seconds
+ */
+
+
+std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& utcOffset);
+
 
   /**
    * \brief Simple function to read the content of a regular file

@@ -55,6 +55,11 @@ set(FMS_Data_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/RmFileOptionsImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/CreateDirOptions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/CreateDirOptionsImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/DirEntry.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/DirEntryImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/DirEntryList.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/DirEntryListImpl.cpp
+ 
    )
    
 set(FMS_Data_HEADERS
@@ -76,7 +81,10 @@ set(FMS_Data_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/TailOfFileOptions.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/RmFileOptions.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/CreateDirOptions.hpp
-   )
+    ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/DirEntry.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/DirEntryList.hpp
+ 
+    )
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data_forward.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/)
@@ -96,7 +104,11 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/HeadOfFileOptions.hpp DESTINA
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/TailOfFileOptions.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/FMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/RmFileOptions.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/FMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/CreateDirOptions.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/FMS_Data)
-   
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/DirEntry.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/FMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/DirEntryList.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/FMS_Data)
+ 
+
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} /home/ibrahima/Projets/ProjetEDF/Vishnu/core/deps/emf_bin/../${INCLUDE_INSTALL_DIR}/emf4cpp /home/ibrahima/Projets/ProjetEDF/Vishnu/core/deps/emf_bin/../${INCLUDE_INSTALL_DIR}/emf4cpp)
 
 add_library(emf4cpp-FMS_Data SHARED ${FMS_Data_HEADERS} ${FMS_Data_SOURCES})

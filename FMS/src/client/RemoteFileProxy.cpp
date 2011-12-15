@@ -745,9 +745,9 @@ string RemoteFileProxy::tail(const TailOfFileOptions& options) {
  * the error message.
  */
 
-list<string> RemoteFileProxy::ls(const LsDirOptions& options) const {
+FMS_Data::DirEntryList* RemoteFileProxy::ls(const LsDirOptions& options) const {
 
-  list<string> result;
+  FMS_Data::DirEntryList* result;
   char* errMsg, *ls, *optionsToString = NULL;
   diet_profile_t* lsProfile;
 
@@ -813,16 +813,7 @@ list<string> RemoteFileProxy::ls(const LsDirOptions& options) const {
   /*To raise a vishnu exception if the received message is not empty*/
   raiseExceptionIfNotEmptyMsg(errMsg);
 
-  // post traitemennt 
-  istringstream is(ls);
-  char buffer[1024];
-  string line;
-
-  while (!is.eof()) {
-    is.getline(buffer, 1024);
-    line = buffer;
-    result.push_back(line);
-  }
+  parseEmfObject(std::string(ls), result, "Error by receiving List object serialized");
 
   return result;
 }

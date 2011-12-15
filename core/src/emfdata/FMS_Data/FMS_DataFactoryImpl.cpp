@@ -33,6 +33,8 @@
 #include <FMS_Data/TailOfFileOptions.hpp>
 #include <FMS_Data/RmFileOptions.hpp>
 #include <FMS_Data/CreateDirOptions.hpp>
+#include <FMS_Data/DirEntry.hpp>
+#include <FMS_Data/DirEntryList.hpp>
 
 #include <ecore.hpp>
 #include <ecorecpp/mapping.hpp>
@@ -76,6 +78,10 @@ FMS_DataFactory::FMS_DataFactory()
         return createRmFileOptions();
     case FMS_DataPackage::CREATEDIROPTIONS:
         return createCreateDirOptions();
+    case FMS_DataPackage::DIRENTRY:
+        return createDirEntry();
+    case FMS_DataPackage::DIRENTRYLIST:
+        return createDirEntryList();
     default:
         throw "IllegalArgumentException";
     }
@@ -204,5 +210,13 @@ RmFileOptions_ptr FMS_DataFactory::createRmFileOptions()
 CreateDirOptions_ptr FMS_DataFactory::createCreateDirOptions()
 {
     return new CreateDirOptions();
+}
+DirEntry_ptr FMS_DataFactory::createDirEntry()
+{
+    return new DirEntry();
+}
+DirEntryList_ptr FMS_DataFactory::createDirEntryList()
+{
+    return new DirEntryList();
 }
 
