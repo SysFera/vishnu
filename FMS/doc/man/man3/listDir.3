@@ -31,7 +31,7 @@
 listDir \- displays the content of a remote directory\&.
 .SH "SYNOPSIS"
 .HP \w'int\ vishnu::listDir('u
-.BI "int vishnu::listDir(const\ string&\ " "sessionKey" ", const\ string&\ " "path" ", FileStatList&\ " "dirContent" ", const\ LsDirOptions&\ " "options" ");"
+.BI "int vishnu::listDir(const\ string&\ " "sessionKey" ", const\ string&\ " "path" ", DirEntryList&\ " "dirContent" ", const\ LsDirOptions&\ " "options" ");"
 .SH "DESCRIPTION"
 .PP
 Displays the content of a directory at the location given by the path parameter\&. The path must be provided in the form \*(Aqmachine_id:path\*(Aq (the machine_id values can be obtained using the vishnu_list_machine command)\&.
