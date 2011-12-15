@@ -257,7 +257,7 @@
       <resultCodes name="ERRCODE_UNKNOWN_LOCAL_ACCOUNT" description="The local account  is unknown" value="38"/>
       <resultCodes name="ERRCODE_INVALID_PATH" description="The path provided is invalid." value="201"/>
       <resultCodes name="ERRCODE_RUNTIME_ERROR" description="Runtime error" value="202"/>
-      <resultCodes name="ERRCODE_UNKNOWN_FILE_TRANSFER" description="The transfer id ins unknown" value="203"/>
+      <resultCodes name="ERRCODE_UNKNOWN_FILE_TRANSFER" description="The transfer id is unknown" value="203"/>
       <resultCodes name="ERRCODE_UNKNOWN_USERID" description="The userId is unknown" value="21" diagnostic=""/>
       <resultCodes name="ERRCODE_CLI_ERROR_NO_SESSION" description="There is no open session in this terminal" value="13" usage="CLI_ONLY" diagnostic=""/>
       <resultCodes name="ERRCODE_CLI_ERROR_MISSING_PARAMETER" description="Missing parameters" value="14" usage="CLI_ONLY" diagnostic=""/>
