@@ -154,7 +154,6 @@ class GenericCli {
 
         if (ret != VISHNU_OK){
           helpUsage(*opt,"[option] "+signature);
-          std::cerr << "ret = " << ret << "\n";
           exit(ret);
         }
 
@@ -162,7 +161,7 @@ class GenericCli {
         checkVishnuConfig(*opt);
         if ( opt->count("help")){
           helpUsage(*opt,"[option] "+signature);
-          exit(0);
+          exit(VISHNU_OK);
         }
 
       }

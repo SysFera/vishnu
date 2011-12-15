@@ -6,6 +6,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include "UMSVishnuException.hpp"
+#include "UserException.hpp"
 namespace bfs = boost::filesystem;
 namespace bs = boost::serialization;
 
@@ -223,9 +224,10 @@ getLastSession(const std::string& terminal){
 
   if(allSessions.empty()){
 
-    std::cerr <<"There is no open session in this terminal\n";
+    //std::cerr <<"There is no open session in this terminal\n";
   
-    exit (CLI_ERROR_NO_SESSION);
+    //exit (CLI_ERROR_NO_SESSION);
+    throw UserException (ERRCODE_CLI_ERROR_NO_SESSION,"There is no open session in this terminal");
 
   }
 
@@ -268,7 +270,7 @@ removeLastSession(const std::string & terminal){
 
       file.close();
     }
-    throw std::runtime_error( "all sessions in this terminal have been closed");
+    throw UserException (ERRCODE_CLI_ERROR_NO_SESSION,"all sessions in this terminal have been closed");
   }
 
 }

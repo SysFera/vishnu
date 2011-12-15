@@ -92,10 +92,8 @@ int solveListDir(diet_profile_t* profile) {
     if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr )) {
       throw SystemException(ERRCODE_INVDATA, "solve_LsDir: LsDirOptions object is not well built");
     }
-    std::cout << "in solve_list_dir before ls \n";
+    
     ls = file->ls(*options_ptr);
-
-    std::cout << "in solve_list_dir after ls \n";
 
     ::ecorecpp::serializer::serializer _ser;
 

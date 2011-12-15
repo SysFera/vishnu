@@ -1,5 +1,5 @@
 #include "CLICmd.hpp"
-
+#include "UserException.hpp" 
 
 CLICmd::CLICmd(int argc, char** argv, boost::shared_ptr<Options> op):margc(argc), margv(argv), mop(op){
 }
@@ -14,10 +14,10 @@ CLICmd::parse(const func1 & s){
     mop->parse_env(s);
     mop->notify();
   } catch(po::required_option& e){//  a required parameter is missing
-    return CLI_ERROR_MISSING_PARAMETER;
+    return ERRCODE_CLI_ERROR_MISSING_PARAMETER;
   } catch(po::error& e){ // catch all other bad parameter errors
-    return CLI_ERROR_INVALID_PARAMETER;
+    return ERRCODE_INVALID_PARAM;
   }
-  return CLI_SUCCESS;
+  return VISHNU_OK;
 }
 
