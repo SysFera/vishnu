@@ -226,8 +226,6 @@ set(FMS_Data_SRCS
   emfdata/FMS_Data/FMS_DataFactory.cpp
   emfdata/FMS_Data/FMS_DataPackageImpl.cpp
   emfdata/FMS_Data/FMS_DataFactoryImpl.cpp
-  emfdata/FMS_Data/StringList.cpp
-  emfdata/FMS_Data/StringListImpl.cpp
   emfdata/FMS_Data/FileStat.cpp
   emfdata/FMS_Data/FileStatImpl.cpp
   emfdata/FMS_Data/CpFileOptions.cpp
@@ -265,7 +263,6 @@ set(FMS_Data_HEADERS
   emfdata/FMS_Data_forward.hpp
   emfdata/FMS_Data/FMS_DataPackage.hpp
   emfdata/FMS_Data/FMS_DataFactory.hpp
-  emfdata/FMS_Data/StringList.hpp
   emfdata/FMS_Data/FileStat.hpp
   emfdata/FMS_Data/CpFileOptions.hpp
   emfdata/FMS_Data/LsDirOptions.hpp
