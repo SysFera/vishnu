@@ -471,14 +471,14 @@
               <row>
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>userId represents the VISHNU user identifier</para></entry>
+                <entry><para>userId represents the VISHNU user identifier.  If userId and password are empty, vishnu connect will read them in the .netrc file located in the home of the user</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
                 <entry><para>password</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>password represents the password of the user. If userId and password are empty, vishnu connet will read them in the user file .netrc located in the home of the user.</para></entry>
+                <entry><para>password represents the password of the user. If userId and password are empty, vishnu connect will read them in the .netrc file located  in the home of the user</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -616,14 +616,14 @@
               <row>
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>userId represents the VISHNU user identifier</para></entry>
+                <entry><para>userId represents the VISHNU user identifier.  If userId and password are empty, vishnu reconnect will read them in the .netrc file located in the home of the user</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
                 <entry><para>password</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>password represents the password of the user. If userId and password are empty, vishnu connet will read them in the user file .netrc located in the home of the user.</para></entry>
+                <entry><para>password represents the password of the user.  If userId and password are empty, vishnu reconnect will read them in the .netrc file located in the home of the user</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
