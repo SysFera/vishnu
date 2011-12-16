@@ -12,14 +12,6 @@
     <eLiterals name="FIFO" value="5"/>
     <eLiterals name="REGULAR" value="6"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StringList" instanceTypeName="StringList">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="strings" upperBound="-1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="the dynamic list of strings."/>
-      </eAnnotations>
-    </eStructuralFeatures>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Status" instanceTypeName="Status">
     <eLiterals name="INPROGRESS"/>
     <eLiterals name="COMPLETED" value="1"/>

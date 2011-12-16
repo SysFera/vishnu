@@ -54,10 +54,6 @@ namespace FMS_Data
 
     // EClass
 
-    // StringList
-    class StringList;
-    typedef StringList* StringList_ptr;
-
     // FileStat
     class FileStat;
     typedef FileStat* FileStat_ptr;

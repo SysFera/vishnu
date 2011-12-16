@@ -46,11 +46,6 @@ namespace FMS_Data
         static FMS_DataFactory_ptr _instance();
 
         /**
-         * \brief Creates a new object of class StringList
-         * \return Pointer to the object
-         */
-        virtual StringList_ptr createStringList();
-        /**
          * \brief Creates a new object of class FileStat
          * \return Pointer to the object
          */
