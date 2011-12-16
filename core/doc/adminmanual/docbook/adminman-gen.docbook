@@ -140,6 +140,24 @@
           Mise à jour pour les nouveaux forwarder de DIET.
       </para></revdescription>
       </revision>
+      <revision>
+        <revnumber>14</revnumber>
+        <date>15/12/2011</date>
+        <authorinitials>I.CISSE</authorinitials>
+        <revdescription>
+          <para>
+            Mise à jour de la section configuration des clés ssh requises pour FMS.
+        </para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>15</revnumber>
+        <date>16/12/2011</date>
+        <authorinitials>D.TRAORE</authorinitials>
+        <revdescription>
+          <para>
+            Ajout de la section configuration des clés ssh requises pour TMS.
+        </para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -804,7 +822,7 @@
       </orderedlist>
     </section>
     <section>
-      <title>Lancement sur plusieurs réseaux <emphasis role="bold">avec DIET au moins version 2.8</emphasis></title>
+      <title>Lancement sur plusieurs réseaux <emphasis role="bold">avec une version de DIET supérieure ou égale à 2.8</emphasis></title>
       <para>Un module VISHNU peut être lancé manuellement.
 	Pour le déploiement on se base sur le modèle de la figure 4.2 du document [ARCH] en supposant pour simplifier que sur un réseau tout est lancé sur la même machine et que les réseaux &quot;Network C&quot; et &quot;Network D&quot; sont confondus (pas de forwarder à mettre entre eux).</para>
       <orderedlist>
@@ -963,7 +981,7 @@
       </orderedlist>
     </section>
     <section>
-      <title>Lancement sur plusieurs réseaux <emphasis role="bold">avec DIET inférieur à la version 2.8</emphasis></title>
+      <title>Lancement sur plusieurs réseaux <emphasis role="bold">avec une version de DIET inférieure à 2.8</emphasis></title>
       <para>Un module VISHNU peut être lancé manuellement.
 	Pour le déploiement on se base sur le modèle de la figure 4.2 du document [ARCH] en supposant pour simplifier que sur un réseau tout est lancé sur la même machine et que les réseaux &quot;Network C&quot; et &quot;Network D&quot; sont confondus (pas de forwarder à mettre entre eux).</para>
       <orderedlist>
@@ -1346,6 +1364,16 @@
         </itemizedlist>
         En somme, il est alors obligatoire que la clé publique du SeD soit ajoutée à tous les comptes utilisateurs des machines impliquées
         par les requêtes FMS. Toutes les clés protégées par des passphrases
+        devront être stockées par un agent ssh pour permettre les
+        authentifications automatiques.
+      </para>
+    </section>
+    <section>
+      <title>Configuration des clés privées/publiques ssh requises pour TMS</title>
+      <para>
+        Les commandes de soumission, d'annulation et de récupération des résultats de jobs  éxécutées par le SeD TMS sont lancées via ssh
+        sous le nom de l'utilisateur ayant émis la requête. Pour pouvoir exécuter ces commandes correctement, la clé publique du compte dédié au SeD TMS doit
+        être ajoutée au fichier authorized_keys ($HOME/.ssh/authorized_keys) de l'utilisateur.  Toutes les clés protégées par des passphrases
         devront être stockées par un agent ssh pour permettre les
         authentifications automatiques.
       </para>
