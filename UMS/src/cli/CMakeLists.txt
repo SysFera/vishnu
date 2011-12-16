@@ -39,7 +39,7 @@ macro(genCli NAME )
     ${Boost_LIBRARIES}
     ${VISHNU_EXCEPTION_LIB}
     vishnu-ums-client
-    crypt)
+    )
   install(TARGETS ${CMDNAME} DESTINATION ${BIN_INSTALL_DIR})
 endmacro(genCli)
 

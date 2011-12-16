@@ -294,6 +294,11 @@ add_library(vishnu-core ${config_SRCS}
   ${FMS_Data_SRCS}
 )
 
+target_link_libraries(vishnu-core
+  emf4cpp-vishnu
+  crypt)
+
+
 set(EMF-ECORE-HEADERS
   ${EMF4CPP_INCLUDE_DIR}/ecore/EAnnotation.hpp
   ${EMF4CPP_INCLUDE_DIR}/ecore/EAttribute.hpp
