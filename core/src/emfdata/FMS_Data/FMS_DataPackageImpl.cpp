@@ -48,17 +48,6 @@ FMS_DataPackage::FMS_DataPackage()
 
     // Create classes and their features
 
-    // StringList
-    m_StringListEClass = new ::ecore::EClass();
-    m_StringListEClass->setClassifierID(STRINGLIST);
-    m_StringListEClass->setEPackage(this);
-    getEClassifiers().push_back(m_StringListEClass);
-    m_StringList__strings = new ::ecore::EAttribute();
-    m_StringList__strings->setFeatureID(
-            ::FMS_Data::FMS_DataPackage::STRINGLIST__STRINGS);
-    m_StringListEClass->getEStructuralFeatures().push_back(
-            m_StringList__strings);
-
     // FileStat
     m_FileStatEClass = new ::ecore::EClass();
     m_FileStatEClass->setClassifierID(FILESTAT);
@@ -400,24 +389,6 @@ FMS_DataPackage::FMS_DataPackage()
 
     // TODO: Initialize classes and features; add operations and parameters
     // TODO: GenericTypes
-    // StringList
-    m_StringListEClass->setName("StringList");
-    m_StringListEClass->setAbstract(false);
-    m_StringListEClass->setInterface(false);
-    m_StringList__strings->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_StringList__strings->setName("strings");
-    m_StringList__strings->setDefaultValueLiteral("");
-    m_StringList__strings->setLowerBound(0);
-    m_StringList__strings->setUpperBound(-1);
-    m_StringList__strings->setTransient(false);
-    m_StringList__strings->setVolatile(false);
-    m_StringList__strings->setChangeable(true);
-    m_StringList__strings->setUnsettable(false);
-    m_StringList__strings->setID(false);
-    m_StringList__strings->setUnique(true);
-    m_StringList__strings->setDerived(false);
-    m_StringList__strings->setOrdered(true);
     // FileStat
     m_FileStatEClass->setName("FileStat");
     m_FileStatEClass->setAbstract(false);
@@ -1327,10 +1298,6 @@ FMS_DataPackage::FMS_DataPackage()
 {
     return m_FileTypeEEnum;
 }
-::ecore::EClass_ptr FMS_DataPackage::getStringList()
-{
-    return m_StringListEClass;
-}
 ::ecore::EEnum_ptr FMS_DataPackage::getStatus()
 {
     return m_StatusEEnum;
@@ -1400,10 +1367,6 @@ FMS_DataPackage::FMS_DataPackage()
     return m_DirEntryListEClass;
 }
 
-::ecore::EAttribute_ptr FMS_DataPackage::getStringList__strings()
-{
-    return m_StringList__strings;
-}
 ::ecore::EAttribute_ptr FMS_DataPackage::getFileStat__path()
 {
     return m_FileStat__path;

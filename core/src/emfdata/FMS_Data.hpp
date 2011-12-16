@@ -27,7 +27,6 @@
 
 
 // EClass
-#include "FMS_Data/StringList.hpp"
 #include "FMS_Data/FileStat.hpp"
 #include "FMS_Data/CpFileOptions.hpp"
 #include "FMS_Data/LsDirOptions.hpp"

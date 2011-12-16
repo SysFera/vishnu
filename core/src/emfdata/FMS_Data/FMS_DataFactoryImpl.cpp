@@ -19,7 +19,6 @@
 
 #include <FMS_Data/FMS_DataFactory.hpp>
 #include <FMS_Data/FMS_DataPackage.hpp>
-#include <FMS_Data/StringList.hpp>
 #include <FMS_Data/FileStat.hpp>
 #include <FMS_Data/CpFileOptions.hpp>
 #include <FMS_Data/LsDirOptions.hpp>
@@ -50,8 +49,6 @@ FMS_DataFactory::FMS_DataFactory()
 {
     switch (_eClass->getClassifierID())
     {
-    case FMS_DataPackage::STRINGLIST:
-        return createStringList();
     case FMS_DataPackage::FILESTAT:
         return createFileStat();
     case FMS_DataPackage::CPFILEOPTIONS:
@@ -155,10 +152,6 @@ FMS_DataFactory::FMS_DataFactory()
     }
 }
 
-StringList_ptr FMS_DataFactory::createStringList()
-{
-    return new StringList();
-}
 FileStat_ptr FMS_DataFactory::createFileStat()
 {
     return new FileStat();

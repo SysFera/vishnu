@@ -43,7 +43,6 @@
 %include "FMS_Data/LsDirOptions.hpp"
 %include "FMS_Data/LsTransferOptions.hpp"
 %include "FMS_Data/StopTransferOptions.hpp"
-%include "FMS_Data/StringList.hpp"
 %include "FMS_Data/TailOfFileOptions.hpp"
 
 

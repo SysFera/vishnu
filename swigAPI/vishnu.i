@@ -103,9 +103,10 @@
 %include "FMS_Data/LsDirOptions.hpp"
 %include "FMS_Data/LsTransferOptions.hpp"
 %include "FMS_Data/StopTransferOptions.hpp"
-%include "FMS_Data/StringList.hpp"
 %include "FMS_Data/TailOfFileOptions.hpp"
 %include "FMS_Data/RmFileOptions.hpp"
+%include "FMS_Data/DirEntry.hpp"
+%include "FMS_Data/DirEntryList.hpp"
 
 %{
 #define SWIG_FILE_WITH_INIT
@@ -158,7 +159,7 @@
 
 %template(EFileTransferList) ::ecorecpp::mapping::EList<::FMS_Data::FileTransfer>;
 %template(EFileStatList) ::ecorecpp::mapping::EList<::FMS_Data::FileStat>;
-%template(EStringList) std::vector< ::ecore::EString >;
+%template(EDirEntryList) ::ecorecpp::mapping::EList<::FMS_Data::DirEntry>;
 
 //  ***************************** UMS MODULE  *****************************
 
