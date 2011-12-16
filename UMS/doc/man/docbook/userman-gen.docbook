@@ -79,7 +79,10 @@ same conditions as regards security.</para>
         <para>Opening a VISHNU session is the first step before using any other VISHNU command.
 This command authenticates you. You must have been registered in the VISHNU system
 by an administrator.  It also creates a session that remains open after the command is
-completed and until the session is either manually or automatically closed.</para>
+completed and until the session is either manually or automatically closed.
+The userId and password may be given through the options, or if no userId and password 
+are specified, vishnu_connect will read them in the  .netrc file located in the home of the user. 
+</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -118,7 +121,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
           <varlistentry>
             <term><option>-w <replaceable>password</replaceable></option></term>
             <listitem>
-              <para>password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc located in the home of the user. .</para>
+              <para>password represents the password of the user.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -213,7 +216,9 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
 been closed. You can disconnect from a session without closing it (for example if there are running
 commands in that session) by setting the session's close policy (at connection time) to CLOSE_ON_TIMEOUT.
 As sessions are linked to a specific client system, you cannot reconnect to a 
-session that was opened on another client system.</para>
+session that was opened on another client system.
+The userId and password may be given through the options, or if no userId and password 
+are specified, vishnu_reconnect will read them in the  .netrc file located in the home of the user. </para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -233,7 +238,7 @@ session that was opened on another client system.</para>
           <varlistentry>
             <term><option>-w <replaceable>password</replaceable></option></term>
             <listitem>
-              <para>password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc located in the home of the user. .</para>
+              <para>password represents the password of the user.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1499,7 +1504,10 @@ opened the session).</para>
         <para>Opening a VISHNU session is the first step before using any other VISHNU command.
 This command authenticates you. You must have been registered in the VISHNU system
 by an administrator.  It also creates a session that remains open after the command is
-completed and until the session is either manually or automatically closed.</para>
+completed and until the session is either manually or automatically closed.
+The userId and password may be given through the options, or if no userId and password 
+are specified, vishnu_connect will read them in the  .netrc file located in the home of the user. 
+</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1507,13 +1515,13 @@ completed and until the session is either manually or automatically closed.</par
           <varlistentry>
             <term><emphasis>userId</emphasis></term>
             <listitem>
-              <para>Input argument. UserId represents the VISHNU user identifier.</para>
+              <para>Input argument. UserId represents the VISHNU user identifier.  If userId and password are empty, vishnu connect will read them in the .netrc file located in the home of the user.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>Input argument. Password represents the password of the user. If userId and password are empty, vishnu connet will read them in the user file .netrc located in the home of the user..</para>
+              <para>Input argument. Password represents the password of the user. If userId and password are empty, vishnu connect will read them in the .netrc file located  in the home of the user.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -1599,7 +1607,9 @@ completed and until the session is either manually or automatically closed.</par
 been closed. You can disconnect from a session without closing it (for example if there are running
 commands in that session) by setting the session's close policy (at connection time) to CLOSE_ON_TIMEOUT.
 As sessions are linked to a specific client system, you cannot reconnect to a 
-session that was opened on another client system.</para>
+session that was opened on another client system.
+The userId and password may be given through the options, or if no userId and password 
+are specified, vishnu_reconnect will read them in the  .netrc file located in the home of the user. </para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1607,13 +1617,13 @@ session that was opened on another client system.</para>
           <varlistentry>
             <term><emphasis>userId</emphasis></term>
             <listitem>
-              <para>Input argument. UserId represents the VISHNU user identifier.</para>
+              <para>Input argument. UserId represents the VISHNU user identifier.  If userId and password are empty, vishnu reconnect will read them in the .netrc file located in the home of the user.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>Input argument. Password represents the password of the user. If userId and password are empty, vishnu connet will read them in the user file .netrc located in the home of the user..</para>
+              <para>Input argument. Password represents the password of the user.  If userId and password are empty, vishnu reconnect will read them in the .netrc file located in the home of the user.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -2680,7 +2690,10 @@ opened the session).</para>
         <para>Opening a VISHNU session is the first step before using any other VISHNU command.
 This command authenticates you. You must have been registered in the VISHNU system
 by an administrator.  It also creates a session that remains open after the command is
-completed and until the session is either manually or automatically closed.</para>
+completed and until the session is either manually or automatically closed.
+The userId and password may be given through the options, or if no userId and password 
+are specified, vishnu_connect will read them in the  .netrc file located in the home of the user. 
+</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2688,13 +2701,13 @@ completed and until the session is either manually or automatically closed.</par
           <varlistentry>
             <term><emphasis>userId</emphasis></term>
             <listitem>
-              <para>Input argument. UserId represents the VISHNU user identifier.</para>
+              <para>Input argument. UserId represents the VISHNU user identifier.  If userId and password are empty, vishnu connect will read them in the .netrc file located in the home of the user.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>Input argument. Password represents the password of the user. If userId and password are empty, vishnu connet will read them in the user file .netrc located in the home of the user..</para>
+              <para>Input argument. Password represents the password of the user. If userId and password are empty, vishnu connect will read them in the .netrc file located  in the home of the user.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -2792,7 +2805,9 @@ completed and until the session is either manually or automatically closed.</par
 been closed. You can disconnect from a session without closing it (for example if there are running
 commands in that session) by setting the session's close policy (at connection time) to CLOSE_ON_TIMEOUT.
 As sessions are linked to a specific client system, you cannot reconnect to a 
-session that was opened on another client system.</para>
+session that was opened on another client system.
+The userId and password may be given through the options, or if no userId and password 
+are specified, vishnu_reconnect will read them in the  .netrc file located in the home of the user. </para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2800,13 +2815,13 @@ session that was opened on another client system.</para>
           <varlistentry>
             <term><emphasis>userId</emphasis></term>
             <listitem>
-              <para>Input argument. UserId represents the VISHNU user identifier.</para>
+              <para>Input argument. UserId represents the VISHNU user identifier.  If userId and password are empty, vishnu reconnect will read them in the .netrc file located in the home of the user.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>Input argument. Password represents the password of the user. If userId and password are empty, vishnu connet will read them in the user file .netrc located in the home of the user..</para>
+              <para>Input argument. Password represents the password of the user.  If userId and password are empty, vishnu reconnect will read them in the .netrc file located in the home of the user.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
