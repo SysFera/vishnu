@@ -89,7 +89,7 @@ BOOST_FIXTURE_TEST_SUITE(CancelFileTransfer, FMSSeDFixture)
 bool areFoundInDir(const string& sessionKey,
                    const string& dirFullPath,
                    const vector<string>& names) {
-  StringList dirContent;
+  DirEntryList dirContent;
   LsDirOptions lsOptions;
   lsOptions.setLongFormat(true);
   BOOST_REQUIRE( listDir(sessionKey, dirFullPath, dirContent) ==0  );
