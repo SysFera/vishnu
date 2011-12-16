@@ -1774,34 +1774,6 @@ class StopTransferOptions(EObject):
 StopTransferOptions_swigregister = _VISHNU.StopTransferOptions_swigregister
 StopTransferOptions_swigregister(StopTransferOptions)
 
-class StringList(EObject):
-    __swig_setmethods__ = {}
-    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, StringList, name, value)
-    __swig_getmethods__ = {}
-    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, StringList, name)
-    __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_StringList()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _VISHNU.delete_StringList
-    __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.StringList__initialize(self)
-    def getStrings(self): return _VISHNU.StringList_getStrings(self)
-    def setStrings(self, *args): return _VISHNU.StringList_setStrings(self, *args)
-    def addStrings(self, *args): return _VISHNU.StringList_addStrings(self, *args)
-    def setStringsAt(self, *args): return _VISHNU.StringList_setStringsAt(self, *args)
-    def deleteStringsAt(self, *args): return _VISHNU.StringList_deleteStringsAt(self, *args)
-    def eGet(self, *args): return _VISHNU.StringList_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.StringList_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.StringList_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.StringList_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.StringList__eClass(self)
-StringList_swigregister = _VISHNU.StringList_swigregister
-StringList_swigregister(StringList)
-
 class TailOfFileOptions(EObject):
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -1851,6 +1823,67 @@ class RmFileOptions(EObject):
     def _eClass(self): return _VISHNU.RmFileOptions__eClass(self)
 RmFileOptions_swigregister = _VISHNU.RmFileOptions_swigregister
 RmFileOptions_swigregister(RmFileOptions)
+
+class DirEntry(EObject):
+    __swig_setmethods__ = {}
+    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, DirEntry, name, value)
+    __swig_getmethods__ = {}
+    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, DirEntry, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _VISHNU.new_DirEntry()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _VISHNU.delete_DirEntry
+    __del__ = lambda self : None;
+    def _initialize(self): return _VISHNU.DirEntry__initialize(self)
+    def getPath(self): return _VISHNU.DirEntry_getPath(self)
+    def setPath(self, *args): return _VISHNU.DirEntry_setPath(self, *args)
+    def getOwner(self): return _VISHNU.DirEntry_getOwner(self)
+    def setOwner(self, *args): return _VISHNU.DirEntry_setOwner(self, *args)
+    def getGroup(self): return _VISHNU.DirEntry_getGroup(self)
+    def setGroup(self, *args): return _VISHNU.DirEntry_setGroup(self, *args)
+    def getPerms(self): return _VISHNU.DirEntry_getPerms(self)
+    def setPerms(self, *args): return _VISHNU.DirEntry_setPerms(self, *args)
+    def getSize(self): return _VISHNU.DirEntry_getSize(self)
+    def setSize(self, *args): return _VISHNU.DirEntry_setSize(self, *args)
+    def getCreationTime(self): return _VISHNU.DirEntry_getCreationTime(self)
+    def setCreationTime(self, *args): return _VISHNU.DirEntry_setCreationTime(self, *args)
+    def getType(self): return _VISHNU.DirEntry_getType(self)
+    def setType(self, *args): return _VISHNU.DirEntry_setType(self, *args)
+    def eGet(self, *args): return _VISHNU.DirEntry_eGet(self, *args)
+    def eSet(self, *args): return _VISHNU.DirEntry_eSet(self, *args)
+    def eIsSet(self, *args): return _VISHNU.DirEntry_eIsSet(self, *args)
+    def eUnset(self, *args): return _VISHNU.DirEntry_eUnset(self, *args)
+    def _eClass(self): return _VISHNU.DirEntry__eClass(self)
+DirEntry_swigregister = _VISHNU.DirEntry_swigregister
+DirEntry_swigregister(DirEntry)
+
+class DirEntryList(EObject):
+    __swig_setmethods__ = {}
+    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, DirEntryList, name, value)
+    __swig_getmethods__ = {}
+    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, DirEntryList, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _VISHNU.new_DirEntryList()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _VISHNU.delete_DirEntryList
+    __del__ = lambda self : None;
+    def _initialize(self): return _VISHNU.DirEntryList__initialize(self)
+    def getDirEntries(self): return _VISHNU.DirEntryList_getDirEntries(self)
+    def eGet(self, *args): return _VISHNU.DirEntryList_eGet(self, *args)
+    def eSet(self, *args): return _VISHNU.DirEntryList_eSet(self, *args)
+    def eIsSet(self, *args): return _VISHNU.DirEntryList_eIsSet(self, *args)
+    def eUnset(self, *args): return _VISHNU.DirEntryList_eUnset(self, *args)
+    def _eClass(self): return _VISHNU.DirEntryList__eClass(self)
+DirEntryList_swigregister = _VISHNU.DirEntryList_swigregister
+DirEntryList_swigregister(DirEntryList)
 
 class EListPtr(_object):
     __swig_setmethods__ = {}
@@ -2181,52 +2214,24 @@ class EFileStatList(_object):
 EFileStatList_swigregister = _VISHNU.EFileStatList_swigregister
 EFileStatList_swigregister(EFileStatList)
 
-class EStringList(_object):
+class EDirEntryList(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, EStringList, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, EDirEntryList, name, value)
     __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, EStringList, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, EDirEntryList, name)
+    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
     __repr__ = _swig_repr
-    def iterator(self): return _VISHNU.EStringList_iterator(self)
-    def __iter__(self): return self.iterator()
-    def __nonzero__(self): return _VISHNU.EStringList___nonzero__(self)
-    def __bool__(self): return _VISHNU.EStringList___bool__(self)
-    def __len__(self): return _VISHNU.EStringList___len__(self)
-    def pop(self): return _VISHNU.EStringList_pop(self)
-    def __getslice__(self, *args): return _VISHNU.EStringList___getslice__(self, *args)
-    def __setslice__(self, *args): return _VISHNU.EStringList___setslice__(self, *args)
-    def __delslice__(self, *args): return _VISHNU.EStringList___delslice__(self, *args)
-    def __delitem__(self, *args): return _VISHNU.EStringList___delitem__(self, *args)
-    def __getitem__(self, *args): return _VISHNU.EStringList___getitem__(self, *args)
-    def __setitem__(self, *args): return _VISHNU.EStringList___setitem__(self, *args)
-    def append(self, *args): return _VISHNU.EStringList_append(self, *args)
-    def empty(self): return _VISHNU.EStringList_empty(self)
-    def size(self): return _VISHNU.EStringList_size(self)
-    def clear(self): return _VISHNU.EStringList_clear(self)
-    def swap(self, *args): return _VISHNU.EStringList_swap(self, *args)
-    def get_allocator(self): return _VISHNU.EStringList_get_allocator(self)
-    def begin(self): return _VISHNU.EStringList_begin(self)
-    def end(self): return _VISHNU.EStringList_end(self)
-    def rbegin(self): return _VISHNU.EStringList_rbegin(self)
-    def rend(self): return _VISHNU.EStringList_rend(self)
-    def pop_back(self): return _VISHNU.EStringList_pop_back(self)
-    def erase(self, *args): return _VISHNU.EStringList_erase(self, *args)
-    def __init__(self, *args): 
-        this = _VISHNU.new_EStringList(*args)
-        try: self.this.append(this)
-        except: self.this = this
-    def push_back(self, *args): return _VISHNU.EStringList_push_back(self, *args)
-    def front(self): return _VISHNU.EStringList_front(self)
-    def back(self): return _VISHNU.EStringList_back(self)
-    def assign(self, *args): return _VISHNU.EStringList_assign(self, *args)
-    def resize(self, *args): return _VISHNU.EStringList_resize(self, *args)
-    def insert(self, *args): return _VISHNU.EStringList_insert(self, *args)
-    def reserve(self, *args): return _VISHNU.EStringList_reserve(self, *args)
-    def capacity(self): return _VISHNU.EStringList_capacity(self)
-    __swig_destroy__ = _VISHNU.delete_EStringList
+    def insert_all(self, *args): return _VISHNU.EDirEntryList_insert_all(self, *args)
+    def insert_at(self, *args): return _VISHNU.EDirEntryList_insert_at(self, *args)
+    def at(self, *args): return _VISHNU.EDirEntryList_at(self, *args)
+    def get(self, *args): return _VISHNU.EDirEntryList_get(self, *args)
+    def push_back(self, *args): return _VISHNU.EDirEntryList_push_back(self, *args)
+    def size(self): return _VISHNU.EDirEntryList_size(self)
+    def clear(self): return _VISHNU.EDirEntryList_clear(self)
+    __swig_destroy__ = _VISHNU.delete_EDirEntryList
     __del__ = lambda self : None;
-EStringList_swigregister = _VISHNU.EStringList_swigregister
-EStringList_swigregister(EStringList)
+EDirEntryList_swigregister = _VISHNU.EDirEntryList_swigregister
+EDirEntryList_swigregister(EDirEntryList)
 
 
 def reconnect(*args):
@@ -2620,10 +2625,6 @@ def contentOfFile(*args):
   return _VISHNU.contentOfFile(*args)
 contentOfFile = _VISHNU.contentOfFile
 
-def createDir(*args):
-  return _VISHNU.createDir(*args)
-createDir = _VISHNU.createDir
-
 def removeDir(*args):
   return _VISHNU.removeDir(*args)
 removeDir = _VISHNU.removeDir
@@ -2672,6 +2673,10 @@ headOfFile = _VISHNU.headOfFile
 def listDir(*args):
   return _VISHNU.listDir(*args)
 listDir = _VISHNU.listDir
+
+def createDir(*args):
+  return _VISHNU.createDir(*args)
+createDir = _VISHNU.createDir
 
 def moveFile(*args):
   return _VISHNU.moveFile(*args)

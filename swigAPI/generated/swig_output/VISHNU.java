@@ -305,16 +305,20 @@ public class VISHNU {
     return VISHNUJNI.contentOfFile(sessionKey, path, contentOfFile);
   }
 
-  public static int listDir(String sessionKey, String path, StringList dirContent, LsDirOptions options) throws InternalFMSException {
-    return VISHNUJNI.listDir__SWIG_0(sessionKey, path, StringList.getCPtr(dirContent), dirContent, LsDirOptions.getCPtr(options), options);
+  public static int listDir(String sessionKey, String path, DirEntryList dirContent, LsDirOptions options) throws InternalFMSException {
+    return VISHNUJNI.listDir__SWIG_0(sessionKey, path, DirEntryList.getCPtr(dirContent), dirContent, LsDirOptions.getCPtr(options), options);
   }
 
-  public static int listDir(String sessionKey, String path, StringList dirContent) throws InternalFMSException {
-    return VISHNUJNI.listDir__SWIG_1(sessionKey, path, StringList.getCPtr(dirContent), dirContent);
+  public static int listDir(String sessionKey, String path, DirEntryList dirContent) throws InternalFMSException {
+    return VISHNUJNI.listDir__SWIG_1(sessionKey, path, DirEntryList.getCPtr(dirContent), dirContent);
+  }
+
+  public static int createDir(String sessionKey, String path, SWIGTYPE_p_FMS_Data__CreateDirOptions options) throws InternalFMSException {
+    return VISHNUJNI.createDir__SWIG_0(sessionKey, path, SWIGTYPE_p_FMS_Data__CreateDirOptions.getCPtr(options));
   }
 
   public static int createDir(String sessionKey, String path) throws InternalFMSException {
-    return VISHNUJNI.createDir(sessionKey, path);
+    return VISHNUJNI.createDir__SWIG_1(sessionKey, path);
   }
 
   public static int moveFile(String sessionKey, String src, String dest, CpFileOptions options) throws InternalFMSException {
