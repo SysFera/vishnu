@@ -91,8 +91,18 @@
     <date>14/12/2011</date>
     <authorinitials>SysFera</authorinitials>
     <revdescription>
-      <para>Add a section dedicated of the VISHNU Job Output Environment Variables. Add  of other syntaxes for VISHNU generic script. Update of vishnu submit job reference, vishnu connect and reconnect reference, vishnu CreateDir reference. Add of vishnu_get_current_session_id a new command line reference. 
+      <para>Add a section dedicated of the VISHNU Job Output Environment Variables. Add  of other syntaxes for VISHNU generic script. Update of vishnu submit job reference, vishnu create dir reference. Add of vishnu_current_session_id a new command line reference. 
         Add the use of the .netrc file of the connection and the reconnection.
+   </para></revdescription>
+  </revision>
+
+    
+  <revision>
+    <revnumber>9</revnumber>
+    <date>16/12/2011</date>
+    <authorinitials>SysFera</authorinitials>
+    <revdescription>
+      <para>Add a section dedicated of the Configuration of ssh keys required for TMS.
    </para></revdescription>
   </revision> 
     </revhistory>
@@ -330,7 +340,7 @@
       <para> <emphasis role="bold">machine</emphasis> vishnu </para> 
       <para> <emphasis role="bold">login</emphasis> toto </para>
       <para> <emphasis role="bold">password</emphasis> pwd </para> 
-      <para>where toto and pwd are respectively the userId and the password of a user registered in vishnu and the machine must be named <emphasis role = "bold">vishnu</emphasis>.</para>
+      <para>The values toto and pwd are respectively the userId and the password of a user registered in vishnu and the machine must be named <emphasis role = "bold">vishnu</emphasis>.</para>
     </section>
 	
 	<section>
@@ -579,8 +589,16 @@
 	    It is important to note that all submitted jobs have two output files: one with the job's results, one (possibly empty) with the errors that occurred during the job's execution. The path of the job's output files is specified during the job's submission.
 	  </para>
 	</section> 
-      </section>
-      
+
+   <section>
+      <title>Configuration of ssh keys required for TMS</title>
+      <para>
+        Submission, cancellation and getting of job output files are executed by TMS SeD launched via ssh under the account of user having issued the request. To execute these services correctly, the public ssh key of the  account dedicated to TMS SeD must be added to authorized_keys ($HOME/.ssh/authorized_keys) file of the user. All keys protected by passphrase must be stored by a ssh agent to allow automatic authentication.
+      </para>
+    </section>
+
+ </section>
+
       <section> <!-- FMS description-->
 	<title> FMS package </title>
 	<section>

@@ -34,17 +34,17 @@ VISHNU.connect \- opens a session
 .BI "ret=VISHNU\&.connect(string\ " "userId" ", string\ " "password" ", Session\ " "session" ", ConnectOptions\ " "options\ =\ ConnectOptions()" ");"
 .SH "DESCRIPTION"
 .PP
-Opening a VISHNU session is the first step before using any other VISHNU command\&. This command authenticates you\&. You must have been registered in the VISHNU system by an administrator\&. It also creates a session that remains open after the command is completed and until the session is either manually or automatically closed\&.
+Opening a VISHNU session is the first step before using any other VISHNU command\&. This command authenticates you\&. You must have been registered in the VISHNU system by an administrator\&. It also creates a session that remains open after the command is completed and until the session is either manually or automatically closed\&. The userId and password may be given through the options, or if no userId and password are specified, vishnu_connect will read them in the \&.netrc file located in the home of the user\&.
 .SH "ARGUMENTS"
 .PP
 \fIuserId\fR
 .RS 4
-Input argument\&. UserId represents the VISHNU user identifier\&.
+Input argument\&. UserId represents the VISHNU user identifier\&. If userId and password are empty, vishnu connect will read them in the \&.netrc file located in the home of the user\&.
 .RE
 .PP
 \fIpassword\fR
 .RS 4
-Input argument\&. Password represents the password of the user\&. If userId and password are empty, vishnu connet will read them in the user file \&.netrc located in the home of the user\&.\&.
+Input argument\&. Password represents the password of the user\&. If userId and password are empty, vishnu connect will read them in the \&.netrc file located in the home of the user\&.
 .RE
 .PP
 \fIsession\fR

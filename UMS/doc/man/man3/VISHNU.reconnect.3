@@ -34,17 +34,17 @@ VISHNU.reconnect \- reconnects to a session that is still active
 .BI "ret=VISHNU\&.reconnect(string\ " "userId" ", string\ " "password" ", string\ " "sessionId" ", Session\ " "session" ");"
 .SH "DESCRIPTION"
 .PP
-This command allows you to resume a session that has been opened previously and that has not yet been closed\&. You can disconnect from a session without closing it (for example if there are running commands in that session) by setting the session\*(Aqs close policy (at connection time) to CLOSE_ON_TIMEOUT\&. As sessions are linked to a specific client system, you cannot reconnect to a session that was opened on another client system\&.
+This command allows you to resume a session that has been opened previously and that has not yet been closed\&. You can disconnect from a session without closing it (for example if there are running commands in that session) by setting the session\*(Aqs close policy (at connection time) to CLOSE_ON_TIMEOUT\&. As sessions are linked to a specific client system, you cannot reconnect to a session that was opened on another client system\&. The userId and password may be given through the options, or if no userId and password are specified, vishnu_reconnect will read them in the \&.netrc file located in the home of the user\&.
 .SH "ARGUMENTS"
 .PP
 \fIuserId\fR
 .RS 4
-Input argument\&. UserId represents the VISHNU user identifier\&.
+Input argument\&. UserId represents the VISHNU user identifier\&. If userId and password are empty, vishnu reconnect will read them in the \&.netrc file located in the home of the user\&.
 .RE
 .PP
 \fIpassword\fR
 .RS 4
-Input argument\&. Password represents the password of the user\&. If userId and password are empty, vishnu connet will read them in the user file \&.netrc located in the home of the user\&.\&.
+Input argument\&. Password represents the password of the user\&. If userId and password are empty, vishnu reconnect will read them in the \&.netrc file located in the home of the user\&.
 .RE
 .PP
 \fIsessionId\fR
