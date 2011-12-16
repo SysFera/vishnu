@@ -42,6 +42,14 @@
           
         <para>Deliverable version</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>2</revnumber>
+        <date>16/12/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+        <para>Replace all Oracle occurrences by MySQL</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -305,7 +313,7 @@
                 <entry><para>VISHNU Package for user and session management</para></entry>
               </row>
               <row>
-                <entry><para>PostgreSQL client (or Oracle client)</para></entry>
+                <entry><para>PostgreSQL client (or MySQL client)</para></entry>
                 <entry><para>Database client</para></entry>
               </row>
             </tbody>
@@ -342,7 +350,7 @@
             </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">VISHNU database</emphasis>, this component represents a unique instance of an Oracle or PostgreSQL database.
+            <para><emphasis role="bold">VISHNU database</emphasis>, this component represents a unique instance of an MySQL or PostgreSQL database.
             </para>
           </listitem>
         </itemizedlist>
@@ -678,7 +686,7 @@
               <row>
                 <entry><para>metricValue</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="Metric">Metric</link></para></entry>
+                <entry><para><link linkend="ListMetric">ListMetric</link></para></entry>
                 <entry><para>Value of the metric</para></entry>
                 <entry><para>OUT</para></entry>
               </row>
@@ -748,13 +756,6 @@
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
                 <entry><para>The id of the machine</para></entry>
-                <entry><para>IN</para></entry>
-              </row>
-              <row>
-                <entry><para>metricType</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para><link linkend="MetricType">MetricType</link></para></entry>
-                <entry><para>Type of metric</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>

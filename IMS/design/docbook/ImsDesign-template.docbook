@@ -25,8 +25,17 @@
         <revdescription>
           <para>Deliverable version</para>
         </revdescription>
-        </revision>
-      </revhistory>
+      </revision>
+      <revision>
+        <revnumber>2</revnumber>
+        <date>16/12/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Replace all Oracle occurrences by MySQL</para>
+        </revdescription>
+      </revision>
+
+    </revhistory>
     </info>
   <chapter>
     <title>Document presentation</title>
@@ -293,7 +302,7 @@
                   <entry><para>VISHNU Package for user and session management</para></entry>
                 </row>
                 <row>
-                  <entry><para>PostgreSQL client (or Oracle client)</para></entry>
+                  <entry><para>PostgreSQL client (or MySQL client)</para></entry>
                   <entry><para>Database client</para></entry>
                 </row>
               </tbody>
@@ -331,7 +340,7 @@
             </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">VISHNU database</emphasis>, this component represents a unique instance of an Oracle or PostgreSQL database.
+            <para><emphasis role="bold">VISHNU database</emphasis>, this component represents a unique instance of an MySQL or PostgreSQL database.
             </para>
           </listitem>
 	 </itemizedlist>

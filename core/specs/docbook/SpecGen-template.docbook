@@ -69,6 +69,17 @@
           </para>
         </revdescription>
         </revision>
+        
+        <revision>
+        <revnumber>07</revnumber>
+        <date>16/12/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>
+            Added use of .netrc file in use case U1.1
+          </para>
+        </revdescription>
+        </revision>
 
       </revhistory>
     </info>
