@@ -34,7 +34,7 @@ vishnu_connect \- opens a session
 \fBvishnu_connect\fR [\fB\-h\fR] [\fB\-p\ \fR\fB\fIclosePolicy\fR\fR] [\fB\-d\ \fR\fB\fIsessionInactivityDelay\fR\fR] [\fB\-s\ \fR\fB\fIsubstituteUserId\fR\fR] [\fB\-u\ \fR\fB\fIuserId\fR\fR] [\fB\-w\ \fR\fB\fIpassword\fR\fR]
 .SH "DESCRIPTION"
 .PP
-Opening a VISHNU session is the first step before using any other VISHNU command\&. This command authenticates you\&. You must have been registered in the VISHNU system by an administrator\&. It also creates a session that remains open after the command is completed and until the session is either manually or automatically closed\&.
+Opening a VISHNU session is the first step before using any other VISHNU command\&. This command authenticates you\&. You must have been registered in the VISHNU system by an administrator\&. It also creates a session that remains open after the command is completed and until the session is either manually or automatically closed\&. The userId and password may be given through the options, or if no userId and password are specified, vishnu_connect will read them in the \&.netrc file located in the home of the user\&.
 .SH "OPTIONS"
 .PP
 \fB\-h \fR\fB\fIhelp\fR\fR
@@ -64,7 +64,7 @@ userId represents the VISHNU user identifier\&.
 .PP
 \fB\-w \fR\fB\fIpassword\fR\fR
 .RS 4
-password represents the password of the user\&. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file \&.netrc located in the home of the user\&. \&.
+password represents the password of the user\&.
 .RE
 .SH "ENVIRONMENT"
 .PP
