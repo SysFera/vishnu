@@ -34,9 +34,18 @@
             <para>Modified addUser and addMachine signature.</para>
           </revdescription>
         </revision>
+        <revision>
+          <revnumber>3</revnumber>
+          <date>16/12/2011</date>
+          <authorinitials>SysFera</authorinitials>
+          <revdescription>
+            <para>Replace all Oracle occurrences by MySQL</para>
+          </revdescription>
+        </revision>
+
       </revhistory>
     </info>
-  <chapter>
+    <chapter>
     <title>Document presentation</title>
     <section>
       <title>Document objectives</title>
@@ -201,7 +210,7 @@
             </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Vishnu database</emphasis>: this component represents a unique instance of an Oracle or PostgreSQL database.
+            <para><emphasis role="bold">Vishnu database</emphasis>: this component represents a unique instance of MySQL or PostgreSQL database.
             </para>
           </listitem>
 	 </itemizedlist>
