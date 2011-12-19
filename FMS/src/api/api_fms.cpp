@@ -299,7 +299,7 @@ int vishnu::listDir(const string& sessionKey,const string& path, DirEntryList& d
     //To check the remote path
     vishnu::checkRemotePath(path);
 
-    // initialize the list of file transfers
+    // initialize the list of dirEntries
     dirContent.getDirEntries().clear();
 
 

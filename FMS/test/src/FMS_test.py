@@ -4,16 +4,15 @@ import time
 import string
 
 def displayDirContent(dirContent):
-  for i in range(dirContent.getStrings().size()):
-    print dirContent.getStrings()[i]
+  for i in range(dirContent.getDirEntries().size()):
+    print dirContent.getDirEntries().get(i)
 
 def displayFileInfo(fileInfo):
   print "path:", fileInfo.getPath()
   print "owner:", fileInfo.getOwner()
   print "group:", fileInfo.getGroup()
-  print "uid:", fileInfo.getUid()
-  print "gid:", fileInfo.getGid()
   print "size:", fileInfo.getSize()
+  print "creationTime:", fileInfo.getCreationTime()
 
 def dispalyContentOfFile(contentOfFile):
    print "---File content:"
@@ -78,7 +77,7 @@ try :
   VISHNU.listDir(k, DIR2, dirContent)
   displayDirContent(dirContent)
   #To clean the list
-  dirContent.getStrings().clear()
+  dirContent.getDirEntries().clear()
   print "createFile testCpFms:"
   VISHNU.createFile(k, path3)
   print "copyFile testGrp:"
@@ -88,13 +87,13 @@ try :
   VISHNU.listDir(k, DIR2, dirContent, lsOpt)
   displayDirContent(dirContent)
   #To clean the list
-  dirContent.getStrings().clear()
+  dirContent.getDirEntries().clear()
   print "===================listDir - LongFormat with testGrp file====================:"
   lsOpt.setLongFormat(True)
   VISHNU.listDir(k, DIR2, dirContent, lsOpt)
   displayDirContent(dirContent)
   #To clean the list
-  dirContent.getStrings().clear()
+  dirContent.getDirEntries().clear()
   print "chGrp:"
   VISHNU.chGrp(k, "adm", path3)
   print "===================listDir - LongFormat with change group on testGrp file============:"
@@ -102,7 +101,7 @@ try :
   VISHNU.listDir(k, DIR2, dirContent, lsOpt)
   displayDirContent(dirContent)
   #To clean the list
-  dirContent.getStrings().clear()
+  dirContent.getDirEntries().clear()
   print "chMod:"
   VISHNU.chMod(k, 644, path4)
   print "===================listDir - LongFormat with change mode on testGrp file============:"
@@ -110,14 +109,14 @@ try :
   VISHNU.listDir(k, DIR2, dirContent, lsOpt)
   displayDirContent(dirContent)
   #To clean the list
-  dirContent.getStrings().clear()
+  dirContent.getDirEntries().clear()
   print "moveFile"
   VISHNU.moveFile(k, path4, path5)
   print "===================listDir============:"
   VISHNU.listDir(k, DIR2, dirContent, lsOpt)
   displayDirContent(dirContent)
   #To clean the list
-  dirContent.getStrings().clear()
+  dirContent.getDirEntries().clear()
   print "===================headOfFile======:"
   r, contentOfFile = VISHNU.headOfFile(k, path2)
   print contentOfFile
@@ -134,7 +133,7 @@ try :
   VISHNU.listDir(k, DIR2, dirContent, lsOpt)
   displayDirContent(dirContent)
   #To clean the list
-  dirContent.getStrings().clear()
+  dirContent.getDirEntries().clear()
   print "copyAsyncFile:"
   lscpAsyncOpt.setIsRecursive(True)
   VISHNU.copyAsyncFile(k, DIR4, DIR5, fileTransferInfo,lscpAsyncOpt)
