@@ -9,10 +9,31 @@
 #include "utilVishnu.hpp"
 #include "FMS_Data.hpp"
 #include "FMSDisplayer.hpp"
+#include <iomanip>
+#include <iostream>
 
 using namespace std;
 using namespace vishnu;
 using namespace FMS_Data;
+
+/**
+ * \brief Display a '-' caracter
+ * \param size: The number of '-' to diplay
+ * \The output stream in which the display will be done.
+ */
+
+void
+setFill(int size, ostream& os) {
+
+  for(int i=0; i < size; i++) {
+    os << "-";
+  }
+  os << "  ";
+
+}
+
+
+
 
 /**
  * \brief function to convert mode value to string
@@ -284,17 +305,87 @@ return os;
  *\param dirEntryList: The file info list
  *\return The output stream in which the list of file information has
  *been printed
- *      */
-std::ostream&
-operator<<(std::ostream& os, DirEntryList& dirEntryList){
- for (size_t i = 0 ; i < dirEntryList.getDirEntries().size() ; i++){
-     os << *(dirEntryList.getDirEntries().get(i));
+ */
+ ostream& operator<<(ostream& os,  DirEntryList& dirEntryList) {
+
+  size_t maxPermsSize = std::string("Permissions").size();
+  size_t maxPathSize = std::string("Path").size();
+  size_t maxOwnerSize = std::string("Owner").size();
+  size_t maxGroupSize = std::string("Group").size();
+  size_t maxFileSize = std::string("Size").size();
+  size_t maxTypeSize = std::string("Type").size();
+  size_t maxCreationTimeSize = std::string("CreationTime").size();
+  
+  mode_t perms;
+  std::string path;
+  std::string owner;
+  std::string group;
+  std::size_t FileSize;
+  std::string type;
+  std::string creationTime;
+
+  for(unsigned int i = 0; i < dirEntryList.getDirEntries().size(); i++) {
+
+     perms = (dirEntryList.getDirEntries().get(i))->getPerms();
+     maxPermsSize = max(maxPermsSize, ConvertModeToString(perms).size());
+     
+     path = (dirEntryList.getDirEntries().get(i))->getPath();
+     maxPathSize = max(maxPathSize, path.size());
+
+     owner = (dirEntryList.getDirEntries().get(i))->getOwner();
+     maxOwnerSize = max(maxOwnerSize, owner.size());
+
+     group = (dirEntryList.getDirEntries().get(i))->getGroup();
+     maxGroupSize = max(maxGroupSize, group.size());
+
+     FileSize = (dirEntryList.getDirEntries().get(i))->getSize();
+     maxFileSize = max(maxFileSize, vishnu::convertToString(FileSize).size());
+     
+     type = ConvertFileTypeToString((dirEntryList.getDirEntries().get(i))->getType());
+     maxTypeSize = max(maxTypeSize, type.size());
+     
+     creationTime = (dirEntryList.getDirEntries().get(i))->getCreationTime();
+     maxCreationTimeSize = max(maxCreationTimeSize, creationTime.size());
+     
+  }
+
+  os << setw(maxPermsSize+2) << left << "permissions"<< setw(maxPathSize+2) << left << "path" << setw(maxOwnerSize+2) << left << "owner" << setw(maxGroupSize+2) << left << "group";
+  os <<setw(maxFileSize+2) << left << "size"<<setw(maxTypeSize+2) << left << "type"<<setw(maxCreationTimeSize+2) << left << "creation time";    
+  os << endl;
+
+  setFill(maxPermsSize, os);
+  setFill(maxPathSize, os);
+  setFill(maxOwnerSize, os);
+  setFill(maxGroupSize, os);
+  setFill(maxFileSize, os);
+  setFill(maxTypeSize, os);
+  setFill(maxCreationTimeSize, os);
+  os << endl;
+
+
+  for(unsigned int i = 0; i < dirEntryList.getDirEntries().size(); i++) {
+    
+     perms = (dirEntryList.getDirEntries().get(i))->getPerms();
+     path = (dirEntryList.getDirEntries().get(i))->getPath();
+     owner = (dirEntryList.getDirEntries().get(i))->getOwner();
+     group = (dirEntryList.getDirEntries().get(i))->getGroup();
+     FileSize = (dirEntryList.getDirEntries().get(i))->getSize();
+     type = ConvertFileTypeToString((dirEntryList.getDirEntries().get(i))->getType());
+     creationTime = (dirEntryList.getDirEntries().get(i))->getCreationTime();
+    
+    
+    os << setw(maxPermsSize+2) << left << ConvertModeToString(perms);
+    os << setw(maxPathSize+2) << left <<  path;
+    os << setw(maxOwnerSize+2) << left << owner;
+    os << setw(maxOwnerSize+2) << left << group;
+    os << setw(maxFileSize+2) << left << FileSize;
+    os << setw(maxTypeSize+2) << left << type;
+    os << setw(maxCreationTimeSize+2) << left << creationTime;
+    os << endl;
   }
 
  return os;
-
 }
-
 
 /**
  * \brief Helper function to display the information of a file
