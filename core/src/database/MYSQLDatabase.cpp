@@ -42,7 +42,7 @@ MYSQLDatabase::process(string request, int transacId){
 
   res=mysql_real_query(conn, request.c_str (), request.length());
 
-  if (res == CR_SERVER_GONE_ERROR) {
+  if (res == CR_SERVER_GONE_ERROR || res == CR_SERVER_LOST) {
 // try to reinitialise the socket
     if (mysql_real_connect(&(mpool[reqPos].mmysql),
                            mconfig.getDbHost().c_str(),
@@ -165,7 +165,7 @@ MYSQLDatabase::getResult(string request, int transacId) {
   // Execute the SQL query
   if ((res=mysql_real_query(conn, request.c_str (), request.length())) != 0) {
 
-    if (res == CR_SERVER_GONE_ERROR) {
+    if (res == CR_SERVER_GONE_ERROR || res == CR_SERVER_LOST) {
 // try to reinitialise the socket
       if (mysql_real_connect(&(mpool[reqPos].mmysql),
                              mconfig.getDbHost().c_str(),
