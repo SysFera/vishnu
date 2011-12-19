@@ -1,6 +1,6 @@
 /**
- * \file create_file.cpp
- * This file defines the VISHNU submit job command 
+ * \file list_dir.cpp
+ * This file defines the VISHNU list dir command 
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -36,11 +36,20 @@ struct ListDirFunc {
 
     DirEntryList dirContent;
 
-     int res= listDir(sessionKey, mpath, dirContent, moptions);
-    
-     cout << dirContent << "\n"; 
-  
-     return res;
+    int res= listDir(sessionKey, mpath, dirContent, moptions);
+
+    if (false ==moptions.isLongFormat()) {
+
+      for(unsigned int i = 0; i < dirContent.getDirEntries().size(); i++) {
+
+        std::cout <<  (dirContent.getDirEntries().get(i))->getPath() <<"\n";
+      } 
+
+    }else{
+
+      cout << dirContent << "\n"; 
+    }
+    return res;
   }
 };
 
