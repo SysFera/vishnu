@@ -49,8 +49,8 @@ contentOfFile = "MA_2"
 #Objects initialization
 headOpt = VISHNU.HeadOfFileOptions()
 tailOpt = VISHNU.TailOfFileOptions()
-dirContent = VISHNU.StringList()
-dirContent2 = VISHNU.StringList()
+dirContent = VISHNU.DirEntryList()
+dirContent2 = VISHNU.DirEntryList()
 lsOpt = VISHNU.LsDirOptions()
 fileInfo = VISHNU.FileStat()
 lscpAsyncOpt = VISHNU.CpFileOptions()

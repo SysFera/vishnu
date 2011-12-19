@@ -42,7 +42,7 @@ MYSQLDatabase::process(string request, int transacId){
 
   res=mysql_real_query(conn, request.c_str (), request.length());
 
-  if (res == CR_SERVER_GONE_ERROR) {
+  if (res) {
 // try to reinitialise the socket
     if (mysql_real_connect(&(mpool[reqPos].mmysql),
                            mconfig.getDbHost().c_str(),
@@ -165,24 +165,22 @@ MYSQLDatabase::getResult(string request, int transacId) {
   // Execute the SQL query
   if ((res=mysql_real_query(conn, request.c_str (), request.length())) != 0) {
 
-    if (res == CR_SERVER_GONE_ERROR) {
 // try to reinitialise the socket
-      if (mysql_real_connect(&(mpool[reqPos].mmysql),
-                             mconfig.getDbHost().c_str(),
-                             mconfig.getDbUserName().c_str(),
-                             mconfig.getDbUserPassword().c_str(),
-                             mconfig.getDbName().c_str(),
-                             mconfig.getDbPort(),
-                             NULL,
-                             CLIENT_MULTI_STATEMENTS) ==NULL) {
-        throw SystemException(ERRCODE_DBERR, "Cannot reconnect to the DB"
-                              + dbErrorMsg(&(mpool[reqPos].mmysql)));
-      }
-      res=mysql_real_query(conn, request.c_str (), request.length());
-      if (res) {
-        releaseConnection(reqPos);
-        throw SystemException(ERRCODE_DBERR, "S-Query error" + dbErrorMsg(conn));
-      }
+    if (mysql_real_connect(&(mpool[reqPos].mmysql),
+                           mconfig.getDbHost().c_str(),
+                           mconfig.getDbUserName().c_str(),
+                           mconfig.getDbUserPassword().c_str(),
+                           mconfig.getDbName().c_str(),
+                           mconfig.getDbPort(),
+                           NULL,
+                           CLIENT_MULTI_STATEMENTS) ==NULL) {
+      throw SystemException(ERRCODE_DBERR, "Cannot reconnect to the DB"
+                            + dbErrorMsg(&(mpool[reqPos].mmysql)));
+    }
+    res=mysql_real_query(conn, request.c_str (), request.length());
+    if (res) {
+      releaseConnection(reqPos);
+      throw SystemException(ERRCODE_DBERR, "S-Query error" + dbErrorMsg(conn));
     }
   }
 
