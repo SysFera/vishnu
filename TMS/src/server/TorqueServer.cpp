@@ -61,6 +61,11 @@ TorqueServer::submit(const char* scriptPath,
    argv[i+2] = const_cast<char*>(cmdsOptions[i].c_str());
   }
 
+  for(int i=0; i < argc; i++) {
+   cout << argv[i] << " ";
+  }
+  cout << endl;
+
   destination[0] = '\0';
   serverOut[0] = '\0';
   //parses the scripthPath and sets the options values
@@ -176,6 +181,42 @@ TorqueServer::processOptions(const TMS_Data::SubmitOptions& options,
       std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1); 
       cmdsOptions.push_back("nodes="+nbNodes+":ppn="+cpuPerNode);
     }
+  }
+
+  if(options.getMailNotification()!="") {
+    cmdsOptions.push_back("-m");  
+    std::string notification = options.getMailNotification();
+    if(notification.compare("BEGIN")==0) {
+      cmdsOptions.push_back("b"); 
+    } else if(notification.compare("END")==0) {
+      cmdsOptions.push_back("e");
+    } else if(notification.compare("ERROR")==0) {
+      cmdsOptions.push_back("a");
+    } else if(notification.compare("ALL")==0) {
+      cmdsOptions.push_back("bea");
+    } else {
+      throw UserException(ERRCODE_INVALID_PARAM, notification+" is an invalid notification type:"+" consult the vishnu user manuel");
+    }
+  }
+
+  if(options.getMailNotifyUser()!="") {
+    cmdsOptions.push_back("-M");
+    cmdsOptions.push_back(options.getMailNotifyUser());
+  } 
+
+  if(options.getGroup()!="") {
+    cmdsOptions.push_back("-W");
+    cmdsOptions.push_back("group_list="+options.getGroup());
+  }
+
+  if(options.getWorkingDir()!="") {
+    cmdsOptions.push_back("-d");
+    cmdsOptions.push_back(options.getWorkingDir());
+  }
+
+  if(options.getCpuTime()!="") {
+    cmdsOptions.push_back("-l");
+    cmdsOptions.push_back("cput="+options.getCpuTime());
   }
 
 }

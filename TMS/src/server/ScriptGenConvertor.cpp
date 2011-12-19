@@ -55,7 +55,7 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[queue]             = "#PBS -q ";
     mconversionTable[priority]          = "#PBS -p " ;
     mconversionTable[mem]               = "#PBS -l mem=";
-    mconversionTable[cpuTime]           = "#PBS cput ";
+    mconversionTable[cpuTime]           = "#PBS -l cput ";
     mconversionTable[loadLevelerSec]    = "";
     mconversionTable[commandSec]        = "";
     mconversionTable[torqueSec]         = "";

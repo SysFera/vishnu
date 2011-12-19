@@ -31,6 +31,11 @@ using namespace vishnu;
  * \param fnbNodeAndCpu : The number of node and processor per node
  * \param foutput : The output path
  * \param ferr : The error path
+ * \param fmailNotif : The type of the nofication (BEGIN, END, ERROR, and ALL)
+ * \param fmailUser : The name of user to receive email notification
+ * \param fgroup : The job group name
+ * \param fworkingDir : The job working directory
+ * \param fcpuTime : The cpu time limit of the job
  * \param dietConfig: Represents the VISHNU config file
  * \return The description of all options allowed by the command
  */
@@ -43,7 +48,12 @@ makeSubJobOp(string pgName,
 	     boost::function1<void, string>& fnbNodeAndCpu,
 	     boost::function1<void, string>& foutput,
 	     boost::function1<void, string>& ferr,
-	     string& walltime,
+	     boost::function1<void, string>& fmailNotif, 
+	     boost::function1<void, string>& fmailUser,
+	     boost::function1<void, string>& fgroup,
+	     boost::function1<void, string>& fworkingDir,
+	     boost::function1<void, string>& fcpuTime,
+       string& walltime,
        string& dietConfig){
   boost::shared_ptr<Options> opt(new Options(pgName));
 
@@ -86,6 +96,29 @@ makeSubJobOp(string pgName,
 	   "The error path on the remote machine of the job",
 	   CONFIG,
 	   ferr);
+  
+  opt->add("mailNotification,M",
+	   "Assigns the notification type of the job. Valid type values are " 
+     "BEGIN, END, ERROR, and ALL (any state change).",
+	   CONFIG,
+	   fmailNotif);
+  opt->add("mailNotifyUser,u",
+	   "The name of user to receive email notification of state changes as defined " 
+     "by the option mailNotification. The default value is the submitting user.",
+	   CONFIG,
+	   fmailUser);
+  opt->add("group,g",
+	   "Assigns a job group name.",
+	   CONFIG,
+	   fgroup);
+  opt->add("workingDir,D",
+	   "Assigns a job remote working dir",
+	   CONFIG,
+	   fworkingDir);
+  opt->add("cpuTime,T",
+	   "Assigns a job cpu limit time",
+	   CONFIG,
+	   fcpuTime);
 
   return opt;
 }
@@ -113,7 +146,11 @@ int main (int argc, char* argv[]){
   boost::function1<void,string> fnbNodeAndCpu(boost::bind(&TMS_Data::SubmitOptions::setNbNodesAndCpuPerNode,boost::ref(subOp),_1));
   boost::function1<void,string> foutput(boost::bind(&TMS_Data::SubmitOptions::setOutputPath,boost::ref(subOp),_1));
   boost::function1<void,string> ferr(boost::bind(&TMS_Data::SubmitOptions::setErrorPath,boost::ref(subOp),_1));
-
+  boost::function1<void,string> fmailNotif(boost::bind(&TMS_Data::SubmitOptions::setMailNotification,boost::ref(subOp),_1));
+  boost::function1<void,string> fmailUser(boost::bind(&TMS_Data::SubmitOptions::setMailNotifyUser,boost::ref(subOp),_1));
+  boost::function1<void,string> fgroup(boost::bind(&TMS_Data::SubmitOptions::setGroup,boost::ref(subOp),_1));
+  boost::function1<void,string> fworkingDir(boost::bind(&TMS_Data::SubmitOptions::setWorkingDir,boost::ref(subOp),_1));
+  boost::function1<void,string> fcpuTime(boost::bind(&TMS_Data::SubmitOptions::setCpuTime,boost::ref(subOp),_1));
      
   /*********** Out parameters *********************/
   Job job;
@@ -121,7 +158,7 @@ int main (int argc, char* argv[]){
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt=makeSubJobOp(argv[0],fname,fqueue, 
 					      fmemory, fnbCpu, fnbNodeAndCpu,
-					      foutput, ferr, walltime, dietConfig);
+					      foutput, ferr, fmailNotif, fmailUser, fgroup, fworkingDir, fcpuTime, walltime, dietConfig);
 
   opt->add("machineId,i",
 	   "represents the id of the machine",
