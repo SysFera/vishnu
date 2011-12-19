@@ -377,7 +377,7 @@
                 <entry><para>password</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>w</para></entry>
-                <entry><para>password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc located in the home of the user. </para></entry>
+                <entry><para>password represents the password of the user</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -473,7 +473,7 @@
                 <entry><para>password</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>w</para></entry>
-                <entry><para>password represents the password of the user. The userId and password may be given through the options, or if no userId and password are specified, vishnu connet will read them in the user file .netrc located in the home of the user. </para></entry>
+                <entry><para>password represents the password of the user</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
