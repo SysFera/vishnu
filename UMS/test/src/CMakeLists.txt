@@ -41,6 +41,11 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/umssed_testing.cfg.in
   ${TEST_CONFIG_PATH}/umssed_testing.cfg
 )
 
+# Create configuration for .netrc file
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/.netrc.in
+  ${TEST_CONFIG_PATH}/.netrc
+)
+
 
 include(UMSTestingMacros)
 ums_test_setup()

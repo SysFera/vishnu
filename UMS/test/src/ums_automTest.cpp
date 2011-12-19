@@ -10,8 +10,57 @@
 #include "UMS_fixtures.hpp"
 #include "api_ums.hpp"
 #include "diet_config_tests.h"
-#include"DIET_client.h" 
+#include"DIET_client.h"
+#include <fstream>
+#include <sstream>
+
+
+void putOnFile(const std::string& path, const std::string& content) {
+  std::ofstream ofile(path.c_str());
+  ofile << content;
+  ofile.close();
+}
+
+void
+replaceAllOccurences(const std::string& path,
+    const std::string& oldValue,
+    const std::string& newValue) {
+
+  std::string fileContent;
+
+  std::ifstream ifs (path.c_str());
+  if (ifs.is_open()) {
+    std::ostringstream oss;
+    oss << ifs.rdbuf();
+    fileContent = oss.str();
+    ifs.close();
+  }
+  size_t pos = fileContent.find(oldValue);
+  while(pos!=std::string::npos) {
+    fileContent.replace(pos, oldValue.size(), newValue, 0, newValue.size());
+    pos = fileContent.find(oldValue, pos+newValue.size());
+  }
+  putOnFile(path, fileContent);
+}
+
+void addLineToFile( const std::string& path,
+                    const std::string& line,
+                    std::string& oldfileContent) {
+
+  std::ifstream ifs (path.c_str());
+  if (ifs.is_open()) {
+    std::ostringstream oss;
+    oss << ifs.rdbuf();
+    oldfileContent = oss.str();
+    ifs.close();
+  }
+  putOnFile(path, line);
+}
+
+
+
 //BOOST_AUTO_TEST_SUITE( test_suite )
+
 BOOST_FIXTURE_TEST_SUITE( test_suite, UMSSeDFixture )
 using namespace std;
 using namespace UMS_Data;
@@ -104,7 +153,6 @@ BOOST_AUTO_TEST_CASE( my_test )
   Configuration           conf ;//= ecoreFactory->createConfiguration();
 
   string np;
-
   // Setting value
   cop.setClosePolicy(sct);
   cop.setSessionInactivityDelay(idl);
@@ -138,7 +186,7 @@ try {
   BOOST_CHECK_THROW  (connect    (uid, "bad", sess, cop), VishnuException);
   BOOST_CHECK_THROW  (listSessions(sess.getSessionKey(), *li   , opt     ), VishnuException);
 
-
+  //BOOST_CHECK  (connect      (uidu, pwdu, sess, cop )==0);
 //  // Connect with timeout
 //  sct = 0;
 //  cop.setClosePolicy(sct);
@@ -184,12 +232,83 @@ try {
   BOOST_CHECK  (listSessions(sess.getSessionKey(), *li , opt              )==0);
   cop = *(ecoreFactory->createConnectOptions());
 
-  sct = 0;
+  /*sct = 0;
   cop.setClosePolicy(sct);
   BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
   BOOST_MESSAGE(" Testing connect on disconnect U1.1-B2" );
   BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
-  BOOST_CHECK(listSessions(sess.getSessionKey(), *li, opt)==0);
+  BOOST_CHECK(listSessions(sess.getSessionKey(), *li, opt)==0);*/
+
+  //netrc's test setting values
+  string homebefore = getenv("HOME");
+  string netrcpath;
+
+  // Connect with netrc normal call
+  BOOST_REQUIRE(restore    (sqlScript+"/clean_session.sql")==0);
+  BOOST_MESSAGE(" Testing normal connection using the .netrc file U1.1-B2" );
+  BOOST_REQUIRE(setenv("HOME", CONFIG_DIR, 1)==0);
+  netrcpath = string(getenv("HOME")) + "/.netrc";
+  BOOST_REQUIRE (system(string("chmod 600 "+ netrcpath).c_str()) != -1);
+  BOOST_CHECK  (connect    ("", "", sess, cop )==0);
+  BOOST_CHECK  (listSessions(sess.getSessionKey(), *li , opt      )==0);
+  BOOST_REQUIRE(setenv("HOME", homebefore.c_str(), 1)==0);
+
+  // Connect with netrc file's bad path
+  BOOST_MESSAGE(" Testing connection with bad netrc file path U1.1-E3" );
+  BOOST_CHECK(setenv("HOME", "/tmp", 1)==0);
+  BOOST_CHECK_THROW (connect("", "", sess, cop ), VishnuException);
+  BOOST_REQUIRE(setenv("HOME", homebefore.c_str(), 1)==0);
+
+  //Connect with netrc file's bad permission
+  BOOST_MESSAGE(" Testing connection with bad netrc file permissions U1.1-E4" );
+  BOOST_REQUIRE(setenv("HOME", CONFIG_DIR, 1)==0);
+  netrcpath = string(getenv("HOME")) + "/.netrc";
+  BOOST_REQUIRE (system(string("chmod 700 "+ netrcpath).c_str()) != -1);
+  BOOST_CHECK_THROW (connect("", "", sess, cop ), VishnuException);
+  BOOST_REQUIRE (system(string("chmod 600 "+ netrcpath).c_str()) != -1);
+  BOOST_REQUIRE(setenv("HOME", homebefore.c_str(), 1)==0);
+
+  //Connect with netrc file with no vishnu machine defined
+  BOOST_MESSAGE(" Testing connection with no vishnu machine on netrc file U1.1-E5" );
+  BOOST_REQUIRE(setenv("HOME", CONFIG_DIR, 1)==0);
+  netrcpath = string(getenv("HOME")) + "/.netrc";
+  BOOST_REQUIRE (system(string("chmod 600 "+ netrcpath).c_str()) != -1);
+  replaceAllOccurences(netrcpath, "vishnu", "vishnu1");
+  BOOST_CHECK_THROW (connect("", "", sess, cop ), VishnuException);
+  BOOST_REQUIRE(setenv("HOME", homebefore.c_str(), 1)==0);
+  replaceAllOccurences(netrcpath, "vishnu1", "vishnu");
+
+  //Connect with .netrc file when the login is not defined
+  std::string oldContent;
+  BOOST_MESSAGE(" Testing connection with no login defined on netrc file U1.1-E6" );
+  BOOST_REQUIRE(setenv("HOME", CONFIG_DIR, 1)==0);
+  netrcpath = string(getenv("HOME")) + "/.netrc";
+  BOOST_REQUIRE (system(string("chmod 600 "+ netrcpath).c_str()) != -1);
+  addLineToFile(netrcpath, "machine vishnu password vishnu_user", oldContent);
+  BOOST_CHECK_THROW (connect("", "", sess, cop ), VishnuException);
+  BOOST_REQUIRE(setenv("HOME", homebefore.c_str(), 1)==0);
+  putOnFile(netrcpath, oldContent);
+
+  //Connect with .netrc file when the password is before the login
+  BOOST_MESSAGE(" Testing connection with the password defined before the login on netrc file U1.1-E6" );
+  BOOST_REQUIRE(setenv("HOME", CONFIG_DIR, 1)==0);
+  netrcpath = string(getenv("HOME")) + "/.netrc";
+  BOOST_REQUIRE (system(string("chmod 600 "+ netrcpath).c_str()) != -1);
+  addLineToFile(netrcpath, "machine vishnu password vishnu_user login root", oldContent);
+  BOOST_CHECK_THROW (connect("", "", sess, cop ), VishnuException);
+  BOOST_REQUIRE(setenv("HOME", homebefore.c_str(), 1)==0);
+  putOnFile(netrcpath, oldContent);
+
+  //Connect with .netrc file when the password is not defined
+  BOOST_MESSAGE(" Testing connection with no password defined on netrc file U1.1-E7" );
+  BOOST_REQUIRE(setenv("HOME", CONFIG_DIR, 1)==0);
+  netrcpath = string(getenv("HOME")) + "/.netrc";
+  BOOST_REQUIRE (system(string("chmod 600 "+ netrcpath).c_str()) != -1);
+  addLineToFile(netrcpath, "machine vishnu login root", oldContent);
+  BOOST_CHECK_THROW (connect("", "", sess, cop ), VishnuException);
+  BOOST_REQUIRE(setenv("HOME", homebefore.c_str(), 1)==0);
+  putOnFile(netrcpath, oldContent);
+
 
    // ReConnect normal call
    // -> connect
