@@ -2688,75 +2688,75 @@ SWIG_Python_MustGetPtr(PyObject *obj, swig_type_info *ty, int argnum, int flags)
 #define SWIGTYPE_p_ExceptionType swig_types[0]
 #define SWIGTYPE_p_FMSVishnuException swig_types[1]
 #define SWIGTYPE_p_FMS_Data__CpFileOptions swig_types[2]
-#define SWIGTYPE_p_FMS_Data__FileStat swig_types[3]
-#define SWIGTYPE_p_FMS_Data__FileStatList swig_types[4]
-#define SWIGTYPE_p_FMS_Data__FileTransfer swig_types[5]
-#define SWIGTYPE_p_FMS_Data__FileTransferList swig_types[6]
-#define SWIGTYPE_p_FMS_Data__HeadOfFileOptions swig_types[7]
-#define SWIGTYPE_p_FMS_Data__LsDirOptions swig_types[8]
-#define SWIGTYPE_p_FMS_Data__LsTransferOptions swig_types[9]
-#define SWIGTYPE_p_FMS_Data__RmFileOptions swig_types[10]
-#define SWIGTYPE_p_FMS_Data__StopTransferOptions swig_types[11]
-#define SWIGTYPE_p_FMS_Data__StringList swig_types[12]
-#define SWIGTYPE_p_FMS_Data__TailOfFileOptions swig_types[13]
-#define SWIGTYPE_p_IMSVishnuException swig_types[14]
-#define SWIGTYPE_p_IMS_Data__CurMetricOp swig_types[15]
-#define SWIGTYPE_p_IMS_Data__ExportOp swig_types[16]
-#define SWIGTYPE_p_IMS_Data__ListMetric swig_types[17]
-#define SWIGTYPE_p_IMS_Data__ListProcesses swig_types[18]
-#define SWIGTYPE_p_IMS_Data__ListSysInfo swig_types[19]
-#define SWIGTYPE_p_IMS_Data__ListThreshold swig_types[20]
-#define SWIGTYPE_p_IMS_Data__Metric swig_types[21]
-#define SWIGTYPE_p_IMS_Data__MetricHistOp swig_types[22]
-#define SWIGTYPE_p_IMS_Data__Process swig_types[23]
-#define SWIGTYPE_p_IMS_Data__ProcessOp swig_types[24]
-#define SWIGTYPE_p_IMS_Data__RestartOp swig_types[25]
-#define SWIGTYPE_p_IMS_Data__SysInfoOp swig_types[26]
-#define SWIGTYPE_p_IMS_Data__SystemInfo swig_types[27]
-#define SWIGTYPE_p_IMS_Data__Threshold swig_types[28]
-#define SWIGTYPE_p_IMS_Data__ThresholdOp swig_types[29]
-#define SWIGTYPE_p_SystemException swig_types[30]
-#define SWIGTYPE_p_T swig_types[31]
-#define SWIGTYPE_p_TMSVishnuException swig_types[32]
-#define SWIGTYPE_p_TMS_Data__Job swig_types[33]
-#define SWIGTYPE_p_TMS_Data__JobResult swig_types[34]
-#define SWIGTYPE_p_TMS_Data__ListJobResults swig_types[35]
-#define SWIGTYPE_p_TMS_Data__ListJobs swig_types[36]
-#define SWIGTYPE_p_TMS_Data__ListJobsOptions swig_types[37]
-#define SWIGTYPE_p_TMS_Data__ListProgression swig_types[38]
-#define SWIGTYPE_p_TMS_Data__ListQueues swig_types[39]
-#define SWIGTYPE_p_TMS_Data__ProgressOptions swig_types[40]
-#define SWIGTYPE_p_TMS_Data__Progression swig_types[41]
-#define SWIGTYPE_p_TMS_Data__Queue swig_types[42]
-#define SWIGTYPE_p_TMS_Data__SubmitOptions swig_types[43]
-#define SWIGTYPE_p_UMSVishnuException swig_types[44]
-#define SWIGTYPE_p_UMS_Data__Command swig_types[45]
-#define SWIGTYPE_p_UMS_Data__Configuration swig_types[46]
-#define SWIGTYPE_p_UMS_Data__ConnectOptions swig_types[47]
-#define SWIGTYPE_p_UMS_Data__ListCmdOptions swig_types[48]
-#define SWIGTYPE_p_UMS_Data__ListCommands swig_types[49]
-#define SWIGTYPE_p_UMS_Data__ListLocalAccOptions swig_types[50]
-#define SWIGTYPE_p_UMS_Data__ListLocalAccounts swig_types[51]
-#define SWIGTYPE_p_UMS_Data__ListMachineOptions swig_types[52]
-#define SWIGTYPE_p_UMS_Data__ListMachines swig_types[53]
-#define SWIGTYPE_p_UMS_Data__ListOptOptions swig_types[54]
-#define SWIGTYPE_p_UMS_Data__ListOptionsValues swig_types[55]
-#define SWIGTYPE_p_UMS_Data__ListSessionOptions swig_types[56]
-#define SWIGTYPE_p_UMS_Data__ListSessions swig_types[57]
-#define SWIGTYPE_p_UMS_Data__ListUsers swig_types[58]
-#define SWIGTYPE_p_UMS_Data__LocalAccount swig_types[59]
-#define SWIGTYPE_p_UMS_Data__Machine swig_types[60]
-#define SWIGTYPE_p_UMS_Data__OptionValue swig_types[61]
-#define SWIGTYPE_p_UMS_Data__Session swig_types[62]
-#define SWIGTYPE_p_UMS_Data__User swig_types[63]
-#define SWIGTYPE_p_UserException swig_types[64]
-#define SWIGTYPE_p_VishnuException swig_types[65]
-#define SWIGTYPE_p___ecorecpp__mapping__EListT_ecore__EObject_t swig_types[66]
-#define SWIGTYPE_p___ecorecpp__mapping__any swig_types[67]
-#define SWIGTYPE_p_allocator_type swig_types[68]
-#define SWIGTYPE_p_bool swig_types[69]
-#define SWIGTYPE_p_char swig_types[70]
-#define SWIGTYPE_p_difference_type swig_types[71]
+#define SWIGTYPE_p_FMS_Data__CreateDirOptions swig_types[3]
+#define SWIGTYPE_p_FMS_Data__DirEntry swig_types[4]
+#define SWIGTYPE_p_FMS_Data__DirEntryList swig_types[5]
+#define SWIGTYPE_p_FMS_Data__FileStat swig_types[6]
+#define SWIGTYPE_p_FMS_Data__FileStatList swig_types[7]
+#define SWIGTYPE_p_FMS_Data__FileTransfer swig_types[8]
+#define SWIGTYPE_p_FMS_Data__FileTransferList swig_types[9]
+#define SWIGTYPE_p_FMS_Data__HeadOfFileOptions swig_types[10]
+#define SWIGTYPE_p_FMS_Data__LsDirOptions swig_types[11]
+#define SWIGTYPE_p_FMS_Data__LsTransferOptions swig_types[12]
+#define SWIGTYPE_p_FMS_Data__RmFileOptions swig_types[13]
+#define SWIGTYPE_p_FMS_Data__StopTransferOptions swig_types[14]
+#define SWIGTYPE_p_FMS_Data__TailOfFileOptions swig_types[15]
+#define SWIGTYPE_p_IMSVishnuException swig_types[16]
+#define SWIGTYPE_p_IMS_Data__CurMetricOp swig_types[17]
+#define SWIGTYPE_p_IMS_Data__ExportOp swig_types[18]
+#define SWIGTYPE_p_IMS_Data__ListMetric swig_types[19]
+#define SWIGTYPE_p_IMS_Data__ListProcesses swig_types[20]
+#define SWIGTYPE_p_IMS_Data__ListSysInfo swig_types[21]
+#define SWIGTYPE_p_IMS_Data__ListThreshold swig_types[22]
+#define SWIGTYPE_p_IMS_Data__Metric swig_types[23]
+#define SWIGTYPE_p_IMS_Data__MetricHistOp swig_types[24]
+#define SWIGTYPE_p_IMS_Data__Process swig_types[25]
+#define SWIGTYPE_p_IMS_Data__ProcessOp swig_types[26]
+#define SWIGTYPE_p_IMS_Data__RestartOp swig_types[27]
+#define SWIGTYPE_p_IMS_Data__SysInfoOp swig_types[28]
+#define SWIGTYPE_p_IMS_Data__SystemInfo swig_types[29]
+#define SWIGTYPE_p_IMS_Data__Threshold swig_types[30]
+#define SWIGTYPE_p_IMS_Data__ThresholdOp swig_types[31]
+#define SWIGTYPE_p_SystemException swig_types[32]
+#define SWIGTYPE_p_T swig_types[33]
+#define SWIGTYPE_p_TMSVishnuException swig_types[34]
+#define SWIGTYPE_p_TMS_Data__Job swig_types[35]
+#define SWIGTYPE_p_TMS_Data__JobResult swig_types[36]
+#define SWIGTYPE_p_TMS_Data__ListJobResults swig_types[37]
+#define SWIGTYPE_p_TMS_Data__ListJobs swig_types[38]
+#define SWIGTYPE_p_TMS_Data__ListJobsOptions swig_types[39]
+#define SWIGTYPE_p_TMS_Data__ListProgression swig_types[40]
+#define SWIGTYPE_p_TMS_Data__ListQueues swig_types[41]
+#define SWIGTYPE_p_TMS_Data__ProgressOptions swig_types[42]
+#define SWIGTYPE_p_TMS_Data__Progression swig_types[43]
+#define SWIGTYPE_p_TMS_Data__Queue swig_types[44]
+#define SWIGTYPE_p_TMS_Data__SubmitOptions swig_types[45]
+#define SWIGTYPE_p_UMSVishnuException swig_types[46]
+#define SWIGTYPE_p_UMS_Data__Command swig_types[47]
+#define SWIGTYPE_p_UMS_Data__Configuration swig_types[48]
+#define SWIGTYPE_p_UMS_Data__ConnectOptions swig_types[49]
+#define SWIGTYPE_p_UMS_Data__ListCmdOptions swig_types[50]
+#define SWIGTYPE_p_UMS_Data__ListCommands swig_types[51]
+#define SWIGTYPE_p_UMS_Data__ListLocalAccOptions swig_types[52]
+#define SWIGTYPE_p_UMS_Data__ListLocalAccounts swig_types[53]
+#define SWIGTYPE_p_UMS_Data__ListMachineOptions swig_types[54]
+#define SWIGTYPE_p_UMS_Data__ListMachines swig_types[55]
+#define SWIGTYPE_p_UMS_Data__ListOptOptions swig_types[56]
+#define SWIGTYPE_p_UMS_Data__ListOptionsValues swig_types[57]
+#define SWIGTYPE_p_UMS_Data__ListSessionOptions swig_types[58]
+#define SWIGTYPE_p_UMS_Data__ListSessions swig_types[59]
+#define SWIGTYPE_p_UMS_Data__ListUsers swig_types[60]
+#define SWIGTYPE_p_UMS_Data__LocalAccount swig_types[61]
+#define SWIGTYPE_p_UMS_Data__Machine swig_types[62]
+#define SWIGTYPE_p_UMS_Data__OptionValue swig_types[63]
+#define SWIGTYPE_p_UMS_Data__Session swig_types[64]
+#define SWIGTYPE_p_UMS_Data__User swig_types[65]
+#define SWIGTYPE_p_UserException swig_types[66]
+#define SWIGTYPE_p_VishnuException swig_types[67]
+#define SWIGTYPE_p___ecorecpp__mapping__EListT_ecore__EObject_t swig_types[68]
+#define SWIGTYPE_p___ecorecpp__mapping__any swig_types[69]
+#define SWIGTYPE_p_bool swig_types[70]
+#define SWIGTYPE_p_char swig_types[71]
 #define SWIGTYPE_p_double swig_types[72]
 #define SWIGTYPE_p_ecore__EClass swig_types[73]
 #define SWIGTYPE_p_ecore__EObject swig_types[74]
@@ -2764,49 +2764,45 @@ SWIG_Python_MustGetPtr(PyObject *obj, swig_type_info *ty, int argnum, int flags)
 #define SWIGTYPE_p_ecore__EReference swig_types[76]
 #define SWIGTYPE_p_ecore__EStructuralFeature swig_types[77]
 #define SWIGTYPE_p_ecorecpp__mapping__DelegateEList__EList_ptr swig_types[78]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT___FMS_Data__FileStat_t swig_types[79]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT___FMS_Data__FileTransfer_t swig_types[80]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT___IMS_Data__Metric_t swig_types[81]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT___IMS_Data__Process_t swig_types[82]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT___IMS_Data__SystemInfo_t swig_types[83]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT___IMS_Data__Threshold_t swig_types[84]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT___TMS_Data__JobResult_t swig_types[85]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT___TMS_Data__Job_t swig_types[86]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT___TMS_Data__Progression_t swig_types[87]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT___TMS_Data__Queue_t swig_types[88]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__Command_t swig_types[89]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__LocalAccount_t swig_types[90]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__Machine_t swig_types[91]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__OptionValue_t swig_types[92]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__Session_t swig_types[93]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__User_t swig_types[94]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT_ecore__EObject_t swig_types[95]
-#define SWIGTYPE_p_ecorecpp__mapping__out_ptrT___ecorecpp__mapping__EListT___ecore__EObject_t_t swig_types[96]
-#define SWIGTYPE_p_element_type swig_types[97]
-#define SWIGTYPE_p_float swig_types[98]
-#define SWIGTYPE_p_int swig_types[99]
-#define SWIGTYPE_p_long_double swig_types[100]
-#define SWIGTYPE_p_long_long swig_types[101]
-#define SWIGTYPE_p_p_PyObject swig_types[102]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___FMS_Data__DirEntry_t swig_types[79]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___FMS_Data__FileStat_t swig_types[80]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___FMS_Data__FileTransfer_t swig_types[81]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___IMS_Data__Metric_t swig_types[82]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___IMS_Data__Process_t swig_types[83]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___IMS_Data__SystemInfo_t swig_types[84]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___IMS_Data__Threshold_t swig_types[85]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___TMS_Data__JobResult_t swig_types[86]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___TMS_Data__Job_t swig_types[87]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___TMS_Data__Progression_t swig_types[88]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___TMS_Data__Queue_t swig_types[89]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__Command_t swig_types[90]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__LocalAccount_t swig_types[91]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__Machine_t swig_types[92]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__OptionValue_t swig_types[93]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__Session_t swig_types[94]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__User_t swig_types[95]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT_ecore__EObject_t swig_types[96]
+#define SWIGTYPE_p_ecorecpp__mapping__out_ptrT___ecorecpp__mapping__EListT___ecore__EObject_t_t swig_types[97]
+#define SWIGTYPE_p_element_type swig_types[98]
+#define SWIGTYPE_p_float swig_types[99]
+#define SWIGTYPE_p_int swig_types[100]
+#define SWIGTYPE_p_long_double swig_types[101]
+#define SWIGTYPE_p_long_long swig_types[102]
 #define SWIGTYPE_p_p_char swig_types[103]
 #define SWIGTYPE_p_ptr_type swig_types[104]
 #define SWIGTYPE_p_short swig_types[105]
-#define SWIGTYPE_p_size_type swig_types[106]
-#define SWIGTYPE_p_std__exception swig_types[107]
-#define SWIGTYPE_p_std__listT___ecorecpp__mapping__any_t swig_types[108]
-#define SWIGTYPE_p_std__listT_ecore__EObject_p_t swig_types[109]
-#define SWIGTYPE_p_std__string swig_types[110]
-#define SWIGTYPE_p_std__stringstream swig_types[111]
-#define SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t swig_types[112]
-#define SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t__allocator_type swig_types[113]
-#define SWIGTYPE_p_std__vectorT_unsigned_char_std__allocatorT_unsigned_char_t_t swig_types[114]
-#define SWIGTYPE_p_swig__SwigPyIterator swig_types[115]
-#define SWIGTYPE_p_time_t swig_types[116]
-#define SWIGTYPE_p_unsigned_char swig_types[117]
-#define SWIGTYPE_p_unsigned_int swig_types[118]
-#define SWIGTYPE_p_value_type swig_types[119]
-static swig_type_info *swig_types[121];
-static swig_module_info swig_module = {swig_types, 120, 0, 0, 0, 0};
+#define SWIGTYPE_p_std__exception swig_types[106]
+#define SWIGTYPE_p_std__listT___ecorecpp__mapping__any_t swig_types[107]
+#define SWIGTYPE_p_std__listT_ecore__EObject_p_t swig_types[108]
+#define SWIGTYPE_p_std__string swig_types[109]
+#define SWIGTYPE_p_std__stringstream swig_types[110]
+#define SWIGTYPE_p_std__vectorT_unsigned_char_std__allocatorT_unsigned_char_t_t swig_types[111]
+#define SWIGTYPE_p_swig__SwigPyIterator swig_types[112]
+#define SWIGTYPE_p_time_t swig_types[113]
+#define SWIGTYPE_p_unsigned_char swig_types[114]
+#define SWIGTYPE_p_unsigned_int swig_types[115]
+static swig_type_info *swig_types[117];
+static swig_module_info swig_module = {swig_types, 116, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -3535,1110 +3531,6 @@ SWIG_From_size_t  (size_t value)
   return SWIG_From_unsigned_SS_long  (static_cast< unsigned long >(value));
 }
 
-
-namespace swig {  
-  template <class Type>
-  struct noconst_traits {
-    typedef Type noconst_type;
-  };
-
-  template <class Type>
-  struct noconst_traits<const Type> {
-    typedef Type noconst_type;
-  };
-
-  /*
-    type categories
-  */
-  struct pointer_category { };  
-  struct value_category { };
-
-  /*
-    General traits that provides type_name and type_info
-  */
-  template <class Type> struct traits { };
-
-  template <class Type>
-  inline const char* type_name() {
-    return traits<typename noconst_traits<Type >::noconst_type >::type_name();
-  }
-
-  template <class Type> 
-  struct traits_info {
-    static swig_type_info *type_query(std::string name) {
-      name += " *";
-      return SWIG_TypeQuery(name.c_str());
-    }    
-    static swig_type_info *type_info() {
-      static swig_type_info *info = type_query(type_name<Type>());
-      return info;
-    }
-  };
-
-  template <class Type>
-  inline swig_type_info *type_info() {
-    return traits_info<Type>::type_info();
-  }
-
-  /*
-    Partial specialization for pointers
-  */
-  template <class Type> struct traits <Type *> {
-    typedef pointer_category category;
-    static std::string make_ptr_name(const char* name) {
-      std::string ptrname = name;
-      ptrname += " *";
-      return ptrname;
-    }    
-    static const char* type_name() {
-      static std::string name = make_ptr_name(swig::type_name<Type>());
-      return name.c_str();
-    }
-  };
-
-  template <class Type, class Category> 
-  struct traits_as { };
- 
-  template <class Type, class Category> 
-  struct traits_check { };
-
-}
-
-
-namespace swig {  
-  /*
-    Traits that provides the from method
-  */
-  template <class Type> struct traits_from_ptr {
-    static PyObject *from(Type *val, int owner = 0) {
-      return SWIG_NewPointerObj(val, type_info<Type>(), owner);
-    }
-  };
-
-  template <class Type> struct traits_from {
-    static PyObject *from(const Type& val) {
-      return traits_from_ptr<Type>::from(new Type(val), 1);
-    }
-  };
-
-  template <class Type> struct traits_from<Type *> {
-    static PyObject *from(Type* val) {
-      return traits_from_ptr<Type>::from(val, 0);
-    }
-  };
-
-  template <class Type> struct traits_from<const Type *> {
-    static PyObject *from(const Type* val) {
-      return traits_from_ptr<Type>::from(const_cast<Type*>(val), 0);
-    }
-  };
-
-
-  template <class Type>
-  inline PyObject *from(const Type& val) {
-    return traits_from<Type>::from(val);
-  }
-
-  template <class Type>
-  inline PyObject *from_ptr(Type* val, int owner) {
-    return traits_from_ptr<Type>::from(val, owner);
-  }
-
-  /*
-    Traits that provides the asval/as/check method
-  */
-  template <class Type>
-  struct traits_asptr {   
-    static int asptr(PyObject *obj, Type **val) {
-      Type *p;
-      int res = SWIG_ConvertPtr(obj, (void**)&p, type_info<Type>(), 0);
-      if (SWIG_IsOK(res)) {
-	if (val) *val = p;
-      }
-      return res;
-    }
-  }; 
-
-  template <class Type>
-  inline int asptr(PyObject *obj, Type **vptr) {
-    return traits_asptr<Type>::asptr(obj, vptr);
-  }
-
-  template <class Type> 
-  struct traits_asval {
-    static int asval(PyObject *obj, Type *val) {
-      if (val) {
-	Type *p = 0;
-	int res = traits_asptr<Type>::asptr(obj, &p);
-	if (!SWIG_IsOK(res)) return res;	
-	if (p) {
-	  typedef typename noconst_traits<Type>::noconst_type noconst_type;
-	  *(const_cast<noconst_type*>(val)) = *p;
-	  if (SWIG_IsNewObj(res)){
-	    delete p;
-	    res = SWIG_DelNewMask(res);
-	  }
-	  return res;
-	} else {
-	  return SWIG_ERROR;
-	}
-      } else {
-	return traits_asptr<Type>::asptr(obj, (Type **)(0));
-      }
-    }
-  };
-
-  template <class Type> struct traits_asval<Type*> {
-    static int asval(PyObject *obj, Type **val) {
-      if (val) {
-        typedef typename noconst_traits<Type>::noconst_type noconst_type;
-        noconst_type *p = 0;
-        int res = traits_asptr<noconst_type>::asptr(obj,  &p);
-        if (SWIG_IsOK(res)) {
-          *(const_cast<noconst_type**>(val)) = p;
-	}
-	return res;
-      } else {
-	return traits_asptr<Type>::asptr(obj, (Type **)(0));
-      }
-    }
-  };
-  
-  template <class Type>
-  inline int asval(PyObject *obj, Type *val) {
-    return traits_asval<Type>::asval(obj, val);
-  }
-
-  template <class Type> 
-  struct traits_as<Type, value_category> {
-    static Type as(PyObject *obj, bool throw_error) {
-      Type v;
-      int res = asval(obj, &v);
-      if (!obj || !SWIG_IsOK(res)) {
-	if (!PyErr_Occurred()) {
-	  ::SWIG_Error(SWIG_TypeError,  swig::type_name<Type>());
-	}
-	if (throw_error) throw std::invalid_argument("bad type");
-      }
-      return v;
-    }
-  };
-
-  template <class Type> 
-  struct traits_as<Type, pointer_category> {
-    static Type as(PyObject *obj, bool throw_error) {
-      Type *v = 0;      
-      int res = (obj ? traits_asptr<Type>::asptr(obj, &v) : SWIG_ERROR);
-      if (SWIG_IsOK(res) && v) {
-	if (SWIG_IsNewObj(res)) {
-	  Type r(*v);
-	  delete v;
-	  return r;
-	} else {
-	  return *v;
-	}
-      } else {
-	// Uninitialized return value, no Type() constructor required.
-	static Type *v_def = (Type*) malloc(sizeof(Type));
-	if (!PyErr_Occurred()) {
-	  SWIG_Error(SWIG_TypeError,  swig::type_name<Type>());
-	}
-	if (throw_error) throw std::invalid_argument("bad type");
-	memset(v_def,0,sizeof(Type));
-	return *v_def;
-      }
-    }
-  };
-
-  template <class Type> 
-  struct traits_as<Type*, pointer_category> {
-    static Type* as(PyObject *obj, bool throw_error) {
-      Type *v = 0;      
-      int res = (obj ? traits_asptr<Type>::asptr(obj, &v) : SWIG_ERROR);
-      if (SWIG_IsOK(res)) {
-	return v;
-      } else {
-	if (!PyErr_Occurred()) {
-	  SWIG_Error(SWIG_TypeError,  swig::type_name<Type>());
-	}
-	if (throw_error) throw std::invalid_argument("bad type");
-	return 0;
-      }
-    }
-  };
-    
-  template <class Type>
-  inline Type as(PyObject *obj, bool te = false) {
-    return traits_as<Type, typename traits<Type>::category>::as(obj, te);
-  }
-
-  template <class Type> 
-  struct traits_check<Type, value_category> {
-    static bool check(PyObject *obj) {
-      int res = obj ? asval(obj, (Type *)(0)) : SWIG_ERROR;
-      return SWIG_IsOK(res) ? true : false;
-    }
-  };
-
-  template <class Type> 
-  struct traits_check<Type, pointer_category> {
-    static bool check(PyObject *obj) {
-      int res = obj ? asptr(obj, (Type **)(0)) : SWIG_ERROR;
-      return SWIG_IsOK(res) ? true : false;
-    }
-  };
-
-  template <class Type>
-  inline bool check(PyObject *obj) {
-    return traits_check<Type, typename traits<Type>::category>::check(obj);
-  }
-}
-
-
-#include <functional>
-
-namespace std {
-  template <>
-  struct less <PyObject *>: public binary_function<PyObject *, PyObject *, bool>
-  {
-    bool
-    operator()(PyObject * v, PyObject *w) const
-    { 
-      bool res;
-      SWIG_PYTHON_THREAD_BEGIN_BLOCK;
-      res = PyObject_RichCompareBool(v, w, Py_LT) ? true : false;
-      /* This may fall into a case of inconsistent
-               eg. ObjA > ObjX > ObjB
-               but ObjA < ObjB
-      */
-      if( PyErr_Occurred() && PyErr_ExceptionMatches(PyExc_TypeError) )
-      {
-        /* Objects can't be compared, this mostly occurred in Python 3.0 */
-        /* Compare their ptr directly for a workaround */
-        res = (v < w);
-        PyErr_Clear();
-      }
-      SWIG_PYTHON_THREAD_END_BLOCK;
-      return res;
-    }
-  };
-
-  template <>
-  struct less <swig::SwigPtr_PyObject>: public binary_function<swig::SwigPtr_PyObject, swig::SwigPtr_PyObject, bool>
-  {
-    bool
-    operator()(const swig::SwigPtr_PyObject& v, const swig::SwigPtr_PyObject& w) const
-    {
-      return std::less<PyObject *>()(v, w);
-    }
-  };
-
-  template <>
-  struct less <swig::SwigVar_PyObject>: public binary_function<swig::SwigVar_PyObject, swig::SwigVar_PyObject, bool>
-  {
-    bool
-    operator()(const swig::SwigVar_PyObject& v, const swig::SwigVar_PyObject& w) const
-    {
-      return std::less<PyObject *>()(v, w);
-    }
-  };
-
-}
-
-namespace swig {
-  template <> struct traits<PyObject *> {
-    typedef value_category category;
-    static const char* type_name() { return "PyObject *"; }
-  };  
-
-  template <>  struct traits_asval<PyObject * > {   
-    typedef PyObject * value_type;
-    static int asval(PyObject *obj, value_type *val) {
-      if (val) *val = obj;
-      return SWIG_OK;
-    }
-  };
-
-  template <> 
-  struct traits_check<PyObject *, value_category> {
-    static bool check(PyObject *) {
-      return true;
-    }
-  };
-
-  template <>  struct traits_from<PyObject *> {
-    typedef PyObject * value_type;
-    static PyObject *from(const value_type& val) {
-      Py_XINCREF(val);
-      return val;
-    }
-  };
-  
-}
-
-namespace swig {
-  inline size_t
-  check_index(ptrdiff_t i, size_t size, bool insert = false) {
-    if ( i < 0 ) {
-      if ((size_t) (-i) <= size)
-	return (size_t) (i + size);
-    } else if ( (size_t) i < size ) {
-      return (size_t) i;
-    } else if (insert && ((size_t) i == size)) {
-      return size;
-    }
-    
-    throw std::out_of_range("index out of range");
-  }
-
-  inline size_t
-  slice_index(ptrdiff_t i, size_t size) {
-    if ( i < 0 ) {
-      if ((size_t) (-i) <= size) {
-	return (size_t) (i + size);
-      } else {
-	throw std::out_of_range("index out of range");
-      }
-    } else {
-      return ( (size_t) i < size ) ? ((size_t) i) : size;
-    }
-  }
-
-  template <class Sequence, class Difference>
-  inline typename Sequence::iterator
-  getpos(Sequence* self, Difference i)  {
-    typename Sequence::iterator pos = self->begin();
-    std::advance(pos, check_index(i,self->size()));
-    return pos;
-  }
-
-  template <class Sequence, class Difference>
-  inline typename Sequence::const_iterator
-  cgetpos(const Sequence* self, Difference i)  {
-    typename Sequence::const_iterator pos = self->begin();
-    std::advance(pos, check_index(i,self->size()));
-    return pos;
-  }
-
-  template <class Sequence, class Difference>
-  inline Sequence*
-  getslice(const Sequence* self, Difference i, Difference j) {
-    typename Sequence::size_type size = self->size();
-    typename Sequence::size_type ii = swig::check_index(i, size);
-    typename Sequence::size_type jj = swig::slice_index(j, size);
-
-    if (jj > ii) {
-      typename Sequence::const_iterator vb = self->begin();
-      typename Sequence::const_iterator ve = self->begin();
-      std::advance(vb,ii);
-      std::advance(ve,jj);
-      return new Sequence(vb, ve);
-    } else {
-      return new Sequence();
-    }
-  }
-
-  template <class Sequence, class Difference, class InputSeq>
-  inline void
-  setslice(Sequence* self, Difference i, Difference j, const InputSeq& v) {
-    typename Sequence::size_type size = self->size();
-    typename Sequence::size_type ii = swig::check_index(i, size, true);
-    typename Sequence::size_type jj = swig::slice_index(j, size);
-    if (jj < ii) jj = ii;
-    size_t ssize = jj - ii;
-    if (ssize <= v.size()) {
-      typename Sequence::iterator sb = self->begin();
-      typename InputSeq::const_iterator vmid = v.begin();
-      std::advance(sb,ii);
-      std::advance(vmid, jj - ii);
-      self->insert(std::copy(v.begin(), vmid, sb), vmid, v.end());
-    } else {
-      typename Sequence::iterator sb = self->begin();
-      typename Sequence::iterator se = self->begin();
-      std::advance(sb,ii);
-      std::advance(se,jj);
-      self->erase(sb,se);
-      self->insert(sb, v.begin(), v.end());
-    }
-  }
-
-  template <class Sequence, class Difference>
-  inline void
-  delslice(Sequence* self, Difference i, Difference j) {
-    typename Sequence::size_type size = self->size();
-    typename Sequence::size_type ii = swig::check_index(i, size, true);
-    typename Sequence::size_type jj = swig::slice_index(j, size);
-    if (jj > ii) {
-      typename Sequence::iterator sb = self->begin();
-      typename Sequence::iterator se = self->begin();
-      std::advance(sb,ii);
-      std::advance(se,jj);
-      self->erase(sb,se);
-    }
-  }
-}
-
-
-#if defined(__SUNPRO_CC) && defined(_RWSTD_VER)
-#  if !defined(SWIG_NO_STD_NOITERATOR_TRAITS_STL)
-#    define SWIG_STD_NOITERATOR_TRAITS_STL
-#  endif
-#endif
-
-#if !defined(SWIG_STD_NOITERATOR_TRAITS_STL)
-#include <iterator>
-#else
-namespace std {
-  template <class Iterator>
-  struct iterator_traits {
-    typedef ptrdiff_t difference_type;
-    typedef typename Iterator::value_type value_type;
-  };
-
-  template <class Iterator, class Category,class T, class Reference, class Pointer, class Distance>
-  struct iterator_traits<__reverse_bi_iterator<Iterator,Category,T,Reference,Pointer,Distance> > {
-    typedef Distance difference_type;
-    typedef T value_type;
-  };
-
-  template <class T>
-  struct iterator_traits<T*> {
-    typedef T value_type;
-    typedef ptrdiff_t difference_type;
-  };
-
-  template<typename _InputIterator>
-  inline typename iterator_traits<_InputIterator>::difference_type
-  distance(_InputIterator __first, _InputIterator __last)
-  {
-    typename iterator_traits<_InputIterator>::difference_type __n = 0;
-    while (__first != __last) {
-      ++__first; ++__n;
-    }
-    return __n;
-  }
-}
-#endif
-
-
-namespace swig {
-  template<typename OutIterator>
-  class SwigPyIterator_T :  public SwigPyIterator
-  {
-  public:
-    typedef OutIterator out_iterator;
-    typedef typename std::iterator_traits<out_iterator>::value_type value_type;    
-    typedef SwigPyIterator_T<out_iterator> self_type;
-
-    SwigPyIterator_T(out_iterator curr, PyObject *seq)
-      : SwigPyIterator(seq), current(curr)
-    {
-    }
-
-    const out_iterator& get_current() const
-    {
-      return current;
-    }
-
-    
-    bool equal (const SwigPyIterator &iter) const
-    {
-      const self_type *iters = dynamic_cast<const self_type *>(&iter);
-      if (iters) {
-	return (current == iters->get_current());
-      } else {
-	throw std::invalid_argument("bad iterator type");
-      }
-    }
-    
-    ptrdiff_t distance(const SwigPyIterator &iter) const
-    {
-      const self_type *iters = dynamic_cast<const self_type *>(&iter);
-      if (iters) {
-	return std::distance(current, iters->get_current());
-      } else {
-	throw std::invalid_argument("bad iterator type");
-      }
-    }    
-    
-  protected:
-    out_iterator current;
-  };
-  
-  template <class ValueType>
-  struct from_oper 
-  {
-    typedef const ValueType& argument_type;
-    typedef PyObject *result_type;
-    result_type operator()(argument_type v) const
-    {
-      return swig::from(v);
-    }
-  };
-
-  template<typename OutIterator, 
-	   typename ValueType = typename std::iterator_traits<OutIterator>::value_type,
-	   typename FromOper = from_oper<ValueType> >
-  class SwigPyIteratorOpen_T :  public SwigPyIterator_T<OutIterator>
-  {
-  public:
-    FromOper from;
-    typedef OutIterator out_iterator;
-    typedef ValueType value_type;
-    typedef SwigPyIterator_T<out_iterator>  base;
-    typedef SwigPyIteratorOpen_T<OutIterator, ValueType, FromOper> self_type;
-    
-    SwigPyIteratorOpen_T(out_iterator curr, PyObject *seq)
-      : SwigPyIterator_T<OutIterator>(curr, seq)
-    {
-    }
-    
-    PyObject *value() const {
-      return from(static_cast<const value_type&>(*(base::current)));
-    }
-    
-    SwigPyIterator *copy() const
-    {
-      return new self_type(*this);
-    }
-
-    SwigPyIterator *incr(size_t n = 1)
-    {
-      while (n--) {
-	++base::current;
-      }
-      return this;
-    }
-
-    SwigPyIterator *decr(size_t n = 1)
-    {
-      while (n--) {
-	--base::current;
-      }
-      return this;
-    }
-  };
-
-  template<typename OutIterator, 
-	   typename ValueType = typename std::iterator_traits<OutIterator>::value_type,
-	   typename FromOper = from_oper<ValueType> >
-  class SwigPyIteratorClosed_T :  public SwigPyIterator_T<OutIterator>
-  {
-  public:
-    FromOper from;
-    typedef OutIterator out_iterator;
-    typedef ValueType value_type;
-    typedef SwigPyIterator_T<out_iterator>  base;    
-    typedef SwigPyIteratorClosed_T<OutIterator, ValueType, FromOper> self_type;
-    
-    SwigPyIteratorClosed_T(out_iterator curr, out_iterator first, out_iterator last, PyObject *seq)
-      : SwigPyIterator_T<OutIterator>(curr, seq), begin(first), end(last)
-    {
-    }
-    
-    PyObject *value() const {
-      if (base::current == end) {
-	throw stop_iteration();
-      } else {
-	return from(static_cast<const value_type&>(*(base::current)));
-      }
-    }
-    
-    SwigPyIterator *copy() const
-    {
-      return new self_type(*this);
-    }
-
-    SwigPyIterator *incr(size_t n = 1)
-    {
-      while (n--) {
-	if (base::current == end) {
-	  throw stop_iteration();
-	} else {
-	  ++base::current;
-	}
-      }
-      return this;
-    }
-
-    SwigPyIterator *decr(size_t n = 1)
-    {
-      while (n--) {
-	if (base::current == begin) {
-	  throw stop_iteration();
-	} else {
-	  --base::current;
-	}
-      }
-      return this;
-    }
-
-  private:
-    out_iterator begin;
-    out_iterator end;
-  };
-
-  template<typename OutIter>
-  inline SwigPyIterator*
-  make_output_iterator(const OutIter& current, const OutIter& begin,const OutIter& end, PyObject *seq = 0)
-  {
-    return new SwigPyIteratorClosed_T<OutIter>(current, begin, end, seq);
-  }
-
-  template<typename OutIter>
-  inline SwigPyIterator*
-  make_output_iterator(const OutIter& current, PyObject *seq = 0)
-  {
-    return new SwigPyIteratorOpen_T<OutIter>(current, seq);
-  }
-}
-
-
-namespace swig
-{
-  template <class T>
-  struct SwigPySequence_Ref
-  {
-    SwigPySequence_Ref(PyObject* seq, int index)
-      : _seq(seq), _index(index)
-    {
-    }
-    
-    operator T () const
-    {
-      swig::SwigVar_PyObject item = PySequence_GetItem(_seq, _index);
-      try {
-	return swig::as<T>(item, true);
-      } catch (std::exception& e) {
-	char msg[1024];
-	sprintf(msg, "in sequence element %d ", _index);
-	if (!PyErr_Occurred()) {
-	  ::SWIG_Error(SWIG_TypeError,  swig::type_name<T>());
-	}
-	SWIG_Python_AddErrorMsg(msg);
-	SWIG_Python_AddErrorMsg(e.what());
-	throw;
-      }
-    }
-
-    SwigPySequence_Ref& operator=(const T& v)
-    {
-      PySequence_SetItem(_seq, _index, swig::from<T>(v));
-      return *this;
-    }
-
-  private:
-    PyObject* _seq;
-    int _index;
-  };
-
-  template <class T>
-  struct SwigPySequence_ArrowProxy
-  {
-    SwigPySequence_ArrowProxy(const T& x): m_value(x) {}
-    const T* operator->() const { return &m_value; }
-    operator const T*() const { return &m_value; }
-    T m_value;
-  };
-
-  template <class T, class Reference >
-  struct SwigPySequence_InputIterator
-  {
-    typedef SwigPySequence_InputIterator<T, Reference > self;
-
-    typedef std::random_access_iterator_tag iterator_category;
-    typedef Reference reference;
-    typedef T value_type;
-    typedef T* pointer;
-    typedef int difference_type;
-
-    SwigPySequence_InputIterator()
-    {
-    }
-
-    SwigPySequence_InputIterator(PyObject* seq, int index)
-      : _seq(seq), _index(index)
-    {
-    }
-
-    reference operator*() const
-    {
-      return reference(_seq, _index);
-    }
-
-    SwigPySequence_ArrowProxy<T>
-    operator->() const {
-      return SwigPySequence_ArrowProxy<T>(operator*());
-    }
-
-    bool operator==(const self& ri) const
-    {
-      return (_index == ri._index) && (_seq == ri._seq);
-    }
-
-    bool operator!=(const self& ri) const
-    {
-      return !(operator==(ri));
-    }
-
-    self& operator ++ ()
-    {
-      ++_index;
-      return *this;
-    }
-
-    self& operator -- ()
-    {
-      --_index;
-      return *this;
-    }
-
-    self& operator += (difference_type n)
-    {
-      _index += n;
-      return *this;
-    }
-
-    self operator +(difference_type n) const
-    {
-      return self(_seq, _index + n);
-    }
-
-    self& operator -= (difference_type n)
-    {
-      _index -= n;
-      return *this;
-    }
-
-    self operator -(difference_type n) const
-    {
-      return self(_seq, _index - n);
-    }
-
-    difference_type operator - (const self& ri) const
-    {
-      return _index - ri._index;
-    }
-
-    bool operator < (const self& ri) const
-    {
-      return _index < ri._index;
-    }
-
-    reference
-    operator[](difference_type n) const
-    {
-      return reference(_seq, _index + n);
-    }
-
-  private:
-    PyObject* _seq;
-    difference_type _index;
-  };
-
-  template <class T>
-  struct SwigPySequence_Cont
-  {
-    typedef SwigPySequence_Ref<T> reference;
-    typedef const SwigPySequence_Ref<T> const_reference;
-    typedef T value_type;
-    typedef T* pointer;
-    typedef int difference_type;
-    typedef int size_type;
-    typedef const pointer const_pointer;
-    typedef SwigPySequence_InputIterator<T, reference> iterator;
-    typedef SwigPySequence_InputIterator<T, const_reference> const_iterator;
-
-    SwigPySequence_Cont(PyObject* seq) : _seq(0)
-    {
-      if (!PySequence_Check(seq)) {
-	throw std::invalid_argument("a sequence is expected");
-      }
-      _seq = seq;
-      Py_INCREF(_seq);
-    }
-
-    ~SwigPySequence_Cont()
-    {
-      Py_XDECREF(_seq);
-    }
-
-    size_type size() const
-    {
-      return static_cast<size_type>(PySequence_Size(_seq));
-    }
-
-    bool empty() const
-    {
-      return size() == 0;
-    }
-
-    iterator begin()
-    {
-      return iterator(_seq, 0);
-    }
-
-    const_iterator begin() const
-    {
-      return const_iterator(_seq, 0);
-    }
-
-    iterator end()
-    {
-      return iterator(_seq, size());
-    }
-
-    const_iterator end() const
-    {
-      return const_iterator(_seq, size());
-    }
-
-    reference operator[](difference_type n)
-    {
-      return reference(_seq, n);
-    }
-
-    const_reference operator[](difference_type n)  const
-    {
-      return const_reference(_seq, n);
-    }
-
-    bool check(bool set_err = true) const
-    {
-      int s = size();
-      for (int i = 0; i < s; ++i) {
-	swig::SwigVar_PyObject item = PySequence_GetItem(_seq, i);
-	if (!swig::check<value_type>(item)) {
-	  if (set_err) {
-	    char msg[1024];
-	    sprintf(msg, "in sequence element %d", i);
-	    SWIG_Error(SWIG_RuntimeError, msg);
-	  }
-	  return false;
-	}
-      }
-      return true;
-    }
-
-  private:
-    PyObject* _seq;
-  };
-
-}
-
-
-SWIGINTERN int
-SWIG_AsVal_std_string (PyObject * obj, std::string *val)
-{
-  std::string* v = (std::string *) 0;
-  int res = SWIG_AsPtr_std_string (obj, &v);
-  if (!SWIG_IsOK(res)) return res;
-  if (v) {
-    if (val) *val = *v;
-    if (SWIG_IsNewObj(res)) {
-      delete v;
-      res = SWIG_DelNewMask(res);
-    }
-    return res;
-  }
-  return SWIG_ERROR;
-}
-
-
-namespace swig {
-  template <> struct traits<std::string > {
-    typedef value_category category;
-    static const char* type_name() { return"std::string"; }
-  };  
-  template <>  struct traits_asval<std::string > {   
-    typedef std::string value_type;
-    static int asval(PyObject *obj, value_type *val) { 
-      return SWIG_AsVal_std_string (obj, val);
-    }
-  };
-  template <>  struct traits_from<std::string > {
-    typedef std::string value_type;
-    static PyObject *from(const value_type& val) {
-      return SWIG_From_std_string  (val);
-    }
-  };
-}
-
-
-namespace swig {
-  template <class SwigPySeq, class Seq>
-  inline void
-  assign(const SwigPySeq& swigpyseq, Seq* seq) {
-    // seq->assign(swigpyseq.begin(), swigpyseq.end()); // not used as not always implemented
-    typedef typename SwigPySeq::value_type value_type;
-    typename SwigPySeq::const_iterator it = swigpyseq.begin();
-    for (;it != swigpyseq.end(); ++it) {
-      seq->insert(seq->end(),(value_type)(*it));
-    }
-  }
-
-  template <class Seq, class T = typename Seq::value_type >
-  struct traits_asptr_stdseq {
-    typedef Seq sequence;
-    typedef T value_type;
-
-    static int asptr(PyObject *obj, sequence **seq) {
-      if (obj == Py_None || SWIG_Python_GetSwigThis(obj)) {
-	sequence *p;
-	if (::SWIG_ConvertPtr(obj,(void**)&p,
-			      swig::type_info<sequence>(),0) == SWIG_OK) {
-	  if (seq) *seq = p;
-	  return SWIG_OLDOBJ;
-	}
-      } else if (PySequence_Check(obj)) {
-	try {
-	  SwigPySequence_Cont<value_type> swigpyseq(obj);
-	  if (seq) {
-	    sequence *pseq = new sequence();
-	    assign(swigpyseq, pseq);
-	    *seq = pseq;
-	    return SWIG_NEWOBJ;
-	  } else {
-	    return swigpyseq.check() ? SWIG_OK : SWIG_ERROR;
-	  }
-	} catch (std::exception& e) {
-	  if (seq) {
-	    if (!PyErr_Occurred()) {
-	      PyErr_SetString(PyExc_TypeError, e.what());
-	    }
-	  }
-	  return SWIG_ERROR;
-	}
-      }
-      return SWIG_ERROR;
-    }
-  };
-
-  template <class Seq, class T = typename Seq::value_type >
-  struct traits_from_stdseq {
-    typedef Seq sequence;
-    typedef T value_type;
-    typedef typename Seq::size_type size_type;
-    typedef typename sequence::const_iterator const_iterator;
-
-    static PyObject *from(const sequence& seq) {
-#ifdef SWIG_PYTHON_EXTRA_NATIVE_CONTAINERS
-      swig_type_info *desc = swig::type_info<sequence>();
-      if (desc && desc->clientdata) {
-	return SWIG_NewPointerObj(new sequence(seq), desc, SWIG_POINTER_OWN);
-      }
-#endif
-      size_type size = seq.size();
-      if (size <= (size_type)INT_MAX) {
-	PyObject *obj = PyTuple_New((int)size);
-	int i = 0;
-	for (const_iterator it = seq.begin();
-	     it != seq.end(); ++it, ++i) {
-	  PyTuple_SetItem(obj,i,swig::from<value_type>(*it));
-	}
-	return obj;
-      } else {
-	PyErr_SetString(PyExc_OverflowError,"sequence size not valid in python");
-	return NULL;
-      }
-    }
-  };
-}
-
-
-  namespace swig {
-    template <class T>
-    struct traits_asptr<std::vector<T> >  {
-      static int asptr(PyObject *obj, std::vector<T> **vec) {
-	return traits_asptr_stdseq<std::vector<T> >::asptr(obj, vec);
-      }
-    };
-    
-    template <class T>
-    struct traits_from<std::vector<T> > {
-      static PyObject *from(const std::vector<T>& vec) {
-	return traits_from_stdseq<std::vector<T> >::from(vec);
-      }
-    };
-  }
-
-
-      namespace swig {
-	template <>  struct traits<std::vector<std::string, std::allocator< std::string > > > {
-	  typedef pointer_category category;
-	  static const char* type_name() {
-	    return "std::vector<" "std::string" "," "std::allocator< std::string >" " >";
-	  }
-	};
-      }
-    
-SWIGINTERN swig::SwigPyIterator *std_vector_Sl__ecore_EString_Sg__iterator(std::vector< ::ecore::EString > *self,PyObject **PYTHON_SELF){
-      return swig::make_output_iterator(self->begin(), self->begin(), self->end(), *PYTHON_SELF);
-    }
-SWIGINTERN bool std_vector_Sl__ecore_EString_Sg____nonzero__(std::vector< ::ecore::EString > const *self){
-      return !(self->empty());
-    }
-SWIGINTERN bool std_vector_Sl__ecore_EString_Sg____bool__(std::vector< ::ecore::EString > const *self){
-      return !(self->empty());
-    }
-SWIGINTERN std::vector< std::string >::size_type std_vector_Sl__ecore_EString_Sg____len__(std::vector< ::ecore::EString > const *self){
-      return self->size();
-    }
-SWIGINTERN std::vector< std::string >::value_type std_vector_Sl__ecore_EString_Sg__pop(std::vector< ::ecore::EString > *self){
-      if (self->size() == 0)
-	throw std::out_of_range("pop from empty container");
-      std::vector<std::string,std::allocator< std::string > >::value_type x = self->back();
-      self->pop_back();
-      return x;
-    }
-SWIGINTERN std::vector< std::string,std::allocator< std::string > > *std_vector_Sl__ecore_EString_Sg____getslice__(std::vector< ::ecore::EString > *self,std::vector< std::string >::difference_type i,std::vector< std::string >::difference_type j){
-      return swig::getslice(self, i, j);
-    }
-SWIGINTERN void std_vector_Sl__ecore_EString_Sg____setslice__(std::vector< ::ecore::EString > *self,std::vector< std::string >::difference_type i,std::vector< std::string >::difference_type j,std::vector< std::string,std::allocator< std::string > > const &v){
-      swig::setslice(self, i, j, v);
-    }
-SWIGINTERN void std_vector_Sl__ecore_EString_Sg____delslice__(std::vector< ::ecore::EString > *self,std::vector< std::string >::difference_type i,std::vector< std::string >::difference_type j){
-      swig::delslice(self, i, j);
-    }
-SWIGINTERN void std_vector_Sl__ecore_EString_Sg____delitem____SWIG_0(std::vector< ::ecore::EString > *self,std::vector< std::string >::difference_type i){
-      self->erase(swig::getpos(self,i));
-    }
-SWIGINTERN std::vector< std::string,std::allocator< std::string > > *std_vector_Sl__ecore_EString_Sg____getitem____SWIG_0(std::vector< ::ecore::EString > *self,PySliceObject *slice){
-      Py_ssize_t i, j, step;
-      if( !PySlice_Check(slice) ) {
-        SWIG_Error(SWIG_TypeError, "Slice object expected.");
-        return NULL;
-      }
-      PySlice_GetIndices(slice, self->size(), &i, &j, &step);
-      return swig::getslice(self, i, j);
-    }
-SWIGINTERN void std_vector_Sl__ecore_EString_Sg____setitem____SWIG_0(std::vector< ::ecore::EString > *self,PySliceObject *slice,std::vector< std::string,std::allocator< std::string > > const &v){
-      Py_ssize_t i, j, step;
-      if( !PySlice_Check(slice) ) {
-        SWIG_Error(SWIG_TypeError, "Slice object expected.");
-        return;
-      }
-      PySlice_GetIndices(slice, self->size(), &i, &j, &step);
-      swig::setslice(self, i, j, v);
-    }
-SWIGINTERN void std_vector_Sl__ecore_EString_Sg____delitem____SWIG_1(std::vector< ::ecore::EString > *self,PySliceObject *slice){
-      Py_ssize_t i, j, step;
-      if( !PySlice_Check(slice) ) {
-        SWIG_Error(SWIG_TypeError, "Slice object expected.");
-        return;
-      }
-      PySlice_GetIndices(slice, self->size(), &i, &j, &step);
-      swig::delslice(self, i,j);
-    }
-SWIGINTERN std::vector< std::string >::value_type const &std_vector_Sl__ecore_EString_Sg____getitem____SWIG_1(std::vector< ::ecore::EString > const *self,std::vector< std::string >::difference_type i){
-      return *(swig::cgetpos(self, i));
-    }
-SWIGINTERN void std_vector_Sl__ecore_EString_Sg____setitem____SWIG_1(std::vector< ::ecore::EString > *self,std::vector< std::string >::difference_type i,std::vector< std::string >::value_type const &x){
-      *(swig::getpos(self,i)) = x;
-    }
-SWIGINTERN void std_vector_Sl__ecore_EString_Sg__append(std::vector< ::ecore::EString > *self,std::vector< std::string >::value_type const &x){
-      self->push_back(x);
-    }
 
 
 
@@ -29815,401 +28707,6 @@ SWIGINTERN PyObject *StopTransferOptions_swigregister(PyObject *SWIGUNUSEDPARM(s
   return SWIG_Py_Void();
 }
 
-SWIGINTERN PyObject *_wrap_new_StringList(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  FMS_Data::StringList *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)":new_StringList")) SWIG_fail;
-  result = (FMS_Data::StringList *)new FMS_Data::StringList();
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_FMS_Data__StringList, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_delete_StringList(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  FMS_Data::StringList *arg1 = (FMS_Data::StringList *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:delete_StringList",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__StringList, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_StringList" "', argument " "1"" of type '" "FMS_Data::StringList *""'"); 
-  }
-  arg1 = reinterpret_cast< FMS_Data::StringList * >(argp1);
-  delete arg1;
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_StringList__initialize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  FMS_Data::StringList *arg1 = (FMS_Data::StringList *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:StringList__initialize",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__StringList, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringList__initialize" "', argument " "1"" of type '" "FMS_Data::StringList *""'"); 
-  }
-  arg1 = reinterpret_cast< FMS_Data::StringList * >(argp1);
-  (arg1)->_initialize();
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_StringList_getStrings(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  FMS_Data::StringList *arg1 = (FMS_Data::StringList *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  std::vector< ::ecore::EString,std::allocator< ::ecore::EString > > *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:StringList_getStrings",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__StringList, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringList_getStrings" "', argument " "1"" of type '" "FMS_Data::StringList const *""'"); 
-  }
-  arg1 = reinterpret_cast< FMS_Data::StringList * >(argp1);
-  result = (std::vector< ::ecore::EString,std::allocator< ::ecore::EString > > *) &((FMS_Data::StringList const *)arg1)->getStrings();
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_StringList_setStrings(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  FMS_Data::StringList *arg1 = (FMS_Data::StringList *) 0 ;
-  std::vector< ::ecore::EString,std::allocator< ::ecore::EString > > *arg2 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:StringList_setStrings",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__StringList, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringList_setStrings" "', argument " "1"" of type '" "FMS_Data::StringList *""'"); 
-  }
-  arg1 = reinterpret_cast< FMS_Data::StringList * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t,  0  | 0);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "StringList_setStrings" "', argument " "2"" of type '" "std::vector< ::ecore::EString,std::allocator< ::ecore::EString > > const &""'"); 
-  }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "StringList_setStrings" "', argument " "2"" of type '" "std::vector< ::ecore::EString,std::allocator< ::ecore::EString > > const &""'"); 
-  }
-  arg2 = reinterpret_cast< std::vector< ::ecore::EString,std::allocator< ::ecore::EString > > * >(argp2);
-  (arg1)->setStrings((std::vector< ::ecore::EString,std::allocator< ::ecore::EString > > const &)*arg2);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_StringList_addStrings(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  FMS_Data::StringList *arg1 = (FMS_Data::StringList *) 0 ;
-  ecore::EString *arg2 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int res2 = SWIG_OLDOBJ ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:StringList_addStrings",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__StringList, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringList_addStrings" "', argument " "1"" of type '" "FMS_Data::StringList *""'"); 
-  }
-  arg1 = reinterpret_cast< FMS_Data::StringList * >(argp1);
-  {
-    std::string *ptr = (std::string *)0;
-    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "StringList_addStrings" "', argument " "2"" of type '" "ecore::EString const &""'"); 
-    }
-    if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "StringList_addStrings" "', argument " "2"" of type '" "ecore::EString const &""'"); 
-    }
-    arg2 = ptr;
-  }
-  (arg1)->addStrings((ecore::EString const &)*arg2);
-  resultobj = SWIG_Py_Void();
-  if (SWIG_IsNewObj(res2)) delete arg2;
-  return resultobj;
-fail:
-  if (SWIG_IsNewObj(res2)) delete arg2;
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_StringList_setStringsAt(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  FMS_Data::StringList *arg1 = (FMS_Data::StringList *) 0 ;
-  size_t arg2 ;
-  ecore::EString *arg3 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  size_t val2 ;
-  int ecode2 = 0 ;
-  int res3 = SWIG_OLDOBJ ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOO:StringList_setStringsAt",&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__StringList, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringList_setStringsAt" "', argument " "1"" of type '" "FMS_Data::StringList *""'"); 
-  }
-  arg1 = reinterpret_cast< FMS_Data::StringList * >(argp1);
-  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "StringList_setStringsAt" "', argument " "2"" of type '" "size_t""'");
-  } 
-  arg2 = static_cast< size_t >(val2);
-  {
-    std::string *ptr = (std::string *)0;
-    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
-    if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "StringList_setStringsAt" "', argument " "3"" of type '" "ecore::EString const &""'"); 
-    }
-    if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "StringList_setStringsAt" "', argument " "3"" of type '" "ecore::EString const &""'"); 
-    }
-    arg3 = ptr;
-  }
-  (arg1)->setStringsAt(arg2,(ecore::EString const &)*arg3);
-  resultobj = SWIG_Py_Void();
-  if (SWIG_IsNewObj(res3)) delete arg3;
-  return resultobj;
-fail:
-  if (SWIG_IsNewObj(res3)) delete arg3;
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_StringList_deleteStringsAt(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  FMS_Data::StringList *arg1 = (FMS_Data::StringList *) 0 ;
-  size_t arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  size_t val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:StringList_deleteStringsAt",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__StringList, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringList_deleteStringsAt" "', argument " "1"" of type '" "FMS_Data::StringList *""'"); 
-  }
-  arg1 = reinterpret_cast< FMS_Data::StringList * >(argp1);
-  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "StringList_deleteStringsAt" "', argument " "2"" of type '" "size_t""'");
-  } 
-  arg2 = static_cast< size_t >(val2);
-  (arg1)->deleteStringsAt(arg2);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_StringList_eGet(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  FMS_Data::StringList *arg1 = (FMS_Data::StringList *) 0 ;
-  ::ecore::EInt arg2 ;
-  ::ecore::EBoolean arg3 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  bool val3 ;
-  int ecode3 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  ::ecore::EJavaObject result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOO:StringList_eGet",&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__StringList, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringList_eGet" "', argument " "1"" of type '" "FMS_Data::StringList *""'"); 
-  }
-  arg1 = reinterpret_cast< FMS_Data::StringList * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "StringList_eGet" "', argument " "2"" of type '" "::ecore::EInt""'");
-  } 
-  arg2 = static_cast< ::ecore::EInt >(val2);
-  ecode3 = SWIG_AsVal_bool(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "StringList_eGet" "', argument " "3"" of type '" "::ecore::EBoolean""'");
-  } 
-  arg3 = static_cast< ::ecore::EBoolean >(val3);
-  result = (arg1)->eGet(arg2,arg3);
-  resultobj = SWIG_NewPointerObj((new ::ecore::EJavaObject(static_cast< const ::ecore::EJavaObject& >(result))), SWIGTYPE_p___ecorecpp__mapping__any, SWIG_POINTER_OWN |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_StringList_eSet(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  FMS_Data::StringList *arg1 = (FMS_Data::StringList *) 0 ;
-  ::ecore::EInt arg2 ;
-  ecore::EJavaObject *arg3 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOO:StringList_eSet",&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__StringList, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringList_eSet" "', argument " "1"" of type '" "FMS_Data::StringList *""'"); 
-  }
-  arg1 = reinterpret_cast< FMS_Data::StringList * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "StringList_eSet" "', argument " "2"" of type '" "::ecore::EInt""'");
-  } 
-  arg2 = static_cast< ::ecore::EInt >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p___ecorecpp__mapping__any,  0  | 0);
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "StringList_eSet" "', argument " "3"" of type '" "ecore::EJavaObject const &""'"); 
-  }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "StringList_eSet" "', argument " "3"" of type '" "ecore::EJavaObject const &""'"); 
-  }
-  arg3 = reinterpret_cast< ecore::EJavaObject * >(argp3);
-  (arg1)->eSet(arg2,(ecore::EJavaObject const &)*arg3);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_StringList_eIsSet(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  FMS_Data::StringList *arg1 = (FMS_Data::StringList *) 0 ;
-  ::ecore::EInt arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  ::ecore::EBoolean result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:StringList_eIsSet",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__StringList, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringList_eIsSet" "', argument " "1"" of type '" "FMS_Data::StringList *""'"); 
-  }
-  arg1 = reinterpret_cast< FMS_Data::StringList * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "StringList_eIsSet" "', argument " "2"" of type '" "::ecore::EInt""'");
-  } 
-  arg2 = static_cast< ::ecore::EInt >(val2);
-  result = (::ecore::EBoolean)(arg1)->eIsSet(arg2);
-  resultobj = SWIG_From_bool(static_cast< bool >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_StringList_eUnset(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  FMS_Data::StringList *arg1 = (FMS_Data::StringList *) 0 ;
-  ::ecore::EInt arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:StringList_eUnset",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__StringList, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringList_eUnset" "', argument " "1"" of type '" "FMS_Data::StringList *""'"); 
-  }
-  arg1 = reinterpret_cast< FMS_Data::StringList * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "StringList_eUnset" "', argument " "2"" of type '" "::ecore::EInt""'");
-  } 
-  arg2 = static_cast< ::ecore::EInt >(val2);
-  (arg1)->eUnset(arg2);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_StringList__eClass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  FMS_Data::StringList *arg1 = (FMS_Data::StringList *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  ::ecore::EClass_ptr result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:StringList__eClass",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__StringList, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringList__eClass" "', argument " "1"" of type '" "FMS_Data::StringList *""'"); 
-  }
-  arg1 = reinterpret_cast< FMS_Data::StringList * >(argp1);
-  result = (::ecore::EClass_ptr)(arg1)->_eClass();
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ecore__EClass, 0 |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *StringList_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *obj;
-  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_FMS_Data__StringList, SWIG_NewClientData(obj));
-  return SWIG_Py_Void();
-}
-
 SWIGINTERN PyObject *_wrap_new_TailOfFileOptions(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   FMS_Data::TailOfFileOptions *result = 0 ;
@@ -30765,6 +29262,874 @@ SWIGINTERN PyObject *RmFileOptions_swigregister(PyObject *SWIGUNUSEDPARM(self), 
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
   SWIG_TypeNewClientData(SWIGTYPE_p_FMS_Data__RmFileOptions, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *_wrap_new_DirEntry(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)":new_DirEntry")) SWIG_fail;
+  result = (FMS_Data::DirEntry *)new FMS_Data::DirEntry();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_FMS_Data__DirEntry, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_DirEntry(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *arg1 = (FMS_Data::DirEntry *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_DirEntry",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntry, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_DirEntry" "', argument " "1"" of type '" "FMS_Data::DirEntry *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntry * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntry__initialize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *arg1 = (FMS_Data::DirEntry *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DirEntry__initialize",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntry__initialize" "', argument " "1"" of type '" "FMS_Data::DirEntry *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntry * >(argp1);
+  (arg1)->_initialize();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntry_getPath(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *arg1 = (FMS_Data::DirEntry *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DirEntry_getPath",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntry_getPath" "', argument " "1"" of type '" "FMS_Data::DirEntry const *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntry * >(argp1);
+  result = (ecore::EString *) &((FMS_Data::DirEntry const *)arg1)->getPath();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntry_setPath(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *arg1 = (FMS_Data::DirEntry *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:DirEntry_setPath",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntry_setPath" "', argument " "1"" of type '" "FMS_Data::DirEntry *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntry * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DirEntry_setPath" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DirEntry_setPath" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setPath((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntry_getOwner(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *arg1 = (FMS_Data::DirEntry *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DirEntry_getOwner",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntry_getOwner" "', argument " "1"" of type '" "FMS_Data::DirEntry const *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntry * >(argp1);
+  result = (ecore::EString *) &((FMS_Data::DirEntry const *)arg1)->getOwner();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntry_setOwner(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *arg1 = (FMS_Data::DirEntry *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:DirEntry_setOwner",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntry_setOwner" "', argument " "1"" of type '" "FMS_Data::DirEntry *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntry * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DirEntry_setOwner" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DirEntry_setOwner" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setOwner((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntry_getGroup(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *arg1 = (FMS_Data::DirEntry *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DirEntry_getGroup",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntry_getGroup" "', argument " "1"" of type '" "FMS_Data::DirEntry const *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntry * >(argp1);
+  result = (ecore::EString *) &((FMS_Data::DirEntry const *)arg1)->getGroup();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntry_setGroup(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *arg1 = (FMS_Data::DirEntry *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:DirEntry_setGroup",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntry_setGroup" "', argument " "1"" of type '" "FMS_Data::DirEntry *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntry * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DirEntry_setGroup" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DirEntry_setGroup" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setGroup((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntry_getPerms(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *arg1 = (FMS_Data::DirEntry *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::EInt result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DirEntry_getPerms",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntry_getPerms" "', argument " "1"" of type '" "FMS_Data::DirEntry const *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntry * >(argp1);
+  result = (::ecore::EInt)((FMS_Data::DirEntry const *)arg1)->getPerms();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntry_setPerms(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *arg1 = (FMS_Data::DirEntry *) 0 ;
+  ::ecore::EInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:DirEntry_setPerms",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntry_setPerms" "', argument " "1"" of type '" "FMS_Data::DirEntry *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntry * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DirEntry_setPerms" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  (arg1)->setPerms(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntry_getSize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *arg1 = (FMS_Data::DirEntry *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::ELong result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DirEntry_getSize",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntry_getSize" "', argument " "1"" of type '" "FMS_Data::DirEntry const *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntry * >(argp1);
+  result = (::ecore::ELong)((FMS_Data::DirEntry const *)arg1)->getSize();
+  resultobj = SWIG_From_long_SS_long(static_cast< long long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntry_setSize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *arg1 = (FMS_Data::DirEntry *) 0 ;
+  ::ecore::ELong arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  long long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:DirEntry_setSize",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntry_setSize" "', argument " "1"" of type '" "FMS_Data::DirEntry *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntry * >(argp1);
+  ecode2 = SWIG_AsVal_long_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DirEntry_setSize" "', argument " "2"" of type '" "::ecore::ELong""'");
+  } 
+  arg2 = static_cast< ::ecore::ELong >(val2);
+  (arg1)->setSize(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntry_getCreationTime(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *arg1 = (FMS_Data::DirEntry *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DirEntry_getCreationTime",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntry_getCreationTime" "', argument " "1"" of type '" "FMS_Data::DirEntry const *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntry * >(argp1);
+  result = (ecore::EString *) &((FMS_Data::DirEntry const *)arg1)->getCreationTime();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntry_setCreationTime(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *arg1 = (FMS_Data::DirEntry *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:DirEntry_setCreationTime",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntry_setCreationTime" "', argument " "1"" of type '" "FMS_Data::DirEntry *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntry * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DirEntry_setCreationTime" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DirEntry_setCreationTime" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setCreationTime((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntry_getType(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *arg1 = (FMS_Data::DirEntry *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::FMS_Data::FileType result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DirEntry_getType",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntry_getType" "', argument " "1"" of type '" "FMS_Data::DirEntry const *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntry * >(argp1);
+  result = (::FMS_Data::FileType)((FMS_Data::DirEntry const *)arg1)->getType();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntry_setType(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *arg1 = (FMS_Data::DirEntry *) 0 ;
+  ::FMS_Data::FileType arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:DirEntry_setType",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntry_setType" "', argument " "1"" of type '" "FMS_Data::DirEntry *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntry * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DirEntry_setType" "', argument " "2"" of type '" "::FMS_Data::FileType""'");
+  } 
+  arg2 = static_cast< ::FMS_Data::FileType >(val2);
+  (arg1)->setType(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntry_eGet(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *arg1 = (FMS_Data::DirEntry *) 0 ;
+  ::ecore::EInt arg2 ;
+  ::ecore::EBoolean arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  ::ecore::EJavaObject result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:DirEntry_eGet",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntry_eGet" "', argument " "1"" of type '" "FMS_Data::DirEntry *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntry * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DirEntry_eGet" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  ecode3 = SWIG_AsVal_bool(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "DirEntry_eGet" "', argument " "3"" of type '" "::ecore::EBoolean""'");
+  } 
+  arg3 = static_cast< ::ecore::EBoolean >(val3);
+  result = (arg1)->eGet(arg2,arg3);
+  resultobj = SWIG_NewPointerObj((new ::ecore::EJavaObject(static_cast< const ::ecore::EJavaObject& >(result))), SWIGTYPE_p___ecorecpp__mapping__any, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntry_eSet(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *arg1 = (FMS_Data::DirEntry *) 0 ;
+  ::ecore::EInt arg2 ;
+  ecore::EJavaObject *arg3 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:DirEntry_eSet",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntry_eSet" "', argument " "1"" of type '" "FMS_Data::DirEntry *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntry * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DirEntry_eSet" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p___ecorecpp__mapping__any,  0  | 0);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "DirEntry_eSet" "', argument " "3"" of type '" "ecore::EJavaObject const &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DirEntry_eSet" "', argument " "3"" of type '" "ecore::EJavaObject const &""'"); 
+  }
+  arg3 = reinterpret_cast< ecore::EJavaObject * >(argp3);
+  (arg1)->eSet(arg2,(ecore::EJavaObject const &)*arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntry_eIsSet(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *arg1 = (FMS_Data::DirEntry *) 0 ;
+  ::ecore::EInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  ::ecore::EBoolean result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:DirEntry_eIsSet",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntry_eIsSet" "', argument " "1"" of type '" "FMS_Data::DirEntry *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntry * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DirEntry_eIsSet" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  result = (::ecore::EBoolean)(arg1)->eIsSet(arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntry_eUnset(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *arg1 = (FMS_Data::DirEntry *) 0 ;
+  ::ecore::EInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:DirEntry_eUnset",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntry_eUnset" "', argument " "1"" of type '" "FMS_Data::DirEntry *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntry * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DirEntry_eUnset" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  (arg1)->eUnset(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntry__eClass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntry *arg1 = (FMS_Data::DirEntry *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::EClass_ptr result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DirEntry__eClass",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntry__eClass" "', argument " "1"" of type '" "FMS_Data::DirEntry *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntry * >(argp1);
+  result = (::ecore::EClass_ptr)(arg1)->_eClass();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ecore__EClass, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *DirEntry_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_FMS_Data__DirEntry, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *_wrap_new_DirEntryList(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntryList *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)":new_DirEntryList")) SWIG_fail;
+  result = (FMS_Data::DirEntryList *)new FMS_Data::DirEntryList();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_FMS_Data__DirEntryList, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_DirEntryList(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntryList *arg1 = (FMS_Data::DirEntryList *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_DirEntryList",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntryList, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_DirEntryList" "', argument " "1"" of type '" "FMS_Data::DirEntryList *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntryList * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntryList__initialize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntryList *arg1 = (FMS_Data::DirEntryList *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DirEntryList__initialize",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntryList, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntryList__initialize" "', argument " "1"" of type '" "FMS_Data::DirEntryList *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntryList * >(argp1);
+  (arg1)->_initialize();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntryList_getDirEntries(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntryList *arg1 = (FMS_Data::DirEntryList *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DirEntryList_getDirEntries",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntryList, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntryList_getDirEntries" "', argument " "1"" of type '" "FMS_Data::DirEntryList *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntryList * >(argp1);
+  result = (::ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *) &(arg1)->getDirEntries();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ecorecpp__mapping__EListT___FMS_Data__DirEntry_t, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntryList_eGet(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntryList *arg1 = (FMS_Data::DirEntryList *) 0 ;
+  ::ecore::EInt arg2 ;
+  ::ecore::EBoolean arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  ::ecore::EJavaObject result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:DirEntryList_eGet",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntryList, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntryList_eGet" "', argument " "1"" of type '" "FMS_Data::DirEntryList *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntryList * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DirEntryList_eGet" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  ecode3 = SWIG_AsVal_bool(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "DirEntryList_eGet" "', argument " "3"" of type '" "::ecore::EBoolean""'");
+  } 
+  arg3 = static_cast< ::ecore::EBoolean >(val3);
+  result = (arg1)->eGet(arg2,arg3);
+  resultobj = SWIG_NewPointerObj((new ::ecore::EJavaObject(static_cast< const ::ecore::EJavaObject& >(result))), SWIGTYPE_p___ecorecpp__mapping__any, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntryList_eSet(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntryList *arg1 = (FMS_Data::DirEntryList *) 0 ;
+  ::ecore::EInt arg2 ;
+  ecore::EJavaObject *arg3 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:DirEntryList_eSet",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntryList, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntryList_eSet" "', argument " "1"" of type '" "FMS_Data::DirEntryList *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntryList * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DirEntryList_eSet" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p___ecorecpp__mapping__any,  0  | 0);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "DirEntryList_eSet" "', argument " "3"" of type '" "ecore::EJavaObject const &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DirEntryList_eSet" "', argument " "3"" of type '" "ecore::EJavaObject const &""'"); 
+  }
+  arg3 = reinterpret_cast< ecore::EJavaObject * >(argp3);
+  (arg1)->eSet(arg2,(ecore::EJavaObject const &)*arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntryList_eIsSet(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntryList *arg1 = (FMS_Data::DirEntryList *) 0 ;
+  ::ecore::EInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  ::ecore::EBoolean result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:DirEntryList_eIsSet",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntryList, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntryList_eIsSet" "', argument " "1"" of type '" "FMS_Data::DirEntryList *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntryList * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DirEntryList_eIsSet" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  result = (::ecore::EBoolean)(arg1)->eIsSet(arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntryList_eUnset(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntryList *arg1 = (FMS_Data::DirEntryList *) 0 ;
+  ::ecore::EInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:DirEntryList_eUnset",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntryList, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntryList_eUnset" "', argument " "1"" of type '" "FMS_Data::DirEntryList *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntryList * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DirEntryList_eUnset" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  (arg1)->eUnset(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DirEntryList__eClass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  FMS_Data::DirEntryList *arg1 = (FMS_Data::DirEntryList *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::EClass_ptr result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DirEntryList__eClass",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FMS_Data__DirEntryList, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DirEntryList__eClass" "', argument " "1"" of type '" "FMS_Data::DirEntryList *""'"); 
+  }
+  arg1 = reinterpret_cast< FMS_Data::DirEntryList * >(argp1);
+  result = (::ecore::EClass_ptr)(arg1)->_eClass();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ecore__EClass, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *DirEntryList_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_FMS_Data__DirEntryList, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
@@ -34937,89 +34302,185 @@ SWIGINTERN PyObject *EFileStatList_swigregister(PyObject *SWIGUNUSEDPARM(self), 
   return SWIG_Py_Void();
 }
 
-SWIGINTERN PyObject *_wrap_EStringList_iterator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_EDirEntryList_insert_all(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  PyObject **arg2 = (PyObject **) 0 ;
+  ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *arg1 = (ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *) 0 ;
+  ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *arg2 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
   PyObject * obj0 = 0 ;
-  swig::SwigPyIterator *result = 0 ;
+  PyObject * obj1 = 0 ;
   
-  arg2 = &obj0;
-  if (!PyArg_ParseTuple(args,(char *)"O:EStringList_iterator",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
+  if (!PyArg_ParseTuple(args,(char *)"OO:EDirEntryList_insert_all",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ecorecpp__mapping__EListT___FMS_Data__DirEntry_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_iterator" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EDirEntryList_insert_all" "', argument " "1"" of type '" "ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  result = (swig::SwigPyIterator *)std_vector_Sl__ecore_EString_Sg__iterator(arg1,arg2);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_swig__SwigPyIterator, SWIG_POINTER_OWN |  0 );
+  arg1 = reinterpret_cast< ecorecpp::mapping::EList< ::FMS_Data::DirEntry > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ecorecpp__mapping__EListT___FMS_Data__DirEntry_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EDirEntryList_insert_all" "', argument " "2"" of type '" "ecorecpp::mapping::EList< ::FMS_Data::DirEntry > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EDirEntryList_insert_all" "', argument " "2"" of type '" "ecorecpp::mapping::EList< ::FMS_Data::DirEntry > &""'"); 
+  }
+  arg2 = reinterpret_cast< ecorecpp::mapping::EList< ::FMS_Data::DirEntry > * >(argp2);
+  (arg1)->insert_all(*arg2);
+  resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_EStringList___nonzero__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_EDirEntryList_insert_at(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
+  ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *arg1 = (ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *) 0 ;
+  size_t arg2 ;
+  FMS_Data::DirEntry *arg3 = (FMS_Data::DirEntry *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
   PyObject * obj0 = 0 ;
-  bool result;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:EStringList___nonzero__",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
+  if (!PyArg_ParseTuple(args,(char *)"OOO:EDirEntryList_insert_at",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ecorecpp__mapping__EListT___FMS_Data__DirEntry_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList___nonzero__" "', argument " "1"" of type '" "std::vector< ::ecore::EString > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EDirEntryList_insert_at" "', argument " "1"" of type '" "ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  result = (bool)std_vector_Sl__ecore_EString_Sg____nonzero__((std::vector< std::string > const *)arg1);
-  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  arg1 = reinterpret_cast< ecorecpp::mapping::EList< ::FMS_Data::DirEntry > * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EDirEntryList_insert_at" "', argument " "2"" of type '" "size_t""'");
+  } 
+  arg2 = static_cast< size_t >(val2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "EDirEntryList_insert_at" "', argument " "3"" of type '" "FMS_Data::DirEntry *""'"); 
+  }
+  arg3 = reinterpret_cast< FMS_Data::DirEntry * >(argp3);
+  (arg1)->insert_at(arg2,arg3);
+  resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_EStringList___bool__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_EDirEntryList_at(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
+  ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *arg1 = (ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *) 0 ;
+  size_t arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
   PyObject * obj0 = 0 ;
-  bool result;
+  PyObject * obj1 = 0 ;
+  ::FMS_Data::DirEntry *result = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:EStringList___bool__",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
+  if (!PyArg_ParseTuple(args,(char *)"OO:EDirEntryList_at",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ecorecpp__mapping__EListT___FMS_Data__DirEntry_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList___bool__" "', argument " "1"" of type '" "std::vector< ::ecore::EString > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EDirEntryList_at" "', argument " "1"" of type '" "ecorecpp::mapping::EList< ::FMS_Data::DirEntry > const *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  result = (bool)std_vector_Sl__ecore_EString_Sg____bool__((std::vector< std::string > const *)arg1);
-  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  arg1 = reinterpret_cast< ecorecpp::mapping::EList< ::FMS_Data::DirEntry > * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EDirEntryList_at" "', argument " "2"" of type '" "size_t""'");
+  } 
+  arg2 = static_cast< size_t >(val2);
+  result = (::FMS_Data::DirEntry *)((ecorecpp::mapping::EList< ::FMS_Data::DirEntry > const *)arg1)->at(arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_EStringList___len__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_EDirEntryList_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
+  ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *arg1 = (ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *) 0 ;
+  size_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  ::FMS_Data::DirEntry *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:EDirEntryList_get",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ecorecpp__mapping__EListT___FMS_Data__DirEntry_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EDirEntryList_get" "', argument " "1"" of type '" "ecorecpp::mapping::EList< ::FMS_Data::DirEntry > const *""'"); 
+  }
+  arg1 = reinterpret_cast< ecorecpp::mapping::EList< ::FMS_Data::DirEntry > * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EDirEntryList_get" "', argument " "2"" of type '" "size_t""'");
+  } 
+  arg2 = static_cast< size_t >(val2);
+  result = (::FMS_Data::DirEntry *)((ecorecpp::mapping::EList< ::FMS_Data::DirEntry > const *)arg1)->get(arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EDirEntryList_push_back(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *arg1 = (ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *) 0 ;
+  FMS_Data::DirEntry *arg2 = (FMS_Data::DirEntry *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:EDirEntryList_push_back",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ecorecpp__mapping__EListT___FMS_Data__DirEntry_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EDirEntryList_push_back" "', argument " "1"" of type '" "ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *""'"); 
+  }
+  arg1 = reinterpret_cast< ecorecpp::mapping::EList< ::FMS_Data::DirEntry > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_FMS_Data__DirEntry, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EDirEntryList_push_back" "', argument " "2"" of type '" "FMS_Data::DirEntry *""'"); 
+  }
+  arg2 = reinterpret_cast< FMS_Data::DirEntry * >(argp2);
+  (arg1)->push_back(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EDirEntryList_size(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *arg1 = (ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
-  std::vector< std::string >::size_type result;
+  size_t result;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:EStringList___len__",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
+  if (!PyArg_ParseTuple(args,(char *)"O:EDirEntryList_size",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ecorecpp__mapping__EListT___FMS_Data__DirEntry_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList___len__" "', argument " "1"" of type '" "std::vector< ::ecore::EString > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EDirEntryList_size" "', argument " "1"" of type '" "ecorecpp::mapping::EList< ::FMS_Data::DirEntry > const *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  result = std_vector_Sl__ecore_EString_Sg____len__((std::vector< std::string > const *)arg1);
+  arg1 = reinterpret_cast< ecorecpp::mapping::EList< ::FMS_Data::DirEntry > * >(argp1);
+  result = ((ecorecpp::mapping::EList< ::FMS_Data::DirEntry > const *)arg1)->size();
   resultobj = SWIG_From_size_t(static_cast< size_t >(result));
   return resultobj;
 fail:
@@ -35027,715 +34488,19 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_EStringList_pop(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_EDirEntryList_clear(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  std::vector< std::string >::value_type result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:EStringList_pop",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_pop" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  try {
-    result = std_vector_Sl__ecore_EString_Sg__pop(arg1);
-  }
-  catch(std::out_of_range &_e) {
-    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
-  }
-  
-  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList___getslice__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  std::vector< std::string >::difference_type arg2 ;
-  std::vector< std::string >::difference_type arg3 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  ptrdiff_t val2 ;
-  int ecode2 = 0 ;
-  ptrdiff_t val3 ;
-  int ecode3 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  std::vector< std::string,std::allocator< std::string > > *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOO:EStringList___getslice__",&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList___getslice__" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EStringList___getslice__" "', argument " "2"" of type '" "std::vector< std::string >::difference_type""'");
-  } 
-  arg2 = static_cast< std::vector< std::string >::difference_type >(val2);
-  ecode3 = SWIG_AsVal_ptrdiff_t(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "EStringList___getslice__" "', argument " "3"" of type '" "std::vector< std::string >::difference_type""'");
-  } 
-  arg3 = static_cast< std::vector< std::string >::difference_type >(val3);
-  try {
-    result = (std::vector< std::string,std::allocator< std::string > > *)std_vector_Sl__ecore_EString_Sg____getslice__(arg1,arg2,arg3);
-  }
-  catch(std::out_of_range &_e) {
-    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
-  }
-  
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, SWIG_POINTER_OWN |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList___setslice__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  std::vector< std::string >::difference_type arg2 ;
-  std::vector< std::string >::difference_type arg3 ;
-  std::vector< std::string,std::allocator< std::string > > *arg4 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  ptrdiff_t val2 ;
-  int ecode2 = 0 ;
-  ptrdiff_t val3 ;
-  int ecode3 = 0 ;
-  int res4 = SWIG_OLDOBJ ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:EStringList___setslice__",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList___setslice__" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EStringList___setslice__" "', argument " "2"" of type '" "std::vector< std::string >::difference_type""'");
-  } 
-  arg2 = static_cast< std::vector< std::string >::difference_type >(val2);
-  ecode3 = SWIG_AsVal_ptrdiff_t(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "EStringList___setslice__" "', argument " "3"" of type '" "std::vector< std::string >::difference_type""'");
-  } 
-  arg3 = static_cast< std::vector< std::string >::difference_type >(val3);
-  {
-    std::vector<std::string,std::allocator< std::string > > *ptr = (std::vector<std::string,std::allocator< std::string > > *)0;
-    res4 = swig::asptr(obj3, &ptr);
-    if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "EStringList___setslice__" "', argument " "4"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
-    }
-    if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EStringList___setslice__" "', argument " "4"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
-    }
-    arg4 = ptr;
-  }
-  try {
-    std_vector_Sl__ecore_EString_Sg____setslice__(arg1,arg2,arg3,(std::vector< std::string,std::allocator< std::string > > const &)*arg4);
-  }
-  catch(std::out_of_range &_e) {
-    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
-  }
-  catch(std::invalid_argument &_e) {
-    SWIG_exception_fail(SWIG_ValueError, (&_e)->what());
-  }
-  
-  resultobj = SWIG_Py_Void();
-  if (SWIG_IsNewObj(res4)) delete arg4;
-  return resultobj;
-fail:
-  if (SWIG_IsNewObj(res4)) delete arg4;
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList___delslice__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  std::vector< std::string >::difference_type arg2 ;
-  std::vector< std::string >::difference_type arg3 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  ptrdiff_t val2 ;
-  int ecode2 = 0 ;
-  ptrdiff_t val3 ;
-  int ecode3 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOO:EStringList___delslice__",&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList___delslice__" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EStringList___delslice__" "', argument " "2"" of type '" "std::vector< std::string >::difference_type""'");
-  } 
-  arg2 = static_cast< std::vector< std::string >::difference_type >(val2);
-  ecode3 = SWIG_AsVal_ptrdiff_t(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "EStringList___delslice__" "', argument " "3"" of type '" "std::vector< std::string >::difference_type""'");
-  } 
-  arg3 = static_cast< std::vector< std::string >::difference_type >(val3);
-  try {
-    std_vector_Sl__ecore_EString_Sg____delslice__(arg1,arg2,arg3);
-  }
-  catch(std::out_of_range &_e) {
-    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
-  }
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList___delitem____SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  std::vector< std::string >::difference_type arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  ptrdiff_t val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:EStringList___delitem__",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList___delitem__" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EStringList___delitem__" "', argument " "2"" of type '" "std::vector< std::string >::difference_type""'");
-  } 
-  arg2 = static_cast< std::vector< std::string >::difference_type >(val2);
-  try {
-    std_vector_Sl__ecore_EString_Sg____delitem____SWIG_0(arg1,arg2);
-  }
-  catch(std::out_of_range &_e) {
-    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
-  }
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList___getitem____SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  PySliceObject *arg2 = (PySliceObject *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  std::vector< std::string,std::allocator< std::string > > *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:EStringList___getitem__",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList___getitem__" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  {
-    arg2 = (PySliceObject *) obj1;
-  }
-  try {
-    result = (std::vector< std::string,std::allocator< std::string > > *)std_vector_Sl__ecore_EString_Sg____getitem____SWIG_0(arg1,arg2);
-  }
-  catch(std::out_of_range &_e) {
-    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
-  }
-  
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList___setitem____SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  PySliceObject *arg2 = (PySliceObject *) 0 ;
-  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int res3 = SWIG_OLDOBJ ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOO:EStringList___setitem__",&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList___setitem__" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  {
-    arg2 = (PySliceObject *) obj1;
-  }
-  {
-    std::vector<std::string,std::allocator< std::string > > *ptr = (std::vector<std::string,std::allocator< std::string > > *)0;
-    res3 = swig::asptr(obj2, &ptr);
-    if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "EStringList___setitem__" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
-    }
-    if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EStringList___setitem__" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
-    }
-    arg3 = ptr;
-  }
-  try {
-    std_vector_Sl__ecore_EString_Sg____setitem____SWIG_0(arg1,arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3);
-  }
-  catch(std::out_of_range &_e) {
-    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
-  }
-  catch(std::invalid_argument &_e) {
-    SWIG_exception_fail(SWIG_ValueError, (&_e)->what());
-  }
-  
-  resultobj = SWIG_Py_Void();
-  if (SWIG_IsNewObj(res3)) delete arg3;
-  return resultobj;
-fail:
-  if (SWIG_IsNewObj(res3)) delete arg3;
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList___delitem____SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  PySliceObject *arg2 = (PySliceObject *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:EStringList___delitem__",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList___delitem__" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  {
-    arg2 = (PySliceObject *) obj1;
-  }
-  try {
-    std_vector_Sl__ecore_EString_Sg____delitem____SWIG_1(arg1,arg2);
-  }
-  catch(std::out_of_range &_e) {
-    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
-  }
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList___delitem__(PyObject *self, PyObject *args) {
-  int argc;
-  PyObject *argv[3];
-  int ii;
-  
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 2); ii++) {
-    argv[ii] = PyTuple_GET_ITEM(args,ii);
-  }
-  if (argc == 2) {
-    int _v;
-    int res = swig::asptr(argv[0], (std::vector<std::string,std::allocator< std::string > >**)(0));
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      {
-        _v = PySlice_Check(argv[1]);
-      }
-      if (_v) {
-        return _wrap_EStringList___delitem____SWIG_1(self, args);
-      }
-    }
-  }
-  if (argc == 2) {
-    int _v;
-    int res = swig::asptr(argv[0], (std::vector<std::string,std::allocator< std::string > >**)(0));
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      {
-        int res = SWIG_AsVal_ptrdiff_t(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        return _wrap_EStringList___delitem____SWIG_0(self, args);
-      }
-    }
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'EStringList___delitem__'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    __delitem__(std::vector< ::ecore::EString > *,std::vector< std::string >::difference_type)\n"
-    "    __delitem__(std::vector< ::ecore::EString > *,PySliceObject *)\n");
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList___getitem____SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  std::vector< std::string >::difference_type arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  ptrdiff_t val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  std::vector< std::string >::value_type *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:EStringList___getitem__",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList___getitem__" "', argument " "1"" of type '" "std::vector< ::ecore::EString > const *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EStringList___getitem__" "', argument " "2"" of type '" "std::vector< std::string >::difference_type""'");
-  } 
-  arg2 = static_cast< std::vector< std::string >::difference_type >(val2);
-  try {
-    result = (std::vector< std::string >::value_type *) &std_vector_Sl__ecore_EString_Sg____getitem____SWIG_1((std::vector< std::string > const *)arg1,arg2);
-  }
-  catch(std::out_of_range &_e) {
-    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
-  }
-  
-  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList___getitem__(PyObject *self, PyObject *args) {
-  int argc;
-  PyObject *argv[3];
-  int ii;
-  
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 2); ii++) {
-    argv[ii] = PyTuple_GET_ITEM(args,ii);
-  }
-  if (argc == 2) {
-    int _v;
-    int res = swig::asptr(argv[0], (std::vector<std::string,std::allocator< std::string > >**)(0));
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      {
-        _v = PySlice_Check(argv[1]);
-      }
-      if (_v) {
-        return _wrap_EStringList___getitem____SWIG_0(self, args);
-      }
-    }
-  }
-  if (argc == 2) {
-    int _v;
-    int res = swig::asptr(argv[0], (std::vector<std::string,std::allocator< std::string > >**)(0));
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      {
-        int res = SWIG_AsVal_ptrdiff_t(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        return _wrap_EStringList___getitem____SWIG_1(self, args);
-      }
-    }
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'EStringList___getitem__'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    __getitem__(std::vector< ::ecore::EString > *,PySliceObject *)\n"
-    "    __getitem__(std::vector< ::ecore::EString > const *,std::vector< std::string >::difference_type)\n");
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList___setitem____SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  std::vector< std::string >::difference_type arg2 ;
-  std::vector< std::string >::value_type *arg3 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  ptrdiff_t val2 ;
-  int ecode2 = 0 ;
-  int res3 = SWIG_OLDOBJ ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOO:EStringList___setitem__",&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList___setitem__" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EStringList___setitem__" "', argument " "2"" of type '" "std::vector< std::string >::difference_type""'");
-  } 
-  arg2 = static_cast< std::vector< std::string >::difference_type >(val2);
-  {
-    std::string *ptr = (std::string *)0;
-    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
-    if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "EStringList___setitem__" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'"); 
-    }
-    if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EStringList___setitem__" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'"); 
-    }
-    arg3 = ptr;
-  }
-  try {
-    std_vector_Sl__ecore_EString_Sg____setitem____SWIG_1(arg1,arg2,(std::string const &)*arg3);
-  }
-  catch(std::out_of_range &_e) {
-    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
-  }
-  
-  resultobj = SWIG_Py_Void();
-  if (SWIG_IsNewObj(res3)) delete arg3;
-  return resultobj;
-fail:
-  if (SWIG_IsNewObj(res3)) delete arg3;
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList___setitem__(PyObject *self, PyObject *args) {
-  int argc;
-  PyObject *argv[4];
-  int ii;
-  
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 3); ii++) {
-    argv[ii] = PyTuple_GET_ITEM(args,ii);
-  }
-  if (argc == 3) {
-    int _v;
-    int res = swig::asptr(argv[0], (std::vector<std::string,std::allocator< std::string > >**)(0));
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      {
-        _v = PySlice_Check(argv[1]);
-      }
-      if (_v) {
-        int res = swig::asptr(argv[2], (std::vector<std::string,std::allocator< std::string > >**)(0));
-        _v = SWIG_CheckState(res);
-        if (_v) {
-          return _wrap_EStringList___setitem____SWIG_0(self, args);
-        }
-      }
-    }
-  }
-  if (argc == 3) {
-    int _v;
-    int res = swig::asptr(argv[0], (std::vector<std::string,std::allocator< std::string > >**)(0));
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      {
-        int res = SWIG_AsVal_ptrdiff_t(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
-        _v = SWIG_CheckState(res);
-        if (_v) {
-          return _wrap_EStringList___setitem____SWIG_1(self, args);
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'EStringList___setitem__'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    __setitem__(std::vector< ::ecore::EString > *,PySliceObject *,std::vector< std::string,std::allocator< std::string > > const &)\n"
-    "    __setitem__(std::vector< ::ecore::EString > *,std::vector< std::string >::difference_type,std::vector< std::string >::value_type const &)\n");
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_append(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  std::vector< std::string >::value_type *arg2 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int res2 = SWIG_OLDOBJ ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:EStringList_append",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_append" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  {
-    std::string *ptr = (std::string *)0;
-    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EStringList_append" "', argument " "2"" of type '" "std::vector< std::string >::value_type const &""'"); 
-    }
-    if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EStringList_append" "', argument " "2"" of type '" "std::vector< std::string >::value_type const &""'"); 
-    }
-    arg2 = ptr;
-  }
-  std_vector_Sl__ecore_EString_Sg__append(arg1,(std::string const &)*arg2);
-  resultobj = SWIG_Py_Void();
-  if (SWIG_IsNewObj(res2)) delete arg2;
-  return resultobj;
-fail:
-  if (SWIG_IsNewObj(res2)) delete arg2;
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_EStringList__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)":new_EStringList")) SWIG_fail;
-  result = (std::vector< ::ecore::EString > *)new std::vector< ::ecore::EString >();
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_EStringList__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = 0 ;
-  int res1 = SWIG_OLDOBJ ;
-  PyObject * obj0 = 0 ;
-  std::vector< ::ecore::EString > *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:new_EStringList",&obj0)) SWIG_fail;
-  {
-    std::vector<std::string,std::allocator< std::string > > *ptr = (std::vector<std::string,std::allocator< std::string > > *)0;
-    res1 = swig::asptr(obj0, &ptr);
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_EStringList" "', argument " "1"" of type '" "std::vector< ::ecore::EString > const &""'"); 
-    }
-    if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_EStringList" "', argument " "1"" of type '" "std::vector< ::ecore::EString > const &""'"); 
-    }
-    arg1 = ptr;
-  }
-  result = (std::vector< ::ecore::EString > *)new std::vector< ::ecore::EString >((std::vector< ::ecore::EString > const &)*arg1);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, SWIG_POINTER_NEW |  0 );
-  if (SWIG_IsNewObj(res1)) delete arg1;
-  return resultobj;
-fail:
-  if (SWIG_IsNewObj(res1)) delete arg1;
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_empty(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  bool result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:EStringList_empty",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_empty" "', argument " "1"" of type '" "std::vector< ::ecore::EString > const *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  result = (bool)((std::vector< ::ecore::EString > const *)arg1)->empty();
-  resultobj = SWIG_From_bool(static_cast< bool >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_size(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  std::vector< std::string >::size_type result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:EStringList_size",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_size" "', argument " "1"" of type '" "std::vector< ::ecore::EString > const *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  result = ((std::vector< ::ecore::EString > const *)arg1)->size();
-  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_clear(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
+  ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *arg1 = (ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:EStringList_clear",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
+  if (!PyArg_ParseTuple(args,(char *)"O:EDirEntryList_clear",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ecorecpp__mapping__EListT___FMS_Data__DirEntry_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_clear" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EDirEntryList_clear" "', argument " "1"" of type '" "ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
+  arg1 = reinterpret_cast< ecorecpp::mapping::EList< ::FMS_Data::DirEntry > * >(argp1);
   (arg1)->clear();
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -35744,928 +34509,19 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_EStringList_swap(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_delete_EDirEntryList(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  std::vector< ::ecore::EString > *arg2 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:EStringList_swap",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_swap" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t,  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EStringList_swap" "', argument " "2"" of type '" "std::vector< ::ecore::EString > &""'"); 
-  }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EStringList_swap" "', argument " "2"" of type '" "std::vector< ::ecore::EString > &""'"); 
-  }
-  arg2 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp2);
-  (arg1)->swap(*arg2);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_get_allocator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  SwigValueWrapper< std::allocator< std::string > > result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:EStringList_get_allocator",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_get_allocator" "', argument " "1"" of type '" "std::vector< ::ecore::EString > const *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  result = ((std::vector< ::ecore::EString > const *)arg1)->get_allocator();
-  resultobj = SWIG_NewPointerObj((new std::vector< std::string >::allocator_type(static_cast< const std::vector< std::string >::allocator_type& >(result))), SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t__allocator_type, SWIG_POINTER_OWN |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_begin(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  SwigValueWrapper< std::vector< std::string >::const_iterator > result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:EStringList_begin",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_begin" "', argument " "1"" of type '" "std::vector< ::ecore::EString > const *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  result = ((std::vector< ::ecore::EString > const *)arg1)->begin();
-  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector< std::string >::const_iterator & >(result)),
-    swig::SwigPyIterator::descriptor(),SWIG_POINTER_OWN);
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_end(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  SwigValueWrapper< std::vector< std::string >::const_iterator > result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:EStringList_end",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_end" "', argument " "1"" of type '" "std::vector< ::ecore::EString > const *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  result = ((std::vector< ::ecore::EString > const *)arg1)->end();
-  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector< std::string >::const_iterator & >(result)),
-    swig::SwigPyIterator::descriptor(),SWIG_POINTER_OWN);
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_rbegin(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  SwigValueWrapper< std::vector< std::string >::const_reverse_iterator > result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:EStringList_rbegin",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_rbegin" "', argument " "1"" of type '" "std::vector< ::ecore::EString > const *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  result = ((std::vector< ::ecore::EString > const *)arg1)->rbegin();
-  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector< std::string >::const_reverse_iterator & >(result)),
-    swig::SwigPyIterator::descriptor(),SWIG_POINTER_OWN);
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_rend(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  SwigValueWrapper< std::vector< std::string >::const_reverse_iterator > result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:EStringList_rend",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_rend" "', argument " "1"" of type '" "std::vector< ::ecore::EString > const *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  result = ((std::vector< ::ecore::EString > const *)arg1)->rend();
-  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector< std::string >::const_reverse_iterator & >(result)),
-    swig::SwigPyIterator::descriptor(),SWIG_POINTER_OWN);
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_EStringList__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< std::string >::size_type arg1 ;
-  size_t val1 ;
-  int ecode1 = 0 ;
-  PyObject * obj0 = 0 ;
-  std::vector< ::ecore::EString > *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:new_EStringList",&obj0)) SWIG_fail;
-  ecode1 = SWIG_AsVal_size_t(obj0, &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_EStringList" "', argument " "1"" of type '" "std::vector< std::string >::size_type""'");
-  } 
-  arg1 = static_cast< std::vector< std::string >::size_type >(val1);
-  result = (std::vector< ::ecore::EString > *)new std::vector< ::ecore::EString >(arg1);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_pop_back(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
+  ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *arg1 = (ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:EStringList_pop_back",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_EDirEntryList",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ecorecpp__mapping__EListT___FMS_Data__DirEntry_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_pop_back" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EDirEntryList" "', argument " "1"" of type '" "ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  (arg1)->pop_back();
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_resize__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  std::vector< std::string >::size_type arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  size_t val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:EStringList_resize",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_resize" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EStringList_resize" "', argument " "2"" of type '" "std::vector< std::string >::size_type""'");
-  } 
-  arg2 = static_cast< std::vector< std::string >::size_type >(val2);
-  (arg1)->resize(arg2);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  SwigValueWrapper< std::vector< std::string >::iterator > arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  swig::SwigPyIterator *iter2 = 0 ;
-  int res2 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  SwigValueWrapper< std::vector< std::string >::iterator > result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:EStringList_erase",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_erase" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::SwigPyIterator::descriptor(), 0);
-  if (!SWIG_IsOK(res2) || !iter2) {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "EStringList_erase" "', argument " "2"" of type '" "std::vector< std::string >::iterator""'");
-  } else {
-    swig::SwigPyIterator_T<std::vector< std::string >::iterator > *iter_t = dynamic_cast<swig::SwigPyIterator_T<std::vector< std::string >::iterator > *>(iter2);
-    if (iter_t) {
-      arg2 = iter_t->get_current();
-    } else {
-      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "EStringList_erase" "', argument " "2"" of type '" "std::vector< std::string >::iterator""'");
-    }
-  }
-  result = (arg1)->erase(arg2);
-  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector< std::string >::iterator & >(result)),
-    swig::SwigPyIterator::descriptor(),SWIG_POINTER_OWN);
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  SwigValueWrapper< std::vector< std::string >::iterator > arg2 ;
-  SwigValueWrapper< std::vector< std::string >::iterator > arg3 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  swig::SwigPyIterator *iter2 = 0 ;
-  int res2 ;
-  swig::SwigPyIterator *iter3 = 0 ;
-  int res3 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  SwigValueWrapper< std::vector< std::string >::iterator > result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOO:EStringList_erase",&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_erase" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::SwigPyIterator::descriptor(), 0);
-  if (!SWIG_IsOK(res2) || !iter2) {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "EStringList_erase" "', argument " "2"" of type '" "std::vector< std::string >::iterator""'");
-  } else {
-    swig::SwigPyIterator_T<std::vector< std::string >::iterator > *iter_t = dynamic_cast<swig::SwigPyIterator_T<std::vector< std::string >::iterator > *>(iter2);
-    if (iter_t) {
-      arg2 = iter_t->get_current();
-    } else {
-      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "EStringList_erase" "', argument " "2"" of type '" "std::vector< std::string >::iterator""'");
-    }
-  }
-  res3 = SWIG_ConvertPtr(obj2, SWIG_as_voidptrptr(&iter3), swig::SwigPyIterator::descriptor(), 0);
-  if (!SWIG_IsOK(res3) || !iter3) {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "EStringList_erase" "', argument " "3"" of type '" "std::vector< std::string >::iterator""'");
-  } else {
-    swig::SwigPyIterator_T<std::vector< std::string >::iterator > *iter_t = dynamic_cast<swig::SwigPyIterator_T<std::vector< std::string >::iterator > *>(iter3);
-    if (iter_t) {
-      arg3 = iter_t->get_current();
-    } else {
-      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "EStringList_erase" "', argument " "3"" of type '" "std::vector< std::string >::iterator""'");
-    }
-  }
-  result = (arg1)->erase(arg2,arg3);
-  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector< std::string >::iterator & >(result)),
-    swig::SwigPyIterator::descriptor(),SWIG_POINTER_OWN);
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_erase(PyObject *self, PyObject *args) {
-  int argc;
-  PyObject *argv[4];
-  int ii;
-  
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 3); ii++) {
-    argv[ii] = PyTuple_GET_ITEM(args,ii);
-  }
-  if (argc == 2) {
-    int _v;
-    int res = swig::asptr(argv[0], (std::vector<std::string,std::allocator< std::string > >**)(0));
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      swig::SwigPyIterator *iter = 0;
-      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::SwigPyIterator::descriptor(), 0);
-      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::SwigPyIterator_T<std::vector< std::string >::iterator > *>(iter) != 0));
-      if (_v) {
-        return _wrap_EStringList_erase__SWIG_0(self, args);
-      }
-    }
-  }
-  if (argc == 3) {
-    int _v;
-    int res = swig::asptr(argv[0], (std::vector<std::string,std::allocator< std::string > >**)(0));
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      swig::SwigPyIterator *iter = 0;
-      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::SwigPyIterator::descriptor(), 0);
-      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::SwigPyIterator_T<std::vector< std::string >::iterator > *>(iter) != 0));
-      if (_v) {
-        swig::SwigPyIterator *iter = 0;
-        int res = SWIG_ConvertPtr(argv[2], SWIG_as_voidptrptr(&iter), swig::SwigPyIterator::descriptor(), 0);
-        _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::SwigPyIterator_T<std::vector< std::string >::iterator > *>(iter) != 0));
-        if (_v) {
-          return _wrap_EStringList_erase__SWIG_1(self, args);
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'EStringList_erase'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    erase(std::vector< ::ecore::EString > *,std::vector< std::string >::iterator)\n"
-    "    erase(std::vector< ::ecore::EString > *,std::vector< std::string >::iterator,std::vector< std::string >::iterator)\n");
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_EStringList__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< std::string >::size_type arg1 ;
-  std::vector< std::string >::value_type *arg2 = 0 ;
-  size_t val1 ;
-  int ecode1 = 0 ;
-  int res2 = SWIG_OLDOBJ ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  std::vector< ::ecore::EString > *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:new_EStringList",&obj0,&obj1)) SWIG_fail;
-  ecode1 = SWIG_AsVal_size_t(obj0, &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_EStringList" "', argument " "1"" of type '" "std::vector< std::string >::size_type""'");
-  } 
-  arg1 = static_cast< std::vector< std::string >::size_type >(val1);
-  {
-    std::string *ptr = (std::string *)0;
-    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_EStringList" "', argument " "2"" of type '" "std::vector< std::string >::value_type const &""'"); 
-    }
-    if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_EStringList" "', argument " "2"" of type '" "std::vector< std::string >::value_type const &""'"); 
-    }
-    arg2 = ptr;
-  }
-  result = (std::vector< ::ecore::EString > *)new std::vector< ::ecore::EString >(arg1,(std::vector< std::string >::value_type const &)*arg2);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, SWIG_POINTER_NEW |  0 );
-  if (SWIG_IsNewObj(res2)) delete arg2;
-  return resultobj;
-fail:
-  if (SWIG_IsNewObj(res2)) delete arg2;
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_EStringList(PyObject *self, PyObject *args) {
-  int argc;
-  PyObject *argv[3];
-  int ii;
-  
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 2); ii++) {
-    argv[ii] = PyTuple_GET_ITEM(args,ii);
-  }
-  if (argc == 0) {
-    return _wrap_new_EStringList__SWIG_0(self, args);
-  }
-  if (argc == 1) {
-    int _v;
-    {
-      int res = SWIG_AsVal_size_t(argv[0], NULL);
-      _v = SWIG_CheckState(res);
-    }
-    if (_v) {
-      return _wrap_new_EStringList__SWIG_2(self, args);
-    }
-  }
-  if (argc == 1) {
-    int _v;
-    int res = swig::asptr(argv[0], (std::vector<std::string,std::allocator< std::string > >**)(0));
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      return _wrap_new_EStringList__SWIG_1(self, args);
-    }
-  }
-  if (argc == 2) {
-    int _v;
-    {
-      int res = SWIG_AsVal_size_t(argv[0], NULL);
-      _v = SWIG_CheckState(res);
-    }
-    if (_v) {
-      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        return _wrap_new_EStringList__SWIG_3(self, args);
-      }
-    }
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_EStringList'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    std::vector< ::ecore::EString >()\n"
-    "    std::vector< ::ecore::EString >(std::vector< ::ecore::EString > const &)\n"
-    "    std::vector< ::ecore::EString >(std::vector< std::string >::size_type)\n"
-    "    std::vector< ::ecore::EString >(std::vector< std::string >::size_type,std::vector< std::string >::value_type const &)\n");
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_push_back(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  std::vector< std::string >::value_type *arg2 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int res2 = SWIG_OLDOBJ ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:EStringList_push_back",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_push_back" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  {
-    std::string *ptr = (std::string *)0;
-    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EStringList_push_back" "', argument " "2"" of type '" "std::vector< std::string >::value_type const &""'"); 
-    }
-    if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EStringList_push_back" "', argument " "2"" of type '" "std::vector< std::string >::value_type const &""'"); 
-    }
-    arg2 = ptr;
-  }
-  (arg1)->push_back((std::vector< std::string >::value_type const &)*arg2);
-  resultobj = SWIG_Py_Void();
-  if (SWIG_IsNewObj(res2)) delete arg2;
-  return resultobj;
-fail:
-  if (SWIG_IsNewObj(res2)) delete arg2;
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_front(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  std::vector< std::string >::value_type *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:EStringList_front",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_front" "', argument " "1"" of type '" "std::vector< ::ecore::EString > const *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  result = (std::vector< std::string >::value_type *) &((std::vector< ::ecore::EString > const *)arg1)->front();
-  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_back(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  std::vector< std::string >::value_type *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:EStringList_back",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_back" "', argument " "1"" of type '" "std::vector< ::ecore::EString > const *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  result = (std::vector< std::string >::value_type *) &((std::vector< ::ecore::EString > const *)arg1)->back();
-  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_assign(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  std::vector< std::string >::size_type arg2 ;
-  std::vector< std::string >::value_type *arg3 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  size_t val2 ;
-  int ecode2 = 0 ;
-  int res3 = SWIG_OLDOBJ ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOO:EStringList_assign",&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_assign" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EStringList_assign" "', argument " "2"" of type '" "std::vector< std::string >::size_type""'");
-  } 
-  arg2 = static_cast< std::vector< std::string >::size_type >(val2);
-  {
-    std::string *ptr = (std::string *)0;
-    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
-    if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "EStringList_assign" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'"); 
-    }
-    if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EStringList_assign" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'"); 
-    }
-    arg3 = ptr;
-  }
-  (arg1)->assign(arg2,(std::vector< std::string >::value_type const &)*arg3);
-  resultobj = SWIG_Py_Void();
-  if (SWIG_IsNewObj(res3)) delete arg3;
-  return resultobj;
-fail:
-  if (SWIG_IsNewObj(res3)) delete arg3;
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_resize__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  std::vector< std::string >::size_type arg2 ;
-  std::vector< std::string >::value_type *arg3 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  size_t val2 ;
-  int ecode2 = 0 ;
-  int res3 = SWIG_OLDOBJ ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOO:EStringList_resize",&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_resize" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EStringList_resize" "', argument " "2"" of type '" "std::vector< std::string >::size_type""'");
-  } 
-  arg2 = static_cast< std::vector< std::string >::size_type >(val2);
-  {
-    std::string *ptr = (std::string *)0;
-    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
-    if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "EStringList_resize" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'"); 
-    }
-    if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EStringList_resize" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'"); 
-    }
-    arg3 = ptr;
-  }
-  (arg1)->resize(arg2,(std::vector< std::string >::value_type const &)*arg3);
-  resultobj = SWIG_Py_Void();
-  if (SWIG_IsNewObj(res3)) delete arg3;
-  return resultobj;
-fail:
-  if (SWIG_IsNewObj(res3)) delete arg3;
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_resize(PyObject *self, PyObject *args) {
-  int argc;
-  PyObject *argv[4];
-  int ii;
-  
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 3); ii++) {
-    argv[ii] = PyTuple_GET_ITEM(args,ii);
-  }
-  if (argc == 2) {
-    int _v;
-    int res = swig::asptr(argv[0], (std::vector<std::string,std::allocator< std::string > >**)(0));
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      {
-        int res = SWIG_AsVal_size_t(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        return _wrap_EStringList_resize__SWIG_0(self, args);
-      }
-    }
-  }
-  if (argc == 3) {
-    int _v;
-    int res = swig::asptr(argv[0], (std::vector<std::string,std::allocator< std::string > >**)(0));
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      {
-        int res = SWIG_AsVal_size_t(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
-        _v = SWIG_CheckState(res);
-        if (_v) {
-          return _wrap_EStringList_resize__SWIG_1(self, args);
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'EStringList_resize'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    resize(std::vector< ::ecore::EString > *,std::vector< std::string >::size_type)\n"
-    "    resize(std::vector< ::ecore::EString > *,std::vector< std::string >::size_type,std::vector< std::string >::value_type const &)\n");
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  SwigValueWrapper< std::vector< std::string >::iterator > arg2 ;
-  std::vector< std::string >::value_type *arg3 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  swig::SwigPyIterator *iter2 = 0 ;
-  int res2 ;
-  int res3 = SWIG_OLDOBJ ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  SwigValueWrapper< std::vector< std::string >::iterator > result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOO:EStringList_insert",&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_insert" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::SwigPyIterator::descriptor(), 0);
-  if (!SWIG_IsOK(res2) || !iter2) {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "EStringList_insert" "', argument " "2"" of type '" "std::vector< std::string >::iterator""'");
-  } else {
-    swig::SwigPyIterator_T<std::vector< std::string >::iterator > *iter_t = dynamic_cast<swig::SwigPyIterator_T<std::vector< std::string >::iterator > *>(iter2);
-    if (iter_t) {
-      arg2 = iter_t->get_current();
-    } else {
-      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "EStringList_insert" "', argument " "2"" of type '" "std::vector< std::string >::iterator""'");
-    }
-  }
-  {
-    std::string *ptr = (std::string *)0;
-    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
-    if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "EStringList_insert" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'"); 
-    }
-    if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EStringList_insert" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'"); 
-    }
-    arg3 = ptr;
-  }
-  result = (arg1)->insert(arg2,(std::vector< std::string >::value_type const &)*arg3);
-  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector< std::string >::iterator & >(result)),
-    swig::SwigPyIterator::descriptor(),SWIG_POINTER_OWN);
-  if (SWIG_IsNewObj(res3)) delete arg3;
-  return resultobj;
-fail:
-  if (SWIG_IsNewObj(res3)) delete arg3;
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  SwigValueWrapper< std::vector< std::string >::iterator > arg2 ;
-  std::vector< std::string >::size_type arg3 ;
-  std::vector< std::string >::value_type *arg4 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  swig::SwigPyIterator *iter2 = 0 ;
-  int res2 ;
-  size_t val3 ;
-  int ecode3 = 0 ;
-  int res4 = SWIG_OLDOBJ ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:EStringList_insert",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_insert" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::SwigPyIterator::descriptor(), 0);
-  if (!SWIG_IsOK(res2) || !iter2) {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "EStringList_insert" "', argument " "2"" of type '" "std::vector< std::string >::iterator""'");
-  } else {
-    swig::SwigPyIterator_T<std::vector< std::string >::iterator > *iter_t = dynamic_cast<swig::SwigPyIterator_T<std::vector< std::string >::iterator > *>(iter2);
-    if (iter_t) {
-      arg2 = iter_t->get_current();
-    } else {
-      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "EStringList_insert" "', argument " "2"" of type '" "std::vector< std::string >::iterator""'");
-    }
-  }
-  ecode3 = SWIG_AsVal_size_t(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "EStringList_insert" "', argument " "3"" of type '" "std::vector< std::string >::size_type""'");
-  } 
-  arg3 = static_cast< std::vector< std::string >::size_type >(val3);
-  {
-    std::string *ptr = (std::string *)0;
-    res4 = SWIG_AsPtr_std_string(obj3, &ptr);
-    if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "EStringList_insert" "', argument " "4"" of type '" "std::vector< std::string >::value_type const &""'"); 
-    }
-    if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EStringList_insert" "', argument " "4"" of type '" "std::vector< std::string >::value_type const &""'"); 
-    }
-    arg4 = ptr;
-  }
-  (arg1)->insert(arg2,arg3,(std::vector< std::string >::value_type const &)*arg4);
-  resultobj = SWIG_Py_Void();
-  if (SWIG_IsNewObj(res4)) delete arg4;
-  return resultobj;
-fail:
-  if (SWIG_IsNewObj(res4)) delete arg4;
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_insert(PyObject *self, PyObject *args) {
-  int argc;
-  PyObject *argv[5];
-  int ii;
-  
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 4); ii++) {
-    argv[ii] = PyTuple_GET_ITEM(args,ii);
-  }
-  if (argc == 3) {
-    int _v;
-    int res = swig::asptr(argv[0], (std::vector<std::string,std::allocator< std::string > >**)(0));
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      swig::SwigPyIterator *iter = 0;
-      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::SwigPyIterator::descriptor(), 0);
-      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::SwigPyIterator_T<std::vector< std::string >::iterator > *>(iter) != 0));
-      if (_v) {
-        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
-        _v = SWIG_CheckState(res);
-        if (_v) {
-          return _wrap_EStringList_insert__SWIG_0(self, args);
-        }
-      }
-    }
-  }
-  if (argc == 4) {
-    int _v;
-    int res = swig::asptr(argv[0], (std::vector<std::string,std::allocator< std::string > >**)(0));
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      swig::SwigPyIterator *iter = 0;
-      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::SwigPyIterator::descriptor(), 0);
-      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::SwigPyIterator_T<std::vector< std::string >::iterator > *>(iter) != 0));
-      if (_v) {
-        {
-          int res = SWIG_AsVal_size_t(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
-          _v = SWIG_CheckState(res);
-          if (_v) {
-            return _wrap_EStringList_insert__SWIG_1(self, args);
-          }
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'EStringList_insert'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    insert(std::vector< ::ecore::EString > *,std::vector< std::string >::iterator,std::vector< std::string >::value_type const &)\n"
-    "    insert(std::vector< ::ecore::EString > *,std::vector< std::string >::iterator,std::vector< std::string >::size_type,std::vector< std::string >::value_type const &)\n");
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_reserve(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  std::vector< std::string >::size_type arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  size_t val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:EStringList_reserve",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_reserve" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EStringList_reserve" "', argument " "2"" of type '" "std::vector< std::string >::size_type""'");
-  } 
-  arg2 = static_cast< std::vector< std::string >::size_type >(val2);
-  (arg1)->reserve(arg2);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EStringList_capacity(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  std::vector< std::string >::size_type result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:EStringList_capacity",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EStringList_capacity" "', argument " "1"" of type '" "std::vector< ::ecore::EString > const *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
-  result = ((std::vector< ::ecore::EString > const *)arg1)->capacity();
-  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_delete_EStringList(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  std::vector< ::ecore::EString > *arg1 = (std::vector< ::ecore::EString > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:delete_EStringList",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EStringList" "', argument " "1"" of type '" "std::vector< ::ecore::EString > *""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector< ::ecore::EString > * >(argp1);
+  arg1 = reinterpret_cast< ecorecpp::mapping::EList< ::FMS_Data::DirEntry > * >(argp1);
   delete arg1;
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -36674,10 +34530,10 @@ fail:
 }
 
 
-SWIGINTERN PyObject *EStringList_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *EDirEntryList_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, SWIG_NewClientData(obj));
+  SWIG_TypeNewClientData(SWIGTYPE_p_ecorecpp__mapping__EListT___FMS_Data__DirEntry_t, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
@@ -44848,7 +42704,7 @@ SWIGINTERN PyObject *_wrap_listDir__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObj
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
-  FMS_Data::StringList *arg3 = 0 ;
+  FMS_Data::DirEntryList *arg3 = 0 ;
   FMS_Data::LsDirOptions *arg4 = 0 ;
   int res1 = SWIG_OLDOBJ ;
   int res2 = SWIG_OLDOBJ ;
@@ -44885,14 +42741,14 @@ SWIGINTERN PyObject *_wrap_listDir__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObj
     }
     arg2 = ptr;
   }
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_FMS_Data__StringList,  0 );
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_FMS_Data__DirEntryList,  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "listDir" "', argument " "3"" of type '" "FMS_Data::StringList &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "listDir" "', argument " "3"" of type '" "FMS_Data::DirEntryList &""'"); 
   }
   if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "listDir" "', argument " "3"" of type '" "FMS_Data::StringList &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "listDir" "', argument " "3"" of type '" "FMS_Data::DirEntryList &""'"); 
   }
-  arg3 = reinterpret_cast< FMS_Data::StringList * >(argp3);
+  arg3 = reinterpret_cast< FMS_Data::DirEntryList * >(argp3);
   res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_FMS_Data__LsDirOptions,  0  | 0);
   if (!SWIG_IsOK(res4)) {
     SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "listDir" "', argument " "4"" of type '" "FMS_Data::LsDirOptions const &""'"); 
@@ -44934,7 +42790,7 @@ SWIGINTERN PyObject *_wrap_listDir__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObj
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
-  FMS_Data::StringList *arg3 = 0 ;
+  FMS_Data::DirEntryList *arg3 = 0 ;
   int res1 = SWIG_OLDOBJ ;
   int res2 = SWIG_OLDOBJ ;
   void *argp3 = 0 ;
@@ -44967,14 +42823,14 @@ SWIGINTERN PyObject *_wrap_listDir__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObj
     }
     arg2 = ptr;
   }
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_FMS_Data__StringList,  0 );
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_FMS_Data__DirEntryList,  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "listDir" "', argument " "3"" of type '" "FMS_Data::StringList &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "listDir" "', argument " "3"" of type '" "FMS_Data::DirEntryList &""'"); 
   }
   if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "listDir" "', argument " "3"" of type '" "FMS_Data::StringList &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "listDir" "', argument " "3"" of type '" "FMS_Data::DirEntryList &""'"); 
   }
-  arg3 = reinterpret_cast< FMS_Data::StringList * >(argp3);
+  arg3 = reinterpret_cast< FMS_Data::DirEntryList * >(argp3);
   try {
     result = (int)vishnu::listDir((std::string const &)*arg1,(std::string const &)*arg2,*arg3);
   }
@@ -45023,7 +42879,7 @@ SWIGINTERN PyObject *_wrap_listDir(PyObject *self, PyObject *args) {
       _v = SWIG_CheckState(res);
       if (_v) {
         void *vptr = 0;
-        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_FMS_Data__StringList, 0);
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_FMS_Data__DirEntryList, 0);
         _v = SWIG_CheckState(res);
         if (_v) {
           return _wrap_listDir__SWIG_1(self, args);
@@ -45040,7 +42896,7 @@ SWIGINTERN PyObject *_wrap_listDir(PyObject *self, PyObject *args) {
       _v = SWIG_CheckState(res);
       if (_v) {
         void *vptr = 0;
-        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_FMS_Data__StringList, 0);
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_FMS_Data__DirEntryList, 0);
         _v = SWIG_CheckState(res);
         if (_v) {
           int res = SWIG_ConvertPtr(argv[3], 0, SWIGTYPE_p_FMS_Data__LsDirOptions, 0);
@@ -45056,13 +42912,87 @@ SWIGINTERN PyObject *_wrap_listDir(PyObject *self, PyObject *args) {
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'listDir'.\n"
     "  Possible C/C++ prototypes are:\n"
-    "    vishnu::listDir(std::string const &,std::string const &,FMS_Data::StringList &,FMS_Data::LsDirOptions const &)\n"
-    "    vishnu::listDir(std::string const &,std::string const &,FMS_Data::StringList &)\n");
+    "    vishnu::listDir(std::string const &,std::string const &,FMS_Data::DirEntryList &,FMS_Data::LsDirOptions const &)\n"
+    "    vishnu::listDir(std::string const &,std::string const &,FMS_Data::DirEntryList &)\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_createDir(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_createDir__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  FMS_Data::CreateDirOptions *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:createDir",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "createDir" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "createDir" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "createDir" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "createDir" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_FMS_Data__CreateDirOptions,  0  | 0);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "createDir" "', argument " "3"" of type '" "FMS_Data::CreateDirOptions const &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "createDir" "', argument " "3"" of type '" "FMS_Data::CreateDirOptions const &""'"); 
+  }
+  arg3 = reinterpret_cast< FMS_Data::CreateDirOptions * >(argp3);
+  try {
+    result = (int)vishnu::createDir((std::string const &)*arg1,(std::string const &)*arg2,(FMS_Data::CreateDirOptions const &)*arg3);
+  }
+  catch(UMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
+  }
+  catch(FMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new FMSVishnuException(static_cast< const FMSVishnuException& >(_e))),SWIGTYPE_p_FMSVishnuException,SWIG_POINTER_OWN), "FMSVishnuException", SWIGTYPE_p_FMSVishnuException); SWIG_fail;
+  }
+  catch(UserException &_e) {
+    {
+      SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UserException,SWIG_POINTER_OWN), "UserException", SWIGTYPE_p_UserException); SWIG_fail;
+    }
+  }
+  catch(SystemException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new SystemException(static_cast< const SystemException& >(_e))),SWIGTYPE_p_SystemException,SWIG_POINTER_OWN), "SystemException", SWIGTYPE_p_SystemException); SWIG_fail;
+  }
+  
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_createDir__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -45120,6 +43050,54 @@ SWIGINTERN PyObject *_wrap_createDir(PyObject *SWIGUNUSEDPARM(self), PyObject *a
 fail:
   if (SWIG_IsNewObj(res1)) delete arg1;
   if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_createDir(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[4];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 3); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_createDir__SWIG_1(self, args);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_ConvertPtr(argv[2], 0, SWIGTYPE_p_FMS_Data__CreateDirOptions, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_createDir__SWIG_0(self, args);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'createDir'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    vishnu::createDir(std::string const &,std::string const &,FMS_Data::CreateDirOptions const &)\n"
+    "    vishnu::createDir(std::string const &,std::string const &)\n");
   return NULL;
 }
 
@@ -47381,20 +45359,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"StopTransferOptions_eUnset", _wrap_StopTransferOptions_eUnset, METH_VARARGS, NULL},
 	 { (char *)"StopTransferOptions__eClass", _wrap_StopTransferOptions__eClass, METH_VARARGS, NULL},
 	 { (char *)"StopTransferOptions_swigregister", StopTransferOptions_swigregister, METH_VARARGS, NULL},
-	 { (char *)"new_StringList", _wrap_new_StringList, METH_VARARGS, NULL},
-	 { (char *)"delete_StringList", _wrap_delete_StringList, METH_VARARGS, NULL},
-	 { (char *)"StringList__initialize", _wrap_StringList__initialize, METH_VARARGS, NULL},
-	 { (char *)"StringList_getStrings", _wrap_StringList_getStrings, METH_VARARGS, NULL},
-	 { (char *)"StringList_setStrings", _wrap_StringList_setStrings, METH_VARARGS, NULL},
-	 { (char *)"StringList_addStrings", _wrap_StringList_addStrings, METH_VARARGS, NULL},
-	 { (char *)"StringList_setStringsAt", _wrap_StringList_setStringsAt, METH_VARARGS, NULL},
-	 { (char *)"StringList_deleteStringsAt", _wrap_StringList_deleteStringsAt, METH_VARARGS, NULL},
-	 { (char *)"StringList_eGet", _wrap_StringList_eGet, METH_VARARGS, NULL},
-	 { (char *)"StringList_eSet", _wrap_StringList_eSet, METH_VARARGS, NULL},
-	 { (char *)"StringList_eIsSet", _wrap_StringList_eIsSet, METH_VARARGS, NULL},
-	 { (char *)"StringList_eUnset", _wrap_StringList_eUnset, METH_VARARGS, NULL},
-	 { (char *)"StringList__eClass", _wrap_StringList__eClass, METH_VARARGS, NULL},
-	 { (char *)"StringList_swigregister", StringList_swigregister, METH_VARARGS, NULL},
 	 { (char *)"new_TailOfFileOptions", _wrap_new_TailOfFileOptions, METH_VARARGS, NULL},
 	 { (char *)"delete_TailOfFileOptions", _wrap_delete_TailOfFileOptions, METH_VARARGS, NULL},
 	 { (char *)"TailOfFileOptions__initialize", _wrap_TailOfFileOptions__initialize, METH_VARARGS, NULL},
@@ -47417,6 +45381,39 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"RmFileOptions_eUnset", _wrap_RmFileOptions_eUnset, METH_VARARGS, NULL},
 	 { (char *)"RmFileOptions__eClass", _wrap_RmFileOptions__eClass, METH_VARARGS, NULL},
 	 { (char *)"RmFileOptions_swigregister", RmFileOptions_swigregister, METH_VARARGS, NULL},
+	 { (char *)"new_DirEntry", _wrap_new_DirEntry, METH_VARARGS, NULL},
+	 { (char *)"delete_DirEntry", _wrap_delete_DirEntry, METH_VARARGS, NULL},
+	 { (char *)"DirEntry__initialize", _wrap_DirEntry__initialize, METH_VARARGS, NULL},
+	 { (char *)"DirEntry_getPath", _wrap_DirEntry_getPath, METH_VARARGS, NULL},
+	 { (char *)"DirEntry_setPath", _wrap_DirEntry_setPath, METH_VARARGS, NULL},
+	 { (char *)"DirEntry_getOwner", _wrap_DirEntry_getOwner, METH_VARARGS, NULL},
+	 { (char *)"DirEntry_setOwner", _wrap_DirEntry_setOwner, METH_VARARGS, NULL},
+	 { (char *)"DirEntry_getGroup", _wrap_DirEntry_getGroup, METH_VARARGS, NULL},
+	 { (char *)"DirEntry_setGroup", _wrap_DirEntry_setGroup, METH_VARARGS, NULL},
+	 { (char *)"DirEntry_getPerms", _wrap_DirEntry_getPerms, METH_VARARGS, NULL},
+	 { (char *)"DirEntry_setPerms", _wrap_DirEntry_setPerms, METH_VARARGS, NULL},
+	 { (char *)"DirEntry_getSize", _wrap_DirEntry_getSize, METH_VARARGS, NULL},
+	 { (char *)"DirEntry_setSize", _wrap_DirEntry_setSize, METH_VARARGS, NULL},
+	 { (char *)"DirEntry_getCreationTime", _wrap_DirEntry_getCreationTime, METH_VARARGS, NULL},
+	 { (char *)"DirEntry_setCreationTime", _wrap_DirEntry_setCreationTime, METH_VARARGS, NULL},
+	 { (char *)"DirEntry_getType", _wrap_DirEntry_getType, METH_VARARGS, NULL},
+	 { (char *)"DirEntry_setType", _wrap_DirEntry_setType, METH_VARARGS, NULL},
+	 { (char *)"DirEntry_eGet", _wrap_DirEntry_eGet, METH_VARARGS, NULL},
+	 { (char *)"DirEntry_eSet", _wrap_DirEntry_eSet, METH_VARARGS, NULL},
+	 { (char *)"DirEntry_eIsSet", _wrap_DirEntry_eIsSet, METH_VARARGS, NULL},
+	 { (char *)"DirEntry_eUnset", _wrap_DirEntry_eUnset, METH_VARARGS, NULL},
+	 { (char *)"DirEntry__eClass", _wrap_DirEntry__eClass, METH_VARARGS, NULL},
+	 { (char *)"DirEntry_swigregister", DirEntry_swigregister, METH_VARARGS, NULL},
+	 { (char *)"new_DirEntryList", _wrap_new_DirEntryList, METH_VARARGS, NULL},
+	 { (char *)"delete_DirEntryList", _wrap_delete_DirEntryList, METH_VARARGS, NULL},
+	 { (char *)"DirEntryList__initialize", _wrap_DirEntryList__initialize, METH_VARARGS, NULL},
+	 { (char *)"DirEntryList_getDirEntries", _wrap_DirEntryList_getDirEntries, METH_VARARGS, NULL},
+	 { (char *)"DirEntryList_eGet", _wrap_DirEntryList_eGet, METH_VARARGS, NULL},
+	 { (char *)"DirEntryList_eSet", _wrap_DirEntryList_eSet, METH_VARARGS, NULL},
+	 { (char *)"DirEntryList_eIsSet", _wrap_DirEntryList_eIsSet, METH_VARARGS, NULL},
+	 { (char *)"DirEntryList_eUnset", _wrap_DirEntryList_eUnset, METH_VARARGS, NULL},
+	 { (char *)"DirEntryList__eClass", _wrap_DirEntryList__eClass, METH_VARARGS, NULL},
+	 { (char *)"DirEntryList_swigregister", DirEntryList_swigregister, METH_VARARGS, NULL},
 	 { (char *)"new_EListPtr", _wrap_new_EListPtr, METH_VARARGS, NULL},
 	 { (char *)"delete_EListPtr", _wrap_delete_EListPtr, METH_VARARGS, NULL},
 	 { (char *)"EListPtr_get", _wrap_EListPtr_get, METH_VARARGS, NULL},
@@ -47570,40 +45567,15 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"EFileStatList_clear", _wrap_EFileStatList_clear, METH_VARARGS, NULL},
 	 { (char *)"delete_EFileStatList", _wrap_delete_EFileStatList, METH_VARARGS, NULL},
 	 { (char *)"EFileStatList_swigregister", EFileStatList_swigregister, METH_VARARGS, NULL},
-	 { (char *)"EStringList_iterator", _wrap_EStringList_iterator, METH_VARARGS, NULL},
-	 { (char *)"EStringList___nonzero__", _wrap_EStringList___nonzero__, METH_VARARGS, NULL},
-	 { (char *)"EStringList___bool__", _wrap_EStringList___bool__, METH_VARARGS, NULL},
-	 { (char *)"EStringList___len__", _wrap_EStringList___len__, METH_VARARGS, NULL},
-	 { (char *)"EStringList_pop", _wrap_EStringList_pop, METH_VARARGS, NULL},
-	 { (char *)"EStringList___getslice__", _wrap_EStringList___getslice__, METH_VARARGS, NULL},
-	 { (char *)"EStringList___setslice__", _wrap_EStringList___setslice__, METH_VARARGS, NULL},
-	 { (char *)"EStringList___delslice__", _wrap_EStringList___delslice__, METH_VARARGS, NULL},
-	 { (char *)"EStringList___delitem__", _wrap_EStringList___delitem__, METH_VARARGS, NULL},
-	 { (char *)"EStringList___getitem__", _wrap_EStringList___getitem__, METH_VARARGS, NULL},
-	 { (char *)"EStringList___setitem__", _wrap_EStringList___setitem__, METH_VARARGS, NULL},
-	 { (char *)"EStringList_append", _wrap_EStringList_append, METH_VARARGS, NULL},
-	 { (char *)"EStringList_empty", _wrap_EStringList_empty, METH_VARARGS, NULL},
-	 { (char *)"EStringList_size", _wrap_EStringList_size, METH_VARARGS, NULL},
-	 { (char *)"EStringList_clear", _wrap_EStringList_clear, METH_VARARGS, NULL},
-	 { (char *)"EStringList_swap", _wrap_EStringList_swap, METH_VARARGS, NULL},
-	 { (char *)"EStringList_get_allocator", _wrap_EStringList_get_allocator, METH_VARARGS, NULL},
-	 { (char *)"EStringList_begin", _wrap_EStringList_begin, METH_VARARGS, NULL},
-	 { (char *)"EStringList_end", _wrap_EStringList_end, METH_VARARGS, NULL},
-	 { (char *)"EStringList_rbegin", _wrap_EStringList_rbegin, METH_VARARGS, NULL},
-	 { (char *)"EStringList_rend", _wrap_EStringList_rend, METH_VARARGS, NULL},
-	 { (char *)"EStringList_pop_back", _wrap_EStringList_pop_back, METH_VARARGS, NULL},
-	 { (char *)"EStringList_erase", _wrap_EStringList_erase, METH_VARARGS, NULL},
-	 { (char *)"new_EStringList", _wrap_new_EStringList, METH_VARARGS, NULL},
-	 { (char *)"EStringList_push_back", _wrap_EStringList_push_back, METH_VARARGS, NULL},
-	 { (char *)"EStringList_front", _wrap_EStringList_front, METH_VARARGS, NULL},
-	 { (char *)"EStringList_back", _wrap_EStringList_back, METH_VARARGS, NULL},
-	 { (char *)"EStringList_assign", _wrap_EStringList_assign, METH_VARARGS, NULL},
-	 { (char *)"EStringList_resize", _wrap_EStringList_resize, METH_VARARGS, NULL},
-	 { (char *)"EStringList_insert", _wrap_EStringList_insert, METH_VARARGS, NULL},
-	 { (char *)"EStringList_reserve", _wrap_EStringList_reserve, METH_VARARGS, NULL},
-	 { (char *)"EStringList_capacity", _wrap_EStringList_capacity, METH_VARARGS, NULL},
-	 { (char *)"delete_EStringList", _wrap_delete_EStringList, METH_VARARGS, NULL},
-	 { (char *)"EStringList_swigregister", EStringList_swigregister, METH_VARARGS, NULL},
+	 { (char *)"EDirEntryList_insert_all", _wrap_EDirEntryList_insert_all, METH_VARARGS, NULL},
+	 { (char *)"EDirEntryList_insert_at", _wrap_EDirEntryList_insert_at, METH_VARARGS, NULL},
+	 { (char *)"EDirEntryList_at", _wrap_EDirEntryList_at, METH_VARARGS, NULL},
+	 { (char *)"EDirEntryList_get", _wrap_EDirEntryList_get, METH_VARARGS, NULL},
+	 { (char *)"EDirEntryList_push_back", _wrap_EDirEntryList_push_back, METH_VARARGS, NULL},
+	 { (char *)"EDirEntryList_size", _wrap_EDirEntryList_size, METH_VARARGS, NULL},
+	 { (char *)"EDirEntryList_clear", _wrap_EDirEntryList_clear, METH_VARARGS, NULL},
+	 { (char *)"delete_EDirEntryList", _wrap_delete_EDirEntryList, METH_VARARGS, NULL},
+	 { (char *)"EDirEntryList_swigregister", EDirEntryList_swigregister, METH_VARARGS, NULL},
 	 { (char *)"connect", _wrap_connect, METH_VARARGS, NULL},
 	 { (char *)"reconnect", _wrap_reconnect, METH_VARARGS, NULL},
 	 { (char *)"close", _wrap_close, METH_VARARGS, NULL},
@@ -47740,9 +45712,6 @@ static void *_p_UMS_Data__ListLocalAccountsTo_p_ecore__EObject(void *x, int *SWI
 static void *_p_IMS_Data__SystemInfoTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ecore::EObject *)  ((IMS_Data::SystemInfo *) x));
 }
-static void *_p_FMS_Data__StringListTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((ecore::EObject *)  ((FMS_Data::StringList *) x));
-}
 static void *_p_UMS_Data__LocalAccountTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ecore::EObject *)  ((UMS_Data::LocalAccount *) x));
 }
@@ -47869,6 +45838,9 @@ static void *_p_IMS_Data__ListMetricTo_p_ecore__EObject(void *x, int *SWIGUNUSED
 static void *_p_IMS_Data__MetricTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ecore::EObject *)  ((IMS_Data::Metric *) x));
 }
+static void *_p_FMS_Data__DirEntryListTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((ecore::EObject *)  ((FMS_Data::DirEntryList *) x));
+}
 static void *_p_UMS_Data__UserTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ecore::EObject *)  ((UMS_Data::User *) x));
 }
@@ -47880,6 +45852,9 @@ static void *_p_TMS_Data__ListQueuesTo_p_ecore__EObject(void *x, int *SWIGUNUSED
 }
 static void *_p_TMS_Data__JobResultTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ecore::EObject *)  ((TMS_Data::JobResult *) x));
+}
+static void *_p_FMS_Data__DirEntryTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((ecore::EObject *)  ((FMS_Data::DirEntry *) x));
 }
 static void *_p_IMS_Data__RestartOpTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ecore::EObject *)  ((IMS_Data::RestartOp *) x));
@@ -47944,6 +45919,9 @@ static void *_p_FMSVishnuExceptionTo_p_VishnuException(void *x, int *SWIGUNUSEDP
 static swig_type_info _swigt__p_ExceptionType = {"_p_ExceptionType", "ExceptionType *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_FMSVishnuException = {"_p_FMSVishnuException", "FMSVishnuException *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_FMS_Data__CpFileOptions = {"_p_FMS_Data__CpFileOptions", "FMS_Data::CpFileOptions *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_FMS_Data__CreateDirOptions = {"_p_FMS_Data__CreateDirOptions", "FMS_Data::CreateDirOptions *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_FMS_Data__DirEntry = {"_p_FMS_Data__DirEntry", "FMS_Data::DirEntry *|::FMS_Data::DirEntry *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_FMS_Data__DirEntryList = {"_p_FMS_Data__DirEntryList", "FMS_Data::DirEntryList *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_FMS_Data__FileStat = {"_p_FMS_Data__FileStat", "FMS_Data::FileStat *|::FMS_Data::FileStat *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_FMS_Data__FileStatList = {"_p_FMS_Data__FileStatList", "FMS_Data::FileStatList *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_FMS_Data__FileTransfer = {"_p_FMS_Data__FileTransfer", "FMS_Data::FileTransfer *|::FMS_Data::FileTransfer *", 0, 0, (void*)0, 0};
@@ -47953,7 +45931,6 @@ static swig_type_info _swigt__p_FMS_Data__LsDirOptions = {"_p_FMS_Data__LsDirOpt
 static swig_type_info _swigt__p_FMS_Data__LsTransferOptions = {"_p_FMS_Data__LsTransferOptions", "FMS_Data::LsTransferOptions *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_FMS_Data__RmFileOptions = {"_p_FMS_Data__RmFileOptions", "FMS_Data::RmFileOptions *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_FMS_Data__StopTransferOptions = {"_p_FMS_Data__StopTransferOptions", "FMS_Data::StopTransferOptions *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_FMS_Data__StringList = {"_p_FMS_Data__StringList", "FMS_Data::StringList *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_FMS_Data__TailOfFileOptions = {"_p_FMS_Data__TailOfFileOptions", "FMS_Data::TailOfFileOptions *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_IMSVishnuException = {"_p_IMSVishnuException", "IMSVishnuException *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_IMS_Data__CurMetricOp = {"_p_IMS_Data__CurMetricOp", "IMS_Data::CurMetricOp *", 0, 0, (void*)0, 0};
@@ -48009,10 +45986,8 @@ static swig_type_info _swigt__p_UserException = {"_p_UserException", "UserExcept
 static swig_type_info _swigt__p_VishnuException = {"_p_VishnuException", "VishnuException *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p___ecorecpp__mapping__EListT_ecore__EObject_t = {"_p___ecorecpp__mapping__EListT_ecore__EObject_t", "::ecorecpp::mapping::EList< ecore::EObject > *|ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList< ::ecore::EObject > >::element_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p___ecorecpp__mapping__any = {"_p___ecorecpp__mapping__any", "::ecore::EJavaObject *|ecore::EJavaObject *|::ecorecpp::mapping::any *|ecore::any *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_allocator_type = {"_p_allocator_type", "allocator_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_bool = {"_p_bool", "bool *|ecore::EBooleanObject *|ecore::EBoolean *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *|ecore::EChar *|ecore::ECharacterObject *|ecorecpp::mapping::type_traits::char_t *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_difference_type = {"_p_difference_type", "difference_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_double = {"_p_double", "ecore::EDoubleObject *|double *|ecore::EDouble *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ecore__EClass = {"_p_ecore__EClass", "::ecore::EClass_ptr|ecore::EClass *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ecore__EObject = {"_p_ecore__EObject", "ecore::EObject *|::ecore::EObject_ptr", 0, 0, (void*)0, 0};
@@ -48020,6 +45995,7 @@ static swig_type_info _swigt__p_ecore__EOperation = {"_p_ecore__EOperation", "ec
 static swig_type_info _swigt__p_ecore__EReference = {"_p_ecore__EReference", "ecore::EReference *|::ecore::EReference_ptr", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ecore__EStructuralFeature = {"_p_ecore__EStructuralFeature", "ecore::EStructuralFeature *|::ecore::EStructuralFeature_ptr", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ecorecpp__mapping__DelegateEList__EList_ptr = {"_p_ecorecpp__mapping__DelegateEList__EList_ptr", "ecorecpp::mapping::DelegateEList::EList_ptr *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_ecorecpp__mapping__EListT___FMS_Data__DirEntry_t = {"_p_ecorecpp__mapping__EListT___FMS_Data__DirEntry_t", "ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *|::ecorecpp::mapping::EList< ::FMS_Data::DirEntry > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ecorecpp__mapping__EListT___FMS_Data__FileStat_t = {"_p_ecorecpp__mapping__EListT___FMS_Data__FileStat_t", "::ecorecpp::mapping::EList< ::FMS_Data::FileStat > *|ecorecpp::mapping::EList< ::FMS_Data::FileStat > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ecorecpp__mapping__EListT___FMS_Data__FileTransfer_t = {"_p_ecorecpp__mapping__EListT___FMS_Data__FileTransfer_t", "::ecorecpp::mapping::EList< ::FMS_Data::FileTransfer > *|ecorecpp::mapping::EList< ::FMS_Data::FileTransfer > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ecorecpp__mapping__EListT___IMS_Data__Metric_t = {"_p_ecorecpp__mapping__EListT___IMS_Data__Metric_t", "::ecorecpp::mapping::EList< ::IMS_Data::Metric > *|ecorecpp::mapping::EList< ::IMS_Data::Metric > *", 0, 0, (void*)0, 0};
@@ -48043,29 +46019,27 @@ static swig_type_info _swigt__p_float = {"_p_float", "float *|ecore::EFloatObjec
 static swig_type_info _swigt__p_int = {"_p_int", "IMS_Data::LoadShedType *|IMS_Data::ExportType *|IMS_Data::SeDType *|int *|ecore::EResourceSet *|ecore::EFeatureMap *|ecore::EInvocationTargetException *|FMS_Data::TransferCommand *|ecore::EEnumerator *|ecore::EFeatureMapEntry *|ecore::EIntegerObject *|ecore::EDiagnosticChain *|ecore::EInt *|TMS_Data::JobPriority *|TMS_Data::QueuePriority *|IMS_Data::ProcessState *|ecore::EResource *|FMS_Data::Status *|TMS_Data::JobStatus *|FMS_Data::FileType *|UMS_Data::StatusType *|UMS_Data::CommandStatusType *|UMS_Data::SessionCloseType *|UMS_Data::PrivilegeType *|IMS_Data::MetricType *|TMS_Data::QueueStatus *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_long_double = {"_p_long_double", "long double *|ecore::EBigDecimal *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_long_long = {"_p_long_long", "ecore::ELongObject *|long long *|ecore::ELong *|ecore::EBigInteger *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_p_PyObject = {"_p_p_PyObject", "PyObject **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_char = {"_p_p_char", "char **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ptr_type = {"_p_ptr_type", "ptr_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_short = {"_p_short", "ecore::EShortObject *|short *|ecore::EShort *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_size_type = {"_p_size_type", "size_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__exception = {"_p_std__exception", "std::exception *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__listT___ecorecpp__mapping__any_t = {"_p_std__listT___ecorecpp__mapping__any_t", "std::list< ::ecorecpp::mapping::any > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__listT_ecore__EObject_p_t = {"_p_std__listT_ecore__EObject_p_t", "std::list< ::ecore::EObject_ptr > *|std::list< ecore::EObject * > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__string = {"_p_std__string", "std::string *|ecore::EString *|ecorecpp::mapping::type_traits::string_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__stringstream = {"_p_std__stringstream", "std::stringstream *|ecorecpp::mapping::type_traits::stringstream_t *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__vectorT_std__string_std__allocatorT_std__string_t_t = {"_p_std__vectorT_std__string_std__allocatorT_std__string_t_t", "std::vector< ::ecore::EString,std::allocator< ::ecore::EString > > *|std::vector< std::string,std::allocator< std::string > > *|std::vector< std::string > *|std::vector< ::ecore::EString > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__vectorT_std__string_std__allocatorT_std__string_t_t__allocator_type = {"_p_std__vectorT_std__string_std__allocatorT_std__string_t_t__allocator_type", "std::vector< std::string >::allocator_type *|std::allocator< std::string > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_unsigned_char_std__allocatorT_unsigned_char_t_t = {"_p_std__vectorT_unsigned_char_std__allocatorT_unsigned_char_t_t", "ecore::EByteArray *|std::vector< unsigned char,std::allocator< unsigned char > > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_swig__SwigPyIterator = {"_p_swig__SwigPyIterator", "swig::SwigPyIterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_time_t = {"_p_time_t", "time_t *|ecore::EDate *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_char = {"_p_unsigned_char", "unsigned char *|ecore::EByteObject *|ecore::EByte *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_int = {"_p_unsigned_int", "unsigned int *|mode_t *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_value_type = {"_p_value_type", "value_type *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__p_ExceptionType,
   &_swigt__p_FMSVishnuException,
   &_swigt__p_FMS_Data__CpFileOptions,
+  &_swigt__p_FMS_Data__CreateDirOptions,
+  &_swigt__p_FMS_Data__DirEntry,
+  &_swigt__p_FMS_Data__DirEntryList,
   &_swigt__p_FMS_Data__FileStat,
   &_swigt__p_FMS_Data__FileStatList,
   &_swigt__p_FMS_Data__FileTransfer,
@@ -48075,7 +46049,6 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_FMS_Data__LsTransferOptions,
   &_swigt__p_FMS_Data__RmFileOptions,
   &_swigt__p_FMS_Data__StopTransferOptions,
-  &_swigt__p_FMS_Data__StringList,
   &_swigt__p_FMS_Data__TailOfFileOptions,
   &_swigt__p_IMSVishnuException,
   &_swigt__p_IMS_Data__CurMetricOp,
@@ -48131,10 +46104,8 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_VishnuException,
   &_swigt__p___ecorecpp__mapping__EListT_ecore__EObject_t,
   &_swigt__p___ecorecpp__mapping__any,
-  &_swigt__p_allocator_type,
   &_swigt__p_bool,
   &_swigt__p_char,
-  &_swigt__p_difference_type,
   &_swigt__p_double,
   &_swigt__p_ecore__EClass,
   &_swigt__p_ecore__EObject,
@@ -48142,6 +46113,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_ecore__EReference,
   &_swigt__p_ecore__EStructuralFeature,
   &_swigt__p_ecorecpp__mapping__DelegateEList__EList_ptr,
+  &_swigt__p_ecorecpp__mapping__EListT___FMS_Data__DirEntry_t,
   &_swigt__p_ecorecpp__mapping__EListT___FMS_Data__FileStat_t,
   &_swigt__p_ecorecpp__mapping__EListT___FMS_Data__FileTransfer_t,
   &_swigt__p_ecorecpp__mapping__EListT___IMS_Data__Metric_t,
@@ -48165,29 +46137,27 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_int,
   &_swigt__p_long_double,
   &_swigt__p_long_long,
-  &_swigt__p_p_PyObject,
   &_swigt__p_p_char,
   &_swigt__p_ptr_type,
   &_swigt__p_short,
-  &_swigt__p_size_type,
   &_swigt__p_std__exception,
   &_swigt__p_std__listT___ecorecpp__mapping__any_t,
   &_swigt__p_std__listT_ecore__EObject_p_t,
   &_swigt__p_std__string,
   &_swigt__p_std__stringstream,
-  &_swigt__p_std__vectorT_std__string_std__allocatorT_std__string_t_t,
-  &_swigt__p_std__vectorT_std__string_std__allocatorT_std__string_t_t__allocator_type,
   &_swigt__p_std__vectorT_unsigned_char_std__allocatorT_unsigned_char_t_t,
   &_swigt__p_swig__SwigPyIterator,
   &_swigt__p_time_t,
   &_swigt__p_unsigned_char,
   &_swigt__p_unsigned_int,
-  &_swigt__p_value_type,
 };
 
 static swig_cast_info _swigc__p_ExceptionType[] = {  {&_swigt__p_ExceptionType, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_FMSVishnuException[] = {  {&_swigt__p_FMSVishnuException, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_FMS_Data__CpFileOptions[] = {  {&_swigt__p_FMS_Data__CpFileOptions, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_FMS_Data__CreateDirOptions[] = {  {&_swigt__p_FMS_Data__CreateDirOptions, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_FMS_Data__DirEntry[] = {  {&_swigt__p_FMS_Data__DirEntry, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_FMS_Data__DirEntryList[] = {  {&_swigt__p_FMS_Data__DirEntryList, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_FMS_Data__FileStat[] = {  {&_swigt__p_FMS_Data__FileStat, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_FMS_Data__FileStatList[] = {  {&_swigt__p_FMS_Data__FileStatList, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_FMS_Data__FileTransfer[] = {  {&_swigt__p_FMS_Data__FileTransfer, 0, 0, 0},{0, 0, 0, 0}};
@@ -48197,7 +46167,6 @@ static swig_cast_info _swigc__p_FMS_Data__LsDirOptions[] = {  {&_swigt__p_FMS_Da
 static swig_cast_info _swigc__p_FMS_Data__LsTransferOptions[] = {  {&_swigt__p_FMS_Data__LsTransferOptions, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_FMS_Data__RmFileOptions[] = {  {&_swigt__p_FMS_Data__RmFileOptions, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_FMS_Data__StopTransferOptions[] = {  {&_swigt__p_FMS_Data__StopTransferOptions, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_FMS_Data__StringList[] = {  {&_swigt__p_FMS_Data__StringList, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_FMS_Data__TailOfFileOptions[] = {  {&_swigt__p_FMS_Data__TailOfFileOptions, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_IMSVishnuException[] = {  {&_swigt__p_IMSVishnuException, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_IMS_Data__CurMetricOp[] = {  {&_swigt__p_IMS_Data__CurMetricOp, 0, 0, 0},{0, 0, 0, 0}};
@@ -48253,17 +46222,16 @@ static swig_cast_info _swigc__p_UserException[] = {  {&_swigt__p_UserException, 
 static swig_cast_info _swigc__p_VishnuException[] = {  {&_swigt__p_VishnuException, 0, 0, 0},  {&_swigt__p_UserException, _p_UserExceptionTo_p_VishnuException, 0, 0},  {&_swigt__p_UMSVishnuException, _p_UMSVishnuExceptionTo_p_VishnuException, 0, 0},  {&_swigt__p_TMSVishnuException, _p_TMSVishnuExceptionTo_p_VishnuException, 0, 0},  {&_swigt__p_IMSVishnuException, _p_IMSVishnuExceptionTo_p_VishnuException, 0, 0},  {&_swigt__p_FMSVishnuException, _p_FMSVishnuExceptionTo_p_VishnuException, 0, 0},  {&_swigt__p_SystemException, _p_SystemExceptionTo_p_VishnuException, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p___ecorecpp__mapping__EListT_ecore__EObject_t[] = {  {&_swigt__p___ecorecpp__mapping__EListT_ecore__EObject_t, 0, 0, 0},  {&_swigt__p_ecorecpp__mapping__EListT_ecore__EObject_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p___ecorecpp__mapping__any[] = {  {&_swigt__p___ecorecpp__mapping__any, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_allocator_type[] = {  {&_swigt__p_allocator_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_bool[] = {  {&_swigt__p_bool, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_difference_type[] = {  {&_swigt__p_difference_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_double[] = {  {&_swigt__p_double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ecore__EClass[] = {  {&_swigt__p_ecore__EClass, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_ecore__EObject[] = {  {&_swigt__p_IMS_Data__CurMetricOp, _p_IMS_Data__CurMetricOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ListSysInfo, _p_IMS_Data__ListSysInfoTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__SysInfoOp, _p_IMS_Data__SysInfoOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Metric, _p_IMS_Data__MetricTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListUsers, _p_UMS_Data__ListUsersTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__FileStatList, _p_FMS_Data__FileStatListTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListLocalAccounts, _p_UMS_Data__ListLocalAccountsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__SystemInfo, _p_IMS_Data__SystemInfoTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__User, _p_UMS_Data__UserTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__StringList, _p_FMS_Data__StringListTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__LocalAccount, _p_UMS_Data__LocalAccountTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ProcessOp, _p_IMS_Data__ProcessOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Configuration, _p_UMS_Data__ConfigurationTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Job, _p_TMS_Data__JobTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Machine, _p_UMS_Data__MachineTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ListThreshold, _p_IMS_Data__ListThresholdTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Threshold, _p_IMS_Data__ThresholdTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListOptionsValues, _p_UMS_Data__ListOptionsValuesTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ListProcesses, _p_IMS_Data__ListProcessesTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListSessions, _p_UMS_Data__ListSessionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Process, _p_IMS_Data__ProcessTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ThresholdOp, _p_IMS_Data__ThresholdOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListMachines, _p_UMS_Data__ListMachinesTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__FileTransferList, _p_FMS_Data__FileTransferListTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Command, _p_UMS_Data__CommandTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__OptionValue, _p_UMS_Data__OptionValueTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListCommands, _p_UMS_Data__ListCommandsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__MetricHistOp, _p_IMS_Data__MetricHistOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ExportOp, _p_IMS_Data__ExportOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__FileStat, _p_FMS_Data__FileStatTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ListJobs, _p_TMS_Data__ListJobsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Queue, _p_TMS_Data__QueueTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ListJobsOptions, _p_TMS_Data__ListJobsOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ProgressOptions, _p_TMS_Data__ProgressOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__SubmitOptions, _p_TMS_Data__SubmitOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListOptOptions, _p_UMS_Data__ListOptOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListMachineOptions, _p_UMS_Data__ListMachineOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ConnectOptions, _p_UMS_Data__ConnectOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListSessionOptions, _p_UMS_Data__ListSessionOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListCmdOptions, _p_UMS_Data__ListCmdOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListLocalAccOptions, _p_UMS_Data__ListLocalAccOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__CpFileOptions, _p_FMS_Data__CpFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__HeadOfFileOptions, _p_FMS_Data__HeadOfFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__LsDirOptions, _p_FMS_Data__LsDirOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__LsTransferOptions, _p_FMS_Data__LsTransferOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__StopTransferOptions, _p_FMS_Data__StopTransferOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__TailOfFileOptions, _p_FMS_Data__TailOfFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__RmFileOptions, _p_FMS_Data__RmFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Session, _p_UMS_Data__SessionTo_p_ecore__EObject, 0, 0},  {&_swigt__p_ecore__EObject, 0, 0, 0},  {&_swigt__p_TMS_Data__ListJobResults, _p_TMS_Data__ListJobResultsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ListMetric, _p_IMS_Data__ListMetricTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__FileTransfer, _p_FMS_Data__FileTransferTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ListQueues, _p_TMS_Data__ListQueuesTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__JobResult, _p_TMS_Data__JobResultTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__RestartOp, _p_IMS_Data__RestartOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Progression, _p_TMS_Data__ProgressionTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ListProgression, _p_TMS_Data__ListProgressionTo_p_ecore__EObject, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ecore__EObject[] = {  {&_swigt__p_IMS_Data__CurMetricOp, _p_IMS_Data__CurMetricOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ListSysInfo, _p_IMS_Data__ListSysInfoTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__SysInfoOp, _p_IMS_Data__SysInfoOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Metric, _p_IMS_Data__MetricTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListUsers, _p_UMS_Data__ListUsersTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__FileStatList, _p_FMS_Data__FileStatListTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListLocalAccounts, _p_UMS_Data__ListLocalAccountsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__SystemInfo, _p_IMS_Data__SystemInfoTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__User, _p_UMS_Data__UserTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__LocalAccount, _p_UMS_Data__LocalAccountTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ProcessOp, _p_IMS_Data__ProcessOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Configuration, _p_UMS_Data__ConfigurationTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Job, _p_TMS_Data__JobTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Machine, _p_UMS_Data__MachineTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ListThreshold, _p_IMS_Data__ListThresholdTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Threshold, _p_IMS_Data__ThresholdTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListOptionsValues, _p_UMS_Data__ListOptionsValuesTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ListProcesses, _p_IMS_Data__ListProcessesTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListSessions, _p_UMS_Data__ListSessionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Process, _p_IMS_Data__ProcessTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ThresholdOp, _p_IMS_Data__ThresholdOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListMachines, _p_UMS_Data__ListMachinesTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__FileTransferList, _p_FMS_Data__FileTransferListTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Command, _p_UMS_Data__CommandTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__OptionValue, _p_UMS_Data__OptionValueTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListCommands, _p_UMS_Data__ListCommandsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__MetricHistOp, _p_IMS_Data__MetricHistOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ExportOp, _p_IMS_Data__ExportOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__FileStat, _p_FMS_Data__FileStatTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ListJobs, _p_TMS_Data__ListJobsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Queue, _p_TMS_Data__QueueTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ListJobsOptions, _p_TMS_Data__ListJobsOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListOptOptions, _p_UMS_Data__ListOptOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ProgressOptions, _p_TMS_Data__ProgressOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__SubmitOptions, _p_TMS_Data__SubmitOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListMachineOptions, _p_UMS_Data__ListMachineOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ConnectOptions, _p_UMS_Data__ConnectOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListSessionOptions, _p_UMS_Data__ListSessionOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListCmdOptions, _p_UMS_Data__ListCmdOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListLocalAccOptions, _p_UMS_Data__ListLocalAccOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__CpFileOptions, _p_FMS_Data__CpFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__HeadOfFileOptions, _p_FMS_Data__HeadOfFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__LsDirOptions, _p_FMS_Data__LsDirOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__LsTransferOptions, _p_FMS_Data__LsTransferOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__StopTransferOptions, _p_FMS_Data__StopTransferOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__TailOfFileOptions, _p_FMS_Data__TailOfFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__RmFileOptions, _p_FMS_Data__RmFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Session, _p_UMS_Data__SessionTo_p_ecore__EObject, 0, 0},  {&_swigt__p_ecore__EObject, 0, 0, 0},  {&_swigt__p_TMS_Data__ListJobResults, _p_TMS_Data__ListJobResultsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ListMetric, _p_IMS_Data__ListMetricTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__DirEntryList, _p_FMS_Data__DirEntryListTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__FileTransfer, _p_FMS_Data__FileTransferTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ListQueues, _p_TMS_Data__ListQueuesTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__JobResult, _p_TMS_Data__JobResultTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__DirEntry, _p_FMS_Data__DirEntryTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__RestartOp, _p_IMS_Data__RestartOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Progression, _p_TMS_Data__ProgressionTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ListProgression, _p_TMS_Data__ListProgressionTo_p_ecore__EObject, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ecore__EOperation[] = {  {&_swigt__p_ecore__EOperation, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ecore__EReference[] = {  {&_swigt__p_ecore__EReference, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ecore__EStructuralFeature[] = {  {&_swigt__p_ecore__EStructuralFeature, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ecorecpp__mapping__DelegateEList__EList_ptr[] = {  {&_swigt__p_ecorecpp__mapping__DelegateEList__EList_ptr, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ecorecpp__mapping__EListT___FMS_Data__DirEntry_t[] = {  {&_swigt__p_ecorecpp__mapping__EListT___FMS_Data__DirEntry_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ecorecpp__mapping__EListT___FMS_Data__FileStat_t[] = {  {&_swigt__p_ecorecpp__mapping__EListT___FMS_Data__FileStat_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ecorecpp__mapping__EListT___FMS_Data__FileTransfer_t[] = {  {&_swigt__p_ecorecpp__mapping__EListT___FMS_Data__FileTransfer_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ecorecpp__mapping__EListT___IMS_Data__Metric_t[] = {  {&_swigt__p_ecorecpp__mapping__EListT___IMS_Data__Metric_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -48287,29 +46255,27 @@ static swig_cast_info _swigc__p_float[] = {  {&_swigt__p_float, 0, 0, 0},{0, 0, 
 static swig_cast_info _swigc__p_int[] = {  {&_swigt__p_int, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_long_double[] = {  {&_swigt__p_long_double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_long_long[] = {  {&_swigt__p_long_long, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_p_PyObject[] = {  {&_swigt__p_p_PyObject, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_char[] = {  {&_swigt__p_p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ptr_type[] = {  {&_swigt__p_ptr_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_short[] = {  {&_swigt__p_short, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_size_type[] = {  {&_swigt__p_size_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__exception[] = {  {&_swigt__p_std__exception, 0, 0, 0},  {&_swigt__p_VishnuException, _p_VishnuExceptionTo_p_std__exception, 0, 0},  {&_swigt__p_UserException, _p_UserExceptionTo_p_std__exception, 0, 0},  {&_swigt__p_UMSVishnuException, _p_UMSVishnuExceptionTo_p_std__exception, 0, 0},  {&_swigt__p_TMSVishnuException, _p_TMSVishnuExceptionTo_p_std__exception, 0, 0},  {&_swigt__p_IMSVishnuException, _p_IMSVishnuExceptionTo_p_std__exception, 0, 0},  {&_swigt__p_FMSVishnuException, _p_FMSVishnuExceptionTo_p_std__exception, 0, 0},  {&_swigt__p_SystemException, _p_SystemExceptionTo_p_std__exception, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__listT___ecorecpp__mapping__any_t[] = {  {&_swigt__p_std__listT___ecorecpp__mapping__any_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__listT_ecore__EObject_p_t[] = {  {&_swigt__p_std__listT_ecore__EObject_p_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__string[] = {  {&_swigt__p_std__string, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__stringstream[] = {  {&_swigt__p_std__stringstream, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_std__vectorT_std__string_std__allocatorT_std__string_t_t[] = {  {&_swigt__p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_std__vectorT_std__string_std__allocatorT_std__string_t_t__allocator_type[] = {  {&_swigt__p_std__vectorT_std__string_std__allocatorT_std__string_t_t__allocator_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_unsigned_char_std__allocatorT_unsigned_char_t_t[] = {  {&_swigt__p_std__vectorT_unsigned_char_std__allocatorT_unsigned_char_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_swig__SwigPyIterator[] = {  {&_swigt__p_swig__SwigPyIterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_time_t[] = {  {&_swigt__p_time_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_char[] = {  {&_swigt__p_unsigned_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_int[] = {  {&_swigt__p_unsigned_int, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_value_type[] = {  {&_swigt__p_value_type, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_ExceptionType,
   _swigc__p_FMSVishnuException,
   _swigc__p_FMS_Data__CpFileOptions,
+  _swigc__p_FMS_Data__CreateDirOptions,
+  _swigc__p_FMS_Data__DirEntry,
+  _swigc__p_FMS_Data__DirEntryList,
   _swigc__p_FMS_Data__FileStat,
   _swigc__p_FMS_Data__FileStatList,
   _swigc__p_FMS_Data__FileTransfer,
@@ -48319,7 +46285,6 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_FMS_Data__LsTransferOptions,
   _swigc__p_FMS_Data__RmFileOptions,
   _swigc__p_FMS_Data__StopTransferOptions,
-  _swigc__p_FMS_Data__StringList,
   _swigc__p_FMS_Data__TailOfFileOptions,
   _swigc__p_IMSVishnuException,
   _swigc__p_IMS_Data__CurMetricOp,
@@ -48375,10 +46340,8 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_VishnuException,
   _swigc__p___ecorecpp__mapping__EListT_ecore__EObject_t,
   _swigc__p___ecorecpp__mapping__any,
-  _swigc__p_allocator_type,
   _swigc__p_bool,
   _swigc__p_char,
-  _swigc__p_difference_type,
   _swigc__p_double,
   _swigc__p_ecore__EClass,
   _swigc__p_ecore__EObject,
@@ -48386,6 +46349,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_ecore__EReference,
   _swigc__p_ecore__EStructuralFeature,
   _swigc__p_ecorecpp__mapping__DelegateEList__EList_ptr,
+  _swigc__p_ecorecpp__mapping__EListT___FMS_Data__DirEntry_t,
   _swigc__p_ecorecpp__mapping__EListT___FMS_Data__FileStat_t,
   _swigc__p_ecorecpp__mapping__EListT___FMS_Data__FileTransfer_t,
   _swigc__p_ecorecpp__mapping__EListT___IMS_Data__Metric_t,
@@ -48409,24 +46373,19 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_int,
   _swigc__p_long_double,
   _swigc__p_long_long,
-  _swigc__p_p_PyObject,
   _swigc__p_p_char,
   _swigc__p_ptr_type,
   _swigc__p_short,
-  _swigc__p_size_type,
   _swigc__p_std__exception,
   _swigc__p_std__listT___ecorecpp__mapping__any_t,
   _swigc__p_std__listT_ecore__EObject_p_t,
   _swigc__p_std__string,
   _swigc__p_std__stringstream,
-  _swigc__p_std__vectorT_std__string_std__allocatorT_std__string_t_t,
-  _swigc__p_std__vectorT_std__string_std__allocatorT_std__string_t_t__allocator_type,
   _swigc__p_std__vectorT_unsigned_char_std__allocatorT_unsigned_char_t_t,
   _swigc__p_swig__SwigPyIterator,
   _swigc__p_time_t,
   _swigc__p_unsigned_char,
   _swigc__p_unsigned_int,
-  _swigc__p_value_type,
 };
 
 
