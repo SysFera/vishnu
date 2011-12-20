@@ -74,7 +74,7 @@ struct UMS_env_name_mapper{
 template <typename userIdType>
 
 boost::shared_ptr<Options>
-makeConnectOptions(std::string pgName,userIdType& userId,int req,std::string& dietConfig){
+makeConnectOptions(std::string pgName,userIdType& userId,int req,std::string& dietConfig, const Group_type& userIdGroup=HIDDEN){
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
@@ -86,7 +86,7 @@ makeConnectOptions(std::string pgName,userIdType& userId,int req,std::string& di
 
   opt->add("userId,u",
            "represents the VISHNU user identifier",
-           HIDDEN,
+           userIdGroup,
            userId,
            req);
 
@@ -95,7 +95,6 @@ makeConnectOptions(std::string pgName,userIdType& userId,int req,std::string& di
 
 
 }
-
 
 
 #endif
