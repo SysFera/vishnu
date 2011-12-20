@@ -31,17 +31,19 @@ using namespace std;
 //The generic script syntaxe
 static std::string prefix = "vishnu";
 static const std::string group               = prefix+"_group";
+static const std::string workingDir          = prefix+"_working_dir";
 static const std::string jobName             = prefix+"_job_name";
 static const std::string jobOutput           = prefix+"_output";
 static const std::string jobError            = prefix+"_error";
 static const std::string jobWallClockLimit   = prefix+"_wallclocklimit";
-static const std::string workingDir          = prefix+"_workingdir";
-static const std::string notify_user         = prefix+"_notify_user";
-static const std::string nodes               = prefix+"_job_nodes";
-static const std::string queue               = prefix+"_queue";
-static const std::string priority            = prefix+"_userpriority";
+static const std::string cpuTime             = prefix+"_cput";
+static const std::string nbCpu               = prefix+"_nb_cpu";
+static const std::string nbNodesAndCpuPerNode= prefix+"_nbNodesAndCpuPerNode";
 static const std::string mem                 = prefix+"_memory";
-static const std::string cpuTime             = prefix+"_cputime";
+static const std::string mailNotification    = prefix+"_mailNotification";
+static const std::string mailNotifyUser      = prefix+"_notify_user";
+static const std::string queue               = prefix+"_queue";
+
 static const std::string loadLevelerSec      = "loadleveler_sec";
 static const std::string torqueSec           = "torque_sec";
 static const std::string slurmSec            = "slurm_sec";
