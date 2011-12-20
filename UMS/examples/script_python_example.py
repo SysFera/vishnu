@@ -78,6 +78,15 @@ try:
   # Closing the connection
   VISHNU.close(k)
 
+  # Test connection using account on the .netrc file
+  print "Test connection using the .netrc file"
+  sess2 = VISHNU.Session()
+  VISHNU.connect("","", sess2)
+  k = sess2.getSessionKey()
+  print "Session key: ",k
+  VISHNU.close(k)
+
+
 except VISHNU.VishnuException, e:
     print e.what()
 
