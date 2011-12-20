@@ -31,8 +31,8 @@ def displayFiletransferList(fileTransferList):
     displayFileTransfer(fileTransferList.getFileTransfers().get(i))
 
 VISHNU.vishnuInitialize("/home/ibrahima/Brouillon/buildFMS/test_files/cfg/client_testing.cfg")
-
-path = "MA_2:/tmp/testFMSpython"
+machineId= "MA_2";
+path = machineId + ":/tmp/testFMSpython"
 DIR = "MA_2:/tmp/testFMSDirpython"
 path2 = "MA_2:/tmp/omninames-Paco-Sysfera.log"
 DIR2 = "MA_2:/tmp/"
