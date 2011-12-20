@@ -11,53 +11,7 @@
 #include "api_ums.hpp"
 #include "diet_config_tests.h"
 #include"DIET_client.h"
-#include <fstream>
-#include <sstream>
-
-
-void putOnFile(const std::string& path, const std::string& content) {
-  std::ofstream ofile(path.c_str());
-  ofile << content;
-  ofile.close();
-}
-
-void
-replaceAllOccurences(const std::string& path,
-    const std::string& oldValue,
-    const std::string& newValue) {
-
-  std::string fileContent;
-
-  std::ifstream ifs (path.c_str());
-  if (ifs.is_open()) {
-    std::ostringstream oss;
-    oss << ifs.rdbuf();
-    fileContent = oss.str();
-    ifs.close();
-  }
-  size_t pos = fileContent.find(oldValue);
-  while(pos!=std::string::npos) {
-    fileContent.replace(pos, oldValue.size(), newValue, 0, newValue.size());
-    pos = fileContent.find(oldValue, pos+newValue.size());
-  }
-  putOnFile(path, fileContent);
-}
-
-void addLineToFile( const std::string& path,
-                    const std::string& line,
-                    std::string& oldfileContent) {
-
-  std::ifstream ifs (path.c_str());
-  if (ifs.is_open()) {
-    std::ostringstream oss;
-    oss << ifs.rdbuf();
-    oldfileContent = oss.str();
-    ifs.close();
-  }
-  putOnFile(path, line);
-}
-
-
+#include "UMS_test_utils.hpp"
 
 //BOOST_AUTO_TEST_SUITE( test_suite )
 
@@ -251,6 +205,7 @@ try {
   BOOST_REQUIRE (system(string("chmod 600 "+ netrcpath).c_str()) != -1);
   BOOST_CHECK  (connect    ("", "", sess, cop )==0);
   BOOST_CHECK  (listSessions(sess.getSessionKey(), *li , opt      )==0);
+  BOOST_MESSAGE("Sess.GetSessionKey() generated : " << sess.getSessionKey() );
   BOOST_REQUIRE(setenv("HOME", homebefore.c_str(), 1)==0);
 
   // Connect with netrc file's bad path
