@@ -25,59 +25,65 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
 {
   if(mbatchType==LOADLEVELER) {
 
-    mconversionTable[group]             = "# @ group=";
-    mconversionTable[jobName]           = "# @ job_name=";
-    mconversionTable[jobOutput]         = "# @ output=";
-    mconversionTable[jobError]          = "# @ error=";
-    mconversionTable[jobWallClockLimit] = "# @ wall_clock_limit=";
-    mconversionTable[workingDir]        = "# @ initialdir=";
-    mconversionTable[notify_user]       = "# @ notification=complete \n # @ notify_user=";
-    mconversionTable[nodes]             = "# @ job_type=parallel \n # @ node=";
-    mconversionTable[queue]             = "# @ class="; 
-    mconversionTable[priority]          = "# @ user_priority=";
-    mconversionTable[mem]               = "# @ data_limit=";
-    mconversionTable[cpuTime]           = "# @ cpu_limit= ";
-    mconversionTable[loadLevelerSec]    = "";
-    mconversionTable[commandSec]        = "";
-    mconversionTable[torqueSec]         = "";
-    mendScript                          = "# @ queue";
+    mconversionTable[group]                = "# @ group=";
+    mconversionTable[workingDir]           = "# @ initialdir=";
+    mconversionTable[jobName]              = "# @ job_name=";
+    mconversionTable[jobOutput]            = "# @ output=";
+    mconversionTable[jobError]             = "# @ error=";
+    mconversionTable[jobWallClockLimit]    = "# @ wall_clock_limit=";
+    mconversionTable[cpuTime]              = "# @ cpu_limit= ";
+    mconversionTable[nbCpu]                = "TODO";
+    mconversionTable[nbNodesAndCpuPerNode] = "TODO";//special case
+    mconversionTable[mem]                  = "# @ data_limit=";
+    mconversionTable[mailNotification]     = "# @ notification=";
+    mconversionTable[mailNotifyUser]       = "# @ mailNotifyUser=";
+    mconversionTable[queue]                = "# @ class="; 
+   
+    mconversionTable[loadLevelerSec]       = "";
+    mconversionTable[commandSec]           = "";
+    mconversionTable[torqueSec]            = "";
+    mendScript                             = "# @ queue";
 
   } else if(mbatchType==TORQUE) {
 
-    mconversionTable[group]             = "#PBS -W group_list=";
-    mconversionTable[jobName]           = "#PBS -N ";
-    mconversionTable[jobOutput]         = "#PBS -o ";
-    mconversionTable[jobError]          = "#PBS -e ";
-    mconversionTable[jobWallClockLimit] = "#PBS -l walltime=";
-    mconversionTable[workingDir]        = "#PBS -d ";
-    mconversionTable[notify_user]       = "#PBS -m e -M ";
-    mconversionTable[nodes]             = "#PBS -l nodes=";
-    mconversionTable[queue]             = "#PBS -q ";
-    mconversionTable[priority]          = "#PBS -p " ;
-    mconversionTable[mem]               = "#PBS -l mem=";
-    mconversionTable[cpuTime]           = "#PBS cput ";
-    mconversionTable[loadLevelerSec]    = "";
-    mconversionTable[commandSec]        = "";
-    mconversionTable[torqueSec]         = "";
+    mconversionTable[group]                = "#PBS -W group_list=";
+    mconversionTable[workingDir]           = "#PBS -d ";
+    mconversionTable[jobName]              = "#PBS -N ";
+    mconversionTable[jobOutput]            = "#PBS -o ";
+    mconversionTable[jobError]             = "#PBS -e ";
+    mconversionTable[jobWallClockLimit]    = "#PBS -l walltime=";
+    mconversionTable[cpuTime]              = "#PBS -l cput=";
+    mconversionTable[nbCpu]                = "#PBS -l ncpus=";
+    mconversionTable[nbNodesAndCpuPerNode] = "#PBS "; //special case
+    mconversionTable[mem]                  = "#PBS -l mem=";
+    mconversionTable[mailNotification]     = "#PBS -m ";
+    mconversionTable[mailNotifyUser]       = "#PBS -M ";
+    mconversionTable[queue]                = "#PBS -q ";
+    
+    mconversionTable[loadLevelerSec]       = "";
+    mconversionTable[commandSec]           = "";
+    mconversionTable[torqueSec]            = "";
     mendScript="";
 
   } else if(mbatchType==SLURM) {
 
-    mconversionTable[group]             = "#SBATCH --gid=";
-    mconversionTable[jobName]           = "#SBATCH -J ";
-    mconversionTable[jobOutput]         = "#SBATCH -o ";
-    mconversionTable[jobError]          = "#SBATCH -e ";
-    mconversionTable[jobWallClockLimit] = "#SBATCH -t ";
-    mconversionTable[workingDir]        = "#SBATCH -D ";
-    mconversionTable[notify_user]       = "#SBATCH --mail-type=END --mail-user=";
-    mconversionTable[nodes]             = "#SBATCH -N ";
-    mconversionTable[queue]             = "#SBATCH -p ";
-    mconversionTable[priority]          = "#SBATCH --nice=" ;
-    mconversionTable[mem]               = "#SBATCH --mem=";
-    mconversionTable[cpuTime]           = "#SBATCH --mincpus=";
-    mconversionTable[slurmSec]          = "";
-    mconversionTable[commandSec]        = "";
-    mconversionTable[torqueSec]         = "";
+    mconversionTable[group]                = "#SBATCH --gid=";
+    mconversionTable[workingDir]           = "#SBATCH -D ";
+    mconversionTable[jobName]              = "#SBATCH -J ";
+    mconversionTable[jobOutput]            = "#SBATCH -o ";
+    mconversionTable[jobError]             = "#SBATCH -e ";
+    mconversionTable[jobWallClockLimit]    = "#SBATCH -t ";
+    mconversionTable[cpuTime]              = "#SBATCH -t";
+    mconversionTable[nbCpu]                = "#SBATCH --mincpus=";
+    mconversionTable[nbNodesAndCpuPerNode] = "#SBATCH "; //spacial case
+    mconversionTable[mem]                  = "#SBATCH --mem=";
+    mconversionTable[mailNotification]     = "#SBATCH --mail-type="; 
+    mconversionTable[mailNotifyUser]       = "#SBATCH --mail-user=";
+    mconversionTable[queue]                = "#SBATCH -p ";
+    
+    mconversionTable[slurmSec]             = "";
+    mconversionTable[commandSec]           = "";
+    mconversionTable[torqueSec]            = "";
     mendScript="";
 
   } else {
@@ -93,17 +99,19 @@ void
 ScriptGenConvertor::initializeTableOfSymbols() {
 
   mtableOfSymbols.push_back(group);
+  mtableOfSymbols.push_back(workingDir);
   mtableOfSymbols.push_back(jobName);
   mtableOfSymbols.push_back(jobOutput);
   mtableOfSymbols.push_back(jobError);
   mtableOfSymbols.push_back(jobWallClockLimit);
-  mtableOfSymbols.push_back(workingDir);
-  mtableOfSymbols.push_back(notify_user);
-  mtableOfSymbols.push_back(queue);
-  mtableOfSymbols.push_back(nodes);
-  mtableOfSymbols.push_back(mem);
   mtableOfSymbols.push_back(cpuTime);
-  mtableOfSymbols.push_back(priority);
+  mtableOfSymbols.push_back(nbCpu);
+  mtableOfSymbols.push_back(nbNodesAndCpuPerNode);
+  mtableOfSymbols.push_back(mem);
+  mtableOfSymbols.push_back(mailNotification);  
+  mtableOfSymbols.push_back(mailNotifyUser);
+  mtableOfSymbols.push_back(queue);
+  
   mtableOfSymbols.push_back(loadLevelerSec);
   mtableOfSymbols.push_back(torqueSec);
   mtableOfSymbols.push_back(commandSec);
@@ -290,6 +298,24 @@ ScriptGenConvertor::getConvertedScript() {
 
     key =  iter->first;
     value = iter->second;
+    
+    //Special case
+    if(key.compare("nbNodesAndCpuPerNode")==0) {
+      size_t posNbNodes = value.find(":");
+      if(posNbNodes!=std::string::npos) {
+        std::string nbNodes = value.substr(0, posNbNodes);
+        std::string cpuPerNode = value.substr(posNbNodes+1);
+
+        if(mbatchType==LOADLEVELER) {
+          value = "TODO";
+        } else if(mbatchType==TORQUE) {
+          value = " nodes="+nbNodes+":ppn="+cpuPerNode;
+        } else if(mbatchType==SLURM) {
+          value = " --nodes="+nbNodes+"\n #SBATCH --mincpus="+cpuPerNode; 
+        }
+      }
+    }
+
     result += mconversionTable[key]  + value + "\n";
   }
 

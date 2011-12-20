@@ -333,6 +333,40 @@ SlurmServer::processOptions(const TMS_Data::SubmitOptions& options,
     }
   }
 
+  if(options.getMailNotification()!="") {
+    std::string notification = options.getMailNotification();
+    if(notification.compare("BEGIN")==0) {
+      cmdsOptions.push_back("--mail-type=BEGIN");
+    } else if(notification.compare("END")==0) {
+      cmdsOptions.push_back("--mail-type=END");
+    } else if(notification.compare("ERROR")==0) {
+      cmdsOptions.push_back("--mail-type=FAIL");
+    } else if(notification.compare("ALL")==0) {
+      cmdsOptions.push_back("--mail-type=ALL");
+    } else {
+      throw UserException(ERRCODE_INVALID_PARAM, notification+" is an invalid notification type:"+" consult the vishnu user manuel");
+    }
+  }
+
+  if(options.getMailNotifyUser()!="") {
+    cmdsOptions.push_back("--mail-user="+options.getMailNotifyUser());
+  }
+
+  if(options.getGroup()!="") {
+    cmdsOptions.push_back("--gid="+options.getGroup());
+  }
+
+  if(options.getWorkingDir()!="") {
+    cmdsOptions.push_back("-D");
+    cmdsOptions.push_back(options.getWorkingDir());
+  }
+
+  if(options.getCpuTime()!="") {
+    cmdsOptions.push_back("-t");
+    cmdsOptions.push_back(options.getCpuTime());
+  }
+
+
 }
 
 /**
