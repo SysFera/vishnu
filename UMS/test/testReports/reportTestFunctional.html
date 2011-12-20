@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title></title><meta name="generator" content="DocBook XSL Stylesheets V1.75.2" /></head><body><div xml:lang="" class="article" lang=""><div class="titlepage"><hr /></div><p></p><p>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>VISHNU - UMS - Functional test results</title><meta name="generator" content="DocBook XSL Stylesheets V1.75.2" /></head><body><div xml:lang="" class="article" title="VISHNU - UMS - Functional test results" lang=""><div class="titlepage"><div><div><h1 class="title"><a id="id2851233"></a>VISHNU - UMS - Functional test results</h1></div><div><div class="author"><h3 class="author"><span class="firstname">Daouda</span> <span class="surname">Traoré</span></h3></div></div><div><div class="author"><h3 class="author"><span class="firstname">Eugène</span> <span class="surname">Pamba Capo-Chichi</span></h3></div></div><div><div class="author"><h3 class="author"><span class="firstname">Kevin</span> <span class="surname">Coulomb</span></h3></div></div><div><div class="author"><h3 class="author"><span class="firstname">Ibrahima</span> <span class="surname">Cissé</span></h3></div></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="3"><b>Revision History</b></th></tr><tr><td align="left">Revision 1</td><td align="left">08/03/2011</td><td align="left">D. Traore</td></tr><tr><td align="left" colspan="3">
+          <p>Deliverable version</p>
+        </td></tr><tr><td align="left">Revision 2</td><td align="left">20/12/2011</td><td align="left">E. PAMBA CAPO-CHICHI</td></tr><tr><td align="left" colspan="3">
+          <p>Added tests for connection using the .netrc file</p>
+        </td></tr></table></div></div></div><hr /></div><p></p><p>
      </p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /><col /><col /><col /></colgroup><tbody><tr><td>
                   <p>Test type</p>
                </td><td>
@@ -42,9 +46,9 @@
                </td><td>
                   <p>Command(s) tested</p>
                </td><td>
-                  <p>Output expected</p>
+                  <p>Expected output</p>
                </td><td>
-                  <p>Output gotten</p>
+                  <p>Output</p>
                </td><td>
                   <p>Error</p>
                </td><td>
@@ -926,7 +930,7 @@
                </td><td>
                   <p>A list with the machine</p>
                </td><td>
-                  <p>A list wsith the machine</p>
+                  <p>A list with the machine</p>
                </td><td>
                   <p>0</p>
                </td><td> </td></tr><tr><td>
@@ -969,5 +973,103 @@
                   <p>session closed</p>
                </td><td> </td><td>
                   <p>Tested with command line interface</p>
+               </td></tr><tr><td>
+                  <p>U1.1-B2</p>
+               </td><td>
+                  <p>20/12/12</p>
+               </td><td>
+                  <p>Normal connection using the .netrc file</p>
+               </td><td>
+                  <p>connect</p>
+               </td><td>
+                  <p>session key</p>
+               </td><td>
+                  <p>The session key is returned</p>
+               </td><td> </td><td>
+                  <p></p>
+               </td></tr><tr><td>
+                  <p>U1.1-E3</p>
+               </td><td>
+                  <p>20/12/12</p>
+               </td><td>
+                  <p>Connection using a bad .netrc file path</p>
+               </td><td>
+                  <p>connect</p>
+               </td><td>
+                  <p>VishnuException</p>
+               </td><td>
+                  <p>VishnuException</p>
+               </td><td> </td><td>
+                  <p></p>
+               </td></tr><tr><td>
+                  <p>U1.1-E4</p>
+               </td><td>
+                  <p>20/12/12</p>
+               </td><td>
+                  <p>Connection using a bad .netrc file permissions</p>
+               </td><td>
+                  <p>connect</p>
+               </td><td>
+                  <p>VishnuException</p>
+               </td><td>
+                  <p>VishnuException</p>
+               </td><td> </td><td>
+                  <p></p>
+               </td></tr><tr><td>
+                  <p>U1.1-E5</p>
+               </td><td>
+                  <p>20/12/12</p>
+               </td><td>
+                  <p>Connection with no vishnu machine defined on the .netrc file</p>
+               </td><td>
+                  <p>connect</p>
+               </td><td>
+                  <p>VishnuException</p>
+               </td><td>
+                  <p>VishnuException</p>
+               </td><td> </td><td>
+                  <p></p>
+               </td></tr><tr><td>
+                  <p>U1.1-E6</p>
+               </td><td>
+                  <p>20/12/12</p>
+               </td><td>
+                  <p>Connection with no login defined on the .netrc file</p>
+               </td><td>
+                  <p>connect</p>
+               </td><td>
+                  <p>VishnuException</p>
+               </td><td>
+                  <p>VishnuException</p>
+               </td><td> </td><td>
+                  <p></p>
+               </td></tr><tr><td>
+                  <p>U1.1-E6</p>
+               </td><td>
+                  <p>20/12/12</p>
+               </td><td>
+                  <p>Connection with the password before the login on the .netrc file</p>
+               </td><td>
+                  <p>connect</p>
+               </td><td>
+                  <p>VishnuException</p>
+               </td><td>
+                  <p>VishnuException</p>
+               </td><td> </td><td>
+                  <p></p>
+               </td></tr><tr><td>
+                  <p>U1.1-E7</p>
+               </td><td>
+                  <p>20/12/12</p>
+               </td><td>
+                  <p>Connection with no password defined on the .netrc file</p>
+               </td><td>
+                  <p>connect</p>
+               </td><td>
+                  <p>VishnuException</p>
+               </td><td>
+                  <p>VishnuException</p>
+               </td><td> </td><td>
+                  <p></p>
                </td></tr></tbody></table></div><p>
     </p><p></p><p></p><p></p></div></body></html>
