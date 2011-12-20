@@ -60,7 +60,9 @@ LLServer::submit(const char* scriptPath,
   job.setMemLimit(llJobInfo.step_list[0]->limits64.memlock_soft_limit);
   job.setNbCpus(llJobInfo.step_list[0]->limits.cpu_soft_limit);
   job.setNbNodes(llJobInfo.step_list[0]->limits.core_soft_limit);
-
+  //To fill the job working dir
+  job.setJobWorkingDir(llJobInfo.step_list[0]->iwd); 
+  
   llfree_job_info(&llJobInfo,LL_JOB_VERSION);
 
   return 0;

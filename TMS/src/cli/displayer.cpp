@@ -55,7 +55,7 @@ displayJob(TMS_Data::Job& j){
   cout << " Error path  (remote) : " << j.getErrorPath() << endl;
   cout << " Priority             : " << j.getJobPrio() << "(" << convertJobPriorityToString(j.getJobPrio()) << ")" << endl;
   cout << " CPU                  : " << j.getNbCpus() << endl;
-  cout << " Working dir          : " << j.getJobWorkingDir() << endl;
+  cout << " Working dir (remote) : " << j.getJobWorkingDir() << endl;
   cout << " Status               : " << convertJobStateToString(j.getStatus()) << endl;
   if(j.getSubmitDate() > 0) {
     pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(j.getSubmitDate()));

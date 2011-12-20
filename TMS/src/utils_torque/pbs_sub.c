@@ -61,6 +61,7 @@ static char PBS_DPREFIX_DEFAULT[] = "#PBS";
 #define MAX_ERROR_MSG_SIZE 1024
 
 char PBS_ERROR_MSG[MAX_ERROR_MSG_SIZE];
+char tmp_err_msg[256];
 char PBS_Filter[256];
 char PBS_InitDir[256];
 char PBS_RootDir[256];
@@ -1812,7 +1813,8 @@ int parse_file(
 
           if ((after = cvtdate(optarg)) < 0)
             {
-            sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -a value\n");
+            sprintf(tmp_err_msg, "pbs_submit: illegal -a value\n");
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
             errflg++;
 
             break;
@@ -1863,8 +1865,8 @@ int parse_file(
 
           if (strlen(optarg) == 0)
             {
-            sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -c value\n");
-
+            sprintf(tmp_err_msg, "pbs_submit: illegal -c value\n");
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
             errflg++;
 
             break;
@@ -1883,6 +1885,7 @@ int parse_file(
             if ((*pc != 'n') && (*pc != 's') && (*pc != 'c'))
             {
               fprintf(stderr, "qsub: illegal -c value\n");
+              
               errflg++;
 
               break;
@@ -1940,7 +1943,8 @@ int parse_file(
 
               if (csv_find_string(checkpoint_strings, search_string) == NULL)
                 {
-                sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -c value \"%s\"\n", ptr);
+                sprintf(tmp_err_msg, "pbs_submit: illegal -c value \"%s\"\n", ptr);
+                strcat(PBS_ERROR_MSG, tmp_err_msg);
                 errflg++;
                 goto err;
                 }
@@ -1980,10 +1984,10 @@ int parse_file(
 
             if (mypwd == NULL)
               {
-              sprintf(PBS_ERROR_MSG, "pbs_submit: unable to get cwd: %d (%s)\n",
+              sprintf(tmp_err_msg, "pbs_submit: unable to get cwd: %d (%s)\n",
                       errno,
                       strerror(errno));
-
+              strcat(PBS_ERROR_MSG, tmp_err_msg);
               errflg++;
 
               /* we don't want to return yet, but we also don't want a segfault either */
@@ -1997,9 +2001,9 @@ int parse_file(
 
             if ((strlen(mypwd) + strlen(optarg)) >= sizeof(PBS_InitDir))
               {
-              sprintf(PBS_ERROR_MSG, "pbs_submit: -d arg is longer than %ld characters\n",
+              sprintf(tmp_err_msg, "pbs_submit: -d arg is longer than %ld characters\n",
                       (long)sizeof(PBS_InitDir));
-
+              strcat(PBS_ERROR_MSG, tmp_err_msg);
               errflg++;
               }
 
@@ -2012,9 +2016,9 @@ int parse_file(
             {
             if (strlen(optarg) >= sizeof(PBS_InitDir))
               {
-              sprintf(PBS_ERROR_MSG, "pbs_submit: -d arg is longer than %ld characters\n",
+              sprintf(tmp_err_msg, "pbs_submit: -d arg is longer than %ld characters\n",
                       (long)sizeof(PBS_InitDir));
-
+              strcat(PBS_ERROR_MSG, tmp_err_msg);
               errflg++;
               }
 
@@ -2024,22 +2028,21 @@ int parse_file(
           if (validate_path != 0)
             {
             /* validate local existence of '-d' working directory */
-
             if (chdir(PBS_InitDir) == -1)
               {
-              sprintf(PBS_ERROR_MSG, "pbs_submit: cannot chdir to '%s' errno: %d (%s)\n",
+                sprintf(tmp_err_msg, "pbs_submit: cannot chdir to '%s' errno: %d (%s)\n",
                       optarg,
                       errno,
                       strerror(errno));
-
+                strcat(PBS_ERROR_MSG, tmp_err_msg);
               errflg++;
               }
             }
           }    /* END if (optarg != NULL) */
         else
           {
-          sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -d value\n");
-
+          sprintf(tmp_err_msg, "pbs_submit: illegal -d value\n");
+          strcat(PBS_ERROR_MSG, tmp_err_msg);
           errflg++;
           }
 
@@ -2053,8 +2056,8 @@ int parse_file(
           }
         else
           {
-          sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -D value\n");
-
+          sprintf(tmp_err_msg, "pbs_submit: illegal -D value\n");
+          strcat(PBS_ERROR_MSG, tmp_err_msg);
           errflg++;
           }
 
@@ -2078,8 +2081,8 @@ int parse_file(
             }
           else
             {
-            sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -e value\n");
-
+            sprintf(tmp_err_msg, "pbs_submit: illegal -e value\n");
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
             errflg++;
             }
           }
@@ -2125,7 +2128,8 @@ int parse_file(
               strcmp(optarg, "eo") != 0 &&
               strcmp(optarg, "n") != 0)
             {
-            sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -j value\n");
+            sprintf(tmp_err_msg, "pbs_submit: illegal -j value\n");
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
             errflg++;
 
             break;
@@ -2150,7 +2154,8 @@ int parse_file(
               strcmp(optarg, "eo") != 0 &&
               strcmp(optarg, "n") != 0)
             {
-            sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -k value\n");
+            sprintf(tmp_err_msg, "pbs_submit: illegal -k value\n");
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
             errflg++;
 
             break;
@@ -2212,8 +2217,8 @@ int parse_file(
                   sprintf(tmpLine, "procs=%s", proc_val);
                   if (set_resources(&attrib, tmpLine, (pass == 0)) != 0)
                     {                                                                  
-                    sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -l value\n");
-
+                    sprintf(tmp_err_msg, "pbs_submit: illegal -l value\n");
+                    strcat(PBS_ERROR_MSG, tmp_err_msg);
                     errflg++;
                     }
                   }
@@ -2254,8 +2259,8 @@ int parse_file(
 
           if (set_resources(&attrib, optarg, (pass == 0)) != 0)
             {                                                                  
-            sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -l value\n");
-
+            sprintf(tmp_err_msg, "pbs_submit: illegal -l value\n");
+            strcat(PBS_ERROR_MSG, tmp_err_msg); 
             errflg++;
             }
 
@@ -2286,8 +2291,8 @@ int parse_file(
 
                   if (set_resources(&attrib, tmpLine, (pass == 0)) != 0)
                     {
-                    sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -l value\n");
-
+                    sprintf(tmp_err_msg, "pbs_submit: illegal -l value\n");
+                    strcat(PBS_ERROR_MSG, tmp_err_msg);
                     errflg++;
                     }
 
@@ -2318,8 +2323,8 @@ int parse_file(
 
           if (strlen(optarg) == 0)
             {
-            sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -m value\n");
-
+            sprintf(tmp_err_msg, "pbs_submit: illegal -m value\n");
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
             errflg++;
 
             break;
@@ -2333,7 +2338,8 @@ int parse_file(
               {
               if ((*pc != 'a') && (*pc != 'b') && (*pc != 'e'))
                 {
-                sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -m value\n");
+                sprintf(tmp_err_msg, "pbs_submit: illegal -m value\n");
+                strcat(PBS_ERROR_MSG, tmp_err_msg);
                 errflg++;
 
                 break;
@@ -2356,8 +2362,8 @@ int parse_file(
 
           if (parse_at_list(optarg, FALSE, FALSE))
             {
-            sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -M value\n");
-
+            sprintf(tmp_err_msg, "pbs_submit: illegal -M value\n");
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
             errflg++;
 
             break;
@@ -2382,8 +2388,8 @@ int parse_file(
             }
           else
             {
-            sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -N value\n");
-
+            sprintf(tmp_err_msg, "pbs_submit: illegal -N value\n");
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
             errflg++;
             }
           }
@@ -2408,8 +2414,8 @@ int parse_file(
             }
           else
             {
-            sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -o value\n");
-
+            sprintf(tmp_err_msg, "pbs_submit: illegal -o value\n");
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
             errflg++;
             }
           }
@@ -2432,8 +2438,8 @@ int parse_file(
 
           if (strlen(pc) == 0)
             {
-            sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -p value\n");
-
+            sprintf(tmp_err_msg, "pbs_submit: illegal -p value\n");
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
             errflg++;
 
             break;
@@ -2443,8 +2449,8 @@ int parse_file(
             {
             if (!isdigit(*pc))
               {
-              sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -p value\n");
-
+              sprintf(tmp_err_msg, "pbs_submit: illegal -p value\n");
+              strcat(PBS_ERROR_MSG, tmp_err_msg);
               errflg++;
 
               break;
@@ -2457,8 +2463,8 @@ int parse_file(
 
           if ((i < -1024) || (i > 1023))
             {
-            sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -p value\n");
-
+            sprintf(tmp_err_msg, "pbs_submit: illegal -p value\n");
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
             errflg++;
 
             break;
@@ -2482,8 +2488,8 @@ int parse_file(
           // make sure this is the super user *
           if (geteuid() != (uid_t)0)
             {
-            sprintf(PBS_ERROR_MSG, "pbs_submit: Must be the super user to submit a proxy job\n");
-
+            sprintf(tmp_err_msg, "pbs_submit: Must be the super user to submit a proxy job\n");
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
             errflg++;
             }
           user = optarg;
@@ -2500,8 +2506,8 @@ int parse_file(
           }
         else
           {
-          sprintf(PBS_ERROR_MSG, "pbs_submit: -P requires a user name\n");
-
+          sprintf(tmp_err_msg, "pbs_submit: -P requires a user name\n");
+          strcat(PBS_ERROR_MSG, tmp_err_msg);
           errflg++;
           }
     #endif 
@@ -2528,8 +2534,8 @@ int parse_file(
 
           if (strlen(optarg) != 1)
             {
-            sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -r value\n");
-
+            sprintf(tmp_err_msg, "pbs_submit: illegal -r value\n");
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
             errflg++;
 
             break;
@@ -2537,8 +2543,8 @@ int parse_file(
 
           if ((*optarg != 'y') && (*optarg != 'n'))
             {
-            sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -r value\n");
-
+            sprintf(tmp_err_msg, "pbs_submit: illegal -r value\n");
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
             errflg++;
 
             break;
@@ -2557,8 +2563,8 @@ int parse_file(
 
           if (parse_at_list(optarg, TRUE, TRUE))
             {
-            sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -S value\n");
-
+            sprintf(tmp_err_msg, "pbs_submit: illegal -S value\n");
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
             errflg++;
 
             break;
@@ -2605,8 +2611,8 @@ int parse_file(
 
           if (parse_at_list(optarg, TRUE, FALSE))
             {
-            sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -u value\n");
-
+            sprintf(tmp_err_msg, "pbs_submit: illegal -u value\n");
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
             errflg++;
 
             break;
@@ -2630,8 +2636,8 @@ int parse_file(
 
           if (v_value == NULL)
             {
-            sprintf(PBS_ERROR_MSG, "pbs_submit: out of memory\n");
-
+            sprintf(tmp_err_msg, "pbs_submit: out of memory\n");
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
             errflg++;
 
             break;
@@ -2659,8 +2665,8 @@ int parse_file(
           }
         else
           {
-          sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -w value\n");
-
+          sprintf(tmp_err_msg, "pbs_submit: illegal -w value\n");
+          strcat(PBS_ERROR_MSG, tmp_err_msg);
           errflg++;
           }
 
@@ -2675,8 +2681,8 @@ int parse_file(
           {
           /* value is empty */
 
-          sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -W value\n");
-
+          sprintf(tmp_err_msg, "pbs_submit: illegal -W value\n");
+          strcat(PBS_ERROR_MSG, tmp_err_msg);
           errflg++;
 
           break;
@@ -2714,12 +2720,14 @@ int parse_file(
 
                 if (rtn == 2)
                   {
-                  sprintf(PBS_ERROR_MSG,"pbs_submit: -W value exceeded max length (%d)\n",
+                  sprintf(tmp_err_msg,"pbs_submit: -W value exceeded max length (%d)\n",
                     PBS_DEPEND_LEN);
+                  strcat(PBS_ERROR_MSG, tmp_err_msg);
                   }
                 else
                   {
-                  sprintf(PBS_ERROR_MSG,"pbs_submit: illegal -W value\n");
+                  sprintf(tmp_err_msg,"pbs_submit: illegal -W value\n");
+                  strcat(PBS_ERROR_MSG, tmp_err_msg);
                   }
 
                 errflg++;
@@ -2740,8 +2748,8 @@ int parse_file(
                 {
                 /* cannot parse 'stagein' value */
 
-                sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -W value\n");
-
+                sprintf(tmp_err_msg, "pbs_submit: illegal -W value\n");
+                strcat(PBS_ERROR_MSG, tmp_err_msg);
                 errflg++;
 
                 break;
@@ -2760,8 +2768,8 @@ int parse_file(
                 {
                 /* cannot parse 'stageout' value */
 
-                sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -W value\n");
-
+                sprintf(tmp_err_msg, "pbs_submit: illegal -W value\n");
+                strcat(PBS_ERROR_MSG, tmp_err_msg);
                 errflg++;
 
                 break;
@@ -2789,8 +2797,8 @@ int parse_file(
                 {
                 /* cannot parse 'grouplist' value */
 
-                sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -W value\n");
-
+                sprintf(tmp_err_msg, "pbs_submit: illegal -W value\n");
+                strcat(PBS_ERROR_MSG, tmp_err_msg);
                 errflg++;
 
                 break;
@@ -2808,8 +2816,9 @@ int parse_file(
 
             if (len > 3)
               {
-              sprintf(PBS_ERROR_MSG, "Invalid umask value, too many digits: %s\n", 
+              sprintf(tmp_err_msg, "Invalid umask value, too many digits: %s\n", 
                       valuewd); 
+              strcat(PBS_ERROR_MSG, tmp_err_msg);
               errflg++;
              
               break;
@@ -2860,7 +2869,8 @@ int parse_file(
                 break;
               
               default:
-                sprintf(PBS_ERROR_MSG, "invalid %s value: %s\n", ATTR_f, valuewd);
+                sprintf(tmp_err_msg, "invalid %s value: %s\n", ATTR_f, valuewd);
+                strcat(PBS_ERROR_MSG, tmp_err_msg);
                 errflg++;
               }
               
@@ -2878,8 +2888,8 @@ int parse_file(
 
         if (i == -1)
           {
-          sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -W value\n");
-
+          sprintf(tmp_err_msg, "pbs_submit: illegal -W value\n");
+          strcat(PBS_ERROR_MSG, tmp_err_msg);
           errflg++;
           }
 
@@ -2895,8 +2905,8 @@ int parse_file(
 
           if (!getenv("DISPLAY"))
             {
-            sprintf(PBS_ERROR_MSG, "pbs_submit: DISPLAY not set\n");
-
+            sprintf(tmp_err_msg, "pbs_submit: DISPLAY not set\n");
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
             errflg++;
             }
           }
@@ -3309,22 +3319,7 @@ int pbs_prepare_script(
 
   if (errflg || ((optind + 1) < argc))
   {
-    static char usage[] =
-      "usage: pbs_submit [-a date_time] [-A account_string] [-b secs]\n\
-      [-c [ none | { enabled | periodic | shutdown |\n\
-        depth=<int> | dir=<path> | interval=<minutes>}... ]\n\
-        [-C directive_prefix] [-d path] [-D path]\n\
-        [-e path] [-h] [-I] [-j oe] [-k {oe}] [-l resource_list] [-m n|{abe}]\n\
-        [-M user_list] [-N jobname] [-o path] [-p priority] [-P proxy_user] [-q queue] \n\
-        [-r y|n] [-S path] [-t number_to_submit] [-T type]  [-u user_list] [-w] path\n";
 
-    /* need secondary usage since there appears to be a 512 byte size limit */
-
-    static char usage2[] =
-      "      [-W otherattributes=value...] [-v variable_list] [-V ] [-x] [-X] [-z] [script]\n";
-
-    sprintf(PBS_ERROR_MSG,"%s%s", usage, usage2);
-    
     if (submit_args_str != NULL)
     {
       free(submit_args_str);

@@ -34,7 +34,7 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[cpuTime]              = "# @ cpu_limit= ";
     mconversionTable[nbCpu]                = "TODO";
     mconversionTable[nbNodesAndCpuPerNode] = "TODO";//special case
-    mconversionTable[mem]                  = "# @ data_limit=";
+    mconversionTable[mem]                  = "# @ data_limit=";//a voir
     mconversionTable[mailNotification]     = "# @ notification=";
     mconversionTable[mailNotifyUser]       = "# @ mailNotifyUser=";
     mconversionTable[queue]                = "# @ class="; 

@@ -63,6 +63,11 @@ SlurmServer::submit(const char* scriptPath,
     argv[i+1] = const_cast<char*>(cmdsOptions[i].c_str());
   }
 
+  for(int i=0; i < argc; i++) {
+   cout << argv[i] << " ";
+  }
+
+
   job_desc_msg_t desc; //The slurm job descriptor
   //parse the scripthPath and sets the options values
   slurm_parse_script(argc, argv, &desc);
@@ -563,7 +568,10 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId){
     job.setNbCpus(nbCpus);
     job.setNbNodes(nbNodes);
     job.setNbNodesAndCpuPerNode(convertToString(nbNodes)+":"+convertToString(nbCpus));
- 
+
+    //To fill the job working dir
+    job.setJobWorkingDir(slurmJobInfo.work_dir);
+
     //fill the msymbol map
     msymbolMap["\%j"] = vishnu::convertToString(jobId);
     msymbolMap["\%J"] = vishnu::convertToString(jobId);

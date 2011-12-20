@@ -117,7 +117,6 @@ TorqueServer::submit(const char* scriptPath,
   }
 
   unlink(scriptTmp);
-
   struct batch_status *p_status = pbs_statjob(connect, jobId, NULL, NULL);
 
   pbs_disconnect(connect);
@@ -485,7 +484,7 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   string wall       = string("");
   string etime      = string("");
   string nodeAndCpu = string("");
-   
+  string workingDir = string(""); 
   // Getting job idx
   str = p->name;
   pos_found =  str.find(".");
@@ -560,8 +559,20 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
             node = str;
           }
         }
-      } 
-      else if (!strcmp(a->name, ATTR_g)){ // group
+      } else if(!strcmp(a->name, ATTR_v)) { // working_dir
+        std::string env = "PBS_O_WORKDIR";
+        string value = a->value;
+        size_t pos = value.find(env);
+        if(pos!=std::string::npos) {
+          pos = value.find("=",pos+env.size());
+          size_t end = value.find(",",pos+1);
+          if(end!=std::string::npos) {
+            workingDir= value.substr(pos+1, end-pos-1);
+          }
+        } else {
+          workingDir= value.substr(pos+1);
+        }
+      } else if (!strcmp(a->name, ATTR_g)){ // group
         group = str;
       } else if(!strcmp(a->name, ATTR_qtime)){
         qtime = str;
@@ -641,6 +652,8 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   if(nodeAndCpu.size()!=0) {
     job.setNbNodesAndCpuPerNode(nodeAndCpu);
   }
+
+  job.setJobWorkingDir(workingDir);
 }
 
 

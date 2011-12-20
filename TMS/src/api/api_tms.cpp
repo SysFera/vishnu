@@ -49,7 +49,6 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   boost::filesystem::path completePath(scriptFilePath);
   std::string scriptFileCompletePath = (boost::filesystem::path(boost::filesystem::system_complete(completePath))).string();
   jobInfo.setJobPath(scriptFileCompletePath);
-  jobInfo.setJobWorkingDir((boost::filesystem::path(boost::filesystem::current_path().string())).string());
 
   std::string scriptContent = vishnu::get_file_content(scriptFilePath);
 
