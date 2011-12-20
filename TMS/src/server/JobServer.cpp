@@ -57,7 +57,7 @@ int JobServer::submitJob(const std::string& scriptContent,
   std::string machineName = machineServer.getMachineName();
   delete machine;
 
-  #if 0
+#if 0
   Env env(mbatchType);
   env.replaceEnvVariables(const_cast<std::string&>(scriptContent));
   env.replaceAllOccurences(const_cast<std::string&>(scriptContent), "$VISHNU_SUBMIT_MACHINE_NAME", machineName);
@@ -66,7 +66,7 @@ int JobServer::submitJob(const std::string& scriptContent,
   std::cout << "++++++++++++++++++++++BEGIN++++++++++++++++" << std::endl;
   std::cout << scriptContent << std::endl;
   std::cout << "++++++++++++++++++++++END++++++++++++++++" << std::endl;
-  #endif
+#endif
 
   std::string jobSerialized ;
   std::string submitOptionsSerialized;
