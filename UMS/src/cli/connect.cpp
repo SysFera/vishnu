@@ -13,6 +13,7 @@
 #include "daemon_cleaner.hpp"
 #include "utilVishnu.hpp"
 #include "UMSVishnuException.hpp"
+#include "UserException.hpp"
 
 namespace po = boost::program_options;
 
@@ -53,9 +54,8 @@ int main (int ac, char* av[]){
 
   /**************** Describe options *************/
 
-  boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1,dietConfig);
+  boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,0,dietConfig,CONFIG);
 
-  opt->setPosition("userId",-1);
 
   opt->add("sessionInactivityDelay,d", "The session inactivity delay",CONFIG,fSessionInactivityDelay);
 
@@ -84,10 +84,17 @@ int main (int ac, char* av[]){
 
     //Fix me
 
-    if(0==opt->count("password")){
+    if(0==opt->count("password") && 1==opt->count("userId")){
 
     password= vishnu::takePassword("password: ");
     
+    }
+    else if (1==opt->count("password") && 0==opt->count("userId")){
+
+      errorUsage(av[0], "missiong parameter: userId ");      
+
+    return ERRCODE_CLI_ERROR_MISSING_PARAMETER;
+
     }
 
     /************** Call UMS connect service *******************************/
@@ -99,15 +106,12 @@ int main (int ac, char* av[]){
     
       errorUsage(av[0],dietErrorMsg,EXECERROR);
     
-      return  CLI_ERROR_DIET ;
+      return  ERRCODE_CLI_ERROR_DIET ;
     }
-
 
     connect(userId,password, session, connectOpt);// call the api extern connect service to get a session key
 
     vishnuFinalize();
-
-    //storeLastSession(session.getSessionKey(),session.getClosePolicy(),getppid()); // store sessionKey into $HOME/.vishnu/sessions
 
     storeLastSession(session,getppid()); // store sessionKey into $HOME/.vishnu/sessions
     std::cout << "sessionId: " << session.getSessionId() << "\n";
@@ -120,9 +124,9 @@ int main (int ac, char* av[]){
 
   catch(po::required_option& e){// a required parameter is missing
 
-    usage(*opt,"[options] userId ",requiredParamMsg);
+    usage(*opt,"[options] ",requiredParamMsg);
     
-    return CLI_ERROR_MISSING_PARAMETER;
+    return ERRCODE_CLI_ERROR_MISSING_PARAMETER;
   }
   // {{RELAX<CODEREDUCER> The error handling is the same in all command 
 
@@ -130,7 +134,7 @@ int main (int ac, char* av[]){
 
     errorUsage(av[0], e.what());
     
-    return CLI_ERROR_INVALID_PARAMETER;
+    return ERRCODE_INVALID_PARAM;
   }
 
   catch(VishnuException& e){// catch all Vishnu runtime error
@@ -156,7 +160,7 @@ int main (int ac, char* av[]){
 
     errorUsage(av[0], e.what());
     
-    return CLI_ERROR_RUNTIME;
+    return ERRCODE_CLI_ERROR_RUNTIME;
   }
   
   return 0;

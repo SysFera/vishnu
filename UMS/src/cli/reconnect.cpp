@@ -13,6 +13,7 @@
 #include "sessionUtils.hpp"
 #include "daemon_cleaner.hpp"
 #include "utilVishnu.hpp"
+#include "UserException.hpp"
 namespace po = boost::program_options;
 
 using namespace std;
@@ -36,9 +37,8 @@ int main (int ac, char* av[]){
   /**************** Describe options *************/
 
 
-  boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1, dietConfig);
+  boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,0, dietConfig,CONFIG);
 
-  opt->setPosition("userId",1);
 
 
   opt->add("sessionId,s",
@@ -68,14 +68,19 @@ int main (int ac, char* av[]){
 
 
     //Fix me
-   
-   if(0==opt->count("password")){
+
+    if(0==opt->count("password") && 1==opt->count("userId")){
 
     password= vishnu::takePassword("password: ");
-    
+
     }
-   
-   // password=vishnu::takePassword("Password: ");
+    else if (1==opt->count("password") && 0==opt->count("userId")){
+
+      errorUsage(av[0], "missiong parameter: userId ");
+
+    return ERRCODE_CLI_ERROR_MISSING_PARAMETER;
+
+    }
 
 
     /************** Call UMS reconnect service *******************************/
@@ -88,7 +93,7 @@ int main (int ac, char* av[]){
 
       errorUsage(av[0],dietErrorMsg,EXECERROR);
     
-      return  CLI_ERROR_DIET ;
+      return  ERRCODE_CLI_ERROR_DIET ;
 
     }
 
@@ -106,9 +111,9 @@ int main (int ac, char* av[]){
 
   catch(po::required_option& e){//  a required parameter is missing
 
-    usage(*opt,"[options] userId sessionId",requiredParamMsg);
+    usage(*opt,"[options] sessionId",requiredParamMsg);
    
-    return CLI_ERROR_MISSING_PARAMETER;
+    return ERRCODE_CLI_ERROR_MISSING_PARAMETER;
   }
 
   // {{RELAX<CODEREDUCER> The error handling is the same in all command
@@ -117,7 +122,7 @@ int main (int ac, char* av[]){
 
     errorUsage(av[0], e.what());
 
-    return CLI_ERROR_INVALID_PARAMETER;
+    return ERRCODE_INVALID_PARAM;
   }
 
 
@@ -135,7 +140,7 @@ int main (int ac, char* av[]){
 
     errorUsage(av[0], e.what()) ;
 
-    return CLI_ERROR_RUNTIME;
+    return ERRCODE_CLI_ERROR_RUNTIME;
   }
 
   return 0;
