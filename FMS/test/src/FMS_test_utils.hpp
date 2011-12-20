@@ -49,6 +49,7 @@ static const string machineId1 = "machine_1"; // name is TEST_FMS_HOST1 set in c
 static const string machineId2 = "machine_2"; // name is TEST_FMS_HOST2 set in cmake
 static const string newFileName = "FMS_test_file";
 static const string newDirName = "FMS_test_dir";
+static const string newSubDirName = "FMS_test_sub_dir";
 // local
 static const string localDir = FMSWORKINGDIR;
 static const string localFilePath = localDir + slash + newFileName;
@@ -60,6 +61,7 @@ static const string baseDirFullPath2 = machineId2 + sep + remoteBaseDir2;
 static const string fileFullPath1 = baseDirFullPath1 + slash + newFileName;
 static const string fileFullPath2 = baseDirFullPath2 + slash + newFileName;
 static const string dirFullPath1 = baseDirFullPath1 + slash + newDirName;
+static const string recursiveDirFullPath1 = dirFullPath1 + slash +  newSubDirName;
 static const string dirFullPath2 = baseDirFullPath2 + slash + newDirName;
 
 

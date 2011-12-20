@@ -28,8 +28,6 @@ BOOST_FIXTURE_TEST_SUITE(CreateDir, FMSSeDFixture)
 /************************  D I R E C T O R I E S *****************************/
 /*****************************************************************************/
 
-
-
 // All tests of category 1,2,3 for DIRECTORIES only
 
 BOOST_AUTO_TEST_CASE(CreateDir_Base)
@@ -47,9 +45,18 @@ BOOST_AUTO_TEST_CASE(CreateDir_Base)
     string fileFullPath = dirFullPath1 + slash + newFileName;
     BOOST_REQUIRE( createFile(sessionKey, fileFullPath) == 0 );
     // Cleanup
-    BOOST_CHECK( removeFile(sessionKey, fileFullPath) == 0);
-    BOOST_CHECK( removeDir(sessionKey, dirFullPath1) == 0);
-
+    BOOST_REQUIRE( removeFile(sessionKey, fileFullPath) == 0);
+    
+    // check 3 :recursive directory creation 
+    CreateDirOptions mkdirOptions;
+    mkdirOptions.setIsRecursive (true);
+    BOOST_CHECK_EQUAL( createDir(sessionKey, recursiveDirFullPath1,mkdirOptions),0); 
+    // Check 4: list content of parent directory 
+    isNewDirFound = isFoundInDir(sessionKey,dirFullPath1 , newSubDirName);
+    BOOST_REQUIRE(isNewDirFound);
+    RmFileOptions rmOptions;
+    rmOptions.setIsRecursive (true);
+    BOOST_REQUIRE ( removeFile(sessionKey, recursiveDirFullPath1,rmOptions) == 0);
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
     BOOST_CHECK(false);
@@ -75,6 +82,13 @@ BOOST_AUTO_TEST_CASE(CreateDir_Exceptions)
     string invalidMachineId = "tt";
     string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
     BOOST_CHECK_THROW( createDir(sessionKey, invalidMachineFullPath), VishnuException);
+
+// E4 case: recursive directories creation
+// assert dirFullPath1 is not in baseDirFullPath1 
+    bool isNewDirFound = isFoundInDir(sessionKey, baseDirFullPath1,dirFullPath1);
+    BOOST_REQUIRE(!isNewDirFound);
+BOOST_CHECK_THROW( createDir(sessionKey, recursiveDirFullPath1),VishnuException ); 
+
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
