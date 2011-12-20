@@ -1,6 +1,7 @@
 
 import VISHNU
 import time
+import os
 
 def displayQueue (q):
   for i in range(q.getNbQueues()):
@@ -38,12 +39,13 @@ def displayListJ(lij):
     displayJob(lij.getJobs().get(i), i)
     print " "
 
-VISHNU.vishnuInitialize("/home/traore/MYCONFIGFILES/client.cfg")
+VISHNU.vishnuInitialize(os.getenv("VISHNU_CONFIG_FILE"))
 
 j = VISHNU.Job()
 op = VISHNU.SubmitOptions()
-mid = "MA_4"
-path = "/home/traore/VishnuProject/vishnu/TMS/test/src/scripts/torque_script"
+mid = "machine_1"
+#path = "/home/traore/VishnuProject/vishnu/TMS/test/src/scripts/torque_script"
+path = "scripts/torque_script"
 sess = VISHNU.Session()
 r = VISHNU.connect("root", "vishnu_user", sess)
 k = sess.getSessionKey()
@@ -74,30 +76,26 @@ try :
   VISHNU.getCompletedJobsOutput(k, mid, lijr, out)
   VISHNU.submitJob(k, mid, path, j, op)
   VISHNU.cancelJob(k, mid, j.getJobId())
-except VISHNU.TMSVishnuException, e:
-  print e.what()
-except VISHNU.UMSVishnuException, e:
-  print e.what()
-except VISHNU.SystemException, e:
-  print e.what()
 
+  print "@@@@@@@ List of queues @@@@@@@"
+  displayQueue(q)
+  print "@@@@@@@ job information @@@@@@"
+  displayJob(j,0)
+  print "@@@@@@@ List of jobs progression @@@@@@"
+  if li.getNbJobs() > 0:
+    displayProg(li)
+  print "@@@@@@@ Result of job @@@@@@@@@@@@@"
+  displayOut(jr)
+  print "@@@@@@@ List of completed jobs @@@@@@@@@"
+  if lijr.getNbJobs() > 0:
+    displayComp(lijr)
+  print "@@@@@@@@@ List of jobs @@@@@@@@@@"
+  if lij.getNbJobs() > 0:
+    displayListJ(lij)
 
-print "@@@@@@@ List of queues @@@@@@@"
-displayQueue(q)
-print "@@@@@@@ job information @@@@@@"
-displayJob(j,0)
-print "@@@@@@@ List of jobs progression @@@@@@"
-if li.getNbJobs() > 0:
-  displayProg(li)
-print "@@@@@@@ Result of job @@@@@@@@@@@@@"
-displayOut(jr)
-print "@@@@@@@ List of completed jobs @@@@@@@@@"
-if lijr.getNbJobs() > 0:
-  displayComp(lijr)
-print "@@@@@@@@@ List of jobs @@@@@@@@@@"
-if lij.getNbJobs() > 0:
-  displayListJ(lij)
+#VISHNU.getJobProgress(k, mid, li, opp)
 
-VISHNU.getJobProgress(k, mid, li, opp)
+except VISHNU.VishnuException, e:
+  print e.what()
 
 # command execfile("/home/keo/Bureau/depot_git_edf/vishnu/TMS/test/src/toto.py")
