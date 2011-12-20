@@ -10,9 +10,20 @@
 srun hostname
 sleep 7
 echo "Hello world!...."
-echo "The id of the submitted jobs is: "$SLURM_JOB_ID 
 echo "Your job submit directory is: "$SLURM_SUBMIT_DIR
-echo "The total number in your job's resource allocation is: "$SLURM_JOB_NUM_NODES
-echo "The name of your job is: " $SLURM_JOB_NAME
 echo "The list of nodes allocated to the job: " $SLURM_JOB_NODELIST
 echo "The count of processors available to the job on this node: " $SLURM_JOB_CPUS_PER_NODE
+
+echo "TEST OF VISHNU JOB OUTPUT ENVIRONMENT VARIABLES!...."
+echo "#TEST_JOB_ID: "$VISHNU_BATCHJOB_ID 
+echo "#TEST_JOB_NAME: " $VISHNU_BATCHJOB_NAME
+echo "#TEST_NODEFILE:" $VISHNU_BATCHJOB_NODEFILE
+echo "#TEST_NUM_NODES: "$VISHNU_BATCHJOB_NUM_NODES
+echo "#TEST_SUBMIT_MACHINE_NAME: "$VISHNU_SUBMIT_MACHINE_NAME
+
+echo "CORRESPONDING JOB OUTPUT ENVIRONMENT VARIABLES!...."
+echo "#BATCH_JOB_ID: "$SLURM_JOB_ID
+echo "#BATCH_JOB_NAME: " $SLURM_JOB_NAME
+echo "#BATCH_NODEFILE:" 
+echo "#BATCH_NUM_NODES:" $SLURM_JOB_NUM_NODES 
+
