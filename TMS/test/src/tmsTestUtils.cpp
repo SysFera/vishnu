@@ -62,6 +62,16 @@ bool operator== (const Job& lJob,const Job& rJob ){
 
 }
 
+std::string findValue(const std::string& content, const std::string& key) {
+ 
+  size_t pos = content.find(key);
+  std::string tmp = content.substr(pos+key.size());
+  std::istringstream iss(tmp);
+  std::string value;
+  iss >> value;
+ return value;
+}
+
 
 
 
