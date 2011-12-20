@@ -264,7 +264,6 @@ try {
   BOOST_REQUIRE(setenv("HOME", homebefore.c_str(), 1)==0);
   putOnFile(netrcpath, oldContent);
 
-
    // ReConnect normal call
    // -> connect
    BOOST_REQUIRE(restore    (sqlScript+"/clean_session.sql")==0);
