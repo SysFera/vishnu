@@ -203,13 +203,13 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="mailNotification" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="Assigns the notification type of the job. Valid type values are BEGIN, END, ERROR, and ALL (any state change)."/>
+        <details key="content" value="Assigns the notification type of the job. Valid type values are BEGIN, END, ERROR, and ALL (any state change)"/>
         <details key="shortOption" value="M"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="mailNotifyUser" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="The name of user to receive email notification of state changes as defined by the option mailNotification. The default value is the submitting user."/>
+        <details key="content" value="The name of user to receive email notification of state changes as defined by the option mailNotification. The default value is the submitting user"/>
         <details key="shortOption" value="u"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -221,13 +221,13 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="workingDir" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="Assigns a job remote working dir."/>
+        <details key="content" value="Assigns a job remote working dir"/>
         <details key="shortOption" value="D"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="cpuTime" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="Assigns a job cpu limit time."/>
+        <details key="content" value="Assigns a job cpu limit time"/>
         <details key="shortOption" value="T"/>
       </eAnnotations>
     </eStructuralFeatures>

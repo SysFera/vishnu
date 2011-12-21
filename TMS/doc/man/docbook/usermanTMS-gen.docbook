@@ -147,13 +147,13 @@ same conditions as regards security.</para>
           <varlistentry>
             <term><option>-M <replaceable>mailNotification</replaceable></option></term>
             <listitem>
-              <para>Assigns the notification type of the job. Valid type values are BEGIN, END, ERROR, and ALL (any state change)..</para>
+              <para>Assigns the notification type of the job. Valid type values are BEGIN, END, ERROR, and ALL (any state change).</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-u <replaceable>mailNotifyUser</replaceable></option></term>
             <listitem>
-              <para>The name of user to receive email notification of state changes as defined by the option mailNotification. The default value is the submitting user..</para>
+              <para>The name of user to receive email notification of state changes as defined by the option mailNotification. The default value is the submitting user.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -165,13 +165,13 @@ same conditions as regards security.</para>
           <varlistentry>
             <term><option>-D <replaceable>workingDir</replaceable></option></term>
             <listitem>
-              <para>Assigns a job remote working dir..</para>
+              <para>Assigns a job remote working dir.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-T <replaceable>cpuTime</replaceable></option></term>
             <listitem>
-              <para>Assigns a job cpu limit time..</para>
+              <para>Assigns a job cpu limit time.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -227,6 +227,22 @@ same conditions as regards security.</para>
         <title>DIAGNOSTICS</title>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
           <varlistentry>
             <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
             <listitem/>
@@ -322,6 +338,26 @@ same conditions as regards security.</para>
         <title>DIAGNOSTICS</title>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
           <varlistentry>
             <term>&quot;There is no open session in this terminal&quot; [13]</term>
             <listitem/>
@@ -424,6 +460,26 @@ same conditions as regards security.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;There is no open session in this terminal&quot; [13]</term>
             <listitem/>
           </varlistentry>
@@ -505,6 +561,26 @@ same conditions as regards security.</para>
         <title>DIAGNOSTICS</title>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
           <varlistentry>
             <term>&quot;There is no open session in this terminal&quot; [13]</term>
             <listitem/>
@@ -651,6 +727,26 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;There is no open session in this terminal&quot; [13]</term>
             <listitem/>
           </varlistentry>
@@ -744,6 +840,22 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
         <title>DIAGNOSTICS</title>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
           <varlistentry>
             <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
             <listitem/>
@@ -851,6 +963,22 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
             <listitem/>
           </varlistentry>
@@ -941,6 +1069,22 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
         <title>DIAGNOSTICS</title>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
           <varlistentry>
             <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
             <listitem/>

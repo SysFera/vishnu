@@ -1698,6 +1698,26 @@ and password are sent to the user by email.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;There is no open session in this terminal&quot; [13]</term>
             <listitem/>
           </varlistentry>
@@ -1830,6 +1850,26 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;There is no open session in this terminal&quot; [13]</term>
             <listitem/>
           </varlistentry>
@@ -1925,6 +1965,26 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;There is no open session in this terminal&quot; [13]</term>
             <listitem/>
           </varlistentry>
@@ -2012,6 +2072,26 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;There is no open session in this terminal&quot; [13]</term>
             <listitem/>
           </varlistentry>
@@ -2098,6 +2178,26 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;There is no open session in this terminal&quot; [13]</term>
             <listitem/>
           </varlistentry>
@@ -2179,6 +2279,26 @@ After restoring, the vishnu database is re-initialized.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;There is no open session in this terminal&quot; [13]</term>
             <listitem/>
           </varlistentry>
@@ -2259,6 +2379,26 @@ have to add it to the authorized keys of their own account on the machine.</para
         <title>DIAGNOSTICS</title>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
           <varlistentry>
             <term>&quot;There is no open session in this terminal&quot; [13]</term>
             <listitem/>
@@ -2390,6 +2530,26 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;There is no open session in this terminal&quot; [13]</term>
             <listitem/>
           </varlistentry>
@@ -2476,6 +2636,26 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
         <title>DIAGNOSTICS</title>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
           <varlistentry>
             <term>&quot;There is no open session in this terminal&quot; [13]</term>
             <listitem/>
@@ -2566,6 +2746,26 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;There is no open session in this terminal&quot; [13]</term>
             <listitem/>
           </varlistentry>
@@ -2653,6 +2853,26 @@ that option using the vishnu_configure_option command.</para>
         <title>DIAGNOSTICS</title>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
           <varlistentry>
             <term>&quot;There is no open session in this terminal&quot; [13]</term>
             <listitem/>
@@ -5119,6 +5339,22 @@ $TYPE: The 'M' symb to remind it is a machine id</para>
           </varlistentry>
           <varlistentry>
             <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
