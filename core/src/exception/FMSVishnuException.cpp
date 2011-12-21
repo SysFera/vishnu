@@ -20,7 +20,7 @@ void
 FMSVishnuException::initMsg(){
 
   mp.insert(std::pair<int, std::string>(ERRCODE_INVALID_PATH, std::string("Invalid path ")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_RUNTIME_ERROR, std::string("Runtime error")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_RUNTIME_ERROR, std::string("Remote command execution error")));
   mp.insert(std::pair<int, std::string>(ERRCODE_UNKNOWN_FILETRANSFERID, std::string("The file transfer  id is unknown")));
   
 }

@@ -2,7 +2,7 @@
 import VISHNU
 import time
 import string
-
+import os 
 def displayDirContent(dirContent):
   for i in range(dirContent.getDirEntries().size()):
     print dirContent.getDirEntries().get(i)
@@ -30,20 +30,20 @@ def displayFiletransferList(fileTransferList):
   for i in range(fileTransferList.getFileTransfers().size()):
     displayFileTransfer(fileTransferList.getFileTransfers().get(i))
 
-VISHNU.vishnuInitialize("/home/ibrahima/Brouillon/buildFMS/test_files/cfg/client_testing.cfg")
-machineId= "MA_2";
+vishnu_client_file_path =os.getenv("VISHNU_CONFIG_FILE") 
+machineI d= "MA_1";
+VISHNU.vishnuInitialize(vishnu_client_file_path)
 path = machineId + ":/tmp/testFMSpython"
-DIR = "MA_2:/tmp/testFMSDirpython"
-path2 = "MA_2:/tmp/omninames-Paco-Sysfera.log"
-DIR2 = "MA_2:/tmp/"
-path3 = "MA_2:/tmp/testCpFms"
-path4 = "MA_2:/tmp/testGrp"
-path5 = "MA_2:/tmp/testGrpMoved"
-DIR3 = "MA_2:/tmp/TmpTestFMS"
+DIR = machineId + ":/tmp/testFMSDirpython"
+DIR2 = machineId + ":/tmp/"
+path3 = machineId + ":/tmp/testCpFms"
+path4 = machineId + ":/tmp/testGrp"
+path5 = machineId + ":/tmp/testGrpMoved"
+DIR3 = machineId + ":/tmp/TmpTestFMS"
 DIR4 = "/home/capo-chichi/Telechargements/"
-DIR5 = "MA_2:/tmp/TransferLib/"
-DIR6 = "MA_2:/tmp/MoveAsyncTest/"
-contentOfFile = "MA_2"
+DIR5 = machineId + ":/tmp/TransferLib/"
+DIR6 = machineId + ":/tmp/MoveAsyncTest/"
+contentOfFile = machineId + ""
 
 #Objects initialization
 headOpt = VISHNU.HeadOfFileOptions()
@@ -59,13 +59,13 @@ stopTransferOptions = VISHNU.StopTransferOptions()
 lsTransferOptions = VISHNU.LsTransferOptions()
 
 try :
-  r, k = VISHNU.connect("user_1", "toto")
+  r, k = VISHNU.connect("root", "vishnu_user")
   print "createFile:"
   VISHNU.createFile(k, path)
   print "sessionKey:", k
   print "path:", path
   print "==================getFilesInfo===============:"
-  VISHNU.getFilesInfo(k, path2,  fileInfo)
+  VISHNU.getFilesInfo(k, path,  fileInfo)
   displayFileInfo(fileInfo)
   print "removeFile:"
   VISHNU.removeFile(k, path)
@@ -79,7 +79,7 @@ try :
   #To clean the list
   dirContent.getDirEntries().clear()
   print "createFile testCpFms:"
-  VISHNU.createFile(k, path3)
+  VISHNU.createFile(k, path)
   print "copyFile testGrp:"
   VISHNU.copyFile(k, path3, path4)
   print "===================listDir - LongFormat====================:"
@@ -95,7 +95,7 @@ try :
   #To clean the list
   dirContent.getDirEntries().clear()
   print "chGrp:"
-  VISHNU.chGrp(k, "adm", path3)
+  VISHNU.chGrp(k, "adm", path)
   print "===================listDir - LongFormat with change group on testGrp file============:"
   lsOpt.setLongFormat(True)
   VISHNU.listDir(k, DIR2, dirContent, lsOpt)
@@ -103,7 +103,7 @@ try :
   #To clean the list
   dirContent.getDirEntries().clear()
   print "chMod:"
-  VISHNU.chMod(k, 644, path4)
+  VISHNU.chMod(k, 754, path)
   print "===================listDir - LongFormat with change mode on testGrp file============:"
   lsOpt.setLongFormat(True)
   VISHNU.listDir(k, DIR2, dirContent, lsOpt)
@@ -160,7 +160,6 @@ try :
   #print "moveAsyncFile:"
   #VISHNU.moveAsyncFile(k, DIR5, DIR6, fileTransferInfo)
   #displayFileTransfer(fileTransferInfo)
-
 
 except VISHNU.FMSVishnuException, e:
   print e.what()
