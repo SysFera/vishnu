@@ -1,29 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <API xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="com.sysfera.codegen.apimodel" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
   <modules name="FMS">
-    <services name="createFile" description="creates  files on  remote machines.">
+    <services name="createFile" description="creates  files on  remote machines." resultCodes="ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_UNKNOWN_USERID">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key." shortOptionLetter="" defaultValueLiteral=""/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file to create following the pattern  [host:]file path." longOptionName=""/>
-      <resultCodes href="#ERRCODE_INVALID_PARAM"/>
-      <resultCodes href="#ERRCODE_INVALID_PATH"/>
-      <resultCodes href="#ERRCODE_NO_ADMIN"/>
-      <resultCodes href="#ERRCODE_RUNTIME_ERROR"/>
-      <resultCodes href="#ERRCODE_SESSIONKEY_EXPIRED"/>
-      <resultCodes href="#ERRCODE_SESSIONKEY_NOT_FOUND"/>
-      <resultCodes href="#ERRCODE_UNDEFINED"/>
-      <resultCodes href="#ERRCODE_UNKNOWN_FILE_TRANSFER"/>
-      <resultCodes href="#ERRCODE_UNKNOWN_LOCAL_ACCOUNT"/>
-      <resultCodes href="#ERRCODE_UNKNOWN_MACHINE"/>
-      <resultCodes href="#VISHNU_OK"/>
-      <resultCodes href="#ERRCODE_CLI_ERROR_DIET"/>
-      <resultCodes href="#ERRCODE_CLI_ERROR_MISSING_PARAMETER"/>
-      <resultCodes href="#ERRCODE_CLI_ERROR_NO_SESSION"/>
-      <resultCodes href="#ERRCODE_CLI_ERROR_RUNTIME"/>
-      <resultCodes href="#ERRCODE_CONFIGNOTFOUND"/>
-      <resultCodes href="FMS_Internal.apim#ERRCODE_DB_ERROR"/>
-      <resultCodes href="#ERRCODE_DBERR"/>
-      <resultCodes href="#ERRCODE_DIET"/>
-      <resultCodes href="#ERRCODE_UNKNOWN_USERID"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.0"/>
       <details key="description" value="Creates an empty file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command)"/>
       <details key="exCLI" value="To create the file toto on machine_1:&#xA;vishnu_create_file machine_1:/tmp/toto"/>

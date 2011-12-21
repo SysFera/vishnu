@@ -11,7 +11,7 @@
       <resultCodes href="#VISHNU_OK"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
-      <resultCodes href="#ERRCODE_DB_ERROR"/>
+      <resultCodes href="#ERRCODE_DBERR"/>
       <resultCodes href="FMS.apim#ERRCODE_SESSIONKEY_EXPIRED"/>
       <usedByServices href="FMS.apim#//@modules.0/@services.0"/>
     </services>
@@ -25,7 +25,7 @@
       <resultCodes href="#VISHNU_OK"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
-      <resultCodes href="#ERRCODE_DB_ERROR"/>
+      <resultCodes href="#ERRCODE_DBERR"/>
       <resultCodes href="FMS.apim#ERRCODE_SESSIONKEY_EXPIRED"/>
       <usedByServices href="FMS.apim#//@modules.0/@services.1"/>
     </services>
@@ -38,7 +38,7 @@
       <resultCodes href="#ERRCODE_INVALID_MACHINE_ID"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
-      <resultCodes href="#ERRCODE_DB_ERROR"/>
+      <resultCodes href="#ERRCODE_DBERR"/>
       <resultCodes href="FMS.apim#ERRCODE_SESSIONKEY_EXPIRED"/>
       <usedByServices href="FMS.apim#//@modules.0/@services.2"/>
     </services>
@@ -49,7 +49,7 @@
       <resultCodes href="#VISHNU_OK"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
-      <resultCodes href="#ERRCODE_DB_ERROR"/>
+      <resultCodes href="#ERRCODE_DBERR"/>
       <resultCodes href="FMS.apim#ERRCODE_SESSIONKEY_EXPIRED"/>
       <usedByServices href="FMS.apim#//@modules.0/@services.3"/>
     </services>
@@ -61,7 +61,7 @@
       <resultCodes href="#VISHNU_OK"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
-      <resultCodes href="#ERRCODE_DB_ERROR"/>
+      <resultCodes href="#ERRCODE_DBERR"/>
       <resultCodes href="FMS.apim#ERRCODE_SESSIONKEY_EXPIRED"/>
       <usedByServices href="FMS.apim#//@modules.0/@services.4"/>
     </services>
@@ -71,7 +71,7 @@
       <ports name="mode" dataType="//@modules.0/@typeList/@types.1" description=" the access rigths of file/directory in octal system." longOptionName=""/>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <resultCodes href="#VISHNU_OK"/>
-      <resultCodes href="#ERRCODE_DB_ERROR"/>
+      <resultCodes href="#ERRCODE_DBERR"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="FMS.apim#ERRCODE_SESSIONKEY_EXPIRED"/>
@@ -88,7 +88,7 @@
       <resultCodes href="#VISHNU_OK"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
-      <resultCodes href="#ERRCODE_DB_ERROR"/>
+      <resultCodes href="#ERRCODE_DBERR"/>
       <resultCodes href="FMS.apim#ERRCODE_SESSIONKEY_EXPIRED"/>
       <usedByServices href="FMS.apim#//@modules.0/@services.6"/>
     </services>
@@ -103,7 +103,7 @@
       <resultCodes href="#VISHNU_OK"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
-      <resultCodes href="#ERRCODE_DB_ERROR"/>
+      <resultCodes href="#ERRCODE_DBERR"/>
       <resultCodes href="FMS.apim#ERRCODE_SESSIONKEY_EXPIRED"/>
       <usedByServices href="FMS.apim#//@modules.0/@services.7"/>
     </services>
@@ -117,7 +117,7 @@
       <resultCodes href="#ERRCODE_INVALID_MACHINE_ID"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
-      <resultCodes href="#ERRCODE_DB_ERROR"/>
+      <resultCodes href="#ERRCODE_DBERR"/>
       <resultCodes href="FMS.apim#ERRCODE_SESSIONKEY_EXPIRED"/>
       <usedByServices href="FMS.apim#//@modules.0/@services.8"/>
     </services>
@@ -129,14 +129,14 @@
       </ports>
       <ports name="options" dataType="//@modules.0/@typeList/@types.6" description="List of options for the listDir command." optional="true" longOptionName=""/>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned." shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
-      <resultCodes href="#ERRCODE_DB_ERROR"/>
+      <resultCodes href="#ERRCODE_DBERR"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#VISHNU_OK"/>
       <resultCodes href="FMS.apim#ERRCODE_SESSIONKEY_EXPIRED"/>
       <usedByServices href="FMS.apim#//@modules.0/@services.9"/>
     </services>
-    <services name="fileCopy" description="executes a synchronous copy of file." resultCodes="ERRCODE_DB_ERROR ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_UNKNOWN_MACHINE ERRCODE_SESSIONKEY_NOT_FOUND VISHNU_OK">
+    <services name="fileCopy" description="executes a synchronous copy of file." resultCodes="ERRCODE_DBERR ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_UNKNOWN_MACHINE ERRCODE_SESSIONKEY_NOT_FOUND VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key."/>
       <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The  source file to copy following the pattern  [host:]file path." longOptionName=""/>
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file." longOptionName=""/>
@@ -144,7 +144,7 @@
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned." shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <usedByServices href="FMS.apim#//@modules.0/@services.10"/>
     </services>
-    <services name="fileAsyncCopy" description="executes an asynchronous copy of file." resultCodes="ERRCODE_DB_ERROR ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_UNKNOWN_MACHINE ERRCODE_SESSIONKEY_NOT_FOUND VISHNU_OK">
+    <services name="fileAsyncCopy" description="executes an asynchronous copy of file." resultCodes="ERRCODE_DBERR ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_UNKNOWN_MACHINE ERRCODE_SESSIONKEY_NOT_FOUND VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The source file to copy following the pattern  [host:]file path" longOptionName=""/>
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file" longOptionName=""/>
@@ -159,7 +159,7 @@
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file" longOptionName=""/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.8" description="The move command options" optional="true" shortOptionLetter="r" longOptionName=""/>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
-      <resultCodes href="#ERRCODE_DB_ERROR"/>
+      <resultCodes href="#ERRCODE_DBERR"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#VISHNU_OK"/>
@@ -173,7 +173,7 @@
       <ports name="thrId" direction="OUT" dataType="//@modules.0/@typeList/@types.3" description="The file tranfer identifier (allowing for instance  to ckeck the status of a file transfer, or to cancel it)."/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.8" description="The mv command options" optional="true" shortOptionLetter="r"/>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
-      <resultCodes href="#ERRCODE_DB_ERROR"/>
+      <resultCodes href="#ERRCODE_DBERR"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#VISHNU_OK"/>
@@ -183,7 +183,7 @@
     <services name="FileTransferCancel" description="stops an execution of a set of file transfers.">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.10" description="The stop file transfer command options" optional="true" longOptionName=""/>
-      <resultCodes href="#ERRCODE_DB_ERROR"/>
+      <resultCodes href="#ERRCODE_DBERR"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#VISHNU_OK"/>
@@ -197,7 +197,7 @@
       </ports>
       <ports name="options" dataType="//@modules.0/@typeList/@types.9" description="The filter options ." optional="true" longOptionName=""/>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned." shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
-      <resultCodes href="#ERRCODE_DB_ERROR"/>
+      <resultCodes href="#ERRCODE_DBERR"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#VISHNU_OK"/>
@@ -209,7 +209,7 @@
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The file whose inode information will be displayed"/>
       <ports name="filesinfo" direction="OUT" dataType="//@modules.0/@typeList/@types.12" description="The  inode information." shortOptionLetter="" longOptionName=""/>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned." shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
-      <resultCodes href="#ERRCODE_DB_ERROR"/>
+      <resultCodes href="#ERRCODE_DBERR"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#VISHNU_OK"/>
@@ -278,7 +278,7 @@
       <resultCodes name="ERRCODE_INVALID_PARAM" description="an option or a parameter provided is invalid for this service" value="10" diagnostic=""/>
       <resultCodes name="ERRCODE_INVALID_PATH" description="The path provided is invalid" value="201"/>
       <resultCodes name="ERRCODE_CONFIGNOTFOUND" description="Undefined configuration parameter" value="12"/>
-      <resultCodes name="ERRCODE_DB_ERROR" description="Vishnu not available (Database error)" value="2"/>
+      <resultCodes name="ERRCODE_DBERR" description="Vishnu not available (Database error)" value="2"/>
     </resultCodeList>
   </modules>
   <envVariableList>
