@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE(CreateDir_Base)
     BOOST_REQUIRE(isNewDirFound);
     RmFileOptions rmOptions;
     rmOptions.setIsRecursive (true);
-    BOOST_REQUIRE ( removeFile(sessionKey, recursiveDirFullPath1,rmOptions) == 0);
+    BOOST_REQUIRE ( removeFile(sessionKey,dirFullPath1 ,rmOptions) == 0);
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
     BOOST_CHECK(false);
