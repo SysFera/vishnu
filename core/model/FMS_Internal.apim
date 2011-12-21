@@ -9,8 +9,6 @@
       </ports>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned." shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <resultCodes href="#VISHNU_OK"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_NOT_FOUND"/>
-      <resultCodes href="#ERRCODE_INVALID_MACHINE_ID"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#ERRCODE_DB_ERROR"/>
@@ -25,8 +23,6 @@
       </ports>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned." shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <resultCodes href="#VISHNU_OK"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_NOT_FOUND"/>
-      <resultCodes href="#ERRCODE_INVALID_MACHINE_ID"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#ERRCODE_DB_ERROR"/>
@@ -51,8 +47,6 @@
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to remove following the pattern  [host:]directory path." longOptionName=""/>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned." shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <resultCodes href="#VISHNU_OK"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_NOT_FOUND"/>
-      <resultCodes href="#ERRCODE_INVALID_MACHINE_ID"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#ERRCODE_DB_ERROR"/>
@@ -65,8 +59,6 @@
       <ports name="group" dataType="//@modules.0/@typeList/@types.0" description="the new group owner of file/directory."/>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <resultCodes href="#VISHNU_OK"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_NOT_FOUND"/>
-      <resultCodes href="#ERRCODE_INVALID_MACHINE_ID"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#ERRCODE_DB_ERROR"/>
@@ -79,11 +71,9 @@
       <ports name="mode" dataType="//@modules.0/@typeList/@types.1" description=" the access rigths of file/directory in octal system." longOptionName=""/>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <resultCodes href="#VISHNU_OK"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_NOT_FOUND"/>
       <resultCodes href="#ERRCODE_DB_ERROR"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
-      <resultCodes href="#ERRCODE_INVALID_MACHINE_ID"/>
       <resultCodes href="FMS.apim#ERRCODE_SESSIONKEY_EXPIRED"/>
       <usedByServices href="FMS.apim#//@modules.0/@services.5"/>
     </services>
@@ -96,8 +86,6 @@
       </ports>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned." shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <resultCodes href="#VISHNU_OK"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_NOT_FOUND"/>
-      <resultCodes href="#ERRCODE_INVALID_MACHINE_ID"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#ERRCODE_DB_ERROR"/>
@@ -113,8 +101,6 @@
       </ports>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned." shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <resultCodes href="#VISHNU_OK"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_NOT_FOUND"/>
-      <resultCodes href="#ERRCODE_INVALID_MACHINE_ID"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
       <resultCodes href="#ERRCODE_DB_ERROR"/>
@@ -146,8 +132,6 @@
       <resultCodes href="#ERRCODE_DB_ERROR"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
-      <resultCodes href="#ERRCODE_INVALID_MACHINE_ID"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_NOT_FOUND"/>
       <resultCodes href="#VISHNU_OK"/>
       <resultCodes href="FMS.apim#ERRCODE_SESSIONKEY_EXPIRED"/>
       <usedByServices href="FMS.apim#//@modules.0/@services.9"/>
@@ -178,8 +162,6 @@
       <resultCodes href="#ERRCODE_DB_ERROR"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
-      <resultCodes href="#ERRCODE_INVALID_MACHINE_ID"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_NOT_FOUND"/>
       <resultCodes href="#VISHNU_OK"/>
       <resultCodes href="FMS.apim#ERRCODE_SESSIONKEY_EXPIRED"/>
       <usedByServices href="FMS.apim#//@modules.0/@services.12"/>
@@ -194,8 +176,6 @@
       <resultCodes href="#ERRCODE_DB_ERROR"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
-      <resultCodes href="#ERRCODE_INVALID_MACHINE_ID"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_NOT_FOUND"/>
       <resultCodes href="#VISHNU_OK"/>
       <resultCodes href="FMS.apim#ERRCODE_SESSIONKEY_EXPIRED"/>
       <usedByServices href="FMS.apim#//@modules.0/@services.13"/>
@@ -206,8 +186,6 @@
       <resultCodes href="#ERRCODE_DB_ERROR"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
-      <resultCodes href="#ERRCODE_INVALID_MACHINE_ID"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_NOT_FOUND"/>
       <resultCodes href="#VISHNU_OK"/>
       <resultCodes href="FMS.apim#ERRCODE_SESSIONKEY_EXPIRED"/>
       <usedByServices href="FMS.apim#//@modules.0/@services.14"/>
@@ -222,8 +200,6 @@
       <resultCodes href="#ERRCODE_DB_ERROR"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
-      <resultCodes href="#ERRCODE_INVALID_MACHINE_ID"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_NOT_FOUND"/>
       <resultCodes href="#VISHNU_OK"/>
       <resultCodes href="FMS.apim#ERRCODE_SESSIONKEY_EXPIRED"/>
       <usedByServices href="FMS.apim#//@modules.0/@services.15"/>
@@ -236,8 +212,6 @@
       <resultCodes href="#ERRCODE_DB_ERROR"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
       <resultCodes href="#ERRCODE_INVALID_PATH"/>
-      <resultCodes href="#ERRCODE_INVALID_MACHINE_ID"/>
-      <resultCodes href="#ERRCODE_SESSION_KEY_NOT_FOUND"/>
       <resultCodes href="#VISHNU_OK"/>
       <resultCodes href="FMS.apim#ERRCODE_SESSIONKEY_EXPIRED"/>
       <usedByServices href="FMS.apim#//@modules.0/@services.16"/>

@@ -9,14 +9,12 @@
 #include <sstream>
 #include <cstdlib>
 #include <sys/types.h>
-
+#include "FMSVishnuException.hpp"
 
 class DateHandler {
 
   public:
     DateHandler (const std::string& rawDate):mrawDate(rawDate) {
-      /*std::cout << "rawDate " <<mrawDate << "\t";
-        */
     }
   std::string getDate () const {
       return mrawDate;
@@ -34,7 +32,9 @@ class  PermsHandler {
     PermsHandler (const std::string& rawPerms):mrawPerms(rawPerms){ }
     mode_t getPermissions () const {
       
-      assert (mrawPerms.size()==9);
+      if (mrawPerms.size()!=9){
+      throw FMSVishnuException (ERRCODE_RUNTIME_ERROR, "Can not get file permissions "); 
+      }
       std::istringstream iss (convertPerms(mrawPerms.substr(0,3))+convertPerms(mrawPerms.substr(3,3))+convertPerms(mrawPerms.substr(6,3)));
       mode_t res;
       iss >> std::oct >> res;
@@ -44,7 +44,10 @@ class  PermsHandler {
   private:
     std::string mrawPerms;
     static std::string convertPerms(const std::string& perms) {
-      assert (perms.size()==3);
+      
+      if (perms.size()!=3){
+      throw FMSVishnuException (ERRCODE_RUNTIME_ERROR, "Can not get file permissions "); 
+      }
       int res=0;
       BOOST_FOREACH (char right, perms){
         res+=inOct (right);
@@ -79,7 +82,13 @@ class  PermsHandler {
 class StringToDirEntry {
   public:
     
-    StringToDirEntry (const std::string& rawDirEntry ):mrawDirEntry(rawDirEntry) {std::cout << "mrawDirEntry " <<mrawDirEntry << "\n";  }
+    StringToDirEntry (const std::string& rawDirEntry ):mrawDirEntry(rawDirEntry),
+                                                       mperms(""),
+                                                       mowner(""),
+                                                       mgroup(""),
+                                                       msize(0),
+                                                       mdate_time(""),
+                                                       mpath("") { }
 
     void splitter() {
 
