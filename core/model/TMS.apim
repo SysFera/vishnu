@@ -108,12 +108,12 @@
     </typeList>
     <resultCodeList>
       <resultCodes name="VISHNU_OK" description="The service was performed  successfully"/>
-      <resultCodes name="ERRCODE_DIET" description="Vishnu not available (Service bus failure)" value="1" usage="API_ONLY" diagnostic=""/>
-      <resultCodes name="ERRCODE_DBERR" description="Vishnu not available (Database error)" value="2" usage="API_ONLY" diagnostic=""/>
-      <resultCodes name="ERRCODE_DBCONN" description="Vishnu not available (Database connection)" value="3" usage="API_ONLY" diagnostic=""/>
-      <resultCodes name="ERRCODE_SYSTEM" description="Vishnu not available (System)" value="4" usage="API_ONLY" diagnostic=""/>
+      <resultCodes name="ERRCODE_DIET" description="Vishnu not available (Service bus failure)" value="1" diagnostic=""/>
+      <resultCodes name="ERRCODE_DBERR" description="Vishnu not available (Database error)" value="2" diagnostic=""/>
+      <resultCodes name="ERRCODE_DBCONN" description="Vishnu not available (Database connection)" value="3" diagnostic=""/>
+      <resultCodes name="ERRCODE_SYSTEM" description="Vishnu not available (System)" value="4" diagnostic=""/>
       <resultCodes name="ERRCODE_SSH" description="Vishnu not available (SSH error)" value="9"/>
-      <resultCodes name="ERRCODE_UNDEFINED" description="Internal Error: Undefined exception" value="9" usage="API_ONLY" diagnostic=""/>
+      <resultCodes name="ERRCODE_UNDEFINED" description="Internal Error: Undefined exception" value="9" diagnostic=""/>
       <resultCodes name="ERRCODE_INVALID_PARAM" description="Error invalid parameters" value="10"/>
       <resultCodes name="ERRCODE_FILENOTFOUND" description="File not found" value="11"/>
       <resultCodes name="ERRCODE_CONFIGNOTFOUND" description="Undefined configuration parameter" value="12"/>

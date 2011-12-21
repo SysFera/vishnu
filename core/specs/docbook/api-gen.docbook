@@ -564,22 +564,6 @@
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
               </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -709,22 +693,6 @@
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
               </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -825,10 +793,6 @@
                 <entry><para>The machine is locked</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -847,18 +811,6 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -960,10 +912,6 @@
                 <entry><para>Trying to lock a user account that is already locked</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -982,18 +930,6 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1087,10 +1023,6 @@
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -1109,18 +1041,6 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1199,10 +1119,6 @@
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -1221,18 +1137,6 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1340,22 +1244,6 @@
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
               </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -1455,10 +1343,6 @@
                 <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -1477,18 +1361,6 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1593,10 +1465,6 @@
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_LOGIN_ALREADY_USED</para></entry>
                 <entry><para>The system account login is already used by another vishnu user</para></entry>
               </row>
@@ -1623,18 +1491,6 @@
               <row>
                 <entry><para>ERRCODE_UNUSABLE_MACHINE</para></entry>
                 <entry><para>The machine does not exist or it is locked</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1724,10 +1580,6 @@
                 <entry><para>The local is unknown</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -1750,18 +1602,6 @@
               <row>
                 <entry><para>ERRCODE_LOGIN_ALREADY_USED</para></entry>
                 <entry><para>The system account login is already used by another vishnu user</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1854,10 +1694,6 @@
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -1876,18 +1712,6 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1969,10 +1793,6 @@
                 <entry><para>A problem occurs during the configuration saving </para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -1991,18 +1811,6 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2084,10 +1892,6 @@
                 <entry><para>A problem occurs during the configuration restoring</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -2106,18 +1910,6 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2211,10 +2003,6 @@
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -2233,18 +2021,6 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2338,10 +2114,6 @@
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -2360,18 +2132,6 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2461,10 +2221,6 @@
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -2483,18 +2239,6 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2587,10 +2331,6 @@
                 <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -2609,18 +2349,6 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2713,10 +2441,6 @@
                 <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -2735,18 +2459,6 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2839,10 +2551,6 @@
                 <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -2861,18 +2569,6 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2973,10 +2669,6 @@
                 <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -2995,18 +2687,6 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -3099,10 +2779,6 @@
                 <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -3121,18 +2797,6 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -3229,10 +2893,6 @@
                 <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -3251,18 +2911,6 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -3360,10 +3008,6 @@
                 <entry><para>The value of the transfer command is incorrect</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -3382,18 +3026,6 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -3491,10 +3123,6 @@
                 <entry><para>The value of the transfer command is incorrect</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -3513,18 +3141,6 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -4656,22 +4272,6 @@
                 <entry><para>ERRCODE_SSH</para></entry>
                 <entry><para>Vishnu not available (SSH error)</para></entry>
               </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -4797,22 +4397,6 @@
                 <entry><para>ERRCODE_SYSTEM</para></entry>
                 <entry><para>Vishnu not available (System)</para></entry>
               </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -4925,22 +4509,6 @@
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
                 <entry><para>Vishnu not available (System)</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -5067,22 +4635,6 @@
                 <entry><para>ERRCODE_SYSTEM</para></entry>
                 <entry><para>Vishnu not available (System)</para></entry>
               </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -5207,22 +4759,6 @@
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
                 <entry><para>Vishnu not available (System)</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -5368,22 +4904,6 @@
                 <entry><para>ERRCODE_ALREADY_DOWNLOADED</para></entry>
                 <entry><para>The job is already downloaded</para></entry>
               </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -5512,22 +5032,6 @@
               <row>
                 <entry><para>ERRCODE_SSH</para></entry>
                 <entry><para>Vishnu not available (SSH error)</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -5658,22 +5162,6 @@
               <row>
                 <entry><para>ERRCODE_SSH</para></entry>
                 <entry><para>Vishnu not available (SSH error)</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -6270,12 +5758,12 @@
             <row>
               <entry><para>mailNotification</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>Assigns the notification type of the job. Valid type values are BEGIN, END, ERROR, and ALL (any state change).</para></entry>
+              <entry><para>Assigns the notification type of the job. Valid type values are BEGIN, END, ERROR, and ALL (any state change)</para></entry>
             </row>
             <row>
               <entry><para>mailNotifyUser</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>The name of user to receive email notification of state changes as defined by the option mailNotification. The default value is the submitting user.</para></entry>
+              <entry><para>The name of user to receive email notification of state changes as defined by the option mailNotification. The default value is the submitting user</para></entry>
             </row>
             <row>
               <entry><para>group</para></entry>
@@ -6285,12 +5773,12 @@
             <row>
               <entry><para>workingDir</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>Assigns a job remote working dir.</para></entry>
+              <entry><para>Assigns a job remote working dir</para></entry>
             </row>
             <row>
               <entry><para>cpuTime</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>Assigns a job cpu limit time.</para></entry>
+              <entry><para>Assigns a job cpu limit time</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -6560,22 +6048,6 @@
                 <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
                 <entry><para>The session key is unrecognized.</para></entry>
               </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failes</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -6680,22 +6152,6 @@
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Undefined error code</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failes</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -6802,22 +6258,6 @@
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Undefined error code</para></entry>
               </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failes</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -6900,22 +6340,6 @@
                 <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
               </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failes</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -6995,22 +6419,6 @@
                 <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
               </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failes</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -7089,22 +6497,6 @@
               <row>
                 <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failes</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -7192,22 +6584,6 @@
                 <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
               </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failes</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -7286,22 +6662,6 @@
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
                 <entry><para>The database generated an error</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failes</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -7461,22 +6821,6 @@
                 <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
               </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failes</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -7555,22 +6899,6 @@
               <row>
                 <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failes</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -7662,22 +6990,6 @@
                 <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
               </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failes</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -7756,22 +7068,6 @@
               <row>
                 <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failes</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -7864,22 +7160,6 @@
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Undefined error code</para></entry>
               </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failes</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -7958,22 +7238,6 @@
               <row>
                 <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>If a parameter is invalid</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failes</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -8073,22 +7337,6 @@
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Undefined error code</para></entry>
               </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failes</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -8174,22 +7422,6 @@
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
                 <entry><para>The database generated an error</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failes</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -8939,28 +8171,12 @@
                 <entry><para>The service has been performed succesfully.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_CONFIGNOTFOUND</para></entry>
                 <entry><para>Undefined configuration parameter</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
@@ -8971,24 +8187,16 @@
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
+                <entry><para>ERRCODE_CONFIGNOTFOUND</para></entry>
+                <entry><para>Undefined configuration parameter</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
+                <entry/>
+                <entry/>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_USERID</para></entry>
@@ -9124,22 +8332,6 @@
                 <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service has been performed succesfully.</para></entry>
               </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -9270,22 +8462,6 @@
                 <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service has been performed succesfully.</para></entry>
               </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -9354,10 +8530,6 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service has been performed succesfully.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
                 <entry><para>The machine id is unknown</para></entry>
               </row>
@@ -9408,6 +8580,10 @@
               <row>
                 <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
                 <entry><para>The local account  is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
               </row>
               <row>
                 <entry><para>VISHNU_OK</para></entry>
@@ -10490,22 +9666,6 @@
               <row>
                 <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service has been performed succesfully.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_DIET</para></entry>
-                <entry><para>Vishnu initialization failed</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_MISSING_PARAMETER</para></entry>
-                <entry><para>Missing parameters</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_NO_SESSION</para></entry>
-                <entry><para>There is no open session in this terminal</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CLI_ERROR_RUNTIME</para></entry>
-                <entry><para>Undefined error</para></entry>
               </row>
             </tbody>
           </tgroup>

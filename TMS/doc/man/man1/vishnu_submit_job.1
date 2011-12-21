@@ -84,12 +84,12 @@ Assigns the path and file for job error\&.
 .PP
 \fB\-M \fR\fB\fImailNotification\fR\fR
 .RS 4
-Assigns the notification type of the job\&. Valid type values are BEGIN, END, ERROR, and ALL (any state change)\&.\&.
+Assigns the notification type of the job\&. Valid type values are BEGIN, END, ERROR, and ALL (any state change)\&.
 .RE
 .PP
 \fB\-u \fR\fB\fImailNotifyUser\fR\fR
 .RS 4
-The name of user to receive email notification of state changes as defined by the option mailNotification\&. The default value is the submitting user\&.\&.
+The name of user to receive email notification of state changes as defined by the option mailNotification\&. The default value is the submitting user\&.
 .RE
 .PP
 \fB\-g \fR\fB\fIgroup\fR\fR
@@ -99,12 +99,12 @@ Assigns a job group name\&.\&.
 .PP
 \fB\-D \fR\fB\fIworkingDir\fR\fR
 .RS 4
-Assigns a job remote working dir\&.\&.
+Assigns a job remote working dir\&.
 .RE
 .PP
 \fB\-T \fR\fB\fIcpuTime\fR\fR
 .RS 4
-Assigns a job cpu limit time\&.\&.
+Assigns a job cpu limit time\&.
 .RE
 .SH "JOB OUTPUT ENVIRONMENT VARIABLES"
 .PP
@@ -143,6 +143,22 @@ Contains the path to the local configuration file for VISHNU\&.\&.
 .SH "DIAGNOSTICS"
 .PP
 The following diagnostics may be issued on stderr and the command will return the code provided within brackets:
+.PP
+"Vishnu not available (Service bus failure)" [1]
+.RS 4
+.RE
+.PP
+"Vishnu not available (Database error)" [2]
+.RS 4
+.RE
+.PP
+"Vishnu not available (Database connection)" [3]
+.RS 4
+.RE
+.PP
+"Vishnu not available (System)" [4]
+.RS 4
+.RE
 .PP
 "Vishnu not available (SSH error)" [9]
 .RS 4

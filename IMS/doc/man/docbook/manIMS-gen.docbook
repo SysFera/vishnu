@@ -841,6 +841,22 @@ $TYPE: The 'M' symb to remind it is a machine id</para>
             <term>&quot;If a parameter is invalid&quot; [10]</term>
             <listitem/>
           </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="example">

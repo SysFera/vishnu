@@ -231,11 +231,11 @@
       <resultCodes name="ERRCODE_INCORRECT_TIMEOUT" description="The value of the timeout is incorrect" value="43"/>
       <resultCodes name="ERRCODE_LOGIN_ALREADY_USED" description="The system account login is already used by another vishnu user" value="46" diagnostic=""/>
       <resultCodes name="VISHNU_OK" description="The service was performed  successfully"/>
-      <resultCodes name="ERRCODE_DIET" description="Vishnu not available (Service bus failure)" value="1" usage="API_ONLY" diagnostic=""/>
-      <resultCodes name="ERRCODE_DBERR" description="Vishnu not available (Database error)" value="2" usage="API_ONLY" diagnostic=""/>
-      <resultCodes name="ERRCODE_DBCONN" description="Vishnu not available (Database connection)" value="3" usage="API_ONLY" diagnostic=""/>
-      <resultCodes name="ERRCODE_SYSTEM" description="Vishnu not available (System)" value="4" usage="API_ONLY" diagnostic=""/>
-      <resultCodes name="ERRCODE_UNDEFINED" description="Internal Error: Undefined exception" value="9" usage="API_ONLY" diagnostic=""/>
+      <resultCodes name="ERRCODE_DIET" description="Vishnu not available (Service bus failure)" value="1" diagnostic=""/>
+      <resultCodes name="ERRCODE_DBERR" description="Vishnu not available (Database error)" value="2" diagnostic=""/>
+      <resultCodes name="ERRCODE_DBCONN" description="Vishnu not available (Database connection)" value="3" diagnostic=""/>
+      <resultCodes name="ERRCODE_SYSTEM" description="Vishnu not available (System)" value="4" diagnostic=""/>
+      <resultCodes name="ERRCODE_UNDEFINED" description="Internal Error: Undefined exception" value="9" diagnostic=""/>
       <resultCodes name="ERRCODE_ROOT_USER_ONLY" description="Command authorized for VISHNU root user only" value="45" diagnostic=""/>
       <resultCodes name="ERRCODE_USER_ALREADY_LOCKED" description="Trying to lock a user account that is already locked" value="24" diagnostic=""/>
       <resultCodes name="ERRCODE_MACHINE_ALREADY_LOCKED" description="Trying to lock a machine that is already locked" value="35" diagnostic=""/>

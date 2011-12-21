@@ -2028,14 +2028,14 @@
                 <entry><para>mailNotification</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>M</para></entry>
-                <entry><para>Assigns the notification type of the job. Valid type values are BEGIN, END, ERROR, and ALL (any state change).</para></entry>
+                <entry><para>Assigns the notification type of the job. Valid type values are BEGIN, END, ERROR, and ALL (any state change)</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>mailNotifyUser</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>u</para></entry>
-                <entry><para>The name of user to receive email notification of state changes as defined by the option mailNotification. The default value is the submitting user.</para></entry>
+                <entry><para>The name of user to receive email notification of state changes as defined by the option mailNotification. The default value is the submitting user</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -2049,14 +2049,14 @@
                 <entry><para>workingDir</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>D</para></entry>
-                <entry><para>Assigns a job remote working dir.</para></entry>
+                <entry><para>Assigns a job remote working dir</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>cpuTime</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>T</para></entry>
-                <entry><para>Assigns a job cpu limit time.</para></entry>
+                <entry><para>Assigns a job cpu limit time</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
