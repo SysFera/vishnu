@@ -39,6 +39,13 @@ BOOST_AUTO_TEST_CASE(ListDirContent_Base)
   string sessionKey=vc.getSessionKey();
 
   try {
+    
+    if(isFoundInDir(sessionKey,baseDirFullPath1,newDirName)){
+      RmFileOptions rmOptions;
+      rmOptions.setIsRecursive (true);
+      BOOST_REQUIRE( removeFile(sessionKey, dirFullPath1,rmOptions) == 0);
+
+    }
     BOOST_REQUIRE( createDir(sessionKey, dirFullPath1) == 0);
     // put some content into the directory
     const vector<string> fileSuffixes = ba::list_of("1.2.3")("éàè")("$")("!~-_#");
