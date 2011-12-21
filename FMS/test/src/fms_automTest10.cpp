@@ -34,6 +34,13 @@ BOOST_AUTO_TEST_CASE(DeleteDir_Base)
   string sessionKey=vc.getSessionKey();
 
   try {
+   
+    if(isFoundInDir(sessionKey,baseDirFullPath1,newDirName)){
+      RmFileOptions rmOptions;
+      rmOptions.setIsRecursive (true);
+      BOOST_REQUIRE( removeFile(sessionKey, dirFullPath1,rmOptions) == 0);
+    }
+   
     BOOST_REQUIRE( createDir(sessionKey, dirFullPath1) == 0); // setup
     BOOST_REQUIRE( removeDir(sessionKey, dirFullPath1) == 0); // test
     // Check: list content of parent directory
