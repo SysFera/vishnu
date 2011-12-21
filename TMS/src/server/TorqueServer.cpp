@@ -425,11 +425,8 @@ TorqueServer::convertTorqueStateToVishnuState(std::string state) {
   if(state.compare("R")==0 || state.compare("E")==0) {
     return 4; //RUNNING
   }
-  if(state.compare("C")==0) {
-    return 5; //TERMINATED
-  } else {
-    return 5;
-  }
+    
+  return 5; //TERMINATED
   
 }
 
