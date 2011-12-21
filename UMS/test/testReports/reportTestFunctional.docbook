@@ -25,6 +25,14 @@
           <para>Deliverable version</para>
         </revdescription>
       </revision>
+      <revision>
+        <revnumber>2</revnumber>
+        <date>20/12/2011</date>
+        <authorinitials>E. PAMBA CAPO-CHICHI</authorinitials>
+        <revdescription>
+          <para>Added tests for connection using the .netrc file</para>
+        </revdescription>
+      </revision>
     </revhistory>
   </info>
    <para/>
@@ -1719,7 +1727,8 @@
                   <para>Tested with command line interface</para>
                </entry>
             </row>
-            <row>
+            
+	    <row>
                <entry>
                   <para>U3-B1</para>
                </entry>
@@ -1742,7 +1751,184 @@
                <entry>
                   <para>Tested with command line interface</para>
                </entry>
-            </row></tbody>
+            </row>
+	    
+	    <row>
+               <entry>
+                  <para>U1.1-B2</para>
+               </entry>
+               <entry>
+                  <para>20/12/12</para>
+               </entry>
+               <entry>
+                  <para>Normal connection using the .netrc file</para>
+               </entry>
+               <entry>
+                  <para>connect</para>
+               </entry>
+               <entry>
+                  <para>session key</para>
+               </entry>
+               <entry>
+                  <para>The session key is returned</para>
+               </entry>
+               <entry/>
+               <entry>
+                  <para></para>
+               </entry>
+            </row>
+	    
+	    <row>
+               <entry>
+                  <para>U1.1-E3</para>
+               </entry>
+               <entry>
+                  <para>20/12/12</para>
+               </entry>
+               <entry>
+                  <para>Connection using a bad .netrc file path</para>
+               </entry>
+               <entry>
+                  <para>connect</para>
+               </entry>
+               <entry>
+                  <para>VishnuException</para>
+               </entry>
+               <entry>
+                  <para>VishnuException</para>
+               </entry>
+               <entry/>
+               <entry>
+                  <para></para>
+               </entry>
+            </row>
+	    
+	    <row>
+               <entry>
+                  <para>U1.1-E4</para>
+               </entry>
+               <entry>
+                  <para>20/12/12</para>
+               </entry>
+               <entry>
+                  <para>Connection using a bad .netrc file permissions</para>
+               </entry>
+               <entry>
+                  <para>connect</para>
+               </entry>
+               <entry>
+                  <para>VishnuException</para>
+               </entry>
+               <entry>
+                  <para>VishnuException</para>
+               </entry>
+               <entry/>
+               <entry>
+                  <para></para>
+               </entry>
+            </row>
+	  
+	    <row>
+               <entry>
+                  <para>U1.1-E5</para>
+               </entry>
+               <entry>
+                  <para>20/12/12</para>
+               </entry>
+               <entry>
+                  <para>Connection with no vishnu machine defined on the .netrc file</para>
+               </entry>
+               <entry>
+                  <para>connect</para>
+               </entry>
+               <entry>
+                  <para>VishnuException</para>
+               </entry>
+               <entry>
+                  <para>VishnuException</para>
+               </entry>
+               <entry/>
+               <entry>
+                  <para></para>
+               </entry>
+            </row>
+	    
+	    <row>
+               <entry>
+                  <para>U1.1-E6</para>
+               </entry>
+               <entry>
+                  <para>20/12/12</para>
+               </entry>
+               <entry>
+                  <para>Connection with no login defined on the .netrc file</para>
+               </entry>
+               <entry>
+                  <para>connect</para>
+               </entry>
+               <entry>
+                  <para>VishnuException</para>
+               </entry>
+               <entry>
+                  <para>VishnuException</para>
+               </entry>
+               <entry/>
+               <entry>
+                  <para></para>
+               </entry>
+            </row>
+	    
+	    <row>
+               <entry>
+                  <para>U1.1-E6</para>
+               </entry>
+               <entry>
+                  <para>20/12/12</para>
+               </entry>
+               <entry>
+                  <para>Connection with the password before the login on the .netrc file</para>
+               </entry>
+               <entry>
+                  <para>connect</para>
+               </entry>
+               <entry>
+                  <para>VishnuException</para>
+               </entry>
+               <entry>
+                  <para>VishnuException</para>
+               </entry>
+               <entry/>
+               <entry>
+                  <para></para>
+               </entry>
+            </row>
+
+	    <row>
+               <entry>
+                  <para>U1.1-E7</para>
+               </entry>
+               <entry>
+                  <para>20/12/12</para>
+               </entry>
+               <entry>
+                  <para>Connection with no password defined on the .netrc file</para>
+               </entry>
+               <entry>
+                  <para>connect</para>
+               </entry>
+               <entry>
+                  <para>VishnuException</para>
+               </entry>
+               <entry>
+                  <para>VishnuException</para>
+               </entry>
+               <entry/>
+               <entry>
+                  <para></para>
+               </entry>
+            </row>
+	    
+	  </tbody>
       </tgroup>
       </informaltable>
     </para>
