@@ -53,53 +53,20 @@ string ConvertModeToString(const mode_t& mode) {
   const mode_t othW = 1 << 1;
   const mode_t othX = 1;
 
-  //For user permission mode
-  if (mode & usrR){
-    modeStr+="r";
-  } else {
-    modeStr+="-";
-  }
-  if (mode & usrW) {
-    modeStr+="w";
-  } else {
-    modeStr+="-";
-  } if (mode & usrX) {
-    modeStr+="x";
-  } else { 
-    modeStr+="-";
-  }
+  //For owner permission 
+  modeStr+=(mode & usrR ? "r":"-");
+  modeStr+=(mode & usrW ? "w":"-");
+  modeStr+=(mode & usrX ? "x":"-");
 
- //For other groupe mode
-  if (mode & grpR) { 
-    modeStr+="r";
-  } else {
-    modeStr+="-";
-  } if (mode & grpW) {
-    modeStr+="w";
-  } else {
-    modeStr+="-";
-  } 
-  if (mode & grpX) { 
-    modeStr+="x";
-  } else { 
-    modeStr+="-";
-  }
+  //For group owner permissions
+  modeStr+=(mode & grpR ? "r":"-");
+  modeStr+=(mode & grpW ? "w":"-");
+  modeStr+=(mode & grpX ? "x":"-");
 
-  //For other permission mode
-  if (mode & othR) {
-    modeStr+="r";
-  } else { 
-    modeStr+="-";
-  } if (mode & othW) { 
-    modeStr+="w";
-  } else {
-    modeStr+="-";
-  }
-  if (mode & othX){ 
-    modeStr+="x";
-  } else {
-    modeStr+="-";
-  }
+  //For other users permissions
+  modeStr+=(mode & othR ? "r":"-");
+  modeStr+=(mode & othW ? "w":"-");
+  modeStr+=(mode & othX ? "x":"-");
 
   return modeStr;
 }
