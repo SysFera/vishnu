@@ -22,7 +22,7 @@ namespace ba=boost::algorithm;
 ScriptGenConvertor::ScriptGenConvertor(const int batchType, 
                                        const std::string& scriptGenContent): 
   mbatchType(batchType), mscriptGenContent(scriptGenContent) 
-{
+{ 
   if(mbatchType==LOADLEVELER) {
 
     mconversionTable[group]                = "# @ group=";
@@ -32,11 +32,11 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[jobError]             = "# @ error=";
     mconversionTable[jobWallClockLimit]    = "# @ wall_clock_limit=";
     mconversionTable[cpuTime]              = "# @ cpu_limit= ";
-    mconversionTable[nbCpu]                = "TODO";
-    mconversionTable[nbNodesAndCpuPerNode] = "TODO";//special case
+    mconversionTable[nbCpu]                = "# @ "; //special case
+    mconversionTable[nbNodesAndCpuPerNode] = "# @ ";//special case
     mconversionTable[mem]                  = "# @ data_limit=";//a voir
     mconversionTable[mailNotification]     = "# @ notification=";
-    mconversionTable[mailNotifyUser]       = "# @ mailNotifyUser=";
+    mconversionTable[mailNotifyUser]       = "# @ notify_user=";
     mconversionTable[queue]                = "# @ class="; 
    
     mconversionTable[loadLevelerSec]       = "";
@@ -307,13 +307,19 @@ ScriptGenConvertor::getConvertedScript() {
         std::string cpuPerNode = value.substr(posNbNodes+1);
 
         if(mbatchType==LOADLEVELER) {
-          value = "TODO";
+          value = " node="+nbNodes+"\n";
+          value += "# @ tasks_per_node=1\n";
+          value += "# resources = ConsumableCpus("+cpuPerNode+")";
         } else if(mbatchType==TORQUE) {
           value = " nodes="+nbNodes+":ppn="+cpuPerNode;
         } else if(mbatchType==SLURM) {
           value = " --nodes="+nbNodes+"\n #SBATCH --mincpus="+cpuPerNode; 
         }
       }
+    }
+    //Special case
+    if(mbatchType==LOADLEVELER && key.compare("nbCpu")==0) {
+        value = " ConsumableCpus("+value+")";
     }
 
     result += mconversionTable[key]  + value + "\n";

@@ -563,8 +563,8 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId){
       job.setJobDescription(slurmJobInfo.comment);
     }
     job.setJobPrio(convertSlurmPrioToVishnuPrio(slurmJobInfo.priority));
-    uint32_t nbCpus = slurmJobInfo.num_cpus;
     uint32_t nbNodes = slurmJobInfo.num_nodes;
+    uint32_t nbCpus =  slurmJobInfo.pn_min_cpus;
     job.setNbCpus(nbCpus);
     job.setNbNodes(nbNodes);
     job.setNbNodesAndCpuPerNode(convertToString(nbNodes)+":"+convertToString(nbCpus));
