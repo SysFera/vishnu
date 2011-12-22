@@ -554,6 +554,9 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
           }
           else{
             node = str;
+            if(nodeAndCpu.empty()){
+              nodeAndCpu = node+":1";
+            }
           }
         }
       } else if(!strcmp(a->name, ATTR_v)) { // working_dir
