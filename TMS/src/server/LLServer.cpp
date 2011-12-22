@@ -57,12 +57,14 @@ LLServer::submit(const char* scriptPath,
   job.setGroupName(std::string((llJobInfo.step_list[0])->group_name));
   job.setJobDescription(std::string((llJobInfo.step_list[0])->comment));
   job.setJobPrio(convertLLPrioToVishnuPrio((llJobInfo.step_list[0])->prio));
-  job.setMemLimit(llJobInfo.step_list[0]->limits64.memlock_soft_limit);
-  job.setNbCpus(llJobInfo.step_list[0]->limits.cpu_soft_limit);
-  job.setNbNodes(llJobInfo.step_list[0]->limits.core_soft_limit);
+
+  job.setMemLimit(llJobInfo.step_list[0]->memory_requested);
+  
+  job.setNbCpus(llJobInfo.step_list[0]->cpus_requested);
+  job.setNbNodes(llJobInfo.step_list[0]->num_processors);
+  //job.setNbNodesAndCpuPerNode(cpus_per_core);
   //To fill the job working dir
   job.setJobWorkingDir(llJobInfo.step_list[0]->iwd); 
-  
   llfree_job_info(&llJobInfo,LL_JOB_VERSION);
 
   return 0;
@@ -121,19 +123,71 @@ LLServer::processOptions(const char* scriptPath,
       insertOptionLine(optionLineToInsert, content);
     }
     if(options.getNbCpu()!=-1) {
-      optionLineToInsert ="# @ resources = ConsumableCpus("+vishnu::convertToString(options.getNbCpu())+"\n";
+      optionLineToInsert ="# @ resources = ConsumableCpus("+vishnu::convertToString(options.getNbCpu())+")\n";
+      insertOptionLine(optionLineToInsert, content);
     }
     if(options.getMemory()!=-1) {
       if(options.getNbCpu()!=-1) {
-        optionLineToInsert = "# @ resources = ConsumableCpus("+vishnu::convertToString(options.getNbCpu());
-        optionLineToInsert =" ConsumableMemory("+vishnu::convertToString(options.getNbCpu())+" mb\n";
+        optionLineToInsert = "# @ resources = ConsumableCpus("+vishnu::convertToString(options.getNbCpu())+")";
+        optionLineToInsert +=" ConsumableMemory("+vishnu::convertToString(options.getNbCpu())+" mb)\n";
       } else {
-        optionLineToInsert ="# @ resources = ConsumableMemory("+vishnu::convertToString(options.getNbCpu())+" mb\n";
+        optionLineToInsert ="# @ resources = ConsumableMemory("+vishnu::convertToString(options.getNbCpu())+" mb)\n";
       }
+      insertOptionLine(optionLineToInsert, content);
     }
     if(options.getNbNodesAndCpuPerNode()!="") {
-      
+      std::string NbNodesAndCpuPerNode = options.getNbNodesAndCpuPerNode();
+      size_t posNbNodes = NbNodesAndCpuPerNode.find(":");
+      if(posNbNodes!=std::string::npos) {
+        std::string nbNodes = NbNodesAndCpuPerNode.substr(0, posNbNodes);
+        std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1);
+        optionLineToInsert = "# @ node="+nbNodes+"\n";
+        insertOptionLine(optionLineToInsert, content);  
+        optionLineToInsert = "# @ tasks_per_node=1\n";
+        insertOptionLine(optionLineToInsert, content);
+        optionLineToInsert = "# resources = ConsumableCpus("+cpuPerNode+")\n";
+        insertOptionLine(optionLineToInsert, content);
+      }
     }
+    if(options.getMailNotification()!="") {
+      std::string notification = options.getMailNotification();
+      if(notification.compare("BEGIN")==0) {
+        optionLineToInsert = "# @ notification=start\n"; 
+        insertOptionLine(optionLineToInsert, content);
+      } else if(notification.compare("END")==0) {
+        optionLineToInsert = "# @ notification=complete\n"; 
+        insertOptionLine(optionLineToInsert, content);
+      } else if(notification.compare("ERROR")==0) {
+        optionLineToInsert = "# @ notification=error\n";
+        insertOptionLine(optionLineToInsert, content);
+      } else if(notification.compare("ALL")==0) {
+        optionLineToInsert = "# @ notification=always\n";
+        insertOptionLine(optionLineToInsert, content);
+      } else {
+        throw UserException(ERRCODE_INVALID_PARAM, notification+" is an invalid notification type:"+" consult the vishnu user manuel");
+      }
+    }
+
+    if(options.getMailNotifyUser()!="") {
+      optionLineToInsert = "# @ notify_user="+options.getMailNotifyUser()+"\n";
+      insertOptionLine(optionLineToInsert, content);
+    }
+
+    if(options.getGroup()!="") {
+      optionLineToInsert = "# @ group="+options.getGroup()+"\n";
+      insertOptionLine(optionLineToInsert, content);
+    }
+
+    if(options.getWorkingDir()!="") {
+      optionLineToInsert = "# @ initialdir="+options.getWorkingDir()+"\n";
+      insertOptionLine(optionLineToInsert, content);
+    }
+
+    if(options.getCpuTime()!="") {
+      optionLineToInsert = "# @ cpu_limit="+options.getCpuTime()+"\n";
+      insertOptionLine(optionLineToInsert, content);
+    }
+
 
     if(optionLineToInsert.size()!=0) {
       ofstream ofs(scriptPath);
