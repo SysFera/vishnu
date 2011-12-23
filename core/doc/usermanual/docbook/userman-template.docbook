@@ -468,7 +468,7 @@
 		  <para><emphasis role="bold">#% vishnu_cput</emphasis>: allow to specify the job cpu limit time,</para>
 		</listitem>
 		<listitem>
-		  <para><emphasis role="bold">#% vishnu_nb_cpu</emphasis>: allow to specify the number of cpus of the job,</para>
+		  <para><emphasis role="bold">#% vishnu_nb_cpu</emphasis>: allow to specify the number of cpus per node of the job,</para>
 		</listitem>
 		<listitem>
 		  <para><emphasis role="bold">#% vishnu_nbNodesAndCpuPerNode</emphasis>: allow to specify the number of nodes and the cpu of each node. For exemple if you want to use 4 nodes and to use 3 cpus of each node, you must sepecify thes numbers by "4:3", </para>
