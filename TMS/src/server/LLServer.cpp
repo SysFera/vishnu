@@ -59,12 +59,16 @@ LLServer::submit(const char* scriptPath,
   job.setJobPrio(convertLLPrioToVishnuPrio((llJobInfo.step_list[0])->prio));
 
   job.setMemLimit(llJobInfo.step_list[0]->memory_requested);
-  
-  job.setNbCpus(llJobInfo.step_list[0]->cpus_requested);
-  job.setNbNodes(llJobInfo.step_list[0]->num_processors);
-  //job.setNbNodesAndCpuPerNode(cpus_per_core);
+  int nbCpu = llJobInfo.step_list[0]->cpus_requested;
+  job.setNbCpus(nbCpu);
+  int node = getJobNodeCount(llJobId.str());
+  job.setNbNodes(node);
+  if(node!=-1) { 
+    job.setNbNodesAndCpuPerNode(vishnu::convertToString(node)+":"+vishnu::convertToString(nbCpu));
+  }
   //To fill the job working dir
   job.setJobWorkingDir(llJobInfo.step_list[0]->iwd); 
+  
   llfree_job_info(&llJobInfo,LL_JOB_VERSION);
 
   return 0;
@@ -98,6 +102,10 @@ LLServer::cancel(const char* jobId) {
 void
 LLServer::processOptions(const char* scriptPath, 
                          const TMS_Data::SubmitOptions& options) {
+
+  if(!options.getNbNodesAndCpuPerNode().empty() && options.getNbCpu()!=-1) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use the NbCpu option and NbNodesAndCpuPerNode option together.\n");
+  }
 
   std::string content = vishnu::get_file_content(scriptPath); 
   std::string optionLineToInsert;
@@ -410,6 +418,71 @@ LLServer::getJobStartTime(const std::string& jobId) {
   }
 
   return 0;
+}
+
+
+/**
+ * \brief Function to get the number of nodes of the job
+ * \param jobId the identifier of the job 
+ * \return -1 if the job is unknown or server not  unavailable
+ */
+int 
+LLServer::getJobNodeCount(const std::string& jobId) { 
+
+  LL_element *queryObject;
+  LL_element *queryInfos;
+  LL_element *step;
+  int rc;
+  int objCount;
+  int nbNodes;
+  int errCode;
+
+  // Set the type of query
+  queryObject = ll_query(JOBS);
+  if(!queryObject) {
+    return 0;
+  }
+
+  char* IDlist[2];
+  IDlist[0] = strdup(jobId.c_str());
+  IDlist[1] = NULL;
+
+  // Create the request
+  rc = ll_set_request(queryObject, QUERY_STEPID, IDlist, ALL_DATA);
+
+  if(rc) {
+    return 0;
+  }
+  if(queryObject==NULL) {
+    return 0;
+  }
+
+  // Calling to get the results
+  queryInfos = ll_get_objs(queryObject, LL_CM, NULL, &objCount, &errCode);
+  if(queryInfos==NULL) {
+    return 0;
+  }
+
+  while(queryInfos)
+  {
+    rc = ll_get_data(queryInfos, LL_JobGetFirstStep, &step);
+    if(!rc)
+    {
+      while(step) {
+        rc = ll_get_data(step, LL_StepNodeCount, &nbNodes); 
+        if(!rc) {
+          return nbNodes;
+        } else {
+          return -1;
+        }
+
+        ll_get_data(queryInfos, LL_JobGetNextStep, &step);
+      }
+    }
+    queryInfos = ll_next_obj(queryObject);
+  }
+
+  return -1;
 }
 
 /**

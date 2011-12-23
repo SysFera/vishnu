@@ -52,7 +52,7 @@ TorqueServer::submit(const char* scriptPath,
 
   std::vector<std::string> cmdsOptions;
   //processes the options
-  processOptions(options, cmdsOptions);
+  processOptions(scriptPath, options, cmdsOptions);
   argc = cmdsOptions.size()+2;
   char* argv[argc];
   argv[0] = (char*) "vishnu_submit_job";
@@ -60,11 +60,6 @@ TorqueServer::submit(const char* scriptPath,
   for(int i=0; i < cmdsOptions.size(); i++) {
    argv[i+2] = const_cast<char*>(cmdsOptions[i].c_str());
   }
-
-  for(int i=0; i < argc; i++) {
-   cout << argv[i] << " ";
-  }
-  cout << endl;
 
   destination[0] = '\0';
   serverOut[0] = '\0';
@@ -131,13 +126,19 @@ TorqueServer::submit(const char* scriptPath,
 
 /**
  * \brief Function to treat the submission options
+ * \param scriptPath The job script path
  * \param options the object which contains the SubmitOptions options values
  * \param cmdsOptions The list of the option value
  * \return raises an exception on error
  */
 void 
-TorqueServer::processOptions(const TMS_Data::SubmitOptions& options, 
+TorqueServer::processOptions(const char* scriptPath,
+                             const TMS_Data::SubmitOptions& options, 
                              std::vector<std::string>&cmdsOptions) {
+
+  if(!options.getNbNodesAndCpuPerNode().empty() && options.getNbCpu()!=-1) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use the NbCpu option and NbNodesAndCpuPerNode option together.\n");
+  }
 
   if(options.getName().size()!=0){
     cmdsOptions.push_back("-N");
@@ -163,7 +164,30 @@ TorqueServer::processOptions(const TMS_Data::SubmitOptions& options,
     cmdsOptions.push_back("-l");
     std::ostringstream os_str;
     os_str << options.getNbCpu();
-    cmdsOptions.push_back("ncpus="+os_str.str());
+    std::string nbCpuStr = os_str.str();
+
+    std::string scriptContent = vishnu::get_file_content(scriptPath);
+    size_t pos = scriptContent.rfind("#PBS");
+    size_t pos2 = std::string::npos;
+    while(pos!=std::string::npos) {
+      if(scriptContent.find("-l", pos)!=std::string::npos){
+        pos2 = scriptContent.find("nodes=", pos);
+        if(pos2!=std::string::npos) {
+          std::string nbNodes = scriptContent.substr(pos2+std::string("nodes=").size());
+          istringstream is(nbNodes);
+          int value;
+          is >> value;
+          os_str.str("");
+          os_str << value;
+          cmdsOptions.push_back("nodes="+os_str.str()+":ppn="+nbCpuStr);
+          break;
+        }
+      }
+      pos = scriptContent.rfind("#PBS", pos-1);
+    }
+    if(pos2==std::string::npos){
+      cmdsOptions.push_back("nodes=1:ppn="+nbCpuStr);
+    }
   }
   if(options.getMemory()!=-1) {
     cmdsOptions.push_back("-l");
@@ -192,9 +216,9 @@ TorqueServer::processOptions(const TMS_Data::SubmitOptions& options,
     } else if(notification.compare("ERROR")==0) {
       cmdsOptions.push_back("a");
     } else if(notification.compare("ALL")==0) {
-      cmdsOptions.push_back("bea");
+      cmdsOptions.push_back("abe");
     } else {
-      throw UserException(ERRCODE_INVALID_PARAM, notification+" is an invalid notification type:"+" consult the vishnu user manuel");
+      throw UserException(ERRCODE_INVALID_PARAM, notification+" is an invalid notification type:"+" consult the vishnu user manuel.\n");
     }
   }
 
@@ -473,14 +497,14 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   string output     = string("");
   string error      = string("");
   string prio       = string("");
-  string ncpus      = string("");
+  string ncpus      = string("1");
   string qtime      = string("");
   string group      = string("");
   string mem        = string("");
-  string node       = string("");
+  string node       = string("1");
   string wall       = string("");
   string etime      = string("");
-  string nodeAndCpu = string("");
+  string nodeAndCpu = string("1:1");
   string workingDir = string(""); 
   // Getting job idx
   str = p->name;
@@ -528,13 +552,16 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
       else if (!strcmp(a->name, ATTR_p)){ // priority
         prio = str;
       }
-      else if (!strcmp(a->name, ATTR_l)){ // nbcpu or qtime
-        if (!strcmp(a->resource, "ncpus")){
-          ncpus = str;
-        }
-        else if(!strcmp(a->resource, "mem")){
+      else if (!strcmp(a->name, ATTR_l)){ // resource_list
+        
+        if(!strcmp(a->resource, "mem")){
           mem = str;
         }
+#if 0
+        else if(!strcmp(a->resource, "ncpus")){
+          ncpus = str;
+        }
+#endif
         else if(!strcmp(a->resource, "walltime")){
           wall = str;
         }
@@ -548,6 +575,7 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
             pos_found = tmp.find("=");
             if(pos_found!=string::npos) {
               nodeAndCpu = node+":"+tmp.substr(pos_found+1);
+              ncpus = tmp.substr(pos_found+1);
             } else {
               nodeAndCpu = str;
             }
@@ -578,7 +606,7 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
         qtime = str;
       }
       else if (!strcmp(a->name, ATTR_etime)){ // end time ?
-        etime = str;
+        etime =str;
       }	      
       a = a->next;
     }// end if name != null
