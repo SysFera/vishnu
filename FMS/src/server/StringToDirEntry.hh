@@ -4,12 +4,14 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/foreach.hpp>
+#include <boost/cstdint.hpp>
 #include <iostream>
 #include <string>
 #include <sstream>
 #include <cstdlib>
 #include <sys/types.h>
 #include "FMSVishnuException.hpp"
+#include "FileTypes.hpp"
 
 class DateHandler {
 
@@ -114,7 +116,7 @@ class StringToDirEntry {
       return mgroup;
     }
 
-    size_t getSize() {
+     file_size_t getSize() {
       return msize;
     }
     std::string getDateTime (){
@@ -132,7 +134,9 @@ class StringToDirEntry {
     std::string mperms;
     std::string mowner;
     std::string mgroup;
-    std::size_t msize;
+    file_size_t msize;
+
+
     std::string mdate_time;
     std::string mpath;
 };

@@ -1,3 +1,8 @@
+
+#ifndef FILE_HPP
+#define FILE_HPP
+
+
 /**
  * \file File.hpp
  * This file declares a server class to handle a file
@@ -5,93 +10,13 @@
  * \author Ibrahima Cisse (irahima.cisse@sysfera.com)
  */
 
-#ifndef FILESERVER_HH
-#define FILESERVER_HH
 
-#include <string>
-#include <list>
 
-#include <sys/types.h>
-#include <sys/stat.h>
+#include "FileTypes.hpp"
 #include "SessionServer.hpp"
-#include "FMS_Data_forward.hpp"
-#include "FMS_Data.hpp"
 #include "StringToDirEntry.hh"
+
 using namespace FMS_Data;
-
-
-static const mode_t defaultFileAccessMode=420;
-static const mode_t defaultDirectoryAccessMode=493;
-
-/**
- * \brief File type enumeration
- */
-typedef enum {
-  /**
-   * \brief a block 
-   */
-  block,
-  /**
-   * \brief a character 
-   */
-  character,
-  /**
-   * \brief a directory 
-   */
-  directory,
-  /**
-   * \brief a symbolic link 
-   */
-  symboliclink,
-  /**
-   * \brief a socket 
-   */
-  sckt,
-  /**
-   * \brief a fifo 
-   */
-  fifo,
-  /**
-   * \brief a regular file 
-   */
-  regular
-} file_type_t;
-
-/**
- * \brief  File "locality" enumeration
- */
-typedef enum {
-  /**
-   * \brief a local file 
-   */
-  local,
-  /**
-   * \brief a remote file 
-   */
-  remote
-} file_host_t;
-
-/**
- * \brief  The stat structure differs depending on the system type. 
- * BSD file systems used the same structure for large and small
- * partition type.
- */
-#if FS_32 | BSD_LIKE_SYSTEM
-typedef struct stat file_stat_t;
-typedef off_t file_size_t;
-#define STAT(path, buf) stat((path), (buf))
-#else
-typedef struct stat64 file_stat_t;
-/**
- * \brief A defintion of object size type
- */
-typedef off64_t file_size_t;
-/**
- * \brief The default defintion of stat function
- */
-#define STAT(path, buf) stat64((path), (buf))
-#endif
-
 /**
  * \brief Main File class. Encapsulates all the files attributes.
  * Defines the common operation on files (local or remote) 
