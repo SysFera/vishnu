@@ -419,6 +419,7 @@ int vishnu::getFileInfo(const string& sessionKey,const string& path, FileStat& f
     f->getInfos();
 
     fileInfos=f->getFileStat();
+    std::cout << "+++++++++++++ In C++ getFileInfo api size = " << fileInfos.getSize() << "\n";
 
     return 0;
 
