@@ -126,6 +126,14 @@ private:
   computeNbRunJobsAndQueueJobs(std::map<std::string, size_t>& run, 
                                std::map<std::string, size_t>& que);
   /**
+   * \brief Function to get the number of nodes of the job
+   * \param jobId the identifier of the job 
+   * \return -1 if the job is unknown or server not  unavailable
+   */
+  int
+  getJobNodeCount(const std::string& jobId);
+  
+  /**
    * \brief ListQueues returned
    */
   TMS_Data::ListQueues_ptr mlistQueues;

@@ -28,7 +28,7 @@
 
 using namespace std;
 
-//The generic script syntaxe
+//The generic script syntaxe 
 static std::string prefix = "vishnu";
 static const std::string group               = prefix+"_group";
 static const std::string workingDir          = prefix+"_working_dir";
@@ -38,9 +38,9 @@ static const std::string jobError            = prefix+"_error";
 static const std::string jobWallClockLimit   = prefix+"_wallclocklimit";
 static const std::string cpuTime             = prefix+"_cput";
 static const std::string nbCpu               = prefix+"_nb_cpu";
-static const std::string nbNodesAndCpuPerNode= prefix+"_nbNodesAndCpuPerNode";
+static const std::string nbNodesAndCpuPerNode= prefix+"_nbnodesandcpupernode";
 static const std::string mem                 = prefix+"_memory";
-static const std::string mailNotification    = prefix+"_mailNotification";
+static const std::string mailNotification    = prefix+"_mailnotification";
 static const std::string mailNotifyUser      = prefix+"_notify_user";
 static const std::string queue               = prefix+"_queue";
 
