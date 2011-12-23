@@ -96,7 +96,6 @@
 %include "FMS_Data_forward.hpp"
 %include "FMS_Data/CpFileOptions.hpp"
 %include "FMS_Data/FileStat.hpp"
-%include "FMS_Data/FileStatList.hpp"
 %include "FMS_Data/FileTransfer.hpp"
 %include "FMS_Data/FileTransferList.hpp"
 %include "FMS_Data/HeadOfFileOptions.hpp"
@@ -105,6 +104,7 @@
 %include "FMS_Data/StopTransferOptions.hpp"
 %include "FMS_Data/TailOfFileOptions.hpp"
 %include "FMS_Data/RmFileOptions.hpp"
+%include "FMS_Data/CreateDirOptions.hpp"
 %include "FMS_Data/DirEntry.hpp"
 %include "FMS_Data/DirEntryList.hpp"
 
