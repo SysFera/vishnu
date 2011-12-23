@@ -123,7 +123,7 @@ same conditions as regards security.</para>
           <varlistentry>
             <term><option>-P <replaceable>nbCpu</replaceable></option></term>
             <listitem>
-              <para>The number of cpu that the job requires.</para>
+              <para>The number of cpu per node that the job requires.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -668,7 +668,7 @@ same conditions as regards security.</para>
           <varlistentry>
             <term><option>-P <replaceable>nbCpu</replaceable></option></term>
             <listitem>
-              <para>lists the jobs with the specified number of CPUs.</para>
+              <para>lists the jobs with the specified number of CPUs per node.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
