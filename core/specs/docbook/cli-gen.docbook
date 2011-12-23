@@ -2000,7 +2000,7 @@
                 <entry><para>nbCpu</para></entry>
                 <entry><para>int</para></entry>
                 <entry><para>P</para></entry>
-                <entry><para>The number of cpu that the job requires</para></entry>
+                <entry><para>The number of cpu per node that the job requires</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -2289,7 +2289,7 @@
                 <entry><para>nbCpu</para></entry>
                 <entry><para>int</para></entry>
                 <entry><para>P</para></entry>
-                <entry><para>lists the jobs with the specified number of CPUs</para></entry>
+                <entry><para>lists the jobs with the specified number of CPUs per node</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>

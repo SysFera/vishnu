@@ -35,7 +35,7 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[nbCpu]                = "# @ "; //special case
     mconversionTable[nbNodesAndCpuPerNode] = "# @ ";//special case
     mconversionTable[mem]                  = "# @ data_limit=";//a voir
-    mconversionTable[mailNotification]     = "# @ notification=";
+    mconversionTable[mailNotification]     = "# @ notification=";//special case
     mconversionTable[mailNotifyUser]       = "# @ notify_user=";
     mconversionTable[queue]                = "# @ class="; 
    
@@ -53,10 +53,10 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[jobError]             = "#PBS -e ";
     mconversionTable[jobWallClockLimit]    = "#PBS -l walltime=";
     mconversionTable[cpuTime]              = "#PBS -l cput=";
-    mconversionTable[nbCpu]                = "#PBS -l ncpus=";
-    mconversionTable[nbNodesAndCpuPerNode] = "#PBS "; //special case
+    mconversionTable[nbCpu]                = "#PBS -l "; //special case
+    mconversionTable[nbNodesAndCpuPerNode] = "#PBS -l "; //special case
     mconversionTable[mem]                  = "#PBS -l mem=";
-    mconversionTable[mailNotification]     = "#PBS -m ";
+    mconversionTable[mailNotification]     = "#PBS -m "; //special case
     mconversionTable[mailNotifyUser]       = "#PBS -M ";
     mconversionTable[queue]                = "#PBS -q ";
     
@@ -73,11 +73,11 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[jobOutput]            = "#SBATCH -o ";
     mconversionTable[jobError]             = "#SBATCH -e ";
     mconversionTable[jobWallClockLimit]    = "#SBATCH -t ";
-    mconversionTable[cpuTime]              = "#SBATCH -t";
+    mconversionTable[cpuTime]              = "#SBATCH -t ";
     mconversionTable[nbCpu]                = "#SBATCH --mincpus=";
     mconversionTable[nbNodesAndCpuPerNode] = "#SBATCH "; //spacial case
     mconversionTable[mem]                  = "#SBATCH --mem=";
-    mconversionTable[mailNotification]     = "#SBATCH --mail-type="; 
+    mconversionTable[mailNotification]     = "#SBATCH --mail-type=";//special case; 
     mconversionTable[mailNotifyUser]       = "#SBATCH --mail-user=";
     mconversionTable[queue]                = "#SBATCH -p ";
     
@@ -97,7 +97,7 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
  */
 void 
 ScriptGenConvertor::initializeTableOfSymbols() {
-
+  
   mtableOfSymbols.push_back(group);
   mtableOfSymbols.push_back(workingDir);
   mtableOfSymbols.push_back(jobName);
@@ -238,10 +238,8 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
       std::transform(line.begin(), line.end(), line_tolower.begin(), ::tolower);
       iter = std::find(mtableOfSymbols.begin(), mtableOfSymbols.end(), line_tolower);
       if(iter==mtableOfSymbols.end()) {
-        cerr << std::endl;
-        cerr << "Error : Invalid argument " << line_tolower << " at line " << numline << " in your script file" << std::endl;
         ostringstream os_error;
-        os_error << "Error : Invalid argument " << line_tolower << " at line " << numline << " in your script file" << std::endl;
+        os_error << "Error : Invalid argument " << line << " at line " << numline << " in your script file" << std::endl;
         errorMessage = os_error.str();
         return -1;
       }
@@ -258,12 +256,11 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
     /*transform to lower case */
     std::string key_tolower(key);
     std::transform(key.begin(), key.end(), key_tolower.begin(), ::tolower);
+    
     iter = std::find(mtableOfSymbols.begin(), mtableOfSymbols.end(), key_tolower);
     if(iter==mtableOfSymbols.end()) {
-      cerr << std::endl;
-      cerr << "Error : Invalid argument " << key_tolower << " at line " << numline << " in your script file" << std::endl;
       ostringstream os_error;
-      os_error << "Error : Invalid argument " << key_tolower << " at line " << numline << " in your script file" << std::endl;
+      os_error << "Error : Invalid argument " << key << " at line " << numline << " in your script file" << std::endl;
       errorMessage = os_error.str();
       return -1;
     }
@@ -298,9 +295,19 @@ ScriptGenConvertor::getConvertedScript() {
 
     key =  iter->first;
     value = iter->second;
-    
+
     //Special case
-    if(key.compare("nbNodesAndCpuPerNode")==0) {
+    if(key.compare(nbNodesAndCpuPerNode)==0) {
+
+      if(!value.empty()){
+        if(*(value.begin())=='\"'){
+          value.replace(value.begin(), value.begin()+1, "");
+        }
+        if(*(value.end()-1)=='\"'){
+          value.replace(value.end()-1, value.end(), "");
+        } 
+      }
+
       size_t posNbNodes = value.find(":");
       if(posNbNodes!=std::string::npos) {
         std::string nbNodes = value.substr(0, posNbNodes);
@@ -313,13 +320,85 @@ ScriptGenConvertor::getConvertedScript() {
         } else if(mbatchType==TORQUE) {
           value = " nodes="+nbNodes+":ppn="+cpuPerNode;
         } else if(mbatchType==SLURM) {
-          value = " --nodes="+nbNodes+"\n #SBATCH --mincpus="+cpuPerNode; 
+          value = " --nodes="+nbNodes+"\n#SBATCH --mincpus="+cpuPerNode; 
         }
       }
     }
     //Special case
-    if(mbatchType==LOADLEVELER && key.compare("nbCpu")==0) {
-        value = " ConsumableCpus("+value+")";
+    if(mbatchType==LOADLEVELER && key.compare(nbCpu)==0) {
+      value = " ConsumableCpus("+value+")";
+    }
+    //Special case
+    if(mbatchType==TORQUE && key.compare(nbCpu)==0) {
+
+      size_t pos = mscriptGenContent.rfind("#PBS");
+      size_t pos2 = std::string::npos;
+      while(pos!=std::string::npos) {
+        if(mscriptGenContent.find("-l", pos)!=std::string::npos){
+          pos2 = mscriptGenContent.find("nodes=", pos);
+          if(pos2!=std::string::npos) {
+            std::string nbNodes = mscriptGenContent.substr(pos2+std::string("nodes=").size());
+            istringstream is(nbNodes);
+            int tmp;
+            is >> tmp;
+            std::ostringstream os_str;
+            os_str << tmp;
+            value = " nodes="+os_str.str()+":ppn="+value;
+            break;
+          }
+        }
+        pos = mscriptGenContent.rfind("#PBS", pos-1);
+      }
+      if(pos2==std::string::npos){
+        value = " nodes=1:ppn="+value;
+      }
+    }
+
+    //Special case
+    if(key.compare(mailNotification)==0) {
+
+      bool notificationIsNotValid = false;
+      if(mbatchType==LOADLEVELER) {
+        if(value.compare("BEGIN")==0) {
+          value= "start";
+        } else if(value.compare("END")==0) {
+          value = "complete";
+        } else if(value.compare("ERROR")==0) {
+          value = "error";
+        } else if(value.compare("ALL")==0) {
+          value= "always";
+        } else {
+          notificationIsNotValid = true;
+        }
+      } else if(mbatchType==TORQUE) {
+        if(value.compare("BEGIN")==0) {
+          value= "b";
+        } else if(value.compare("END")==0) {
+          value = "e";
+        } else if(value.compare("ERROR")==0) {
+          value = "a";
+        } else if(value.compare("ALL")==0) {
+          value= "abe";
+        } else {
+          notificationIsNotValid = true;
+        }
+      } else if(mbatchType==SLURM) {
+        if(value.compare("BEGIN")==0) {
+          value= "BEGIN";
+        } else if(value.compare("END")==0) {
+          value = "END";
+        } else if(value.compare("ERROR")==0) {
+          value = "FAIL";
+        } else if(value.compare("ALL")==0) {
+          value= "ALL";
+        } else {
+          notificationIsNotValid = true;
+        }
+      }
+
+      if(notificationIsNotValid) {
+        throw UserException(ERRCODE_INVALID_PARAM, value+" is an invalid notification type:"+" consult the vishnu user manuel");
+      }
     }
 
     result += mconversionTable[key]  + value + "\n";

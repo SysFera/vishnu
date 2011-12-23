@@ -27,7 +27,7 @@ using namespace vishnu;
  * \param fqueue : The queue to set the job
  * \param fwallTime : The wall time for the job
  * \param fmemory : The memory needed by the job
- * \param fnbCpu : The number of cpu needed
+ * \param fnbCpu : The number of cpu per node needed 
  * \param fnbNodeAndCpu : The number of node and processor per node
  * \param foutput : The output path
  * \param ferr : The error path
@@ -81,7 +81,7 @@ makeSubJobOp(string pgName,
 	   CONFIG,
 	   fmemory);
   opt->add("nbCpu,P",
-	   "The number of cpu needed by the job",
+	   "The number of cpu per node needed by the job",
 	   CONFIG,
 	   fnbCpu);
   opt->add("nbNodesAndCpuPerNode,N",

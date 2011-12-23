@@ -63,11 +63,6 @@ SlurmServer::submit(const char* scriptPath,
     argv[i+1] = const_cast<char*>(cmdsOptions[i].c_str());
   }
 
-  for(int i=0; i < argc; i++) {
-   cout << argv[i] << " ";
-  }
-
-
   job_desc_msg_t desc; //The slurm job descriptor
   //parse the scripthPath and sets the options values
   slurm_parse_script(argc, argv, &desc);
@@ -281,6 +276,10 @@ bool SlurmServer::containsAnExcludedSlurmSymbols(const std::string& path, std::s
 void 
 SlurmServer::processOptions(const TMS_Data::SubmitOptions& options, 
                              std::vector<std::string>&cmdsOptions) {
+
+  if(!options.getNbNodesAndCpuPerNode().empty() && options.getNbCpu()!=-1) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use the NbCpu option and NbNodesAndCpuPerNode option together.\n");
+  }
 
   if(options.getName().size()!=0){
     cmdsOptions.push_back("-J");
@@ -563,6 +562,7 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId){
       job.setJobDescription(slurmJobInfo.comment);
     }
     job.setJobPrio(convertSlurmPrioToVishnuPrio(slurmJobInfo.priority));
+    job.setMemLimit(slurmJobInfo.pn_min_memory);
     uint32_t nbNodes = slurmJobInfo.num_nodes;
     uint32_t nbCpus =  slurmJobInfo.pn_min_cpus;
     job.setNbCpus(nbCpus);
