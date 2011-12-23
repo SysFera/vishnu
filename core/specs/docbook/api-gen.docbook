@@ -5238,7 +5238,7 @@
             <row>
               <entry><para>nbCpus</para></entry>
               <entry><para>int</para></entry>
-              <entry><para>Is the number of cpu used by the job.</para></entry>
+              <entry><para>Is the number of cpu per node used by the job.</para></entry>
             </row>
             <row>
               <entry><para>jobWorkingDir</para></entry>
@@ -5437,7 +5437,7 @@
             <row>
               <entry><para>nbCpu</para></entry>
               <entry><para>int</para></entry>
-              <entry><para>lists the jobs with the specified number of CPUs</para></entry>
+              <entry><para>lists the jobs with the specified number of CPUs per node</para></entry>
             </row>
             <row>
               <entry><para>fromSubmitDate</para></entry>
@@ -5738,7 +5738,7 @@
             <row>
               <entry><para>nbCpu</para></entry>
               <entry><para>int</para></entry>
-              <entry><para>The number of cpu that the job requires</para></entry>
+              <entry><para>The number of cpu per node that the job requires</para></entry>
             </row>
             <row>
               <entry><para>nbNodesAndCpuPerNode</para></entry>
@@ -8128,7 +8128,7 @@
             <tbody>
               <row>
                 <entry><para>ERRCODE_INVALID_PARAM</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
@@ -8175,28 +8175,12 @@
                 <entry><para>Undefined configuration parameter</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>Vishnu not available (Database error)</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
                 <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_CONFIGNOTFOUND</para></entry>
-                <entry><para>Undefined configuration parameter</para></entry>
-              </row>
-              <row>
-                <entry/>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_USERID</para></entry>
@@ -8290,7 +8274,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PARAM</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
@@ -8420,7 +8404,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PARAM</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
@@ -8530,12 +8514,16 @@
             </thead>
             <tbody>
               <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
                 <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PARAM</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
@@ -8580,10 +8568,6 @@
               <row>
                 <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
                 <entry><para>The local account  is unknown</para></entry>
-              </row>
-              <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service has been performed succesfully.</para></entry>
               </row>
               <row>
                 <entry><para>VISHNU_OK</para></entry>
@@ -8677,7 +8661,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PARAM</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
@@ -8807,7 +8791,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PARAM</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
@@ -8944,7 +8928,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PARAM</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
@@ -9081,7 +9065,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PARAM</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
@@ -9211,7 +9195,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PARAM</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
@@ -9348,7 +9332,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PARAM</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
@@ -9485,7 +9469,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PARAM</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
@@ -9625,7 +9609,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PARAM</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
@@ -9762,7 +9746,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PARAM</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
@@ -9906,7 +9890,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PARAM</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
@@ -10029,7 +10013,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PARAM</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
@@ -10163,7 +10147,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PARAM</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
@@ -10297,7 +10281,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PARAM</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>

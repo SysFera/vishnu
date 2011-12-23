@@ -53,7 +53,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbCpus" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
-        <details key="content" value="Is the number of cpu used by the job."/>
+        <details key="content" value="Is the number of cpu per node used by the job."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobWorkingDir" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
@@ -179,7 +179,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbCpu" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
-        <details key="content" value="The number of cpu that the job requires"/>
+        <details key="content" value="The number of cpu per node that the job requires"/>
         <details key="shortOption" value="P"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -242,7 +242,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbCpu" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
-        <details key="content" value="lists the jobs with the specified number of CPUs"/>
+        <details key="content" value="lists the jobs with the specified number of CPUs per node"/>
         <details key="shortOption" value="P"/>
       </eAnnotations>
     </eStructuralFeatures>

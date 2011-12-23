@@ -54,7 +54,7 @@ displayJob(TMS_Data::Job& j){
   cout << " Output path (remote) : " << j.getOutputPath() << endl;
   cout << " Error path  (remote) : " << j.getErrorPath() << endl;
   cout << " Priority             : " << j.getJobPrio() << "(" << convertJobPriorityToString(j.getJobPrio()) << ")" << endl;
-  cout << " CPU                  : " << j.getNbCpus() << endl;
+  cout << " CPU per Node         : " << j.getNbCpus() << endl;
   cout << " Working dir (remote) : " << j.getJobWorkingDir() << endl;
   cout << " Status               : " << convertJobStateToString(j.getStatus()) << endl;
   if(j.getSubmitDate() > 0) {
@@ -81,7 +81,7 @@ displayJob(TMS_Data::Job& j){
     cout << " Max memory           : UNDEFINED" << endl;
   }
   cout << " Nodes                : " << j.getNbNodes() << endl;
-  cout << " CPU/Node             : " << j.getNbNodesAndCpuPerNode() << endl;
+  cout << " NbNodesAndCpuPerNode : " << j.getNbNodesAndCpuPerNode() << endl;
   cout << endl;
 }
 

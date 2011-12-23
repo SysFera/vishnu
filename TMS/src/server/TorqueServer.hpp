@@ -92,12 +92,14 @@ class TorqueServer : public BatchServer
 
     /**
      * \brief Function to treat the submission options
+     * \param scriptPath The job script path
      * \param options the object which contains the SubmitOptions options values
      * \param cmdsOptions The list of the option value
      * \return raises an exception on error
      */
     void
-    processOptions(const TMS_Data::SubmitOptions& options, 
+    processOptions(const char* scriptPath,
+                   const TMS_Data::SubmitOptions& options, 
                    std::vector<std::string>& cmdsOptions);
 
     /**
