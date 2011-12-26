@@ -31,7 +31,7 @@ using namespace ::FMS_Data;
 
 // Default constructor
 DirEntry::DirEntry() :
-    m_type(6)
+    m_perms(-1), m_size(-1), m_type(6)
 {
 
     /*PROTECTED REGION ID(DirEntryImpl__DirEntryImpl) START*/

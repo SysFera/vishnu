@@ -165,9 +165,9 @@ void DirEntry::eSet(::ecore::EInt _featureID,
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_group);
     case ::FMS_Data::FMS_DataPackage::DIRENTRY__PERMS:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(m_perms);
+        return m_perms != -1;
     case ::FMS_Data::FMS_DataPackage::DIRENTRY__SIZE:
-        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(m_size);
+        return m_size != -1;
     case ::FMS_Data::FMS_DataPackage::DIRENTRY__CREATIONTIME:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_creationTime);
