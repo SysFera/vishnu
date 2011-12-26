@@ -24,7 +24,6 @@
 #include <FMS_Data/LsDirOptions.hpp>
 #include <FMS_Data/MvFileOptions.hpp>
 #include <FMS_Data/LsTransferOptions.hpp>
-#include <FMS_Data/FileStatList.hpp>
 #include <FMS_Data/StopTransferOptions.hpp>
 #include <FMS_Data/FileTransfer.hpp>
 #include <FMS_Data/FileTransferList.hpp>
@@ -59,8 +58,6 @@ FMS_DataFactory::FMS_DataFactory()
         return createMvFileOptions();
     case FMS_DataPackage::LSTRANSFEROPTIONS:
         return createLsTransferOptions();
-    case FMS_DataPackage::FILESTATLIST:
-        return createFileStatList();
     case FMS_DataPackage::STOPTRANSFEROPTIONS:
         return createStopTransferOptions();
     case FMS_DataPackage::FILETRANSFER:
@@ -171,10 +168,6 @@ MvFileOptions_ptr FMS_DataFactory::createMvFileOptions()
 LsTransferOptions_ptr FMS_DataFactory::createLsTransferOptions()
 {
     return new LsTransferOptions();
-}
-FileStatList_ptr FMS_DataFactory::createFileStatList()
-{
-    return new FileStatList();
 }
 StopTransferOptions_ptr FMS_DataFactory::createStopTransferOptions()
 {

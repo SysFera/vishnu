@@ -21,15 +21,6 @@ operator<<(std::ostream& os, FileStat& fileStat);
 
 /**
  * \brief Helper function to display the information of a file
- * \param os: The output stream in which the list will be printed 
- * \param fileStatlist: The file info list
- * \return The output stream in which the list of file information has been printed
- */
-std::ostream&
-operator<<(std::ostream& os, FileStatList& fileStatlist);
-
-/**
- * \brief Helper function to display the information of a file
  * \param os The output stream in which the list will be printed 
  * \param dirEntry The directory entry  information
  * \return The output stream in which the list of users has been printed

@@ -227,23 +227,6 @@ return os;
 }
 
 
-/**
- *\brief Helper function to display the information of a file
- *\param os: The output stream in which the list will be printed 
- *\param fileStatlist: The file info list
- *\return The output stream in which the list of file information has
- *been printed
- */
-std::ostream&
-operator<<(std::ostream& os, FileStatList& fileStatlist){
- for (size_t i = 0 ; i < fileStatlist.getFileStats().size() ; i++){
-     os << *(fileStatlist.getFileStats().get(i));
-  }
-
- return os;
-
-}
-
 
 std::ostream&
 operator<<(std::ostream& os, DirEntry& dirEntry) {

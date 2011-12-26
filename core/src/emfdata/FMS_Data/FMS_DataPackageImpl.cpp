@@ -162,17 +162,6 @@ FMS_DataPackage::FMS_DataPackage()
     m_LsTransferOptionsEClass->getEStructuralFeatures().push_back(
             m_LsTransferOptions__status);
 
-    // FileStatList
-    m_FileStatListEClass = new ::ecore::EClass();
-    m_FileStatListEClass->setClassifierID(FILESTATLIST);
-    m_FileStatListEClass->setEPackage(this);
-    getEClassifiers().push_back(m_FileStatListEClass);
-    m_FileStatList__fileStats = new ::ecore::EReference();
-    m_FileStatList__fileStats->setFeatureID(
-            ::FMS_Data::FMS_DataPackage::FILESTATLIST__FILESTATS);
-    m_FileStatListEClass->getEStructuralFeatures().push_back(
-            m_FileStatList__fileStats);
-
     // StopTransferOptions
     m_StopTransferOptionsEClass = new ::ecore::EClass();
     m_StopTransferOptionsEClass->setClassifierID(STOPTRANSFEROPTIONS);
@@ -685,23 +674,6 @@ FMS_DataPackage::FMS_DataPackage()
     m_LsTransferOptions__status->setUnique(true);
     m_LsTransferOptions__status->setDerived(false);
     m_LsTransferOptions__status->setOrdered(true);
-    // FileStatList
-    m_FileStatListEClass->setName("FileStatList");
-    m_FileStatListEClass->setAbstract(false);
-    m_FileStatListEClass->setInterface(false);
-    m_FileStatList__fileStats->setEType(m_FileStatEClass);
-    m_FileStatList__fileStats->setName("fileStats");
-    m_FileStatList__fileStats->setDefaultValueLiteral("");
-    m_FileStatList__fileStats->setLowerBound(0);
-    m_FileStatList__fileStats->setUpperBound(-1);
-    m_FileStatList__fileStats->setTransient(false);
-    m_FileStatList__fileStats->setVolatile(false);
-    m_FileStatList__fileStats->setChangeable(true);
-    m_FileStatList__fileStats->setContainment(true);
-    m_FileStatList__fileStats->setResolveProxies(true);
-    m_FileStatList__fileStats->setUnique(true);
-    m_FileStatList__fileStats->setDerived(false);
-    m_FileStatList__fileStats->setOrdered(true);
     // StopTransferOptions
     m_StopTransferOptionsEClass->setName("StopTransferOptions");
     m_StopTransferOptionsEClass->setAbstract(false);
@@ -1326,10 +1298,6 @@ FMS_DataPackage::FMS_DataPackage()
 {
     return m_LsTransferOptionsEClass;
 }
-::ecore::EClass_ptr FMS_DataPackage::getFileStatList()
-{
-    return m_FileStatListEClass;
-}
 ::ecore::EClass_ptr FMS_DataPackage::getStopTransferOptions()
 {
     return m_StopTransferOptionsEClass;
@@ -1446,10 +1414,6 @@ FMS_DataPackage::FMS_DataPackage()
 ::ecore::EAttribute_ptr FMS_DataPackage::getLsTransferOptions__status()
 {
     return m_LsTransferOptions__status;
-}
-::ecore::EReference_ptr FMS_DataPackage::getFileStatList__fileStats()
-{
-    return m_FileStatList__fileStats;
 }
 ::ecore::EAttribute_ptr FMS_DataPackage::getStopTransferOptions__transferId()
 {

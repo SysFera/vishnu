@@ -71,11 +71,6 @@ namespace FMS_Data
          */
         virtual LsTransferOptions_ptr createLsTransferOptions();
         /**
-         * \brief Creates a new object of class FileStatList
-         * \return Pointer to the object
-         */
-        virtual FileStatList_ptr createFileStatList();
-        /**
          * \brief Creates a new object of class StopTransferOptions
          * \return Pointer to the object
          */

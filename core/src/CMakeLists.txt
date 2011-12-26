@@ -236,8 +236,6 @@ set(FMS_Data_SRCS
   emfdata/FMS_Data/MvFileOptionsImpl.cpp
   emfdata/FMS_Data/LsTransferOptions.cpp
   emfdata/FMS_Data/LsTransferOptionsImpl.cpp
-  emfdata/FMS_Data/FileStatList.cpp
-  emfdata/FMS_Data/FileStatListImpl.cpp
   emfdata/FMS_Data/StopTransferOptions.cpp
   emfdata/FMS_Data/StopTransferOptionsImpl.cpp
   emfdata/FMS_Data/FileTransfer.cpp
@@ -268,7 +266,6 @@ set(FMS_Data_HEADERS
   emfdata/FMS_Data/LsDirOptions.hpp
   emfdata/FMS_Data/MvFileOptions.hpp
   emfdata/FMS_Data/LsTransferOptions.hpp
-  emfdata/FMS_Data/FileStatList.hpp
   emfdata/FMS_Data/StopTransferOptions.hpp
   emfdata/FMS_Data/FileTransfer.hpp
   emfdata/FMS_Data/FileTransferList.hpp

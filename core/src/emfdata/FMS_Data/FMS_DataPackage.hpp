@@ -74,69 +74,64 @@ namespace FMS_Data
         static const int FILESTAT = 4;
 
         /**
-         * \brief Constant for FileStatList class
-         */
-        static const int FILESTATLIST = 5;
-
-        /**
          * \brief Constant for FileTransfer class
          */
-        static const int FILETRANSFER = 6;
+        static const int FILETRANSFER = 5;
 
         /**
          * \brief Constant for FileTransferList class
          */
-        static const int FILETRANSFERLIST = 7;
+        static const int FILETRANSFERLIST = 6;
 
         /**
          * \brief Constant for FileType class
          */
-        static const int FILETYPE = 8;
+        static const int FILETYPE = 7;
 
         /**
          * \brief Constant for HeadOfFileOptions class
          */
-        static const int HEADOFFILEOPTIONS = 9;
+        static const int HEADOFFILEOPTIONS = 8;
 
         /**
          * \brief Constant for LsDirOptions class
          */
-        static const int LSDIROPTIONS = 10;
+        static const int LSDIROPTIONS = 9;
 
         /**
          * \brief Constant for LsTransferOptions class
          */
-        static const int LSTRANSFEROPTIONS = 11;
+        static const int LSTRANSFEROPTIONS = 10;
 
         /**
          * \brief Constant for MvFileOptions class
          */
-        static const int MVFILEOPTIONS = 12;
+        static const int MVFILEOPTIONS = 11;
 
         /**
          * \brief Constant for RmFileOptions class
          */
-        static const int RMFILEOPTIONS = 13;
+        static const int RMFILEOPTIONS = 12;
 
         /**
          * \brief Constant for Status class
          */
-        static const int STATUS = 14;
+        static const int STATUS = 13;
 
         /**
          * \brief Constant for StopTransferOptions class
          */
-        static const int STOPTRANSFEROPTIONS = 15;
+        static const int STOPTRANSFEROPTIONS = 14;
 
         /**
          * \brief Constant for TailOfFileOptions class
          */
-        static const int TAILOFFILEOPTIONS = 16;
+        static const int TAILOFFILEOPTIONS = 15;
 
         /**
          * \brief Constant for TransferCommand class
          */
-        static const int TRANSFERCOMMAND = 17;
+        static const int TRANSFERCOMMAND = 16;
 
         /**
          * \brief Constant for FILESTAT__PATH feature
@@ -239,149 +234,144 @@ namespace FMS_Data
         static const int LSTRANSFEROPTIONS__STATUS = 19;
 
         /**
-         * \brief Constant for FILESTATLIST__FILESTATS feature
-         */
-        static const int FILESTATLIST__FILESTATS = 20;
-
-        /**
          * \brief Constant for STOPTRANSFEROPTIONS__TRANSFERID feature
          */
-        static const int STOPTRANSFEROPTIONS__TRANSFERID = 21;
+        static const int STOPTRANSFEROPTIONS__TRANSFERID = 20;
 
         /**
          * \brief Constant for STOPTRANSFEROPTIONS__FROMMACHINEID feature
          */
-        static const int STOPTRANSFEROPTIONS__FROMMACHINEID = 22;
+        static const int STOPTRANSFEROPTIONS__FROMMACHINEID = 21;
 
         /**
          * \brief Constant for STOPTRANSFEROPTIONS__USERID feature
          */
-        static const int STOPTRANSFEROPTIONS__USERID = 23;
+        static const int STOPTRANSFEROPTIONS__USERID = 22;
 
         /**
          * \brief Constant for FILETRANSFER__TRANSFERID feature
          */
-        static const int FILETRANSFER__TRANSFERID = 24;
+        static const int FILETRANSFER__TRANSFERID = 23;
 
         /**
          * \brief Constant for FILETRANSFER__STATUS feature
          */
-        static const int FILETRANSFER__STATUS = 25;
+        static const int FILETRANSFER__STATUS = 24;
 
         /**
          * \brief Constant for FILETRANSFER__USERID feature
          */
-        static const int FILETRANSFER__USERID = 26;
+        static const int FILETRANSFER__USERID = 25;
 
         /**
          * \brief Constant for FILETRANSFER__CLIENTMACHINEID feature
          */
-        static const int FILETRANSFER__CLIENTMACHINEID = 27;
+        static const int FILETRANSFER__CLIENTMACHINEID = 26;
 
         /**
          * \brief Constant for FILETRANSFER__SOURCEMACHINEID feature
          */
-        static const int FILETRANSFER__SOURCEMACHINEID = 28;
+        static const int FILETRANSFER__SOURCEMACHINEID = 27;
 
         /**
          * \brief Constant for FILETRANSFER__DESTINATIONMACHINEID feature
          */
-        static const int FILETRANSFER__DESTINATIONMACHINEID = 29;
+        static const int FILETRANSFER__DESTINATIONMACHINEID = 28;
 
         /**
          * \brief Constant for FILETRANSFER__SOURCEFILEPATH feature
          */
-        static const int FILETRANSFER__SOURCEFILEPATH = 30;
+        static const int FILETRANSFER__SOURCEFILEPATH = 29;
 
         /**
          * \brief Constant for FILETRANSFER__DESTINATIONFILEPATH feature
          */
-        static const int FILETRANSFER__DESTINATIONFILEPATH = 31;
+        static const int FILETRANSFER__DESTINATIONFILEPATH = 30;
 
         /**
          * \brief Constant for FILETRANSFER__SIZE feature
          */
-        static const int FILETRANSFER__SIZE = 32;
+        static const int FILETRANSFER__SIZE = 31;
 
         /**
          * \brief Constant for FILETRANSFER__START_TIME feature
          */
-        static const int FILETRANSFER__START_TIME = 33;
+        static const int FILETRANSFER__START_TIME = 32;
 
         /**
          * \brief Constant for FILETRANSFER__TRCOMMAND feature
          */
-        static const int FILETRANSFER__TRCOMMAND = 34;
+        static const int FILETRANSFER__TRCOMMAND = 33;
 
         /**
          * \brief Constant for FILETRANSFER__ERRORMSG feature
          */
-        static const int FILETRANSFER__ERRORMSG = 35;
+        static const int FILETRANSFER__ERRORMSG = 34;
 
         /**
          * \brief Constant for FILETRANSFERLIST__FILETRANSFERS feature
          */
-        static const int FILETRANSFERLIST__FILETRANSFERS = 36;
+        static const int FILETRANSFERLIST__FILETRANSFERS = 35;
 
         /**
          * \brief Constant for HEADOFFILEOPTIONS__NLINE feature
          */
-        static const int HEADOFFILEOPTIONS__NLINE = 37;
+        static const int HEADOFFILEOPTIONS__NLINE = 36;
 
         /**
          * \brief Constant for TAILOFFILEOPTIONS__NLINE feature
          */
-        static const int TAILOFFILEOPTIONS__NLINE = 38;
+        static const int TAILOFFILEOPTIONS__NLINE = 37;
 
         /**
          * \brief Constant for RMFILEOPTIONS__ISRECURSIVE feature
          */
-        static const int RMFILEOPTIONS__ISRECURSIVE = 39;
+        static const int RMFILEOPTIONS__ISRECURSIVE = 38;
 
         /**
          * \brief Constant for CREATEDIROPTIONS__ISRECURSIVE feature
          */
-        static const int CREATEDIROPTIONS__ISRECURSIVE = 40;
+        static const int CREATEDIROPTIONS__ISRECURSIVE = 39;
 
         /**
          * \brief Constant for DIRENTRY__PATH feature
          */
-        static const int DIRENTRY__PATH = 41;
+        static const int DIRENTRY__PATH = 40;
 
         /**
          * \brief Constant for DIRENTRY__OWNER feature
          */
-        static const int DIRENTRY__OWNER = 42;
+        static const int DIRENTRY__OWNER = 41;
 
         /**
          * \brief Constant for DIRENTRY__GROUP feature
          */
-        static const int DIRENTRY__GROUP = 43;
+        static const int DIRENTRY__GROUP = 42;
 
         /**
          * \brief Constant for DIRENTRY__PERMS feature
          */
-        static const int DIRENTRY__PERMS = 44;
+        static const int DIRENTRY__PERMS = 43;
 
         /**
          * \brief Constant for DIRENTRY__SIZE feature
          */
-        static const int DIRENTRY__SIZE = 45;
+        static const int DIRENTRY__SIZE = 44;
 
         /**
          * \brief Constant for DIRENTRY__CREATIONTIME feature
          */
-        static const int DIRENTRY__CREATIONTIME = 46;
+        static const int DIRENTRY__CREATIONTIME = 45;
 
         /**
          * \brief Constant for DIRENTRY__TYPE feature
          */
-        static const int DIRENTRY__TYPE = 47;
+        static const int DIRENTRY__TYPE = 46;
 
         /**
          * \brief Constant for DIRENTRYLIST__DIRENTRIES feature
          */
-        static const int DIRENTRYLIST__DIRENTRIES = 48;
+        static const int DIRENTRYLIST__DIRENTRIES = 47;
 
         // EClassifiers methods
 
@@ -432,12 +422,6 @@ namespace FMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EClass_ptr getLsTransferOptions();
-
-        /**
-         * \brief Returns the reflective object for class FileStatList
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EClass_ptr getFileStatList();
 
         /**
          * \brief Returns the reflective object for class StopTransferOptions
@@ -614,12 +598,6 @@ namespace FMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EAttribute_ptr getLsTransferOptions__status();
-
-        /**
-         * \brief Returns the reflective object for feature fileStats of class FileStatList
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EReference_ptr getFileStatList__fileStats();
 
         /**
          * \brief Returns the reflective object for feature transferId of class StopTransferOptions
@@ -826,11 +804,6 @@ namespace FMS_Data
         ::ecore::EClass_ptr m_LsTransferOptionsEClass;
 
         /**
-         * \brief The instance for the class FileStatList
-         */
-        ::ecore::EClass_ptr m_FileStatListEClass;
-
-        /**
          * \brief The instance for the class StopTransferOptions
          */
         ::ecore::EClass_ptr m_StopTransferOptionsEClass;
@@ -996,11 +969,6 @@ namespace FMS_Data
          * \brief The instance for the feature status of class LsTransferOptions
          */
         ::ecore::EAttribute_ptr m_LsTransferOptions__status;
-
-        /**
-         * \brief The instance for the feature fileStats of class FileStatList
-         */
-        ::ecore::EReference_ptr m_FileStatList__fileStats;
 
         /**
          * \brief The instance for the feature transferId of class StopTransferOptions

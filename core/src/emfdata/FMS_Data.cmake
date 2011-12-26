@@ -37,8 +37,6 @@ set(FMS_Data_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/MvFileOptionsImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/LsTransferOptions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/LsTransferOptionsImpl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FileStatList.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FileStatListImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/StopTransferOptions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/StopTransferOptionsImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FileTransfer.cpp
@@ -70,7 +68,6 @@ set(FMS_Data_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/LsDirOptions.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/MvFileOptions.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/LsTransferOptions.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FileStatList.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/StopTransferOptions.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FileTransfer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FileTransferList.hpp
@@ -92,7 +89,6 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/CpFileOptions.hpp DESTINATION
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/LsDirOptions.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/FMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/MvFileOptions.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/FMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/LsTransferOptions.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/FMS_Data)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FileStatList.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/FMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/StopTransferOptions.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/FMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FileTransfer.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/FMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FileTransferList.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/FMS_Data)
