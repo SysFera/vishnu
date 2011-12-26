@@ -32,7 +32,6 @@
 #include "FMS_Data/LsDirOptions.hpp"
 #include "FMS_Data/MvFileOptions.hpp"
 #include "FMS_Data/LsTransferOptions.hpp"
-#include "FMS_Data/FileStatList.hpp"
 #include "FMS_Data/StopTransferOptions.hpp"
 #include "FMS_Data/FileTransfer.hpp"
 #include "FMS_Data/FileTransferList.hpp"

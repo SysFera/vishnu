@@ -74,10 +74,6 @@ namespace FMS_Data
     class LsTransferOptions;
     typedef LsTransferOptions* LsTransferOptions_ptr;
 
-    // FileStatList
-    class FileStatList;
-    typedef FileStatList* FileStatList_ptr;
-
     // StopTransferOptions
     class StopTransferOptions;
     typedef StopTransferOptions* StopTransferOptions_ptr;
