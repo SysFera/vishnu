@@ -159,6 +159,14 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FileStatList" instanceTypeName="FileStatList">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fileStats" upperBound="-1"
+        eType="#//FileStat" containment="true">
+      <eAnnotations source="Description">
+        <details key="content" value="list of inodes."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StopTransferOptions" instanceTypeName="StopTransferOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="transferId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
