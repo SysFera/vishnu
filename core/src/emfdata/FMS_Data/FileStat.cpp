@@ -31,7 +31,8 @@ using namespace ::FMS_Data;
 
 // Default constructor
 FileStat::FileStat() :
-    m_type(6)
+    m_perms(-1), m_uid(-1), m_gid(-1), m_size(-1), m_atime(-1), m_mtime(-1),
+            m_ctime(-1), m_type(6)
 {
 
     /*PROTECTED REGION ID(FileStatImpl__FileStatImpl) START*/

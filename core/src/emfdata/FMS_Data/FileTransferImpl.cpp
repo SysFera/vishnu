@@ -241,7 +241,7 @@ void FileTransfer::eSet(::ecore::EInt _featureID,
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_destinationFilePath);
     case ::FMS_Data::FMS_DataPackage::FILETRANSFER__SIZE:
-        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(m_size);
+        return m_size != -1;
     case ::FMS_Data::FMS_DataPackage::FILETRANSFER__START_TIME:
         return m_start_time != 0;
     case ::FMS_Data::FMS_DataPackage::FILETRANSFER__TRCOMMAND:

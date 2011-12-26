@@ -438,7 +438,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_FileStat__perms->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_FileStat__perms->setName("perms");
-    m_FileStat__perms->setDefaultValueLiteral("");
+    m_FileStat__perms->setDefaultValueLiteral("-1");
     m_FileStat__perms->setLowerBound(0);
     m_FileStat__perms->setUpperBound(1);
     m_FileStat__perms->setTransient(false);
@@ -452,7 +452,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_FileStat__uid->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_FileStat__uid->setName("uid");
-    m_FileStat__uid->setDefaultValueLiteral("");
+    m_FileStat__uid->setDefaultValueLiteral("-1");
     m_FileStat__uid->setLowerBound(0);
     m_FileStat__uid->setUpperBound(1);
     m_FileStat__uid->setTransient(false);
@@ -466,7 +466,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_FileStat__gid->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_FileStat__gid->setName("gid");
-    m_FileStat__gid->setDefaultValueLiteral("");
+    m_FileStat__gid->setDefaultValueLiteral("-1");
     m_FileStat__gid->setLowerBound(0);
     m_FileStat__gid->setUpperBound(1);
     m_FileStat__gid->setTransient(false);
@@ -480,7 +480,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_FileStat__size->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_FileStat__size->setName("size");
-    m_FileStat__size->setDefaultValueLiteral("");
+    m_FileStat__size->setDefaultValueLiteral("-1");
     m_FileStat__size->setLowerBound(0);
     m_FileStat__size->setUpperBound(1);
     m_FileStat__size->setTransient(false);
@@ -494,7 +494,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_FileStat__atime->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_FileStat__atime->setName("atime");
-    m_FileStat__atime->setDefaultValueLiteral("");
+    m_FileStat__atime->setDefaultValueLiteral("-1");
     m_FileStat__atime->setLowerBound(0);
     m_FileStat__atime->setUpperBound(1);
     m_FileStat__atime->setTransient(false);
@@ -508,7 +508,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_FileStat__mtime->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_FileStat__mtime->setName("mtime");
-    m_FileStat__mtime->setDefaultValueLiteral("");
+    m_FileStat__mtime->setDefaultValueLiteral("-1");
     m_FileStat__mtime->setLowerBound(0);
     m_FileStat__mtime->setUpperBound(1);
     m_FileStat__mtime->setTransient(false);
@@ -522,7 +522,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_FileStat__ctime->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_FileStat__ctime->setName("ctime");
-    m_FileStat__ctime->setDefaultValueLiteral("");
+    m_FileStat__ctime->setDefaultValueLiteral("-1");
     m_FileStat__ctime->setLowerBound(0);
     m_FileStat__ctime->setUpperBound(1);
     m_FileStat__ctime->setTransient(false);
@@ -866,7 +866,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_FileTransfer__size->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_FileTransfer__size->setName("size");
-    m_FileTransfer__size->setDefaultValueLiteral("");
+    m_FileTransfer__size->setDefaultValueLiteral("-1");
     m_FileTransfer__size->setLowerBound(0);
     m_FileTransfer__size->setUpperBound(1);
     m_FileTransfer__size->setTransient(false);
@@ -1056,7 +1056,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_DirEntry__perms->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_DirEntry__perms->setName("perms");
-    m_DirEntry__perms->setDefaultValueLiteral("");
+    m_DirEntry__perms->setDefaultValueLiteral("-1");
     m_DirEntry__perms->setLowerBound(0);
     m_DirEntry__perms->setUpperBound(1);
     m_DirEntry__perms->setTransient(false);
@@ -1070,7 +1070,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_DirEntry__size->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_DirEntry__size->setName("size");
-    m_DirEntry__size->setDefaultValueLiteral("");
+    m_DirEntry__size->setDefaultValueLiteral("-1");
     m_DirEntry__size->setLowerBound(0);
     m_DirEntry__size->setUpperBound(1);
     m_DirEntry__size->setTransient(false);

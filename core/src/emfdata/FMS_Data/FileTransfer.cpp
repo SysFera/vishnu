@@ -31,7 +31,7 @@ using namespace ::FMS_Data;
 
 // Default constructor
 FileTransfer::FileTransfer() :
-    m_status(4), m_start_time(0), m_trCommand(2)
+    m_status(4), m_size(-1), m_start_time(0), m_trCommand(2)
 {
 
     /*PROTECTED REGION ID(FileTransferImpl__FileTransferImpl) START*/

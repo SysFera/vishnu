@@ -208,22 +208,19 @@ void FileStat::eSet(::ecore::EInt _featureID,
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_group);
     case ::FMS_Data::FMS_DataPackage::FILESTAT__PERMS:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(m_perms);
+        return m_perms != -1;
     case ::FMS_Data::FMS_DataPackage::FILESTAT__UID:
-        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(m_uid);
+        return m_uid != -1;
     case ::FMS_Data::FMS_DataPackage::FILESTAT__GID:
-        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(m_gid);
+        return m_gid != -1;
     case ::FMS_Data::FMS_DataPackage::FILESTAT__SIZE:
-        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(m_size);
+        return m_size != -1;
     case ::FMS_Data::FMS_DataPackage::FILESTAT__ATIME:
-        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(
-                m_atime);
+        return m_atime != -1;
     case ::FMS_Data::FMS_DataPackage::FILESTAT__MTIME:
-        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(
-                m_mtime);
+        return m_mtime != -1;
     case ::FMS_Data::FMS_DataPackage::FILESTAT__CTIME:
-        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(
-                m_ctime);
+        return m_ctime != -1;
     case ::FMS_Data::FMS_DataPackage::FILESTAT__TYPE:
         return m_type != 6;
 
