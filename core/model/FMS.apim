@@ -11,7 +11,7 @@
     <services name="createDir" description="creates directories on remote machines." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to create following the pattern  [host:]directory path." longOptionName=""/>
-      <ports name="options" dataType="//@modules.0/@typeList/@types.21" description="the create directory command options" optional="true" shortOptionLetter=""/>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.19" description="the create directory command options" optional="true" shortOptionLetter=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.1"/>
       <details key="description" value="Creates an new directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command)"/>
       <details key="exCLI" value="To create the repository toto on machine_1:&#xA;vishnu_create_dir machine_1:/tmp/toto"/>
@@ -21,7 +21,7 @@
       <ports name="path" description="The  file to remove following the pattern  [host:]file path" longOptionName="">
         <dataType href="FMS_Internal.apim#//@modules.0/@typeList/@types.0"/>
       </ports>
-      <ports name="options" dataType="//@modules.0/@typeList/@types.20" description="the remove command options" optional="true" shortOptionLetter=""/>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.18" description="the remove command options" optional="true" shortOptionLetter=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.2"/>
       <details key="description" value="Deletes a file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command)"/>
       <details key="exCLI" value="To remove the file toto on machine_1:&#xA;vishnu_remove_file machine_1:/tmp/toto "/>
@@ -43,7 +43,7 @@
     </services>
     <services name="chMod" description="changes  access rights of remote files/directories." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_SESSIONKEY_EXPIRED ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
-      <ports name="mode" dataType="//@modules.0/@typeList/@types.12" description=" the access rigths of file/directory in octal system." shortOptionLetter="" longOptionName=""/>
+      <ports name="mode" dataType="//@modules.0/@typeList/@types.11" description=" the access rigths of file/directory in octal system." shortOptionLetter="" longOptionName=""/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file/directory following the pattern  [host:]file path" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.5"/>
       <details key="description" value="Changes the permissions of a file or directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;The mode parameter is the same value as for the unix chmod command."/>
@@ -53,7 +53,7 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file  following the pattern  [host:]file path" longOptionName=""/>
       <ports name="fileContent" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="The first &quot;nLine&quot; lines of the file" shortOptionLetter="" longOptionName=""/>
-      <ports name="options" dataType="//@modules.0/@typeList/@types.18" description="the  head commandoptions" optional="true" shortOptionLetter="r"/>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.16" description="the  head commandoptions" optional="true" shortOptionLetter="r"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.6"/>
       <details key="description" value="Displays the first lines of a file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>
       <details key="exCLI" value="To visualize the 3 first line on the file toto on machine_1:&#xA;vishnu_head_of_file -n 3 machine_1:/tmp/toto"/>
@@ -62,7 +62,7 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file  following the pattern  [host:]file path" longOptionName=""/>
       <ports name="fileContent" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="The last &quot;nLine&quot; lines of the file" longOptionName=""/>
-      <ports name="options" dataType="//@modules.0/@typeList/@types.19" description="the tail command options" optional="true" shortOptionLetter=""/>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.17" description="the tail command options" optional="true" shortOptionLetter=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.7"/>
       <details key="description" value="Displays the last lines of a file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>
       <details key="exCLI" value="To vizualize the 3 last lines of the file toto on machine_1:&#xA;vishnu_tail_of_file -n 3 machine_1:/tmp/toto"/>
@@ -78,8 +78,8 @@
     <services name="listDir" description="displays  the content of a remote directory. " resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to list following the pattern  [host:]directory path" longOptionName=""/>
-      <ports name="dirContent" direction="OUT" dataType="//@modules.0/@typeList/@types.22" description="The content of the directory." shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
-      <ports name="options" dataType="//@modules.0/@typeList/@types.6" description="List of options for the listDir command" longOptionName=""/>
+      <ports name="dirContent" direction="OUT" dataType="//@modules.0/@typeList/@types.20" description="The content of the directory." shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.5" description="List of options for the listDir command" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.9"/>
       <details key="description" value="Displays the content of a directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>
       <details key="exCLI" value="To display the content of the toto repository on machine_1:&#xA; vishnu_list_dir machine_1:/tmp/toto"/>
@@ -88,7 +88,7 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The  source file to copy following the pattern  [host:]file path" longOptionName=""/>
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file" longOptionName=""/>
-      <ports name="options" dataType="//@modules.0/@typeList/@types.7" description="the copy options" optional="true" shortOptionLetter=""/>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.6" description="the copy options" optional="true" shortOptionLetter=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.10"/>
       <details key="description" value="Copy a file or directory from the location given by the src parameter to the location given by the dest parameter.&#xA;The src parameter must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command) or 'path' only if the file is on the local system.&#xA;The dest parameter must be provided in a similar way. Note that one of the two locations at least must be a remote location,&#xA;i.e. a local copy cannot be handled by this command.&#xA;"/>
       <details key="exCLI" value="To copy the file toto from machine_1 to machine_2 home directory: &#xA;vishnu_copy_file machine_1:/tmp/toto machine_2:/home/vishnu/"/>
@@ -97,8 +97,8 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The source file to copy following the pattern  [host:]file path" longOptionName=""/>
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file" longOptionName=""/>
-      <ports name="transferInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.15" description="A file tranfer identifier (allowing for instance  to ckeck the status of a file transfer, or to cancel it)"/>
-      <ports name="options" dataType="//@modules.0/@typeList/@types.7" description="the copy options" shortOptionLetter=""/>
+      <ports name="transferInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.14" description="A file tranfer identifier (allowing for instance  to ckeck the status of a file transfer, or to cancel it)"/>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.6" description="the copy options" shortOptionLetter=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.11"/>
       <details key="description" value="Initiates a copy of a file or directory from the location given by the src parameter to the location given by the dest parameter.&#xA;The src parameter must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command) or 'path' only if the file is on the local system.&#xA;The dest parameter must be provided in a similar way. Note that one of the two locations at least must be a remote location,&#xA;i.e. a local copy cannot be handled by this command.&#xA;The command listFileTransfers can be used to check the status of the transfer after it is initiated, using the transfer id as the identifier.&#xA;"/>
       <details key="exCLI" value="To copy using an asynchrone method the file toto from machine_1 to machine_2 home directory: &#xA;vishnu_copy_async_file machine_1:/tmp/toto machine_2:/home/vishnu/"/>
@@ -107,7 +107,7 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The  source file to move following the pattern  [host:]file path" longOptionName=""/>
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file" longOptionName=""/>
-      <ports name="options" dataType="//@modules.0/@typeList/@types.7" description="The move command options" shortOptionLetter="" longOptionName=""/>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.6" description="The move command options" shortOptionLetter="" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.12"/>
       <details key="description" value="Move a file or directory from the location given by the src parameter to the location given by the dest parameter.&#xA;The src parameter must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command) or 'path' only if the file is on the local system.&#xA;The dest parameter must be provided in a similar way. Note that one of the two locations at least must be a remote location,&#xA;i.e. a local move cannot be handled by this command.&#xA;"/>
       <details key="exCLI" value="To move the file toto from machine_1 to machine_2 home directory: &#xA;vishnu_move_file machine_1:/tmp/toto machine_2:/home/vishnu/"/>
@@ -116,15 +116,15 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The source file to move following the pattern  [host:]file path" longOptionName=""/>
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file" longOptionName=""/>
-      <ports name="transferInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.15" description="A file tranfer identifier (allowing for instance  to ckeck the status of a file transfer, or to cancel it)"/>
-      <ports name="options" dataType="//@modules.0/@typeList/@types.7" description="The transfer command options" optional="true" shortOptionLetter="r"/>
+      <ports name="transferInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.14" description="A file tranfer identifier (allowing for instance  to ckeck the status of a file transfer, or to cancel it)"/>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.6" description="The transfer command options" optional="true" shortOptionLetter="r"/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.13"/>
       <details key="description" value="Initiates a move of a file or directory from the location given by the src parameter to the location given by the dest parameter.&#xA;The src parameter must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command) or 'path' only if the file is on the local system.&#xA;The dest parameter must be provided in a similar way. Note that one of the two locations at least must be a remote location,&#xA;i.e. a local move cannot be handled by this command.&#xA;The command listFileTransfers can be used to check the status of the transfer after it is initiated, using the transfer id as the identifier.&#xA;"/>
       <details key="exCLI" value="To move using an asynchronous method the file toto from machine_1 to machine_2 home directory: &#xA;vishnu_move_async_file machine_1:/tmp/toto machine_2:/home/vishnu/"/>
     </services>
     <services name="stopFileTransfer" description="stops an execution of a set of file transfers." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK ERRCODE_UNKNOWN_USERID">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key" longOptionName=""/>
-      <ports name="options" dataType="//@modules.0/@typeList/@types.10" description="The stop file transfer command options" optional="true" longOptionName=""/>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.9" description="The stop file transfer command options" optional="true" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.14"/>
       <details key="description" value="Cancels a file or directory transfer that has been initiated using a vishnu asynchronous copy or move file command.&#xA;The command listFileTransfers can be used to check the status of the transfer after it has been cancelled, using the transfer id as the identifier.&#xA;"/>
       <details key="exCLI" value="To stop the file transfers on machine_1:&#xA;vishnu_stop_file_transfer -m machine_1"/>
@@ -134,7 +134,7 @@
       <ports name="fileTransferList" direction="OUT" description="The file transfer list" longOptionName="">
         <dataType href="FMS_Internal.apim#//@modules.0/@typeList/@types.16"/>
       </ports>
-      <ports name="options" dataType="//@modules.0/@typeList/@types.9" description="The filter options  " optional="true" longOptionName=""/>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.8" description="The filter options  " optional="true" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.15"/>
       <details key="description" value="Get the list of all file or directory transfers that have been initiated &#xA;using a vishnu synchronous or asynchronous copy or move file command.&#xA;"/>
       <details key="exCLI" value="To list the file transfers on machine_1 for the user user_1:&#xA;vishnu_list_file_transfers -m machine_1 -u user_1"/>
@@ -142,7 +142,7 @@
     <services name="getFileInfo" description="displays the information  of  files." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The file whose inode information will be displayed"/>
-      <ports name="filesinfo" direction="OUT" dataType="//@modules.0/@typeList/@types.11" description="The  inode information" shortOptionLetter="" longOptionName=""/>
+      <ports name="filesinfo" direction="OUT" dataType="//@modules.0/@typeList/@types.10" description="The  inode information" shortOptionLetter="" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.16"/>
       <details key="description" value="Get the details of a remote file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>
       <details key="exCLI" value="To get the data concerning the file toto on machine_1:&#xA;vishnu_get_file_info machine_1:/tmp/toto"/>
@@ -159,9 +159,6 @@
       </types>
       <types name="long" description="defines a long integer.">
         <ECoreType xsi:type="ecore:EDataType" href="Ecore.ecore#//ELong"/>
-      </types>
-      <types name="StringList" description="stores a list of strings">
-        <ECoreType xsi:type="ecore:EClass" href="FMS_Data.ecore#//StringList"/>
       </types>
       <types name="Status" description="defines the transfer file status.">
         <ECoreType xsi:type="ecore:EEnum" href="FMS_Data.ecore#//Status"/>
@@ -198,9 +195,6 @@
       </types>
       <types name="FileTransferList" description="The file transfer container">
         <ECoreType xsi:type="ecore:EClass" href="FMS_Data.ecore#//FileTransferList"/>
-      </types>
-      <types name="FileStatList" description="A container for file inode information">
-        <ECoreType xsi:type="ecore:EClass" href="FMS_Data.ecore#//FileStatList"/>
       </types>
       <types name="HeadOfFileOptions" description="stores all options  to perform head command.">
         <ECoreType xsi:type="ecore:EClass" href="FMS_Data.ecore#//HeadOfFileOptions"/>

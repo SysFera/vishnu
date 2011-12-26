@@ -19,9 +19,10 @@
 #include "File.hpp"
 #include "FMSVishnuException.hpp"
 #include "utilServer.hpp"
-#include <boost/scoped_ptr.hpp>
 #include "FileTransferCommand.hpp"
+#include "FileTypes.hpp"
 #include <boost/date_time/time_zone_base.hpp>
+#include <boost/scoped_ptr.hpp>
 using namespace std;
 
 /* Default constructor. */
@@ -109,7 +110,8 @@ void SSHFile::getInfos() const {
   mode_t perms;
   uid_t uid;
   gid_t gid;
-  file_size_t size;
+
+   file_size_t size;
   time_t atime, mtime, ctime;
   
   
@@ -137,7 +139,6 @@ void SSHFile::getInfos() const {
     >> atime >> mtime >> ctime >> fileType;
 
   transform(fileType.begin(), fileType.end(), fileType.begin(), ::tolower);
-  
   setOwner(owner);
   setGroup(group);
   setPerms(perms);
@@ -147,6 +148,10 @@ void SSHFile::getInfos() const {
   setAtime(atime);
   setMtime(mtime);
   setCtime(ctime);
+  
+  
+  
+  
   if (fileType=="block"){
     setType(block);
   }
