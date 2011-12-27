@@ -40,13 +40,11 @@ int main (int ac, char* av[]){
       CONFIG);
   
   bool isEmpty;
-  std::cout << "in create_dir\n";  
   GenericCli().processListOpt( opt, isEmpty,ac,av," path");
  
   // Parse the cli and setting the options found
 
   if(opt->count("isRecursive")){
-    std::cout << "+++++ recursive option on\n" ;
     mkdirOptions.setIsRecursive(true);
   } 
   
