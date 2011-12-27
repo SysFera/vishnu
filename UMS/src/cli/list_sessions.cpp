@@ -84,13 +84,13 @@ int main (int ac, char* av[]){
 
   opt->add("status,t",
            "specifies the type of the sessions which will be\n"
-           "listed (INACTIVE or ACTIVE)",
+           "listed (0 for INACTIVE or 1 for ACTIVE)",
            CONFIG,
            fStatus);
 
   opt->add("sessionClosePolicy,p",
            "Specifies the closure mode of the sessions which\n"
-           "will be listed (CLOSE_ON_TIMEOUT or CLOSE_ON_DISCONNECT)",
+           "will be listed (1 for CLOSE_ON_TIMEOUT or 2 for CLOSE_ON_DISCONNECT)",
            CONFIG,
            fSessionClosePolicy);
 
