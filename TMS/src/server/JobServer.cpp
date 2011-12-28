@@ -62,10 +62,6 @@ int JobServer::submitJob(const std::string& scriptContent,
   env.replaceAllOccurences(const_cast<std::string&>(scriptContent), "$VISHNU_SUBMIT_MACHINE_NAME", machineName);
   env.replaceAllOccurences(const_cast<std::string&>(scriptContent), "${VISHNU_SUBMIT_MACHINE_NAME}", machineName);
 
-  std::cout << "++++++++++++++++++++++BEGIN++++++++++++++++" << std::endl;
-  std::cout << scriptContent << std::endl;
-  std::cout << "++++++++++++++++++++++END++++++++++++++++" << std::endl;
-
   std::string jobSerialized ;
   std::string submitOptionsSerialized;
   char* scriptPath = NULL;
@@ -79,14 +75,8 @@ int JobServer::submitJob(const std::string& scriptContent,
   if(scriptConvertor->scriptIsGeneric()) {
     std::string genScript = scriptConvertor->getConvertedScript();
     convertedScript = genScript;
-    std::cout << "++++++++++++++++++++++BEGIN OF convertedScript++++++++++++++++" << std::endl;
-    std::cout << convertedScript << std::endl;
-    std::cout << "++++++++++++++++++++++END OF convertedScript++++++++++++++++" << std::endl; 
   } else {
     convertedScript = scriptContent;
-    std::cout << "++++++++++++++++++++++BEGIN OF convertedScript++++++++++++++++" << std::endl;
-    std::cout << convertedScript << std::endl;
-    std::cout << "++++++++++++++++++++++END OF convertedScript++++++++++++++++" << std::endl;
   }
 
   vishnu::createTmpFile(scriptPath, convertedScript);
