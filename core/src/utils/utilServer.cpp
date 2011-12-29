@@ -289,7 +289,7 @@ vishnu::getGeneratedName (const char* format, int cpt, IdType type,
 }
 
 int
-vishnu::ninja(std::string counterName, std::string vishnuIdString){
+vishnu::getVishnuCounter(std::string counterName, std::string vishnuIdString){
   DbFactory factory;
   Database *databaseVishnu;
   int ret;
@@ -374,14 +374,9 @@ vishnu::getObjectId(int vishnuId,
   pthread_mutex_init(&(mutex), NULL);
   pthread_mutex_lock(&(mutex));
 
-// Start transaction
-  DbFactory factory;
-  Database *databaseVishnu;
-  databaseVishnu = factory.getDatabaseInstance();
-
   //To get the counter
   int counter;
-  counter = ninja(counterName, vishnuIdString);
+  counter = getVishnuCounter(counterName, vishnuIdString);
   //To get the formatiduser
   std::string format = getAttrVishnu(formatName, vishnuIdString).c_str();
 
