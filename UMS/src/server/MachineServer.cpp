@@ -60,15 +60,9 @@ MachineServer::add(int vishnuId) {
 
       vishnuid = convertToString(vishnuId);
 
-// Start transaction
-//      int ret = mdatabaseVishnu->startTransaction();
-//      machineCpt = convertToInt(getAttrVishnu("machinecpt", vishnuid, ret));
-//      incrementCpt("machinecpt", machineCpt, ret);
-//      machineCpt = convertToInt(getAttrVishnu("machinecpt", vishnuid, ret));
-//      mdatabaseVishnu->endTransaction(ret);
       //To get the counter
       int counter;
-      counter = ninja("machinecpt", vishnuid);
+      counter = getVishnuCounter("machinecpt", vishnuid);
 
       machineCpt = counter;
 

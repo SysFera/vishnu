@@ -77,17 +77,11 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
 
       vishnuid = convertToString(vishnuId);
 
-// Start transaction
-//      int ret = mdatabaseVishnu->startTransaction();
       //To get the counter
       int counter;
-      counter = ninja("userCpt", vishnuid);
+      counter = getVishnuCounter("userCpt", vishnuid);
 
       //To get the user counter
-//      userCpt = convertToInt(getAttrVishnu("usercpt", vishnuid, ret));
-//      incrementCpt("usercpt", userCpt, ret);
-//      userCpt = convertToInt(getAttrVishnu("usercpt", vishnuid, ret));
-//      mdatabaseVishnu->endTransaction(ret);
       userCpt = counter;
 
       //To get the formatiduser

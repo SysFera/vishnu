@@ -203,13 +203,13 @@ namespace vishnu {
                     std::string site ="");
 
   /**
-   * \brief Function to get information from the table vishnu
+   * \brief Function to get a specific vishnu counter
    * \param counterName the name of the counter
    * \param vishnuid the id of the vishnu configuration
    * \return The int counter value
    */
   int
-  ninja(std::string counterName, std::string vishnuId);
+  getVishnuCounter(std::string counterName, std::string vishnuId);
 
   /**
    * \brief Function to get information from the table vishnu
