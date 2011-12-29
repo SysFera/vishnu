@@ -309,12 +309,10 @@ MYSQLDatabase::cancelTransaction(int transactionID) {
   releaseConnection(transactionID);
 }
 
-
 void
 MYSQLDatabase::flush(int transactionID){
-  bool ret;
   MYSQL* conn = (&(mpool[transactionID].mmysql));
-  ret = mysql_commit(conn);
+  mysql_commit(conn);
 }
 
 int
