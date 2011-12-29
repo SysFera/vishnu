@@ -4,6 +4,7 @@ import time
 import string
 import os 
 import shutil 
+import sys
 
 def convertPermissionsToString(perms):
    usrR = 1 << 8;
@@ -108,6 +109,12 @@ sep = ":";
 slash = "/";
 machineId1 = "MA_1"; 
 machineId2 = "MA_1";
+
+#The first argument in command line corresponds to the machine name
+if len(sys.argv) > 1:
+  machineId1 = sys.argv[1]
+  machineId2 = sys.argv[1]
+
 newFileName = "FMS_test_file";
 newDirName = "FMS_test_dir";
 newSubDirName = "FMS_test_sub_dir";
@@ -121,7 +128,7 @@ fileFullPath2 = baseDirFullPath2 + slash + newFileName;
 dirFullPath1 = baseDirFullPath1 + slash + newDirName;
 recursiveDirFullPath1 = dirFullPath1 + slash +  newSubDirName;
 dirFullPath2 = baseDirFullPath2 + slash + newDirName;
-
+  
 #Objects initialization
 headOpt = VISHNU.HeadOfFileOptions()
 tailOpt = VISHNU.TailOfFileOptions()
