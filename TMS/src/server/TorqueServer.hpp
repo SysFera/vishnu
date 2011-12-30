@@ -128,6 +128,25 @@ class TorqueServer : public BatchServer
                 struct batch_status *p);
 
     /**
+     * \brief Function to get the number of nodes in the torque node format
+     * \param format The node format
+     * \param nbCpu The minimum number of cpu per node
+     * \return the number of node
+     */
+    int
+    getNbNodesInNodeFormat(const std::string& format, 
+                           int& nbCpu);
+
+    /**
+     * \brief Function to get the torque formated cpu per node
+     * \param cpu The given cpu in string
+     * \param scriptPath The path of the script that enventually contain the node format or the number of node
+     * \return formated cpu per node
+     */ 
+    std::string
+    getFormatedCpuPerNode(const int& cpu, const std::string& scriptPath);
+ 
+    /**
      * \brief ListQueues returned
      */
     TMS_Data::ListQueues_ptr mlistQueues; 

@@ -9,6 +9,8 @@
 #include <vector>
 #include <sstream>
 
+#include <boost/algorithm/string.hpp>
+
 extern "C" {
 #include "pbs_ifl.h" //Torque includes
 #include "pbs_error.h"
@@ -161,33 +163,17 @@ TorqueServer::processOptions(const char* scriptPath,
     cmdsOptions.push_back("walltime="+vishnu::convertWallTimeToString(options.getWallTime()));
   }
   if(options.getNbCpu()!=-1) {
-    cmdsOptions.push_back("-l");
-    std::ostringstream os_str;
-    os_str << options.getNbCpu();
-    std::string nbCpuStr = os_str.str();
 
-    std::string scriptContent = vishnu::get_file_content(scriptPath);
-    size_t pos = scriptContent.rfind("#PBS");
-    size_t pos2 = std::string::npos;
-    while(pos!=std::string::npos) {
-      if(scriptContent.find("-l", pos)!=std::string::npos){
-        pos2 = scriptContent.find("nodes=", pos);
-        if(pos2!=std::string::npos) {
-          std::string nbNodes = scriptContent.substr(pos2+std::string("nodes=").size());
-          istringstream is(nbNodes);
-          int value;
-          is >> value;
-          os_str.str("");
-          os_str << value;
-          cmdsOptions.push_back("nodes="+os_str.str()+":ppn="+nbCpuStr);
-          break;
-        }
-      }
-      pos = scriptContent.rfind("#PBS", pos-1);
+    cmdsOptions.push_back("-l");
+
+    string format = getFormatedCpuPerNode(options.getNbCpu(), scriptPath);
+
+    if(!format.empty()) {
+      cmdsOptions.push_back(format);
+    } else {
+      cmdsOptions.push_back("nodes=1:ppn="+vishnu::convertToString(options.getNbCpu()));
     }
-    if(pos2==std::string::npos){
-      cmdsOptions.push_back("nodes=1:ppn="+nbCpuStr);
-    }
+
   }
   if(options.getMemory()!=-1) {
     cmdsOptions.push_back("-l");
@@ -504,7 +490,6 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   string node       = string("1");
   string wall       = string("");
   string etime      = string("");
-  string nodeAndCpu = string("1:1");
   string workingDir = string(""); 
   // Getting job idx
   str = p->name;
@@ -566,26 +551,9 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
           wall = str;
         }
         else if(!strcmp(a->resource, "nodes")){ // node and nodeandcpupernode
-          string tmp;
-          pos_found =  string(a->value).find(":");
-          if (pos_found != string::npos){
-            tmp = str.substr(0, pos_found);
-            node = tmp;
-            tmp = str.substr(pos_found); 
-            pos_found = tmp.find("=");
-            if(pos_found!=string::npos) {
-              nodeAndCpu = node+":"+tmp.substr(pos_found+1);
-              ncpus = tmp.substr(pos_found+1);
-            } else {
-              nodeAndCpu = str;
-            }
-          }
-          else{
-            node = str;
-            if(nodeAndCpu.empty()){
-              nodeAndCpu = node+":1";
-            }
-          }
+        
+          node = str;
+
         }
       } else if(!strcmp(a->name, ATTR_v)) { // working_dir
         std::string env = "PBS_O_WORKDIR";
@@ -673,12 +641,14 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   }
 
   if (node.compare("")!=0) {
-    job.setNbNodes(vishnu::convertToInt(node));
+    int nbCpu;
+    int nbNodes = getNbNodesInNodeFormat(node, nbCpu);
+    job.setNbNodes(nbNodes);
+    job.setNbNodesAndCpuPerNode(vishnu::convertToString(nbNodes)+":"+vishnu::convertToString(nbCpu));
+    job.setNbCpus(nbCpu);
   } else {
-    job.setNbNodes(0);
-  }
-  if(nodeAndCpu.size()!=0) {
-    job.setNbNodesAndCpuPerNode(nodeAndCpu);
+    job.setNbNodes(1);
+    job.setNbNodesAndCpuPerNode("1:1");
   }
 
   job.setJobWorkingDir(workingDir);
@@ -830,6 +800,187 @@ TorqueServer::listQueues(const std::string& OptqueueName) {
   }
   mlistQueues->setNbQueues(mlistQueues->getQueues().size());
   return mlistQueues;
+}
+
+/**
+ * \brief Function to get the number of nodes in the torque node format
+ * \param format The node format
+ * \param nbCpu The minimum number of cpu per node
+ * \return the number of node
+ */
+int 
+TorqueServer::getNbNodesInNodeFormat(const std::string& format, 
+                                     int& nbCpu) {
+
+  std::string nextNodeContent;
+  std::string nextNode;
+  std::string nbCpuStr;
+  size_t pos;
+  size_t posFirstChar;
+  size_t posColon;
+  nbCpu = std::numeric_limits<int>::max();
+  int nbNodes = 0;
+  size_t beg = 0;
+  char delim = '+';
+  std::string ppn=":ppn=";
+  size_t end = format.find(delim);
+  if(end==std::string::npos){
+    nextNodeContent = format.substr(beg, end-beg);
+    posColon = nextNodeContent.find(':');
+    nextNode = nextNodeContent.substr(0, posColon);
+    if((pos=nextNodeContent.find(ppn)!=std::string::npos)) {
+      posFirstChar = nextNodeContent.find_first_not_of("0123456789", pos+ppn.size());
+      if(posFirstChar!=std::string::npos) {
+        nbCpuStr = nextNodeContent.substr(pos+ppn.size(), posFirstChar-(pos+ppn.size()));
+      } else {
+        nbCpuStr = nextNodeContent.substr(pos+ppn.size());
+      }
+
+      nbCpu = (nbCpu > vishnu::convertToInt(nbCpuStr))?vishnu::convertToInt(nbCpuStr):nbCpu;
+    }
+    if(nextNode.find_first_not_of("0123456789")==std::string::npos) {
+      nbNodes += vishnu::convertToInt(nextNode);
+    } else {
+      nbNodes +=1;
+    }
+  }
+
+  while(end!=std::string::npos) {
+    nextNodeContent = format.substr(beg, end-beg);
+    posColon = nextNodeContent.find(':');
+    nextNode = nextNodeContent.substr(0, posColon);
+    if((pos=nextNodeContent.find(ppn)!=std::string::npos)) {
+      posFirstChar = nextNodeContent.find_first_not_of("0123456789", pos+ppn.size());
+      if(posFirstChar!=std::string::npos) {
+        nbCpuStr = nextNodeContent.substr(pos+ppn.size(), posFirstChar-(pos+ppn.size()));
+      } else {
+        nbCpuStr = nextNodeContent.substr(pos+ppn.size());
+      }
+      nbCpu = (nbCpu > vishnu::convertToInt(nbCpuStr))?vishnu::convertToInt(nbCpuStr):nbCpu;
+    }
+
+    if(nextNode.find_first_not_of("0123456789")==std::string::npos) {
+      nbNodes += vishnu::convertToInt(nextNode);
+    } else {
+      nbNodes +=1;
+    }
+
+    beg = end+1;
+    end = format.find(delim, beg);
+    //last node
+    if(end==std::string::npos){
+      nextNodeContent = format.substr(beg, end-beg);
+      posColon = nextNodeContent.find(':');
+      nextNode = nextNodeContent.substr(0, posColon);
+      if((pos=nextNodeContent.find(ppn)!=std::string::npos)) {
+        posFirstChar = nextNodeContent.find_first_not_of("0123456789", pos+ppn.size());
+        if(posFirstChar!=std::string::npos) {
+          nbCpuStr = nextNodeContent.substr(pos+ppn.size(), posFirstChar-(pos+ppn.size()));
+        } else {
+          nbCpuStr = nextNodeContent.substr(pos+ppn.size());
+        }
+        nbCpu = (nbCpu > vishnu::convertToInt(nbCpuStr))?vishnu::convertToInt(nbCpuStr):nbCpu;
+      }
+      if(nextNode.find_first_not_of("0123456789")==std::string::npos) {
+        nbNodes += vishnu::convertToInt(nextNode);
+      } else {
+        nbNodes +=1;
+      }
+    }
+  }
+  if(nbNodes==0) {
+    nbNodes=1;
+  }
+  if(nbCpu==std::numeric_limits<int>::max()){
+    nbCpu = 1;
+  }
+  return nbNodes;
+}
+
+/**
+ * \brief Function to get the torque formated cpu per node
+ * \param cpu The given cpu in string
+ * \param scriptPath The path of the script that enventually contain the node format or the number of node
+ * \return formated cpu per node
+ */
+std::string
+TorqueServer::getFormatedCpuPerNode(const int& cpu, 
+                                    const std::string& scriptPath) {
+
+  std::string nbCpuStr = vishnu::convertToString(cpu);
+
+  std::string scriptContent = vishnu::get_file_content(scriptPath);
+  std::istringstream iss(scriptContent);
+  std::string line;
+  std::string nodeValue;
+  while(!iss.eof()) {
+    getline(iss, line);
+    size_t pos = line.find('#');
+    if(pos==string::npos) {
+      continue;
+    }
+    line = line.erase(0, pos);
+    if(boost::algorithm::starts_with(line, "#PBS")){
+      line = line.substr(std::string("#PBS").size());
+      pos = line.find("-l");
+      if(pos!=std::string::npos){
+        pos = line.find("nodes=", pos+2);
+        if(pos!=std::string::npos){
+          nodeValue = line.substr(pos);
+
+          if(!nodeValue.empty()) {
+            istringstream iss(nodeValue);
+            iss >> nodeValue;
+
+            std::string ppn=":ppn=";
+
+            size_t pos = nodeValue.find(ppn);
+            while(pos!=std::string::npos) {
+              std::string oldPPNValue;
+              size_t posFirstChar = nodeValue.find_first_not_of("0123456789", pos+ppn.size());
+              if(posFirstChar!=std::string::npos) {
+                oldPPNValue = nodeValue.substr(pos+ppn.size(), posFirstChar-(pos+ppn.size()));
+              } else {
+                oldPPNValue =  nodeValue.substr(pos+ppn.size());
+              }
+
+              nodeValue.replace(pos+ppn.size(), oldPPNValue.size(), nbCpuStr); 
+              pos = nodeValue.find(ppn, pos+1);
+            }
+
+            char delim = '+';
+            size_t beginPosTonken = 0;
+            size_t endPosToken = nodeValue.find(delim);
+            std::string tmp;
+            if(endPosToken==std::string::npos) {
+              tmp = nodeValue.substr(beginPosTonken);
+              if(tmp.find(ppn)==std::string::npos) {
+                nodeValue.replace(beginPosTonken, tmp.size(), tmp+ppn+nbCpuStr);
+              }
+            } 
+            while(endPosToken!=std::string::npos) {
+              tmp = nodeValue.substr(beginPosTonken, endPosToken-beginPosTonken);
+              if(tmp.find(ppn)==std::string::npos) {
+                nodeValue.replace(beginPosTonken, tmp.size(), tmp+ppn+nbCpuStr);
+              }
+              beginPosTonken = endPosToken+1;
+              endPosToken = nodeValue.find(delim, beginPosTonken);
+              //last token
+              if(endPosToken==std::string::npos){
+                tmp = nodeValue.substr(beginPosTonken);
+                if(tmp.find(ppn)==std::string::npos) {
+                  nodeValue.replace(beginPosTonken, tmp.size(), tmp+ppn+nbCpuStr);
+                }
+              }
+            }
+
+          }
+        }
+      }
+    }
+  }
+
+  return nodeValue;
 }
 
 /**
