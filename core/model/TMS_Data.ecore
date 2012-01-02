@@ -108,7 +108,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="memLimit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
-        <details key="content" value="Represents the memory size limit of the job."/>
+        <details key="content" value="Represents the memory size limit of the job ((in MegaBytes)."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbNodes" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
@@ -165,14 +165,14 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="wallTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
-        <details key="content" value="The maximum wall-clock time during which the job can run"/>
+        <details key="content" value="The maximum wall-clock time during which the job can run (in secondes or in the format [[HH:]MM:]SS)"/>
         <details key="shortOption" value="t"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="memory" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
-        <details key="content" value="Is the memory size that the job requires"/>
+        <details key="content" value="Is the memory size that the job requires (in MegaBytes)"/>
         <details key="shortOption" value="m"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -227,7 +227,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="cpuTime" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="Assigns a job cpu limit time"/>
+        <details key="content" value="Assigns a job cpu limit time (in secondes or in the format [[HH:]MM:]SS)"/>
         <details key="shortOption" value="T"/>
       </eAnnotations>
     </eStructuralFeatures>
