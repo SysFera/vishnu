@@ -144,8 +144,44 @@ class TorqueServer : public BatchServer
      * \return formated cpu per node
      */ 
     std::string
-    getFormatedCpuPerNode(const int& cpu, const std::string& scriptPath);
- 
+    getFormatedCpuPerNode(const int& cpu, 
+                          const std::string& scriptPath);
+
+    /*
+     * \brief Function to insert some additional content (valueToInsert)
+     * \param valueToFind string to find 
+     * \param valueToInsert to insert
+     * \param begin The begin position of the substring in src
+     * \param end The end position of the substring in src
+     * \param src The string to modify
+     */
+    void 
+    findAndInsert(const std::string& valueToFind,
+                  const std::string& valueToInsert,
+                  const size_t& begin,
+                  size_t& end,
+                  std::string& src);
+
+    /*
+     * \brief Function to compute the number of nodes and cpus in the torque format nodes
+     * \param ppn The syntaxe containing the number of processors per node
+     * \param nbNodes The computed number of nodes
+     * \param nbCpu The numbers of cpus
+     */
+    void
+    computeNbNodesAndNbCpu(const std::string& nextNodeContent,
+                           const std::string& ppn,
+                           int& nbNodes,
+                           int& nbCpu);
+
+    /**
+     * \brief Function to convert torque memory into mb
+     * \param memStr memory to convert
+     * \return the converted memory
+     */
+    int
+    convertTorqueMem(const std::string& memStr);
+
     /**
      * \brief ListQueues returned
      */
