@@ -2370,13 +2370,13 @@ opened the session).</para>
           <varlistentry>
             <term><option>-t <replaceable>wallTime</replaceable></option></term>
             <listitem>
-              <para>The maximum wall-clock time during which the job can run.</para>
+              <para>The maximum wall-clock time during which the job can run (in secondes or in the format [[HH:]MM:]SS).</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-m <replaceable>memory</replaceable></option></term>
             <listitem>
-              <para>Is the memory size that the job requires.</para>
+              <para>Is the memory size that the job requires (in MegaBytes).</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -2430,7 +2430,7 @@ opened the session).</para>
           <varlistentry>
             <term><option>-T <replaceable>cpuTime</replaceable></option></term>
             <listitem>
-              <para>Assigns a job cpu limit time.</para>
+              <para>Assigns a job cpu limit time (in secondes or in the format [[HH:]MM:]SS).</para>
             </listitem>
           </varlistentry>
         </variablelist>
