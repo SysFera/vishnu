@@ -179,7 +179,7 @@ TorqueServer::processOptions(const char* scriptPath,
     cmdsOptions.push_back("-l");
     std::ostringstream os_str;
     os_str << options.getMemory();
-    cmdsOptions.push_back("mem="+os_str.str());
+    cmdsOptions.push_back("mem="+os_str.str()+"mb");
   }
   if(options.getNbNodesAndCpuPerNode()!="") {
     cmdsOptions.push_back("-l");
@@ -483,7 +483,6 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   string output     = string("");
   string error      = string("");
   string prio       = string("");
-  string ncpus      = string("1");
   string qtime      = string("");
   string group      = string("");
   string mem        = string("");
@@ -542,18 +541,11 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
         if(!strcmp(a->resource, "mem")){
           mem = str;
         }
-#if 0
-        else if(!strcmp(a->resource, "ncpus")){
-          ncpus = str;
-        }
-#endif
         else if(!strcmp(a->resource, "walltime")){
           wall = str;
         }
         else if(!strcmp(a->resource, "nodes")){ // node and nodeandcpupernode
-        
           node = str;
-
         }
       } else if(!strcmp(a->name, ATTR_v)) { // working_dir
         std::string env = "PBS_O_WORKDIR";
@@ -600,14 +592,6 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
     job.setJobPrio(100);
   }
 
-  if (ncpus.compare("")!=0) {
-    std::ostringstream os_ncpus;
-    os_ncpus << ncpus.c_str();
-    job.setNbCpus(vishnu::convertToInt(ncpus.c_str()));
-  } else {
-    job.setNbCpus(0);
-  }
-
   if (qtime.compare("")!=0) {
     std::istringstream isQtime(qtime.c_str()); 
     long lQtime;
@@ -635,7 +619,7 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   }
 
   if (mem.compare("")!=0) {
-    job.setMemLimit(convertToInt(mem));
+    job.setMemLimit(convertTorqueMem(mem));
   } else {
     job.setMemLimit(0);
   }
@@ -770,21 +754,18 @@ TorqueServer::listQueues(const std::string& OptqueueName) {
           queue->setNbRunningJobs(nbRunningJobs);
         } else if(!strcmp(a->name, ATTR_rescmax)){
           if(!strcmp(a->resource, "mem")) {
-            std::string walltime = std::string(a->value);
-
-            size_t pos = walltime.find_first_not_of("0123456789");
-            if(pos!=std::string::npos) {
-              walltime = walltime.substr(0, pos);
-            } 
-            //A Verifier : si la taille de la memoire est en byte?
-            queue->setMemory(vishnu::convertToInt(walltime));  
+            std::string mem = std::string(a->value);
+            queue->setMemory(convertTorqueMem(mem));  
           } else if(!strcmp(a->resource, "ncpus")) {
             queue->setMaxProcCpu(vishnu::convertToInt(std::string(a->value)));
           }
           if(!strcmp(a->resource, "walltime")){
             queue->setWallTime(vishnu::convertStringToWallTime(std::string(a->value)));      
           } else if(!strcmp(a->resource, "nodect")) {
-            queue->setNode(vishnu::convertToInt(std::string(a->value)));
+            int nbCpu;
+            int nbNodes = getNbNodesInNodeFormat(std::string(a->value), nbCpu);
+            queue->setNode(nbNodes);
+            queue->setMaxJobCpu(nbCpu);
           }
         } else if (!strcmp(a->name, ATTR_p)){ 
           queue->setPriority(convertTorquePrioToVishnuPrio(vishnu::convertToInt(std::string(a->value))));
@@ -826,66 +807,18 @@ TorqueServer::getNbNodesInNodeFormat(const std::string& format,
   size_t end = format.find(delim);
   if(end==std::string::npos){
     nextNodeContent = format.substr(beg, end-beg);
-    posColon = nextNodeContent.find(':');
-    nextNode = nextNodeContent.substr(0, posColon);
-    if((pos=nextNodeContent.find(ppn)!=std::string::npos)) {
-      posFirstChar = nextNodeContent.find_first_not_of("0123456789", pos+ppn.size());
-      if(posFirstChar!=std::string::npos) {
-        nbCpuStr = nextNodeContent.substr(pos+ppn.size(), posFirstChar-(pos+ppn.size()));
-      } else {
-        nbCpuStr = nextNodeContent.substr(pos+ppn.size());
-      }
-
-      nbCpu = (nbCpu > vishnu::convertToInt(nbCpuStr))?vishnu::convertToInt(nbCpuStr):nbCpu;
-    }
-    if(nextNode.find_first_not_of("0123456789")==std::string::npos) {
-      nbNodes += vishnu::convertToInt(nextNode);
-    } else {
-      nbNodes +=1;
-    }
+    computeNbNodesAndNbCpu(nextNodeContent, ppn,nbNodes, nbCpu); 
   }
 
   while(end!=std::string::npos) {
     nextNodeContent = format.substr(beg, end-beg);
-    posColon = nextNodeContent.find(':');
-    nextNode = nextNodeContent.substr(0, posColon);
-    if((pos=nextNodeContent.find(ppn)!=std::string::npos)) {
-      posFirstChar = nextNodeContent.find_first_not_of("0123456789", pos+ppn.size());
-      if(posFirstChar!=std::string::npos) {
-        nbCpuStr = nextNodeContent.substr(pos+ppn.size(), posFirstChar-(pos+ppn.size()));
-      } else {
-        nbCpuStr = nextNodeContent.substr(pos+ppn.size());
-      }
-      nbCpu = (nbCpu > vishnu::convertToInt(nbCpuStr))?vishnu::convertToInt(nbCpuStr):nbCpu;
-    }
-
-    if(nextNode.find_first_not_of("0123456789")==std::string::npos) {
-      nbNodes += vishnu::convertToInt(nextNode);
-    } else {
-      nbNodes +=1;
-    }
-
+    computeNbNodesAndNbCpu(nextNodeContent, ppn,nbNodes, nbCpu);
     beg = end+1;
     end = format.find(delim, beg);
     //last node
     if(end==std::string::npos){
       nextNodeContent = format.substr(beg, end-beg);
-      posColon = nextNodeContent.find(':');
-      nextNode = nextNodeContent.substr(0, posColon);
-      if((pos=nextNodeContent.find(ppn)!=std::string::npos)) {
-        posFirstChar = nextNodeContent.find_first_not_of("0123456789", pos+ppn.size());
-        if(posFirstChar!=std::string::npos) {
-          nbCpuStr = nextNodeContent.substr(pos+ppn.size(), posFirstChar-(pos+ppn.size()));
-        } else {
-          nbCpuStr = nextNodeContent.substr(pos+ppn.size());
-        }
-        nbCpu = (nbCpu > vishnu::convertToInt(nbCpuStr))?vishnu::convertToInt(nbCpuStr):nbCpu;
-      }
-      if(nextNode.find_first_not_of("0123456789")==std::string::npos) {
-        nbNodes += vishnu::convertToInt(nextNode);
-      } else {
-        nbNodes +=1;
-      }
+      computeNbNodesAndNbCpu(nextNodeContent, ppn,nbNodes, nbCpu);
     }
   }
   if(nbNodes==0) {
@@ -908,7 +841,6 @@ TorqueServer::getFormatedCpuPerNode(const int& cpu,
                                     const std::string& scriptPath) {
 
   std::string nbCpuStr = vishnu::convertToString(cpu);
-
   std::string scriptContent = vishnu::get_file_content(scriptPath);
   std::istringstream iss(scriptContent);
   std::string line;
@@ -933,7 +865,6 @@ TorqueServer::getFormatedCpuPerNode(const int& cpu,
             iss >> nodeValue;
 
             std::string ppn=":ppn=";
-
             size_t pos = nodeValue.find(ppn);
             while(pos!=std::string::npos) {
               std::string oldPPNValue;
@@ -943,7 +874,6 @@ TorqueServer::getFormatedCpuPerNode(const int& cpu,
               } else {
                 oldPPNValue =  nodeValue.substr(pos+ppn.size());
               }
-
               nodeValue.replace(pos+ppn.size(), oldPPNValue.size(), nbCpuStr); 
               pos = nodeValue.find(ppn, pos+1);
             }
@@ -953,27 +883,17 @@ TorqueServer::getFormatedCpuPerNode(const int& cpu,
             size_t endPosToken = nodeValue.find(delim);
             std::string tmp;
             if(endPosToken==std::string::npos) {
-              tmp = nodeValue.substr(beginPosTonken);
-              if(tmp.find(ppn)==std::string::npos) {
-                nodeValue.replace(beginPosTonken, tmp.size(), tmp+ppn+nbCpuStr);
-              }
+              findAndInsert(ppn, ppn+nbCpuStr, beginPosTonken, endPosToken, nodeValue);
             } 
             while(endPosToken!=std::string::npos) {
-              tmp = nodeValue.substr(beginPosTonken, endPosToken-beginPosTonken);
-              if(tmp.find(ppn)==std::string::npos) {
-                nodeValue.replace(beginPosTonken, tmp.size(), tmp+ppn+nbCpuStr);
-              }
+              findAndInsert(ppn, ppn+nbCpuStr, beginPosTonken, endPosToken, nodeValue);
               beginPosTonken = endPosToken+1;
               endPosToken = nodeValue.find(delim, beginPosTonken);
               //last token
               if(endPosToken==std::string::npos){
-                tmp = nodeValue.substr(beginPosTonken);
-                if(tmp.find(ppn)==std::string::npos) {
-                  nodeValue.replace(beginPosTonken, tmp.size(), tmp+ppn+nbCpuStr);
-                }
+                findAndInsert(ppn, ppn+nbCpuStr, beginPosTonken, endPosToken, nodeValue);
               }
             }
-
           }
         }
       }
@@ -981,6 +901,116 @@ TorqueServer::getFormatedCpuPerNode(const int& cpu,
   }
 
   return nodeValue;
+}
+
+/*
+ * \brief Function to insert some additional content (valueToInsert)
+ * \param valueToFind string to find 
+ * \param valueToInsert to insert
+ * \param begin The begin position of the substring in src
+ * \param end The end position of the substring in src
+ * \param src The string to modify
+ */
+void
+TorqueServer::findAndInsert(const std::string& valueToFind,
+                            const std::string& valueToInsert,
+                            const size_t& begin,
+                            size_t& end,
+                            std::string& src) {
+
+  std::string tmp;
+  if(end!=std::string::npos) {
+   tmp = src.substr(begin, end-begin);
+  } else {
+   tmp = src.substr(begin);
+  }
+  if(tmp.find(valueToFind)==std::string::npos) {
+    src.insert(begin+tmp.size(), valueToInsert);
+    if(end!=std::string::npos) {
+      end += valueToInsert.size();
+    }
+  } 
+}
+
+/*
+ * \brief Function to compute the number of nodes and cpus in the torque format nodes
+ * \param ppn The syntaxe containing the number of processors per node
+ * \param nbNodes The computed number of nodes
+ * \param nbCpu The numbers of cpus
+ */
+void
+TorqueServer::computeNbNodesAndNbCpu(const std::string& nextNodeContent,
+                                     const std::string& ppn,
+                                     int& nbNodes,
+                                     int& nbCpu) {
+
+    std::string nbCpuStr;
+    size_t posColon = nextNodeContent.find(':');
+    std::string nextNode = nextNodeContent.substr(0, posColon);
+    size_t pos = nextNodeContent.find(ppn);
+    if(pos!=std::string::npos) {
+      size_t posFirstChar = nextNodeContent.find_first_not_of("0123456789", pos+ppn.size());
+      if(posFirstChar!=std::string::npos) {
+        nbCpuStr = nextNodeContent.substr(pos+ppn.size(), posFirstChar-(pos+ppn.size()));
+      } else {
+        nbCpuStr = nextNodeContent.substr(pos+ppn.size());
+      }
+      nbCpu = (nbCpu > vishnu::convertToInt(nbCpuStr))?vishnu::convertToInt(nbCpuStr):nbCpu;
+    } else {
+      nbCpu = 1;
+    }
+
+    if(nextNode.find_first_not_of("0123456789")==std::string::npos) {
+      nbNodes += vishnu::convertToInt(nextNode);
+    } else {
+      nbNodes +=1;
+    }
+}
+
+/**
+ * \brief Function to convert torque memory into mb
+ * \param memStr memory to convert
+ * \return the converted memory
+ */
+int
+TorqueServer::convertTorqueMem(const std::string& memStr) {
+
+  size_t posSuffix = memStr.find_first_not_of("0123456789");
+  int mem;
+
+  if(posSuffix!=std::string::npos) {
+    //default of vishnu mem is in megabyte
+    mem = vishnu::convertToInt(memStr.substr(0, posSuffix));
+    std::string suffix = memStr.substr(posSuffix);
+    if(suffix.compare("b")==0) {
+      mem = mem +((1 << 20)-1);
+      mem = mem >> 20;
+    } else if(suffix.compare("kb")==0) {
+      mem = mem + ((1 << 10)-1);
+      mem = mem >> 10;
+    } else if(suffix.compare("gb")==0) {
+      mem = mem << 10;
+    } else if(suffix.compare("tb")==0) {
+      mem = mem << 20;
+    } else if(suffix.compare("w")==0) {
+      mem = mem +((1 << 17)-1);
+      mem = mem >> 17;
+    } else if(suffix.compare("kw")==0) {
+      mem = mem + ((1 << 7)-1);
+      mem = mem >> 7;
+    } else if(suffix.compare("mw")==0) {
+      mem = mem << 3;
+    } else if(suffix.compare("gw")==0) {
+      mem = mem << 13;
+    } else if(suffix.compare("tw")==0) {
+      mem = mem << 23;
+    }
+  } else { //default value of torque is in byte 
+    mem = vishnu::convertToInt(memStr);
+    mem = mem +((1 << 20)-1);
+    mem = mem >> 20;
+  } 
+  return mem;
 }
 
 /**

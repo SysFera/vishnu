@@ -73,11 +73,11 @@ makeSubJobOp(string pgName,
 	   CONFIG,
 	   fqueue);
   opt->add("wallTime,t",
-	   "The wall time for the job (in the format hh:mm:ss)",
+	   "The wall time for the job (in secondes or in the format [[HH:]MM:]SS)",
 	   CONFIG,
 	   walltime);
   opt->add("memory,m",
-	   "The memory needed by the job",
+	   "The memory needed by the job (in MegaBytes)",
 	   CONFIG,
 	   fmemory);
   opt->add("nbCpu,P",
@@ -116,7 +116,7 @@ makeSubJobOp(string pgName,
 	   CONFIG,
 	   fworkingDir);
   opt->add("cpuTime,T",
-	   "Assigns a job cpu limit time",
+	   "Assigns a job cpu limit time (in secondes or in the format [[HH:]MM:]SS)",
 	   CONFIG,
 	   fcpuTime);
 
