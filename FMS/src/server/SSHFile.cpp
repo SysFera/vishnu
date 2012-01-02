@@ -390,12 +390,6 @@ FMS_Data::DirEntryList* SSHFile::ls(const LsDirOptions& options) const {
     throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
   }
 
-  /*
-  if (options.isLongFormat()){
-    lsCmd.append("-l ");
-  }
-  */
-
   if (options.isAllFiles()){
     lsCmd.append("-a ");
   }

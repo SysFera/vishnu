@@ -1,3 +1,6 @@
+#ifndef STRINGTODIRENTRY_HH 
+#define STRINGTODIRENTRY_HH 
+
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/date_time/local_time/local_time.hpp>
 #include <boost/filesystem.hpp>
@@ -143,4 +146,4 @@ class StringToDirEntry {
 
 /**********************************************************************/
 
-
+#endif

@@ -214,45 +214,45 @@ try :
   displayFileInfo(fileInfo)
   VISHNU.removeFile(k,fileFullPath2)
 
-#  print "===================headOfFile======:"
-#  command ="/bin/ls " + FMSWORKINGDIR + " > " + FMSDIR1 + "/" + newFileName
-#  os.system (command )
-#  r,contentOfFile =VISHNU.headOfFile(k,fileFullPath1)
-#  print contentOfFile
-#  print "===================tailOfFile======:"
-#  r, contentOfFile = VISHNU.tailOfFile(k, fileFullPath1)
-#  print contentOfFile
-#  print "===================contentOfFile======:"
-#  r, contentOfFile = VISHNU.contentOfFile(k, fileFullPath1)
-#  print contentOfFile
-#  VISHNU.removeFile(k,fileFullPath1)
-#  print contentOfFile
-#  print "=========================copyAsyncFile:"
-#  transferOpt.setIsRecursive(True)
-#  VISHNU.copyAsyncFile(k, workingDirFullPath1,baseDirFullPath2, fileTransferInfo,transferOpt)
-#  displayFileTransfer(fileTransferInfo)
-#  print "===========listFileTransfers:============="
-#  VISHNU.listFileTransfers(k, fileTransferList)
-#  displayFiletransferList(fileTransferList)
-#  #To clean the list
-#  fileTransferList.getFileTransfers().clear()
-#  print "===========stopFileTransfer===============:"
-#  print fileTransferInfo.getTransferId()
-#  stopTransferOptions.setTransferId(fileTransferInfo.getTransferId())
-#  VISHNU.stopFileTransfer(k, stopTransferOptions)
-#  print "===========listFileTransfers:============="
-#
-#  VISHNU.listFileTransfers(k, fileTransferList)
-#  displayFiletransferList(fileTransferList)
-#
-#  print "=========================MvAsyncFile:"
-#  VISHNU.createFile(k,fileFullPath1)
-#  VISHNU.moveAsyncFile(k, fileFullPath1,baseDirFullPath2, fileTransferInfo)
-#  displayFileTransfer(fileTransferInfo)
-#  print "===========listFileTransfers:============="
-#  VISHNU.listFileTransfers(k, fileTransferList)
-#  displayFiletransferList(fileTransferList)
-#
+  print "===================headOfFile======:"
+  command ="/bin/ls " + FMSWORKINGDIR + " > " + FMSDIR1 + "/" + newFileName
+  os.system (command )
+  r,contentOfFile =VISHNU.headOfFile(k,fileFullPath1)
+  print contentOfFile
+  print "===================tailOfFile======:"
+  r, contentOfFile = VISHNU.tailOfFile(k, fileFullPath1)
+  print contentOfFile
+  print "===================contentOfFile======:"
+  r, contentOfFile = VISHNU.contentOfFile(k, fileFullPath1)
+  print contentOfFile
+  VISHNU.removeFile(k,fileFullPath1)
+  print contentOfFile
+  print "=========================copyAsyncFile:"
+  transferOpt.setIsRecursive(True)
+  VISHNU.copyAsyncFile(k, workingDirFullPath1,baseDirFullPath2, fileTransferInfo,transferOpt)
+  displayFileTransfer(fileTransferInfo)
+  print "===========listFileTransfers:============="
+  VISHNU.listFileTransfers(k, fileTransferList)
+  displayFiletransferList(fileTransferList)
+  #To clean the list
+  fileTransferList.getFileTransfers().clear()
+  print "===========stopFileTransfer===============:"
+  print fileTransferInfo.getTransferId()
+  stopTransferOptions.setTransferId(fileTransferInfo.getTransferId())
+  VISHNU.stopFileTransfer(k, stopTransferOptions)
+  print "===========listFileTransfers:============="
+
+  VISHNU.listFileTransfers(k, fileTransferList)
+  displayFiletransferList(fileTransferList)
+
+  print "=========================MvAsyncFile:"
+  VISHNU.createFile(k,fileFullPath1)
+  VISHNU.moveAsyncFile(k, fileFullPath1,baseDirFullPath2, fileTransferInfo)
+  displayFileTransfer(fileTransferInfo)
+  print "===========listFileTransfers:============="
+  VISHNU.listFileTransfers(k, fileTransferList)
+  displayFiletransferList(fileTransferList)
+
 except VISHNU.FMSVishnuException, e:
   print e.what()
 except VISHNU.UMSVishnuException, e:
