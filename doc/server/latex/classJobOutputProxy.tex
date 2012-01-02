@@ -54,9 +54,9 @@ std::string \hyperlink{classJobOutputProxy_a2d864d915f82bd34e8c9453170a1cb35}{mo
 \index{JobOutputProxy@{JobOutputProxy}!JobOutputProxy@{JobOutputProxy}}
 \subsubsection[{JobOutputProxy}]{\setlength{\rightskip}{0pt plus 5cm}JobOutputProxy::JobOutputProxy (
 \begin{DoxyParamCaption}
-\item[{const {\bf SessionProxy} \&}]{ session, }
-\item[{const std::string \&}]{ machineId, }
-\item[{const std::string \&}]{ outDir}
+\item[{const {\bf SessionProxy} \&}]{session, }
+\item[{const std::string \&}]{machineId, }
+\item[{const std::string \&}]{outDir}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
 \label{classJobOutputProxy_aee2c0babf8b2c1c82d9051f29acadb69}
@@ -66,7 +66,13 @@ Constructor, raises an exception on error.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em session}]The object which encapsulates the session information \item[{\em machineId}]The machine identifier where has been submitted \item[{\em outDir}]The output directory where the files will be stored (default is current directory) \end{DoxyParams}
+{\em session} & The object which encapsulates the session information \\
+\hline
+{\em machineId} & The machine identifier where has been submitted \\
+\hline
+{\em outDir} & The output directory where the files will be stored (default is current directory) \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -91,7 +97,7 @@ The list of the job results
 \index{getJobOutPut@{getJobOutPut}!JobOutputProxy@{JobOutputProxy}}
 \subsubsection[{getJobOutPut}]{\setlength{\rightskip}{0pt plus 5cm}TMS\_\-Data::JobResult JobOutputProxy::getJobOutPut (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ jobId}
+\item[{const std::string \&}]{jobId}
 \end{DoxyParamCaption}
 )}}
 \label{classJobOutputProxy_a11bec7120c3cf89c233e9983aef0e5a3}
@@ -101,7 +107,9 @@ Function to get the job results.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em jobId}]The Id of the \end{DoxyParams}
+{\em jobId} & The Id of the \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The job results data structure 
 \end{DoxyReturn}

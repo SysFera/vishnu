@@ -81,7 +81,7 @@ GenericCli().processListOpt( opt, isEmpty,argc,argv,"path");
 }
 
 /**
- * \brief  A define type
+ * \brief  File action type representation
  */
 
 typedef enum{
@@ -91,21 +91,52 @@ typedef enum{
   REMOVEDIR
 } FileActionType;
 
+/**
+ * \brief Represents non typed Options
+ */ 
 struct NoOptions{};
 
+/**
+ * \brief Generic type to represent function acting on file
+ */
 template <FileActionType fileActionType,typename CommandOptionsType>
 struct FileApiCommand {
 };
+
+/**
+ * \brief A specialization of FileApiCommand for file creation function 
+ */
+
 template <>
 struct FileApiCommand<CREATEFILE,NoOptions> {
+  /**
+   * \brief create file function
+   * \param sessionKey The session key
+   * \param path the new directory path
+   * \param options the file creation options
+   * \return VISHNU_OK if the remote command succeeds or an error code otherwise
+   */
 static const int api (const std::string& sessionKey,const std::string& path,const NoOptions& options ){
 
 return  createFile(sessionKey,path);
 
 }
 };
+
+
+/**
+ * \brief A specialization of FileApiCommand for directory creation function 
+ */
+
 template <>
 struct FileApiCommand<CREATEDIR,FMS_Data::CreateDirOptions> {
+  /**
+   * \brief create directory function
+   * \param sessionKey The session key
+   * \param path the new directory path
+   * \param options the directory creation options
+   * \return VISHNU_OK if the remote command succeeds or an error code otherwise
+   */
 static const int api (const std::string& sessionKey,const std::string& path, const FMS_Data::CreateDirOptions& options ){
 
 return  createDir(sessionKey,path,options);
@@ -113,8 +144,18 @@ return  createDir(sessionKey,path,options);
 }
 };
 
+/**
+ * \brief A specialization of FileApiCommand for file deletion function 
+ */
 template <>
 struct FileApiCommand<REMOVEFILE,FMS_Data::RmFileOptions> {
+  /**
+   * \brief remove file function
+   * \param sessionKey The session key
+   * \param path the file path
+   * \param options the file deletion options
+   * \return VISHNU_OK if the remote command succeeds or an error code otherwise
+   */
 static const int api (const std::string& sessionKey,const std::string& path, const FMS_Data::RmFileOptions& options ){
 
 return  removeFile(sessionKey,path,options);
@@ -122,8 +163,18 @@ return  removeFile(sessionKey,path,options);
 }
 };
 
+/**
+ * \brief A specialization of FileApiCommand for file deletion function 
+ */
 template <>
 struct FileApiCommand<REMOVEDIR,NoOptions> {
+  /**
+   * \brief remove directory function
+   * \param sessionKey The session key
+   * \param path the  directory path
+   * \param options the directory deletion options
+   * \return VISHNU_OK if the remote command succeeds or an error code otherwise
+   */
 static const int api (const std::string& sessionKey,const std::string& path, const NoOptions& options ){
 
 return  removeDir(sessionKey,path);
@@ -147,15 +198,15 @@ struct FileActionFunc {
   CommandOptionsType moptions;
 
   /**
-   * \param path The path to treat
    * \brief Constructor
+   * \param path The path to treat
    */
   FileActionFunc(const std::string& path):mpath(path){}
 
   /**
+   * \brief Constructor
    * \param path The path to treat
    * \param options The file transfer option
-   * \brief Constructor
    */
   FileActionFunc(const std::string& path,const CommandOptionsType& options):mpath(path),moptions(options){}
 
@@ -168,31 +219,8 @@ struct FileActionFunc {
     
      return FileApiCommand<fileActionType,CommandOptionsType>::api(sessionKey,mpath,moptions);
     
-    /*int res = -1;
-    switch(fileActionType) {
-      case CREATEFILE:
-        res = createFile(sessionKey,mpath);
-        break;
-      case CREATEDIR:
-        res = createDir(sessionKey,mpath,moptions);
-        break;
-      case REMOVEFILE:
-        res = removeFile(sessionKey,mpath,moptions);
-        break;
-      case REMOVEDIR:
-        res = removeDir(sessionKey,mpath);
-        break;
-      default:
-        break;
-    }
-
-    return res;
-
-  */
   }
 };
-
-
 
 
 #endif

@@ -135,10 +135,10 @@ the path of the configuration file
 \index{init@{init}!ServerIMS@{ServerIMS}}
 \subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}int ServerIMS::init (
 \begin{DoxyParamCaption}
-\item[{int}]{ vishnuId, }
-\item[{{\bf DbConfiguration}}]{ dbConfig, }
-\item[{std::string}]{ sendmailScriptPath, }
-\item[{string}]{ mid}
+\item[{int}]{vishnuId, }
+\item[{{\bf DbConfiguration}}]{dbConfig, }
+\item[{string}]{sendmailScriptPath, }
+\item[{string}]{mid}
 \end{DoxyParamCaption}
 )}}
 \label{classServerIMS_a81304b0173c5fca9ab9da6112d4b07f5}
@@ -148,7 +148,15 @@ To initialize the IMS server.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em vishnuId}]The password of the root user vishnu\_\-user for the connection with the database \item[{\em dbConfig}]The configuration of the database \item[{\em sendmailScriptPath}]The path to the script for sending emails \item[{\em mid,:}]The machine id \end{DoxyParams}
+{\em vishnuId} & The password of the root user vishnu\_\-user for the connection with the database \\
+\hline
+{\em dbConfig} & The configuration of the database \\
+\hline
+{\em sendmailScriptPath} & The path to the script for sending emails \\
+\hline
+{\em mid,:} & The machine id \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 an error code (0 if success and 1 if an error occurs) 
 \end{DoxyReturn}

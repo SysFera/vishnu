@@ -92,8 +92,8 @@ UMS\_\-Data::User \hyperlink{classUserServer_ac6ce31683fb8b809052ddc54f1ec95b4}{
 \index{UserServer@{UserServer}!UserServer@{UserServer}}
 \subsubsection[{UserServer}]{\setlength{\rightskip}{0pt plus 5cm}UserServer::UserServer (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ userId, }
-\item[{std::string}]{ password}
+\item[{std::string}]{userId, }
+\item[{std::string}]{password}
 \end{DoxyParamCaption}
 )}}
 \label{classUserServer_a64281da3f0076b3273bf9e83123211a2}
@@ -103,13 +103,17 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em userId}]The userId of the user \item[{\em password}]The password of the user \end{DoxyParams}
+{\em userId} & The userId of the user \\
+\hline
+{\em password} & The password of the user \\
+\hline
+\end{DoxyParams}
 \hypertarget{classUserServer_a5b19188b031a3ab5fc40cabc2a097b1d}{
 \index{UserServer@{UserServer}!UserServer@{UserServer}}
 \index{UserServer@{UserServer}!UserServer@{UserServer}}
 \subsubsection[{UserServer}]{\setlength{\rightskip}{0pt plus 5cm}UserServer::UserServer (
 \begin{DoxyParamCaption}
-\item[{const UMS\_\-Data::User \&}]{ user}
+\item[{const UMS\_\-Data::User \&}]{user}
 \end{DoxyParamCaption}
 )}}
 \label{classUserServer_a5b19188b031a3ab5fc40cabc2a097b1d}
@@ -119,13 +123,15 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em user}]The user data structure \end{DoxyParams}
+{\em user} & The user data structure \\
+\hline
+\end{DoxyParams}
 \hypertarget{classUserServer_a2a8ac1a46357a5fb7d10ea741b534b3d}{
 \index{UserServer@{UserServer}!UserServer@{UserServer}}
 \index{UserServer@{UserServer}!UserServer@{UserServer}}
 \subsubsection[{UserServer}]{\setlength{\rightskip}{0pt plus 5cm}UserServer::UserServer (
 \begin{DoxyParamCaption}
-\item[{{\bf SessionServer}}]{ sessionServer}
+\item[{{\bf SessionServer}}]{sessionServer}
 \end{DoxyParamCaption}
 )}}
 \label{classUserServer_a2a8ac1a46357a5fb7d10ea741b534b3d}
@@ -135,7 +141,9 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em sessionServer}]The object to manipulate session \end{DoxyParams}
+{\em sessionServer} & The object to manipulate session \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -144,9 +152,9 @@ Constructor.
 \index{add@{add}!UserServer@{UserServer}}
 \subsubsection[{add}]{\setlength{\rightskip}{0pt plus 5cm}int UserServer::add (
 \begin{DoxyParamCaption}
-\item[{UMS\_\-Data::User $\ast$\&}]{ user, }
-\item[{int}]{ vishnuId, }
-\item[{std::string}]{ sendmailScriptPath}
+\item[{UMS\_\-Data::User $\ast$\&}]{user, }
+\item[{int}]{vishnuId, }
+\item[{std::string}]{sendmailScriptPath}
 \end{DoxyParamCaption}
 )}}
 \label{classUserServer_a86ac31bb630ea859c06bc1127eea2c9a}
@@ -156,7 +164,13 @@ Function to add a new VISHNU user.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em user}]The user data structure \item[{\em vishnuId}]The identifier of the vishnu instance \item[{\em sendmailScriptPath}]The path to the script for sending emails \end{DoxyParams}
+{\em user} & The user data structure \\
+\hline
+{\em vishnuId} & The identifier of the vishnu instance \\
+\hline
+{\em sendmailScriptPath} & The path to the script for sending emails \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -165,7 +179,7 @@ raises an exception on error
 \index{changePassword@{changePassword}!UserServer@{UserServer}}
 \subsubsection[{changePassword}]{\setlength{\rightskip}{0pt plus 5cm}int UserServer::changePassword (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ newPassword}
+\item[{std::string}]{newPassword}
 \end{DoxyParamCaption}
 )}}
 \label{classUserServer_a63b49fc59574e8b81fde104f09a4585e}
@@ -175,7 +189,9 @@ Function to change VISHNU user password.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em newPassword}]The new password of the user \end{DoxyParams}
+{\em newPassword} & The new password of the user \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -184,7 +200,7 @@ raises an exception on error
 \index{deleteUser@{deleteUser}!UserServer@{UserServer}}
 \subsubsection[{deleteUser}]{\setlength{\rightskip}{0pt plus 5cm}int UserServer::deleteUser (
 \begin{DoxyParamCaption}
-\item[{UMS\_\-Data::User}]{ user}
+\item[{UMS\_\-Data::User}]{user}
 \end{DoxyParamCaption}
 )}}
 \label{classUserServer_acb26d67e359123b9b4b80fa007d37423}
@@ -194,7 +210,9 @@ Function to delete VISHNU user.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em user}]The user data structure \end{DoxyParams}
+{\em user} & The user data structure \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -203,7 +221,7 @@ raises an exception on error
 \index{exist@{exist}!UserServer@{UserServer}}
 \subsubsection[{exist}]{\setlength{\rightskip}{0pt plus 5cm}bool UserServer::exist (
 \begin{DoxyParamCaption}
-\item[{bool}]{ flagForChangePwd = {\ttfamily false}}
+\item[{bool}]{flagForChangePwd = {\ttfamily false}}
 \end{DoxyParamCaption}
 )}}
 \label{classUserServer_a26ccae7a3b8ee7e62e2224312119aece}
@@ -213,7 +231,9 @@ Function to check user on database.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em flagForChangePwd}]A flag to check the password state \end{DoxyParams}
+{\em flagForChangePwd} & A flag to check the password state \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 true if the password state has not to be checked else false 
 \end{DoxyReturn}
@@ -222,7 +242,7 @@ true if the password state has not to be checked else false
 \index{existuserId@{existuserId}!UserServer@{UserServer}}
 \subsubsection[{existuserId}]{\setlength{\rightskip}{0pt plus 5cm}bool UserServer::existuserId (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ userId}
+\item[{std::string}]{userId}
 \end{DoxyParamCaption}
 )}}
 \label{classUserServer_ac61e9715aa922ad746ecd8f788130834}
@@ -232,7 +252,9 @@ Function to check a userId.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em userId}]The userId to check \end{DoxyParams}
+{\em userId} & The userId to check \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 true if the userId exists 
 \end{DoxyReturn}
@@ -241,8 +263,8 @@ true if the userId exists
 \index{generatePassword@{generatePassword}!UserServer@{UserServer}}
 \subsubsection[{generatePassword}]{\setlength{\rightskip}{0pt plus 5cm}UserServer::generatePassword (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ value1, }
-\item[{std::string}]{ value2}
+\item[{std::string}]{value1, }
+\item[{std::string}]{value2}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classUserServer_a61f17775588f641c30035349e5e8bfef}
@@ -252,7 +274,11 @@ Function to generate a password.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em value1}]a string used to generate the password \item[{\em value2}]a string used to generate the password \end{DoxyParams}
+{\em value1} & a string used to generate the password \\
+\hline
+{\em value2} & a string used to generate the password \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 an encrypted message 
 \end{DoxyReturn}
@@ -261,8 +287,8 @@ an encrypted message
 \index{getAttribut@{getAttribut}!UserServer@{UserServer}}
 \subsubsection[{getAttribut}]{\setlength{\rightskip}{0pt plus 5cm}UserServer::getAttribut (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ condition, }
-\item[{std::string}]{ attrname = {\ttfamily \char`\"{}numuserid\char`\"{}}}
+\item[{std::string}]{condition, }
+\item[{std::string}]{attrname = {\ttfamily \char`\"{}numuserid\char`\"{}}}
 \end{DoxyParamCaption}
 )}}
 \label{classUserServer_aaabcde0c694987b990a3ba1af445f718}
@@ -272,7 +298,11 @@ Function to get user information from the database vishnu.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em condition}]The condition of the select request \item[{\em attrname}]the name of the attribut to get \end{DoxyParams}
+{\em condition} & The condition of the select request \\
+\hline
+{\em attrname} & the name of the attribut to get \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the value of the attribut or empty string if no results 
 \end{DoxyReturn}
@@ -297,8 +327,8 @@ The user data structure
 \index{getMailContent@{getMailContent}!UserServer@{UserServer}}
 \subsubsection[{getMailContent}]{\setlength{\rightskip}{0pt plus 5cm}std::string UserServer::getMailContent (
 \begin{DoxyParamCaption}
-\item[{const UMS\_\-Data::User \&}]{ user, }
-\item[{bool}]{ flagAdduser}
+\item[{const UMS\_\-Data::User \&}]{user, }
+\item[{bool}]{flagAdduser}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classUserServer_a4896a5d7bd51b8ad24cf6864ba400487}
@@ -308,7 +338,11 @@ Function to get the email content.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em user}]the user who will receives the email \item[{\em flagAdduser}]a flag which means that it is uses on adduser function \end{DoxyParams}
+{\em user} & the user who will receives the email \\
+\hline
+{\em flagAdduser} & a flag which means that it is uses on adduser function \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the email content 
 \end{DoxyReturn}
@@ -317,7 +351,7 @@ the email content
 \index{getUserAccountLogin@{getUserAccountLogin}!UserServer@{UserServer}}
 \subsubsection[{getUserAccountLogin}]{\setlength{\rightskip}{0pt plus 5cm}std::string UserServer::getUserAccountLogin (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ machineId}
+\item[{const std::string \&}]{machineId}
 \end{DoxyParamCaption}
 )}}
 \label{classUserServer_a9ad90b441d2caa41be086f046bc58d62}
@@ -327,7 +361,9 @@ Function to get the user account login.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em machineId}]The machine identifier of machine on which the user have a account \end{DoxyParams}
+{\em machineId} & The machine identifier of machine on which the user have a account \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the user account login 
 \end{DoxyReturn}
@@ -352,8 +388,8 @@ true if the user is an admin else false
 \index{isAttributOk@{isAttributOk}!UserServer@{UserServer}}
 \subsubsection[{isAttributOk}]{\setlength{\rightskip}{0pt plus 5cm}bool UserServer::isAttributOk (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ attributName, }
-\item[{int}]{ valueOk}
+\item[{std::string}]{attributName, }
+\item[{int}]{valueOk}
 \end{DoxyParamCaption}
 )}}
 \label{classUserServer_aecc5dd38cacf2460a187f6e751000c9a}
@@ -363,7 +399,11 @@ Function to check the user attribut value.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em attributName}]The name of the attribut to check \item[{\em valueOk}]the value which will be compare to attribut name value \end{DoxyParams}
+{\em attributName} & The name of the attribut to check \\
+\hline
+{\em valueOk} & the value which will be compare to attribut name value \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 true if the attributName value is valueOk 
 \end{DoxyReturn}
@@ -372,8 +412,8 @@ true if the attributName value is valueOk
 \index{resetPassword@{resetPassword}!UserServer@{UserServer}}
 \subsubsection[{resetPassword}]{\setlength{\rightskip}{0pt plus 5cm}int UserServer::resetPassword (
 \begin{DoxyParamCaption}
-\item[{UMS\_\-Data::User \&}]{ user, }
-\item[{std::string}]{ sendmailScriptPath}
+\item[{UMS\_\-Data::User \&}]{user, }
+\item[{std::string}]{sendmailScriptPath}
 \end{DoxyParamCaption}
 )}}
 \label{classUserServer_ad25cf22ec48e1519df9fd68b1d66a36d}
@@ -383,7 +423,11 @@ Function to change VISHNU user password.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em user}]The user data structure \item[{\em sendmailScriptPath}]The path to the script for sending emails \end{DoxyParams}
+{\em user} & The user data structure \\
+\hline
+{\em sendmailScriptPath} & The path to the script for sending emails \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -392,10 +436,10 @@ raises an exception on error
 \index{sendMailToUser@{sendMailToUser}!UserServer@{UserServer}}
 \subsubsection[{sendMailToUser}]{\setlength{\rightskip}{0pt plus 5cm}int UserServer::sendMailToUser (
 \begin{DoxyParamCaption}
-\item[{const UMS\_\-Data::User \&}]{ user, }
-\item[{std::string}]{ content, }
-\item[{std::string}]{ subject, }
-\item[{std::string}]{ sendmailScriptPath}
+\item[{const UMS\_\-Data::User \&}]{user, }
+\item[{std::string}]{content, }
+\item[{std::string}]{subject, }
+\item[{std::string}]{sendmailScriptPath}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classUserServer_ac4e5db25963346be0bc57f5b61a1ad59}
@@ -405,7 +449,15 @@ Function to send an email to the user.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em user}]the user to whom send the email \item[{\em content}]the body of the email \item[{\em subject}]the subject of the email \item[{\em sendmailScriptPath}]The path to the script for sending emails \end{DoxyParams}
+{\em user} & the user to whom send the email \\
+\hline
+{\em content} & the body of the email \\
+\hline
+{\em subject} & the subject of the email \\
+\hline
+{\em sendmailScriptPath} & The path to the script for sending emails \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The error or success code 
 \end{DoxyReturn}
@@ -414,7 +466,7 @@ The error or success code
 \index{update@{update}!UserServer@{UserServer}}
 \subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}int UserServer::update (
 \begin{DoxyParamCaption}
-\item[{UMS\_\-Data::User $\ast$}]{ user}
+\item[{UMS\_\-Data::User $\ast$}]{user}
 \end{DoxyParamCaption}
 )}}
 \label{classUserServer_a6653ef686b1622001ca6b211da5d9f3b}
@@ -424,7 +476,9 @@ Function to update user information.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em user}]The user data structure \end{DoxyParams}
+{\em user} & The user data structure \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}

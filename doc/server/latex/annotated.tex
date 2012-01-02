@@ -12,13 +12,19 @@ Here are the classes, structs, unions and interfaces with brief descriptions:\be
 \item\contentsline{section}{\hyperlink{classDbConfiguration}{DbConfiguration} (Contains the configuration parameters for the Vishnu database )}{\pageref{classDbConfiguration}}{}
 \item\contentsline{section}{\hyperlink{classDbFactory}{DbFactory} (\hyperlink{classDatabase}{Database} factory )}{\pageref{classDbFactory}}{}
 \item\contentsline{section}{\hyperlink{structDefineIdentifierFunc}{DefineIdentifierFunc$<$ defineIdentifierType $>$} (A functor to handle define identifier api function )}{\pageref{structDefineIdentifierFunc}}{}
+\item\contentsline{section}{\hyperlink{classEnv}{Env} (\hyperlink{classEnv}{Env} class implementation )}{\pageref{classEnv}}{}
 \item\contentsline{section}{\hyperlink{structenv__name__mapper}{env\_\-name\_\-mapper} (Environment variable name mapper )}{\pageref{structenv__name__mapper}}{}
 \item\contentsline{section}{\hyperlink{classExecConfiguration}{ExecConfiguration} (Program configuration based on key/value pairs stored in a file )}{\pageref{classExecConfiguration}}{}
 \item\contentsline{section}{\hyperlink{classExporterProxy}{ExporterProxy} (\hyperlink{classExporterProxy}{ExporterProxy} class implementation )}{\pageref{classExporterProxy}}{}
 \item\contentsline{section}{\hyperlink{classExportFactory}{ExportFactory} (Export factory )}{\pageref{classExportFactory}}{}
 \item\contentsline{section}{\hyperlink{classExportServer}{ExportServer} (Superclass to export in various formats )}{\pageref{classExportServer}}{}
 \item\contentsline{section}{\hyperlink{classFile}{File} (Main \hyperlink{classFile}{File} class. Encapsulates all the files attributes. Defines the common operation on files (local or remote) )}{\pageref{classFile}}{}
-\item\contentsline{section}{\hyperlink{structFileActionFunc}{FileActionFunc$<$ fileActionType $>$} (A functor to handle file action (create/remove) api function )}{\pageref{structFileActionFunc}}{}
+\item\contentsline{section}{\hyperlink{structFileActionFunc}{FileActionFunc$<$ fileActionType, CommandOptionsType $>$} (A functor to handle file action (create/remove) api function )}{\pageref{structFileActionFunc}}{}
+\item\contentsline{section}{\hyperlink{structFileApiCommand}{FileApiCommand$<$ fileActionType, CommandOptionsType $>$} (Generic type to represent function acting on file )}{\pageref{structFileApiCommand}}{}
+\item\contentsline{section}{\hyperlink{structFileApiCommand_3_01CREATEDIR_00_01FMS__Data_1_1CreateDirOptions_01_4}{FileApiCommand$<$ CREATEDIR, FMS\_\-Data::CreateDirOptions $>$} (A specialization of \hyperlink{structFileApiCommand}{FileApiCommand} for directory creation function )}{\pageref{structFileApiCommand_3_01CREATEDIR_00_01FMS__Data_1_1CreateDirOptions_01_4}}{}
+\item\contentsline{section}{\hyperlink{structFileApiCommand_3_01CREATEFILE_00_01NoOptions_01_4}{FileApiCommand$<$ CREATEFILE, NoOptions $>$} (A specialization of \hyperlink{structFileApiCommand}{FileApiCommand} for file creation function )}{\pageref{structFileApiCommand_3_01CREATEFILE_00_01NoOptions_01_4}}{}
+\item\contentsline{section}{\hyperlink{structFileApiCommand_3_01REMOVEDIR_00_01NoOptions_01_4}{FileApiCommand$<$ REMOVEDIR, NoOptions $>$} (A specialization of \hyperlink{structFileApiCommand}{FileApiCommand} for file deletion function )}{\pageref{structFileApiCommand_3_01REMOVEDIR_00_01NoOptions_01_4}}{}
+\item\contentsline{section}{\hyperlink{structFileApiCommand_3_01REMOVEFILE_00_01FMS__Data_1_1RmFileOptions_01_4}{FileApiCommand$<$ REMOVEFILE, FMS\_\-Data::RmFileOptions $>$} (A specialization of \hyperlink{structFileApiCommand}{FileApiCommand} for file deletion function )}{\pageref{structFileApiCommand_3_01REMOVEFILE_00_01FMS__Data_1_1RmFileOptions_01_4}}{}
 \item\contentsline{section}{\hyperlink{classFileFactory}{FileFactory} (A factory class for the Files classes )}{\pageref{classFileFactory}}{}
 \item\contentsline{section}{\hyperlink{classFileParser}{FileParser} (Simple \hyperlink{classConfiguration}{Configuration} \hyperlink{classFile}{File} Parser )}{\pageref{classFileParser}}{}
 \item\contentsline{section}{\hyperlink{classFileProxy}{FileProxy} (Main \hyperlink{classFileProxy}{FileProxy} class. Encapsulates all the files attributes. Defines the common operation on files (local or remote) )}{\pageref{classFileProxy}}{}
@@ -68,6 +74,8 @@ Here are the classes, structs, unions and interfaces with brief descriptions:\be
 \item\contentsline{section}{\hyperlink{classMonitorTMS}{MonitorTMS} (This class describes the TMS Monitor )}{\pageref{classMonitorTMS}}{}
 \item\contentsline{section}{\hyperlink{classMonitorUMS}{MonitorUMS} (This class describes the UMS Monitor )}{\pageref{classMonitorUMS}}{}
 \item\contentsline{section}{\hyperlink{classMYSQLDatabase}{MYSQLDatabase} (MYSQL implementation of the \hyperlink{classDatabase}{Database} )}{\pageref{classMYSQLDatabase}}{}
+\item\contentsline{section}{\hyperlink{classNetrcReader}{NetrcReader} (\hyperlink{classNetrcReader}{NetrcReader} class implementation )}{\pageref{classNetrcReader}}{}
+\item\contentsline{section}{\hyperlink{structNoOptions}{NoOptions} (Represents non typed \hyperlink{classOptions}{Options} )}{\pageref{structNoOptions}}{}
 \item\contentsline{section}{\hyperlink{classObjectIdProxy}{ObjectIdProxy} (The object id proxy class implementation )}{\pageref{classObjectIdProxy}}{}
 \item\contentsline{section}{\hyperlink{classObjectIdServer}{ObjectIdServer} (Class that implements the object id format server )}{\pageref{classObjectIdServer}}{}
 \item\contentsline{section}{\hyperlink{classOptions}{Options} (Used to process the users command line parameters )}{\pageref{classOptions}}{}
@@ -87,6 +95,8 @@ Here are the classes, structs, unions and interfaces with brief descriptions:\be
 \item\contentsline{section}{\hyperlink{classRsyncCommand}{RsyncCommand} (Declaration of class to build a Rsync command )}{\pageref{classRsyncCommand}}{}
 \item\contentsline{section}{\hyperlink{classScpCommand}{ScpCommand} (Declaration of class to build a Scp command )}{\pageref{classScpCommand}}{}
 \item\contentsline{section}{\hyperlink{classScriptGenConvertor}{ScriptGenConvertor} (\hyperlink{classScriptGenConvertor}{ScriptGenConvertor} class implementation )}{\pageref{classScriptGenConvertor}}{}
+\item\contentsline{section}{\hyperlink{structSerializeAdaptor}{SerializeAdaptor$<$ Object $>$} (\hyperlink{structSerializeAdaptor}{SerializeAdaptor} class implementation )}{\pageref{structSerializeAdaptor}}{}
+\item\contentsline{section}{\hyperlink{structSerializeAdaptor_3_01std_1_1string_01_4}{SerializeAdaptor$<$ std::string $>$} (Specialization in std::string of the \hyperlink{structSerializeAdaptor}{SerializeAdaptor} )}{\pageref{structSerializeAdaptor_3_01std_1_1string_01_4}}{}
 \item\contentsline{section}{\hyperlink{classServerFMS}{ServerFMS} (This class describes the FMS server )}{\pageref{classServerFMS}}{}
 \item\contentsline{section}{\hyperlink{classServerIMS}{ServerIMS} (This class describes the IMS server )}{\pageref{classServerIMS}}{}
 \item\contentsline{section}{\hyperlink{classServerTMS}{ServerTMS} (This class describes the g server )}{\pageref{classServerTMS}}{}

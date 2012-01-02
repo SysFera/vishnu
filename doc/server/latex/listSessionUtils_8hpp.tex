@@ -56,16 +56,16 @@ Ibrahima Cisse (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sysf
 \index{makeListSessionOptions@{makeListSessionOptions}!listSessionUtils.hpp@{listSessionUtils.hpp}}
 \subsubsection[{makeListSessionOptions}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<${\bf Options}$>$ makeListSessionOptions (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ pgName, }
-\item[{{\bf StringcallBackType} \&}]{ fUserId, }
-\item[{std::string \&}]{ dietConfig, }
-\item[{{\bf StringcallBackType} \&}]{ fMachineId, }
-\item[{{\bf StringcallBackType} \&}]{ fSessionId, }
-\item[{{\bf StatuscallBackType} \&}]{ fStatus, }
-\item[{{\bf ClosePolicycallBackType} \&}]{ fClosePolicy, }
-\item[{{\bf IntcallBackType} \&}]{ fSessionInactivityDelay, }
-\item[{{\bf LongcallBackType} \&}]{ fStartDateOption, }
-\item[{{\bf LongcallBackType} \&}]{ fEndDateOption}
+\item[{std::string}]{pgName, }
+\item[{{\bf StringcallBackType} \&}]{fUserId, }
+\item[{std::string \&}]{dietConfig, }
+\item[{{\bf StringcallBackType} \&}]{fMachineId, }
+\item[{{\bf StringcallBackType} \&}]{fSessionId, }
+\item[{{\bf StatuscallBackType} \&}]{fStatus, }
+\item[{{\bf ClosePolicycallBackType} \&}]{fClosePolicy, }
+\item[{{\bf IntcallBackType} \&}]{fSessionInactivityDelay, }
+\item[{{\bf LongcallBackType} \&}]{fStartDateOption, }
+\item[{{\bf LongcallBackType} \&}]{fEndDateOption}
 \end{DoxyParamCaption}
 )}}
 \label{listSessionUtils_8hpp_ad357938c69910e3700be2f78981f426e}
@@ -75,7 +75,27 @@ To build options for the VISHNU list session command.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em pgName}]: The name of the command \item[{\em fUserId,:}]The user identifier option callback \item[{\em dietConfig,:}]Represents the VISHNU config file \item[{\em fMachineId,:}]The machine identifier option callback \item[{\em fSessionId,:}]The session identifier option callback \item[{\em fStatus,:}]The session status option callback \item[{\em fClosePolicy,:}]The session close policy option callback \item[{\em fSessionInactivityDelay,:}]The session inactivity delay option callback \item[{\em fStartDateOption,:}]The session start date option callback \item[{\em fEndDateOption,:}]The session end date option callback \end{DoxyParams}
+{\em pgName} & : The name of the command \\
+\hline
+{\em fUserId,:} & The user identifier option callback \\
+\hline
+{\em dietConfig,:} & Represents the VISHNU config file \\
+\hline
+{\em fMachineId,:} & The machine identifier option callback \\
+\hline
+{\em fSessionId,:} & The session identifier option callback \\
+\hline
+{\em fStatus,:} & The session status option callback \\
+\hline
+{\em fClosePolicy,:} & The session close policy option callback \\
+\hline
+{\em fSessionInactivityDelay,:} & The session inactivity delay option callback \\
+\hline
+{\em fStartDateOption,:} & The session start date option callback \\
+\hline
+{\em fEndDateOption,:} & The session end date option callback \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The description of all options allowed by the command 
 \end{DoxyReturn}

@@ -82,8 +82,8 @@ std::string \hyperlink{classScriptGenConvertor_aa57231ad5aa90bfaddf7a65c97686d03
 \index{ScriptGenConvertor@{ScriptGenConvertor}!ScriptGenConvertor@{ScriptGenConvertor}}
 \subsubsection[{ScriptGenConvertor}]{\setlength{\rightskip}{0pt plus 5cm}ScriptGenConvertor::ScriptGenConvertor (
 \begin{DoxyParamCaption}
-\item[{const int}]{ batchType, }
-\item[{const std::string \&}]{ scriptGenContent}
+\item[{const int}]{batchType, }
+\item[{const std::string \&}]{scriptGenContent}
 \end{DoxyParamCaption}
 )}}
 \label{classScriptGenConvertor_a4aa6af3a71aef7772404c78e95472214}
@@ -93,7 +93,11 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em batchType}]the type of the batch scheduler \item[{\em scriptGenContent}]the generic script to convert \end{DoxyParams}
+{\em batchType} & the type of the batch scheduler \\
+\hline
+{\em scriptGenContent} & the generic script to convert \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -102,7 +106,7 @@ Constructor.
 \index{parseFile@{parseFile}!ScriptGenConvertor@{ScriptGenConvertor}}
 \subsubsection[{parseFile}]{\setlength{\rightskip}{0pt plus 5cm}int ScriptGenConvertor::parseFile (
 \begin{DoxyParamCaption}
-\item[{std::string \&}]{ errorMessage}
+\item[{std::string \&}]{errorMessage}
 \end{DoxyParamCaption}
 )}}
 \label{classScriptGenConvertor_a6627150950cbb725e5a0de1db73db85e}
@@ -112,7 +116,9 @@ Function to parse the generic script.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em errorMessage}]is the message of the errors occured during the parsing \end{DoxyParams}
+{\em errorMessage} & is the message of the errors occured during the parsing \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if success, -\/1 if if failure 
 \end{DoxyReturn}

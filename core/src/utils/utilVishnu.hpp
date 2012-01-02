@@ -86,7 +86,6 @@ namespace vishnu {
 
   /**
    * \brief To crypt a password
-   * \fn std::string cryptPassword(const std::string& salt, const std::string password)
    * \param salt The salt to use to crypt
    * \param password The password to crypt
    * \return The crypted password

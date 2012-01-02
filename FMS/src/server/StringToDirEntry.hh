@@ -16,21 +16,18 @@
 #include "FMSVishnuException.hpp"
 #include "FileTypes.hpp"
 
-class DateHandler {
+struct DateHandler {
 
-  public:
     DateHandler (const std::string& rawDate):mrawDate(rawDate) {
     }
-  std::string getDate () const {
+   std::string getDate () const {
       return mrawDate;
     }
 
-  private:
     std::string mrawDate; 
 };
 
 
-/**********************************************************************/
 class  PermsHandler {
 
   public:

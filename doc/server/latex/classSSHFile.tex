@@ -20,11 +20,6 @@ Inheritance diagram for SSHFile:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classSSHFile_a211ff46a0d86240ed740543adedac050}{
-\hyperlink{classSSHFile_a211ff46a0d86240ed740543adedac050}{SSHFile} ()}
-\label{classSSHFile_a211ff46a0d86240ed740543adedac050}
-
-\begin{DoxyCompactList}\small\item\em The dafault constructor. \item\end{DoxyCompactList}\item 
 \hyperlink{classSSHFile_a290ef8ca31782187379af1d38cbf0598}{SSHFile} (const \hyperlink{classSessionServer}{SessionServer} \&sessionServer, const std::string \&path, const std::string \&\hyperlink{classSSHFile_a5a4a3d20457a33f57824b7defe7c2df5}{sshHost}, const std::string \&\hyperlink{classSSHFile_a4c6b4d096a6a9fd2043bcd24990f1ba1}{sshUser}, const std::string \&\hyperlink{classSSHFile_af11b98c5b07958117814b032f1ebbcd1}{sshPublicKey}, const std::string \&\hyperlink{classSSHFile_a31b70dd7571b49a4be99c40e1150a8fc}{sshPrivateKey}, const std::string \&\hyperlink{classSSHFile_a824e84e8d2ddfe669b6d824f06527c44}{sshPassword}, unsigned int \hyperlink{classSSHFile_affe979a9a81151e5094608ca9553745d}{sshPort}, const std::string \&\hyperlink{classSSHFile_a4c78048685325e41ae6ca61ab7c5cdc4}{sshCommand}=\char`\"{}/usr/bin/ssh\char`\"{}, const std::string \&\hyperlink{classSSHFile_a7ae092c6888e1e256346e393f7ac075e}{scpCommand}=\char`\"{}/usr/bin/scp\char`\"{})
 \begin{DoxyCompactList}\small\item\em Another constructor by value. \item\end{DoxyCompactList}\item 
 \hyperlink{classSSHFile_a549e78912b9f41dcd939078fe6f15a8f}{SSHFile} (const \hyperlink{classSSHFile}{SSHFile} \&file)
@@ -57,13 +52,13 @@ virtual std::string \hyperlink{classSSHFile_a1aa5ce33bac38cb9c0370a45b2733e56}{g
 \begin{DoxyCompactList}\small\item\em To get the content of the file. \item\end{DoxyCompactList}\item 
 virtual int \hyperlink{classSSHFile_aae0e9486c370a13469ec72cbb503638c}{mkfile} (const mode\_\-t mode)
 \begin{DoxyCompactList}\small\item\em To create a new file. \item\end{DoxyCompactList}\item 
-virtual int \hyperlink{classSSHFile_abceada8383b3731fa3c3a99650928311}{mkdir} (const mode\_\-t mode)
+virtual int \hyperlink{classSSHFile_aa7c631c5648da18c7d0c93b23e806cb7}{mkdir} (const CreateDirOptions \&options)
 \begin{DoxyCompactList}\small\item\em To create a new directory. \item\end{DoxyCompactList}\item 
-virtual int \hyperlink{classSSHFile_a6070540c48390c4b75134229cdfd147d}{rm} (bool isRecursive=false)
+virtual int \hyperlink{classSSHFile_ae967241d0e3d65fb697d53c1d483baa4}{rm} (const FMS\_\-Data::RmFileOptions \&options)
 \begin{DoxyCompactList}\small\item\em To remove a file. \item\end{DoxyCompactList}\item 
 virtual int \hyperlink{classSSHFile_a2e11320295a5f9a70286e4e24c2c106c}{rmdir} ()
 \begin{DoxyCompactList}\small\item\em To remove an empty directory. \item\end{DoxyCompactList}\item 
-virtual std::list$<$ std::string $>$ \hyperlink{classSSHFile_ab51fb59a5b81be660ca9a39b74591b14}{ls} (const LsDirOptions \&options) const 
+virtual FMS\_\-Data::DirEntryList $\ast$ \hyperlink{classSSHFile_a4be397cf77959dbc6f730f084435662c}{ls} (const LsDirOptions \&options) const 
 \begin{DoxyCompactList}\small\item\em To list the content of a directory. \item\end{DoxyCompactList}\item 
 virtual int \hyperlink{classSSHFile_af656c34ec5d57decce27bbe82eba0b3f}{cp} (const std::string \&path, const CpFileOptions \&options)
 \begin{DoxyCompactList}\small\item\em To copy the file. \item\end{DoxyCompactList}\item 
@@ -133,16 +128,16 @@ A class for file representation through SSH.
 \index{SSHFile@{SSHFile}!SSHFile@{SSHFile}}
 \subsubsection[{SSHFile}]{\setlength{\rightskip}{0pt plus 5cm}SSHFile::SSHFile (
 \begin{DoxyParamCaption}
-\item[{const {\bf SessionServer} \&}]{ sessionServer, }
-\item[{const std::string \&}]{ path, }
-\item[{const std::string \&}]{ sshHost, }
-\item[{const std::string \&}]{ sshUser, }
-\item[{const std::string \&}]{ sshPublicKey, }
-\item[{const std::string \&}]{ sshPrivateKey, }
-\item[{const std::string \&}]{ sshPassword, }
-\item[{unsigned int}]{ sshPort, }
-\item[{const std::string \&}]{ sshCommand = {\ttfamily \char`\"{}/usr/bin/ssh\char`\"{}}, }
-\item[{const std::string \&}]{ scpCommand = {\ttfamily \char`\"{}/usr/bin/scp\char`\"{}}}
+\item[{const {\bf SessionServer} \&}]{sessionServer, }
+\item[{const std::string \&}]{path, }
+\item[{const std::string \&}]{sshHost, }
+\item[{const std::string \&}]{sshUser, }
+\item[{const std::string \&}]{sshPublicKey, }
+\item[{const std::string \&}]{sshPrivateKey, }
+\item[{const std::string \&}]{sshPassword, }
+\item[{unsigned int}]{sshPort, }
+\item[{const std::string \&}]{sshCommand = {\ttfamily \char`\"{}/usr/bin/ssh\char`\"{}}, }
+\item[{const std::string \&}]{scpCommand = {\ttfamily \char`\"{}/usr/bin/scp\char`\"{}}}
 \end{DoxyParamCaption}
 )}}
 \label{classSSHFile_a290ef8ca31782187379af1d38cbf0598}
@@ -152,13 +147,33 @@ Another constructor by value.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em sessionServer}]the session object server \item[{\em path}]the path of the file \item[{\em sshHost}]the ssh host \item[{\em sshUser}]the ssh user \item[{\em sshPublicKey}]the ssh public key \item[{\em sshPrivateKey}]the ssh private key \item[{\em sshPassword}]the ssh password \item[{\em sshPort}]the ssh port \item[{\em sshCommand}]the ssh command path \item[{\em scpCommand}]the scp command path \end{DoxyParams}
+{\em sessionServer} & the session object server \\
+\hline
+{\em path} & the path of the file \\
+\hline
+{\em sshHost} & the ssh host \\
+\hline
+{\em sshUser} & the ssh user \\
+\hline
+{\em sshPublicKey} & the ssh public key \\
+\hline
+{\em sshPrivateKey} & the ssh private key \\
+\hline
+{\em sshPassword} & the ssh password \\
+\hline
+{\em sshPort} & the ssh port \\
+\hline
+{\em sshCommand} & the ssh command path \\
+\hline
+{\em scpCommand} & the scp command path \\
+\hline
+\end{DoxyParams}
 \hypertarget{classSSHFile_a549e78912b9f41dcd939078fe6f15a8f}{
 \index{SSHFile@{SSHFile}!SSHFile@{SSHFile}}
 \index{SSHFile@{SSHFile}!SSHFile@{SSHFile}}
 \subsubsection[{SSHFile}]{\setlength{\rightskip}{0pt plus 5cm}SSHFile::SSHFile (
 \begin{DoxyParamCaption}
-\item[{const {\bf SSHFile} \&}]{ file}
+\item[{const {\bf SSHFile} \&}]{file}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
 \label{classSSHFile_a549e78912b9f41dcd939078fe6f15a8f}
@@ -168,7 +183,9 @@ Another constructor by reference.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em file}]the other file \end{DoxyParams}
+{\em file} & the other file \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -177,7 +194,7 @@ Another constructor by reference.
 \index{chgrp@{chgrp}!SSHFile@{SSHFile}}
 \subsubsection[{chgrp}]{\setlength{\rightskip}{0pt plus 5cm}virtual int SSHFile::chgrp (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ group}
+\item[{const std::string \&}]{group}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classSSHFile_aa0b50bce63279fd0c1e14e7b9058b900}
@@ -187,7 +204,9 @@ To update the group of the file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em group}]the new group \end{DoxyParams}
+{\em group} & the new group \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
@@ -200,7 +219,7 @@ Implements \hyperlink{classFile_ac49c7da7767921e6c97263ecc30cede6}{File}.
 \index{chmod@{chmod}!SSHFile@{SSHFile}}
 \subsubsection[{chmod}]{\setlength{\rightskip}{0pt plus 5cm}virtual int SSHFile::chmod (
 \begin{DoxyParamCaption}
-\item[{const mode\_\-t}]{ mode}
+\item[{const mode\_\-t}]{mode}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classSSHFile_a8a8a8991bac15f105f5bb144c63999b3}
@@ -210,7 +229,9 @@ To update the new file access permissions.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em mode}]the new file access permissions \end{DoxyParams}
+{\em mode} & the new file access permissions \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
@@ -223,8 +244,8 @@ Implements \hyperlink{classFile_a8d5f8ed5b3d4750df415e3f6207157fe}{File}.
 \index{cp@{cp}!SSHFile@{SSHFile}}
 \subsubsection[{cp}]{\setlength{\rightskip}{0pt plus 5cm}virtual int SSHFile::cp (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ path, }
-\item[{const CpFileOptions \&}]{ options}
+\item[{const std::string \&}]{path, }
+\item[{const CpFileOptions \&}]{options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classSSHFile_af656c34ec5d57decce27bbe82eba0b3f}
@@ -234,7 +255,11 @@ To copy the file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em path}]the copy destination \item[{\em options}]the copy options \end{DoxyParams}
+{\em path} & the copy destination \\
+\hline
+{\em options} & the copy options \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
@@ -283,7 +308,7 @@ the last error message
 \index{head@{head}!SSHFile@{SSHFile}}
 \subsubsection[{head}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string SSHFile::head (
 \begin{DoxyParamCaption}
-\item[{const HeadOfFileOptions \&}]{ options}
+\item[{const HeadOfFileOptions \&}]{options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classSSHFile_a6dd61931bed51f7a61183ef73beb3d6f}
@@ -293,7 +318,9 @@ To get the first lines of the file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em options}]the options object \end{DoxyParams}
+{\em options} & the options object \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the first lines of the file 
 \end{DoxyReturn}
@@ -321,58 +348,62 @@ true if the file is already updated, false otherwise
 
 Implements \hyperlink{classFile_aac96e148c3f4e1271ed40fee9a88be77}{File}.
 
-\hypertarget{classSSHFile_ab51fb59a5b81be660ca9a39b74591b14}{
+\hypertarget{classSSHFile_a4be397cf77959dbc6f730f084435662c}{
 \index{SSHFile@{SSHFile}!ls@{ls}}
 \index{ls@{ls}!SSHFile@{SSHFile}}
-\subsubsection[{ls}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::list$<$std::string$>$ SSHFile::ls (
+\subsubsection[{ls}]{\setlength{\rightskip}{0pt plus 5cm}virtual FMS\_\-Data::DirEntryList$\ast$ SSHFile::ls (
 \begin{DoxyParamCaption}
-\item[{const LsDirOptions \&}]{ options}
+\item[{const LsDirOptions \&}]{options}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classSSHFile_ab51fb59a5b81be660ca9a39b74591b14}
+\label{classSSHFile_a4be397cf77959dbc6f730f084435662c}
 
 
 To list the content of a directory. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em options}]the list options \end{DoxyParams}
+{\em options} & the list options \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the content of the directory 
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classFile_a8f0d0fb350e9587914c648597ebf7343}{File}.
+Implements \hyperlink{classFile_a3793eba26e021e65ec214e36979277da}{File}.
 
-\hypertarget{classSSHFile_abceada8383b3731fa3c3a99650928311}{
+\hypertarget{classSSHFile_aa7c631c5648da18c7d0c93b23e806cb7}{
 \index{SSHFile@{SSHFile}!mkdir@{mkdir}}
 \index{mkdir@{mkdir}!SSHFile@{SSHFile}}
 \subsubsection[{mkdir}]{\setlength{\rightskip}{0pt plus 5cm}virtual int SSHFile::mkdir (
 \begin{DoxyParamCaption}
-\item[{const mode\_\-t}]{ mode}
+\item[{const CreateDirOptions \&}]{options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classSSHFile_abceada8383b3731fa3c3a99650928311}
+\label{classSSHFile_aa7c631c5648da18c7d0c93b23e806cb7}
 
 
 To create a new directory. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em mode}]the access permission of the directory \end{DoxyParams}
+{\em options} & the directory creation options \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classFile_a44f6ee1c94813f1b4b6f8cca880a3dce}{File}.
+Implements \hyperlink{classFile_a7348fafa4ba9c028fff5b57c003879c4}{File}.
 
 \hypertarget{classSSHFile_aae0e9486c370a13469ec72cbb503638c}{
 \index{SSHFile@{SSHFile}!mkfile@{mkfile}}
 \index{mkfile@{mkfile}!SSHFile@{SSHFile}}
 \subsubsection[{mkfile}]{\setlength{\rightskip}{0pt plus 5cm}virtual int SSHFile::mkfile (
 \begin{DoxyParamCaption}
-\item[{const mode\_\-t}]{ mode}
+\item[{const mode\_\-t}]{mode}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classSSHFile_aae0e9486c370a13469ec72cbb503638c}
@@ -382,7 +413,9 @@ To create a new file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em mode}]the access permission of the file \end{DoxyParams}
+{\em mode} & the access permission of the file \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
@@ -395,8 +428,8 @@ Implements \hyperlink{classFile_ad61fdb89f84856e17abb7b7f537cd4f3}{File}.
 \index{mv@{mv}!SSHFile@{SSHFile}}
 \subsubsection[{mv}]{\setlength{\rightskip}{0pt plus 5cm}virtual int SSHFile::mv (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ path, }
-\item[{const CpFileOptions \&}]{ options}
+\item[{const std::string \&}]{path, }
+\item[{const CpFileOptions \&}]{options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classSSHFile_a1d803bcc5945bb06ae7434868c34baac}
@@ -406,7 +439,11 @@ To move the file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em path}]the move destination \item[{\em options}]the move options \end{DoxyParams}
+{\em path} & the move destination \\
+\hline
+{\em options} & the move options \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
@@ -419,7 +456,7 @@ Implements \hyperlink{classFile_acc9987632d392f01748ea4f58455c4d0}{File}.
 \index{operator=@{operator=}!SSHFile@{SSHFile}}
 \subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf SSHFile}\& SSHFile::operator= (
 \begin{DoxyParamCaption}
-\item[{const {\bf SSHFile} \&}]{ file}
+\item[{const {\bf SSHFile} \&}]{file}
 \end{DoxyParamCaption}
 )}}
 \label{classSSHFile_a280279aad1796b206d20ddc131639ce1}
@@ -429,32 +466,36 @@ The assignment operator.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em file}]the object to assign \end{DoxyParams}
+{\em file} & the object to assign \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the new assigned file 
 \end{DoxyReturn}
-\hypertarget{classSSHFile_a6070540c48390c4b75134229cdfd147d}{
+\hypertarget{classSSHFile_ae967241d0e3d65fb697d53c1d483baa4}{
 \index{SSHFile@{SSHFile}!rm@{rm}}
 \index{rm@{rm}!SSHFile@{SSHFile}}
 \subsubsection[{rm}]{\setlength{\rightskip}{0pt plus 5cm}virtual int SSHFile::rm (
 \begin{DoxyParamCaption}
-\item[{bool}]{ isRecursive = {\ttfamily false}}
+\item[{const FMS\_\-Data::RmFileOptions \&}]{options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classSSHFile_a6070540c48390c4b75134229cdfd147d}
+\label{classSSHFile_ae967241d0e3d65fb697d53c1d483baa4}
 
 
 To remove a file. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em isRecursive}]To remove directory \end{DoxyParams}
+{\em options} & The file deletion options \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classFile_ab293f14b29c227c87ae03ad2ce3e605b}{File}.
+Implements \hyperlink{classFile_aa73bca9e79b14a45612e290d9e2736f3}{File}.
 
 \hypertarget{classSSHFile_a2e11320295a5f9a70286e4e24c2c106c}{
 \index{SSHFile@{SSHFile}!rmdir@{rmdir}}
@@ -481,7 +522,7 @@ Implements \hyperlink{classFile_a7789c3c8671dbdff8b8dfe2cabeaf433}{File}.
 \index{tail@{tail}!SSHFile@{SSHFile}}
 \subsubsection[{tail}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string SSHFile::tail (
 \begin{DoxyParamCaption}
-\item[{const TailOfFileOptions \&}]{ options}
+\item[{const TailOfFileOptions \&}]{options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classSSHFile_a29bb48719424956f73ddd3eee8dc8090}
@@ -491,7 +532,9 @@ To get the last lines of the file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em options}]the options object \end{DoxyParams}
+{\em options} & the options object \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the last lines of the file 
 \end{DoxyReturn}

@@ -284,13 +284,13 @@ class File {
     virtual int mkfile(const mode_t mode=defaultFileAccessMode) = 0;
       /**
        * \brief To create a new directory
-       * \param mode the access permission of the directory
+       * \param options create directory options 
        * \return 0 if the command succeeds, an error code otherwise
        */ 
       virtual int mkdir(const CreateDirOptions& options) = 0;
       /**
        * \brief To remove a file
-       * \param isRecursive to remove directory
+       * \param options remove directory options
        * \return 0 if the command succeeds, an error code otherwise
        */ 
     virtual int rm(const FMS_Data::RmFileOptions& options) = 0;

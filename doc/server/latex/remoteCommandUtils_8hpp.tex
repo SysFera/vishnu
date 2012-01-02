@@ -21,7 +21,19 @@ This file declare useful functions and types for the VISHNU remote commands.
 \subsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
-struct \hyperlink{structFileActionFunc}{FileActionFunc$<$ fileActionType $>$}
+struct \hyperlink{structNoOptions}{NoOptions}
+\begin{DoxyCompactList}\small\item\em Represents non typed \hyperlink{classOptions}{Options}. \item\end{DoxyCompactList}\item 
+struct \hyperlink{structFileApiCommand}{FileApiCommand$<$ fileActionType, CommandOptionsType $>$}
+\begin{DoxyCompactList}\small\item\em Generic type to represent function acting on file. \item\end{DoxyCompactList}\item 
+struct \hyperlink{structFileApiCommand_3_01CREATEFILE_00_01NoOptions_01_4}{FileApiCommand$<$ CREATEFILE, NoOptions $>$}
+\begin{DoxyCompactList}\small\item\em A specialization of \hyperlink{structFileApiCommand}{FileApiCommand} for file creation function. \item\end{DoxyCompactList}\item 
+struct \hyperlink{structFileApiCommand_3_01CREATEDIR_00_01FMS__Data_1_1CreateDirOptions_01_4}{FileApiCommand$<$ CREATEDIR, FMS\_\-Data::CreateDirOptions $>$}
+\begin{DoxyCompactList}\small\item\em A specialization of \hyperlink{structFileApiCommand}{FileApiCommand} for directory creation function. \item\end{DoxyCompactList}\item 
+struct \hyperlink{structFileApiCommand_3_01REMOVEFILE_00_01FMS__Data_1_1RmFileOptions_01_4}{FileApiCommand$<$ REMOVEFILE, FMS\_\-Data::RmFileOptions $>$}
+\begin{DoxyCompactList}\small\item\em A specialization of \hyperlink{structFileApiCommand}{FileApiCommand} for file deletion function. \item\end{DoxyCompactList}\item 
+struct \hyperlink{structFileApiCommand_3_01REMOVEDIR_00_01NoOptions_01_4}{FileApiCommand$<$ REMOVEDIR, NoOptions $>$}
+\begin{DoxyCompactList}\small\item\em A specialization of \hyperlink{structFileApiCommand}{FileApiCommand} for file deletion function. \item\end{DoxyCompactList}\item 
+struct \hyperlink{structFileActionFunc}{FileActionFunc$<$ fileActionType, CommandOptionsType $>$}
 \begin{DoxyCompactList}\small\item\em A functor to handle file action (create/remove) api function. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Enumerations}
 \begin{DoxyCompactItemize}
@@ -31,7 +43,7 @@ enum \hyperlink{remoteCommandUtils_8hpp_adf9293cc072dd994e9a03a66d1113254}{FileA
 {\bfseries REMOVEFILE}, 
 {\bfseries REMOVEDIR}
  \}
-\begin{DoxyCompactList}\small\item\em A define type. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em \hyperlink{classFile}{File} action type representation. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -53,9 +65,9 @@ Ibrahima Cissé (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sys
 \index{makeRemoteCommandOpt@{makeRemoteCommandOpt}!remoteCommandUtils.hpp@{remoteCommandUtils.hpp}}
 \subsubsection[{makeRemoteCommandOpt}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<${\bf Options}$>$ makeRemoteCommandOpt (
 \begin{DoxyParamCaption}
-\item[{string}]{ pgName, }
-\item[{string \&}]{ dietConfig, }
-\item[{string \&}]{ path}
+\item[{string}]{pgName, }
+\item[{string \&}]{dietConfig, }
+\item[{string \&}]{path}
 \end{DoxyParamCaption}
 )}}
 \label{remoteCommandUtils_8hpp_a4db11de347cdf28a2446ec082711cd67}
@@ -65,7 +77,13 @@ To build options for the VISHNU command line.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em pgName}]: The name of the command \item[{\em dietConfig}]Represents the VISHNU config file \item[{\em path}]Represents the path of the file \end{DoxyParams}
+{\em pgName} & : The name of the command \\
+\hline
+{\em dietConfig} & Represents the VISHNU config file \\
+\hline
+{\em path} & Represents the path of the file \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The built command 
 \end{DoxyReturn}
@@ -74,10 +92,10 @@ The built command
 \index{ParseRemoteCommandOptions@{ParseRemoteCommandOptions}!remoteCommandUtils.hpp@{remoteCommandUtils.hpp}}
 \subsubsection[{ParseRemoteCommandOptions}]{\setlength{\rightskip}{0pt plus 5cm}void ParseRemoteCommandOptions (
 \begin{DoxyParamCaption}
-\item[{int}]{ argc, }
-\item[{char $\ast$}]{ argv\mbox{[}$\,$\mbox{]}, }
-\item[{std::string \&}]{ dietConfig, }
-\item[{std::string \&}]{ path}
+\item[{int}]{argc, }
+\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]}, }
+\item[{std::string \&}]{dietConfig, }
+\item[{std::string \&}]{path}
 \end{DoxyParamCaption}
 )}}
 \label{remoteCommandUtils_8hpp_a9b65135529749854fa7f4bf90c6517d0}
@@ -87,4 +105,12 @@ A generic functio to parse remote command involving a file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em argc}]The number of command line arguments \item[{\em argv}]the command line arguments \item[{\em dietConfig}]the diet client config file \item[{\em path}]the path of the file \end{DoxyParams}
+{\em argc} & The number of command line arguments \\
+\hline
+{\em argv} & the command line arguments \\
+\hline
+{\em dietConfig} & the diet client config file \\
+\hline
+{\em path} & the path of the file \\
+\hline
+\end{DoxyParams}

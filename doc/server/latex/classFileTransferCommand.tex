@@ -100,11 +100,11 @@ Ibrahima Cisse (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sysf
 \index{FileTransferCommand@{FileTransferCommand}!FileTransferCommand@{FileTransferCommand}}
 \subsubsection[{FileTransferCommand}]{\setlength{\rightskip}{0pt plus 5cm}FileTransferCommand::FileTransferCommand (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ name, }
-\item[{const std::string \&}]{ location, }
-\item[{bool}]{ recursive, }
-\item[{bool}]{ compression, }
-\item[{const std::string \&}]{ command = {\ttfamily \char`\"{}\char`\"{}}}
+\item[{const std::string \&}]{name, }
+\item[{const std::string \&}]{location, }
+\item[{bool}]{recursive, }
+\item[{bool}]{compression, }
+\item[{const std::string \&}]{command = {\ttfamily \char`\"{}\char`\"{}}}
 \end{DoxyParamCaption}
 )}}
 \label{classFileTransferCommand_a74c352bc2fb6d39bc87bcaf972dafa89}
@@ -114,7 +114,17 @@ A constructor by value.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em name}]the name of the command \item[{\em location}]the path of the command \item[{\em recursive}]a flag for command recursivity \item[{\em compression}]a flag for use compression \item[{\em command}]the command \end{DoxyParams}
+{\em name} & the name of the command \\
+\hline
+{\em location} & the path of the command \\
+\hline
+{\em recursive} & a flag for command recursivity \\
+\hline
+{\em compression} & a flag for use compression \\
+\hline
+{\em command} & the command \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -123,7 +133,7 @@ A constructor by value.
 \index{addOptions@{addOptions}!FileTransferCommand@{FileTransferCommand}}
 \subsubsection[{addOptions}]{\setlength{\rightskip}{0pt plus 5cm}void FileTransferCommand::addOptions (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ options}
+\item[{const std::string \&}]{options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
 \label{classFileTransferCommand_a392a21a5fd210c114a10dd0caa9cb83a}
@@ -133,7 +143,9 @@ To add options to the command.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em options}]the new options to add \end{DoxyParams}
+{\em options} & the new options to add \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFileTransferCommand_a64a77c5e49a2faae086802aca2163d5f}{
 \index{FileTransferCommand@{FileTransferCommand}!getCommand@{getCommand}}
 \index{getCommand@{getCommand}!FileTransferCommand@{FileTransferCommand}}
@@ -155,8 +167,8 @@ the command
 \index{getCopyCommand@{getCopyCommand}!FileTransferCommand@{FileTransferCommand}}
 \subsubsection[{getCopyCommand}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf FileTransferCommand}$\ast$ FileTransferCommand::getCopyCommand (
 \begin{DoxyParamCaption}
-\item[{const {\bf SessionServer} \&}]{ sessionServer, }
-\item[{const FMS\_\-Data::CpFileOptions \&}]{ options}
+\item[{const {\bf SessionServer} \&}]{sessionServer, }
+\item[{const FMS\_\-Data::CpFileOptions \&}]{options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
 \label{classFileTransferCommand_aeb0d1bd0b544169d037f54946d7a0bb3}
@@ -166,7 +178,11 @@ A factory to build a copy command.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em sessionServer}]the session object server \item[{\em options}]the copy options \end{DoxyParams}
+{\em sessionServer} & the session object server \\
+\hline
+{\em options} & the copy options \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 a new file transfer command 
 \end{DoxyReturn}
@@ -223,7 +239,7 @@ true if the command is recursive false otherwise
 \index{setCommand@{setCommand}!FileTransferCommand@{FileTransferCommand}}
 \subsubsection[{setCommand}]{\setlength{\rightskip}{0pt plus 5cm}void FileTransferCommand::setCommand (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ command}
+\item[{const std::string \&}]{command}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
 \label{classFileTransferCommand_a360f6048bf450909531cb1b3b8ebf1ea}
@@ -233,13 +249,15 @@ To update the command.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em command}]the new command \end{DoxyParams}
+{\em command} & the new command \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFileTransferCommand_a09486cc2c9565c471b8e7777d5c5edae}{
 \index{FileTransferCommand@{FileTransferCommand}!setLocation@{setLocation}}
 \index{setLocation@{setLocation}!FileTransferCommand@{FileTransferCommand}}
 \subsubsection[{setLocation}]{\setlength{\rightskip}{0pt plus 5cm}void FileTransferCommand::setLocation (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ location}
+\item[{const std::string \&}]{location}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
 \label{classFileTransferCommand_a09486cc2c9565c471b8e7777d5c5edae}
@@ -249,13 +267,15 @@ To update the command location.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em location}]the new command location \end{DoxyParams}
+{\em location} & the new command location \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFileTransferCommand_a76e8a020f622b149249d826c7bfb15f3}{
 \index{FileTransferCommand@{FileTransferCommand}!setName@{setName}}
 \index{setName@{setName}!FileTransferCommand@{FileTransferCommand}}
 \subsubsection[{setName}]{\setlength{\rightskip}{0pt plus 5cm}void FileTransferCommand::setName (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ name}
+\item[{const std::string \&}]{name}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
 \label{classFileTransferCommand_a76e8a020f622b149249d826c7bfb15f3}
@@ -265,7 +285,9 @@ To update the command name.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em name}]the new command name \end{DoxyParams}
+{\em name} & the new command name \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFileTransferCommand_a35dd0e3c154f243b00e3833881d5f8ad}{
 \index{FileTransferCommand@{FileTransferCommand}!useCompression@{useCompression}}
 \index{useCompression@{useCompression}!FileTransferCommand@{FileTransferCommand}}

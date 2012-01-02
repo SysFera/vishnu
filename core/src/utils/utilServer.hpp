@@ -205,7 +205,7 @@ namespace vishnu {
   /**
    * \brief Function to get a specific vishnu counter
    * \param counterName the name of the counter
-   * \param vishnuid the id of the vishnu configuration
+   * \param vishnuId the id of the vishnu configuration
    * \return The int counter value
    */
   int
@@ -222,12 +222,10 @@ namespace vishnu {
   getAttrVishnu(std::string attrname, std::string vishnuid, int transacId = -1);
 
   /**
-   * \brief Function to increment a counter of the table vishnu
-   * \fn int  incrementCpt(std::string cptName, int cpt)
+   * \brief Function to increment a counter of the table vishnu.
    * \param cptName the name of the counter to increment
    * \param cpt     the current value of the counter
    * \param transacId the id of the transaction if one is used. -1 to ignore
-   * \return raises an exception
    */
   void
   incrementCpt(std::string cptName, int cpt, int transacId = -1);

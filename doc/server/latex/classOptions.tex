@@ -41,7 +41,7 @@ void \hyperlink{classOptions_a2b7bc0da71a508d8b03703a045e3ee8c}{parse\_\-env} (c
 void \hyperlink{classOptions_ac3c10bdaf1149f4a6ff45245a67d9948}{notify} ()}
 \label{classOptions_ac3c10bdaf1149f4a6ff45245a67d9948}
 
-\begin{DoxyCompactList}\small\item\em To notify all user-\/defined functions (callback). \item\end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em To notify all user-\/defined functions (callback) \item\end{DoxyCompactList}\item 
 int \hyperlink{classOptions_ac4172898028eda1e46fc53043729906f}{count} (const std::string \&key) const 
 \begin{DoxyCompactList}\small\item\em To check if an option is provided after parsing the command line. \item\end{DoxyCompactList}\item 
 \hypertarget{classOptions_a8a7550b7c30cfc130d3545329512dc94}{
@@ -115,7 +115,7 @@ Used to process the users command line parameters.
 \index{Options@{Options}!Options@{Options}}
 \subsubsection[{Options}]{\setlength{\rightskip}{0pt plus 5cm}Options::Options (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ name}
+\item[{const std::string \&}]{name}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
 \label{classOptions_a8274e100da90b671193dc80cdd2ad4c4}
@@ -125,13 +125,15 @@ Constructor by variable taking a string in parameter.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em name}]the name of the command which uses the option \end{DoxyParams}
+{\em name} & the name of the command which uses the option \\
+\hline
+\end{DoxyParams}
 \hypertarget{classOptions_ae1a28f4270459e280a1085489cd79c9e}{
 \index{Options@{Options}!Options@{Options}}
 \index{Options@{Options}!Options@{Options}}
 \subsubsection[{Options}]{\setlength{\rightskip}{0pt plus 5cm}Options::Options (
 \begin{DoxyParamCaption}
-\item[{boost::shared\_\-ptr$<$ {\bf Configuration} $>$}]{ c}
+\item[{boost::shared\_\-ptr$<$ {\bf Configuration} $>$}]{c}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
 \label{classOptions_ae1a28f4270459e280a1085489cd79c9e}
@@ -141,7 +143,9 @@ Constructor by variable taking a command configuration in parameter.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em c}]The configuration \end{DoxyParams}
+{\em c} & The configuration \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -150,9 +154,9 @@ Constructor by variable taking a command configuration in parameter.
 \index{add@{add}!Options@{Options}}
 \subsubsection[{add}]{\setlength{\rightskip}{0pt plus 5cm}void Options::add (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ name, }
-\item[{const std::string \&}]{ desc, }
-\item[{const {\bf Group\_\-type} \&}]{ group}
+\item[{const std::string \&}]{name, }
+\item[{const std::string \&}]{desc, }
+\item[{const {\bf Group\_\-type} \&}]{group}
 \end{DoxyParamCaption}
 )}}
 \label{classOptions_a1e3932da0674e048c6c03b4ddc07594a}
@@ -162,17 +166,23 @@ function allowing to add a new non-\/typed option
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em name,:}]the name of the option \item[{\em desc,:}]brief description of the option \item[{\em group,:}]a group which option belongs to \end{DoxyParams}
+{\em name,:} & the name of the option \\
+\hline
+{\em desc,:} & brief description of the option \\
+\hline
+{\em group,:} & a group which option belongs to \\
+\hline
+\end{DoxyParams}
 \hypertarget{classOptions_ab5ef6835170eeb2b947c6bdf7df78a86}{
 \index{Options@{Options}!add@{add}}
 \index{add@{add}!Options@{Options}}
 \subsubsection[{add}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void Options::add (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ name, }
-\item[{const std::string \&}]{ desc, }
-\item[{const {\bf Group\_\-type} \&}]{ group, }
-\item[{boost::function1$<$ void, T $>$ \&}]{ userFunc, }
-\item[{int}]{ required = {\ttfamily 0}}
+\item[{const std::string \&}]{name, }
+\item[{const std::string \&}]{desc, }
+\item[{const {\bf Group\_\-type} \&}]{group, }
+\item[{boost::function1$<$ void, T $>$ \&}]{userFunc, }
+\item[{int}]{required = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{classOptions_ab5ef6835170eeb2b947c6bdf7df78a86}
@@ -182,17 +192,27 @@ Function providing another way to add a typed option.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em name,:}]the name of the option \item[{\em desc,:}]brief description of the option \item[{\em group,:}]a group which option belongs to \item[{\em userFunc,:}]The user defined function (callback) command line \item[{\em required,:}]for required option \end{DoxyParams}
+{\em name,:} & the name of the option \\
+\hline
+{\em desc,:} & brief description of the option \\
+\hline
+{\em group,:} & a group which option belongs to \\
+\hline
+{\em userFunc,:} & The user defined function (callback) command line \\
+\hline
+{\em required,:} & for required option \\
+\hline
+\end{DoxyParams}
 \hypertarget{classOptions_ae5f9d2285dbdc49173c70028c2175e46}{
 \index{Options@{Options}!add@{add}}
 \index{add@{add}!Options@{Options}}
 \subsubsection[{add}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ void Options::add (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ name, }
-\item[{const std::string \&}]{ desc, }
-\item[{const {\bf Group\_\-type} \&}]{ group, }
-\item[{T \&}]{ value, }
-\item[{int}]{ required = {\ttfamily 0}}
+\item[{const std::string \&}]{name, }
+\item[{const std::string \&}]{desc, }
+\item[{const {\bf Group\_\-type} \&}]{group, }
+\item[{T \&}]{value, }
+\item[{int}]{required = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{classOptions_ae5f9d2285dbdc49173c70028c2175e46}
@@ -202,13 +222,23 @@ function provinding a way to add a typed option
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em name,:}]the name of the option \item[{\em desc,:}]brief description of the option \item[{\em group,:}]a group which option belongs to \item[{\em value,:}]the value of the option when option is provided in command line \item[{\em required,:}]for required option \end{DoxyParams}
+{\em name,:} & the name of the option \\
+\hline
+{\em desc,:} & brief description of the option \\
+\hline
+{\em group,:} & a group which option belongs to \\
+\hline
+{\em value,:} & the value of the option when option is provided in command line \\
+\hline
+{\em required,:} & for required option \\
+\hline
+\end{DoxyParams}
 \hypertarget{classOptions_ac4172898028eda1e46fc53043729906f}{
 \index{Options@{Options}!count@{count}}
 \index{count@{count}!Options@{Options}}
 \subsubsection[{count}]{\setlength{\rightskip}{0pt plus 5cm}int Options::count (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ key}
+\item[{const std::string \&}]{key}
 \end{DoxyParamCaption}
 ) const}}
 \label{classOptions_ac4172898028eda1e46fc53043729906f}
@@ -218,7 +248,9 @@ To check if an option is provided after parsing the command line.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em key,:}]The name of the option \end{DoxyParams}
+{\em key,:} & The name of the option \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The number odf occurrences of the options (0 or 1) 
 \end{DoxyReturn}
@@ -227,7 +259,7 @@ The number odf occurrences of the options (0 or 1)
 \index{get@{get}!Options@{Options}}
 \subsubsection[{get}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const T\& Options::get (
 \begin{DoxyParamCaption}
-\item[{const std::string}]{ key}
+\item[{const std::string}]{key}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{classOptions_ac38ac6753b19140073a33d2b3da5229c}
@@ -237,7 +269,9 @@ To get the value of options.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em key,:}]the name of the option \end{DoxyParams}
+{\em key,:} & the name of the option \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The value of the option 
 \end{DoxyReturn}
@@ -262,8 +296,8 @@ the configuration
 \index{parse\_\-cli@{parse\_\-cli}!Options@{Options}}
 \subsubsection[{parse\_\-cli}]{\setlength{\rightskip}{0pt plus 5cm}void Options::parse\_\-cli (
 \begin{DoxyParamCaption}
-\item[{int}]{ ac, }
-\item[{char $\ast$}]{ av\mbox{[}$\,$\mbox{]}}
+\item[{int}]{ac, }
+\item[{char $\ast$}]{av\mbox{[}$\,$\mbox{]}}
 \end{DoxyParamCaption}
 )}}
 \label{classOptions_aeccb885f4fda7fe5f7bc20672301ad40}
@@ -273,13 +307,17 @@ To parse command line.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em ac,:}]The number of parameters of the command \item[{\em av,:}]the names of all paramters \end{DoxyParams}
+{\em ac,:} & The number of parameters of the command \\
+\hline
+{\em av,:} & the names of all paramters \\
+\hline
+\end{DoxyParams}
 \hypertarget{classOptions_a2b7bc0da71a508d8b03703a045e3ee8c}{
 \index{Options@{Options}!parse\_\-env@{parse\_\-env}}
 \index{parse\_\-env@{parse\_\-env}!Options@{Options}}
 \subsubsection[{parse\_\-env}]{\setlength{\rightskip}{0pt plus 5cm}void Options::parse\_\-env (
 \begin{DoxyParamCaption}
-\item[{const {\bf func1} \&}]{ name\_\-mapper}
+\item[{const {\bf func1} \&}]{name\_\-mapper}
 \end{DoxyParamCaption}
 )}}
 \label{classOptions_a2b7bc0da71a508d8b03703a045e3ee8c}
@@ -289,14 +327,16 @@ To parse environement variable.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em name\_\-mapper,:}]a functor providing a simple name from the conventional name of the environment variable Ex: for VISHNU\_\-CONFIG\_\-FILE, it returns dietConfig \end{DoxyParams}
+{\em name\_\-mapper,:} & a functor providing a simple name from the conventional name of the environment variable Ex: for VISHNU\_\-CONFIG\_\-FILE, it returns dietConfig \\
+\hline
+\end{DoxyParams}
 \hypertarget{classOptions_ae31bd514a7a2d4386be106b7387ff2f4}{
 \index{Options@{Options}!setGroup@{setGroup}}
 \index{setGroup@{setGroup}!Options@{Options}}
 \subsubsection[{setGroup}]{\setlength{\rightskip}{0pt plus 5cm}void Options::setGroup (
 \begin{DoxyParamCaption}
-\item[{const po::options\_\-description \&}]{ tmp\_\-options, }
-\item[{const {\bf Group\_\-type} \&}]{ group}
+\item[{const po::options\_\-description \&}]{tmp\_\-options, }
+\item[{const {\bf Group\_\-type} \&}]{group}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classOptions_ae31bd514a7a2d4386be106b7387ff2f4}
@@ -306,14 +346,18 @@ a private function used to set option group
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em tmp\_\-options,:}]the set of options to group \item[{\em group}]: the group to set \end{DoxyParams}
+{\em tmp\_\-options,:} & the set of options to group \\
+\hline
+{\em group} & : the group to set \\
+\hline
+\end{DoxyParams}
 \hypertarget{classOptions_a9b4a10b364e83b45976720d2e4b3b5b8}{
 \index{Options@{Options}!setPosition@{setPosition}}
 \index{setPosition@{setPosition}!Options@{Options}}
 \subsubsection[{setPosition}]{\setlength{\rightskip}{0pt plus 5cm}void Options::setPosition (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ name, }
-\item[{int}]{ pos}
+\item[{const std::string \&}]{name, }
+\item[{int}]{pos}
 \end{DoxyParamCaption}
 )}}
 \label{classOptions_a9b4a10b364e83b45976720d2e4b3b5b8}
@@ -323,7 +367,11 @@ To set position of options.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em name,:}]the name of the option \item[{\em pos}]: the required position \end{DoxyParams}
+{\em name,:} & the name of the option \\
+\hline
+{\em pos} & : the required position \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Friends And Related Function Documentation}
@@ -332,8 +380,8 @@ To set position of options.
 \index{operator$<$$<$@{operator$<$$<$}!Options@{Options}}
 \subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
 \begin{DoxyParamCaption}
-\item[{std::ostream \&}]{ os, }
-\item[{const {\bf Options} \&}]{ opt}
+\item[{std::ostream \&}]{os, }
+\item[{const {\bf Options} \&}]{opt}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}friend\mbox{]}}}}
 \label{classOptions_ae15f68171e057fc044838a8b66a029a0}
@@ -343,7 +391,11 @@ to print the set of options allowed by a command
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em os,:}]Where options wiil be printed. \item[{\em opt,:}]the options to print. \end{DoxyParams}
+{\em os,:} & Where options wiil be printed. \\
+\hline
+{\em opt,:} & the options to print. \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the stream where the options are printed. 
 \end{DoxyReturn}

@@ -183,10 +183,9 @@ class FileProxy {
 
     /**
      * \brief To create a new directory
-     * \param mode the access permission of the directory
+     * \param options the directory creation options
      * \return 0 if the command succeeds, an error code otherwise
      */ 
-    //virtual int mkdir(const mode_t mode=defaultDirectoryAccessMode) = 0;
     virtual int mkdir(const CreateDirOptions& options) = 0;
 
     /**

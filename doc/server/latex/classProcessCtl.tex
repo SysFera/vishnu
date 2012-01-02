@@ -42,9 +42,7 @@ void \hyperlink{classProcessCtl_a573af8bdace41dc46472acadf7e222d7}{loadShed} (in
 void \hyperlink{classProcessCtl_af8eebb6eb14d7b02a452e27e9d146313}{stopAll} ()}
 \label{classProcessCtl_af8eebb6eb14d7b02a452e27e9d146313}
 
-\begin{DoxyCompactList}\small\item\em To stop all the vishnu processes on a machine. \item\end{DoxyCompactList}\item 
-void \hyperlink{classProcessCtl_a4a3c0f9f5ad25f02745b37abc7c33778}{createFile} (string \&dest, IMS\_\-Data::Process\_\-ptr p, bool loc)
-\begin{DoxyCompactList}\small\item\em To create the file for the restart function. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em To stop all the vishnu processes on a machine. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -74,30 +72,12 @@ string \hyperlink{classProcessCtl_a3e7e5466d92085a7bc4904336f54c8dc}{mmid}}
 Class dealing wwith the control of the processes. 
 
 \subsection{Member Function Documentation}
-\hypertarget{classProcessCtl_a4a3c0f9f5ad25f02745b37abc7c33778}{
-\index{ProcessCtl@{ProcessCtl}!createFile@{createFile}}
-\index{createFile@{createFile}!ProcessCtl@{ProcessCtl}}
-\subsubsection[{createFile}]{\setlength{\rightskip}{0pt plus 5cm}void ProcessCtl::createFile (
-\begin{DoxyParamCaption}
-\item[{string \&}]{ dest, }
-\item[{IMS\_\-Data::Process\_\-ptr}]{ p, }
-\item[{bool}]{ loc}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classProcessCtl_a4a3c0f9f5ad25f02745b37abc7c33778}
-
-
-To create the file for the restart function. 
-
-
-\begin{DoxyParams}{Parameters}
-\item[{\em dest,:}]The destination file (inout) \item[{\em p,:}]The process containing the script \item[{\em loc,:}]If the process is local \end{DoxyParams}
 \hypertarget{classProcessCtl_a38209177f745d65ea63f843cd1cc2ad8}{
 \index{ProcessCtl@{ProcessCtl}!isIMSSeD@{isIMSSeD}}
 \index{isIMSSeD@{isIMSSeD}!ProcessCtl@{ProcessCtl}}
 \subsubsection[{isIMSSeD}]{\setlength{\rightskip}{0pt plus 5cm}bool ProcessCtl::isIMSSeD (
 \begin{DoxyParamCaption}
-\item[{string}]{ Pname}
+\item[{string}]{Pname}
 \end{DoxyParamCaption}
 )}}
 \label{classProcessCtl_a38209177f745d65ea63f843cd1cc2ad8}
@@ -107,7 +87,9 @@ Return true if the process with a diet name Pname is of type IMS.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em Pname,:}]DIET name of the process \end{DoxyParams}
+{\em Pname,:} & DIET name of the process \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 True if Pname represents an IMS SeD 
 \end{DoxyReturn}
@@ -116,21 +98,23 @@ True if Pname represents an IMS SeD
 \index{loadShed@{loadShed}!ProcessCtl@{ProcessCtl}}
 \subsubsection[{loadShed}]{\setlength{\rightskip}{0pt plus 5cm}void ProcessCtl::loadShed (
 \begin{DoxyParamCaption}
-\item[{int}]{ type}
+\item[{int}]{type}
 \end{DoxyParamCaption}
 )}}
 \label{classProcessCtl_a573af8bdace41dc46472acadf7e222d7}
 To perform load schedding operations 
 \begin{DoxyParams}{Parameters}
-\item[{\em type,:}]The type of loadShedding \end{DoxyParams}
+{\em type,:} & The type of loadShedding \\
+\hline
+\end{DoxyParams}
 \hypertarget{classProcessCtl_a7dbb1bba78af73d111d81d6f109bbd1a}{
 \index{ProcessCtl@{ProcessCtl}!restart@{restart}}
 \index{restart@{restart}!ProcessCtl@{ProcessCtl}}
 \subsubsection[{restart}]{\setlength{\rightskip}{0pt plus 5cm}void ProcessCtl::restart (
 \begin{DoxyParamCaption}
-\item[{IMS\_\-Data::RestartOp\_\-ptr}]{ op, }
-\item[{string}]{ machineTo, }
-\item[{bool}]{ isAPI = {\ttfamily true}}
+\item[{IMS\_\-Data::RestartOp\_\-ptr}]{op, }
+\item[{string}]{machineTo, }
+\item[{bool}]{isAPI = {\ttfamily true}}
 \end{DoxyParamCaption}
 )}}
 \label{classProcessCtl_a7dbb1bba78af73d111d81d6f109bbd1a}
@@ -140,7 +124,13 @@ To relaunch a process.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em op,:}]\hyperlink{classOptions}{Options} for restarting \item[{\em machineTo,:}]the host of the process \item[{\em isAPI,:}]If called with the external API or not \end{DoxyParams}
+{\em op,:} & \hyperlink{classOptions}{Options} for restarting \\
+\hline
+{\em machineTo,:} & the host of the process \\
+\hline
+{\em isAPI,:} & If called with the external API or not \\
+\hline
+\end{DoxyParams}
 
 
 The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}

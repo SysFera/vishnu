@@ -98,7 +98,7 @@ int \hyperlink{classFileTransferServer_ae831f9f5ee7af30669bd7e79e213d964}{mvishn
 \hyperlink{classFile_a6b5e0e4ca04b9983349e02866ff1c659}{File::TransferType} \hyperlink{classFileTransferServer_a25140701b4a3fd9e4687e6e526f7c8ce}{mtransferType}}
 \label{classFileTransferServer_a25140701b4a3fd9e4687e6e526f7c8ce}
 
-\begin{DoxyCompactList}\small\item\em The file transfer type (copy or move). \item\end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em The file transfer type (copy or move) \item\end{DoxyCompactList}\item 
 \hypertarget{classFileTransferServer_ae7657882a53251ad9d52713ed0891ff6}{
 boost::thread \hyperlink{classFileTransferServer_ae7657882a53251ad9d52713ed0891ff6}{mthread}}
 \label{classFileTransferServer_ae7657882a53251ad9d52713ed0891ff6}
@@ -143,8 +143,8 @@ The main class to handle file transfer.
 \index{FileTransferServer@{FileTransferServer}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{FileTransferServer}]{\setlength{\rightskip}{0pt plus 5cm}FileTransferServer::FileTransferServer (
 \begin{DoxyParamCaption}
-\item[{const {\bf SessionServer} \&}]{ sessionServer, }
-\item[{const int \&}]{ vishnuId}
+\item[{const {\bf SessionServer} \&}]{sessionServer, }
+\item[{const int \&}]{vishnuId}
 \end{DoxyParamCaption}
 )}}
 \label{classFileTransferServer_a77efa82bd50ff9948b405be91f6abeb7}
@@ -154,18 +154,22 @@ A constructor by value.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em sessionServer}]a session server object \item[{\em vishnuId}]The vishnu instance identifier \end{DoxyParams}
+{\em sessionServer} & a session server object \\
+\hline
+{\em vishnuId} & The vishnu instance identifier \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFileTransferServer_aaac9cbbc17f04ff77957adbabeaa958f}{
 \index{FileTransferServer@{FileTransferServer}!FileTransferServer@{FileTransferServer}}
 \index{FileTransferServer@{FileTransferServer}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{FileTransferServer}]{\setlength{\rightskip}{0pt plus 5cm}FileTransferServer::FileTransferServer (
 \begin{DoxyParamCaption}
-\item[{const {\bf SessionServer} \&}]{ sessionServer, }
-\item[{const std::string \&}]{ srcHost, }
-\item[{const std::string \&}]{ destHost, }
-\item[{const std::string \&}]{ srcFilePath, }
-\item[{const std::string \&}]{ destFilePath, }
-\item[{const int \&}]{ vishnuId}
+\item[{const {\bf SessionServer} \&}]{sessionServer, }
+\item[{const std::string \&}]{srcHost, }
+\item[{const std::string \&}]{destHost, }
+\item[{const std::string \&}]{srcFilePath, }
+\item[{const std::string \&}]{destFilePath, }
+\item[{const int \&}]{vishnuId}
 \end{DoxyParamCaption}
 )}}
 \label{classFileTransferServer_aaac9cbbc17f04ff77957adbabeaa958f}
@@ -175,7 +179,19 @@ Another constructor by value.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em sessionServer}]a session server object \item[{\em srcHost}]the source host \item[{\em destHost}]the destination host \item[{\em srcFilePath}]the source file path \item[{\em destFilePath}]the destination file path \item[{\em vishnuId}]the vishnu identifier \end{DoxyParams}
+{\em sessionServer} & a session server object \\
+\hline
+{\em srcHost} & the source host \\
+\hline
+{\em destHost} & the destination host \\
+\hline
+{\em srcFilePath} & the source file path \\
+\hline
+{\em destFilePath} & the destination file path \\
+\hline
+{\em vishnuId} & the vishnu identifier \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -184,12 +200,12 @@ Another constructor by value.
 \index{addCpAsyncThread@{addCpAsyncThread}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{addCpAsyncThread}]{\setlength{\rightskip}{0pt plus 5cm}int FileTransferServer::addCpAsyncThread (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ srcUser, }
-\item[{const std::string \&}]{ srcMachineName, }
-\item[{const std::string \&}]{ srcUserKey, }
-\item[{const std::string \&}]{ destUser, }
-\item[{const std::string \&}]{ destMachineName, }
-\item[{const FMS\_\-Data::CpFileOptions \&}]{ options}
+\item[{const std::string \&}]{srcUser, }
+\item[{const std::string \&}]{srcMachineName, }
+\item[{const std::string \&}]{srcUserKey, }
+\item[{const std::string \&}]{destUser, }
+\item[{const std::string \&}]{destMachineName, }
+\item[{const FMS\_\-Data::CpFileOptions \&}]{options}
 \end{DoxyParamCaption}
 )}}
 \label{classFileTransferServer_ac7c5eee613fd0ba56c69fb1372ed6909}
@@ -199,7 +215,19 @@ To add a new asynchronous copy thread.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em srcUser}]the source user \item[{\em srcMachineName}]the source host \item[{\em srcUserKey}]the source user private key path \item[{\em destUser}]the destination user \item[{\em destMachineName}]the destination machine name \item[{\em options}]the transfer options \end{DoxyParams}
+{\em srcUser} & the source user \\
+\hline
+{\em srcMachineName} & the source host \\
+\hline
+{\em srcUserKey} & the source user private key path \\
+\hline
+{\em destUser} & the destination user \\
+\hline
+{\em destMachineName} & the destination machine name \\
+\hline
+{\em options} & the transfer options \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the service succeeds or an error code otherwise 
 \end{DoxyReturn}
@@ -208,12 +236,12 @@ To add a new asynchronous copy thread.
 \index{addCpThread@{addCpThread}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{addCpThread}]{\setlength{\rightskip}{0pt plus 5cm}int FileTransferServer::addCpThread (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ srcUser, }
-\item[{const std::string \&}]{ srcMachineName, }
-\item[{const std::string \&}]{ srcUserKey, }
-\item[{const std::string \&}]{ destUser, }
-\item[{const std::string \&}]{ destMachineName, }
-\item[{const FMS\_\-Data::CpFileOptions \&}]{ options}
+\item[{const std::string \&}]{srcUser, }
+\item[{const std::string \&}]{srcMachineName, }
+\item[{const std::string \&}]{srcUserKey, }
+\item[{const std::string \&}]{destUser, }
+\item[{const std::string \&}]{destMachineName, }
+\item[{const FMS\_\-Data::CpFileOptions \&}]{options}
 \end{DoxyParamCaption}
 )}}
 \label{classFileTransferServer_a907124bdf656c0ba203d642414503f2f}
@@ -223,7 +251,19 @@ To add a new copy thread.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em srcUser}]the source user \item[{\em srcMachineName}]the source host \item[{\em srcUserKey}]the source user private key path \item[{\em destUser}]the destination user \item[{\em destMachineName}]the destination machine name \item[{\em options}]the transfer options \end{DoxyParams}
+{\em srcUser} & the source user \\
+\hline
+{\em srcMachineName} & the source host \\
+\hline
+{\em srcUserKey} & the source user private key path \\
+\hline
+{\em destUser} & the destination user \\
+\hline
+{\em destMachineName} & the destination machine name \\
+\hline
+{\em options} & the transfer options \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the service succeeds or an error code otherwise 
 \end{DoxyReturn}
@@ -232,12 +272,12 @@ To add a new copy thread.
 \index{addMvAsyncThread@{addMvAsyncThread}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{addMvAsyncThread}]{\setlength{\rightskip}{0pt plus 5cm}int FileTransferServer::addMvAsyncThread (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ srcUser, }
-\item[{const std::string \&}]{ srcMachineName, }
-\item[{const std::string \&}]{ srcUserKey, }
-\item[{const std::string \&}]{ destUser, }
-\item[{const std::string \&}]{ destMachineName, }
-\item[{const FMS\_\-Data::CpFileOptions \&}]{ options}
+\item[{const std::string \&}]{srcUser, }
+\item[{const std::string \&}]{srcMachineName, }
+\item[{const std::string \&}]{srcUserKey, }
+\item[{const std::string \&}]{destUser, }
+\item[{const std::string \&}]{destMachineName, }
+\item[{const FMS\_\-Data::CpFileOptions \&}]{options}
 \end{DoxyParamCaption}
 )}}
 \label{classFileTransferServer_a6693b9cedb08cca79ea0e8ea42531ae0}
@@ -247,7 +287,19 @@ To add a new asynchronous move thread.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em srcUser}]the source user \item[{\em srcMachineName}]the source host \item[{\em srcUserKey}]the source user private key path \item[{\em destUser}]the destination user \item[{\em destMachineName}]the destination machine name \item[{\em options}]the transfer options \end{DoxyParams}
+{\em srcUser} & the source user \\
+\hline
+{\em srcMachineName} & the source host \\
+\hline
+{\em srcUserKey} & the source user private key path \\
+\hline
+{\em destUser} & the destination user \\
+\hline
+{\em destMachineName} & the destination machine name \\
+\hline
+{\em options} & the transfer options \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the service succeeds or an error code otherwise 
 \end{DoxyReturn}
@@ -256,12 +308,12 @@ To add a new asynchronous move thread.
 \index{addMvThread@{addMvThread}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{addMvThread}]{\setlength{\rightskip}{0pt plus 5cm}int FileTransferServer::addMvThread (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ srcUser, }
-\item[{const std::string \&}]{ srcMachineName, }
-\item[{const std::string \&}]{ srcUserKey, }
-\item[{const std::string \&}]{ destUser, }
-\item[{const std::string \&}]{ destMachineName, }
-\item[{const FMS\_\-Data::CpFileOptions \&}]{ options}
+\item[{const std::string \&}]{srcUser, }
+\item[{const std::string \&}]{srcMachineName, }
+\item[{const std::string \&}]{srcUserKey, }
+\item[{const std::string \&}]{destUser, }
+\item[{const std::string \&}]{destMachineName, }
+\item[{const FMS\_\-Data::CpFileOptions \&}]{options}
 \end{DoxyParamCaption}
 )}}
 \label{classFileTransferServer_a1d17c8438d3b18e1064b9389772a0dc2}
@@ -271,7 +323,19 @@ To add a new move thread.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em srcUser}]the source user \item[{\em srcMachineName}]the source host \item[{\em srcUserKey}]the source user private key path \item[{\em destUser}]the destination user \item[{\em destMachineName}]the destination machine name \item[{\em options}]the transfer options \end{DoxyParams}
+{\em srcUser} & the source user \\
+\hline
+{\em srcMachineName} & the source host \\
+\hline
+{\em srcUserKey} & the source user private key path \\
+\hline
+{\em destUser} & the destination user \\
+\hline
+{\em destMachineName} & the destination machine name \\
+\hline
+{\em options} & the transfer options \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the service succeeds or an error code otherwise 
 \end{DoxyReturn}
@@ -280,9 +344,9 @@ To add a new move thread.
 \index{addOptionRequest@{addOptionRequest}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{addOptionRequest}]{\setlength{\rightskip}{0pt plus 5cm}static void FileTransferServer::addOptionRequest (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ name, }
-\item[{const std::string \&}]{ value, }
-\item[{std::string \&}]{ request}
+\item[{const std::string \&}]{name, }
+\item[{const std::string \&}]{value, }
+\item[{std::string \&}]{request}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
 \label{classFileTransferServer_a50d3535fc7434b2d94b4e70256fe752f}
@@ -292,18 +356,24 @@ To add options to sql request.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em name}]the option name \item[{\em value}]the option value \item[{\em request}]the sql request to modify \end{DoxyParams}
+{\em name} & the option name \\
+\hline
+{\em value} & the option value \\
+\hline
+{\em request} & the sql request to modify \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFileTransferServer_a865f8450b3fcf73b7596c04bd51bbcb0}{
 \index{FileTransferServer@{FileTransferServer}!addTransferThread@{addTransferThread}}
 \index{addTransferThread@{addTransferThread}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{addTransferThread}]{\setlength{\rightskip}{0pt plus 5cm}int FileTransferServer::addTransferThread (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ srcUser, }
-\item[{const std::string \&}]{ srcMachineName, }
-\item[{const std::string \&}]{ srcUserKey, }
-\item[{const std::string \&}]{ destUser, }
-\item[{const std::string \&}]{ destMachineName, }
-\item[{const FMS\_\-Data::CpFileOptions \&}]{ options}
+\item[{const std::string \&}]{srcUser, }
+\item[{const std::string \&}]{srcMachineName, }
+\item[{const std::string \&}]{srcUserKey, }
+\item[{const std::string \&}]{destUser, }
+\item[{const std::string \&}]{destMachineName, }
+\item[{const FMS\_\-Data::CpFileOptions \&}]{options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classFileTransferServer_a865f8450b3fcf73b7596c04bd51bbcb0}
@@ -313,7 +383,19 @@ acommon add transfer function used by the other add transfer function
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em srcUser}]the source user \item[{\em srcMachineName}]the source host \item[{\em srcUserKey}]the source user private key path \item[{\em destUser}]the destination user \item[{\em destMachineName}]the destination machine name \item[{\em options}]the transfer options \end{DoxyParams}
+{\em srcUser} & the source user \\
+\hline
+{\em srcMachineName} & the source host \\
+\hline
+{\em srcUserKey} & the source user private key path \\
+\hline
+{\em destUser} & the destination user \\
+\hline
+{\em destMachineName} & the destination machine name \\
+\hline
+{\em options} & the transfer options \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the service succeeds or an error code otherwise 
 \end{DoxyReturn}
@@ -322,7 +404,7 @@ acommon add transfer function used by the other add transfer function
 \index{checkTransferId@{checkTransferId}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{checkTransferId}]{\setlength{\rightskip}{0pt plus 5cm}static void FileTransferServer::checkTransferId (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ transferId}
+\item[{std::string}]{transferId}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
 \label{classFileTransferServer_a73de2897fd2e10695fc8cbfa0a1f4446}
@@ -332,13 +414,15 @@ To check if the transfer identifier exists.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em transferId}]the transfer identifier \end{DoxyParams}
+{\em transferId} & the transfer identifier \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFileTransferServer_af0dbce6cdaeaf7fd5df4cd19c9b51222}{
 \index{FileTransferServer@{FileTransferServer}!checkUserId@{checkUserId}}
 \index{checkUserId@{checkUserId}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{checkUserId}]{\setlength{\rightskip}{0pt plus 5cm}static void FileTransferServer::checkUserId (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ userId}
+\item[{std::string}]{userId}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
 \label{classFileTransferServer_af0dbce6cdaeaf7fd5df4cd19c9b51222}
@@ -348,13 +432,15 @@ To check if the user identifier exists.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em userId}]the user identifier \end{DoxyParams}
+{\em userId} & the user identifier \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFileTransferServer_a6ee07b8fe009fe330bee05339f1b0b1d}{
 \index{FileTransferServer@{FileTransferServer}!cleanOutputMsg@{cleanOutputMsg}}
 \index{cleanOutputMsg@{cleanOutputMsg}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{cleanOutputMsg}]{\setlength{\rightskip}{0pt plus 5cm}static std::string FileTransferServer::cleanOutputMsg (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ outputMsg}
+\item[{const std::string \&}]{outputMsg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
 \label{classFileTransferServer_a6ee07b8fe009fe330bee05339f1b0b1d}
@@ -364,7 +450,9 @@ A helper function to clean output message from verbosity.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em outputMsg}]the output message \end{DoxyParams}
+{\em outputMsg} & the output message \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the cleaned output message 
 \end{DoxyReturn}
@@ -373,8 +461,8 @@ the cleaned output message
 \index{copy@{copy}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{copy}]{\setlength{\rightskip}{0pt plus 5cm}void FileTransferServer::copy (
 \begin{DoxyParamCaption}
-\item[{const {\bf TransferExec} \&}]{ transferExec, }
-\item[{const std::string \&}]{ trCmd}
+\item[{const {\bf TransferExec} \&}]{transferExec, }
+\item[{const std::string \&}]{trCmd}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classFileTransferServer_aa791e828eb3aa23f3935273bed57af3b}
@@ -384,13 +472,17 @@ To perform a copy transfer.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em transferExec}]the information about the transfer \item[{\em trCmd}]the transfer command \end{DoxyParams}
+{\em transferExec} & the information about the transfer \\
+\hline
+{\em trCmd} & the transfer command \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFileTransferServer_a97fb412a9ccaedab645d1ee13376cd4f}{
 \index{FileTransferServer@{FileTransferServer}!filterString@{filterString}}
 \index{filterString@{filterString}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{filterString}]{\setlength{\rightskip}{0pt plus 5cm}static std::string FileTransferServer::filterString (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ toFilter}
+\item[{const std::string \&}]{toFilter}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
 \label{classFileTransferServer_a97fb412a9ccaedab645d1ee13376cd4f}
@@ -400,7 +492,9 @@ To remove some characters from string.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em toFilter}]the string to filter \end{DoxyParams}
+{\em toFilter} & the string to filter \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cleaned string 
 \end{DoxyReturn}
@@ -425,7 +519,7 @@ the database instance
 \index{getErrorFromDatabase@{getErrorFromDatabase}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{getErrorFromDatabase}]{\setlength{\rightskip}{0pt plus 5cm}static std::string FileTransferServer::getErrorFromDatabase (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ transferid}
+\item[{const std::string \&}]{transferid}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
 \label{classFileTransferServer_a45145cc8d6a5ef953ec040f834efa609}
@@ -435,7 +529,9 @@ Get an error execution of file transfer from database.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em transferid}]the transfer identifier \end{DoxyParams}
+{\em transferid} & the transfer identifier \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the error message 
 \end{DoxyReturn}
@@ -492,8 +588,8 @@ the ssh port
 \index{getUserInfo@{getUserInfo}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{getUserInfo}]{\setlength{\rightskip}{0pt plus 5cm}void FileTransferServer::getUserInfo (
 \begin{DoxyParamCaption}
-\item[{std::string \&}]{ name, }
-\item[{std::string \&}]{ userId}
+\item[{std::string \&}]{name, }
+\item[{std::string \&}]{userId}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classFileTransferServer_ab150718ba4db1dd89a398f8a97325872}
@@ -503,14 +599,18 @@ To get the client machine name and userId from database.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em name}]to store the client machine name \item[{\em userId}]to store the userId \end{DoxyParams}
+{\em name} & to store the client machine name \\
+\hline
+{\em userId} & to store the userId \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFileTransferServer_a2c1a6715aa823eb3cda6f7bb044628dc}{
 \index{FileTransferServer@{FileTransferServer}!logIntoDatabase@{logIntoDatabase}}
 \index{logIntoDatabase@{logIntoDatabase}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{logIntoDatabase}]{\setlength{\rightskip}{0pt plus 5cm}void FileTransferServer::logIntoDatabase (
 \begin{DoxyParamCaption}
-\item[{int}]{ processId = {\ttfamily -\/1}, }
-\item[{const std::string \&}]{ errorMsg = {\ttfamily \char`\"{}\char`\"{}}}
+\item[{int}]{processId = {\ttfamily -\/1}, }
+\item[{const std::string \&}]{errorMsg = {\ttfamily \char`\"{}\char`\"{}}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classFileTransferServer_a2c1a6715aa823eb3cda6f7bb044628dc}
@@ -520,14 +620,18 @@ To store file transfer information into database.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em processId}]the transfer process identifier \item[{\em errorMsg}]the eventual file transfer execution error message \end{DoxyParams}
+{\em processId} & the transfer process identifier \\
+\hline
+{\em errorMsg} & the eventual file transfer execution error message \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFileTransferServer_a0825a813c09aaa4c63de51716ac440fd}{
 \index{FileTransferServer@{FileTransferServer}!move@{move}}
 \index{move@{move}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{move}]{\setlength{\rightskip}{0pt plus 5cm}void FileTransferServer::move (
 \begin{DoxyParamCaption}
-\item[{const {\bf TransferExec} \&}]{ transferExec, }
-\item[{const std::string \&}]{ trCmd}
+\item[{const {\bf TransferExec} \&}]{transferExec, }
+\item[{const std::string \&}]{trCmd}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classFileTransferServer_a0825a813c09aaa4c63de51716ac440fd}
@@ -537,14 +641,18 @@ To perform a move transfer.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em transferExec}]the information about the transfer \item[{\em trCmd}]the transfer command \end{DoxyParams}
+{\em transferExec} & the information about the transfer \\
+\hline
+{\em trCmd} & the transfer command \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFileTransferServer_a4f086a80ff1a621709b6c153bdabc5b5}{
 \index{FileTransferServer@{FileTransferServer}!processOptions@{processOptions}}
 \index{processOptions@{processOptions}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{processOptions}]{\setlength{\rightskip}{0pt plus 5cm}void FileTransferServer::processOptions (
 \begin{DoxyParamCaption}
-\item[{const FMS\_\-Data::StopTransferOptions \&}]{ options, }
-\item[{std::string \&}]{ sqlRequest}
+\item[{const FMS\_\-Data::StopTransferOptions \&}]{options, }
+\item[{std::string \&}]{sqlRequest}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classFileTransferServer_a4f086a80ff1a621709b6c153bdabc5b5}
@@ -554,13 +662,17 @@ To process database query options.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em options}]the stop options \item[{\em sqlRequest}]the sql request \end{DoxyParams}
+{\em options} & the stop options \\
+\hline
+{\em sqlRequest} & the sql request \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFileTransferServer_a9b1c4473cbfda5b90ef0e245fea1967a}{
 \index{FileTransferServer@{FileTransferServer}!setFileTransfer@{setFileTransfer}}
 \index{setFileTransfer@{setFileTransfer}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{setFileTransfer}]{\setlength{\rightskip}{0pt plus 5cm}void FileTransferServer::setFileTransfer (
 \begin{DoxyParamCaption}
-\item[{const FMS\_\-Data::FileTransfer \&}]{ fileTransfer}
+\item[{const FMS\_\-Data::FileTransfer \&}]{fileTransfer}
 \end{DoxyParamCaption}
 ) const}}
 \label{classFileTransferServer_a9b1c4473cbfda5b90ef0e245fea1967a}
@@ -570,13 +682,15 @@ Update The file transfer information.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em fileTransfer}]The new file transfer information \end{DoxyParams}
+{\em fileTransfer} & The new file transfer information \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFileTransferServer_a8cb07d4d9d4235dabcc333c9f6bdff03}{
 \index{FileTransferServer@{FileTransferServer}!setSSHCommand@{setSSHCommand}}
 \index{setSSHCommand@{setSSHCommand}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{setSSHCommand}]{\setlength{\rightskip}{0pt plus 5cm}static void FileTransferServer::setSSHCommand (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ sshCommand}
+\item[{const std::string \&}]{sshCommand}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
 \label{classFileTransferServer_a8cb07d4d9d4235dabcc333c9f6bdff03}
@@ -586,13 +700,15 @@ Update the ssh command.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em sshCommand}]The new ssh command \end{DoxyParams}
+{\em sshCommand} & The new ssh command \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFileTransferServer_a9508d87be5880b7dc3fba61738815e70}{
 \index{FileTransferServer@{FileTransferServer}!setSSHPort@{setSSHPort}}
 \index{setSSHPort@{setSSHPort}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{setSSHPort}]{\setlength{\rightskip}{0pt plus 5cm}static void FileTransferServer::setSSHPort (
 \begin{DoxyParamCaption}
-\item[{const unsigned int}]{ sshPort}
+\item[{const unsigned int}]{sshPort}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
 \label{classFileTransferServer_a9508d87be5880b7dc3fba61738815e70}
@@ -602,14 +718,16 @@ Update the ssh port.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em sshPort}]The new ssh port \end{DoxyParams}
+{\em sshPort} & The new ssh port \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFileTransferServer_a9a2974fdbd80f765d3727ed74e38c9b7}{
 \index{FileTransferServer@{FileTransferServer}!stopThread@{stopThread}}
 \index{stopThread@{stopThread}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{stopThread}]{\setlength{\rightskip}{0pt plus 5cm}int FileTransferServer::stopThread (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ transferid, }
-\item[{const int \&}]{ pid}
+\item[{const std::string \&}]{transferid, }
+\item[{const int \&}]{pid}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classFileTransferServer_a9a2974fdbd80f765d3727ed74e38c9b7}
@@ -619,7 +737,11 @@ To stop a transfer.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em transferid}]the transfer identifier \item[{\em pid}]the transfer process identifier \end{DoxyParams}
+{\em transferid} & the transfer identifier \\
+\hline
+{\em pid} & the transfer process identifier \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the process succeeds or an error code otherwise 
 \end{DoxyReturn}
@@ -628,7 +750,7 @@ To stop a transfer.
 \index{stopThread@{stopThread}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{stopThread}]{\setlength{\rightskip}{0pt plus 5cm}int FileTransferServer::stopThread (
 \begin{DoxyParamCaption}
-\item[{const StopTransferOptions \&}]{ options}
+\item[{const StopTransferOptions \&}]{options}
 \end{DoxyParamCaption}
 )}}
 \label{classFileTransferServer_a6fefd4ae4019a033f4752ef6f887e260}
@@ -638,7 +760,9 @@ To stop a file transfer thread.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em options}]the stop file transfer options \end{DoxyParams}
+{\em options} & the stop file transfer options \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the service succeeds or an error code otherwise 
 \end{DoxyReturn}
@@ -647,9 +771,9 @@ To stop a file transfer thread.
 \index{updateStatus@{updateStatus}!FileTransferServer@{FileTransferServer}}
 \subsubsection[{updateStatus}]{\setlength{\rightskip}{0pt plus 5cm}void FileTransferServer::updateStatus (
 \begin{DoxyParamCaption}
-\item[{const FMS\_\-Data::Status \&}]{ status, }
-\item[{const std::string \&}]{ transferId, }
-\item[{const std::string \&}]{ errorMsg}
+\item[{const FMS\_\-Data::Status \&}]{status, }
+\item[{const std::string \&}]{transferId, }
+\item[{const std::string \&}]{errorMsg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classFileTransferServer_a05bff800da5a38808ccd9396d02ddd52}
@@ -659,7 +783,13 @@ To Update file transfer data in database.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em status}]the last execution status \item[{\em transferId}]the transfer identifier \item[{\em errorMsg}]the eventual file transfer execution error message \end{DoxyParams}
+{\em status} & the last execution status \\
+\hline
+{\em transferId} & the transfer identifier \\
+\hline
+{\em errorMsg} & the eventual file transfer execution error message \\
+\hline
+\end{DoxyParams}
 
 
 The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}

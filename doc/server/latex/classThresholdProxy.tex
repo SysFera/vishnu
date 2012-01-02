@@ -44,7 +44,7 @@ int \hyperlink{classThresholdProxy_a4a7f8f2ca78023a7d5f91cb6f3957e85}{getSystemT
 \index{ThresholdProxy@{ThresholdProxy}!ThresholdProxy@{ThresholdProxy}}
 \subsubsection[{ThresholdProxy}]{\setlength{\rightskip}{0pt plus 5cm}ThresholdProxy::ThresholdProxy (
 \begin{DoxyParamCaption}
-\item[{const {\bf SessionProxy} \&}]{ session}
+\item[{const {\bf SessionProxy} \&}]{session}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
 \label{classThresholdProxy_a8851fa85704fd78a21577a1a10e95487}
@@ -54,7 +54,9 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em session}]The object which encapsulates the session information \end{DoxyParams}
+{\em session} & The object which encapsulates the session information \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -63,8 +65,8 @@ Constructor.
 \index{getSystemThreshold@{getSystemThreshold}!ThresholdProxy@{ThresholdProxy}}
 \subsubsection[{getSystemThreshold}]{\setlength{\rightskip}{0pt plus 5cm}int ThresholdProxy::getSystemThreshold (
 \begin{DoxyParamCaption}
-\item[{IMS\_\-Data::ListThreshold \&}]{ listSysThreshold, }
-\item[{const IMS\_\-Data::ThresholdOp \&}]{ options}
+\item[{IMS\_\-Data::ListThreshold \&}]{listSysThreshold, }
+\item[{const IMS\_\-Data::ThresholdOp \&}]{options}
 \end{DoxyParamCaption}
 )}}
 \label{classThresholdProxy_a4a7f8f2ca78023a7d5f91cb6f3957e85}
@@ -74,7 +76,11 @@ Function to get a system threshold.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em options}]the options data structure to get system threshold \item[{\em listSysThreshold}]the list of system threshold returned \end{DoxyParams}
+{\em options} & the options data structure to get system threshold \\
+\hline
+{\em listSysThreshold} & the list of system threshold returned \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -83,7 +89,7 @@ raises an exception on error
 \index{setSystemThreshold@{setSystemThreshold}!ThresholdProxy@{ThresholdProxy}}
 \subsubsection[{setSystemThreshold}]{\setlength{\rightskip}{0pt plus 5cm}void ThresholdProxy::setSystemThreshold (
 \begin{DoxyParamCaption}
-\item[{IMS\_\-Data::Threshold}]{ systemThreshold}
+\item[{IMS\_\-Data::Threshold}]{systemThreshold}
 \end{DoxyParamCaption}
 )}}
 \label{classThresholdProxy_a3d1e8d6d4e1aaafd97cf75ba0e66b2c9}
@@ -93,7 +99,9 @@ Function to set a system threshold.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em systemThreshold}]the system threshold \end{DoxyParams}
+{\em systemThreshold} & the system threshold \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}

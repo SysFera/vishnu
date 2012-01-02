@@ -52,9 +52,9 @@ This class represents the class to parse the cli.
 \index{CLICmd@{CLICmd}!CLICmd@{CLICmd}}
 \subsubsection[{CLICmd}]{\setlength{\rightskip}{0pt plus 5cm}CLICmd::CLICmd (
 \begin{DoxyParamCaption}
-\item[{int}]{ argc, }
-\item[{char $\ast$$\ast$}]{ argv, }
-\item[{boost::shared\_\-ptr$<$ {\bf Options} $>$}]{ op}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv, }
+\item[{boost::shared\_\-ptr$<$ {\bf Options} $>$}]{op}
 \end{DoxyParamCaption}
 )}}
 \label{classCLICmd_a574259371aeb8b67f3b83a4e0c477255}
@@ -64,7 +64,13 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em argc,:}]argc from C program \item[{\em argv,:}]argv from C program \item[{\em op,:}]Option to fill (OUT) \end{DoxyParams}
+{\em argc,:} & argc from C program \\
+\hline
+{\em argv,:} & argv from C program \\
+\hline
+{\em op,:} & Option to fill (OUT) \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -73,7 +79,7 @@ Constructor.
 \index{parse@{parse}!CLICmd@{CLICmd}}
 \subsubsection[{parse}]{\setlength{\rightskip}{0pt plus 5cm}int CLICmd::parse (
 \begin{DoxyParamCaption}
-\item[{const {\bf func1} \&}]{ s}
+\item[{const {\bf func1} \&}]{s}
 \end{DoxyParamCaption}
 )}}
 \label{classCLICmd_a867bca3ebdb191e644ddd4de0a4bee98}
@@ -83,7 +89,9 @@ To get all the parameters for the C++ API call.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em s,:}]The environment \end{DoxyParams}
+{\em s,:} & The environment \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 An error code depending on the success of the call 
 \end{DoxyReturn}

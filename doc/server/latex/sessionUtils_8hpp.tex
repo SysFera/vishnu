@@ -16,6 +16,7 @@ This file contains a declaration of class to handle a storage of session key.
 {\ttfamily \#include $<$boost/archive/binary\_\-oarchive.hpp$>$}\par
 {\ttfamily \#include $<$boost/serialization/list.hpp$>$}\par
 {\ttfamily \#include $<$boost/serialization/nvp.hpp$>$}\par
+{\ttfamily \#include \char`\"{}UMS\_\-Data.hpp\char`\"{}}\par
 \subsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
@@ -40,6 +41,8 @@ typedef std::list$<$ \hyperlink{classSessionEntry}{SessionEntry} $>$ \hyperlink{
 \begin{DoxyCompactList}\small\item\em helper function which which wrappes getFromFile function and ensures that all error exception is catched . \item\end{DoxyCompactList}\item 
 void \hyperlink{sessionUtils_8hpp_ae3f37a11728af1a93673b029668dc6e0}{storeLastSession} (const \hyperlink{classSessionEntry}{SessionEntry} \&session, const std::string \&terminal)
 \begin{DoxyCompactList}\small\item\em To store a the current session running in a terminal in the file. \item\end{DoxyCompactList}\item 
+void \hyperlink{sessionUtils_8hpp_a5823721c5d9b9536fddcc416fc393b08}{storeLastSession} (const UMS\_\-Data::Session \&session\_\-, int ppid)
+\begin{DoxyCompactList}\small\item\em Another function to store last session open. \item\end{DoxyCompactList}\item 
 \hyperlink{classSessionEntry}{SessionEntry} \hyperlink{sessionUtils_8hpp_a5d3fe9881f446699acee7f21c84d5d97}{getLastSession} (const std::string \&terminal)
 \item 
 void \hyperlink{sessionUtils_8hpp_af765ba0d97fc2960174a666aaf87f26b}{removeLastSession} (const std::string \&terminal)
@@ -50,6 +53,8 @@ void \hyperlink{sessionUtils_8hpp_af74f199202d5f3c6530d187229fba3d0}{storeLastSe
 \begin{DoxyCompactList}\small\item\em Another function to store last session open. \item\end{DoxyCompactList}\item 
 std::string \hyperlink{sessionUtils_8hpp_a75cb918af5ef4da1c42114cc433ac24f}{getLastSessionKey} (int ppid)
 \begin{DoxyCompactList}\small\item\em To get the last session key. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{sessionUtils_8hpp_a3e08c9dbbe17b84c4f39bcdce20b5e43}{getLastSessionId} (int ppid)
+\begin{DoxyCompactList}\small\item\em To get the last session identifier. \item\end{DoxyCompactList}\item 
 void \hyperlink{sessionUtils_8hpp_afcf5268e99579b60306a5aa21af435d7}{removeBadSessionKeyFromFile} (int ppid)
 \begin{DoxyCompactList}\small\item\em To remove the bad session keys stored in the session file. \item\end{DoxyCompactList}\item 
 bool \hyperlink{sessionUtils_8hpp_ad6ace2ec1dd5a5ba311aa49db7eb4b00}{checkBadSessionKeyError} (const \hyperlink{classVishnuException}{VishnuException} \&e)
@@ -65,7 +70,7 @@ This file contains a declaration of class to handle a storage of session key.
 \index{checkBadSessionKeyError@{checkBadSessionKeyError}!sessionUtils.hpp@{sessionUtils.hpp}}
 \subsubsection[{checkBadSessionKeyError}]{\setlength{\rightskip}{0pt plus 5cm}bool checkBadSessionKeyError (
 \begin{DoxyParamCaption}
-\item[{const {\bf VishnuException} \&}]{ e}
+\item[{const {\bf VishnuException} \&}]{e}
 \end{DoxyParamCaption}
 )}}
 \label{sessionUtils_8hpp_ad6ace2ec1dd5a5ba311aa49db7eb4b00}
@@ -75,7 +80,9 @@ A helper function which check if an given exception represents a bad sessionKey.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em e,:}]a given \hyperlink{classVishnuException}{VishnuException} \end{DoxyParams}
+{\em e,:} & a given \hyperlink{classVishnuException}{VishnuException} \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 : true if it's a bad session key or false otherwhise 
 \end{DoxyReturn}
@@ -84,7 +91,7 @@ A helper function which check if an given exception represents a bad sessionKey.
 \index{getAllSessions@{getAllSessions}!sessionUtils.hpp@{sessionUtils.hpp}}
 \subsubsection[{getAllSessions}]{\setlength{\rightskip}{0pt plus 5cm}{\bf SessionContainer} getAllSessions (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ terminal}
+\item[{const std::string \&}]{terminal}
 \end{DoxyParamCaption}
 )}}
 \label{sessionUtils_8hpp_aaca31098f5494c62c5b33c95d74ae102}
@@ -94,7 +101,9 @@ helper function which which wrappes getFromFile function and ensures that all er
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em terminal,:}]the file corresponding to the terminal which launched the serialization process \end{DoxyParams}
+{\em terminal,:} & the file corresponding to the terminal which launched the serialization process \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 all sessions stored into the file or an empty container 
 \end{DoxyReturn}
@@ -103,8 +112,8 @@ all sessions stored into the file or an empty container
 \index{getFromFile@{getFromFile}!sessionUtils.hpp@{sessionUtils.hpp}}
 \subsubsection[{getFromFile}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ void getFromFile (
 \begin{DoxyParamCaption}
-\item[{{\bf SessionContainer} \&}]{ allSessions, }
-\item[{const char $\ast$}]{ file}
+\item[{{\bf SessionContainer} \&}]{allSessions, }
+\item[{const char $\ast$}]{file}
 \end{DoxyParamCaption}
 )}}
 \label{sessionUtils_8hpp_a512a76d75ea4bccbf5e547fba43b288f}
@@ -114,31 +123,60 @@ To load all sessions stored in a file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em allSessions,:}]The sessions stored in the file \item[{\em file}]: The file storing the sessions \end{DoxyParams}
+{\em allSessions,:} & The sessions stored in the file \\
+\hline
+{\em file} & : The file storing the sessions \\
+\hline
+\end{DoxyParams}
 
 \begin{DoxyExceptions}{Exceptions}
-\item[{\em :}]raises a Boost archive exception \end{DoxyExceptions}
+{\em :} & raises a Boost archive exception \\
+\hline
+\end{DoxyExceptions}
 \hypertarget{sessionUtils_8hpp_a5d3fe9881f446699acee7f21c84d5d97}{
 \index{sessionUtils.hpp@{sessionUtils.hpp}!getLastSession@{getLastSession}}
 \index{getLastSession@{getLastSession}!sessionUtils.hpp@{sessionUtils.hpp}}
 \subsubsection[{getLastSession}]{\setlength{\rightskip}{0pt plus 5cm}{\bf SessionEntry} getLastSession (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ terminal}
+\item[{const std::string \&}]{terminal}
 \end{DoxyParamCaption}
 )}}
 \label{sessionUtils_8hpp_a5d3fe9881f446699acee7f21c84d5d97}
 To get the last open session corrseponding to the last session stored in the file 
 \begin{DoxyParams}{Parameters}
-\item[{\em terminal}]: The terminal in which the session was running \end{DoxyParams}
+{\em terminal} & : The terminal in which the session was running \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The last stored session 
+\end{DoxyReturn}
+\hypertarget{sessionUtils_8hpp_a3e08c9dbbe17b84c4f39bcdce20b5e43}{
+\index{sessionUtils.hpp@{sessionUtils.hpp}!getLastSessionId@{getLastSessionId}}
+\index{getLastSessionId@{getLastSessionId}!sessionUtils.hpp@{sessionUtils.hpp}}
+\subsubsection[{getLastSessionId}]{\setlength{\rightskip}{0pt plus 5cm}std::string getLastSessionId (
+\begin{DoxyParamCaption}
+\item[{int}]{ppid}
+\end{DoxyParamCaption}
+)}}
+\label{sessionUtils_8hpp_a3e08c9dbbe17b84c4f39bcdce20b5e43}
+
+
+To get the last session identifier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ppid,:} & The identifier of the terminal as process in which the session had been open \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The identifier of the last session open from the terminal 
 \end{DoxyReturn}
 \hypertarget{sessionUtils_8hpp_a75cb918af5ef4da1c42114cc433ac24f}{
 \index{sessionUtils.hpp@{sessionUtils.hpp}!getLastSessionKey@{getLastSessionKey}}
 \index{getLastSessionKey@{getLastSessionKey}!sessionUtils.hpp@{sessionUtils.hpp}}
 \subsubsection[{getLastSessionKey}]{\setlength{\rightskip}{0pt plus 5cm}std::string getLastSessionKey (
 \begin{DoxyParamCaption}
-\item[{int}]{ ppid}
+\item[{int}]{ppid}
 \end{DoxyParamCaption}
 )}}
 \label{sessionUtils_8hpp_a75cb918af5ef4da1c42114cc433ac24f}
@@ -148,7 +186,9 @@ To get the last session key.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em ppid,:}]The identifier of the terminal as process in which the session had been open \end{DoxyParams}
+{\em ppid,:} & The identifier of the terminal as process in which the session had been open \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The key of the last session open from the terminal 
 \end{DoxyReturn}
@@ -157,7 +197,7 @@ The key of the last session open from the terminal
 \index{getSessionLocation@{getSessionLocation}!sessionUtils.hpp@{sessionUtils.hpp}}
 \subsubsection[{getSessionLocation}]{\setlength{\rightskip}{0pt plus 5cm}std::string getSessionLocation (
 \begin{DoxyParamCaption}
-\item[{int}]{ tpid}
+\item[{int}]{tpid}
 \end{DoxyParamCaption}
 )}}
 \label{sessionUtils_8hpp_aa3d509dce20e70fd5ec581d8f2743b5b}
@@ -167,7 +207,9 @@ To get the path of the file in which the sessions open from a terminal had been 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em tpid}]: the identifier of the terminal as process \end{DoxyParams}
+{\em tpid} & : the identifier of the terminal as process \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the path of the file in which the sessions open from the terminal had been stored 
 \end{DoxyReturn}
@@ -176,7 +218,7 @@ the path of the file in which the sessions open from the terminal had been store
 \index{removeBadSessionKeyFromFile@{removeBadSessionKeyFromFile}!sessionUtils.hpp@{sessionUtils.hpp}}
 \subsubsection[{removeBadSessionKeyFromFile}]{\setlength{\rightskip}{0pt plus 5cm}void removeBadSessionKeyFromFile (
 \begin{DoxyParamCaption}
-\item[{int}]{ ppid}
+\item[{int}]{ppid}
 \end{DoxyParamCaption}
 )}}
 \label{sessionUtils_8hpp_afcf5268e99579b60306a5aa21af435d7}
@@ -186,13 +228,15 @@ To remove the bad session keys stored in the session file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em ppid}]: The process identifier of the terminal in which the session had been open. \end{DoxyParams}
+{\em ppid} & : The process identifier of the terminal in which the session had been open. \\
+\hline
+\end{DoxyParams}
 \hypertarget{sessionUtils_8hpp_af765ba0d97fc2960174a666aaf87f26b}{
 \index{sessionUtils.hpp@{sessionUtils.hpp}!removeLastSession@{removeLastSession}}
 \index{removeLastSession@{removeLastSession}!sessionUtils.hpp@{sessionUtils.hpp}}
 \subsubsection[{removeLastSession}]{\setlength{\rightskip}{0pt plus 5cm}void removeLastSession (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ terminal}
+\item[{const std::string \&}]{terminal}
 \end{DoxyParamCaption}
 )}}
 \label{sessionUtils_8hpp_af765ba0d97fc2960174a666aaf87f26b}
@@ -202,14 +246,16 @@ To remove the last entry of session from the file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em terminal}]: The terminal in which the session was running \end{DoxyParams}
+{\em terminal} & : The terminal in which the session was running \\
+\hline
+\end{DoxyParams}
 \hypertarget{sessionUtils_8hpp_af8708b3809bf1b15de5ab67b72b3695c}{
 \index{sessionUtils.hpp@{sessionUtils.hpp}!saveIntoFile@{saveIntoFile}}
 \index{saveIntoFile@{saveIntoFile}!sessionUtils.hpp@{sessionUtils.hpp}}
 \subsubsection[{saveIntoFile}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ void saveIntoFile (
 \begin{DoxyParamCaption}
-\item[{{\bf SessionContainer} \&}]{ allSessions, }
-\item[{const char $\ast$}]{ file}
+\item[{{\bf SessionContainer} \&}]{allSessions, }
+\item[{const char $\ast$}]{file}
 \end{DoxyParamCaption}
 )}}
 \label{sessionUtils_8hpp_af8708b3809bf1b15de5ab67b72b3695c}
@@ -219,18 +265,24 @@ To record sessions in a file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em allSessions,:}]A set of sessions which will be stored in the file \item[{\em file}]: the path of the file \end{DoxyParams}
+{\em allSessions,:} & A set of sessions which will be stored in the file \\
+\hline
+{\em file} & : the path of the file \\
+\hline
+\end{DoxyParams}
 
 \begin{DoxyExceptions}{Exceptions}
-\item[{\em :}]raises a Boost archive exception \end{DoxyExceptions}
+{\em :} & raises a Boost archive exception \\
+\hline
+\end{DoxyExceptions}
 \hypertarget{sessionUtils_8hpp_af74f199202d5f3c6530d187229fba3d0}{
 \index{sessionUtils.hpp@{sessionUtils.hpp}!storeLastSession@{storeLastSession}}
 \index{storeLastSession@{storeLastSession}!sessionUtils.hpp@{sessionUtils.hpp}}
 \subsubsection[{storeLastSession}]{\setlength{\rightskip}{0pt plus 5cm}void storeLastSession (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ sessionKey, }
-\item[{int}]{ closePolicy, }
-\item[{int}]{ ppid}
+\item[{const std::string \&}]{sessionKey, }
+\item[{int}]{closePolicy, }
+\item[{int}]{ppid}
 \end{DoxyParamCaption}
 )}}
 \label{sessionUtils_8hpp_af74f199202d5f3c6530d187229fba3d0}
@@ -240,14 +292,20 @@ Another function to store last session open.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em sessionKey,:}]The key of the session which will be stored \item[{\em closePolicy,:}]The session close type \item[{\em ppid,:}]The identifier of the terminal as process \end{DoxyParams}
+{\em sessionKey,:} & The key of the session which will be stored \\
+\hline
+{\em closePolicy,:} & The session close type \\
+\hline
+{\em ppid,:} & The identifier of the terminal as process \\
+\hline
+\end{DoxyParams}
 \hypertarget{sessionUtils_8hpp_ae3f37a11728af1a93673b029668dc6e0}{
 \index{sessionUtils.hpp@{sessionUtils.hpp}!storeLastSession@{storeLastSession}}
 \index{storeLastSession@{storeLastSession}!sessionUtils.hpp@{sessionUtils.hpp}}
 \subsubsection[{storeLastSession}]{\setlength{\rightskip}{0pt plus 5cm}void storeLastSession (
 \begin{DoxyParamCaption}
-\item[{const {\bf SessionEntry} \&}]{ session, }
-\item[{const std::string \&}]{ terminal}
+\item[{const {\bf SessionEntry} \&}]{session, }
+\item[{const std::string \&}]{terminal}
 \end{DoxyParamCaption}
 )}}
 \label{sessionUtils_8hpp_ae3f37a11728af1a93673b029668dc6e0}
@@ -257,4 +315,29 @@ To store a the current session running in a terminal in the file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em session}]: the current session \item[{\em terminal,:}]The terminal in which the session is running \end{DoxyParams}
+{\em session} & : the current session \\
+\hline
+{\em terminal,:} & The terminal in which the session is running \\
+\hline
+\end{DoxyParams}
+\hypertarget{sessionUtils_8hpp_a5823721c5d9b9536fddcc416fc393b08}{
+\index{sessionUtils.hpp@{sessionUtils.hpp}!storeLastSession@{storeLastSession}}
+\index{storeLastSession@{storeLastSession}!sessionUtils.hpp@{sessionUtils.hpp}}
+\subsubsection[{storeLastSession}]{\setlength{\rightskip}{0pt plus 5cm}void storeLastSession (
+\begin{DoxyParamCaption}
+\item[{const UMS\_\-Data::Session \&}]{session\_\-, }
+\item[{int}]{ppid}
+\end{DoxyParamCaption}
+)}}
+\label{sessionUtils_8hpp_a5823721c5d9b9536fddcc416fc393b08}
+
+
+Another function to store last session open. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em session\_\-,:} & The session which will be stored \\
+\hline
+{\em ppid,:} & The identifier of the terminal as process \\
+\hline
+\end{DoxyParams}

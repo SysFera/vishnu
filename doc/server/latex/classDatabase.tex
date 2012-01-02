@@ -20,11 +20,11 @@ Inheritance diagram for Database:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-virtual int \hyperlink{classDatabase_a41881436b79aac5f4d8e179056564de1}{process} (std::string request)=0
+virtual int \hyperlink{classDatabase_a528eb90161e789d75c98415b8df58907}{process} (std::string request, int transacId=-\/1)=0
 \begin{DoxyCompactList}\small\item\em Function to process the request in the database. \item\end{DoxyCompactList}\item 
 virtual int \hyperlink{classDatabase_aed0ada648871f841cfbe08bc1ee1bf92}{connect} ()=0
 \begin{DoxyCompactList}\small\item\em To make a connection to the database. \item\end{DoxyCompactList}\item 
-virtual \hyperlink{classDatabaseResult}{DatabaseResult} $\ast$ \hyperlink{classDatabase_a30f002bf9752a54c2a056abc1b8bb4d4}{getResult} (std::string request)=0
+virtual \hyperlink{classDatabaseResult}{DatabaseResult} $\ast$ \hyperlink{classDatabase_a4b87b83ddfcac9d2bbebf3805da602c2}{getResult} (std::string request, int transacId=-\/1)=0
 \begin{DoxyCompactList}\small\item\em To get the result of a select request. \item\end{DoxyCompactList}\item 
 virtual \hyperlink{classDbConfiguration_a4a57e43a5017a5c4833a784a994c91cf}{DbConfiguration::db\_\-type\_\-t} \hyperlink{classDatabase_a668ffe571cb0f9f355a2f874e40cb515}{getDbType} ()=0
 \begin{DoxyCompactList}\small\item\em To get the type of database. \item\end{DoxyCompactList}\item 
@@ -32,7 +32,17 @@ virtual \hyperlink{classDbConfiguration_a4a57e43a5017a5c4833a784a994c91cf}{DbCon
 virtual \hyperlink{classDatabase_a84d399a2ad58d69daab9b05330e1316d}{$\sim$Database} ()}
 \label{classDatabase_a84d399a2ad58d69daab9b05330e1316d}
 
-\begin{DoxyCompactList}\small\item\em Destructor, raises an exception on error. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Destructor, raises an exception on error. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classDatabase_afd54fc087caf27f2636f2e535691e8c2}{startTransaction} ()=0
+\begin{DoxyCompactList}\small\item\em Start a transaction. \item\end{DoxyCompactList}\item 
+virtual void \hyperlink{classDatabase_a5d90789cdc650feede851c90bd48168d}{endTransaction} (int transactionID)=0
+\begin{DoxyCompactList}\small\item\em End a transaction. \item\end{DoxyCompactList}\item 
+virtual void \hyperlink{classDatabase_a16849263b31bf827ff1421d9df980196}{cancelTransaction} (int transactionID)=0
+\begin{DoxyCompactList}\small\item\em Cancel a transaction. \item\end{DoxyCompactList}\item 
+virtual void \hyperlink{classDatabase_a0dc84deddb8aab9d54817484a7c58400}{flush} (int transactionID)=0
+\begin{DoxyCompactList}\small\item\em To commit a transaction. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classDatabase_ac17618be411cc0a017d830ab56b4e31f}{generateId} (std::string table, std::string fields, std::string val, int tid)=0
+\begin{DoxyCompactList}\small\item\em To get a unique id. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -52,6 +62,28 @@ virtual int \hyperlink{classDatabase_adca650f8a5db531ff1fb85aaef25e711}{disconne
 This class describes a database. 
 
 \subsection{Member Function Documentation}
+\hypertarget{classDatabase_a16849263b31bf827ff1421d9df980196}{
+\index{Database@{Database}!cancelTransaction@{cancelTransaction}}
+\index{cancelTransaction@{cancelTransaction}!Database@{Database}}
+\subsubsection[{cancelTransaction}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Database::cancelTransaction (
+\begin{DoxyParamCaption}
+\item[{int}]{transactionID}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classDatabase_a16849263b31bf827ff1421d9df980196}
+
+
+Cancel a transaction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em transactionID,:} & The ID of the transaction \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classMYSQLDatabase_aafb2ffadceed8006db24a247032dbbdb}{MYSQLDatabase}, and \hyperlink{classPOSTGREDatabase_af511e1e797dbd05dcb582d3f9603392f}{POSTGREDatabase}.
+
 \hypertarget{classDatabase_aed0ada648871f841cfbe08bc1ee1bf92}{
 \index{Database@{Database}!connect@{connect}}
 \index{connect@{connect}!Database@{Database}}
@@ -92,6 +124,84 @@ raises an exception on error
 
 Implemented in \hyperlink{classMYSQLDatabase_a4dc57bd6bec47b4e0c19163c1d6c7fbe}{MYSQLDatabase}, \hyperlink{classOracleDatabase_a9839467588dcecbdb4c4582903379346}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_af026bcf159590b97226d829bddb8e00a}{POSTGREDatabase}.
 
+\hypertarget{classDatabase_a5d90789cdc650feede851c90bd48168d}{
+\index{Database@{Database}!endTransaction@{endTransaction}}
+\index{endTransaction@{endTransaction}!Database@{Database}}
+\subsubsection[{endTransaction}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Database::endTransaction (
+\begin{DoxyParamCaption}
+\item[{int}]{transactionID}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classDatabase_a5d90789cdc650feede851c90bd48168d}
+
+
+End a transaction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em transactionID,:} & The ID of the transaction \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classMYSQLDatabase_a5b2543618f1468649e52ec6e86a80ccb}{MYSQLDatabase}, and \hyperlink{classPOSTGREDatabase_a5fb689587cff7610949dd8ae0c14a321}{POSTGREDatabase}.
+
+\hypertarget{classDatabase_a0dc84deddb8aab9d54817484a7c58400}{
+\index{Database@{Database}!flush@{flush}}
+\index{flush@{flush}!Database@{Database}}
+\subsubsection[{flush}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Database::flush (
+\begin{DoxyParamCaption}
+\item[{int}]{transactionID}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classDatabase_a0dc84deddb8aab9d54817484a7c58400}
+
+
+To commit a transaction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em transactionID,:} & The ID of the transaction \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classMYSQLDatabase_a722f4a93562ae658142fb5cbae3ee8e2}{MYSQLDatabase}, and \hyperlink{classPOSTGREDatabase_a558be82c58bcd1dd1b019bf9bfb88ded}{POSTGREDatabase}.
+
+\hypertarget{classDatabase_ac17618be411cc0a017d830ab56b4e31f}{
+\index{Database@{Database}!generateId@{generateId}}
+\index{generateId@{generateId}!Database@{Database}}
+\subsubsection[{generateId}]{\setlength{\rightskip}{0pt plus 5cm}virtual int Database::generateId (
+\begin{DoxyParamCaption}
+\item[{std::string}]{table, }
+\item[{std::string}]{fields, }
+\item[{std::string}]{val, }
+\item[{int}]{tid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classDatabase_ac17618be411cc0a017d830ab56b4e31f}
+
+
+To get a unique id. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em table,:} & The table to use to generate the id \\
+\hline
+{\em fields,:} & The fields of the table \\
+\hline
+{\em val,:} & The values of the fields to insert \\
+\hline
+{\em tid,:} & The transaction id \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new integer never returned by this function 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classMYSQLDatabase_ad8947cf6f7b1922f0d7cfc7d23d6b783}{MYSQLDatabase}, and \hyperlink{classPOSTGREDatabase_abf052a5ce6b62c3be2c96ec8a4a13887}{POSTGREDatabase}.
+
 \hypertarget{classDatabase_a668ffe571cb0f9f355a2f874e40cb515}{
 \index{Database@{Database}!getDbType@{getDbType}}
 \index{getDbType@{getDbType}!Database@{Database}}
@@ -112,51 +222,81 @@ An enum identifying the type of database
 
 Implemented in \hyperlink{classMYSQLDatabase_a6002562a486bc8a4c5a820cf45a62e64}{MYSQLDatabase}, \hyperlink{classOracleDatabase_a4079e91290576c8d71bc062ffa20330a}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_a6f446f99cff05695b37165ee0ce22a9a}{POSTGREDatabase}.
 
-\hypertarget{classDatabase_a30f002bf9752a54c2a056abc1b8bb4d4}{
+\hypertarget{classDatabase_a4b87b83ddfcac9d2bbebf3805da602c2}{
 \index{Database@{Database}!getResult@{getResult}}
 \index{getResult@{getResult}!Database@{Database}}
-\subsubsection[{getResult}]{\setlength{\rightskip}{0pt plus 5cm}{\bf DatabaseResult} $\ast$ Database::getResult (
+\subsubsection[{getResult}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf DatabaseResult}$\ast$ Database::getResult (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ request}
+\item[{std::string}]{request, }
+\item[{int}]{transacId = {\ttfamily -\/1}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
-\label{classDatabase_a30f002bf9752a54c2a056abc1b8bb4d4}
+\label{classDatabase_a4b87b83ddfcac9d2bbebf3805da602c2}
 
 
 To get the result of a select request. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em request}]The request to process \end{DoxyParams}
+{\em request} & The request to process \\
+\hline
+{\em transacId} & the id of the transaction if one is used \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 An object which encapsulates the database results 
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classMYSQLDatabase_a4e3804ff11f44b3e5770932c8351ea92}{MYSQLDatabase}, \hyperlink{classOracleDatabase_a399070863f94605bc2e520c968e3edbe}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_a4be2769e7d13be7f139b540ffb3a4760}{POSTGREDatabase}.
+Implemented in \hyperlink{classMYSQLDatabase_a69bbd3724ec02ae9230e558254a3648e}{MYSQLDatabase}, and \hyperlink{classPOSTGREDatabase_a1ec869cd220eacd6833b7f47388023fc}{POSTGREDatabase}.
 
-\hypertarget{classDatabase_a41881436b79aac5f4d8e179056564de1}{
+\hypertarget{classDatabase_a528eb90161e789d75c98415b8df58907}{
 \index{Database@{Database}!process@{process}}
 \index{process@{process}!Database@{Database}}
-\subsubsection[{process}]{\setlength{\rightskip}{0pt plus 5cm}int Database::process (
+\subsubsection[{process}]{\setlength{\rightskip}{0pt plus 5cm}virtual int Database::process (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ request}
+\item[{std::string}]{request, }
+\item[{int}]{transacId = {\ttfamily -\/1}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
-\label{classDatabase_a41881436b79aac5f4d8e179056564de1}
+\label{classDatabase_a528eb90161e789d75c98415b8df58907}
 
 
 Function to process the request in the database. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em request}]The request to process (must contain a SINGLE SQL statement without a semicolumn) \end{DoxyParams}
+{\em request} & The request to process (must contain a SINGLE SQL statement without a semicolumn) \\
+\hline
+{\em transacId} & the id of the transaction if one is used \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classMYSQLDatabase_ae43c4557f43b775f26817082f4913d81}{MYSQLDatabase}, \hyperlink{classOracleDatabase_ae6515239e0f313896f21b3ec267acdd9}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_a0371d887a489418bed525acb0d9c5eb3}{POSTGREDatabase}.
+Implemented in \hyperlink{classMYSQLDatabase_a2108f42fe84b3f174b87633f533e42b3}{MYSQLDatabase}, and \hyperlink{classPOSTGREDatabase_a6d987fa60e08c3041a6aee5c06e108dd}{POSTGREDatabase}.
+
+\hypertarget{classDatabase_afd54fc087caf27f2636f2e535691e8c2}{
+\index{Database@{Database}!startTransaction@{startTransaction}}
+\index{startTransaction@{startTransaction}!Database@{Database}}
+\subsubsection[{startTransaction}]{\setlength{\rightskip}{0pt plus 5cm}virtual int Database::startTransaction (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classDatabase_afd54fc087caf27f2636f2e535691e8c2}
+
+
+Start a transaction. 
+
+\begin{DoxyReturn}{Returns}
+The transaction ID 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classMYSQLDatabase_a7c460d606e90494efd0895d8b420b080}{MYSQLDatabase}, and \hyperlink{classPOSTGREDatabase_a3257276f03c981dd6bb4b61d0cd0f863}{POSTGREDatabase}.
 
 
 
