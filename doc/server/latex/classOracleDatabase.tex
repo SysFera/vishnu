@@ -61,7 +61,7 @@ Connection $\ast$ \hyperlink{classOracleDatabase_a5dc53869aaff49e9780885bf54d4ac
 Statement $\ast$ \hyperlink{classOracleDatabase_ad6cd3577621325feda91be87b9ef4b29}{mstmt}}
 \label{classOracleDatabase_ad6cd3577621325feda91be87b9ef4b29}
 
-\begin{DoxyCompactList}\small\item\em The statement (=request). \item\end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em The statement (=request) \item\end{DoxyCompactList}\item 
 \hypertarget{classOracleDatabase_a97515c847c370c74e704cbd473ce54de}{
 ResultSet $\ast$ \hyperlink{classOracleDatabase_a97515c847c370c74e704cbd473ce54de}{mres}}
 \label{classOracleDatabase_a97515c847c370c74e704cbd473ce54de}
@@ -98,11 +98,11 @@ Oracle implementation of the \hyperlink{classDatabase}{Database} class.
 \index{OracleDatabase@{OracleDatabase}!OracleDatabase@{OracleDatabase}}
 \subsubsection[{OracleDatabase}]{\setlength{\rightskip}{0pt plus 5cm}OracleDatabase::OracleDatabase (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ hostname, }
-\item[{std::string}]{ username, }
-\item[{std::string}]{ pwd, }
-\item[{std::string}]{ database = {\ttfamily \char`\"{}\char`\"{}}, }
-\item[{unsigned int}]{ port = {\ttfamily 0}}
+\item[{std::string}]{hostname, }
+\item[{std::string}]{username, }
+\item[{std::string}]{pwd, }
+\item[{std::string}]{database = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{unsigned int}]{port = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )}}
 \label{classOracleDatabase_aee0fb586efbd08f76089b1d343ad9345}
@@ -112,7 +112,17 @@ Constructor, raises an exception on error.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em hostname}]The name of the host to connect \item[{\em username}]The username to connect to the database \item[{\em pwd}]The password to connect to the database \item[{\em database}]The database to connect \item[{\em port}]The port to use \end{DoxyParams}
+{\em hostname} & The name of the host to connect \\
+\hline
+{\em username} & The username to connect to the database \\
+\hline
+{\em pwd} & The password to connect to the database \\
+\hline
+{\em database} & The database to connect \\
+\hline
+{\em port} & The port to use \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -181,9 +191,9 @@ Implements \hyperlink{classDatabase_a668ffe571cb0f9f355a2f874e40cb515}{Database}
 \index{getResult@{getResult}!OracleDatabase@{OracleDatabase}}
 \subsubsection[{getResult}]{\setlength{\rightskip}{0pt plus 5cm}{\bf DatabaseResult} $\ast$ OracleDatabase::getResult (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ request}
+\item[{std::string}]{request}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+)}}
 \label{classOracleDatabase_a399070863f94605bc2e520c968e3edbe}
 
 
@@ -191,22 +201,20 @@ To get the result of a select request.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em request}]The request to process \end{DoxyParams}
+{\em request} & The request to process \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 An object which encapsulates the database results 
 \end{DoxyReturn}
-
-
-Implements \hyperlink{classDatabase_a30f002bf9752a54c2a056abc1b8bb4d4}{Database}.
-
 \hypertarget{classOracleDatabase_ae6515239e0f313896f21b3ec267acdd9}{
 \index{OracleDatabase@{OracleDatabase}!process@{process}}
 \index{process@{process}!OracleDatabase@{OracleDatabase}}
 \subsubsection[{process}]{\setlength{\rightskip}{0pt plus 5cm}int OracleDatabase::process (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ request}
+\item[{std::string}]{request}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+)}}
 \label{classOracleDatabase_ae6515239e0f313896f21b3ec267acdd9}
 
 
@@ -214,20 +222,18 @@ Function to process the request in the database.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em request}]The request to process \end{DoxyParams}
+{\em request} & The request to process \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
-
-
-Implements \hyperlink{classDatabase_a41881436b79aac5f4d8e179056564de1}{Database}.
-
 \hypertarget{classOracleDatabase_a937a096b286c4e6738ea5d314aabe109}{
 \index{OracleDatabase@{OracleDatabase}!setDatabase@{setDatabase}}
 \index{setDatabase@{setDatabase}!OracleDatabase@{OracleDatabase}}
 \subsubsection[{setDatabase}]{\setlength{\rightskip}{0pt plus 5cm}int OracleDatabase::setDatabase (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ db}
+\item[{std::string}]{db}
 \end{DoxyParamCaption}
 )}}
 \label{classOracleDatabase_a937a096b286c4e6738ea5d314aabe109}
@@ -237,7 +243,9 @@ To set the db to use.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em db}]The name of the database to use \end{DoxyParams}
+{\em db} & The name of the database to use \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 raises an exception on error 
 \end{DoxyReturn}
@@ -246,7 +254,7 @@ To set the db to use.
 \index{startTransaction@{startTransaction}!OracleDatabase@{OracleDatabase}}
 \subsubsection[{startTransaction}]{\setlength{\rightskip}{0pt plus 5cm}int OracleDatabase::startTransaction (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ request}
+\item[{std::string}]{request}
 \end{DoxyParamCaption}
 )}}
 \label{classOracleDatabase_a24767193dece017c4e97ca5bce7214e6}
@@ -256,7 +264,9 @@ To start a transaction with the database.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em request}]The series of requests to process \end{DoxyParams}
+{\em request} & The series of requests to process \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}

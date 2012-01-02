@@ -14,7 +14,6 @@
 #include "SessionProxy.hpp"
 
 /**
- * \class SerializeAdaptor
  * \brief SerializeAdaptor class implementation
  */
 template <class Object>
@@ -23,6 +22,7 @@ struct SerializeAdaptor {
   /**
    * \brief Function to convert an object type to string 
    * \param object The Object to convert
+   * \return the serialized object
    */
   static std::string serialize(const Object& object) {
     ::ecorecpp::serializer::serializer _ser;
@@ -32,7 +32,6 @@ struct SerializeAdaptor {
 }; 
 
 /**
- * \class SerializeAdaptor
  * \brief Specialization in std::string of the SerializeAdaptor
  */
 template <>
@@ -41,6 +40,7 @@ struct SerializeAdaptor<std::string> {
   /**
    * \brief Function to convert an object type to string
    * \param object The Object to convert
+   * \return the serialized object
    */
   static std::string serialize(const std::string& object) {
     return  object;

@@ -54,7 +54,7 @@ std::string \hyperlink{classListLocalAccountsServer_a99cd66acbc10588d30ca00c4903
 \index{ListLocalAccountsServer@{ListLocalAccountsServer}!ListLocalAccountsServer@{ListLocalAccountsServer}}
 \subsubsection[{ListLocalAccountsServer}]{\setlength{\rightskip}{0pt plus 5cm}ListLocalAccountsServer::ListLocalAccountsServer (
 \begin{DoxyParamCaption}
-\item[{const {\bf SessionServer}}]{ session}
+\item[{const {\bf SessionServer}}]{session}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{classListLocalAccountsServer_a6ac7bb6958347ef75e3114c32a99d647}
@@ -64,14 +64,16 @@ Constructor, raises an exception on error.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \end{DoxyParams}
+{\em session} & The object which encapsulates the session information (ex: identifier of the session) \\
+\hline
+\end{DoxyParams}
 \hypertarget{classListLocalAccountsServer_accde50c6113c2211eb62b8ee1a669612}{
 \index{ListLocalAccountsServer@{ListLocalAccountsServer}!ListLocalAccountsServer@{ListLocalAccountsServer}}
 \index{ListLocalAccountsServer@{ListLocalAccountsServer}!ListLocalAccountsServer@{ListLocalAccountsServer}}
 \subsubsection[{ListLocalAccountsServer}]{\setlength{\rightskip}{0pt plus 5cm}ListLocalAccountsServer::ListLocalAccountsServer (
 \begin{DoxyParamCaption}
-\item[{UMS\_\-Data::ListLocalAccOptions\_\-ptr}]{ params, }
-\item[{const {\bf SessionServer} \&}]{ session}
+\item[{UMS\_\-Data::ListLocalAccOptions\_\-ptr}]{params, }
+\item[{const {\bf SessionServer} \&}]{session}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{classListLocalAccountsServer_accde50c6113c2211eb62b8ee1a669612}
@@ -81,7 +83,11 @@ Constructor, raises an exception on error.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em params}]The object which encapsulates the information of \hyperlink{classListLocalAccountsServer}{ListLocalAccountsServer} options \item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \end{DoxyParams}
+{\em params} & The object which encapsulates the information of \hyperlink{classListLocalAccountsServer}{ListLocalAccountsServer} options \\
+\hline
+{\em session} & The object which encapsulates the session information (ex: identifier of the session) \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -132,9 +138,9 @@ Implements \hyperlink{classQueryServer_a2ad0f3f1b75e6f0705a9edbe4bab76b0}{QueryS
 \index{processOptions@{processOptions}!ListLocalAccountsServer@{ListLocalAccountsServer}}
 \subsubsection[{processOptions}]{\setlength{\rightskip}{0pt plus 5cm}void ListLocalAccountsServer::processOptions (
 \begin{DoxyParamCaption}
-\item[{{\bf UserServer}}]{ userServer, }
-\item[{const UMS\_\-Data::ListLocalAccOptions\_\-ptr \&}]{ options, }
-\item[{std::string \&}]{ sqlRequest}
+\item[{{\bf UserServer}}]{userServer, }
+\item[{const UMS\_\-Data::ListLocalAccOptions\_\-ptr \&}]{options, }
+\item[{std::string \&}]{sqlRequest}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{classListLocalAccountsServer_add401d738d4c69fcafaa916e6744ce89}
@@ -144,7 +150,13 @@ Function to treat the \hyperlink{classListLocalAccountsServer}{ListLocalAccounts
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em userServer}]the object which encapsulates user information \item[{\em options}]the object which contains the \hyperlink{classListLocalAccountsServer}{ListLocalAccountsServer} options \item[{\em sqlRequest}]the sql data base request \end{DoxyParams}
+{\em userServer} & the object which encapsulates user information \\
+\hline
+{\em options} & the object which contains the \hyperlink{classListLocalAccountsServer}{ListLocalAccountsServer} options \\
+\hline
+{\em sqlRequest} & the sql data base request \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}

@@ -113,7 +113,7 @@ class LocalFileProxy : public FileProxy {
     virtual int mkfile(const mode_t mode=defaultFileAccessMode) {return 0; }
     /**
      * \brief To create a new directory
-     * \param mode the access permission of the directory
+     * \param options the create directory options
      * \return 0 if the command succeeds, an error code otherwise
      */ 
     virtual int mkdir(const CreateDirOptions& options) {return 0; }

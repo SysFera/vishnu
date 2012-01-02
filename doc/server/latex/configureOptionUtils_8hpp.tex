@@ -45,10 +45,10 @@ Ibrahima Cisse (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sysf
 \index{commonConfigure@{commonConfigure}!configureOptionUtils.hpp@{configureOptionUtils.hpp}}
 \subsubsection[{commonConfigure}]{\setlength{\rightskip}{0pt plus 5cm}int commonConfigure (
 \begin{DoxyParamCaption}
-\item[{boost::shared\_\-ptr$<$ {\bf Options} $>$}]{ opt, }
-\item[{int}]{ ac, }
-\item[{char $\ast$}]{ av\mbox{[}$\,$\mbox{]}, }
-\item[{const {\bf ConfigureCallBackType} \&}]{ conf\_\-func}
+\item[{boost::shared\_\-ptr$<$ {\bf Options} $>$}]{opt, }
+\item[{int}]{ac, }
+\item[{char $\ast$}]{av\mbox{[}$\,$\mbox{]}, }
+\item[{const {\bf ConfigureCallBackType} \&}]{conf\_\-func}
 \end{DoxyParamCaption}
 )}}
 \label{configureOptionUtils_8hpp_ab856997bbed7bc5d7007be786518c8ca}
@@ -58,7 +58,15 @@ A common function betwenn the VISHNU configure option command and the VISHNU con
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em opt,:}]Describes all allowed options for the command \item[{\em ac}]: The number of parameters the command takes \item[{\em av}]: The name of all of that parameters \item[{\em conf\_\-func,:}]The VISHNU API function, configureOption our ConfigureDefaultOption \end{DoxyParams}
+{\em opt,:} & Describes all allowed options for the command \\
+\hline
+{\em ac} & : The number of parameters the command takes \\
+\hline
+{\em av} & : The name of all of that parameters \\
+\hline
+{\em conf\_\-func,:} & The VISHNU API function, configureOption our ConfigureDefaultOption \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the function succeeds, an error code otherwise 
 \end{DoxyReturn}
@@ -67,10 +75,10 @@ A common function betwenn the VISHNU configure option command and the VISHNU con
 \index{makeConfigureOptions@{makeConfigureOptions}!configureOptionUtils.hpp@{configureOptionUtils.hpp}}
 \subsubsection[{makeConfigureOptions}]{\setlength{\rightskip}{0pt plus 5cm}void makeConfigureOptions (
 \begin{DoxyParamCaption}
-\item[{boost::shared\_\-ptr$<$ {\bf Options} $>$}]{ opt, }
-\item[{std::string \&}]{ dietConfig, }
-\item[{{\bf StringcallBackType} \&}]{ fOptionName, }
-\item[{{\bf StringcallBackType} \&}]{ fValue}
+\item[{boost::shared\_\-ptr$<$ {\bf Options} $>$}]{opt, }
+\item[{std::string \&}]{dietConfig, }
+\item[{{\bf StringcallBackType} \&}]{fOptionName, }
+\item[{{\bf StringcallBackType} \&}]{fValue}
 \end{DoxyParamCaption}
 )}}
 \label{configureOptionUtils_8hpp_aebcc5e5cfeb3b2641997ebe5e159b11e}
@@ -80,4 +88,12 @@ To build options for the VISHNU configure option command.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em opt,:}]Describes all allowed options for the VISHNU configure option command \item[{\em dietConfig,:}]Represents the VISHNU config file \item[{\em fOptionName}]: A callback for the option name \item[{\em fValue}]: A callback for the option value \end{DoxyParams}
+{\em opt,:} & Describes all allowed options for the VISHNU configure option command \\
+\hline
+{\em dietConfig,:} & Represents the VISHNU config file \\
+\hline
+{\em fOptionName} & : A callback for the option name \\
+\hline
+{\em fValue} & : A callback for the option value \\
+\hline
+\end{DoxyParams}

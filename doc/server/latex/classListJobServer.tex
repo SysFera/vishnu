@@ -59,8 +59,8 @@ std::string \hyperlink{classListJobServer_a7c6b50c7766fbd303eb4d494fb09e6b1}{mma
 \index{ListJobServer@{ListJobServer}!ListJobServer@{ListJobServer}}
 \subsubsection[{ListJobServer}]{\setlength{\rightskip}{0pt plus 5cm}ListJobServer::ListJobServer (
 \begin{DoxyParamCaption}
-\item[{const {\bf SessionServer}}]{ session, }
-\item[{std::string}]{ machineId}
+\item[{const {\bf SessionServer}}]{session, }
+\item[{std::string}]{machineId}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{classListJobServer_aca3cea95317efb694e70d98353ad9e15}
@@ -70,15 +70,19 @@ Constructor, raises an exception on error.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \item[{\em machineId}]The identifier of the machine in which the jobs will be listed \end{DoxyParams}
+{\em session} & The object which encapsulates the session information (ex: identifier of the session) \\
+\hline
+{\em machineId} & The identifier of the machine in which the jobs will be listed \\
+\hline
+\end{DoxyParams}
 \hypertarget{classListJobServer_a201cfa0d8b9c3fbedc1224a3a5fbeaa5}{
 \index{ListJobServer@{ListJobServer}!ListJobServer@{ListJobServer}}
 \index{ListJobServer@{ListJobServer}!ListJobServer@{ListJobServer}}
 \subsubsection[{ListJobServer}]{\setlength{\rightskip}{0pt plus 5cm}ListJobServer::ListJobServer (
 \begin{DoxyParamCaption}
-\item[{TMS\_\-Data::ListJobsOptions\_\-ptr}]{ params, }
-\item[{const {\bf SessionServer} \&}]{ session, }
-\item[{std::string}]{ machineId}
+\item[{TMS\_\-Data::ListJobsOptions\_\-ptr}]{params, }
+\item[{const {\bf SessionServer} \&}]{session, }
+\item[{std::string}]{machineId}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{classListJobServer_a201cfa0d8b9c3fbedc1224a3a5fbeaa5}
@@ -88,7 +92,13 @@ Constructor, raises an exception on error.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em params}]The object which encapsulates the information of \hyperlink{classListJobServer}{ListJobServer} options \item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \item[{\em machineId}]The identifier of the machine in which the jobs will be listed \end{DoxyParams}
+{\em params} & The object which encapsulates the information of \hyperlink{classListJobServer}{ListJobServer} options \\
+\hline
+{\em session} & The object which encapsulates the session information (ex: identifier of the session) \\
+\hline
+{\em machineId} & The identifier of the machine in which the jobs will be listed \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -139,8 +149,8 @@ Implements \hyperlink{classQueryServer_a2ad0f3f1b75e6f0705a9edbe4bab76b0}{QueryS
 \index{processOptions@{processOptions}!ListJobServer@{ListJobServer}}
 \subsubsection[{processOptions}]{\setlength{\rightskip}{0pt plus 5cm}void ListJobServer::processOptions (
 \begin{DoxyParamCaption}
-\item[{const TMS\_\-Data::ListJobsOptions\_\-ptr \&}]{ options, }
-\item[{std::string \&}]{ sqlRequest}
+\item[{const TMS\_\-Data::ListJobsOptions\_\-ptr \&}]{options, }
+\item[{std::string \&}]{sqlRequest}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{classListJobServer_aee4778e1bc0d87018454dcfb9cd5a915}
@@ -150,7 +160,11 @@ Function to treat the listJobServer options.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em options}]the object which contains the \hyperlink{classListJobServer}{ListJobServer} options values \item[{\em sqlRequest}]the sql data base request \end{DoxyParams}
+{\em options} & the object which contains the \hyperlink{classListJobServer}{ListJobServer} options values \\
+\hline
+{\em sqlRequest} & the sql data base request \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}

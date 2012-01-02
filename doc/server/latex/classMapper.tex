@@ -92,7 +92,7 @@ Generic mapper.
 \index{Mapper@{Mapper}!Mapper@{Mapper}}
 \subsubsection[{Mapper}]{\setlength{\rightskip}{0pt plus 5cm}Mapper::Mapper (
 \begin{DoxyParamCaption}
-\item[{{\bf MapperRegistry} $\ast$}]{ reg}
+\item[{{\bf MapperRegistry} $\ast$}]{reg}
 \end{DoxyParamCaption}
 )}}
 \label{classMapper_a3ceeb740084ee1ee24164cc5c5c4f253}
@@ -102,13 +102,15 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em reg}]Registry to register \end{DoxyParams}
+{\em reg} & Registry to register \\
+\hline
+\end{DoxyParams}
 \hypertarget{classMapper_a5cdd791945456f75a903295e65d818d7}{
 \index{Mapper@{Mapper}!Mapper@{Mapper}}
 \index{Mapper@{Mapper}!Mapper@{Mapper}}
 \subsubsection[{Mapper}]{\setlength{\rightskip}{0pt plus 5cm}Mapper::Mapper (
 \begin{DoxyParamCaption}
-\item[{const {\bf Mapper} \&}]{ m}
+\item[{const {\bf Mapper} \&}]{m}
 \end{DoxyParamCaption}
 )}}
 \label{classMapper_a5cdd791945456f75a903295e65d818d7}
@@ -118,7 +120,9 @@ Copy constructor.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em m}]The mapper to copy \end{DoxyParams}
+{\em m} & The mapper to copy \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -127,8 +131,8 @@ Copy constructor.
 \index{code@{code}!Mapper@{Mapper}}
 \subsubsection[{code}]{\setlength{\rightskip}{0pt plus 5cm}int Mapper::code (
 \begin{DoxyParamCaption}
-\item[{const string \&}]{ cmd, }
-\item[{unsigned int}]{ code = {\ttfamily 0}}
+\item[{const string \&}]{cmd, }
+\item[{unsigned int}]{code = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
 \label{classMapper_a915f9829fd340b2b0978323b90eda360}
@@ -138,7 +142,11 @@ Function to add an element to code.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em cmd}]The string to add \item[{\em code}]If 0, the code is created, otherwize it is the key in the map to add the string \end{DoxyParams}
+{\em cmd} & The string to add \\
+\hline
+{\em code} & If 0, the code is created, otherwize it is the key in the map to add the string \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 if param code = 0, the assigned code to add other element to the same item, otherwize return 0 
 \end{DoxyReturn}
@@ -151,7 +159,7 @@ Reimplemented in \hyperlink{classFMSMapper_a51fbbdc957501c96dba021a8882bb50f}{FM
 \index{decode@{decode}!Mapper@{Mapper}}
 \subsubsection[{decode}]{\setlength{\rightskip}{0pt plus 5cm}string Mapper::decode (
 \begin{DoxyParamCaption}
-\item[{const string \&}]{ msg}
+\item[{const string \&}]{msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
 \label{classMapper_a5e51b9148704b25e26e5ec48bd643a0b}
@@ -161,7 +169,9 @@ To get, from a coded string, the CPP command that made it.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em msg}]The coded string \end{DoxyParams}
+{\em msg} & The coded string \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The CPP command 
 \end{DoxyReturn}
@@ -174,7 +184,7 @@ Reimplemented in \hyperlink{classFMSMapper_ab7b4f97dba156d89c59e0fc4ddaf4fa3}{FM
 \index{finalize@{finalize}!Mapper@{Mapper}}
 \subsubsection[{finalize}]{\setlength{\rightskip}{0pt plus 5cm}string Mapper::finalize (
 \begin{DoxyParamCaption}
-\item[{int}]{ key}
+\item[{int}]{key}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classMapper_a568fcb8dba98cb9d37700972ef5d8df0}
@@ -184,7 +194,9 @@ To end a command, delete it from the map and get its value.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em key}]The entry in the map to get an remove \end{DoxyParams}
+{\em key} & The entry in the map to get an remove \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The coded value of the command 
 \end{DoxyReturn}
@@ -193,8 +205,8 @@ The coded value of the command
 \index{findSeparator@{findSeparator}!Mapper@{Mapper}}
 \subsubsection[{findSeparator}]{\setlength{\rightskip}{0pt plus 5cm}void Mapper::findSeparator (
 \begin{DoxyParamCaption}
-\item[{const string \&}]{ s, }
-\item[{vector$<$ int $>$ \&}]{ vec}
+\item[{const string \&}]{s, }
+\item[{vector$<$ int $>$ \&}]{vec}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
 \label{classMapper_ae19b072bc022475bc6c9e9943d4851f4}
@@ -204,7 +216,11 @@ To find all the separator in the string s and fill the vector with their positio
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em s}]The string to find the separator \item[{\em vec}]A vector containing the position of the separator in the string s (OUT) \end{DoxyParams}
+{\em s} & The string to find the separator \\
+\hline
+{\em vec} & A vector containing the position of the separator in the string s (OUT) \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -213,8 +229,8 @@ The cli like close command
 \index{getCommand@{getCommand}!Mapper@{Mapper}}
 \subsubsection[{getCommand}]{\setlength{\rightskip}{0pt plus 5cm}int Mapper::getCommand (
 \begin{DoxyParamCaption}
-\item[{const string \&}]{ key, }
-\item[{string \&}]{ command}
+\item[{const string \&}]{key, }
+\item[{string \&}]{command}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
 \label{classMapper_a8bd089cd656e7d8da672253df70baead}
@@ -224,7 +240,11 @@ To get the command corresponding to a key.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em key}]The key to use \item[{\em command}]OUT, the command corresponding to the key \end{DoxyParams}
+{\em key} & The key to use \\
+\hline
+{\em command} & OUT, the command corresponding to the key \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 on success, an error code otherwise 
 \end{DoxyReturn}
@@ -233,8 +253,8 @@ To get the command corresponding to a key.
 \index{getKey@{getKey}!Mapper@{Mapper}}
 \subsubsection[{getKey}]{\setlength{\rightskip}{0pt plus 5cm}int Mapper::getKey (
 \begin{DoxyParamCaption}
-\item[{const string \&}]{ command, }
-\item[{string \&}]{ key}
+\item[{const string \&}]{command, }
+\item[{string \&}]{key}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
 \label{classMapper_a94b8783c6c56f0928a32bb4c80c875de}
@@ -244,7 +264,11 @@ To get the key corresponding to a command.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em command}]The 'key' to use \item[{\em key}]OUT, the key corresponding to the command \end{DoxyParams}
+{\em command} & The 'key' to use \\
+\hline
+{\em key} & OUT, the key corresponding to the command \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 on success, an error code otherwise 
 \end{DoxyReturn}

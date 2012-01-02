@@ -60,7 +60,8 @@ class NetrcReader {
     /**
       * \brief Function to get value associated to a key
       * \param key the key associated to a value on the file
-      * \param line the line where the value of the key is searched
+      * \param value  the value corresponding to the key on the file
+      * \param tokens the parsed tokens
       * \param tab a table which allows to register the couple key value
       * \param machine_pos
       * \return true if the value has found else found

@@ -1,5 +1,5 @@
 \hypertarget{structFileActionFunc}{
-\section{FileActionFunc$<$ fileActionType $>$ Struct Template Reference}
+\section{FileActionFunc$<$ fileActionType, CommandOptionsType $>$ Struct Template Reference}
 \label{structFileActionFunc}\index{FileActionFunc@{FileActionFunc}}
 }
 
@@ -14,85 +14,93 @@ A functor to handle file action (create/remove) api function.
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{structFileActionFunc_acf8c606c21c91984a722a27a00fe8413}{FileActionFunc} (const std::string \&path)
+\hyperlink{structFileActionFunc_a899ef8d7659ae6c83c958b71b939c0fb}{FileActionFunc} (const std::string \&path)
 \begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
-\hyperlink{structFileActionFunc_a37b891b64e0b5e3d67870ff1f0a7289d}{FileActionFunc} (const std::string \&path, const RmFileOptions \&options)
+\hyperlink{structFileActionFunc_af9248de6d02d23b2e11ae0777f052521}{FileActionFunc} (const std::string \&path, const CommandOptionsType \&options)
 \begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
-int \hyperlink{structFileActionFunc_aa559e76fb78cf395ea13647f8f1d2cac}{operator()} (std::string sessionKey)
+int \hyperlink{structFileActionFunc_aeae506f5a4b71fcfc554a8492d86a52a}{operator()} (std::string sessionKey)
 \begin{DoxyCompactList}\small\item\em To execute the FileAction operation. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{structFileActionFunc_a50a8072e9b8516706329d48de5f89b8e}{
-std::string \hyperlink{structFileActionFunc_a50a8072e9b8516706329d48de5f89b8e}{mpath}}
-\label{structFileActionFunc_a50a8072e9b8516706329d48de5f89b8e}
+\hypertarget{structFileActionFunc_aba331b5e48f2e574abb58abb4fcd2805}{
+std::string \hyperlink{structFileActionFunc_aba331b5e48f2e574abb58abb4fcd2805}{mpath}}
+\label{structFileActionFunc_aba331b5e48f2e574abb58abb4fcd2805}
 
 \begin{DoxyCompactList}\small\item\em The path to treat. \item\end{DoxyCompactList}\item 
-\hypertarget{structFileActionFunc_aabc24fad5c25664ef7a0b0288d3fc2ba}{
-RmFileOptions \hyperlink{structFileActionFunc_aabc24fad5c25664ef7a0b0288d3fc2ba}{moptions}}
-\label{structFileActionFunc_aabc24fad5c25664ef7a0b0288d3fc2ba}
+\hypertarget{structFileActionFunc_ad3800ea3fec795dd8824219a33024a41}{
+CommandOptionsType \hyperlink{structFileActionFunc_ad3800ea3fec795dd8824219a33024a41}{moptions}}
+\label{structFileActionFunc_ad3800ea3fec795dd8824219a33024a41}
 
 \begin{DoxyCompactList}\small\item\em The file transfer options. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-\subsubsection*{template$<$FileActionType fileActionType$>$ struct FileActionFunc$<$ fileActionType $>$}
+\subsubsection*{template$<$FileActionType fileActionType, typename CommandOptionsType = NoOptions$>$ struct FileActionFunc$<$ fileActionType, CommandOptionsType $>$}
 
 A functor to handle file action (create/remove) api function. 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{structFileActionFunc_acf8c606c21c91984a722a27a00fe8413}{
+\hypertarget{structFileActionFunc_a899ef8d7659ae6c83c958b71b939c0fb}{
 \index{FileActionFunc@{FileActionFunc}!FileActionFunc@{FileActionFunc}}
 \index{FileActionFunc@{FileActionFunc}!FileActionFunc@{FileActionFunc}}
-\subsubsection[{FileActionFunc}]{\setlength{\rightskip}{0pt plus 5cm}template$<$FileActionType fileActionType$>$ {\bf FileActionFunc}$<$ fileActionType $>$::{\bf FileActionFunc} (
+\subsubsection[{FileActionFunc}]{\setlength{\rightskip}{0pt plus 5cm}template$<$FileActionType fileActionType, typename CommandOptionsType  = NoOptions$>$ {\bf FileActionFunc}$<$ fileActionType, CommandOptionsType $>$::{\bf FileActionFunc} (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ path}
+\item[{const std::string \&}]{path}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
-\label{structFileActionFunc_acf8c606c21c91984a722a27a00fe8413}
+\label{structFileActionFunc_a899ef8d7659ae6c83c958b71b939c0fb}
 
 
 Constructor. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em path}]The path to treat \end{DoxyParams}
-\hypertarget{structFileActionFunc_a37b891b64e0b5e3d67870ff1f0a7289d}{
+{\em path} & The path to treat \\
+\hline
+\end{DoxyParams}
+\hypertarget{structFileActionFunc_af9248de6d02d23b2e11ae0777f052521}{
 \index{FileActionFunc@{FileActionFunc}!FileActionFunc@{FileActionFunc}}
 \index{FileActionFunc@{FileActionFunc}!FileActionFunc@{FileActionFunc}}
-\subsubsection[{FileActionFunc}]{\setlength{\rightskip}{0pt plus 5cm}template$<$FileActionType fileActionType$>$ {\bf FileActionFunc}$<$ fileActionType $>$::{\bf FileActionFunc} (
+\subsubsection[{FileActionFunc}]{\setlength{\rightskip}{0pt plus 5cm}template$<$FileActionType fileActionType, typename CommandOptionsType  = NoOptions$>$ {\bf FileActionFunc}$<$ fileActionType, CommandOptionsType $>$::{\bf FileActionFunc} (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ path, }
-\item[{const RmFileOptions \&}]{ options}
+\item[{const std::string \&}]{path, }
+\item[{const CommandOptionsType \&}]{options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
-\label{structFileActionFunc_a37b891b64e0b5e3d67870ff1f0a7289d}
+\label{structFileActionFunc_af9248de6d02d23b2e11ae0777f052521}
 
 
 Constructor. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em path}]The path to treat \item[{\em options}]The file transfer option \end{DoxyParams}
+{\em path} & The path to treat \\
+\hline
+{\em options} & The file transfer option \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
-\hypertarget{structFileActionFunc_aa559e76fb78cf395ea13647f8f1d2cac}{
+\hypertarget{structFileActionFunc_aeae506f5a4b71fcfc554a8492d86a52a}{
 \index{FileActionFunc@{FileActionFunc}!operator()@{operator()}}
 \index{operator()@{operator()}!FileActionFunc@{FileActionFunc}}
-\subsubsection[{operator()}]{\setlength{\rightskip}{0pt plus 5cm}template$<$FileActionType fileActionType$>$ int {\bf FileActionFunc}$<$ fileActionType $>$::operator() (
+\subsubsection[{operator()}]{\setlength{\rightskip}{0pt plus 5cm}template$<$FileActionType fileActionType, typename CommandOptionsType  = NoOptions$>$ int {\bf FileActionFunc}$<$ fileActionType, CommandOptionsType $>$::operator() (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ sessionKey}
+\item[{std::string}]{sessionKey}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
-\label{structFileActionFunc_aa559e76fb78cf395ea13647f8f1d2cac}
+\label{structFileActionFunc_aeae506f5a4b71fcfc554a8492d86a52a}
 
 
 To execute the FileAction operation. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em sessionKey}]The identifier of the session \end{DoxyParams}
+{\em sessionKey} & The identifier of the session \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 non-\/zero on error 
 \end{DoxyReturn}

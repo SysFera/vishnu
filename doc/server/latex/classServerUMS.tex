@@ -140,9 +140,9 @@ the path of the configuration file
 \index{init@{init}!ServerUMS@{ServerUMS}}
 \subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}int ServerUMS::init (
 \begin{DoxyParamCaption}
-\item[{int}]{ vishnuId, }
-\item[{{\bf DbConfiguration}}]{ dbConfig, }
-\item[{std::string}]{ sendmailScriptPath}
+\item[{int}]{vishnuId, }
+\item[{{\bf DbConfiguration}}]{dbConfig, }
+\item[{std::string}]{sendmailScriptPath}
 \end{DoxyParamCaption}
 )}}
 \label{classServerUMS_a56a5c740db9e9c1b3e28fa4d0b05546b}
@@ -152,7 +152,13 @@ To initialize the UMS server.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em vishnuId}]The identifier of the vishnu instance \item[{\em dbConfig}]The configuration of the database \item[{\em sendmailScriptPath}]The path to the script for sending emails \end{DoxyParams}
+{\em vishnuId} & The identifier of the vishnu instance \\
+\hline
+{\em dbConfig} & The configuration of the database \\
+\hline
+{\em sendmailScriptPath} & The path to the script for sending emails \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 an error code (0 if success and 1 if an error occurs) 
 \end{DoxyReturn}

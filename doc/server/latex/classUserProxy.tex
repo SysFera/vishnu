@@ -63,8 +63,8 @@ UMS\_\-Data::User \hyperlink{classUserProxy_ac3623aeafa379974a9878e60716ac6d8}{m
 \index{UserProxy@{UserProxy}!UserProxy@{UserProxy}}
 \subsubsection[{UserProxy}]{\setlength{\rightskip}{0pt plus 5cm}UserProxy::UserProxy (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ userId, }
-\item[{const std::string \&}]{ password}
+\item[{const std::string \&}]{userId, }
+\item[{const std::string \&}]{password}
 \end{DoxyParamCaption}
 )}}
 \label{classUserProxy_a651d351f86a03d5fa82b38c071f2e5da}
@@ -74,13 +74,17 @@ Constructor, raises an exception on error.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em userId}]the user identifier \item[{\em password}]the user password \end{DoxyParams}
+{\em userId} & the user identifier \\
+\hline
+{\em password} & the user password \\
+\hline
+\end{DoxyParams}
 \hypertarget{classUserProxy_a6a0c05cfa1cebe51b5a7250916e99edd}{
 \index{UserProxy@{UserProxy}!UserProxy@{UserProxy}}
 \index{UserProxy@{UserProxy}!UserProxy@{UserProxy}}
 \subsubsection[{UserProxy}]{\setlength{\rightskip}{0pt plus 5cm}UserProxy::UserProxy (
 \begin{DoxyParamCaption}
-\item[{{\bf SessionProxy}}]{ session}
+\item[{{\bf SessionProxy}}]{session}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
 \label{classUserProxy_a6a0c05cfa1cebe51b5a7250916e99edd}
@@ -90,13 +94,15 @@ Constructor, raises an exception on error.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \end{DoxyParams}
+{\em session} & The object which encapsulates the session information (ex: identifier of the session) \\
+\hline
+\end{DoxyParams}
 \hypertarget{classUserProxy_a134b4495a84d5c119e76297b3af504bd}{
 \index{UserProxy@{UserProxy}!UserProxy@{UserProxy}}
 \index{UserProxy@{UserProxy}!UserProxy@{UserProxy}}
 \subsubsection[{UserProxy}]{\setlength{\rightskip}{0pt plus 5cm}UserProxy::UserProxy (
 \begin{DoxyParamCaption}
-\item[{const UMS\_\-Data::User \&}]{ user}
+\item[{const UMS\_\-Data::User \&}]{user}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
 \label{classUserProxy_a134b4495a84d5c119e76297b3af504bd}
@@ -106,7 +112,9 @@ Constructor, raises an exception on error.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em user}]The object which encapsulates the user information \end{DoxyParams}
+{\em user} & The object which encapsulates the user information \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -115,7 +123,7 @@ Constructor, raises an exception on error.
 \index{add@{add}!UserProxy@{UserProxy}}
 \subsubsection[{add}]{\setlength{\rightskip}{0pt plus 5cm}int UserProxy::add (
 \begin{DoxyParamCaption}
-\item[{UMS\_\-Data::User \&}]{ user}
+\item[{UMS\_\-Data::User \&}]{user}
 \end{DoxyParamCaption}
 )}}
 \label{classUserProxy_ad1287c55215ec875174bb1168f44a5a6}
@@ -125,7 +133,9 @@ Function to add new user.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em user}]The object which encapsulates the user information \end{DoxyParams}
+{\em user} & The object which encapsulates the user information \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -134,8 +144,8 @@ raises an exception on error
 \index{changePassword@{changePassword}!UserProxy@{UserProxy}}
 \subsubsection[{changePassword}]{\setlength{\rightskip}{0pt plus 5cm}int UserProxy::changePassword (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ oldPassword, }
-\item[{const std::string \&}]{ newPassword}
+\item[{const std::string \&}]{oldPassword, }
+\item[{const std::string \&}]{newPassword}
 \end{DoxyParamCaption}
 )}}
 \label{classUserProxy_a6dae7cef256b94bcfc3ae42ea8825ea3}
@@ -145,7 +155,11 @@ Function to change user password.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em oldPassword}]the old password of the user \item[{\em newPassword}]the new password of the user \end{DoxyParams}
+{\em oldPassword} & the old password of the user \\
+\hline
+{\em newPassword} & the new password of the user \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -154,7 +168,7 @@ raises an exception on error
 \index{deleteUser@{deleteUser}!UserProxy@{UserProxy}}
 \subsubsection[{deleteUser}]{\setlength{\rightskip}{0pt plus 5cm}int UserProxy::deleteUser (
 \begin{DoxyParamCaption}
-\item[{const UMS\_\-Data::User \&}]{ user}
+\item[{const UMS\_\-Data::User \&}]{user}
 \end{DoxyParamCaption}
 )}}
 \label{classUserProxy_a61f3a85440dec730275d541ea0c05213}
@@ -164,7 +178,9 @@ Function to remove user information.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em user}]The object which encapsulates the user information \end{DoxyParams}
+{\em user} & The object which encapsulates the user information \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -209,7 +225,7 @@ raises an exception on error
 \index{resetPassword@{resetPassword}!UserProxy@{UserProxy}}
 \subsubsection[{resetPassword}]{\setlength{\rightskip}{0pt plus 5cm}int UserProxy::resetPassword (
 \begin{DoxyParamCaption}
-\item[{UMS\_\-Data::User \&}]{ user}
+\item[{UMS\_\-Data::User \&}]{user}
 \end{DoxyParamCaption}
 )}}
 \label{classUserProxy_ab4870acd027834b353633407779f7aa1}
@@ -219,7 +235,9 @@ Function to reset user password.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em user}]The object which encapsulates the user information \end{DoxyParams}
+{\em user} & The object which encapsulates the user information \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -228,7 +246,7 @@ raises an exception on error
 \index{update@{update}!UserProxy@{UserProxy}}
 \subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}int UserProxy::update (
 \begin{DoxyParamCaption}
-\item[{const UMS\_\-Data::User \&}]{ user}
+\item[{const UMS\_\-Data::User \&}]{user}
 \end{DoxyParamCaption}
 )}}
 \label{classUserProxy_adcc862d8982f239e0cbe79e55a09d456}
@@ -238,7 +256,9 @@ Function to update user information.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em user}]The object which encapsulates the user information \end{DoxyParams}
+{\em user} & The object which encapsulates the user information \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}

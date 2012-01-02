@@ -58,9 +58,9 @@ TMS\_\-Data::Job \hyperlink{classJobProxy_a3fec0f0cad24fb926cc12213b932ffb4}{mjo
 \index{JobProxy@{JobProxy}!JobProxy@{JobProxy}}
 \subsubsection[{JobProxy}]{\setlength{\rightskip}{0pt plus 5cm}JobProxy::JobProxy (
 \begin{DoxyParamCaption}
-\item[{const {\bf SessionProxy} \&}]{ session, }
-\item[{const std::string \&}]{ machineId, }
-\item[{TMS\_\-Data::Job \&}]{ job}
+\item[{const {\bf SessionProxy} \&}]{session, }
+\item[{const std::string \&}]{machineId, }
+\item[{TMS\_\-Data::Job \&}]{job}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
 \label{classJobProxy_ab3914c852a7be792043c2a6a28784032}
@@ -70,7 +70,13 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em session}]The object which encapsulates the session information \item[{\em machineId}]The id of the machine \item[{\em job}]The job data structure \end{DoxyParams}
+{\em session} & The object which encapsulates the session information \\
+\hline
+{\em machineId} & The id of the machine \\
+\hline
+{\em job} & The job data structure \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -127,8 +133,8 @@ raises an exception on error
 \index{submitJob@{submitJob}!JobProxy@{JobProxy}}
 \subsubsection[{submitJob}]{\setlength{\rightskip}{0pt plus 5cm}int JobProxy::submitJob (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ scriptContent, }
-\item[{const TMS\_\-Data::SubmitOptions \&}]{ options}
+\item[{const std::string \&}]{scriptContent, }
+\item[{const TMS\_\-Data::SubmitOptions \&}]{options}
 \end{DoxyParamCaption}
 )}}
 \label{classJobProxy_a7b3249dd22a939ffbb31b9df9d6ec611}
@@ -138,7 +144,11 @@ Function to submit job.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em scriptContent}]the content of the script \item[{\em options}]the options to submit job \end{DoxyParams}
+{\em scriptContent} & the content of the script \\
+\hline
+{\em options} & the options to submit job \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}

@@ -58,10 +58,10 @@ A factory class for the Files classes.
 \index{getFileServer@{getFileServer}!FileFactory@{FileFactory}}
 \subsubsection[{getFileServer}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf File}$\ast$ FileFactory::getFileServer (
 \begin{DoxyParamCaption}
-\item[{const {\bf SessionServer} \&}]{ sessionServer, }
-\item[{const std::string \&}]{ path, }
-\item[{const std::string \&}]{ user, }
-\item[{const std::string \&}]{ key}
+\item[{const {\bf SessionServer} \&}]{sessionServer, }
+\item[{const std::string \&}]{path, }
+\item[{const std::string \&}]{user, }
+\item[{const std::string \&}]{key}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
 \label{classFileFactory_a198b53121ac8988aeb90a2e309ef767d}
@@ -71,7 +71,15 @@ Get the ssh file implementation.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em sessionServer}]the session server object \item[{\em path}]the path of the file \item[{\em user}]the file user \item[{\em key}]the ssh private key path \end{DoxyParams}
+{\em sessionServer} & the session server object \\
+\hline
+{\em path} & the path of the file \\
+\hline
+{\em user} & the file user \\
+\hline
+{\em key} & the ssh private key path \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The new built file 
 \end{DoxyReturn}
@@ -80,7 +88,7 @@ The new built file
 \index{setSCPCommand@{setSCPCommand}!FileFactory@{FileFactory}}
 \subsubsection[{setSCPCommand}]{\setlength{\rightskip}{0pt plus 5cm}static void FileFactory::setSCPCommand (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ scpCommand}
+\item[{const std::string \&}]{scpCommand}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
 \label{classFileFactory_ab2acfafdd415b00e9eca6e4e97440a74}
@@ -90,13 +98,15 @@ Update a scp command path.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em scpCommand}]the new scp command path \end{DoxyParams}
+{\em scpCommand} & the new scp command path \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFileFactory_a58947a53e9d878bad0586f028df7375b}{
 \index{FileFactory@{FileFactory}!setSSHCommand@{setSSHCommand}}
 \index{setSSHCommand@{setSSHCommand}!FileFactory@{FileFactory}}
 \subsubsection[{setSSHCommand}]{\setlength{\rightskip}{0pt plus 5cm}static void FileFactory::setSSHCommand (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ sshCommand}
+\item[{const std::string \&}]{sshCommand}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
 \label{classFileFactory_a58947a53e9d878bad0586f028df7375b}
@@ -106,13 +116,15 @@ Update a ssh command path.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em sshCommand}]the new ssh command path \end{DoxyParams}
+{\em sshCommand} & the new ssh command path \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFileFactory_a53b0aa4df40e44e7ef2d7b2e618e69a4}{
 \index{FileFactory@{FileFactory}!setSSHPort@{setSSHPort}}
 \index{setSSHPort@{setSSHPort}!FileFactory@{FileFactory}}
 \subsubsection[{setSSHPort}]{\setlength{\rightskip}{0pt plus 5cm}static void FileFactory::setSSHPort (
 \begin{DoxyParamCaption}
-\item[{const unsigned int}]{ sshPort}
+\item[{const unsigned int}]{sshPort}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
 \label{classFileFactory_a53b0aa4df40e44e7ef2d7b2e618e69a4}
@@ -122,13 +134,15 @@ Update a ssh port.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em sshPort}]the new ssh port \end{DoxyParams}
+{\em sshPort} & the new ssh port \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFileFactory_af2d30140299b916e71242d9f502ee49e}{
 \index{FileFactory@{FileFactory}!setSSHServer@{setSSHServer}}
 \index{setSSHServer@{setSSHServer}!FileFactory@{FileFactory}}
 \subsubsection[{setSSHServer}]{\setlength{\rightskip}{0pt plus 5cm}static void FileFactory::setSSHServer (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ sshServer}
+\item[{const std::string \&}]{sshServer}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
 \label{classFileFactory_af2d30140299b916e71242d9f502ee49e}
@@ -138,7 +152,9 @@ Update a ssh server host.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em sshServer}]the new ssh server host \end{DoxyParams}
+{\em sshServer} & the new ssh server host \\
+\hline
+\end{DoxyParams}
 
 
 The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}

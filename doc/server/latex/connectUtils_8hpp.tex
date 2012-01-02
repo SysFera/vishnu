@@ -20,7 +20,7 @@ struct \hyperlink{structUMS__env__name__mapper}{UMS\_\-env\_\-name\_\-mapper}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-{\footnotesize template$<$typename userIdType $>$ }\\boost::shared\_\-ptr$<$ \hyperlink{classOptions}{Options} $>$ \hyperlink{connectUtils_8hpp_a00593cb832038a7bcc2574fa71d816ae}{makeConnectOptions} (std::string pgName, userIdType \&userId, int req, std::string \&dietConfig)
+{\footnotesize template$<$typename userIdType $>$ }\\boost::shared\_\-ptr$<$ \hyperlink{classOptions}{Options} $>$ \hyperlink{connectUtils_8hpp_a26ca757c4134278e1322c39c6c7f565e}{makeConnectOptions} (std::string pgName, userIdType \&userId, int req, std::string \&dietConfig, const \hyperlink{Options_8hpp_abca947614755a7e288afe5c44b07c98d}{Group\_\-type} \&userIdGroup=HIDDEN)
 \begin{DoxyCompactList}\small\item\em To build options for the VISHNU authentication (connect, reconnect)command command. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -31,25 +31,36 @@ Ibrahima Cissé (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sys
 
 
 \subsection{Function Documentation}
-\hypertarget{connectUtils_8hpp_a00593cb832038a7bcc2574fa71d816ae}{
+\hypertarget{connectUtils_8hpp_a26ca757c4134278e1322c39c6c7f565e}{
 \index{connectUtils.hpp@{connectUtils.hpp}!makeConnectOptions@{makeConnectOptions}}
 \index{makeConnectOptions@{makeConnectOptions}!connectUtils.hpp@{connectUtils.hpp}}
 \subsubsection[{makeConnectOptions}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename userIdType $>$ boost::shared\_\-ptr$<${\bf Options}$>$ makeConnectOptions (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ pgName, }
-\item[{userIdType \&}]{ userId, }
-\item[{int}]{ req, }
-\item[{std::string \&}]{ dietConfig}
+\item[{std::string}]{pgName, }
+\item[{userIdType \&}]{userId, }
+\item[{int}]{req, }
+\item[{std::string \&}]{dietConfig, }
+\item[{const {\bf Group\_\-type} \&}]{userIdGroup = {\ttfamily HIDDEN}}
 \end{DoxyParamCaption}
 )}}
-\label{connectUtils_8hpp_a00593cb832038a7bcc2574fa71d816ae}
+\label{connectUtils_8hpp_a26ca757c4134278e1322c39c6c7f565e}
 
 
 To build options for the VISHNU authentication (connect, reconnect)command command. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em pgName,:}]Represents the name of the command \item[{\em userId}]: A callback for user identifier \item[{\em req}]: for required parameters, 0 optional paramter whereas 1 means mandatory parameter \item[{\em dietConfig}]: Represents the VISHNU config file \end{DoxyParams}
+{\em pgName,:} & Represents the name of the command \\
+\hline
+{\em userId} & : A callback for user identifier \\
+\hline
+{\em req} & : for required parameters, 0 optional paramter whereas 1 means mandatory parameter \\
+\hline
+{\em dietConfig} & : Represents the VISHNU config file \\
+\hline
+{\em userIdGroup} & : represents the userId option group type, it may be HIDDEN,CONFIG,or ENV \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The description of all options allowed by the command 
 \end{DoxyReturn}

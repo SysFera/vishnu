@@ -25,7 +25,7 @@ struct \hyperlink{structPOSTGREDatabase_1_1pool__t}{pool\_\-t}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-int \hyperlink{classPOSTGREDatabase_a0371d887a489418bed525acb0d9c5eb3}{process} (std::string request)
+int \hyperlink{classPOSTGREDatabase_a6d987fa60e08c3041a6aee5c06e108dd}{process} (std::string request, int transacId=-\/1)
 \begin{DoxyCompactList}\small\item\em Function to process the request in the database. \item\end{DoxyCompactList}\item 
 int \hyperlink{classPOSTGREDatabase_a758b0d66ddda58296932242533000846}{connect} ()
 \begin{DoxyCompactList}\small\item\em To make a connection to the database. \item\end{DoxyCompactList}\item 
@@ -41,10 +41,20 @@ int \hyperlink{classPOSTGREDatabase_a758b0d66ddda58296932242533000846}{connect} 
 \begin{DoxyCompactList}\small\item\em Destructor, raises an exception on error. \item\end{DoxyCompactList}\item 
 int \hyperlink{classPOSTGREDatabase_acadff2a3649a40b323eb7711e0d705cf}{setDatabase} (std::string db)
 \begin{DoxyCompactList}\small\item\em To set the db to use. \item\end{DoxyCompactList}\item 
-\hyperlink{classDatabaseResult}{DatabaseResult} $\ast$ \hyperlink{classPOSTGREDatabase_a4be2769e7d13be7f139b540ffb3a4760}{getResult} (std::string request)
+\hyperlink{classDatabaseResult}{DatabaseResult} $\ast$ \hyperlink{classPOSTGREDatabase_a1ec869cd220eacd6833b7f47388023fc}{getResult} (std::string request, int transacId=-\/1)
 \begin{DoxyCompactList}\small\item\em To get the result of a select request. \item\end{DoxyCompactList}\item 
 \hyperlink{classDbConfiguration_a4a57e43a5017a5c4833a784a994c91cf}{DbConfiguration::db\_\-type\_\-t} \hyperlink{classPOSTGREDatabase_a6f446f99cff05695b37165ee0ce22a9a}{getDbType} ()
-\begin{DoxyCompactList}\small\item\em To get the type of database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em To get the type of database. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classPOSTGREDatabase_a3257276f03c981dd6bb4b61d0cd0f863}{startTransaction} ()
+\begin{DoxyCompactList}\small\item\em Start a transaction. \item\end{DoxyCompactList}\item 
+virtual void \hyperlink{classPOSTGREDatabase_a5fb689587cff7610949dd8ae0c14a321}{endTransaction} (int transactionID)
+\begin{DoxyCompactList}\small\item\em End a transaction. \item\end{DoxyCompactList}\item 
+virtual void \hyperlink{classPOSTGREDatabase_af511e1e797dbd05dcb582d3f9603392f}{cancelTransaction} (int transactionID)
+\begin{DoxyCompactList}\small\item\em Cancel a transaction. \item\end{DoxyCompactList}\item 
+virtual void \hyperlink{classPOSTGREDatabase_a558be82c58bcd1dd1b019bf9bfb88ded}{flush} (int transactionID)
+\begin{DoxyCompactList}\small\item\em To commit a transaction. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classPOSTGREDatabase_abf052a5ce6b62c3be2c96ec8a4a13887}{generateId} (std::string table, std::string fields, std::string val, int tid)
+\begin{DoxyCompactList}\small\item\em To get a unique id. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Types}
 \begin{DoxyCompactItemize}
 \item 
@@ -56,9 +66,9 @@ typedef struct \hyperlink{structPOSTGREDatabase_1_1pool__t}{POSTGREDatabase::poo
 \subsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-PGconn $\ast$ \hyperlink{classPOSTGREDatabase_adbea0ea18a50130d51b68dbaa86c1e89}{getConnexion} (int \&pos)
+PGconn $\ast$ \hyperlink{classPOSTGREDatabase_a8a09eb602c9a20af9663b2e7c048682d}{getConnection} (int \&pos)
 \begin{DoxyCompactList}\small\item\em To get a valid connexion. \item\end{DoxyCompactList}\item 
-void \hyperlink{classPOSTGREDatabase_a6bc07c4256ea310f59b85bfc5803a340}{releaseConnexion} (int pos)
+void \hyperlink{classPOSTGREDatabase_a2d7fcd4fe54836067a1fa31a829a3410}{releaseConnection} (int pos)
 \begin{DoxyCompactList}\small\item\em To release a connexion. \item\end{DoxyCompactList}\item 
 int \hyperlink{classPOSTGREDatabase_af026bcf159590b97226d829bddb8e00a}{disconnect} ()
 \begin{DoxyCompactList}\small\item\em To disconnect from the database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -86,6 +96,28 @@ bool \hyperlink{classPOSTGREDatabase_aa4f59d325b41b9b328878323c9589ac4}{misConne
 POSTGRESQL implementation of the \hyperlink{classDatabase}{Database} class. 
 
 \subsection{Member Function Documentation}
+\hypertarget{classPOSTGREDatabase_af511e1e797dbd05dcb582d3f9603392f}{
+\index{POSTGREDatabase@{POSTGREDatabase}!cancelTransaction@{cancelTransaction}}
+\index{cancelTransaction@{cancelTransaction}!POSTGREDatabase@{POSTGREDatabase}}
+\subsubsection[{cancelTransaction}]{\setlength{\rightskip}{0pt plus 5cm}virtual void POSTGREDatabase::cancelTransaction (
+\begin{DoxyParamCaption}
+\item[{int}]{transactionID}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classPOSTGREDatabase_af511e1e797dbd05dcb582d3f9603392f}
+
+
+Cancel a transaction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em transactionID,:} & The ID of the transaction \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classDatabase_a16849263b31bf827ff1421d9df980196}{Database}.
+
 \hypertarget{classPOSTGREDatabase_a758b0d66ddda58296932242533000846}{
 \index{POSTGREDatabase@{POSTGREDatabase}!connect@{connect}}
 \index{connect@{connect}!POSTGREDatabase@{POSTGREDatabase}}
@@ -126,22 +158,102 @@ raises an exception on error
 
 Implements \hyperlink{classDatabase_adca650f8a5db531ff1fb85aaef25e711}{Database}.
 
-\hypertarget{classPOSTGREDatabase_adbea0ea18a50130d51b68dbaa86c1e89}{
-\index{POSTGREDatabase@{POSTGREDatabase}!getConnexion@{getConnexion}}
-\index{getConnexion@{getConnexion}!POSTGREDatabase@{POSTGREDatabase}}
-\subsubsection[{getConnexion}]{\setlength{\rightskip}{0pt plus 5cm}PGconn $\ast$ POSTGREDatabase::getConnexion (
+\hypertarget{classPOSTGREDatabase_a5fb689587cff7610949dd8ae0c14a321}{
+\index{POSTGREDatabase@{POSTGREDatabase}!endTransaction@{endTransaction}}
+\index{endTransaction@{endTransaction}!POSTGREDatabase@{POSTGREDatabase}}
+\subsubsection[{endTransaction}]{\setlength{\rightskip}{0pt plus 5cm}virtual void POSTGREDatabase::endTransaction (
 \begin{DoxyParamCaption}
-\item[{int \&}]{ pos}
+\item[{int}]{transactionID}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classPOSTGREDatabase_a5fb689587cff7610949dd8ae0c14a321}
+
+
+End a transaction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em transactionID,:} & The ID of the transaction \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classDatabase_a5d90789cdc650feede851c90bd48168d}{Database}.
+
+\hypertarget{classPOSTGREDatabase_a558be82c58bcd1dd1b019bf9bfb88ded}{
+\index{POSTGREDatabase@{POSTGREDatabase}!flush@{flush}}
+\index{flush@{flush}!POSTGREDatabase@{POSTGREDatabase}}
+\subsubsection[{flush}]{\setlength{\rightskip}{0pt plus 5cm}virtual void POSTGREDatabase::flush (
+\begin{DoxyParamCaption}
+\item[{int}]{transactionID}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classPOSTGREDatabase_a558be82c58bcd1dd1b019bf9bfb88ded}
+
+
+To commit a transaction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em transactionID,:} & The ID of the transaction \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classDatabase_a0dc84deddb8aab9d54817484a7c58400}{Database}.
+
+\hypertarget{classPOSTGREDatabase_abf052a5ce6b62c3be2c96ec8a4a13887}{
+\index{POSTGREDatabase@{POSTGREDatabase}!generateId@{generateId}}
+\index{generateId@{generateId}!POSTGREDatabase@{POSTGREDatabase}}
+\subsubsection[{generateId}]{\setlength{\rightskip}{0pt plus 5cm}virtual int POSTGREDatabase::generateId (
+\begin{DoxyParamCaption}
+\item[{std::string}]{table, }
+\item[{std::string}]{fields, }
+\item[{std::string}]{val, }
+\item[{int}]{tid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classPOSTGREDatabase_abf052a5ce6b62c3be2c96ec8a4a13887}
+
+
+To get a unique id. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em table,:} & The table to use to generate the id \\
+\hline
+{\em fields,:} & The fields of the table \\
+\hline
+{\em val,:} & The values of the fields to insert \\
+\hline
+{\em tid,:} & The transaction id \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new integer never returned by this function 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classDatabase_ac17618be411cc0a017d830ab56b4e31f}{Database}.
+
+\hypertarget{classPOSTGREDatabase_a8a09eb602c9a20af9663b2e7c048682d}{
+\index{POSTGREDatabase@{POSTGREDatabase}!getConnection@{getConnection}}
+\index{getConnection@{getConnection}!POSTGREDatabase@{POSTGREDatabase}}
+\subsubsection[{getConnection}]{\setlength{\rightskip}{0pt plus 5cm}PGconn$\ast$ POSTGREDatabase::getConnection (
+\begin{DoxyParamCaption}
+\item[{int \&}]{pos}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classPOSTGREDatabase_adbea0ea18a50130d51b68dbaa86c1e89}
+\label{classPOSTGREDatabase_a8a09eb602c9a20af9663b2e7c048682d}
 
 
 To get a valid connexion. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em pos}]The position of the connexion gotten in the pool \end{DoxyParams}
+{\em pos} & The position of the connexion gotten in the pool \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 A valid and free connexion 
 \end{DoxyReturn}
@@ -165,74 +277,86 @@ An enum identifying the type of database
 
 Implements \hyperlink{classDatabase_a668ffe571cb0f9f355a2f874e40cb515}{Database}.
 
-\hypertarget{classPOSTGREDatabase_a4be2769e7d13be7f139b540ffb3a4760}{
+\hypertarget{classPOSTGREDatabase_a1ec869cd220eacd6833b7f47388023fc}{
 \index{POSTGREDatabase@{POSTGREDatabase}!getResult@{getResult}}
 \index{getResult@{getResult}!POSTGREDatabase@{POSTGREDatabase}}
 \subsubsection[{getResult}]{\setlength{\rightskip}{0pt plus 5cm}{\bf DatabaseResult} $\ast$ POSTGREDatabase::getResult (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ request}
+\item[{std::string}]{request, }
+\item[{int}]{transacId = {\ttfamily -\/1}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classPOSTGREDatabase_a4be2769e7d13be7f139b540ffb3a4760}
+\label{classPOSTGREDatabase_a1ec869cd220eacd6833b7f47388023fc}
 
 
 To get the result of a select request. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em request}]The request to process \end{DoxyParams}
+{\em request} & The request to process \\
+\hline
+{\em transacId} & the id of the transaction if one is used \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 An object which encapsulates the database results 
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classDatabase_a30f002bf9752a54c2a056abc1b8bb4d4}{Database}.
+Implements \hyperlink{classDatabase_a4b87b83ddfcac9d2bbebf3805da602c2}{Database}.
 
-\hypertarget{classPOSTGREDatabase_a0371d887a489418bed525acb0d9c5eb3}{
+\hypertarget{classPOSTGREDatabase_a6d987fa60e08c3041a6aee5c06e108dd}{
 \index{POSTGREDatabase@{POSTGREDatabase}!process@{process}}
 \index{process@{process}!POSTGREDatabase@{POSTGREDatabase}}
 \subsubsection[{process}]{\setlength{\rightskip}{0pt plus 5cm}int POSTGREDatabase::process (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ request}
+\item[{std::string}]{request, }
+\item[{int}]{transacId = {\ttfamily -\/1}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classPOSTGREDatabase_a0371d887a489418bed525acb0d9c5eb3}
+\label{classPOSTGREDatabase_a6d987fa60e08c3041a6aee5c06e108dd}
 
 
 Function to process the request in the database. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em request}]The request to process \end{DoxyParams}
+{\em request} & The request to process \\
+\hline
+{\em transacId} & the id of the transaction if one is used \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classDatabase_a41881436b79aac5f4d8e179056564de1}{Database}.
+Implements \hyperlink{classDatabase_a528eb90161e789d75c98415b8df58907}{Database}.
 
-\hypertarget{classPOSTGREDatabase_a6bc07c4256ea310f59b85bfc5803a340}{
-\index{POSTGREDatabase@{POSTGREDatabase}!releaseConnexion@{releaseConnexion}}
-\index{releaseConnexion@{releaseConnexion}!POSTGREDatabase@{POSTGREDatabase}}
-\subsubsection[{releaseConnexion}]{\setlength{\rightskip}{0pt plus 5cm}void POSTGREDatabase::releaseConnexion (
+\hypertarget{classPOSTGREDatabase_a2d7fcd4fe54836067a1fa31a829a3410}{
+\index{POSTGREDatabase@{POSTGREDatabase}!releaseConnection@{releaseConnection}}
+\index{releaseConnection@{releaseConnection}!POSTGREDatabase@{POSTGREDatabase}}
+\subsubsection[{releaseConnection}]{\setlength{\rightskip}{0pt plus 5cm}void POSTGREDatabase::releaseConnection (
 \begin{DoxyParamCaption}
-\item[{int}]{ pos}
+\item[{int}]{pos}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classPOSTGREDatabase_a6bc07c4256ea310f59b85bfc5803a340}
+\label{classPOSTGREDatabase_a2d7fcd4fe54836067a1fa31a829a3410}
 
 
 To release a connexion. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em pos}]The position of the connexion to release \end{DoxyParams}
+{\em pos} & The position of the connexion to release \\
+\hline
+\end{DoxyParams}
 \hypertarget{classPOSTGREDatabase_acadff2a3649a40b323eb7711e0d705cf}{
 \index{POSTGREDatabase@{POSTGREDatabase}!setDatabase@{setDatabase}}
 \index{setDatabase@{setDatabase}!POSTGREDatabase@{POSTGREDatabase}}
 \subsubsection[{setDatabase}]{\setlength{\rightskip}{0pt plus 5cm}int POSTGREDatabase::setDatabase (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ db}
+\item[{std::string}]{db}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{classPOSTGREDatabase_acadff2a3649a40b323eb7711e0d705cf}
@@ -242,12 +366,35 @@ To set the db to use.
 
 FIXME obsolete 
 \begin{DoxyParams}{Parameters}
-\item[{\em db}]The name of the database to use \end{DoxyParams}
+{\em db} & The name of the database to use \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 raises an exception on error 
 \end{DoxyReturn}
+\hypertarget{classPOSTGREDatabase_a3257276f03c981dd6bb4b61d0cd0f863}{
+\index{POSTGREDatabase@{POSTGREDatabase}!startTransaction@{startTransaction}}
+\index{startTransaction@{startTransaction}!POSTGREDatabase@{POSTGREDatabase}}
+\subsubsection[{startTransaction}]{\setlength{\rightskip}{0pt plus 5cm}virtual int POSTGREDatabase::startTransaction (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classPOSTGREDatabase_a3257276f03c981dd6bb4b61d0cd0f863}
 
 
-The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+Start a transaction. 
+
+\begin{DoxyReturn}{Returns}
+The transaction ID 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classDatabase_afd54fc087caf27f2636f2e535691e8c2}{Database}.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
-core/src/database/\hyperlink{POSTGREDatabase_8hpp}{POSTGREDatabase.hpp}\end{DoxyCompactItemize}
+core/src/database/\hyperlink{POSTGREDatabase_8hpp}{POSTGREDatabase.hpp}\item 
+core/src/database/\hyperlink{MYSQLDatabase_8hpp}{MYSQLDatabase.hpp}\end{DoxyCompactItemize}

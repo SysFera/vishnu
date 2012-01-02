@@ -87,8 +87,8 @@ virtual string \hyperlink{classIMSMapper_acda01f83bdbd18fba9c99bba7fa538e7}{deco
 \index{IMSMapper@{IMSMapper}!IMSMapper@{IMSMapper}}
 \subsubsection[{IMSMapper}]{\setlength{\rightskip}{0pt plus 5cm}IMSMapper::IMSMapper (
 \begin{DoxyParamCaption}
-\item[{{\bf MapperRegistry} $\ast$}]{ reg, }
-\item[{string}]{ name}
+\item[{{\bf MapperRegistry} $\ast$}]{reg, }
+\item[{string}]{name}
 \end{DoxyParamCaption}
 )}}
 \label{classIMSMapper_ae98b7c56f1613969e0919f2885ce123d}
@@ -98,7 +98,11 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em reg}]Registry to register \item[{\em name}]Name to use to register \end{DoxyParams}
+{\em reg} & Registry to register \\
+\hline
+{\em name} & Name to use to register \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -107,8 +111,8 @@ Constructor.
 \index{code@{code}!IMSMapper@{IMSMapper}}
 \subsubsection[{code}]{\setlength{\rightskip}{0pt plus 5cm}int IMSMapper::code (
 \begin{DoxyParamCaption}
-\item[{const string \&}]{ cmd, }
-\item[{unsigned int}]{ code = {\ttfamily 0}}
+\item[{const string \&}]{cmd, }
+\item[{unsigned int}]{code = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classIMSMapper_ac972651946c18f94bc683654462ccecd}
@@ -118,7 +122,11 @@ Function to add an element to code.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em cmd}]The string to add \item[{\em code}]If 0, the code is created, otherwize it is the key in the map to add the string \end{DoxyParams}
+{\em cmd} & The string to add \\
+\hline
+{\em code} & If 0, the code is created, otherwize it is the key in the map to add the string \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 if param code = 0, the assigned code to add other element to the same item, otherwize return 0 
 \end{DoxyReturn}
@@ -131,7 +139,7 @@ Reimplemented from \hyperlink{classMapper_a915f9829fd340b2b0978323b90eda360}{Map
 \index{decode@{decode}!IMSMapper@{IMSMapper}}
 \subsubsection[{decode}]{\setlength{\rightskip}{0pt plus 5cm}string IMSMapper::decode (
 \begin{DoxyParamCaption}
-\item[{const string \&}]{ msg}
+\item[{const string \&}]{msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classIMSMapper_a39e3b6ab30b0c8f49a4acf2a25241700}
@@ -141,7 +149,9 @@ To get, from a coded string, the cli like command that made it.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em msg}]The coded string \end{DoxyParams}
+{\em msg} & The coded string \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like command 
 \end{DoxyReturn}
@@ -154,8 +164,8 @@ Reimplemented from \hyperlink{classMapper_a5e51b9148704b25e26e5ec48bd643a0b}{Map
 \index{decodeCur@{decodeCur}!IMSMapper@{IMSMapper}}
 \subsubsection[{decodeCur}]{\setlength{\rightskip}{0pt plus 5cm}virtual string IMSMapper::decodeCur (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{ separator, }
-\item[{const string \&}]{ msg}
+\item[{vector$<$ int $>$}]{separator, }
+\item[{const string \&}]{msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classIMSMapper_ae8b518766957d35ee20737cd2dde4fec}
@@ -165,7 +175,11 @@ To decode the close call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+{\em separator} & A vector containing the position of the separator in the message msg \\
+\hline
+{\em msg} & The message to decode \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -174,8 +188,8 @@ The cli like close command
 \index{decodeExp@{decodeExp}!IMSMapper@{IMSMapper}}
 \subsubsection[{decodeExp}]{\setlength{\rightskip}{0pt plus 5cm}virtual string IMSMapper::decodeExp (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{ separator, }
-\item[{const string \&}]{ msg}
+\item[{vector$<$ int $>$}]{separator, }
+\item[{const string \&}]{msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classIMSMapper_afdc6bd11992d07d732ba1399d901a63a}
@@ -185,7 +199,11 @@ To decode the close call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+{\em separator} & A vector containing the position of the separator in the message msg \\
+\hline
+{\em msg} & The message to decode \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -194,8 +212,8 @@ The cli like close command
 \index{decodeFid@{decodeFid}!IMSMapper@{IMSMapper}}
 \subsubsection[{decodeFid}]{\setlength{\rightskip}{0pt plus 5cm}virtual string IMSMapper::decodeFid (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{ separator, }
-\item[{const string \&}]{ msg}
+\item[{vector$<$ int $>$}]{separator, }
+\item[{const string \&}]{msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classIMSMapper_a04db35d8ada7dcb3ffe6dc64d4e4fd8f}
@@ -205,7 +223,11 @@ To decode the close call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+{\em separator} & A vector containing the position of the separator in the message msg \\
+\hline
+{\em msg} & The message to decode \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -214,8 +236,8 @@ The cli like close command
 \index{decodeGetF@{decodeGetF}!IMSMapper@{IMSMapper}}
 \subsubsection[{decodeGetF}]{\setlength{\rightskip}{0pt plus 5cm}virtual string IMSMapper::decodeGetF (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{ separator, }
-\item[{const string \&}]{ msg}
+\item[{vector$<$ int $>$}]{separator, }
+\item[{const string \&}]{msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classIMSMapper_a1481e2aec04b986736f769c364659eda}
@@ -225,7 +247,11 @@ To decode the close call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+{\em separator} & A vector containing the position of the separator in the message msg \\
+\hline
+{\em msg} & The message to decode \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -234,8 +260,8 @@ The cli like close command
 \index{decodeGetSys@{decodeGetSys}!IMSMapper@{IMSMapper}}
 \subsubsection[{decodeGetSys}]{\setlength{\rightskip}{0pt plus 5cm}virtual string IMSMapper::decodeGetSys (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{ separator, }
-\item[{const string \&}]{ msg}
+\item[{vector$<$ int $>$}]{separator, }
+\item[{const string \&}]{msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classIMSMapper_acda01f83bdbd18fba9c99bba7fa538e7}
@@ -245,7 +271,11 @@ To decode the close call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+{\em separator} & A vector containing the position of the separator in the message msg \\
+\hline
+{\em msg} & The message to decode \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -254,8 +284,8 @@ The cli like close command
 \index{decodeGetThre@{decodeGetThre}!IMSMapper@{IMSMapper}}
 \subsubsection[{decodeGetThre}]{\setlength{\rightskip}{0pt plus 5cm}virtual string IMSMapper::decodeGetThre (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{ separator, }
-\item[{const string \&}]{ msg}
+\item[{vector$<$ int $>$}]{separator, }
+\item[{const string \&}]{msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classIMSMapper_a783156c222eacd5be72bdf7ad00d2481}
@@ -265,7 +295,11 @@ To decode the close call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+{\em separator} & A vector containing the position of the separator in the message msg \\
+\hline
+{\em msg} & The message to decode \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -274,8 +308,8 @@ The cli like close command
 \index{decodeHist@{decodeHist}!IMSMapper@{IMSMapper}}
 \subsubsection[{decodeHist}]{\setlength{\rightskip}{0pt plus 5cm}virtual string IMSMapper::decodeHist (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{ separator, }
-\item[{const string \&}]{ msg}
+\item[{vector$<$ int $>$}]{separator, }
+\item[{const string \&}]{msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classIMSMapper_a0ee71a02e2de7ce08a45f413590cd3b8}
@@ -285,7 +319,11 @@ To decode the close call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+{\em separator} & A vector containing the position of the separator in the message msg \\
+\hline
+{\em msg} & The message to decode \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -294,8 +332,8 @@ The cli like close command
 \index{decodeLoad@{decodeLoad}!IMSMapper@{IMSMapper}}
 \subsubsection[{decodeLoad}]{\setlength{\rightskip}{0pt plus 5cm}virtual string IMSMapper::decodeLoad (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{ separator, }
-\item[{const string \&}]{ msg}
+\item[{vector$<$ int $>$}]{separator, }
+\item[{const string \&}]{msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classIMSMapper_abe6d2e3537b551aa184b657a349d8cb2}
@@ -305,7 +343,11 @@ To decode the close call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+{\em separator} & A vector containing the position of the separator in the message msg \\
+\hline
+{\em msg} & The message to decode \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -314,8 +356,8 @@ The cli like close command
 \index{decodeMid@{decodeMid}!IMSMapper@{IMSMapper}}
 \subsubsection[{decodeMid}]{\setlength{\rightskip}{0pt plus 5cm}virtual string IMSMapper::decodeMid (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{ separator, }
-\item[{const string \&}]{ msg}
+\item[{vector$<$ int $>$}]{separator, }
+\item[{const string \&}]{msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classIMSMapper_ad7979ec5031fca19e89820740e79d99b}
@@ -325,7 +367,11 @@ To decode the close call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+{\em separator} & A vector containing the position of the separator in the message msg \\
+\hline
+{\em msg} & The message to decode \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -334,8 +380,8 @@ The cli like close command
 \index{decodeProc@{decodeProc}!IMSMapper@{IMSMapper}}
 \subsubsection[{decodeProc}]{\setlength{\rightskip}{0pt plus 5cm}virtual string IMSMapper::decodeProc (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{ separator, }
-\item[{const string \&}]{ msg}
+\item[{vector$<$ int $>$}]{separator, }
+\item[{const string \&}]{msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classIMSMapper_a61c1a3d5d5ac306ddb86925a1777b568}
@@ -345,7 +391,11 @@ To decode the close call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+{\em separator} & A vector containing the position of the separator in the message msg \\
+\hline
+{\em msg} & The message to decode \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -354,8 +404,8 @@ The cli like close command
 \index{decodeRestart@{decodeRestart}!IMSMapper@{IMSMapper}}
 \subsubsection[{decodeRestart}]{\setlength{\rightskip}{0pt plus 5cm}virtual string IMSMapper::decodeRestart (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{ separator, }
-\item[{const string \&}]{ msg}
+\item[{vector$<$ int $>$}]{separator, }
+\item[{const string \&}]{msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classIMSMapper_a949ccf0f3c1b9fcc93d0a3a444304ba0}
@@ -365,7 +415,11 @@ To decode the close call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+{\em separator} & A vector containing the position of the separator in the message msg \\
+\hline
+{\em msg} & The message to decode \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -374,8 +428,8 @@ The cli like close command
 \index{decodeSetF@{decodeSetF}!IMSMapper@{IMSMapper}}
 \subsubsection[{decodeSetF}]{\setlength{\rightskip}{0pt plus 5cm}virtual string IMSMapper::decodeSetF (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{ separator, }
-\item[{const string \&}]{ msg}
+\item[{vector$<$ int $>$}]{separator, }
+\item[{const string \&}]{msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classIMSMapper_a87c4a9459c2823a089cc338c347ad4f6}
@@ -385,7 +439,11 @@ To decode the close call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+{\em separator} & A vector containing the position of the separator in the message msg \\
+\hline
+{\em msg} & The message to decode \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -394,8 +452,8 @@ The cli like close command
 \index{decodeSetSys@{decodeSetSys}!IMSMapper@{IMSMapper}}
 \subsubsection[{decodeSetSys}]{\setlength{\rightskip}{0pt plus 5cm}virtual string IMSMapper::decodeSetSys (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{ separator, }
-\item[{const string \&}]{ msg}
+\item[{vector$<$ int $>$}]{separator, }
+\item[{const string \&}]{msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classIMSMapper_a5d0d0531f0dc64f2186021b57375419b}
@@ -405,7 +463,11 @@ To decode the close call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+{\em separator} & A vector containing the position of the separator in the message msg \\
+\hline
+{\em msg} & The message to decode \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -414,8 +476,8 @@ The cli like close command
 \index{decodeSetThre@{decodeSetThre}!IMSMapper@{IMSMapper}}
 \subsubsection[{decodeSetThre}]{\setlength{\rightskip}{0pt plus 5cm}virtual string IMSMapper::decodeSetThre (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{ separator, }
-\item[{const string \&}]{ msg}
+\item[{vector$<$ int $>$}]{separator, }
+\item[{const string \&}]{msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classIMSMapper_a87686fec5fdf92f365230a209f9b2c4b}
@@ -425,7 +487,11 @@ To decode the close call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+{\em separator} & A vector containing the position of the separator in the message msg \\
+\hline
+{\em msg} & The message to decode \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -434,8 +500,8 @@ The cli like close command
 \index{decodeStop@{decodeStop}!IMSMapper@{IMSMapper}}
 \subsubsection[{decodeStop}]{\setlength{\rightskip}{0pt plus 5cm}virtual string IMSMapper::decodeStop (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{ separator, }
-\item[{const string \&}]{ msg}
+\item[{vector$<$ int $>$}]{separator, }
+\item[{const string \&}]{msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classIMSMapper_a71be80fb21c0fe3cde1064d8379a0a67}
@@ -445,7 +511,11 @@ To decode the close call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+{\em separator} & A vector containing the position of the separator in the message msg \\
+\hline
+{\em msg} & The message to decode \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -454,8 +524,8 @@ The cli like close command
 \index{decodeTid@{decodeTid}!IMSMapper@{IMSMapper}}
 \subsubsection[{decodeTid}]{\setlength{\rightskip}{0pt plus 5cm}virtual string IMSMapper::decodeTid (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{ separator, }
-\item[{const string \&}]{ msg}
+\item[{vector$<$ int $>$}]{separator, }
+\item[{const string \&}]{msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classIMSMapper_a7d6379e366a7271871a2916f01f4dfc2}
@@ -465,7 +535,11 @@ To decode the close call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+{\em separator} & A vector containing the position of the separator in the message msg \\
+\hline
+{\em msg} & The message to decode \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -474,8 +548,8 @@ The cli like close command
 \index{decodeUid@{decodeUid}!IMSMapper@{IMSMapper}}
 \subsubsection[{decodeUid}]{\setlength{\rightskip}{0pt plus 5cm}virtual string IMSMapper::decodeUid (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{ separator, }
-\item[{const string \&}]{ msg}
+\item[{vector$<$ int $>$}]{separator, }
+\item[{const string \&}]{msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classIMSMapper_abc943e621369332d9a03f9819d85fcbc}
@@ -485,7 +559,11 @@ To decode the close call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+{\em separator} & A vector containing the position of the separator in the message msg \\
+\hline
+{\em msg} & The message to decode \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -494,8 +572,8 @@ The cli like close command
 \index{getCommand@{getCommand}!IMSMapper@{IMSMapper}}
 \subsubsection[{getCommand}]{\setlength{\rightskip}{0pt plus 5cm}int IMSMapper::getCommand (
 \begin{DoxyParamCaption}
-\item[{const int \&}]{ key, }
-\item[{string \&}]{ command}
+\item[{const int \&}]{key, }
+\item[{string \&}]{command}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classIMSMapper_a25a97459b750bf8204178b9a18637113}
@@ -505,7 +583,11 @@ To get the command corresponding to a key.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em key}]The key to use \item[{\em command}]OUT, the command corresponding to the key \end{DoxyParams}
+{\em key} & The key to use \\
+\hline
+{\em command} & OUT, the command corresponding to the key \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 on success, an error code otherwise 
 \end{DoxyReturn}
@@ -514,8 +596,8 @@ To get the command corresponding to a key.
 \index{getKey@{getKey}!IMSMapper@{IMSMapper}}
 \subsubsection[{getKey}]{\setlength{\rightskip}{0pt plus 5cm}int IMSMapper::getKey (
 \begin{DoxyParamCaption}
-\item[{const string \&}]{ command, }
-\item[{int \&}]{ key}
+\item[{const string \&}]{command, }
+\item[{int \&}]{key}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classIMSMapper_a762164cb091f97d2a4698de59cc66cb5}
@@ -525,7 +607,11 @@ To get the key corresponding to a command.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em command}]The 'key' to use \item[{\em key}]OUT, the key corresponding to the command \end{DoxyParams}
+{\em command} & The 'key' to use \\
+\hline
+{\em key} & OUT, the key corresponding to the command \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 on success, an error code otherwise 
 \end{DoxyReturn}

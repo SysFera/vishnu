@@ -23,7 +23,7 @@ int \hyperlink{classConfigurationProxy_a2650b17f6673f1b283ff45f617b40e6c}{save} 
 int \hyperlink{classConfigurationProxy_a2f680f79eebe3969b5b5669908682ff0}{restoreFromFile} ()
 \begin{DoxyCompactList}\small\item\em Function to restore the configuration of VISHNU from a file. \item\end{DoxyCompactList}\item 
 int \hyperlink{classConfigurationProxy_a928c9e220845af6a169471f5d35aeb35}{restoreFromData} ()
-\begin{DoxyCompactList}\small\item\em Function to restore the configuration of VISHNU from an object (Data). \item\end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Function to restore the configuration of VISHNU from an object (Data) \item\end{DoxyCompactList}\item 
 UMS\_\-Data::Configuration $\ast$ \hyperlink{classConfigurationProxy_a2f4b00c91144abd47d146835a44c4233}{getData} ()
 \begin{DoxyCompactList}\small\item\em Function get the saved configuration of VISHNU. \item\end{DoxyCompactList}\item 
 \hyperlink{classSessionProxy}{SessionProxy} \hyperlink{classConfigurationProxy_a4bf705d620244939cb8557a806b74daa}{getSessionProxy} ()
@@ -67,8 +67,8 @@ std::string \hyperlink{classConfigurationProxy_adf6e46f39a26757595323122b002c8b0
 \index{ConfigurationProxy@{ConfigurationProxy}!ConfigurationProxy@{ConfigurationProxy}}
 \subsubsection[{ConfigurationProxy}]{\setlength{\rightskip}{0pt plus 5cm}ConfigurationProxy::ConfigurationProxy (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ filePath, }
-\item[{const {\bf SessionProxy} \&}]{ session}
+\item[{const std::string \&}]{filePath, }
+\item[{const {\bf SessionProxy} \&}]{session}
 \end{DoxyParamCaption}
 )}}
 \label{classConfigurationProxy_ad017715ce1a21c5c552a12214890ae03}
@@ -78,14 +78,18 @@ Constructor, raises an exception on error.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em filePath}]The file containing the configuration (serialized) \item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \end{DoxyParams}
+{\em filePath} & The file containing the configuration (serialized) \\
+\hline
+{\em session} & The object which encapsulates the session information (ex: identifier of the session) \\
+\hline
+\end{DoxyParams}
 \hypertarget{classConfigurationProxy_a43efe8fc92cd6fa8bf44528b689654c6}{
 \index{ConfigurationProxy@{ConfigurationProxy}!ConfigurationProxy@{ConfigurationProxy}}
 \index{ConfigurationProxy@{ConfigurationProxy}!ConfigurationProxy@{ConfigurationProxy}}
 \subsubsection[{ConfigurationProxy}]{\setlength{\rightskip}{0pt plus 5cm}ConfigurationProxy::ConfigurationProxy (
 \begin{DoxyParamCaption}
-\item[{UMS\_\-Data::Configuration $\ast$}]{ config, }
-\item[{const {\bf SessionProxy} \&}]{ session}
+\item[{UMS\_\-Data::Configuration $\ast$}]{config, }
+\item[{const {\bf SessionProxy} \&}]{session}
 \end{DoxyParamCaption}
 )}}
 \label{classConfigurationProxy_a43efe8fc92cd6fa8bf44528b689654c6}
@@ -95,7 +99,11 @@ Constructor, raises an exception on error.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em config}]The object which encapsulates the configuration description \item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \end{DoxyParams}
+{\em config} & The object which encapsulates the configuration description \\
+\hline
+{\em session} & The object which encapsulates the session information (ex: identifier of the session) \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -140,7 +148,7 @@ raises an exception on error
 \index{restore@{restore}!ConfigurationProxy@{ConfigurationProxy}}
 \subsubsection[{restore}]{\setlength{\rightskip}{0pt plus 5cm}int ConfigurationProxy::restore (
 \begin{DoxyParamCaption}
-\item[{bool}]{ fromFile = {\ttfamily true}}
+\item[{bool}]{fromFile = {\ttfamily true}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classConfigurationProxy_a3c83af09aa3588da46c00ee5b05fb29b}
@@ -150,7 +158,9 @@ Function to combine \hyperlink{classConfigurationProxy_a2f680f79eebe3969b5b56699
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em fromFile}]To select the call of restoreFromFile or restoreFromData function \end{DoxyParams}
+{\em fromFile} & To select the call of restoreFromFile or restoreFromData function \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -165,7 +175,7 @@ raises an exception on error
 \label{classConfigurationProxy_a928c9e220845af6a169471f5d35aeb35}
 
 
-Function to restore the configuration of VISHNU from an object (Data). 
+Function to restore the configuration of VISHNU from an object (Data) 
 
 \begin{DoxyReturn}{Returns}
 raises an exception on error 

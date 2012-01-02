@@ -54,10 +54,10 @@ A functor to handle asynchronous file transfer api function.
 \index{TransferAsyncFunc@{TransferAsyncFunc}!TransferAsyncFunc@{TransferAsyncFunc}}
 \subsubsection[{TransferAsyncFunc}]{\setlength{\rightskip}{0pt plus 5cm}template$<$TransferType transferType$>$ {\bf TransferAsyncFunc}$<$ transferType $>$::{\bf TransferAsyncFunc} (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ src, }
-\item[{const std::string \&}]{ dest, }
-\item[{const FMS\_\-Data::FileTransfer \&}]{ transferInfo, }
-\item[{const FMS\_\-Data::CpFileOptions \&}]{ cpFileOptions}
+\item[{const std::string \&}]{src, }
+\item[{const std::string \&}]{dest, }
+\item[{const FMS\_\-Data::FileTransfer \&}]{transferInfo, }
+\item[{const FMS\_\-Data::CpFileOptions \&}]{cpFileOptions}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{structTransferAsyncFunc_a8d8f234e085f7afd0e5f0c809273e65e}
@@ -67,7 +67,15 @@ Constructor with parameters.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em src}]The source \item[{\em dest}]The destination \item[{\em transferInfo}]The file transfer complete information \item[{\em cpFileOptions}]The file transfer options \end{DoxyParams}
+{\em src} & The source \\
+\hline
+{\em dest} & The destination \\
+\hline
+{\em transferInfo} & The file transfer complete information \\
+\hline
+{\em cpFileOptions} & The file transfer options \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -76,7 +84,7 @@ Constructor with parameters.
 \index{operator()@{operator()}!TransferAsyncFunc@{TransferAsyncFunc}}
 \subsubsection[{operator()}]{\setlength{\rightskip}{0pt plus 5cm}template$<$TransferType transferType$>$ int {\bf TransferAsyncFunc}$<$ transferType $>$::operator() (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ sessionKey}
+\item[{const std::string \&}]{sessionKey}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{structTransferAsyncFunc_ac65f639acae45670544ca1694192d0b4}
@@ -86,7 +94,9 @@ Constructor with parameters.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em sessionKey}]The session key \end{DoxyParams}
+{\em sessionKey} & The session key \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if it succeeds or an error code otherwise 
 \end{DoxyReturn}

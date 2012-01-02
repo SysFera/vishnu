@@ -254,13 +254,13 @@ class SSHFile : public File {
     virtual int mkfile(const mode_t mode);
     /**
      * \brief To create a new directory
-     * \param mode the access permission of the directory
+     * \param options the directory creation options
      * \return 0 if the command succeeds, an error code otherwise
      */ 
     virtual int mkdir(const CreateDirOptions& options);
     /**
      * \brief To remove a file
-     * \param isRecursive To remove directory
+     * \param options The file deletion options
      * \return 0 if the command succeeds, an error code otherwise
      */ 
     virtual int rm(const FMS_Data::RmFileOptions& options);

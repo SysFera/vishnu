@@ -67,6 +67,7 @@ struct UMS_env_name_mapper{
  * \param req    : for required parameters, 0 optional paramter whereas 1 means
  * mandatory parameter
  * \param dietConfig      : Represents the VISHNU config file
+ * \param userIdGroup : represents the userId option group type, it may be HIDDEN,CONFIG,or ENV
  * \return The description of all options allowed by the command
  */
 

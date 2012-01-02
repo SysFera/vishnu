@@ -69,10 +69,10 @@ The only instance of the factory
 \index{getTool@{getTool}!ToolFactory@{ToolFactory}}
 \subsubsection[{getTool}]{\setlength{\rightskip}{0pt plus 5cm}{\bf LogTool}$\ast$ ToolFactory::getTool (
 \begin{DoxyParamCaption}
-\item[{int}]{ type, }
-\item[{int}]{ argc, }
-\item[{char $\ast$$\ast$}]{ argv, }
-\item[{string}]{ mid}
+\item[{int}]{type, }
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv, }
+\item[{string}]{mid}
 \end{DoxyParamCaption}
 )}}
 \label{classToolFactory_a1142003b41b2c25bd52c26c9044424ab}
@@ -82,7 +82,15 @@ To get a tool of type 'type'.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em type,:}]The type of the tool to create \item[{\em argc,:}]Argc from main \item[{\em argv,:}]Argv from main \item[{\em mid,:}]The machine id the log tool will run \end{DoxyParams}
+{\em type,:} & The type of the tool to create \\
+\hline
+{\em argc,:} & Argc from main \\
+\hline
+{\em argv,:} & Argv from main \\
+\hline
+{\em mid,:} & The machine id the log tool will run \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The created tool 
 \end{DoxyReturn}

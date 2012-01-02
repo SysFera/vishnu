@@ -61,7 +61,7 @@ std::string \hyperlink{classListFileTransfers_a1e0408c71b436b348c6c0c95aef7f804}
 \index{ListFileTransfers@{ListFileTransfers}!ListFileTransfers@{ListFileTransfers}}
 \subsubsection[{ListFileTransfers}]{\setlength{\rightskip}{0pt plus 5cm}ListFileTransfers::ListFileTransfers (
 \begin{DoxyParamCaption}
-\item[{const {\bf SessionServer}}]{ session}
+\item[{const {\bf SessionServer}}]{session}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{classListFileTransfers_a9bfaf4ab3b09a09b82478f951a41cde3}
@@ -71,14 +71,16 @@ Constructor, raises an exception on error.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \end{DoxyParams}
+{\em session} & The object which encapsulates the session information (ex: identifier of the session) \\
+\hline
+\end{DoxyParams}
 \hypertarget{classListFileTransfers_acc6bd5f4a76a7f11182cb45cac687443}{
 \index{ListFileTransfers@{ListFileTransfers}!ListFileTransfers@{ListFileTransfers}}
 \index{ListFileTransfers@{ListFileTransfers}!ListFileTransfers@{ListFileTransfers}}
 \subsubsection[{ListFileTransfers}]{\setlength{\rightskip}{0pt plus 5cm}ListFileTransfers::ListFileTransfers (
 \begin{DoxyParamCaption}
-\item[{FMS\_\-Data::LsTransferOptions\_\-ptr}]{ params, }
-\item[{const {\bf SessionServer} \&}]{ session}
+\item[{FMS\_\-Data::LsTransferOptions\_\-ptr}]{params, }
+\item[{const {\bf SessionServer} \&}]{session}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{classListFileTransfers_acc6bd5f4a76a7f11182cb45cac687443}
@@ -88,7 +90,11 @@ Constructor, raises an exception on error.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em params}]The object which encapsulates the information of \hyperlink{classListFileTransfers}{ListFileTransfers} options \item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \end{DoxyParams}
+{\em params} & The object which encapsulates the information of \hyperlink{classListFileTransfers}{ListFileTransfers} options \\
+\hline
+{\em session} & The object which encapsulates the session information (ex: identifier of the session) \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -97,7 +103,7 @@ Constructor, raises an exception on error.
 \index{checkStatus@{checkStatus}!ListFileTransfers@{ListFileTransfers}}
 \subsubsection[{checkStatus}]{\setlength{\rightskip}{0pt plus 5cm}void ListFileTransfers::checkStatus (
 \begin{DoxyParamCaption}
-\item[{int}]{ status}
+\item[{int}]{status}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline, private\mbox{]}}}}
 \label{classListFileTransfers_ae10c9dc107c719e7129b12245de7b5f8}
@@ -107,13 +113,15 @@ Function to check the file transfer status.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em status}]the file transfer status \end{DoxyParams}
+{\em status} & the file transfer status \\
+\hline
+\end{DoxyParams}
 \hypertarget{classListFileTransfers_adb9c1301e69d043d53418e339458a388}{
 \index{ListFileTransfers@{ListFileTransfers}!checkTransferId@{checkTransferId}}
 \index{checkTransferId@{checkTransferId}!ListFileTransfers@{ListFileTransfers}}
 \subsubsection[{checkTransferId}]{\setlength{\rightskip}{0pt plus 5cm}void ListFileTransfers::checkTransferId (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ transferId}
+\item[{std::string}]{transferId}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline, private\mbox{]}}}}
 \label{classListFileTransfers_adb9c1301e69d043d53418e339458a388}
@@ -123,7 +131,9 @@ Function to check if a given transfer identifier exists.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em transferId}]the file transfer identifier \end{DoxyParams}
+{\em transferId} & the file transfer identifier \\
+\hline
+\end{DoxyParams}
 \hypertarget{classListFileTransfers_a6d7e7aba9de33a523a30e80e43664f43}{
 \index{ListFileTransfers@{ListFileTransfers}!getCommandName@{getCommandName}}
 \index{getCommandName@{getCommandName}!ListFileTransfers@{ListFileTransfers}}
@@ -171,8 +181,8 @@ Implements \hyperlink{classQueryServer_a2ad0f3f1b75e6f0705a9edbe4bab76b0}{QueryS
 \index{processOptions@{processOptions}!ListFileTransfers@{ListFileTransfers}}
 \subsubsection[{processOptions}]{\setlength{\rightskip}{0pt plus 5cm}void ListFileTransfers::processOptions (
 \begin{DoxyParamCaption}
-\item[{const FMS\_\-Data::LsTransferOptions\_\-ptr \&}]{ options, }
-\item[{std::string \&}]{ sqlRequest}
+\item[{const FMS\_\-Data::LsTransferOptions\_\-ptr \&}]{options, }
+\item[{std::string \&}]{sqlRequest}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{classListFileTransfers_a72f8ab930001bbe48fa5f7f9e4abd00d}
@@ -182,7 +192,11 @@ Function to treat the listFile transfer options.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em options}]the object which contains the \hyperlink{classListFileTransfers}{ListFileTransfers} options values \item[{\em sqlRequest}]the sql data base request \end{DoxyParams}
+{\em options} & the object which contains the \hyperlink{classListFileTransfers}{ListFileTransfers} options values \\
+\hline
+{\em sqlRequest} & the sql data base request \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}

@@ -73,7 +73,7 @@ std::string \hyperlink{classMachineServer_af5b160283015cb15b5da6a4658a06f92}{mss
 \index{MachineServer@{MachineServer}!MachineServer@{MachineServer}}
 \subsubsection[{MachineServer}]{\setlength{\rightskip}{0pt plus 5cm}MachineServer::MachineServer (
 \begin{DoxyParamCaption}
-\item[{UMS\_\-Data::Machine $\ast$\&}]{ machine}
+\item[{UMS\_\-Data::Machine $\ast$\&}]{machine}
 \end{DoxyParamCaption}
 )}}
 \label{classMachineServer_a067dab7512c1882721579dea892a5f8c}
@@ -83,14 +83,16 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em machine}]The machine data structure \end{DoxyParams}
+{\em machine} & The machine data structure \\
+\hline
+\end{DoxyParams}
 \hypertarget{classMachineServer_ac65f4c23f95852a0725a0561b276f383}{
 \index{MachineServer@{MachineServer}!MachineServer@{MachineServer}}
 \index{MachineServer@{MachineServer}!MachineServer@{MachineServer}}
 \subsubsection[{MachineServer}]{\setlength{\rightskip}{0pt plus 5cm}MachineServer::MachineServer (
 \begin{DoxyParamCaption}
-\item[{UMS\_\-Data::Machine $\ast$\&}]{ machine, }
-\item[{{\bf SessionServer} \&}]{ session}
+\item[{UMS\_\-Data::Machine $\ast$\&}]{machine, }
+\item[{{\bf SessionServer} \&}]{session}
 \end{DoxyParamCaption}
 )}}
 \label{classMachineServer_ac65f4c23f95852a0725a0561b276f383}
@@ -100,7 +102,11 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em machine}]The machine data structure \item[{\em session}]The object which encapsulates session data \end{DoxyParams}
+{\em machine} & The machine data structure \\
+\hline
+{\em session} & The object which encapsulates session data \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -109,7 +115,7 @@ Constructor.
 \index{add@{add}!MachineServer@{MachineServer}}
 \subsubsection[{add}]{\setlength{\rightskip}{0pt plus 5cm}int MachineServer::add (
 \begin{DoxyParamCaption}
-\item[{int}]{ vishnuId}
+\item[{int}]{vishnuId}
 \end{DoxyParamCaption}
 )}}
 \label{classMachineServer_a9b8152eefc63abc02a3d15419ce91dd6}
@@ -119,7 +125,9 @@ Function to add a new VISHNU machine.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em vishnuId}]The identifier of the vishnu instance \end{DoxyParams}
+{\em vishnuId} & The identifier of the vishnu instance \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -160,8 +168,8 @@ raises an exception on error
 \index{getAttribut@{getAttribut}!MachineServer@{MachineServer}}
 \subsubsection[{getAttribut}]{\setlength{\rightskip}{0pt plus 5cm}MachineServer::getAttribut (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ condition, }
-\item[{std::string}]{ attrname = {\ttfamily \char`\"{}nummachineid\char`\"{}}}
+\item[{std::string}]{condition, }
+\item[{std::string}]{attrname = {\ttfamily \char`\"{}nummachineid\char`\"{}}}
 \end{DoxyParamCaption}
 )}}
 \label{classMachineServer_a14afc6c4424dd26be8cc0843aac3f2f3}
@@ -171,7 +179,11 @@ Function to get machine information from the database vishnu.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em condition}]The condition of the select request \item[{\em attrname}]the name of the attribut to get \end{DoxyParams}
+{\em condition} & The condition of the select request \\
+\hline
+{\em attrname} & the name of the attribut to get \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the value of the attribut or empty string if no results 
 \end{DoxyReturn}

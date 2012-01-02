@@ -4,7 +4,7 @@
 }
 
 
-Main \hyperlink{classFile}{File} class. Encapsulates all the files attributes. Defines the common operation on files (local or remote).  
+Main \hyperlink{classFile}{File} class. Encapsulates all the files attributes. Defines the common operation on files (local or remote)  
 
 
 
@@ -64,7 +64,7 @@ uid\_\-t \hyperlink{classFile_a328160d52f616869a8994d6d0a85f8a6}{getUid} () cons
 \begin{DoxyCompactList}\small\item\em To get the identifier of the file owner. \item\end{DoxyCompactList}\item 
 gid\_\-t \hyperlink{classFile_ac608e5021f47b280aa00229e34f19d28}{getGid} () const 
 \begin{DoxyCompactList}\small\item\em To get the group identifier of the file owner. \item\end{DoxyCompactList}\item 
-\hyperlink{File_8hpp_aaf19f83503293d8d9fb6c5f7607cb5ee}{file\_\-size\_\-t} \hyperlink{classFile_a96ab72424a4cab2a671892bc2cd22982}{getSize} () const 
+file\_\-size\_\-t \hyperlink{classFile_a96ab72424a4cab2a671892bc2cd22982}{getSize} () const 
 \begin{DoxyCompactList}\small\item\em To get the size of the file. \item\end{DoxyCompactList}\item 
 time\_\-t \hyperlink{classFile_ae5b150a9c6382290f8a491514cd56477}{getAtime} () const 
 \begin{DoxyCompactList}\small\item\em To get the last access time of the file. \item\end{DoxyCompactList}\item 
@@ -74,7 +74,7 @@ time\_\-t \hyperlink{classFile_a44da403de6230a3a06acb9adbb0d63c9}{getCtime} () c
 \begin{DoxyCompactList}\small\item\em To get the last change time of the file. \item\end{DoxyCompactList}\item 
 FileType \hyperlink{classFile_ad83dca0e922f784eba36047e7f47fad7}{getType} () const 
 \begin{DoxyCompactList}\small\item\em To get the file type. \item\end{DoxyCompactList}\item 
-\hyperlink{File_8hpp_aaa08d9ac47a1aad716e3941312603212}{file\_\-host\_\-t} \hyperlink{classFile_a52ba4dce39f96117d09a5b52c97c57a5}{getHostType} () const 
+file\_\-host\_\-t \hyperlink{classFile_a52ba4dce39f96117d09a5b52c97c57a5}{getHostType} () const 
 \begin{DoxyCompactList}\small\item\em To get the host type of the file. \item\end{DoxyCompactList}\item 
 bool \hyperlink{classFile_a44ecfb6abf4c56065e773785787f2fb0}{exists} () const 
 \begin{DoxyCompactList}\small\item\em To check if the file exists. \item\end{DoxyCompactList}\item 
@@ -103,13 +103,13 @@ virtual std::string \hyperlink{classFile_a4b5a13754b6a7a77b50b18ffdeb496b4}{getC
 \begin{DoxyCompactList}\small\item\em To get the content of the file. \item\end{DoxyCompactList}\item 
 virtual int \hyperlink{classFile_ad61fdb89f84856e17abb7b7f537cd4f3}{mkfile} (const mode\_\-t mode=defaultFileAccessMode)=0
 \begin{DoxyCompactList}\small\item\em To create a new file. \item\end{DoxyCompactList}\item 
-virtual int \hyperlink{classFile_a44f6ee1c94813f1b4b6f8cca880a3dce}{mkdir} (const mode\_\-t mode=defaultDirectoryAccessMode)=0
+virtual int \hyperlink{classFile_a7348fafa4ba9c028fff5b57c003879c4}{mkdir} (const CreateDirOptions \&options)=0
 \begin{DoxyCompactList}\small\item\em To create a new directory. \item\end{DoxyCompactList}\item 
-virtual int \hyperlink{classFile_ab293f14b29c227c87ae03ad2ce3e605b}{rm} (bool isRecursive=false)=0
+virtual int \hyperlink{classFile_aa73bca9e79b14a45612e290d9e2736f3}{rm} (const FMS\_\-Data::RmFileOptions \&options)=0
 \begin{DoxyCompactList}\small\item\em To remove a file. \item\end{DoxyCompactList}\item 
 virtual int \hyperlink{classFile_a7789c3c8671dbdff8b8dfe2cabeaf433}{rmdir} ()=0
 \begin{DoxyCompactList}\small\item\em To remove an empty directory. \item\end{DoxyCompactList}\item 
-virtual std::list$<$ std::string $>$ \hyperlink{classFile_a8f0d0fb350e9587914c648597ebf7343}{ls} (const LsDirOptions \&options) const =0
+virtual FMS\_\-Data::DirEntryList $\ast$ \hyperlink{classFile_a3793eba26e021e65ec214e36979277da}{ls} (const LsDirOptions \&options) const =0
 \begin{DoxyCompactList}\small\item\em To list the content of a directory. \item\end{DoxyCompactList}\item 
 virtual int \hyperlink{classFile_a29eed199fb54187949ecd0cb5828a376}{cp} (const std::string \&path, const CpFileOptions \&options)=0
 \begin{DoxyCompactList}\small\item\em To copy the file. \item\end{DoxyCompactList}\item 
@@ -121,7 +121,9 @@ virtual int \hyperlink{classFile_acc9987632d392f01748ea4f58455c4d0}{mv} (const s
 static std::string \hyperlink{classFile_ab91c3d08d46d0d2dac03cce0e912add5}{extHost} (const std::string \&path)
 \begin{DoxyCompactList}\small\item\em a useful function to extract the host name from path \item\end{DoxyCompactList}\item 
 static std::string \hyperlink{classFile_aec682e21e601fd41e09a612485e94e27}{extName} (const std::string \&path)
-\begin{DoxyCompactList}\small\item\em a useful function to extract the file path name from the complete path \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em a useful function to extract the file path name from the complete path \item\end{DoxyCompactList}\item 
+static int \hyperlink{classFile_a5c5498499bbecd60255a3f9d81eb72c2}{getDirEntryFrom} (const std::string \&rawFileStat, FMS\_\-Data::DirEntry $\ast$dirEntry)
+\begin{DoxyCompactList}\small\item\em a useful function to extract dirEntry data structure from a raw data provided by ls command \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -139,7 +141,7 @@ void \hyperlink{classFile_a2510d79e08b9bce8bcbb4dbab3948ff6}{setUid} (const uid\
 \begin{DoxyCompactList}\small\item\em To update the identifier of the file owner. \item\end{DoxyCompactList}\item 
 void \hyperlink{classFile_a45b2b29b558a910648ac4077a7c26aae}{setGid} (const gid\_\-t gid) const 
 \begin{DoxyCompactList}\small\item\em To update the group identifier of the file owner. \item\end{DoxyCompactList}\item 
-void \hyperlink{classFile_a468b86e87c939649a4ec0939bd8cafa0}{setSize} (const \hyperlink{File_8hpp_aaf19f83503293d8d9fb6c5f7607cb5ee}{file\_\-size\_\-t} size) const 
+void \hyperlink{classFile_a468b86e87c939649a4ec0939bd8cafa0}{setSize} (const file\_\-size\_\-t size) const 
 \begin{DoxyCompactList}\small\item\em To update the size of the file. \item\end{DoxyCompactList}\item 
 void \hyperlink{classFile_a066d14d55524520404641b26027ca815}{setAtime} (const time\_\-t atime) const 
 \begin{DoxyCompactList}\small\item\em To update the last access time of the file. \item\end{DoxyCompactList}\item 
@@ -147,7 +149,7 @@ void \hyperlink{classFile_a3d419f6b7306952fdc0b73093ce7920c}{setMtime} (const ti
 \begin{DoxyCompactList}\small\item\em To update the last modification time of the file. \item\end{DoxyCompactList}\item 
 void \hyperlink{classFile_aaa8808f7df137f5460f2a06835b65930}{setCtime} (const time\_\-t ctime) const 
 \begin{DoxyCompactList}\small\item\em To update the last change time of the file. \item\end{DoxyCompactList}\item 
-void \hyperlink{classFile_a590877c07f2214045644e7daa77ca7bc}{setType} (const \hyperlink{File_8hpp_af728de96ee6e62d6340d3dba27941ec3}{file\_\-type\_\-t} type) const 
+void \hyperlink{classFile_a590877c07f2214045644e7daa77ca7bc}{setType} (const file\_\-type\_\-t type) const 
 \begin{DoxyCompactList}\small\item\em To update the file type. \item\end{DoxyCompactList}\item 
 void \hyperlink{classFile_a3dc1f3dc8c88a37d5b99499e4db75c3b}{exists} (const bool \hyperlink{classFile_a7551ebf856afc07947078a4cb3a2823f}{exist}) const 
 \begin{DoxyCompactList}\small\item\em To updata the file existence flag. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -177,7 +179,7 @@ FileStat \hyperlink{classFile_a840df2f237869227454169e3c006e36a}{mfileStat}}
 
 
 \subsection{Detailed Description}
-Main \hyperlink{classFile}{File} class. Encapsulates all the files attributes. Defines the common operation on files (local or remote). 
+Main \hyperlink{classFile}{File} class. Encapsulates all the files attributes. Defines the common operation on files (local or remote) 
 
 \subsection{Member Enumeration Documentation}
 \hypertarget{classFile_a4295512b0ee27752fb5ee313155499cc}{
@@ -238,8 +240,8 @@ move}
 \index{File@{File}!File@{File}}
 \subsubsection[{File}]{\setlength{\rightskip}{0pt plus 5cm}File::File (
 \begin{DoxyParamCaption}
-\item[{const {\bf SessionServer} \&}]{ sessionServer, }
-\item[{const std::string \&}]{ path}
+\item[{const {\bf SessionServer} \&}]{sessionServer, }
+\item[{const std::string \&}]{path}
 \end{DoxyParamCaption}
 )}}
 \label{classFile_a0b5d680c3ef10d1ffc746e67eda2e9ba}
@@ -249,13 +251,17 @@ Another constructor taking two parameters.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em sessionServer}]the session object server \item[{\em path}]the path of the file \end{DoxyParams}
+{\em sessionServer} & the session object server \\
+\hline
+{\em path} & the path of the file \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFile_a59bf1e7bb0c6b8dd83dccef6b942a0f9}{
 \index{File@{File}!File@{File}}
 \index{File@{File}!File@{File}}
 \subsubsection[{File}]{\setlength{\rightskip}{0pt plus 5cm}File::File (
 \begin{DoxyParamCaption}
-\item[{const {\bf File} \&}]{ file}
+\item[{const {\bf File} \&}]{file}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
 \label{classFile_a59bf1e7bb0c6b8dd83dccef6b942a0f9}
@@ -265,7 +271,9 @@ Another constructor by reference.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em file}]the other file \end{DoxyParams}
+{\em file} & the other file \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -274,7 +282,7 @@ Another constructor by reference.
 \index{chgrp@{chgrp}!File@{File}}
 \subsubsection[{chgrp}]{\setlength{\rightskip}{0pt plus 5cm}virtual int File::chgrp (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ group}
+\item[{const std::string \&}]{group}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
 \label{classFile_ac49c7da7767921e6c97263ecc30cede6}
@@ -284,7 +292,9 @@ To update the group of the file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em group}]the new group \end{DoxyParams}
+{\em group} & the new group \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
@@ -297,7 +307,7 @@ Implemented in \hyperlink{classSSHFile_aa0b50bce63279fd0c1e14e7b9058b900}{SSHFil
 \index{chmod@{chmod}!File@{File}}
 \subsubsection[{chmod}]{\setlength{\rightskip}{0pt plus 5cm}virtual int File::chmod (
 \begin{DoxyParamCaption}
-\item[{const mode\_\-t}]{ mode}
+\item[{const mode\_\-t}]{mode}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
 \label{classFile_a8d5f8ed5b3d4750df415e3f6207157fe}
@@ -307,7 +317,9 @@ To update the new file access permissions.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em mode}]the new file access permissions \end{DoxyParams}
+{\em mode} & the new file access permissions \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
@@ -320,8 +332,8 @@ Implemented in \hyperlink{classSSHFile_a8a8a8991bac15f105f5bb144c63999b3}{SSHFil
 \index{cp@{cp}!File@{File}}
 \subsubsection[{cp}]{\setlength{\rightskip}{0pt plus 5cm}virtual int File::cp (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ path, }
-\item[{const CpFileOptions \&}]{ options}
+\item[{const std::string \&}]{path, }
+\item[{const CpFileOptions \&}]{options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
 \label{classFile_a29eed199fb54187949ecd0cb5828a376}
@@ -331,7 +343,11 @@ To copy the file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em path}]the copy destination \item[{\em options}]the copy options \end{DoxyParams}
+{\em path} & the copy destination \\
+\hline
+{\em options} & the copy options \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
@@ -344,7 +360,7 @@ Implemented in \hyperlink{classSSHFile_af656c34ec5d57decce27bbe82eba0b3f}{SSHFil
 \index{exists@{exists}!File@{File}}
 \subsubsection[{exists}]{\setlength{\rightskip}{0pt plus 5cm}void File::exists (
 \begin{DoxyParamCaption}
-\item[{const bool}]{ exist}
+\item[{const bool}]{exist}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
 \label{classFile_a3dc1f3dc8c88a37d5b99499e4db75c3b}
@@ -354,7 +370,9 @@ To updata the file existence flag.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em exist}]the new file existence flag \end{DoxyParams}
+{\em exist} & the new file existence flag \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFile_a44ecfb6abf4c56065e773785787f2fb0}{
 \index{File@{File}!exists@{exists}}
 \index{exists@{exists}!File@{File}}
@@ -376,7 +394,7 @@ true if the file exists, false otherwise
 \index{extHost@{extHost}!File@{File}}
 \subsubsection[{extHost}]{\setlength{\rightskip}{0pt plus 5cm}static std::string File::extHost (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ path}
+\item[{const std::string \&}]{path}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
 \label{classFile_ab91c3d08d46d0d2dac03cce0e912add5}
@@ -386,7 +404,9 @@ a useful function to extract the host name from path
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em path}]the file path \end{DoxyParams}
+{\em path} & the file path \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the host name 
 \end{DoxyReturn}
@@ -395,7 +415,7 @@ the host name
 \index{extName@{extName}!File@{File}}
 \subsubsection[{extName}]{\setlength{\rightskip}{0pt plus 5cm}static std::string File::extName (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ path}
+\item[{const std::string \&}]{path}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
 \label{classFile_aec682e21e601fd41e09a612485e94e27}
@@ -405,7 +425,9 @@ a useful function to extract the file path name from the complete path
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em path}]the complete file path \end{DoxyParams}
+{\em path} & the complete file path \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the file path 
 \end{DoxyReturn}
@@ -460,6 +482,30 @@ To get the last change time of the file.
 
 \begin{DoxyReturn}{Returns}
 the last change time 
+\end{DoxyReturn}
+\hypertarget{classFile_a5c5498499bbecd60255a3f9d81eb72c2}{
+\index{File@{File}!getDirEntryFrom@{getDirEntryFrom}}
+\index{getDirEntryFrom@{getDirEntryFrom}!File@{File}}
+\subsubsection[{getDirEntryFrom}]{\setlength{\rightskip}{0pt plus 5cm}static int File::getDirEntryFrom (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{rawFileStat, }
+\item[{FMS\_\-Data::DirEntry $\ast$}]{dirEntry}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFile_a5c5498499bbecd60255a3f9d81eb72c2}
+
+
+a useful function to extract dirEntry data structure from a raw data provided by ls command 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rawFileStat} & the raw data \\
+\hline
+{\em dirEntry} & the extracted dirEntry \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if evrything is Ok or an error code otherwise 
 \end{DoxyReturn}
 \hypertarget{classFile_aff72a878b41f2fd26ddda0d135edc69a}{
 \index{File@{File}!getFileStat@{getFileStat}}
@@ -528,7 +574,7 @@ the host of the file
 \hypertarget{classFile_a52ba4dce39f96117d09a5b52c97c57a5}{
 \index{File@{File}!getHostType@{getHostType}}
 \index{getHostType@{getHostType}!File@{File}}
-\subsubsection[{getHostType}]{\setlength{\rightskip}{0pt plus 5cm}{\bf file\_\-host\_\-t} File::getHostType (
+\subsubsection[{getHostType}]{\setlength{\rightskip}{0pt plus 5cm}file\_\-host\_\-t File::getHostType (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
@@ -624,7 +670,7 @@ the session in which the file was created
 \hypertarget{classFile_a96ab72424a4cab2a671892bc2cd22982}{
 \index{File@{File}!getSize@{getSize}}
 \index{getSize@{getSize}!File@{File}}
-\subsubsection[{getSize}]{\setlength{\rightskip}{0pt plus 5cm}{\bf file\_\-size\_\-t} File::getSize (
+\subsubsection[{getSize}]{\setlength{\rightskip}{0pt plus 5cm}file\_\-size\_\-t File::getSize (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
@@ -674,7 +720,7 @@ the identifier of the file owner
 \index{head@{head}!File@{File}}
 \subsubsection[{head}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string File::head (
 \begin{DoxyParamCaption}
-\item[{const HeadOfFileOptions \&}]{ options}
+\item[{const HeadOfFileOptions \&}]{options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
 \label{classFile_ab6b6465dcf91dca981e9925459744496}
@@ -684,7 +730,9 @@ To get the first lines of the file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em options}]the options object \end{DoxyParams}
+{\em options} & the options object \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the first lines of the file 
 \end{DoxyReturn}
@@ -712,58 +760,62 @@ true if the file is already updated, false otherwise
 
 Implemented in \hyperlink{classSSHFile_a61ad8e108ad9027310e010ab5ab96ca9}{SSHFile}.
 
-\hypertarget{classFile_a8f0d0fb350e9587914c648597ebf7343}{
+\hypertarget{classFile_a3793eba26e021e65ec214e36979277da}{
 \index{File@{File}!ls@{ls}}
 \index{ls@{ls}!File@{File}}
-\subsubsection[{ls}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::list$<$std::string$>$ File::ls (
+\subsubsection[{ls}]{\setlength{\rightskip}{0pt plus 5cm}virtual FMS\_\-Data::DirEntryList$\ast$ File::ls (
 \begin{DoxyParamCaption}
-\item[{const LsDirOptions \&}]{ options}
+\item[{const LsDirOptions \&}]{options}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
-\label{classFile_a8f0d0fb350e9587914c648597ebf7343}
+\label{classFile_a3793eba26e021e65ec214e36979277da}
 
 
 To list the content of a directory. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em options}]the list options \end{DoxyParams}
+{\em options} & the list options \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the content of the directory 
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classSSHFile_ab51fb59a5b81be660ca9a39b74591b14}{SSHFile}.
+Implemented in \hyperlink{classSSHFile_a4be397cf77959dbc6f730f084435662c}{SSHFile}.
 
-\hypertarget{classFile_a44f6ee1c94813f1b4b6f8cca880a3dce}{
+\hypertarget{classFile_a7348fafa4ba9c028fff5b57c003879c4}{
 \index{File@{File}!mkdir@{mkdir}}
 \index{mkdir@{mkdir}!File@{File}}
 \subsubsection[{mkdir}]{\setlength{\rightskip}{0pt plus 5cm}virtual int File::mkdir (
 \begin{DoxyParamCaption}
-\item[{const mode\_\-t}]{ mode = {\ttfamily defaultDirectoryAccessMode}}
+\item[{const CreateDirOptions \&}]{options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
-\label{classFile_a44f6ee1c94813f1b4b6f8cca880a3dce}
+\label{classFile_a7348fafa4ba9c028fff5b57c003879c4}
 
 
 To create a new directory. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em mode}]the access permission of the directory \end{DoxyParams}
+{\em options} & create directory options \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classSSHFile_abceada8383b3731fa3c3a99650928311}{SSHFile}.
+Implemented in \hyperlink{classSSHFile_aa7c631c5648da18c7d0c93b23e806cb7}{SSHFile}.
 
 \hypertarget{classFile_ad61fdb89f84856e17abb7b7f537cd4f3}{
 \index{File@{File}!mkfile@{mkfile}}
 \index{mkfile@{mkfile}!File@{File}}
 \subsubsection[{mkfile}]{\setlength{\rightskip}{0pt plus 5cm}virtual int File::mkfile (
 \begin{DoxyParamCaption}
-\item[{const mode\_\-t}]{ mode = {\ttfamily defaultFileAccessMode}}
+\item[{const mode\_\-t}]{mode = {\ttfamily defaultFileAccessMode}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
 \label{classFile_ad61fdb89f84856e17abb7b7f537cd4f3}
@@ -773,7 +825,9 @@ To create a new file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em mode}]the access permission of the file \end{DoxyParams}
+{\em mode} & the access permission of the file \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
@@ -786,8 +840,8 @@ Implemented in \hyperlink{classSSHFile_aae0e9486c370a13469ec72cbb503638c}{SSHFil
 \index{mv@{mv}!File@{File}}
 \subsubsection[{mv}]{\setlength{\rightskip}{0pt plus 5cm}virtual int File::mv (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ path, }
-\item[{const CpFileOptions \&}]{ options}
+\item[{const std::string \&}]{path, }
+\item[{const CpFileOptions \&}]{options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
 \label{classFile_acc9987632d392f01748ea4f58455c4d0}
@@ -797,7 +851,11 @@ To move the file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em path}]the move destination \item[{\em options}]the move options \end{DoxyParams}
+{\em path} & the move destination \\
+\hline
+{\em options} & the move options \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
@@ -810,7 +868,7 @@ Implemented in \hyperlink{classSSHFile_a1d803bcc5945bb06ae7434868c34baac}{SSHFil
 \index{operator$<$@{operator$<$}!File@{File}}
 \subsubsection[{operator$<$}]{\setlength{\rightskip}{0pt plus 5cm}bool File::operator$<$ (
 \begin{DoxyParamCaption}
-\item[{const {\bf File} \&}]{ file}
+\item[{const {\bf File} \&}]{file}
 \end{DoxyParamCaption}
 )}}
 \label{classFile_a7ee45a77fb229db0af307cbcbaf6a51e}
@@ -820,7 +878,9 @@ The less than operator.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em file}]the file to compare with \end{DoxyParams}
+{\em file} & the file to compare with \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 true if the left hand side file path is less than the right side file 
 \end{DoxyReturn}
@@ -829,7 +889,7 @@ true if the left hand side file path is less than the right side file
 \index{operator=@{operator=}!File@{File}}
 \subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf File}\& File::operator= (
 \begin{DoxyParamCaption}
-\item[{const {\bf File} \&}]{ file}
+\item[{const {\bf File} \&}]{file}
 \end{DoxyParamCaption}
 )}}
 \label{classFile_a157cbcdf7a17fca90a48a0402becd296}
@@ -839,7 +899,9 @@ The assignment operator.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em file}]the object to assign \end{DoxyParams}
+{\em file} & the object to assign \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the new assigned file 
 \end{DoxyReturn}
@@ -848,7 +910,7 @@ the new assigned file
 \index{operator==@{operator==}!File@{File}}
 \subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}bool File::operator== (
 \begin{DoxyParamCaption}
-\item[{const {\bf File} \&}]{ file}
+\item[{const {\bf File} \&}]{file}
 \end{DoxyParamCaption}
 )}}
 \label{classFile_ac8357818462f976167486bb90bd7488a}
@@ -858,32 +920,36 @@ The comparison operator.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em file}]the file to compare with \end{DoxyParams}
+{\em file} & the file to compare with \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 true if the two files have the same complete path 
 \end{DoxyReturn}
-\hypertarget{classFile_ab293f14b29c227c87ae03ad2ce3e605b}{
+\hypertarget{classFile_aa73bca9e79b14a45612e290d9e2736f3}{
 \index{File@{File}!rm@{rm}}
 \index{rm@{rm}!File@{File}}
 \subsubsection[{rm}]{\setlength{\rightskip}{0pt plus 5cm}virtual int File::rm (
 \begin{DoxyParamCaption}
-\item[{bool}]{ isRecursive = {\ttfamily false}}
+\item[{const FMS\_\-Data::RmFileOptions \&}]{options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
-\label{classFile_ab293f14b29c227c87ae03ad2ce3e605b}
+\label{classFile_aa73bca9e79b14a45612e290d9e2736f3}
 
 
 To remove a file. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em isRecursive}]to remove directory \end{DoxyParams}
+{\em options} & remove directory options \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classSSHFile_a6070540c48390c4b75134229cdfd147d}{SSHFile}.
+Implemented in \hyperlink{classSSHFile_ae967241d0e3d65fb697d53c1d483baa4}{SSHFile}.
 
 \hypertarget{classFile_a7789c3c8671dbdff8b8dfe2cabeaf433}{
 \index{File@{File}!rmdir@{rmdir}}
@@ -910,7 +976,7 @@ Implemented in \hyperlink{classSSHFile_a2e11320295a5f9a70286e4e24c2c106c}{SSHFil
 \index{setAtime@{setAtime}!File@{File}}
 \subsubsection[{setAtime}]{\setlength{\rightskip}{0pt plus 5cm}void File::setAtime (
 \begin{DoxyParamCaption}
-\item[{const time\_\-t}]{ atime}
+\item[{const time\_\-t}]{atime}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
 \label{classFile_a066d14d55524520404641b26027ca815}
@@ -920,13 +986,15 @@ To update the last access time of the file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em atime}]the new access time \end{DoxyParams}
+{\em atime} & the new access time \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFile_aaa8808f7df137f5460f2a06835b65930}{
 \index{File@{File}!setCtime@{setCtime}}
 \index{setCtime@{setCtime}!File@{File}}
 \subsubsection[{setCtime}]{\setlength{\rightskip}{0pt plus 5cm}void File::setCtime (
 \begin{DoxyParamCaption}
-\item[{const time\_\-t}]{ ctime}
+\item[{const time\_\-t}]{ctime}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
 \label{classFile_aaa8808f7df137f5460f2a06835b65930}
@@ -936,13 +1004,15 @@ To update the last change time of the file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em ctime}]the new change time \end{DoxyParams}
+{\em ctime} & the new change time \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFile_a45b2b29b558a910648ac4077a7c26aae}{
 \index{File@{File}!setGid@{setGid}}
 \index{setGid@{setGid}!File@{File}}
 \subsubsection[{setGid}]{\setlength{\rightskip}{0pt plus 5cm}void File::setGid (
 \begin{DoxyParamCaption}
-\item[{const gid\_\-t}]{ gid}
+\item[{const gid\_\-t}]{gid}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
 \label{classFile_a45b2b29b558a910648ac4077a7c26aae}
@@ -952,13 +1022,15 @@ To update the group identifier of the file owner.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em gid}]the new group identifier \end{DoxyParams}
+{\em gid} & the new group identifier \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFile_aabc387f38012568f3939c453c6088f34}{
 \index{File@{File}!setGroup@{setGroup}}
 \index{setGroup@{setGroup}!File@{File}}
 \subsubsection[{setGroup}]{\setlength{\rightskip}{0pt plus 5cm}void File::setGroup (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ group}
+\item[{const std::string \&}]{group}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
 \label{classFile_aabc387f38012568f3939c453c6088f34}
@@ -968,13 +1040,15 @@ To update the group of the file owner.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em group}]the new group \end{DoxyParams}
+{\em group} & the new group \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFile_a1dab18179bdfb51685bbdfdd67bda920}{
 \index{File@{File}!setHost@{setHost}}
 \index{setHost@{setHost}!File@{File}}
 \subsubsection[{setHost}]{\setlength{\rightskip}{0pt plus 5cm}void File::setHost (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ host}
+\item[{const std::string \&}]{host}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
 \label{classFile_a1dab18179bdfb51685bbdfdd67bda920}
@@ -984,13 +1058,15 @@ To update the host of the file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em host}]the new host \end{DoxyParams}
+{\em host} & the new host \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFile_a3d419f6b7306952fdc0b73093ce7920c}{
 \index{File@{File}!setMtime@{setMtime}}
 \index{setMtime@{setMtime}!File@{File}}
 \subsubsection[{setMtime}]{\setlength{\rightskip}{0pt plus 5cm}void File::setMtime (
 \begin{DoxyParamCaption}
-\item[{const time\_\-t}]{ mtime}
+\item[{const time\_\-t}]{mtime}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
 \label{classFile_a3d419f6b7306952fdc0b73093ce7920c}
@@ -1000,13 +1076,15 @@ To update the last modification time of the file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em mtime}]the new modofocation time \end{DoxyParams}
+{\em mtime} & the new modofocation time \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFile_a7a2722df520658d92911cce52e3b7a77}{
 \index{File@{File}!setOwner@{setOwner}}
 \index{setOwner@{setOwner}!File@{File}}
 \subsubsection[{setOwner}]{\setlength{\rightskip}{0pt plus 5cm}void File::setOwner (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ owner}
+\item[{const std::string \&}]{owner}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
 \label{classFile_a7a2722df520658d92911cce52e3b7a77}
@@ -1016,13 +1094,15 @@ To update the name of the file owner.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em owner}]the new owner \end{DoxyParams}
+{\em owner} & the new owner \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFile_ace8ab8b98c3435c79106e6eb4346ae83}{
 \index{File@{File}!setPath@{setPath}}
 \index{setPath@{setPath}!File@{File}}
 \subsubsection[{setPath}]{\setlength{\rightskip}{0pt plus 5cm}void File::setPath (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{ path}
+\item[{const std::string \&}]{path}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
 \label{classFile_ace8ab8b98c3435c79106e6eb4346ae83}
@@ -1032,13 +1112,15 @@ To update the path of the file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em path}]the new path \end{DoxyParams}
+{\em path} & the new path \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFile_a0897fa173d69a732771fab5d1291bfa1}{
 \index{File@{File}!setPerms@{setPerms}}
 \index{setPerms@{setPerms}!File@{File}}
 \subsubsection[{setPerms}]{\setlength{\rightskip}{0pt plus 5cm}void File::setPerms (
 \begin{DoxyParamCaption}
-\item[{const mode\_\-t}]{ perms}
+\item[{const mode\_\-t}]{perms}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
 \label{classFile_a0897fa173d69a732771fab5d1291bfa1}
@@ -1048,13 +1130,15 @@ To update the access permissions of the file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em perms}]the new access permissions \end{DoxyParams}
+{\em perms} & the new access permissions \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFile_a468b86e87c939649a4ec0939bd8cafa0}{
 \index{File@{File}!setSize@{setSize}}
 \index{setSize@{setSize}!File@{File}}
 \subsubsection[{setSize}]{\setlength{\rightskip}{0pt plus 5cm}void File::setSize (
 \begin{DoxyParamCaption}
-\item[{const {\bf file\_\-size\_\-t}}]{ size}
+\item[{const file\_\-size\_\-t}]{size}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
 \label{classFile_a468b86e87c939649a4ec0939bd8cafa0}
@@ -1064,13 +1148,15 @@ To update the size of the file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em size}]the new size \end{DoxyParams}
+{\em size} & the new size \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFile_a590877c07f2214045644e7daa77ca7bc}{
 \index{File@{File}!setType@{setType}}
 \index{setType@{setType}!File@{File}}
 \subsubsection[{setType}]{\setlength{\rightskip}{0pt plus 5cm}void File::setType (
 \begin{DoxyParamCaption}
-\item[{const {\bf file\_\-type\_\-t}}]{ type}
+\item[{const file\_\-type\_\-t}]{type}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
 \label{classFile_a590877c07f2214045644e7daa77ca7bc}
@@ -1080,13 +1166,15 @@ To update the file type.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em type}]the new file type \end{DoxyParams}
+{\em type} & the new file type \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFile_a2510d79e08b9bce8bcbb4dbab3948ff6}{
 \index{File@{File}!setUid@{setUid}}
 \index{setUid@{setUid}!File@{File}}
 \subsubsection[{setUid}]{\setlength{\rightskip}{0pt plus 5cm}void File::setUid (
 \begin{DoxyParamCaption}
-\item[{const uid\_\-t}]{ uid}
+\item[{const uid\_\-t}]{uid}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
 \label{classFile_a2510d79e08b9bce8bcbb4dbab3948ff6}
@@ -1096,13 +1184,15 @@ To update the identifier of the file owner.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em uid}]the new owner identifier \end{DoxyParams}
+{\em uid} & the new owner identifier \\
+\hline
+\end{DoxyParams}
 \hypertarget{classFile_ab42e1acabd8cf2126590b268adb60952}{
 \index{File@{File}!tail@{tail}}
 \index{tail@{tail}!File@{File}}
 \subsubsection[{tail}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string File::tail (
 \begin{DoxyParamCaption}
-\item[{const TailOfFileOptions \&}]{ options}
+\item[{const TailOfFileOptions \&}]{options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
 \label{classFile_ab42e1acabd8cf2126590b268adb60952}
@@ -1112,7 +1202,9 @@ To get the last lines of the file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em options}]the options object \end{DoxyParams}
+{\em options} & the options object \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the last lines of the file 
 \end{DoxyReturn}

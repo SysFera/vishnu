@@ -36,10 +36,10 @@ Ibrahima Cisse (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sysf
 \index{makeListMachineOptions@{makeListMachineOptions}!listMachineUtils.hpp@{listMachineUtils.hpp}}
 \subsubsection[{makeListMachineOptions}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<${\bf Options}$>$ makeListMachineOptions (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ pgName, }
-\item[{{\bf StringcallBackType} \&}]{ fUserId, }
-\item[{std::string \&}]{ dietConfig, }
-\item[{{\bf StringcallBackType} \&}]{ fMachineId}
+\item[{std::string}]{pgName, }
+\item[{{\bf StringcallBackType} \&}]{fUserId, }
+\item[{std::string \&}]{dietConfig, }
+\item[{{\bf StringcallBackType} \&}]{fMachineId}
 \end{DoxyParamCaption}
 )}}
 \label{listMachineUtils_8hpp_a09e987942ea9bad0bcbb3ff4890ee462}
@@ -49,7 +49,15 @@ To build options for the VISHNU list machine command.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em pgName}]: The name of the command \item[{\em fUserId,:}]The user identifier option callback \item[{\em dietConfig,:}]Represents the VISHNU config file \item[{\em fMachineId}]: The callback for the machine identifier \end{DoxyParams}
+{\em pgName} & : The name of the command \\
+\hline
+{\em fUserId,:} & The user identifier option callback \\
+\hline
+{\em dietConfig,:} & Represents the VISHNU config file \\
+\hline
+{\em fMachineId} & : The callback for the machine identifier \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The description of all options allowed by the command 
 \end{DoxyReturn}

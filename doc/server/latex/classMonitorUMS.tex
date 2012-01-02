@@ -49,7 +49,7 @@ This class describes the UMS Monitor.
 \index{MonitorUMS@{MonitorUMS}!MonitorUMS@{MonitorUMS}}
 \subsubsection[{MonitorUMS}]{\setlength{\rightskip}{0pt plus 5cm}MonitorUMS::MonitorUMS (
 \begin{DoxyParamCaption}
-\item[{int}]{ interval = {\ttfamily 1}}
+\item[{int}]{interval = {\ttfamily 1}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
 \label{classMonitorUMS_ab3e7af32b9eb1e778ade65438d52fd8b}
@@ -59,7 +59,9 @@ Constructor, raises an exception on error.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em interval}]The interval in seconds to check the database \end{DoxyParams}
+{\em interval} & The interval in seconds to check the database \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -68,8 +70,8 @@ Constructor, raises an exception on error.
 \index{init@{init}!MonitorUMS@{MonitorUMS}}
 \subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}void MonitorUMS::init (
 \begin{DoxyParamCaption}
-\item[{int}]{ vishnuId, }
-\item[{{\bf DbConfiguration}}]{ dbConfig}
+\item[{int}]{vishnuId, }
+\item[{{\bf DbConfiguration}}]{dbConfig}
 \end{DoxyParamCaption}
 )}}
 \label{classMonitorUMS_a14c0a0e214e1c3dd306314474d6a3ff8}
@@ -79,7 +81,11 @@ To initialize the UMS monitor with individual parameters instead of configuratio
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em vishnuId}]The password of the root user vishnu\_\-user for the connection with the database \item[{\em dbConfig}]The configuration of the database \end{DoxyParams}
+{\em vishnuId} & The password of the root user vishnu\_\-user for the connection with the database \\
+\hline
+{\em dbConfig} & The configuration of the database \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an execption 
 \end{DoxyReturn}

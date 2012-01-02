@@ -46,7 +46,7 @@ bool \hyperlink{classIMSVishnuTool_aeb84a7b24348bdd9c7208989966404ed}{elect} ()
 \begin{DoxyCompactItemize}
 \item 
 string \hyperlink{classIMSVishnuTool_aa703880867b1ac81c53dc59e8599d6fa}{getMidFromOutLog} (string msg)
-\begin{DoxyCompactList}\small\item\em Extract the machine if from log message (out message). \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Extract the machine if from log message (out message) \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -66,9 +66,9 @@ Class that implements the log tool for the IMS SeD in VISHNU.
 \index{IMSVishnuTool@{IMSVishnuTool}!IMSVishnuTool@{IMSVishnuTool}}
 \subsubsection[{IMSVishnuTool}]{\setlength{\rightskip}{0pt plus 5cm}IMSVishnuTool::IMSVishnuTool (
 \begin{DoxyParamCaption}
-\item[{int}]{ argc, }
-\item[{char $\ast$$\ast$}]{ argv, }
-\item[{string}]{ mid}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv, }
+\item[{string}]{mid}
 \end{DoxyParamCaption}
 )}}
 \label{classIMSVishnuTool_aae3ba24f147f2274ec491c6650a57056}
@@ -78,7 +78,13 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em argc,:}]The argc of the main function \item[{\em argv,:}]The argv of the main function \item[{\em mid,:}]The machine id \end{DoxyParams}
+{\em argc,:} & The argc of the main function \\
+\hline
+{\em argv,:} & The argv of the main function \\
+\hline
+{\em mid,:} & The machine id \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -123,17 +129,19 @@ True if the process is elected, false otherwise
 \index{getMidFromOutLog@{getMidFromOutLog}!IMSVishnuTool@{IMSVishnuTool}}
 \subsubsection[{getMidFromOutLog}]{\setlength{\rightskip}{0pt plus 5cm}string IMSVishnuTool::getMidFromOutLog (
 \begin{DoxyParamCaption}
-\item[{string}]{ msg}
+\item[{string}]{msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classIMSVishnuTool_aa703880867b1ac81c53dc59e8599d6fa}
 
 
-Extract the machine if from log message (out message). 
+Extract the machine if from log message (out message) 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em msg,:}]The message received from the log \end{DoxyParams}
+{\em msg,:} & The message received from the log \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The hostname of the machine 
 \end{DoxyReturn}
@@ -142,7 +150,7 @@ The hostname of the machine
 \index{sendMsg@{sendMsg}!IMSVishnuTool@{IMSVishnuTool}}
 \subsubsection[{sendMsg}]{\setlength{\rightskip}{0pt plus 5cm}void IMSVishnuTool::sendMsg (
 \begin{DoxyParamCaption}
-\item[{const log\_\-msg\_\-buf\_\-t \&}]{ msg}
+\item[{const log\_\-msg\_\-buf\_\-t \&}]{msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classIMSVishnuTool_a091fff6fed4eed02270497f66131a094}
@@ -152,7 +160,9 @@ Function called when a message is received.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em msg,:}]The message to send \end{DoxyParams}
+{\em msg,:} & The message to send \\
+\hline
+\end{DoxyParams}
 
 
 Implements \hyperlink{classLogTool_a46d2c266ef709e801bfd651089312422}{LogTool}.
@@ -162,7 +172,7 @@ Implements \hyperlink{classLogTool_a46d2c266ef709e801bfd651089312422}{LogTool}.
 \index{setFilename@{setFilename}!IMSVishnuTool@{IMSVishnuTool}}
 \subsubsection[{setFilename}]{\setlength{\rightskip}{0pt plus 5cm}void IMSVishnuTool::setFilename (
 \begin{DoxyParamCaption}
-\item[{string}]{ name}
+\item[{string}]{name}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classIMSVishnuTool_ab44fc6ad246e4c82a513c4f08bf74960}
@@ -172,7 +182,9 @@ To set the name of the output file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em name,:}]The name of the file filter \end{DoxyParams}
+{\em name,:} & The name of the file filter \\
+\hline
+\end{DoxyParams}
 
 
 Implements \hyperlink{classLogTool_a4cdf12439d3a93fb3c1441a2df2a7235}{LogTool}.
@@ -182,7 +194,7 @@ Implements \hyperlink{classLogTool_a4cdf12439d3a93fb3c1441a2df2a7235}{LogTool}.
 \index{setFilter@{setFilter}!IMSVishnuTool@{IMSVishnuTool}}
 \subsubsection[{setFilter}]{\setlength{\rightskip}{0pt plus 5cm}void IMSVishnuTool::setFilter (
 \begin{DoxyParamCaption}
-\item[{string}]{ description\_\-file}
+\item[{string}]{description\_\-file}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classIMSVishnuTool_a0fdec4505183f4fc8308f1f3e2afce5f}
@@ -192,7 +204,9 @@ To set the filter to use.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em description\_\-file,:}]The path to the description file \end{DoxyParams}
+{\em description\_\-file,:} & The path to the description file \\
+\hline
+\end{DoxyParams}
 
 
 Implements \hyperlink{classLogTool_a10da74570e9bac6082a06c9710612a6c}{LogTool}.
