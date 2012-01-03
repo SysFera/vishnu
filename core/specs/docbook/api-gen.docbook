@@ -5273,7 +5273,7 @@
             <row>
               <entry><para>wallClockLimit</para></entry>
               <entry><para>long</para></entry>
-              <entry><para>Is the maximum wall-clock time during which the job can run (in seconds)</para></entry>
+              <entry><para>Is the maximum wall-clock time during which the job can run (in seconds or in the format [[HH:]MM:]SS)</para></entry>
             </row>
             <row>
               <entry><para>groupName</para></entry>
@@ -5298,7 +5298,7 @@
             <row>
               <entry><para>nbNodesAndCpuPerNode</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>Is the number of nodes and processors per node used by the job.</para></entry>
+              <entry><para>Is the number of nodes and processors per node used by the job (in the format nbNodes:nbCpuPerNode).</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -5728,7 +5728,7 @@
             <row>
               <entry><para>wallTime</para></entry>
               <entry><para>int</para></entry>
-              <entry><para>The maximum wall-clock time during which the job can run (in secondes or in the format [[HH:]MM:]SS)</para></entry>
+              <entry><para>The maximum wall-clock time during which the job can run (in seconds or in the format [[HH:]MM:]SS)</para></entry>
             </row>
             <row>
               <entry><para>memory</para></entry>
@@ -5743,7 +5743,7 @@
             <row>
               <entry><para>nbNodesAndCpuPerNode</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>The number of nodes and processors per node. For example if you want to use 4 nodes with 3 cpus for each node, you must specify these numbers by &quot;4:3&quot;</para></entry>
+              <entry><para>The number of nodes and processors per node (in the format nbNodes:nbCpuPerNode). For example if you want to use 4 nodes with 3 cpus for each node, you must specify these numbers by &quot;4:3&quot;</para></entry>
             </row>
             <row>
               <entry><para>outputPath</para></entry>
@@ -5778,7 +5778,7 @@
             <row>
               <entry><para>cpuTime</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>Assigns a job cpu limit time (in secondes or in the format [[HH:]MM:]SS)</para></entry>
+              <entry><para>Assigns a job cpu limit time (in seconds or in the format [[HH:]MM:]SS)</para></entry>
             </row>
           </tbody>
         </tgroup>
