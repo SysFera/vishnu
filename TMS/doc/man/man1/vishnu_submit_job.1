@@ -54,7 +54,7 @@ Assigns the queue or class of the job\&.
 .PP
 \fB\-t \fR\fB\fIwallTime\fR\fR
 .RS 4
-The maximum wall\-clock time during which the job can run (in secondes or in the format [[HH:]MM:]SS)\&.
+The maximum wall\-clock time during which the job can run (in seconds or in the format [[HH:]MM:]SS)\&.
 .RE
 .PP
 \fB\-m \fR\fB\fImemory\fR\fR
@@ -69,7 +69,7 @@ The number of cpu per node that the job requires\&.
 .PP
 \fB\-N \fR\fB\fInbNodesAndCpuPerNode\fR\fR
 .RS 4
-The number of nodes and processors per node\&. For example if you want to use 4 nodes with 3 cpus for each node, you must specify these numbers by "4:3"\&.
+The number of nodes and processors per node (in the format nbNodes:nbCpuPerNode)\&. For example if you want to use 4 nodes with 3 cpus for each node, you must specify these numbers by "4:3"\&.
 .RE
 .PP
 \fB\-o \fR\fB\fIoutputPath\fR\fR
@@ -104,7 +104,7 @@ Assigns a job remote working dir\&.
 .PP
 \fB\-T \fR\fB\fIcpuTime\fR\fR
 .RS 4
-Assigns a job cpu limit time (in secondes or in the format [[HH:]MM:]SS)\&.
+Assigns a job cpu limit time (in seconds or in the format [[HH:]MM:]SS)\&.
 .RE
 .SH "JOB OUTPUT ENVIRONMENT VARIABLES"
 .PP
