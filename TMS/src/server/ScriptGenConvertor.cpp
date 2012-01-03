@@ -416,7 +416,7 @@ ScriptGenConvertor::getConvertedScript() {
   return result+mendScript;
 }
 
-/*
+/**
  * \brief Function to insert some additional (ppn+nbCpuStr) content in the string str
  * \param ppn A part of the content to insert
  * \param nbCpuStr An other part of the content to insert
@@ -458,7 +458,7 @@ ScriptGenConvertor::findAndReplace(const std::string& ppn,
   }
 }
 
-/*
+/**
  * \brief Function to insert some additional content (newValue)
  * \param oldValue oldValue to replace 
  * \param newValue new value to insert

@@ -49,7 +49,7 @@ This class describes the FMS Monitor.
 \index{MonitorFMS@{MonitorFMS}!MonitorFMS@{MonitorFMS}}
 \subsubsection[{MonitorFMS}]{\setlength{\rightskip}{0pt plus 5cm}MonitorFMS::MonitorFMS (
 \begin{DoxyParamCaption}
-\item[{int}]{interval = {\ttfamily 1}}
+\item[{int}]{ interval = {\ttfamily 1}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
 \label{classMonitorFMS_ae070dde72ea132d5e40fdd3529ecb2b2}
@@ -59,9 +59,7 @@ Constructor, raises an exception on error.
 
 
 \begin{DoxyParams}{Parameters}
-{\em interval} & The interval in seconds to check the database \\
-\hline
-\end{DoxyParams}
+\item[{\em interval}]The interval in seconds to check the database \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -70,8 +68,8 @@ Constructor, raises an exception on error.
 \index{init@{init}!MonitorFMS@{MonitorFMS}}
 \subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}void MonitorFMS::init (
 \begin{DoxyParamCaption}
-\item[{int}]{vishnuId, }
-\item[{{\bf DbConfiguration}}]{dbConfig}
+\item[{int}]{ vishnuId, }
+\item[{{\bf DbConfiguration}}]{ dbConfig}
 \end{DoxyParamCaption}
 )}}
 \label{classMonitorFMS_a93ee1d437459fe2753114afb13466e2f}
@@ -81,11 +79,7 @@ To initialize the FMS monitor with individual parameters instead of configuratio
 
 
 \begin{DoxyParams}{Parameters}
-{\em vishnuId} & The password of the root user vishnu\_\-user for the connection with the database \\
-\hline
-{\em dbConfig} & The configuration of the database \\
-\hline
-\end{DoxyParams}
+\item[{\em vishnuId}]The password of the root user vishnu\_\-user for the connection with the database \item[{\em dbConfig}]The configuration of the database \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an execption 
 \end{DoxyReturn}

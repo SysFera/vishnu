@@ -67,7 +67,7 @@ UMS\_\-Data::Configuration $\ast$ \hyperlink{classConfigurationServer_aca605c704
 \index{ConfigurationServer@{ConfigurationServer}!ConfigurationServer@{ConfigurationServer}}
 \subsubsection[{ConfigurationServer}]{\setlength{\rightskip}{0pt plus 5cm}ConfigurationServer::ConfigurationServer (
 \begin{DoxyParamCaption}
-\item[{{\bf SessionServer}}]{session}
+\item[{{\bf SessionServer}}]{ session}
 \end{DoxyParamCaption}
 )}}
 \label{classConfigurationServer_a56576161624c4cb62b332079efc733b9}
@@ -77,16 +77,14 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em session} & The object which encapsulates session data \\
-\hline
-\end{DoxyParams}
+\item[{\em session}]The object which encapsulates session data \end{DoxyParams}
 \hypertarget{classConfigurationServer_a0d37dc5d1d5a5e865f2a28b83fa60840}{
 \index{ConfigurationServer@{ConfigurationServer}!ConfigurationServer@{ConfigurationServer}}
 \index{ConfigurationServer@{ConfigurationServer}!ConfigurationServer@{ConfigurationServer}}
 \subsubsection[{ConfigurationServer}]{\setlength{\rightskip}{0pt plus 5cm}ConfigurationServer::ConfigurationServer (
 \begin{DoxyParamCaption}
-\item[{UMS\_\-Data::Configuration $\ast$\&}]{configuration, }
-\item[{{\bf SessionServer}}]{session}
+\item[{UMS\_\-Data::Configuration $\ast$\&}]{ configuration, }
+\item[{{\bf SessionServer}}]{ session}
 \end{DoxyParamCaption}
 )}}
 \label{classConfigurationServer_a0d37dc5d1d5a5e865f2a28b83fa60840}
@@ -96,11 +94,7 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em configuration} & The \hyperlink{classConfiguration}{Configuration} data structure \\
-\hline
-{\em session} & The object which encapsulates session data \\
-\hline
-\end{DoxyParams}
+\item[{\em configuration}]The \hyperlink{classConfiguration}{Configuration} data structure \item[{\em session}]The object which encapsulates session data \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -125,7 +119,7 @@ The LocalAccount data structure
 \index{machineDescToSql@{machineDescToSql}!ConfigurationServer@{ConfigurationServer}}
 \subsubsection[{machineDescToSql}]{\setlength{\rightskip}{0pt plus 5cm}std::string ConfigurationServer::machineDescToSql (
 \begin{DoxyParamCaption}
-\item[{UMS\_\-Data::Machine\_\-ptr}]{machine}
+\item[{UMS\_\-Data::Machine\_\-ptr}]{ machine}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classConfigurationServer_a10dc6a2581fce8e24144f9f49e08d58f}
@@ -135,9 +129,7 @@ Function to get the sql code of machines description from a VISHNU configuration
 
 
 \begin{DoxyParams}{Parameters}
-{\em machine} & The machine object \\
-\hline
-\end{DoxyParams}
+\item[{\em machine}]The machine object \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the sql code containing the sql code of machines description 
 \end{DoxyReturn}
@@ -146,8 +138,8 @@ the sql code containing the sql code of machines description
 \index{machineToSql@{machineToSql}!ConfigurationServer@{ConfigurationServer}}
 \subsubsection[{machineToSql}]{\setlength{\rightskip}{0pt plus 5cm}std::string ConfigurationServer::machineToSql (
 \begin{DoxyParamCaption}
-\item[{UMS\_\-Data::Machine\_\-ptr}]{machine, }
-\item[{int}]{vishnuId}
+\item[{UMS\_\-Data::Machine\_\-ptr}]{ machine, }
+\item[{int}]{ vishnuId}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classConfigurationServer_a6899508cf595a37a05d90b9efe8c9358}
@@ -157,11 +149,7 @@ Function to get the sql code of machines from a VISHNU configuration.
 
 
 \begin{DoxyParams}{Parameters}
-{\em machine} & The machine object \\
-\hline
-{\em vishnuId} & The identifier of the vishnu instance \\
-\hline
-\end{DoxyParams}
+\item[{\em machine}]The machine object \item[{\em vishnuId}]The identifier of the vishnu instance \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the sql code containing the sql code of machines 
 \end{DoxyReturn}
@@ -170,7 +158,7 @@ the sql code containing the sql code of machines
 \index{restore@{restore}!ConfigurationServer@{ConfigurationServer}}
 \subsubsection[{restore}]{\setlength{\rightskip}{0pt plus 5cm}int ConfigurationServer::restore (
 \begin{DoxyParamCaption}
-\item[{int}]{vishnuId}
+\item[{int}]{ vishnuId}
 \end{DoxyParamCaption}
 )}}
 \label{classConfigurationServer_ad77b3755e8b45cd283c6047c36a8a921}
@@ -180,9 +168,7 @@ Function to restore a VISHNU configuration.
 
 
 \begin{DoxyParams}{Parameters}
-{\em vishnuId} & The identifier of the vishnu instance \\
-\hline
-\end{DoxyParams}
+\item[{\em vishnuId}]The identifier of the vishnu instance \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -207,8 +193,8 @@ raises an exception on error
 \index{userToSql@{userToSql}!ConfigurationServer@{ConfigurationServer}}
 \subsubsection[{userToSql}]{\setlength{\rightskip}{0pt plus 5cm}std::string ConfigurationServer::userToSql (
 \begin{DoxyParamCaption}
-\item[{UMS\_\-Data::User\_\-ptr}]{user, }
-\item[{int}]{vishnuId}
+\item[{UMS\_\-Data::User\_\-ptr}]{ user, }
+\item[{int}]{ vishnuId}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classConfigurationServer_adfcf50dc485096fe1d109142d0acaaa2}
@@ -218,11 +204,7 @@ Function to get the sql code of users from a VISHNU configuration.
 
 
 \begin{DoxyParams}{Parameters}
-{\em user} & The user object \\
-\hline
-{\em vishnuId} & The identifier of the vishnu instance \\
-\hline
-\end{DoxyParams}
+\item[{\em user}]The user object \item[{\em vishnuId}]The identifier of the vishnu instance \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the sql code containing the sql code of users 
 \end{DoxyReturn}

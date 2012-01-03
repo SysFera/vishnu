@@ -73,13 +73,13 @@ void \hyperlink{namespacevishnu_aa59f3181383172b450f3621192c3ad26}{vishnu::check
 void \hyperlink{namespacevishnu_a66c4f962fb018f2e5e89d81f06357ca3}{vishnu::checkJobNbNodesAndNbCpuPerNode} (const std::string \&nbNodesAndCpuPerNode)
 \begin{DoxyCompactList}\small\item\em Function to check the job nbNodesAndCpuPerNode. \item\end{DoxyCompactList}\item 
 time\_\-t \hyperlink{namespacevishnu_a34810356a494e9db0e924c76889474b0}{vishnu::getCurrentTimeInUTC} ()
-\begin{DoxyCompactList}\small\item\em Function to get current time in seconds (UTC) \item\end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Function to get current time in seconds (UTC). \item\end{DoxyCompactList}\item 
 time\_\-t \hyperlink{namespacevishnu_a912b9d87fc92812a07bb7f6dce8dcb85}{vishnu::convertUTCtimeINLocaltime} (const time\_\-t \&localtime)
-\begin{DoxyCompactList}\small\item\em Function to convert UTC time into localtime (seconds) \item\end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Function to convert UTC time into localtime (seconds). \item\end{DoxyCompactList}\item 
 time\_\-t \hyperlink{namespacevishnu_a7607f0891ab382dcb2343a36d9b25190}{vishnu::convertLocaltimeINUTCtime} (const time\_\-t \&localtime)
-\begin{DoxyCompactList}\small\item\em Function to localtime into UTC (seconds) \item\end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Function to localtime into UTC (seconds). \item\end{DoxyCompactList}\item 
 long \hyperlink{namespacevishnu_a34f4596f7c86c2f9bd6b6bd49be69e6f}{vishnu::diffLocaltimeUTCtime} ()
-\begin{DoxyCompactList}\small\item\em Function to return the difference between localtime and UTC time (seconds) \item\end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Function to return the difference between localtime and UTC time (seconds). \item\end{DoxyCompactList}\item 
 void \hyperlink{namespacevishnu_a33f3fca5bc294663e2863c1abc1da5c8}{vishnu::createTmpFile} (char $\ast$fileName, const std::string \&file\_\-content)
 \begin{DoxyCompactList}\small\item\em Function to create temporary file. \item\end{DoxyCompactList}\item 
 void \hyperlink{namespacevishnu_a18002572e5b0039069544475365f335d}{vishnu::createTmpFile} (char $\ast$fileName)
@@ -155,8 +155,8 @@ UNDEFINED}
 \index{crypt@{crypt}!utilVishnu.hpp@{utilVishnu.hpp}}
 \subsubsection[{crypt}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ crypt (
 \begin{DoxyParamCaption}
-\item[{const char $\ast$}]{clef, }
-\item[{const char $\ast$}]{salt}
+\item[{const char $\ast$}]{ clef, }
+\item[{const char $\ast$}]{ salt}
 \end{DoxyParamCaption}
 )}}
 \label{utilVishnu_8hpp_af8fddc209cd7604f6611fac491e14c65}
@@ -166,11 +166,7 @@ Function to encrypt data and password.
 
 
 \begin{DoxyParams}{Parameters}
-{\em clef} & is the data to be encrypted \\
-\hline
-{\em salt} & This string is used to perturb the algorithm \\
-\hline
-\end{DoxyParams}
+\item[{\em clef}]is the data to be encrypted \item[{\em salt}]This string is used to perturb the algorithm \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the string encrypted 
 \end{DoxyReturn}

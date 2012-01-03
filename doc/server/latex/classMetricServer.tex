@@ -102,8 +102,8 @@ Server that link the metrics and the database.
 \index{MetricServer@{MetricServer}!MetricServer@{MetricServer}}
 \subsubsection[{MetricServer}]{\setlength{\rightskip}{0pt plus 5cm}MetricServer::MetricServer (
 \begin{DoxyParamCaption}
-\item[{const {\bf UserServer}}]{session, }
-\item[{string}]{mail}
+\item[{const {\bf UserServer}}]{ session, }
+\item[{string}]{ mail}
 \end{DoxyParamCaption}
 )}}
 \label{classMetricServer_a3e5fe73716340b9387c04834da9fe47e}
@@ -113,19 +113,15 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em session,:} & A session to use for the call \\
-\hline
-{\em mail,:} & The script to send mails \\
-\hline
-\end{DoxyParams}
+\item[{\em session,:}]A session to use for the call \item[{\em mail,:}]The script to send mails \end{DoxyParams}
 \hypertarget{classMetricServer_af0f9afbf41bb0fdc3ba06cfcb54b1ea9}{
 \index{MetricServer@{MetricServer}!MetricServer@{MetricServer}}
 \index{MetricServer@{MetricServer}!MetricServer@{MetricServer}}
 \subsubsection[{MetricServer}]{\setlength{\rightskip}{0pt plus 5cm}MetricServer::MetricServer (
 \begin{DoxyParamCaption}
-\item[{const {\bf UserServer}}]{session, }
-\item[{IMS\_\-Data::MetricHistOp\_\-ptr}]{op, }
-\item[{string}]{mail}
+\item[{const {\bf UserServer}}]{ session, }
+\item[{IMS\_\-Data::MetricHistOp\_\-ptr}]{ op, }
+\item[{string}]{ mail}
 \end{DoxyParamCaption}
 )}}
 \label{classMetricServer_af0f9afbf41bb0fdc3ba06cfcb54b1ea9}
@@ -135,21 +131,15 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em session,:} & A session to use for the call \\
-\hline
-{\em op,:} & \hyperlink{classOptions}{Options} for the get metric history call \\
-\hline
-{\em mail,:} & The script to send mails \\
-\hline
-\end{DoxyParams}
+\item[{\em session,:}]A session to use for the call \item[{\em op,:}]\hyperlink{classOptions}{Options} for the get metric history call \item[{\em mail,:}]The script to send mails \end{DoxyParams}
 \hypertarget{classMetricServer_a8f865d6adad34eef1d094c8696c12ff9}{
 \index{MetricServer@{MetricServer}!MetricServer@{MetricServer}}
 \index{MetricServer@{MetricServer}!MetricServer@{MetricServer}}
 \subsubsection[{MetricServer}]{\setlength{\rightskip}{0pt plus 5cm}MetricServer::MetricServer (
 \begin{DoxyParamCaption}
-\item[{const {\bf UserServer}}]{session, }
-\item[{IMS\_\-Data::CurMetricOp\_\-ptr}]{op, }
-\item[{string}]{mail}
+\item[{const {\bf UserServer}}]{ session, }
+\item[{IMS\_\-Data::CurMetricOp\_\-ptr}]{ op, }
+\item[{string}]{ mail}
 \end{DoxyParamCaption}
 )}}
 \label{classMetricServer_a8f865d6adad34eef1d094c8696c12ff9}
@@ -159,13 +149,7 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em session,:} & A session to use for the call \\
-\hline
-{\em op,:} & \hyperlink{classOptions}{Options} for the get current metric value call \\
-\hline
-{\em mail,:} & The script to send mails \\
-\hline
-\end{DoxyParams}
+\item[{\em session,:}]A session to use for the call \item[{\em op,:}]\hyperlink{classOptions}{Options} for the get current metric value call \item[{\em mail,:}]The script to send mails \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -174,8 +158,8 @@ Constructor.
 \index{addMetricSet@{addMetricSet}!MetricServer@{MetricServer}}
 \subsubsection[{addMetricSet}]{\setlength{\rightskip}{0pt plus 5cm}void MetricServer::addMetricSet (
 \begin{DoxyParamCaption}
-\item[{IMS\_\-Data::ListMetric $\ast$}]{set, }
-\item[{string}]{mid}
+\item[{IMS\_\-Data::ListMetric $\ast$}]{ set, }
+\item[{string}]{ mid}
 \end{DoxyParamCaption}
 )}}
 \label{classMetricServer_ad84b869bee5b7d1890c54fbf778b0ee1}
@@ -185,11 +169,7 @@ To add all the monitored types of metric in the database at a time t.
 
 
 \begin{DoxyParams}{Parameters}
-{\em set,:} & A list containing the monitored \\
-\hline
-{\em mid,:} & The machine id of the machine to add the set \\
-\hline
-\end{DoxyParams}
+\item[{\em set,:}]A list containing the monitored \item[{\em mid,:}]The machine id of the machine to add the set \end{DoxyParams}
 \hypertarget{classMetricServer_ae6f1cc4eda630823029dc6161f5bcd3e}{
 \index{MetricServer@{MetricServer}!checkUpFreq@{checkUpFreq}}
 \index{checkUpFreq@{checkUpFreq}!MetricServer@{MetricServer}}
@@ -227,7 +207,7 @@ The current list of metrics
 \index{getHistMet@{getHistMet}!MetricServer@{MetricServer}}
 \subsubsection[{getHistMet}]{\setlength{\rightskip}{0pt plus 5cm}IMS\_\-Data::ListMetric$\ast$ MetricServer::getHistMet (
 \begin{DoxyParamCaption}
-\item[{string}]{machineId}
+\item[{string}]{ machineId}
 \end{DoxyParamCaption}
 )}}
 \label{classMetricServer_afcb928edb891800c34a5fda3cae4abe3}
@@ -240,20 +220,18 @@ The old list of metrics
 \end{DoxyReturn}
 
 \begin{DoxyParams}{Parameters}
-{\em machineId,:} & The vishnu id of the machine \\
-\hline
-\end{DoxyParams}
+\item[{\em machineId,:}]The vishnu id of the machine \end{DoxyParams}
 \hypertarget{classMetricServer_a4163ec4b6d279051877af2d3694151f6}{
 \index{MetricServer@{MetricServer}!sendMail@{sendMail}}
 \index{sendMail@{sendMail}!MetricServer@{MetricServer}}
 \subsubsection[{sendMail}]{\setlength{\rightskip}{0pt plus 5cm}void MetricServer::sendMail (
 \begin{DoxyParamCaption}
-\item[{int}]{val, }
-\item[{int}]{threshold, }
-\item[{int}]{type, }
-\item[{string}]{email, }
-\item[{string}]{uid, }
-\item[{string}]{mid}
+\item[{int}]{ val, }
+\item[{int}]{ threshold, }
+\item[{int}]{ type, }
+\item[{string}]{ email, }
+\item[{string}]{ uid, }
+\item[{string}]{ mid}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classMetricServer_a4163ec4b6d279051877af2d3694151f6}
@@ -263,25 +241,13 @@ To send a mail.
 
 
 \begin{DoxyParams}{Parameters}
-{\em val,:} & The value of the metric \\
-\hline
-{\em threshold,:} & The value of the threshold \\
-\hline
-{\em type,:} & The type of the threshold \\
-\hline
-{\em email,:} & The email adress \\
-\hline
-{\em uid,:} & The user id of the user target \\
-\hline
-{\em mid,:} & The machine id of the machine where the threshold is reached \\
-\hline
-\end{DoxyParams}
+\item[{\em val,:}]The value of the metric \item[{\em threshold,:}]The value of the threshold \item[{\em type,:}]The type of the threshold \item[{\em email,:}]The email adress \item[{\em uid,:}]The user id of the user target \item[{\em mid,:}]The machine id of the machine where the threshold is reached \end{DoxyParams}
 \hypertarget{classMetricServer_adfea7bbb8ea22a861bf6f7652075f35b}{
 \index{MetricServer@{MetricServer}!setUpFreq@{setUpFreq}}
 \index{setUpFreq@{setUpFreq}!MetricServer@{MetricServer}}
 \subsubsection[{setUpFreq}]{\setlength{\rightskip}{0pt plus 5cm}void MetricServer::setUpFreq (
 \begin{DoxyParamCaption}
-\item[{int}]{freq}
+\item[{int}]{ freq}
 \end{DoxyParamCaption}
 )}}
 \label{classMetricServer_adfea7bbb8ea22a861bf6f7652075f35b}
@@ -291,9 +257,7 @@ To set the update frequency value.
 
 
 \begin{DoxyParams}{Parameters}
-{\em freq,:} & The new frequency value \\
-\hline
-\end{DoxyParams}
+\item[{\em freq,:}]The new frequency value \end{DoxyParams}
 
 
 The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}

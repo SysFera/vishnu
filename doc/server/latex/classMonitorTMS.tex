@@ -59,7 +59,7 @@ This class describes the TMS Monitor.
 \index{MonitorTMS@{MonitorTMS}!MonitorTMS@{MonitorTMS}}
 \subsubsection[{MonitorTMS}]{\setlength{\rightskip}{0pt plus 5cm}MonitorTMS::MonitorTMS (
 \begin{DoxyParamCaption}
-\item[{int}]{interval = {\ttfamily 1}}
+\item[{int}]{ interval = {\ttfamily 1}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
 \label{classMonitorTMS_ab53b703c3d2cacdd053b804bcaa70d5f}
@@ -69,9 +69,7 @@ Constructor, raises an exception on error.
 
 
 \begin{DoxyParams}{Parameters}
-{\em interval} & The interval in seconds to check the database \\
-\hline
-\end{DoxyParams}
+\item[{\em interval}]The interval in seconds to check the database \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -80,10 +78,10 @@ Constructor, raises an exception on error.
 \index{init@{init}!MonitorTMS@{MonitorTMS}}
 \subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}void MonitorTMS::init (
 \begin{DoxyParamCaption}
-\item[{int}]{vishnuId, }
-\item[{{\bf DbConfiguration}}]{dbConfig, }
-\item[{const std::string \&}]{machineId, }
-\item[{const {\bf BatchType} \&}]{batchType}
+\item[{int}]{ vishnuId, }
+\item[{{\bf DbConfiguration}}]{ dbConfig, }
+\item[{const std::string \&}]{ machineId, }
+\item[{const {\bf BatchType} \&}]{ batchType}
 \end{DoxyParamCaption}
 )}}
 \label{classMonitorTMS_ab476b3c94d741da1f571979223eb0c8d}
@@ -93,15 +91,7 @@ To initialize the TMS monitor with individual parameters instead of configuratio
 
 
 \begin{DoxyParams}{Parameters}
-{\em vishnuId} & The password of the root user vishnu\_\-user for the connection with the database \\
-\hline
-{\em dbConfig} & The configuration of the database \\
-\hline
-{\em machineId} & The machine identifier \\
-\hline
-{\em batchType} & The batch scheduler type \\
-\hline
-\end{DoxyParams}
+\item[{\em vishnuId}]The password of the root user vishnu\_\-user for the connection with the database \item[{\em dbConfig}]The configuration of the database \item[{\em machineId}]The machine identifier \item[{\em batchType}]The batch scheduler type \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an execption 
 \end{DoxyReturn}

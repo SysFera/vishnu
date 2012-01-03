@@ -68,7 +68,7 @@ Server that link the thresholds and the database.
 \index{ThresholdServer@{ThresholdServer}!ThresholdServer@{ThresholdServer}}
 \subsubsection[{ThresholdServer}]{\setlength{\rightskip}{0pt plus 5cm}ThresholdServer::ThresholdServer (
 \begin{DoxyParamCaption}
-\item[{const {\bf UserServer}}]{session}
+\item[{const {\bf UserServer}}]{ session}
 \end{DoxyParamCaption}
 )}}
 \label{classThresholdServer_a14f5953a7fd2d049e01b949dd1c98369}
@@ -78,16 +78,14 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em session,:} & A session to use for the call \\
-\hline
-\end{DoxyParams}
+\item[{\em session,:}]A session to use for the call \end{DoxyParams}
 \hypertarget{classThresholdServer_a068807807db72b6e7b1be4578773e70c}{
 \index{ThresholdServer@{ThresholdServer}!ThresholdServer@{ThresholdServer}}
 \index{ThresholdServer@{ThresholdServer}!ThresholdServer@{ThresholdServer}}
 \subsubsection[{ThresholdServer}]{\setlength{\rightskip}{0pt plus 5cm}ThresholdServer::ThresholdServer (
 \begin{DoxyParamCaption}
-\item[{const {\bf UserServer}}]{session, }
-\item[{IMS\_\-Data::ThresholdOp}]{op}
+\item[{const {\bf UserServer}}]{ session, }
+\item[{IMS\_\-Data::ThresholdOp}]{ op}
 \end{DoxyParamCaption}
 )}}
 \label{classThresholdServer_a068807807db72b6e7b1be4578773e70c}
@@ -97,11 +95,7 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em session,:} & A session to use for the call \\
-\hline
-{\em op,:} & The option of the threshold \\
-\hline
-\end{DoxyParams}
+\item[{\em session,:}]A session to use for the call \item[{\em op,:}]The option of the threshold \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -110,7 +104,7 @@ Constructor.
 \index{checkExist@{checkExist}!ThresholdServer@{ThresholdServer}}
 \subsubsection[{checkExist}]{\setlength{\rightskip}{0pt plus 5cm}bool ThresholdServer::checkExist (
 \begin{DoxyParamCaption}
-\item[{IMS\_\-Data::Threshold\_\-ptr}]{tree}
+\item[{IMS\_\-Data::Threshold\_\-ptr}]{ tree}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classThresholdServer_af68236fde6dce7aab91703c0b544eb86}
@@ -120,9 +114,7 @@ Check if a threshold of this type on this machine is already defined.
 
 
 \begin{DoxyParams}{Parameters}
-{\em tree,:} & The threshold \\
-\hline
-\end{DoxyParams}
+\item[{\em tree,:}]The threshold \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 True if the threshold already exist in the database 
 \end{DoxyReturn}
@@ -147,9 +139,9 @@ A list of thresholds
 \index{getUserAndMachine@{getUserAndMachine}!ThresholdServer@{ThresholdServer}}
 \subsubsection[{getUserAndMachine}]{\setlength{\rightskip}{0pt plus 5cm}void ThresholdServer::getUserAndMachine (
 \begin{DoxyParamCaption}
-\item[{IMS\_\-Data::Threshold\_\-ptr}]{tree, }
-\item[{string \&}]{nuid, }
-\item[{string \&}]{nmid}
+\item[{IMS\_\-Data::Threshold\_\-ptr}]{ tree, }
+\item[{string \&}]{ nuid, }
+\item[{string \&}]{ nmid}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classThresholdServer_a22403dda97498796a2aaa4c7d7763153}
@@ -159,19 +151,13 @@ To get the numerical userid and numerical machineid corresponding to a threshold
 
 
 \begin{DoxyParams}{Parameters}
-{\em tree,:} & The threshold \\
-\hline
-{\em nuid,:} & The numerical user id (out) \\
-\hline
-{\em nmid,:} & The numerical machine id (out) \\
-\hline
-\end{DoxyParams}
+\item[{\em tree,:}]The threshold \item[{\em nuid,:}]The numerical user id (out) \item[{\em nmid,:}]The numerical machine id (out) \end{DoxyParams}
 \hypertarget{classThresholdServer_af2ced48c09e928b0385cfa21e3f15e4b}{
 \index{ThresholdServer@{ThresholdServer}!setThreshold@{setThreshold}}
 \index{setThreshold@{setThreshold}!ThresholdServer@{ThresholdServer}}
 \subsubsection[{setThreshold}]{\setlength{\rightskip}{0pt plus 5cm}void ThresholdServer::setThreshold (
 \begin{DoxyParamCaption}
-\item[{IMS\_\-Data::Threshold\_\-ptr}]{tree}
+\item[{IMS\_\-Data::Threshold\_\-ptr}]{ tree}
 \end{DoxyParamCaption}
 )}}
 \label{classThresholdServer_af2ced48c09e928b0385cfa21e3f15e4b}
@@ -181,9 +167,7 @@ To set a threshold.
 
 
 \begin{DoxyParams}{Parameters}
-{\em tree,:} & A threshold \\
-\hline
-\end{DoxyParams}
+\item[{\em tree,:}]A threshold \end{DoxyParams}
 
 
 The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}

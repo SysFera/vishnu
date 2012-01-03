@@ -65,8 +65,8 @@ std::string \hyperlink{classLocalAccountProxy_a8c33a9bae468dd99acbaa5acef8b0d5e}
 \index{LocalAccountProxy@{LocalAccountProxy}!LocalAccountProxy@{LocalAccountProxy}}
 \subsubsection[{LocalAccountProxy}]{\setlength{\rightskip}{0pt plus 5cm}LocalAccountProxy::LocalAccountProxy (
 \begin{DoxyParamCaption}
-\item[{const UMS\_\-Data::LocalAccount \&}]{localAccount, }
-\item[{const {\bf SessionProxy} \&}]{session}
+\item[{const UMS\_\-Data::LocalAccount \&}]{ localAccount, }
+\item[{const {\bf SessionProxy} \&}]{ session}
 \end{DoxyParamCaption}
 )}}
 \label{classLocalAccountProxy_a101ce2caca3aa0f876e4abd477a4d914}
@@ -76,11 +76,7 @@ Constructor, raises an exception on error.
 
 
 \begin{DoxyParams}{Parameters}
-{\em localAccount} & The object which encapsulates the user Acccount information \\
-\hline
-{\em session} & The object which encapsulates the session information (ex: identifier of the session) \\
-\hline
-\end{DoxyParams}
+\item[{\em localAccount}]The object which encapsulates the user Acccount information \item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -89,7 +85,7 @@ Constructor, raises an exception on error.
 \index{\_\-addLocalAccountInformation@{\_\-addLocalAccountInformation}!LocalAccountProxy@{LocalAccountProxy}}
 \subsubsection[{\_\-addLocalAccountInformation}]{\setlength{\rightskip}{0pt plus 5cm}int LocalAccountProxy::\_\-addLocalAccountInformation (
 \begin{DoxyParamCaption}
-\item[{bool}]{isNewLocalAccount = {\ttfamily true}}
+\item[{bool}]{ isNewLocalAccount = {\ttfamily true}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classLocalAccountProxy_a80bbacfc52c341153c6a1aefc20b3dff}
@@ -99,9 +95,7 @@ Function to combine \hyperlink{classLocalAccountProxy_a0676a2d914681e61a401e5cb6
 
 
 \begin{DoxyParams}{Parameters}
-{\em isNewLocalAccount} & to select the call of add or update function \\
-\hline
-\end{DoxyParams}
+\item[{\em isNewLocalAccount}]to select the call of add or update function \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}

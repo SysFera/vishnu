@@ -58,7 +58,7 @@ std::string \hyperlink{classCommandServer_a98ec7cb8ee6d06037e2c52a212e2bf77}{mco
 \index{CommandServer@{CommandServer}!CommandServer@{CommandServer}}
 \subsubsection[{CommandServer}]{\setlength{\rightskip}{0pt plus 5cm}CommandServer::CommandServer (
 \begin{DoxyParamCaption}
-\item[{{\bf SessionServer}}]{session}
+\item[{{\bf SessionServer}}]{ session}
 \end{DoxyParamCaption}
 )}}
 \label{classCommandServer_aa15f07a3768c8b15ace8b470d3ff9b34}
@@ -68,16 +68,14 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em session} & The object which encapsulates session data \\
-\hline
-\end{DoxyParams}
+\item[{\em session}]The object which encapsulates session data \end{DoxyParams}
 \hypertarget{classCommandServer_a1ed27508bf43e78ab53b9c8d1d6abcd7}{
 \index{CommandServer@{CommandServer}!CommandServer@{CommandServer}}
 \index{CommandServer@{CommandServer}!CommandServer@{CommandServer}}
 \subsubsection[{CommandServer}]{\setlength{\rightskip}{0pt plus 5cm}CommandServer::CommandServer (
 \begin{DoxyParamCaption}
-\item[{std::string}]{cmd, }
-\item[{{\bf SessionServer}}]{session}
+\item[{std::string}]{ cmd, }
+\item[{{\bf SessionServer}}]{ session}
 \end{DoxyParamCaption}
 )}}
 \label{classCommandServer_a1ed27508bf43e78ab53b9c8d1d6abcd7}
@@ -87,11 +85,7 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em cmd} & The cmd launched by the user \\
-\hline
-{\em session} & The object which encapsulates session data \\
-\hline
-\end{DoxyParams}
+\item[{\em cmd}]The cmd launched by the user \item[{\em session}]The object which encapsulates session data \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -132,11 +126,11 @@ true if commands are running else false
 \index{record@{record}!CommandServer@{CommandServer}}
 \subsubsection[{record}]{\setlength{\rightskip}{0pt plus 5cm}int CommandServer::record (
 \begin{DoxyParamCaption}
-\item[{{\bf CmdType}}]{cmdType, }
-\item[{{\bf vishnu::CmdStatus}}]{cmdStatus, }
-\item[{std::string}]{newVishnuObjectID = {\ttfamily \char`\"{}~\char`\"{}}, }
-\item[{std::string}]{startTime = {\ttfamily \char`\"{}CURRENT\_\-TIMESTAMP\char`\"{}}, }
-\item[{std::string}]{endTime = {\ttfamily \char`\"{}CURRENT\_\-TIMESTAMP\char`\"{}}}
+\item[{{\bf CmdType}}]{ cmdType, }
+\item[{{\bf vishnu::CmdStatus}}]{ cmdStatus, }
+\item[{std::string}]{ newVishnuObjectID = {\ttfamily \char`\"{}~\char`\"{}}, }
+\item[{std::string}]{ startTime = {\ttfamily \char`\"{}CURRENT\_\-TIMESTAMP\char`\"{}}, }
+\item[{std::string}]{ endTime = {\ttfamily \char`\"{}CURRENT\_\-TIMESTAMP\char`\"{}}}
 \end{DoxyParamCaption}
 )}}
 \label{classCommandServer_aa1ac01df3897b29b78a961bec8a2534b}
@@ -146,17 +140,7 @@ Function to record the command on the database.
 
 
 \begin{DoxyParams}{Parameters}
-{\em cmdType} & The type of the command (UMS, TMS, FMS, IMS) \\
-\hline
-{\em cmdStatus} & The status of the command \\
-\hline
-{\em newVishnuObjectID} & the new vishnu object Id \\
-\hline
-{\em startTime} & The start time of command \\
-\hline
-{\em endTime} & The end time of command \\
-\hline
-\end{DoxyParams}
+\item[{\em cmdType}]The type of the command (UMS, TMS, FMS, IMS) \item[{\em cmdStatus}]The status of the command \item[{\em newVishnuObjectID}]the new vishnu object Id \item[{\em startTime}]The start time of command \item[{\em endTime}]The end time of command \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}

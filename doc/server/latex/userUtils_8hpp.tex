@@ -41,13 +41,13 @@ Ibrahima Cisse (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sysf
 \index{makeUserOptions@{makeUserOptions}!userUtils.hpp@{userUtils.hpp}}
 \subsubsection[{makeUserOptions}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<${\bf Options}$>$ makeUserOptions (
 \begin{DoxyParamCaption}
-\item[{std::string}]{pgName, }
-\item[{std::string \&}]{dietConfig, }
-\item[{{\bf privilegeCallBackType} \&}]{fPrivilege, }
-\item[{{\bf StringcallBackType} \&}]{fFirstname, }
-\item[{{\bf StringcallBackType} \&}]{fLastName, }
-\item[{{\bf StringcallBackType} \&}]{fEmail, }
-\item[{int}]{type = {\ttfamily 0}}
+\item[{std::string}]{ pgName, }
+\item[{std::string \&}]{ dietConfig, }
+\item[{{\bf privilegeCallBackType} \&}]{ fPrivilege, }
+\item[{{\bf StringcallBackType} \&}]{ fFirstname, }
+\item[{{\bf StringcallBackType} \&}]{ fLastName, }
+\item[{{\bf StringcallBackType} \&}]{ fEmail, }
+\item[{int}]{ type = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )}}
 \label{userUtils_8hpp_a9b2350581ccf42e222d73567f53d10c1}
@@ -57,21 +57,7 @@ To build options for the VISHNU user commands.
 
 
 \begin{DoxyParams}{Parameters}
-{\em pgName} & : The name of the command \\
-\hline
-{\em dietConfig,:} & Represents the VISHNU config file \\
-\hline
-{\em fPrivilege,:} & The privilege option callback \\
-\hline
-{\em fFirstname,:} & The user first name option callback \\
-\hline
-{\em fLastName,:} & The user last name option callback \\
-\hline
-{\em fEmail,:} & The user email option callback \\
-\hline
-{\em type,:} & Indicates if it is an add or an update command, 0 means update, and 1 means add \\
-\hline
-\end{DoxyParams}
+\item[{\em pgName}]: The name of the command \item[{\em dietConfig,:}]Represents the VISHNU config file \item[{\em fPrivilege,:}]The privilege option callback \item[{\em fFirstname,:}]The user first name option callback \item[{\em fLastName,:}]The user last name option callback \item[{\em fEmail,:}]The user email option callback \item[{\em type,:}]Indicates if it is an add or an update command, 0 means update, and 1 means add \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The description of all options allowed by the command 
 \end{DoxyReturn}

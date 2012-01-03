@@ -75,10 +75,10 @@ std::string \hyperlink{classJobServer_ad9c1fc25152bb646b083e3e2b13df170}{mmachin
 \index{JobServer@{JobServer}!JobServer@{JobServer}}
 \subsubsection[{JobServer}]{\setlength{\rightskip}{0pt plus 5cm}JobServer::JobServer (
 \begin{DoxyParamCaption}
-\item[{const {\bf SessionServer} \&}]{sessionServer, }
-\item[{const std::string \&}]{machineId, }
-\item[{const TMS\_\-Data::Job \&}]{job, }
-\item[{const {\bf BatchType} \&}]{batchType}
+\item[{const {\bf SessionServer} \&}]{ sessionServer, }
+\item[{const std::string \&}]{ machineId, }
+\item[{const TMS\_\-Data::Job \&}]{ job, }
+\item[{const {\bf BatchType} \&}]{ batchType}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
 \label{classJobServer_a85b283abac959954b934611ca3cd1d73}
@@ -88,15 +88,7 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em sessionServer} & The object which encapsulates the session information \\
-\hline
-{\em machineId} & The machine identifier \\
-\hline
-{\em job} & The job data structure \\
-\hline
-{\em batchType} & The batch scheduler type \\
-\hline
-\end{DoxyParams}
+\item[{\em sessionServer}]The object which encapsulates the session information \item[{\em machineId}]The machine identifier \item[{\em job}]The job data structure \item[{\em batchType}]The batch scheduler type \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -105,7 +97,7 @@ Constructor.
 \index{cancelJob@{cancelJob}!JobServer@{JobServer}}
 \subsubsection[{cancelJob}]{\setlength{\rightskip}{0pt plus 5cm}int JobServer::cancelJob (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{slaveDirectory}
+\item[{const std::string \&}]{ slaveDirectory}
 \end{DoxyParamCaption}
 )}}
 \label{classJobServer_ae0a6c00f5021c43f749c5d901b5f0a84}
@@ -115,9 +107,7 @@ Function to cancel job.
 
 
 \begin{DoxyParams}{Parameters}
-{\em slaveDirectory} & the path to the TMS slave executable \\
-\hline
-\end{DoxyParams}
+\item[{\em slaveDirectory}]the path to the TMS slave executable \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -126,7 +116,7 @@ raises an exception on error
 \index{convertToTimeType@{convertToTimeType}!JobServer@{JobServer}}
 \subsubsection[{convertToTimeType}]{\setlength{\rightskip}{0pt plus 5cm}long long JobServer::convertToTimeType (
 \begin{DoxyParamCaption}
-\item[{std::string}]{date}
+\item[{std::string}]{ date}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classJobServer_a01467503a79019299b03e3903cb334c6}
@@ -136,9 +126,7 @@ Function to convert a given date into correspondant long value.
 
 
 \begin{DoxyParams}{Parameters}
-{\em date} & The date to convert \\
-\hline
-\end{DoxyParams}
+\item[{\em date}]The date to convert \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The converted value 
 \end{DoxyReturn}
@@ -179,9 +167,9 @@ The job data structure
 \index{scanErrorMessage@{scanErrorMessage}!JobServer@{JobServer}}
 \subsubsection[{scanErrorMessage}]{\setlength{\rightskip}{0pt plus 5cm}void JobServer::scanErrorMessage (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{errorInfo, }
-\item[{int \&}]{code, }
-\item[{std::string \&}]{message}
+\item[{const std::string \&}]{ errorInfo, }
+\item[{int \&}]{ code, }
+\item[{std::string \&}]{ message}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classJobServer_ae14cd2f9ba17ced6186b5b7c0a53a781}
@@ -191,13 +179,7 @@ Function to scan VISHNU error message.
 
 
 \begin{DoxyParams}{Parameters}
-{\em errorInfo} & the error information to scan \\
-\hline
-{\em code} & The code The code of the error \\
-\hline
-{\em message} & The message associeted to the error code \\
-\hline
-\end{DoxyParams}
+\item[{\em errorInfo}]the error information to scan \item[{\em code}]The code The code of the error \item[{\em message}]The message associeted to the error code \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on erroor 
 \end{DoxyReturn}
@@ -206,10 +188,10 @@ raises an exception on erroor
 \index{submitJob@{submitJob}!JobServer@{JobServer}}
 \subsubsection[{submitJob}]{\setlength{\rightskip}{0pt plus 5cm}int JobServer::submitJob (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{scriptContent, }
-\item[{const TMS\_\-Data::SubmitOptions \&}]{options, }
-\item[{const int \&}]{vishnuId, }
-\item[{const std::string \&}]{slaveDirectory}
+\item[{const std::string \&}]{ scriptContent, }
+\item[{const TMS\_\-Data::SubmitOptions \&}]{ options, }
+\item[{const int \&}]{ vishnuId, }
+\item[{const std::string \&}]{ slaveDirectory}
 \end{DoxyParamCaption}
 )}}
 \label{classJobServer_a45fc18d575cf6fa41f70dc77b970c61d}
@@ -219,15 +201,7 @@ Function to submit job.
 
 
 \begin{DoxyParams}{Parameters}
-{\em scriptContent} & the content of the script \\
-\hline
-{\em options} & the options to submit job \\
-\hline
-{\em vishnuId} & The VISHNU identifier \\
-\hline
-{\em slaveDirectory} & the path to the TMS slave executable \\
-\hline
-\end{DoxyParams}
+\item[{\em scriptContent}]the content of the script \item[{\em options}]the options to submit job \item[{\em vishnuId}]The VISHNU identifier \item[{\em slaveDirectory}]the path to the TMS slave executable \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}

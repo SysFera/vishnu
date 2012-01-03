@@ -903,7 +903,7 @@ TorqueServer::getFormatedCpuPerNode(const int& cpu,
   return nodeValue;
 }
 
-/*
+/**
  * \brief Function to insert some additional content (valueToInsert)
  * \param valueToFind string to find 
  * \param valueToInsert to insert
@@ -932,8 +932,9 @@ TorqueServer::findAndInsert(const std::string& valueToFind,
   } 
 }
 
-/*
+/**
  * \brief Function to compute the number of nodes and cpus in the torque format nodes
+ * \param nextNodeContent The node content to parse
  * \param ppn The syntaxe containing the number of processors per node
  * \param nbNodes The computed number of nodes
  * \param nbCpu The numbers of cpus

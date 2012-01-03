@@ -36,14 +36,14 @@ Ibrahima Cisse (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sysf
 \index{makeLocalAccountOptions@{makeLocalAccountOptions}!localAccountUtils.hpp@{localAccountUtils.hpp}}
 \subsubsection[{makeLocalAccountOptions}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<${\bf Options}$>$ makeLocalAccountOptions (
 \begin{DoxyParamCaption}
-\item[{std::string}]{pgName, }
-\item[{{\bf StringcallBackType} \&}]{fUserId, }
-\item[{std::string \&}]{dietConfig, }
-\item[{{\bf StringcallBackType} \&}]{fMachineId, }
-\item[{{\bf StringcallBackType} \&}]{fAcLogin, }
-\item[{{\bf StringcallBackType} \&}]{fSshKeyPath, }
-\item[{{\bf StringcallBackType} \&}]{fHomeDirectory, }
-\item[{int}]{type = {\ttfamily 0}}
+\item[{std::string}]{ pgName, }
+\item[{{\bf StringcallBackType} \&}]{ fUserId, }
+\item[{std::string \&}]{ dietConfig, }
+\item[{{\bf StringcallBackType} \&}]{ fMachineId, }
+\item[{{\bf StringcallBackType} \&}]{ fAcLogin, }
+\item[{{\bf StringcallBackType} \&}]{ fSshKeyPath, }
+\item[{{\bf StringcallBackType} \&}]{ fHomeDirectory, }
+\item[{int}]{ type = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )}}
 \label{localAccountUtils_8hpp_a9d5e98b8cd2f4651004c32266b9e4773}
@@ -53,23 +53,7 @@ To build options for the VISHNU local account commands.
 
 
 \begin{DoxyParams}{Parameters}
-{\em pgName} & : The name of the command \\
-\hline
-{\em fUserId,:} & The user identifier option callback \\
-\hline
-{\em dietConfig,:} & Represents the VISHNU config file \\
-\hline
-{\em fMachineId,:} & The machine identifier option callback \\
-\hline
-{\em fAcLogin,:} & The user login option callback \\
-\hline
-{\em fSshKeyPath,:} & The user ssh key path option callback \\
-\hline
-{\em fHomeDirectory,:} & The user home directory option callback \\
-\hline
-{\em type,:} & Indicates if it is an add or an update command, 0 means update, and 1 means add \\
-\hline
-\end{DoxyParams}
+\item[{\em pgName}]: The name of the command \item[{\em fUserId,:}]The user identifier option callback \item[{\em dietConfig,:}]Represents the VISHNU config file \item[{\em fMachineId,:}]The machine identifier option callback \item[{\em fAcLogin,:}]The user login option callback \item[{\em fSshKeyPath,:}]The user ssh key path option callback \item[{\em fHomeDirectory,:}]The user home directory option callback \item[{\em type,:}]Indicates if it is an add or an update command, 0 means update, and 1 means add \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The description of all options allowed by the command 
 \end{DoxyReturn}

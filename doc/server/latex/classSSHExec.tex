@@ -88,14 +88,14 @@ A class to call command through SSH.
 \index{SSHExec@{SSHExec}!SSHExec@{SSHExec}}
 \subsubsection[{SSHExec}]{\setlength{\rightskip}{0pt plus 5cm}SSHExec::SSHExec (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{sshCommand, }
-\item[{const std::string \&}]{scpCommand, }
-\item[{const std::string \&}]{server, }
-\item[{unsigned int}]{sshPort, }
-\item[{const std::string \&}]{userName, }
-\item[{const std::string \&}]{password, }
-\item[{const std::string \&}]{publicKey, }
-\item[{const std::string \&}]{privateKey}
+\item[{const std::string \&}]{ sshCommand, }
+\item[{const std::string \&}]{ scpCommand, }
+\item[{const std::string \&}]{ server, }
+\item[{unsigned int}]{ sshPort, }
+\item[{const std::string \&}]{ userName, }
+\item[{const std::string \&}]{ password, }
+\item[{const std::string \&}]{ publicKey, }
+\item[{const std::string \&}]{ privateKey}
 \end{DoxyParamCaption}
 )}}
 \label{classSSHExec_a6864edb815f1d885d7a2658ca2c2d203}
@@ -105,23 +105,7 @@ A constructor by value.
 
 
 \begin{DoxyParams}{Parameters}
-{\em sshCommand} & the ssh command path \\
-\hline
-{\em scpCommand} & the scp command path \\
-\hline
-{\em server} & the ssh host \\
-\hline
-{\em sshPort} & the ssh port \\
-\hline
-{\em userName} & the ssh user \\
-\hline
-{\em password} & the ssh password \\
-\hline
-{\em publicKey} & the ssh public key \\
-\hline
-{\em privateKey} & the ssh private key \\
-\hline
-\end{DoxyParams}
+\item[{\em sshCommand}]the ssh command path \item[{\em scpCommand}]the scp command path \item[{\em server}]the ssh host \item[{\em sshPort}]the ssh port \item[{\em userName}]the ssh user \item[{\em password}]the ssh password \item[{\em publicKey}]the ssh public key \item[{\em privateKey}]the ssh private key \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -130,7 +114,7 @@ A constructor by value.
 \index{exec@{exec}!SSHExec@{SSHExec}}
 \subsubsection[{exec}]{\setlength{\rightskip}{0pt plus 5cm}std::pair$<$std::string, std::string$>$ SSHExec::exec (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{cmd}
+\item[{const std::string \&}]{ cmd}
 \end{DoxyParamCaption}
 ) const}}
 \label{classSSHExec_adb964e0054f177d1c158106c161f904b}
@@ -140,9 +124,7 @@ perform a command through ssh
 
 
 \begin{DoxyParams}{Parameters}
-{\em cmd} & the command to perform \\
-\hline
-\end{DoxyParams}
+\item[{\em cmd}]the command to perform \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the command output an error 
 \end{DoxyReturn}
@@ -183,7 +165,7 @@ the last execution process identifier
 \index{setProcessId@{setProcessId}!SSHExec@{SSHExec}}
 \subsubsection[{setProcessId}]{\setlength{\rightskip}{0pt plus 5cm}void SSHExec::setProcessId (
 \begin{DoxyParamCaption}
-\item[{const int \&}]{processId}
+\item[{const int \&}]{ processId}
 \end{DoxyParamCaption}
 ) const}}
 \label{classSSHExec_ac1c7e79f74476408ee267540b1c96771}
@@ -193,9 +175,7 @@ Update the last execution process identifier.
 
 
 \begin{DoxyParams}{Parameters}
-{\em processId} & the new execution process identifier \\
-\hline
-\end{DoxyParams}
+\item[{\em processId}]the new execution process identifier \end{DoxyParams}
 
 
 The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}

@@ -68,8 +68,8 @@ UMS\_\-Data::OptionValue $\ast$ \hyperlink{classOptionValueServer_afffe0327c4375
 \index{OptionValueServer@{OptionValueServer}!OptionValueServer@{OptionValueServer}}
 \subsubsection[{OptionValueServer}]{\setlength{\rightskip}{0pt plus 5cm}OptionValueServer::OptionValueServer (
 \begin{DoxyParamCaption}
-\item[{UMS\_\-Data::OptionValue $\ast$\&}]{optionvalue, }
-\item[{{\bf SessionServer}}]{session}
+\item[{UMS\_\-Data::OptionValue $\ast$\&}]{ optionvalue, }
+\item[{{\bf SessionServer}}]{ session}
 \end{DoxyParamCaption}
 )}}
 \label{classOptionValueServer_a2f432257cbe83451b54d59c584cc35c6}
@@ -79,11 +79,7 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em optionvalue} & the option data structure \\
-\hline
-{\em session} & The object to manipulate session \\
-\hline
-\end{DoxyParams}
+\item[{\em optionvalue}]the option data structure \item[{\em session}]The object to manipulate session \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -92,7 +88,7 @@ Constructor.
 \index{configureOption@{configureOption}!OptionValueServer@{OptionValueServer}}
 \subsubsection[{configureOption}]{\setlength{\rightskip}{0pt plus 5cm}int OptionValueServer::configureOption (
 \begin{DoxyParamCaption}
-\item[{bool}]{defaultOptions = {\ttfamily false}}
+\item[{bool}]{ defaultOptions = {\ttfamily false}}
 \end{DoxyParamCaption}
 )}}
 \label{classOptionValueServer_afe5c33ad15ac74fe72690c8d54302729}
@@ -102,9 +98,7 @@ Function to configure options on the database.
 
 
 \begin{DoxyParams}{Parameters}
-{\em defaultOptions} & the flag to get data from defauts options table \\
-\hline
-\end{DoxyParams}
+\item[{\em defaultOptions}]the flag to get data from defauts options table \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -113,9 +107,9 @@ raises an exception on error
 \index{getAttribut@{getAttribut}!OptionValueServer@{OptionValueServer}}
 \subsubsection[{getAttribut}]{\setlength{\rightskip}{0pt plus 5cm}std::string OptionValueServer::getAttribut (
 \begin{DoxyParamCaption}
-\item[{std::string}]{condition, }
-\item[{std::string}]{attrname = {\ttfamily \char`\"{}value\char`\"{}}, }
-\item[{bool}]{defaultOptions = {\ttfamily false}}
+\item[{std::string}]{ condition, }
+\item[{std::string}]{ attrname = {\ttfamily \char`\"{}value\char`\"{}}, }
+\item[{bool}]{ defaultOptions = {\ttfamily false}}
 \end{DoxyParamCaption}
 )}}
 \label{classOptionValueServer_a9be8cdef4ed59ef0fdf421bb973257d0}
@@ -125,13 +119,7 @@ Function to get option information from the database vishnu.
 
 
 \begin{DoxyParams}{Parameters}
-{\em condition} & The condition of the select request \\
-\hline
-{\em attrname} & the name of the attribut to get \\
-\hline
-{\em defaultOptions} & the flag to get data from defauts options table \\
-\hline
-\end{DoxyParams}
+\item[{\em condition}]The condition of the select request \item[{\em attrname}]the name of the attribut to get \item[{\em defaultOptions}]the flag to get data from defauts options table \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the value of the attribut or empty string if no results 
 \end{DoxyReturn}
@@ -156,8 +144,8 @@ The user data structure
 \index{getOptionValueForUser@{getOptionValueForUser}!OptionValueServer@{OptionValueServer}}
 \subsubsection[{getOptionValueForUser}]{\setlength{\rightskip}{0pt plus 5cm}int OptionValueServer::getOptionValueForUser (
 \begin{DoxyParamCaption}
-\item[{std::string}]{numuserId, }
-\item[{std::string}]{optionName}
+\item[{std::string}]{ numuserId, }
+\item[{std::string}]{ optionName}
 \end{DoxyParamCaption}
 )}}
 \label{classOptionValueServer_a849d033e5fd6ec57b8e9afb1fdd75986}
@@ -167,11 +155,7 @@ Function to get user option value.
 
 
 \begin{DoxyParams}{Parameters}
-{\em numuserId} & The database number id of the user \\
-\hline
-{\em optionName} & the name of the option \\
-\hline
-\end{DoxyParams}
+\item[{\em numuserId}]The database number id of the user \item[{\em optionName}]the name of the option \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The error or success code 
 \end{DoxyReturn}

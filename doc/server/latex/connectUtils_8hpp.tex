@@ -36,11 +36,11 @@ Ibrahima Cissé (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sys
 \index{makeConnectOptions@{makeConnectOptions}!connectUtils.hpp@{connectUtils.hpp}}
 \subsubsection[{makeConnectOptions}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename userIdType $>$ boost::shared\_\-ptr$<${\bf Options}$>$ makeConnectOptions (
 \begin{DoxyParamCaption}
-\item[{std::string}]{pgName, }
-\item[{userIdType \&}]{userId, }
-\item[{int}]{req, }
-\item[{std::string \&}]{dietConfig, }
-\item[{const {\bf Group\_\-type} \&}]{userIdGroup = {\ttfamily HIDDEN}}
+\item[{std::string}]{ pgName, }
+\item[{userIdType \&}]{ userId, }
+\item[{int}]{ req, }
+\item[{std::string \&}]{ dietConfig, }
+\item[{const {\bf Group\_\-type} \&}]{ userIdGroup = {\ttfamily HIDDEN}}
 \end{DoxyParamCaption}
 )}}
 \label{connectUtils_8hpp_a26ca757c4134278e1322c39c6c7f565e}
@@ -50,17 +50,7 @@ To build options for the VISHNU authentication (connect, reconnect)command comma
 
 
 \begin{DoxyParams}{Parameters}
-{\em pgName,:} & Represents the name of the command \\
-\hline
-{\em userId} & : A callback for user identifier \\
-\hline
-{\em req} & : for required parameters, 0 optional paramter whereas 1 means mandatory parameter \\
-\hline
-{\em dietConfig} & : Represents the VISHNU config file \\
-\hline
-{\em userIdGroup} & : represents the userId option group type, it may be HIDDEN,CONFIG,or ENV \\
-\hline
-\end{DoxyParams}
+\item[{\em pgName,:}]Represents the name of the command \item[{\em userId}]: A callback for user identifier \item[{\em req}]: for required parameters, 0 optional paramter whereas 1 means mandatory parameter \item[{\em dietConfig}]: Represents the VISHNU config file \item[{\em userIdGroup}]: represents the userId option group type, it may be HIDDEN,CONFIG,or ENV \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The description of all options allowed by the command 
 \end{DoxyReturn}

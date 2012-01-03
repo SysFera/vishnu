@@ -55,8 +55,8 @@ Class to export in shell format.
 \index{ShellExporter@{ShellExporter}!ShellExporter@{ShellExporter}}
 \subsubsection[{ShellExporter}]{\setlength{\rightskip}{0pt plus 5cm}ShellExporter::ShellExporter (
 \begin{DoxyParamCaption}
-\item[{{\bf UserServer}}]{u, }
-\item[{IMS\_\-Data::ExportOp\_\-ptr}]{op}
+\item[{{\bf UserServer}}]{ u, }
+\item[{IMS\_\-Data::ExportOp\_\-ptr}]{ op}
 \end{DoxyParamCaption}
 )}}
 \label{classShellExporter_af6bcdecb46d45faafecab41d663fed40}
@@ -66,11 +66,7 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em u,:} & The user server \\
-\hline
-{\em op,:} & \hyperlink{classOptions}{Options} to restart \\
-\hline
-\end{DoxyParams}
+\item[{\em u,:}]The user server \item[{\em op,:}]\hyperlink{classOptions}{Options} to restart \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -79,10 +75,10 @@ Constructor.
 \index{exporte@{exporte}!ShellExporter@{ShellExporter}}
 \subsubsection[{exporte}]{\setlength{\rightskip}{0pt plus 5cm}int ShellExporter::exporte (
 \begin{DoxyParamCaption}
-\item[{string}]{oldSession, }
-\item[{string \&}]{content}
+\item[{string}]{ oldSession, }
+\item[{string \&}]{ content}
 \end{DoxyParamCaption}
-)}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classShellExporter_a6170de97246f7e2ad1c7fb61d7850e90}
 
 
@@ -90,20 +86,20 @@ To export the commands made in the oldSession in the file filename with the opti
 
 
 \begin{DoxyParams}{Parameters}
-{\em oldSession,:} & Session id of the old session to export \\
-\hline
-{\em content,:} & The content of the export (OUT) \\
-\hline
-\end{DoxyParams}
+\item[{\em oldSession,:}]Session id of the old session to export \item[{\em content,:}]The content of the export (OUT) \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 Succes, an error code otherwise 
 \end{DoxyReturn}
+
+
+Implements \hyperlink{classExportServer_acb16e159a3c1b7113b97699ce522d350}{ExportServer}.
+
 \hypertarget{classShellExporter_a34c15b723028388a012d3a3d98ff45c6}{
 \index{ShellExporter@{ShellExporter}!isClosed@{isClosed}}
 \index{isClosed@{isClosed}!ShellExporter@{ShellExporter}}
 \subsubsection[{isClosed}]{\setlength{\rightskip}{0pt plus 5cm}bool ShellExporter::isClosed (
 \begin{DoxyParamCaption}
-\item[{string}]{sid}
+\item[{string}]{ sid}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classShellExporter_a34c15b723028388a012d3a3d98ff45c6}
@@ -113,9 +109,7 @@ Return true if the session with the session sid sid is closed.
 
 
 \begin{DoxyParams}{Parameters}
-{\em sid,:} & A session id \\
-\hline
-\end{DoxyParams}
+\item[{\em sid,:}]A session id \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 False is the session does not exist or is open 
 \end{DoxyReturn}

@@ -124,15 +124,15 @@ A useful class to perform a transfer command.
 \index{TransferExec@{TransferExec}!TransferExec@{TransferExec}}
 \subsubsection[{TransferExec}]{\setlength{\rightskip}{0pt plus 5cm}TransferExec::TransferExec (
 \begin{DoxyParamCaption}
-\item[{const {\bf SessionServer} \&}]{sessionServer, }
-\item[{const std::string \&}]{srcUser, }
-\item[{const std::string \&}]{srcMachineName, }
-\item[{const std::string \&}]{srcPath, }
-\item[{const std::string \&}]{srcUserKey, }
-\item[{const std::string \&}]{destUser, }
-\item[{const std::string \&}]{destMachineName, }
-\item[{const std::string \&}]{destPath, }
-\item[{const std::string \&}]{transferId}
+\item[{const {\bf SessionServer} \&}]{ sessionServer, }
+\item[{const std::string \&}]{ srcUser, }
+\item[{const std::string \&}]{ srcMachineName, }
+\item[{const std::string \&}]{ srcPath, }
+\item[{const std::string \&}]{ srcUserKey, }
+\item[{const std::string \&}]{ destUser, }
+\item[{const std::string \&}]{ destMachineName, }
+\item[{const std::string \&}]{ destPath, }
+\item[{const std::string \&}]{ transferId}
 \end{DoxyParamCaption}
 )}}
 \label{classTransferExec_a0afdf6581b6d116af3de73f974495225}
@@ -142,25 +142,7 @@ A constructor by value.
 
 
 \begin{DoxyParams}{Parameters}
-{\em sessionServer} & a session server object \\
-\hline
-{\em srcUser} & the source user \\
-\hline
-{\em srcMachineName} & the source machine name \\
-\hline
-{\em srcPath} & the source file path \\
-\hline
-{\em srcUserKey} & the source user private key path \\
-\hline
-{\em destUser} & the destination user \\
-\hline
-{\em destMachineName} & the destination machine name \\
-\hline
-{\em destPath} & the destination file path \\
-\hline
-{\em transferId} & The transfer identifier \\
-\hline
-\end{DoxyParams}
+\item[{\em sessionServer}]a session server object \item[{\em srcUser}]the source user \item[{\em srcMachineName}]the source machine name \item[{\em srcPath}]the source file path \item[{\em srcUserKey}]the source user private key path \item[{\em destUser}]the destination user \item[{\em destMachineName}]the destination machine name \item[{\em destPath}]the destination file path \item[{\em transferId}]The transfer identifier \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -169,7 +151,7 @@ A constructor by value.
 \index{exec@{exec}!TransferExec@{TransferExec}}
 \subsubsection[{exec}]{\setlength{\rightskip}{0pt plus 5cm}std::pair$<$std::string, std::string$>$ TransferExec::exec (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{cmd}
+\item[{const std::string \&}]{ cmd}
 \end{DoxyParamCaption}
 ) const}}
 \label{classTransferExec_a661a194a292e717664ae1145f5a151d3}
@@ -179,9 +161,7 @@ To perform a the transfer command.
 
 
 \begin{DoxyParams}{Parameters}
-{\em cmd} & the transfer command to perform \\
-\hline
-\end{DoxyParams}
+\item[{\em cmd}]the transfer command to perform \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The command output or error 
 \end{DoxyReturn}

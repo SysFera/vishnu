@@ -90,8 +90,8 @@ A proxy class to handle local to remote file transfer.
 \index{LocalFileProxy@{LocalFileProxy}!LocalFileProxy@{LocalFileProxy}}
 \subsubsection[{LocalFileProxy}]{\setlength{\rightskip}{0pt plus 5cm}LocalFileProxy::LocalFileProxy (
 \begin{DoxyParamCaption}
-\item[{const {\bf SessionProxy} \&}]{sessionProxy, }
-\item[{const std::string \&}]{path}
+\item[{const {\bf SessionProxy} \&}]{ sessionProxy, }
+\item[{const std::string \&}]{ path}
 \end{DoxyParamCaption}
 )}}
 \label{classLocalFileProxy_ac6ce5c9939256eccb0371aa45417e5eb}
@@ -101,17 +101,13 @@ Another constructor taking two parameters.
 
 
 \begin{DoxyParams}{Parameters}
-{\em sessionProxy} & the session object proxy \\
-\hline
-{\em path} & the path of the file \\
-\hline
-\end{DoxyParams}
+\item[{\em sessionProxy}]the session object proxy \item[{\em path}]the path of the file \end{DoxyParams}
 \hypertarget{classLocalFileProxy_aa15ee30b8332e8eb45c66f092e89d5e1}{
 \index{LocalFileProxy@{LocalFileProxy}!LocalFileProxy@{LocalFileProxy}}
 \index{LocalFileProxy@{LocalFileProxy}!LocalFileProxy@{LocalFileProxy}}
 \subsubsection[{LocalFileProxy}]{\setlength{\rightskip}{0pt plus 5cm}LocalFileProxy::LocalFileProxy (
 \begin{DoxyParamCaption}
-\item[{const {\bf LocalFileProxy} \&}]{file}
+\item[{const {\bf LocalFileProxy} \&}]{ file}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
 \label{classLocalFileProxy_aa15ee30b8332e8eb45c66f092e89d5e1}
@@ -121,9 +117,7 @@ Another constructor by reference.
 
 
 \begin{DoxyParams}{Parameters}
-{\em file} & the other file \\
-\hline
-\end{DoxyParams}
+\item[{\em file}]the other file \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -132,7 +126,7 @@ Another constructor by reference.
 \index{chgrp@{chgrp}!LocalFileProxy@{LocalFileProxy}}
 \subsubsection[{chgrp}]{\setlength{\rightskip}{0pt plus 5cm}virtual int LocalFileProxy::chgrp (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{group}
+\item[{const std::string \&}]{ group}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
 \label{classLocalFileProxy_a10dde3f07320a91da934b90b26150dee}
@@ -142,9 +136,7 @@ To update the group of the file.
 
 
 \begin{DoxyParams}{Parameters}
-{\em group} & the new group \\
-\hline
-\end{DoxyParams}
+\item[{\em group}]the new group \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
@@ -157,7 +149,7 @@ Implements \hyperlink{classFileProxy_ab2917ca9b79dd0eb7ab1c26d70e70987}{FileProx
 \index{chmod@{chmod}!LocalFileProxy@{LocalFileProxy}}
 \subsubsection[{chmod}]{\setlength{\rightskip}{0pt plus 5cm}virtual int LocalFileProxy::chmod (
 \begin{DoxyParamCaption}
-\item[{const mode\_\-t}]{mode}
+\item[{const mode\_\-t}]{ mode}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
 \label{classLocalFileProxy_a8f9ef7205b9c08b305052ff474cf18a1}
@@ -167,9 +159,7 @@ To update the new file access permissions.
 
 
 \begin{DoxyParams}{Parameters}
-{\em mode} & the new file access permissions \\
-\hline
-\end{DoxyParams}
+\item[{\em mode}]the new file access permissions \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
@@ -182,8 +172,8 @@ Implements \hyperlink{classFileProxy_aff09861e6910e2d2d11c6971426cbf84}{FileProx
 \index{cp@{cp}!LocalFileProxy@{LocalFileProxy}}
 \subsubsection[{cp}]{\setlength{\rightskip}{0pt plus 5cm}virtual int LocalFileProxy::cp (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{dest, }
-\item[{const CpFileOptions \&}]{options}
+\item[{const std::string \&}]{ dest, }
+\item[{const CpFileOptions \&}]{ options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classLocalFileProxy_a262f742c0188d1eccd0eb16a2eca72b8}
@@ -193,11 +183,7 @@ To copy the file.
 
 
 \begin{DoxyParams}{Parameters}
-{\em dest} & the copy destination \\
-\hline
-{\em options} & the copy options \\
-\hline
-\end{DoxyParams}
+\item[{\em dest}]the copy destination \item[{\em options}]the copy options \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
@@ -210,9 +196,9 @@ Implements \hyperlink{classFileProxy_a857ef4fd0f9b469e0d6edb8a7b932f18}{FileProx
 \index{cpAsync@{cpAsync}!LocalFileProxy@{LocalFileProxy}}
 \subsubsection[{cpAsync}]{\setlength{\rightskip}{0pt plus 5cm}virtual int LocalFileProxy::cpAsync (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{dest, }
-\item[{const CpFileOptions \&}]{options, }
-\item[{FileTransfer \&}]{fileTransfer}
+\item[{const std::string \&}]{ dest, }
+\item[{const CpFileOptions \&}]{ options, }
+\item[{FileTransfer \&}]{ fileTransfer}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classLocalFileProxy_a8edb18eefdde2d0daea34aca515579fb}
@@ -222,13 +208,7 @@ To copy the file in asynchronous mode.
 
 
 \begin{DoxyParams}{Parameters}
-{\em dest} & the copy destination \\
-\hline
-{\em options} & the copy options \\
-\hline
-{\em fileTransfer} & information about the transfer like its identifier \\
-\hline
-\end{DoxyParams}
+\item[{\em dest}]the copy destination \item[{\em options}]the copy options \item[{\em fileTransfer}]information about the transfer like its identifier \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
@@ -261,7 +241,7 @@ Implements \hyperlink{classFileProxy_abcee2624975ecc29a47d45e50aedc807}{FileProx
 \index{head@{head}!LocalFileProxy@{LocalFileProxy}}
 \subsubsection[{head}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string LocalFileProxy::head (
 \begin{DoxyParamCaption}
-\item[{const HeadOfFileOptions \&}]{options}
+\item[{const HeadOfFileOptions \&}]{ options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
 \label{classLocalFileProxy_aeab9747a068e7cd8df8a07f1a727bb31}
@@ -271,9 +251,7 @@ To get the first lines of the file.
 
 
 \begin{DoxyParams}{Parameters}
-{\em options} & the options object \\
-\hline
-\end{DoxyParams}
+\item[{\em options}]the options object \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the first lines of the file 
 \end{DoxyReturn}
@@ -306,7 +284,7 @@ Implements \hyperlink{classFileProxy_afae6e6254e95a89c0629d80136e3cc29}{FileProx
 \index{ls@{ls}!LocalFileProxy@{LocalFileProxy}}
 \subsubsection[{ls}]{\setlength{\rightskip}{0pt plus 5cm}virtual FMS\_\-Data::DirEntryList$\ast$ LocalFileProxy::ls (
 \begin{DoxyParamCaption}
-\item[{const LsDirOptions \&}]{options}
+\item[{const LsDirOptions \&}]{ options}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
 \label{classLocalFileProxy_a06d7fdcf9fca34b2cba9aeee6cb08dc4}
@@ -316,9 +294,7 @@ To list the content of a directory.
 
 
 \begin{DoxyParams}{Parameters}
-{\em options} & the list options \\
-\hline
-\end{DoxyParams}
+\item[{\em options}]the list options \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the content of the directory 
 \end{DoxyReturn}
@@ -331,7 +307,7 @@ Implements \hyperlink{classFileProxy_a642a602cd4635367981cd4e6616ea0a4}{FileProx
 \index{mkdir@{mkdir}!LocalFileProxy@{LocalFileProxy}}
 \subsubsection[{mkdir}]{\setlength{\rightskip}{0pt plus 5cm}virtual int LocalFileProxy::mkdir (
 \begin{DoxyParamCaption}
-\item[{const CreateDirOptions \&}]{options}
+\item[{const CreateDirOptions \&}]{ options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
 \label{classLocalFileProxy_a7a679a1450918251354799aebd92e1d5}
@@ -341,9 +317,7 @@ To create a new directory.
 
 
 \begin{DoxyParams}{Parameters}
-{\em options} & the create directory options \\
-\hline
-\end{DoxyParams}
+\item[{\em options}]the create directory options \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
@@ -356,7 +330,7 @@ Implements \hyperlink{classFileProxy_ae63d8edc448f5276a8174d9d05843b0c}{FileProx
 \index{mkfile@{mkfile}!LocalFileProxy@{LocalFileProxy}}
 \subsubsection[{mkfile}]{\setlength{\rightskip}{0pt plus 5cm}virtual int LocalFileProxy::mkfile (
 \begin{DoxyParamCaption}
-\item[{const mode\_\-t}]{mode = {\ttfamily defaultFileAccessMode}}
+\item[{const mode\_\-t}]{ mode = {\ttfamily defaultFileAccessMode}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
 \label{classLocalFileProxy_a89c0787198641b84fd11cb295e0f721b}
@@ -366,9 +340,7 @@ To create a new file.
 
 
 \begin{DoxyParams}{Parameters}
-{\em mode} & the access permission of the file \\
-\hline
-\end{DoxyParams}
+\item[{\em mode}]the access permission of the file \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
@@ -381,8 +353,8 @@ Implements \hyperlink{classFileProxy_a23a6d0ddfc62d7df31cc677adddd58d8}{FileProx
 \index{mv@{mv}!LocalFileProxy@{LocalFileProxy}}
 \subsubsection[{mv}]{\setlength{\rightskip}{0pt plus 5cm}virtual int LocalFileProxy::mv (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{dest, }
-\item[{const CpFileOptions \&}]{options}
+\item[{const std::string \&}]{ dest, }
+\item[{const CpFileOptions \&}]{ options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classLocalFileProxy_a698df970e4fdc3fd9b7815fc336eea28}
@@ -392,11 +364,7 @@ To move the file.
 
 
 \begin{DoxyParams}{Parameters}
-{\em dest} & the move destination \\
-\hline
-{\em options} & the move options \\
-\hline
-\end{DoxyParams}
+\item[{\em dest}]the move destination \item[{\em options}]the move options \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
@@ -409,9 +377,9 @@ Implements \hyperlink{classFileProxy_ac5ad61b772170696f71f37d784b59fa5}{FileProx
 \index{mvAsync@{mvAsync}!LocalFileProxy@{LocalFileProxy}}
 \subsubsection[{mvAsync}]{\setlength{\rightskip}{0pt plus 5cm}virtual int LocalFileProxy::mvAsync (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{dest, }
-\item[{const CpFileOptions \&}]{options, }
-\item[{FileTransfer \&}]{fileTransfer}
+\item[{const std::string \&}]{ dest, }
+\item[{const CpFileOptions \&}]{ options, }
+\item[{FileTransfer \&}]{ fileTransfer}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classLocalFileProxy_a66e35fcf3ec9531fd4b085d242d2c9c9}
@@ -421,13 +389,7 @@ To move the file in asynchronous mode.
 
 
 \begin{DoxyParams}{Parameters}
-{\em dest} & the move destination \\
-\hline
-{\em options} & the move options \\
-\hline
-{\em fileTransfer} & information about the transfer like its identifier \\
-\hline
-\end{DoxyParams}
+\item[{\em dest}]the move destination \item[{\em options}]the move options \item[{\em fileTransfer}]information about the transfer like its identifier \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
@@ -440,7 +402,7 @@ Implements \hyperlink{classFileProxy_a70e2f40c0b15d3640d631f914a2e627b}{FileProx
 \index{operator=@{operator=}!LocalFileProxy@{LocalFileProxy}}
 \subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf LocalFileProxy}\& LocalFileProxy::operator= (
 \begin{DoxyParamCaption}
-\item[{const {\bf LocalFileProxy} \&}]{localFileProxy}
+\item[{const {\bf LocalFileProxy} \&}]{ localFileProxy}
 \end{DoxyParamCaption}
 )}}
 \label{classLocalFileProxy_a450a9bb2548efc8dab572f76ba14e43f}
@@ -450,9 +412,7 @@ The assignment operator.
 
 
 \begin{DoxyParams}{Parameters}
-{\em localFileProxy} & the object to assign \\
-\hline
-\end{DoxyParams}
+\item[{\em localFileProxy}]the object to assign \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the new assigned file 
 \end{DoxyReturn}
@@ -461,7 +421,7 @@ the new assigned file
 \index{rm@{rm}!LocalFileProxy@{LocalFileProxy}}
 \subsubsection[{rm}]{\setlength{\rightskip}{0pt plus 5cm}virtual int LocalFileProxy::rm (
 \begin{DoxyParamCaption}
-\item[{const RmFileOptions \&}]{options}
+\item[{const RmFileOptions \&}]{ options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
 \label{classLocalFileProxy_a547344b53a3220ef9dbb09a7b60abfb6}
@@ -471,9 +431,7 @@ To remove a file.
 
 
 \begin{DoxyParams}{Parameters}
-{\em options} & the remove file options \\
-\hline
-\end{DoxyParams}
+\item[{\em options}]the remove file options \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the command succeeds, an error code otherwise 
 \end{DoxyReturn}
@@ -506,7 +464,7 @@ Implements \hyperlink{classFileProxy_a7d2495abbcfab9828df3c11815db1866}{FileProx
 \index{tail@{tail}!LocalFileProxy@{LocalFileProxy}}
 \subsubsection[{tail}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string LocalFileProxy::tail (
 \begin{DoxyParamCaption}
-\item[{const TailOfFileOptions \&}]{options}
+\item[{const TailOfFileOptions \&}]{ options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
 \label{classLocalFileProxy_aee171fefc216520156fd652b326bfb66}
@@ -516,9 +474,7 @@ To get the last lines of the file.
 
 
 \begin{DoxyParams}{Parameters}
-{\em options} & the options object \\
-\hline
-\end{DoxyParams}
+\item[{\em options}]the options object \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the last lines of the file 
 \end{DoxyReturn}
@@ -531,10 +487,10 @@ Implements \hyperlink{classFileProxy_a95ac84bd106d6699252bf558ec4b4b71}{FileProx
 \index{transferFile@{transferFile}!LocalFileProxy@{LocalFileProxy}}
 \subsubsection[{transferFile}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class typeofoption $>$ int LocalFileProxy::transferFile (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{dest, }
-\item[{const typeofoption \&}]{options, }
-\item[{const std::string \&}]{servicename, }
-\item[{FileTransfer \&}]{fileTransfer}
+\item[{const std::string \&}]{ dest, }
+\item[{const typeofoption \&}]{ options, }
+\item[{const std::string \&}]{ servicename, }
+\item[{FileTransfer \&}]{ fileTransfer}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classLocalFileProxy_abbb7512da9f5692274d04bae413bc114}
@@ -544,15 +500,7 @@ A generic class to handle a local to remote file transfer.
 
 
 \begin{DoxyParams}{Parameters}
-{\em dest} & the destination \\
-\hline
-{\em options} & the transfer options \\
-\hline
-{\em servicename} & the name of the service \\
-\hline
-{\em fileTransfer} & information about the transfer \\
-\hline
-\end{DoxyParams}
+\item[{\em dest}]the destination \item[{\em options}]the transfer options \item[{\em servicename}]the name of the service \item[{\em fileTransfer}]information about the transfer \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the function succeeds or an error code otherwise 
 \end{DoxyReturn}

@@ -49,9 +49,9 @@ A functor to handle synchronous file transfer api function.
 \index{TransferSyncFunc@{TransferSyncFunc}!TransferSyncFunc@{TransferSyncFunc}}
 \subsubsection[{TransferSyncFunc}]{\setlength{\rightskip}{0pt plus 5cm}template$<$TransferType transferType$>$ {\bf TransferSyncFunc}$<$ transferType $>$::{\bf TransferSyncFunc} (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{src, }
-\item[{const std::string \&}]{dest, }
-\item[{const FMS\_\-Data::CpFileOptions \&}]{cpFileOptions}
+\item[{const std::string \&}]{ src, }
+\item[{const std::string \&}]{ dest, }
+\item[{const FMS\_\-Data::CpFileOptions \&}]{ cpFileOptions}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{structTransferSyncFunc_aa8e218ca0fdfe1397d80cfa14b1e3c45}
@@ -61,13 +61,7 @@ Constructor with parameters.
 
 
 \begin{DoxyParams}{Parameters}
-{\em src} & The source \\
-\hline
-{\em dest} & The destination \\
-\hline
-{\em cpFileOptions} & The file transfer options \\
-\hline
-\end{DoxyParams}
+\item[{\em src}]The source \item[{\em dest}]The destination \item[{\em cpFileOptions}]The file transfer options \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -76,7 +70,7 @@ Constructor with parameters.
 \index{operator()@{operator()}!TransferSyncFunc@{TransferSyncFunc}}
 \subsubsection[{operator()}]{\setlength{\rightskip}{0pt plus 5cm}template$<$TransferType transferType$>$ int {\bf TransferSyncFunc}$<$ transferType $>$::operator() (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{sessionKey}
+\item[{const std::string \&}]{ sessionKey}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{structTransferSyncFunc_a6dbdbcdf12b2f1ec7c2fb92467f0e638}
@@ -86,9 +80,7 @@ Constructor with parameters.
 
 
 \begin{DoxyParams}{Parameters}
-{\em sessionKey} & The session key \\
-\hline
-\end{DoxyParams}
+\item[{\em sessionKey}]The session key \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if it succeeds or an error code otherwise 
 \end{DoxyReturn}

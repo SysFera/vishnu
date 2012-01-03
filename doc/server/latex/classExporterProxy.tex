@@ -42,7 +42,7 @@ int \hyperlink{classExporterProxy_a5826c1c6b3b881705f6069f7ba1ecfd3}{exportCmd} 
 \index{ExporterProxy@{ExporterProxy}!ExporterProxy@{ExporterProxy}}
 \subsubsection[{ExporterProxy}]{\setlength{\rightskip}{0pt plus 5cm}ExporterProxy::ExporterProxy (
 \begin{DoxyParamCaption}
-\item[{const {\bf SessionProxy} \&}]{session}
+\item[{const {\bf SessionProxy} \&}]{ session}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
 \label{classExporterProxy_a4acc109bee093857bbf9c351655c83a4}
@@ -52,9 +52,7 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em session} & The object which encapsulates the session information \\
-\hline
-\end{DoxyParams}
+\item[{\em session}]The object which encapsulates the session information \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -63,9 +61,9 @@ Constructor.
 \index{exportCmd@{exportCmd}!ExporterProxy@{ExporterProxy}}
 \subsubsection[{exportCmd}]{\setlength{\rightskip}{0pt plus 5cm}int ExporterProxy::exportCmd (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{oldSessionId, }
-\item[{const std::string \&}]{filename, }
-\item[{IMS\_\-Data::ExportOp}]{options}
+\item[{const std::string \&}]{ oldSessionId, }
+\item[{const std::string \&}]{ filename, }
+\item[{IMS\_\-Data::ExportOp}]{ options}
 \end{DoxyParamCaption}
 )}}
 \label{classExporterProxy_a5826c1c6b3b881705f6069f7ba1ecfd3}
@@ -75,13 +73,7 @@ Function to export all the commands launched by a user during a session.
 
 
 \begin{DoxyParams}{Parameters}
-{\em oldSessionId} & The identifier of a session closed to export \\
-\hline
-{\em filename} & The path of the output file containing the Vishnu shell commands \\
-\hline
-{\em options} & The data structure which encapsulates the o object export \\
-\hline
-\end{DoxyParams}
+\item[{\em oldSessionId}]The identifier of a session closed to export \item[{\em filename}]The path of the output file containing the Vishnu shell commands \item[{\em options}]The data structure which encapsulates the o object export \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
