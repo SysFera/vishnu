@@ -98,6 +98,32 @@ class ScriptGenConvertor {
 
   private:
 
+    /*
+     * \brief Function to insert some additional (ppn+nbCpuStr) content in the string str
+     * \param ppn A part of the content to insert
+     * \param nbCpuStr An other part of the content to insert
+     * \param str The string to modify
+     */
+    void
+      findAndReplace(const std::string& ppn,
+          const std::string& nbCpuStr,
+          std::string& str);
+
+    /*
+     * \brief Function to insert some additional content (newValue)
+     * \param oldValue oldValue to replace 
+     * \param newValue new value to insert
+     * \param begin The begin position of the substring in str
+     * \param end The end position of the substring in str
+     * \param str The string to modify
+     */
+    void
+      findAndInsert(const std::string& oldValue,
+          const std::string& newValue,
+          const size_t& begin,
+          size_t& end,
+          std::string& str);
+    
     /**
      * \brief The type of the batch scheduler 
      */

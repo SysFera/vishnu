@@ -53,7 +53,7 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[jobError]             = "#PBS -e ";
     mconversionTable[jobWallClockLimit]    = "#PBS -l walltime=";
     mconversionTable[cpuTime]              = "#PBS -l cput=";
-    mconversionTable[nbCpu]                = "#PBS -l "; //special case
+    mconversionTable[nbCpu]                = "## PBS -l "; //special case
     mconversionTable[nbNodesAndCpuPerNode] = "#PBS -l "; //special case
     mconversionTable[mem]                  = "#PBS -l mem=";
     mconversionTable[mailNotification]     = "#PBS -m "; //special case
@@ -289,8 +289,9 @@ ScriptGenConvertor::getConvertedScript() {
 
   std::string result ;
   std::string key, value;
+  std::string torqueNodes;
+  bool torqueNodeIsAdd = false;
   std::vector< pair<std::string, std::string> >::const_iterator iter;
-
   for(iter = mjobDescriptor.begin(); iter!=mjobDescriptor.end(); ++iter) {
 
     key =  iter->first;
@@ -328,29 +329,37 @@ ScriptGenConvertor::getConvertedScript() {
     if(mbatchType==LOADLEVELER && key.compare(nbCpu)==0) {
       value = " ConsumableCpus("+value+")";
     }
+
     //Special case
     if(mbatchType==TORQUE && key.compare(nbCpu)==0) {
-
-      size_t pos = mscriptGenContent.rfind("#PBS");
-      size_t pos2 = std::string::npos;
-      while(pos!=std::string::npos) {
-        if(mscriptGenContent.find("-l", pos)!=std::string::npos){
-          pos2 = mscriptGenContent.find("nodes=", pos);
-          if(pos2!=std::string::npos) {
-            std::string nbNodes = mscriptGenContent.substr(pos2+std::string("nodes=").size());
-            istringstream is(nbNodes);
-            int tmp;
-            is >> tmp;
-            std::ostringstream os_str;
-            os_str << tmp;
-            value = " nodes="+os_str.str()+":ppn="+value;
-            break;
+      std::istringstream imscriptGenContent(mscriptGenContent);
+      std::string line;
+      bool ppnNotDefined=true;;
+      while(!imscriptGenContent.eof()) {
+        getline(imscriptGenContent, line);
+        size_t pos = line.find("#PBS");
+        if(pos!=std::string::npos) {
+          size_t posL = line.find("-l", pos);
+          if(posL!=std::string::npos){
+            if(line.find("nodes=", pos)!=std::string::npos) {
+              line = line.substr(posL+2);
+              ppnNotDefined = false;
+              findAndReplace(":ppn=", value, line);
+              torqueNodes += "#PBS -l "+line+"\n";
+            }
           }
         }
-        pos = mscriptGenContent.rfind("#PBS", pos-1);
       }
-      if(pos2==std::string::npos){
+      if(ppnNotDefined){
         value = " nodes=1:ppn="+value;
+      }
+    }
+
+    //Special case
+    if(mbatchType==TORQUE && key.compare(commandSec)==0){
+      if(!torqueNodes.empty() && !torqueNodeIsAdd){
+        result += torqueNodes;
+        torqueNodeIsAdd = true;
       }
     }
 
@@ -406,6 +415,78 @@ ScriptGenConvertor::getConvertedScript() {
 
   return result+mendScript;
 }
+
+/*
+ * \brief Function to insert some additional (ppn+nbCpuStr) content in the string str
+ * \param ppn A part of the content to insert
+ * \param nbCpuStr An other part of the content to insert
+ * \param str The string to modify
+ */
+void
+ScriptGenConvertor::findAndReplace(const std::string& ppn, 
+                                   const std::string& nbCpuStr, 
+                                   std::string& str){
+  
+  size_t pos = str.find(ppn);
+  while(pos!=std::string::npos) {
+    std::string oldPPNValue;
+    size_t posFirstChar = str.find_first_not_of("0123456789", pos+ppn.size());
+    if(posFirstChar!=std::string::npos) {
+      oldPPNValue = str.substr(pos+ppn.size(), posFirstChar-(pos+ppn.size()));
+    } else {
+      oldPPNValue =  str.substr(pos+ppn.size());
+    }
+    str.replace(pos+ppn.size(), oldPPNValue.size(), nbCpuStr);
+    pos = str.find(ppn, pos+1);
+  }
+
+  char delim = '+';
+  size_t begin = 0;
+  size_t end = str.find(delim);
+  std::string tmp;
+  if(end==std::string::npos) {
+    findAndInsert(ppn, ppn+nbCpuStr, begin, end, str);
+  }
+  while(end!=std::string::npos) {
+    findAndInsert(ppn, ppn+nbCpuStr, begin, end, str);
+    begin = end+1;
+    end = str.find(delim, begin);
+    //last token
+    if(end==std::string::npos){
+      findAndInsert(ppn, ppn+nbCpuStr, begin, end, str);
+    }
+  }
+}
+
+/*
+ * \brief Function to insert some additional content (newValue)
+ * \param oldValue oldValue to replace 
+ * \param newValue new value to insert
+ * \param begin The begin position of the substring in str
+ * \param end The end position of the substring in str
+ * \param str The string to modify
+ */
+void
+ScriptGenConvertor::findAndInsert(const std::string& oldValue,
+                                  const std::string& newValue,
+                                  const size_t& begin,
+                                  size_t& end,
+                                  std::string& str) {
+
+  std::string substr;
+  if(end!=std::string::npos) {
+   substr = str.substr(begin, end-begin);
+  } else {
+   substr = str.substr(begin);
+  }
+  if(substr.find(oldValue)==std::string::npos) {
+    str.insert(begin+substr.size(), newValue);
+    if(end!=std::string::npos) {
+      end += newValue.size();
+    }
+  }
+}
+
 
 /**
  * \brief Function to check if the script is generic
