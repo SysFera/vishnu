@@ -51,12 +51,12 @@ Ibrahima Cisse (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sysf
 \index{makeListHistoryCmdOptions@{makeListHistoryCmdOptions}!listHistoryCmdUtils.hpp@{listHistoryCmdUtils.hpp}}
 \subsubsection[{makeListHistoryCmdOptions}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<${\bf Options}$>$ makeListHistoryCmdOptions (
 \begin{DoxyParamCaption}
-\item[{std::string}]{pgName, }
-\item[{{\bf StringcallBackType} \&}]{fUserId, }
-\item[{std::string \&}]{dietConfig, }
-\item[{{\bf StringcallBackType} \&}]{fSessionId, }
-\item[{std::string \&}]{startDateOption, }
-\item[{std::string \&}]{endDateOption}
+\item[{std::string}]{ pgName, }
+\item[{{\bf StringcallBackType} \&}]{ fUserId, }
+\item[{std::string \&}]{ dietConfig, }
+\item[{{\bf StringcallBackType} \&}]{ fSessionId, }
+\item[{std::string \&}]{ startDateOption, }
+\item[{std::string \&}]{ endDateOption}
 \end{DoxyParamCaption}
 )}}
 \label{listHistoryCmdUtils_8hpp_a4a451435fc366dd5f622c4dc64d1d6a1}
@@ -66,19 +66,7 @@ To build options for the VISHNU list history command.
 
 
 \begin{DoxyParams}{Parameters}
-{\em pgName} & : The name of the command \\
-\hline
-{\em fUserId,:} & The user identifier option callback \\
-\hline
-{\em dietConfig,:} & Represents the VISHNU config file \\
-\hline
-{\em fSessionId} & : The callback for the session identifier \\
-\hline
-{\em startDateOption,:} & The start date option \\
-\hline
-{\em endDateOption,:} & The end date option \\
-\hline
-\end{DoxyParams}
+\item[{\em pgName}]: The name of the command \item[{\em fUserId,:}]The user identifier option callback \item[{\em dietConfig,:}]Represents the VISHNU config file \item[{\em fSessionId}]: The callback for the session identifier \item[{\em startDateOption,:}]The start date option \item[{\em endDateOption,:}]The end date option \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The description of all options allowed by the command 
 \end{DoxyReturn}

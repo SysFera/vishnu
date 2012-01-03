@@ -69,7 +69,7 @@ A proxy class to handle file transfer.
 \index{FileTransferProxy@{FileTransferProxy}!FileTransferProxy@{FileTransferProxy}}
 \subsubsection[{FileTransferProxy}]{\setlength{\rightskip}{0pt plus 5cm}FileTransferProxy::FileTransferProxy (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{sessionKey}
+\item[{const std::string \&}]{ sessionKey}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
 \label{classFileTransferProxy_ab1b4391127778b89aa9f4d09ecea60ba}
@@ -79,17 +79,15 @@ A constructor with one parameter.
 
 
 \begin{DoxyParams}{Parameters}
-{\em sessionKey} & The session key \\
-\hline
-\end{DoxyParams}
+\item[{\em sessionKey}]The session key \end{DoxyParams}
 \hypertarget{classFileTransferProxy_a16fe987d0edac5921bff6913099aa5c5}{
 \index{FileTransferProxy@{FileTransferProxy}!FileTransferProxy@{FileTransferProxy}}
 \index{FileTransferProxy@{FileTransferProxy}!FileTransferProxy@{FileTransferProxy}}
 \subsubsection[{FileTransferProxy}]{\setlength{\rightskip}{0pt plus 5cm}FileTransferProxy::FileTransferProxy (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{sessionKey, }
-\item[{const std::string \&}]{srcFilePath, }
-\item[{const std::string \&}]{destFilePath}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{const std::string \&}]{ srcFilePath, }
+\item[{const std::string \&}]{ destFilePath}
 \end{DoxyParamCaption}
 )}}
 \label{classFileTransferProxy_a16fe987d0edac5921bff6913099aa5c5}
@@ -99,13 +97,7 @@ Another constructor with parameters.
 
 
 \begin{DoxyParams}{Parameters}
-{\em sessionKey} & The session key \\
-\hline
-{\em srcFilePath} & The source file path \\
-\hline
-{\em destFilePath} & The destination file path \\
-\hline
-\end{DoxyParams}
+\item[{\em sessionKey}]The session key \item[{\em srcFilePath}]The source file path \item[{\em destFilePath}]The destination file path \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -114,7 +106,7 @@ Another constructor with parameters.
 \index{addCpAsyncThread@{addCpAsyncThread}!FileTransferProxy@{FileTransferProxy}}
 \subsubsection[{addCpAsyncThread}]{\setlength{\rightskip}{0pt plus 5cm}int FileTransferProxy::addCpAsyncThread (
 \begin{DoxyParamCaption}
-\item[{const FMS\_\-Data::CpFileOptions \&}]{options}
+\item[{const FMS\_\-Data::CpFileOptions \&}]{ options}
 \end{DoxyParamCaption}
 )}}
 \label{classFileTransferProxy_a787ee7b8a04b450a0e11fea0d4cf9bb4}
@@ -124,9 +116,7 @@ Add a new asynchronous copy file thread.
 
 
 \begin{DoxyParams}{Parameters}
-{\em options} & the copy options \\
-\hline
-\end{DoxyParams}
+\item[{\em options}]the copy options \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the function succeeds or an error code otherwise 
 \end{DoxyReturn}
@@ -135,7 +125,7 @@ Add a new asynchronous copy file thread.
 \index{addCpThread@{addCpThread}!FileTransferProxy@{FileTransferProxy}}
 \subsubsection[{addCpThread}]{\setlength{\rightskip}{0pt plus 5cm}int FileTransferProxy::addCpThread (
 \begin{DoxyParamCaption}
-\item[{const FMS\_\-Data::CpFileOptions \&}]{options}
+\item[{const FMS\_\-Data::CpFileOptions \&}]{ options}
 \end{DoxyParamCaption}
 )}}
 \label{classFileTransferProxy_a3260414718394057da542686e5cddda3}
@@ -145,9 +135,7 @@ Add a new copy file thread.
 
 
 \begin{DoxyParams}{Parameters}
-{\em options} & the copy options \\
-\hline
-\end{DoxyParams}
+\item[{\em options}]the copy options \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the function succeeds or an error code otherwise 
 \end{DoxyReturn}
@@ -156,7 +144,7 @@ Add a new copy file thread.
 \index{addMvAsyncThread@{addMvAsyncThread}!FileTransferProxy@{FileTransferProxy}}
 \subsubsection[{addMvAsyncThread}]{\setlength{\rightskip}{0pt plus 5cm}int FileTransferProxy::addMvAsyncThread (
 \begin{DoxyParamCaption}
-\item[{const FMS\_\-Data::CpFileOptions \&}]{options}
+\item[{const FMS\_\-Data::CpFileOptions \&}]{ options}
 \end{DoxyParamCaption}
 )}}
 \label{classFileTransferProxy_a42b158cebb919a88d00d3c21c2c22093}
@@ -166,9 +154,7 @@ Add a new asynchronous move file thread.
 
 
 \begin{DoxyParams}{Parameters}
-{\em options} & the move options \\
-\hline
-\end{DoxyParams}
+\item[{\em options}]the move options \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the function succeeds or an error code otherwise 
 \end{DoxyReturn}
@@ -177,7 +163,7 @@ Add a new asynchronous move file thread.
 \index{addMvThread@{addMvThread}!FileTransferProxy@{FileTransferProxy}}
 \subsubsection[{addMvThread}]{\setlength{\rightskip}{0pt plus 5cm}int FileTransferProxy::addMvThread (
 \begin{DoxyParamCaption}
-\item[{const FMS\_\-Data::CpFileOptions \&}]{options}
+\item[{const FMS\_\-Data::CpFileOptions \&}]{ options}
 \end{DoxyParamCaption}
 )}}
 \label{classFileTransferProxy_a37685d93ddfef009ee4ea0e8925cd265}
@@ -187,9 +173,7 @@ Add a new move file thread.
 
 
 \begin{DoxyParams}{Parameters}
-{\em options} & the move file options \\
-\hline
-\end{DoxyParams}
+\item[{\em options}]the move file options \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the function succeeds or an error code otherwise 
 \end{DoxyReturn}
@@ -214,7 +198,7 @@ The file transfer information
 \index{stopThread@{stopThread}!FileTransferProxy@{FileTransferProxy}}
 \subsubsection[{stopThread}]{\setlength{\rightskip}{0pt plus 5cm}int FileTransferProxy::stopThread (
 \begin{DoxyParamCaption}
-\item[{const FMS\_\-Data::StopTransferOptions \&}]{options}
+\item[{const FMS\_\-Data::StopTransferOptions \&}]{ options}
 \end{DoxyParamCaption}
 )}}
 \label{classFileTransferProxy_a286ffeb697841c8dc6d246ca268c4169}
@@ -224,9 +208,7 @@ Stop a file transfer.
 
 
 \begin{DoxyParams}{Parameters}
-{\em options} & The stop options \\
-\hline
-\end{DoxyParams}
+\item[{\em options}]The stop options \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the function succeeds or an error code otherwise 
 \end{DoxyReturn}

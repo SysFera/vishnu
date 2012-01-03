@@ -51,7 +51,7 @@ virtual \hyperlink{classBatchServer_a790c2e3c638edda49b68ab77d45e6e08}{$\sim$Bat
 \index{cancel@{cancel}!BatchServer@{BatchServer}}
 \subsubsection[{cancel}]{\setlength{\rightskip}{0pt plus 5cm}virtual int BatchServer::cancel (
 \begin{DoxyParamCaption}
-\item[{const char $\ast$}]{jobId}
+\item[{const char $\ast$}]{ jobId}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
 \label{classBatchServer_af40bbd83fa2bd1f1720e29800227cdb0}
@@ -61,9 +61,7 @@ Function to cancel job.
 
 
 \begin{DoxyParams}{Parameters}
-{\em jobId} & the identifier of the job to cancel \\
-\hline
-\end{DoxyParams}
+\item[{\em jobId}]the identifier of the job to cancel \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -76,7 +74,7 @@ Implemented in \hyperlink{classLLServer_ac547f34f2fcdfb1a8950de77fd8377e1}{LLSer
 \index{getJobStartTime@{getJobStartTime}!BatchServer@{BatchServer}}
 \subsubsection[{getJobStartTime}]{\setlength{\rightskip}{0pt plus 5cm}virtual time\_\-t BatchServer::getJobStartTime (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{jobId}
+\item[{const std::string \&}]{ jobId}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
 \label{classBatchServer_aa43eebf4a61d0d61646b7595630d2ef1}
@@ -86,9 +84,7 @@ Function to get the start time of the job.
 
 
 \begin{DoxyParams}{Parameters}
-{\em jobId} & the identifier of the job \\
-\hline
-\end{DoxyParams}
+\item[{\em jobId}]the identifier of the job \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the job is unknown or server not unavailable 
 \end{DoxyReturn}
@@ -101,7 +97,7 @@ Implemented in \hyperlink{classLLServer_a9ee6e489594d927c1c4c24fb03a16492}{LLSer
 \index{getJobState@{getJobState}!BatchServer@{BatchServer}}
 \subsubsection[{getJobState}]{\setlength{\rightskip}{0pt plus 5cm}virtual int BatchServer::getJobState (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{jobId}
+\item[{const std::string \&}]{ jobId}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
 \label{classBatchServer_ac82e407645e4ad185cf59edcee832d58}
@@ -111,9 +107,7 @@ Function to get the status of the job.
 
 
 \begin{DoxyParams}{Parameters}
-{\em jobId} & the identifier of the job \\
-\hline
-\end{DoxyParams}
+\item[{\em jobId}]the identifier of the job \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 -\/1 if the job is unknown or server not unavailable 
 \end{DoxyReturn}
@@ -126,7 +120,7 @@ Implemented in \hyperlink{classLLServer_a9a47c22111b809031c69879f10ce4b03}{LLSer
 \index{listQueues@{listQueues}!BatchServer@{BatchServer}}
 \subsubsection[{listQueues}]{\setlength{\rightskip}{0pt plus 5cm}virtual TMS\_\-Data::ListQueues$\ast$ BatchServer::listQueues (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{optQueueName = {\ttfamily std::string()}}
+\item[{const std::string \&}]{ optQueueName = {\ttfamily std::string()}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
 \label{classBatchServer_ab5cb2d2073b50e7c1f81693baed942ea}
@@ -136,9 +130,7 @@ Function to request the status of queues.
 
 
 \begin{DoxyParams}{Parameters}
-{\em optQueueName} & (optional) the name of the queue to request \\
-\hline
-\end{DoxyParams}
+\item[{\em optQueueName}](optional) the name of the queue to request \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The requested status in to ListQueues data structure 
 \end{DoxyReturn}
@@ -151,10 +143,10 @@ Implemented in \hyperlink{classLLServer_ae804a87a0a62253ec3b90eb8d409ffd1}{LLSer
 \index{submit@{submit}!BatchServer@{BatchServer}}
 \subsubsection[{submit}]{\setlength{\rightskip}{0pt plus 5cm}virtual int BatchServer::submit (
 \begin{DoxyParamCaption}
-\item[{const char $\ast$}]{scriptPath, }
-\item[{const TMS\_\-Data::SubmitOptions \&}]{options, }
-\item[{TMS\_\-Data::Job \&}]{job, }
-\item[{char $\ast$$\ast$}]{envp = {\ttfamily NULL}}
+\item[{const char $\ast$}]{ scriptPath, }
+\item[{const TMS\_\-Data::SubmitOptions \&}]{ options, }
+\item[{TMS\_\-Data::Job \&}]{ job, }
+\item[{char $\ast$$\ast$}]{ envp = {\ttfamily NULL}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
 \label{classBatchServer_a078c0f8605e770c02b8eca0351526f59}
@@ -164,15 +156,7 @@ Function to submit a job.
 
 
 \begin{DoxyParams}{Parameters}
-{\em scriptPath} & the path to the script containing the job characteristique \\
-\hline
-{\em options} & the options to submit job \\
-\hline
-{\em job} & The job data structure \\
-\hline
-{\em envp} & The list of environment variables used by submission function \\
-\hline
-\end{DoxyParams}
+\item[{\em scriptPath}]the path to the script containing the job characteristique \item[{\em options}]the options to submit job \item[{\em job}]The job data structure \item[{\em envp}]The list of environment variables used by submission function \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}

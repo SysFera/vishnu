@@ -74,7 +74,7 @@ TMS\_\-Data::ListQueues\_\-ptr \hyperlink{classLLServer_a753c355ca93eb090880be91
 \index{cancel@{cancel}!LLServer@{LLServer}}
 \subsubsection[{cancel}]{\setlength{\rightskip}{0pt plus 5cm}int LLServer::cancel (
 \begin{DoxyParamCaption}
-\item[{const char $\ast$}]{jobId}
+\item[{const char $\ast$}]{ jobId}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classLLServer_ac547f34f2fcdfb1a8950de77fd8377e1}
@@ -84,9 +84,7 @@ Function to cancel job.
 
 
 \begin{DoxyParams}{Parameters}
-{\em jobId} & the identifier of the job to cancel \\
-\hline
-\end{DoxyParams}
+\item[{\em jobId}]the identifier of the job to cancel \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -99,8 +97,8 @@ Implements \hyperlink{classBatchServer_af40bbd83fa2bd1f1720e29800227cdb0}{BatchS
 \index{computeNbRunJobsAndQueueJobs@{computeNbRunJobsAndQueueJobs}!LLServer@{LLServer}}
 \subsubsection[{computeNbRunJobsAndQueueJobs}]{\setlength{\rightskip}{0pt plus 5cm}int LLServer::computeNbRunJobsAndQueueJobs (
 \begin{DoxyParamCaption}
-\item[{std::map$<$ std::string, size\_\-t $>$ \&}]{run, }
-\item[{std::map$<$ std::string, size\_\-t $>$ \&}]{que}
+\item[{std::map$<$ std::string, size\_\-t $>$ \&}]{ run, }
+\item[{std::map$<$ std::string, size\_\-t $>$ \&}]{ que}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classLLServer_a3a9587a14a7cfb5e308b0f8173649cf9}
@@ -110,11 +108,7 @@ Function to compute the number of running and waiting jobs of each queue.
 
 
 \begin{DoxyParams}{Parameters}
-{\em run} & contains the number of running jobs of each queue \\
-\hline
-{\em que} & contains the number of waiting jobs of each queue \\
-\hline
-\end{DoxyParams}
+\item[{\em run}]contains the number of running jobs of each queue \item[{\em que}]contains the number of waiting jobs of each queue \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -123,7 +117,7 @@ raises an exception on error
 \index{convertLLPrioToVishnuPrio@{convertLLPrioToVishnuPrio}!LLServer@{LLServer}}
 \subsubsection[{convertLLPrioToVishnuPrio}]{\setlength{\rightskip}{0pt plus 5cm}int LLServer::convertLLPrioToVishnuPrio (
 \begin{DoxyParamCaption}
-\item[{const int \&}]{prio}
+\item[{const int \&}]{ prio}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classLLServer_a8649f7c42ad24f66215a63d12e2d54a6}
@@ -133,9 +127,7 @@ Function to convert the LL priority into VISHNU priority.
 
 
 \begin{DoxyParams}{Parameters}
-{\em prio} & the priority to convert \\
-\hline
-\end{DoxyParams}
+\item[{\em prio}]the priority to convert \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 VISHNU state 
 \end{DoxyReturn}
@@ -144,7 +136,7 @@ VISHNU state
 \index{convertLLStateToVishnuState@{convertLLStateToVishnuState}!LLServer@{LLServer}}
 \subsubsection[{convertLLStateToVishnuState}]{\setlength{\rightskip}{0pt plus 5cm}int LLServer::convertLLStateToVishnuState (
 \begin{DoxyParamCaption}
-\item[{int}]{state}
+\item[{int}]{ state}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classLLServer_a0691e56eda4540ad4379a60ce1e5f3f5}
@@ -154,9 +146,7 @@ Function to convert the LL state into VISHNU state.
 
 
 \begin{DoxyParams}{Parameters}
-{\em state} & the state to convert \\
-\hline
-\end{DoxyParams}
+\item[{\em state}]the state to convert \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 VISHNU state 
 \end{DoxyReturn}
@@ -165,7 +155,7 @@ VISHNU state
 \index{getJobNodeCount@{getJobNodeCount}!LLServer@{LLServer}}
 \subsubsection[{getJobNodeCount}]{\setlength{\rightskip}{0pt plus 5cm}int LLServer::getJobNodeCount (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{jobId}
+\item[{const std::string \&}]{ jobId}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classLLServer_a96abe5f6fbe6451a8c584f444d162478}
@@ -175,9 +165,7 @@ Function to get the number of nodes of the job.
 
 
 \begin{DoxyParams}{Parameters}
-{\em jobId} & the identifier of the job \\
-\hline
-\end{DoxyParams}
+\item[{\em jobId}]the identifier of the job \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 -\/1 if the job is unknown or server not unavailable 
 \end{DoxyReturn}
@@ -186,7 +174,7 @@ Function to get the number of nodes of the job.
 \index{getJobStartTime@{getJobStartTime}!LLServer@{LLServer}}
 \subsubsection[{getJobStartTime}]{\setlength{\rightskip}{0pt plus 5cm}time\_\-t LLServer::getJobStartTime (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{jobId}
+\item[{const std::string \&}]{ jobId}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classLLServer_a9ee6e489594d927c1c4c24fb03a16492}
@@ -196,9 +184,7 @@ Function to get the start time of the job.
 
 
 \begin{DoxyParams}{Parameters}
-{\em jobId} & the identifier of the job \\
-\hline
-\end{DoxyParams}
+\item[{\em jobId}]the identifier of the job \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if the job is unknown or server not unavailable 
 \end{DoxyReturn}
@@ -211,7 +197,7 @@ Implements \hyperlink{classBatchServer_aa43eebf4a61d0d61646b7595630d2ef1}{BatchS
 \index{getJobState@{getJobState}!LLServer@{LLServer}}
 \subsubsection[{getJobState}]{\setlength{\rightskip}{0pt plus 5cm}int LLServer::getJobState (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{jobId}
+\item[{const std::string \&}]{ jobId}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classLLServer_a9a47c22111b809031c69879f10ce4b03}
@@ -221,9 +207,7 @@ Function to get the status of the job.
 
 
 \begin{DoxyParams}{Parameters}
-{\em jobId} & the identifier of the job \\
-\hline
-\end{DoxyParams}
+\item[{\em jobId}]the identifier of the job \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 -\/1 if the job is unknown or server not unavailable 
 \end{DoxyReturn}
@@ -236,8 +220,8 @@ Implements \hyperlink{classBatchServer_ac82e407645e4ad185cf59edcee832d58}{BatchS
 \index{insertOptionLine@{insertOptionLine}!LLServer@{LLServer}}
 \subsubsection[{insertOptionLine}]{\setlength{\rightskip}{0pt plus 5cm}void LLServer::insertOptionLine (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{optionLineToInsert, }
-\item[{std::string \&}]{content}
+\item[{const std::string \&}]{ optionLineToInsert, }
+\item[{std::string \&}]{ content}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classLLServer_a12ec697d6b846611c1e67ac1057d4ee0}
@@ -247,11 +231,7 @@ Function to insert option into string.
 
 
 \begin{DoxyParams}{Parameters}
-{\em optionLineToInsert} & the option to insert \\
-\hline
-{\em content} & The buffer containing the inserted option \\
-\hline
-\end{DoxyParams}
+\item[{\em optionLineToInsert}]the option to insert \item[{\em content}]The buffer containing the inserted option \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -260,7 +240,7 @@ raises an exception on error
 \index{listQueues@{listQueues}!LLServer@{LLServer}}
 \subsubsection[{listQueues}]{\setlength{\rightskip}{0pt plus 5cm}TMS\_\-Data::ListQueues$\ast$ LLServer::listQueues (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{optQueueName = {\ttfamily std::string()}}
+\item[{const std::string \&}]{ optQueueName = {\ttfamily std::string()}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classLLServer_ae804a87a0a62253ec3b90eb8d409ffd1}
@@ -270,9 +250,7 @@ Function to request the status of queues.
 
 
 \begin{DoxyParams}{Parameters}
-{\em optQueueName} & (optional) the name of the queue to request \\
-\hline
-\end{DoxyParams}
+\item[{\em optQueueName}](optional) the name of the queue to request \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The requested status in to ListQueues data structure 
 \end{DoxyReturn}
@@ -285,8 +263,8 @@ Implements \hyperlink{classBatchServer_ab5cb2d2073b50e7c1f81693baed942ea}{BatchS
 \index{processOptions@{processOptions}!LLServer@{LLServer}}
 \subsubsection[{processOptions}]{\setlength{\rightskip}{0pt plus 5cm}void LLServer::processOptions (
 \begin{DoxyParamCaption}
-\item[{const char $\ast$}]{scriptPath, }
-\item[{const TMS\_\-Data::SubmitOptions \&}]{options}
+\item[{const char $\ast$}]{ scriptPath, }
+\item[{const TMS\_\-Data::SubmitOptions \&}]{ options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classLLServer_a54487bfb5d744a3b892e22127f3643ea}
@@ -296,11 +274,7 @@ Function to treat the submission options.
 
 
 \begin{DoxyParams}{Parameters}
-{\em scriptPath} & The job script path \\
-\hline
-{\em options} & the object which contains the SubmitOptions options values \\
-\hline
-\end{DoxyParams}
+\item[{\em scriptPath}]The job script path \item[{\em options}]the object which contains the SubmitOptions options values \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -309,10 +283,10 @@ raises an exception on error
 \index{submit@{submit}!LLServer@{LLServer}}
 \subsubsection[{submit}]{\setlength{\rightskip}{0pt plus 5cm}int LLServer::submit (
 \begin{DoxyParamCaption}
-\item[{const char $\ast$}]{scriptPath, }
-\item[{const TMS\_\-Data::SubmitOptions \&}]{options, }
-\item[{TMS\_\-Data::Job \&}]{job, }
-\item[{char $\ast$$\ast$}]{envp = {\ttfamily NULL}}
+\item[{const char $\ast$}]{ scriptPath, }
+\item[{const TMS\_\-Data::SubmitOptions \&}]{ options, }
+\item[{TMS\_\-Data::Job \&}]{ job, }
+\item[{char $\ast$$\ast$}]{ envp = {\ttfamily NULL}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classLLServer_a69115c3fd71ea7449003156d50508b37}
@@ -322,15 +296,7 @@ Function to submit LL job.
 
 
 \begin{DoxyParams}{Parameters}
-{\em scriptPath} & the path to the script containing the job characteristique \\
-\hline
-{\em options} & the options to submit job \\
-\hline
-{\em job} & The job data structure \\
-\hline
-{\em envp} & The list of environment variables used by LL submission function \\
-\hline
-\end{DoxyParams}
+\item[{\em scriptPath}]the path to the script containing the job characteristique \item[{\em options}]the options to submit job \item[{\em job}]The job data structure \item[{\em envp}]The list of environment variables used by LL submission function \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}

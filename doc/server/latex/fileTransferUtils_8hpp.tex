@@ -54,13 +54,13 @@ Ibrahima Cissé (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sys
 \index{copyParseOptions@{copyParseOptions}!fileTransferUtils.hpp@{fileTransferUtils.hpp}}
 \subsubsection[{copyParseOptions}]{\setlength{\rightskip}{0pt plus 5cm}void copyParseOptions (
 \begin{DoxyParamCaption}
-\item[{int}]{argc, }
-\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]}, }
-\item[{std::string \&}]{dietConfig, }
-\item[{std::string \&}]{src, }
-\item[{std::string \&}]{dest, }
-\item[{FMS\_\-Data::CpFileOptions \&}]{cpFileOptions, }
-\item[{{\bf TransferType}}]{transferType}
+\item[{int}]{ argc, }
+\item[{char $\ast$}]{ argv\mbox{[}$\,$\mbox{]}, }
+\item[{std::string \&}]{ dietConfig, }
+\item[{std::string \&}]{ src, }
+\item[{std::string \&}]{ dest, }
+\item[{FMS\_\-Data::CpFileOptions \&}]{ cpFileOptions, }
+\item[{{\bf TransferType}}]{ transferType}
 \end{DoxyParamCaption}
 )}}
 \label{fileTransferUtils_8hpp_ae5899da4071e99536db934d183268921}
@@ -70,31 +70,17 @@ common parse function for file transfer command
 
 
 \begin{DoxyParams}{Parameters}
-{\em argc} & The number of command line arguments \\
-\hline
-{\em argv} & The command line arguments \\
-\hline
-{\em dietConfig} & The VISHNU client config file \\
-\hline
-{\em src} & The file transfer source \\
-\hline
-{\em dest} & The file transfer destination \\
-\hline
-{\em cpFileOptions} & The file transfer options \\
-\hline
-{\em transferType} & The file transfer type \\
-\hline
-\end{DoxyParams}
+\item[{\em argc}]The number of command line arguments \item[{\em argv}]The command line arguments \item[{\em dietConfig}]The VISHNU client config file \item[{\em src}]The file transfer source \item[{\em dest}]The file transfer destination \item[{\em cpFileOptions}]The file transfer options \item[{\em transferType}]The file transfer type \end{DoxyParams}
 \hypertarget{fileTransferUtils_8hpp_a43ef510991efe7a62277b501b5a13080}{
 \index{fileTransferUtils.hpp@{fileTransferUtils.hpp}!makeTransferCommandOptions@{makeTransferCommandOptions}}
 \index{makeTransferCommandOptions@{makeTransferCommandOptions}!fileTransferUtils.hpp@{fileTransferUtils.hpp}}
 \subsubsection[{makeTransferCommandOptions}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<${\bf Options}$>$ makeTransferCommandOptions (
 \begin{DoxyParamCaption}
-\item[{string}]{pgName, }
-\item[{string \&}]{dietConfig, }
-\item[{string \&}]{trCmdStr, }
-\item[{string \&}]{src, }
-\item[{string \&}]{dest}
+\item[{string}]{ pgName, }
+\item[{string \&}]{ dietConfig, }
+\item[{string \&}]{ trCmdStr, }
+\item[{string \&}]{ src, }
+\item[{string \&}]{ dest}
 \end{DoxyParamCaption}
 )}}
 \label{fileTransferUtils_8hpp_a43ef510991efe7a62277b501b5a13080}
@@ -104,17 +90,7 @@ To build options for the VISHNU copy of file command.
 
 
 \begin{DoxyParams}{Parameters}
-{\em pgName} & The name of the command \\
-\hline
-{\em dietConfig} & Represents the VISHNU config file \\
-\hline
-{\em trCmdStr} & The command to use to perform file transfer \\
-\hline
-{\em src} & The source file to copy following the pattern \mbox{[}host:\mbox{]}file path \\
-\hline
-{\em dest} & The path of the destination file \\
-\hline
-\end{DoxyParams}
+\item[{\em pgName}]The name of the command \item[{\em dietConfig}]Represents the VISHNU config file \item[{\em trCmdStr}]The command to use to perform file transfer \item[{\em src}]The source file to copy following the pattern \mbox{[}host:\mbox{]}file path \item[{\em dest}]The path of the destination file \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The built option 
 \end{DoxyReturn}

@@ -39,14 +39,14 @@ Ibrahima Cisse (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sysf
 \index{makeMachineOptions@{makeMachineOptions}!machineUtils.hpp@{machineUtils.hpp}}
 \subsubsection[{makeMachineOptions}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<${\bf Options}$>$ makeMachineOptions (
 \begin{DoxyParamCaption}
-\item[{std::string}]{pgName, }
-\item[{{\bf StringcallBackType} \&}]{fName, }
-\item[{std::string \&}]{dietConfig, }
-\item[{{\bf StringcallBackType} \&}]{fSite, }
-\item[{{\bf StringcallBackType} \&}]{fLanguage, }
-\item[{std::string \&}]{sshPublicKeyPath, }
-\item[{{\bf StringcallBackType} \&}]{fMachineDescription, }
-\item[{int}]{type = {\ttfamily 0}}
+\item[{std::string}]{ pgName, }
+\item[{{\bf StringcallBackType} \&}]{ fName, }
+\item[{std::string \&}]{ dietConfig, }
+\item[{{\bf StringcallBackType} \&}]{ fSite, }
+\item[{{\bf StringcallBackType} \&}]{ fLanguage, }
+\item[{std::string \&}]{ sshPublicKeyPath, }
+\item[{{\bf StringcallBackType} \&}]{ fMachineDescription, }
+\item[{int}]{ type = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )}}
 \label{machineUtils_8hpp_a3ed66f85c798f065eb5902e8a5ab1d46}
@@ -56,23 +56,7 @@ To build options for the VISHNU machine commands.
 
 
 \begin{DoxyParams}{Parameters}
-{\em pgName} & : The name of the command \\
-\hline
-{\em fName} & : The machine name option callback \\
-\hline
-{\em dietConfig} & : Represents the VISHNU config file \\
-\hline
-{\em fSite} & : The site name option callback \\
-\hline
-{\em fLanguage} & : The language option callback \\
-\hline
-{\em sshPublicKeyPath} & : The user ssh key path option \\
-\hline
-{\em fMachineDescription} & : The machine description option callback \\
-\hline
-{\em type} & : Indicates if it is an add or an update command, 0 means update, and 1 means add \\
-\hline
-\end{DoxyParams}
+\item[{\em pgName}]: The name of the command \item[{\em fName}]: The machine name option callback \item[{\em dietConfig}]: Represents the VISHNU config file \item[{\em fSite}]: The site name option callback \item[{\em fLanguage}]: The language option callback \item[{\em sshPublicKeyPath}]: The user ssh key path option \item[{\em fMachineDescription}]: The machine description option callback \item[{\em type}]: Indicates if it is an add or an update command, 0 means update, and 1 means add \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The description of all options allowed by the command 
 \end{DoxyReturn}

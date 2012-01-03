@@ -18,30 +18,41 @@
 class Env
 {
 
-public:
-  /**
-   * \param batchType The batch scheduler type
-   * \brief Constructor
-   */
-  Env(const BatchType& batchType);
+  public:
+    /**
+     * \param batchType The batch scheduler type
+     * \brief Constructor
+     */
+    Env(const BatchType& batchType);
 
-  /*
-  */
-  void replaceAllOccurences(std::string& scriptContent,
-      const std::string& oldValue,
-      const std::string& newValue);
+    /**
+     * \brief Function to replace all occurences in a string
+     * \param scriptContent The string to modify
+     * \param oldValue The value to replace
+     * \param newValue The new value
+     */
+    void replaceAllOccurences(std::string& scriptContent,
+        const std::string& oldValue,
+        const std::string& newValue);
 
-  /*
-  */
-  void replaceEnvVariables(std::string& scriptContent);
+        
+    /**
+     * \brief Function to replace some environment variables in a string
+     * \param scriptContent The string content to modify
+     */
+    void replaceEnvVariables(std::string& scriptContent);
 
-private:
+  private:
 
-  void getTorqueNumNodes(std::string& scriptContent);
-  /**
-   * \brief The type of the batch scheduler 
-   */
-  BatchType mbatchType;
+    /**
+     * \brief Function to get number of nodes for torque 
+     * \param scriptContent The string content to modify
+     */
+    void getTorqueNumNodes(std::string& scriptContent);
+    /**
+     * \brief The type of the batch scheduler 
+     */
+    BatchType mbatchType;
 
 };
 

@@ -46,7 +46,7 @@ A functor to handle file action (create/remove) api function.
 \index{FileActionFunc@{FileActionFunc}!FileActionFunc@{FileActionFunc}}
 \subsubsection[{FileActionFunc}]{\setlength{\rightskip}{0pt plus 5cm}template$<$FileActionType fileActionType, typename CommandOptionsType  = NoOptions$>$ {\bf FileActionFunc}$<$ fileActionType, CommandOptionsType $>$::{\bf FileActionFunc} (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{path}
+\item[{const std::string \&}]{ path}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{structFileActionFunc_a899ef8d7659ae6c83c958b71b939c0fb}
@@ -56,16 +56,14 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em path} & The path to treat \\
-\hline
-\end{DoxyParams}
+\item[{\em path}]The path to treat \end{DoxyParams}
 \hypertarget{structFileActionFunc_af9248de6d02d23b2e11ae0777f052521}{
 \index{FileActionFunc@{FileActionFunc}!FileActionFunc@{FileActionFunc}}
 \index{FileActionFunc@{FileActionFunc}!FileActionFunc@{FileActionFunc}}
 \subsubsection[{FileActionFunc}]{\setlength{\rightskip}{0pt plus 5cm}template$<$FileActionType fileActionType, typename CommandOptionsType  = NoOptions$>$ {\bf FileActionFunc}$<$ fileActionType, CommandOptionsType $>$::{\bf FileActionFunc} (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{path, }
-\item[{const CommandOptionsType \&}]{options}
+\item[{const std::string \&}]{ path, }
+\item[{const CommandOptionsType \&}]{ options}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{structFileActionFunc_af9248de6d02d23b2e11ae0777f052521}
@@ -75,11 +73,7 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em path} & The path to treat \\
-\hline
-{\em options} & The file transfer option \\
-\hline
-\end{DoxyParams}
+\item[{\em path}]The path to treat \item[{\em options}]The file transfer option \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -88,7 +82,7 @@ Constructor.
 \index{operator()@{operator()}!FileActionFunc@{FileActionFunc}}
 \subsubsection[{operator()}]{\setlength{\rightskip}{0pt plus 5cm}template$<$FileActionType fileActionType, typename CommandOptionsType  = NoOptions$>$ int {\bf FileActionFunc}$<$ fileActionType, CommandOptionsType $>$::operator() (
 \begin{DoxyParamCaption}
-\item[{std::string}]{sessionKey}
+\item[{std::string}]{ sessionKey}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{structFileActionFunc_aeae506f5a4b71fcfc554a8492d86a52a}
@@ -98,9 +92,7 @@ To execute the FileAction operation.
 
 
 \begin{DoxyParams}{Parameters}
-{\em sessionKey} & The identifier of the session \\
-\hline
-\end{DoxyParams}
+\item[{\em sessionKey}]The identifier of the session \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 non-\/zero on error 
 \end{DoxyReturn}

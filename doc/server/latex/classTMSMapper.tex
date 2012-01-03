@@ -74,8 +74,8 @@ virtual string \hyperlink{classTMSMapper_a2082d6a55048ef9cf47fe6cfddb3e3f2}{deco
 \index{TMSMapper@{TMSMapper}!TMSMapper@{TMSMapper}}
 \subsubsection[{TMSMapper}]{\setlength{\rightskip}{0pt plus 5cm}TMSMapper::TMSMapper (
 \begin{DoxyParamCaption}
-\item[{{\bf MapperRegistry} $\ast$}]{reg, }
-\item[{string}]{name}
+\item[{{\bf MapperRegistry} $\ast$}]{ reg, }
+\item[{string}]{ name}
 \end{DoxyParamCaption}
 )}}
 \label{classTMSMapper_aacd67bc9f88731c8b071c68c152b3650}
@@ -85,11 +85,7 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em reg} & Registry to register \\
-\hline
-{\em name} & Name to use to register \\
-\hline
-\end{DoxyParams}
+\item[{\em reg}]Registry to register \item[{\em name}]Name to use to register \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -98,8 +94,8 @@ Constructor.
 \index{code@{code}!TMSMapper@{TMSMapper}}
 \subsubsection[{code}]{\setlength{\rightskip}{0pt plus 5cm}int TMSMapper::code (
 \begin{DoxyParamCaption}
-\item[{const string \&}]{cmd, }
-\item[{unsigned int}]{code = {\ttfamily 0}}
+\item[{const string \&}]{ cmd, }
+\item[{unsigned int}]{ code = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classTMSMapper_aae46d8055ecfe88e485be237a37f1f24}
@@ -109,11 +105,7 @@ Function to add an element to code.
 
 
 \begin{DoxyParams}{Parameters}
-{\em cmd} & The string to add \\
-\hline
-{\em code} & If 0, the code is created, otherwize it is the key in the map to add the string \\
-\hline
-\end{DoxyParams}
+\item[{\em cmd}]The string to add \item[{\em code}]If 0, the code is created, otherwize it is the key in the map to add the string \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 if param code = 0, the assigned code to add other element to the same item, otherwize return 0 
 \end{DoxyReturn}
@@ -126,7 +118,7 @@ Reimplemented from \hyperlink{classMapper_a915f9829fd340b2b0978323b90eda360}{Map
 \index{decode@{decode}!TMSMapper@{TMSMapper}}
 \subsubsection[{decode}]{\setlength{\rightskip}{0pt plus 5cm}string TMSMapper::decode (
 \begin{DoxyParamCaption}
-\item[{const string \&}]{msg}
+\item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classTMSMapper_accb3c964a3f3cb147d1678d0efaeabb0}
@@ -136,9 +128,7 @@ To get, from a coded string, the cli like command that made it.
 
 
 \begin{DoxyParams}{Parameters}
-{\em msg} & The coded string \\
-\hline
-\end{DoxyParams}
+\item[{\em msg}]The coded string \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like command 
 \end{DoxyReturn}
@@ -151,8 +141,8 @@ Reimplemented from \hyperlink{classMapper_a5e51b9148704b25e26e5ec48bd643a0b}{Map
 \index{decodeCancel@{decodeCancel}!TMSMapper@{TMSMapper}}
 \subsubsection[{decodeCancel}]{\setlength{\rightskip}{0pt plus 5cm}string TMSMapper::decodeCancel (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{separator, }
-\item[{const string \&}]{msg}
+\item[{vector$<$ int $>$}]{ separator, }
+\item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classTMSMapper_a305e7e1543609faddfc92c85159c0df4}
@@ -162,11 +152,7 @@ To decode the cancel call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-{\em separator} & A vector containing the position of the separator in the message msg \\
-\hline
-{\em msg} & The message to decode \\
-\hline
-\end{DoxyParams}
+\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -175,8 +161,8 @@ The cli like close command
 \index{decodeCompletedJob@{decodeCompletedJob}!TMSMapper@{TMSMapper}}
 \subsubsection[{decodeCompletedJob}]{\setlength{\rightskip}{0pt plus 5cm}string TMSMapper::decodeCompletedJob (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{separator, }
-\item[{const string \&}]{msg}
+\item[{vector$<$ int $>$}]{ separator, }
+\item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classTMSMapper_a0592e967b8eb2ddeaadfc7fe92094345}
@@ -186,11 +172,7 @@ To decode the get all output call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-{\em separator} & A vector containing the position of the separator in the message msg \\
-\hline
-{\em msg} & The message to decode \\
-\hline
-\end{DoxyParams}
+\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -199,8 +181,8 @@ The cli like close command
 \index{decodeJobInfo@{decodeJobInfo}!TMSMapper@{TMSMapper}}
 \subsubsection[{decodeJobInfo}]{\setlength{\rightskip}{0pt plus 5cm}string TMSMapper::decodeJobInfo (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{separator, }
-\item[{const string \&}]{msg}
+\item[{vector$<$ int $>$}]{ separator, }
+\item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classTMSMapper_a2082d6a55048ef9cf47fe6cfddb3e3f2}
@@ -210,11 +192,7 @@ To decode the get job info call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-{\em separator} & A vector containing the position of the separator in the message msg \\
-\hline
-{\em msg} & The message to decode \\
-\hline
-\end{DoxyParams}
+\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -223,8 +201,8 @@ The cli like close command
 \index{decodeListJob@{decodeListJob}!TMSMapper@{TMSMapper}}
 \subsubsection[{decodeListJob}]{\setlength{\rightskip}{0pt plus 5cm}string TMSMapper::decodeListJob (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{separator, }
-\item[{const string \&}]{msg}
+\item[{vector$<$ int $>$}]{ separator, }
+\item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classTMSMapper_a60f6a62060a0587a401da0435a32892f}
@@ -234,11 +212,7 @@ To decode the get list job call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-{\em separator} & A vector containing the position of the separator in the message msg \\
-\hline
-{\em msg} & The message to decode \\
-\hline
-\end{DoxyParams}
+\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -247,8 +221,8 @@ The cli like close command
 \index{decodeOutput@{decodeOutput}!TMSMapper@{TMSMapper}}
 \subsubsection[{decodeOutput}]{\setlength{\rightskip}{0pt plus 5cm}string TMSMapper::decodeOutput (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{separator, }
-\item[{const string \&}]{msg}
+\item[{vector$<$ int $>$}]{ separator, }
+\item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classTMSMapper_aae8811bb1bf6bd8830154b1b1331002d}
@@ -258,11 +232,7 @@ To decode the get output call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-{\em separator} & A vector containing the position of the separator in the message msg \\
-\hline
-{\em msg} & The message to decode \\
-\hline
-\end{DoxyParams}
+\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -271,8 +241,8 @@ The cli like close command
 \index{decodeProg@{decodeProg}!TMSMapper@{TMSMapper}}
 \subsubsection[{decodeProg}]{\setlength{\rightskip}{0pt plus 5cm}string TMSMapper::decodeProg (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{separator, }
-\item[{const string \&}]{msg}
+\item[{vector$<$ int $>$}]{ separator, }
+\item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classTMSMapper_aaf50d5b60f32283e5d6785c839446cdc}
@@ -282,11 +252,7 @@ To decode the get progression call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-{\em separator} & A vector containing the position of the separator in the message msg \\
-\hline
-{\em msg} & The message to decode \\
-\hline
-\end{DoxyParams}
+\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -295,8 +261,8 @@ The cli like close command
 \index{decodeQueue@{decodeQueue}!TMSMapper@{TMSMapper}}
 \subsubsection[{decodeQueue}]{\setlength{\rightskip}{0pt plus 5cm}string TMSMapper::decodeQueue (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{separator, }
-\item[{const string \&}]{msg}
+\item[{vector$<$ int $>$}]{ separator, }
+\item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classTMSMapper_a214f2d08465fc7a21343c4d74c67c255}
@@ -306,11 +272,7 @@ To decode the get queue call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-{\em separator} & A vector containing the position of the separator in the message msg \\
-\hline
-{\em msg} & The message to decode \\
-\hline
-\end{DoxyParams}
+\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -319,8 +281,8 @@ The cli like close command
 \index{decodeSubmit@{decodeSubmit}!TMSMapper@{TMSMapper}}
 \subsubsection[{decodeSubmit}]{\setlength{\rightskip}{0pt plus 5cm}string TMSMapper::decodeSubmit (
 \begin{DoxyParamCaption}
-\item[{vector$<$ int $>$}]{separator, }
-\item[{const string \&}]{msg}
+\item[{vector$<$ int $>$}]{ separator, }
+\item[{const string \&}]{ msg}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
 \label{classTMSMapper_aa59a3b07e1d6149067d5c7ecee9d5586}
@@ -330,11 +292,7 @@ To decode the submit call sequence of the string returned by finalize.
 
 
 \begin{DoxyParams}{Parameters}
-{\em separator} & A vector containing the position of the separator in the message msg \\
-\hline
-{\em msg} & The message to decode \\
-\hline
-\end{DoxyParams}
+\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like close command 
 \end{DoxyReturn}
@@ -343,8 +301,8 @@ The cli like close command
 \index{getCommand@{getCommand}!TMSMapper@{TMSMapper}}
 \subsubsection[{getCommand}]{\setlength{\rightskip}{0pt plus 5cm}int TMSMapper::getCommand (
 \begin{DoxyParamCaption}
-\item[{const int \&}]{key, }
-\item[{string \&}]{command}
+\item[{const int \&}]{ key, }
+\item[{string \&}]{ command}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classTMSMapper_a4c101d1620d544eaa7e42c364878c6aa}
@@ -354,11 +312,7 @@ To get the command corresponding to a key.
 
 
 \begin{DoxyParams}{Parameters}
-{\em key} & The key to use \\
-\hline
-{\em command} & OUT, the command corresponding to the key \\
-\hline
-\end{DoxyParams}
+\item[{\em key}]The key to use \item[{\em command}]OUT, the command corresponding to the key \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 on success, an error code otherwise 
 \end{DoxyReturn}
@@ -367,8 +321,8 @@ To get the command corresponding to a key.
 \index{getKey@{getKey}!TMSMapper@{TMSMapper}}
 \subsubsection[{getKey}]{\setlength{\rightskip}{0pt plus 5cm}int TMSMapper::getKey (
 \begin{DoxyParamCaption}
-\item[{const string \&}]{command, }
-\item[{int \&}]{key}
+\item[{const string \&}]{ command, }
+\item[{int \&}]{ key}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classTMSMapper_a943adb719ff984d5f6d9864850c3ad9d}
@@ -378,11 +332,7 @@ To get the key corresponding to a command.
 
 
 \begin{DoxyParams}{Parameters}
-{\em command} & The 'key' to use \\
-\hline
-{\em key} & OUT, the key corresponding to the command \\
-\hline
-\end{DoxyParams}
+\item[{\em command}]The 'key' to use \item[{\em key}]OUT, the key corresponding to the command \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 on success, an error code otherwise 
 \end{DoxyReturn}

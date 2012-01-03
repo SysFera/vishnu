@@ -16,24 +16,15 @@
 \item 
 \hyperlink{classEnv_af79a38d660d0c8854858075a529fa8c8}{Env} (const \hyperlink{utilVishnu_8hpp_a864d748e7097d176552dd4c7635016ea}{BatchType} \&batchType)
 \begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
-\hypertarget{classEnv_ae392272deae068e7f74d0ae26231acb2}{
-void {\bfseries replaceAllOccurences} (std::string \&scriptContent, const std::string \&oldValue, const std::string \&newValue)}
-\label{classEnv_ae392272deae068e7f74d0ae26231acb2}
-
-\item 
-\hypertarget{classEnv_abe12e01f5012827ca1a6fb635a613367}{
-void {\bfseries replaceEnvVariables} (std::string \&scriptContent)}
-\label{classEnv_abe12e01f5012827ca1a6fb635a613367}
-
-\end{DoxyCompactItemize}
+void \hyperlink{classEnv_ae392272deae068e7f74d0ae26231acb2}{replaceAllOccurences} (std::string \&scriptContent, const std::string \&oldValue, const std::string \&newValue)
+\begin{DoxyCompactList}\small\item\em Function to replace all occurences in a string. \item\end{DoxyCompactList}\item 
+void \hyperlink{classEnv_abe12e01f5012827ca1a6fb635a613367}{replaceEnvVariables} (std::string \&scriptContent)
+\begin{DoxyCompactList}\small\item\em Function to replace some environment variables in a string. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classEnv_ac6516808e45dbea3e40383ba8a1525ed}{
-void {\bfseries getTorqueNumNodes} (std::string \&scriptContent)}
-\label{classEnv_ac6516808e45dbea3e40383ba8a1525ed}
-
-\end{DoxyCompactItemize}
+void \hyperlink{classEnv_ac6516808e45dbea3e40383ba8a1525ed}{getTorqueNumNodes} (std::string \&scriptContent)
+\begin{DoxyCompactList}\small\item\em Function to get number of nodes for torque. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -53,7 +44,7 @@ void {\bfseries getTorqueNumNodes} (std::string \&scriptContent)}
 \index{Env@{Env}!Env@{Env}}
 \subsubsection[{Env}]{\setlength{\rightskip}{0pt plus 5cm}Env::Env (
 \begin{DoxyParamCaption}
-\item[{const {\bf BatchType} \&}]{batchType}
+\item[{const {\bf BatchType} \&}]{ batchType}
 \end{DoxyParamCaption}
 )}}
 \label{classEnv_af79a38d660d0c8854858075a529fa8c8}
@@ -63,9 +54,60 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em batchType} & The batch scheduler type \\
-\hline
-\end{DoxyParams}
+\item[{\em batchType}]The batch scheduler type \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classEnv_ac6516808e45dbea3e40383ba8a1525ed}{
+\index{Env@{Env}!getTorqueNumNodes@{getTorqueNumNodes}}
+\index{getTorqueNumNodes@{getTorqueNumNodes}!Env@{Env}}
+\subsubsection[{getTorqueNumNodes}]{\setlength{\rightskip}{0pt plus 5cm}void Env::getTorqueNumNodes (
+\begin{DoxyParamCaption}
+\item[{std::string \&}]{ scriptContent}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classEnv_ac6516808e45dbea3e40383ba8a1525ed}
+
+
+Function to get number of nodes for torque. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em scriptContent}]The string content to modify \end{DoxyParams}
+\hypertarget{classEnv_ae392272deae068e7f74d0ae26231acb2}{
+\index{Env@{Env}!replaceAllOccurences@{replaceAllOccurences}}
+\index{replaceAllOccurences@{replaceAllOccurences}!Env@{Env}}
+\subsubsection[{replaceAllOccurences}]{\setlength{\rightskip}{0pt plus 5cm}void Env::replaceAllOccurences (
+\begin{DoxyParamCaption}
+\item[{std::string \&}]{ scriptContent, }
+\item[{const std::string \&}]{ oldValue, }
+\item[{const std::string \&}]{ newValue}
+\end{DoxyParamCaption}
+)}}
+\label{classEnv_ae392272deae068e7f74d0ae26231acb2}
+
+
+Function to replace all occurences in a string. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em scriptContent}]The string to modify \item[{\em oldValue}]The value to replace \item[{\em newValue}]The new value \end{DoxyParams}
+\hypertarget{classEnv_abe12e01f5012827ca1a6fb635a613367}{
+\index{Env@{Env}!replaceEnvVariables@{replaceEnvVariables}}
+\index{replaceEnvVariables@{replaceEnvVariables}!Env@{Env}}
+\subsubsection[{replaceEnvVariables}]{\setlength{\rightskip}{0pt plus 5cm}void Env::replaceEnvVariables (
+\begin{DoxyParamCaption}
+\item[{std::string \&}]{ scriptContent}
+\end{DoxyParamCaption}
+)}}
+\label{classEnv_abe12e01f5012827ca1a6fb635a613367}
+
+
+Function to replace some environment variables in a string. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em scriptContent}]The string content to modify \end{DoxyParams}
 
 
 The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}

@@ -117,7 +117,7 @@ Class linking the database and the processes.
 \index{authentifyProcess@{authentifyProcess}!ProcessServer@{ProcessServer}}
 \subsubsection[{authentifyProcess}]{\setlength{\rightskip}{0pt plus 5cm}int ProcessServer::authentifyProcess (
 \begin{DoxyParamCaption}
-\item[{IMS\_\-Data::Process\_\-ptr}]{proc}
+\item[{IMS\_\-Data::Process\_\-ptr}]{ proc}
 \end{DoxyParamCaption}
 )}}
 \label{classProcessServer_a6606327ead9ca6bd50d195587f3d8d66}
@@ -127,9 +127,7 @@ To update the database with the link between the diet and vishnu id.
 
 
 \begin{DoxyParams}{Parameters}
-{\em proc,:} & The process that has just been authentified \\
-\hline
-\end{DoxyParams}
+\item[{\em proc,:}]The process that has just been authentified \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 Success, an error code otherwise 
 \end{DoxyReturn}
@@ -138,8 +136,8 @@ Success, an error code otherwise
 \index{checkStopped@{checkStopped}!ProcessServer@{ProcessServer}}
 \subsubsection[{checkStopped}]{\setlength{\rightskip}{0pt plus 5cm}bool ProcessServer::checkStopped (
 \begin{DoxyParamCaption}
-\item[{string}]{machine, }
-\item[{string}]{type}
+\item[{string}]{ machine, }
+\item[{string}]{ type}
 \end{DoxyParamCaption}
 )}}
 \label{classProcessServer_aacc5b51b54c41ebfa0e08c739dd9f31e}
@@ -149,11 +147,7 @@ Return true if the process with a diet name Pname is of type IMS.
 
 
 \begin{DoxyParams}{Parameters}
-{\em machine,:} & The vishnu machine id \\
-\hline
-{\em type,:} & The type of the sed \\
-\hline
-\end{DoxyParams}
+\item[{\em machine,:}]The vishnu machine id \item[{\em type,:}]The type of the sed \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 True if no process on this machine and of this type are down 
 \end{DoxyReturn}
@@ -162,7 +156,7 @@ True if no process on this machine and of this type are down
 \index{connectProcess@{connectProcess}!ProcessServer@{ProcessServer}}
 \subsubsection[{connectProcess}]{\setlength{\rightskip}{0pt plus 5cm}int ProcessServer::connectProcess (
 \begin{DoxyParamCaption}
-\item[{IMS\_\-Data::Process\_\-ptr}]{proc}
+\item[{IMS\_\-Data::Process\_\-ptr}]{ proc}
 \end{DoxyParamCaption}
 )}}
 \label{classProcessServer_affb3bba539691ff8e05890a9a98cea7a}
@@ -172,9 +166,7 @@ To update the database with a process connexion.
 
 
 \begin{DoxyParams}{Parameters}
-{\em proc,:} & The process that has just connected \\
-\hline
-\end{DoxyParams}
+\item[{\em proc,:}]The process that has just connected \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 Success, an error code otherwise 
 \end{DoxyReturn}
@@ -183,7 +175,7 @@ Success, an error code otherwise
 \index{disconnectProcess@{disconnectProcess}!ProcessServer@{ProcessServer}}
 \subsubsection[{disconnectProcess}]{\setlength{\rightskip}{0pt plus 5cm}int ProcessServer::disconnectProcess (
 \begin{DoxyParamCaption}
-\item[{IMS\_\-Data::Process\_\-ptr}]{proc}
+\item[{IMS\_\-Data::Process\_\-ptr}]{ proc}
 \end{DoxyParamCaption}
 )}}
 \label{classProcessServer_aab1bad8a4cad8bea3db7a5fbe220e37a}
@@ -193,9 +185,7 @@ To update the database with a process disconnexion.
 
 
 \begin{DoxyParams}{Parameters}
-{\em proc,:} & The process that has just disconnected \\
-\hline
-\end{DoxyParams}
+\item[{\em proc,:}]The process that has just disconnected \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 Success, an error code otherwise 
 \end{DoxyReturn}
@@ -204,7 +194,7 @@ Success, an error code otherwise
 \index{fillContent@{fillContent}!ProcessServer@{ProcessServer}}
 \subsubsection[{fillContent}]{\setlength{\rightskip}{0pt plus 5cm}void ProcessServer::fillContent (
 \begin{DoxyParamCaption}
-\item[{IMS\_\-Data::Process\_\-ptr}]{p}
+\item[{IMS\_\-Data::Process\_\-ptr}]{ p}
 \end{DoxyParamCaption}
 )}}
 \label{classProcessServer_ad48bec4be2d70b61135aeb323b448e84}
@@ -214,9 +204,7 @@ To get the script content from the machineId and dietName.
 
 
 \begin{DoxyParams}{Parameters}
-{\em p,:} & Process to fill \\
-\hline
-\end{DoxyParams}
+\item[{\em p,:}]Process to fill \end{DoxyParams}
 \hypertarget{classProcessServer_a19a98c66886027c2d3fa019e7ce77784}{
 \index{ProcessServer@{ProcessServer}!getCommandName@{getCommandName}}
 \index{getCommandName@{getCommandName}!ProcessServer@{ProcessServer}}
@@ -238,7 +226,7 @@ The the name of the query command line
 \index{getDataFromDietId@{getDataFromDietId}!ProcessServer@{ProcessServer}}
 \subsubsection[{getDataFromDietId}]{\setlength{\rightskip}{0pt plus 5cm}void ProcessServer::getDataFromDietId (
 \begin{DoxyParamCaption}
-\item[{IMS\_\-Data::Process\_\-ptr}]{p}
+\item[{IMS\_\-Data::Process\_\-ptr}]{ p}
 \end{DoxyParamCaption}
 )}}
 \label{classProcessServer_ab5c0b53b66a0c8d1ac26d477db6958cd}
@@ -248,9 +236,7 @@ To get the script content from the dietId.
 
 
 \begin{DoxyParams}{Parameters}
-{\em p,:} & Process to fill \\
-\hline
-\end{DoxyParams}
+\item[{\em p,:}]Process to fill \end{DoxyParams}
 \hypertarget{classProcessServer_a496974be492e966314d02df205daf2a5}{
 \index{ProcessServer@{ProcessServer}!getElectedMid@{getElectedMid}}
 \index{getElectedMid@{getElectedMid}!ProcessServer@{ProcessServer}}
@@ -272,9 +258,9 @@ The last updated running IMS sed
 \index{getHost@{getHost}!ProcessServer@{ProcessServer}}
 \subsubsection[{getHost}]{\setlength{\rightskip}{0pt plus 5cm}void ProcessServer::getHost (
 \begin{DoxyParamCaption}
-\item[{string}]{mmid, }
-\item[{string \&}]{hostname, }
-\item[{string \&}]{acclog}
+\item[{string}]{ mmid, }
+\item[{string \&}]{ hostname, }
+\item[{string \&}]{ acclog}
 \end{DoxyParamCaption}
 )}}
 \label{classProcessServer_ac99cd39c216e9c03c857241e093dbbe9}
@@ -284,19 +270,13 @@ To get the hostname on the machine mmid.
 
 
 \begin{DoxyParams}{Parameters}
-{\em mmid,:} & Vishnu machine id \\
-\hline
-{\em hostname,:} & hostname of the machine \\
-\hline
-{\em acclog,:} & Account login of the user 'root' on the machine \\
-\hline
-\end{DoxyParams}
+\item[{\em mmid,:}]Vishnu machine id \item[{\em hostname,:}]hostname of the machine \item[{\em acclog,:}]Account login of the user 'root' on the machine \end{DoxyParams}
 \hypertarget{classProcessServer_a886644ab325e838721bd482582e25be3}{
 \index{ProcessServer@{ProcessServer}!isIMSSeD@{isIMSSeD}}
 \index{isIMSSeD@{isIMSSeD}!ProcessServer@{ProcessServer}}
 \subsubsection[{isIMSSeD}]{\setlength{\rightskip}{0pt plus 5cm}bool ProcessServer::isIMSSeD (
 \begin{DoxyParamCaption}
-\item[{string}]{Pname}
+\item[{string}]{ Pname}
 \end{DoxyParamCaption}
 )}}
 \label{classProcessServer_a886644ab325e838721bd482582e25be3}
@@ -306,9 +286,7 @@ Return true if the process with a diet name Pname is of type IMS.
 
 
 \begin{DoxyParams}{Parameters}
-{\em Pname,:} & DIET name of the process \\
-\hline
-\end{DoxyParams}
+\item[{\em Pname,:}]DIET name of the process \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 True if Pname represents an IMS SeD 
 \end{DoxyReturn}
@@ -335,7 +313,7 @@ raises an exception on error
 \index{setRestarted@{setRestarted}!ProcessServer@{ProcessServer}}
 \subsubsection[{setRestarted}]{\setlength{\rightskip}{0pt plus 5cm}int ProcessServer::setRestarted (
 \begin{DoxyParamCaption}
-\item[{IMS\_\-Data::Process\_\-ptr}]{proc}
+\item[{IMS\_\-Data::Process\_\-ptr}]{ proc}
 \end{DoxyParamCaption}
 )}}
 \label{classProcessServer_aef604927a5e7f2bb3996cdfb9bd08e29}
@@ -345,9 +323,7 @@ To set a process as stopped.
 
 
 \begin{DoxyParams}{Parameters}
-{\em proc,:} & The proc down to flag as stopped (means restarted) \\
-\hline
-\end{DoxyParams}
+\item[{\em proc,:}]The proc down to flag as stopped (means restarted) \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 Success, an error code otherwise 
 \end{DoxyReturn}
@@ -356,7 +332,7 @@ Success, an error code otherwise
 \index{stopAllProcesses@{stopAllProcesses}!ProcessServer@{ProcessServer}}
 \subsubsection[{stopAllProcesses}]{\setlength{\rightskip}{0pt plus 5cm}int ProcessServer::stopAllProcesses (
 \begin{DoxyParamCaption}
-\item[{IMS\_\-Data::Process\_\-ptr}]{proc}
+\item[{IMS\_\-Data::Process\_\-ptr}]{ proc}
 \end{DoxyParamCaption}
 )}}
 \label{classProcessServer_aa6e4cc71dc1a94b3d85c375298908f37}
@@ -366,9 +342,7 @@ To set all running processes as stopped on the machine.
 
 
 \begin{DoxyParams}{Parameters}
-{\em proc,:} & The proc to flag as stopped \\
-\hline
-\end{DoxyParams}
+\item[{\em proc,:}]The proc to flag as stopped \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 Success, an error code otherwise 
 \end{DoxyReturn}
@@ -377,7 +351,7 @@ Success, an error code otherwise
 \index{stopProcess@{stopProcess}!ProcessServer@{ProcessServer}}
 \subsubsection[{stopProcess}]{\setlength{\rightskip}{0pt plus 5cm}int ProcessServer::stopProcess (
 \begin{DoxyParamCaption}
-\item[{IMS\_\-Data::Process\_\-ptr}]{proc}
+\item[{IMS\_\-Data::Process\_\-ptr}]{ proc}
 \end{DoxyParamCaption}
 )}}
 \label{classProcessServer_a4ba31bc3a4c161334f65ff97ad5bed5f}
@@ -387,9 +361,7 @@ To set a process as stopped.
 
 
 \begin{DoxyParams}{Parameters}
-{\em proc,:} & The proc to flag as stopped \\
-\hline
-\end{DoxyParams}
+\item[{\em proc,:}]The proc to flag as stopped \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 Success, an error code otherwise 
 \end{DoxyReturn}

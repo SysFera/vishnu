@@ -91,7 +91,7 @@ MYSQL implementation of the \hyperlink{classDatabase}{Database}.
 \index{MYSQLDatabase@{MYSQLDatabase}!MYSQLDatabase@{MYSQLDatabase}}
 \subsubsection[{MYSQLDatabase}]{\setlength{\rightskip}{0pt plus 5cm}MYSQLDatabase::MYSQLDatabase (
 \begin{DoxyParamCaption}
-\item[{{\bf DbConfiguration}}]{dbConfig}
+\item[{{\bf DbConfiguration}}]{ dbConfig}
 \end{DoxyParamCaption}
 )}}
 \label{classMYSQLDatabase_a69cca4aa62adf08b995908aec1451522}
@@ -101,9 +101,7 @@ Constructor, raises an exception on error.
 
 
 \begin{DoxyParams}{Parameters}
-{\em dbConfig} & the configuration of the database client \\
-\hline
-\end{DoxyParams}
+\item[{\em dbConfig}]the configuration of the database client \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -112,7 +110,7 @@ Constructor, raises an exception on error.
 \index{cancelTransaction@{cancelTransaction}!MYSQLDatabase@{MYSQLDatabase}}
 \subsubsection[{cancelTransaction}]{\setlength{\rightskip}{0pt plus 5cm}virtual void MYSQLDatabase::cancelTransaction (
 \begin{DoxyParamCaption}
-\item[{int}]{transactionID}
+\item[{int}]{ transactionID}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classMYSQLDatabase_aafb2ffadceed8006db24a247032dbbdb}
@@ -122,9 +120,7 @@ Cancel a transaction.
 
 
 \begin{DoxyParams}{Parameters}
-{\em transactionID,:} & The ID of the transaction \\
-\hline
-\end{DoxyParams}
+\item[{\em transactionID,:}]The ID of the transaction \end{DoxyParams}
 
 
 Implements \hyperlink{classDatabase_a16849263b31bf827ff1421d9df980196}{Database}.
@@ -174,7 +170,7 @@ Implements \hyperlink{classDatabase_adca650f8a5db531ff1fb85aaef25e711}{Database}
 \index{endTransaction@{endTransaction}!MYSQLDatabase@{MYSQLDatabase}}
 \subsubsection[{endTransaction}]{\setlength{\rightskip}{0pt plus 5cm}virtual void MYSQLDatabase::endTransaction (
 \begin{DoxyParamCaption}
-\item[{int}]{transactionID}
+\item[{int}]{ transactionID}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classMYSQLDatabase_a5b2543618f1468649e52ec6e86a80ccb}
@@ -184,9 +180,7 @@ End a transaction.
 
 
 \begin{DoxyParams}{Parameters}
-{\em transactionID,:} & The ID of the transaction \\
-\hline
-\end{DoxyParams}
+\item[{\em transactionID,:}]The ID of the transaction \end{DoxyParams}
 
 
 Implements \hyperlink{classDatabase_a5d90789cdc650feede851c90bd48168d}{Database}.
@@ -196,7 +190,7 @@ Implements \hyperlink{classDatabase_a5d90789cdc650feede851c90bd48168d}{Database}
 \index{flush@{flush}!MYSQLDatabase@{MYSQLDatabase}}
 \subsubsection[{flush}]{\setlength{\rightskip}{0pt plus 5cm}virtual void MYSQLDatabase::flush (
 \begin{DoxyParamCaption}
-\item[{int}]{transactionID}
+\item[{int}]{ transactionID}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classMYSQLDatabase_a722f4a93562ae658142fb5cbae3ee8e2}
@@ -206,9 +200,7 @@ To commit a transaction.
 
 
 \begin{DoxyParams}{Parameters}
-{\em transactionID,:} & The ID of the transaction \\
-\hline
-\end{DoxyParams}
+\item[{\em transactionID,:}]The ID of the transaction \end{DoxyParams}
 
 
 Implements \hyperlink{classDatabase_a0dc84deddb8aab9d54817484a7c58400}{Database}.
@@ -218,10 +210,10 @@ Implements \hyperlink{classDatabase_a0dc84deddb8aab9d54817484a7c58400}{Database}
 \index{generateId@{generateId}!MYSQLDatabase@{MYSQLDatabase}}
 \subsubsection[{generateId}]{\setlength{\rightskip}{0pt plus 5cm}virtual int MYSQLDatabase::generateId (
 \begin{DoxyParamCaption}
-\item[{std::string}]{table, }
-\item[{std::string}]{fields, }
-\item[{std::string}]{val, }
-\item[{int}]{tid}
+\item[{std::string}]{ table, }
+\item[{std::string}]{ fields, }
+\item[{std::string}]{ val, }
+\item[{int}]{ tid}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classMYSQLDatabase_ad8947cf6f7b1922f0d7cfc7d23d6b783}
@@ -231,15 +223,7 @@ To get a unique id.
 
 
 \begin{DoxyParams}{Parameters}
-{\em table,:} & The table to use to generate the id \\
-\hline
-{\em fields,:} & The fields of the table \\
-\hline
-{\em val,:} & The values of the fields to insert \\
-\hline
-{\em tid,:} & The transaction id \\
-\hline
-\end{DoxyParams}
+\item[{\em table,:}]The table to use to generate the id \item[{\em fields,:}]The fields of the table \item[{\em val,:}]The values of the fields to insert \item[{\em tid,:}]The transaction id \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 A new integer never returned by this function 
 \end{DoxyReturn}
@@ -252,7 +236,7 @@ Implements \hyperlink{classDatabase_ac17618be411cc0a017d830ab56b4e31f}{Database}
 \index{getConnection@{getConnection}!MYSQLDatabase@{MYSQLDatabase}}
 \subsubsection[{getConnection}]{\setlength{\rightskip}{0pt plus 5cm}MYSQL $\ast$ MYSQLDatabase::getConnection (
 \begin{DoxyParamCaption}
-\item[{int \&}]{pos}
+\item[{int \&}]{ pos}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classMYSQLDatabase_aab2f9ef902b164de793094a4cb92144c}
@@ -262,9 +246,7 @@ To get a valid connexion.
 
 
 \begin{DoxyParams}{Parameters}
-{\em pos} & The position of the connection gotten in the pool \\
-\hline
-\end{DoxyParams}
+\item[{\em pos}]The position of the connection gotten in the pool \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 A valid and free connection 
 \end{DoxyReturn}
@@ -293,8 +275,8 @@ Implements \hyperlink{classDatabase_a668ffe571cb0f9f355a2f874e40cb515}{Database}
 \index{getResult@{getResult}!MYSQLDatabase@{MYSQLDatabase}}
 \subsubsection[{getResult}]{\setlength{\rightskip}{0pt plus 5cm}{\bf DatabaseResult}$\ast$ MYSQLDatabase::getResult (
 \begin{DoxyParamCaption}
-\item[{std::string}]{request, }
-\item[{int}]{transacId = {\ttfamily -\/1}}
+\item[{std::string}]{ request, }
+\item[{int}]{ transacId = {\ttfamily -\/1}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classMYSQLDatabase_a69bbd3724ec02ae9230e558254a3648e}
@@ -304,11 +286,7 @@ To get the result of a select request.
 
 
 \begin{DoxyParams}{Parameters}
-{\em request} & The request to process \\
-\hline
-{\em transacId} & the id of the transaction if one is used \\
-\hline
-\end{DoxyParams}
+\item[{\em request}]The request to process \item[{\em transacId}]the id of the transaction if one is used \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 An object which encapsulates the database results 
 \end{DoxyReturn}
@@ -321,8 +299,8 @@ Implements \hyperlink{classDatabase_a4b87b83ddfcac9d2bbebf3805da602c2}{Database}
 \index{process@{process}!MYSQLDatabase@{MYSQLDatabase}}
 \subsubsection[{process}]{\setlength{\rightskip}{0pt plus 5cm}int MYSQLDatabase::process (
 \begin{DoxyParamCaption}
-\item[{std::string}]{request, }
-\item[{int}]{transacId = {\ttfamily -\/1}}
+\item[{std::string}]{ request, }
+\item[{int}]{ transacId = {\ttfamily -\/1}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classMYSQLDatabase_a2108f42fe84b3f174b87633f533e42b3}
@@ -332,11 +310,7 @@ Function to process the request in the database.
 
 
 \begin{DoxyParams}{Parameters}
-{\em request} & The request to process (must contain a SINGLE SQL statement without a semicolumn) \\
-\hline
-{\em transacId} & the id of the transaction if one is used \\
-\hline
-\end{DoxyParams}
+\item[{\em request}]The request to process (must contain a SINGLE SQL statement without a semicolumn) \item[{\em transacId}]the id of the transaction if one is used \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 on success, an error code otherwise 
 \end{DoxyReturn}
@@ -349,7 +323,7 @@ Implements \hyperlink{classDatabase_a528eb90161e789d75c98415b8df58907}{Database}
 \index{releaseConnection@{releaseConnection}!MYSQLDatabase@{MYSQLDatabase}}
 \subsubsection[{releaseConnection}]{\setlength{\rightskip}{0pt plus 5cm}void MYSQLDatabase::releaseConnection (
 \begin{DoxyParamCaption}
-\item[{int}]{pos}
+\item[{int}]{ pos}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classMYSQLDatabase_a02068cf7e0dd72553013716d7aadabe7}
@@ -359,9 +333,7 @@ To release a connexion.
 
 
 \begin{DoxyParams}{Parameters}
-{\em pos} & The position of the connection to release \\
-\hline
-\end{DoxyParams}
+\item[{\em pos}]The position of the connection to release \end{DoxyParams}
 \hypertarget{classMYSQLDatabase_a7c460d606e90494efd0895d8b420b080}{
 \index{MYSQLDatabase@{MYSQLDatabase}!startTransaction@{startTransaction}}
 \index{startTransaction@{startTransaction}!MYSQLDatabase@{MYSQLDatabase}}

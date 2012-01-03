@@ -53,7 +53,7 @@ string \hyperlink{classNetrcReader_a780a28e35c823c66ff62c75186fb7d15}{mpath}}
 \index{NetrcReader@{NetrcReader}!NetrcReader@{NetrcReader}}
 \subsubsection[{NetrcReader}]{\setlength{\rightskip}{0pt plus 5cm}NetrcReader::NetrcReader (
 \begin{DoxyParamCaption}
-\item[{std::string}]{path}
+\item[{std::string}]{ path}
 \end{DoxyParamCaption}
 )}}
 \label{classNetrcReader_ab9005fa7effec542628d4dfb033f6969}
@@ -63,9 +63,7 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em path} & The path until the netrc file \\
-\hline
-\end{DoxyParams}
+\item[{\em path}]The path until the netrc file \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -90,8 +88,8 @@ raises an exception on error
 \index{getIdentifiers@{getIdentifiers}!NetrcReader@{NetrcReader}}
 \subsubsection[{getIdentifiers}]{\setlength{\rightskip}{0pt plus 5cm}pair$<$string,string$>$ NetrcReader::getIdentifiers (
 \begin{DoxyParamCaption}
-\item[{std::map$<$ size\_\-t, pair$<$ string, string $>$ $>$ \&}]{tab, }
-\item[{const string \&}]{machineName}
+\item[{std::map$<$ size\_\-t, pair$<$ string, string $>$ $>$ \&}]{ tab, }
+\item[{const string \&}]{ machineName}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classNetrcReader_af34324922c7b658e1cffdec4ebb2bff9}
@@ -101,11 +99,7 @@ Function to get the login and the password associated to a specific machine from
 
 
 \begin{DoxyParams}{Parameters}
-{\em tab} & a table in which the couple key and value are registered \\
-\hline
-{\em machineName} & the machine name used for searching the couple \\
-\hline
-\end{DoxyParams}
+\item[{\em tab}]a table in which the couple key and value are registered \item[{\em machineName}]the machine name used for searching the couple \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the login and password associated to the corresponding machineName 
 \end{DoxyReturn}
@@ -114,7 +108,7 @@ the login and password associated to the corresponding machineName
 \index{getNetrcInfo@{getNetrcInfo}!NetrcReader@{NetrcReader}}
 \subsubsection[{getNetrcInfo}]{\setlength{\rightskip}{0pt plus 5cm}pair$<$string,string$>$ NetrcReader::getNetrcInfo (
 \begin{DoxyParamCaption}
-\item[{const string \&}]{machineName}
+\item[{const string \&}]{ machineName}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classNetrcReader_a0429aed611cf9065c277c011a977fa9d}
@@ -124,9 +118,7 @@ Function to get the login and the password associated to a specific machine by p
 
 
 \begin{DoxyParams}{Parameters}
-{\em machineName} & the name of the machine \\
-\hline
-\end{DoxyParams}
+\item[{\em machineName}]the name of the machine \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the corresponding couple (login, password) 
 \end{DoxyReturn}
@@ -135,9 +127,9 @@ the corresponding couple (login, password)
 \index{read@{read}!NetrcReader@{NetrcReader}}
 \subsubsection[{read}]{\setlength{\rightskip}{0pt plus 5cm}void NetrcReader::read (
 \begin{DoxyParamCaption}
-\item[{string \&}]{login, }
-\item[{string \&}]{pwd, }
-\item[{const string \&}]{machineName = {\ttfamily \char`\"{}vishnu\char`\"{}}}
+\item[{string \&}]{ login, }
+\item[{string \&}]{ pwd, }
+\item[{const string \&}]{ machineName = {\ttfamily \char`\"{}vishnu\char`\"{}}}
 \end{DoxyParamCaption}
 )}}
 \label{classNetrcReader_a24b6cd69a5a43dffca8ffeb335dad65c}
@@ -147,13 +139,7 @@ Function to get the login and the password associated to a specific machine defi
 
 
 \begin{DoxyParams}{Parameters}
-{\em login} & the login returned which is associated to the machine \\
-\hline
-{\em pwd} & the password returned which is associated to the machine \\
-\hline
-{\em machineName} & the name of the machine defined on the netrc file \\
-\hline
-\end{DoxyParams}
+\item[{\em login}]the login returned which is associated to the machine \item[{\em pwd}]the password returned which is associated to the machine \item[{\em machineName}]the name of the machine defined on the netrc file \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the corresponding couple (login, password) 
 \end{DoxyReturn}
@@ -162,11 +148,11 @@ the corresponding couple (login, password)
 \index{searchValueFromKey@{searchValueFromKey}!NetrcReader@{NetrcReader}}
 \subsubsection[{searchValueFromKey}]{\setlength{\rightskip}{0pt plus 5cm}bool NetrcReader::searchValueFromKey (
 \begin{DoxyParamCaption}
-\item[{const string \&}]{key, }
-\item[{string \&}]{value, }
-\item[{vector$<$ string $>$ \&}]{tokens, }
-\item[{std::map$<$ size\_\-t, pair$<$ string, string $>$ $>$ \&}]{tab, }
-\item[{const size\_\-t}]{machine\_\-pos}
+\item[{const string \&}]{ key, }
+\item[{string \&}]{ value, }
+\item[{vector$<$ string $>$ \&}]{ tokens, }
+\item[{std::map$<$ size\_\-t, pair$<$ string, string $>$ $>$ \&}]{ tab, }
+\item[{const size\_\-t}]{ machine\_\-pos}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classNetrcReader_a502e087b9254713d86adcb750058b1a2}
@@ -176,17 +162,7 @@ Function to get value associated to a key.
 
 
 \begin{DoxyParams}{Parameters}
-{\em key} & the key associated to a value on the file \\
-\hline
-{\em value} & the value corresponding to the key on the file \\
-\hline
-{\em tokens} & the parsed tokens \\
-\hline
-{\em tab} & a table which allows to register the couple key value \\
-\hline
-{\em machine\_\-pos} & \\
-\hline
-\end{DoxyParams}
+\item[{\em key}]the key associated to a value on the file \item[{\em value}]the value corresponding to the key on the file \item[{\em tokens}]the parsed tokens \item[{\em tab}]a table which allows to register the couple key value \item[{\em machine\_\-pos}]\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 true if the value has found else found 
 \end{DoxyReturn}

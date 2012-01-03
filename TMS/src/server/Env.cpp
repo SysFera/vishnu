@@ -14,6 +14,12 @@
 Env::Env(const BatchType& batchType): mbatchType(batchType) {
 }
 
+/**
+ * \brief Function to replace all occurences in a string
+ * \param scriptContent The string to modify
+ * \param oldValue The value to replace
+ * \param newValue The new value
+ */
 
 void Env::replaceAllOccurences(std::string& scriptContent,
     const std::string& oldValue,
@@ -27,7 +33,10 @@ void Env::replaceAllOccurences(std::string& scriptContent,
 
 }
 
-
+/**
+ * \brief Function to get number of nodes for torque 
+ * \param scriptContent The string content to modify
+ */
 void Env::getTorqueNumNodes(std::string& scriptContent) {
 
   size_t pos = scriptContent.find("VISHNU_BATCHJOB_NUM_NODES");
@@ -38,11 +47,13 @@ void Env::getTorqueNumNodes(std::string& scriptContent) {
     replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$NBNODES");
     replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$NBNODES");
   }
-  
+
 }
 
-/*
-*/
+/**
+ * \brief Function to replace some environment variables in a string
+ * \param scriptContent The string content to modify
+ */
 void Env::replaceEnvVariables(std::string& scriptContent) {
 
   std::string numNodes;

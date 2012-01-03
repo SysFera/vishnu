@@ -44,9 +44,9 @@ April 2011
 \index{parseEmfObject@{parseEmfObject}!utilClient.hpp@{utilClient.hpp}}
 \subsubsection[{parseEmfObject}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ void parseEmfObject (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{objectSerialized, }
-\item[{T $\ast$\&}]{object\_\-ptr, }
-\item[{const std::string}]{msgComp = {\ttfamily std::string()}}
+\item[{const std::string \&}]{ objectSerialized, }
+\item[{T $\ast$\&}]{ object\_\-ptr, }
+\item[{const std::string}]{ msgComp = {\ttfamily std::string()}}
 \end{DoxyParamCaption}
 )}}
 \label{utilClient_8hpp_addfe20f16ff350e49905d6902e764f7c}
@@ -56,13 +56,7 @@ Function to parse the EMF object.
 
 
 \begin{DoxyParams}{Parameters}
-{\em objectSerialized} & the EMF object serialized \\
-\hline
-{\em object\_\-ptr} & the object build with the objectSerialized \\
-\hline
-{\em msgComp} & an exception message \\
-\hline
-\end{DoxyParams}
+\item[{\em objectSerialized}]the EMF object serialized \item[{\em object\_\-ptr}]the object build with the objectSerialized \item[{\em msgComp}]an exception message \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -71,7 +65,7 @@ raises an exception on error
 \index{raiseDietMsgException@{raiseDietMsgException}!utilClient.hpp@{utilClient.hpp}}
 \subsubsection[{raiseDietMsgException}]{\setlength{\rightskip}{0pt plus 5cm}void raiseDietMsgException (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{msg}
+\item[{const std::string \&}]{ msg}
 \end{DoxyParamCaption}
 )}}
 \label{utilClient_8hpp_a4724b68263580fa43892c050b81a24ff}
@@ -81,15 +75,13 @@ Function to spread error message to C++ API, Python API, Web service API and com
 
 
 \begin{DoxyParams}{Parameters}
-{\em msg} & to spread \\
-\hline
-\end{DoxyParams}
+\item[{\em msg}]to spread \end{DoxyParams}
 \hypertarget{utilClient_8hpp_aa5e3ca42e1ddfaebc2d40a2dc1779354}{
 \index{utilClient.hpp@{utilClient.hpp}!raiseExceptionIfNotEmptyMsg@{raiseExceptionIfNotEmptyMsg}}
 \index{raiseExceptionIfNotEmptyMsg@{raiseExceptionIfNotEmptyMsg}!utilClient.hpp@{utilClient.hpp}}
 \subsubsection[{raiseExceptionIfNotEmptyMsg}]{\setlength{\rightskip}{0pt plus 5cm}void raiseExceptionIfNotEmptyMsg (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{msg}
+\item[{const std::string \&}]{ msg}
 \end{DoxyParamCaption}
 )}}
 \label{utilClient_8hpp_aa5e3ca42e1ddfaebc2d40a2dc1779354}
@@ -99,6 +91,4 @@ Function to split the receiving message into error code and message error.
 
 
 \begin{DoxyParams}{Parameters}
-{\em msg} & to split \\
-\hline
-\end{DoxyParams}
+\item[{\em msg}]to split \end{DoxyParams}

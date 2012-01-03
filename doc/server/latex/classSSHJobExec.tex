@@ -80,11 +80,11 @@ std::string \hyperlink{classSSHJobExec_a94726c18bdb344fe9a824b6a6125bb3a}{mhostn
 \index{SSHJobExec@{SSHJobExec}!SSHJobExec@{SSHJobExec}}
 \subsubsection[{SSHJobExec}]{\setlength{\rightskip}{0pt plus 5cm}SSHJobExec::SSHJobExec (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{user, }
-\item[{const std::string \&}]{hostname, }
-\item[{const {\bf BatchType} \&}]{batchType = {\ttfamily UNDEFINED}, }
-\item[{const std::string \&}]{jobSerialized = {\ttfamily \char`\"{}\char`\"{}}, }
-\item[{const std::string \&}]{submitOptionsSerialized = {\ttfamily \char`\"{}\char`\"{}}}
+\item[{const std::string \&}]{ user, }
+\item[{const std::string \&}]{ hostname, }
+\item[{const {\bf BatchType} \&}]{ batchType = {\ttfamily UNDEFINED}, }
+\item[{const std::string \&}]{ jobSerialized = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{const std::string \&}]{ submitOptionsSerialized = {\ttfamily \char`\"{}\char`\"{}}}
 \end{DoxyParamCaption}
 )}}
 \label{classSSHJobExec_a5d668f7ace2d9254b2e56f6da222f1f4}
@@ -94,17 +94,7 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em user} & the user login \\
-\hline
-{\em hostname} & the hostname of the machine \\
-\hline
-{\em batchType} & the type of the batch scheduler \\
-\hline
-{\em jobSerialized} & the job serialized \\
-\hline
-{\em submitOptionsSerialized} & the job options serialized \\
-\hline
-\end{DoxyParams}
+\item[{\em user}]the user login \item[{\em hostname}]the hostname of the machine \item[{\em batchType}]the type of the batch scheduler \item[{\em jobSerialized}]the job serialized \item[{\em submitOptionsSerialized}]the job options serialized \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -129,7 +119,7 @@ raises an exception on error
 \index{convertBatchTypeToString@{convertBatchTypeToString}!SSHJobExec@{SSHJobExec}}
 \subsubsection[{convertBatchTypeToString}]{\setlength{\rightskip}{0pt plus 5cm}std::string SSHJobExec::convertBatchTypeToString (
 \begin{DoxyParamCaption}
-\item[{{\bf BatchType}}]{batchType}
+\item[{{\bf BatchType}}]{ batchType}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classSSHJobExec_a7299a222321c1ca1e32db976b1df79a2}
@@ -139,9 +129,7 @@ Function to convert the batch type to string.
 
 
 \begin{DoxyParams}{Parameters}
-{\em batchType} & the batch type to convert \\
-\hline
-\end{DoxyParams}
+\item[{\em batchType}]the batch type to convert \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the converted batch type 
 \end{DoxyReturn}
@@ -150,10 +138,10 @@ the converted batch type
 \index{copyFiles@{copyFiles}!SSHJobExec@{SSHJobExec}}
 \subsubsection[{copyFiles}]{\setlength{\rightskip}{0pt plus 5cm}int SSHJobExec::copyFiles (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{outputPath, }
-\item[{const std::string \&}]{errorPath, }
-\item[{const char $\ast$}]{copyOfOutputPath, }
-\item[{const char $\ast$}]{copyOfErrorPath}
+\item[{const std::string \&}]{ outputPath, }
+\item[{const std::string \&}]{ errorPath, }
+\item[{const char $\ast$}]{ copyOfOutputPath, }
+\item[{const char $\ast$}]{ copyOfErrorPath}
 \end{DoxyParamCaption}
 )}}
 \label{classSSHJobExec_ae422bcb5022de94c945109142c5f9fdc}
@@ -163,15 +151,7 @@ Function to copy files from remote machine.
 
 
 \begin{DoxyParams}{Parameters}
-{\em outputPath} & the output path to get \\
-\hline
-{\em errorPath} & the error path to get \\
-\hline
-{\em copyOfOutputPath} & the copy of the outputPath \\
-\hline
-{\em copyOfErrorPath} & the copy of errorPath \\
-\hline
-\end{DoxyParams}
+\item[{\em outputPath}]the output path to get \item[{\em errorPath}]the error path to get \item[{\em copyOfOutputPath}]the copy of the outputPath \item[{\em copyOfErrorPath}]the copy of errorPath \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -212,9 +192,9 @@ job serialized content
 \index{sshexec@{sshexec}!SSHJobExec@{SSHJobExec}}
 \subsubsection[{sshexec}]{\setlength{\rightskip}{0pt plus 5cm}void SSHJobExec::sshexec (
 \begin{DoxyParamCaption}
-\item[{const std::string \&}]{slaveDirectory, }
-\item[{const std::string \&}]{serviceName, }
-\item[{const std::string \&}]{script\_\-path = {\ttfamily \char`\"{}\char`\"{}}}
+\item[{const std::string \&}]{ slaveDirectory, }
+\item[{const std::string \&}]{ serviceName, }
+\item[{const std::string \&}]{ script\_\-path = {\ttfamily \char`\"{}\char`\"{}}}
 \end{DoxyParamCaption}
 )}}
 \label{classSSHJobExec_a8cd9b0b6bb07890bbe3d1dcacab24eb5}
@@ -224,13 +204,7 @@ Function to execute command by using ssh.
 
 
 \begin{DoxyParams}{Parameters}
-{\em slaveDirectory} & the path to the command executable \\
-\hline
-{\em serviceName} & the name of the service to execute \\
-\hline
-{\em script\_\-path} & the path to script to submit \\
-\hline
-\end{DoxyParams}
+\item[{\em slaveDirectory}]the path to the command executable \item[{\em serviceName}]the name of the service to execute \item[{\em script\_\-path}]the path to script to submit \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}

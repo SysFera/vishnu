@@ -66,7 +66,7 @@ std::string \hyperlink{classProcessCtlProxy_a61e502eebb092ace3e8c5613130e3ac0}{m
 \index{ProcessCtlProxy@{ProcessCtlProxy}!ProcessCtlProxy@{ProcessCtlProxy}}
 \subsubsection[{ProcessCtlProxy}]{\setlength{\rightskip}{0pt plus 5cm}ProcessCtlProxy::ProcessCtlProxy (
 \begin{DoxyParamCaption}
-\item[{const {\bf SessionProxy} \&}]{session}
+\item[{const {\bf SessionProxy} \&}]{ session}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
 \label{classProcessCtlProxy_a726d138d35f547346f473108a39db1cd}
@@ -76,16 +76,14 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em session} & The object which encapsulates the session information \\
-\hline
-\end{DoxyParams}
+\item[{\em session}]The object which encapsulates the session information \end{DoxyParams}
 \hypertarget{classProcessCtlProxy_ab74b057a3798343c8b9949eb1c44a095}{
 \index{ProcessCtlProxy@{ProcessCtlProxy}!ProcessCtlProxy@{ProcessCtlProxy}}
 \index{ProcessCtlProxy@{ProcessCtlProxy}!ProcessCtlProxy@{ProcessCtlProxy}}
 \subsubsection[{ProcessCtlProxy}]{\setlength{\rightskip}{0pt plus 5cm}ProcessCtlProxy::ProcessCtlProxy (
 \begin{DoxyParamCaption}
-\item[{const {\bf SessionProxy} \&}]{session, }
-\item[{const std::string \&}]{machineId}
+\item[{const {\bf SessionProxy} \&}]{ session, }
+\item[{const std::string \&}]{ machineId}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
 \label{classProcessCtlProxy_ab74b057a3798343c8b9949eb1c44a095}
@@ -95,11 +93,7 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em session} & The object which encapsulates the session information \\
-\hline
-{\em machineId} & The id of the machine \\
-\hline
-\end{DoxyParams}
+\item[{\em session}]The object which encapsulates the session information \item[{\em machineId}]The id of the machine \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -108,7 +102,7 @@ Constructor.
 \index{loadShed@{loadShed}!ProcessCtlProxy@{ProcessCtlProxy}}
 \subsubsection[{loadShed}]{\setlength{\rightskip}{0pt plus 5cm}int ProcessCtlProxy::loadShed (
 \begin{DoxyParamCaption}
-\item[{IMS\_\-Data::LoadShedType}]{loadShedType}
+\item[{IMS\_\-Data::LoadShedType}]{ loadShedType}
 \end{DoxyParamCaption}
 )}}
 \label{classProcessCtlProxy_a389d2701b7cad8691b21d800c47588c5}
@@ -118,9 +112,7 @@ Function to get the refresh period.
 
 
 \begin{DoxyParams}{Parameters}
-{\em loadShedType} & the type of the load shedding mode (SOFT or HARD) \\
-\hline
-\end{DoxyParams}
+\item[{\em loadShedType}]the type of the load shedding mode (SOFT or HARD) \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -129,7 +121,7 @@ raises an exception on error
 \index{restart@{restart}!ProcessCtlProxy@{ProcessCtlProxy}}
 \subsubsection[{restart}]{\setlength{\rightskip}{0pt plus 5cm}int ProcessCtlProxy::restart (
 \begin{DoxyParamCaption}
-\item[{const IMS\_\-Data::RestartOp \&}]{options}
+\item[{const IMS\_\-Data::RestartOp \&}]{ options}
 \end{DoxyParamCaption}
 )}}
 \label{classProcessCtlProxy_a817d9c7c6e578c490fb743e0958882ad}
@@ -139,9 +131,7 @@ Function to to restart a SeD or a MA.
 
 
 \begin{DoxyParams}{Parameters}
-{\em options} & the options for the restart \\
-\hline
-\end{DoxyParams}
+\item[{\em options}]the options for the restart \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -150,7 +140,7 @@ raises an exception on error
 \index{stop@{stop}!ProcessCtlProxy@{ProcessCtlProxy}}
 \subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}int ProcessCtlProxy::stop (
 \begin{DoxyParamCaption}
-\item[{IMS\_\-Data::Process}]{process}
+\item[{IMS\_\-Data::Process}]{ process}
 \end{DoxyParamCaption}
 )}}
 \label{classProcessCtlProxy_af11106aa5267bf0d97a9fa9bb30b2272}
@@ -160,9 +150,7 @@ Function to get the refresh period.
 
 
 \begin{DoxyParams}{Parameters}
-{\em process} & The data structure containing information about the process to stop \\
-\hline
-\end{DoxyParams}
+\item[{\em process}]The data structure containing information about the process to stop \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}

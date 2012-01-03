@@ -77,7 +77,7 @@ Class dealing wwith the control of the processes.
 \index{isIMSSeD@{isIMSSeD}!ProcessCtl@{ProcessCtl}}
 \subsubsection[{isIMSSeD}]{\setlength{\rightskip}{0pt plus 5cm}bool ProcessCtl::isIMSSeD (
 \begin{DoxyParamCaption}
-\item[{string}]{Pname}
+\item[{string}]{ Pname}
 \end{DoxyParamCaption}
 )}}
 \label{classProcessCtl_a38209177f745d65ea63f843cd1cc2ad8}
@@ -87,9 +87,7 @@ Return true if the process with a diet name Pname is of type IMS.
 
 
 \begin{DoxyParams}{Parameters}
-{\em Pname,:} & DIET name of the process \\
-\hline
-\end{DoxyParams}
+\item[{\em Pname,:}]DIET name of the process \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 True if Pname represents an IMS SeD 
 \end{DoxyReturn}
@@ -98,23 +96,21 @@ True if Pname represents an IMS SeD
 \index{loadShed@{loadShed}!ProcessCtl@{ProcessCtl}}
 \subsubsection[{loadShed}]{\setlength{\rightskip}{0pt plus 5cm}void ProcessCtl::loadShed (
 \begin{DoxyParamCaption}
-\item[{int}]{type}
+\item[{int}]{ type}
 \end{DoxyParamCaption}
 )}}
 \label{classProcessCtl_a573af8bdace41dc46472acadf7e222d7}
 To perform load schedding operations 
 \begin{DoxyParams}{Parameters}
-{\em type,:} & The type of loadShedding \\
-\hline
-\end{DoxyParams}
+\item[{\em type,:}]The type of loadShedding \end{DoxyParams}
 \hypertarget{classProcessCtl_a7dbb1bba78af73d111d81d6f109bbd1a}{
 \index{ProcessCtl@{ProcessCtl}!restart@{restart}}
 \index{restart@{restart}!ProcessCtl@{ProcessCtl}}
 \subsubsection[{restart}]{\setlength{\rightskip}{0pt plus 5cm}void ProcessCtl::restart (
 \begin{DoxyParamCaption}
-\item[{IMS\_\-Data::RestartOp\_\-ptr}]{op, }
-\item[{string}]{machineTo, }
-\item[{bool}]{isAPI = {\ttfamily true}}
+\item[{IMS\_\-Data::RestartOp\_\-ptr}]{ op, }
+\item[{string}]{ machineTo, }
+\item[{bool}]{ isAPI = {\ttfamily true}}
 \end{DoxyParamCaption}
 )}}
 \label{classProcessCtl_a7dbb1bba78af73d111d81d6f109bbd1a}
@@ -124,13 +120,7 @@ To relaunch a process.
 
 
 \begin{DoxyParams}{Parameters}
-{\em op,:} & \hyperlink{classOptions}{Options} for restarting \\
-\hline
-{\em machineTo,:} & the host of the process \\
-\hline
-{\em isAPI,:} & If called with the external API or not \\
-\hline
-\end{DoxyParams}
+\item[{\em op,:}]\hyperlink{classOptions}{Options} for restarting \item[{\em machineTo,:}]the host of the process \item[{\em isAPI,:}]If called with the external API or not \end{DoxyParams}
 
 
 The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}

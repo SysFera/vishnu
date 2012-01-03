@@ -45,7 +45,6 @@ public :
   ~MYSQLDatabase();
   /**
   * \brief To get the result of a select request
-  * \fn DatabaseResult* getResult(std::string request)
   * \param request The request to process
   * \param transacId the id of the transaction if one is used
   * \return An object which encapsulates the database results

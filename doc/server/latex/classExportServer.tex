@@ -66,8 +66,8 @@ Superclass to export in various formats.
 \index{ExportServer@{ExportServer}!ExportServer@{ExportServer}}
 \subsubsection[{ExportServer}]{\setlength{\rightskip}{0pt plus 5cm}ExportServer::ExportServer (
 \begin{DoxyParamCaption}
-\item[{{\bf UserServer}}]{u, }
-\item[{IMS\_\-Data::ExportOp}]{op}
+\item[{{\bf UserServer}}]{ u, }
+\item[{IMS\_\-Data::ExportOp}]{ op}
 \end{DoxyParamCaption}
 )}}
 \label{classExportServer_ac42e32c2e2b06e6d5f2cf3a56c9161e4}
@@ -77,11 +77,7 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em u,:} & The user server \\
-\hline
-{\em op,:} & \hyperlink{classOptions}{Options} to restart \\
-\hline
-\end{DoxyParams}
+\item[{\em u,:}]The user server \item[{\em op,:}]\hyperlink{classOptions}{Options} to restart \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -90,8 +86,8 @@ Constructor.
 \index{exporte@{exporte}!ExportServer@{ExportServer}}
 \subsubsection[{exporte}]{\setlength{\rightskip}{0pt plus 5cm}virtual int ExportServer::exporte (
 \begin{DoxyParamCaption}
-\item[{string}]{oldSession, }
-\item[{string \&}]{content}
+\item[{string}]{ oldSession, }
+\item[{string \&}]{ content}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
 \label{classExportServer_acb16e159a3c1b7113b97699ce522d350}
@@ -101,14 +97,14 @@ To export the commands made in the oldSession in the file filename with the opti
 
 
 \begin{DoxyParams}{Parameters}
-{\em oldSession,:} & Session id of the old session to export \\
-\hline
-{\em content,:} & The content of the export (OUT) \\
-\hline
-\end{DoxyParams}
+\item[{\em oldSession,:}]Session id of the old session to export \item[{\em content,:}]The content of the export (OUT) \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 Return if the export was a SUCCESS 
 \end{DoxyReturn}
+
+
+Implemented in \hyperlink{classShellExporter_a6170de97246f7e2ad1c7fb61d7850e90}{ShellExporter}.
+
 
 
 The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}

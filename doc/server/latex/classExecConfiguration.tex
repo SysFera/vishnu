@@ -52,8 +52,8 @@ Program configuration based on key/value pairs stored in a file.
 \index{getConfigValue@{getConfigValue}!ExecConfiguration@{ExecConfiguration}}
 \subsubsection[{getConfigValue}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ bool ExecConfiguration::getConfigValue (
 \begin{DoxyParamCaption}
-\item[{{\bf vishnu::param\_\-type\_\-t}}]{param, }
-\item[{T \&}]{value}
+\item[{{\bf vishnu::param\_\-type\_\-t}}]{ param, }
+\item[{T \&}]{ value}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{classExecConfiguration_a6642ffe0f41262c3b0188723c2c7ee14}
@@ -62,12 +62,8 @@ Program configuration based on key/value pairs stored in a file.
 Get the value of a configuration parameter. 
 
 
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em param} & \\
-\hline
-\mbox{\tt out}  & {\em value} & result \\
-\hline
-\end{DoxyParams}
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em param}]\item[\mbox{\tt[out]} {\em value}]result \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 param has been set or not 
 \end{DoxyReturn}
@@ -76,8 +72,8 @@ param has been set or not
 \index{getRequiredConfigValue@{getRequiredConfigValue}!ExecConfiguration@{ExecConfiguration}}
 \subsubsection[{getRequiredConfigValue}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void ExecConfiguration::getRequiredConfigValue (
 \begin{DoxyParamCaption}
-\item[{{\bf vishnu::param\_\-type\_\-t}}]{param, }
-\item[{T \&}]{value}
+\item[{{\bf vishnu::param\_\-type\_\-t}}]{ param, }
+\item[{T \&}]{ value}
 \end{DoxyParamCaption}
 ) const  throw ({\bf UserException})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{classExecConfiguration_abbfae5b4cf60595866016107c66e02ee}
@@ -86,18 +82,14 @@ param has been set or not
 Check and get the value of a configuration parameter. 
 
 
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em param} & \\
-\hline
-\mbox{\tt out}  & {\em value} & result \\
-\hline
-\end{DoxyParams}
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em param}]\item[\mbox{\tt[out]} {\em value}]result \end{DoxyParams}
 \hypertarget{classExecConfiguration_acc0689c976ae6c48f88b3156bea802c1}{
 \index{ExecConfiguration@{ExecConfiguration}!initFromFile@{initFromFile}}
 \index{initFromFile@{initFromFile}!ExecConfiguration@{ExecConfiguration}}
 \subsubsection[{initFromFile}]{\setlength{\rightskip}{0pt plus 5cm}void ExecConfiguration::initFromFile (
 \begin{DoxyParamCaption}
-\item[{std::string}]{filePath}
+\item[{std::string}]{ filePath}
 \end{DoxyParamCaption}
 )  throw ({\bf UserException},std::exception)}}
 \label{classExecConfiguration_acc0689c976ae6c48f88b3156bea802c1}
@@ -107,9 +99,7 @@ Initialize from a file.
 
 
 \begin{DoxyParams}{Parameters}
-{\em filePath} & full path of the configuration filePath \\
-\hline
-\end{DoxyParams}
+\item[{\em filePath}]full path of the configuration filePath \end{DoxyParams}
 
 
 The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
