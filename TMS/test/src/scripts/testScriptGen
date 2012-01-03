@@ -1,0 +1,32 @@
+#!/bin/sh
+
+#% vishnu_job_name=first_job
+#          % vishnu_queue=first_queue
+#% vishnu_output=my_first_job_gen.out
+#% vishnu_error=my_first_job_gen.err
+#% vishnu_working_dir=/tmp
+#% vishnu_mailNotification=BEGIN
+#% vishnu_notify_user=daouda.traore@sysfera.com
+#% vishnu_wallclocklimit=01:00:00
+##% vishnu_cput=1:10
+##% vishnu_memory=1
+##% vishnu_nb_cpu=2
+##% vishnu_nbNodesAndCpuPerNode = "2:2"
+##% vishnu_nbNodesAndCpuPerNode = 1:1
+# PBS -l nodes=2:ppn=1+1+1:ppn=2
+# PBS -l nodes=2
+##% vishnu_nb_cpu=2
+#% vishnu_group = traore
+#ceci est un commentaire
+#   @ wall_clock_limit=
+#5:0:0 
+# PBS -q queue3
+#SBATCH --comment "Test job with vishnu generic script"
+#SBATCH \    
+--share
+# PBS -l walltime=01:00:00
+#SBATCH -p firstPart
+#PBS -q second_queue
+echo "The name of the submitted server is: " $HOSTNAME
+ sleep 60
+  ls -l
