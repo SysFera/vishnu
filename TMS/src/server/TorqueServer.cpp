@@ -796,9 +796,6 @@ TorqueServer::getNbNodesInNodeFormat(const std::string& format,
   std::string nextNodeContent;
   std::string nextNode;
   std::string nbCpuStr;
-  size_t pos;
-  size_t posFirstChar;
-  size_t posColon;
   nbCpu = std::numeric_limits<int>::max();
   int nbNodes = 0;
   size_t beg = 0;
