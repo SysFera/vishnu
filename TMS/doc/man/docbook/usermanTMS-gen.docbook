@@ -111,7 +111,7 @@ same conditions as regards security.</para>
           <varlistentry>
             <term><option>-t <replaceable>wallTime</replaceable></option></term>
             <listitem>
-              <para>The maximum wall-clock time during which the job can run (in seconds or in the format [[HH:]MM:]SS).</para>
+              <para>The maximum wall-clock time during which the job can run (in seconds).</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -171,7 +171,7 @@ same conditions as regards security.</para>
           <varlistentry>
             <term><option>-T <replaceable>cpuTime</replaceable></option></term>
             <listitem>
-              <para>Assigns a job cpu limit time (in seconds or in the format [[HH:]MM:]SS).</para>
+              <para>Assigns a job cpu limit time (in the format [[HH:]MM:]SS).</para>
             </listitem>
           </varlistentry>
         </variablelist>
