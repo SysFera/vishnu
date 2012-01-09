@@ -1,4 +1,23 @@
 +--------------+
+| VISHNU 1.2.6 |
++--------------+
+
+* Extended submit job options: added mailNotification, mailNotifyUser,
+group, workingDir cpuTime options
+
+* Added JOB OUTPUT ENVIRONMENT VARIABLES
+
+* Added the use of .netrc file for the connection
+
+* Added recursive option for the creation of the directory
+
+* Modified listDir C++ and Python API: new structure added 
+
+* Added -w option for the vishnu_reconnect function
+
+* Added a new command line vishnu_current_session_id added
+
++--------------+
 | VISHNU 1.2.5 |
 +--------------+
 
