@@ -1986,7 +1986,7 @@
                 <entry><para>wallTime</para></entry>
                 <entry><para>int</para></entry>
                 <entry><para>t</para></entry>
-                <entry><para>The maximum wall-clock time during which the job can run (in seconds or in the format [[HH:]MM:]SS)</para></entry>
+                <entry><para>The maximum wall-clock time during which the job can run (in seconds)</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -2056,7 +2056,7 @@
                 <entry><para>cpuTime</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>T</para></entry>
-                <entry><para>Assigns a job cpu limit time (in seconds or in the format [[HH:]MM:]SS)</para></entry>
+                <entry><para>Assigns a job cpu limit time (in the format [[HH:]MM:]SS)</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>

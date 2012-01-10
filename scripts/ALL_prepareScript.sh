@@ -246,6 +246,7 @@ copy_dir UMS/test/src/sql UMS/test/src
 copy_file UMS/test/src/\*pp UMS/test/src
 copy_file UMS/test/src/\*.in UMS/test/src
 copy_file UMS/test/src/CMakeLists.txt UMS/test/src
+copy_file UMS/test/src/.netrc.in UMS/test/src
 
 # Copy man pages
 copy_file  UMS/doc/man/CMakeLists.txt UMS/doc/man/
