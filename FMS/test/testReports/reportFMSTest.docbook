@@ -263,6 +263,14 @@ same conditions as regards security.</para>
               <entry><para>VishnuException</para></entry>
               <entry><para>0</para></entry>
             </row>
+ <row>
+             <entry><para>F1.CR2-E4</para></entry>
+              <entry><para> The new directory path contains
+                  parent directories which don't exist </para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
           </tbody>
         </tgroup>
       </informaltable>
