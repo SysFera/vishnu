@@ -144,8 +144,23 @@
         </revdescription>
       </revision>
 
+      <revision>
+        <revnumber>11</revnumber>
+        <date>10/01/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Updates of TMS:</para>
+            <para>Added new data structures LoadCriterion and LoadType.</para>
+            <para>Modified decription of submitJob function (to take into account automatic submission).</para> 
+            <para>Modified SubmitOptions structure (added load criterion option for automatic submission, added option to select a queue automatically).</para>
+            <para>Modified decription of listJobs function (to take into account listing of jobs on all machines).</para> 
+            <para>Modified ListJobsOptions structure (added multipleStatus option for combination of several job states, added option to list all jobs submitted by the underlying batch scheduler (VISHNU jobs and jobs submitted out of VISHNU).</para>
+        </revdescription>
+      </revision>
+
       </revhistory>
     </info>
+    
   <chapter>
     <title>Document presentation</title>
     <section>

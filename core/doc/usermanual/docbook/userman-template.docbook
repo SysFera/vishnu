@@ -105,7 +105,24 @@
       <para>Add a section dedicated of the Configuration of ssh keys required for TMS.
    </para></revdescription>
   </revision> 
-    </revhistory>
+
+  <revision>
+    <revnumber>10</revnumber>
+    <date>10/01/2012</date>
+    <authorinitials>SysFera</authorinitials>
+    <revdescription>
+      <para>Updates of TMS:</para>
+      <para>Modified decription of vishnu_submit_job command (to take into account automatic submission).</para>
+      <para>Extended vishnu_submit_job options (added load criterion option for automatic submission, added option to select a queue automatically).</para>
+      <para>Modified decription of vishnu_list_jobs command (to take into account listing of jobs on all machines).</para>
+      <para>Extended vishnu_list_jobs options (added multipleStatus option for combination of several job states, added option to list all jobs submitted by the underlying batch scheduler (VISHNU jobs and jobs submitted out of VISHNU).</para>
+      <para>Modified decription of submitJob C++ and Python API function (to take into account automatic submission).</para>
+      <para>Modified decription of listJobs C++ and Python API function (to take into account listing of jobs on all machines).</para>
+    </revdescription>
+  </revision>
+
+
+  </revhistory>
 
     <copyright>
       <year>2011</year>
