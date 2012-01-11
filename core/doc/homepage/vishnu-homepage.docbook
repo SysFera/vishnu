@@ -3,7 +3,7 @@
   <info>
     <title>Vishnu Home Page</title>
     <productname>VISHNU</productname>
-    <releaseinfo>Version 1.2.5</releaseinfo>
+    <releaseinfo>Version 1.2.6</releaseinfo>
     <date>June 28, 2011</date>
     <author>
       <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
@@ -51,6 +51,14 @@
 	<authorinitials>SysFera</authorinitials>
 	<revdescription>
 	  <para>Update for release 1.2.5</para>
+        </revdescription>
+      </revision>
+      <revision>
+	<revnumber>3</revnumber>
+	<date>11/01/2012</date>
+	<authorinitials>SysFera</authorinitials>
+	<revdescription>
+	  <para>Update for release 1.2.6</para>
         </revdescription>
       </revision>
     </revhistory>
@@ -119,6 +127,9 @@
     <section>
       <title>Change log</title>
       <itemizedlist>
+	<listitem>
+          <para>V1.2.6 (11/01/2012): Fix bugs, add options, minor API changes.</para>
+        </listitem>
 	<listitem>
           <para>V1.2.5 (07/11/2011): Fix bugs.</para>
         </listitem>
@@ -222,15 +233,15 @@
       <para>The following archive contain the necessary binary packages: </para>
       <itemizedlist>
         <listitem>
-          <para>i386 (32 bits) for fedora 15</para>
+          <para>i386 (32 bits) for fedora 15 (vishnu 1.2.5)</para>
           <itemizedlist>
             <listitem><para>sysfera-ds-all-f15-sid-i386.tar.gz<ulink url="sysfera-ds-all-f15-i386.tar.gz">[download]</ulink></para></listitem>
           </itemizedlist>
-          <para>x86_64 (64 bits) for fedora 15</para>
+          <para>x86_64 (64 bits) for fedora 15 (vishnu 1.2.5)</para>
           <itemizedlist>
             <listitem><para>sysfera-ds-all-f15-sid-amd64.tar.gz<ulink url="sysfera-ds-all-f15-x86_64.tar.gz">[download]</ulink></para></listitem>
           </itemizedlist>
-          <para>Sources for fedora 15</para>
+          <para>Sources for fedora 15 (vishnu 1.2.5)</para>
           <itemizedlist>
             <listitem><para>sysfera-ds-all-f15-sid-src.tar.gz<ulink url="sysfera-ds-all-f15-src.tar.gz">[download]</ulink></para></listitem>
           </itemizedlist>            
