@@ -130,6 +130,18 @@
             Added -w option to connect and reconnect command.
           </para></revdescription>
       </revision>
+      <revision>
+        <revnumber>11</revnumber>
+        <date>10/01/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+          
+          
+          
+          
+        <para>Updates of TMS:</para><para>Modified decription of vishnu_submit_job command (to take into account automatic submission).</para><para>Extended vishnu_submit_job options (added load criterion option for automatic submission, added option to select a queue automatically).</para><para>Modified decription of vishnu_list_jobs command (to take into account listing of jobs on all machines).</para><para>Extended vishnu_list_jobs options (added multipleStatus option for combination of several job states, added option to list all jobs submitted by the underlying batch scheduler (VISHNU jobs and jobs submitted out of VISHNU).</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -1914,7 +1926,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_submit_job command submits a job on a machine through the use of a script (scriptFilePath)</para>
+        <para>The vishnu_submit_job command submits a job on a machine through the use of a script (scriptFilePath). If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script  using  VISHNU's generic directives for all batch schedulers</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_submit_job</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
@@ -1930,6 +1942,7 @@
               choice="opt"><option>-g <replaceable>group</replaceable></option></arg><arg
               choice="opt"><option>-D <replaceable>workingDir</replaceable></option></arg><arg
               choice="opt"><option>-T <replaceable>cpuTime</replaceable></option></arg><arg
+              choice="opt"><option>-Q</option></arg><arg choice="opt"><option>-L <replaceable>loadType</replaceable></option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -2056,7 +2069,21 @@
                 <entry><para>cpuTime</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>T</para></entry>
-                <entry><para>Assigns a job cpu limit time (in the format [[HH:]MM:]SS)</para></entry>
+                <entry><para>Assigns a job cpu limit time (in seconds or in the format [[HH:]MM:]SS)</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>selectQueueAutom</para></entry>
+                <entry><para>boolean</para></entry>
+                <entry><para>Q</para></entry>
+                <entry><para>allows to select automatically a queue which has the number of nodes requested by the user</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>loadType</para></entry>
+                <entry><para><link linkend="LoadType">LoadType</link></para></entry>
+                <entry><para>L</para></entry>
+                <entry><para>The criterion to aumatically submit a job (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs). This option is used only if the machine identifier is equal to autom (this keyword is used to submit automatically a job)</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -2236,7 +2263,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_list_jobs command gets a list of all submitted jobs</para>
+        <para>The vishnu_list_jobs command gets a list of all submitted jobs on a machine. If machine identifier is equal to all, submitted jobs on all machines are listed</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_list_jobs</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-i <replaceable>jobId</replaceable></option></arg><arg
@@ -2247,7 +2274,8 @@
               choice="opt"><option>-s <replaceable>status</replaceable></option></arg><arg
               choice="opt"><option>-p <replaceable>priority</replaceable></option></arg><arg
               choice="opt"><option>-q <replaceable>queue</replaceable></option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-S <replaceable>multipleStatus</replaceable></option></arg><arg
+              choice="opt"><option>-b</option></arg><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2332,6 +2360,20 @@
                 <entry><para>string</para></entry>
                 <entry><para>q</para></entry>
                 <entry><para>the jobs with the specified queue name</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>multipleStatus</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>S</para></entry>
+                <entry><para>lists the jobs with the specified status (combination of multiple status). Its format contains  the first letter or the value (interger) of each chosen status. For exemple to list the cancelled and terminated jobs,  you use the format CT or 65</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>batchJob</para></entry>
+                <entry><para>boolean</para></entry>
+                <entry><para>b</para></entry>
+                <entry><para>allows to select all jobs submitted  through the underlying batch scheduler  (jobs submitted through vishnu and out of vishnu)</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -2594,6 +2636,35 @@
             <row>
               <entry><para>ALREADY_DOWNLOADED</para></entry>
               <entry><para>7</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="LoadType"><emphasis role="bold">Enumeration TMS::LoadType Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>USE_NB_WAITING_JOBS</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>USE_NB_JOBS</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>USE_NB_RUNNING_JOBS</para></entry>
+              <entry><para>2</para></entry>
             </row>
           </tbody>
         </tgroup>

@@ -28,13 +28,13 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-VISHNU.submitJob \- submits a job on a machine through the use of a script (scriptFilePath)
+VISHNU.submitJob \- submits a job on a machine through the use of a script (scriptFilePath)\&. If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script using VISHNU\*(Aqs generic directives for all batch schedulers
 .SH "SYNOPSIS"
 .HP \w'ret=VISHNU\&.submitJob('u
 .BI "ret=VISHNU\&.submitJob(string\ " "sessionKey" ", string\ " "machineId" ", string\ " "scriptFilePath" ", Job\ " "jobInfo" ", SubmitOptions\ " "options\ =\ SubmitOptions()" ");"
 .SH "DESCRIPTION"
 .PP
-This command is used to submit a job to the specific batch scheduler associated to a machine\&. It allows describing a job in a script, using either the batch scheduler\*(Aqs directives or VISHNU\*(Aqs generic directives for all batch schedulers\&.
+This command is used to submit a job to the specific batch scheduler associated to a machine\&. It allows describing a job in a script, using either the batch scheduler\*(Aqs directives or VISHNU\*(Aqs generic directives for all batch schedulers\&. If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script using VISHNU\*(Aqs generic directives for all batch schedulers
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR

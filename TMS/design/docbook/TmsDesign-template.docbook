@@ -42,7 +42,21 @@
          <para>Added SLURM batch scheduler </para>  
         </revdescription>
       </revision>
-      </revhistory>
+
+      <revision>
+        <revnumber>4</revnumber>
+        <date>10/01/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Updates of TMS:</para>
+          <para>Added new internal service named jobSubmit_autom.</para>
+          <para>Added new internal service named getListOfJobs_all.</para>
+          <para>Modified TMS Data Class diagram.</para>
+          <para>Modified TMS Server Class diagram.</para>
+        </revdescription>
+      </revision>
+ 
+    </revhistory>
     </info>
   <chapter>
     <title>Document presentation</title>
