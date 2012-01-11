@@ -34,6 +34,15 @@
           <para>Deliverable version</para>
         </revdescription>
       </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>11/01/2012</date>
+        <authorinitials>  SYSFERA SAS</authorinitials>
+        <revdescription>
+          <para>Added test case F1.CR2-E4 corresponding to recursive directories creation</para>
+        </revdescription>
+      </revision>
+    
     </revhistory>
     
       <copyright>
