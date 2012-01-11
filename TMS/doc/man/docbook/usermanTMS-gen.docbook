@@ -64,7 +64,7 @@ same conditions as regards security.</para>
       </refmeta>
       <refnamediv>
         <refname>vishnu_submit_job</refname>
-        <refpurpose>submits a job on a machine through the use of a script (scriptFilePath)</refpurpose>
+        <refpurpose>submits a job on a machine through the use of a script (scriptFilePath). If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script  using  VISHNU's generic directives for all batch schedulers</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_submit_job</command><arg choice="opt"><option>-h</option></arg><arg
@@ -81,11 +81,13 @@ same conditions as regards security.</para>
               choice="opt"><option>-g <replaceable>group</replaceable></option></arg><arg
               choice="opt"><option>-D <replaceable>workingDir</replaceable></option></arg><arg
               choice="opt"><option>-T <replaceable>cpuTime</replaceable></option></arg><arg
+              choice="opt"><option>-Q</option></arg><arg choice="opt"><option>-L <replaceable>loadType</replaceable></option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command is used to submit a job to the specific batch scheduler associated to a machine. It allows describing a job in a script, using either the batch scheduler's directives or VISHNU's generic directives for all batch schedulers.</para>
+        <para>This command is used to submit a job to the specific batch scheduler associated to a machine. It allows describing a job in a script, using either the batch scheduler's directives or VISHNU's generic directives for all batch schedulers.
+If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are  used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script  using  VISHNU's generic directives for all batch schedulers</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -171,7 +173,20 @@ same conditions as regards security.</para>
           <varlistentry>
             <term><option>-T <replaceable>cpuTime</replaceable></option></term>
             <listitem>
-              <para>Assigns a job cpu limit time (in the format [[HH:]MM:]SS).</para>
+              <para>Assigns a job cpu limit time (in seconds or in the format [[HH:]MM:]SS).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-Q <replaceable>selectQueueAutom</replaceable></option></term>
+            <listitem>
+              <para>allows to select automatically a queue which has the number of nodes requested by the user.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-L <replaceable>loadType</replaceable></option></term>
+            <listitem>
+              <para>The criterion to aumatically submit a job (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs). This option is used only if the machine identifier is equal to autom (this keyword is used to submit automatically a job).
+The value must be an integer. Predefined values are: 0 (USE_NB_WAITING_JOBS), 1 (USE_NB_JOBS), 2 (USE_NB_RUNNING_JOBS).</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -291,8 +306,12 @@ same conditions as regards security.</para>
       </refsect1>
       <refsect1 id="example">
         <title>EXAMPLE</title>
-        <para>To submit on machine_1 the job in the script toto:</para>
+        <para>To submit on machine_1 the script toto:</para>
         <para>vishnu_submit_job machine_1 toto</para>
+        <para>To submit automatically the script toto on the best machine (by the default the machine that has the minimum number of waiting jobs is seleted):</para>
+        <para>vishnu_submit_job autom toto</para>
+        <para>To submit automatically the script toto on the best machine by using a machine that has the minimum total number of jobs:</para>
+        <para>vishnu_submit_job autom toto -L 1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -632,7 +651,7 @@ same conditions as regards security.</para>
       </refmeta>
       <refnamediv>
         <refname>vishnu_list_jobs</refname>
-        <refpurpose>gets a list of all submitted jobs</refpurpose>
+        <refpurpose>gets a list of all submitted jobs on a machine. If machine identifier is equal to all, submitted jobs on all machines are listed</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_list_jobs</command><arg choice="opt"><option>-h</option></arg><arg
@@ -644,11 +663,12 @@ same conditions as regards security.</para>
               choice="opt"><option>-s <replaceable>status</replaceable></option></arg><arg
               choice="opt"><option>-p <replaceable>priority</replaceable></option></arg><arg
               choice="opt"><option>-q <replaceable>queue</replaceable></option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-S <replaceable>multipleStatus</replaceable></option></arg><arg
+              choice="opt"><option>-b</option></arg><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows displaying the jobs submitted on a specific machine's batch scheduler.</para>
+        <para>This command allows displaying the jobs submitted on a specific machine's batch scheduler. If machine identifier is equal to all, submitted jobs on all machines are listed</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -707,6 +727,18 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <term><option>-q <replaceable>queue</replaceable></option></term>
             <listitem>
               <para>the jobs with the specified queue name.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-S <replaceable>multipleStatus</replaceable></option></term>
+            <listitem>
+              <para>lists the jobs with the specified status (combination of multiple status). Its format contains  the first letter or the value (interger) of each chosen status. For exemple to list the cancelled and terminated jobs,  you use the format CT or 65.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-b <replaceable>batchJob</replaceable></option></term>
+            <listitem>
+              <para>allows to select all jobs submitted  through the underlying batch scheduler  (jobs submitted through vishnu and out of vishnu).</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -788,6 +820,8 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
         <title>EXAMPLE</title>
         <para>To list the jobs on machine_1:</para>
         <para>vishnu_list_jobs machine_1</para>
+        <para>To list submitted jobs on all machines:</para>
+        <para>vishnu_list_jobs all</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1151,14 +1185,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refmeta>
       <refnamediv>
         <refname>submitJob</refname>
-        <refpurpose>submits a job on a machine through the use of a script (scriptFilePath)</refpurpose>
+        <refpurpose>submits a job on a machine through the use of a script (scriptFilePath). If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script  using  VISHNU's generic directives for all batch schedulers</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
         <funcsynopsis><funcprototype><funcdef>int <function>vishnu::submitJob</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>scriptFilePath</parameter></paramdef><paramdef>Job&amp; <parameter>jobInfo</parameter></paramdef><paramdef>const SubmitOptions&amp; <parameter>options = SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command is used to submit a job to the specific batch scheduler associated to a machine. It allows describing a job in a script, using either the batch scheduler's directives or VISHNU's generic directives for all batch schedulers.</para>
+        <para>This command is used to submit a job to the specific batch scheduler associated to a machine. It allows describing a job in a script, using either the batch scheduler's directives or VISHNU's generic directives for all batch schedulers.
+If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are  used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script  using  VISHNU's generic directives for all batch schedulers</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1517,14 +1552,14 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refmeta>
       <refnamediv>
         <refname>listJobs</refname>
-        <refpurpose>gets a list of all submitted jobs</refpurpose>
+        <refpurpose>gets a list of all submitted jobs on a machine. If machine identifier is equal to all, submitted jobs on all machines are listed</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
         <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listJobs</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListJobs&amp; <parameter>listOfJobs</parameter></paramdef><paramdef>const ListJobsOptions&amp; <parameter>options = ListJobsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows displaying the jobs submitted on a specific machine's batch scheduler.</para>
+        <para>This command allows displaying the jobs submitted on a specific machine's batch scheduler. If machine identifier is equal to all, submitted jobs on all machines are listed</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1904,14 +1939,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refmeta>
       <refnamediv>
         <refname>VISHNU.submitJob</refname>
-        <refpurpose>submits a job on a machine through the use of a script (scriptFilePath)</refpurpose>
+        <refpurpose>submits a job on a machine through the use of a script (scriptFilePath). If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script  using  VISHNU's generic directives for all batch schedulers</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
         <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.submitJob</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>scriptFilePath</parameter></paramdef><paramdef>Job <parameter>jobInfo</parameter></paramdef><paramdef>SubmitOptions <parameter>options = SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command is used to submit a job to the specific batch scheduler associated to a machine. It allows describing a job in a script, using either the batch scheduler's directives or VISHNU's generic directives for all batch schedulers.</para>
+        <para>This command is used to submit a job to the specific batch scheduler associated to a machine. It allows describing a job in a script, using either the batch scheduler's directives or VISHNU's generic directives for all batch schedulers.
+If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are  used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script  using  VISHNU's generic directives for all batch schedulers</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2318,14 +2354,14 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refmeta>
       <refnamediv>
         <refname>VISHNU.listJobs</refname>
-        <refpurpose>gets a list of all submitted jobs</refpurpose>
+        <refpurpose>gets a list of all submitted jobs on a machine. If machine identifier is equal to all, submitted jobs on all machines are listed</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
         <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listJobs</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListJobs <parameter>listOfJobs</parameter></paramdef><paramdef>ListJobsOptions <parameter>options = ListJobsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows displaying the jobs submitted on a specific machine's batch scheduler.</para>
+        <para>This command allows displaying the jobs submitted on a specific machine's batch scheduler. If machine identifier is equal to all, submitted jobs on all machines are listed</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>

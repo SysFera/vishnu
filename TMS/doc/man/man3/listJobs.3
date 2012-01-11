@@ -28,13 +28,13 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-listJobs \- gets a list of all submitted jobs
+listJobs \- gets a list of all submitted jobs on a machine\&. If machine identifier is equal to all, submitted jobs on all machines are listed
 .SH "SYNOPSIS"
 .HP \w'int\ vishnu::listJobs('u
 .BI "int vishnu::listJobs(const\ string&\ " "sessionKey" ", const\ string&\ " "machineId" ", ListJobs&\ " "listOfJobs" ", const\ ListJobsOptions&\ " "options\ =\ ListJobsOptions()" ");"
 .SH "DESCRIPTION"
 .PP
-This command allows displaying the jobs submitted on a specific machine\*(Aqs batch scheduler\&.
+This command allows displaying the jobs submitted on a specific machine\*(Aqs batch scheduler\&. If machine identifier is equal to all, submitted jobs on all machines are listed
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR
