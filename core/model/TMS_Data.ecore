@@ -227,8 +227,22 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="cpuTime" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="Assigns a job cpu limit time (in the format [[HH:]MM:]SS)"/>
+        <details key="content" value="Assigns a job cpu limit time (in seconds or in the format [[HH:]MM:]SS)"/>
         <details key="shortOption" value="T"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="selectQueueAutom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false">
+      <eAnnotations source="Description">
+        <details key="content" value="allows to select automatically a queue which has the number of nodes requested by the user"/>
+        <details key="shortOption" value="Q"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="criterion" eType="#//LoadCriterion"
+        containment="true">
+      <eAnnotations source="Description">
+        <details key="content" value="Represents the scheduling criterion to automatically submit a job"/>
+        <details key="shortOption" value="L"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -284,6 +298,19 @@
       <eAnnotations source="Description">
         <details key="content" value="the jobs with the specified queue name"/>
         <details key="shortOption" value="q"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="multipleStatus" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="lists the jobs with the specified status (combination of multiple status). Its format contains  the first letter or the value (interger) of each chosen status. For exemple to list the cancelled and terminated jobs,  you use the format CT or 65"/>
+        <details key="shortOption" value="S"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="batchJob" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false">
+      <eAnnotations source="Description">
+        <details key="content" value="allows to select all jobs submitted  through the underlying batch scheduler  (jobs submitted through vishnu and out of vishnu)"/>
+        <details key="shortOption" value="b"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -498,5 +525,19 @@
         <details key="content" value="Represents the list of completed jobs results."/>
       </eAnnotations>
     </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LoadCriterion" instanceTypeName="LoadCriterion">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="loadType" eType="#//LoadType"
+        defaultValueLiteral="1">
+      <eAnnotations source="Description">
+        <details key="content" value="The criterion to aumatically submit a job (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs). This option is used only if the machine identifier is equal to autom (this keyword is used to submit automatically a job)"/>
+        <details key="shortOption" value="L"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="LoadType" instanceTypeName="LoadType">
+    <eLiterals name="USE_NB_WAITING_JOBS" literal="USE_NB_WAITING_JOBS"/>
+    <eLiterals name="USE_NB_JOBS" value="1" literal="USE_NB_JOBS"/>
+    <eLiterals name="USE_NB_RUNNING_JOBS" value="2" literal="USE_NB_RUNNING_JOBS"/>
   </eClassifiers>
 </ecore:EPackage>
