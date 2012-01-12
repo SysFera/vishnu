@@ -1,7 +1,8 @@
 /**
 * \file utilVishnu.hpp
 * \brief This file presents the utils functions of the vishnu system
-* \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
+* \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com) and
+*  Daouda Traoré (daouda.traore@sysfera.com and Ibrahima Cissé (ibrahima.cisse@sysfera.com)
 * \date 15/02/2011
 */
 
@@ -35,6 +36,8 @@ typedef enum {
   UNDEFINED = 3 /*!< IF batch type is not defined*/
 } BatchType;
 
+static const std::string AUTOMATIC_SUBMIT_JOB_KEYWORD="autom";
+static const std::string LIST_JOBS_ON_MACHINES_KEYWORD="all";
 
 /**
 * \brief Function to encrypt data and password
@@ -279,19 +282,25 @@ std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& ut
     * \param proc_dir The given process info directory
     * \return True if the pid exists
     */
-
    bool
      process_exists(const std::string& pid, const bfs::path& proc_dir="/proc");
 
-/**
- * \brief Get the fully qualified name for the current system
- * \param port the port
- * \return the fully qualified name for the current system
- */
+   /**
+    * \brief Get the fully qualified name for the current system
+    * \param port the port
+    * \return the fully qualified name for the current system
+    */
+   std::string getLocalMachineName(const std::string& port );
 
-
-std::string getLocalMachineName(const std::string& port );
-
+   /**
+    * \brief Function to check if a string is empty
+    * \param str The string to check
+    * \param comMsg The complementary message to print
+    * \return raises an exception on error
+    */
+   void
+     checkEmptyString(const std::string& str,
+         const std::string& compMsg);  
 
 }
 #endif // _UTILVISHNU_H_

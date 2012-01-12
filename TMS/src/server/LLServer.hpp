@@ -74,6 +74,14 @@ public:
   listQueues(const std::string& optQueueName=std::string()); 
 
   /**
+   * \brief Function to get a list of submitted jobs
+   * \param listOfJobs the ListJobs structure to fill
+   * \param ignoredIds the list of job ids to ignore 
+   */
+  void fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
+            const std::vector<string>& ignoredIds=std::vector<string>());
+
+  /**
    * \brief Destructor
    */
   ~LLServer();

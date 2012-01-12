@@ -1012,6 +1012,71 @@ TorqueServer::convertTorqueMem(const std::string& memStr) {
 }
 
 /**
+ * \brief Function to get a list of submitted jobs
+ * \param listOfJobs the ListJobs structure to fill
+ * \param ignoredIds the list of job ids to ignore 
+ */
+void TorqueServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
+                                  const std::vector<string>& ignoredIds) {
+
+   int connect = cnt2server(serverOut);
+
+   if (connect <= 0)
+   {
+     std::ostringstream connect_error;
+
+     connect_error << "TORQUE ERROR: pbs_selstat: cannot connect to server ";
+     connect_error <<  pbs_server << " (errno=" << pbs_errno << ") " << pbs_strerror(pbs_errno) << std::endl;
+
+     if (getenv("PBSDEBUG") != NULL)
+     {
+       connect_error <<  "TORQUE ERROR: pbs_server daemon may not be running on host";
+       connect_error <<  " or hostname in file '$TORQUEHOME/server_name' may be incorrect" << endl;
+     }
+     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, connect_error.str());
+   }
+
+   struct batch_status* p_status = pbs_selstat(connect, NULL, NULL);
+   pbs_disconnect(connect);
+
+   if(p_status!=NULL)
+   {
+     std::string batchId;
+     int jobStatus;
+     long nbRunningJobs = 0;
+     long nbWaitingJobs = 0;
+     struct batch_status *p;
+     for(p = p_status; p!=NULL; p = p->next)
+     {
+       // Getting job idx
+       std::string batchId = p->name;
+       size_t pos_found =  batchId.find(".");
+       if (pos_found!=std::string::npos) {
+         pos_found=batchId.find(".", pos_found+1);
+       }
+       batchId=batchId.substr(0, pos_found);
+       std::vector<std::string>::const_iterator iter;
+       iter = std::find(ignoredIds.begin(), ignoredIds.end(), batchId);
+       if(iter==ignoredIds.end()) {
+         TMS_Data::Job_ptr job = new TMS_Data::Job();
+         fillJobInfo(*job, p);
+         jobStatus = job->getStatus();
+         if(jobStatus==4) {
+           nbRunningJobs++;
+         } else if(jobStatus >= 1 && jobStatus <= 3) {
+           nbWaitingJobs++;
+         }
+
+         listOfJobs->getJobs().push_back(job);
+       }
+     }
+     listOfJobs->setNbJobs(listOfJobs->getJobs().size());
+     listOfJobs->setNbRunningJobs(listOfJobs->getNbRunningJobs()+nbRunningJobs);
+     listOfJobs->setNbWaitingJobs(listOfJobs->getNbWaitingJobs()+nbWaitingJobs);
+   }
+}
+
+/**
  * \brief Destructor
  */
 TorqueServer::~TorqueServer() {

@@ -1,7 +1,8 @@
 /**
 * \file utilVishnu.cpp
 * \brief This file implements the utils functions of the vishnu system
-* \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
+* \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com) and
+* Daouda Traoré (daouda.traore@sysfera.com and Ibrahima Cissé (ibrahima.cisse@sysfera.com)
 * \date 15/02/2011
 */
 
@@ -655,7 +656,19 @@ std::string vishnu::getLocalMachineName(const std::string& port ){
 
 }
 
+/**
+ * \brief Function to check if a string is empty
+ * \param str The string to check
+ * \param comMsg The complementary message to print
+ * \return raises an exception on error
+ */
+void
+vishnu::checkEmptyString(const std::string& str,
+                          const std::string& compMsg) {
 
+  if(str.empty()) {
+    throw UserException(ERRCODE_INVALID_PARAM, compMsg+" must be not empty");
+  }
 
-
+}
 

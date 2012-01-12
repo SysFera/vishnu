@@ -94,34 +94,44 @@ namespace TMS_Data
         static const int LISTQUEUES = 8;
 
         /**
+         * \brief Constant for LoadCriterion class
+         */
+        static const int LOADCRITERION = 9;
+
+        /**
+         * \brief Constant for LoadType class
+         */
+        static const int LOADTYPE = 10;
+
+        /**
          * \brief Constant for Progression class
          */
-        static const int PROGRESSION = 9;
+        static const int PROGRESSION = 11;
 
         /**
          * \brief Constant for ProgressOptions class
          */
-        static const int PROGRESSOPTIONS = 10;
+        static const int PROGRESSOPTIONS = 12;
 
         /**
          * \brief Constant for Queue class
          */
-        static const int QUEUE = 11;
+        static const int QUEUE = 13;
 
         /**
          * \brief Constant for QueuePriority class
          */
-        static const int QUEUEPRIORITY = 12;
+        static const int QUEUEPRIORITY = 14;
 
         /**
          * \brief Constant for QueueStatus class
          */
-        static const int QUEUESTATUS = 13;
+        static const int QUEUESTATUS = 15;
 
         /**
          * \brief Constant for SubmitOptions class
          */
-        static const int SUBMITOPTIONS = 14;
+        static const int SUBMITOPTIONS = 16;
 
         /**
          * \brief Constant for JOB__SESSIONID feature
@@ -319,189 +329,214 @@ namespace TMS_Data
         static const int SUBMITOPTIONS__CPUTIME = 38;
 
         /**
+         * \brief Constant for SUBMITOPTIONS__SELECTQUEUEAUTOM feature
+         */
+        static const int SUBMITOPTIONS__SELECTQUEUEAUTOM = 39;
+
+        /**
+         * \brief Constant for SUBMITOPTIONS__CRITERION feature
+         */
+        static const int SUBMITOPTIONS__CRITERION = 40;
+
+        /**
          * \brief Constant for LISTJOBSOPTIONS__JOBID feature
          */
-        static const int LISTJOBSOPTIONS__JOBID = 39;
+        static const int LISTJOBSOPTIONS__JOBID = 41;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__NBCPU feature
          */
-        static const int LISTJOBSOPTIONS__NBCPU = 40;
+        static const int LISTJOBSOPTIONS__NBCPU = 42;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__FROMSUBMITDATE feature
          */
-        static const int LISTJOBSOPTIONS__FROMSUBMITDATE = 41;
+        static const int LISTJOBSOPTIONS__FROMSUBMITDATE = 43;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__TOSUBMITDATE feature
          */
-        static const int LISTJOBSOPTIONS__TOSUBMITDATE = 42;
+        static const int LISTJOBSOPTIONS__TOSUBMITDATE = 44;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__OWNER feature
          */
-        static const int LISTJOBSOPTIONS__OWNER = 43;
+        static const int LISTJOBSOPTIONS__OWNER = 45;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__STATUS feature
          */
-        static const int LISTJOBSOPTIONS__STATUS = 44;
+        static const int LISTJOBSOPTIONS__STATUS = 46;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__PRIORITY feature
          */
-        static const int LISTJOBSOPTIONS__PRIORITY = 45;
+        static const int LISTJOBSOPTIONS__PRIORITY = 47;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__QUEUE feature
          */
-        static const int LISTJOBSOPTIONS__QUEUE = 46;
+        static const int LISTJOBSOPTIONS__QUEUE = 48;
+
+        /**
+         * \brief Constant for LISTJOBSOPTIONS__MULTIPLESTATUS feature
+         */
+        static const int LISTJOBSOPTIONS__MULTIPLESTATUS = 49;
+
+        /**
+         * \brief Constant for LISTJOBSOPTIONS__BATCHJOB feature
+         */
+        static const int LISTJOBSOPTIONS__BATCHJOB = 50;
 
         /**
          * \brief Constant for PROGRESSOPTIONS__JOBID feature
          */
-        static const int PROGRESSOPTIONS__JOBID = 47;
+        static const int PROGRESSOPTIONS__JOBID = 51;
 
         /**
          * \brief Constant for PROGRESSOPTIONS__JOBOWNER feature
          */
-        static const int PROGRESSOPTIONS__JOBOWNER = 48;
+        static const int PROGRESSOPTIONS__JOBOWNER = 52;
 
         /**
          * \brief Constant for LISTPROGRESSION__NBJOBS feature
          */
-        static const int LISTPROGRESSION__NBJOBS = 49;
+        static const int LISTPROGRESSION__NBJOBS = 53;
 
         /**
          * \brief Constant for LISTPROGRESSION__PROGRESS feature
          */
-        static const int LISTPROGRESSION__PROGRESS = 50;
+        static const int LISTPROGRESSION__PROGRESS = 54;
 
         /**
          * \brief Constant for PROGRESSION__JOBID feature
          */
-        static const int PROGRESSION__JOBID = 51;
+        static const int PROGRESSION__JOBID = 55;
 
         /**
          * \brief Constant for PROGRESSION__JOBNAME feature
          */
-        static const int PROGRESSION__JOBNAME = 52;
+        static const int PROGRESSION__JOBNAME = 56;
 
         /**
          * \brief Constant for PROGRESSION__WALLTIME feature
          */
-        static const int PROGRESSION__WALLTIME = 53;
+        static const int PROGRESSION__WALLTIME = 57;
 
         /**
          * \brief Constant for PROGRESSION__STARTTIME feature
          */
-        static const int PROGRESSION__STARTTIME = 54;
+        static const int PROGRESSION__STARTTIME = 58;
 
         /**
          * \brief Constant for PROGRESSION__ENDTIME feature
          */
-        static const int PROGRESSION__ENDTIME = 55;
+        static const int PROGRESSION__ENDTIME = 59;
 
         /**
          * \brief Constant for PROGRESSION__PERCENT feature
          */
-        static const int PROGRESSION__PERCENT = 56;
+        static const int PROGRESSION__PERCENT = 60;
 
         /**
          * \brief Constant for PROGRESSION__STATUS feature
          */
-        static const int PROGRESSION__STATUS = 57;
+        static const int PROGRESSION__STATUS = 61;
 
         /**
          * \brief Constant for LISTQUEUES__NBQUEUES feature
          */
-        static const int LISTQUEUES__NBQUEUES = 58;
+        static const int LISTQUEUES__NBQUEUES = 62;
 
         /**
          * \brief Constant for LISTQUEUES__QUEUES feature
          */
-        static const int LISTQUEUES__QUEUES = 59;
+        static const int LISTQUEUES__QUEUES = 63;
 
         /**
          * \brief Constant for QUEUE__NAME feature
          */
-        static const int QUEUE__NAME = 60;
+        static const int QUEUE__NAME = 64;
 
         /**
          * \brief Constant for QUEUE__MAXJOBCPU feature
          */
-        static const int QUEUE__MAXJOBCPU = 61;
+        static const int QUEUE__MAXJOBCPU = 65;
 
         /**
          * \brief Constant for QUEUE__MAXPROCCPU feature
          */
-        static const int QUEUE__MAXPROCCPU = 62;
+        static const int QUEUE__MAXPROCCPU = 66;
 
         /**
          * \brief Constant for QUEUE__MEMORY feature
          */
-        static const int QUEUE__MEMORY = 63;
+        static const int QUEUE__MEMORY = 67;
 
         /**
          * \brief Constant for QUEUE__WALLTIME feature
          */
-        static const int QUEUE__WALLTIME = 64;
+        static const int QUEUE__WALLTIME = 68;
 
         /**
          * \brief Constant for QUEUE__NODE feature
          */
-        static const int QUEUE__NODE = 65;
+        static const int QUEUE__NODE = 69;
 
         /**
          * \brief Constant for QUEUE__NBRUNNINGJOBS feature
          */
-        static const int QUEUE__NBRUNNINGJOBS = 66;
+        static const int QUEUE__NBRUNNINGJOBS = 70;
 
         /**
          * \brief Constant for QUEUE__NBJOBSINQUEUE feature
          */
-        static const int QUEUE__NBJOBSINQUEUE = 67;
+        static const int QUEUE__NBJOBSINQUEUE = 71;
 
         /**
          * \brief Constant for QUEUE__STATE feature
          */
-        static const int QUEUE__STATE = 68;
+        static const int QUEUE__STATE = 72;
 
         /**
          * \brief Constant for QUEUE__PRIORITY feature
          */
-        static const int QUEUE__PRIORITY = 69;
+        static const int QUEUE__PRIORITY = 73;
 
         /**
          * \brief Constant for QUEUE__DESCRIPTION feature
          */
-        static const int QUEUE__DESCRIPTION = 70;
+        static const int QUEUE__DESCRIPTION = 74;
 
         /**
          * \brief Constant for JOBRESULT__JOBID feature
          */
-        static const int JOBRESULT__JOBID = 71;
+        static const int JOBRESULT__JOBID = 75;
 
         /**
          * \brief Constant for JOBRESULT__OUTPUTPATH feature
          */
-        static const int JOBRESULT__OUTPUTPATH = 72;
+        static const int JOBRESULT__OUTPUTPATH = 76;
 
         /**
          * \brief Constant for JOBRESULT__ERRORPATH feature
          */
-        static const int JOBRESULT__ERRORPATH = 73;
+        static const int JOBRESULT__ERRORPATH = 77;
 
         /**
          * \brief Constant for LISTJOBRESULTS__NBJOBS feature
          */
-        static const int LISTJOBRESULTS__NBJOBS = 74;
+        static const int LISTJOBRESULTS__NBJOBS = 78;
 
         /**
          * \brief Constant for LISTJOBRESULTS__RESULTS feature
          */
-        static const int LISTJOBRESULTS__RESULTS = 75;
+        static const int LISTJOBRESULTS__RESULTS = 79;
+
+        /**
+         * \brief Constant for LOADCRITERION__LOADTYPE feature
+         */
+        static const int LOADCRITERION__LOADTYPE = 80;
 
         // EClassifiers methods
 
@@ -594,6 +629,18 @@ namespace TMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EClass_ptr getListJobResults();
+
+        /**
+         * \brief Returns the reflective object for class LoadCriterion
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EClass_ptr getLoadCriterion();
+
+        /**
+         * \brief Returns the reflective object for class LoadType
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EEnum_ptr getLoadType();
 
         // EStructuralFeatures methods
 
@@ -833,6 +880,18 @@ namespace TMS_Data
         virtual ::ecore::EAttribute_ptr getSubmitOptions__cpuTime();
 
         /**
+         * \brief Returns the reflective object for feature selectQueueAutom of class SubmitOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getSubmitOptions__selectQueueAutom();
+
+        /**
+         * \brief Returns the reflective object for feature criterion of class SubmitOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EReference_ptr getSubmitOptions__criterion();
+
+        /**
          * \brief Returns the reflective object for feature jobId of class ListJobsOptions
          * \return A pointer to the reflective object
          */
@@ -879,6 +938,18 @@ namespace TMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EAttribute_ptr getListJobsOptions__queue();
+
+        /**
+         * \brief Returns the reflective object for feature multipleStatus of class ListJobsOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getListJobsOptions__multipleStatus();
+
+        /**
+         * \brief Returns the reflective object for feature batchJob of class ListJobsOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getListJobsOptions__batchJob();
 
         /**
          * \brief Returns the reflective object for feature jobId of class ProgressOptions
@@ -1054,6 +1125,12 @@ namespace TMS_Data
          */
         virtual ::ecore::EReference_ptr getListJobResults__Results();
 
+        /**
+         * \brief Returns the reflective object for feature loadType of class LoadCriterion
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getLoadCriterion__loadType();
+
     protected:
 
         /**
@@ -1120,6 +1197,11 @@ namespace TMS_Data
          */
         ::ecore::EClass_ptr m_ListJobResultsEClass;
 
+        /**
+         * \brief The instance for the class LoadCriterion
+         */
+        ::ecore::EClass_ptr m_LoadCriterionEClass;
+
         // EEnuminstances 
 
         /**
@@ -1141,6 +1223,11 @@ namespace TMS_Data
          * \brief The instance for the enum QueueStatus
          */
         ::ecore::EEnum_ptr m_QueueStatusEEnum;
+
+        /**
+         * \brief The instance for the enum LoadType
+         */
+        ::ecore::EEnum_ptr m_LoadTypeEEnum;
 
         // EDataType instances 
 
@@ -1343,6 +1430,16 @@ namespace TMS_Data
         ::ecore::EAttribute_ptr m_SubmitOptions__cpuTime;
 
         /**
+         * \brief The instance for the feature selectQueueAutom of class SubmitOptions
+         */
+        ::ecore::EAttribute_ptr m_SubmitOptions__selectQueueAutom;
+
+        /**
+         * \brief The instance for the feature criterion of class SubmitOptions
+         */
+        ::ecore::EReference_ptr m_SubmitOptions__criterion;
+
+        /**
          * \brief The instance for the feature jobId of class ListJobsOptions
          */
         ::ecore::EAttribute_ptr m_ListJobsOptions__jobId;
@@ -1381,6 +1478,16 @@ namespace TMS_Data
          * \brief The instance for the feature queue of class ListJobsOptions
          */
         ::ecore::EAttribute_ptr m_ListJobsOptions__queue;
+
+        /**
+         * \brief The instance for the feature multipleStatus of class ListJobsOptions
+         */
+        ::ecore::EAttribute_ptr m_ListJobsOptions__multipleStatus;
+
+        /**
+         * \brief The instance for the feature batchJob of class ListJobsOptions
+         */
+        ::ecore::EAttribute_ptr m_ListJobsOptions__batchJob;
 
         /**
          * \brief The instance for the feature jobId of class ProgressOptions
@@ -1526,6 +1633,11 @@ namespace TMS_Data
          * \brief The instance for the feature Results of class ListJobResults
          */
         ::ecore::EReference_ptr m_ListJobResults__Results;
+
+        /**
+         * \brief The instance for the feature loadType of class LoadCriterion
+         */
+        ::ecore::EAttribute_ptr m_LoadCriterion__loadType;
 
     };
 

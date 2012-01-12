@@ -75,7 +75,15 @@ public:
    */
   virtual TMS_Data::ListQueues* 
   listQueues(const std::string& optQueueName=std::string())=0;
-  
+
+   /**
+   * \brief Function to get a list of submitted jobs
+   * \param listOfJobs the ListJobs structure to fill
+   * \param ignoredIds the list of job ids to ignore 
+   */
+  virtual void fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
+                      const std::vector<string>& ignoredIds=std::vector<string>())=0;
+   
   /**
    * \brief Destructor
    */

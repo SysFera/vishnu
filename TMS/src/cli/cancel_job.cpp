@@ -1,7 +1,7 @@
 /**
  * \file cancel_job.cpp
  * This file defines the VISHNU command to cancel a job
- * \author Coulomb Kevin (kevin.coulomb@sysfera.com)
+ * \author Coulomb Kevin (kevin.coulomb@sysfera.com) and Daouda Traore (daouda.traore@sysfera.com)
  */
 
 

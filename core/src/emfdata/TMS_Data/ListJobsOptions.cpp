@@ -32,7 +32,7 @@ using namespace ::TMS_Data;
 // Default constructor
 ListJobsOptions::ListJobsOptions() :
     m_nbCpu(-1), m_fromSubmitDate(-1), m_toSubmitDate(-1), m_status(-1),
-            m_priority(-1)
+            m_priority(-1), m_batchJob(false)
 {
 
     /*PROTECTED REGION ID(ListJobsOptionsImpl__ListJobsOptionsImpl) START*/
@@ -254,6 +254,58 @@ void ListJobsOptions::setQueue(::ecore::EString const& _queue)
                 (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getListJobsOptions__queue(),
                 _old_queue,
                 m_queue
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EString const& ListJobsOptions::getMultipleStatus() const
+{
+    return m_multipleStatus;
+}
+
+void ListJobsOptions::setMultipleStatus(::ecore::EString const& _multipleStatus)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_multipleStatus = m_multipleStatus;
+#endif
+    m_multipleStatus = _multipleStatus;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getListJobsOptions__multipleStatus(),
+                _old_multipleStatus,
+                m_multipleStatus
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EBoolean ListJobsOptions::isBatchJob() const
+{
+    return m_batchJob;
+}
+
+void ListJobsOptions::setBatchJob(::ecore::EBoolean _batchJob)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EBoolean _old_batchJob = m_batchJob;
+#endif
+    m_batchJob = _batchJob;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getListJobsOptions__batchJob(),
+                _old_batchJob,
+                m_batchJob
         );
         eNotify(&notification);
     }

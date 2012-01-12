@@ -37,7 +37,7 @@
 /**
  * \file list_jobs.cpp
  * This file defines the VISHNU list jobs command
- * \author Coulomb Kevin (kevin.coulomb@sysfera.com)
+ * \author Coulomb Kevin (kevin.coulomb@sysfera.com) and Daouda Traore (daouda.traore@sysfera.com)
  */
 
 
@@ -69,6 +69,7 @@ using namespace vishnu;
  * \param foutput : The output path
  * \param ferr : The error path
  * \param fqueue : The queue to set the job
+ * \param fmutlStatus : lists the jobs with the specified status (combination of multiple status)
  * \param dietConfig: Represents the VISHNU config file
  * \return The description of all options allowed by the command
  */
@@ -82,6 +83,7 @@ makeListJobOp(string pgName,
 	      string& status,
 	      boost::function1<void, JobPriority>& fpriority,
 	      boost::function1<void, string>& fqueue,
+        boost::function1<void, string>& fmutlStatus,
 	      string& dietConfig){
   boost::shared_ptr<Options> opt(new Options(pgName));
 
@@ -136,6 +138,10 @@ makeListJobOp(string pgName,
 	   "List the submitted jobs in this queue",
 	   CONFIG,
 	   fqueue);
+  opt->add("multipleStatus,S",
+      "List the jobs with the specified status (combination of multiple status)",
+      CONFIG,
+      fmutlStatus);
 
   return opt;
 }
@@ -163,7 +169,7 @@ int main (int argc, char* argv[]){
   boost::function1<void,string> fown(boost::bind(&TMS_Data::ListJobsOptions::setOwner,boost::ref(jobOp),_1));
   boost::function1<void,JobPriority> fpriority(boost::bind(&TMS_Data::ListJobsOptions::setPriority,boost::ref(jobOp),_1));
   boost::function1<void,string> fqueue(boost::bind(&TMS_Data::ListJobsOptions::setQueue,boost::ref(jobOp),_1));
-
+  boost::function1<void,string> fmutlStatus(boost::bind(&TMS_Data::ListJobsOptions::setMultipleStatus,boost::ref(jobOp),_1));
 
   /*********** Out parameters *********************/
   TMS_Data::ListJobs job;
@@ -178,12 +184,18 @@ int main (int argc, char* argv[]){
 					       statusStr,
 					       fpriority,
 					       fqueue,
+                 fmutlStatus,
                  dietConfig);
 
+  opt->add("isBatchJob,b",
+      "allows to select all jobs submitted  through the underlying"
+      " batch scheduler (jobs submitted through vishnu and out of vishnu)",
+      CONFIG);
+
   opt->add("machineId,m",
-	   "represents the id of the machine",
-	   HIDDEN,
-	   machineId,1);
+      "represents the id of the machine",
+      HIDDEN,
+      machineId,1);
   opt->setPosition("machineId",1);
 
   CLICmd cmd = CLICmd (argc, argv, opt);
@@ -253,6 +265,10 @@ int main (int argc, char* argv[]){
 
     if(opt->count("toSubmitDate")){
       jobOp.setToSubmitDate(convertLocaltimeINUTCtime(string_to_time_t(toDate)));
+    }
+
+    if(opt->count("isBatchJob")) {
+      jobOp.setBatchJob(true);
     }
 
     // initializing DIET

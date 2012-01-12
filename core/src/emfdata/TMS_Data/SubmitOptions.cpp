@@ -18,6 +18,7 @@
  */
 
 #include "SubmitOptions.hpp"
+#include <TMS_Data/LoadCriterion.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include "TMS_Data/TMS_DataPackage.hpp"
@@ -31,7 +32,8 @@ using namespace ::TMS_Data;
 
 // Default constructor
 SubmitOptions::SubmitOptions() :
-    m_wallTime(-1), m_memory(-1), m_nbCpu(-1)
+    m_wallTime(-1), m_memory(-1), m_nbCpu(-1), m_selectQueueAutom(false),
+            m_criterion(0)
 {
 
     /*PROTECTED REGION ID(SubmitOptionsImpl__SubmitOptionsImpl) START*/
@@ -42,6 +44,10 @@ SubmitOptions::SubmitOptions() :
 
 SubmitOptions::~SubmitOptions()
 {
+    if (m_criterion)
+    {
+        delete m_criterion;
+    }
 }
 
 /*PROTECTED REGION ID(SubmitOptions.cpp) START*/
@@ -391,5 +397,58 @@ void SubmitOptions::setCpuTime(::ecore::EString const& _cpuTime)
 #endif
 }
 
+::ecore::EBoolean SubmitOptions::isSelectQueueAutom() const
+{
+    return m_selectQueueAutom;
+}
+
+void SubmitOptions::setSelectQueueAutom(::ecore::EBoolean _selectQueueAutom)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EBoolean _old_selectQueueAutom = m_selectQueueAutom;
+#endif
+    m_selectQueueAutom = _selectQueueAutom;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__selectQueueAutom(),
+                _old_selectQueueAutom,
+                m_selectQueueAutom
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
 // References
+::TMS_Data::LoadCriterion_ptr SubmitOptions::getCriterion()
+{
+    return m_criterion;
+}
+
+void SubmitOptions::setCriterion(::TMS_Data::LoadCriterion_ptr _criterion)
+{
+    ::TMS_Data::LoadCriterion_ptr _old_criterion = m_criterion;
+
+    m_criterion = _criterion;
+
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__criterion(),
+                _old_criterion,
+                m_criterion
+        );
+        eNotify(&notification);
+    }
+#endif
+
+    delete _old_criterion;
+}
 

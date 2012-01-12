@@ -143,7 +143,9 @@ set(TMS_Data_SRCS
   emfdata/TMS_Data/JobResult.cpp
   emfdata/TMS_Data/JobResultImpl.cpp
   emfdata/TMS_Data/ListJobResults.cpp
-  emfdata/TMS_Data/ListJobResultsImpl.cpp)
+  emfdata/TMS_Data/ListJobResultsImpl.cpp
+  emfdata/TMS_Data/LoadCriterion.cpp
+  emfdata/TMS_Data/LoadCriterionImpl.cpp)
    
 set(TMS_Data_HEADERS
   emfdata/TMS_Data.hpp
@@ -160,7 +162,8 @@ set(TMS_Data_HEADERS
   emfdata/TMS_Data/ListQueues.hpp
   emfdata/TMS_Data/Queue.hpp
   emfdata/TMS_Data/JobResult.hpp
-  emfdata/TMS_Data/ListJobResults.hpp)
+  emfdata/TMS_Data/ListJobResults.hpp
+   emfdata/TMS_Data/LoadCriterion.hpp)
 
 set(IMS_Data_SRCS
   emfdata/IMS_Data.cpp

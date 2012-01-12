@@ -213,8 +213,28 @@ namespace TMS_Data
          **/
         void setCpuTime(::ecore::EString const& _cpuTime);
 
-        // References
+        /**
+         * \brief To get the selectQueueAutom
+         * \return The selectQueueAutom attribute value
+         **/
+        ::ecore::EBoolean isSelectQueueAutom() const;
+        /**
+         * \brief To set the selectQueueAutom
+         * \param _selectQueueAutom The selectQueueAutom value
+         **/
+        void setSelectQueueAutom(::ecore::EBoolean _selectQueueAutom);
 
+        // References
+        /**
+         * \brief To get the criterion
+         * \return A reference to criterion
+         **/
+        ::TMS_Data::LoadCriterion_ptr getCriterion();
+        /**
+         * \brief To set the criterion reference
+         * \param _criterion A reference to a criterion
+         **/
+        void setCriterion(::TMS_Data::LoadCriterion_ptr _criterion);
 
         /*PROTECTED REGION ID(SubmitOptions) START*/
         // Please, enable the protected region if you add manually written code.
@@ -264,7 +284,11 @@ namespace TMS_Data
 
         ::ecore::EString m_cpuTime;
 
+        ::ecore::EBoolean m_selectQueueAutom;
+
         // References
+
+        ::TMS_Data::LoadCriterion_ptr m_criterion;
 
     };
 

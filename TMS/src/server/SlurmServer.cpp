@@ -719,6 +719,45 @@ SlurmServer::listQueues(const std::string& OptqueueName) {
 }
 
 /**
+ * \brief Function to get a list of submitted jobs
+ * \param listOfJobs the ListJobs structure to fill
+ * \param ignoredIds the list of job ids to ignore 
+ */
+void SlurmServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
+    const std::vector<string>& ignoredIds) {
+
+  job_info_msg_t * job_buffer_ptr = NULL;
+  int res = slurm_load_jobs((time_t) NULL, &job_buffer_ptr, SHOW_ALL);
+  if(!res) {
+    uint32_t batchId;
+    int jobStatus;
+    long nbRunningJobs = 0;
+    long nbWaitingJobs = 0;
+    for(uint32_t i=0; i < job_buffer_ptr->record_count; i++) {
+      batchId = (job_buffer_ptr->job_array[i]).job_id;
+      std::vector<std::string>::const_iterator iter;
+      iter = std::find(ignoredIds.begin(), ignoredIds.end(), convertToString(batchId));
+      if(iter==ignoredIds.end()) {
+        TMS_Data::Job_ptr job = new TMS_Data::Job();
+        fillJobInfo(*job, batchId);
+        jobStatus = job->getStatus();
+        if(jobStatus==4) {
+          nbRunningJobs++;
+        } else if(jobStatus >= 1 && jobStatus <= 3) {
+          nbWaitingJobs++;
+        }
+        listOfJobs->getJobs().push_back(job);
+      }
+    }
+    listOfJobs->setNbJobs(listOfJobs->getJobs().size());
+    listOfJobs->setNbRunningJobs(listOfJobs->getNbRunningJobs()+nbRunningJobs);
+    listOfJobs->setNbWaitingJobs(listOfJobs->getNbWaitingJobs()+nbWaitingJobs);
+  }
+
+}
+
+
+/**
  * \brief Destructor
  */
 SlurmServer::~SlurmServer() {

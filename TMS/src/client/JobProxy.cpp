@@ -44,7 +44,7 @@ JobProxy::submitJob(const std::string& scriptContent,
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if (diet_string_set(diet_parameter(submitJobProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if (diet_paramstring_set(diet_parameter(submitJobProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
@@ -63,7 +63,7 @@ JobProxy::submitJob(const std::string& scriptContent,
   //To serialize the options object in to optionsInString
   optionsToString =  strdup(_ser.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options)).c_str());
 
-  if (diet_string_set(diet_parameter(submitJobProfile,3), optionsToString, DIET_VOLATILE)) {
+  if (diet_paramstring_set(diet_parameter(submitJobProfile,3), optionsToString, DIET_VOLATILE)) {
     msgErrorDiet += "with optionsInString parameter "+std::string(optionsToString);
     raiseDietMsgException(msgErrorDiet);
   }

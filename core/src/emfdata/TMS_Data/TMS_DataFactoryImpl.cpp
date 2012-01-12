@@ -30,6 +30,7 @@
 #include <TMS_Data/Queue.hpp>
 #include <TMS_Data/JobResult.hpp>
 #include <TMS_Data/ListJobResults.hpp>
+#include <TMS_Data/LoadCriterion.hpp>
 
 #include <ecore.hpp>
 #include <ecorecpp/mapping.hpp>
@@ -67,6 +68,8 @@ TMS_DataFactory::TMS_DataFactory()
         return createJobResult();
     case TMS_DataPackage::LISTJOBRESULTS:
         return createListJobResults();
+    case TMS_DataPackage::LOADCRITERION:
+        return createLoadCriterion();
     default:
         throw "IllegalArgumentException";
     }
@@ -106,6 +109,13 @@ TMS_DataFactory::TMS_DataFactory()
         TMS_DataPackage_ptr _epkg =
                 dynamic_cast< ::TMS_Data::TMS_DataPackage_ptr > (getEPackage());
         return _epkg->getQueueStatus()->getEEnumLiteralByLiteral(_literalValue)->getValue();
+    }
+    case TMS_DataPackage::LOADTYPE:
+    {
+        ::ecore::EJavaObject _any;
+        TMS_DataPackage_ptr _epkg =
+                dynamic_cast< ::TMS_Data::TMS_DataPackage_ptr > (getEPackage());
+        return _epkg->getLoadType()->getEEnumLiteralByLiteral(_literalValue)->getValue();
     }
     default:
         throw "IllegalArgumentException";
@@ -149,6 +159,14 @@ TMS_DataFactory::TMS_DataFactory()
         ::ecore::EInt _value = ::ecorecpp::mapping::any::any_cast<
                 ::ecore::EInt >(_instanceValue);
         return _epkg->getQueueStatus()->getEEnumLiteral(_value)->getName();
+    }
+    case TMS_DataPackage::LOADTYPE:
+    {
+        TMS_DataPackage_ptr _epkg = ::TMS_Data::instanceOf<
+                ::TMS_Data::TMS_DataPackage >(getEPackage());
+        ::ecore::EInt _value = ::ecorecpp::mapping::any::any_cast<
+                ::ecore::EInt >(_instanceValue);
+        return _epkg->getLoadType()->getEEnumLiteral(_value)->getName();
     }
     default:
         throw "IllegalArgumentException";
@@ -198,5 +216,9 @@ JobResult_ptr TMS_DataFactory::createJobResult()
 ListJobResults_ptr TMS_DataFactory::createListJobResults()
 {
     return new ListJobResults();
+}
+LoadCriterion_ptr TMS_DataFactory::createLoadCriterion()
+{
+    return new LoadCriterion();
 }
 

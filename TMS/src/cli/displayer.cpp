@@ -425,6 +425,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
   std::string queue;
   int priority;
   int status;
+  std::string machineId;
 
   std::string jobIdHead = "Job id";
   std::string jobNameHead = "Job name";
@@ -432,6 +433,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
   std::string statusHead = "Status";
   std::string queueHead = "Queue";
   std::string priorityHead = "Priority";
+  std::string machineIdHead = "Machine id";
 
   size_t maxJobIdSize = jobIdHead.size();
   size_t maxJobNameSize = jobNameHead.size();
@@ -439,6 +441,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
   size_t maxStatusSize = statusHead.size();
   size_t maxQueueSize = queueHead.size();
   size_t maxPrioritySize = priorityHead.size();
+  size_t maxMachineIdSize = machineIdHead.size();
 
   for(size_t i = 0; i < listJobs.getJobs().size(); i++) {
 
@@ -459,11 +462,15 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
 
     priority = (listJobs.getJobs().get(i))->getJobPrio();
     maxPrioritySize = std::max(maxPrioritySize, convertJobPriorityToString(priority).size()+3);
+
+    machineId = (listJobs.getJobs().get(i))->getSubmitMachineId();
+    maxMachineIdSize = std::max(maxMachineIdSize, machineId.size());
   }
 
   os << setw(maxJobIdSize+2) << left << jobIdHead << setw(maxJobNameSize+2) << left << jobNameHead << setw(maxOwnerSize+2) ;
   os << left << ownerHead << setw(maxStatusSize+2) << statusHead  << setw(maxQueueSize+2) << left << queueHead;
-  os << setw(maxPrioritySize+2) << left << priorityHead  << endl;
+  os << setw(maxPrioritySize+2) << left << priorityHead << setw(maxMachineIdSize+2) << left << machineIdHead << endl;
+  
 
   setFill(maxJobIdSize, os);
   setFill(maxJobNameSize, os);
@@ -471,6 +478,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
   setFill(maxStatusSize, os);
   setFill(maxQueueSize, os);
   setFill(maxPrioritySize, os);
+  setFill(maxMachineIdSize, os);
   os << endl;
 
  for(size_t i = 0; i < listJobs.getJobs().size(); i++) {
@@ -481,6 +489,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
     status = (listJobs.getJobs().get(i))->getStatus();
     queue = (listJobs.getJobs().get(i))->getJobQueue();
     priority = (listJobs.getJobs().get(i))->getJobPrio();
+    machineId = (listJobs.getJobs().get(i))->getSubmitMachineId();
 
     os << setw(maxJobIdSize+2) << left << jobId;
     os << setw(maxJobNameSize+2) << left << jobName;
@@ -490,6 +499,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
     ostringstream oss;
     oss << priority  << "(" << convertJobPriorityToString(priority) << ")";
     os << setw(maxPrioritySize+2) << left << oss.str();
+    os << setw(maxMachineIdSize+2) << left << machineId;
     os << endl;
 
   }

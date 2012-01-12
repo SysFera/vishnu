@@ -1,7 +1,7 @@
 /**
  * \file submit_job.cpp
  * This file defines the VISHNU submit job command 
- * \author Coulomb Kevin (kevin.coulomb@sysfera.com)
+ * \author Coulomb Kevin (kevin.coulomb@sysfera.com) and Daouda Traore (daouda.traore@sysfera.com)
  */
 
 
@@ -36,6 +36,9 @@ using namespace vishnu;
  * \param fgroup : The job group name
  * \param fworkingDir : The job working directory
  * \param fcpuTime : The cpu time limit of the job
+ * \param loadCriterionStr : The load value to use (for now three criterions are be used: 
+ *  minimum number of waiting jobs, minimum number of running jobs and the total number of job )
+ * \param dietConfig: Represents the VISHNU config file 
  * \param dietConfig: Represents the VISHNU config file
  * \return The description of all options allowed by the command
  */
@@ -53,6 +56,7 @@ makeSubJobOp(string pgName,
 	     boost::function1<void, string>& fgroup,
 	     boost::function1<void, string>& fworkingDir,
 	     boost::function1<void, string>& fcpuTime,
+       string& loadCriterionStr,
        string& walltime,
        string& dietConfig){
   boost::shared_ptr<Options> opt(new Options(pgName));
@@ -119,6 +123,15 @@ makeSubJobOp(string pgName,
 	   "Assigns a job cpu limit time (in secondes or in the format [[HH:]MM:]SS)",
 	   CONFIG,
 	   fcpuTime);
+  opt->add("useLoad,L",
+      " The criterion to aumatically submit a job (for now three criterions are used:"
+      " minimum number of waiting jobs, minimum number of running jobs and the total"
+      "number of jobs). Predefined values are:\n"
+      "0 or W: To select a machine that has minimum number of waiting jobs\n"
+      "1 or T: To select a machine that has minimum number of total jobs (wainting and running)\n"
+      "2 or R: To select a machine that has minimum number of running jobs",
+      CONFIG,
+      loadCriterionStr);
 
   return opt;
 }
@@ -151,15 +164,19 @@ int main (int argc, char* argv[]){
   boost::function1<void,string> fgroup(boost::bind(&TMS_Data::SubmitOptions::setGroup,boost::ref(subOp),_1));
   boost::function1<void,string> fworkingDir(boost::bind(&TMS_Data::SubmitOptions::setWorkingDir,boost::ref(subOp),_1));
   boost::function1<void,string> fcpuTime(boost::bind(&TMS_Data::SubmitOptions::setCpuTime,boost::ref(subOp),_1));
-     
+  std::string loadCriterionStr; 
   /*********** Out parameters *********************/
   Job job;
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeSubJobOp(argv[0],fname,fqueue, 
-					      fmemory, fnbCpu, fnbNodeAndCpu,
-					      foutput, ferr, fmailNotif, fmailUser, fgroup, fworkingDir, fcpuTime, walltime, dietConfig);
-
+  boost::shared_ptr<Options> opt=makeSubJobOp(argv[0],fname,fqueue,
+                fmemory, fnbCpu, fnbNodeAndCpu,
+                foutput, ferr, fmailNotif, fmailUser, fgroup, fworkingDir, fcpuTime, loadCriterionStr, walltime, dietConfig);
+ 
+  opt->add("selectQueueAutom,Q",
+      "allows to select automatically a queue which has the number of nodes requested by the user.",
+      CONFIG);
+  
   opt->add("machineId,i",
 	   "represents the id of the machine",
 	   HIDDEN,
@@ -196,6 +213,43 @@ int main (int argc, char* argv[]){
       subOp.setWallTime(convertStringToWallTime(walltime));
     }
 
+    //To set the load criterion
+    int loadCriterionType;
+    TMS_Data::LoadCriterion_ptr loadCriterion_ptr = new TMS_Data::LoadCriterion();
+    if(loadCriterionStr.size()!=0) {
+      size_t pos = loadCriterionStr.find_first_not_of("0123456789");
+      if(pos!=std::string::npos) {
+        if(loadCriterionStr.size()==1) {
+          switch(loadCriterionStr[0]) {
+            case 'W' :
+              loadCriterionType = 0;
+              break;
+            case 'T' :
+              loadCriterionType = 1;
+              break;
+            case 'R' :
+              loadCriterionType = 2;
+              break;
+            default:
+              loadCriterionType = 0;
+              break;
+          }
+        }
+        if ((loadCriterionStr.size() > 1)) {
+          std::cerr << "Unknown load criterion " << loadCriterionStr << std::endl;
+          return 0;
+        }
+      } else {
+        loadCriterionType = convertToInt(loadCriterionStr);
+      }
+      loadCriterion_ptr->setLoadType(loadCriterionType);
+      subOp.setCriterion(loadCriterion_ptr);
+    }
+
+    if(opt->count("selectQueueAutom")) {
+      subOp.setSelectQueueAutom(true);
+    }
+ 
     // initializing DIET
     if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
       errorUsage(argv[0],dietErrorMsg,EXECERROR);

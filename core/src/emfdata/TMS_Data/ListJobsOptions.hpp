@@ -157,6 +157,28 @@ namespace TMS_Data
          **/
         void setQueue(::ecore::EString const& _queue);
 
+        /**
+         * \brief To get the multipleStatus
+         * \return The multipleStatus attribute value
+         **/
+        ::ecore::EString const& getMultipleStatus() const;
+        /**
+         * \brief To set the multipleStatus
+         * \param _multipleStatus The multipleStatus value
+         **/
+        void setMultipleStatus(::ecore::EString const& _multipleStatus);
+
+        /**
+         * \brief To get the batchJob
+         * \return The batchJob attribute value
+         **/
+        ::ecore::EBoolean isBatchJob() const;
+        /**
+         * \brief To set the batchJob
+         * \param _batchJob The batchJob value
+         **/
+        void setBatchJob(::ecore::EBoolean _batchJob);
+
         // References
 
 
@@ -197,6 +219,10 @@ namespace TMS_Data
         ::TMS_Data::JobPriority m_priority;
 
         ::ecore::EString m_queue;
+
+        ::ecore::EString m_multipleStatus;
+
+        ::ecore::EBoolean m_batchJob;
 
         // References
 

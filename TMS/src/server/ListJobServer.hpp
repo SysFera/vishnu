@@ -100,9 +100,61 @@ public:
       //To add the number of the cpu to the request
       addOptionRequest("status", convertToString(options->getStatus()), sqlRequest);
     } else {
-       if (options->getJobId().size() == 0) { 
+       if (options->getJobId().empty() && options->getMultipleStatus().empty()) { 
          sqlRequest.append(" and status < 5 "); 
        } 
+    }
+
+    if(!options->getMultipleStatus().empty()) {
+      bool error = false;
+      string invalidState;
+      std::string multStat = options->getMultipleStatus();
+      std::string::iterator iter;
+      std::string::iterator beg = multStat.begin();
+      std::string::iterator end = multStat.end();
+      std::vector<std::string> vec;
+      for(iter=beg; iter!=end; ++iter) {
+        switch(*iter) {
+          case 'S':case '1':
+            vec.push_back("status=1");
+            break;
+          case 'Q':case '2':
+            vec.push_back("status=2");
+            break;
+          case 'W':case '3':
+            vec.push_back("status=3");
+            break;
+          case 'R':case '4':
+            vec.push_back("status=4");
+            break;
+          case 'T':case '5':
+            vec.push_back("status=5");
+            break;
+          case 'C':case '6':
+            vec.push_back("status=6");
+            break;
+          case 'D':case '7':
+            vec.push_back("status=7");
+            break;
+          default:
+            error = true;
+            invalidState = *iter;
+            break;
+        }
+
+        if(error) {
+          throw UserException(ERRCODE_INVALID_PARAM, invalidState+" is an invalid state.");
+        }
+      }
+      std::vector<std::string>::iterator vec_iter;
+      if(!vec.empty()){
+        sqlRequest.append(" and ("+*vec.begin());
+        for(vec_iter=vec.begin()+1; vec_iter!=vec.end(); ++vec_iter) {
+
+          sqlRequest.append(" or "+*vec_iter);
+        }
+        sqlRequest.append(")");
+      }
     }
 
     //To check the job priority
@@ -138,9 +190,30 @@ public:
     std::string sqlListOfJobs = "SELECT vsessionid, submitMachineId, submitMachineName, jobId, jobName, jobPath,"
                                 "outputPath, errorPath, jobPrio, nbCpus, jobWorkingDir, status, submitDate, endDate, owner,"
                                 "jobQueue,wallClockLimit, groupName, jobDescription, memLimit, nbNodes, "
-                                "nbNodesAndCpuPerNode from job, vsession "
+                                "nbNodesAndCpuPerNode, batchJobId from job, vsession "
                                 "where vsession.numsessionid=job.vsession_numsessionid"
-                                " and status > 0 and job.submitMachineId='"+mmachineId+"'";
+                                " and status > 0 ";
+
+    if(mmachineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD)!=0) {
+      sqlListOfJobs.append(" and job.submitMachineId='"+mmachineId+"'");
+    }
+
+    bool allOptionsAreNotSet = (mparameters->getNbCpu()<=0);
+    allOptionsAreNotSet = allOptionsAreNotSet && (mparameters->getFromSubmitDate()==-1);
+    allOptionsAreNotSet = allOptionsAreNotSet && (mparameters->getToSubmitDate()==-1);
+    allOptionsAreNotSet = allOptionsAreNotSet && (mparameters->getStatus()==-1);
+    allOptionsAreNotSet = allOptionsAreNotSet && (mparameters->getMultipleStatus().empty());
+    allOptionsAreNotSet = allOptionsAreNotSet && (mparameters->getPriority()==-1);
+    allOptionsAreNotSet = allOptionsAreNotSet && (mparameters->getOwner().empty());
+    allOptionsAreNotSet = allOptionsAreNotSet && (mparameters->getQueue().empty());
+
+    if(mparameters->isBatchJob() && !allOptionsAreNotSet) {
+     throw UserException(ERRCODE_INVALID_PARAM, "Conflict: the batchJob option is incompatible with other options excepted jobId option.");
+    }
+
+    if(mparameters->isBatchJob() && mmachineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD)==0) {
+     throw UserException(ERRCODE_INVALID_PARAM, "Conflict: the batchJob option is incompatible with machine id equal to all.");
+    }
 
     std::vector<std::string>::iterator ii;
     std::vector<std::string> results;
@@ -159,6 +232,8 @@ public:
     int jobStatus ;
     time_t submitDate;
     time_t endDate;
+    std::vector<string> ignoredIds;
+
     if (ListOfJobs->getNbTuples() != 0){
       for (size_t i = 0; i < ListOfJobs->getNbTuples(); ++i) {
         results.clear();
@@ -200,14 +275,46 @@ public:
         job->setNbNodes(convertToInt(*(++ii)));
         job->setNbNodesAndCpuPerNode(*(++ii)); 
 
+        ignoredIds.push_back(*(++ii));
+
         mlistObject->getJobs().push_back(job);
       }
       mlistObject->setNbJobs(mlistObject->getJobs().size());
       mlistObject->setNbRunningJobs(nbRunningJobs);
       mlistObject->setNbWaitingJobs(nbWaitingJobs);
-    } else {
+    } 
+ 
+    if(mparameters->isBatchJob() && !mparameters->getJobId().empty() && mmachineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD)!=0){
+      BatchFactory factory;
+      BatchType batchType  = ServerTMS::getInstance()->getBatchType();
+      boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType));
 
+      if(mlistObject != NULL) {
+        std::vector<std::string>::const_iterator iter = ignoredIds.begin();
+        for(unsigned int i = 0; i < mlistObject->getJobs().size(); i++) {
+          if(iter!=ignoredIds.end()){
+            (mlistObject->getJobs().get(i))->setJobId(*iter);
+            int state = batchServer->getJobState(*iter);
+            ++iter;
+            if(state!=-1 && (mlistObject->getJobs().get(i))->getStatus()!=5 &&
+                (mlistObject->getJobs().get(i))->getStatus()!=6 &&
+                (mlistObject->getJobs().get(i))->getStatus()!=7) {
+              (mlistObject->getJobs().get(i))->setStatus(state);
+            }
+          }
+        }
+      }
+      return mlistObject;
     }
+
+    if(mparameters->isBatchJob() && mmachineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD)!=0 && allOptionsAreNotSet){
+      BatchFactory factory;
+      BatchType batchType  = ServerTMS::getInstance()->getBatchType();
+      boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType));
+
+      batchServer->fillListOfJobs(mlistObject, ignoredIds);
+    }
+
     return mlistObject;
   }
 

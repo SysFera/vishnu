@@ -115,7 +115,11 @@ MonitorTMS::run() {
     sleep(minterval);
 
   } catch (VishnuException& e) {
-    cerr << e.buildExceptionString() << endl;
+    string errorInfo =  e.buildExceptionString();
+    if (e.getMsgI() == ERRCODE_DBERR) {
+      cerr << errorInfo << endl;
+      exit(1);
+    }
     sleep(minterval);
   }
   return 0;
