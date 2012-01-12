@@ -56,6 +56,11 @@ namespace TMS_Data
     // To do this, add the keyword ENABLED before START.
     typedef int QueueStatus;
     /*PROTECTED REGION END*/
+    /*PROTECTED REGION ID(TMS_Data_LoadType) START*/
+    // Please, enable the protected region if you add manually written code.
+    // To do this, add the keyword ENABLED before START.
+    typedef int LoadType;
+    /*PROTECTED REGION END*/
 
     // EClass
 
@@ -102,6 +107,10 @@ namespace TMS_Data
     // ListJobResults
     class ListJobResults;
     typedef ListJobResults* ListJobResults_ptr;
+
+    // LoadCriterion
+    class LoadCriterion;
+    typedef LoadCriterion* LoadCriterion_ptr;
 
     // Package & Factory
     class TMS_DataFactory;

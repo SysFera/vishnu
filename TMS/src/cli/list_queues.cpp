@@ -1,7 +1,7 @@
 /**
  * \file list_queues.cpp
  * This file defines the VISHNU list queues command 
- * \author Coulomb Kevin (kevin.coulomb@sysfera.com)
+ * \author Coulomb Kevin (kevin.coulomb@sysfera.com) and Daouda Traore (daouda.traore@sysfera.com)
  */
 
 

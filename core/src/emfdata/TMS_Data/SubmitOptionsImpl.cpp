@@ -19,6 +19,7 @@
 
 #include "SubmitOptions.hpp"
 #include <TMS_Data/TMS_DataPackage.hpp>
+#include <TMS_Data/LoadCriterion.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include <ecore/EStructuralFeature.hpp>
@@ -38,6 +39,13 @@ void SubmitOptions::_initialize()
     // Supertypes
 
     // Rerefences
+    if (m_criterion)
+    {
+        m_criterion->_initialize();
+        m_criterion->_setEContainer(
+                this,
+                ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__criterion());
+    }
 
     /*PROTECTED REGION ID(SubmitOptionsImpl__initialize) START*/
     // Please, enable the protected region if you add manually written code.
@@ -130,6 +138,17 @@ void SubmitOptions::_initialize()
                 m_cpuTime);
     }
         return _any;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__SELECTQUEUEAUTOM:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EBoolean >::toAny(_any,
+                m_selectQueueAutom);
+    }
+        return _any;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CRITERION:
+    {
+        _any = static_cast< ::ecore::EObject* > (m_criterion);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -218,6 +237,21 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
                 m_cpuTime);
     }
         return;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__SELECTQUEUEAUTOM:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EBoolean >::fromAny(
+                _newValue, m_selectQueueAutom);
+    }
+        return;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CRITERION:
+    {
+        ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast<
+                ::ecore::EObject_ptr >(_newValue);
+        ::TMS_Data::LoadCriterion_ptr _t1 =
+                dynamic_cast< ::TMS_Data::LoadCriterion_ptr > (_t0);
+        ::TMS_Data::SubmitOptions::setCriterion(_t1);
+    }
+        return;
 
     }
     throw "Error";
@@ -263,6 +297,10 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CPUTIME:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_cpuTime);
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__SELECTQUEUEAUTOM:
+        return m_selectQueueAutom != false;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CRITERION:
+        return m_criterion;
 
     }
     throw "Error";

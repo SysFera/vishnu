@@ -41,6 +41,8 @@ vishnu::submitJob(const std::string& sessionKey,
           const SubmitOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
+  checkEmptyString(sessionKey, "The session key");
+  checkEmptyString(machineId, "The machine id");
   //To check options value nbNodesAndCpuPerNode
   checkJobNbNodesAndNbCpuPerNode(options.getNbNodesAndCpuPerNode());
 
@@ -76,6 +78,10 @@ vishnu::cancelJob(const std::string& sessionKey,
           const std::string& jobId)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
+  checkEmptyString(sessionKey, "The session key");
+  checkEmptyString(machineId, "The machine id");
+  checkEmptyString(jobId, "The job id");
+
   SessionProxy sessionProxy(sessionKey);
 
   TMS_Data::Job job;
@@ -104,6 +110,10 @@ vishnu::getJobInfo(const std::string& sessionKey,
     Job& jobInfo)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
+  checkEmptyString(sessionKey, "The session key");
+  checkEmptyString(machineId, "The machine id");
+  checkEmptyString(jobId, "The job id");
+
   SessionProxy sessionProxy(sessionKey);
   jobInfo.setJobId(jobId);
 
@@ -131,6 +141,9 @@ vishnu::listJobs(const std::string& sessionKey,
           ListJobs& listOfJobs,
           const ListJobsOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
+
+  checkEmptyString(sessionKey, "The session key");
+  checkEmptyString(machineId, "The machine id");
 
   std::string serviceName = "getListOfJobs_";
   serviceName.append(machineId);
@@ -178,6 +191,9 @@ vishnu::getJobProgress(const std::string& sessionKey,
               const ProgressOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
+  checkEmptyString(sessionKey, "The session key");
+  checkEmptyString(machineId, "The machine id");
+
   std::string serviceName = "getJobsProgression_";
   serviceName.append(machineId);
 
@@ -216,6 +232,9 @@ vishnu::listQueues(const std::string& sessionKey,
                    ListQueues& listofQueues,
                    const std::string& queueName)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
+
+  checkEmptyString(sessionKey, "The session key");
+  checkEmptyString(machineId, "The machine id");
 
   std::string serviceName = "getListOfQueues_";
   serviceName.append(machineId);
@@ -259,6 +278,9 @@ vishnu::getJobOutput(const std::string& sessionKey,
               const std::string& outDir)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
+  checkEmptyString(sessionKey, "The session key");
+  checkEmptyString(machineId, "The machine id");
+
   if((outDir.size()!=0)&&(!boost::filesystem::exists(outDir))) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The directory "+outDir+" does not exist");
   }
@@ -286,6 +308,9 @@ vishnu::getCompletedJobsOutput(const std::string& sessionKey,
                   ListJobResults& listOfResults,
                   const std::string& outDir)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
+
+  checkEmptyString(sessionKey, "The session key");
+  checkEmptyString(machineId, "The machine id");
 
   if((outDir.size()!=0)&&(!boost::filesystem::exists(outDir))) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The directory "+outDir+" does not exist");

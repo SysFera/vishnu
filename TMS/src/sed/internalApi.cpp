@@ -62,10 +62,10 @@ solveSubmitJob(diet_profile_t* pb) {
   int mapperkey;
   std::string cmd = "";
 
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  diet_paramstring_get(diet_parameter(pb,0), &sessionKey, NULL);
   diet_string_get(diet_parameter(pb,1), &machineId, NULL);
   diet_string_get(diet_parameter(pb,2), &script_content, NULL);
-  diet_string_get(diet_parameter(pb,3), &submitOptionsSerialized, NULL);
+  diet_paramstring_get(diet_parameter(pb,3), &submitOptionsSerialized, NULL);
   diet_string_get(diet_parameter(pb,4), &jobSerialized, NULL);
 
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
@@ -88,6 +88,21 @@ solveSubmitJob(diet_profile_t* pb) {
 
     if(!vishnu::parseEmfObject(std::string(submitOptionsSerialized), submitOptions)) {
       throw SystemException(ERRCODE_INVDATA, "solve_submitJob: SubmitOptions object is not well built");
+    }
+
+    if(std::string(machineId).compare(AUTOMATIC_SUBMIT_JOB_KEYWORD)==0) {
+      sessionServer.check(); //To check the sessionKey
+      machineId = strdup((ServerTMS::getInstance()->getMachineId()).c_str());
+      try {
+        UserServer(sessionServer).getUserAccountLogin(machineId);
+      } catch (VishnuException& e) {
+        throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "You have not a local account on any of the machines.");
+      }
+    } else {
+      if(submitOptions->getCriterion()!=NULL) {
+        throw UserException(ERRCODE_INVALID_PARAM, "Criterion option is used only if the machine identifier is equal"
+            " to autom (this keyword is used to submit automatically a job)");
+      }
     }
 
     JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());

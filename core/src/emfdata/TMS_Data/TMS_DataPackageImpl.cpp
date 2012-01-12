@@ -221,6 +221,16 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CPUTIME);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
             m_SubmitOptions__cpuTime);
+    m_SubmitOptions__selectQueueAutom = new ::ecore::EAttribute();
+    m_SubmitOptions__selectQueueAutom->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__SELECTQUEUEAUTOM);
+    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
+            m_SubmitOptions__selectQueueAutom);
+    m_SubmitOptions__criterion = new ::ecore::EReference();
+    m_SubmitOptions__criterion->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CRITERION);
+    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
+            m_SubmitOptions__criterion);
 
     // ListJobsOptions
     m_ListJobsOptionsEClass = new ::ecore::EClass();
@@ -267,6 +277,16 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__QUEUE);
     m_ListJobsOptionsEClass->getEStructuralFeatures().push_back(
             m_ListJobsOptions__queue);
+    m_ListJobsOptions__multipleStatus = new ::ecore::EAttribute();
+    m_ListJobsOptions__multipleStatus->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__MULTIPLESTATUS);
+    m_ListJobsOptionsEClass->getEStructuralFeatures().push_back(
+            m_ListJobsOptions__multipleStatus);
+    m_ListJobsOptions__batchJob = new ::ecore::EAttribute();
+    m_ListJobsOptions__batchJob->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__BATCHJOB);
+    m_ListJobsOptionsEClass->getEStructuralFeatures().push_back(
+            m_ListJobsOptions__batchJob);
 
     // ProgressOptions
     m_ProgressOptionsEClass = new ::ecore::EClass();
@@ -438,6 +458,17 @@ TMS_DataPackage::TMS_DataPackage()
     m_ListJobResultsEClass->getEStructuralFeatures().push_back(
             m_ListJobResults__Results);
 
+    // LoadCriterion
+    m_LoadCriterionEClass = new ::ecore::EClass();
+    m_LoadCriterionEClass->setClassifierID(LOADCRITERION);
+    m_LoadCriterionEClass->setEPackage(this);
+    getEClassifiers().push_back(m_LoadCriterionEClass);
+    m_LoadCriterion__loadType = new ::ecore::EAttribute();
+    m_LoadCriterion__loadType->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::LOADCRITERION__LOADTYPE);
+    m_LoadCriterionEClass->getEStructuralFeatures().push_back(
+            m_LoadCriterion__loadType);
+
     // Create enums
 
     m_JobPriorityEEnum = new ::ecore::EEnum();
@@ -459,6 +490,11 @@ TMS_DataPackage::TMS_DataPackage()
     m_QueueStatusEEnum->setClassifierID(QUEUESTATUS);
     m_QueueStatusEEnum->setEPackage(this);
     getEClassifiers().push_back(m_QueueStatusEEnum);
+
+    m_LoadTypeEEnum = new ::ecore::EEnum();
+    m_LoadTypeEEnum->setClassifierID(LOADTYPE);
+    m_LoadTypeEEnum->setEPackage(this);
+    getEClassifiers().push_back(m_LoadTypeEEnum);
 
     // Create data types
 
@@ -1029,6 +1065,33 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__cpuTime->setUnique(true);
     m_SubmitOptions__cpuTime->setDerived(false);
     m_SubmitOptions__cpuTime->setOrdered(true);
+    m_SubmitOptions__selectQueueAutom->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEBoolean());
+    m_SubmitOptions__selectQueueAutom->setName("selectQueueAutom");
+    m_SubmitOptions__selectQueueAutom->setDefaultValueLiteral("false");
+    m_SubmitOptions__selectQueueAutom->setLowerBound(0);
+    m_SubmitOptions__selectQueueAutom->setUpperBound(1);
+    m_SubmitOptions__selectQueueAutom->setTransient(false);
+    m_SubmitOptions__selectQueueAutom->setVolatile(false);
+    m_SubmitOptions__selectQueueAutom->setChangeable(true);
+    m_SubmitOptions__selectQueueAutom->setUnsettable(false);
+    m_SubmitOptions__selectQueueAutom->setID(false);
+    m_SubmitOptions__selectQueueAutom->setUnique(true);
+    m_SubmitOptions__selectQueueAutom->setDerived(false);
+    m_SubmitOptions__selectQueueAutom->setOrdered(true);
+    m_SubmitOptions__criterion->setEType(m_LoadCriterionEClass);
+    m_SubmitOptions__criterion->setName("criterion");
+    m_SubmitOptions__criterion->setDefaultValueLiteral("");
+    m_SubmitOptions__criterion->setLowerBound(0);
+    m_SubmitOptions__criterion->setUpperBound(1);
+    m_SubmitOptions__criterion->setTransient(false);
+    m_SubmitOptions__criterion->setVolatile(false);
+    m_SubmitOptions__criterion->setChangeable(true);
+    m_SubmitOptions__criterion->setContainment(true);
+    m_SubmitOptions__criterion->setResolveProxies(true);
+    m_SubmitOptions__criterion->setUnique(true);
+    m_SubmitOptions__criterion->setDerived(false);
+    m_SubmitOptions__criterion->setOrdered(true);
     // ListJobsOptions
     m_ListJobsOptionsEClass->setName("ListJobsOptions");
     m_ListJobsOptionsEClass->setAbstract(false);
@@ -1143,6 +1206,34 @@ TMS_DataPackage::TMS_DataPackage()
     m_ListJobsOptions__queue->setUnique(true);
     m_ListJobsOptions__queue->setDerived(false);
     m_ListJobsOptions__queue->setOrdered(true);
+    m_ListJobsOptions__multipleStatus->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_ListJobsOptions__multipleStatus->setName("multipleStatus");
+    m_ListJobsOptions__multipleStatus->setDefaultValueLiteral("");
+    m_ListJobsOptions__multipleStatus->setLowerBound(0);
+    m_ListJobsOptions__multipleStatus->setUpperBound(1);
+    m_ListJobsOptions__multipleStatus->setTransient(false);
+    m_ListJobsOptions__multipleStatus->setVolatile(false);
+    m_ListJobsOptions__multipleStatus->setChangeable(true);
+    m_ListJobsOptions__multipleStatus->setUnsettable(false);
+    m_ListJobsOptions__multipleStatus->setID(false);
+    m_ListJobsOptions__multipleStatus->setUnique(true);
+    m_ListJobsOptions__multipleStatus->setDerived(false);
+    m_ListJobsOptions__multipleStatus->setOrdered(true);
+    m_ListJobsOptions__batchJob->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEBoolean());
+    m_ListJobsOptions__batchJob->setName("batchJob");
+    m_ListJobsOptions__batchJob->setDefaultValueLiteral("false");
+    m_ListJobsOptions__batchJob->setLowerBound(0);
+    m_ListJobsOptions__batchJob->setUpperBound(1);
+    m_ListJobsOptions__batchJob->setTransient(false);
+    m_ListJobsOptions__batchJob->setVolatile(false);
+    m_ListJobsOptions__batchJob->setChangeable(true);
+    m_ListJobsOptions__batchJob->setUnsettable(false);
+    m_ListJobsOptions__batchJob->setID(false);
+    m_ListJobsOptions__batchJob->setUnique(true);
+    m_ListJobsOptions__batchJob->setDerived(false);
+    m_ListJobsOptions__batchJob->setOrdered(true);
     // ProgressOptions
     m_ProgressOptionsEClass->setName("ProgressOptions");
     m_ProgressOptionsEClass->setAbstract(false);
@@ -1571,6 +1662,23 @@ TMS_DataPackage::TMS_DataPackage()
     m_ListJobResults__Results->setUnique(true);
     m_ListJobResults__Results->setDerived(false);
     m_ListJobResults__Results->setOrdered(true);
+    // LoadCriterion
+    m_LoadCriterionEClass->setName("LoadCriterion");
+    m_LoadCriterionEClass->setAbstract(false);
+    m_LoadCriterionEClass->setInterface(false);
+    m_LoadCriterion__loadType->setEType(m_LoadTypeEEnum);
+    m_LoadCriterion__loadType->setName("loadType");
+    m_LoadCriterion__loadType->setDefaultValueLiteral("1");
+    m_LoadCriterion__loadType->setLowerBound(0);
+    m_LoadCriterion__loadType->setUpperBound(1);
+    m_LoadCriterion__loadType->setTransient(false);
+    m_LoadCriterion__loadType->setVolatile(false);
+    m_LoadCriterion__loadType->setChangeable(true);
+    m_LoadCriterion__loadType->setUnsettable(false);
+    m_LoadCriterion__loadType->setID(false);
+    m_LoadCriterion__loadType->setUnique(true);
+    m_LoadCriterion__loadType->setDerived(false);
+    m_LoadCriterion__loadType->setOrdered(true);
 
     // TODO: Initialize data types
 
@@ -1821,6 +1929,40 @@ TMS_DataPackage::TMS_DataPackage()
         m_QueueStatusEEnum->getELiterals().push_back(_el);
     }
 
+    // LoadType
+    m_LoadTypeEEnum->setName("LoadType");
+    m_LoadTypeEEnum->setSerializable(true);
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // USE_NB_WAITING_JOBS
+        _el->setName("USE_NB_WAITING_JOBS");
+        _el->setValue(0);
+        _el->setLiteral("USE_NB_WAITING_JOBS");
+        _el->setEEnum(m_LoadTypeEEnum);
+        m_LoadTypeEEnum->getELiterals().push_back(_el);
+    }
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // USE_NB_JOBS
+        _el->setName("USE_NB_JOBS");
+        _el->setValue(1);
+        _el->setLiteral("USE_NB_JOBS");
+        _el->setEEnum(m_LoadTypeEEnum);
+        m_LoadTypeEEnum->getELiterals().push_back(_el);
+    }
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // USE_NB_RUNNING_JOBS
+        _el->setName("USE_NB_RUNNING_JOBS");
+        _el->setValue(2);
+        _el->setLiteral("USE_NB_RUNNING_JOBS");
+        _el->setEEnum(m_LoadTypeEEnum);
+        m_LoadTypeEEnum->getELiterals().push_back(_el);
+    }
+
     _initialize();
 }
 
@@ -1883,6 +2025,14 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EClass_ptr TMS_DataPackage::getListJobResults()
 {
     return m_ListJobResultsEClass;
+}
+::ecore::EClass_ptr TMS_DataPackage::getLoadCriterion()
+{
+    return m_LoadCriterionEClass;
+}
+::ecore::EEnum_ptr TMS_DataPackage::getLoadType()
+{
+    return m_LoadTypeEEnum;
 }
 
 ::ecore::EAttribute_ptr TMS_DataPackage::getJob__sessionId()
@@ -2041,6 +2191,14 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_SubmitOptions__cpuTime;
 }
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__selectQueueAutom()
+{
+    return m_SubmitOptions__selectQueueAutom;
+}
+::ecore::EReference_ptr TMS_DataPackage::getSubmitOptions__criterion()
+{
+    return m_SubmitOptions__criterion;
+}
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__jobId()
 {
     return m_ListJobsOptions__jobId;
@@ -2072,6 +2230,14 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__queue()
 {
     return m_ListJobsOptions__queue;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__multipleStatus()
+{
+    return m_ListJobsOptions__multipleStatus;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__batchJob()
+{
+    return m_ListJobsOptions__batchJob;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getProgressOptions__jobId()
 {
@@ -2188,5 +2354,9 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EReference_ptr TMS_DataPackage::getListJobResults__Results()
 {
     return m_ListJobResults__Results;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getLoadCriterion__loadType()
+{
+    return m_LoadCriterion__loadType;
 }
 

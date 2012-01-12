@@ -1,7 +1,7 @@
 /**
  * \file get_job_info.cpp
  * This file defines the VISHNU get job info command 
- * \author Coulomb Kevin (kevin.coulomb@sysfera.com)
+ * \author Coulomb Kevin (kevin.coulomb@sysfera.com) and Daouda Traore (daouda.traore@sysfera.com)
  */
 
 

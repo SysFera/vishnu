@@ -11,6 +11,9 @@
 #include "utilVishnu.hpp"
 #include <boost/scoped_ptr.hpp>
 #include "SystemException.hpp"
+#include "BatchServer.hpp"
+#include "BatchFactory.hpp"
+#include "UserServer.hpp"
 
 //{{RELAX<MISRA_0_1_3> Because these variables are used this class
 ServerTMS *ServerTMS::minstance = NULL;
@@ -146,13 +149,12 @@ ServerTMS::init(int vishnuId,
 
   // initialization of the service table
   diet_service_table_init(NB_SRV);
-
   /* submitJob */
   mprofile = diet_profile_desc_alloc((SERVICES[0]+std::string(machineId)).c_str(), 4, 4, 6);
-  diet_generic_desc_set(diet_param_desc(mprofile,0), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,0), DIET_PARAMSTRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_PARAMSTRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,4), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,5), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,6), DIET_STRING, DIET_CHAR);
@@ -245,8 +247,101 @@ ServerTMS::init(int vishnuId,
     return 1;
   }
   diet_profile_desc_free(mprofile);
+  /* ListOfJobs on all machines */
+  mprofile = diet_profile_desc_alloc(SERVICES[8], 2, 2, 4);
+  diet_generic_desc_set(diet_param_desc(mprofile,0), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,4), DIET_STRING, DIET_CHAR);
+  if (diet_service_table_add(mprofile, NULL, solveGetListOfJobs)) {
+    return 1;
+  }
+  diet_profile_desc_free(mprofile);
+  /* automatic submitJob */
+  mprofile = diet_profile_desc_alloc(SERVICES[9], 4, 4, 6);
+  diet_aggregator_desc_t *agg;
+  //TO SELECT a SeD
+  {
+    agg = diet_profile_desc_aggregator(mprofile);
+    diet_service_use_perfmetric(ServerTMS::setBatchLoadPerformance);
+    diet_aggregator_set_type(agg, DIET_AGG_PRIORITY);
+    diet_aggregator_priority_minuser(agg, 0);
+  }
+
+  diet_generic_desc_set(diet_param_desc(mprofile,0), DIET_PARAMSTRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_PARAMSTRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,4), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,5), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,6), DIET_STRING, DIET_CHAR);
+  if (diet_service_table_add(mprofile, NULL, solveSubmitJob)) {
+    return 1;
+  }
+  diet_profile_desc_free(mprofile);
 
   return 0;
+}
+
+/**
+ * \brief Function to compute the batch load performance (number of waiting jobs, running jobs and total jobs)
+ * \param pb the resquest profile
+ * \param perfValues The vector contain the estimation load performance (number of waiting jobs, running jobs and total jobs)
+ */
+void
+ServerTMS::setBatchLoadPerformance(diet_profile_t* pb, estVector_t perfValues) {
+
+  BatchFactory factory;
+  BatchType batchType  = ServerTMS::getInstance()->getBatchType();
+  boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType));
+  TMS_Data::ListJobs* listOfJobs = new TMS_Data::ListJobs();
+  batchServer->fillListOfJobs(listOfJobs);
+
+  char* sessionKey = (diet_paramstring_get_desc(diet_parameter(pb, 0)))->param;
+  std::cout << "+++++++++++++++sessionKey=" << sessionKey << std::endl;
+  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  long LoadValue = std::numeric_limits<long>::max();
+
+  try {
+    std::string machineId = ServerTMS::getInstance()->getMachineId();
+    UserServer(sessionServer).getUserAccountLogin(machineId);
+    char* jobSerialized = (diet_paramstring_get_desc(diet_parameter(pb, 3)))->param;
+    TMS_Data::SubmitOptions_ptr submitOptions = NULL;
+    if(vishnu::parseEmfObject(std::string(jobSerialized), submitOptions)) {
+      if(submitOptions->getCriterion()!=NULL) {
+        switch((submitOptions->getCriterion())->getLoadType()) {
+          case 0 :
+            LoadValue = listOfJobs->getNbWaitingJobs();
+            std::cout << "++++++++++++++++NbWaitingJobs=" << LoadValue << std::endl;
+            break;
+          case 1 :
+            LoadValue = listOfJobs->getNbJobs();
+            std::cout << "++++++++++++++++NbJobs=" << LoadValue << std::endl;
+            break;
+          case 2 :
+            LoadValue = listOfJobs->getNbRunningJobs();
+            std::cout << "++++++++++++++++NbRunningJobs=" << LoadValue << std::endl;
+            break;
+          default :
+            LoadValue = listOfJobs->getNbWaitingJobs();
+            break;
+        }
+      } else {
+        LoadValue = listOfJobs->getNbWaitingJobs();
+        std::cout << "++++++++++++++++NbWaitingJobs=" << LoadValue << std::endl;
+      }
+    }
+  } catch (VishnuException& e) {
+  }
+
+  std::cout << "++++++++++++++++++++++++LoadValue=" << LoadValue << std::endl;
+  /*
+   ** store the LoadValue value in the user estimate space,
+   */
+  diet_est_set(perfValues, 0, LoadValue);
+
+  delete listOfJobs;
 }
 
 /**

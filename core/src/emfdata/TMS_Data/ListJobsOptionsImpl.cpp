@@ -102,6 +102,18 @@ void ListJobsOptions::_initialize()
                 m_queue);
     }
         return _any;
+    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__MULTIPLESTATUS:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_multipleStatus);
+    }
+        return _any;
+    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__BATCHJOB:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EBoolean >::toAny(_any,
+                m_batchJob);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -160,6 +172,18 @@ void ListJobsOptions::eSet(::ecore::EInt _featureID,
                 m_queue);
     }
         return;
+    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__MULTIPLESTATUS:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_multipleStatus);
+    }
+        return;
+    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__BATCHJOB:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EBoolean >::fromAny(
+                _newValue, m_batchJob);
+    }
+        return;
 
     }
     throw "Error";
@@ -188,6 +212,11 @@ void ListJobsOptions::eSet(::ecore::EInt _featureID,
     case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__QUEUE:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_queue);
+    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__MULTIPLESTATUS:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_multipleStatus);
+    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__BATCHJOB:
+        return m_batchJob != false;
 
     }
     throw "Error";
