@@ -264,7 +264,7 @@
     <section>
       <title>Install from source</title>
       <para>VISHNU must be compiled with G++ (4.4.3 or greater) and CMake (2.8 or greater).</para>
-      <para>Source tarball: vishnu_v1.2.5.tgz <ulink url="vishnu_v1.2.5.tgz">[download]</ulink> (added on 28th June 2011)</para>
+      <para>Source tarball: vishnu_v1.2.6.tgz <ulink url="vishnu_v1.2.6.tgz">[download]</ulink> (added on 11th January 2012)</para>
     </section>
     <section>
       <title>Launch the VISHNU platform</title>
