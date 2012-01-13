@@ -2,6 +2,8 @@
 import VISHNU
 import time
 import os
+import sys
+
 
 def displayQueue (q):
   for i in range(q.getNbQueues()):
@@ -16,6 +18,7 @@ def displayJob(j, pos):
     print "jobinfo name", j.getJobName()
     print "job status", j.getStatus()
     print "jobinfo submit date", j.getSubmitDate()
+    print "machine id", j.getSubmitMachineId()
 
 def displayProg(li):
   for i in range(li.getNbJobs()):
@@ -42,10 +45,28 @@ def displayListJ(lij):
 VISHNU.vishnuInitialize(os.getenv("VISHNU_CONFIG_FILE"))
 
 j = VISHNU.Job()
+j1 = VISHNU.Job()
+j2 = VISHNU.Job()
+j3 = VISHNU.Job()
+criterion = VISHNU.LoadCriterion()
 op = VISHNU.SubmitOptions()
 mid = "machine_1"
+mid2 = "machine_2"
 #path = "/home/traore/VishnuProject/vishnu/TMS/test/src/scripts/torque_script"
-path = "scripts/torque_script"
+#path = "scripts/torque_script"
+path = "scripts/testScriptGen"
+waitingScriptPath = "scripts/testScriptGenWaiting"
+
+#The first argument in command line corresponds to the machine id
+if len(sys.argv) > 1:
+  mid = sys.argv[1]
+#The second argument in command line corresponds to the second machine id
+if len(sys.argv) > 2:
+  mid2 = sys.argv[2]
+#The second argument in command line corresponds to the waiting job script path
+if len(sys.argv) > 3:
+  waitingScriptPath = sys.argv[3]
+
 sess = VISHNU.Session()
 r = VISHNU.connect("root", "vishnu_user", sess)
 k = sess.getSessionKey()
@@ -73,7 +94,7 @@ try :
   print "*****status=", j.getStatus()
 
   VISHNU.getJobOutput(k, mid, j.getJobId(), jr, out)
-  VISHNU.getCompletedJobsOutput(k, mid, lijr, out)
+  #VISHNU.getCompletedJobsOutput(k, mid, lijr, out)
   VISHNU.submitJob(k, mid, path, j, op)
   VISHNU.cancelJob(k, mid, j.getJobId())
 
@@ -93,6 +114,39 @@ try :
   if lij.getNbJobs() > 0:
     displayListJ(lij)
 
+  VISHNU.submitJob(k, mid, path, j, op)
+  VISHNU.submitJob(k, mid2, path, j, op)
+  ALL="all"
+  allJobs=VISHNU.ListJobs()
+  VISHNU.listJobs(k, ALL, allJobs, opj)
+  print "@@@@@@@@@ List of jobs on all machines @@@@@@@@@@"
+  if allJobs.getNbJobs() > 0:
+    displayListJ(allJobs)
+ 
+  AUTOM="autom"
+  VISHNU.submitJob(k, mid, waitingScriptPath, j1, op)
+  VISHNU.submitJob(k, mid, waitingScriptPath, j2, op)
+  VISHNU.submitJob(k, mid, waitingScriptPath, j3, op)
+  print "++++++++++++++++++++Three submitted waiting jobs on:", mid
+  VISHNU.submitJob(k, AUTOM, path, j, op)
+  print "++++++++++++++++++++Automatic job id is:", j.getSubmitMachineId() 
+  VISHNU.submitJob(k, AUTOM, path, j, op)
+  print "++++++++++++++++++++Automatic job id is:", j.getSubmitMachineId()
+  
+  VISHNU.cancelJob(k, mid, j1.getJobId())
+  VISHNU.cancelJob(k, mid, j2.getJobId())
+  VISHNU.cancelJob(k, mid, j3.getJobId())
+
+  #VISHNU.submitJob(k, mid2, path, j1, op)
+  #VISHNU.submitJob(k, mid2, path, j2, op)
+  #criterion.setLoadType(3)
+  #op.setCriterion(criterion)
+  #print "++++++++++++++++++++Two running jobs on:", mid2
+  #VISHNU.submitJob(k, AUTOM, path, j, op)
+  #print "++++++++++++++++++++Automatic2 job id is:", j.getSubmitMachineId()
+  
+  #VISHNU.cancelJob(k, mid, j1.getJobId())
+  #VISHNU.cancelJob(k, mid, j2.getJobId())
 #VISHNU.getJobProgress(k, mid, li, opp)
 
 except VISHNU.VishnuException, e:

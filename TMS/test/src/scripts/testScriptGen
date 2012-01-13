@@ -4,7 +4,7 @@
 #          % vishnu_queue=first_queue
 #% vishnu_output=my_first_job_gen.out
 #% vishnu_error=my_first_job_gen.err
-#% vishnu_working_dir=/tmp
+##% vishnu_working_dir=/tmp
 #% vishnu_mailNotification=BEGIN
 #% vishnu_notify_user=daouda.traore@sysfera.com
 #% vishnu_wallclocklimit=01:00:00
