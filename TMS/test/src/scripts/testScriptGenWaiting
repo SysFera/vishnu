@@ -27,6 +27,8 @@
 # PBS -l walltime=01:00:00
 #SBATCH -p firstPart
 #PBS -q second_queue
+#PBS -a 1230
+#SBATCH --begin=now+1hour
 echo "The name of the submitted server is: " $HOSTNAME
  sleep 60
   ls -l
