@@ -419,6 +419,39 @@ BOOST_AUTO_TEST_CASE(automatic_submit_a_Job_normal_call)
   }
 }
 
+//TODO: Est ce que les cas E1, E2 et E3 sont utiles? Parce qu'ils sont déjà testés plus haut?
+//autom c'est juste le nom de la machine qui change
+//Seul le cas E4 est pertinent
+
+// automatic submit a job: automatic job submission for user with no local accounts
+BOOST_AUTO_TEST_CASE(automatic_submit_a_Job_with_user_no_local_accounts)
+{
+
+  BOOST_TEST_MESSAGE("Testing automatic job submission for user with no local accounts (use case T1.2-E4)");
+
+  VishnuConnexion vc("user_2","toto");
+
+  // get the session key and the machine identifier
+  string sessionKey=vc.getConnexion();
+
+  string autom="autom";
+
+  try {
+    //Setting submitjob parameters
+
+    const std::string scriptFilePath= TMSSCRIPTPATH;
+    Job jobInfo;
+    SubmitOptions subOptions;
+
+    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+    BOOST_CHECK_THROW(submitJob(sessionKey, autom, scriptFilePath, jobInfo,subOptions) ,VishnuException );
+    BOOST_TEST_MESSAGE("*********************** automatic submit job for user with no local accounts  ok!!!!*****************************");
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
 
 
 BOOST_AUTO_TEST_SUITE_END()
