@@ -792,6 +792,131 @@ LLServer::convertLLPrioToVishnuPrio(const int& prio) {
 void LLServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
     const std::vector<string>& ignoredIds) {
 
+  LL_element *queryObject;
+  LL_element *queryInfos, *step, *credential;
+  int rc;
+  int obj_count = 0;
+  int state;
+  int err_code;
+  int pri;
+  char  *owner; 
+  char* jclass;
+
+  queryObject = ll_query(JOBS);
+  if(!queryObject) {
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "Query JOBS : ll_query() return NULL.\n");
+  }
+
+  rc = ll_set_request(queryObject, QUERY_ALL, NULL, ALL_DATA);
+  if(rc) {
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "Query Infos : ll_set_request() return code is non-zero.\n");
+  }
+
+  /* LL_CM : le daemon LoadL_negociator doit etre lance par le root */
+  /* LL_SCHEDD : le daemon LoadL_schedd doit lance par le root */
+  queryInfos = ll_get_objs(queryObject, LL_CM, NULL, &obj_count, &err_code);
+  if(queryInfos==NULL) {
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "Query Infos : ll_get_objs() return code is non-zero.\n");
+  }
+
+  char *value;
+  time_t submittime, wc_time_soft;
+  int nbNodes = -1;;
+  int nbCpu = -1;
+  long nbWaitingJobs = 0;
+  long nbRunningJobs = 0;
+
+  while(queryInfos)
+  {
+    rc = ll_get_data(queryInfos, LL_JobCredential, &credential);
+    if(!rc) {
+      ll_get_data(credential, LL_CredentialUserName, &owner);
+    }
+    ll_get_data(queryInfos, LL_JobSubmitTime, &submittime);
+
+    rc = ll_get_data(queryInfos, LL_JobGetFirstStep, &step);
+    if(!rc)
+    {
+      while(step) {
+        ll_get_data(step, LL_StepID, &value);
+        std::vector<std::string>::const_iterator iter;
+        iter = std::find(ignoredIds.begin(), ignoredIds.end(), value);
+        if(iter==ignoredIds.end()) {
+
+          TMS_Data::Job_ptr job = new TMS_Data::Job();
+
+          job->setJobId(value);
+
+          if(owner!=NULL) {
+            job->setOwner(owner);
+          }
+          job->setSubmitDate(submittime);
+          job->setEndDate(-1);
+
+          ll_get_data(step, LL_StepName, &value);
+          job->setJobName(value);
+
+          ll_get_data(step, LL_StepState, &state);
+          job->setStatus(convertLLStateToVishnuState(state));
+          if(job->getStatus()==4) {
+            nbRunningJobs++;
+          } else if(job->getStatus() >= 1 && job->getStatus() <= 3) {
+            nbWaitingJobs++;
+          }
+
+
+          ll_get_data(step, LL_StepPriority, &pri);
+          job->setJobPrio(convertLLPrioToVishnuPrio(pri));
+
+          ll_get_data(step, LL_StepOutputFile, &value);
+          job->setOutputPath(value);
+
+          ll_get_data(step, LL_StepErrorFile, &value);
+          job->setErrorPath(value);
+
+          ll_get_data(step, LL_StepWallClockLimitSoft, &wc_time_soft);
+          job->setWallClockLimit(wc_time_soft);
+
+          ll_get_data(step, LL_StepJobClass, &jclass);
+          job->setJobQueue(jclass);
+
+          ll_get_data(step, LL_StepLoadLevelerGroup, &value);
+          job->setGroupName(value);
+
+          ll_get_data(step, LL_StepComment, &value);
+          job->setJobDescription(value);
+
+          job->setMemLimit(-1);
+
+          ll_get_data(step, LL_StepCpusPerCore, &nbCpu);
+          job->setNbCpus(nbCpu);
+
+          ll_get_data(step, LL_StepNodeCount, &nbNodes);
+          job->setNbNodes(nbNodes);
+
+          if(nbNodes!=-1) {
+            job->setNbNodesAndCpuPerNode(vishnu::convertToString(nbNodes)+":"+convertToString(nbCpu));
+          }
+          //To fill the job working dir
+          ll_get_data(step, LL_StepIwd, &value);
+          job->setJobWorkingDir(value);
+
+          listOfJobs->getJobs().push_back(job);
+        }
+        ll_get_data(queryInfos, LL_JobGetNextStep, &step);
+      }
+    }
+    queryInfos = ll_next_obj(queryObject);
+
+  }
+
+  listOfJobs->setNbJobs(listOfJobs->getJobs().size());
+  listOfJobs->setNbRunningJobs(listOfJobs->getNbRunningJobs()+nbRunningJobs);
+  listOfJobs->setNbWaitingJobs(listOfJobs->getNbWaitingJobs()+nbWaitingJobs);
+
+  ll_free_objs(queryInfos);
+  ll_deallocate(queryObject);
+
 }
 
 /**
