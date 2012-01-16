@@ -114,7 +114,7 @@ allows to select automatically a queue which has the number of nodes requested b
 .PP
 \fB\-L \fR\fB\fIloadType\fR\fR
 .RS 4
-The criterion to aumatically submit a job (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs)\&. This option is used only if the machine identifier is equal to autom (this keyword is used to submit automatically a job)\&. The value must be an integer\&. Predefined values are: 0 (USE_NB_WAITING_JOBS), 1 (USE_NB_JOBS), 2 (USE_NB_RUNNING_JOBS)\&.
+The criterion to automatically submit a job (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs)\&. This option is used only if the machine identifier is equal to autom (this keyword is used to submit automatically a job)\&. The value must be an integer\&. Predefined values are: 0 (USE_NB_WAITING_JOBS), 1 (USE_NB_JOBS), 2 (USE_NB_RUNNING_JOBS)\&.
 .RE
 .SH "JOB OUTPUT ENVIRONMENT VARIABLES"
 .PP
@@ -219,11 +219,11 @@ To submit on machine_1 the script toto:
 .PP
 vishnu_submit_job machine_1 toto
 .PP
-To submit automatically the script toto on the best machine (by the default the machine that has the minimum number of waiting jobs is seleted):
+To submit automatically the script toto on the best machine (by the default the machine which has the minimum number of waiting jobs is seleted):
 .PP
 vishnu_submit_job autom toto
 .PP
-To submit automatically the script toto on the best machine by using a machine that has the minimum total number of jobs:
+To submit automatically the script toto on the best machine by using a machine which has the minimum total number of jobs:
 .PP
 vishnu_submit_job autom toto \-L 1
 .SH "AUTHOR"

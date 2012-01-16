@@ -530,7 +530,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="loadType" eType="#//LoadType"
         defaultValueLiteral="1">
       <eAnnotations source="Description">
-        <details key="content" value="The criterion to aumatically submit a job (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs). This option is used only if the machine identifier is equal to autom (this keyword is used to submit automatically a job)"/>
+        <details key="content" value="The criterion to automatically submit a job (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs). This option is used only if the machine identifier is equal to autom (this keyword is used to submit automatically a job)"/>
         <details key="shortOption" value="L"/>
       </eAnnotations>
     </eStructuralFeatures>
