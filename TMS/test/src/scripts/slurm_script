@@ -6,7 +6,10 @@
 #SBATCH -p firstPart
 #SBATCH --comment="my first slurm job"
 #SBATCH --share
-
+#SBATCH -N 1
+#SBATCH --mincpus=2
+#SBATCH --nodes=1
+#SBATCH --time=01:05:10
 srun hostname
 sleep 300
 echo "Hello world!...."

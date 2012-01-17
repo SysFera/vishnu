@@ -141,6 +141,10 @@ TorqueServer::processOptions(const char* scriptPath,
   if(!options.getNbNodesAndCpuPerNode().empty() && options.getNbCpu()!=-1) {
     throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use the NbCpu option and NbNodesAndCpuPerNode option together.\n");
   }
+  
+  if(options.isSelectQueueAutom() && !options.getQueue().empty() ) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use the SelectQueueAutom (-Q) and getQueue (-q) options together.\n");
+  }
 
   if(options.getName().size()!=0){
     cmdsOptions.push_back("-N");
@@ -228,6 +232,64 @@ TorqueServer::processOptions(const char* scriptPath,
     cmdsOptions.push_back("cput="+options.getCpuTime());
   }
 
+  if(options.isSelectQueueAutom()) {
+    int node = 0;
+      int cpu = -1;
+      istringstream isNode;
+      std::string optionNodesValue = options.getNbNodesAndCpuPerNode();
+      if(optionNodesValue.empty()) {
+        node = getTorqueNbNodesInScript(scriptPath, cpu);
+        std::cout << "************************in script node=" << node << std::endl;
+        std::cout << "************************in script cpu=" << cpu << std::endl;
+      } else {
+        isNode.str(optionNodesValue);
+        isNode >> node;
+        char colon;
+        isNode >> colon;
+        isNode >> cpu;
+        std::cout << "************************optionNodesValue=" << optionNodesValue << std::endl;
+        std::cout << "************************node=" << node << std::endl;
+        std::cout << "************************colon=" << colon << std::endl;
+        std::cout << "************************cpu=" << cpu << std::endl;
+
+      }
+      if(node <=0) {
+        node = 1;
+      }
+       TMS_Data::ListQueues* listOfQueues = listQueues();
+      if(listOfQueues != NULL) {
+        for(unsigned int i = 0; i < listOfQueues->getNbQueues(); i++) {
+          TMS_Data::Queue* queue =  listOfQueues->getQueues().get(i);
+          if(queue->getNode()>=node){
+            std::string queueName = queue->getName();
+            TMS_Data::ListQueues* resourceMin =  queuesResourceMin(queueName);
+
+            std::string walltimeStr = getTorqueResourceValue(scriptPath, "walltime");
+            long walltime = options.getWallTime()==-1?vishnu::convertStringToWallTime(walltimeStr):options.getWallTime();
+            long qwalltimeMax = queue->getWallTime();
+            long qwalltimeMin = ((resourceMin->getQueues()).get(0))->getWallTime();
+            std::cout << "************************walltime=" << walltime << std::endl;
+            std::cout << "************************qwalltimeMax=" << qwalltimeMax << std::endl;
+            std::cout << "************************qwalltimeMin=" << qwalltimeMin << std::endl;
+
+            int qCpuMax = queue->getMaxProcCpu();
+            int qCpuMin = ((resourceMin->getQueues()).get(0))->getMaxProcCpu();
+            std::cout << "************************cpu=" << cpu << std::endl;
+            std::cout << "************************qCpuMax=" << qCpuMax << std::endl;
+            std::cout << "************************qCpuMin=" << qCpuMin << std::endl;
+
+            if(walltime >= qwalltimeMin && (walltime <= qwalltimeMax || qwalltimeMax==0) &&
+               (cpu >= qCpuMin && cpu <= qCpuMax)){
+              cmdsOptions.push_back("-q");
+              cmdsOptions.push_back(queueName);
+              std::cout << "************************selectedQueue=" << cmdsOptions.back() << std::endl;
+              break;
+            }
+            delete resourceMin;
+          };
+        }
+      }
+  } 
 }
 
 /**
@@ -626,7 +688,8 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
 
   if (node.compare("")!=0) {
     int nbCpu;
-    int nbNodes = getNbNodesInNodeFormat(node, nbCpu);
+    int maxNbCpu;
+    int nbNodes = getNbNodesInNodeFormat(node, nbCpu, maxNbCpu);
     job.setNbNodes(nbNodes);
     job.setNbNodesAndCpuPerNode(vishnu::convertToString(nbNodes)+":"+vishnu::convertToString(nbCpu));
     job.setNbCpus(nbCpu);
@@ -763,7 +826,8 @@ TorqueServer::listQueues(const std::string& OptqueueName) {
             queue->setWallTime(vishnu::convertStringToWallTime(std::string(a->value)));      
           } else if(!strcmp(a->resource, "nodect")) {
             int nbCpu;
-            int nbNodes = getNbNodesInNodeFormat(std::string(a->value), nbCpu);
+            int maxNbCpu;
+            int nbNodes = getNbNodesInNodeFormat(std::string(a->value), nbCpu, maxNbCpu);
             queue->setNode(nbNodes);
             queue->setMaxJobCpu(nbCpu);
           }
@@ -791,7 +855,8 @@ TorqueServer::listQueues(const std::string& OptqueueName) {
  */
 int 
 TorqueServer::getNbNodesInNodeFormat(const std::string& format, 
-                                     int& nbCpu) {
+                                     int& nbCpu,
+                                     int& maxNbCpu) {
 
   std::string nextNodeContent;
   std::string nextNode;
@@ -804,18 +869,18 @@ TorqueServer::getNbNodesInNodeFormat(const std::string& format,
   size_t end = format.find(delim);
   if(end==std::string::npos){
     nextNodeContent = format.substr(beg, end-beg);
-    computeNbNodesAndNbCpu(nextNodeContent, ppn,nbNodes, nbCpu); 
+    computeNbNodesAndNbCpu(nextNodeContent, ppn,nbNodes, nbCpu, maxNbCpu); 
   }
 
   while(end!=std::string::npos) {
     nextNodeContent = format.substr(beg, end-beg);
-    computeNbNodesAndNbCpu(nextNodeContent, ppn,nbNodes, nbCpu);
+    computeNbNodesAndNbCpu(nextNodeContent, ppn,nbNodes, nbCpu, maxNbCpu);
     beg = end+1;
     end = format.find(delim, beg);
     //last node
     if(end==std::string::npos){
       nextNodeContent = format.substr(beg, end-beg);
-      computeNbNodesAndNbCpu(nextNodeContent, ppn,nbNodes, nbCpu);
+      computeNbNodesAndNbCpu(nextNodeContent, ppn,nbNodes, nbCpu, maxNbCpu);
     }
   }
   if(nbNodes==0) {
@@ -900,6 +965,48 @@ TorqueServer::getFormatedCpuPerNode(const int& cpu,
   return nodeValue;
 }
 
+
+/**
+ * \brief Function to get the torque number of nodes in cripy
+ * \param scriptPath The path of the script that enventually contain the node format or the number of node
+ * \param nbCpu The maximum number of cpus in the script
+ * \return the number of nodes in the given script
+ */
+int
+TorqueServer::getTorqueNbNodesInScript(const std::string& scriptPath, int& maxNbCpu) {
+
+  std::string scriptContent = vishnu::get_file_content(scriptPath);
+  std::istringstream iss(scriptContent);
+  std::string line;
+  int nbNodes = -1;
+  while(!iss.eof()) {
+    getline(iss, line);
+    size_t pos = line.find('#');
+    if(pos==string::npos) {
+      continue;
+    }
+    line = line.erase(0, pos);
+    if(boost::algorithm::starts_with(line, "#PBS")){
+      line = line.substr(std::string("#PBS").size());
+      pos = line.find("-l");
+      if(pos!=std::string::npos){
+        pos = line.find("nodes=");
+        if(pos!=std::string::npos){
+          line = line.substr(pos+std::string("nodes=").size());
+          std::cout << "+++++++++++++++++++getTorqueNbNodesInScript line= " << line << std::endl;
+          int nbCpu = -1;
+          maxNbCpu = -1;
+          nbNodes = getNbNodesInNodeFormat(line, nbCpu, maxNbCpu);
+          std::cout << "+++++++++++++++++++nbNodes= " << nbNodes << std::endl;
+          std::cout << "+++++++++++++++++++maxNbCpu=" << maxNbCpu << std::endl;
+        }
+      }
+    }
+  }
+
+  return nbNodes;
+}
+
 /**
  * \brief Function to insert some additional content (valueToInsert)
  * \param valueToFind string to find 
@@ -935,12 +1042,14 @@ TorqueServer::findAndInsert(const std::string& valueToFind,
  * \param ppn The syntaxe containing the number of processors per node
  * \param nbNodes The computed number of nodes
  * \param nbCpu The numbers of cpus
+ * \param nbCpu The maximum numbers of cpus
  */
 void
 TorqueServer::computeNbNodesAndNbCpu(const std::string& nextNodeContent,
                                      const std::string& ppn,
                                      int& nbNodes,
-                                     int& nbCpu) {
+                                     int& nbCpu,
+                                     int& maxNbCpu) {
 
     std::string nbCpuStr;
     size_t posColon = nextNodeContent.find(':');
@@ -954,8 +1063,10 @@ TorqueServer::computeNbNodesAndNbCpu(const std::string& nextNodeContent,
         nbCpuStr = nextNodeContent.substr(pos+ppn.size());
       }
       nbCpu = (nbCpu > vishnu::convertToInt(nbCpuStr))?vishnu::convertToInt(nbCpuStr):nbCpu;
+      maxNbCpu = (maxNbCpu < vishnu::convertToInt(nbCpuStr))?vishnu::convertToInt(nbCpuStr):maxNbCpu;
     } else {
       nbCpu = 1;
+      maxNbCpu = 1;
     }
 
     if(nextNode.find_first_not_of("0123456789")==std::string::npos) {
@@ -1074,6 +1185,153 @@ void TorqueServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
      listOfJobs->setNbRunningJobs(listOfJobs->getNbRunningJobs()+nbRunningJobs);
      listOfJobs->setNbWaitingJobs(listOfJobs->getNbWaitingJobs()+nbWaitingJobs);
    }
+}
+
+/**
+* TODO
+*/
+std::string
+TorqueServer::getTorqueResourceValue(const char* file, const std::string& resourceName) {
+
+  std::string resourceValue;
+  std::string torquePrefix = "#PBS";
+  std::string line;
+  ifstream ifile(file);
+  if (ifile.is_open()) {
+    while (!ifile.eof()) {
+      getline(ifile, line);
+      size_t pos = line.find('#');
+      if(pos==string::npos) {
+        continue;
+      }
+      line = line.erase(0, pos);
+      if(boost::algorithm::starts_with(line,torquePrefix)){
+        line = line.substr(torquePrefix.size());
+        pos = line.find("-l");
+        if(pos!=std::string::npos){
+          std::cout << "++++++++line=" << line << std::endl;
+          pos = line.find(resourceName+"=", pos+2);
+          if(pos!=std::string::npos){
+            resourceValue = line.substr(pos+resourceName.size()+1);
+          }
+        }
+      }
+    }
+
+    ifile.close();
+  }
+  return resourceValue;
+}
+
+/**
+ * \brief Function to request the status of queues 
+ * \param optQueueName (optional) the name of the queue to request 
+ * \return The requested status in to ListQueues data structure 
+ */
+TMS_Data::ListQueues*
+TorqueServer::queuesResourceMin(const std::string& OptqueueName) {
+
+  int connect;
+  std::string errorMsg;
+
+  serverOut[0] = '\0'; //le bon a recuperer dans la base vishnu
+  // Connect to the torque server
+  connect = cnt2server(serverOut);
+
+  if (connect <= 0)
+  {
+    errorMsg = "TORQUE: pbs_statque: cannot connect to server ";
+
+    if (getenv("VPBSDEBUG") != NULL)
+    {
+      errorMsg.append("TORQUE: pbs_statque: pbs_server daemon may not be running on host");
+      errorMsg.append(" or hostname in file '$TORQUEHOME/server_name' may be incorrect\n");
+    }
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, errorMsg);
+  }
+
+
+  struct batch_status *p_status;
+  if(OptqueueName.size()!=0) {
+    p_status = pbs_statque(connect, strdup(OptqueueName.c_str()), NULL, NULL);
+  } else {
+    p_status = pbs_statque(connect, NULL, NULL, NULL);
+  }
+  if(p_status==NULL)
+  {
+    char* errmsg = pbs_geterrmsg(connect);
+    if(errmsg!=NULL)
+    {
+      errorMsg = "TORQUE: pbs_statque: ";
+      errorMsg.append(std::string(errmsg));
+    }
+    else {
+      errorMsg = "TORQUE: pbs_statque: getting status of server\n";
+    }
+
+    pbs_disconnect(connect);
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, errorMsg);
+  }
+
+  pbs_disconnect(connect);
+
+  struct batch_status *p;
+  struct attrl *a;
+
+
+  TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
+  TMS_Data::ListQueues* listQueuesResourceMin = ecoreFactory->createListQueues();
+
+  for(p = p_status; p!=NULL; p = p->next)
+  {
+    TMS_Data::Queue_ptr queue = ecoreFactory->createQueue();
+    queue->setName(std::string(p->name));
+    queue->setWallTime(0);
+    queue->setMemory(-1);
+    queue->setNode(0);
+    queue->setNbRunningJobs(0);
+    queue->setNbJobsInQueue(0);
+    queue->setMaxProcCpu(-1);
+    queue->setMaxJobCpu(-1);
+
+
+    a = p->attribs;
+    while(a!=NULL)
+    {
+
+      if(a->name!=NULL) {
+        if(!strcmp(a->name, ATTR_rescmin)){
+          if(!strcmp(a->resource, "mem")) {
+            std::string walltime = std::string(a->value);
+
+            size_t pos = walltime.find_first_not_of("0123456789");
+            if(pos!=std::string::npos) {
+              walltime = walltime.substr(0, pos);
+            }
+            //A Verifier : si la taille de la memoire est en byte?
+            queue->setMemory(vishnu::convertToInt(walltime));
+          } else if(!strcmp(a->resource, "ncpus")) {
+            queue->setMaxProcCpu(vishnu::convertToInt(std::string(a->value)));
+          }
+          if(!strcmp(a->resource, "walltime")){
+            queue->setWallTime(vishnu::convertStringToWallTime(std::string(a->value)));
+          } else if(!strcmp(a->resource, "nodect")) {
+            queue->setNode(vishnu::convertToInt(std::string(a->value)));
+          }
+        } else if (!strcmp(a->name, ATTR_p)){
+          queue->setPriority(convertTorquePrioToVishnuPrio(vishnu::convertToInt(std::string(a->value))));
+        } else if (!strcmp(a->name, ATTR_comment)) {
+          queue->setDescription(std::string(a->value));
+        }
+
+        a = a->next;
+      }
+    }
+    // Adding created queue to the list
+    listQueuesResourceMin->getQueues().push_back(queue);
+  }
+  listQueuesResourceMin->setNbQueues(listQueuesResourceMin->getQueues().size());
+  return listQueuesResourceMin;
 }
 
 /**
