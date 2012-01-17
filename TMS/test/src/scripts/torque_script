@@ -2,6 +2,11 @@
 #PBS -N  sequentiel
 #PBS -l walltime=00:15:00
 #PBS -q second_queue
+#PBS -l nodes=1
+# PBS -l nodes=2:ppn=2+1:ppn=2
+# PBS -l nodes=1:ppn=1+1:ppn=2
+# PBS -l nodes=1:ppn=2
+# PBS -l nodes=1:ppn=1
 echo "Queue name: " $PBS_O_QUEUE 
 echo "Server Name: " $PBS_SERVER 
 echo "Working dir: " $PBS_O_WORKDIR 

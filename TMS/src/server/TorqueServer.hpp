@@ -139,11 +139,13 @@ class TorqueServer : public BatchServer
      * \brief Function to get the number of nodes in the torque node format
      * \param format The node format
      * \param nbCpu The minimum number of cpu per node
+     * \param maxNbCpu The maximum number of cpu per node
      * \return the number of node
      */
     int
     getNbNodesInNodeFormat(const std::string& format, 
-                           int& nbCpu);
+                           int& nbCpu,
+                           int& maxNbCpu);
 
     /**
      * \brief Function to get the torque formated cpu per node
@@ -175,13 +177,40 @@ class TorqueServer : public BatchServer
      * \param nextNodeContent The node content to parse
      * \param ppn The syntaxe containing the number of processors per node
      * \param nbNodes The computed number of nodes
-     * \param nbCpu The numbers of cpus
+     * \param nbCpu The minimum number of cpus
+     * \param maxNbCpu The maximum number of cpus
      */
     void
     computeNbNodesAndNbCpu(const std::string& nextNodeContent,
                            const std::string& ppn,
                            int& nbNodes,
-                           int& nbCpu);
+                           int& nbCpu,
+                           int& maxNbCpu);
+
+    /**
+     * \brief Function to get the torque number of nodes in cripy
+     * \param scriptPath The path of the script that enventually contain the node format or the number of node
+     * \param nbCpu The maximum number of cpus in the script
+     * \return the number of nodes in the given script
+     */
+    int
+    getTorqueNbNodesInScript(const std::string& scriptPath, 
+                             int& nbCpu);
+
+    /**
+     * TODO
+     */
+    std::string
+    getTorqueResourceValue(const char* file, 
+                                           const std::string& resourceName);
+
+    /**
+     * \brief Function to request the status of queues 
+     * \param optQueueName (optional) the name of the queue to request 
+     * \return The requested status in to ListQueues data structure 
+     */
+    TMS_Data::ListQueues*
+    queuesResourceMin(const std::string& OptqueueName);
 
     /**
      * \brief Function to convert torque memory into mb

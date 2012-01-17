@@ -11,6 +11,8 @@
 #include <algorithm>
 #include <limits>
 
+#include <boost/algorithm/string.hpp>
+
 #include <unistd.h>
 #include <pwd.h>
 #include <grp.h>
@@ -53,7 +55,7 @@ SlurmServer::submit(const char* scriptPath,
 
   std::vector<std::string> cmdsOptions;
   //processes the vishnu options
-  processOptions(options, cmdsOptions);
+  processOptions(scriptPath, options, cmdsOptions);
 
   int argc = cmdsOptions.size()+2;
   char* argv[argc];
@@ -269,16 +271,22 @@ bool SlurmServer::containsAnExcludedSlurmSymbols(const std::string& path, std::s
 
 /**
  * \brief Function to treat the submission options
+ * \param scriptPath The job script path
  * \param options the object which contains the SubmitOptions options values
  * \param cmdsOptions The list of the option value
  * \return raises an exception on error
  */
 void 
-SlurmServer::processOptions(const TMS_Data::SubmitOptions& options, 
-                             std::vector<std::string>&cmdsOptions) {
+SlurmServer::processOptions(const char* scriptPath,
+                            const TMS_Data::SubmitOptions& options, 
+                            std::vector<std::string>&cmdsOptions) {
 
   if(!options.getNbNodesAndCpuPerNode().empty() && options.getNbCpu()!=-1) {
     throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use the NbCpu option and NbNodesAndCpuPerNode option together.\n");
+  }
+
+  if(options.isSelectQueueAutom() && !options.getQueue().empty() ) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use the SelectQueueAutom (-Q) and getQueue (-q) options together.\n");
   }
 
   if(options.getName().size()!=0){
@@ -370,6 +378,78 @@ SlurmServer::processOptions(const TMS_Data::SubmitOptions& options,
     cmdsOptions.push_back(options.getCpuTime());
   }
 
+  if(options.isSelectQueueAutom()) {
+    int node = 0;
+    int cpu = -1;
+    istringstream isNode;
+    std::string optionNodesValue = options.getNbNodesAndCpuPerNode();
+    if(optionNodesValue.empty()) {
+      std::string nodeStr = getSlurmResourceValue(scriptPath, "-N", "--nodes");
+      std::string cpuStr =  getSlurmResourceValue(scriptPath, "", "--mincpus");
+      std::cout << "************************ nodeStr=" << nodeStr << std::endl;
+      if(!nodeStr.empty()) {
+        if(nodeStr.find('-')!=std::string::npos) {
+          istringstream isNodeStr(nodeStr);
+          int minnode;
+          int maxNode;
+          char sparator;
+          isNodeStr >> minnode;
+          isNodeStr >> sparator;
+          isNodeStr >> maxNode;
+          node = maxNode; 
+        } else {
+          node = vishnu::convertToInt(nodeStr);
+        }
+      }
+      if(!cpuStr.empty()) {
+        cpu = vishnu::convertToInt(cpuStr);
+      }
+      std::cout << "************************in script node=" << node << std::endl;
+      std::cout << "************************in script cpu=" << cpu << std::endl;
+    } else {
+      isNode.str(optionNodesValue);
+      isNode >> node;
+      char colon;
+      isNode >> colon;
+      isNode >> cpu;
+      std::cout << "************************optionNodesValue=" << optionNodesValue << std::endl;
+      std::cout << "************************node=" << node << std::endl;
+      std::cout << "************************colon=" << colon << std::endl;
+      std::cout << "************************cpu=" << cpu << std::endl;
+
+    }
+    if(node <=0) {
+      node = 1;
+    }
+    TMS_Data::ListQueues* listOfQueues = listQueues();
+    if(listOfQueues != NULL) {
+      for(unsigned int i = 0; i < listOfQueues->getNbQueues(); i++) {
+        TMS_Data::Queue* queue =  listOfQueues->getQueues().get(i);
+        if(queue->getNode()>=node){
+          std::string queueName = queue->getName();
+
+          std::string walltimeStr = getSlurmResourceValue(scriptPath, "-t", "--time");
+          std::cout << "************************walltimeStr=" << walltimeStr << ", walltimeStr.size()=" << walltimeStr.size() << std::endl;
+          long walltime = options.getWallTime()==-1?vishnu::convertStringToWallTime(walltimeStr):options.getWallTime();
+          long qwalltimeMax = queue->getWallTime();
+          std::cout << "************************walltime=" << walltime << std::endl;
+          std::cout << "************************qwalltimeMax=" << qwalltimeMax << std::endl;
+
+          int qCpuMax = queue->getMaxProcCpu();
+          std::cout << "************************cpu=" << cpu << std::endl;
+          std::cout << "************************qCpuMax=" << qCpuMax << std::endl;
+
+          if((walltime <= qwalltimeMax || qwalltimeMax==0) &&
+              (cpu <= qCpuMax)){
+            cmdsOptions.push_back("-p");
+            cmdsOptions.push_back(queueName);
+            std::cout << "************************selectedQueue=" << cmdsOptions.back() << std::endl;
+            break;
+          }
+        };
+      }
+    }
+  }
 
 }
 
@@ -754,6 +834,55 @@ void SlurmServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
     listOfJobs->setNbWaitingJobs(listOfJobs->getNbWaitingJobs()+nbWaitingJobs);
   }
 
+}
+
+/**
+* TODO
+*/
+std::string
+SlurmServer::getSlurmResourceValue(const char* file,
+    const std::string& shortOptionLetterSyntax,
+    const std::string& longOptionLetterSyntax) {
+
+  std::string resourceValue;
+  std::string slurmPrefix = "#SBATCH";
+  std::string line;
+  ifstream ifile(file);
+  if (ifile.is_open()) {
+    while (!ifile.eof()) {
+      getline(ifile, line);
+      size_t pos = line.find('#');
+      if(pos==string::npos) {
+        continue;
+      }
+      line = line.erase(0, pos);
+      if(boost::algorithm::starts_with(line,slurmPrefix)){
+        line = line.substr(slurmPrefix.size());
+        if(!shortOptionLetterSyntax.empty()&& line.find(longOptionLetterSyntax)==std::string::npos){ 
+          pos = line.find(shortOptionLetterSyntax);
+          if(pos!=std::string::npos){
+            std::cout << "++++++++shortOptionLetterSyntax=" << shortOptionLetterSyntax << std::endl;
+            std::cout << "++++++++line=" << line << std::endl;
+            resourceValue = line.substr(pos+shortOptionLetterSyntax.size());
+          }
+        } else if(!longOptionLetterSyntax.empty()){
+          pos = line.find(longOptionLetterSyntax+"=");
+          if(pos!=std::string::npos){
+            std::cout << "++++++++longOptionLetterSyntax=" << longOptionLetterSyntax << std::endl;
+            std::cout << "++++++++line=" << line << std::endl;
+            resourceValue = line.substr(pos+longOptionLetterSyntax.size()+1);
+          }
+        }
+      }
+    }
+
+    ifile.close();
+  }
+
+  istringstream cleanResourceValue(resourceValue);
+  cleanResourceValue >> resourceValue;
+
+  return resourceValue;
 }
 
 
