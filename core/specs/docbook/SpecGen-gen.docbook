@@ -95,6 +95,16 @@
             Added use of .netrc file in use case U1.1
           </para></revdescription>
       </revision>
+      <revision>
+        <revnumber>08</revnumber>
+        <date>18/01/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+        <para>
+            Added UC T1.2 and UC T2.8
+          </para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -1835,7 +1845,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User sends the request</para><para>2. The System checks that the session key is valid</para><para>3. The System checks that the machine id is valid and machine is available</para><para>4. If command parameters contain a file the System verifies that the file is available and readable</para><para>5. The System processes the request</para><para>6. The System returns information to the user</para><para>6. The System records request information (time, user, machine, request parameters) in the system log</para></entry>
+                <entry><para>1. User sends the request</para><para>2. The System checks that the session key is valid</para><para>3. If the request contains the machine id the System checks that machine id is valid and machine is available</para><para>4. If command parameters contain a file the System verifies that the file is available and readable</para><para>5. The System processes the request</para><para>6. The System returns information to the user</para><para>7. The System records request information (time, user, machine, request parameters) in the system log</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -1847,7 +1857,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Extensions</para></entry>
-                <entry><para>T1.1 - Submit a job </para></entry>
+                <entry><para>T1.2 Automatic Submit Job</para><para>T1.1 - Submit a job </para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1899,6 +1909,51 @@ in order to avoid systematic authentification</para>
         </informaltable>
       </section>
       <section>
+        <title>T1.2 Automatic Submit Job</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>T1.2 Automatic Submit Job</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>User asks to submit a job automatically on the best  machine (the used criterion is the minimum number of waiting jobs  or minimum running jobs or minimum total jobs)</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry><para>  - The machine id is equal to autom</para></entry>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry><para>- The job is submitted on the best machine (the used criterion is the minimum number of waiting jobs or minimum running jobs or minimum total jobs)</para><para>- The job state and id are recorded on the system's log</para><para>- The job id is sent to the user</para></entry>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1. The System checks that request parameters contain:</para><para>  - job script path</para><para>  - job options</para><para>2. The TMS server on the best machine is contacted</para><para>3. The job is submitted by the TMS server to the batch scheduler</para><para>4. The id of the submitted job is returned to the user</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry><para>1a. Invalid options or script</para><para>4a. The batch scheduler server is unavailable</para><para>4b. The batch scheduler server rejects the request</para></entry>
+              </row>
+              <row>
+                <entry><para>Extension of</para></entry>
+                <entry><para>T1 - Asynchronous command on a machine</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
         <title>T2 - Synchronous command on a machine</title>
         <informaltable>
           <tgroup cols="2">
@@ -1925,11 +1980,11 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. The User sends the request with parameters including session key and machine id</para><para>2. The System checks that the session key is valid</para><para>3. The System checks that the machine id is valid and machine is available</para><para>4. If command parameters contain a file the System verifies that the file is available and readable</para><para>5. The System processes the request</para><para>6. The System returns information containing the results of the request</para><para>7. The System records request information (time, user, machine, request parameters) in the system log</para></entry>
+                <entry><para>1. The User sends the request with parameters including session key and machine id</para><para>2. The System checks that the session key is valid</para><para>3. If the request contains the machine id the System checks that the machine id is valid and machine is available</para><para>4. If command parameters contain a file the System verifies that the file is available and readable</para><para>5. The System processes the request</para><para>6. The System returns information containing the results of the request</para><para>7. The System records request information (time, user, machine, request parameters) in the system log</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
-                <entry><para>5a. T2.1</para><para>5b. T2.2</para><para>5c. T2.3</para><para>5d. T2.4</para><para>5e. T2.5</para><para>5f. TA1</para><para>5g. TA2</para></entry>
+                <entry><para>5a. T2.1</para><para>5b. T2.2</para><para>5c. T2.3</para><para>5d. T2.4</para><para>5e. T2.5</para><para>5f.  T2.6</para><para>5g. T2.7</para><para>5h. T2.8</para><para>5i. TA1</para><para>5j. TA2</para></entry>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
@@ -1937,7 +1992,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Extensions</para></entry>
-                <entry><para>T2.1 - Get job information</para><para>T2.2 - Cancel a job</para><para>T2.3 - List job queues</para><para>T2.4 - List jobs</para><para>T2.5 - Get jobs progression</para><para>T2.6 - Get one job outputs </para><para>T2.7 - Get all completed jobs outputs </para></entry>
+                <entry><para>T2.1 - Get job information</para><para>T2.2 - Cancel a job</para><para>T2.3 - List job queues</para><para>T2.4 - List jobs</para><para>T2.5 - Get jobs progression</para><para>T2.6 - Get one job outputs </para><para>T2.7 - Get all completed jobs outputs </para><para>T2.8 List Jobs on all machines</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1970,7 +2025,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para> 1. The Systems checks the job id</para><para> 2. The TMS server on the given machine is contacted</para><para> 3. The TMS server asks job information to the batch scheduler server</para><para> 4. The User receives job information</para></entry>
+                <entry><para> 1. The Systems checks the job id </para><para> 2. The TMS server on the given machine is contacted</para><para> 3. The TMS server asks job information to the batch scheduler server</para><para> 4. The User receives job information</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -2265,6 +2320,51 @@ in order to avoid systematic authentification</para>
               <row>
                 <entry><para>Notes</para></entry>
                 <entry><para>This use case defines behaviour(s) that is/are not defined in the </para><para>project initial requirements.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>T2.8 List Jobs on all machines</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>T2.8 List Jobs on all machines</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>User lists all jobs submitted on all machines matching some search criteria</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry><para>-The machine id is equal to all</para></entry>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para> 1. The User sends the request containing  the following optional search criteria: job id, number of CPUs required for the job, date of submission (from/to), job submitter, status, priority, queue, outputPath and errorPath.</para><para> 2. The System obtains jobs information from the batch scheduler server (depends on the underlying batch scheduler software)</para><para> 3. The System returns jobs information that match the search criteria to the User</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry><para>2a. The batch scheduler server is unavailable</para><para>2b. The batch scheduler server rejects the request</para></entry>
+              </row>
+              <row>
+                <entry><para>Extension of</para></entry>
+                <entry><para>T2 - Synchronous command on a machine</para></entry>
               </row>
             </tbody>
           </tgroup>
