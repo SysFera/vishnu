@@ -3,7 +3,7 @@
   PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 <article lang="">
 <info>
-    <title>VISHNU - UMS - Web Services Interface - Tests report</title>
+    <title>VISHNU - TMS - Web Services Interface - Tests report</title>
     <author>
       <personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
     </author>
@@ -23,6 +23,15 @@
         <authorinitials>K. COULOMB</authorinitials>
         <revdescription>
           <para>Deliverable version</para>
+        </revdescription>
+      </revision>
+
+      <revision>
+        <revnumber>2</revnumber>
+        <date>18/01/2012</date>
+        <authorinitials>D. TRAORE</authorinitials>
+        <revdescription>
+          <para>Add tests for automatic submit a job, list jobs on all machines and list batch jobs (jobs submitted through VISHNU and out of VISHNU)</para>
         </revdescription>
       </revision>
     </revhistory>
@@ -67,7 +76,7 @@
 		<para>Author of the test code</para>
               </entry>
               <entry>
-		<para>K. Coulomb</para>
+		<para>K. Coulomb and D. Traore</para>
               </entry>
             </row>
             <row>
@@ -75,7 +84,7 @@
 		<para>Author of the report</para>
               </entry>
               <entry>
-		<para>K. COULOMB</para>
+		<para>K. COULOMB and D. Traore</para>
               </entry>
             </row>
             <row>
@@ -255,6 +264,129 @@
                 <para>OK</para>
               </entry>
             </row>
+
+
+            <row>
+              <entry>
+                <para>18/01/12</para>
+              </entry>
+              <entry>
+                <para>Simple automatic submit job </para>
+              </entry>
+              <entry>
+                <para>submitJob</para>
+              </entry>
+              <entry>
+                <para>OK</para>
+              </entry>
+            </row>
+
+            <row>
+              <entry>
+                <para>18/01/12</para>
+              </entry>
+              <entry>
+                <para>Simple automatic submit job with minimum total jobs load criterion option </para>
+              </entry>
+              <entry>
+                <para>submitJob</para>
+              </entry>
+              <entry>
+                <para>OK</para>
+              </entry>
+            </row>
+
+            <row>
+              <entry>
+                <para>18/01/12</para>
+              </entry>
+              <entry>
+                <para>Simple automatic submit job with minimum running jobs load criterion option </para>
+              </entry>
+              <entry>
+                <para>submitJob</para>
+              </entry>
+              <entry>
+                <para>OK</para>
+              </entry>
+            </row>
+
+            <row>
+              <entry>
+                <para>18/01/12</para>
+              </entry>
+              <entry>
+                <para>Simple submit job with automatically queue option </para>
+              </entry>
+              <entry>
+                <para>submitJob</para>
+              </entry>
+              <entry>
+                <para>OK</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>18/01/12</para>
+              </entry>
+              <entry>
+                <para>Simple list jobs on all machine </para>
+              </entry>
+              <entry>
+                <para>listJobs</para>
+              </entry>
+              <entry>
+                <para>OK</para>
+              </entry>
+            </row>
+
+            <row>
+              <entry>
+                <para>18/01/12</para>
+              </entry>
+              <entry>
+                <para>Simple list jobs with batch jobs option </para>
+              </entry>
+              <entry>
+                <para>listJobs</para>
+              </entry>
+              <entry>
+                <para>OK</para>
+              </entry>
+            </row>
+
+            <row>
+              <entry>
+                <para>18/01/12</para>
+              </entry>
+              <entry>
+                <para>Simple list jobs with batch jobs option and a given job id </para>
+              </entry>
+              <entry>
+                <para>listJobs</para>
+              </entry>
+              <entry>
+                <para>OK</para>
+              </entry>
+            </row>
+
+            <row>
+              <entry>
+                <para>18/01/12</para>
+              </entry>
+              <entry>
+                <para>Simple list jobs with batch multiStatus option </para>
+              </entry>
+              <entry>
+                <para>listJobs</para>
+              </entry>
+              <entry>
+                <para>OK</para>
+              </entry>
+            </row>
+
+
+
 	  </tbody>
 	</tgroup>
       </informaltable>
