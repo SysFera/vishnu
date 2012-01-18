@@ -299,7 +299,6 @@ ServerTMS::setBatchLoadPerformance(diet_profile_t* pb, estVector_t perfValues) {
   batchServer->fillListOfJobs(listOfJobs);
 
   char* sessionKey = (diet_paramstring_get_desc(diet_parameter(pb, 0)))->param;
-  std::cout << "+++++++++++++++sessionKey=" << sessionKey << std::endl;
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   long LoadValue = std::numeric_limits<long>::max();
 
@@ -313,15 +312,12 @@ ServerTMS::setBatchLoadPerformance(diet_profile_t* pb, estVector_t perfValues) {
         switch((submitOptions->getCriterion())->getLoadType()) {
           case 0 :
             LoadValue = listOfJobs->getNbWaitingJobs();
-            std::cout << "++++++++++++++++NbWaitingJobs=" << LoadValue << std::endl;
             break;
           case 1 :
             LoadValue = listOfJobs->getNbJobs();
-            std::cout << "++++++++++++++++NbJobs=" << LoadValue << std::endl;
             break;
           case 2 :
             LoadValue = listOfJobs->getNbRunningJobs();
-            std::cout << "++++++++++++++++NbRunningJobs=" << LoadValue << std::endl;
             break;
           default :
             LoadValue = listOfJobs->getNbWaitingJobs();
@@ -329,13 +325,11 @@ ServerTMS::setBatchLoadPerformance(diet_profile_t* pb, estVector_t perfValues) {
         }
       } else {
         LoadValue = listOfJobs->getNbWaitingJobs();
-        std::cout << "++++++++++++++++NbWaitingJobs=" << LoadValue << std::endl;
       }
     }
   } catch (VishnuException& e) {
   }
 
-  std::cout << "++++++++++++++++++++++++LoadValue=" << LoadValue << std::endl;
   /*
    ** store the LoadValue value in the user estimate space,
    */

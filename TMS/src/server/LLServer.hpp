@@ -140,6 +140,13 @@ private:
    */
   int
   getJobNodeCount(const std::string& jobId);
+
+  /**
+   * TODO
+   */
+  std::string
+  getLLResourceValue(const char* file,
+                     const std::string& optionLetterSyntax);   
   
   /**
    * \brief ListQueues returned

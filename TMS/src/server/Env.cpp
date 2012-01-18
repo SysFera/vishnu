@@ -34,23 +34,6 @@ void Env::replaceAllOccurences(std::string& scriptContent,
 }
 
 /**
- * \brief Function to get number of nodes for torque 
- * \param scriptContent The string content to modify
- */
-void Env::getTorqueNumNodes(std::string& scriptContent) {
-
-  size_t pos = scriptContent.find("VISHNU_BATCHJOB_NUM_NODES");
-  if(pos!=std::string::npos) {
-    pos = scriptContent.rfind("\n", pos-1);
-    std::string tmp = "NBNODES=\"$(cat  $PBS_NODEFILE | wc -l)\" \n";
-    scriptContent.insert(pos+1, tmp);
-    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$NBNODES");
-    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$NBNODES");
-  }
-
-}
-
-/**
  * \brief Function to replace some environment variables in a string
  * \param scriptContent The string content to modify
  */
@@ -73,7 +56,7 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
       replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", "$PBS_NODEFILE");
       replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$PBS_NODEFILE");
       //To replace VISHNU_BATCHJOB_NUM_NODES
-      getTorqueNumNodes(scriptContent);
+      //getTorqueNumNodes(scriptContent);
 
       break;
 

@@ -45,11 +45,6 @@ class Env
   private:
 
     /**
-     * \brief Function to get number of nodes for torque 
-     * \param scriptContent The string content to modify
-     */
-    void getTorqueNumNodes(std::string& scriptContent);
-    /**
      * \brief The type of the batch scheduler 
      */
     BatchType mbatchType;

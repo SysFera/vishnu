@@ -21,7 +21,7 @@ extern "C" {
 #include "TorqueServer.hpp"
 #include "TMSVishnuException.hpp"
 #include "utilVishnu.hpp"
-
+#include "Env.hpp"
 
 using namespace std;
 using namespace vishnu;
@@ -63,6 +63,32 @@ TorqueServer::submit(const char* scriptPath,
    argv[i+2] = const_cast<char*>(cmdsOptions[i].c_str());
   }
 
+  std::string nbNodesStr;
+  if(!options.getNbNodesAndCpuPerNode().empty()) { 
+    size_t posNbNodes = (options.getNbNodesAndCpuPerNode()).find(":");
+    if(posNbNodes!=std::string::npos) {
+      nbNodesStr = (options.getNbNodesAndCpuPerNode()).substr(0, posNbNodes);
+    } 
+  } else {
+    int nbCpu;
+    int nbNodes;
+    nbNodes = getTorqueNbNodesInScript(scriptPath, nbCpu);
+    if(nbNodes==-1) {
+      nbNodes=1;
+    }
+    std::ostringstream osNbnodes;
+    osNbnodes << nbNodes;
+    nbNodesStr = osNbnodes.str();
+  }
+  //To replace VISHNU_BATCHJOB_NUM_NODES
+  std::string scriptContent = vishnu::get_file_content(scriptPath);
+  Env env(TORQUE);
+  env.replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", nbNodesStr);
+  env.replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", nbNodesStr);
+  std::ofstream ofile(scriptPath);
+  ofile << scriptContent;
+  ofile.close();
+
   destination[0] = '\0';
   serverOut[0] = '\0';
   //parses the scripthPath and sets the options values
@@ -87,7 +113,7 @@ TorqueServer::submit(const char* scriptPath,
     }
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, connect_error.str());
   }
- 
+
   pbs_errno = 0;
   char*jobId = pbs_submit(connect, (struct attropl *)attrib,
                           scriptTmp, destination, NULL);
@@ -239,19 +265,12 @@ TorqueServer::processOptions(const char* scriptPath,
       std::string optionNodesValue = options.getNbNodesAndCpuPerNode();
       if(optionNodesValue.empty()) {
         node = getTorqueNbNodesInScript(scriptPath, cpu);
-        std::cout << "************************in script node=" << node << std::endl;
-        std::cout << "************************in script cpu=" << cpu << std::endl;
       } else {
         isNode.str(optionNodesValue);
         isNode >> node;
         char colon;
         isNode >> colon;
         isNode >> cpu;
-        std::cout << "************************optionNodesValue=" << optionNodesValue << std::endl;
-        std::cout << "************************node=" << node << std::endl;
-        std::cout << "************************colon=" << colon << std::endl;
-        std::cout << "************************cpu=" << cpu << std::endl;
-
       }
       if(node <=0) {
         node = 1;
@@ -268,21 +287,14 @@ TorqueServer::processOptions(const char* scriptPath,
             long walltime = options.getWallTime()==-1?vishnu::convertStringToWallTime(walltimeStr):options.getWallTime();
             long qwalltimeMax = queue->getWallTime();
             long qwalltimeMin = ((resourceMin->getQueues()).get(0))->getWallTime();
-            std::cout << "************************walltime=" << walltime << std::endl;
-            std::cout << "************************qwalltimeMax=" << qwalltimeMax << std::endl;
-            std::cout << "************************qwalltimeMin=" << qwalltimeMin << std::endl;
 
             int qCpuMax = queue->getMaxProcCpu();
             int qCpuMin = ((resourceMin->getQueues()).get(0))->getMaxProcCpu();
-            std::cout << "************************cpu=" << cpu << std::endl;
-            std::cout << "************************qCpuMax=" << qCpuMax << std::endl;
-            std::cout << "************************qCpuMin=" << qCpuMin << std::endl;
-
+            
             if(walltime >= qwalltimeMin && (walltime <= qwalltimeMax || qwalltimeMax==0) &&
                (cpu >= qCpuMin && cpu <= qCpuMax)){
               cmdsOptions.push_back("-q");
               cmdsOptions.push_back(queueName);
-              std::cout << "************************selectedQueue=" << cmdsOptions.back() << std::endl;
               break;
             }
             delete resourceMin;
@@ -967,7 +979,7 @@ TorqueServer::getFormatedCpuPerNode(const int& cpu,
 
 
 /**
- * \brief Function to get the torque number of nodes in cripy
+ * \brief Function to get the torque number of nodes in script
  * \param scriptPath The path of the script that enventually contain the node format or the number of node
  * \param nbCpu The maximum number of cpus in the script
  * \return the number of nodes in the given script
@@ -993,12 +1005,9 @@ TorqueServer::getTorqueNbNodesInScript(const std::string& scriptPath, int& maxNb
         pos = line.find("nodes=");
         if(pos!=std::string::npos){
           line = line.substr(pos+std::string("nodes=").size());
-          std::cout << "+++++++++++++++++++getTorqueNbNodesInScript line= " << line << std::endl;
           int nbCpu = -1;
           maxNbCpu = -1;
           nbNodes = getNbNodesInNodeFormat(line, nbCpu, maxNbCpu);
-          std::cout << "+++++++++++++++++++nbNodes= " << nbNodes << std::endl;
-          std::cout << "+++++++++++++++++++maxNbCpu=" << maxNbCpu << std::endl;
         }
       }
     }
@@ -1209,7 +1218,6 @@ TorqueServer::getTorqueResourceValue(const char* file, const std::string& resour
         line = line.substr(torquePrefix.size());
         pos = line.find("-l");
         if(pos!=std::string::npos){
-          std::cout << "++++++++line=" << line << std::endl;
           pos = line.find(resourceName+"=", pos+2);
           if(pos!=std::string::npos){
             resourceValue = line.substr(pos+resourceName.size()+1);
