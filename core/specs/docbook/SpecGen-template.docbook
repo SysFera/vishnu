@@ -81,6 +81,17 @@
         </revdescription>
         </revision>
 
+        <revision>
+        <revnumber>08</revnumber>
+        <date>18/01/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>
+            Added UC T1.2 and UC T2.8
+          </para>
+        </revdescription>
+      </revision>
+
       </revhistory>
     </info>
   <chapter>

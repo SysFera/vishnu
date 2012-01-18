@@ -43,6 +43,15 @@
           <para>Add tests for T1.1-B2 and T1.1-B3</para>
         </revdescription>
       </revision>
+
+      <revision>
+        <revnumber>3</revnumber>
+        <date>18/01/2012</date>
+        <authorinitials>  SYSFERA SAS</authorinitials>
+        <revdescription>
+          <para>Add tests for T1.2-B, T2.8-B and T2.4-B2</para>
+        </revdescription>
+      </revision>
     </revhistory>
     
       <copyright>
@@ -191,7 +200,47 @@ same conditions as regards security.</para>
         </tgroup>
       </informaltable>
     </section>
-    
+
+        
+     <section>
+      <title> T1.2 - Automatic Submit a job </title>
+      <para><emphasis role = "italic"> API command: submitJob</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>T1.2-B</para></entry>
+              <entry><para>Normal execution of automatic submitJob</para></entry>
+              <entry><para>The job identifier is returned</para></entry>
+              <entry><para>The job identifier is returned</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+             <entry><para>T1.2-E1</para></entry>
+              <entry><para>The user has not an account on any machines</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
     <section>
       <title> T2.2 - Cancel a job </title>
       <para><emphasis role = "italic"> API command: cancelJob</emphasis></para>
@@ -564,6 +613,94 @@ same conditions as regards security.</para>
         </tgroup>
       </informaltable>
     </section>
+
+
+      <section>
+      <title> T2.4-B2 - List batch jobs </title>
+      <para><emphasis role = "italic"> API command: listJobs</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>T2.4-B</para></entry>
+              <entry><para>Normal execution of list batch Jobs</para></entry>
+              <entry><para>The list of batch jobs is returned</para></entry>
+              <entry><para>The list of batch jobs is returned</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+             <entry><para>T2.4-E1</para></entry>
+              <entry><para>Bad session key</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>T2.4-E2</para></entry>
+              <entry><para>Bad machine Identifier</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+      <section>
+      <title> T2.8 - List jobs on all machines </title>
+      <para><emphasis role = "italic"> API command: listJobs</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>T2.8-B</para></entry>
+              <entry><para>Normal execution of list Jobs on all machines</para></entry>
+              <entry><para>The list of jobs on all machines is returned</para></entry>
+              <entry><para>The list of jobs on all machines is returned</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+             <entry><para>T2.8-E1</para></entry>
+              <entry><para>Bad session key</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
   </chapter> <!-- end Functionnal Tests --> 
   
   <chapter>
