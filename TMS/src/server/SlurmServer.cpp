@@ -386,7 +386,6 @@ SlurmServer::processOptions(const char* scriptPath,
     if(optionNodesValue.empty()) {
       std::string nodeStr = getSlurmResourceValue(scriptPath, "-N", "--nodes");
       std::string cpuStr =  getSlurmResourceValue(scriptPath, "", "--mincpus");
-      std::cout << "************************ nodeStr=" << nodeStr << std::endl;
       if(!nodeStr.empty()) {
         if(nodeStr.find('-')!=std::string::npos) {
           istringstream isNodeStr(nodeStr);
@@ -404,19 +403,12 @@ SlurmServer::processOptions(const char* scriptPath,
       if(!cpuStr.empty()) {
         cpu = vishnu::convertToInt(cpuStr);
       }
-      std::cout << "************************in script node=" << node << std::endl;
-      std::cout << "************************in script cpu=" << cpu << std::endl;
     } else {
       isNode.str(optionNodesValue);
       isNode >> node;
       char colon;
       isNode >> colon;
       isNode >> cpu;
-      std::cout << "************************optionNodesValue=" << optionNodesValue << std::endl;
-      std::cout << "************************node=" << node << std::endl;
-      std::cout << "************************colon=" << colon << std::endl;
-      std::cout << "************************cpu=" << cpu << std::endl;
-
     }
     if(node <=0) {
       node = 1;
@@ -429,21 +421,14 @@ SlurmServer::processOptions(const char* scriptPath,
           std::string queueName = queue->getName();
 
           std::string walltimeStr = getSlurmResourceValue(scriptPath, "-t", "--time");
-          std::cout << "************************walltimeStr=" << walltimeStr << ", walltimeStr.size()=" << walltimeStr.size() << std::endl;
           long walltime = options.getWallTime()==-1?vishnu::convertStringToWallTime(walltimeStr):options.getWallTime();
           long qwalltimeMax = queue->getWallTime();
-          std::cout << "************************walltime=" << walltime << std::endl;
-          std::cout << "************************qwalltimeMax=" << qwalltimeMax << std::endl;
-
           int qCpuMax = queue->getMaxProcCpu();
-          std::cout << "************************cpu=" << cpu << std::endl;
-          std::cout << "************************qCpuMax=" << qCpuMax << std::endl;
 
           if((walltime <= qwalltimeMax || qwalltimeMax==0) &&
               (cpu <= qCpuMax)){
             cmdsOptions.push_back("-p");
             cmdsOptions.push_back(queueName);
-            std::cout << "************************selectedQueue=" << cmdsOptions.back() << std::endl;
             break;
           }
         };
@@ -861,15 +846,11 @@ SlurmServer::getSlurmResourceValue(const char* file,
         if(!shortOptionLetterSyntax.empty()&& line.find(longOptionLetterSyntax)==std::string::npos){ 
           pos = line.find(shortOptionLetterSyntax);
           if(pos!=std::string::npos){
-            std::cout << "++++++++shortOptionLetterSyntax=" << shortOptionLetterSyntax << std::endl;
-            std::cout << "++++++++line=" << line << std::endl;
             resourceValue = line.substr(pos+shortOptionLetterSyntax.size());
           }
         } else if(!longOptionLetterSyntax.empty()){
           pos = line.find(longOptionLetterSyntax+"=");
           if(pos!=std::string::npos){
-            std::cout << "++++++++longOptionLetterSyntax=" << longOptionLetterSyntax << std::endl;
-            std::cout << "++++++++line=" << line << std::endl;
             resourceValue = line.substr(pos+longOptionLetterSyntax.size()+1);
           }
         }

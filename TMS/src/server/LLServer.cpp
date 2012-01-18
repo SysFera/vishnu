@@ -1,6 +1,9 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+
+#include <boost/algorithm/string.hpp>
+
 #include "llapi.h"
 
 #include "LLServer.hpp"
@@ -107,6 +110,10 @@ LLServer::processOptions(const char* scriptPath,
     throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use the NbCpu option and NbNodesAndCpuPerNode option together.\n");
   }
 
+  if(options.isSelectQueueAutom() && !options.getQueue().empty() ) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use the SelectQueueAutom (-Q) and getQueue (-q) options together.\n");
+  }
+ 
   std::string content = vishnu::get_file_content(scriptPath); 
   std::string optionLineToInsert;
   if(content.size()!=0) {
@@ -196,6 +203,39 @@ LLServer::processOptions(const char* scriptPath,
       insertOptionLine(optionLineToInsert, content);
     }
 
+    if(options.isSelectQueueAutom()) {
+      int node = 0;
+      istringstream isNode;
+      std::string optionNodesValue = options.getNbNodesAndCpuPerNode();
+      if(optionNodesValue.empty()) {
+        node = vishnu::convertToInt(getLLResourceValue(scriptPath, "node"));
+      } else {
+        isNode.str(optionNodesValue);
+        isNode >> node;
+      }
+      if(node <=0) {
+        node = 1;
+      }
+      TMS_Data::ListQueues* listOfQueues = listQueues();
+      if(listOfQueues != NULL) {
+        for(unsigned int i = 0; i < listOfQueues->getNbQueues(); i++) {
+          TMS_Data::Queue* queue =  listOfQueues->getQueues().get(i);
+          if(queue->getNode()>=node){
+            std::string queueName = queue->getName();
+
+            std::string walltimeStr = getLLResourceValue(scriptPath, "wall_clock_limit");
+            long walltime = options.getWallTime()==-1?vishnu::convertStringToWallTime(walltimeStr):options.getWallTime();
+            long qwalltimeMax = queue->getWallTime();
+
+            if((walltime <= qwalltimeMax || qwalltimeMax==0)){
+              optionLineToInsert ="# @ class="+queueName+"\n";
+              insertOptionLine(optionLineToInsert, content);
+              break;
+            }
+          };
+        }
+      }
+    }
 
     if(optionLineToInsert.size()!=0) {
       ofstream ofs(scriptPath);
@@ -920,7 +960,49 @@ void LLServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
 }
 
 /**
- * \brief List of jobs
+ * TODO
+ */
+std::string
+LLServer::getLLResourceValue(const char* file,
+    const std::string& optionLetterSyntax) {
+
+  std::string resourceValue;
+  std::string LLPrefix = "#@";
+  std::string line;
+  ifstream ifile(file);
+  if (ifile.is_open()) {
+    while (!ifile.eof()) {
+      getline(ifile, line);
+      std::transform(line.begin(), line.end(), line.begin(), ::tolower);
+      size_t pos = line.find('#');
+      if(pos==string::npos) {
+        continue;
+      }
+      line = line.erase(0, pos);
+      if(boost::algorithm::starts_with(boost::algorithm::erase_all_copy(line," "), LLPrefix)){
+        pos = line.find("@");
+        line = line.substr(pos+1);
+        pos = line.find(optionLetterSyntax);
+        if(pos!=std::string::npos){
+          pos = line.find("=");
+          if(pos!=std::string::npos){
+            resourceValue = line.substr(pos+optionLetterSyntax.size()+1);
+          }
+        }
+      }
+    }
+
+    ifile.close();
+  }
+  istringstream cleanResourceValue(resourceValue);
+  cleanResourceValue >> resourceValue;
+
+  return resourceValue;
+}
+
+
+/**
+ * \brief Destructor
  */
 LLServer::~LLServer() {
 }

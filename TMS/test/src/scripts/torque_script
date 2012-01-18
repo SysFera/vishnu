@@ -30,7 +30,7 @@ echo "#BATCH_JOB_NAME: " $PBS_JOBNAME
 echo "#BATCH_NODEFILE:" $PBS_NODEFILE
 echo "#BATCH_NUM_NODES:" $PBS_NODENUM 
 
-sleep 300
+sleep 30
 #/home/traore/TEST/fibo_calc2 43 
 
 
