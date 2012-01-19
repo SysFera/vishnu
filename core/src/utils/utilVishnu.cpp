@@ -329,7 +329,18 @@ std::string vishnu::convertWallTimeToString(const long& walltime) {
  * \param walltime The walltime to convert
  * \return the walltime converted to seconds
  */
-long vishnu::convertStringToWallTime(const std::string& walltime) {
+long vishnu::convertStringToWallTime(const std::string& walltime_) {
+
+  std::string walltime(walltime_);
+
+  if(!walltime.empty()){
+    if(*(walltime.begin())=='\"'){
+      walltime.replace(walltime.begin(), walltime.begin()+1, "");
+    }
+    if(*(walltime.end()-1)=='\"'){
+      walltime.replace(walltime.end()-1, walltime.end(), "");
+    }
+  }
 
   if(walltime.size()!=0) {
     int seconds = 0;
