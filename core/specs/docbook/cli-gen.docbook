@@ -2083,7 +2083,7 @@
                 <entry><para>loadType</para></entry>
                 <entry><para><link linkend="LoadType">LoadType</link></para></entry>
                 <entry><para>L</para></entry>
-                <entry><para>The criterion to aumatically submit a job (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs). This option is used only if the machine identifier is equal to autom (this keyword is used to submit automatically a job)</para></entry>
+                <entry><para>The criterion to automatically submit a job (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs). This option is used only if the machine identifier is equal to autom (this keyword is used to submit automatically a job)</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -2500,7 +2500,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_cancel_job command cancels a job from its id</para>
+        <para>The vishnu_cancel_job command cancels a job from its id. If job id is equal to all, all submitted jobs by all users will be cancelled if the user is an administrator, and only jobs submitted by the user will be cancelled if the user is not an administrator.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_cancel_job</command><arg choice="opt"><option>-h</option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
