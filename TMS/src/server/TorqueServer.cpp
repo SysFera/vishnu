@@ -260,47 +260,50 @@ TorqueServer::processOptions(const char* scriptPath,
 
   if(options.isSelectQueueAutom()) {
     int node = 0;
-      int cpu = -1;
-      istringstream isNode;
-      std::string optionNodesValue = options.getNbNodesAndCpuPerNode();
-      if(optionNodesValue.empty()) {
-        node = getTorqueNbNodesInScript(scriptPath, cpu);
-      } else {
-        isNode.str(optionNodesValue);
-        isNode >> node;
-        char colon;
-        isNode >> colon;
-        isNode >> cpu;
-      }
-      if(node <=0) {
-        node = 1;
-      }
-       TMS_Data::ListQueues* listOfQueues = listQueues();
-      if(listOfQueues != NULL) {
-        for(unsigned int i = 0; i < listOfQueues->getNbQueues(); i++) {
-          TMS_Data::Queue* queue =  listOfQueues->getQueues().get(i);
-          if(queue->getNode()>=node){
-            std::string queueName = queue->getName();
-            TMS_Data::ListQueues* resourceMin =  queuesResourceMin(queueName);
+    int cpu = -1;
+    istringstream isNode;
+    std::string optionNodesValue = options.getNbNodesAndCpuPerNode();
+    if(optionNodesValue.empty()) {
+      node = getTorqueNbNodesInScript(scriptPath, cpu);
+      if(options.getNbCpu()!=-1) {
+        cpu=options.getNbCpu();
+      } 
+    } else {
+      isNode.str(optionNodesValue);
+      isNode >> node;
+      char colon;
+      isNode >> colon;
+      isNode >> cpu;
+    }
+    if(node <=0) {
+      node = 1;
+    }
+    TMS_Data::ListQueues* listOfQueues = listQueues();
+    if(listOfQueues != NULL) {
+      for(unsigned int i = 0; i < listOfQueues->getNbQueues(); i++) {
+        TMS_Data::Queue* queue =  listOfQueues->getQueues().get(i);
+        if(queue->getNode()>=node){
+          std::string queueName = queue->getName();
+          TMS_Data::ListQueues* resourceMin =  queuesResourceMin(queueName);
 
-            std::string walltimeStr = getTorqueResourceValue(scriptPath, "walltime");
-            long walltime = options.getWallTime()==-1?vishnu::convertStringToWallTime(walltimeStr):options.getWallTime();
-            long qwalltimeMax = queue->getWallTime();
-            long qwalltimeMin = ((resourceMin->getQueues()).get(0))->getWallTime();
+          std::string walltimeStr = getTorqueResourceValue(scriptPath, "walltime");
+          long walltime = options.getWallTime()==-1?vishnu::convertStringToWallTime(walltimeStr):options.getWallTime();
+          long qwalltimeMax = queue->getWallTime();
+          long qwalltimeMin = ((resourceMin->getQueues()).get(0))->getWallTime();
 
-            int qCpuMax = queue->getMaxProcCpu();
-            int qCpuMin = ((resourceMin->getQueues()).get(0))->getMaxProcCpu();
-            
-            if(walltime >= qwalltimeMin && (walltime <= qwalltimeMax || qwalltimeMax==0) &&
-               (cpu >= qCpuMin && cpu <= qCpuMax)){
-              cmdsOptions.push_back("-q");
-              cmdsOptions.push_back(queueName);
-              break;
-            }
-            delete resourceMin;
-          };
-        }
+          int qCpuMax = queue->getMaxProcCpu();
+          int qCpuMin = ((resourceMin->getQueues()).get(0))->getMaxProcCpu();
+
+          if(walltime >= qwalltimeMin && (walltime <= qwalltimeMax || qwalltimeMax==0) &&
+              (cpu >= qCpuMin && cpu <= qCpuMax)){
+            cmdsOptions.push_back("-q");
+            cmdsOptions.push_back(queueName);
+            break;
+          }
+          delete resourceMin;
+        };
       }
+    }
   } 
 }
 
