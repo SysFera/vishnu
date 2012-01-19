@@ -659,7 +659,7 @@ std::string vishnu::getLocalMachineName(const std::string& port ){
 /**
  * \brief Function to check if a string is empty
  * \param str The string to check
- * \param comMsg The complementary message to print
+ * \param compMsg The complementary message to print
  * \return raises an exception on error
  */
 void

@@ -35,6 +35,8 @@ virtual time\_\-t \hyperlink{classBatchServer_aa43eebf4a61d0d61646b7595630d2ef1}
 \begin{DoxyCompactList}\small\item\em Function to get the start time of the job. \item\end{DoxyCompactList}\item 
 virtual TMS\_\-Data::ListQueues $\ast$ \hyperlink{classBatchServer_ab5cb2d2073b50e7c1f81693baed942ea}{listQueues} (const std::string \&optQueueName=std::string())=0
 \begin{DoxyCompactList}\small\item\em Function to request the status of queues. \item\end{DoxyCompactList}\item 
+virtual void \hyperlink{classBatchServer_ab5f0adb84f7b7e22e78d7a4a45679efd}{fillListOfJobs} (TMS\_\-Data::ListJobs $\ast$\&listOfJobs, const std::vector$<$ string $>$ \&ignoredIds=std::vector$<$ string $>$())=0
+\begin{DoxyCompactList}\small\item\em Function to get a list of submitted jobs. \item\end{DoxyCompactList}\item 
 \hypertarget{classBatchServer_a790c2e3c638edda49b68ab77d45e6e08}{
 virtual \hyperlink{classBatchServer_a790c2e3c638edda49b68ab77d45e6e08}{$\sim$BatchServer} ()}
 \label{classBatchServer_a790c2e3c638edda49b68ab77d45e6e08}
@@ -68,6 +70,27 @@ raises an exception on error
 
 
 Implemented in \hyperlink{classLLServer_ac547f34f2fcdfb1a8950de77fd8377e1}{LLServer}, \hyperlink{classSlurmServer_a5965b0689881cee596641c47135357e7}{SlurmServer}, and \hyperlink{classTorqueServer_a18f3c5c500957a5a14f64f3c34252ae5}{TorqueServer}.
+
+\hypertarget{classBatchServer_ab5f0adb84f7b7e22e78d7a4a45679efd}{
+\index{BatchServer@{BatchServer}!fillListOfJobs@{fillListOfJobs}}
+\index{fillListOfJobs@{fillListOfJobs}!BatchServer@{BatchServer}}
+\subsubsection[{fillListOfJobs}]{\setlength{\rightskip}{0pt plus 5cm}virtual void BatchServer::fillListOfJobs (
+\begin{DoxyParamCaption}
+\item[{TMS\_\-Data::ListJobs $\ast$\&}]{ listOfJobs, }
+\item[{const std::vector$<$ string $>$ \&}]{ ignoredIds = {\ttfamily std::vector$<$~string~$>$()}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classBatchServer_ab5f0adb84f7b7e22e78d7a4a45679efd}
+
+
+Function to get a list of submitted jobs. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em listOfJobs}]the ListJobs structure to fill \item[{\em ignoredIds}]the list of job ids to ignore \end{DoxyParams}
+
+
+Implemented in \hyperlink{classLLServer_a40380f79a1905b5b660849e9b3d665ff}{LLServer}, \hyperlink{classSlurmServer_a303b5f20541943052dd850e5f02da0c6}{SlurmServer}, and \hyperlink{classTorqueServer_a336c622db6abd25975aa3af4a4e1aed4}{TorqueServer}.
 
 \hypertarget{classBatchServer_aa43eebf4a61d0d61646b7595630d2ef1}{
 \index{BatchServer@{BatchServer}!getJobStartTime@{getJobStartTime}}

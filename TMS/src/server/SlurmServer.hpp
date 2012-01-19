@@ -165,7 +165,11 @@ class SlurmServer : public BatchServer
     checkSLURMOutPutPath(char*& path, const std::string& pathInfo="job output path");
 
     /**
-     * TODO
+     * \brief Function to get the value of SLURM resource (nodes, walltime, cpu) in the script
+     * \param file The file contain the script to scan
+     * \param shortOptionLetterSyntax The syntax of the short option (--N, -t) whose value will be returned
+     * \param longOptionLetterSyntax The syntax of the long option (--nodes, --time) whose value will be returned
+     * \return The value of the resource
      */
     std::string
     getSlurmResourceValue(const char* file,

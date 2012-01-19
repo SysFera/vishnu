@@ -66,6 +66,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the start time of the job.  <a href="#a9ee6e489594d927c1c4c24fb03a16492"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">TMS_Data::ListQueues *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLLServer.html#ae804a87a0a62253ec3b90eb8d409ffd1">listQueues</a> (const std::string &amp;optQueueName=std::string())</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to request the status of queues.  <a href="#ae804a87a0a62253ec3b90eb8d409ffd1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLLServer.html#a40380f79a1905b5b660849e9b3d665ff">fillListOfJobs</a> (TMS_Data::ListJobs *&amp;listOfJobs, const std::vector&lt; string &gt; &amp;ignoredIds=std::vector&lt; string &gt;())</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get a list of submitted jobs.  <a href="#a40380f79a1905b5b660849e9b3d665ff"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ce6925164e8a184e1b3883e8e8a07c6"></a><!-- doxytag: member="LLServer::~LLServer" ref="a6ce6925164e8a184e1b3883e8e8a07c6" args="()" -->
 &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLLServer.html#a6ce6925164e8a184e1b3883e8e8a07c6">~LLServer</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructor. <br/></td></tr>
@@ -83,6 +85,8 @@ Private Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to compute the number of running and waiting jobs of each queue.  <a href="#a3a9587a14a7cfb5e308b0f8173649cf9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLLServer.html#a96abe5f6fbe6451a8c584f444d162478">getJobNodeCount</a> (const std::string &amp;jobId)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the number of nodes of the job.  <a href="#a96abe5f6fbe6451a8c584f444d162478"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLLServer.html#a1858df223d11dedec38da8010321cf32">getLLResourceValue</a> (const char *file, const std::string &amp;optionLetterSyntax)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the value of LoadLeveler resource (nodes, walltime, cpu) in the script.  <a href="#a1858df223d11dedec38da8010321cf32"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a753c355ca93eb090880be918d1b54bf6"></a><!-- doxytag: member="LLServer::mlistQueues" ref="a753c355ca93eb090880be918d1b54bf6" args="" -->
@@ -212,6 +216,44 @@ TMS_Data::ListQueues_ptr&nbsp;</td><td class="memItemRight" valign="bottom"><a c
 
 </div>
 </div>
+<a class="anchor" id="a40380f79a1905b5b660849e9b3d665ff"></a><!-- doxytag: member="LLServer::fillListOfJobs" ref="a40380f79a1905b5b660849e9b3d665ff" args="(TMS_Data::ListJobs *&amp;listOfJobs, const std::vector&lt; string &gt; &amp;ignoredIds=std::vector&lt; string &gt;())" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LLServer::fillListOfJobs </td>
+          <td>(</td>
+          <td class="paramtype">TMS_Data::ListJobs *&amp;&nbsp;</td>
+          <td class="paramname"> <em>listOfJobs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; string &gt; &amp;&nbsp;</td>
+          <td class="paramname"> <em>ignoredIds</em> = <code>std::vector&lt;&nbsp;string&nbsp;&gt;()</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to get a list of submitted jobs. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>listOfJobs</em>&nbsp;</td><td>the ListJobs structure to fill </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>ignoredIds</em>&nbsp;</td><td>the list of job ids to ignore </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classBatchServer.html#ab5f0adb84f7b7e22e78d7a4a45679efd">BatchServer</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a96abe5f6fbe6451a8c584f444d162478"></a><!-- doxytag: member="LLServer::getJobNodeCount" ref="a96abe5f6fbe6451a8c584f444d162478" args="(const std::string &amp;jobId)" -->
 <div class="memitem">
 <div class="memproto">
@@ -294,6 +336,43 @@ TMS_Data::ListQueues_ptr&nbsp;</td><td class="memItemRight" valign="bottom"><a c
 <dl class="return"><dt><b>Returns:</b></dt><dd>-1 if the job is unknown or server not unavailable </dd></dl>
 
 <p>Implements <a class="el" href="classBatchServer.html#ac82e407645e4ad185cf59edcee832d58">BatchServer</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1858df223d11dedec38da8010321cf32"></a><!-- doxytag: member="LLServer::getLLResourceValue" ref="a1858df223d11dedec38da8010321cf32" args="(const char *file, const std::string &amp;optionLetterSyntax)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string LLServer::getLLResourceValue </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>optionLetterSyntax</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to get the value of LoadLeveler resource (nodes, walltime, cpu) in the script. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>file</em>&nbsp;</td><td>The file contain the script to scan </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>optionLetterSyntax</em>&nbsp;</td><td>The syntax of the option (nodes, walltime, cpu) whose value will be returned </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The value of the resource </dd></dl>
 
 </div>
 </div>
@@ -457,7 +536,7 @@ TMS_Data::ListQueues_ptr&nbsp;</td><td class="memItemRight" valign="bottom"><a c
 <li>TMS/src/server/<a class="el" href="LLServer_8hpp_source.html">LLServer.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jan 3 2012 15:07:46 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:45 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

@@ -30,6 +30,7 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#pri-static-attribs">Static Private Attributes</a>  </div>
   <div class="headertitle">
@@ -75,6 +76,10 @@ Private Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa966756d974810cbb474aa0f620dc6fc"></a><!-- doxytag: member="ServerTMS::operator=" ref="aa966756d974810cbb474aa0f620dc6fc" args="(const ServerTMS &amp;)" -->
 <a class="el" href="classServerTMS.html">ServerTMS</a> &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerTMS.html#aa966756d974810cbb474aa0f620dc6fc">operator=</a> (const <a class="el" href="classServerTMS.html">ServerTMS</a> &amp;)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">operator= <br/></td></tr>
+<tr><td colspan="2"><h2><a name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerTMS.html#a277dcd0ef987c37c18c5d8d56ed9a27d">setBatchLoadPerformance</a> (diet_profile_t *pb, estVector_t perfValues)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to compute the batch load performance (number of waiting jobs, running jobs and total jobs).  <a href="#a277dcd0ef987c37c18c5d8d56ed9a27d"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abb3f2b7bff3f06d0ed84625078c192bd"></a><!-- doxytag: member="ServerTMS::mvishnuId" ref="abb3f2b7bff3f06d0ed84625078c192bd" args="" -->
@@ -245,11 +250,47 @@ static <a class="el" href="classTMSMapper.html">TMSMapper</a> *&nbsp;</td><td cl
 
 </div>
 </div>
+<a class="anchor" id="a277dcd0ef987c37c18c5d8d56ed9a27d"></a><!-- doxytag: member="ServerTMS::setBatchLoadPerformance" ref="a277dcd0ef987c37c18c5d8d56ed9a27d" args="(diet_profile_t *pb, estVector_t perfValues)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void ServerTMS::setBatchLoadPerformance </td>
+          <td>(</td>
+          <td class="paramtype">diet_profile_t *&nbsp;</td>
+          <td class="paramname"> <em>pb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">estVector_t&nbsp;</td>
+          <td class="paramname"> <em>perfValues</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [static, private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to compute the batch load performance (number of waiting jobs, running jobs and total jobs). </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pb</em>&nbsp;</td><td>the resquest profile </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>perfValues</em>&nbsp;</td><td>The vector contain the estimation load performance (number of waiting jobs, running jobs and total jobs) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>TMS/src/sed/<a class="el" href="ServerTMS_8hpp_source.html">ServerTMS.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jan 3 2012 15:07:47 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:46 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

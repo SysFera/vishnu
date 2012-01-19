@@ -164,6 +164,8 @@ bool \hyperlink{namespacevishnu_a04f9a9dfc61b7390150222b10f64bb70}{process\_\-ex
 \begin{DoxyCompactList}\small\item\em Check if the pid exists. \item\end{DoxyCompactList}\item 
 std::string \hyperlink{namespacevishnu_a7d9cd0241f290039aff6a6410b1cc22f}{getLocalMachineName} (const std::string \&port)
 \begin{DoxyCompactList}\small\item\em Get the fully qualified name for the current system. \item\end{DoxyCompactList}\item 
+void \hyperlink{namespacevishnu_a1c6d3d877a77eb1a3eb8f33496bb6bf7}{checkEmptyString} (const std::string \&str, const std::string \&compMsg)
+\begin{DoxyCompactList}\small\item\em Function to check if a string is empty. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_ac58b058a6a467a21f7eb21192617c90f}{connect} (const std::string \&userId, const std::string \&password, UMS\_\-Data::Session \&session, const UMS\_\-Data::ConnectOptions \&connectOpt=UMS\_\-Data::ConnectOptions())  throw (UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em Function to open a session. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_ae120231ba899d68724dc972374206745}{reconnect} (const std::string \&userId, const std::string \&password, const std::string \&sessionId, UMS\_\-Data::Session \&session)  throw (UserException, SystemException)
@@ -526,6 +528,26 @@ Function to change the password.
 
 \begin{DoxyParams}{Parameters}
 \item[{\em userId}]represents the VISHNU user identifier \item[{\em password}]represents the password of the user \item[{\em passwordNew}]represents the new password of the user \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a1c6d3d877a77eb1a3eb8f33496bb6bf7}{
+\index{vishnu@{vishnu}!checkEmptyString@{checkEmptyString}}
+\index{checkEmptyString@{checkEmptyString}!vishnu@{vishnu}}
+\subsubsection[{checkEmptyString}]{\setlength{\rightskip}{0pt plus 5cm}void vishnu::checkEmptyString (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ str, }
+\item[{const std::string \&}]{ compMsg}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_a1c6d3d877a77eb1a3eb8f33496bb6bf7}
+
+
+Function to check if a string is empty. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em str}]The string to check \item[{\em compMsg}]The complementary message to print \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}

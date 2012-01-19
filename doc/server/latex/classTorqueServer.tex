@@ -35,6 +35,8 @@ time\_\-t \hyperlink{classTorqueServer_accebe9545525e72a67d3c684665c9264}{getJob
 \begin{DoxyCompactList}\small\item\em Function to get the start time of the job. \item\end{DoxyCompactList}\item 
 TMS\_\-Data::ListQueues $\ast$ \hyperlink{classTorqueServer_a63240dcd85082bb88ee157a8da8f6a04}{listQueues} (const std::string \&optQueueName=std::string())
 \begin{DoxyCompactList}\small\item\em Function to request the status of queues. \item\end{DoxyCompactList}\item 
+void \hyperlink{classTorqueServer_a336c622db6abd25975aa3af4a4e1aed4}{fillListOfJobs} (TMS\_\-Data::ListJobs $\ast$\&listOfJobs, const std::vector$<$ string $>$ \&ignoredIds=std::vector$<$ string $>$())
+\begin{DoxyCompactList}\small\item\em Function to get a list of submitted jobs. \item\end{DoxyCompactList}\item 
 \hypertarget{classTorqueServer_a1f6d05661fd240d68e0ef7bf92f54092}{
 \hyperlink{classTorqueServer_a1f6d05661fd240d68e0ef7bf92f54092}{$\sim$TorqueServer} ()}
 \label{classTorqueServer_a1f6d05661fd240d68e0ef7bf92f54092}
@@ -53,14 +55,20 @@ int \hyperlink{classTorqueServer_a2427d2d3c69cf28f779d22396383e4d4}{convertTorqu
 \begin{DoxyCompactList}\small\item\em Function to convert the Torque priority into VISHNU priority. \item\end{DoxyCompactList}\item 
 void \hyperlink{classTorqueServer_a0411b4c5d842efabc66e9a5db39cceba}{fillJobInfo} (TMS\_\-Data::Job \&job, struct batch\_\-status $\ast$p)
 \begin{DoxyCompactList}\small\item\em Function To fill the info concerning a job. \item\end{DoxyCompactList}\item 
-int \hyperlink{classTorqueServer_a3abd12ff06eb1774669d03b3f6f85f22}{getNbNodesInNodeFormat} (const std::string \&format, int \&nbCpu)
+int \hyperlink{classTorqueServer_a6c021e8406f45d2e06f6232d8e0279ea}{getNbNodesInNodeFormat} (const std::string \&format, int \&nbCpu, int \&maxNbCpu)
 \begin{DoxyCompactList}\small\item\em Function to get the number of nodes in the torque node format. \item\end{DoxyCompactList}\item 
 std::string \hyperlink{classTorqueServer_aa43c09a2a522df515a6b0b4334ed96d8}{getFormatedCpuPerNode} (const int \&cpu, const std::string \&scriptPath)
 \begin{DoxyCompactList}\small\item\em Function to get the torque formated cpu per node. \item\end{DoxyCompactList}\item 
 void \hyperlink{classTorqueServer_ad7eff84c7ffb7596b28e80650aa59c2b}{findAndInsert} (const std::string \&valueToFind, const std::string \&valueToInsert, const size\_\-t \&begin, size\_\-t \&end, std::string \&src)
 \begin{DoxyCompactList}\small\item\em Function to insert some additional content (valueToInsert). \item\end{DoxyCompactList}\item 
-void \hyperlink{classTorqueServer_a78dc1909e07eaf03854d423696b30c4e}{computeNbNodesAndNbCpu} (const std::string \&nextNodeContent, const std::string \&ppn, int \&nbNodes, int \&nbCpu)
+void \hyperlink{classTorqueServer_a6be0e0721b4f7713181e0ff43a696e5d}{computeNbNodesAndNbCpu} (const std::string \&nextNodeContent, const std::string \&ppn, int \&nbNodes, int \&nbCpu, int \&maxNbCpu)
 \begin{DoxyCompactList}\small\item\em Function to compute the number of nodes and cpus in the torque format nodes. \item\end{DoxyCompactList}\item 
+int \hyperlink{classTorqueServer_a9b1f022f047fe9347fb21648ba15bc52}{getTorqueNbNodesInScript} (const std::string \&scriptPath, int \&nbCpu)
+\begin{DoxyCompactList}\small\item\em Function to get the torque number of nodes in cripy. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classTorqueServer_a5e7fe92d9def0402948b9e29c817861e}{getTorqueResourceValue} (const char $\ast$file, const std::string \&resourceName)
+\begin{DoxyCompactList}\small\item\em Function to get the value of TORQUE resource (nodes, walltime, cpu) in the script. \item\end{DoxyCompactList}\item 
+TMS\_\-Data::ListQueues $\ast$ \hyperlink{classTorqueServer_a5a78dc0220cca1f1929782503136aa0e}{queuesResourceMin} (const std::string \&optQueueName)
+\begin{DoxyCompactList}\small\item\em Function to request the status of queues. \item\end{DoxyCompactList}\item 
 int \hyperlink{classTorqueServer_ac5675d4a8fa217925824a146ac93750f}{convertTorqueMem} (const std::string \&memStr)
 \begin{DoxyCompactList}\small\item\em Function to convert torque memory into mb. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
@@ -105,7 +113,7 @@ raises an exception on error
 
 Implements \hyperlink{classBatchServer_af40bbd83fa2bd1f1720e29800227cdb0}{BatchServer}.
 
-\hypertarget{classTorqueServer_a78dc1909e07eaf03854d423696b30c4e}{
+\hypertarget{classTorqueServer_a6be0e0721b4f7713181e0ff43a696e5d}{
 \index{TorqueServer@{TorqueServer}!computeNbNodesAndNbCpu@{computeNbNodesAndNbCpu}}
 \index{computeNbNodesAndNbCpu@{computeNbNodesAndNbCpu}!TorqueServer@{TorqueServer}}
 \subsubsection[{computeNbNodesAndNbCpu}]{\setlength{\rightskip}{0pt plus 5cm}void TorqueServer::computeNbNodesAndNbCpu (
@@ -113,17 +121,18 @@ Implements \hyperlink{classBatchServer_af40bbd83fa2bd1f1720e29800227cdb0}{BatchS
 \item[{const std::string \&}]{ nextNodeContent, }
 \item[{const std::string \&}]{ ppn, }
 \item[{int \&}]{ nbNodes, }
-\item[{int \&}]{ nbCpu}
+\item[{int \&}]{ nbCpu, }
+\item[{int \&}]{ maxNbCpu}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classTorqueServer_a78dc1909e07eaf03854d423696b30c4e}
+\label{classTorqueServer_a6be0e0721b4f7713181e0ff43a696e5d}
 
 
 Function to compute the number of nodes and cpus in the torque format nodes. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em nextNodeContent}]The node content to parse \item[{\em ppn}]The syntaxe containing the number of processors per node \item[{\em nbNodes}]The computed number of nodes \item[{\em nbCpu}]The numbers of cpus \end{DoxyParams}
+\item[{\em nextNodeContent}]The node content to parse \item[{\em ppn}]The syntaxe containing the number of processors per node \item[{\em nbNodes}]The computed number of nodes \item[{\em nbCpu}]The minimum number of cpus \item[{\em maxNbCpu}]The maximum number of cpus \end{DoxyParams}
 \hypertarget{classTorqueServer_ac5675d4a8fa217925824a146ac93750f}{
 \index{TorqueServer@{TorqueServer}!convertTorqueMem@{convertTorqueMem}}
 \index{convertTorqueMem@{convertTorqueMem}!TorqueServer@{TorqueServer}}
@@ -198,6 +207,27 @@ Function To fill the info concerning a job.
 
 \begin{DoxyParams}{Parameters}
 \item[{\em job,:}]The job to fill \item[{\em p,:}]The batch status structure containing the job info \end{DoxyParams}
+\hypertarget{classTorqueServer_a336c622db6abd25975aa3af4a4e1aed4}{
+\index{TorqueServer@{TorqueServer}!fillListOfJobs@{fillListOfJobs}}
+\index{fillListOfJobs@{fillListOfJobs}!TorqueServer@{TorqueServer}}
+\subsubsection[{fillListOfJobs}]{\setlength{\rightskip}{0pt plus 5cm}void TorqueServer::fillListOfJobs (
+\begin{DoxyParamCaption}
+\item[{TMS\_\-Data::ListJobs $\ast$\&}]{ listOfJobs, }
+\item[{const std::vector$<$ string $>$ \&}]{ ignoredIds = {\ttfamily std::vector$<$~string~$>$()}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classTorqueServer_a336c622db6abd25975aa3af4a4e1aed4}
+
+
+Function to get a list of submitted jobs. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em listOfJobs}]the ListJobs structure to fill \item[{\em ignoredIds}]the list of job ids to ignore \end{DoxyParams}
+
+
+Implements \hyperlink{classBatchServer_ab5f0adb84f7b7e22e78d7a4a45679efd}{BatchServer}.
+
 \hypertarget{classTorqueServer_ad7eff84c7ffb7596b28e80650aa59c2b}{
 \index{TorqueServer@{TorqueServer}!findAndInsert@{findAndInsert}}
 \index{findAndInsert@{findAndInsert}!TorqueServer@{TorqueServer}}
@@ -284,25 +314,66 @@ Function to get the status of the job.
 
 Implements \hyperlink{classBatchServer_ac82e407645e4ad185cf59edcee832d58}{BatchServer}.
 
-\hypertarget{classTorqueServer_a3abd12ff06eb1774669d03b3f6f85f22}{
+\hypertarget{classTorqueServer_a6c021e8406f45d2e06f6232d8e0279ea}{
 \index{TorqueServer@{TorqueServer}!getNbNodesInNodeFormat@{getNbNodesInNodeFormat}}
 \index{getNbNodesInNodeFormat@{getNbNodesInNodeFormat}!TorqueServer@{TorqueServer}}
 \subsubsection[{getNbNodesInNodeFormat}]{\setlength{\rightskip}{0pt plus 5cm}int TorqueServer::getNbNodesInNodeFormat (
 \begin{DoxyParamCaption}
 \item[{const std::string \&}]{ format, }
-\item[{int \&}]{ nbCpu}
+\item[{int \&}]{ nbCpu, }
+\item[{int \&}]{ maxNbCpu}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classTorqueServer_a3abd12ff06eb1774669d03b3f6f85f22}
+\label{classTorqueServer_a6c021e8406f45d2e06f6232d8e0279ea}
 
 
 Function to get the number of nodes in the torque node format. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em format}]The node format \item[{\em nbCpu}]The minimum number of cpu per node \end{DoxyParams}
+\item[{\em format}]The node format \item[{\em nbCpu}]The minimum number of cpu per node \item[{\em maxNbCpu}]The maximum number of cpu per node \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the number of node 
+\end{DoxyReturn}
+\hypertarget{classTorqueServer_a9b1f022f047fe9347fb21648ba15bc52}{
+\index{TorqueServer@{TorqueServer}!getTorqueNbNodesInScript@{getTorqueNbNodesInScript}}
+\index{getTorqueNbNodesInScript@{getTorqueNbNodesInScript}!TorqueServer@{TorqueServer}}
+\subsubsection[{getTorqueNbNodesInScript}]{\setlength{\rightskip}{0pt plus 5cm}int TorqueServer::getTorqueNbNodesInScript (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ scriptPath, }
+\item[{int \&}]{ nbCpu}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTorqueServer_a9b1f022f047fe9347fb21648ba15bc52}
+
+
+Function to get the torque number of nodes in cripy. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em scriptPath}]The path of the script that enventually contain the node format or the number of node \item[{\em nbCpu}]The maximum number of cpus in the script \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the number of nodes in the given script 
+\end{DoxyReturn}
+\hypertarget{classTorqueServer_a5e7fe92d9def0402948b9e29c817861e}{
+\index{TorqueServer@{TorqueServer}!getTorqueResourceValue@{getTorqueResourceValue}}
+\index{getTorqueResourceValue@{getTorqueResourceValue}!TorqueServer@{TorqueServer}}
+\subsubsection[{getTorqueResourceValue}]{\setlength{\rightskip}{0pt plus 5cm}std::string TorqueServer::getTorqueResourceValue (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ file, }
+\item[{const std::string \&}]{ resourceName}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTorqueServer_a5e7fe92d9def0402948b9e29c817861e}
+
+
+Function to get the value of TORQUE resource (nodes, walltime, cpu) in the script. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em file}]The file contain the script to scan \item[{\em resourceName}]The name of the option (nodes, walltime, cpu) whose value will be returned \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value of the resource 
 \end{DoxyReturn}
 \hypertarget{classTorqueServer_a63240dcd85082bb88ee157a8da8f6a04}{
 \index{TorqueServer@{TorqueServer}!listQueues@{listQueues}}
@@ -368,6 +439,25 @@ Function to treat the submission options.
 \item[{\em scriptPath}]The job script path \item[{\em options}]the object which contains the SubmitOptions options values \item[{\em cmdsOptions}]The list of the option value \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classTorqueServer_a5a78dc0220cca1f1929782503136aa0e}{
+\index{TorqueServer@{TorqueServer}!queuesResourceMin@{queuesResourceMin}}
+\index{queuesResourceMin@{queuesResourceMin}!TorqueServer@{TorqueServer}}
+\subsubsection[{queuesResourceMin}]{\setlength{\rightskip}{0pt plus 5cm}TMS\_\-Data::ListQueues$\ast$ TorqueServer::queuesResourceMin (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ optQueueName}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTorqueServer_a5a78dc0220cca1f1929782503136aa0e}
+
+
+Function to request the status of queues. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em optQueueName}](optional) The name of the queue to request \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The requested status in to ListQueues data structure 
 \end{DoxyReturn}
 \hypertarget{classTorqueServer_aed03b8755d1959b3a2218abbf4c15b45}{
 \index{TorqueServer@{TorqueServer}!submit@{submit}}

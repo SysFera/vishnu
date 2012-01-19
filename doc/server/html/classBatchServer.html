@@ -66,6 +66,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the start time of the job.  <a href="#aa43eebf4a61d0d61646b7595630d2ef1"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual TMS_Data::ListQueues *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBatchServer.html#ab5cb2d2073b50e7c1f81693baed942ea">listQueues</a> (const std::string &amp;optQueueName=std::string())=0</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to request the status of queues.  <a href="#ab5cb2d2073b50e7c1f81693baed942ea"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBatchServer.html#ab5f0adb84f7b7e22e78d7a4a45679efd">fillListOfJobs</a> (TMS_Data::ListJobs *&amp;listOfJobs, const std::vector&lt; string &gt; &amp;ignoredIds=std::vector&lt; string &gt;())=0</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get a list of submitted jobs.  <a href="#ab5f0adb84f7b7e22e78d7a4a45679efd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a790c2e3c638edda49b68ab77d45e6e08"></a><!-- doxytag: member="BatchServer::~BatchServer" ref="a790c2e3c638edda49b68ab77d45e6e08" args="()" -->
 virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBatchServer.html#a790c2e3c638edda49b68ab77d45e6e08">~BatchServer</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructor. <br/></td></tr>
@@ -99,6 +101,44 @@ virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
 
 <p>Implemented in <a class="el" href="classLLServer.html#ac547f34f2fcdfb1a8950de77fd8377e1">LLServer</a>, <a class="el" href="classSlurmServer.html#a5965b0689881cee596641c47135357e7">SlurmServer</a>, and <a class="el" href="classTorqueServer.html#a18f3c5c500957a5a14f64f3c34252ae5">TorqueServer</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab5f0adb84f7b7e22e78d7a4a45679efd"></a><!-- doxytag: member="BatchServer::fillListOfJobs" ref="ab5f0adb84f7b7e22e78d7a4a45679efd" args="(TMS_Data::ListJobs *&amp;listOfJobs, const std::vector&lt; string &gt; &amp;ignoredIds=std::vector&lt; string &gt;())=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void BatchServer::fillListOfJobs </td>
+          <td>(</td>
+          <td class="paramtype">TMS_Data::ListJobs *&amp;&nbsp;</td>
+          <td class="paramname"> <em>listOfJobs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; string &gt; &amp;&nbsp;</td>
+          <td class="paramname"> <em>ignoredIds</em> = <code>std::vector&lt;&nbsp;string&nbsp;&gt;()</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to get a list of submitted jobs. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>listOfJobs</em>&nbsp;</td><td>the ListJobs structure to fill </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>ignoredIds</em>&nbsp;</td><td>the list of job ids to ignore </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classLLServer.html#a40380f79a1905b5b660849e9b3d665ff">LLServer</a>, <a class="el" href="classSlurmServer.html#a303b5f20541943052dd850e5f02da0c6">SlurmServer</a>, and <a class="el" href="classTorqueServer.html#a336c622db6abd25975aa3af4a4e1aed4">TorqueServer</a>.</p>
 
 </div>
 </div>
@@ -246,7 +286,7 @@ virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <li>TMS/src/server/<a class="el" href="BatchServer_8hpp_source.html">BatchServer.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jan 3 2012 15:07:43 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:42 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

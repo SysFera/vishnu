@@ -198,19 +198,22 @@ class TorqueServer : public BatchServer
                              int& nbCpu);
 
     /**
-     * TODO
+     * \brief Function to get the value of TORQUE resource (nodes, walltime, cpu) in the script
+     * \param file The file contain the script to scan
+     * \param resourceName The name of the option (nodes, walltime, cpu) whose value will be returned
+     * \return The value of the resource
      */
     std::string
     getTorqueResourceValue(const char* file, 
-                                           const std::string& resourceName);
+                           const std::string& resourceName);
 
     /**
      * \brief Function to request the status of queues 
-     * \param optQueueName (optional) the name of the queue to request 
+     * \param optQueueName (optional) The name of the queue to request 
      * \return The requested status in to ListQueues data structure 
      */
     TMS_Data::ListQueues*
-    queuesResourceMin(const std::string& OptqueueName);
+    queuesResourceMin(const std::string& optQueueName);
 
     /**
      * \brief Function to convert torque memory into mb

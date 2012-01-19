@@ -35,6 +35,8 @@ time\_\-t \hyperlink{classLLServer_a9ee6e489594d927c1c4c24fb03a16492}{getJobStar
 \begin{DoxyCompactList}\small\item\em Function to get the start time of the job. \item\end{DoxyCompactList}\item 
 TMS\_\-Data::ListQueues $\ast$ \hyperlink{classLLServer_ae804a87a0a62253ec3b90eb8d409ffd1}{listQueues} (const std::string \&optQueueName=std::string())
 \begin{DoxyCompactList}\small\item\em Function to request the status of queues. \item\end{DoxyCompactList}\item 
+void \hyperlink{classLLServer_a40380f79a1905b5b660849e9b3d665ff}{fillListOfJobs} (TMS\_\-Data::ListJobs $\ast$\&listOfJobs, const std::vector$<$ string $>$ \&ignoredIds=std::vector$<$ string $>$())
+\begin{DoxyCompactList}\small\item\em Function to get a list of submitted jobs. \item\end{DoxyCompactList}\item 
 \hypertarget{classLLServer_a6ce6925164e8a184e1b3883e8e8a07c6}{
 \hyperlink{classLLServer_a6ce6925164e8a184e1b3883e8e8a07c6}{$\sim$LLServer} ()}
 \label{classLLServer_a6ce6925164e8a184e1b3883e8e8a07c6}
@@ -54,7 +56,9 @@ int \hyperlink{classLLServer_a8649f7c42ad24f66215a63d12e2d54a6}{convertLLPrioToV
 int \hyperlink{classLLServer_a3a9587a14a7cfb5e308b0f8173649cf9}{computeNbRunJobsAndQueueJobs} (std::map$<$ std::string, size\_\-t $>$ \&run, std::map$<$ std::string, size\_\-t $>$ \&que)
 \begin{DoxyCompactList}\small\item\em Function to compute the number of running and waiting jobs of each queue. \item\end{DoxyCompactList}\item 
 int \hyperlink{classLLServer_a96abe5f6fbe6451a8c584f444d162478}{getJobNodeCount} (const std::string \&jobId)
-\begin{DoxyCompactList}\small\item\em Function to get the number of nodes of the job. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Function to get the number of nodes of the job. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classLLServer_a1858df223d11dedec38da8010321cf32}{getLLResourceValue} (const char $\ast$file, const std::string \&optionLetterSyntax)
+\begin{DoxyCompactList}\small\item\em Function to get the value of LoadLeveler resource (nodes, walltime, cpu) in the script. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -150,6 +154,27 @@ Function to convert the LL state into VISHNU state.
 \begin{DoxyReturn}{Returns}
 VISHNU state 
 \end{DoxyReturn}
+\hypertarget{classLLServer_a40380f79a1905b5b660849e9b3d665ff}{
+\index{LLServer@{LLServer}!fillListOfJobs@{fillListOfJobs}}
+\index{fillListOfJobs@{fillListOfJobs}!LLServer@{LLServer}}
+\subsubsection[{fillListOfJobs}]{\setlength{\rightskip}{0pt plus 5cm}void LLServer::fillListOfJobs (
+\begin{DoxyParamCaption}
+\item[{TMS\_\-Data::ListJobs $\ast$\&}]{ listOfJobs, }
+\item[{const std::vector$<$ string $>$ \&}]{ ignoredIds = {\ttfamily std::vector$<$~string~$>$()}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classLLServer_a40380f79a1905b5b660849e9b3d665ff}
+
+
+Function to get a list of submitted jobs. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em listOfJobs}]the ListJobs structure to fill \item[{\em ignoredIds}]the list of job ids to ignore \end{DoxyParams}
+
+
+Implements \hyperlink{classBatchServer_ab5f0adb84f7b7e22e78d7a4a45679efd}{BatchServer}.
+
 \hypertarget{classLLServer_a96abe5f6fbe6451a8c584f444d162478}{
 \index{LLServer@{LLServer}!getJobNodeCount@{getJobNodeCount}}
 \index{getJobNodeCount@{getJobNodeCount}!LLServer@{LLServer}}
@@ -215,6 +240,26 @@ Function to get the status of the job.
 
 Implements \hyperlink{classBatchServer_ac82e407645e4ad185cf59edcee832d58}{BatchServer}.
 
+\hypertarget{classLLServer_a1858df223d11dedec38da8010321cf32}{
+\index{LLServer@{LLServer}!getLLResourceValue@{getLLResourceValue}}
+\index{getLLResourceValue@{getLLResourceValue}!LLServer@{LLServer}}
+\subsubsection[{getLLResourceValue}]{\setlength{\rightskip}{0pt plus 5cm}std::string LLServer::getLLResourceValue (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ file, }
+\item[{const std::string \&}]{ optionLetterSyntax}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classLLServer_a1858df223d11dedec38da8010321cf32}
+
+
+Function to get the value of LoadLeveler resource (nodes, walltime, cpu) in the script. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em file}]The file contain the script to scan \item[{\em optionLetterSyntax}]The syntax of the option (nodes, walltime, cpu) whose value will be returned \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value of the resource 
+\end{DoxyReturn}
 \hypertarget{classLLServer_a12ec697d6b846611c1e67ac1057d4ee0}{
 \index{LLServer@{LLServer}!insertOptionLine@{insertOptionLine}}
 \index{insertOptionLine@{insertOptionLine}!LLServer@{LLServer}}

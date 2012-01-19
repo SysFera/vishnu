@@ -66,6 +66,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the start time of the job.  <a href="#accebe9545525e72a67d3c684665c9264"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">TMS_Data::ListQueues *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTorqueServer.html#a63240dcd85082bb88ee157a8da8f6a04">listQueues</a> (const std::string &amp;optQueueName=std::string())</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to request the status of queues.  <a href="#a63240dcd85082bb88ee157a8da8f6a04"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTorqueServer.html#a336c622db6abd25975aa3af4a4e1aed4">fillListOfJobs</a> (TMS_Data::ListJobs *&amp;listOfJobs, const std::vector&lt; string &gt; &amp;ignoredIds=std::vector&lt; string &gt;())</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get a list of submitted jobs.  <a href="#a336c622db6abd25975aa3af4a4e1aed4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1f6d05661fd240d68e0ef7bf92f54092"></a><!-- doxytag: member="TorqueServer::~TorqueServer" ref="a1f6d05661fd240d68e0ef7bf92f54092" args="()" -->
 &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTorqueServer.html#a1f6d05661fd240d68e0ef7bf92f54092">~TorqueServer</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructor. <br/></td></tr>
@@ -81,14 +83,20 @@ Private Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to convert the Torque priority into VISHNU priority.  <a href="#a2427d2d3c69cf28f779d22396383e4d4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTorqueServer.html#a0411b4c5d842efabc66e9a5db39cceba">fillJobInfo</a> (TMS_Data::Job &amp;job, struct batch_status *p)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function To fill the info concerning a job.  <a href="#a0411b4c5d842efabc66e9a5db39cceba"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTorqueServer.html#a3abd12ff06eb1774669d03b3f6f85f22">getNbNodesInNodeFormat</a> (const std::string &amp;format, int &amp;nbCpu)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the number of nodes in the torque node format.  <a href="#a3abd12ff06eb1774669d03b3f6f85f22"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTorqueServer.html#a6c021e8406f45d2e06f6232d8e0279ea">getNbNodesInNodeFormat</a> (const std::string &amp;format, int &amp;nbCpu, int &amp;maxNbCpu)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the number of nodes in the torque node format.  <a href="#a6c021e8406f45d2e06f6232d8e0279ea"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTorqueServer.html#aa43c09a2a522df515a6b0b4334ed96d8">getFormatedCpuPerNode</a> (const int &amp;cpu, const std::string &amp;scriptPath)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the torque formated cpu per node.  <a href="#aa43c09a2a522df515a6b0b4334ed96d8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTorqueServer.html#ad7eff84c7ffb7596b28e80650aa59c2b">findAndInsert</a> (const std::string &amp;valueToFind, const std::string &amp;valueToInsert, const size_t &amp;begin, size_t &amp;end, std::string &amp;src)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to insert some additional content (valueToInsert).  <a href="#ad7eff84c7ffb7596b28e80650aa59c2b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTorqueServer.html#a78dc1909e07eaf03854d423696b30c4e">computeNbNodesAndNbCpu</a> (const std::string &amp;nextNodeContent, const std::string &amp;ppn, int &amp;nbNodes, int &amp;nbCpu)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to compute the number of nodes and cpus in the torque format nodes.  <a href="#a78dc1909e07eaf03854d423696b30c4e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTorqueServer.html#a6be0e0721b4f7713181e0ff43a696e5d">computeNbNodesAndNbCpu</a> (const std::string &amp;nextNodeContent, const std::string &amp;ppn, int &amp;nbNodes, int &amp;nbCpu, int &amp;maxNbCpu)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to compute the number of nodes and cpus in the torque format nodes.  <a href="#a6be0e0721b4f7713181e0ff43a696e5d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTorqueServer.html#a9b1f022f047fe9347fb21648ba15bc52">getTorqueNbNodesInScript</a> (const std::string &amp;scriptPath, int &amp;nbCpu)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the torque number of nodes in cripy.  <a href="#a9b1f022f047fe9347fb21648ba15bc52"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTorqueServer.html#a5e7fe92d9def0402948b9e29c817861e">getTorqueResourceValue</a> (const char *file, const std::string &amp;resourceName)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the value of TORQUE resource (nodes, walltime, cpu) in the script.  <a href="#a5e7fe92d9def0402948b9e29c817861e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">TMS_Data::ListQueues *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTorqueServer.html#a5a78dc0220cca1f1929782503136aa0e">queuesResourceMin</a> (const std::string &amp;optQueueName)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to request the status of queues.  <a href="#a5a78dc0220cca1f1929782503136aa0e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTorqueServer.html#ac5675d4a8fa217925824a146ac93750f">convertTorqueMem</a> (const std::string &amp;memStr)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to convert torque memory into mb.  <a href="#ac5675d4a8fa217925824a146ac93750f"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
@@ -132,7 +140,7 @@ char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a class="anchor" id="a78dc1909e07eaf03854d423696b30c4e"></a><!-- doxytag: member="TorqueServer::computeNbNodesAndNbCpu" ref="a78dc1909e07eaf03854d423696b30c4e" args="(const std::string &amp;nextNodeContent, const std::string &amp;ppn, int &amp;nbNodes, int &amp;nbCpu)" -->
+<a class="anchor" id="a6be0e0721b4f7713181e0ff43a696e5d"></a><!-- doxytag: member="TorqueServer::computeNbNodesAndNbCpu" ref="a6be0e0721b4f7713181e0ff43a696e5d" args="(const std::string &amp;nextNodeContent, const std::string &amp;ppn, int &amp;nbNodes, int &amp;nbCpu, int &amp;maxNbCpu)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -158,7 +166,13 @@ char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int &amp;&nbsp;</td>
-          <td class="paramname"> <em>nbCpu</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>nbCpu</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&nbsp;</td>
+          <td class="paramname"> <em>maxNbCpu</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -175,7 +189,8 @@ char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
     <tr><td valign="top"></td><td valign="top"><em>nextNodeContent</em>&nbsp;</td><td>The node content to parse </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>ppn</em>&nbsp;</td><td>The syntaxe containing the number of processors per node </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>nbNodes</em>&nbsp;</td><td>The computed number of nodes </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>nbCpu</em>&nbsp;</td><td>The numbers of cpus </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>nbCpu</em>&nbsp;</td><td>The minimum number of cpus </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>maxNbCpu</em>&nbsp;</td><td>The maximum number of cpus </td></tr>
   </table>
   </dd>
 </dl>
@@ -296,6 +311,44 @@ char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="a336c622db6abd25975aa3af4a4e1aed4"></a><!-- doxytag: member="TorqueServer::fillListOfJobs" ref="a336c622db6abd25975aa3af4a4e1aed4" args="(TMS_Data::ListJobs *&amp;listOfJobs, const std::vector&lt; string &gt; &amp;ignoredIds=std::vector&lt; string &gt;())" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TorqueServer::fillListOfJobs </td>
+          <td>(</td>
+          <td class="paramtype">TMS_Data::ListJobs *&amp;&nbsp;</td>
+          <td class="paramname"> <em>listOfJobs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; string &gt; &amp;&nbsp;</td>
+          <td class="paramname"> <em>ignoredIds</em> = <code>std::vector&lt;&nbsp;string&nbsp;&gt;()</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to get a list of submitted jobs. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>listOfJobs</em>&nbsp;</td><td>the ListJobs structure to fill </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>ignoredIds</em>&nbsp;</td><td>the list of job ids to ignore </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classBatchServer.html#ab5f0adb84f7b7e22e78d7a4a45679efd">BatchServer</a>.</p>
 
 </div>
 </div>
@@ -451,7 +504,7 @@ char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a class="anchor" id="a3abd12ff06eb1774669d03b3f6f85f22"></a><!-- doxytag: member="TorqueServer::getNbNodesInNodeFormat" ref="a3abd12ff06eb1774669d03b3f6f85f22" args="(const std::string &amp;format, int &amp;nbCpu)" -->
+<a class="anchor" id="a6c021e8406f45d2e06f6232d8e0279ea"></a><!-- doxytag: member="TorqueServer::getNbNodesInNodeFormat" ref="a6c021e8406f45d2e06f6232d8e0279ea" args="(const std::string &amp;format, int &amp;nbCpu, int &amp;maxNbCpu)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -460,6 +513,50 @@ char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td>(</td>
           <td class="paramtype">const std::string &amp;&nbsp;</td>
           <td class="paramname"> <em>format</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&nbsp;</td>
+          <td class="paramname"> <em>nbCpu</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&nbsp;</td>
+          <td class="paramname"> <em>maxNbCpu</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to get the number of nodes in the torque node format. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>format</em>&nbsp;</td><td>The node format </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>nbCpu</em>&nbsp;</td><td>The minimum number of cpu per node </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>maxNbCpu</em>&nbsp;</td><td>The maximum number of cpu per node </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the number of node </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a9b1f022f047fe9347fb21648ba15bc52"></a><!-- doxytag: member="TorqueServer::getTorqueNbNodesInScript" ref="a9b1f022f047fe9347fb21648ba15bc52" args="(const std::string &amp;scriptPath, int &amp;nbCpu)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int TorqueServer::getTorqueNbNodesInScript </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>scriptPath</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -476,15 +573,52 @@ char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div>
 <div class="memdoc">
 
-<p>Function to get the number of nodes in the torque node format. </p>
+<p>Function to get the torque number of nodes in cripy. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>format</em>&nbsp;</td><td>The node format </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>nbCpu</em>&nbsp;</td><td>The minimum number of cpu per node </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>scriptPath</em>&nbsp;</td><td>The path of the script that enventually contain the node format or the number of node </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>nbCpu</em>&nbsp;</td><td>The maximum number of cpus in the script </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>the number of node </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the number of nodes in the given script </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5e7fe92d9def0402948b9e29c817861e"></a><!-- doxytag: member="TorqueServer::getTorqueResourceValue" ref="a5e7fe92d9def0402948b9e29c817861e" args="(const char *file, const std::string &amp;resourceName)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string TorqueServer::getTorqueResourceValue </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>resourceName</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to get the value of TORQUE resource (nodes, walltime, cpu) in the script. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>file</em>&nbsp;</td><td>The file contain the script to scan </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>resourceName</em>&nbsp;</td><td>The name of the option (nodes, walltime, cpu) whose value will be returned </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The value of the resource </dd></dl>
 
 </div>
 </div>
@@ -605,6 +739,33 @@ char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a class="anchor" id="a5a78dc0220cca1f1929782503136aa0e"></a><!-- doxytag: member="TorqueServer::queuesResourceMin" ref="a5a78dc0220cca1f1929782503136aa0e" args="(const std::string &amp;optQueueName)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TMS_Data::ListQueues* TorqueServer::queuesResourceMin </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>optQueueName</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to request the status of queues. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>optQueueName</em>&nbsp;</td><td>(optional) The name of the queue to request </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The requested status in to ListQueues data structure </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="aed03b8755d1959b3a2218abbf4c15b45"></a><!-- doxytag: member="TorqueServer::submit" ref="aed03b8755d1959b3a2218abbf4c15b45" args="(const char *scriptPath, const TMS_Data::SubmitOptions &amp;options, TMS_Data::Job &amp;job, char **envp=NULL)" -->
 <div class="memitem">
 <div class="memproto">
@@ -662,7 +823,7 @@ char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <li>TMS/src/server/<a class="el" href="TorqueServer_8hpp_source.html">TorqueServer.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jan 3 2012 15:07:48 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:47 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

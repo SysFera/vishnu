@@ -197,6 +197,8 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Check if the pid exists.  <a href="#a04f9a9dfc61b7390150222b10f64bb70"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a7d9cd0241f290039aff6a6410b1cc22f">getLocalMachineName</a> (const std::string &amp;port)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get the fully qualified name for the current system.  <a href="#a7d9cd0241f290039aff6a6410b1cc22f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a1c6d3d877a77eb1a3eb8f33496bb6bf7">checkEmptyString</a> (const std::string &amp;str, const std::string &amp;compMsg)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check if a string is empty.  <a href="#a1c6d3d877a77eb1a3eb8f33496bb6bf7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ac58b058a6a467a21f7eb21192617c90f">connect</a> (const std::string &amp;userId, const std::string &amp;password, UMS_Data::Session &amp;session, const UMS_Data::ConnectOptions &amp;connectOpt=UMS_Data::ConnectOptions())  throw (UserException, SystemException)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to open a session.  <a href="#ac58b058a6a467a21f7eb21192617c90f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ae120231ba899d68724dc972374206745">reconnect</a> (const std::string &amp;userId, const std::string &amp;password, const std::string &amp;sessionId, UMS_Data::Session &amp;session)  throw (UserException, SystemException)</td></tr>
@@ -673,6 +675,43 @@ Variables</h2></td></tr>
     <tr><td valign="top"></td><td valign="top"><em>userId</em>&nbsp;</td><td>represents the VISHNU user identifier </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>password</em>&nbsp;</td><td>represents the password of the user </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>passwordNew</em>&nbsp;</td><td>represents the new password of the user </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a1c6d3d877a77eb1a3eb8f33496bb6bf7"></a><!-- doxytag: member="vishnu::checkEmptyString" ref="a1c6d3d877a77eb1a3eb8f33496bb6bf7" args="(const std::string &amp;str, const std::string &amp;compMsg)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void vishnu::checkEmptyString </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>compMsg</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to check if a string is empty. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>str</em>&nbsp;</td><td>The string to check </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>compMsg</em>&nbsp;</td><td>The complementary message to print </td></tr>
   </table>
   </dd>
 </dl>
@@ -4809,7 +4848,7 @@ template&lt;class T &gt; </div>
 </div>
 </div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jan 3 2012 15:07:49 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:48 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

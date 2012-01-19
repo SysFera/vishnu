@@ -60,63 +60,79 @@
 <a name="l00071"></a>00071     TMS_Data::ListQueues*
 <a name="l00072"></a>00072     <a class="code" href="classTorqueServer.html#a63240dcd85082bb88ee157a8da8f6a04" title="Function to request the status of queues.">listQueues</a>(<span class="keyword">const</span> std::string&amp; optQueueName=std::string());
 <a name="l00073"></a>00073 
-<a name="l00077"></a>00077     <a class="code" href="classTorqueServer.html#a1f6d05661fd240d68e0ef7bf92f54092" title="Destructor.">~TorqueServer</a>(); 
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079   <span class="keyword">private</span>:
-<a name="l00080"></a>00080    
-<a name="l00088"></a>00088     <span class="keywordtype">int</span>
-<a name="l00089"></a>00089     <a class="code" href="classTorqueServer.html#a8f155d04ceea433de756c98225c053b8" title="Function to cancel job on remote machine.">pbs_cancel</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* jobId, 
-<a name="l00090"></a>00090                <span class="keywordtype">char</span> remoteServer[], 
-<a name="l00091"></a>00091                <span class="keywordtype">bool</span> isLocal=<span class="keyword">true</span>);
-<a name="l00092"></a>00092 
-<a name="l00100"></a>00100     <span class="keywordtype">void</span>
-<a name="l00101"></a>00101     <a class="code" href="classTorqueServer.html#a8c8357ec45741351b28891a01fd52a3b" title="Function to treat the submission options.">processOptions</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* scriptPath,
-<a name="l00102"></a>00102                    <span class="keyword">const</span> TMS_Data::SubmitOptions&amp; options, 
-<a name="l00103"></a>00103                    std::vector&lt;std::string&gt;&amp; cmdsOptions);
-<a name="l00104"></a>00104 
-<a name="l00110"></a>00110     <span class="keywordtype">int</span>
-<a name="l00111"></a>00111     <a class="code" href="classTorqueServer.html#a5fb51c751187a2bd49598aee2b0e3b18" title="Function to convert the Torque state into VISHNU state.">convertTorqueStateToVishnuState</a>(std::string state); 
+<a name="l00079"></a>00079     <span class="keywordtype">void</span> <a class="code" href="classTorqueServer.html#a336c622db6abd25975aa3af4a4e1aed4" title="Function to get a list of submitted jobs.">fillListOfJobs</a>(TMS_Data::ListJobs*&amp; listOfJobs,
+<a name="l00080"></a>00080         <span class="keyword">const</span> std::vector&lt;string&gt;&amp; ignoredIds=std::vector&lt;string&gt;());
+<a name="l00081"></a>00081 
+<a name="l00085"></a>00085     <a class="code" href="classTorqueServer.html#a1f6d05661fd240d68e0ef7bf92f54092" title="Destructor.">~TorqueServer</a>(); 
+<a name="l00086"></a>00086 
+<a name="l00087"></a>00087   <span class="keyword">private</span>:
+<a name="l00088"></a>00088    
+<a name="l00096"></a>00096     <span class="keywordtype">int</span>
+<a name="l00097"></a>00097     <a class="code" href="classTorqueServer.html#a8f155d04ceea433de756c98225c053b8" title="Function to cancel job on remote machine.">pbs_cancel</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* jobId, 
+<a name="l00098"></a>00098                <span class="keywordtype">char</span> remoteServer[], 
+<a name="l00099"></a>00099                <span class="keywordtype">bool</span> isLocal=<span class="keyword">true</span>);
+<a name="l00100"></a>00100 
+<a name="l00108"></a>00108     <span class="keywordtype">void</span>
+<a name="l00109"></a>00109     <a class="code" href="classTorqueServer.html#a8c8357ec45741351b28891a01fd52a3b" title="Function to treat the submission options.">processOptions</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* scriptPath,
+<a name="l00110"></a>00110                    <span class="keyword">const</span> TMS_Data::SubmitOptions&amp; options, 
+<a name="l00111"></a>00111                    std::vector&lt;std::string&gt;&amp; cmdsOptions);
 <a name="l00112"></a>00112 
 <a name="l00118"></a>00118     <span class="keywordtype">int</span>
-<a name="l00119"></a>00119     <a class="code" href="classTorqueServer.html#a2427d2d3c69cf28f779d22396383e4d4" title="Function to convert the Torque priority into VISHNU priority.">convertTorquePrioToVishnuPrio</a>(<span class="keyword">const</span> <span class="keywordtype">int</span>&amp; prio); 
+<a name="l00119"></a>00119     <a class="code" href="classTorqueServer.html#a5fb51c751187a2bd49598aee2b0e3b18" title="Function to convert the Torque state into VISHNU state.">convertTorqueStateToVishnuState</a>(std::string state); 
 <a name="l00120"></a>00120 
-<a name="l00126"></a>00126     <span class="keywordtype">void</span>
-<a name="l00127"></a>00127     <a class="code" href="classTorqueServer.html#a0411b4c5d842efabc66e9a5db39cceba" title="Function To fill the info concerning a job.">fillJobInfo</a>(TMS_Data::Job &amp;job, 
-<a name="l00128"></a>00128                 <span class="keyword">struct</span> batch_status *p);
-<a name="l00129"></a>00129 
-<a name="l00136"></a>00136     <span class="keywordtype">int</span>
-<a name="l00137"></a>00137     <a class="code" href="classTorqueServer.html#a3abd12ff06eb1774669d03b3f6f85f22" title="Function to get the number of nodes in the torque node format.">getNbNodesInNodeFormat</a>(<span class="keyword">const</span> std::string&amp; format, 
-<a name="l00138"></a>00138                            <span class="keywordtype">int</span>&amp; nbCpu);
-<a name="l00139"></a>00139 
-<a name="l00146"></a>00146     std::string
-<a name="l00147"></a>00147     <a class="code" href="classTorqueServer.html#aa43c09a2a522df515a6b0b4334ed96d8" title="Function to get the torque formated cpu per node.">getFormatedCpuPerNode</a>(<span class="keyword">const</span> <span class="keywordtype">int</span>&amp; cpu, 
-<a name="l00148"></a>00148                           <span class="keyword">const</span> std::string&amp; scriptPath);
+<a name="l00126"></a>00126     <span class="keywordtype">int</span>
+<a name="l00127"></a>00127     <a class="code" href="classTorqueServer.html#a2427d2d3c69cf28f779d22396383e4d4" title="Function to convert the Torque priority into VISHNU priority.">convertTorquePrioToVishnuPrio</a>(<span class="keyword">const</span> <span class="keywordtype">int</span>&amp; prio); 
+<a name="l00128"></a>00128 
+<a name="l00134"></a>00134     <span class="keywordtype">void</span>
+<a name="l00135"></a>00135     <a class="code" href="classTorqueServer.html#a0411b4c5d842efabc66e9a5db39cceba" title="Function To fill the info concerning a job.">fillJobInfo</a>(TMS_Data::Job &amp;job, 
+<a name="l00136"></a>00136                 <span class="keyword">struct</span> batch_status *p);
+<a name="l00137"></a>00137 
+<a name="l00145"></a>00145     <span class="keywordtype">int</span>
+<a name="l00146"></a>00146     <a class="code" href="classTorqueServer.html#a6c021e8406f45d2e06f6232d8e0279ea" title="Function to get the number of nodes in the torque node format.">getNbNodesInNodeFormat</a>(<span class="keyword">const</span> std::string&amp; format, 
+<a name="l00147"></a>00147                            <span class="keywordtype">int</span>&amp; nbCpu,
+<a name="l00148"></a>00148                            <span class="keywordtype">int</span>&amp; maxNbCpu);
 <a name="l00149"></a>00149 
-<a name="l00158"></a>00158     <span class="keywordtype">void</span> 
-<a name="l00159"></a>00159     <a class="code" href="classTorqueServer.html#ad7eff84c7ffb7596b28e80650aa59c2b" title="Function to insert some additional content (valueToInsert).">findAndInsert</a>(<span class="keyword">const</span> std::string&amp; valueToFind,
-<a name="l00160"></a>00160                   <span class="keyword">const</span> std::string&amp; valueToInsert,
-<a name="l00161"></a>00161                   <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; begin,
-<a name="l00162"></a>00162                   <span class="keywordtype">size_t</span>&amp; end,
-<a name="l00163"></a>00163                   std::string&amp; src);
-<a name="l00164"></a>00164 
-<a name="l00172"></a>00172     <span class="keywordtype">void</span>
-<a name="l00173"></a>00173     <a class="code" href="classTorqueServer.html#a78dc1909e07eaf03854d423696b30c4e" title="Function to compute the number of nodes and cpus in the torque format nodes.">computeNbNodesAndNbCpu</a>(<span class="keyword">const</span> std::string&amp; nextNodeContent,
-<a name="l00174"></a>00174                            <span class="keyword">const</span> std::string&amp; ppn,
-<a name="l00175"></a>00175                            <span class="keywordtype">int</span>&amp; nbNodes,
-<a name="l00176"></a>00176                            <span class="keywordtype">int</span>&amp; nbCpu);
-<a name="l00177"></a>00177 
-<a name="l00183"></a>00183     <span class="keywordtype">int</span>
-<a name="l00184"></a>00184     <a class="code" href="classTorqueServer.html#ac5675d4a8fa217925824a146ac93750f" title="Function to convert torque memory into mb.">convertTorqueMem</a>(<span class="keyword">const</span> std::string&amp; memStr);
-<a name="l00185"></a>00185 
-<a name="l00189"></a><a class="code" href="classTorqueServer.html#ada6a31f5672ecf7297dfac26ed62e19a">00189</a>     TMS_Data::ListQueues_ptr <a class="code" href="classTorqueServer.html#ada6a31f5672ecf7297dfac26ed62e19a" title="ListQueues returned.">mlistQueues</a>; 
-<a name="l00193"></a><a class="code" href="classTorqueServer.html#ae798d6ea4f01fc4336756a0cba5a644c">00193</a>     <span class="keywordtype">char</span> <a class="code" href="classTorqueServer.html#ae798d6ea4f01fc4336756a0cba5a644c" title="The name of the server to connect.">serverOut</a>[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
-<a name="l00194"></a>00194 
-<a name="l00195"></a>00195 };
-<a name="l00196"></a>00196 
-<a name="l00197"></a>00197 <span class="preprocessor">#endif</span>
+<a name="l00156"></a>00156     std::string
+<a name="l00157"></a>00157     <a class="code" href="classTorqueServer.html#aa43c09a2a522df515a6b0b4334ed96d8" title="Function to get the torque formated cpu per node.">getFormatedCpuPerNode</a>(<span class="keyword">const</span> <span class="keywordtype">int</span>&amp; cpu, 
+<a name="l00158"></a>00158                           <span class="keyword">const</span> std::string&amp; scriptPath);
+<a name="l00159"></a>00159 
+<a name="l00168"></a>00168     <span class="keywordtype">void</span> 
+<a name="l00169"></a>00169     <a class="code" href="classTorqueServer.html#ad7eff84c7ffb7596b28e80650aa59c2b" title="Function to insert some additional content (valueToInsert).">findAndInsert</a>(<span class="keyword">const</span> std::string&amp; valueToFind,
+<a name="l00170"></a>00170                   <span class="keyword">const</span> std::string&amp; valueToInsert,
+<a name="l00171"></a>00171                   <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; begin,
+<a name="l00172"></a>00172                   <span class="keywordtype">size_t</span>&amp; end,
+<a name="l00173"></a>00173                   std::string&amp; src);
+<a name="l00174"></a>00174 
+<a name="l00183"></a>00183     <span class="keywordtype">void</span>
+<a name="l00184"></a>00184     <a class="code" href="classTorqueServer.html#a6be0e0721b4f7713181e0ff43a696e5d" title="Function to compute the number of nodes and cpus in the torque format nodes.">computeNbNodesAndNbCpu</a>(<span class="keyword">const</span> std::string&amp; nextNodeContent,
+<a name="l00185"></a>00185                            <span class="keyword">const</span> std::string&amp; ppn,
+<a name="l00186"></a>00186                            <span class="keywordtype">int</span>&amp; nbNodes,
+<a name="l00187"></a>00187                            <span class="keywordtype">int</span>&amp; nbCpu,
+<a name="l00188"></a>00188                            <span class="keywordtype">int</span>&amp; maxNbCpu);
+<a name="l00189"></a>00189 
+<a name="l00196"></a>00196     <span class="keywordtype">int</span>
+<a name="l00197"></a>00197     <a class="code" href="classTorqueServer.html#a9b1f022f047fe9347fb21648ba15bc52" title="Function to get the torque number of nodes in cripy.">getTorqueNbNodesInScript</a>(<span class="keyword">const</span> std::string&amp; scriptPath, 
+<a name="l00198"></a>00198                              <span class="keywordtype">int</span>&amp; nbCpu);
+<a name="l00199"></a>00199 
+<a name="l00206"></a>00206     std::string
+<a name="l00207"></a>00207     <a class="code" href="classTorqueServer.html#a5e7fe92d9def0402948b9e29c817861e" title="Function to get the value of TORQUE resource (nodes, walltime, cpu) in the script.">getTorqueResourceValue</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* file, 
+<a name="l00208"></a>00208                            <span class="keyword">const</span> std::string&amp; resourceName);
+<a name="l00209"></a>00209 
+<a name="l00215"></a>00215     TMS_Data::ListQueues*
+<a name="l00216"></a>00216     <a class="code" href="classTorqueServer.html#a5a78dc0220cca1f1929782503136aa0e" title="Function to request the status of queues.">queuesResourceMin</a>(<span class="keyword">const</span> std::string&amp; optQueueName);
+<a name="l00217"></a>00217 
+<a name="l00223"></a>00223     <span class="keywordtype">int</span>
+<a name="l00224"></a>00224     <a class="code" href="classTorqueServer.html#ac5675d4a8fa217925824a146ac93750f" title="Function to convert torque memory into mb.">convertTorqueMem</a>(<span class="keyword">const</span> std::string&amp; memStr);
+<a name="l00225"></a>00225 
+<a name="l00229"></a><a class="code" href="classTorqueServer.html#ada6a31f5672ecf7297dfac26ed62e19a">00229</a>     TMS_Data::ListQueues_ptr <a class="code" href="classTorqueServer.html#ada6a31f5672ecf7297dfac26ed62e19a" title="ListQueues returned.">mlistQueues</a>; 
+<a name="l00233"></a><a class="code" href="classTorqueServer.html#ae798d6ea4f01fc4336756a0cba5a644c">00233</a>     <span class="keywordtype">char</span> <a class="code" href="classTorqueServer.html#ae798d6ea4f01fc4336756a0cba5a644c" title="The name of the server to connect.">serverOut</a>[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
+<a name="l00234"></a>00234 
+<a name="l00235"></a>00235 };
+<a name="l00236"></a>00236 
+<a name="l00237"></a>00237 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jan 3 2012 15:07:43 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:42 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

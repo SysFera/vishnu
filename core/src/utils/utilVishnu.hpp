@@ -295,7 +295,7 @@ std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& ut
    /**
     * \brief Function to check if a string is empty
     * \param str The string to check
-    * \param comMsg The complementary message to print
+    * \param compMsg The complementary message to print
     * \return raises an exception on error
     */
    void

@@ -66,13 +66,15 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the start time of the job.  <a href="#a85aab0d27ed279c3696a033ddf1a05bf"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">TMS_Data::ListQueues *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSlurmServer.html#a363bf0b22c519039244f6bc938577e9c">listQueues</a> (const std::string &amp;optQueueName=std::string())</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to request the status of queues.  <a href="#a363bf0b22c519039244f6bc938577e9c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSlurmServer.html#a303b5f20541943052dd850e5f02da0c6">fillListOfJobs</a> (TMS_Data::ListJobs *&amp;listOfJobs, const std::vector&lt; string &gt; &amp;ignoredIds=std::vector&lt; string &gt;())</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get a list of submitted jobs.  <a href="#a303b5f20541943052dd850e5f02da0c6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa7ff9a60deb4bca42bb39d0c5d98daa3"></a><!-- doxytag: member="SlurmServer::~SlurmServer" ref="aa7ff9a60deb4bca42bb39d0c5d98daa3" args="()" -->
 &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSlurmServer.html#aa7ff9a60deb4bca42bb39d0c5d98daa3">~SlurmServer</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructor. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSlurmServer.html#a04c8991b630a2b23d0da7a9814bcae47">processOptions</a> (const TMS_Data::SubmitOptions &amp;options, std::vector&lt; std::string &gt; &amp;cmdsOptions)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to treat the submission options.  <a href="#a04c8991b630a2b23d0da7a9814bcae47"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSlurmServer.html#afc45d1d7b21372d0eb47a8e2577aa861">processOptions</a> (const char *scriptPath, const TMS_Data::SubmitOptions &amp;options, std::vector&lt; std::string &gt; &amp;cmdsOptions)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to treat the submission options.  <a href="#afc45d1d7b21372d0eb47a8e2577aa861"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSlurmServer.html#a294e9fcc0e094584645838773a5f454e">convertSlurmStateToVishnuState</a> (const uint16_t &amp;state)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to convert the Slurm state into VISHNU state.  <a href="#a294e9fcc0e094584645838773a5f454e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSlurmServer.html#a307212f4e936651b7c9f98c6878ff94c">convertSlurmPrioToVishnuPrio</a> (const uint32_t &amp;prio)</td></tr>
@@ -89,6 +91,8 @@ Private Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to cheick if a path contains an excluded slurm symbol by vishnu.  <a href="#a81c65cc4a6b83c291b5ec2c8ca028169"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSlurmServer.html#a6c33cb8cae0ca873cd8b59fe5df85634">checkSLURMOutPutPath</a> (char *&amp;path, const std::string &amp;pathInfo=&quot;job output path&quot;)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check if slurm path syntax is correct.  <a href="#a6c33cb8cae0ca873cd8b59fe5df85634"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSlurmServer.html#ae3b9ae057e244c1fe1e471916af30c98">getSlurmResourceValue</a> (const char *file, const std::string &amp;shortOptionLetterSyntax, const std::string &amp;longOptionLetterSyntax)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the value of SLURM resource (nodes, walltime, cpu) in the script.  <a href="#ae3b9ae057e244c1fe1e471916af30c98"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad6eff756bf514fdd864f438d9f316753"></a><!-- doxytag: member="SlurmServer::mlistQueues" ref="ad6eff756bf514fdd864f438d9f316753" args="" -->
@@ -359,6 +363,44 @@ std::string &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el
 
 </div>
 </div>
+<a class="anchor" id="a303b5f20541943052dd850e5f02da0c6"></a><!-- doxytag: member="SlurmServer::fillListOfJobs" ref="a303b5f20541943052dd850e5f02da0c6" args="(TMS_Data::ListJobs *&amp;listOfJobs, const std::vector&lt; string &gt; &amp;ignoredIds=std::vector&lt; string &gt;())" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SlurmServer::fillListOfJobs </td>
+          <td>(</td>
+          <td class="paramtype">TMS_Data::ListJobs *&amp;&nbsp;</td>
+          <td class="paramname"> <em>listOfJobs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; string &gt; &amp;&nbsp;</td>
+          <td class="paramname"> <em>ignoredIds</em> = <code>std::vector&lt;&nbsp;string&nbsp;&gt;()</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to get a list of submitted jobs. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>listOfJobs</em>&nbsp;</td><td>the ListJobs structure to fill </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>ignoredIds</em>&nbsp;</td><td>the list of job ids to ignore </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classBatchServer.html#ab5f0adb84f7b7e22e78d7a4a45679efd">BatchServer</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a85aab0d27ed279c3696a033ddf1a05bf"></a><!-- doxytag: member="SlurmServer::getJobStartTime" ref="a85aab0d27ed279c3696a033ddf1a05bf" args="(const std::string &amp;jobId)" -->
 <div class="memitem">
 <div class="memproto">
@@ -417,6 +459,50 @@ std::string &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el
 
 </div>
 </div>
+<a class="anchor" id="ae3b9ae057e244c1fe1e471916af30c98"></a><!-- doxytag: member="SlurmServer::getSlurmResourceValue" ref="ae3b9ae057e244c1fe1e471916af30c98" args="(const char *file, const std::string &amp;shortOptionLetterSyntax, const std::string &amp;longOptionLetterSyntax)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string SlurmServer::getSlurmResourceValue </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>shortOptionLetterSyntax</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>longOptionLetterSyntax</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to get the value of SLURM resource (nodes, walltime, cpu) in the script. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>file</em>&nbsp;</td><td>The file contain the script to scan </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>shortOptionLetterSyntax</em>&nbsp;</td><td>The syntax of the short option (--N, -t) whose value will be returned </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>longOptionLetterSyntax</em>&nbsp;</td><td>The syntax of the long option (--nodes, --time) whose value will be returned </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The value of the resource </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a363bf0b22c519039244f6bc938577e9c"></a><!-- doxytag: member="SlurmServer::listQueues" ref="a363bf0b22c519039244f6bc938577e9c" args="(const std::string &amp;optQueueName=std::string())" -->
 <div class="memitem">
 <div class="memproto">
@@ -446,13 +532,19 @@ std::string &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el
 
 </div>
 </div>
-<a class="anchor" id="a04c8991b630a2b23d0da7a9814bcae47"></a><!-- doxytag: member="SlurmServer::processOptions" ref="a04c8991b630a2b23d0da7a9814bcae47" args="(const TMS_Data::SubmitOptions &amp;options, std::vector&lt; std::string &gt; &amp;cmdsOptions)" -->
+<a class="anchor" id="afc45d1d7b21372d0eb47a8e2577aa861"></a><!-- doxytag: member="SlurmServer::processOptions" ref="afc45d1d7b21372d0eb47a8e2577aa861" args="(const char *scriptPath, const TMS_Data::SubmitOptions &amp;options, std::vector&lt; std::string &gt; &amp;cmdsOptions)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void SlurmServer::processOptions </td>
           <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>scriptPath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">const TMS_Data::SubmitOptions &amp;&nbsp;</td>
           <td class="paramname"> <em>options</em>, </td>
         </tr>
@@ -474,6 +566,7 @@ std::string &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el
 <p>Function to treat the submission options. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>scriptPath</em>&nbsp;</td><td>The job script path </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>options</em>&nbsp;</td><td>the object which contains the SubmitOptions options values </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>cmdsOptions</em>&nbsp;</td><td>The list of the option value </td></tr>
   </table>
@@ -566,7 +659,7 @@ std::string &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el
 <li>TMS/src/server/<a class="el" href="SlurmServer_8hpp_source.html">SlurmServer.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jan 3 2012 15:07:47 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:46 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
