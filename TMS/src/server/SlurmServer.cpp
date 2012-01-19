@@ -403,6 +403,9 @@ SlurmServer::processOptions(const char* scriptPath,
       if(!cpuStr.empty()) {
         cpu = vishnu::convertToInt(cpuStr);
       }
+      if(options.getNbCpu()!=-1) {
+        cpu=options.getNbCpu();
+      } 
     } else {
       isNode.str(optionNodesValue);
       isNode >> node;
