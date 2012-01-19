@@ -1,3 +1,22 @@
+
++--------------+
+| VISHNU 1.2.7 |
++--------------+
+
+* Added service for automatically submit a job
+
+* Added keyword autom as machine id to submit job API function and Command
+line to allow automatic submission
+
+* Added service for list all submitted jobs through VISHNU on all machines
+
+* Added keyword all as machine id to list jobs API function and Command
+line to allow the listing of jobs on all machines
+
+* Extended submit job options: added selectQueueAutom and loadType options
+
+* Extended list jobs options: added multipleStatus and batchJob options 
+
 +--------------+
 | VISHNU 1.2.6 |
 +--------------+
