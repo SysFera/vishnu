@@ -720,7 +720,7 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
  * \return The requested status in to ListQueues data structure 
  */
 TMS_Data::ListQueues*
-TorqueServer::listQueues(const std::string& OptqueueName) { 
+TorqueServer::listQueues(const std::string& optqueueName) { 
 
   int connect;
   std::string errorMsg;
@@ -743,8 +743,8 @@ TorqueServer::listQueues(const std::string& OptqueueName) {
 
 
   struct batch_status *p_status;
-  if(OptqueueName.size()!=0) {
-    p_status = pbs_statque(connect, strdup(OptqueueName.c_str()), NULL, NULL);
+  if(optqueueName.size()!=0) {
+    p_status = pbs_statque(connect, strdup(optqueueName.c_str()), NULL, NULL);
   } else {
     p_status = pbs_statque(connect, NULL, NULL, NULL);
   }
@@ -1197,8 +1197,11 @@ void TorqueServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
 }
 
 /**
-* TODO
-*/
+ * \brief Function to get the value of TORQUE resource (nodes, walltime, cpu) in the script
+ * \param file The file contain the script to scan
+ * \param resourceName The name of the option (nodes, walltime, cpu) whose value will be returned
+ * \return The value of the resource
+ */
 std::string
 TorqueServer::getTorqueResourceValue(const char* file, const std::string& resourceName) {
 
@@ -1237,7 +1240,7 @@ TorqueServer::getTorqueResourceValue(const char* file, const std::string& resour
  * \return The requested status in to ListQueues data structure 
  */
 TMS_Data::ListQueues*
-TorqueServer::queuesResourceMin(const std::string& OptqueueName) {
+TorqueServer::queuesResourceMin(const std::string& optqueueName) {
 
   int connect;
   std::string errorMsg;
@@ -1260,8 +1263,8 @@ TorqueServer::queuesResourceMin(const std::string& OptqueueName) {
 
 
   struct batch_status *p_status;
-  if(OptqueueName.size()!=0) {
-    p_status = pbs_statque(connect, strdup(OptqueueName.c_str()), NULL, NULL);
+  if(optqueueName.size()!=0) {
+    p_status = pbs_statque(connect, strdup(optqueueName.c_str()), NULL, NULL);
   } else {
     p_status = pbs_statque(connect, NULL, NULL, NULL);
   }

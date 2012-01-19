@@ -64,16 +64,19 @@
 <a name="l00070"></a>00070   
 <a name="l00076"></a>00076   <span class="keyword">virtual</span> TMS_Data::ListQueues* 
 <a name="l00077"></a>00077   <a class="code" href="namespacevishnu.html#ada2d98155cffa475261261fb33f7e873" title="The listQueues function gets queues information.">listQueues</a>(<span class="keyword">const</span> std::string&amp; optQueueName=std::string())=0;
-<a name="l00078"></a>00078   
-<a name="l00082"></a>00082   <span class="keyword">virtual</span> ~<a class="code" href="classBatchServer.html" title="BatchServer class implementation.">BatchServer</a>();
-<a name="l00083"></a>00083 
-<a name="l00084"></a>00084 <span class="keyword">private</span>:
-<a name="l00085"></a>00085 };
-<a name="l00086"></a>00086 
-<a name="l00087"></a>00087 <span class="preprocessor">#endif</span>
+<a name="l00078"></a>00078 
+<a name="l00084"></a>00084   <span class="keyword">virtual</span> <span class="keywordtype">void</span> fillListOfJobs(TMS_Data::ListJobs*&amp; listOfJobs,
+<a name="l00085"></a>00085                       <span class="keyword">const</span> std::vector&lt;string&gt;&amp; ignoredIds=std::vector&lt;string&gt;())=0;
+<a name="l00086"></a>00086    
+<a name="l00090"></a>00090   <span class="keyword">virtual</span> ~<a class="code" href="classBatchServer.html" title="BatchServer class implementation.">BatchServer</a>();
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092 <span class="keyword">private</span>:
+<a name="l00093"></a>00093 };
+<a name="l00094"></a>00094 
+<a name="l00095"></a>00095 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jan 3 2012 15:07:43 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:42 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

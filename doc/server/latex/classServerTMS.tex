@@ -55,6 +55,11 @@ static \hyperlink{classServerTMS}{ServerTMS} $\ast$ \hyperlink{classServerTMS_a8
 \label{classServerTMS_aa966756d974810cbb474aa0f620dc6fc}
 
 \begin{DoxyCompactList}\small\item\em operator= \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classServerTMS_a277dcd0ef987c37c18c5d8d56ed9a27d}{setBatchLoadPerformance} (diet\_\-profile\_\-t $\ast$pb, estVector\_\-t perfValues)
+\begin{DoxyCompactList}\small\item\em Function to compute the batch load performance (number of waiting jobs, running jobs and total jobs). \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -194,6 +199,23 @@ To initialize the TMS Server class.
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
+\hypertarget{classServerTMS_a277dcd0ef987c37c18c5d8d56ed9a27d}{
+\index{ServerTMS@{ServerTMS}!setBatchLoadPerformance@{setBatchLoadPerformance}}
+\index{setBatchLoadPerformance@{setBatchLoadPerformance}!ServerTMS@{ServerTMS}}
+\subsubsection[{setBatchLoadPerformance}]{\setlength{\rightskip}{0pt plus 5cm}static void ServerTMS::setBatchLoadPerformance (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb, }
+\item[{estVector\_\-t}]{ perfValues}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classServerTMS_a277dcd0ef987c37c18c5d8d56ed9a27d}
+
+
+Function to compute the batch load performance (number of waiting jobs, running jobs and total jobs). 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]the resquest profile \item[{\em perfValues}]The vector contain the estimation load performance (number of waiting jobs, running jobs and total jobs) \end{DoxyParams}
 
 
 The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}

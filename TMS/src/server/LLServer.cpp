@@ -960,7 +960,10 @@ void LLServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
 }
 
 /**
- * TODO
+ * \brief Function to get the value of LoadLeveler resource (nodes, walltime, cpu) in the script
+ * \param file The file contain the script to scan
+ * \param optionLetterSyntax The syntax of the option (nodes, walltime, cpu) whose value will be returned
+ * \return The value of the resource
  */
 std::string
 LLServer::getLLResourceValue(const char* file,

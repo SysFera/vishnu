@@ -35,6 +35,8 @@ time\_\-t \hyperlink{classSlurmServer_a85aab0d27ed279c3696a033ddf1a05bf}{getJobS
 \begin{DoxyCompactList}\small\item\em Function to get the start time of the job. \item\end{DoxyCompactList}\item 
 TMS\_\-Data::ListQueues $\ast$ \hyperlink{classSlurmServer_a363bf0b22c519039244f6bc938577e9c}{listQueues} (const std::string \&optQueueName=std::string())
 \begin{DoxyCompactList}\small\item\em Function to request the status of queues. \item\end{DoxyCompactList}\item 
+void \hyperlink{classSlurmServer_a303b5f20541943052dd850e5f02da0c6}{fillListOfJobs} (TMS\_\-Data::ListJobs $\ast$\&listOfJobs, const std::vector$<$ string $>$ \&ignoredIds=std::vector$<$ string $>$())
+\begin{DoxyCompactList}\small\item\em Function to get a list of submitted jobs. \item\end{DoxyCompactList}\item 
 \hypertarget{classSlurmServer_aa7ff9a60deb4bca42bb39d0c5d98daa3}{
 \hyperlink{classSlurmServer_aa7ff9a60deb4bca42bb39d0c5d98daa3}{$\sim$SlurmServer} ()}
 \label{classSlurmServer_aa7ff9a60deb4bca42bb39d0c5d98daa3}
@@ -43,7 +45,7 @@ TMS\_\-Data::ListQueues $\ast$ \hyperlink{classSlurmServer_a363bf0b22c519039244f
 \subsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classSlurmServer_a04c8991b630a2b23d0da7a9814bcae47}{processOptions} (const TMS\_\-Data::SubmitOptions \&options, std::vector$<$ std::string $>$ \&cmdsOptions)
+void \hyperlink{classSlurmServer_afc45d1d7b21372d0eb47a8e2577aa861}{processOptions} (const char $\ast$scriptPath, const TMS\_\-Data::SubmitOptions \&options, std::vector$<$ std::string $>$ \&cmdsOptions)
 \begin{DoxyCompactList}\small\item\em Function to treat the submission options. \item\end{DoxyCompactList}\item 
 int \hyperlink{classSlurmServer_a294e9fcc0e094584645838773a5f454e}{convertSlurmStateToVishnuState} (const uint16\_\-t \&state)
 \begin{DoxyCompactList}\small\item\em Function to convert the Slurm state into VISHNU state. \item\end{DoxyCompactList}\item 
@@ -60,7 +62,9 @@ void \hyperlink{classSlurmServer_a27e52d883798ce8ba9d341da69364245}{replaceSymbo
 bool \hyperlink{classSlurmServer_a81c65cc4a6b83c291b5ec2c8ca028169}{containsAnExcludedSlurmSymbols} (const std::string \&path, std::string \&symbol)
 \begin{DoxyCompactList}\small\item\em Function to cheick if a path contains an excluded slurm symbol by vishnu. \item\end{DoxyCompactList}\item 
 std::string \hyperlink{classSlurmServer_a6c33cb8cae0ca873cd8b59fe5df85634}{checkSLURMOutPutPath} (char $\ast$\&path, const std::string \&pathInfo=\char`\"{}job output path\char`\"{})
-\begin{DoxyCompactList}\small\item\em Function to check if slurm path syntax is correct. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Function to check if slurm path syntax is correct. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classSlurmServer_ae3b9ae057e244c1fe1e471916af30c98}{getSlurmResourceValue} (const char $\ast$file, const std::string \&shortOptionLetterSyntax, const std::string \&longOptionLetterSyntax)
+\begin{DoxyCompactList}\small\item\em Function to get the value of SLURM resource (nodes, walltime, cpu) in the script. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -237,6 +241,27 @@ Function To fill the info concerning a job.
 
 \begin{DoxyParams}{Parameters}
 \item[{\em job,:}]The job to fill \item[{\em jobId,:}]The identifier of the job to load \end{DoxyParams}
+\hypertarget{classSlurmServer_a303b5f20541943052dd850e5f02da0c6}{
+\index{SlurmServer@{SlurmServer}!fillListOfJobs@{fillListOfJobs}}
+\index{fillListOfJobs@{fillListOfJobs}!SlurmServer@{SlurmServer}}
+\subsubsection[{fillListOfJobs}]{\setlength{\rightskip}{0pt plus 5cm}void SlurmServer::fillListOfJobs (
+\begin{DoxyParamCaption}
+\item[{TMS\_\-Data::ListJobs $\ast$\&}]{ listOfJobs, }
+\item[{const std::vector$<$ string $>$ \&}]{ ignoredIds = {\ttfamily std::vector$<$~string~$>$()}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classSlurmServer_a303b5f20541943052dd850e5f02da0c6}
+
+
+Function to get a list of submitted jobs. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em listOfJobs}]the ListJobs structure to fill \item[{\em ignoredIds}]the list of job ids to ignore \end{DoxyParams}
+
+
+Implements \hyperlink{classBatchServer_ab5f0adb84f7b7e22e78d7a4a45679efd}{BatchServer}.
+
 \hypertarget{classSlurmServer_a85aab0d27ed279c3696a033ddf1a05bf}{
 \index{SlurmServer@{SlurmServer}!getJobStartTime@{getJobStartTime}}
 \index{getJobStartTime@{getJobStartTime}!SlurmServer@{SlurmServer}}
@@ -283,6 +308,27 @@ Function to get the status of the job.
 
 Implements \hyperlink{classBatchServer_ac82e407645e4ad185cf59edcee832d58}{BatchServer}.
 
+\hypertarget{classSlurmServer_ae3b9ae057e244c1fe1e471916af30c98}{
+\index{SlurmServer@{SlurmServer}!getSlurmResourceValue@{getSlurmResourceValue}}
+\index{getSlurmResourceValue@{getSlurmResourceValue}!SlurmServer@{SlurmServer}}
+\subsubsection[{getSlurmResourceValue}]{\setlength{\rightskip}{0pt plus 5cm}std::string SlurmServer::getSlurmResourceValue (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ file, }
+\item[{const std::string \&}]{ shortOptionLetterSyntax, }
+\item[{const std::string \&}]{ longOptionLetterSyntax}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classSlurmServer_ae3b9ae057e244c1fe1e471916af30c98}
+
+
+Function to get the value of SLURM resource (nodes, walltime, cpu) in the script. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em file}]The file contain the script to scan \item[{\em shortOptionLetterSyntax}]The syntax of the short option (-\/-\/N, -\/t) whose value will be returned \item[{\em longOptionLetterSyntax}]The syntax of the long option (-\/-\/nodes, -\/-\/time) whose value will be returned \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value of the resource 
+\end{DoxyReturn}
 \hypertarget{classSlurmServer_a363bf0b22c519039244f6bc938577e9c}{
 \index{SlurmServer@{SlurmServer}!listQueues@{listQueues}}
 \index{listQueues@{listQueues}!SlurmServer@{SlurmServer}}
@@ -306,23 +352,24 @@ The requested status in to ListQueues data structure
 
 Implements \hyperlink{classBatchServer_ab5cb2d2073b50e7c1f81693baed942ea}{BatchServer}.
 
-\hypertarget{classSlurmServer_a04c8991b630a2b23d0da7a9814bcae47}{
+\hypertarget{classSlurmServer_afc45d1d7b21372d0eb47a8e2577aa861}{
 \index{SlurmServer@{SlurmServer}!processOptions@{processOptions}}
 \index{processOptions@{processOptions}!SlurmServer@{SlurmServer}}
 \subsubsection[{processOptions}]{\setlength{\rightskip}{0pt plus 5cm}void SlurmServer::processOptions (
 \begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ scriptPath, }
 \item[{const TMS\_\-Data::SubmitOptions \&}]{ options, }
 \item[{std::vector$<$ std::string $>$ \&}]{ cmdsOptions}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classSlurmServer_a04c8991b630a2b23d0da7a9814bcae47}
+\label{classSlurmServer_afc45d1d7b21372d0eb47a8e2577aa861}
 
 
 Function to treat the submission options. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em options}]the object which contains the SubmitOptions options values \item[{\em cmdsOptions}]The list of the option value \end{DoxyParams}
+\item[{\em scriptPath}]The job script path \item[{\em options}]the object which contains the SubmitOptions options values \item[{\em cmdsOptions}]The list of the option value \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
