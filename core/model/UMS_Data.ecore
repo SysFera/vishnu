@@ -538,4 +538,69 @@
     <eLiterals name="FAILURE" literal="FAILURE"/>
     <eLiterals name="SUCCESS" value="1" literal="SUCCESS"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AuthSystems" instanceTypeName="AuthSystems">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="corresponds to the user-authentication system's name"/>
+        <details key="shortOption" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="URI" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="is the URI of the user-authentication systems (by the form host:port for LDAP)"/>
+        <details key="shortOption" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="authLogin" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="is the login used to connect to the user-authentication system"/>
+        <details key="shortOption" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="authPassword" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="is the password used to connect to the user-authentication system"/>
+        <details key="shortOption" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//AuthentType"
+        defaultValueLiteral="0">
+      <eAnnotations source="Description">
+        <details key="content" value="represents the type of the user-authentication systems."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ldapBase" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="is an option for user-authentication system based on LDAP which specifies the DN of the root entry "/>
+        <details key="shortOption" value="b"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="AuthentType" instanceTypeName="AuthentType">
+    <eAnnotations source="Description">
+      <contents xsi:type="ecore:EEnumLiteral" name="LDAP" literal="LDAP"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ListAuthSystems" instanceTypeName="ListAuthSystems">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="AuthSystems" upperBound="-1"
+        eType="#//AuthSystems" containment="true">
+      <eAnnotations source="Description">
+        <details key="content" value="is the list of user-authentication systems"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AuthSystemsOptions" instanceTypeName="AuthSystemsOptions">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="listAllAuthSystems" eType="ecore:EDataType Ecore.ecore#//EBoolean"
+        defaultValueLiteral="false">
+      <eAnnotations source="Description">
+        <details key="content" value="is an option for listing all VISHNU user-authentication systems"/>
+        <details key="shortOption" value="a"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
 </ecore:EPackage>
