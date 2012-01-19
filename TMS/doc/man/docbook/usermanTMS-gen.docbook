@@ -1067,7 +1067,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refmeta>
       <refnamediv>
         <refname>vishnu_cancel_job</refname>
-        <refpurpose>cancels a job from its id. If job is equal to all, all submitted jobs by all users will be cancelled if the user is an administrator, and only jobs submitted by the user will be cancelled if the user is not an administrator.</refpurpose>
+        <refpurpose>cancels a job from its id. If job id is equal to all, all submitted jobs by all users will be cancelled if the user is an administrator, and only jobs submitted by the user will be cancelled if the user is not an administrator.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_cancel_job</command><arg choice="opt"><option>-h</option></arg><arg
@@ -1844,7 +1844,7 @@ If the machine identifier is equal to autom, the job will be automatically submi
       </refmeta>
       <refnamediv>
         <refname>cancelJob</refname>
-        <refpurpose>cancels a job from its id. If job is equal to all, all submitted jobs by all users will be cancelled if the user is an administrator, and only jobs submitted by the user will be cancelled if the user is not an administrator.</refpurpose>
+        <refpurpose>cancels a job from its id. If job id is equal to all, all submitted jobs by all users will be cancelled if the user is an administrator, and only jobs submitted by the user will be cancelled if the user is not an administrator.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
         <funcsynopsis><funcprototype><funcdef>int <function>vishnu::cancelJob</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>jobId</parameter></paramdef></funcprototype></funcsynopsis>
@@ -2682,7 +2682,7 @@ If the machine identifier is equal to autom, the job will be automatically submi
       </refmeta>
       <refnamediv>
         <refname>VISHNU.cancelJob</refname>
-        <refpurpose>cancels a job from its id. If job is equal to all, all submitted jobs by all users will be cancelled if the user is an administrator, and only jobs submitted by the user will be cancelled if the user is not an administrator.</refpurpose>
+        <refpurpose>cancels a job from its id. If job id is equal to all, all submitted jobs by all users will be cancelled if the user is an administrator, and only jobs submitted by the user will be cancelled if the user is not an administrator.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
         <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.cancelJob</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef></funcprototype></funcsynopsis>

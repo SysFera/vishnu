@@ -5,7 +5,7 @@
   <?oooversion 3.2$Unix?>
   <bookinfo>
     <title> </title>
-    <date>2011-12-15T11:31:33</date>
+    <date>2012-01-18T17:38:30</date>
     <keywordset/>
     <confgroup/>
   </bookinfo>
@@ -192,10 +192,10 @@
       <para>Les fonctionnalités sont classées par catégories de tests :</para>
       <itemizedlist>
         <listitem>
-          <para>Catégorie 1 : regroupe les fonctionnalités permettant de soumettre une action au serveur TMS:<emphasis> vishnu_submit_job, vishnu_cancel_job, vishnu_set_machine_refresh_period.</emphasis></para>
+          <para>Catégorie 1 : regroupe les fonctionnalités permettant de soumettre une action au serveur TMS:<emphasis> vishnu_submit_job</emphasis><emphasis>, </emphasis><emphasis>vishnu_cancel_job.</emphasis></para>
         </listitem>
         <listitem>
-          <para>Catégorie 2 : regroupe les fonctionnalités permettant de solliciter des informations du serveur TMS: <emphasis>vishnu_get_job_info, vishnu_get_job_progress, vishnu_get_job_out_put, vishnu_get_all_jobs_out_put, vishnu_get_machine_refresh_period, vishnu_list_queues, vishnu_list_jobs.</emphasis></para>
+          <para>Catégorie 2 : regroupe les fonctionnalités permettant de solliciter des informations du serveur TMS: <emphasis>vishnu_get_job_info, vishnu_get_job_progress, vishnu_get_job_out_put, vishnu_get_all_jobs_out_put, vishnu_list_queues, vishnu_list_jobs.</emphasis></para>
         </listitem>
       </itemizedlist>
       <para>Chaque test fonctionnel sera réalisé en utilisant chacune des interfaces d'accès suivantes : <emphasis>fonctions API/C++ et API/Python, ligne de commande utilisateur et API web services.</emphasis></para>
@@ -221,7 +221,7 @@
             <colspec colname="c2" colwidth="9cm"/>
             <colspec colname="c3" colwidth="3.2cm"/>
             <colspec colname="c4" colwidth="2cm"/>
-            <tbody>
+            <thead>
               <row>
                 <entry>
                   <?border-top 0.002cm solid #000000?>
@@ -246,6 +246,8 @@
                   <para>Considérations particulières</para>
                 </entry>
               </row>
+            </thead>
+            <tbody>
               <row>
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
@@ -468,20 +470,37 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
-                  <para>T2.2-B:cancel a job </para>
+                  <para>T1.2-B: automatic submit job </para>
                 </entry>
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
-                      <para><emphasis role="strong">Cas de test </emphasis>: les paramètres sont corrects.</para>
+                      <para><emphasis role="strong">Cas de test</emphasis> : les paramètres sont corrects.</para>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Pour la validité ce test, on suppose que le serveur TMS est lancé sur deux machines ayant respectivement pour identifiant MA_1 et MA_2. Les gestionnaires de ressources de ces deux machines ne doivent avoir aucun job en attente.</para>
+                        </listitem>
+                      </itemizedlist>
                     </listitem>
                     <listitem>
-                      <para>Lancer la commande <emphasis>vishnu_cancel_job</emphasis><emphasis> </emphasis>avec l'identifiant de la machine sur laquelle le job sera annulé et l'identifiant du job à annuler.</para>
+                      <para>Lancer les commandes <emphasis>vishnu_cancel_job</emphasis> MA_1 <emphasis role="strong">all</emphasis> et </para>
+                      <para><emphasis>vishnu_cancel_job</emphasis> MA_2 <emphasis role="strong">all</emphasis>.</para>
                     </listitem>
                     <listitem>
-                      <para>Lancer la commande <emphasis>vishnu_get_job_info</emphasis><emphasis> </emphasis>avec les paramètres précédents (l'identifiant de la machine sur laquelle le job a été annulé et l'identifiant du job annulé) et vérifier que son exécution échoue.<emphasis> </emphasis></para>
+                      <para>Lancer la commande <emphasis>vishnu_submit_job </emphasis>avec comme paramètres MA_1 et un script contenant la directive permettant de donner la date de commencement du job (par exemple 1h après la date de lancement de la commande <emphasis>vishnu_submit_job</emphasis><emphasis>). </emphasis>Le choix de cette directive à pour but de forcer l'état en attente (<emphasis>waiting</emphasis>).</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_submit_job </emphasis>avec comme paramètre l'identifiant de la machine égale<emphasis role="strong"> </emphasis>à<emphasis role="strong"> autom</emphasis> et le chemin vers le script contenant les caractéristiques du job. </para>
+                    </listitem>
+                    <listitem>
+                      <para>Si l'identifiant de machine et le script sont valides, un identifiant du job généré par VISHNU.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_list_jobs</emphasis> et vérifier que </para>
+                      <para>le job a été bien lancé sur la machine MA_2.</para>
+                      <para/>
                     </listitem>
                   </orderedlist>
                 </entry>
@@ -493,6 +512,85 @@
                       <orderedlist continuation="continues" numeration="arabic"/>
                     </listitem>
                   </itemizedlist>
+                </entry>
+                <entry align="left">
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Deux SeDs TMS doivent être lancés sur deux machines.</para>
+                  <para>Le script à soumettre doit être générique et doit respecter les directives du Batch scheduler et les directives du script générique de vishnu</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>T1.2-E1: automatic submit job</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis role="strong">Cas de test </emphasis>: les paramètres sont incorrects.</para>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas E1 : l'utilisateur n'a pas de compte sur aucune des machines</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_submit_job </emphasis><emphasis>avec l'identifiant de la machine égale</emphasis><emphasis> </emphasis><emphasis>à</emphasis><emphasis> autom</emphasis> et le cas de test E1 et vérifier que son exécution échoue avec le message correspondant.</para>
+                      <para/>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <itemizedlist>
+                    <listitem>
+                      <orderedlist continuation="continues" numeration="arabic"/>
+                    </listitem>
+                  </itemizedlist>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>T2.2-B: cancel a job</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis role="strong">Cas de test </emphasis>: les paramètres sont corrects.</para>
+                    </listitem>
+                    <listitem>
+                      <para><emphasis>Lancer la commande</emphasis><emphasis> </emphasis><emphasis>vishnu_</emphasis><emphasis>cancel</emphasis><emphasis>_job</emphasis><emphasis> </emphasis>avec l'identifiant de la machine sur laquelle le job sera annulé et l'identifiant du job à annuler.</para>
+                    </listitem>
+                    <listitem>
+                      <para><emphasis>Lancer la commande</emphasis><emphasis> </emphasis><emphasis>vishnu_get_job_info</emphasis><emphasis> </emphasis>avec les paramètres précédents (l'identifiant de la machine sur laquelle le job a été annulé et l'identifiant du job annulé) et vérifier que son exécution échoue.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- le job est annulé</para>
                 </entry>
                 <entry>
                   <?border-right 0.002cm solid #000000?>
@@ -1101,6 +1199,93 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
+                  <para>T2.4-B2:list jobs</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis role="strong">Cas de test</emphasis> : les paramètres sont corrects.</para>
+                      <para/>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la soumission d'un job avec le script en entrée de la commande choisie ci-dessous selon les cas suivants :</para>
+                      <itemizedlist>
+                        <listitem>
+                          <para><emphasis role="strong">Cas 1</emphasis> : Le Batch scheduler Torque est installé sur la machine cible</para>
+                          <orderedlist continuation="restarts" numeration="arabic">
+                            <listitem>
+                              <para>Lancer la commande <emphasis>'ssh &lt;host&gt; qsub'</emphasis> </para>
+                            </listitem>
+                          </orderedlist>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para><emphasis role="strong">Cas 2</emphasis> : Le Batch scheduler LoadLeveler est installé sur la machine cible</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <orderedlist continuation="restarts" numeration="arabic">
+                            <listitem>
+                              <para>Lancer la commande <emphasis>'ssh &lt;host&gt; llsubmit'</emphasis> </para>
+                            </listitem>
+                          </orderedlist>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para><emphasis role="strong">Cas 3</emphasis> : Le Batch scheduler SLURM est installé sur la machine cible</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <orderedlist continuation="restarts" numeration="arabic">
+                            <listitem>
+                              <para>Lancer la commande <emphasis>'ssh &lt;host&gt; sbatch'</emphasis> </para>
+                            </listitem>
+                          </orderedlist>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_list_jobs </emphasis>avec l'identifiant de la machine sur laquelle le job a été soumis et avec l'option <emphasis>batch</emphasis> (<emphasis role="strong">-b</emphasis> pour la ligne de commande). Vérifier à l'aide de la commande (<emphasis>qstat</emphasis> pour <emphasis>TORQUE</emphasis>, <emphasis>squeue</emphasis> pour <emphasis>SLURM</emphasis> et <emphasis>llq</emphasis> pour <emphasis>LoadLeveler</emphasis>) du batch sous-jacent sur la machine que les jobs soumis précédemment sont bien affichés.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Les jobs soumis sont bien retounés avec les identifiants donnés par le batch sous-jacent.</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
                   <para>T2.4-E1:list jobs</para>
                   <para>T2.4-E2:list jobs</para>
                 </entry>
@@ -1129,6 +1314,97 @@
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <para>Lancer la commande <emphasis>vishnu_list_jobs</emphasis> avec le cas de test (E1 ou E2) et vérifier que son exécution échoue avec le message d'erreur correspondant.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Un message correspondant au cas d'erreur est affiché</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>T2.8-B:list jobs on all machines</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis role="strong">Cas de test</emphasis> : les paramètres sont corrects.</para>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Pour la validité de ce test, on suppose que le serveur TMS est lancé sur deux machines. On suppose que les deux machines ont pour identifiants MA_1 et MA_2.</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Vérifier sur les deux machines qu'aucun job n'est soumis ou en cours d'exécution sinon les annuler à l'aide de <emphasis>vishnu_cancel_job</emphasis>. </para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer<emphasis> </emphasis>deux fois<emphasis> vishnu_submit_job </emphasis>avec l'identifiant MA_1 et le chemin vers le script contenant les caractéristiques du job puis conserver les identifiants des jobs.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer<emphasis> </emphasis>trois fois<emphasis> vishnu_submit_job </emphasis>avec l'identifiant MA_2 et le chemin vers le script contenant les caractéristiques du job puis conserver les identifiants des jobs.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_list_jobs </emphasis><emphasis>avec</emphasis><emphasis> </emphasis><emphasis>l'identifiant de la </emphasis><emphasis>machine </emphasis><emphasis>égale</emphasis><emphasis> </emphasis><emphasis>à</emphasis><emphasis> all</emphasis> et vérifier que les cinq jobs précédents sont affichés, et qu'il y a deux jobs qui ont été soumis sur MA_1 et trois jobs sur MA_2.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Les jobs soumis sont affichés.</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>T2.8-E1:list jobs on all machines</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis role="strong">Cas de test</emphasis> : les paramètres sont incorrects.</para>
+                      <para/>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas E1 : le certificat de session n'est pas enregistré dans VISHNU ou il a expiré</para>
+                          <para/>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_list_jobs </emphasis><emphasis>avec l'identifiant de la machine égale</emphasis><emphasis> </emphasis><emphasis>à</emphasis><emphasis> all</emphasis> et le cas de test E1 et vérifier que son exécution échoue avec le message d'erreur correspondant.</para>
                     </listitem>
                   </orderedlist>
                 </entry>
@@ -1454,8 +1730,10 @@
       <section>
         <title>Liste des tests</title>
         <informaltable>
-          <tgroup cols="1">
-            <colspec colname="c1" colwidth="NaNcm"/>
+          <tgroup cols="3">
+            <colspec colname="c1" colwidth="5.4cm"/>
+            <colspec colname="c2" colwidth="6cm"/>
+            <colspec colname="c3" colwidth="5.7cm"/>
             <tbody>
               <row>
                 <entry>
@@ -1562,8 +1840,10 @@
       <section>
         <title>Liste des tests</title>
         <informaltable>
-          <tgroup cols="1">
-            <colspec colname="c1" colwidth="NaNcm"/>
+          <tgroup cols="3">
+            <colspec colname="c1" colwidth="4.4cm"/>
+            <colspec colname="c2" colwidth="6.3cm"/>
+            <colspec colname="c3" colwidth="6.4cm"/>
             <tbody>
               <row>
                 <entry>
@@ -1710,8 +1990,10 @@
       <section>
         <title>Liste des tests</title>
         <informaltable>
-          <tgroup cols="1">
-            <colspec colname="c1" colwidth="NaNcm"/>
+          <tgroup cols="3">
+            <colspec colname="c1" colwidth="4.4cm"/>
+            <colspec colname="c2" colwidth="6.3cm"/>
+            <colspec colname="c3" colwidth="6.4cm"/>
             <tbody>
               <row>
                 <entry>
@@ -1856,8 +2138,10 @@
       <section>
         <title>Liste des tests</title>
         <informaltable>
-          <tgroup cols="1">
-            <colspec colname="c1" colwidth="NaNcm"/>
+          <tgroup cols="3">
+            <colspec colname="c1" colwidth="4.4cm"/>
+            <colspec colname="c2" colwidth="6.3cm"/>
+            <colspec colname="c3" colwidth="6.4cm"/>
             <tbody>
               <row>
                 <entry>

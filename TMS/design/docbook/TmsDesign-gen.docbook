@@ -669,7 +669,7 @@ in the Vishnu Database.
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The jobCancel_MACHINEID() function cancels a job submitted on machine of identifier MACHINEID </para>
+        <para>The jobCancel_MACHINEID() function cancels a job submitted on machine of identifier MACHINEID . If job id is equal to all, all submitted jobs by all users will be cancelled if the user is an administrator, and only jobs submitted by the user will be cancelled if the user is not an administrator.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
