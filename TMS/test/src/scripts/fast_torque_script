@@ -23,4 +23,4 @@ echo "#BATCH_JOB_NAME: " $PBS_JOBNAME
 echo "#BATCH_NODEFILE:" $PBS_NODEFILE
 echo "#BATCH_NUM_NODES:" 
 
-sleep (7)
+sleep 10 
