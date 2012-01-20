@@ -92,7 +92,7 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
         scriptContent.insert(pos+1+tmp.size(), "sed -i 's/,/\\n/g' "+fileName+"\n");
         replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", fileName);
         replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", fileName);
-
+        scriptContent.insert(scriptContent.size()-1, "\n rm "+fileName+"\n");
       }
 
      break;
