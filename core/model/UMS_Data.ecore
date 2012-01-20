@@ -625,4 +625,27 @@
     </eAnnotations>
     <eLiterals name="LDAP"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LocalAuthAccount" instanceTypeName="LocalAuthAccount">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="represents the VISHNU user identifier"/>
+        <details key="shortOption" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="authSystemId" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="is the identifier of the user-authentication system"/>
+        <details key="shortOption" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="acLogin" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="acLogin represents the login of the user on the associated user-authentication system"/>
+        <details key="shortOption" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
 </ecore:EPackage>
