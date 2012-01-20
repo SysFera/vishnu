@@ -55,8 +55,6 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
       //To replace VISHNU_BATCHJOB_NODEFILE
       replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", "$PBS_NODEFILE");
       replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$PBS_NODEFILE");
-      //To replace VISHNU_BATCHJOB_NUM_NODES
-      //getTorqueNumNodes(scriptContent);
 
       break;
 
