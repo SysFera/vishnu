@@ -182,4 +182,48 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="addAuthSystemsOptions" instanceTypeName="addAuthSystemsOptions">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="corresponds to the user-authentication system's name"/>
+        <details key="shortOption" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="URI" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="is the URI of the user-authentication systems (by the form host:port for LDAP)"/>
+        <details key="shortOption" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="authLogin" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="is the login used to connect to the user-authentication system"/>
+        <details key="shortOption" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="authPassword" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="is the password used to connect to the user-authentication system"/>
+        <details key="shortOption" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EEnum UMS_Data.ecore#//AuthentType"
+        defaultValueLiteral="0">
+      <eAnnotations source="Description">
+        <details key="content" value="represents the type of the user-authentication systems"/>
+        <details key="shortOption" value="t"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ldapBase" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="is an option for user-authentication system based on LDAP which specifies the DN of the root entry "/>
+        <details key="shortOption" value="b"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
 </ecore:EPackage>
