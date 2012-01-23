@@ -211,6 +211,13 @@
         <details key="shortOption" value=""/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userPasswordEncryption"
+        lowerBound="1" eType="ecore:EEnum UMS_Data.ecore#//EncryptionMethod" defaultValueLiteral="0">
+      <eAnnotations source="Description">
+        <details key="content" value="represents the encryption method used to encrypt user's password"/>
+        <details key="shortOption" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EEnum UMS_Data.ecore#//AuthentType"
         defaultValueLiteral="0">
       <eAnnotations source="Description">
@@ -255,6 +262,13 @@
         <details key="shortOption" value="w"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userPasswordEncryption"
+        eType="ecore:EEnum UMS_Data.ecore#//EncryptionMethod" defaultValueLiteral="0">
+      <eAnnotations source="Description">
+        <details key="content" value="represents the encryption method used to encrypt user's password"/>
+        <details key="shortOption" value="e"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EEnum UMS_Data.ecore#//AuthentType"
         defaultValueLiteral="0">
       <eAnnotations source="Description">
@@ -275,5 +289,28 @@
       <details key="content" value="represents the type of the user-authentication systems"/>
     </eAnnotations>
     <eLiterals name="LDAP"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LocalAuthAccOptions" instanceTypeName="LocalAuthAccOptions">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="represents the VISHNU user identifier"/>
+        <details key="shortOption" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="authSystemId" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="is the identifier of the user-authentication system"/>
+        <details key="shortOption" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="acLogin" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="is an option to change the login of the user on the associated user-authentication system"/>
+        <details key="shortOption" value="l"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
 </ecore:EPackage>
