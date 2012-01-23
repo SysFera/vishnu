@@ -182,7 +182,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="addAuthSystemsOptions" instanceTypeName="addAuthSystemsOptions">
+  <eClassifiers xsi:type="ecore:EClass" name="AddAuthSystemsOptions" instanceTypeName="AddAuthSystemsOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
@@ -233,7 +233,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="updateAuthSystemsOptions" instanceTypeName="updateAuthSystemsOptions">
+  <eClassifiers xsi:type="ecore:EClass" name="UpdateAuthSystemsOptions" instanceTypeName="UpdateAuthSystemsOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
@@ -290,19 +290,19 @@
     </eAnnotations>
     <eLiterals name="LDAP"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LocalAuthAccOptions" instanceTypeName="LocalAuthAccOptions">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&quot;&quot;">
-      <eAnnotations source="Description">
-        <details key="content" value="represents the VISHNU user identifier"/>
-        <details key="shortOption" value=""/>
-      </eAnnotations>
-    </eStructuralFeatures>
+  <eClassifiers xsi:type="ecore:EClass" name="UpdateLocalAuthAccOptions" instanceTypeName="UpdateLocalAuthAccOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="authSystemId" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
         <details key="content" value="is the identifier of the user-authentication system"/>
         <details key="shortOption" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="represents the VISHNU user identifier"/>
+        <details key="shortOption" value="u"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="acLogin" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
@@ -312,5 +312,11 @@
         <details key="shortOption" value="l"/>
       </eAnnotations>
     </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="EncryptionMethod" instanceTypeName="EncryptionMethod">
+    <eAnnotations source="Description">
+      <details key="content" value="represents the name of the encryption method "/>
+    </eAnnotations>
+    <eLiterals name="SSHA"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -633,18 +633,18 @@
     <eLiterals name="LDAP"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LocalAuthAccount" instanceTypeName="LocalAuthAccount">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&quot;&quot;">
-      <eAnnotations source="Description">
-        <details key="content" value="represents the VISHNU user identifier"/>
-        <details key="shortOption" value=""/>
-      </eAnnotations>
-    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="authSystemId" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
         <details key="content" value="is the identifier of the user-authentication system"/>
         <details key="shortOption" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="represents an admin option to add a local user-authentication configuration of a specific user"/>
+        <details key="shortOption" value="u"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="acLogin" lowerBound="1"
