@@ -574,6 +574,13 @@
         <details key="shortOption" value=""/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userPasswordEncryption"
+        lowerBound="1" eType="#//EncryptionMethod" defaultValueLiteral="0">
+      <eAnnotations source="Description">
+        <details key="content" value="represents the encryption method used to encrypt user's password"/>
+        <details key="shortOption" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//AuthentType"
         defaultValueLiteral="0">
       <eAnnotations source="Description">
@@ -647,5 +654,11 @@
         <details key="shortOption" value=""/>
       </eAnnotations>
     </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="EncryptionMethod" instanceTypeName="EncryptionMethod">
+    <eAnnotations source="Description">
+      <details key="content" value="represents the name of the encryption method "/>
+    </eAnnotations>
+    <eLiterals name="SSHA"/>
   </eClassifiers>
 </ecore:EPackage>
