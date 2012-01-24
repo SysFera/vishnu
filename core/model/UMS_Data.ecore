@@ -222,11 +222,11 @@
         <details key="shortOption" value="u"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//AuthentType"
-        defaultValueLiteral="0">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="authSystemId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
-        <details key="content" value="represents the type of the user-authentication systems used to list users"/>
-        <details key="shortOption" value="t"/>
+        <details key="content" value="is an option to list users who have local user-authentication configurations on a specific user-authentication system"/>
+        <details key="shortOption" value="i"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -625,7 +625,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AuthSystemsOptions" instanceTypeName="AuthSystemsOptions">
+  <eClassifiers xsi:type="ecore:EClass" name="ListAuthSysOptions" instanceTypeName="ListAuthSysOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="listAllAuthSystems" eType="ecore:EDataType Ecore.ecore#//EBoolean"
         defaultValueLiteral="false">
       <eAnnotations source="Description">
@@ -639,11 +639,11 @@
         <details key="shortOption" value="u"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//AuthentType"
-        defaultValueLiteral="0">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="authSystemId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
-        <details key="content" value="represents the type of the user-authentication systems"/>
-        <details key="shortOption" value="t"/>
+        <details key="content" value="is an option to list a specific user-authentication system"/>
+        <details key="shortOption" value="i"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -653,7 +653,7 @@
     </eAnnotations>
     <eLiterals name="LDAP"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LocalAuthAccount" instanceTypeName="LocalAuthAccount">
+  <eClassifiers xsi:type="ecore:EClass" name="AuthenAccount" instanceTypeName="AuthenAccount">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="authSystemId" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
@@ -682,15 +682,15 @@
     </eAnnotations>
     <eLiterals name="SSHA"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ListLocalAuthAccounts" instanceTypeName="ListLocalAuthAccounts">
+  <eClassifiers xsi:type="ecore:EClass" name="ListAuthenAccounts" instanceTypeName="ListAuthenAccounts">
     <eStructuralFeatures xsi:type="ecore:EReference" name="LocalAuthAccounts" upperBound="-1"
-        eType="#//LocalAuthAccount" containment="true">
+        eType="#//AuthenAccount" containment="true">
       <eAnnotations source="Description">
         <details key="content" value="is the list of users objects"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ListLocalAuthAccOptions" instanceTypeName="ListLocalAuthAccOptions">
+  <eClassifiers xsi:type="ecore:EClass" name="ListAuthenAccOptions" instanceTypeName="ListAuthenAccOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="listAll" eType="ecore:EDataType Ecore.ecore#//EBoolean"
         defaultValueLiteral="false">
       <eAnnotations source="Description">
