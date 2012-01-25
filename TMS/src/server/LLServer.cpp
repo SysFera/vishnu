@@ -62,9 +62,9 @@ LLServer::submit(const char* scriptPath,
   job.setJobPrio(convertLLPrioToVishnuPrio((llJobInfo.step_list[0])->prio));
 
   job.setMemLimit(llJobInfo.step_list[0]->memory_requested);
-  int nbCpu = llJobInfo.step_list[0]->cpus_requested;
+  int nbCpu = llJobInfo.step_list[0]->cpus_per_core;
   job.setNbCpus(nbCpu);
-  int node = getJobNodeCount(llJobId.str());
+  int node = llJobInfo.step_list[0]->max_processors;
   job.setNbNodes(node);
   if(node!=-1) { 
     job.setNbNodesAndCpuPerNode(vishnu::convertToString(node)+":"+vishnu::convertToString(nbCpu));
@@ -138,16 +138,13 @@ LLServer::processOptions(const char* scriptPath,
       insertOptionLine(optionLineToInsert, content);
     }
     if(options.getNbCpu()!=-1) {
-      optionLineToInsert ="# @ resources = ConsumableCpus("+vishnu::convertToString(options.getNbCpu())+")\n";
+      optionLineToInsert ="# @ tasks_per_node = 1 \n";
+      optionLineToInsert +="# @ tasks_affinity = core(1) \n";
+      optionLineToInsert +="# @ cpus_per_node = "+vishnu::convertToString(options.getNbCpu())+"\n";
       insertOptionLine(optionLineToInsert, content);
     }
     if(options.getMemory()!=-1) {
-      if(options.getNbCpu()!=-1) {
-        optionLineToInsert = "# @ resources = ConsumableCpus("+vishnu::convertToString(options.getNbCpu())+")";
-        optionLineToInsert +=" ConsumableMemory("+vishnu::convertToString(options.getNbCpu())+" mb)\n";
-      } else {
-        optionLineToInsert ="# @ resources = ConsumableMemory("+vishnu::convertToString(options.getNbCpu())+" mb)\n";
-      }
+      optionLineToInsert ="# @ resources = ConsumableMemory("+vishnu::convertToString(options.getNbCpu())+" mb)\n";
       insertOptionLine(optionLineToInsert, content);
     }
     if(options.getNbNodesAndCpuPerNode()!="") {
@@ -160,7 +157,8 @@ LLServer::processOptions(const char* scriptPath,
         insertOptionLine(optionLineToInsert, content);  
         optionLineToInsert = "# @ tasks_per_node=1\n";
         insertOptionLine(optionLineToInsert, content);
-        optionLineToInsert = "# resources = ConsumableCpus("+cpuPerNode+")\n";
+        optionLineToInsert ="# @ tasks_affinity = core(1) \n";
+        optionLineToInsert +="# @ cpus_per_node = "+cpuPerNode+")\n";
         insertOptionLine(optionLineToInsert, content);
       }
     }
