@@ -341,7 +341,7 @@
       <resultCodes name="ERRCODE_LOCAL_AUTH_ACCOUNT_EXIST" description="The local user-authentication configuration already exists" value="49"/>
       <resultCodes name="ERRCODE_UNKNOWN_LOCAL_AUTH_ACCOUNT" description="The local user-authentication account is unknown" value="50"/>
       <resultCodes name="ERRCODE_UNKNOWN_ENCRYPTION_METHOD" description="The encryption method is unknown" value="51" diagnostic=""/>
-      <resultCodes name="ERRCODE_READONLY_ACCOUNT" description="Your user-authentication system uses a readonly account " value="52"/>
+      <resultCodes name="ERRCODE_READONLY_ACCOUNT" description="You can modify information. This account is read-only. " value="52"/>
     </resultCodeList>
   </modules>
   <envVariableList>
