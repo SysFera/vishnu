@@ -317,7 +317,8 @@ ScriptGenConvertor::getConvertedScript() {
         if(mbatchType==LOADLEVELER) {
           value = " node="+nbNodes+"\n";
           value += "# @ tasks_per_node=1\n";
-          value += "# resources = ConsumableCpus("+cpuPerNode+")";
+          value += "# @ tasks_affinity = core(1) \n";
+          value += " @ cpus_per_node = "+cpuPerNode+"\n";
         } else if(mbatchType==TORQUE) {
           value = " nodes="+nbNodes+":ppn="+cpuPerNode;
         } else if(mbatchType==SLURM) {
@@ -327,7 +328,9 @@ ScriptGenConvertor::getConvertedScript() {
     }
     //Special case
     if(mbatchType==LOADLEVELER && key.compare(nbCpu)==0) {
-      value = " ConsumableCpus("+value+")";
+      value ="# @ tasks_per_node = 1 \n";
+      value +="# @ tasks_affinity = core(1) \n";
+      value +="# @ cpus_per_node = "+nbCpu+"\n";
     }
 
     //Special case
