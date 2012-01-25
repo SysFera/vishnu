@@ -81,6 +81,12 @@
         <details key="content" value="is the inactivity delay in seconds associated to the CLOSE_ON_TIMEOUT option"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="authenId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="represents the identifier defined on a user-authentication system and used for the current session "/>
+        <details key="shortOption" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListSessions" instanceTypeName="ListSessions">
     <eStructuralFeatures xsi:type="ecore:EReference" name="sessions" upperBound="-1"
@@ -198,12 +204,6 @@
       <eAnnotations source="Description">
         <details key="content" value="represents the status of the user"/>
         <details key="shortOption" value="s"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="authenId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="represents the identifier defined on a user-authentication system and used for the current authentication "/>
-        <details key="shortOption" value=""/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -609,6 +609,8 @@
         <details key="shortOption" value="t"/>
       </eAnnotations>
     </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AuthSystemsOptions" instanceTypeName="AuthSystemsOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="ldapBase" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
@@ -707,7 +709,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="authSystemId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
-        <details key="content" value="is an option to list local user-configuration of a specific user-authentication system"/>
+        <details key="content" value="is an option for listing local user-configuration of a specific user-authentication system"/>
         <details key="shortOption" value="i"/>
       </eAnnotations>
     </eStructuralFeatures>
