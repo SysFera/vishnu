@@ -79,7 +79,9 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
       //To replace SLURM_JOB_NUM_NODES
       replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$SLURM_JOB_NUM_NODES");
       replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$SLURM_JOB_NUM_NODES");
-      
+
+      //To replace VISHNU_BATCHJOB_NODEFILE
+      replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$VISHNU_BATCHJOB_NODEFILE");      
       pos = scriptContent.find("$VISHNU_BATCHJOB_NODEFILE");
       if(pos!=std::string::npos) {
         std::string fileName = std::string(getenv("HOME"))+"/NODELIST_XXXXXX";
