@@ -605,7 +605,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//AuthentType"
         defaultValueLiteral="0">
       <eAnnotations source="Description">
-        <details key="content" value="represents the type of the user-authentication systems"/>
+        <details key="content" value="represents the type of the user-authentication system"/>
         <details key="shortOption" value="t"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -644,7 +644,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="authSystemId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
-        <details key="content" value="is an option to list a specific user-authentication system"/>
+        <details key="content" value="is an option for listing a specific user-authentication system"/>
         <details key="shortOption" value="i"/>
       </eAnnotations>
     </eStructuralFeatures>
