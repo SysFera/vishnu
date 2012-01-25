@@ -279,7 +279,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EEnum UMS_Data.ecore#//AuthentType"
         defaultValueLiteral="0">
       <eAnnotations source="Description">
-        <details key="content" value="represents the type of the user-authentication systems"/>
+        <details key="content" value="represents the type of the user-authentication system"/>
         <details key="shortOption" value="t"/>
       </eAnnotations>
     </eStructuralFeatures>
