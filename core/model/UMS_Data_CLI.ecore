@@ -218,7 +218,7 @@
         <details key="shortOption" value=""/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="ecore:EEnum UMS_Data.ecore#//AuthentType"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//AuthType"
         defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="content" value="represents the type of the user-authentication systems"/>
@@ -276,7 +276,7 @@
         <details key="shortOption" value="e"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EEnum UMS_Data.ecore#//AuthentType"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//AuthType"
         defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="content" value="represents the type of the user-authentication system"/>
@@ -291,7 +291,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="AuthentType" instanceTypeName="AuthentType">
+  <eClassifiers xsi:type="ecore:EEnum" name="AuthType" instanceTypeName="AuthType">
     <eAnnotations source="Description">
       <details key="content" value="represents the type of the user-authentication systems"/>
     </eAnnotations>
