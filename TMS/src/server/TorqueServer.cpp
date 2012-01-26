@@ -21,7 +21,6 @@ extern "C" {
 #include "TorqueServer.hpp"
 #include "TMSVishnuException.hpp"
 #include "utilVishnu.hpp"
-#include "Env.hpp"
 
 using namespace std;
 using namespace vishnu;
@@ -80,14 +79,6 @@ TorqueServer::submit(const char* scriptPath,
     osNbnodes << nbNodes;
     nbNodesStr = osNbnodes.str();
   }
-  //To replace VISHNU_BATCHJOB_NUM_NODES
-  std::string scriptContent = vishnu::get_file_content(scriptPath);
-  Env env(TORQUE);
-  env.replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", nbNodesStr);
-  env.replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", nbNodesStr);
-  std::ofstream ofile(scriptPath);
-  ofile << scriptContent;
-  ofile.close();
 
   destination[0] = '\0';
   serverOut[0] = '\0';

@@ -45,7 +45,6 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
   switch(mbatchType) {
 
     case TORQUE:
-
       //To replace VISHNU_BATCHJOB_ID
       replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$PBS_JOBID");
       replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$PBS_JOBID");
@@ -55,9 +54,10 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
       //To replace VISHNU_BATCHJOB_NODEFILE
       replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", "$PBS_NODEFILE");
       replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$PBS_NODEFILE");
-
+      //To replace VISHNU_BATCHJOB_NUM_NODES
+      replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");
+      replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");
       break;
-
     case LOADLEVELER:
       //To replace VISHNU_BATCHJOB_ID
       replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$LOADL_STEP_ID"); 
@@ -67,7 +67,10 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
       replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$LOADL_JOB_NAME"); 
       //To replace VISHNU_BATCHJOB_NODEFILE
       replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", "$LOADL_HOSTFILE"); 
-      replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$LOADL_HOSTFILE"); 
+      replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$LOADL_HOSTFILE");
+      //To replace VISHNU_BATCHJOB_NUM_NODES
+      replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(cat  $LOADL_HOSTFILE | sort | uniq | wc -l)");
+      replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat  $LOADL_HOSTFILE | sort | uniq | wc -l)"); 
       break;
     case SLURM:
       //To replace VISHNU_BATCHJOB_ID
