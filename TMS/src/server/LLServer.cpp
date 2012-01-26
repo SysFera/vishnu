@@ -158,7 +158,7 @@ LLServer::processOptions(const char* scriptPath,
         optionLineToInsert = "# @ tasks_per_node=1\n";
         insertOptionLine(optionLineToInsert, content);
         optionLineToInsert ="# @ tasks_affinity = core(1) \n";
-        optionLineToInsert +="# @ cpus_per_node = "+cpuPerNode+")\n";
+        optionLineToInsert +="# @ cpus_per_node = "+cpuPerNode+"\n";
         insertOptionLine(optionLineToInsert, content);
       }
     }
