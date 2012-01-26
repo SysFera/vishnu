@@ -91,7 +91,16 @@
           </para>
         </revdescription>
       </revision>
-
+      <revision>
+        <revnumber>09</revnumber>
+        <date>26/01/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>
+            Modified U1.1, U1.5 and UA5.2. Added U5, U6, U6.1, U6.2, U6.3, UA8, UA8.1, UA8.2.
+          </para>
+        </revdescription>
+        </revision>
       </revhistory>
     </info>
   <chapter>
