@@ -602,7 +602,7 @@
         <details key="shortOption" value=""/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//AuthentType"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//AuthType"
         defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="content" value="represents the type of the user-authentication system"/>
@@ -649,13 +649,13 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="AuthentType" instanceTypeName="AuthentType">
+  <eClassifiers xsi:type="ecore:EEnum" name="AuthType" instanceTypeName="AuthType">
     <eAnnotations source="Description">
       <details key="content" value="represents the type of the user-authentication systems"/>
     </eAnnotations>
     <eLiterals name="LDAP"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AuthenAccount" instanceTypeName="AuthenAccount">
+  <eClassifiers xsi:type="ecore:EClass" name="AuthAccount" instanceTypeName="AuthAccount">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="authSystemId" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
@@ -684,15 +684,15 @@
     </eAnnotations>
     <eLiterals name="SSHA"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ListAuthenAccounts" instanceTypeName="ListAuthenAccounts">
+  <eClassifiers xsi:type="ecore:EClass" name="ListAuthAccounts" instanceTypeName="ListAuthAccounts">
     <eStructuralFeatures xsi:type="ecore:EReference" name="LocalAuthAccounts" upperBound="-1"
-        eType="#//AuthenAccount" containment="true">
+        eType="#//AuthAccount" containment="true">
       <eAnnotations source="Description">
         <details key="content" value="is the list of users objects"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ListAuthenAccOptions" instanceTypeName="ListAuthenAccOptions">
+  <eClassifiers xsi:type="ecore:EClass" name="ListAuthAccOptions" instanceTypeName="ListAuthAccOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="listAll" eType="ecore:EDataType Ecore.ecore#//EBoolean"
         defaultValueLiteral="false">
       <eAnnotations source="Description">
