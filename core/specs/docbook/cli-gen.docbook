@@ -142,6 +142,21 @@
           
         <para>Updates of TMS:</para><para>Modified decription of vishnu_submit_job command (to take into account automatic submission).</para><para>Extended vishnu_submit_job options (added load criterion option for automatic submission, added option to select a queue automatically).</para><para>Modified decription of vishnu_list_jobs command (to take into account listing of jobs on all machines).</para><para>Extended vishnu_list_jobs options (added multipleStatus option for combination of several job states, added option to list all jobs submitted by the underlying batch scheduler (VISHNU jobs and jobs submitted out of VISHNU).</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>12</revnumber>
+        <date>20/01/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+            
+	    
+	    
+	  
+	  
+        <para>Updates of UMS:</para><para>Added vishnu_connect_m and vishnu_reconnect_m respectively for connection and reconnection using multiple VISHNU accounts defined on the .netrc file.</para><para>Modified vishnu_list_users option -u to -i for userId and added a new option for user-authentication system.</para><para>Added vishnu_add_authentication_system, vishnu_update_authentication_system, vishnu_delete_authentication_system,
+	    vishnu_list_authentication_system, vishnu_add_auth_account, vishnu_update_auth_account, vishnu_delete_auth_account, vishnu_list_auth_account.
+	  </para><para>Updates of IMS:</para><para>Added vishnu_define_auth_identifier</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -434,6 +449,102 @@
         </informaltable>
       </section>
       <section>
+        <title>vishnu_connect_m</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_connect_m command opens a session by trying multiple couples (userId, password) each in turn</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_connect_m</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-p <replaceable>closePolicy</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>sessionInactivityDelay</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>substituteUserId</replaceable></option></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>closePolicy</para></entry>
+                <entry><para><link linkend="SessionCloseType">SessionCloseType</link></para></entry>
+                <entry><para>p</para></entry>
+                <entry><para>is an option for closing session automatically</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionInactivityDelay</para></entry>
+                <entry><para>int</para></entry>
+                <entry><para>d</para></entry>
+                <entry><para>is the maximum delay in seconds between two user requests when the CLOSE_ON_TIMEOUT policy is set</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>substituteUserId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>s</para></entry>
+                <entry><para>is an admin option which allows an admin to open a session as if she was another user identified by her userId</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_CLOSE_POLICY</para></entry>
+                <entry><para>closePolicy</para></entry>
+                <entry><para><link linkend="SessionCloseType">SessionCloseType</link></para></entry>
+                <entry><para>is an option for closing session automatically</para></entry>
+                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
         <title>vishnu_reconnect</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
@@ -487,6 +598,51 @@
                 <entry><para>w</para></entry>
                 <entry><para>password represents the password of the user</para></entry>
                 <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_reconnect_m</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_reconnect_m command reconnects to a session that is still active by trying multiple couples (userId, password) each in turn</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_reconnect_m</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>sessionId</replaceable></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>sessionId is the identifier of the session defined in the database</para></entry>
+                <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1546,7 +1702,8 @@
         <para>The vishnu_list_users command lists VISHNU users</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_list_users</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-i <replaceable>userIdOption</replaceable></option></arg></cmdsynopsis>
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-i <replaceable>authSystemId</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1571,10 +1728,17 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>userIdOption</para></entry>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>u</para></entry>
+                <entry><para>allows an admin to get information about a specific user identified by his/her userId</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>authSystemId</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>i</para></entry>
-                <entry><para>allows an admin to get information about a specific user identified by his/her userId</para></entry>
+                <entry><para>is an option to list users who have local user-authentication configurations on a specific user-authentication system</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -1808,9 +1972,561 @@
         <para><emphasis role="bold">Environment variables</emphasis></para>
         <para>This command defines no environment variables.</para>
       </section>
+      <section>
+        <title>vishnu_add_authentication_system</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_add_authentication_system command adds a new user-authentication system in VISHNU</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_add_authentication_system</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-b <replaceable>ldapBase</replaceable></option></arg><arg
+              choice="plain"><replaceable>name</replaceable></arg><arg choice="plain"><replaceable>URI</replaceable></arg><arg
+              choice="plain"><replaceable>authLogin</replaceable></arg><arg choice="plain"><replaceable>authPassword</replaceable></arg><arg
+              choice="plain"><replaceable>userPasswordEncryption</replaceable></arg><arg
+              choice="plain"><replaceable>type</replaceable></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>name</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>corresponds to the user-authentication system's name</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>URI</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>is the URI of the user-authentication systems (by the form host:port for LDAP)</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>authLogin</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>is the login used to connect to the user-authentication system</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>authPassword</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>is the password used to connect to the user-authentication system</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>userPasswordEncryption</para></entry>
+                <entry><para><link linkend="EncryptionMethod">EncryptionMethod</link></para></entry>
+                <entry/>
+                <entry><para>represents the encryption method used to encrypt user's password</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>type</para></entry>
+                <entry><para><link linkend="AuthType">AuthType</link></para></entry>
+                <entry/>
+                <entry><para>represents the type of the user-authentication systems</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>ldapBase</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>b</para></entry>
+                <entry><para>is an option for user-authentication system based on LDAP which specifies the DN of the root entry </para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_update_authentication_system</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_update_authentication_system command updates a user-authentication system in VISHNU</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_update_authentication_system</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
+              choice="opt"><option>-i <replaceable>URI</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>authLogin</replaceable></option></arg><arg
+              choice="opt"><option>-w <replaceable>authPassword</replaceable></option></arg><arg
+              choice="opt"><option>-e <replaceable>userPasswordEncryption</replaceable></option></arg><arg
+              choice="opt"><option>-t <replaceable>type</replaceable></option></arg><arg
+              choice="opt"><option>-b <replaceable>ldapBase</replaceable></option></arg><arg
+              choice="plain"><replaceable>authSystemId</replaceable></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>authSystemId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>is the identifier, generated by VISHNU, of the user-authentication system</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>name</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n</para></entry>
+                <entry><para>corresponds to the user-authentication system's name</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>URI</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>i</para></entry>
+                <entry><para>is the URI of the user-authentication systems (by the form host:port for LDAP)</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>authLogin</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>u</para></entry>
+                <entry><para>is the login used to connect to the user-authentication system</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>authPassword</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>w</para></entry>
+                <entry><para>is the password used to connect to the user-authentication system</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>userPasswordEncryption</para></entry>
+                <entry><para><link linkend="EncryptionMethod">EncryptionMethod</link></para></entry>
+                <entry><para>e</para></entry>
+                <entry><para>represents the encryption method used to encrypt user's password</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>type</para></entry>
+                <entry><para><link linkend="AuthType">AuthType</link></para></entry>
+                <entry><para>t</para></entry>
+                <entry><para>represents the type of the user-authentication system</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>ldapBase</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>b</para></entry>
+                <entry><para>is an option for user-authentication system based on LDAP which specifies the DN of the root entry </para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_delete_authentication_system</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_delete_authentication_system command removes a user-authentication system from VISHNU</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_delete_authentication_system</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>authSystemId</replaceable></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>authSystemId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>authSystemId is the identifier of the user-authentication system</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_list_authentication_systems</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_list_authentication_systems command lists VISHNU user-authentification systems</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_list_authentication_systems</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-a</option></arg><arg choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-i <replaceable>authSystemId</replaceable></option></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>listAllAuthSystems</para></entry>
+                <entry><para>boolean</para></entry>
+                <entry><para>a</para></entry>
+                <entry><para>is an option for listing all VISHNU user-authentication systems</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>u</para></entry>
+                <entry><para>is an admin option for listing all user-authentication systems in which a specific user has local user-authentication configs</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>authSystemId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>i</para></entry>
+                <entry><para>is an option for listing a specific user-authentication system</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_add_auth_account</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_add_auth_account command adds a new local user-authentication configuration</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_add_auth_account</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="plain"><replaceable>authSystemId</replaceable></arg><arg choice="plain"><replaceable>acLogin</replaceable></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>authSystemId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>is the identifier of the user-authentication system</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>u</para></entry>
+                <entry><para>represents an admin option to add a local user-authentication configuration of a specific user</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>acLogin</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>acLogin represents the login of the user on the associated user-authentication system</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_update_auth_account</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_update_auth_account command updates a local user-authentication configuration</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_update_auth_account</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-l <replaceable>acLogin</replaceable></option></arg><arg
+              choice="plain"><replaceable>authSystemId</replaceable></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>authSystemId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>is the identifier of the user-authentication system</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>u</para></entry>
+                <entry><para>represents the VISHNU user identifier</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>acLogin</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>l</para></entry>
+                <entry><para>is an option to change the login of the user on the associated user-authentication system</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_delete_auth_account</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_delete_auth_account command removes a local user-authentication configuration from VISHNU</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_delete_auth_account</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="plain"><replaceable>authSystemId</replaceable></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>u</para></entry>
+                <entry><para>is an admin option which represents the VISHNU identifier of the user whose local user-authentication configuration will be deleted</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>authSystemId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>authSystemId is the identifier of the user-authentication system</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_list_auth_account</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_list_auth_account command lists local user-authentication configurations</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_list_auth_account</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-a</option></arg><arg choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-i <replaceable>authSystemId</replaceable></option></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>listAll</para></entry>
+                <entry><para>boolean</para></entry>
+                <entry><para>a</para></entry>
+                <entry><para>is an admin option for listing all local user-authentication configurations of VISHNU</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>u</para></entry>
+                <entry><para>is an admin option for listing all local user-authentication configurations of a specific user identified by his/her userId</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>authSystemId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>i</para></entry>
+                <entry><para>is an option for listing local user-configuration of a specific user-authentication system</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
     </section>
     <section>
       <title>Parameters definitions</title>
+      <para xml:id="AuthType"><emphasis role="bold">Enumeration UMS::AuthType Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>LDAP</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
       <para xml:id="CommandStatusType"><emphasis role="bold">Enumeration UMS::CommandStatusType Type</emphasis></para>
       <informaltable>
         <tgroup cols="2">
@@ -1832,6 +2548,27 @@
             <row>
               <entry><para>SUCCESS</para></entry>
               <entry><para>1</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="EncryptionMethod"><emphasis role="bold">Enumeration UMS::EncryptionMethod Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>SSHA</para></entry>
+              <entry><para>0</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -1942,8 +2679,8 @@
               choice="opt"><option>-g <replaceable>group</replaceable></option></arg><arg
               choice="opt"><option>-D <replaceable>workingDir</replaceable></option></arg><arg
               choice="opt"><option>-T <replaceable>cpuTime</replaceable></option></arg><arg
-              choice="opt"><option>-Q</option></arg><arg choice="opt"><option>-L <replaceable>loadType</replaceable></option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-Q</option></arg><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
+              choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2077,13 +2814,6 @@
                 <entry><para>boolean</para></entry>
                 <entry><para>Q</para></entry>
                 <entry><para>allows to select automatically a queue which has the number of nodes requested by the user</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>loadType</para></entry>
-                <entry><para><link linkend="LoadType">LoadType</link></para></entry>
-                <entry><para>L</para></entry>
-                <entry><para>The criterion to automatically submit a job (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs). This option is used only if the machine identifier is equal to autom (this keyword is used to submit automatically a job)</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -3289,6 +4019,51 @@
         <para>The vishnu_define_transfer_identifier command defines the shape of the identifiers automatically generated for the file transfers</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_define_transfer_identifier</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>format</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The new format to use</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_define_auth_identifier</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_define_auth_identifier command defines the shape of the identifiers automatically generated for the authentication system</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_define_auth_identifier</command><arg choice="opt"><option>-h</option></arg><arg
               choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>

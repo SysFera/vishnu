@@ -171,6 +171,22 @@
             
         <para>Updates of TMS:</para><para>Added new data structures LoadCriterion and LoadType.</para><para>Modified decription of submitJob function (to take into account automatic submission).</para><para>Modified SubmitOptions structure (added load criterion option for automatic submission, added option to select a queue automatically).</para><para>Modified decription of listJobs function (to take into account listing of jobs on all machines).</para><para>Modified ListJobsOptions structure (added multipleStatus option for combination of several job states, added option to list all jobs submitted by the underlying batch scheduler (VISHNU jobs and jobs submitted out of VISHNU).</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>12</revnumber>
+        <date>20/01/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+            
+	    
+	    
+	    
+	  
+	  
+        <para>Updates of UMS:</para><para>Added a second UMS::connect with the structure ListUsers as an entry parameter.</para><para>Added a second UMS::reconnect with the structure ListUsers as an entry parameter.</para><para>Modified UMS::listUsers (added a structure ListUsersOptions).</para><para>Added UMS::addAuthenticationSystem, UMS::updateAuthenticationSystem, UMS::deleteAuthenticationSystem,
+	    UMS::listAuthenticationSystem, UMS::addAuthAccount, UMS::updateAuthAccount, UMS::deleteAuthAccount, UMS::listAuthAccount.
+	  </para><para>Updates of IMS:</para><para>Added IMS::defineAuthIdentifier</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -584,6 +600,128 @@
         <funcsynopsis><funcprototype><funcdef>int <function>vishnu::connect</function></funcdef><paramdef>const string&amp; <parameter>userId</parameter></paramdef><paramdef>const string&amp; <parameter>password</parameter></paramdef><paramdef>Session&amp; <parameter>session</parameter></paramdef><paramdef>const ConnectOptions&amp; <parameter>options = ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
+        <title>Function UMS::connect</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Mode
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>listUsers</para></entry>
+                <entry><para><link linkend="ListUsers">ListUsers</link></para></entry>
+                <entry><para>The list containing one or more couple (userId and password) potentially usable for connection</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>session</para></entry>
+                <entry><para><link linkend="Session">Session</link></para></entry>
+                <entry><para>The session object that contains the created session details</para></entry>
+                <entry><para>OUT</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para><link linkend="ConnectOptions">ConnectOptions</link></para></entry>
+                <entry><para>options is an object which encapsulates the options available for the connect method. It allows the user to choose the way for closing the session automatically on TIMEOUT or on DISCONNECT and the possibility for an admin to open a session as he/she was a specific user</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>no</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The connect() function opens a session by trying multiple couples (userId, password) each in turn</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the function</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_USER</para></entry>
+                <entry><para>The user is unknown or the password is wrong</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_CLOSURE_MODE</para></entry>
+                <entry><para>The closure policy is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INCORRECT_TIMEOUT</para></entry>
+                <entry><para>The value of the timeout is incorrect</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_USERID</para></entry>
+                <entry><para>The userId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_USER_LOCKED</para></entry>
+                <entry><para>The user is locked</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Signature </emphasis></para>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::connect</function></funcdef><paramdef>const ListUsers&amp; <parameter>listUsers</parameter></paramdef><paramdef>Session&amp; <parameter>session</parameter></paramdef><paramdef>const ConnectOptions&amp; <parameter>options = ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+      </section>
+      <section>
         <title>Function UMS::reconnect</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
@@ -711,6 +849,128 @@
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
         <funcsynopsis><funcprototype><funcdef>int <function>vishnu::reconnect</function></funcdef><paramdef>const string&amp; <parameter>userId</parameter></paramdef><paramdef>const string&amp; <parameter>password</parameter></paramdef><paramdef>const string&amp; <parameter>sessionId</parameter></paramdef><paramdef>Session&amp; <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
+      </section>
+      <section>
+        <title>Function UMS::reconnect</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Mode
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>listUsers</para></entry>
+                <entry><para><link linkend="ListUsers">ListUsers</link></para></entry>
+                <entry><para>The list containing one or more couple (userId and password) potentially usable for connection</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>sessionId is the identifier of the session defined in the database</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>session</para></entry>
+                <entry><para><link linkend="Session">Session</link></para></entry>
+                <entry><para>The session object containing session information</para></entry>
+                <entry><para>OUT</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The reconnect() function reconnects to a session that is still active by trying multiple couples (userId, password) each in turn</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the function</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_USER</para></entry>
+                <entry><para>The user is unknown or the password is wrong</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_USER_LOCKED</para></entry>
+                <entry><para>The user is locked</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNUSABLE_MACHINE</para></entry>
+                <entry><para>The machine does not exist or it is locked</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_SESSION_ID</para></entry>
+                <entry><para>The session Id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Signature </emphasis></para>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::reconnect</function></funcdef><paramdef>const ListUsers&amp; <parameter>listUsers</parameter></paramdef><paramdef>const string&amp; <parameter>sessionId</parameter></paramdef><paramdef>Session&amp; <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::addUser</title>
@@ -1238,6 +1498,10 @@
                 <entry><para>The user is locked</para></entry>
               </row>
               <row>
+                <entry><para>ERRCODE_READONLY_ACCOUNT</para></entry>
+                <entry><para>You can modify information. This account is read-only. </para></entry>
+              </row>
+              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -1590,7 +1854,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
-                <entry><para>The local is unknown</para></entry>
+                <entry><para>The local account is unknown</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
@@ -1696,7 +1960,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
-                <entry><para>The local is unknown</para></entry>
+                <entry><para>The local account is unknown</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
@@ -2749,9 +3013,9 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>userIdOption</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>allows an admin to get information about a specific user identified by his/her userId</para></entry>
+                <entry><para>options</para></entry>
+                <entry><para><link linkend="ListUsersOptions">ListUsersOptions</link></para></entry>
+                <entry><para>allows an admin to get information about a specific user identified by his/her userId or to get information about users authenticated by a specific user-authentication system</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>no</para></entry>
               </row>
@@ -2815,7 +3079,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listUsers</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers&amp; <parameter>listuser</parameter></paramdef><paramdef>const string&amp; <parameter>userIdOption = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listUsers</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers&amp; <parameter>listuser</parameter></paramdef><paramdef>const ListUsersOptions&amp; <parameter>options = ListUsersOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::listSessions</title>
@@ -3274,9 +3538,1063 @@
         <para><emphasis role="bold">Signature </emphasis></para>
         <funcsynopsis><funcprototype><funcdef>int <function>vishnu::vishnuFinalize</function></funcdef><paramdef/></funcprototype></funcsynopsis>
       </section>
+      <section>
+        <title>Function UMS::addAuthenticationSystem</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Mode
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>newAuthSys</para></entry>
+                <entry><para><link linkend="AuthSystems">AuthSystems</link></para></entry>
+                <entry><para>is an object which encapsulates the information of the user-authentication system which will be added in VISHNU</para></entry>
+                <entry><para>INOUT</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para><link linkend="AuthSystemsOptions">AuthSystemsOptions</link></para></entry>
+                <entry><para>is an object which encapsulates the user-authentication system options</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>no</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The addAuthenticationSystem() function adds a new user-authentication system in VISHNU</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the function</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_ENCRYPTION_METHOD</para></entry>
+                <entry><para>The encryption method is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Signature </emphasis></para>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::addAuthenticationSystem</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>AuthSystems&amp; <parameter>newAuthSys</parameter></paramdef><paramdef>const AuthSystemsOptions&amp; <parameter>options = AuthSystemsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+      </section>
+      <section>
+        <title>Function UMS::updateAuthenticationSystem</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Mode
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>AuthSys</para></entry>
+                <entry><para><link linkend="AuthSystems">AuthSystems</link></para></entry>
+                <entry><para>is an object which encapsulates the information of the user-authentication system which will be added in VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The updateAuthenticationSystem() function updates a user-authentication system in VISHNU</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the function</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_AUTH_SYSTEM</para></entry>
+                <entry><para>The user-authentication system is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_ENCRYPTION_METHOD</para></entry>
+                <entry><para>The encryption method is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Signature </emphasis></para>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::updateAuthenticationSystem</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const AuthSystems&amp; <parameter>AuthSys</parameter></paramdef></funcprototype></funcsynopsis>
+      </section>
+      <section>
+        <title>Function UMS::deleteAuthenticationSystem</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Mode
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>authSystemId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>authSystemId is the identifier of the user-authentication system</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The deleteAuthenticationSystem() function removes a user-authentication system from VISHNU</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the function</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_AUTH_SYSTEM</para></entry>
+                <entry><para>The user-authentication system is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Signature </emphasis></para>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::deleteAuthenticationSystem</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>authSystemId</parameter></paramdef></funcprototype></funcsynopsis>
+      </section>
+      <section>
+        <title>Function UMS::listAuthenticationSystems</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Mode
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>listAuthSys</para></entry>
+                <entry><para><link linkend="ListAuthSystems">ListAuthSystems</link></para></entry>
+                <entry><para>listAuthSys is the list of the user-authentication systems</para></entry>
+                <entry><para>OUT</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para><link linkend="ListAuthSysOptions">ListAuthSysOptions</link></para></entry>
+                <entry><para>allows an admin to list all user-authentication systems used by a specific user or a user to list all user-authentication systems declared in VISHNU (and not only those where a local user-authentication configs are defined). It also allows to list user-authentication systems of a specific type</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>no</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The listAuthenticationSystems() function lists VISHNU user-authentification systems</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the function</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_USERID</para></entry>
+                <entry><para>The userId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_AUTH_TYPE</para></entry>
+                <entry><para>The type of the user-authentication system is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Signature </emphasis></para>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listAuthenticationSystems</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthSystems&amp; <parameter>listAuthSys</parameter></paramdef><paramdef>const ListAuthSysOptions&amp; <parameter>options = ListAuthSysOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+      </section>
+      <section>
+        <title>Function UMS::addAuthAccount</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Mode
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>authAccount</para></entry>
+                <entry><para><link linkend="AuthAccount">AuthAccount</link></para></entry>
+                <entry><para>is an object which encapsulates the information of the local user-authentication configuration which will be added in VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The addAuthAccount() function adds a new local user-authentication configuration</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the function</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_USERID</para></entry>
+                <entry><para>The userId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_USER_LOCKED</para></entry>
+                <entry><para>The user is locked</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_AUTH_SYSTEM</para></entry>
+                <entry><para>The user-authentication system is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_LOCAL_AUTH_ACCOUNT_EXIST</para></entry>
+                <entry><para>The local user-authentication configuration already exists</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Signature </emphasis></para>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::addAuthAccount</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const AuthAccount&amp; <parameter>authAccount</parameter></paramdef></funcprototype></funcsynopsis>
+      </section>
+      <section>
+        <title>Function UMS::updateAuthAccount</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Mode
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>authenAccount</para></entry>
+                <entry><para><link linkend="AuthAccount">AuthAccount</link></para></entry>
+                <entry><para>is an object which encapsulates the information of the local user-authentication configuration which will be updated</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The updateAuthAccount() function updates a local user-authentication configuration</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the function</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_USERID</para></entry>
+                <entry><para>The userId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_USER_LOCKED</para></entry>
+                <entry><para>The user is locked</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_AUTH_SYSTEM</para></entry>
+                <entry><para>The user-authentication system is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_AUTH_ACCOUNT</para></entry>
+                <entry><para>The local user-authentication account is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Signature </emphasis></para>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::updateAuthAccount</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const AuthAccount&amp; <parameter>authenAccount</parameter></paramdef></funcprototype></funcsynopsis>
+      </section>
+      <section>
+        <title>Function UMS::deleteAuthAccount</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Mode
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>is an admin option which represents the VISHNU identifier of the user whose local user-authentication configuration will be deleted</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>no</para></entry>
+              </row>
+              <row>
+                <entry><para>authSystemId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>authSystemId is the identifier of the user-authentication system</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The deleteAuthAccount() function removes a local user-authentication configuration from VISHNU</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the function</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_USERID</para></entry>
+                <entry><para>The userId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_USER_LOCKED</para></entry>
+                <entry><para>The user is locked</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_AUTH_SYSTEM</para></entry>
+                <entry><para>The user-authentication system is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_AUTH_ACCOUNT</para></entry>
+                <entry><para>The local user-authentication account is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Signature </emphasis></para>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::deleteAuthAccount</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>userId = &quot;&quot;</parameter></paramdef><paramdef>const string&amp; <parameter>authSystemId</parameter></paramdef></funcprototype></funcsynopsis>
+      </section>
+      <section>
+        <title>Function UMS::listAuthAccount</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Mode
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>listAuthAccount</para></entry>
+                <entry><para><link linkend="ListAuthAccounts">ListAuthAccounts</link></para></entry>
+                <entry><para>listAuthSys is the list of the local user-authentication configurations</para></entry>
+                <entry><para>OUT</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para><link linkend="ListAuthAccOptions">ListAuthAccOptions</link></para></entry>
+                <entry><para>allows an admin to list all local user-authentication configurations or to list local user-authentication configurations of a specific user or for a user to list local user-authentication configuration defined for a specific user-authentication system</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>no</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The listAuthAccount() function lists local user-authentication configurations</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the function</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_USERID</para></entry>
+                <entry><para>The userId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_USER_LOCKED</para></entry>
+                <entry><para>The user is locked</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_AUTH_SYSTEM</para></entry>
+                <entry><para>The user-authentication system is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_AUTH_ACCOUNT</para></entry>
+                <entry><para>The local user-authentication account is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Signature </emphasis></para>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listAuthAccount</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthAccounts&amp; <parameter>listAuthAccount</parameter></paramdef><paramdef>const ListAuthAccOptions&amp; <parameter>options = ListAuthAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+      </section>
     </section>
     <section>
       <title>Data types definitions</title>
+      <para xml:id="AuthAccount"><emphasis role="bold">Class UMS::AuthAccount Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>authSystemId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is the identifier of the user-authentication system</para></entry>
+            </row>
+            <row>
+              <entry><para>userId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents an admin option to add a local user-authentication configuration of a specific user</para></entry>
+            </row>
+            <row>
+              <entry><para>acLogin</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>acLogin represents the login of the user on the associated user-authentication system</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="AuthSystems"><emphasis role="bold">Class UMS::AuthSystems Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>authSystemId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is the identifier, generated by VISHNU, of the user-authentication system</para></entry>
+            </row>
+            <row>
+              <entry><para>name</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>corresponds to the user-authentication system's name</para></entry>
+            </row>
+            <row>
+              <entry><para>URI</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is the URI of the user-authentication systems (by the form host:port for LDAP)</para></entry>
+            </row>
+            <row>
+              <entry><para>authLogin</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is the login used to connect to the user-authentication system</para></entry>
+            </row>
+            <row>
+              <entry><para>authPassword</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is the password used to connect to the user-authentication system</para></entry>
+            </row>
+            <row>
+              <entry><para>userPasswordEncryption</para></entry>
+              <entry><para><link linkend="EncryptionMethod">EncryptionMethod</link></para></entry>
+              <entry><para>represents the encryption method used to encrypt user's password</para></entry>
+            </row>
+            <row>
+              <entry><para>type</para></entry>
+              <entry><para><link linkend="AuthType">AuthType</link></para></entry>
+              <entry><para>represents the type of the user-authentication system</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="AuthSystemsOptions"><emphasis role="bold">Class UMS::AuthSystemsOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>ldapBase</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is an option for user-authentication system based on LDAP which specifies the DN of the root entry </para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
       <para xml:id="Command"><emphasis role="bold">Class UMS::Command Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
@@ -3406,6 +4724,130 @@
               <entry><para>substituteUserId</para></entry>
               <entry><para>string</para></entry>
               <entry><para>is an admin option which allows an admin to open a session as if she was another user identified by her userId</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="ListAuthAccOptions"><emphasis role="bold">Class UMS::ListAuthAccOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>listAll</para></entry>
+              <entry><para>boolean</para></entry>
+              <entry><para>is an admin option for listing all local user-authentication configurations of VISHNU</para></entry>
+            </row>
+            <row>
+              <entry><para>userId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is an admin option for listing all local user-authentication configurations of a specific user identified by his/her userId</para></entry>
+            </row>
+            <row>
+              <entry><para>authSystemId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is an option for listing local user-configuration of a specific user-authentication system</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="ListAuthAccounts"><emphasis role="bold">Class UMS::ListAuthAccounts Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>LocalAuthAccounts</para></entry>
+              <entry><para>List of <link linkend="AuthAccount">AuthAccount</link></para></entry>
+              <entry><para>is the list of users objects</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="ListAuthSysOptions"><emphasis role="bold">Class UMS::ListAuthSysOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>listAllAuthSystems</para></entry>
+              <entry><para>boolean</para></entry>
+              <entry><para>is an option for listing all VISHNU user-authentication systems</para></entry>
+            </row>
+            <row>
+              <entry><para>userId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is an admin option for listing all user-authentication systems in which a specific user has local user-authentication configs</para></entry>
+            </row>
+            <row>
+              <entry><para>authSystemId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is an option for listing a specific user-authentication system</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="ListAuthSystems"><emphasis role="bold">Class UMS::ListAuthSystems Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>AuthSystems</para></entry>
+              <entry><para>List of <link linkend="AuthSystems">AuthSystems</link></para></entry>
+              <entry><para>is the list of user-authentication systems</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -3786,6 +5228,37 @@
           </tbody>
         </tgroup>
       </informaltable>
+      <para xml:id="ListUsersOptions"><emphasis role="bold">Class UMS::ListUsersOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>userId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>allows an admin to get information about a specific user identified by his/her userId</para></entry>
+            </row>
+            <row>
+              <entry><para>authSystemId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is an option to list users who have local user-authentication configurations on a specific user-authentication system</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
       <para xml:id="LocalAccount"><emphasis role="bold">Class UMS::LocalAccount Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
@@ -3982,6 +5455,11 @@
               <entry><para>long</para></entry>
               <entry><para>is the inactivity delay in seconds associated to the CLOSE_ON_TIMEOUT option</para></entry>
             </row>
+            <row>
+              <entry><para>authenId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the identifier defined on a user-authentication system and used for the current session </para></entry>
+            </row>
           </tbody>
         </tgroup>
       </informaltable>
@@ -4041,6 +5519,27 @@
           </tbody>
         </tgroup>
       </informaltable>
+      <para xml:id="AuthType"><emphasis role="bold">Enumeration UMS::AuthType Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>LDAP</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
       <para xml:id="CommandStatusType"><emphasis role="bold">Enumeration UMS::CommandStatusType Type</emphasis></para>
       <informaltable>
         <tgroup cols="2">
@@ -4062,6 +5561,27 @@
             <row>
               <entry><para>SUCCESS</para></entry>
               <entry><para>1</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="EncryptionMethod"><emphasis role="bold">Enumeration UMS::EncryptionMethod Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>SSHA</para></entry>
+              <entry><para>0</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -6993,6 +8513,85 @@
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
         <funcsynopsis><funcprototype><funcdef>int <function>vishnu::defineTransferIdentifier</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
+      </section>
+      <section>
+        <title>Function IMS::defineAuthIdentifier</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Mode
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>format</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The new format to use</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The defineAuthIdentifier() function defines the shape of the identifiers automatically generated for the authentication system</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the function</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Signature </emphasis></para>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::defineAuthIdentifier</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function IMS::loadShed</title>
