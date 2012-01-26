@@ -53,6 +53,10 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter=""/>
     </services>
+    <services name="int_defineAuthenIdentifier" description="defines the shape of the identifiers automatically generated for the authentication systems" adminOnly="true">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
+      <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter=""/>
+    </services>
     <services name="int_loadShed" description="load sheds a machine" adminOnly="true">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine to stop" shortOptionLetter=""/>
