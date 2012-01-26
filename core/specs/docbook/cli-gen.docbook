@@ -2398,7 +2398,7 @@
         <para>The vishnu_delete_auth_account command removes a local user-authentication configuration from VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_delete_auth_account</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>userIdOption</replaceable></option></arg><arg
               choice="plain"><replaceable>authSystemId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -2424,18 +2424,18 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>userId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>u</para></entry>
-                <entry><para>is an admin option which represents the VISHNU identifier of the user whose local user-authentication configuration will be deleted</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
                 <entry><para>authSystemId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
                 <entry><para>authSystemId is the identifier of the user-authentication system</para></entry>
                 <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>userIdOption</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>u</para></entry>
+                <entry><para>is an admin option which represents the VISHNU identifier of the user whose local user-authentication configuration will be deleted</para></entry>
+                <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
