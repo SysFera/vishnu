@@ -129,6 +129,21 @@
         </revdescription>
       </revision>
 
+      <revision>
+        <revnumber>12</revnumber>
+        <date>20/01/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Updates of UMS:</para>
+            <para>Added vishnu_connect_m and vishnu_reconnect_m respectively for connection and reconnection using multiple VISHNU accounts defined on the .netrc file.</para>
+	    <para>Modified vishnu_list_users option -u to -i for userId and added a new option for user-authentication system.</para>
+	    <para>Added vishnu_add_authentication_system, vishnu_update_authentication_system, vishnu_delete_authentication_system,
+	    vishnu_list_authentication_system, vishnu_add_auth_account, vishnu_update_auth_account, vishnu_delete_auth_account, vishnu_list_auth_account.
+	  </para>
+	  <para>Updates of IMS:</para>
+	  <para>Added vishnu_define_auth_identifier</para>
+        </revdescription>
+      </revision>
       </revhistory>
     </info>
   <chapter>

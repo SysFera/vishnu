@@ -157,7 +157,22 @@
             <para>Modified ListJobsOptions structure (added multipleStatus option for combination of several job states, added option to list all jobs submitted by the underlying batch scheduler (VISHNU jobs and jobs submitted out of VISHNU).</para>
         </revdescription>
       </revision>
-
+      <revision>
+        <revnumber>12</revnumber>
+        <date>20/01/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Updates of UMS:</para>
+            <para>Added a second UMS::connect with the structure ListUsers as an entry parameter.</para>
+	    <para>Added a second UMS::reconnect with the structure ListUsers as an entry parameter.</para>
+	    <para>Modified UMS::listUsers (added a structure ListUsersOptions).</para>
+	    <para>Added UMS::addAuthenticationSystem, UMS::updateAuthenticationSystem, UMS::deleteAuthenticationSystem,
+	    UMS::listAuthenticationSystem, UMS::addAuthAccount, UMS::updateAuthAccount, UMS::deleteAuthAccount, UMS::listAuthAccount.
+	  </para>
+	  <para>Updates of IMS:</para>
+	  <para>Added IMS::defineAuthIdentifier</para>
+        </revdescription>
+      </revision>
       </revhistory>
     </info>
     
