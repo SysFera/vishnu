@@ -4257,18 +4257,18 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>userId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>is an admin option which represents the VISHNU identifier of the user whose local user-authentication configuration will be deleted</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>no</para></entry>
-              </row>
-              <row>
                 <entry><para>authSystemId</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>authSystemId is the identifier of the user-authentication system</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>userIdOption</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>is an admin option which represents the VISHNU identifier of the user whose local user-authentication configuration will be deleted</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>no</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -4346,7 +4346,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::deleteAuthAccount</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>userId = &quot;&quot;</parameter></paramdef><paramdef>const string&amp; <parameter>authSystemId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::deleteAuthAccount</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>authSystemId</parameter></paramdef><paramdef>const string&amp; <parameter>userIdOption = &quot;&quot;</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::listAuthAccount</title>
@@ -4383,9 +4383,9 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>listAuthAccount</para></entry>
+                <entry><para>listAuthAccounts</para></entry>
                 <entry><para><link linkend="ListAuthAccounts">ListAuthAccounts</link></para></entry>
-                <entry><para>listAuthSys is the list of the local user-authentication configurations</para></entry>
+                <entry><para>is the list of the local user-authentication configurations</para></entry>
                 <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -4472,7 +4472,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listAuthAccount</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthAccounts&amp; <parameter>listAuthAccount</parameter></paramdef><paramdef>const ListAuthAccOptions&amp; <parameter>options = ListAuthAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listAuthAccount</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthAccounts&amp; <parameter>listAuthAccounts</parameter></paramdef><paramdef>const ListAuthAccOptions&amp; <parameter>options = ListAuthAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
     </section>
     <section>
