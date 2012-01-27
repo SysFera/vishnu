@@ -42,7 +42,17 @@
             <para>Replace all Oracle occurrences by MySQL</para>
           </revdescription>
         </revision>
-
+	 <revision>
+          <revnumber>4</revnumber>
+          <date>27/01/2012</date>
+          <authorinitials>SysFera</authorinitials>
+          <revdescription>
+	    <para>Modified UserList (added structure ListUsersOptions)</para>
+	    <para> Added Services: SystemAuthenticationCreate, SystemAuthenticationUpdate, Service SystemAuthenticationDelete, 
+		  Service SystemAuthenticationList, Service AccountAuthCreate, AccountAuthUpdate, AccountAuthDelete, AccountAuthList.
+	    </para>
+          </revdescription>
+        </revision>
       </revhistory>
     </info>
     <chapter>
