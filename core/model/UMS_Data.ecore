@@ -609,6 +609,13 @@
         <details key="shortOption" value="t"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//StatusType"
+        defaultValueLiteral="1">
+      <eAnnotations source="Description">
+        <details key="content" value="represents the status of the user-authentication system"/>
+        <details key="shortOption" value="s"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AuthSystemsOptions" instanceTypeName="AuthSystemsOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="ldapBase" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"

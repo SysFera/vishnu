@@ -283,6 +283,13 @@
         <details key="shortOption" value="t"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="ecore:EEnum UMS_Data.ecore#//StatusType"
+        defaultValueLiteral="1">
+      <eAnnotations source="Description">
+        <details key="content" value="represents the status of the user-authentication system"/>
+        <details key="shortOption" value="s"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="ldapBase" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
