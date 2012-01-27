@@ -2077,6 +2077,7 @@
               choice="opt"><option>-w <replaceable>authPassword</replaceable></option></arg><arg
               choice="opt"><option>-e <replaceable>userPasswordEncryption</replaceable></option></arg><arg
               choice="opt"><option>-t <replaceable>type</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>status</replaceable></option></arg><arg
               choice="opt"><option>-b <replaceable>ldapBase</replaceable></option></arg><arg
               choice="plain"><replaceable>authSystemId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -2149,6 +2150,13 @@
                 <entry><para><link linkend="AuthType">AuthType</link></para></entry>
                 <entry><para>t</para></entry>
                 <entry><para>represents the type of the user-authentication system</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>status</para></entry>
+                <entry><para><link linkend="StatusType">StatusType</link></para></entry>
+                <entry><para>s</para></entry>
+                <entry><para>represents the status of the user-authentication system</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
