@@ -25,6 +25,7 @@
 #include <UMS_Data/ListSessionOptions.hpp>
 #include <UMS_Data/User.hpp>
 #include <UMS_Data/ListUsers.hpp>
+#include <UMS_Data/ListUsersOptions.hpp>
 #include <UMS_Data/Command.hpp>
 #include <UMS_Data/ListCommands.hpp>
 #include <UMS_Data/ListCmdOptions.hpp>
@@ -38,6 +39,13 @@
 #include <UMS_Data/OptionValue.hpp>
 #include <UMS_Data/ListOptionsValues.hpp>
 #include <UMS_Data/ListOptOptions.hpp>
+#include <UMS_Data/AuthSystems.hpp>
+#include <UMS_Data/AuthSystemsOptions.hpp>
+#include <UMS_Data/ListAuthSystems.hpp>
+#include <UMS_Data/ListAuthSysOptions.hpp>
+#include <UMS_Data/AuthAccount.hpp>
+#include <UMS_Data/ListAuthAccounts.hpp>
+#include <UMS_Data/ListAuthAccOptions.hpp>
 
 #include <ecore.hpp>
 #include <ecorecpp/mapping.hpp>
@@ -65,6 +73,8 @@ UMS_DataFactory::UMS_DataFactory()
         return createUser();
     case UMS_DataPackage::LISTUSERS:
         return createListUsers();
+    case UMS_DataPackage::LISTUSERSOPTIONS:
+        return createListUsersOptions();
     case UMS_DataPackage::COMMAND:
         return createCommand();
     case UMS_DataPackage::LISTCOMMANDS:
@@ -91,6 +101,20 @@ UMS_DataFactory::UMS_DataFactory()
         return createListOptionsValues();
     case UMS_DataPackage::LISTOPTOPTIONS:
         return createListOptOptions();
+    case UMS_DataPackage::AUTHSYSTEMS:
+        return createAuthSystems();
+    case UMS_DataPackage::AUTHSYSTEMSOPTIONS:
+        return createAuthSystemsOptions();
+    case UMS_DataPackage::LISTAUTHSYSTEMS:
+        return createListAuthSystems();
+    case UMS_DataPackage::LISTAUTHSYSOPTIONS:
+        return createListAuthSysOptions();
+    case UMS_DataPackage::AUTHACCOUNT:
+        return createAuthAccount();
+    case UMS_DataPackage::LISTAUTHACCOUNTS:
+        return createListAuthAccounts();
+    case UMS_DataPackage::LISTAUTHACCOPTIONS:
+        return createListAuthAccOptions();
     default:
         throw "IllegalArgumentException";
     }
@@ -131,6 +155,21 @@ UMS_DataFactory::UMS_DataFactory()
         UMS_DataPackage_ptr _epkg =
                 dynamic_cast< ::UMS_Data::UMS_DataPackage_ptr > (getEPackage());
         return _epkg->getCommandStatusType()->getEEnumLiteralByLiteral(
+                _literalValue)->getValue();
+    }
+    case UMS_DataPackage::AUTHTYPE:
+    {
+        ::ecore::EJavaObject _any;
+        UMS_DataPackage_ptr _epkg =
+                dynamic_cast< ::UMS_Data::UMS_DataPackage_ptr > (getEPackage());
+        return _epkg->getAuthType()->getEEnumLiteralByLiteral(_literalValue)->getValue();
+    }
+    case UMS_DataPackage::ENCRYPTIONMETHOD:
+    {
+        ::ecore::EJavaObject _any;
+        UMS_DataPackage_ptr _epkg =
+                dynamic_cast< ::UMS_Data::UMS_DataPackage_ptr > (getEPackage());
+        return _epkg->getEncryptionMethod()->getEEnumLiteralByLiteral(
                 _literalValue)->getValue();
     }
     default:
@@ -176,6 +215,22 @@ UMS_DataFactory::UMS_DataFactory()
                 ::ecore::EInt >(_instanceValue);
         return _epkg->getCommandStatusType()->getEEnumLiteral(_value)->getName();
     }
+    case UMS_DataPackage::AUTHTYPE:
+    {
+        UMS_DataPackage_ptr _epkg = ::UMS_Data::instanceOf<
+                ::UMS_Data::UMS_DataPackage >(getEPackage());
+        ::ecore::EInt _value = ::ecorecpp::mapping::any::any_cast<
+                ::ecore::EInt >(_instanceValue);
+        return _epkg->getAuthType()->getEEnumLiteral(_value)->getName();
+    }
+    case UMS_DataPackage::ENCRYPTIONMETHOD:
+    {
+        UMS_DataPackage_ptr _epkg = ::UMS_Data::instanceOf<
+                ::UMS_Data::UMS_DataPackage >(getEPackage());
+        ::ecore::EInt _value = ::ecorecpp::mapping::any::any_cast<
+                ::ecore::EInt >(_instanceValue);
+        return _epkg->getEncryptionMethod()->getEEnumLiteral(_value)->getName();
+    }
     default:
         throw "IllegalArgumentException";
     }
@@ -204,6 +259,10 @@ User_ptr UMS_DataFactory::createUser()
 ListUsers_ptr UMS_DataFactory::createListUsers()
 {
     return new ListUsers();
+}
+ListUsersOptions_ptr UMS_DataFactory::createListUsersOptions()
+{
+    return new ListUsersOptions();
 }
 Command_ptr UMS_DataFactory::createCommand()
 {
@@ -256,5 +315,33 @@ ListOptionsValues_ptr UMS_DataFactory::createListOptionsValues()
 ListOptOptions_ptr UMS_DataFactory::createListOptOptions()
 {
     return new ListOptOptions();
+}
+AuthSystems_ptr UMS_DataFactory::createAuthSystems()
+{
+    return new AuthSystems();
+}
+AuthSystemsOptions_ptr UMS_DataFactory::createAuthSystemsOptions()
+{
+    return new AuthSystemsOptions();
+}
+ListAuthSystems_ptr UMS_DataFactory::createListAuthSystems()
+{
+    return new ListAuthSystems();
+}
+ListAuthSysOptions_ptr UMS_DataFactory::createListAuthSysOptions()
+{
+    return new ListAuthSysOptions();
+}
+AuthAccount_ptr UMS_DataFactory::createAuthAccount()
+{
+    return new AuthAccount();
+}
+ListAuthAccounts_ptr UMS_DataFactory::createListAuthAccounts()
+{
+    return new ListAuthAccounts();
+}
+ListAuthAccOptions_ptr UMS_DataFactory::createListAuthAccOptions()
+{
+    return new ListAuthAccOptions();
 }
 

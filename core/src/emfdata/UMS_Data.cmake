@@ -39,6 +39,8 @@ set(UMS_Data_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/UserImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListUsers.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListUsersImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListUsersOptions.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListUsersOptionsImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/Command.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/CommandImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListCommands.cpp
@@ -65,7 +67,23 @@ set(UMS_Data_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListOptionsValuesImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListOptOptions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListOptOptionsImpl.cpp
-   )
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/AuthSystems.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/AuthSystemsImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/AuthSystemsOptions.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/AuthSystemsOptionsImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListAuthSystems.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListAuthSystemsImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListAuthSysOptions.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListAuthSysOptionsImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/AuthAccount.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/AuthAccountImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListAuthAccounts.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListAuthAccountsImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListAuthAccOptions.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListAuthAccOptionsImpl.cpp
+ 
+   
+    )
 
 set(UMS_Data_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data.hpp
@@ -78,6 +96,7 @@ set(UMS_Data_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListSessionOptions.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/User.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListUsers.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListUsersOptions.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/Command.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListCommands.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListCmdOptions.hpp
@@ -91,7 +110,15 @@ set(UMS_Data_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/OptionValue.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListOptionsValues.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListOptOptions.hpp
-   )
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/AuthSystems.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/AuthSystemsOptions.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListAuthSystems.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListAuthSysOptions.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/AuthAccount.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListAuthAccounts.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListAuthAccOptions.hpp
+
+    )
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data_forward.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/)
@@ -103,6 +130,7 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListSessions.hpp DESTINATION 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListSessionOptions.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/UMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/User.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/UMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListUsers.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/UMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListUsersOptions.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/UMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/Command.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/UMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListCommands.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/UMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListCmdOptions.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/UMS_Data)
@@ -116,7 +144,14 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/Configuration.hpp DESTINATION
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/OptionValue.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/UMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListOptionsValues.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/UMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListOptOptions.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/UMS_Data)
-
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/AuthSystems.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/UMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/AuthSystemsOptions.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/UMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListAuthSystems.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/UMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListAuthSysOptions.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/UMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/AuthAccount.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/UMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListAuthAccounts.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/UMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListAuthAccOptions.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/UMS_Data)
+ 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${EMF4CPP_INCLUDE_DIR})
 
 add_library(emf4cpp-UMS_Data SHARED ${UMS_Data_HEADERS} ${UMS_Data_SOURCES})

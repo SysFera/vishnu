@@ -109,6 +109,12 @@ void Session::_initialize()
                 m_timeout);
     }
         return _any;
+    case ::UMS_Data::UMS_DataPackage::SESSION__AUTHENID:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_authenId);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -173,6 +179,12 @@ void Session::eSet(::ecore::EInt _featureID,
                 m_timeout);
     }
         return;
+    case ::UMS_Data::UMS_DataPackage::SESSION__AUTHENID:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_authenId);
+    }
+        return;
 
     }
     throw "Error";
@@ -200,6 +212,9 @@ void Session::eSet(::ecore::EInt _featureID,
         return m_closePolicy != 0;
     case ::UMS_Data::UMS_DataPackage::SESSION__TIMEOUT:
         return m_timeout != 0;
+    case ::UMS_Data::UMS_DataPackage::SESSION__AUTHENID:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_authenId);
 
     }
     throw "Error";

@@ -12,7 +12,7 @@ include_directories(${Boost_INCLUDE_DIRS}
 
 #declare all command lines provided
 
-set(ALLCLI current_session_id connect reconnect close
+set(ALLCLI current_session_id connect connect_m reconnect reconnect_m close
   add_user update_user delete_user
   change_password reset_password
   add_local_account update_local_account delete_local_account

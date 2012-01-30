@@ -1,10 +1,8 @@
 /**
- * \file reconnect.cpp
+ * \file reconnect_m.cpp
  * This file defines the VISHNU reconnect command 
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
-
-
 
 #include "common.hpp"
 #include "cliUtil.hpp"
@@ -22,13 +20,14 @@ using namespace vishnu;
 int main (int ac, char* av[]){
 
 
-	string userId;
-
-	string password;
-
 	string sessionId;
 
 	string dietConfig;
+
+  /*********** In parameters **********************/
+
+  UMS_Data::ListUsers listUsers;
+  
 
 /********* Out parameters     *****************/
 
@@ -37,8 +36,13 @@ int main (int ac, char* av[]){
   /**************** Describe options *************/
 
 
-  boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,0, dietConfig,CONFIG);
 
+  boost::shared_ptr< Options> opt(new Options(av[0]) );
+
+  opt->add("dietConfig,c",
+      "The diet config file",
+      ENV,
+      dietConfig);
 
 
   opt->add("sessionId,s",
@@ -48,8 +52,6 @@ int main (int ac, char* av[]){
 
   opt->setPosition("sessionId",1);
  
-  
-  opt->add("password,w","To give the password ",CONFIG,password );
 
   try {
 
@@ -71,22 +73,6 @@ int main (int ac, char* av[]){
     }
 
 
-    //Fix me
-
-    if(0==opt->count("password") && 1==opt->count("userId")){
-
-    password= vishnu::takePassword("password: ");
-
-    }
-    else if (1==opt->count("password") && 0==opt->count("userId")){
-
-      errorUsage(av[0], "missiong parameter: userId ");
-
-    return ERRCODE_CLI_ERROR_MISSING_PARAMETER;
-
-    }
-
-
     /************** Call UMS reconnect service *******************************/
 
     cleaner(const_cast<char*>(dietConfig.c_str()), ac, av);// lauch the daemon cleaner if it is not already running  
@@ -101,11 +87,10 @@ int main (int ac, char* av[]){
 
     }
 
-    reconnect(userId, password, sessionId, session);
+//    reconnect_m(listUsers,sessionId, session);
 
     // store the session information
 
-    //storeLastSession(session.getSessionKey(),session.getClosePolicy(),getppid());
     storeLastSession(session,getppid());
     
     printSuccessMessage();

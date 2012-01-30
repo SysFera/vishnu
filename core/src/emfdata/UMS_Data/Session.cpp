@@ -287,5 +287,31 @@ void Session::setTimeout(::ecore::ELong _timeout)
 #endif
 }
 
+::ecore::EString const& Session::getAuthenId() const
+{
+    return m_authenId;
+}
+
+void Session::setAuthenId(::ecore::EString const& _authenId)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_authenId = m_authenId;
+#endif
+    m_authenId = _authenId;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getSession__authenId(),
+                _old_authenId,
+                m_authenId
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
 // References
 
