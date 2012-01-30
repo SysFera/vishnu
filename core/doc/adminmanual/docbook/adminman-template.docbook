@@ -148,6 +148,15 @@
             Ajout de la section configuration des clés ssh requises pour TMS.
         </para></revdescription>
       </revision>
+      <revision>
+        <revnumber>16</revnumber>
+        <date>30/01/2012</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+          <para>
+            Modifie les requirements en fonction de la version de DIET
+        </para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -295,10 +304,10 @@
               <para>GCC version 4.4.3 minimum</para>
             </listitem>
             <listitem>
-              <para>CMAKE version 2.6 minimum</para>
+              <para>CMAKE version 2.8 minimum si DIET 2.8, à partir de 2.6 sinon</para>
             </listitem>
             <listitem>
-              <para>BOOST version 1.45 minimum</para>
+              <para>BOOST version 1.45 minimum si DIET 2.7 ou inférieur, 1.46.1 si DIET 2.8 ou supérieur</para>
             </listitem>
             <listitem>
               <para>OMNIORB version 4.1.4</para>
