@@ -64,6 +64,8 @@ set(UMS_Data_SRCS
   emfdata/UMS_Data/UserImpl.cpp
   emfdata/UMS_Data/ListUsers.cpp
   emfdata/UMS_Data/ListUsersImpl.cpp
+  emfdata/UMS_Data/ListUsersOptions.cpp
+  emfdata/UMS_Data/ListUsersOptionsImpl.cpp
   emfdata/UMS_Data/Command.cpp
   emfdata/UMS_Data/CommandImpl.cpp
   emfdata/UMS_Data/ListCommands.cpp
@@ -89,7 +91,21 @@ set(UMS_Data_SRCS
   emfdata/UMS_Data/ListOptionsValues.cpp
   emfdata/UMS_Data/ListOptionsValuesImpl.cpp
   emfdata/UMS_Data/ListOptOptions.cpp
-  emfdata/UMS_Data/ListOptOptionsImpl.cpp)
+  emfdata/UMS_Data/ListOptOptionsImpl.cpp
+  emfdata/UMS_Data/AuthSystems.cpp
+  emfdata/UMS_Data/AuthSystemsImpl.cpp
+  emfdata/UMS_Data/AuthSystemsOptions.cpp
+  emfdata/UMS_Data/AuthSystemsOptionsImpl.cpp
+  emfdata/UMS_Data/ListAuthSystems.cpp
+  emfdata/UMS_Data/ListAuthSystemsImpl.cpp
+  emfdata/UMS_Data/ListAuthSysOptions.cpp
+  emfdata/UMS_Data/ListAuthSysOptionsImpl.cpp
+  emfdata/UMS_Data/AuthAccount.cpp
+  emfdata/UMS_Data/AuthAccountImpl.cpp
+  emfdata/UMS_Data/ListAuthAccounts.cpp
+  emfdata/UMS_Data/ListAuthAccountsImpl.cpp
+  emfdata/UMS_Data/ListAuthAccOptions.cpp
+  emfdata/UMS_Data/ListAuthAccOptionsImpl.cpp)
 
 set(UMS_Data_HEADERS
   emfdata/UMS_Data.hpp
@@ -102,6 +118,7 @@ set(UMS_Data_HEADERS
   emfdata/UMS_Data/ListSessionOptions.hpp
   emfdata/UMS_Data/User.hpp
   emfdata/UMS_Data/ListUsers.hpp
+  emfdata/UMS_Data/ListUsersOptions.hpp
   emfdata/UMS_Data/Command.hpp
   emfdata/UMS_Data/ListCommands.hpp
   emfdata/UMS_Data/ListCmdOptions.hpp
@@ -114,7 +131,14 @@ set(UMS_Data_HEADERS
   emfdata/UMS_Data/Configuration.hpp
   emfdata/UMS_Data/OptionValue.hpp
   emfdata/UMS_Data/ListOptionsValues.hpp
-  emfdata/UMS_Data/ListOptOptions.hpp)
+  emfdata/UMS_Data/ListOptOptions.hpp
+  emfdata/UMS_Data/AuthSystems.hpp
+  emfdata/UMS_Data/AuthSystemsOptions.hpp
+  emfdata/UMS_Data/ListAuthSystems.hpp
+  emfdata/UMS_Data/ListAuthSysOptions.hpp
+  emfdata/UMS_Data/AuthAccount.hpp
+  emfdata/UMS_Data/ListAuthAccounts.hpp
+  emfdata/UMS_Data/ListAuthAccOptions.hpp)
 
 set(TMS_Data_SRCS
   emfdata/TMS_Data.cpp

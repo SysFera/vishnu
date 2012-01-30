@@ -1,6 +1,6 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
- * UMS_Data/ListMachineOptionsImpl.cpp
+ * UMS_Data/AuthAccountImpl.cpp
  * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ListMachineOptions.hpp"
+#include "AuthAccount.hpp"
 #include <UMS_Data/UMS_DataPackage.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
@@ -28,18 +28,18 @@
 
 using namespace ::UMS_Data;
 
-/*PROTECTED REGION ID(ListMachineOptionsImpl.cpp) START*/
+/*PROTECTED REGION ID(AuthAccountImpl.cpp) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/
 
-void ListMachineOptions::_initialize()
+void AuthAccount::_initialize()
 {
     // Supertypes
 
     // Rerefences
 
-    /*PROTECTED REGION ID(ListMachineOptionsImpl__initialize) START*/
+    /*PROTECTED REGION ID(AuthAccountImpl__initialize) START*/
     // Please, enable the protected region if you add manually written code.
     // To do this, add the keyword ENABLED before START.
     /*PROTECTED REGION END*/
@@ -49,28 +49,28 @@ void ListMachineOptions::_initialize()
 
 
 // EObject
-::ecore::EJavaObject ListMachineOptions::eGet(::ecore::EInt _featureID,
+::ecore::EJavaObject AuthAccount::eGet(::ecore::EInt _featureID,
         ::ecore::EBoolean _resolve)
 {
     ::ecore::EJavaObject _any;
     switch (_featureID)
     {
-    case ::UMS_Data::UMS_DataPackage::LISTMACHINEOPTIONS__USERID:
+    case ::UMS_Data::UMS_DataPackage::AUTHACCOUNT__AUTHSYSTEMID:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_authSystemId);
+    }
+        return _any;
+    case ::UMS_Data::UMS_DataPackage::AUTHACCOUNT__USERID:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
                 m_userId);
     }
         return _any;
-    case ::UMS_Data::UMS_DataPackage::LISTMACHINEOPTIONS__LISTALLMACHINE:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EBoolean >::toAny(_any,
-                m_listAllMachine);
-    }
-        return _any;
-    case ::UMS_Data::UMS_DataPackage::LISTMACHINEOPTIONS__MACHINEID:
+    case ::UMS_Data::UMS_DataPackage::AUTHACCOUNT__ACLOGIN:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_machineId);
+                m_acLogin);
     }
         return _any;
 
@@ -78,27 +78,27 @@ void ListMachineOptions::_initialize()
     throw "Error";
 }
 
-void ListMachineOptions::eSet(::ecore::EInt _featureID,
+void AuthAccount::eSet(::ecore::EInt _featureID,
         ::ecore::EJavaObject const& _newValue)
 {
     switch (_featureID)
     {
-    case ::UMS_Data::UMS_DataPackage::LISTMACHINEOPTIONS__USERID:
+    case ::UMS_Data::UMS_DataPackage::AUTHACCOUNT__AUTHSYSTEMID:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_authSystemId);
+    }
+        return;
+    case ::UMS_Data::UMS_DataPackage::AUTHACCOUNT__USERID:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
                 m_userId);
     }
         return;
-    case ::UMS_Data::UMS_DataPackage::LISTMACHINEOPTIONS__LISTALLMACHINE:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EBoolean >::fromAny(
-                _newValue, m_listAllMachine);
-    }
-        return;
-    case ::UMS_Data::UMS_DataPackage::LISTMACHINEOPTIONS__MACHINEID:
+    case ::UMS_Data::UMS_DataPackage::AUTHACCOUNT__ACLOGIN:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_machineId);
+                m_acLogin);
     }
         return;
 
@@ -106,23 +106,22 @@ void ListMachineOptions::eSet(::ecore::EInt _featureID,
     throw "Error";
 }
 
-::ecore::EBoolean ListMachineOptions::eIsSet(::ecore::EInt _featureID)
+::ecore::EBoolean AuthAccount::eIsSet(::ecore::EInt _featureID)
 {
     switch (_featureID)
     {
-    case ::UMS_Data::UMS_DataPackage::LISTMACHINEOPTIONS__USERID:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_userId);
-    case ::UMS_Data::UMS_DataPackage::LISTMACHINEOPTIONS__LISTALLMACHINE:
-        return m_listAllMachine != false;
-    case ::UMS_Data::UMS_DataPackage::LISTMACHINEOPTIONS__MACHINEID:
-        return m_machineId != "";
+    case ::UMS_Data::UMS_DataPackage::AUTHACCOUNT__AUTHSYSTEMID:
+        return m_authSystemId != "";
+    case ::UMS_Data::UMS_DataPackage::AUTHACCOUNT__USERID:
+        return m_userId != "";
+    case ::UMS_Data::UMS_DataPackage::AUTHACCOUNT__ACLOGIN:
+        return m_acLogin != "";
 
     }
     throw "Error";
 }
 
-void ListMachineOptions::eUnset(::ecore::EInt _featureID)
+void AuthAccount::eUnset(::ecore::EInt _featureID)
 {
     switch (_featureID)
     {
@@ -131,11 +130,11 @@ void ListMachineOptions::eUnset(::ecore::EInt _featureID)
     throw "Error";
 }
 
-::ecore::EClass_ptr ListMachineOptions::_eClass()
+::ecore::EClass_ptr AuthAccount::_eClass()
 {
     static ::ecore::EClass_ptr
             _eclass =
-                    dynamic_cast< ::UMS_Data::UMS_DataPackage_ptr > (::UMS_Data::UMS_DataPackage::_instance())->getListMachineOptions();
+                    dynamic_cast< ::UMS_Data::UMS_DataPackage_ptr > (::UMS_Data::UMS_DataPackage::_instance())->getAuthAccount();
     return _eclass;
 }
 
