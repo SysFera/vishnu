@@ -71,7 +71,7 @@ public:
 
     size_t userIdSize = options->getUserId().size();
     size_t machineIdSize = options->getMachineId().size();
-    bool isListAll = options->isListAllmachine();
+    bool isListAll = options->isListAllMachine();
 
     if ((!userServer.isAdmin()) && userIdSize!=0) {
       UMSVishnuException e (ERRCODE_NO_ADMIN);
