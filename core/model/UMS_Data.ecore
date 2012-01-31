@@ -648,6 +648,13 @@
         <details key="shortOption" value="a"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="listFullInfo" eType="ecore:EDataType Ecore.ecore#//EBoolean"
+        defaultValueLiteral="false">
+      <eAnnotations source="Description">
+        <details key="content" value="is an admin option for listing full VISHNU user-authentication systems information such as all concerned only the administrator:&#xA;authLogin, authPassword and userPasswordEncryption&#xA;&#xA; &#xA;"/>
+        <details key="shortOption" value="f"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="is an admin option for listing all user-authentication systems in which a specific user has local user-authentication configs"/>
