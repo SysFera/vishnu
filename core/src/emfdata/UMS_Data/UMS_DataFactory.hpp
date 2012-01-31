@@ -76,6 +76,11 @@ namespace UMS_Data
          */
         virtual ListUsers_ptr createListUsers();
         /**
+         * \brief Creates a new object of class ListUsersOptions
+         * \return Pointer to the object
+         */
+        virtual ListUsersOptions_ptr createListUsersOptions();
+        /**
          * \brief Creates a new object of class Command
          * \return Pointer to the object
          */
@@ -140,6 +145,41 @@ namespace UMS_Data
          * \return Pointer to the object
          */
         virtual ListOptOptions_ptr createListOptOptions();
+        /**
+         * \brief Creates a new object of class AuthSystems
+         * \return Pointer to the object
+         */
+        virtual AuthSystems_ptr createAuthSystems();
+        /**
+         * \brief Creates a new object of class AuthSystemsOptions
+         * \return Pointer to the object
+         */
+        virtual AuthSystemsOptions_ptr createAuthSystemsOptions();
+        /**
+         * \brief Creates a new object of class ListAuthSystems
+         * \return Pointer to the object
+         */
+        virtual ListAuthSystems_ptr createListAuthSystems();
+        /**
+         * \brief Creates a new object of class ListAuthSysOptions
+         * \return Pointer to the object
+         */
+        virtual ListAuthSysOptions_ptr createListAuthSysOptions();
+        /**
+         * \brief Creates a new object of class AuthAccount
+         * \return Pointer to the object
+         */
+        virtual AuthAccount_ptr createAuthAccount();
+        /**
+         * \brief Creates a new object of class ListAuthAccounts
+         * \return Pointer to the object
+         */
+        virtual ListAuthAccounts_ptr createListAuthAccounts();
+        /**
+         * \brief Creates a new object of class ListAuthAccOptions
+         * \return Pointer to the object
+         */
+        virtual ListAuthAccOptions_ptr createListAuthAccOptions();
 
         /**
          * \brief To create an object of a given class (reflective API)

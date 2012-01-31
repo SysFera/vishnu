@@ -33,6 +33,7 @@
 #include "UMS_Data/ListSessionOptions.hpp"
 #include "UMS_Data/User.hpp"
 #include "UMS_Data/ListUsers.hpp"
+#include "UMS_Data/ListUsersOptions.hpp"
 #include "UMS_Data/Command.hpp"
 #include "UMS_Data/ListCommands.hpp"
 #include "UMS_Data/ListCmdOptions.hpp"
@@ -46,6 +47,13 @@
 #include "UMS_Data/OptionValue.hpp"
 #include "UMS_Data/ListOptionsValues.hpp"
 #include "UMS_Data/ListOptOptions.hpp"
+#include "UMS_Data/AuthSystems.hpp"
+#include "UMS_Data/AuthSystemsOptions.hpp"
+#include "UMS_Data/ListAuthSystems.hpp"
+#include "UMS_Data/ListAuthSysOptions.hpp"
+#include "UMS_Data/AuthAccount.hpp"
+#include "UMS_Data/ListAuthAccounts.hpp"
+#include "UMS_Data/ListAuthAccOptions.hpp"
 
 // Package & Factory
 #include "UMS_Data/UMS_DataPackage.hpp"

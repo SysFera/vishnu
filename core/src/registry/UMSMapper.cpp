@@ -553,7 +553,7 @@ UMSMapper::decodeListM(vector<int> separator, const string& msg){
     res+=" -u ";
     res+=a;
   }
-  if (ac->isListAllmachine()){
+  if (ac->isListAllMachine()){
     res+=" -a ";
   }
   a = ac->getMachineId();

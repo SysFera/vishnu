@@ -81,7 +81,7 @@ int main (int ac, char* av[]){
   /********  Process **************************/
   if (opt->count("listAllmachine")){
 
-    listOptions.setListAllmachine(true);
+    listOptions.setListAllMachine(true);
   }
 
   bool full = false;

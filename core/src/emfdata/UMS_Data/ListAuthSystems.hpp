@@ -1,6 +1,6 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
- * UMS_Data/ListMachineOptions.hpp
+ * UMS_Data/ListAuthSystems.hpp
  * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -18,24 +18,21 @@
  */
 
 /**
- * \file ListMachineOptions.hpp
- * \brief The ListMachineOptions class
+ * \file ListAuthSystems.hpp
+ * \brief The ListAuthSystems class
  * \author Generated file
  * \date 31/03/2011
  */
 
-#ifndef UMS_DATA_LISTMACHINEOPTIONS_HPP
-#define UMS_DATA_LISTMACHINEOPTIONS_HPP
+#ifndef UMS_DATA_LISTAUTHSYSTEMS_HPP
+#define UMS_DATA_LISTAUTHSYSTEMS_HPP
 
 #include <UMS_Data_forward.hpp>
 #include <ecorecpp/mapping_forward.hpp>
 
-#include <ecore_forward.hpp>
-#include <ecore_forward.hpp>
-
 #include <ecore/EObject.hpp>
 
-/*PROTECTED REGION ID(ListMachineOptions_pre) START*/
+/*PROTECTED REGION ID(ListAuthSystems_pre) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/
@@ -44,21 +41,21 @@ namespace UMS_Data
 {
 
     /**
-     * \class ListMachineOptions
-     * \brief Implementation of the ListMachineOptions class
+     * \class ListAuthSystems
+     * \brief Implementation of the ListAuthSystems class
      */
-    class ListMachineOptions: public virtual ::ecore::EObject
+    class ListAuthSystems: public virtual ::ecore::EObject
 
     {
     public:
         /**
-         * \brief The default constructor for ListMachineOptions
+         * \brief The default constructor for ListAuthSystems
          */
-        ListMachineOptions();
+        ListAuthSystems();
         /**
-         * \brief The destructor for ListMachineOptions
+         * \brief The destructor for ListAuthSystems
          */
-        virtual ~ListMachineOptions();
+        virtual ~ListAuthSystems();
 
         /**
          * \brief Internal method
@@ -69,43 +66,15 @@ namespace UMS_Data
 
 
         // Attributes
-        /**
-         * \brief To get the userId
-         * \return The userId attribute value
-         **/
-        ::ecore::EString const& getUserId() const;
-        /**
-         * \brief To set the userId
-         * \param _userId The userId value
-         **/
-        void setUserId(::ecore::EString const& _userId);
-
-        /**
-         * \brief To get the listAllMachine
-         * \return The listAllMachine attribute value
-         **/
-        ::ecore::EBoolean isListAllMachine() const;
-        /**
-         * \brief To set the listAllMachine
-         * \param _listAllMachine The listAllMachine value
-         **/
-        void setListAllMachine(::ecore::EBoolean _listAllMachine);
-
-        /**
-         * \brief To get the machineId
-         * \return The machineId attribute value
-         **/
-        ::ecore::EString const& getMachineId() const;
-        /**
-         * \brief To set the machineId
-         * \param _machineId The machineId value
-         **/
-        void setMachineId(::ecore::EString const& _machineId);
 
         // References
+        /**
+         * \brief To get the list of AuthSystemss
+         * \return A reference to a list of AuthSystemss
+         **/
+        ::ecorecpp::mapping::EList< ::UMS_Data::AuthSystems >& getAuthSystems();
 
-
-        /*PROTECTED REGION ID(ListMachineOptions) START*/
+        /*PROTECTED REGION ID(ListAuthSystems) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/
@@ -119,7 +88,7 @@ namespace UMS_Data
         virtual void eUnset(::ecore::EInt _featureID);
         virtual ::ecore::EClass_ptr _eClass();
 
-        /*PROTECTED REGION ID(ListMachineOptionsImpl) START*/
+        /*PROTECTED REGION ID(ListAuthSystemsImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/
@@ -127,16 +96,14 @@ namespace UMS_Data
     protected:
         // Attributes
 
-        ::ecore::EString m_userId;
-
-        ::ecore::EBoolean m_listAllMachine;
-
-        ::ecore::EString m_machineId;
 
         // References
+
+        ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList<
+                ::UMS_Data::AuthSystems > > m_AuthSystems;
 
     };
 
 } // UMS_Data
 
-#endif // UMS_DATA_LISTMACHINEOPTIONS_HPP
+#endif // UMS_DATA_LISTAUTHSYSTEMS_HPP

@@ -1,6 +1,6 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
- * UMS_Data/ListMachineOptions.hpp
+ * UMS_Data/ListAuthAccOptions.hpp
  * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -18,14 +18,14 @@
  */
 
 /**
- * \file ListMachineOptions.hpp
- * \brief The ListMachineOptions class
+ * \file ListAuthAccOptions.hpp
+ * \brief The ListAuthAccOptions class
  * \author Generated file
  * \date 31/03/2011
  */
 
-#ifndef UMS_DATA_LISTMACHINEOPTIONS_HPP
-#define UMS_DATA_LISTMACHINEOPTIONS_HPP
+#ifndef UMS_DATA_LISTAUTHACCOPTIONS_HPP
+#define UMS_DATA_LISTAUTHACCOPTIONS_HPP
 
 #include <UMS_Data_forward.hpp>
 #include <ecorecpp/mapping_forward.hpp>
@@ -35,7 +35,7 @@
 
 #include <ecore/EObject.hpp>
 
-/*PROTECTED REGION ID(ListMachineOptions_pre) START*/
+/*PROTECTED REGION ID(ListAuthAccOptions_pre) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/
@@ -44,21 +44,21 @@ namespace UMS_Data
 {
 
     /**
-     * \class ListMachineOptions
-     * \brief Implementation of the ListMachineOptions class
+     * \class ListAuthAccOptions
+     * \brief Implementation of the ListAuthAccOptions class
      */
-    class ListMachineOptions: public virtual ::ecore::EObject
+    class ListAuthAccOptions: public virtual ::ecore::EObject
 
     {
     public:
         /**
-         * \brief The default constructor for ListMachineOptions
+         * \brief The default constructor for ListAuthAccOptions
          */
-        ListMachineOptions();
+        ListAuthAccOptions();
         /**
-         * \brief The destructor for ListMachineOptions
+         * \brief The destructor for ListAuthAccOptions
          */
-        virtual ~ListMachineOptions();
+        virtual ~ListAuthAccOptions();
 
         /**
          * \brief Internal method
@@ -69,6 +69,17 @@ namespace UMS_Data
 
 
         // Attributes
+        /**
+         * \brief To get the listAll
+         * \return The listAll attribute value
+         **/
+        ::ecore::EBoolean isListAll() const;
+        /**
+         * \brief To set the listAll
+         * \param _listAll The listAll value
+         **/
+        void setListAll(::ecore::EBoolean _listAll);
+
         /**
          * \brief To get the userId
          * \return The userId attribute value
@@ -81,31 +92,20 @@ namespace UMS_Data
         void setUserId(::ecore::EString const& _userId);
 
         /**
-         * \brief To get the listAllMachine
-         * \return The listAllMachine attribute value
+         * \brief To get the authSystemId
+         * \return The authSystemId attribute value
          **/
-        ::ecore::EBoolean isListAllMachine() const;
+        ::ecore::EString const& getAuthSystemId() const;
         /**
-         * \brief To set the listAllMachine
-         * \param _listAllMachine The listAllMachine value
+         * \brief To set the authSystemId
+         * \param _authSystemId The authSystemId value
          **/
-        void setListAllMachine(::ecore::EBoolean _listAllMachine);
-
-        /**
-         * \brief To get the machineId
-         * \return The machineId attribute value
-         **/
-        ::ecore::EString const& getMachineId() const;
-        /**
-         * \brief To set the machineId
-         * \param _machineId The machineId value
-         **/
-        void setMachineId(::ecore::EString const& _machineId);
+        void setAuthSystemId(::ecore::EString const& _authSystemId);
 
         // References
 
 
-        /*PROTECTED REGION ID(ListMachineOptions) START*/
+        /*PROTECTED REGION ID(ListAuthAccOptions) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/
@@ -119,7 +119,7 @@ namespace UMS_Data
         virtual void eUnset(::ecore::EInt _featureID);
         virtual ::ecore::EClass_ptr _eClass();
 
-        /*PROTECTED REGION ID(ListMachineOptionsImpl) START*/
+        /*PROTECTED REGION ID(ListAuthAccOptionsImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/
@@ -127,11 +127,11 @@ namespace UMS_Data
     protected:
         // Attributes
 
+        ::ecore::EBoolean m_listAll;
+
         ::ecore::EString m_userId;
 
-        ::ecore::EBoolean m_listAllMachine;
-
-        ::ecore::EString m_machineId;
+        ::ecore::EString m_authSystemId;
 
         // References
 
@@ -139,4 +139,4 @@ namespace UMS_Data
 
 } // UMS_Data
 
-#endif // UMS_DATA_LISTMACHINEOPTIONS_HPP
+#endif // UMS_DATA_LISTAUTHACCOPTIONS_HPP
