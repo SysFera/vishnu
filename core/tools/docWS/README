@@ -1,0 +1,3 @@
+xsltproc --param ignore.image.scaling 1 wsdl-viewer.xsl UMS.wsdl > UMS.html
+#For generating the corresponding pdffile
+htmldoc -f UMS.pdf UMS.html 

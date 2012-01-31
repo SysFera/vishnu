@@ -616,6 +616,12 @@
         <details key="shortOption" value="s"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="options" eType="#//AuthSystemsOptions">
+      <eAnnotations source="Description">
+        <details key="content" value="is an object which encapsulates the options of the user-authentication system"/>
+        <details key="shortOption" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AuthSystemsOptions" instanceTypeName="AuthSystemsOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="ldapBase" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
