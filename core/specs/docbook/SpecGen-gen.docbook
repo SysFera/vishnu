@@ -2019,7 +2019,7 @@
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. The administrator provides all the parameters required to connect to the user-authentication system: host address, connection login, connection password, type of authentication system.</para><para>2. The System creates the user-authentification system in the database and associates it to an identifier.</para><para>3. The System returns an acknowledgment to the administrator.</para></entry>
+                <entry><para>1. The administrator provides all the parameters required to connect to the user-authentication system: name, host address, connection login, connection password, type of authentication system.</para><para>2. The System creates the user-authentification system in the database and associates it to an identifier.</para><para>3. The System returns an acknowledgment to the administrator.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -2027,7 +2027,7 @@
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry/>
+                <entry><para>1a. The user-authentication system already exists</para></entry>
               </row>
             </tbody>
           </tgroup>
