@@ -3579,13 +3579,6 @@
                 <entry><para>INOUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
-              <row>
-                <entry><para>options</para></entry>
-                <entry><para><link linkend="AuthSystemsOptions">AuthSystemsOptions</link></para></entry>
-                <entry><para>is an object which encapsulates the user-authentication system options</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>no</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -3650,7 +3643,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::addAuthenticationSystem</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>AuthSystems&amp; <parameter>newAuthSys</parameter></paramdef><paramdef>const AuthSystemsOptions&amp; <parameter>options = AuthSystemsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::addAuthenticationSystem</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>AuthSystems&amp; <parameter>newAuthSys</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::updateAuthenticationSystem</title>
@@ -3736,6 +3729,10 @@
               <row>
                 <entry><para>ERRCODE_UNKNOWN_ENCRYPTION_METHOD</para></entry>
                 <entry><para>The encryption method is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_AUTH_ALREADY_LOCKED</para></entry>
+                <entry><para>The user-authentication system is already locked</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
@@ -4570,6 +4567,11 @@
               <entry><para>status</para></entry>
               <entry><para><link linkend="StatusType">StatusType</link></para></entry>
               <entry><para>represents the status of the user-authentication system</para></entry>
+            </row>
+            <row>
+              <entry><para>options</para></entry>
+              <entry><para><link linkend="AuthSystemsOptions">AuthSystemsOptions</link></para></entry>
+              <entry><para>is an object which encapsulates the options of the user-authentication system</para></entry>
             </row>
           </tbody>
         </tgroup>
