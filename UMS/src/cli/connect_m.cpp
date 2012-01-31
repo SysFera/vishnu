@@ -1,5 +1,5 @@
 /**
- * \file connect.cpp
+ * \file connect_m.cpp
  * This file defines the VISHNU connect command 
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
@@ -21,7 +21,6 @@ using namespace std;
 using namespace vishnu;
 
 
-
 int main (int ac, char* av[]){
 
 
@@ -29,19 +28,18 @@ int main (int ac, char* av[]){
 
   string dietConfig;
 
-  std::string userId;
-
-  std::string password;
-
-
   /********** EMF Data ****************************/
-
 
   UMS_Data::ConnectOptions connectOpt;
 
+  /*********** In parameters **********************/
 
-
+  UMS_Data::ListUsers listUsers;
+  
+  
   /******** Callback functions ******************/
+
+
 
   boost::function1<void,UMS_Data::SessionCloseType> fClosePolicy( boost::bind(&UMS_Data::ConnectOptions::setClosePolicy,boost::ref(connectOpt),_1));
   boost::function1<void,int> fSessionInactivityDelay( boost::bind(&UMS_Data::ConnectOptions::setSessionInactivityDelay,boost::ref(connectOpt),_1));
@@ -52,11 +50,15 @@ int main (int ac, char* av[]){
 
   UMS_Data::Session session;
 
-  /**************** Describe options *************/
 
-  
+  /**************** Describe options *************/
     
-    boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,0,dietConfig,CONFIG);
+  boost::shared_ptr< Options> opt(new Options(av[0]) );
+
+  opt->add("dietConfig,c",
+      "The diet config file",
+      ENV,
+      dietConfig);
 
 
   opt->add("sessionInactivityDelay,d", "The session inactivity delay",CONFIG,fSessionInactivityDelay);
@@ -65,8 +67,6 @@ int main (int ac, char* av[]){
   opt->add("substituteUserId,s","The substitute user identifier",CONFIG,fSubstituteUserId);
 
   opt->add("closePolicy,p","for closing session automatically",ENV,fClosePolicy );
-  
-  opt->add("password,w","To give the password ",CONFIG,password );
 
 
   try{
@@ -88,20 +88,6 @@ int main (int ac, char* av[]){
       exit(VISHNU_OK);
     }
 
-    //Fix me
-
-    if(0==opt->count("password") && 1==opt->count("userId")){
-
-    password= vishnu::takePassword("password: ");
-    
-    }
-    else if (1==opt->count("password") && 0==opt->count("userId")){
-
-      errorUsage(av[0], "missiong parameter: userId ");      
-
-    return ERRCODE_CLI_ERROR_MISSING_PARAMETER;
-
-    }
 
     /************** Call UMS connect service *******************************/
 
@@ -109,13 +95,13 @@ int main (int ac, char* av[]){
 
     // initializing DIET
     if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
-    
+
       errorUsage(av[0],dietErrorMsg,EXECERROR);
-    
+
       return  ERRCODE_CLI_ERROR_DIET ;
     }
 
-    connect(userId,password, session, connectOpt);// call the api extern connect service to get a session key
+    //connect(listUsers, session, connectOpt);// call the api extern connect service to get a session key
 
     vishnuFinalize();
 

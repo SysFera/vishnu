@@ -56,6 +56,16 @@ namespace UMS_Data
     // To do this, add the keyword ENABLED before START.
     typedef int CommandStatusType;
     /*PROTECTED REGION END*/
+    /*PROTECTED REGION ID(UMS_Data_AuthType) START*/
+    // Please, enable the protected region if you add manually written code.
+    // To do this, add the keyword ENABLED before START.
+    typedef int AuthType;
+    /*PROTECTED REGION END*/
+    /*PROTECTED REGION ID(UMS_Data_EncryptionMethod) START*/
+    // Please, enable the protected region if you add manually written code.
+    // To do this, add the keyword ENABLED before START.
+    typedef int EncryptionMethod;
+    /*PROTECTED REGION END*/
 
     // EClass
 
@@ -82,6 +92,10 @@ namespace UMS_Data
     // ListUsers
     class ListUsers;
     typedef ListUsers* ListUsers_ptr;
+
+    // ListUsersOptions
+    class ListUsersOptions;
+    typedef ListUsersOptions* ListUsersOptions_ptr;
 
     // Command
     class Command;
@@ -134,6 +148,34 @@ namespace UMS_Data
     // ListOptOptions
     class ListOptOptions;
     typedef ListOptOptions* ListOptOptions_ptr;
+
+    // AuthSystems
+    class AuthSystems;
+    typedef AuthSystems* AuthSystems_ptr;
+
+    // AuthSystemsOptions
+    class AuthSystemsOptions;
+    typedef AuthSystemsOptions* AuthSystemsOptions_ptr;
+
+    // ListAuthSystems
+    class ListAuthSystems;
+    typedef ListAuthSystems* ListAuthSystems_ptr;
+
+    // ListAuthSysOptions
+    class ListAuthSysOptions;
+    typedef ListAuthSysOptions* ListAuthSysOptions_ptr;
+
+    // AuthAccount
+    class AuthAccount;
+    typedef AuthAccount* AuthAccount_ptr;
+
+    // ListAuthAccounts
+    class ListAuthAccounts;
+    typedef ListAuthAccounts* ListAuthAccounts_ptr;
+
+    // ListAuthAccOptions
+    class ListAuthAccOptions;
+    typedef ListAuthAccOptions* ListAuthAccOptions_ptr;
 
     // Package & Factory
     class UMS_DataFactory;

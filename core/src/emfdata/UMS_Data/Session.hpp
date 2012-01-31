@@ -168,6 +168,17 @@ namespace UMS_Data
          **/
         void setTimeout(::ecore::ELong _timeout);
 
+        /**
+         * \brief To get the authenId
+         * \return The authenId attribute value
+         **/
+        ::ecore::EString const& getAuthenId() const;
+        /**
+         * \brief To set the authenId
+         * \param _authenId The authenId value
+         **/
+        void setAuthenId(::ecore::EString const& _authenId);
+
         // References
 
 
@@ -210,6 +221,8 @@ namespace UMS_Data
         ::UMS_Data::SessionCloseType m_closePolicy;
 
         ::ecore::ELong m_timeout;
+
+        ::ecore::EString m_authenId;
 
         // References
 

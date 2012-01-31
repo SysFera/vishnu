@@ -1,6 +1,6 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
- * UMS_Data/ListMachineOptions.cpp
+ * UMS_Data/ListAuthAccOptions.cpp
  * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ListMachineOptions.hpp"
+#include "ListAuthAccOptions.hpp"
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include "UMS_Data/UMS_DataPackage.hpp"
@@ -30,33 +30,59 @@
 using namespace ::UMS_Data;
 
 // Default constructor
-ListMachineOptions::ListMachineOptions() :
-    m_listAllMachine(false), m_machineId("")
+ListAuthAccOptions::ListAuthAccOptions() :
+    m_listAll(false), m_authSystemId("")
 {
 
-    /*PROTECTED REGION ID(ListMachineOptionsImpl__ListMachineOptionsImpl) START*/
+    /*PROTECTED REGION ID(ListAuthAccOptionsImpl__ListAuthAccOptionsImpl) START*/
     // Please, enable the protected region if you add manually written code.
     // To do this, add the keyword ENABLED before START.
     /*PROTECTED REGION END*/
 }
 
-ListMachineOptions::~ListMachineOptions()
+ListAuthAccOptions::~ListAuthAccOptions()
 {
 }
 
-/*PROTECTED REGION ID(ListMachineOptions.cpp) START*/
+/*PROTECTED REGION ID(ListAuthAccOptions.cpp) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/
 
 // Attributes
 
-::ecore::EString const& ListMachineOptions::getUserId() const
+::ecore::EBoolean ListAuthAccOptions::isListAll() const
+{
+    return m_listAll;
+}
+
+void ListAuthAccOptions::setListAll(::ecore::EBoolean _listAll)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EBoolean _old_listAll = m_listAll;
+#endif
+    m_listAll = _listAll;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getListAuthAccOptions__listAll(),
+                _old_listAll,
+                m_listAll
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EString const& ListAuthAccOptions::getUserId() const
 {
     return m_userId;
 }
 
-void ListMachineOptions::setUserId(::ecore::EString const& _userId)
+void ListAuthAccOptions::setUserId(::ecore::EString const& _userId)
 {
 #ifdef ECORECPP_NOTIFICATION_API
     ::ecore::EString _old_userId = m_userId;
@@ -68,7 +94,7 @@ void ListMachineOptions::setUserId(::ecore::EString const& _userId)
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getListMachineOptions__userId(),
+                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getListAuthAccOptions__userId(),
                 _old_userId,
                 m_userId
         );
@@ -77,52 +103,26 @@ void ListMachineOptions::setUserId(::ecore::EString const& _userId)
 #endif
 }
 
-::ecore::EBoolean ListMachineOptions::isListAllMachine() const
+::ecore::EString const& ListAuthAccOptions::getAuthSystemId() const
 {
-    return m_listAllMachine;
+    return m_authSystemId;
 }
 
-void ListMachineOptions::setListAllMachine(::ecore::EBoolean _listAllMachine)
+void ListAuthAccOptions::setAuthSystemId(::ecore::EString const& _authSystemId)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EBoolean _old_listAllMachine = m_listAllMachine;
+    ::ecore::EString _old_authSystemId = m_authSystemId;
 #endif
-    m_listAllMachine = _listAllMachine;
+    m_authSystemId = _authSystemId;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getListMachineOptions__listAllMachine(),
-                _old_listAllMachine,
-                m_listAllMachine
-        );
-        eNotify(&notification);
-    }
-#endif
-}
-
-::ecore::EString const& ListMachineOptions::getMachineId() const
-{
-    return m_machineId;
-}
-
-void ListMachineOptions::setMachineId(::ecore::EString const& _machineId)
-{
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_machineId = m_machineId;
-#endif
-    m_machineId = _machineId;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getListMachineOptions__machineId(),
-                _old_machineId,
-                m_machineId
+                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getListAuthAccOptions__authSystemId(),
+                _old_authSystemId,
+                m_authSystemId
         );
         eNotify(&notification);
     }
