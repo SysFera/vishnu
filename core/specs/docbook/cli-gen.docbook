@@ -2225,7 +2225,8 @@
         <para>The vishnu_list_authentication_systems command lists VISHNU user-authentification systems</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_list_authentication_systems</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-a</option></arg><arg choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-a</option></arg><arg choice="opt"><option>-f</option></arg><arg
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
               choice="opt"><option>-i <replaceable>authSystemId</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -2255,6 +2256,13 @@
                 <entry><para>boolean</para></entry>
                 <entry><para>a</para></entry>
                 <entry><para>is an option for listing all VISHNU user-authentication systems</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>listFullInfo</para></entry>
+                <entry><para>boolean</para></entry>
+                <entry><para>f</para></entry>
+                <entry><para>is an admin option for listing full VISHNU user-authentication systems information such as all concerned only the administrator:</para><para>authLogin, authPassword and userPasswordEncryption</para><para> </para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -2452,13 +2460,13 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_list_auth_account</title>
+        <title>vishnu_list_auth_accounts</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_list_auth_account command lists local user-authentication configurations</para>
+        <para>The vishnu_list_auth_accounts command lists local user-authentication configurations</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_list_auth_account</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_list_auth_accounts</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-a</option></arg><arg choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
               choice="opt"><option>-i <replaceable>authSystemId</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>

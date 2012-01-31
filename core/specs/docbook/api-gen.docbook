@@ -4346,7 +4346,7 @@
         <funcsynopsis><funcprototype><funcdef>int <function>vishnu::deleteAuthAccount</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>authSystemId</parameter></paramdef><paramdef>const string&amp; <parameter>userIdOption = &quot;&quot;</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function UMS::listAuthAccount</title>
+        <title>Function UMS::listAuthAccounts</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -4397,7 +4397,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listAuthAccount() function lists local user-authentication configurations</para>
+        <para>The listAuthAccounts() function lists local user-authentication configurations</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -4469,7 +4469,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listAuthAccount</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthAccounts&amp; <parameter>listAuthAccounts</parameter></paramdef><paramdef>const ListAuthAccOptions&amp; <parameter>options = ListAuthAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listAuthAccounts</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthAccounts&amp; <parameter>listAuthAccounts</parameter></paramdef><paramdef>const ListAuthAccOptions&amp; <parameter>options = ListAuthAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
     </section>
     <section>
@@ -4819,6 +4819,11 @@
               <entry><para>listAllAuthSystems</para></entry>
               <entry><para>boolean</para></entry>
               <entry><para>is an option for listing all VISHNU user-authentication systems</para></entry>
+            </row>
+            <row>
+              <entry><para>listFullInfo</para></entry>
+              <entry><para>boolean</para></entry>
+              <entry><para>is an admin option for listing full VISHNU user-authentication systems information such as all concerned only the administrator:</para><para>authLogin, authPassword and userPasswordEncryption</para><para> </para></entry>
             </row>
             <row>
               <entry><para>userId</para></entry>
