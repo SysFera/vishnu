@@ -3620,6 +3620,10 @@
                 <entry><para>The encryption method is unknown</para></entry>
               </row>
               <row>
+                <entry><para>ERRCODE_AUTHSYSTEM_ALREADY_EXIST</para></entry>
+                <entry><para>The name of the user-authentication system already exists</para></entry>
+              </row>
+              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -3731,7 +3735,7 @@
                 <entry><para>The encryption method is unknown</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_AUTH_ALREADY_LOCKED</para></entry>
+                <entry><para>ERRCODE_AUTHSYSTEM_ALREADY_LOCKED</para></entry>
                 <entry><para>The user-authentication system is already locked</para></entry>
               </row>
               <row>
