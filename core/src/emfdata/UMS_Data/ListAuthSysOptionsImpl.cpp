@@ -61,6 +61,12 @@ void ListAuthSysOptions::_initialize()
                 m_listAllAuthSystems);
     }
         return _any;
+    case ::UMS_Data::UMS_DataPackage::LISTAUTHSYSOPTIONS__LISTFULLINFO:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EBoolean >::toAny(_any,
+                m_listFullInfo);
+    }
+        return _any;
     case ::UMS_Data::UMS_DataPackage::LISTAUTHSYSOPTIONS__USERID:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
@@ -89,6 +95,12 @@ void ListAuthSysOptions::eSet(::ecore::EInt _featureID,
                 _newValue, m_listAllAuthSystems);
     }
         return;
+    case ::UMS_Data::UMS_DataPackage::LISTAUTHSYSOPTIONS__LISTFULLINFO:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EBoolean >::fromAny(
+                _newValue, m_listFullInfo);
+    }
+        return;
     case ::UMS_Data::UMS_DataPackage::LISTAUTHSYSOPTIONS__USERID:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
@@ -112,6 +124,8 @@ void ListAuthSysOptions::eSet(::ecore::EInt _featureID,
     {
     case ::UMS_Data::UMS_DataPackage::LISTAUTHSYSOPTIONS__LISTALLAUTHSYSTEMS:
         return m_listAllAuthSystems != false;
+    case ::UMS_Data::UMS_DataPackage::LISTAUTHSYSOPTIONS__LISTFULLINFO:
+        return m_listFullInfo != false;
     case ::UMS_Data::UMS_DataPackage::LISTAUTHSYSOPTIONS__USERID:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_userId);

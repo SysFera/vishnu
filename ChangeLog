@@ -17,6 +17,8 @@ line to allow the listing of jobs on all machines
 
 * Extended list jobs options: added multipleStatus and batchJob options 
 
+* Fixed bugzilla #326 where with the option -h of connect command did not work 
+
 +--------------+
 | VISHNU 1.2.6 |
 +--------------+

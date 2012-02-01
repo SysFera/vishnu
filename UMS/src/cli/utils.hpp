@@ -62,9 +62,55 @@ operator<<(std::ostream& os, const UMS_Data::LocalAccount_ptr& account);
  * \return The output stream in which the list of local accounts has been printed
  */
 
-
 std::ostream&
 operator<<(std::ostream& os, UMS_Data::ListLocalAccounts& lsLocalAccounts);
+
+/**
+ * \brief Helper function to display an authentication system
+ * \param os: The output stream in which the authentication system will be printed 
+ * \param authSystem: The authentication system  to display
+ * \return The output stream in which the authentication system has been printed
+ */
+
+std::ostream&
+operator<<(std::ostream& os, const UMS_Data::AuthSystems_ptr& authSystem);
+
+/**
+ * \brief Helper function to display a list of authentication systems
+ * \param os: The output stream in which the list will be printed 
+ * \param lsAuthSystems: The list to display
+ * \return The output stream in which the list of authentication systems has been printed
+ */
+
+std::ostream&
+operator<<(std::ostream& os, UMS_Data::ListAuthSystems& lsAuthSystems);
+
+
+/**
+ * \brief Helper function to display an authentication account
+ * \param os: The output stream in which the authentication account will be printed 
+ * \param authSystem: The authentication account  to display
+ * \return The output stream in which the authentication account has been printed
+ */
+
+std::ostream&
+operator<<(std::ostream& os, const UMS_Data::AuthAccount_ptr& authAccount);
+
+/**
+ * \brief Helper function to display a list of authentication accounts
+ * \param os: The output stream in which the list will be printed 
+ * \param lsAuthAccounts: The list to display
+ * \return The output stream in which the list of authentication accounts has been printed
+ */
+
+std::ostream&
+operator<<(std::ostream& os, UMS_Data::ListAuthAccounts& lsAuthAccounts);
+
+
+
+
+
+
 
 
 /**
