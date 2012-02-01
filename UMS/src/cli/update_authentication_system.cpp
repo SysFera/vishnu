@@ -46,6 +46,7 @@ int main (int ac, char* av[]){
 
   string dietConfig;
 
+  std::string ldapBase;
   /********** EMF data ************/
 
   UMS_Data::AuthSystems newAuthsystem;
@@ -66,14 +67,13 @@ int main (int ac, char* av[]){
 
   AuthcallBackType fType( boost::bind(&UMS_Data::AuthSystems::setType,boost::ref(newAuthsystem),_1));
 
-  StringcallBackType fLdapBase( boost::bind(&UMS_Data::AuthSystemsOptions::setLdapBase,boost::ref(options),_1));
 
 StatuscallBackType fStatus ( boost::bind(&UMS_Data::AuthSystems::setStatus,boost::ref(newAuthsystem),_1));
   
   /**************** Describe options *************/
 
 boost::shared_ptr<Options> opt= makeAuthSystemOptions(av[0],dietConfig, fName,
-fURI,fAuthLogin,fAuthPassword,fUserPasswordEncryption,fType,fLdapBase);
+fURI,fAuthLogin,fAuthPassword,fUserPasswordEncryption,fType,ldapBase);
 
 opt->add("status,s",
     "represents the status of the user-authentication system",
@@ -107,6 +107,15 @@ CLICmd cmd = CLICmd (ac, av, opt);
     return 0;
   }
  
+  if(opt->count ("ldapBase")){
+
+  UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+ UMS_Data::AuthSystemsOptions_ptr options_ptr = ecoreFactory->createAuthSystemsOptions();
+options_ptr->setLdapBase(ldapBase);
+newAuthsystem.setOptions(options_ptr);
+
+
+}
   UpdateAuthenticationSystemFunc apiFunc(newAuthsystem);
   return GenericCli().run(apiFunc, dietConfig, ac, av);
 

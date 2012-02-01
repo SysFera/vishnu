@@ -31,7 +31,7 @@ using namespace ::UMS_Data;
 
 // Default constructor
 ListAuthSysOptions::ListAuthSysOptions() :
-    m_listAllAuthSystems(false), m_authSystemId("")
+    m_listAllAuthSystems(false), m_listFullInfo(false), m_authSystemId("")
 {
 
     /*PROTECTED REGION ID(ListAuthSysOptionsImpl__ListAuthSysOptionsImpl) START*/
@@ -72,6 +72,32 @@ void ListAuthSysOptions::setListAllAuthSystems(
                 (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getListAuthSysOptions__listAllAuthSystems(),
                 _old_listAllAuthSystems,
                 m_listAllAuthSystems
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EBoolean ListAuthSysOptions::isListFullInfo() const
+{
+    return m_listFullInfo;
+}
+
+void ListAuthSysOptions::setListFullInfo(::ecore::EBoolean _listFullInfo)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EBoolean _old_listFullInfo = m_listFullInfo;
+#endif
+    m_listFullInfo = _listFullInfo;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getListAuthSysOptions__listFullInfo(),
+                _old_listFullInfo,
+                m_listFullInfo
         );
         eNotify(&notification);
     }

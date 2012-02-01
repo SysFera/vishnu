@@ -22,16 +22,15 @@ using namespace vishnu;
 struct AddAuthenticationSystemFunc {
 
   UMS_Data::AuthSystems mnewAuthsystem;
-  UMS_Data::AuthSystemsOptions moptions;
 
-  AddAuthenticationSystemFunc(const UMS_Data::AuthSystems& newAuthsystem, UMS_Data::AuthSystemsOptions options ):
-     mnewAuthsystem(newAuthsystem),moptions(options)
+  AddAuthenticationSystemFunc(const UMS_Data::AuthSystems& newAuthsystem ):
+     mnewAuthsystem(newAuthsystem)
   {};
 
   int operator()(std::string sessionKey) {
 
 
-     int res=addAuthenticationSystem(sessionKey,mnewAuthsystem,moptions);
+     int res=addAuthenticationSystem(sessionKey,mnewAuthsystem);
     
       cout <<"The new authentication system identifier is " << mnewAuthsystem.getAuthSystemId() << endl;
 
@@ -50,8 +49,8 @@ int main (int ac, char* av[]){
   /********** EMF data ************/
 
   UMS_Data::AuthSystems newAuthsystem;
-  UMS_Data::AuthSystemsOptions options;
-
+  
+  std::string ldapBase;
   /******** Callback functions ******************/
 
   StringcallBackType fName( boost::bind(&UMS_Data::AuthSystems::setName,boost::ref(newAuthsystem),_1));
@@ -67,13 +66,12 @@ int main (int ac, char* av[]){
 
   AuthcallBackType fType( boost::bind(&UMS_Data::AuthSystems::setType,boost::ref(newAuthsystem),_1));
 
-  StringcallBackType fLdapBase( boost::bind(&UMS_Data::AuthSystemsOptions::setLdapBase,boost::ref(options),_1));
 
 
   /**************** Describe options *************/
 
 boost::shared_ptr<Options> opt= makeAuthSystemOptions(av[0],dietConfig, fName,
-fURI,fAuthLogin,fAuthPassword,fUserPasswordEncryption,fType,fLdapBase,1);
+fURI,fAuthLogin,fAuthPassword,fUserPasswordEncryption,fType,ldapBase,1);
   
 
 CLICmd cmd = CLICmd (ac, av, opt);
@@ -92,8 +90,20 @@ CLICmd cmd = CLICmd (ac, av, opt);
     helpUsage(*opt,"name URI authLogin authPassword userPasswordEncryption type");
     return 0;
   }
- 
-  AddAuthenticationSystemFunc apiFunc(newAuthsystem,options);
+
+if(opt->count ("ldapBase")){
+
+  UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+ UMS_Data::AuthSystemsOptions_ptr options_ptr = ecoreFactory->createAuthSystemsOptions();
+options_ptr->setLdapBase(ldapBase);
+newAuthsystem.setOptions(options_ptr);
+
+
+
+}
+
+
+  AddAuthenticationSystemFunc apiFunc(newAuthsystem);
   return GenericCli().run(apiFunc, dietConfig, ac, av);
 
 }// end of main
