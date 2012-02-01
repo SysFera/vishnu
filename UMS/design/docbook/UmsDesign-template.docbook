@@ -151,7 +151,7 @@
       <title>Overview of the UMS software infrastructure</title>
       <para>We present in this section a detailed description of the UMS package architecture in terms of software components.
 	In addition we show the dependencies between components to highlight their reuse. These components follow a client/server model.
-        We present the different software layers from services (provided directly to the user) to the database (used by the server). 
+        We present the different software layers from services (provided directly to the user) to the external dependencies (databases or LDAP used by the server). 
 	The UMS client server package has been split into eight different interrelated components. The diagrams shown in section 2.3 describe
         the relationships between these components. The definitions of the components are the following:
        </para>
@@ -193,6 +193,10 @@
 	    <para><emphasis role="bold">Vishnu Database</emphasis> stores all data manipulated by the UMS Server.
 	    </para>
 	  </listitem>
+	  <listitem>
+	    <para><emphasis role="bold">LDAP</emphasis> is an external component used for authentication.
+	    </para>
+	  </listitem>
 
         </itemizedlist>
       </para>
@@ -221,6 +225,10 @@
           </listitem>
           <listitem>
             <para><emphasis role="bold">Vishnu database</emphasis>: this component represents a unique instance of MySQL or PostgreSQL database.
+            </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">LDAP</emphasis>: this component represents a running LDAP system.
             </para>
           </listitem>
 	 </itemizedlist>
@@ -391,6 +399,82 @@
 	      </listitem>
 	    </itemizedlist>
 	  </listitem>
+	  <listitem>
+	    <para>
+            </para>
+	    <itemizedlist>
+              <listitem>
+		<para>The <emphasis
+			     role="it">VISHNU</emphasis> table has one or more <emphasis
+										  role="it">AUTHSYSTEM</emphasis>
+		</para>
+	      </listitem>
+              <listitem>
+		<para>A <emphasis
+			   role="it">AUTHSYSTEM</emphasis> is in one and only one <emphasis
+										  role="it">VISHNU</emphasis> infrastructure
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+	  <listitem>
+	    <para>
+            </para>
+	    <itemizedlist>
+              <listitem>
+		<para>The <emphasis
+			     role="it">AUTHSYSTEM</emphasis> table is extended one or more <emphasis
+										  role="it">LDAPAUTHSYST</emphasis>
+		</para>
+	      </listitem>
+              <listitem>
+		<para>A <emphasis
+			   role="it">LDAPAUTHSYST</emphasis> is in one and only one <emphasis
+										       role="it">AUTHSYSTEM</emphasis>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+
+	  <listitem>
+	    <para>
+            </para>
+	    <itemizedlist>
+              <listitem>
+		<para>The <emphasis
+			     role="it">AUTHSYSTEM</emphasis> table has one or more <emphasis
+										  role="it">AUTHACCOUNT</emphasis>
+		</para>
+	      </listitem>
+              <listitem>
+		<para>A <emphasis
+			   role="it">AUTHACCOUNT</emphasis> is in one and only one <emphasis
+										       role="it">AUTHSYSTEM</emphasis>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+
+	  <listitem>
+	    <para>
+            </para>
+	    <itemizedlist>
+              <listitem>
+		<para>The <emphasis
+			     role="it">USERS</emphasis> has one or more <emphasis
+										  role="it">AUTHACCOUNT</emphasis>
+		</para>
+	      </listitem>
+              <listitem>
+		<para>A <emphasis
+			   role="it">AUTHACCOUNT</emphasis> is for one and only one <emphasis
+										       role="it">USERS</emphasis>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+
+
 	  <listitem>
 	    <para>
             </para>
