@@ -75,6 +75,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   string             	  lana = "dupont"  ;
   string             	  mail = "cl3m3ntlebgkidechyr@hotmail.fr";
   ListUsers_ptr      	  liu  = ecoreFactory->createListUsers();
+  ListUsersOptions      liuo;
   // local account
   ListLocalAccounts_ptr   lia  = ecoreFactory->createListLocalAccounts();
   ListLocalAccOptions     lioa ;//= ecoreFactory->createListLocalAccOptions();
@@ -614,30 +615,33 @@ try {
   ma.setMachineId(maid);
 
   // Test list user
+  liuo.setUserId ("");
   BOOST_REQUIRE(restore  (sqlScript+"/clean_session.sql")==0);
   BOOST_MESSAGE(" Testing normal list user UA5.2B" );
   BOOST_CHECK  (connect  (uid, pwd, sess, cop )==0);
-  BOOST_CHECK  (listUsers(sess.getSessionKey(), *liu, ""       )==0);
+  BOOST_CHECK  (listUsers(sess.getSessionKey(), *liu, liuo       )==0);
   BOOST_CHECK  (close    (sess.getSessionKey()                )==0);
   BOOST_CHECK (liu->getUsers().size()>0);
   BOOST_CHECK (liu->getUsers()[0]->getUserId() == "admin_1");
 
   // Test list user option user
+  liuo.setUserId ("admin_1");
   BOOST_REQUIRE(restore  (sqlScript+"/clean_session.sql")==0);
   BOOST_MESSAGE(" Testing list user with userid UA5.2B" );
   BOOST_CHECK  (connect  (uid, pwd, sess, cop )==0);
   liu = ecoreFactory->createListUsers();
-  BOOST_CHECK  (listUsers(sess.getSessionKey(), *liu, "admin_1")==0);
+  BOOST_CHECK  (listUsers(sess.getSessionKey(), *liu, liuo )==0);
   BOOST_CHECK  (close    (sess.getSessionKey()                )==0);
   BOOST_CHECK (liu->getUsers().size()>0);
   BOOST_CHECK (liu->getUsers()[0]->getUserId()=="admin_1");
 
   // Test list user
+  liuo.setUserId ("");
   BOOST_REQUIRE(restore  (sqlScript+"/clean_session.sql"  )==0);
   BOOST_MESSAGE(" Testing bad key list user UA5.2E" );
   BOOST_CHECK  (connect  (uid  , pwd, sess, cop )==0);
   liu = ecoreFactory->createListUsers();
-  BOOST_CHECK_THROW  (listUsers("bad", *liu, ""       ), VishnuException);
+  BOOST_CHECK_THROW  (listUsers("bad", *liu, liuo       ), VishnuException);
   BOOST_CHECK  (close    (sess.getSessionKey()                  )==0);
 
   // Test list session
@@ -876,9 +880,11 @@ try {
   else{
     BOOST_MESSAGE("List session failed, reconnect not called");
   }
-  BOOST_CHECK	 (listUsers             (sess.getSessionKey(), *liu , ""       )==0);
+  
+  liuo.setUserId ("");
+  BOOST_CHECK	 (listUsers             (sess.getSessionKey(), *liu , liuo       )==0);
   liom.setMachineId(mid);
-  liom.setListAllmachine(true);
+  liom.setListAllMachine(true);
   BOOST_CHECK	 (listMachines           (sess.getSessionKey(), *lim , liom     )==0);
   lioa.setMachineId("");
   BOOST_CHECK	 (listLocalAccounts      (sess.getSessionKey(), *lia , lioa     )==0);
