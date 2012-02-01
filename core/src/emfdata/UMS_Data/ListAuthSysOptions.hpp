@@ -81,6 +81,17 @@ namespace UMS_Data
         void setListAllAuthSystems(::ecore::EBoolean _listAllAuthSystems);
 
         /**
+         * \brief To get the listFullInfo
+         * \return The listFullInfo attribute value
+         **/
+        ::ecore::EBoolean isListFullInfo() const;
+        /**
+         * \brief To set the listFullInfo
+         * \param _listFullInfo The listFullInfo value
+         **/
+        void setListFullInfo(::ecore::EBoolean _listFullInfo);
+
+        /**
          * \brief To get the userId
          * \return The userId attribute value
          **/
@@ -128,6 +139,8 @@ namespace UMS_Data
         // Attributes
 
         ::ecore::EBoolean m_listAllAuthSystems;
+
+        ::ecore::EBoolean m_listFullInfo;
 
         ::ecore::EString m_userId;
 

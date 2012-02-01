@@ -158,7 +158,16 @@ namespace UMS_Data
         void setStatus(::UMS_Data::StatusType _status);
 
         // References
-
+        /**
+         * \brief To get the options
+         * \return A reference to options
+         **/
+        ::UMS_Data::AuthSystemsOptions_ptr getOptions();
+        /**
+         * \brief To set the options reference
+         * \param _options A reference to a options
+         **/
+        void setOptions(::UMS_Data::AuthSystemsOptions_ptr _options);
 
         /*PROTECTED REGION ID(AuthSystems) START*/
         // Please, enable the protected region if you add manually written code.
@@ -199,6 +208,8 @@ namespace UMS_Data
         ::UMS_Data::StatusType m_status;
 
         // References
+
+        ::UMS_Data::AuthSystemsOptions_ptr m_options;
 
     };
 
