@@ -24,7 +24,8 @@ set(cli_SRCS cli/utils
   cli/machineUtils
   cli/listMachineUtils
   cli/listHistoryCmdUtils
-  cli/authenticationSystemUtils.cpp)
+  cli/authenticationSystemUtils.cpp
+  cli/authenticationAccountUtils.cpp)
 
 set(api_SRCS api/api_ums.cpp)
 set(api_HEADERS api/api_ums.hpp)

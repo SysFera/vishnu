@@ -752,7 +752,7 @@ int
 
 
 int
-  vishnu::addAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSystems& newAuthSys, const UMS_Data::AuthSystemsOptions& options)
+  vishnu::addAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSystems& newAuthSys)
                                      throw(UserException, SystemException){
                                      
                                        std::cout << "name "  << newAuthSys.getName() << "\n";                                 
@@ -761,9 +761,10 @@ int
                                        std::cout << "authPassword "  << newAuthSys.getAuthPassword() << "\n";                                 
                                        std::cout << "UserPasswordEncryption "  << newAuthSys.getUserPasswordEncryption() << "\n";                                 
                                        std::cout << "type "  << newAuthSys.getType() << "\n";                                 
-                                       std::cout << "LdapBase "  << options.getLdapBase() << "\n";                                 
-                                     
-                                     
+                                       if (newAuthSys.getOptions() != NULL) {
+                                         std::cout << "LdapBase "  << newAuthSys.getOptions()->getLdapBase() << "\n";                                 
+                                       }
+
                                      }
 
 /***
@@ -776,7 +777,7 @@ int
 
 
 int
-vishnu::updateAuthenticationSystem(const std::string& sessionKey, const UMS_Data::AuthSystems& AuthSys)
+vishnu::updateAuthenticationSystem(const std::string& sessionKey,  UMS_Data::AuthSystems& AuthSys)
                                      throw(UserException, SystemException){
                                        std::cout << "name "  << AuthSys.getName() << "\n";                                 
                                        std::cout << "URI "  << AuthSys.getURI() << "\n";                                 
@@ -785,7 +786,9 @@ vishnu::updateAuthenticationSystem(const std::string& sessionKey, const UMS_Data
                                        std::cout << "UserPasswordEncryption "  << AuthSys.getUserPasswordEncryption() << "\n";                                 
                                        std::cout << "status "  << AuthSys.getStatus() << "\n";                                 
                                        std::cout << "type "  << AuthSys.getType() << "\n";                                 
-                                     
+                                    if (AuthSys.getOptions() != NULL) {
+                                         std::cout << "LdapBase "  << AuthSys.getOptions()->getLdapBase() << "\n";                                 
+                                       } 
                                      }
 
 /***
@@ -797,9 +800,13 @@ vishnu::updateAuthenticationSystem(const std::string& sessionKey, const UMS_Data
 
 int
 vishnu::deleteAuthenticationSystem(const std::string& sessionKey, const std::string& authSystemId)
-                                    throw(UserException, SystemException){}
+                                    throw(UserException, SystemException){
+                                    
+                                    
+                                       std::cout << "ID "  << authSystemId << "\n";                                 
+                                    
+                                    }
  
-
 
 /***
  * \brief Function to lists VISHNU user-authentification systems 
@@ -829,7 +836,14 @@ vishnu::listAuthenticationSystems(const std::string& sessionKey, UMS_Data::ListA
 
 int
 vishnu::addAuthAccount(const std::string& sessionKey, const UMS_Data::AuthAccount& authAccount)
-                                     throw(UserException, SystemException){}
+                                     throw(UserException, SystemException){
+                                     
+                                         std::cout << "authSystemId "  << authAccount.getAuthSystemId() << "\n";                                 
+                                       std::cout << "UserId "  << authAccount.getUserId() << "\n";                                 
+                                       std::cout << "acLogin "  << authAccount.getAcLogin() << "\n";                                 
+                                    
+                                     
+                                     }
 
 
 /***
@@ -842,7 +856,16 @@ vishnu::addAuthAccount(const std::string& sessionKey, const UMS_Data::AuthAccoun
 
 int 
 vishnu::updateAuthAccount(const std::string& sessionKey, const UMS_Data::AuthAccount& authenAccount)
-                                     throw(UserException, SystemException){}
+                                     throw(UserException, SystemException){
+                                     
+                                      
+                                         std::cout << "authSystemId "  << authenAccount.getAuthSystemId() << "\n";                                 
+                                       std::cout << "UserId "  << authenAccount.getUserId() << "\n";                                 
+                                       std::cout << "acLogin "  << authenAccount.getAcLogin() << "\n";                                 
+                                    
+
+                                     
+                                     }
 
 
 /***
@@ -859,7 +882,15 @@ vishnu::updateAuthAccount(const std::string& sessionKey, const UMS_Data::AuthAcc
 
 int 
 vishnu::deleteAuthAccount(const std::string& sessionKey, const std::string& authSystemId, const std::string& userIdOption )
-                                     throw(UserException, SystemException){}
+                                     throw(UserException, SystemException){
+                                     
+                                       
+                                         std::cout << "authSystemId "  << authSystemId<< "\n";                                 
+                                       std::cout << "UserIdOption "  << userIdOption << "\n";                                 
+                                     
+                                     
+                                     
+                                     }
 
 /***
  * \brief Function to lists local user-authentication configurations 
@@ -875,8 +906,15 @@ vishnu::deleteAuthAccount(const std::string& sessionKey, const std::string& auth
 
 
 int 
-vishnu::listAuthAccount(const std::string& sessionKey, UMS_Data::ListAuthAccounts& listAuthAccounts, const UMS_Data::ListAuthAccOptions& options)
-                            throw(UserException, SystemException){}
+vishnu::listAuthAccounts(const std::string& sessionKey, UMS_Data::ListAuthAccounts& listAuthAccounts, const UMS_Data::ListAuthAccOptions& options)
+                            throw(UserException, SystemException){
+                            
+                              std::cout << "userId :" <<  options.getUserId() << "\n";
+                              std::cout << "AuthSystemId: " <<  options.getAuthSystemId() << "\n";
+                              std::cout << "listAll: " << std::boolalpha <<  options.isListAll() << "\n";
+
+                            
+                            }
 
 
 /**

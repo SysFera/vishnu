@@ -330,6 +330,148 @@ ostream& operator<<(ostream& os,  UMS_Data::ListLocalAccounts& lsLocalAccount) {
 }
 
 /**
+ * \brief Helper function to display an authentication system
+ * \param os: The output stream in which the authentication system will be printed 
+ * \param authSystem: The authentication system  to display
+ * \return The output stream in which the authentication system has been printed
+ */
+
+std::ostream&
+operator<<(std::ostream& os, const UMS_Data::AuthSystems_ptr& authSystem){}
+
+/**
+ * \brief Helper function to display a list of authentication systems
+ * \param os: The output stream in which the list will be printed 
+ * \param lsAuthSystems: The list to display
+ * \return The output stream in which the list of authentication systems has been printed
+ */
+
+std::ostream&
+operator<<(std::ostream& os, UMS_Data::ListAuthSystems& lsAuthSystems) {
+
+//#if 0
+  size_t maxAuthSystemIdSize = std::string("authSystemId").size();
+  size_t maxNameSize = std::string("name").size();
+  size_t maxURISize = std::string("URI").size();
+  std::string authSystemId;
+  std::string name;
+  std::string URI;
+
+  for(unsigned int i = 0; i < lsAuthSystems.getAuthSystems().size(); i++) {
+
+    authSystemId = (lsAuthSystems.getAuthSystems().get(i))->getAuthSystemId();
+    maxAuthSystemIdSize = max(maxAuthSystemIdSize, authSystemId.size());
+
+    name = (lsAuthSystems.getAuthSystems().get(i))->getName();
+    maxNameSize = max(maxNameSize, name.size());
+
+    URI = (lsAuthSystems.getAuthSystems().get(i))->getURI();
+    maxURISize = max(maxURISize, URI.size());
+
+  }
+
+  os << setw(maxAuthSystemIdSize+2) << left << "authSystemId" << setw(maxNameSize+2) << left << "name" << setw(maxURISize+2) << left << "URI";
+  os << endl;
+  setFill(maxAuthSystemIdSize, os);
+  setFill(maxNameSize, os);
+  setFill(maxURISize, os);
+  os << endl;
+
+  for(unsigned int i = 0; i < lsAuthSystems.getAuthSystems().size(); i++) {
+    authSystemId = (lsAuthSystems.getAuthSystems().get(i))->getAuthSystemId();
+    name = (lsAuthSystems.getAuthSystems().get(i))->getName();
+    URI = (lsAuthSystems.getAuthSystems().get(i))->getURI();
+    os << setw(maxAuthSystemIdSize+2) << left << authSystemId;
+    os << setw(maxNameSize+2) << left << name;
+    os << setw(maxURISize+2) << left <<  URI;
+    os << endl;
+  }
+
+//#endif
+
+}
+
+
+
+/**
+ * \brief Helper function to display an authentication account
+ * \param os: The output stream in which the authentication account will be printed 
+ * \param authSystem: The authentication account  to display
+ * \return The output stream in which the authentication account has been printed
+ */
+
+std::ostream&
+operator<<(std::ostream& os, const UMS_Data::AuthAccount_ptr& authAccount) {}
+
+/**
+ * \brief Helper function to display a list of authentication accounts
+ * \param os: The output stream in which the list will be printed 
+ * \param lsAuthAccounts: The list to display
+ * \return The output stream in which the list of authentication accounts has been printed
+ */
+
+std::ostream&
+operator<<(std::ostream& os, UMS_Data::ListAuthAccounts& lsAuthAccounts) {
+
+  //#if 0
+  size_t maxAuthAccountIdSize = std::string("authAccountId").size();
+  size_t maxUserIdSize = std::string("userId").size();
+  size_t maxAcLoginSize = std::string("acLogin").size();
+  std::string authAccountId;
+  std::string userId;
+  std::string acLogin;
+
+  for(unsigned int i = 0; i < lsAuthAccounts.getLocalAuthAccounts().size(); i++) {
+
+    authAccountId = (lsAuthAccounts.getLocalAuthAccounts().get(i))->getAuthSystemId();
+    maxAuthAccountIdSize = max(maxAuthAccountIdSize, authAccountId.size());
+
+    userId = (lsAuthAccounts.getLocalAuthAccounts().get(i))->getUserId();
+    maxUserIdSize = max(maxUserIdSize, userId.size());
+
+    acLogin = (lsAuthAccounts.getLocalAuthAccounts().get(i))->getAcLogin();
+    maxAcLoginSize = max(maxAcLoginSize, acLogin.size());
+
+  }
+
+  os << setw(maxAuthAccountIdSize+2) << left << "authAccountId" << setw(maxUserIdSize+2) << left << "userId" << setw(maxAcLoginSize+2) << left << "acLogin";
+  os << endl;
+  setFill(maxAuthAccountIdSize, os);
+  setFill(maxUserIdSize, os);
+  setFill(maxAcLoginSize, os);
+  os << endl;
+
+  for(unsigned int i = 0; i < lsAuthAccounts.getLocalAuthAccounts().size(); i++) {
+    authAccountId = (lsAuthAccounts.getLocalAuthAccounts().get(i))->getAuthSystemId();
+    userId = (lsAuthAccounts.getLocalAuthAccounts().get(i))->getUserId();
+    acLogin = (lsAuthAccounts.getLocalAuthAccounts().get(i))->getAcLogin();
+    os << setw(maxAuthAccountIdSize+2) << left << authAccountId;
+    os << setw(maxUserIdSize+2) << left << userId;
+    os << setw(maxAcLoginSize+2) << left <<  acLogin;
+    os << endl;
+  }
+
+//#endif
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
  * \brief Helper function to display a machine
  * \param os: The output stream in which the machine will be printed
  * \param machine: The machine  to display

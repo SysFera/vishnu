@@ -634,64 +634,74 @@ namespace UMS_Data
         static const int AUTHSYSTEMS__STATUS = 83;
 
         /**
+         * \brief Constant for AUTHSYSTEMS__OPTIONS feature
+         */
+        static const int AUTHSYSTEMS__OPTIONS = 84;
+
+        /**
          * \brief Constant for AUTHSYSTEMSOPTIONS__LDAPBASE feature
          */
-        static const int AUTHSYSTEMSOPTIONS__LDAPBASE = 84;
+        static const int AUTHSYSTEMSOPTIONS__LDAPBASE = 85;
 
         /**
          * \brief Constant for LISTAUTHSYSTEMS__AUTHSYSTEMS feature
          */
-        static const int LISTAUTHSYSTEMS__AUTHSYSTEMS = 85;
+        static const int LISTAUTHSYSTEMS__AUTHSYSTEMS = 86;
 
         /**
          * \brief Constant for LISTAUTHSYSOPTIONS__LISTALLAUTHSYSTEMS feature
          */
-        static const int LISTAUTHSYSOPTIONS__LISTALLAUTHSYSTEMS = 86;
+        static const int LISTAUTHSYSOPTIONS__LISTALLAUTHSYSTEMS = 87;
+
+        /**
+         * \brief Constant for LISTAUTHSYSOPTIONS__LISTFULLINFO feature
+         */
+        static const int LISTAUTHSYSOPTIONS__LISTFULLINFO = 88;
 
         /**
          * \brief Constant for LISTAUTHSYSOPTIONS__USERID feature
          */
-        static const int LISTAUTHSYSOPTIONS__USERID = 87;
+        static const int LISTAUTHSYSOPTIONS__USERID = 89;
 
         /**
          * \brief Constant for LISTAUTHSYSOPTIONS__AUTHSYSTEMID feature
          */
-        static const int LISTAUTHSYSOPTIONS__AUTHSYSTEMID = 88;
+        static const int LISTAUTHSYSOPTIONS__AUTHSYSTEMID = 90;
 
         /**
          * \brief Constant for AUTHACCOUNT__AUTHSYSTEMID feature
          */
-        static const int AUTHACCOUNT__AUTHSYSTEMID = 89;
+        static const int AUTHACCOUNT__AUTHSYSTEMID = 91;
 
         /**
          * \brief Constant for AUTHACCOUNT__USERID feature
          */
-        static const int AUTHACCOUNT__USERID = 90;
+        static const int AUTHACCOUNT__USERID = 92;
 
         /**
          * \brief Constant for AUTHACCOUNT__ACLOGIN feature
          */
-        static const int AUTHACCOUNT__ACLOGIN = 91;
+        static const int AUTHACCOUNT__ACLOGIN = 93;
 
         /**
          * \brief Constant for LISTAUTHACCOUNTS__LOCALAUTHACCOUNTS feature
          */
-        static const int LISTAUTHACCOUNTS__LOCALAUTHACCOUNTS = 92;
+        static const int LISTAUTHACCOUNTS__LOCALAUTHACCOUNTS = 94;
 
         /**
          * \brief Constant for LISTAUTHACCOPTIONS__LISTALL feature
          */
-        static const int LISTAUTHACCOPTIONS__LISTALL = 93;
+        static const int LISTAUTHACCOPTIONS__LISTALL = 95;
 
         /**
          * \brief Constant for LISTAUTHACCOPTIONS__USERID feature
          */
-        static const int LISTAUTHACCOPTIONS__USERID = 94;
+        static const int LISTAUTHACCOPTIONS__USERID = 96;
 
         /**
          * \brief Constant for LISTAUTHACCOPTIONS__AUTHSYSTEMID feature
          */
-        static const int LISTAUTHACCOPTIONS__AUTHSYSTEMID = 95;
+        static const int LISTAUTHACCOPTIONS__AUTHSYSTEMID = 97;
 
         // EClassifiers methods
 
@@ -1408,6 +1418,12 @@ namespace UMS_Data
         virtual ::ecore::EAttribute_ptr getAuthSystems__status();
 
         /**
+         * \brief Returns the reflective object for feature options of class AuthSystems
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EReference_ptr getAuthSystems__options();
+
+        /**
          * \brief Returns the reflective object for feature ldapBase of class AuthSystemsOptions
          * \return A pointer to the reflective object
          */
@@ -1425,6 +1441,12 @@ namespace UMS_Data
          */
         virtual ::ecore::EAttribute_ptr
                 getListAuthSysOptions__listAllAuthSystems();
+
+        /**
+         * \brief Returns the reflective object for feature listFullInfo of class ListAuthSysOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getListAuthSysOptions__listFullInfo();
 
         /**
          * \brief Returns the reflective object for feature userId of class ListAuthSysOptions
@@ -2085,6 +2107,11 @@ namespace UMS_Data
         ::ecore::EAttribute_ptr m_AuthSystems__status;
 
         /**
+         * \brief The instance for the feature options of class AuthSystems
+         */
+        ::ecore::EReference_ptr m_AuthSystems__options;
+
+        /**
          * \brief The instance for the feature ldapBase of class AuthSystemsOptions
          */
         ::ecore::EAttribute_ptr m_AuthSystemsOptions__ldapBase;
@@ -2098,6 +2125,11 @@ namespace UMS_Data
          * \brief The instance for the feature listAllAuthSystems of class ListAuthSysOptions
          */
         ::ecore::EAttribute_ptr m_ListAuthSysOptions__listAllAuthSystems;
+
+        /**
+         * \brief The instance for the feature listFullInfo of class ListAuthSysOptions
+         */
+        ::ecore::EAttribute_ptr m_ListAuthSysOptions__listFullInfo;
 
         /**
          * \brief The instance for the feature userId of class ListAuthSysOptions

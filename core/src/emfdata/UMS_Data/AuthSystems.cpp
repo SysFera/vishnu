@@ -18,6 +18,7 @@
  */
 
 #include "AuthSystems.hpp"
+#include <UMS_Data/AuthSystemsOptions.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include "UMS_Data/UMS_DataPackage.hpp"
@@ -32,7 +33,8 @@ using namespace ::UMS_Data;
 // Default constructor
 AuthSystems::AuthSystems() :
     m_authSystemId(""), m_name(""), m_URI(""), m_authLogin(""), m_authPassword(
-            ""), m_userPasswordEncryption(0), m_type(0), m_status(1)
+            ""), m_userPasswordEncryption(0), m_type(0), m_status(1),
+            m_options(0)
 {
 
     /*PROTECTED REGION ID(AuthSystemsImpl__AuthSystemsImpl) START*/
@@ -262,4 +264,30 @@ void AuthSystems::setStatus(::UMS_Data::StatusType _status)
 }
 
 // References
+::UMS_Data::AuthSystemsOptions_ptr AuthSystems::getOptions()
+{
+    return m_options;
+}
+
+void AuthSystems::setOptions(::UMS_Data::AuthSystemsOptions_ptr _options)
+{
+    ::UMS_Data::AuthSystemsOptions_ptr _old_options = m_options;
+
+    m_options = _options;
+
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getAuthSystems__options(),
+                _old_options,
+                m_options
+        );
+        eNotify(&notification);
+    }
+#endif
+
+}
 

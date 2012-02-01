@@ -19,6 +19,7 @@
 
 #include "AuthSystems.hpp"
 #include <UMS_Data/UMS_DataPackage.hpp>
+#include <UMS_Data/AuthSystemsOptions.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include <ecore/EStructuralFeature.hpp>
@@ -101,6 +102,11 @@ void AuthSystems::_initialize()
                 m_status);
     }
         return _any;
+    case ::UMS_Data::UMS_DataPackage::AUTHSYSTEMS__OPTIONS:
+    {
+        _any = static_cast< ::ecore::EObject* > (m_options);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -159,6 +165,15 @@ void AuthSystems::eSet(::ecore::EInt _featureID,
                 _newValue, m_status);
     }
         return;
+    case ::UMS_Data::UMS_DataPackage::AUTHSYSTEMS__OPTIONS:
+    {
+        ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast<
+                ::ecore::EObject_ptr >(_newValue);
+        ::UMS_Data::AuthSystemsOptions_ptr _t1 =
+                dynamic_cast< ::UMS_Data::AuthSystemsOptions_ptr > (_t0);
+        ::UMS_Data::AuthSystems::setOptions(_t1);
+    }
+        return;
 
     }
     throw "Error";
@@ -184,6 +199,8 @@ void AuthSystems::eSet(::ecore::EInt _featureID,
         return m_type != 0;
     case ::UMS_Data::UMS_DataPackage::AUTHSYSTEMS__STATUS:
         return m_status != 1;
+    case ::UMS_Data::UMS_DataPackage::AUTHSYSTEMS__OPTIONS:
+        return m_options;
 
     }
     throw "Error";
