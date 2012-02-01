@@ -1118,7 +1118,7 @@ solveGenerique(diet_profile_t* pb) {
 */
 int
 solveListUsers(diet_profile_t* pb) {
-
+#if 0
   char* sessionKey = NULL;
   char* option = NULL;
   std::string listUsersSerialized = "";
@@ -1170,6 +1170,10 @@ solveListUsers(diet_profile_t* pb) {
   }
   delete listUsers;
   return 0;
+#endif
+
+  return solveGenerique<UMS_Data::ListUsersOptions, UMS_Data::ListUsers, ListUsersServer>(pb);
+
 
 }
 

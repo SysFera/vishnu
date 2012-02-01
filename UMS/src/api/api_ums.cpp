@@ -713,10 +713,10 @@ int
                                                      throw(UserException, SystemException)
 
 {
-  /*
+  
   
   SessionProxy sessionProxy(sessionKey);
-  QueryProxy<std::string, UMS_Data::ListUsers> query(listOptions, sessionProxy, "userList");
+  QueryProxy<UMS_Data::ListUsersOptions, UMS_Data::ListUsers> query(listOptions, sessionProxy, "userList");
 
   UMS_Data::ListUsers* listUsers_ptr = query.list();
 
@@ -731,7 +731,7 @@ int
     delete listUsers_ptr;
   }
 
-*/
+
 
 
 
@@ -881,12 +881,12 @@ vishnu::updateAuthAccount(const std::string& sessionKey, const UMS_Data::AuthAcc
 
 
 int 
-vishnu::deleteAuthAccount(const std::string& sessionKey, const std::string& authSystemId, const std::string& userIdOption )
+vishnu::deleteAuthAccount(const std::string& sessionKey, const std::string& authSystemId, const std::string& userId )
                                      throw(UserException, SystemException){
                                      
                                        
                                          std::cout << "authSystemId "  << authSystemId<< "\n";                                 
-                                       std::cout << "UserIdOption "  << userIdOption << "\n";                                 
+                                       std::cout << "UserId "  << userId << "\n";                                 
                                      
                                      
                                      

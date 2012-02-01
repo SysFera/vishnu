@@ -37,7 +37,7 @@ msessionServer(session)
  * \param session The object which encapsulates the session information (ex: identifier of the session)
  * \brief Constructor, raises an exception on error
  */
-ListUsersServer::ListUsersServer(const std::string& option, const SessionServer& session):
+ListUsersServer::ListUsersServer(const UMS_Data::ListUsersOptions_ptr& option, const SessionServer& session):
 moption(option), msessionServer(session)
 {
    mlistUsers = NULL;
@@ -55,16 +55,16 @@ moption(option), msessionServer(session)
  * \param sqlRequest the sql data base request
  * \return raises an exception on error
  */
-void ListUsersServer::processOptions(UserServer userServer, const std::string& options, std::string& sqlRequest)
+void ListUsersServer::processOptions(UserServer userServer, const UMS_Data::ListUsersOptions_ptr& options, std::string& sqlRequest)
 {
   if(!userServer.isAdmin()) {
     UMSVishnuException e (ERRCODE_NO_ADMIN);
     throw e;
   }
-
-  if(options.size()!=0) {
+  std::string  userId = options->getUserId();
+  if(userId.size()!=0) {
     sqlRequest.append(" and userid=");
-    sqlRequest.append("'"+moption+"'");
+    sqlRequest.append("'"+userId+"'");
     boost::scoped_ptr<DatabaseResult> ListofUsers (mdatabaseVishnu->getResult(sqlRequest.c_str()));
     if(ListofUsers->getNbTuples()==0) {
       UMSVishnuException e(ERRCODE_UNKNOWN_USERID);
