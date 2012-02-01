@@ -22,16 +22,16 @@ using namespace vishnu;
 struct DeleteAuthenticationAccountFunc {
 
   std::string  mauthAccountId;
-  std::string  muserIdOption;
+  std::string  muserId;
 
-  DeleteAuthenticationAccountFunc(const std::string& authAccountId,const std::string& userIdOption ):
-     mauthAccountId(authAccountId),muserIdOption (userIdOption)
+  DeleteAuthenticationAccountFunc(const std::string& authAccountId,const std::string& userId ):
+     mauthAccountId(authAccountId),muserId (userId)
   {};
 
   int operator()(std::string sessionKey) {
 
 
-     int res=deleteAuthAccount(sessionKey,mauthAccountId,muserIdOption);
+     int res=deleteAuthAccount(sessionKey,mauthAccountId,muserId);
 
     return res;
   }
@@ -48,7 +48,7 @@ int main (int ac, char* av[]){
   /********** EMF data ************/
 
   std::string authSystemId;
-  std::string userIdOption ("");
+  std::string userId ("");
 
   /******** Callback functions ******************/
 
@@ -68,12 +68,12 @@ int main (int ac, char* av[]){
 
   opt->setPosition("authSystemId",1);
 
-  opt->add("userIdOption,u",
+  opt->add("userId,u",
       "an admin option which represents the VISHNU"
       "identifier of the user whose local"
       "user-authentication configuration will be deleted ",
       CONFIG,
-      userIdOption);
+      userId);
 
 
   CLICmd cmd = CLICmd (ac, av, opt);
@@ -93,7 +93,7 @@ int main (int ac, char* av[]){
     return 0;
   }
 
-  DeleteAuthenticationAccountFunc apiFunc(authSystemId,userIdOption);
+  DeleteAuthenticationAccountFunc apiFunc(authSystemId,userId);
   return GenericCli().run(apiFunc, dietConfig, ac, av);
 
 }// end of main
