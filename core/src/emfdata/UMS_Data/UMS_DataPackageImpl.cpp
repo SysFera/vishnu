@@ -554,6 +554,11 @@ UMS_DataPackage::UMS_DataPackage()
             ::UMS_Data::UMS_DataPackage::AUTHSYSTEMS__STATUS);
     m_AuthSystemsEClass->getEStructuralFeatures().push_back(
             m_AuthSystems__status);
+    m_AuthSystems__options = new ::ecore::EReference();
+    m_AuthSystems__options->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::AUTHSYSTEMS__OPTIONS);
+    m_AuthSystemsEClass->getEStructuralFeatures().push_back(
+            m_AuthSystems__options);
 
     // AuthSystemsOptions
     m_AuthSystemsOptionsEClass = new ::ecore::EClass();
@@ -587,6 +592,11 @@ UMS_DataPackage::UMS_DataPackage()
             ::UMS_Data::UMS_DataPackage::LISTAUTHSYSOPTIONS__LISTALLAUTHSYSTEMS);
     m_ListAuthSysOptionsEClass->getEStructuralFeatures().push_back(
             m_ListAuthSysOptions__listAllAuthSystems);
+    m_ListAuthSysOptions__listFullInfo = new ::ecore::EAttribute();
+    m_ListAuthSysOptions__listFullInfo->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::LISTAUTHSYSOPTIONS__LISTFULLINFO);
+    m_ListAuthSysOptionsEClass->getEStructuralFeatures().push_back(
+            m_ListAuthSysOptions__listFullInfo);
     m_ListAuthSysOptions__userId = new ::ecore::EAttribute();
     m_ListAuthSysOptions__userId->setFeatureID(
             ::UMS_Data::UMS_DataPackage::LISTAUTHSYSOPTIONS__USERID);
@@ -1937,6 +1947,19 @@ UMS_DataPackage::UMS_DataPackage()
     m_AuthSystems__status->setUnique(true);
     m_AuthSystems__status->setDerived(false);
     m_AuthSystems__status->setOrdered(true);
+    m_AuthSystems__options->setEType(m_AuthSystemsOptionsEClass);
+    m_AuthSystems__options->setName("options");
+    m_AuthSystems__options->setDefaultValueLiteral("");
+    m_AuthSystems__options->setLowerBound(0);
+    m_AuthSystems__options->setUpperBound(1);
+    m_AuthSystems__options->setTransient(false);
+    m_AuthSystems__options->setVolatile(false);
+    m_AuthSystems__options->setChangeable(true);
+    m_AuthSystems__options->setContainment(false);
+    m_AuthSystems__options->setResolveProxies(true);
+    m_AuthSystems__options->setUnique(true);
+    m_AuthSystems__options->setDerived(false);
+    m_AuthSystems__options->setOrdered(true);
     // AuthSystemsOptions
     m_AuthSystemsOptionsEClass->setName("AuthSystemsOptions");
     m_AuthSystemsOptionsEClass->setAbstract(false);
@@ -1990,6 +2013,20 @@ UMS_DataPackage::UMS_DataPackage()
     m_ListAuthSysOptions__listAllAuthSystems->setUnique(true);
     m_ListAuthSysOptions__listAllAuthSystems->setDerived(false);
     m_ListAuthSysOptions__listAllAuthSystems->setOrdered(true);
+    m_ListAuthSysOptions__listFullInfo->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEBoolean());
+    m_ListAuthSysOptions__listFullInfo->setName("listFullInfo");
+    m_ListAuthSysOptions__listFullInfo->setDefaultValueLiteral("false");
+    m_ListAuthSysOptions__listFullInfo->setLowerBound(0);
+    m_ListAuthSysOptions__listFullInfo->setUpperBound(1);
+    m_ListAuthSysOptions__listFullInfo->setTransient(false);
+    m_ListAuthSysOptions__listFullInfo->setVolatile(false);
+    m_ListAuthSysOptions__listFullInfo->setChangeable(true);
+    m_ListAuthSysOptions__listFullInfo->setUnsettable(false);
+    m_ListAuthSysOptions__listFullInfo->setID(false);
+    m_ListAuthSysOptions__listFullInfo->setUnique(true);
+    m_ListAuthSysOptions__listFullInfo->setDerived(false);
+    m_ListAuthSysOptions__listFullInfo->setOrdered(true);
     m_ListAuthSysOptions__userId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_ListAuthSysOptions__userId->setName("userId");
@@ -2737,6 +2774,10 @@ UMS_DataPackage::UMS_DataPackage()
 {
     return m_AuthSystems__status;
 }
+::ecore::EReference_ptr UMS_DataPackage::getAuthSystems__options()
+{
+    return m_AuthSystems__options;
+}
 ::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystemsOptions__ldapBase()
 {
     return m_AuthSystemsOptions__ldapBase;
@@ -2748,6 +2789,10 @@ UMS_DataPackage::UMS_DataPackage()
 ::ecore::EAttribute_ptr UMS_DataPackage::getListAuthSysOptions__listAllAuthSystems()
 {
     return m_ListAuthSysOptions__listAllAuthSystems;
+}
+::ecore::EAttribute_ptr UMS_DataPackage::getListAuthSysOptions__listFullInfo()
+{
+    return m_ListAuthSysOptions__listFullInfo;
 }
 ::ecore::EAttribute_ptr UMS_DataPackage::getListAuthSysOptions__userId()
 {

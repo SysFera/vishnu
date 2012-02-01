@@ -343,8 +343,8 @@ namespace vishnu {
 
 
 int
-  addAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSystems& newAuthSys, const UMS_Data::AuthSystemsOptions& options =UMS_Data::AuthSystemsOptions())
-                                     throw(UserException, SystemException);
+  addAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSystems& newAuthSys)
+  throw(UserException, SystemException);
 
 /***
  * \brief Function to add a new user-authentication system in VISHNU
@@ -356,7 +356,7 @@ int
 
 
 int
-updateAuthenticationSystem(const std::string& sessionKey, const UMS_Data::AuthSystems& AuthSys)
+updateAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSystems& AuthSys)
                                      throw(UserException, SystemException);
 
 /***
@@ -446,7 +446,7 @@ deleteAuthAccount(const std::string& sessionKey, const std::string& authSystemId
 
 
 int 
-listAuthAccount(const std::string& sessionKey, UMS_Data::ListAuthAccounts& listAuthAccounts, const UMS_Data::ListAuthAccOptions& options = UMS_Data::ListAuthAccOptions())
+listAuthAccounts(const std::string& sessionKey, UMS_Data::ListAuthAccounts& listAuthAccounts, const UMS_Data::ListAuthAccOptions& options = UMS_Data::ListAuthAccOptions())
                             throw(UserException, SystemException);
 
 
