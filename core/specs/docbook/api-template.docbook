@@ -167,7 +167,7 @@
 	    <para>Added a second UMS::reconnect with the structure ListUsers as an entry parameter.</para>
 	    <para>Modified UMS::listUsers (added a structure ListUsersOptions).</para>
 	    <para>Added UMS::addAuthenticationSystem, UMS::updateAuthenticationSystem, UMS::deleteAuthenticationSystem,
-	    UMS::listAuthenticationSystem, UMS::addAuthAccount, UMS::updateAuthAccount, UMS::deleteAuthAccount, UMS::listAuthAccount.
+	    UMS::listAuthenticationSystem, UMS::addAuthAccount, UMS::updateAuthAccount, UMS::deleteAuthAccount, UMS::listAuthAccounts.
 	  </para>
 	  <para>Updates of IMS:</para>
 	  <para>Added IMS::defineAuthIdentifier</para>
