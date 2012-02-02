@@ -35,7 +35,8 @@ namespace vishnu {
     MACHINEID,
     REMOTEBINDIR,
     INTERVALMONITOR,
-    DBPOOLSIZE
+    DBPOOLSIZE,
+    AUTHENTYPE
   } param_type_t;
 
   /**
@@ -65,7 +66,7 @@ namespace vishnu {
   /**
    * \brief An arry to store all paraeters
    */
-  extern param_t params[]; //%RELAX<MISRA_3_1_3> Because this table is defined in constants.cpp 
+  extern param_t params[]; //%RELAX<MISRA_3_1_3> Because this table is defined in constants.cpp
 }
 
 #endif /* _CONSTANTS_HPP_ */
