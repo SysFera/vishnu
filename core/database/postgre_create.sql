@@ -13,6 +13,11 @@
 -- Revision author      : Benjamin Isnard <benjamin.isnard@sysfera.com>
 -- Revision comment     : release of FMS and IMS modules
 
+-- Revision nb          : 1.2.7
+-- Revision date        : 02/02/12
+-- Revision author      : Kevin Coulomb <kevin.coulomb@sysfera.com>
+-- Revision comment     : Add auth System
+
 CREATE TABLE optionu (
   numoptionid SERIAL  NOT NULL ,
   optionid INTEGER    ,
@@ -115,6 +120,7 @@ CREATE TABLE vsession (
   state INTEGER    ,
   closepolicy INTEGER    ,
   timeout INTEGER      ,
+  authId VARCHAR(255)      ,
 PRIMARY KEY(numsessionid),
   FOREIGN KEY(users_numuserid)
     REFERENCES users(numuserid) ON DELETE CASCADE,
@@ -251,6 +257,40 @@ CREATE TABLE filetransfer (
   FOREIGN KEY(vsession_numsessionid)
   REFERENCES vsession(numsessionid) ON DELETE CASCADE);
 
+
+CREATE TABLE authsystem (
+  authsystemid SERIAL  NOT NULL ,
+  vishnu_vishnuid INTEGER   NOT NULL ,
+  name VARCHAR(255)    ,
+  uri VARCHAR(255)    ,
+  authlogin VARCHAR(255)    ,
+  authpassword VARCHAR(255)    ,
+  userpwdencryption INTEGER    ,
+  types INTEGER    ,
+  state INTEGER      ,
+PRIMARY KEY(authsystemid)  ,
+  FOREIGN KEY(vishnu_vishnuid)
+    REFERENCES vishnu(vishnuid));
+
+CREATE TABLE authaccount (
+  authaccountid SERIAL  NOT NULL ,
+  authsystem_authsystemid INTEGER   NOT NULL ,
+  users_numuserid INTEGER   NOT NULL ,
+  aclogin VARCHAR(255)      ,
+PRIMARY KEY(authaccountid)    ,
+  FOREIGN KEY(users_numuserid)
+    REFERENCES users(numuserid),
+  FOREIGN KEY(authsystem_authsystemid)
+    REFERENCES authsystem(authsystemid));
+
+CREATE TABLE ldapauthsystem (
+  ldapauthsystid SERIAL  NOT NULL ,
+  authsystem_authsystemid INTEGER   NOT NULL ,
+  ldapbase VARCHAR(255)      ,
+PRIMARY KEY(ldapauthsystid)  ,
+  FOREIGN KEY(authsystem_authsystemid)
+    REFERENCES authsystem(authsystemid));
+
 -- Role Creation;
 
 CREATE USER vishnu_user WITH PASSWORD 'vishnu_user';
@@ -282,6 +322,9 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON filetransfer TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON filesub TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON job TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON process TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON authaccount TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON authsystem TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON ldapauthsystem TO "vishnu_db_admin";
 
 
 --CREATE ROLE vishnu_user;
@@ -304,6 +347,9 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON filetransfer TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON filesub TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON job TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON process TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON authaccount TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON authsystem TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON ldapauthsystem TO "vishnu_user";
 
 --Grant on sequences
 
@@ -323,5 +369,8 @@ GRANT ALL ON SEQUENCE users_numuserid_seq TO vishnu_user;
 GRANT ALL ON SEQUENCE vishnu_vishnuid_seq TO vishnu_user;
 GRANT ALL ON SEQUENCE vsession_numsessionid_seq TO vishnu_user;
 GRANT ALL ON SEQUENCE process_numprocess_seq TO vishnu_user;
+GRANT ALL ON SEQUENCE authaccount TO "vishnu_user";
+GRANT ALL ON SEQUENCE authsystem TO "vishnu_user";
+GRANT ALL ON SEQUENCE ldapauthsystem TO "vishnu_user";
 
 
