@@ -20,7 +20,7 @@ namespace vishnu {
     /* [11] */ {REMOTEBINDIR, "vishnuRemoteBinDirectory", STRING_PARAMETER},
     /* [12] */ {INTERVALMONITOR, "intervalMonitor", INT_PARAMETER},
     /* [13] */ {DBPOOLSIZE, "databaseConnectionsNb", INT_PARAMETER},
-    /* [14] */ {AUTHENTYPE, "authentificationType",STRING_PARAMETER}
+    /* [14] */ {AUTHENTYPE, "authenticationType",STRING_PARAMETER}
   };
 //}}RELAX<MISRA_0_1_3>
 }
