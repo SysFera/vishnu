@@ -68,16 +68,21 @@ vishnu::convertToInt(std::string val) {
  * \fn std::string cryptPassword(const std::string& salt, const std::string password)
  * \param salt The salt to use to crypt
  * \param password The password to crypt
+ * \param encrypted The flag for password encryption
  * \return The crypted password
  */
 
 std::string
-vishnu::cryptPassword(const std::string& salt, const std::string& password) {
+vishnu::cryptPassword(const std::string& salt, const std::string& password, bool encrypted) {
 
+  if (!encrypted) {
+    return password;
+  }
+  else {
   std::string saltTmp="$6$"+salt+"$";
   std::string encryptedPassword=crypt(password.c_str(),saltTmp.c_str());
-
   return encryptedPassword.substr(saltTmp.size());
+  }
 }
 
 /**
@@ -145,14 +150,14 @@ vishnu::string_to_time_t(const std::string& ts){
 /**
  * \brief Simple function to convert time
  * from string format (YYYY-MM-DD H:M:S) to
- * long integer format in seconds in utc 
+ * long integer format in seconds in utc
  * \param ts: the time in string format
  * \param utcOffset: time zone in string format
  * \return the time in long integer format in seconds
  */
 
 
-std::time_t 
+std::time_t
 vishnu::string_lc_to_utc_time_t(const std::string& ts,const std::string& utcOffset) {
 
   // two aliases for convenience
