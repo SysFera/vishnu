@@ -184,7 +184,7 @@
 	  
 	  
         <para>Updates of UMS:</para><para>Added a second UMS::connect with the structure ListUsers as an entry parameter.</para><para>Added a second UMS::reconnect with the structure ListUsers as an entry parameter.</para><para>Modified UMS::listUsers (added a structure ListUsersOptions).</para><para>Added UMS::addAuthenticationSystem, UMS::updateAuthenticationSystem, UMS::deleteAuthenticationSystem,
-	    UMS::listAuthenticationSystem, UMS::addAuthAccount, UMS::updateAuthAccount, UMS::deleteAuthAccount, UMS::listAuthAccount.
+	    UMS::listAuthenticationSystem, UMS::addAuthAccount, UMS::updateAuthAccount, UMS::deleteAuthAccount, UMS::listAuthAccounts.
 	  </para><para>Updates of IMS:</para><para>Added IMS::defineAuthIdentifier</para></revdescription>
       </revision>
     </revhistory>
@@ -574,6 +574,10 @@
                 <entry><para>The user is locked</para></entry>
               </row>
               <row>
+                <entry><para>ERRCODE_AUTHENTERR</para></entry>
+                <entry><para>Vishnu not available (Authenticator error)</para></entry>
+              </row>
+              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -694,6 +698,10 @@
               <row>
                 <entry><para>ERRCODE_USER_LOCKED</para></entry>
                 <entry><para>The user is locked</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_AUTHENTERR</para></entry>
+                <entry><para>Vishnu not available (Authenticator error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
@@ -825,6 +833,10 @@
                 <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
+                <entry><para>ERRCODE_AUTHENTERR</para></entry>
+                <entry><para>Vishnu not available (Authenticator error)</para></entry>
+              </row>
+              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -945,6 +957,10 @@
               <row>
                 <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
                 <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_AUTHENTERR</para></entry>
+                <entry><para>Vishnu not available (Authenticator error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
@@ -1500,6 +1516,10 @@
               <row>
                 <entry><para>ERRCODE_READONLY_ACCOUNT</para></entry>
                 <entry><para>You can modify information. This account is read-only. </para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_AUTHENTERR</para></entry>
+                <entry><para>Vishnu not available (Authenticator error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
@@ -4265,7 +4285,7 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>userIdOption</para></entry>
+                <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>is an admin option which represents the VISHNU identifier of the user whose local user-authentication configuration will be deleted</para></entry>
                 <entry><para>IN</para></entry>
@@ -4347,7 +4367,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::deleteAuthAccount</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>authSystemId</parameter></paramdef><paramdef>const string&amp; <parameter>userIdOption = &quot;&quot;</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::deleteAuthAccount</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>authSystemId</parameter></paramdef><paramdef>const string&amp; <parameter>userId = &quot;&quot;</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::listAuthAccounts</title>
