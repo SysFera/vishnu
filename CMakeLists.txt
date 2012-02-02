@@ -245,6 +245,7 @@ set(REGISTRY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/registry)
 set(UTILVISHNU_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/utils)
 set(CONFIG_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/config)
 set(EMF_DATA_DIR ${VISHNU_SOURCE_DIR}/core/src/emfdata)
+set(AUTHENTICATOR_INCLUDE_DIR ${VISHNU_SOURCE_DIR}/core/src/authenticator)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/vishnu_version.hpp.in
     ${PROJECT_BINARY_DIR}/vishnu_version.hpp)
@@ -348,6 +349,7 @@ if (BUILD_TESTING)
   set(TEST_TMS_SCRIPT_NAME_WAITING testScriptGenWaiting CACHE STRING " The name of the with an option to put job on waiting state")
   set(TMS_SCRIPT_PATH ${VISHNU_SOURCE_DIR}/TMS/test/src/scripts CACHE STRING " The path to the script to submit")
   set(TEST_CONFIG_DIR ${VISHNU_SOURCE_DIR}/TMS/test/src/scripts/ CACHE PATH "Tests configuration directory")
+  set(TEST_AUTHENTYPE "UMS" CACHE STRING "The type of authentication")
 
   mark_as_advanced(TEST_DB_TYPE)
   mark_as_advanced(TEST_DB_HOST)
