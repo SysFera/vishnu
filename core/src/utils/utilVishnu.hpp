@@ -91,10 +91,11 @@ namespace vishnu {
    * \brief To crypt a password
    * \param salt The salt to use to crypt
    * \param password The password to crypt
+   * \param encrypted The flag that password encryption
    * \return The crypted password
    */
   std::string
-  cryptPassword(const std::string& salt, const std::string& password) ;
+  cryptPassword(const std::string& salt, const std::string& password, bool encrypted = true) ;
 
   /**
   * \brief Function to get a random number
@@ -125,7 +126,7 @@ namespace vishnu {
 /**
  * \brief Simple function to convert time
  * from string format (YYYY-MM-DD H:M:S) to
- * long integer format in seconds in utc 
+ * long integer format in seconds in utc
  * \param ts: the time in string format
  * \param utcOffset: time zone in string format
  * \return the time in long integer format in seconds
@@ -300,7 +301,7 @@ std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& ut
     */
    void
      checkEmptyString(const std::string& str,
-         const std::string& compMsg);  
+         const std::string& compMsg);
 
 }
 #endif // _UTILVISHNU_H_
