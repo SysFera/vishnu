@@ -1,91 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <API xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="com.sysfera.codegen.apimodel" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
   <modules name="IMS_Internal">
-    <services name="int_exportCommands" description="exports all the commands made by a user during a session">
+    <services name="int_exportCommands" description="exports all the commands made by a user during a session" resultCodes="VISHNU_OK ERRCODE_DBERR ERRCODE_INVALID_PARAMETER ERRCODE_UNDEFINED ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="oldSessionId" dataType="//@typeList/@types.0" description="The id of the session to export (session has ended)" shortOptionLetter="" longOptionName=""/>
       <ports name="filename" direction="INOUT" dataType="//@typeList/@types.0" description="The path of the output file containing the Vishnu shell commands" longOptionName=""/>
       <ports name="options" dataType="//@typeList/@types.13" description="Options for the export" optional="true" shortOptionLetter=""/>
+      <usedByServices href="IMS.apim#//@modules.0/@services.0"/>
     </services>
-    <services name="int_getMetricCurrentValue" description="Retrieve the current value of a metric on a machine">
+    <services name="int_getMetricCurrentValue" description="Retrieve the current value of a metric on a machine" resultCodes="VISHNU_OK ERRCODE_DBERR ERRCODE_INVALID_PARAMETER ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" shortOptionLetter=""/>
       <ports name="metricValue" direction="OUT" dataType="//@typeList/@types.10" description="Value of the metric" defaultValueLiteral=""/>
       <ports name="options" dataType="//@typeList/@types.14" description="Options" optional="true" shortOptionLetter="" defaultValueLiteral=""/>
+      <usedByServices href="IMS.apim#//@modules.0/@services.1"/>
     </services>
-    <services name="int_getMetricHistory" description="Retrieve the history of values of a metric on a machine">
+    <services name="int_getMetricHistory" description="Retrieve the history of values of a metric on a machine" resultCodes="VISHNU_OK ERRCODE_DBERR ERRCODE_INVALID_PARAMETER ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" shortOptionLetter=""/>
       <ports name="metricValues" direction="OUT" dataType="//@typeList/@types.10" description="List of metric values" longOptionName=""/>
       <ports name="endTime" dataType="//@typeList/@types.15" description="End time of metric history" optional="true" shortOptionLetter="" longOptionName=""/>
+      <usedByServices href="IMS.apim#//@modules.0/@services.2"/>
     </services>
-    <services name="int_getProcesses" description="gets the list of the processes running over a front machine" adminOnly="true">
+    <services name="int_getProcesses" description="gets the list of the processes running over a front machine" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_INVALID_PARAMETER ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="process" direction="OUT" dataType="//@typeList/@types.8" description="The list of the Vishnu processes on the machine" shortOptionLetter=""/>
       <ports name="options" dataType="//@typeList/@types.16" description="The id of the machine the user wants the running processes" optional="true" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
+      <usedByServices href="IMS.apim#//@modules.0/@services.3"/>
     </services>
-    <services name="int_setSystemInfo" description="updates the system information of a machine" adminOnly="true">
+    <services name="int_setSystemInfo" description="updates the system information of a machine" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_DBERR ERRCODE_INVALID_PARAMETER ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="systemInfo" dataType="//@typeList/@types.12" description="Contains system information to store in Vishnu database" shortOptionLetter=""/>
+      <usedByServices href="IMS.apim#//@modules.0/@services.4"/>
     </services>
-    <services name="int_setSystemThreshold" description="sets a threshold on a machine of a system" adminOnly="true">
+    <services name="int_setSystemThreshold" description="sets a threshold on a machine of a system" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_DBERR ERRCODE_INVALID_PARAMETER ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="threshold" dataType="//@typeList/@types.17" description="The type of the metric to set" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
+      <usedByServices href="IMS.apim#//@modules.0/@services.5"/>
     </services>
-    <services name="int_getSystemThreshold" description="gets a System threshold on a machine" adminOnly="true">
+    <services name="int_getSystemThreshold" description="gets a System threshold on a machine" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_DBERR ERRCODE_INVALID_PARAMETER ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="options" dataType="//@typeList/@types.19" description="The options for the threshold" optional="true" shortOptionLetter="" defaultValueLiteral=""/>
       <ports name="value" direction="OUT" dataType="//@typeList/@types.18" description="The threshold values" longOptionName=""/>
+      <usedByServices href="IMS.apim#//@modules.0/@services.6"/>
     </services>
-    <services name="int_defineUserIdentifier" description="defines the shape of the identifiers automatically generated for the users" adminOnly="true">
+    <services name="int_defineUserIdentifier" description="defines the shape of the identifiers automatically generated for the users" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_INVALID_PARAMETER ERRCODE_DBERR ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter="" longOptionName=""/>
+      <usedByServices href="IMS.apim#//@modules.0/@services.7"/>
     </services>
-    <services name="int_defineMachineIdentifier" description="defines the shape of the identifiers automatically generated for the machines" adminOnly="true">
+    <services name="int_defineMachineIdentifier" description="defines the shape of the identifiers automatically generated for the machines" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_INVALID_PARAMETER ERRCODE_DBERR ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key"/>
       <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter=""/>
+      <usedByServices href="IMS.apim#//@modules.0/@services.8"/>
     </services>
-    <services name="int_defineJobIdentifier" description="defines the shape of the identifiers automatically generated for the jobs" adminOnly="true">
+    <services name="int_defineJobIdentifier" description="defines the shape of the identifiers automatically generated for the jobs" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_INVALID_PARAMETER ERRCODE_DBERR ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter=""/>
+      <usedByServices href="IMS.apim#//@modules.0/@services.9"/>
     </services>
-    <services name="int_defineTransferIdentifier" description="defines the shape of the identifiers automatically generated for the file transfers" adminOnly="true">
+    <services name="int_defineTransferIdentifier" description="defines the shape of the identifiers automatically generated for the file transfers" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_INVALID_PARAMETER ERRCODE_DBERR ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter=""/>
+      <usedByServices href="IMS.apim#//@modules.0/@services.10"/>
     </services>
-    <services name="int_defineAuthenIdentifier" description="defines the shape of the identifiers automatically generated for the authentication systems" adminOnly="true">
+    <services name="int_defineAuthIdentifier" description="defines the shape of the identifiers automatically generated for the authentication systems" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_INVALID_PARAMETER ERRCODE_DBERR ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter=""/>
+      <usedByServices href="IMS.apim#//@modules.0/@services.11"/>
     </services>
-    <services name="int_loadShed" description="load sheds a machine" adminOnly="true">
+    <services name="int_loadShed" description="load sheds a machine" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_COMPONENT_ERROR ERRCODE_DBERR ERRCODE_INVALID_PARAMETER ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine to stop" shortOptionLetter=""/>
       <ports name="loadShedType" dataType="//@typeList/@types.7" description="Selects a load shedding mode (SOFT: stops all services and they can be restarted, HARD: stops all services, they cannot be restarted)" shortOptionLetter="" longOptionName=""/>
+      <usedByServices href="IMS.apim#//@modules.0/@services.12"/>
     </services>
-    <services name="int_setUpdateFrequency" description="sets the update frequency of the IMS tables" adminOnly="true">
+    <services name="int_setUpdateFrequency" description="sets the update frequency of the IMS tables" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_DBERR ERRCODE_INVALID_PARAMETER ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="freq" dataType="//@typeList/@types.1" description="Frequency the data are updated, in second" shortOptionLetter="" longOptionName=""/>
+      <usedByServices href="IMS.apim#//@modules.0/@services.13"/>
     </services>
-    <services name="int_getUpdateFrequency" description="gets the update frequency of the IMS database">
+    <services name="int_getUpdateFrequency" description="gets the update frequency of the IMS database" resultCodes="VISHNU_OK ERRCODE_DBERR ERRCODE_INVALID_PARAMETER ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="freq" direction="OUT" dataType="//@typeList/@types.1" description="Frequency the data are updated, in second"/>
+      <usedByServices href="IMS.apim#//@modules.0/@services.14"/>
     </services>
-    <services name="int_restart" description="restarts the whole VISHNU infrastructure. Actions are saved and restarted from the beginning once the infrastructure has been restarted" adminOnly="true">
+    <services name="int_restart" description="restarts the whole VISHNU infrastructure. Actions are saved and restarted from the beginning once the infrastructure has been restarted" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_INVALID_PARAMETER ERRCODE_DBERR ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine where the component is to be relaunched" optional="true" shortOptionLetter="m" longOptionName=""/>
       <ports name="type" dataType="//@typeList/@types.6" description="The type of restart" shortOptionLetter=""/>
       <ports name="options" dataType="//@typeList/@types.20" description="The options to restart" optional="true" shortOptionLetter="" longOptionName=""/>
+      <usedByServices href="IMS.apim#//@modules.0/@services.17"/>
     </services>
-    <services name="int_stop" description="To stop a sed">
+    <services name="int_stop" description="To stop a sed" adminOnly="true" resultCodes="ERRCODE_DBERR VISHNU_OK ERRCODE_INVALID_PARAMETER ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="process" dataType="//@typeList/@types.21" description="The process to stop"/>
+      <usedByServices href="IMS.apim#//@modules.0/@services.15"/>
     </services>
-    <services name="int_getSystemInfo" description="To get system info">
+    <services name="int_getSystemInfo" description="To get system info" resultCodes="ERRCODE_DBERR ERRCODE_INVALID_PARAMETER VISHNU_OK ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="res" direction="OUT" dataType="//@typeList/@types.22" description="The set of system information" defaultValueLiteral=""/>
       <ports name="options" dataType="//@typeList/@types.23" description="Options for the sysinfo" optional="true" longOptionName="" defaultValueLiteral=""/>
+      <usedByServices href="IMS.apim#//@modules.0/@services.16"/>
     </services>
-    <resultCodeList/>
+    <resultCodeList>
+      <resultCodes name="VISHNU_OK" description="Error code returned if success"/>
+      <resultCodes name="ERRCODE_INVALID_PARAMETER" description="If a parameter is invalid" value="10"/>
+      <resultCodes name="ERRCODE_DBERR" description="The database generated an error" value="2"/>
+      <resultCodes name="ERRCODE_COMPONENT_ERROR" description="If a component is unavailable" value="301"/>
+      <resultCodes name="ERRCODE_SESSIONKEY_EXPIRED" description="The session key has expired. The session is closed." value="29" diagnostic=""/>
+      <resultCodes name="ERRCODE_SESSIONKEY_NOT_FOUND" description="The session key is unrecognized." value="28"/>
+      <resultCodes name="ERRCODE_UNDEFINED" description="Undefined error code" value="9" diagnostic=""/>
+      <resultCodes name="ERRCODE_CLI_ERROR_NO_SESSION" description="There is no open session in this terminal" value="13" usage="CLI_ONLY" diagnostic=""/>
+      <resultCodes name="ERRCODE_CLI_ERROR_MISSING_PARAMETER" description="Missing parameters" value="14" usage="CLI_ONLY" diagnostic=""/>
+      <resultCodes name="ERRCODE_CLI_ERROR_DIET" description="Vishnu initialization failes" value="15" usage="CLI_ONLY" diagnostic=""/>
+      <resultCodes name="ERRCODE_CLI_ERROR_RUNTIME" description="Undefined error" value="16" usage="CLI_ONLY" diagnostic=""/>
+    </resultCodeList>
   </modules>
   <typeList>
     <types name="string" description="String standard">
