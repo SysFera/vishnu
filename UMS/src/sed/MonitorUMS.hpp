@@ -10,6 +10,8 @@
 
 #include <string>
 #include "internalApi.hpp"
+class AuthenticatorConfiguration;
+class Authenticator;
 
 /**
  * \class MonitorUMS
@@ -34,10 +36,11 @@ public :
    * \brief To initialize the UMS monitor with individual parameters instead of configuration file
    * \param vishnuId The password of the root user vishnu_user for the connection with the database
    * \param dbConfig The configuration of the database
+   * \param authenticatorConfig The configuration of the authenticator
    * \return raises an execption
    */
   void
-  init(int vishnuId, DbConfiguration dbConfig);
+  init(int vishnuId, DbConfiguration dbConfig, AuthenticatorConfiguration authenticatorConfig);
 
    /**
    * \brief To launch the UMS Monitor
@@ -61,6 +64,11 @@ private :
   * \brief An instance of vishnu database
   */
   Database *mdatabaseVishnu;
+
+  /**
+  * \brief Instance of Authenticator
+  */
+  Authenticator *mauthenticator;
 
 };
 #endif // MONITORUMS

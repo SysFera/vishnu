@@ -8,6 +8,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/scoped_ptr.hpp>
+#include "AuthenticatorConfiguration.hpp"
 
 using namespace vishnu;
 
@@ -57,6 +58,8 @@ int main(int argc, char* argv[], char* envp[]) {
   int vishnuId = 0;
   ExecConfiguration config;
   DbConfiguration dbConfig(config);
+  AuthenticatorConfiguration authenticatorConfig(config);
+
   std::string dietConfigFile;
   std::string sendmailScriptPath;
   struct sigaction action;
@@ -80,6 +83,13 @@ int main(int argc, char* argv[], char* envp[]) {
       std::cerr << "Error: cannot open the script file for sending email" << std::endl;
       exit(1);
     }
+    authenticatorConfig.check();
+    if (authenticatorConfig.getAuthenType() != AuthenticatorConfiguration::UMS) {
+      #ifndef USE_LDAP
+        std::cerr << "Error: this authentification type uses LDAP and this server has not been compiled with LDAP library" << std::endl;
+        exit(1);
+      #endif
+    }
   } catch (UserException& e) {
     std::cerr << e.what() << std::endl;
     exit(1);
@@ -97,12 +107,12 @@ int main(int argc, char* argv[], char* envp[]) {
   if (pid > 0) {
     //Initialize the UMS Server (Opens a connection to the database)
     boost::scoped_ptr<ServerUMS> server(ServerUMS::getInstance());
-    res = server->init(vishnuId, dbConfig, sendmailScriptPath);
+    res = server->init(vishnuId, dbConfig, sendmailScriptPath, authenticatorConfig);
 
     try {
       registerSeD(UMSTYPE, config, cfg);
     } catch (VishnuException& e) {
-      
+
     }
 
     //Declaration of signal handler
@@ -125,7 +135,7 @@ int main(int argc, char* argv[], char* envp[]) {
     // Initialize the UMS Monitor (Opens a connection to the database)
     MonitorUMS monitor;
     dbConfig.setDbPoolSize(1);
-    monitor.init(vishnuId, dbConfig);
+    monitor.init(vishnuId, dbConfig, authenticatorConfig);
     ppid = getppid();
 
     while(kill(ppid,0) == 0) {

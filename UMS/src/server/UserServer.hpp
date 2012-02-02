@@ -116,6 +116,13 @@ public:
   bool
   exist(bool flagForChangePwd = false);
   /**
+  * \brief Function to authenticate user by using an authentification system
+  * \param flagForChangePwd A flag to check the password state
+  * \return true if the user is authenticated else false
+  */
+  bool
+  isAuthenticate(bool flagForChangePwd = false);
+  /**
   * \brief Function to check the VISHNU user privilege
   * \fn bool isAdmin()
   * \return true if the user is an admin else false
@@ -150,9 +157,9 @@ public:
   existuserId(std::string userId);
 
    /**
-   * \brief Function to get the user account login 
+   * \brief Function to get the user account login
    * \param machineId The machine identifier of machine on which the user have a account
-   * \return the user account login 
+   * \return the user account login
    */
   std::string
   getUserAccountLogin(const std::string& machineId);
@@ -211,6 +218,14 @@ private:
    */
   std::string
   getMailContent(const UMS_Data::User& user, bool flagAdduser);
+
+  /**
+  * \brief Function to check the user state (locked or not) and to
+  * verify the password state
+  * \param flagForChangePwd A flag to check the password state
+  */
+  void
+  CheckUserState(bool flagForChangePwd);
 
 };
 #endif
