@@ -8,7 +8,8 @@
 
 #include "VishnuException.hpp"
 
-// RESERVED CODES FROM 1 TO 9
+// RESERVED CODES FROM 1 TO 9 plus negative values
+static const int ERRCODE_AUTHENTERR = -1;
 static const int ERRCODE_DIET = 1;
 static const int ERRCODE_DBERR = 2;
 static const int ERRCODE_DBCONN = 3;
