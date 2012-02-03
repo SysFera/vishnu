@@ -8,6 +8,9 @@
 #include <boost/scoped_ptr.hpp>
 #include "MonitorUMS.hpp"
 #include "SystemException.hpp"
+#include "AuthenticatorConfiguration.hpp"
+#include "AuthenticatorFactory.hpp"
+#include "Authenticator.hpp"
 
 /**
 * \brief Constructor, raises an exception on error
@@ -17,6 +20,7 @@
 MonitorUMS::MonitorUMS(int interval) {
 minterval = interval;
 mdatabaseVishnu = NULL;
+mauthenticator = NULL;
 }
 
 /**
@@ -36,14 +40,19 @@ MonitorUMS::~MonitorUMS() {
 * \fn int init(int vishnuId, int dbType, std::string dbHost, std::string dbUsername, std::string dbPassword)
 * \param vishnuId The password of the root user vishnu_user for the connection with the database
 * \param dbConfig The configuration of the database
+* \param authenticatorConfig The configuration of the authenticator
 * \return raises an execption
 */
 void
-MonitorUMS::init(int vishnuId, DbConfiguration dbConfig) {
+MonitorUMS::init(int vishnuId,
+                 DbConfiguration dbConfig,
+                 AuthenticatorConfiguration authenticatorConfig) {
 
   DbFactory factory;
-
   mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
+
+  AuthenticatorFactory authfactory;
+  mauthenticator = authfactory.createAuthenticatorInstance(authenticatorConfig);
 
   std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(vishnuId));
 
@@ -92,6 +101,11 @@ MonitorUMS::run() {
         catch (VishnuException& e) {
           string errorInfo =  e.buildExceptionString();
           cerr << errorInfo << endl;
+          if (e.getMsgI() == ERRCODE_AUTHENTERR) {
+            //FIXME: Do something for the sed UMS when the monitor goes out
+            cerr << errorInfo << endl;
+            exit(1);
+          }
         }
       }
     }
@@ -99,7 +113,8 @@ MonitorUMS::run() {
 
   } catch (VishnuException& e) {
     string errorInfo =  e.buildExceptionString();
-    if (e.getMsgI() == ERRCODE_DBERR) {
+
+    if ((e.getMsgI() == ERRCODE_DBERR) || (e.getMsgI() == ERRCODE_AUTHENTERR)) {
       cerr << errorInfo << endl;
       exit(1);
     }

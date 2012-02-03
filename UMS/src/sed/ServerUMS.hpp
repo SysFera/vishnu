@@ -20,8 +20,10 @@
 #include "IMSMapper.hpp"
 #include "MapperRegistry.hpp"
 #include "DbConfiguration.hpp"
+#include "AuthenticatorConfiguration.hpp"
 
 class Database;
+class Authenticator;
 
 static const char* SRV[NB_SRV] = {
   "sessionConnect",
@@ -82,10 +84,14 @@ public :
    * \param vishnuId  The identifier of the vishnu instance
    * \param dbConfig  The configuration of the database
    * \param sendmailScriptPath The path to the script for sending emails
+   * \param authenticatorConfig The configuration of the authenticator
    * \return an error code (0 if success and 1 if an error occurs)
    */
   int
-  init(int vishnuId, DbConfiguration dbConfig, std::string sendmailScriptPath);
+  init(int vishnuId,
+       DbConfiguration dbConfig,
+       std::string sendmailScriptPath,
+       AuthenticatorConfiguration authenticatorConfig);
 
   /**
    * \brief Destructor, raises an exception on error
@@ -144,5 +150,9 @@ private :
   * \brief Instance of UMSMapper
   */
   static IMSMapper *mmapperIMS;
+  /**
+  * \brief Instance of Authenticator
+  */
+  static Authenticator *mauthenticator;
 };
 #endif // SERVERUMS

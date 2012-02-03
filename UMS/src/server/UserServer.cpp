@@ -12,6 +12,7 @@
 #include "LocalAccountServer.hpp"
 #include "utilVishnu.hpp"
 #include "utilServer.hpp"
+#include "AuthenticatorFactory.hpp"
 
 /**
 * \brief Constructor
@@ -274,8 +275,7 @@ UserServer::changePassword(std::string newPassword) {
   std::string sqlUpdatePwdState;
 
   //If the user exist (the flagForChangePwd is set to true to avoid the password state checking)
-  if (exist(true)) {
-
+  if (isAuthenticate(true)) {
     //sql code to change the user password
     sqlChangePwd = "UPDATE users SET pwd='"+newPassword+"'where "
     "userid='"+muser.getUserId()+"' and pwd='"+muser.getPassword()+"';";
@@ -421,39 +421,36 @@ UserServer::init(){
 * \param flagForChangePwd A flag to check the password state
 * \return true if the password state has not to be checked else false
 */
-bool UserServer::exist(bool flagForChangePwd) {
-
-  bool existUser = true;
-
-    //If the user is on the database
+bool
+UserServer::exist(bool flagForChangePwd) {
+  //if the user is on the database
   if (getAttribut("where userid='"+muser.getUserId()+"'and pwd='"+muser.getPassword()+"'").size() != 0) {
-      //If the user is not locked
-      if (isAttributOk("status", 1)) {
-        //if the flag to check the password state is set
-        if (!flagForChangePwd) {
-          //If the passwordstate is active
-          if (isAttributOk("passwordstate", 1)) {
-            return existUser;
-          } //END If the passwordstate is active
-          else {
-            UMSVishnuException e (ERRCODE_TEMPORARY_PASSWORD);
-            throw e;
-          }
-        }//END the flag to check the password state is set
-        else {
-          return existUser;
-        }
-      } //END if the user is not locked
-      else {
-        UMSVishnuException e (ERRCODE_USER_LOCKED);
-        throw e;
-      }
+    CheckUserState(flagForChangePwd);
+    return true;
   }//END if the user is on the database
   else {
-    existUser = false;
+    return false;
+  }
+} //END: exist(bool flagForChangePwd)
+
+/**
+* \brief Function to check user on database
+* \return true if the user is authenticated else false
+*/
+bool
+UserServer::isAuthenticate(bool flagForChangePwd) {
+
+  bool existUser = false;
+  AuthenticatorFactory authFactory;
+  Authenticator *authenticatorInstance = authFactory.getAuthenticatorInstance();
+
+  existUser = authenticatorInstance->authenticate(muser);
+  if (existUser) {
+    CheckUserState(flagForChangePwd);
   }
   return existUser;
-} //END: exist(bool flagForChangePwd)
+}
+
 
 /**
 * \brief Function to check the VISHNU user privilege
@@ -501,13 +498,12 @@ std::string UserServer::getAttribut(std::string condition, std::string attrname)
 */
 bool
 UserServer::existuserId(std::string userId) {
-  bool existUser = true;
 
   //If the userID exists on the database
   if (getAttribut("where userid='"+userId+"'").size() != 0)	{
     //If the user is not locked
     if ( convertToInt(getAttribut("where userid='"+userId+"'", "status")) == 1) {
-      return existUser;
+      return true;
     } //END if the user is not locked
     else {
       UMSVishnuException e (ERRCODE_USER_LOCKED);
@@ -515,9 +511,8 @@ UserServer::existuserId(std::string userId) {
     }
   }//END If the userID exists on the database
   else {
-    existUser = false;
+    return false;
   }
-  return existUser;
 }
 
 /**
@@ -680,3 +675,27 @@ UserServer::getUserAccountLogin(const std::string& machineId) {
   delete machine;
   return acLogin;
 }
+
+/**
+* \brief Function to check the user state (locked or not) and to
+* verify the password state
+*/
+void
+UserServer::CheckUserState(bool flagForChangePwd) {
+  //If the user is not locked
+  if (isAttributOk("status", 1)) {
+    //if the flag to check the password state is set
+    if (!flagForChangePwd) {
+      //If the passwordstate is not active
+      if (!isAttributOk("passwordstate", 1)) {
+        UMSVishnuException e (ERRCODE_TEMPORARY_PASSWORD);
+        throw e;
+      }//END If the passwordstate is not active
+    }//END the flag to check the password state is set
+  } //END if the user is not locked
+  else {
+    UMSVishnuException e (ERRCODE_USER_LOCKED);
+    throw e;
+  }
+}
+
