@@ -8,7 +8,7 @@
 -- Revision author      : Kevin Coulomb <kevin.coulomb@sysfera.com>
 -- Revision comment     : release of FMS and IMS modules (VISHNU v1.2.0)
 
--- Revision nb          : 1.2.7
+-- Revision nb          : 1.2.8
 -- Revision date        : 02/02/12
 -- Revision author      : Kevin Coulomb <kevin.coulomb@sysfera.com>
 -- Revision comment     : Add auth System
@@ -254,10 +254,11 @@ CREATE TABLE authaccount (
   aclogin VARCHAR(255)  ,
 PRIMARY KEY(authaccountid),
   FOREIGN KEY(users_numuserid)
-    REFERENCES users(numuserid),
+    REFERENCES users(numuserid) ON DELETE CASCADE,
   FOREIGN KEY(authsystem_authsystemid)
-    REFERENCES authsystem(authsystemid)
+    REFERENCES authsystem(authsystemid) ON DELETE CASCADE
 );
+
 
 CREATE TABLE ldapauthsystem (
   ldapauthsystid SERIAL NOT NULL,
@@ -265,9 +266,7 @@ CREATE TABLE ldapauthsystem (
   ldapbase VARCHAR(255)  ,
 PRIMARY KEY(ldapauthsystid),
   FOREIGN KEY(authsystem_authsystemid)
-    REFERENCES authsystem(authsystemid)
-);
-
+    REFERENCES authsystem(authsystemid) ON DELETE CASCADE);
 
 
 -- Role Creation;
