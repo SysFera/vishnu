@@ -9,7 +9,7 @@
 -- Revision comment     : initial version for upgrade from release 1.2.6 to 1.2.7
 
 CREATE TABLE authsystem (
-  authsystemid SERIAL NOT NULL,
+  numauthsystemid SERIAL NOT NULL,
   vishnu_vishnuid INTEGER UNSIGNED  NOT NULL  ,
   authsystemid VARCHAR(255)    ,
   name VARCHAR(255)  ,
