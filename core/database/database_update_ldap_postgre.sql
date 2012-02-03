@@ -12,6 +12,7 @@
 CREATE TABLE authsystem (
   authsystemid SERIAL  NOT NULL ,
   vishnu_vishnuid INTEGER   NOT NULL ,
+  authsystemid VARCHAR(255)    ,
   name VARCHAR(255)    ,
   uri VARCHAR(255)    ,
   authlogin VARCHAR(255)    ,

@@ -8,6 +8,22 @@
 -- Revision author      : Kevin Coulomb <kevin.coulomb@sysfera.com>
 -- Revision comment     : initial version for upgrade from release 1.2.6 to 1.2.7
 
+CREATE TABLE authsystem (
+  authsystemid SERIAL NOT NULL,
+  vishnu_vishnuid INTEGER UNSIGNED  NOT NULL  ,
+  authsystemid VARCHAR(255)    ,
+  name VARCHAR(255)  ,
+  uri VARCHAR(255)  ,
+  authlogin VARCHAR(255)  ,
+  authpassword VARCHAR(255)  ,
+  userpwdencryption INTEGER UNSIGNED  ,
+  types INTEGER UNSIGNED  ,
+  state INTEGER UNSIGNED  ,
+PRIMARY KEY(authsystemid),
+  FOREIGN KEY(vishnu_vishnuid)
+     REFERENCES vishnu(vishnuid)
+);    
+
 CREATE TABLE authaccount (
   authaccountid SERIAL NOT NULL,
   authsystem_authsystemid INTEGER UNSIGNED  NOT NULL  ,
@@ -29,20 +45,6 @@ PRIMARY KEY(ldapauthsystid),
     REFERENCES authsystem(authsystemid)
 );
 
-CREATE TABLE authsystem (
-  authsystemid SERIAL NOT NULL,
-  vishnu_vishnuid INTEGER UNSIGNED  NOT NULL  ,
-  name VARCHAR(255)  ,
-  uri VARCHAR(255)  ,
-  authlogin VARCHAR(255)  ,
-  authpassword VARCHAR(255)  ,
-  userpwdencryption INTEGER UNSIGNED  ,
-  types INTEGER UNSIGNED  ,
-  state INTEGER UNSIGNED  ,
-PRIMARY KEY(authsystemid),
-  FOREIGN KEY(vishnu_vishnuid)
-     REFERENCES vishnu(vishnuid)
-);    
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON authaccount TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON authsystem TO "vishnu_db_admin";
