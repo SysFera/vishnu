@@ -1,6 +1,6 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
- * UMS_Data/ListAuthSystems.cpp
+ * UMS_Data/AuthSystemOptions.cpp
  * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -17,8 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ListAuthSystems.hpp"
-#include <UMS_Data/AuthSystem.hpp>
+#include "AuthSystemOptions.hpp"
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include "UMS_Data/UMS_DataPackage.hpp"
@@ -31,32 +30,52 @@
 using namespace ::UMS_Data;
 
 // Default constructor
-ListAuthSystems::ListAuthSystems()
+AuthSystemOptions::AuthSystemOptions() :
+    m_ldapBase("")
 {
 
-    m_AuthSystems.reset(new ::ecorecpp::mapping::ReferenceEListImpl<
-            ::UMS_Data::AuthSystem, -1, true, false >(this, NULL));
-
-    /*PROTECTED REGION ID(ListAuthSystemsImpl__ListAuthSystemsImpl) START*/
+    /*PROTECTED REGION ID(AuthSystemOptionsImpl__AuthSystemOptionsImpl) START*/
     // Please, enable the protected region if you add manually written code.
     // To do this, add the keyword ENABLED before START.
     /*PROTECTED REGION END*/
 }
 
-ListAuthSystems::~ListAuthSystems()
+AuthSystemOptions::~AuthSystemOptions()
 {
 }
 
-/*PROTECTED REGION ID(ListAuthSystems.cpp) START*/
+/*PROTECTED REGION ID(AuthSystemOptions.cpp) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/
 
 // Attributes
 
-// References
-::ecorecpp::mapping::EList< ::UMS_Data::AuthSystem >& ListAuthSystems::getAuthSystems()
+::ecore::EString const& AuthSystemOptions::getLdapBase() const
 {
-    return *m_AuthSystems;
+    return m_ldapBase;
 }
+
+void AuthSystemOptions::setLdapBase(::ecore::EString const& _ldapBase)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_ldapBase = m_ldapBase;
+#endif
+    m_ldapBase = _ldapBase;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getAuthSystemOptions__ldapBase(),
+                _old_ldapBase,
+                m_ldapBase
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+// References
 

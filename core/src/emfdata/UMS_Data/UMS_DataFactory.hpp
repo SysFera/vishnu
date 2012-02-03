@@ -146,15 +146,15 @@ namespace UMS_Data
          */
         virtual ListOptOptions_ptr createListOptOptions();
         /**
-         * \brief Creates a new object of class AuthSystems
+         * \brief Creates a new object of class AuthSystem
          * \return Pointer to the object
          */
-        virtual AuthSystems_ptr createAuthSystems();
+        virtual AuthSystem_ptr createAuthSystem();
         /**
-         * \brief Creates a new object of class AuthSystemsOptions
+         * \brief Creates a new object of class AuthSystemOptions
          * \return Pointer to the object
          */
-        virtual AuthSystemsOptions_ptr createAuthSystemsOptions();
+        virtual AuthSystemOptions_ptr createAuthSystemOptions();
         /**
          * \brief Creates a new object of class ListAuthSystems
          * \return Pointer to the object

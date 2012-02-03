@@ -54,14 +54,14 @@ namespace UMS_Data
         static const int AUTHACCOUNT = 0;
 
         /**
-         * \brief Constant for AuthSystems class
+         * \brief Constant for AuthSystem class
          */
-        static const int AUTHSYSTEMS = 1;
+        static const int AUTHSYSTEM = 1;
 
         /**
-         * \brief Constant for AuthSystemsOptions class
+         * \brief Constant for AuthSystemOptions class
          */
-        static const int AUTHSYSTEMSOPTIONS = 2;
+        static const int AUTHSYSTEMOPTIONS = 2;
 
         /**
          * \brief Constant for AuthType class
@@ -594,54 +594,54 @@ namespace UMS_Data
         static const int LISTOPTOPTIONS__OPTIONNAME = 75;
 
         /**
-         * \brief Constant for AUTHSYSTEMS__AUTHSYSTEMID feature
+         * \brief Constant for AUTHSYSTEM__AUTHSYSTEMID feature
          */
-        static const int AUTHSYSTEMS__AUTHSYSTEMID = 76;
+        static const int AUTHSYSTEM__AUTHSYSTEMID = 76;
 
         /**
-         * \brief Constant for AUTHSYSTEMS__NAME feature
+         * \brief Constant for AUTHSYSTEM__NAME feature
          */
-        static const int AUTHSYSTEMS__NAME = 77;
+        static const int AUTHSYSTEM__NAME = 77;
 
         /**
-         * \brief Constant for AUTHSYSTEMS__URI feature
+         * \brief Constant for AUTHSYSTEM__URI feature
          */
-        static const int AUTHSYSTEMS__URI = 78;
+        static const int AUTHSYSTEM__URI = 78;
 
         /**
-         * \brief Constant for AUTHSYSTEMS__AUTHLOGIN feature
+         * \brief Constant for AUTHSYSTEM__AUTHLOGIN feature
          */
-        static const int AUTHSYSTEMS__AUTHLOGIN = 79;
+        static const int AUTHSYSTEM__AUTHLOGIN = 79;
 
         /**
-         * \brief Constant for AUTHSYSTEMS__AUTHPASSWORD feature
+         * \brief Constant for AUTHSYSTEM__AUTHPASSWORD feature
          */
-        static const int AUTHSYSTEMS__AUTHPASSWORD = 80;
+        static const int AUTHSYSTEM__AUTHPASSWORD = 80;
 
         /**
-         * \brief Constant for AUTHSYSTEMS__USERPASSWORDENCRYPTION feature
+         * \brief Constant for AUTHSYSTEM__USERPASSWORDENCRYPTION feature
          */
-        static const int AUTHSYSTEMS__USERPASSWORDENCRYPTION = 81;
+        static const int AUTHSYSTEM__USERPASSWORDENCRYPTION = 81;
 
         /**
-         * \brief Constant for AUTHSYSTEMS__TYPE feature
+         * \brief Constant for AUTHSYSTEM__TYPE feature
          */
-        static const int AUTHSYSTEMS__TYPE = 82;
+        static const int AUTHSYSTEM__TYPE = 82;
 
         /**
-         * \brief Constant for AUTHSYSTEMS__STATUS feature
+         * \brief Constant for AUTHSYSTEM__STATUS feature
          */
-        static const int AUTHSYSTEMS__STATUS = 83;
+        static const int AUTHSYSTEM__STATUS = 83;
 
         /**
-         * \brief Constant for AUTHSYSTEMS__OPTIONS feature
+         * \brief Constant for AUTHSYSTEM__OPTIONS feature
          */
-        static const int AUTHSYSTEMS__OPTIONS = 84;
+        static const int AUTHSYSTEM__OPTIONS = 84;
 
         /**
-         * \brief Constant for AUTHSYSTEMSOPTIONS__LDAPBASE feature
+         * \brief Constant for AUTHSYSTEMOPTIONS__LDAPBASE feature
          */
-        static const int AUTHSYSTEMSOPTIONS__LDAPBASE = 85;
+        static const int AUTHSYSTEMOPTIONS__LDAPBASE = 85;
 
         /**
          * \brief Constant for LISTAUTHSYSTEMS__AUTHSYSTEMS feature
@@ -850,16 +850,16 @@ namespace UMS_Data
         virtual ::ecore::EEnum_ptr getCommandStatusType();
 
         /**
-         * \brief Returns the reflective object for class AuthSystems
+         * \brief Returns the reflective object for class AuthSystem
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EClass_ptr getAuthSystems();
+        virtual ::ecore::EClass_ptr getAuthSystem();
 
         /**
-         * \brief Returns the reflective object for class AuthSystemsOptions
+         * \brief Returns the reflective object for class AuthSystemOptions
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EClass_ptr getAuthSystemsOptions();
+        virtual ::ecore::EClass_ptr getAuthSystemOptions();
 
         /**
          * \brief Returns the reflective object for class ListAuthSystems
@@ -1369,65 +1369,64 @@ namespace UMS_Data
         virtual ::ecore::EAttribute_ptr getListOptOptions__optionName();
 
         /**
-         * \brief Returns the reflective object for feature authSystemId of class AuthSystems
+         * \brief Returns the reflective object for feature authSystemId of class AuthSystem
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getAuthSystems__authSystemId();
+        virtual ::ecore::EAttribute_ptr getAuthSystem__authSystemId();
 
         /**
-         * \brief Returns the reflective object for feature name of class AuthSystems
+         * \brief Returns the reflective object for feature name of class AuthSystem
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getAuthSystems__name();
+        virtual ::ecore::EAttribute_ptr getAuthSystem__name();
 
         /**
-         * \brief Returns the reflective object for feature URI of class AuthSystems
+         * \brief Returns the reflective object for feature URI of class AuthSystem
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getAuthSystems__URI();
+        virtual ::ecore::EAttribute_ptr getAuthSystem__URI();
 
         /**
-         * \brief Returns the reflective object for feature authLogin of class AuthSystems
+         * \brief Returns the reflective object for feature authLogin of class AuthSystem
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getAuthSystems__authLogin();
+        virtual ::ecore::EAttribute_ptr getAuthSystem__authLogin();
 
         /**
-         * \brief Returns the reflective object for feature authPassword of class AuthSystems
+         * \brief Returns the reflective object for feature authPassword of class AuthSystem
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getAuthSystems__authPassword();
+        virtual ::ecore::EAttribute_ptr getAuthSystem__authPassword();
 
         /**
-         * \brief Returns the reflective object for feature userPasswordEncryption of class AuthSystems
+         * \brief Returns the reflective object for feature userPasswordEncryption of class AuthSystem
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr
-                getAuthSystems__userPasswordEncryption();
+        virtual ::ecore::EAttribute_ptr getAuthSystem__userPasswordEncryption();
 
         /**
-         * \brief Returns the reflective object for feature type of class AuthSystems
+         * \brief Returns the reflective object for feature type of class AuthSystem
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getAuthSystems__type();
+        virtual ::ecore::EAttribute_ptr getAuthSystem__type();
 
         /**
-         * \brief Returns the reflective object for feature status of class AuthSystems
+         * \brief Returns the reflective object for feature status of class AuthSystem
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getAuthSystems__status();
+        virtual ::ecore::EAttribute_ptr getAuthSystem__status();
 
         /**
-         * \brief Returns the reflective object for feature options of class AuthSystems
+         * \brief Returns the reflective object for feature options of class AuthSystem
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EReference_ptr getAuthSystems__options();
+        virtual ::ecore::EReference_ptr getAuthSystem__options();
 
         /**
-         * \brief Returns the reflective object for feature ldapBase of class AuthSystemsOptions
+         * \brief Returns the reflective object for feature ldapBase of class AuthSystemOptions
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getAuthSystemsOptions__ldapBase();
+        virtual ::ecore::EAttribute_ptr getAuthSystemOptions__ldapBase();
 
         /**
          * \brief Returns the reflective object for feature AuthSystems of class ListAuthSystems
@@ -1615,14 +1614,14 @@ namespace UMS_Data
         ::ecore::EClass_ptr m_ListOptOptionsEClass;
 
         /**
-         * \brief The instance for the class AuthSystems
+         * \brief The instance for the class AuthSystem
          */
-        ::ecore::EClass_ptr m_AuthSystemsEClass;
+        ::ecore::EClass_ptr m_AuthSystemEClass;
 
         /**
-         * \brief The instance for the class AuthSystemsOptions
+         * \brief The instance for the class AuthSystemOptions
          */
-        ::ecore::EClass_ptr m_AuthSystemsOptionsEClass;
+        ::ecore::EClass_ptr m_AuthSystemOptionsEClass;
 
         /**
          * \brief The instance for the class ListAuthSystems
@@ -2067,54 +2066,54 @@ namespace UMS_Data
         ::ecore::EAttribute_ptr m_ListOptOptions__optionName;
 
         /**
-         * \brief The instance for the feature authSystemId of class AuthSystems
+         * \brief The instance for the feature authSystemId of class AuthSystem
          */
-        ::ecore::EAttribute_ptr m_AuthSystems__authSystemId;
+        ::ecore::EAttribute_ptr m_AuthSystem__authSystemId;
 
         /**
-         * \brief The instance for the feature name of class AuthSystems
+         * \brief The instance for the feature name of class AuthSystem
          */
-        ::ecore::EAttribute_ptr m_AuthSystems__name;
+        ::ecore::EAttribute_ptr m_AuthSystem__name;
 
         /**
-         * \brief The instance for the feature URI of class AuthSystems
+         * \brief The instance for the feature URI of class AuthSystem
          */
-        ::ecore::EAttribute_ptr m_AuthSystems__URI;
+        ::ecore::EAttribute_ptr m_AuthSystem__URI;
 
         /**
-         * \brief The instance for the feature authLogin of class AuthSystems
+         * \brief The instance for the feature authLogin of class AuthSystem
          */
-        ::ecore::EAttribute_ptr m_AuthSystems__authLogin;
+        ::ecore::EAttribute_ptr m_AuthSystem__authLogin;
 
         /**
-         * \brief The instance for the feature authPassword of class AuthSystems
+         * \brief The instance for the feature authPassword of class AuthSystem
          */
-        ::ecore::EAttribute_ptr m_AuthSystems__authPassword;
+        ::ecore::EAttribute_ptr m_AuthSystem__authPassword;
 
         /**
-         * \brief The instance for the feature userPasswordEncryption of class AuthSystems
+         * \brief The instance for the feature userPasswordEncryption of class AuthSystem
          */
-        ::ecore::EAttribute_ptr m_AuthSystems__userPasswordEncryption;
+        ::ecore::EAttribute_ptr m_AuthSystem__userPasswordEncryption;
 
         /**
-         * \brief The instance for the feature type of class AuthSystems
+         * \brief The instance for the feature type of class AuthSystem
          */
-        ::ecore::EAttribute_ptr m_AuthSystems__type;
+        ::ecore::EAttribute_ptr m_AuthSystem__type;
 
         /**
-         * \brief The instance for the feature status of class AuthSystems
+         * \brief The instance for the feature status of class AuthSystem
          */
-        ::ecore::EAttribute_ptr m_AuthSystems__status;
+        ::ecore::EAttribute_ptr m_AuthSystem__status;
 
         /**
-         * \brief The instance for the feature options of class AuthSystems
+         * \brief The instance for the feature options of class AuthSystem
          */
-        ::ecore::EReference_ptr m_AuthSystems__options;
+        ::ecore::EReference_ptr m_AuthSystem__options;
 
         /**
-         * \brief The instance for the feature ldapBase of class AuthSystemsOptions
+         * \brief The instance for the feature ldapBase of class AuthSystemOptions
          */
-        ::ecore::EAttribute_ptr m_AuthSystemsOptions__ldapBase;
+        ::ecore::EAttribute_ptr m_AuthSystemOptions__ldapBase;
 
         /**
          * \brief The instance for the feature AuthSystems of class ListAuthSystems

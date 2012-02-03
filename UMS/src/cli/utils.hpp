@@ -73,7 +73,7 @@ operator<<(std::ostream& os, UMS_Data::ListLocalAccounts& lsLocalAccounts);
  */
 
 std::ostream&
-operator<<(std::ostream& os, const UMS_Data::AuthSystems_ptr& authSystem);
+operator<<(std::ostream& os, const UMS_Data::AuthSystem_ptr& authSystem);
 
 /**
  * \brief Helper function to display a list of authentication systems

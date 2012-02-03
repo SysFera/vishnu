@@ -1,6 +1,6 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
- * UMS_Data/ListAuthSystemsImpl.cpp
+ * UMS_Data/AuthSystemOptionsImpl.cpp
  * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -17,9 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ListAuthSystems.hpp"
+#include "AuthSystemOptions.hpp"
 #include <UMS_Data/UMS_DataPackage.hpp>
-#include <UMS_Data/AuthSystem.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include <ecore/EStructuralFeature.hpp>
@@ -29,25 +28,18 @@
 
 using namespace ::UMS_Data;
 
-/*PROTECTED REGION ID(ListAuthSystemsImpl.cpp) START*/
+/*PROTECTED REGION ID(AuthSystemOptionsImpl.cpp) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/
 
-void ListAuthSystems::_initialize()
+void AuthSystemOptions::_initialize()
 {
     // Supertypes
 
     // Rerefences
-    for (size_t i = 0; i < m_AuthSystems->size(); i++)
-    {
-        (*m_AuthSystems)[i]->_initialize();
-        (*m_AuthSystems)[i]->_setEContainer(
-                this,
-                ::UMS_Data::UMS_DataPackage::_instance()->getListAuthSystems__AuthSystems());
-    }
 
-    /*PROTECTED REGION ID(ListAuthSystemsImpl__initialize) START*/
+    /*PROTECTED REGION ID(AuthSystemOptionsImpl__initialize) START*/
     // Please, enable the protected region if you add manually written code.
     // To do this, add the keyword ENABLED before START.
     /*PROTECTED REGION END*/
@@ -57,15 +49,16 @@ void ListAuthSystems::_initialize()
 
 
 // EObject
-::ecore::EJavaObject ListAuthSystems::eGet(::ecore::EInt _featureID,
+::ecore::EJavaObject AuthSystemOptions::eGet(::ecore::EInt _featureID,
         ::ecore::EBoolean _resolve)
 {
     ::ecore::EJavaObject _any;
     switch (_featureID)
     {
-    case ::UMS_Data::UMS_DataPackage::LISTAUTHSYSTEMS__AUTHSYSTEMS:
+    case ::UMS_Data::UMS_DataPackage::AUTHSYSTEMOPTIONS__LDAPBASE:
     {
-        _any = m_AuthSystems->asEListOf< ::ecore::EObject > ();
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_ldapBase);
     }
         return _any;
 
@@ -73,18 +66,15 @@ void ListAuthSystems::_initialize()
     throw "Error";
 }
 
-void ListAuthSystems::eSet(::ecore::EInt _featureID,
+void AuthSystemOptions::eSet(::ecore::EInt _featureID,
         ::ecore::EJavaObject const& _newValue)
 {
     switch (_featureID)
     {
-    case ::UMS_Data::UMS_DataPackage::LISTAUTHSYSTEMS__AUTHSYSTEMS:
+    case ::UMS_Data::UMS_DataPackage::AUTHSYSTEMOPTIONS__LDAPBASE:
     {
-        ::ecorecpp::mapping::EList_ptr _t0 =
-                ::ecorecpp::mapping::any::any_cast<
-                        ::ecorecpp::mapping::EList_ptr >(_newValue);
-        ::UMS_Data::ListAuthSystems::getAuthSystems().clear();
-        ::UMS_Data::ListAuthSystems::getAuthSystems().insert_all(*_t0);
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_ldapBase);
     }
         return;
 
@@ -92,18 +82,18 @@ void ListAuthSystems::eSet(::ecore::EInt _featureID,
     throw "Error";
 }
 
-::ecore::EBoolean ListAuthSystems::eIsSet(::ecore::EInt _featureID)
+::ecore::EBoolean AuthSystemOptions::eIsSet(::ecore::EInt _featureID)
 {
     switch (_featureID)
     {
-    case ::UMS_Data::UMS_DataPackage::LISTAUTHSYSTEMS__AUTHSYSTEMS:
-        return m_AuthSystems && m_AuthSystems->size();
+    case ::UMS_Data::UMS_DataPackage::AUTHSYSTEMOPTIONS__LDAPBASE:
+        return m_ldapBase != "";
 
     }
     throw "Error";
 }
 
-void ListAuthSystems::eUnset(::ecore::EInt _featureID)
+void AuthSystemOptions::eUnset(::ecore::EInt _featureID)
 {
     switch (_featureID)
     {
@@ -112,11 +102,11 @@ void ListAuthSystems::eUnset(::ecore::EInt _featureID)
     throw "Error";
 }
 
-::ecore::EClass_ptr ListAuthSystems::_eClass()
+::ecore::EClass_ptr AuthSystemOptions::_eClass()
 {
     static ::ecore::EClass_ptr
             _eclass =
-                    dynamic_cast< ::UMS_Data::UMS_DataPackage_ptr > (::UMS_Data::UMS_DataPackage::_instance())->getListAuthSystems();
+                    dynamic_cast< ::UMS_Data::UMS_DataPackage_ptr > (::UMS_Data::UMS_DataPackage::_instance())->getAuthSystemOptions();
     return _eclass;
 }
 

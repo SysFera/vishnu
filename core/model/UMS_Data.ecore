@@ -559,7 +559,7 @@
     <eLiterals name="FAILURE" literal="FAILURE"/>
     <eLiterals name="SUCCESS" value="1" literal="SUCCESS"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AuthSystems" instanceTypeName="AuthSystems">
+  <eClassifiers xsi:type="ecore:EClass" name="AuthSystem" instanceTypeName="AuthSystem">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="authSystemId" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
@@ -616,14 +616,14 @@
         <details key="shortOption" value="s"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="options" eType="#//AuthSystemsOptions">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="options" eType="#//AuthSystemOptions">
       <eAnnotations source="Description">
         <details key="content" value="is an object which encapsulates the options of the user-authentication system"/>
         <details key="shortOption" value=""/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AuthSystemsOptions" instanceTypeName="AuthSystemsOptions">
+  <eClassifiers xsi:type="ecore:EClass" name="AuthSystemOptions" instanceTypeName="AuthSystemOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="ldapBase" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
@@ -634,7 +634,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListAuthSystems" instanceTypeName="ListAuthSystems">
     <eStructuralFeatures xsi:type="ecore:EReference" name="AuthSystems" upperBound="-1"
-        eType="#//AuthSystems" containment="true">
+        eType="#//AuthSystem" containment="true">
       <eAnnotations source="Description">
         <details key="content" value="is the list of user-authentication systems"/>
       </eAnnotations>
