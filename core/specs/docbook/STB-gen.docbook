@@ -398,7 +398,7 @@ de SHA-1.</para>
             <row>
               <entry><para>1.2.6</para></entry>
               <entry><para>Logiciels de gestion de jobs batch supportés</para></entry>
-              <entry><para>- Torque </para><para>- IBM LoadLeveler</para><para>- SLURM</para></entry>
+              <entry><para>- Torque 2.3.6</para><para>- IBM LoadLeveler</para><para>- SLURM 2.2.1</para></entry>
             </row>
             <row>
               <entry><para>1.2.7</para></entry>
@@ -578,7 +578,7 @@ de SHA-1.</para>
             <row>
               <entry><para>1.5.2</para></entry>
               <entry><para>SGBD supportés</para></entry>
-              <entry><para>L'un des deux SGBD suivantes doit être installé:</para><para>- PostGreSQL version 8.0 ou ultérieure</para><para>- Oracle Database 11g (v11.1.0.6 minimum)</para></entry>
+              <entry><para>L'un des deux SGBD suivantes doit être installé:</para><para>- PostGreSQL version 8.0 ou ultérieure</para><para>- MySQL (v5.1.49)</para></entry>
             </row>
             <row>
               <entry><para>1.5.3</para></entry>
@@ -648,7 +648,7 @@ de SHA-1.</para>
             <row>
               <entry><para>2.1</para></entry>
               <entry><para>SSH</para></entry>
-              <entry><para>serveur ssh et client ssh - version minimum TBD</para></entry>
+              <entry><para>serveur ssh et client ssh - version minimum openSSH 4.2</para></entry>
             </row>
             <row>
               <entry><para>2.2</para></entry>
@@ -683,7 +683,7 @@ de SHA-1.</para>
             <row>
               <entry><para>2.8</para></entry>
               <entry><para>Client database</para></entry>
-              <entry><para>- Oracle Database Client 11g (v11.1.0.6 minimum)</para><para>- PostgreSQL client v8.0</para></entry>
+              <entry><para>- PostgreSQL client v8.0</para><para>- MySQL v5.1.49</para></entry>
             </row>
             <row>
               <entry><para>3.</para></entry>
@@ -714,6 +714,11 @@ de SHA-1.</para>
               <entry><para>3.5</para></entry>
               <entry><para>Java</para></entry>
               <entry><para>JDK 1.6 minimum</para></entry>
+            </row>
+            <row>
+              <entry><para>3.6</para></entry>
+              <entry><para>GLIBC</para></entry>
+              <entry><para>Version 2.7 pour un support natif du cryptage</para></entry>
             </row>
           </tbody>
         </tgroup>
