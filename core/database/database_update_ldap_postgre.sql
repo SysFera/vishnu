@@ -3,10 +3,10 @@
 -- Script owner         : SysFera SAS
 
 -- REVISIONS
--- Revision nb          : 1.2.7
+-- Revision nb          : 1.2.8
 -- Revision date        : 02/02/12
 -- Revision author      : Kevin Coulomb <kevin.coulomb@sysfera.com>
--- Revision comment     : initial version for upgrade from release 1.2.6 to 1.2.7
+-- Revision comment     : initial version for upgrade from release 1.2.7 to 1.2.8
 
 
 CREATE TABLE authsystem (
@@ -31,9 +31,9 @@ CREATE TABLE authaccount (
   aclogin VARCHAR(255)      ,
 PRIMARY KEY(authaccountid)    ,
   FOREIGN KEY(users_numuserid)
-    REFERENCES users(numuserid),
+    REFERENCES users(numuserid) ON DELETE CASCADE,
   FOREIGN KEY(authsystem_authsystemid)
-    REFERENCES authsystem(authsystemid));
+    REFERENCES authsystem(authsystemid) ON DELETE CASCADE);
 
 CREATE TABLE ldapauthsystem (
   ldapauthsystid SERIAL  NOT NULL ,
@@ -41,7 +41,7 @@ CREATE TABLE ldapauthsystem (
   ldapbase VARCHAR(255)      ,
 PRIMARY KEY(ldapauthsystid)  ,
   FOREIGN KEY(authsystem_authsystemid)
-    REFERENCES authsystem(authsystemid));
+    REFERENCES authsystem(authsystemid) ON DELETE CASCADE);
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON authaccount TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON authsystem TO "vishnu_db_admin";
