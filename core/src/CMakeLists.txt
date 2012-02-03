@@ -3,7 +3,8 @@ include_directories(${Boost_INCLUDE_DIRS}
   ../deps/emf4cpp ${UMS_SERVER_SOURCE_DIR} ${TMS_SERVER_SOURCE_DIR}
   ${IMS_SERVER_SOURCE_DIR} ${FMS_SERVER_SOURCE_DIR}
   ${PROJECT_BINARY_DIR}
-  ${DATABASE_INCLUDE_DIR})
+  ${DATABASE_INCLUDE_DIR}
+  ${AUTHENTICATOR_INCLUDE_DIR})
 
 #################### config ###################################################
 set(config_SRCS config/CommonParser.cpp
@@ -170,7 +171,7 @@ set(TMS_Data_SRCS
   emfdata/TMS_Data/ListJobResultsImpl.cpp
   emfdata/TMS_Data/LoadCriterion.cpp
   emfdata/TMS_Data/LoadCriterionImpl.cpp)
-   
+
 set(TMS_Data_HEADERS
   emfdata/TMS_Data.hpp
   emfdata/TMS_Data_forward.hpp
@@ -282,7 +283,7 @@ set(FMS_Data_SRCS
   emfdata/FMS_Data/DirEntryList.cpp
   emfdata/FMS_Data/DirEntryListImpl.cpp
     )
-   
+
 set(FMS_Data_HEADERS
   emfdata/FMS_Data.hpp
   emfdata/FMS_Data_forward.hpp
@@ -309,7 +310,7 @@ add_library(vishnu-core ${config_SRCS}
   ${exception_SRCS}
   ${utils_SRCS}
   ${registry_SRCS}
-  ${UMS_Data_SRCS} 
+  ${UMS_Data_SRCS}
   ${TMS_Data_SRCS}
   ${IMS_Data_SRCS}
   ${FMS_Data_SRCS}
@@ -402,7 +403,7 @@ install(FILES ${PROJECT_BINARY_DIR}/vishnu_version.hpp DESTINATION ${INCLUDE_INS
 target_link_libraries(vishnu-core ${Boost_LIBRARIES})
 
 if(NOT CLIENT_ONLY)
-  set(database_SRCS 
+  set(database_SRCS
     database/DbConfiguration.cpp
     database/DbFactory.cpp
     database/Database.cpp
@@ -414,14 +415,33 @@ if(NOT CLIENT_ONLY)
     include_directories(${MYSQL_INCLUDE_DIR})
     set(DB_LIBS ${DATABASE_LIBS})
   endif()
-   
+
   if(POSTGRESQL_FOUND AND ENABLE_POSTGRESQL)
     set(database_SRCS ${database_SRCS} database/POSTGREDatabase.cpp)
     include_directories(${DATABASE_INCLUDE_DIR})
     set(DB_LIBS ${DATABASE_LIBS})
   endif()
 
-  add_library(vishnu-core-server ${database_SRCS} ${utils_server_SRCS})
+  if ((OPENSSL_FOUND) AND (VISHNU_USE_LDAP) AND (LDAP_FOUND))
+    include_directories(${LDAP_PROXY_SOURCE_DIR})
+    set(authenticator_SRCS
+    authenticator/AuthenticatorConfiguration.cpp
+    authenticator/AuthenticatorFactory.cpp
+    authenticator/Authenticator.cpp
+    authenticator/UMSAuthenticator.cpp
+    authenticator/LDAPAuthenticator.cpp
+    authenticator/UMSLDAPAuthenticator.cpp
+    authenticator/LDAPUMSAuthenticator.cpp
+    authenticator/ldap/LDAPProxy.cpp)
+  else ((OPENSSL_FOUND) AND (VISHNU_USE_LDAP) AND (LDAP_FOUND))
+    set(authenticator_SRCS
+    authenticator/AuthenticatorConfiguration.cpp
+    authenticator/AuthenticatorFactory.cpp
+    authenticator/Authenticator.cpp
+    authenticator/UMSAuthenticator.cpp)
+  endif ((OPENSSL_FOUND) AND (VISHNU_USE_LDAP) AND (LDAP_FOUND))
+
+  add_library(vishnu-core-server ${database_SRCS} ${utils_server_SRCS} ${authenticator_SRCS})
   set_target_properties(vishnu-core-server PROPERTIES VERSION ${VISHNU_VERSION})
   install(TARGETS vishnu-core-server DESTINATION ${LIB_INSTALL_DIR})
   target_link_libraries(vishnu-core-server ${DB_LIBS})

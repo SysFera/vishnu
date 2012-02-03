@@ -51,7 +51,7 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
   std::string numUserIdToconnect;
 
   //if the user exist
-  if (user.exist()) {
+  if (user.isAuthenticate()) {
     //if a user to substitute is defined
     if (connectOpt->getSubstituteUserId().size() != 0) {
       // if the user is admin
@@ -114,7 +114,7 @@ SessionServer::reconnect(UserServer user, MachineClientServer host, std::string 
   msession.setSessionId(sessionId);
 
   //If the user exists
-  if (user.exist()) {
+  if (user.isAuthenticate()) {
     state = getState(true);
     // -1 is an error code of getState when nohting has found
     if (state != -1) {

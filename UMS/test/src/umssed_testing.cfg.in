@@ -8,3 +8,4 @@ databaseUserName=@TEST_DB_LOGIN@
 databaseUserPassword=@TEST_DB_PASSWORD@
 sendmailScriptPath=@SENDMAILPY@
 vishnuMachineId=machine_1
+authenticationType=@TEST_AUTHENTYPE@

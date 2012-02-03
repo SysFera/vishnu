@@ -7,6 +7,8 @@
 
 #include "ServerUMS.hpp"
 #include "internalApi.hpp"
+#include "Authenticator.hpp"
+#include "AuthenticatorFactory.hpp"
 
 //{{RELAX<MISRA_0_1_3> Because these variables are used in this class
 Database *ServerUMS::mdatabaseVishnu = NULL;
@@ -15,6 +17,8 @@ UMSMapper *ServerUMS::mmapper = NULL;
 TMSMapper *ServerUMS::mmapperTMS = NULL;
 FMSMapper *ServerUMS::mmapperFMS = NULL;
 IMSMapper *ServerUMS::mmapperIMS = NULL;
+Authenticator *ServerUMS::mauthenticator = NULL;
+
 //}}RELAX<MISRA_0_1_3>
 
 /**
@@ -60,19 +64,23 @@ ServerUMS::ServerUMS() : mprofile(NULL) {
 * \param vishnuId The id of the vishnu configuration registered in the database
 * \param dbConfig  The configuration of the database
 * \param sendmailScriptPath The path to the script for sending emails
+* \param authenticatorConfig The configuration of the authenticator
 * \return an error code (0 if success and 1 if an error occurs)
 */
 int
 ServerUMS::init(int vishnuId,
                 DbConfiguration dbConfig,
-                std::string sendmailScriptPath) {
+                std::string sendmailScriptPath,
+                AuthenticatorConfiguration authenticatorConfig) {
 
   msendmailScriptPath = sendmailScriptPath;
 
   DbFactory factory;
+  AuthenticatorFactory authfactory;
 
   try {
     mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
+    mauthenticator = authfactory.createAuthenticatorInstance(authenticatorConfig);
 
     mvishnuId = vishnuId;
 
@@ -434,6 +442,9 @@ ServerUMS::~ServerUMS() {
   }
   if (mdatabaseVishnu != NULL) {
     delete mdatabaseVishnu;
+  }
+  if (mauthenticator != NULL) {
+    delete mauthenticator;
   }
 }
 
