@@ -39,8 +39,8 @@
 #include <UMS_Data/OptionValue.hpp>
 #include <UMS_Data/ListOptionsValues.hpp>
 #include <UMS_Data/ListOptOptions.hpp>
-#include <UMS_Data/AuthSystems.hpp>
-#include <UMS_Data/AuthSystemsOptions.hpp>
+#include <UMS_Data/AuthSystem.hpp>
+#include <UMS_Data/AuthSystemOptions.hpp>
 #include <UMS_Data/ListAuthSystems.hpp>
 #include <UMS_Data/ListAuthSysOptions.hpp>
 #include <UMS_Data/AuthAccount.hpp>
@@ -101,10 +101,10 @@ UMS_DataFactory::UMS_DataFactory()
         return createListOptionsValues();
     case UMS_DataPackage::LISTOPTOPTIONS:
         return createListOptOptions();
-    case UMS_DataPackage::AUTHSYSTEMS:
-        return createAuthSystems();
-    case UMS_DataPackage::AUTHSYSTEMSOPTIONS:
-        return createAuthSystemsOptions();
+    case UMS_DataPackage::AUTHSYSTEM:
+        return createAuthSystem();
+    case UMS_DataPackage::AUTHSYSTEMOPTIONS:
+        return createAuthSystemOptions();
     case UMS_DataPackage::LISTAUTHSYSTEMS:
         return createListAuthSystems();
     case UMS_DataPackage::LISTAUTHSYSOPTIONS:
@@ -316,13 +316,13 @@ ListOptOptions_ptr UMS_DataFactory::createListOptOptions()
 {
     return new ListOptOptions();
 }
-AuthSystems_ptr UMS_DataFactory::createAuthSystems()
+AuthSystem_ptr UMS_DataFactory::createAuthSystem()
 {
-    return new AuthSystems();
+    return new AuthSystem();
 }
-AuthSystemsOptions_ptr UMS_DataFactory::createAuthSystemsOptions()
+AuthSystemOptions_ptr UMS_DataFactory::createAuthSystemOptions()
 {
-    return new AuthSystemsOptions();
+    return new AuthSystemOptions();
 }
 ListAuthSystems_ptr UMS_DataFactory::createListAuthSystems()
 {

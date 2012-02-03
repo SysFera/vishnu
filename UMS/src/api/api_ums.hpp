@@ -343,7 +343,7 @@ namespace vishnu {
 
 
 int
-  addAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSystems& newAuthSys)
+  addAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSystem& newAuthSys)
   throw(UserException, SystemException);
 
 /***
@@ -356,7 +356,7 @@ int
 
 
 int
-updateAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSystems& AuthSys)
+updateAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSystem& AuthSys)
                                      throw(UserException, SystemException);
 
 /***

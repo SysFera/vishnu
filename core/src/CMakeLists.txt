@@ -92,10 +92,10 @@ set(UMS_Data_SRCS
   emfdata/UMS_Data/ListOptionsValuesImpl.cpp
   emfdata/UMS_Data/ListOptOptions.cpp
   emfdata/UMS_Data/ListOptOptionsImpl.cpp
-  emfdata/UMS_Data/AuthSystems.cpp
-  emfdata/UMS_Data/AuthSystemsImpl.cpp
-  emfdata/UMS_Data/AuthSystemsOptions.cpp
-  emfdata/UMS_Data/AuthSystemsOptionsImpl.cpp
+  emfdata/UMS_Data/AuthSystem.cpp
+  emfdata/UMS_Data/AuthSystemImpl.cpp
+  emfdata/UMS_Data/AuthSystemOptions.cpp
+  emfdata/UMS_Data/AuthSystemOptionsImpl.cpp
   emfdata/UMS_Data/ListAuthSystems.cpp
   emfdata/UMS_Data/ListAuthSystemsImpl.cpp
   emfdata/UMS_Data/ListAuthSysOptions.cpp
@@ -132,8 +132,8 @@ set(UMS_Data_HEADERS
   emfdata/UMS_Data/OptionValue.hpp
   emfdata/UMS_Data/ListOptionsValues.hpp
   emfdata/UMS_Data/ListOptOptions.hpp
-  emfdata/UMS_Data/AuthSystems.hpp
-  emfdata/UMS_Data/AuthSystemsOptions.hpp
+  emfdata/UMS_Data/AuthSystem.hpp
+  emfdata/UMS_Data/AuthSystemOptions.hpp
   emfdata/UMS_Data/ListAuthSystems.hpp
   emfdata/UMS_Data/ListAuthSysOptions.hpp
   emfdata/UMS_Data/AuthAccount.hpp

@@ -329,6 +329,48 @@ ostream& operator<<(ostream& os,  UMS_Data::ListLocalAccounts& lsLocalAccount) {
  return os;
 }
 
+
+
+std::string  convertEncryptionMethodToString (const UMS_Data::EncryptionMethod& meth) {
+
+  std::string result;
+
+  switch (meth){
+
+    case 0:
+      result="SSHA";
+      break;
+
+    default:
+      result = "UNDEFINED";
+
+  }
+  return result;
+
+}
+
+
+std::string  convertAuthTypeToString (const UMS_Data::AuthType& type) {
+
+  std::string result;
+
+  switch (type){
+
+    case 0:
+      result="LDAP";
+      break;
+
+    default:
+      result = "UNDEFINED";
+
+  }
+  return result;
+
+}
+
+
+
+
 /**
  * \brief Helper function to display an authentication system
  * \param os: The output stream in which the authentication system will be printed 
@@ -337,7 +379,32 @@ ostream& operator<<(ostream& os,  UMS_Data::ListLocalAccounts& lsLocalAccount) {
  */
 
 std::ostream&
-operator<<(std::ostream& os, const UMS_Data::AuthSystems_ptr& authSystem){}
+operator<<(std::ostream& os, const UMS_Data::AuthSystem_ptr& authSystem){
+
+  std::string authSystemId = authSystem->getAuthSystemId();
+  std::string name = authSystem->getName();
+  std::string URI = authSystem->getURI();
+  UMS_Data::AuthType type = authSystem->getType();
+  std::string typeStr=convertAuthTypeToString(type);
+  UMS_Data::StatusType status=authSystem->getStatus();
+  std::string statusStr = (status?"ACTIVE":"INACTIVE");
+  std::string authLogin = authSystem->getAuthLogin();
+  std::string authPassword = authSystem->getAuthPassword();
+  UMS_Data::EncryptionMethod meth =authSystem->getUserPasswordEncryption();
+  std::string userPasswordEncryption = convertEncryptionMethodToString(meth);
+
+  os << "============ authentication system  " << name << "===========" << std::endl;
+  os << setw(25) << right << "authSystemId: " << authSystemId<< endl;
+  os << setw(25) << right << "name : " << name  << endl;
+  os << setw(25) << right << "URI: "  << URI << endl;
+  os << setw(25) << right << "Status: " << status << " (" << statusStr << ")" << endl;
+  os << setw(25) << right << "type: " << type << " (" << typeStr << ")" << endl;
+  os << setw(25) << right << "meth: " << meth << " (" << userPasswordEncryption<< ")" << endl;
+
+  return os;
+
+
+}
 
 /**
  * \brief Helper function to display a list of authentication systems
@@ -401,7 +468,22 @@ operator<<(std::ostream& os, UMS_Data::ListAuthSystems& lsAuthSystems) {
  */
 
 std::ostream&
-operator<<(std::ostream& os, const UMS_Data::AuthAccount_ptr& authAccount) {}
+operator<<(std::ostream& os, const UMS_Data::AuthAccount_ptr& authAccount) {
+
+  std::string authSystemId = authAccount->getAuthSystemId();
+  std::string userId = authAccount->getUserId();
+  std::string acLogin = authAccount->getAcLogin();
+
+  os << "============ authentication account for " << userId << "===========" << std::endl;
+  os << setw(25) << right << "authSystemId: " << authSystemId<< endl;
+  os << setw(25) << right << "userId : " << userId  << endl;
+  os << setw(25) << right << "acLogin: "  << acLogin << endl;
+
+  return os;
+
+
+
+}
 
 /**
  * \brief Helper function to display a list of authentication accounts
@@ -454,20 +536,6 @@ operator<<(std::ostream& os, UMS_Data::ListAuthAccounts& lsAuthAccounts) {
 //#endif
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

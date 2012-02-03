@@ -46,7 +46,7 @@ int main (int ac, char* av[]){
 
   /********** EMF data ************/
 
-  UMS_Data::AuthSystems newAuthsystem;
+  UMS_Data::AuthSystem newAuthsystem;
   
   std::string authSystemId;
   /******** Callback functions ******************/

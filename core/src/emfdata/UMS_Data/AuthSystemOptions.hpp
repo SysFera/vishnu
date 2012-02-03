@@ -1,6 +1,6 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
- * UMS_Data/ListAuthSystems.hpp
+ * UMS_Data/AuthSystemOptions.hpp
  * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -18,21 +18,23 @@
  */
 
 /**
- * \file ListAuthSystems.hpp
- * \brief The ListAuthSystems class
+ * \file AuthSystemOptions.hpp
+ * \brief The AuthSystemOptions class
  * \author Generated file
  * \date 31/03/2011
  */
 
-#ifndef UMS_DATA_LISTAUTHSYSTEMS_HPP
-#define UMS_DATA_LISTAUTHSYSTEMS_HPP
+#ifndef UMS_DATA_AUTHSYSTEMOPTIONS_HPP
+#define UMS_DATA_AUTHSYSTEMOPTIONS_HPP
 
 #include <UMS_Data_forward.hpp>
 #include <ecorecpp/mapping_forward.hpp>
 
+#include <ecore_forward.hpp>
+
 #include <ecore/EObject.hpp>
 
-/*PROTECTED REGION ID(ListAuthSystems_pre) START*/
+/*PROTECTED REGION ID(AuthSystemOptions_pre) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/
@@ -41,21 +43,21 @@ namespace UMS_Data
 {
 
     /**
-     * \class ListAuthSystems
-     * \brief Implementation of the ListAuthSystems class
+     * \class AuthSystemOptions
+     * \brief Implementation of the AuthSystemOptions class
      */
-    class ListAuthSystems: public virtual ::ecore::EObject
+    class AuthSystemOptions: public virtual ::ecore::EObject
 
     {
     public:
         /**
-         * \brief The default constructor for ListAuthSystems
+         * \brief The default constructor for AuthSystemOptions
          */
-        ListAuthSystems();
+        AuthSystemOptions();
         /**
-         * \brief The destructor for ListAuthSystems
+         * \brief The destructor for AuthSystemOptions
          */
-        virtual ~ListAuthSystems();
+        virtual ~AuthSystemOptions();
 
         /**
          * \brief Internal method
@@ -66,15 +68,21 @@ namespace UMS_Data
 
 
         // Attributes
+        /**
+         * \brief To get the ldapBase
+         * \return The ldapBase attribute value
+         **/
+        ::ecore::EString const& getLdapBase() const;
+        /**
+         * \brief To set the ldapBase
+         * \param _ldapBase The ldapBase value
+         **/
+        void setLdapBase(::ecore::EString const& _ldapBase);
 
         // References
-        /**
-         * \brief To get the list of AuthSystems
-         * \return A reference to a list of AuthSystems
-         **/
-        ::ecorecpp::mapping::EList< ::UMS_Data::AuthSystem >& getAuthSystems();
 
-        /*PROTECTED REGION ID(ListAuthSystems) START*/
+
+        /*PROTECTED REGION ID(AuthSystemOptions) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/
@@ -88,7 +96,7 @@ namespace UMS_Data
         virtual void eUnset(::ecore::EInt _featureID);
         virtual ::ecore::EClass_ptr _eClass();
 
-        /*PROTECTED REGION ID(ListAuthSystemsImpl) START*/
+        /*PROTECTED REGION ID(AuthSystemOptionsImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/
@@ -96,14 +104,12 @@ namespace UMS_Data
     protected:
         // Attributes
 
+        ::ecore::EString m_ldapBase;
 
         // References
-
-        ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList<
-                ::UMS_Data::AuthSystem > > m_AuthSystems;
 
     };
 
 } // UMS_Data
 
-#endif // UMS_DATA_LISTAUTHSYSTEMS_HPP
+#endif // UMS_DATA_AUTHSYSTEMOPTIONS_HPP

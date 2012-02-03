@@ -512,64 +512,63 @@ UMS_DataPackage::UMS_DataPackage()
     m_ListOptOptionsEClass->getEStructuralFeatures().push_back(
             m_ListOptOptions__optionName);
 
-    // AuthSystems
-    m_AuthSystemsEClass = new ::ecore::EClass();
-    m_AuthSystemsEClass->setClassifierID(AUTHSYSTEMS);
-    m_AuthSystemsEClass->setEPackage(this);
-    getEClassifiers().push_back(m_AuthSystemsEClass);
-    m_AuthSystems__authSystemId = new ::ecore::EAttribute();
-    m_AuthSystems__authSystemId->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::AUTHSYSTEMS__AUTHSYSTEMID);
-    m_AuthSystemsEClass->getEStructuralFeatures().push_back(
-            m_AuthSystems__authSystemId);
-    m_AuthSystems__name = new ::ecore::EAttribute();
-    m_AuthSystems__name->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::AUTHSYSTEMS__NAME);
-    m_AuthSystemsEClass->getEStructuralFeatures().push_back(m_AuthSystems__name);
-    m_AuthSystems__URI = new ::ecore::EAttribute();
-    m_AuthSystems__URI->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::AUTHSYSTEMS__URI);
-    m_AuthSystemsEClass->getEStructuralFeatures().push_back(m_AuthSystems__URI);
-    m_AuthSystems__authLogin = new ::ecore::EAttribute();
-    m_AuthSystems__authLogin->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::AUTHSYSTEMS__AUTHLOGIN);
-    m_AuthSystemsEClass->getEStructuralFeatures().push_back(
-            m_AuthSystems__authLogin);
-    m_AuthSystems__authPassword = new ::ecore::EAttribute();
-    m_AuthSystems__authPassword->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::AUTHSYSTEMS__AUTHPASSWORD);
-    m_AuthSystemsEClass->getEStructuralFeatures().push_back(
-            m_AuthSystems__authPassword);
-    m_AuthSystems__userPasswordEncryption = new ::ecore::EAttribute();
-    m_AuthSystems__userPasswordEncryption->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::AUTHSYSTEMS__USERPASSWORDENCRYPTION);
-    m_AuthSystemsEClass->getEStructuralFeatures().push_back(
-            m_AuthSystems__userPasswordEncryption);
-    m_AuthSystems__type = new ::ecore::EAttribute();
-    m_AuthSystems__type->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::AUTHSYSTEMS__TYPE);
-    m_AuthSystemsEClass->getEStructuralFeatures().push_back(m_AuthSystems__type);
-    m_AuthSystems__status = new ::ecore::EAttribute();
-    m_AuthSystems__status->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::AUTHSYSTEMS__STATUS);
-    m_AuthSystemsEClass->getEStructuralFeatures().push_back(
-            m_AuthSystems__status);
-    m_AuthSystems__options = new ::ecore::EReference();
-    m_AuthSystems__options->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::AUTHSYSTEMS__OPTIONS);
-    m_AuthSystemsEClass->getEStructuralFeatures().push_back(
-            m_AuthSystems__options);
+    // AuthSystem
+    m_AuthSystemEClass = new ::ecore::EClass();
+    m_AuthSystemEClass->setClassifierID(AUTHSYSTEM);
+    m_AuthSystemEClass->setEPackage(this);
+    getEClassifiers().push_back(m_AuthSystemEClass);
+    m_AuthSystem__authSystemId = new ::ecore::EAttribute();
+    m_AuthSystem__authSystemId->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__AUTHSYSTEMID);
+    m_AuthSystemEClass->getEStructuralFeatures().push_back(
+            m_AuthSystem__authSystemId);
+    m_AuthSystem__name = new ::ecore::EAttribute();
+    m_AuthSystem__name->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__NAME);
+    m_AuthSystemEClass->getEStructuralFeatures().push_back(m_AuthSystem__name);
+    m_AuthSystem__URI = new ::ecore::EAttribute();
+    m_AuthSystem__URI->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__URI);
+    m_AuthSystemEClass->getEStructuralFeatures().push_back(m_AuthSystem__URI);
+    m_AuthSystem__authLogin = new ::ecore::EAttribute();
+    m_AuthSystem__authLogin->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__AUTHLOGIN);
+    m_AuthSystemEClass->getEStructuralFeatures().push_back(
+            m_AuthSystem__authLogin);
+    m_AuthSystem__authPassword = new ::ecore::EAttribute();
+    m_AuthSystem__authPassword->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__AUTHPASSWORD);
+    m_AuthSystemEClass->getEStructuralFeatures().push_back(
+            m_AuthSystem__authPassword);
+    m_AuthSystem__userPasswordEncryption = new ::ecore::EAttribute();
+    m_AuthSystem__userPasswordEncryption->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__USERPASSWORDENCRYPTION);
+    m_AuthSystemEClass->getEStructuralFeatures().push_back(
+            m_AuthSystem__userPasswordEncryption);
+    m_AuthSystem__type = new ::ecore::EAttribute();
+    m_AuthSystem__type->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__TYPE);
+    m_AuthSystemEClass->getEStructuralFeatures().push_back(m_AuthSystem__type);
+    m_AuthSystem__status = new ::ecore::EAttribute();
+    m_AuthSystem__status->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__STATUS);
+    m_AuthSystemEClass->getEStructuralFeatures().push_back(m_AuthSystem__status);
+    m_AuthSystem__options = new ::ecore::EReference();
+    m_AuthSystem__options->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__OPTIONS);
+    m_AuthSystemEClass->getEStructuralFeatures().push_back(
+            m_AuthSystem__options);
 
-    // AuthSystemsOptions
-    m_AuthSystemsOptionsEClass = new ::ecore::EClass();
-    m_AuthSystemsOptionsEClass->setClassifierID(AUTHSYSTEMSOPTIONS);
-    m_AuthSystemsOptionsEClass->setEPackage(this);
-    getEClassifiers().push_back(m_AuthSystemsOptionsEClass);
-    m_AuthSystemsOptions__ldapBase = new ::ecore::EAttribute();
-    m_AuthSystemsOptions__ldapBase->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::AUTHSYSTEMSOPTIONS__LDAPBASE);
-    m_AuthSystemsOptionsEClass->getEStructuralFeatures().push_back(
-            m_AuthSystemsOptions__ldapBase);
+    // AuthSystemOptions
+    m_AuthSystemOptionsEClass = new ::ecore::EClass();
+    m_AuthSystemOptionsEClass->setClassifierID(AUTHSYSTEMOPTIONS);
+    m_AuthSystemOptionsEClass->setEPackage(this);
+    getEClassifiers().push_back(m_AuthSystemOptionsEClass);
+    m_AuthSystemOptions__ldapBase = new ::ecore::EAttribute();
+    m_AuthSystemOptions__ldapBase->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::AUTHSYSTEMOPTIONS__LDAPBASE);
+    m_AuthSystemOptionsEClass->getEStructuralFeatures().push_back(
+            m_AuthSystemOptions__ldapBase);
 
     // ListAuthSystems
     m_ListAuthSystemsEClass = new ::ecore::EClass();
@@ -1834,155 +1833,155 @@ UMS_DataPackage::UMS_DataPackage()
     m_ListOptOptions__optionName->setUnique(true);
     m_ListOptOptions__optionName->setDerived(false);
     m_ListOptOptions__optionName->setOrdered(true);
-    // AuthSystems
-    m_AuthSystemsEClass->setName("AuthSystems");
-    m_AuthSystemsEClass->setAbstract(false);
-    m_AuthSystemsEClass->setInterface(false);
-    m_AuthSystems__authSystemId->setEType(
+    // AuthSystem
+    m_AuthSystemEClass->setName("AuthSystem");
+    m_AuthSystemEClass->setAbstract(false);
+    m_AuthSystemEClass->setInterface(false);
+    m_AuthSystem__authSystemId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_AuthSystems__authSystemId->setName("authSystemId");
-    m_AuthSystems__authSystemId->setDefaultValueLiteral("" "");
-    m_AuthSystems__authSystemId->setLowerBound(1);
-    m_AuthSystems__authSystemId->setUpperBound(1);
-    m_AuthSystems__authSystemId->setTransient(false);
-    m_AuthSystems__authSystemId->setVolatile(false);
-    m_AuthSystems__authSystemId->setChangeable(true);
-    m_AuthSystems__authSystemId->setUnsettable(false);
-    m_AuthSystems__authSystemId->setID(false);
-    m_AuthSystems__authSystemId->setUnique(true);
-    m_AuthSystems__authSystemId->setDerived(false);
-    m_AuthSystems__authSystemId->setOrdered(true);
-    m_AuthSystems__name->setEType(
+    m_AuthSystem__authSystemId->setName("authSystemId");
+    m_AuthSystem__authSystemId->setDefaultValueLiteral("" "");
+    m_AuthSystem__authSystemId->setLowerBound(1);
+    m_AuthSystem__authSystemId->setUpperBound(1);
+    m_AuthSystem__authSystemId->setTransient(false);
+    m_AuthSystem__authSystemId->setVolatile(false);
+    m_AuthSystem__authSystemId->setChangeable(true);
+    m_AuthSystem__authSystemId->setUnsettable(false);
+    m_AuthSystem__authSystemId->setID(false);
+    m_AuthSystem__authSystemId->setUnique(true);
+    m_AuthSystem__authSystemId->setDerived(false);
+    m_AuthSystem__authSystemId->setOrdered(true);
+    m_AuthSystem__name->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_AuthSystems__name->setName("name");
-    m_AuthSystems__name->setDefaultValueLiteral("" "");
-    m_AuthSystems__name->setLowerBound(1);
-    m_AuthSystems__name->setUpperBound(1);
-    m_AuthSystems__name->setTransient(false);
-    m_AuthSystems__name->setVolatile(false);
-    m_AuthSystems__name->setChangeable(true);
-    m_AuthSystems__name->setUnsettable(false);
-    m_AuthSystems__name->setID(false);
-    m_AuthSystems__name->setUnique(true);
-    m_AuthSystems__name->setDerived(false);
-    m_AuthSystems__name->setOrdered(true);
-    m_AuthSystems__URI->setEType(
+    m_AuthSystem__name->setName("name");
+    m_AuthSystem__name->setDefaultValueLiteral("" "");
+    m_AuthSystem__name->setLowerBound(1);
+    m_AuthSystem__name->setUpperBound(1);
+    m_AuthSystem__name->setTransient(false);
+    m_AuthSystem__name->setVolatile(false);
+    m_AuthSystem__name->setChangeable(true);
+    m_AuthSystem__name->setUnsettable(false);
+    m_AuthSystem__name->setID(false);
+    m_AuthSystem__name->setUnique(true);
+    m_AuthSystem__name->setDerived(false);
+    m_AuthSystem__name->setOrdered(true);
+    m_AuthSystem__URI->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_AuthSystems__URI->setName("URI");
-    m_AuthSystems__URI->setDefaultValueLiteral("" "");
-    m_AuthSystems__URI->setLowerBound(1);
-    m_AuthSystems__URI->setUpperBound(1);
-    m_AuthSystems__URI->setTransient(false);
-    m_AuthSystems__URI->setVolatile(false);
-    m_AuthSystems__URI->setChangeable(true);
-    m_AuthSystems__URI->setUnsettable(false);
-    m_AuthSystems__URI->setID(false);
-    m_AuthSystems__URI->setUnique(true);
-    m_AuthSystems__URI->setDerived(false);
-    m_AuthSystems__URI->setOrdered(true);
-    m_AuthSystems__authLogin->setEType(
+    m_AuthSystem__URI->setName("URI");
+    m_AuthSystem__URI->setDefaultValueLiteral("" "");
+    m_AuthSystem__URI->setLowerBound(1);
+    m_AuthSystem__URI->setUpperBound(1);
+    m_AuthSystem__URI->setTransient(false);
+    m_AuthSystem__URI->setVolatile(false);
+    m_AuthSystem__URI->setChangeable(true);
+    m_AuthSystem__URI->setUnsettable(false);
+    m_AuthSystem__URI->setID(false);
+    m_AuthSystem__URI->setUnique(true);
+    m_AuthSystem__URI->setDerived(false);
+    m_AuthSystem__URI->setOrdered(true);
+    m_AuthSystem__authLogin->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_AuthSystems__authLogin->setName("authLogin");
-    m_AuthSystems__authLogin->setDefaultValueLiteral("" "");
-    m_AuthSystems__authLogin->setLowerBound(1);
-    m_AuthSystems__authLogin->setUpperBound(1);
-    m_AuthSystems__authLogin->setTransient(false);
-    m_AuthSystems__authLogin->setVolatile(false);
-    m_AuthSystems__authLogin->setChangeable(true);
-    m_AuthSystems__authLogin->setUnsettable(false);
-    m_AuthSystems__authLogin->setID(false);
-    m_AuthSystems__authLogin->setUnique(true);
-    m_AuthSystems__authLogin->setDerived(false);
-    m_AuthSystems__authLogin->setOrdered(true);
-    m_AuthSystems__authPassword->setEType(
+    m_AuthSystem__authLogin->setName("authLogin");
+    m_AuthSystem__authLogin->setDefaultValueLiteral("" "");
+    m_AuthSystem__authLogin->setLowerBound(1);
+    m_AuthSystem__authLogin->setUpperBound(1);
+    m_AuthSystem__authLogin->setTransient(false);
+    m_AuthSystem__authLogin->setVolatile(false);
+    m_AuthSystem__authLogin->setChangeable(true);
+    m_AuthSystem__authLogin->setUnsettable(false);
+    m_AuthSystem__authLogin->setID(false);
+    m_AuthSystem__authLogin->setUnique(true);
+    m_AuthSystem__authLogin->setDerived(false);
+    m_AuthSystem__authLogin->setOrdered(true);
+    m_AuthSystem__authPassword->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_AuthSystems__authPassword->setName("authPassword");
-    m_AuthSystems__authPassword->setDefaultValueLiteral("" "");
-    m_AuthSystems__authPassword->setLowerBound(1);
-    m_AuthSystems__authPassword->setUpperBound(1);
-    m_AuthSystems__authPassword->setTransient(false);
-    m_AuthSystems__authPassword->setVolatile(false);
-    m_AuthSystems__authPassword->setChangeable(true);
-    m_AuthSystems__authPassword->setUnsettable(false);
-    m_AuthSystems__authPassword->setID(false);
-    m_AuthSystems__authPassword->setUnique(true);
-    m_AuthSystems__authPassword->setDerived(false);
-    m_AuthSystems__authPassword->setOrdered(true);
-    m_AuthSystems__userPasswordEncryption->setEType(m_EncryptionMethodEEnum);
-    m_AuthSystems__userPasswordEncryption->setName("userPasswordEncryption");
-    m_AuthSystems__userPasswordEncryption->setDefaultValueLiteral("0");
-    m_AuthSystems__userPasswordEncryption->setLowerBound(1);
-    m_AuthSystems__userPasswordEncryption->setUpperBound(1);
-    m_AuthSystems__userPasswordEncryption->setTransient(false);
-    m_AuthSystems__userPasswordEncryption->setVolatile(false);
-    m_AuthSystems__userPasswordEncryption->setChangeable(true);
-    m_AuthSystems__userPasswordEncryption->setUnsettable(false);
-    m_AuthSystems__userPasswordEncryption->setID(false);
-    m_AuthSystems__userPasswordEncryption->setUnique(true);
-    m_AuthSystems__userPasswordEncryption->setDerived(false);
-    m_AuthSystems__userPasswordEncryption->setOrdered(true);
-    m_AuthSystems__type->setEType(m_AuthTypeEEnum);
-    m_AuthSystems__type->setName("type");
-    m_AuthSystems__type->setDefaultValueLiteral("0");
-    m_AuthSystems__type->setLowerBound(0);
-    m_AuthSystems__type->setUpperBound(1);
-    m_AuthSystems__type->setTransient(false);
-    m_AuthSystems__type->setVolatile(false);
-    m_AuthSystems__type->setChangeable(true);
-    m_AuthSystems__type->setUnsettable(false);
-    m_AuthSystems__type->setID(false);
-    m_AuthSystems__type->setUnique(true);
-    m_AuthSystems__type->setDerived(false);
-    m_AuthSystems__type->setOrdered(true);
-    m_AuthSystems__status->setEType(m_StatusTypeEEnum);
-    m_AuthSystems__status->setName("status");
-    m_AuthSystems__status->setDefaultValueLiteral("1");
-    m_AuthSystems__status->setLowerBound(0);
-    m_AuthSystems__status->setUpperBound(1);
-    m_AuthSystems__status->setTransient(false);
-    m_AuthSystems__status->setVolatile(false);
-    m_AuthSystems__status->setChangeable(true);
-    m_AuthSystems__status->setUnsettable(false);
-    m_AuthSystems__status->setID(false);
-    m_AuthSystems__status->setUnique(true);
-    m_AuthSystems__status->setDerived(false);
-    m_AuthSystems__status->setOrdered(true);
-    m_AuthSystems__options->setEType(m_AuthSystemsOptionsEClass);
-    m_AuthSystems__options->setName("options");
-    m_AuthSystems__options->setDefaultValueLiteral("");
-    m_AuthSystems__options->setLowerBound(0);
-    m_AuthSystems__options->setUpperBound(1);
-    m_AuthSystems__options->setTransient(false);
-    m_AuthSystems__options->setVolatile(false);
-    m_AuthSystems__options->setChangeable(true);
-    m_AuthSystems__options->setContainment(false);
-    m_AuthSystems__options->setResolveProxies(true);
-    m_AuthSystems__options->setUnique(true);
-    m_AuthSystems__options->setDerived(false);
-    m_AuthSystems__options->setOrdered(true);
-    // AuthSystemsOptions
-    m_AuthSystemsOptionsEClass->setName("AuthSystemsOptions");
-    m_AuthSystemsOptionsEClass->setAbstract(false);
-    m_AuthSystemsOptionsEClass->setInterface(false);
-    m_AuthSystemsOptions__ldapBase->setEType(
+    m_AuthSystem__authPassword->setName("authPassword");
+    m_AuthSystem__authPassword->setDefaultValueLiteral("" "");
+    m_AuthSystem__authPassword->setLowerBound(1);
+    m_AuthSystem__authPassword->setUpperBound(1);
+    m_AuthSystem__authPassword->setTransient(false);
+    m_AuthSystem__authPassword->setVolatile(false);
+    m_AuthSystem__authPassword->setChangeable(true);
+    m_AuthSystem__authPassword->setUnsettable(false);
+    m_AuthSystem__authPassword->setID(false);
+    m_AuthSystem__authPassword->setUnique(true);
+    m_AuthSystem__authPassword->setDerived(false);
+    m_AuthSystem__authPassword->setOrdered(true);
+    m_AuthSystem__userPasswordEncryption->setEType(m_EncryptionMethodEEnum);
+    m_AuthSystem__userPasswordEncryption->setName("userPasswordEncryption");
+    m_AuthSystem__userPasswordEncryption->setDefaultValueLiteral("0");
+    m_AuthSystem__userPasswordEncryption->setLowerBound(1);
+    m_AuthSystem__userPasswordEncryption->setUpperBound(1);
+    m_AuthSystem__userPasswordEncryption->setTransient(false);
+    m_AuthSystem__userPasswordEncryption->setVolatile(false);
+    m_AuthSystem__userPasswordEncryption->setChangeable(true);
+    m_AuthSystem__userPasswordEncryption->setUnsettable(false);
+    m_AuthSystem__userPasswordEncryption->setID(false);
+    m_AuthSystem__userPasswordEncryption->setUnique(true);
+    m_AuthSystem__userPasswordEncryption->setDerived(false);
+    m_AuthSystem__userPasswordEncryption->setOrdered(true);
+    m_AuthSystem__type->setEType(m_AuthTypeEEnum);
+    m_AuthSystem__type->setName("type");
+    m_AuthSystem__type->setDefaultValueLiteral("0");
+    m_AuthSystem__type->setLowerBound(0);
+    m_AuthSystem__type->setUpperBound(1);
+    m_AuthSystem__type->setTransient(false);
+    m_AuthSystem__type->setVolatile(false);
+    m_AuthSystem__type->setChangeable(true);
+    m_AuthSystem__type->setUnsettable(false);
+    m_AuthSystem__type->setID(false);
+    m_AuthSystem__type->setUnique(true);
+    m_AuthSystem__type->setDerived(false);
+    m_AuthSystem__type->setOrdered(true);
+    m_AuthSystem__status->setEType(m_StatusTypeEEnum);
+    m_AuthSystem__status->setName("status");
+    m_AuthSystem__status->setDefaultValueLiteral("1");
+    m_AuthSystem__status->setLowerBound(0);
+    m_AuthSystem__status->setUpperBound(1);
+    m_AuthSystem__status->setTransient(false);
+    m_AuthSystem__status->setVolatile(false);
+    m_AuthSystem__status->setChangeable(true);
+    m_AuthSystem__status->setUnsettable(false);
+    m_AuthSystem__status->setID(false);
+    m_AuthSystem__status->setUnique(true);
+    m_AuthSystem__status->setDerived(false);
+    m_AuthSystem__status->setOrdered(true);
+    m_AuthSystem__options->setEType(m_AuthSystemOptionsEClass);
+    m_AuthSystem__options->setName("options");
+    m_AuthSystem__options->setDefaultValueLiteral("");
+    m_AuthSystem__options->setLowerBound(0);
+    m_AuthSystem__options->setUpperBound(1);
+    m_AuthSystem__options->setTransient(false);
+    m_AuthSystem__options->setVolatile(false);
+    m_AuthSystem__options->setChangeable(true);
+    m_AuthSystem__options->setContainment(false);
+    m_AuthSystem__options->setResolveProxies(true);
+    m_AuthSystem__options->setUnique(true);
+    m_AuthSystem__options->setDerived(false);
+    m_AuthSystem__options->setOrdered(true);
+    // AuthSystemOptions
+    m_AuthSystemOptionsEClass->setName("AuthSystemOptions");
+    m_AuthSystemOptionsEClass->setAbstract(false);
+    m_AuthSystemOptionsEClass->setInterface(false);
+    m_AuthSystemOptions__ldapBase->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_AuthSystemsOptions__ldapBase->setName("ldapBase");
-    m_AuthSystemsOptions__ldapBase->setDefaultValueLiteral("" "");
-    m_AuthSystemsOptions__ldapBase->setLowerBound(0);
-    m_AuthSystemsOptions__ldapBase->setUpperBound(1);
-    m_AuthSystemsOptions__ldapBase->setTransient(false);
-    m_AuthSystemsOptions__ldapBase->setVolatile(false);
-    m_AuthSystemsOptions__ldapBase->setChangeable(true);
-    m_AuthSystemsOptions__ldapBase->setUnsettable(false);
-    m_AuthSystemsOptions__ldapBase->setID(false);
-    m_AuthSystemsOptions__ldapBase->setUnique(true);
-    m_AuthSystemsOptions__ldapBase->setDerived(false);
-    m_AuthSystemsOptions__ldapBase->setOrdered(true);
+    m_AuthSystemOptions__ldapBase->setName("ldapBase");
+    m_AuthSystemOptions__ldapBase->setDefaultValueLiteral("" "");
+    m_AuthSystemOptions__ldapBase->setLowerBound(0);
+    m_AuthSystemOptions__ldapBase->setUpperBound(1);
+    m_AuthSystemOptions__ldapBase->setTransient(false);
+    m_AuthSystemOptions__ldapBase->setVolatile(false);
+    m_AuthSystemOptions__ldapBase->setChangeable(true);
+    m_AuthSystemOptions__ldapBase->setUnsettable(false);
+    m_AuthSystemOptions__ldapBase->setID(false);
+    m_AuthSystemOptions__ldapBase->setUnique(true);
+    m_AuthSystemOptions__ldapBase->setDerived(false);
+    m_AuthSystemOptions__ldapBase->setOrdered(true);
     // ListAuthSystems
     m_ListAuthSystemsEClass->setName("ListAuthSystems");
     m_ListAuthSystemsEClass->setAbstract(false);
     m_ListAuthSystemsEClass->setInterface(false);
-    m_ListAuthSystems__AuthSystems->setEType(m_AuthSystemsEClass);
+    m_ListAuthSystems__AuthSystems->setEType(m_AuthSystemEClass);
     m_ListAuthSystems__AuthSystems->setName("AuthSystems");
     m_ListAuthSystems__AuthSystems->setDefaultValueLiteral("");
     m_ListAuthSystems__AuthSystems->setLowerBound(0);
@@ -2401,13 +2400,13 @@ UMS_DataPackage::UMS_DataPackage()
 {
     return m_CommandStatusTypeEEnum;
 }
-::ecore::EClass_ptr UMS_DataPackage::getAuthSystems()
+::ecore::EClass_ptr UMS_DataPackage::getAuthSystem()
 {
-    return m_AuthSystemsEClass;
+    return m_AuthSystemEClass;
 }
-::ecore::EClass_ptr UMS_DataPackage::getAuthSystemsOptions()
+::ecore::EClass_ptr UMS_DataPackage::getAuthSystemOptions()
 {
-    return m_AuthSystemsOptionsEClass;
+    return m_AuthSystemOptionsEClass;
 }
 ::ecore::EClass_ptr UMS_DataPackage::getListAuthSystems()
 {
@@ -2742,45 +2741,45 @@ UMS_DataPackage::UMS_DataPackage()
 {
     return m_ListOptOptions__optionName;
 }
-::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystems__authSystemId()
+::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystem__authSystemId()
 {
-    return m_AuthSystems__authSystemId;
+    return m_AuthSystem__authSystemId;
 }
-::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystems__name()
+::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystem__name()
 {
-    return m_AuthSystems__name;
+    return m_AuthSystem__name;
 }
-::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystems__URI()
+::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystem__URI()
 {
-    return m_AuthSystems__URI;
+    return m_AuthSystem__URI;
 }
-::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystems__authLogin()
+::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystem__authLogin()
 {
-    return m_AuthSystems__authLogin;
+    return m_AuthSystem__authLogin;
 }
-::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystems__authPassword()
+::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystem__authPassword()
 {
-    return m_AuthSystems__authPassword;
+    return m_AuthSystem__authPassword;
 }
-::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystems__userPasswordEncryption()
+::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystem__userPasswordEncryption()
 {
-    return m_AuthSystems__userPasswordEncryption;
+    return m_AuthSystem__userPasswordEncryption;
 }
-::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystems__type()
+::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystem__type()
 {
-    return m_AuthSystems__type;
+    return m_AuthSystem__type;
 }
-::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystems__status()
+::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystem__status()
 {
-    return m_AuthSystems__status;
+    return m_AuthSystem__status;
 }
-::ecore::EReference_ptr UMS_DataPackage::getAuthSystems__options()
+::ecore::EReference_ptr UMS_DataPackage::getAuthSystem__options()
 {
-    return m_AuthSystems__options;
+    return m_AuthSystem__options;
 }
-::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystemsOptions__ldapBase()
+::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystemOptions__ldapBase()
 {
-    return m_AuthSystemsOptions__ldapBase;
+    return m_AuthSystemOptions__ldapBase;
 }
 ::ecore::EReference_ptr UMS_DataPackage::getListAuthSystems__AuthSystems()
 {

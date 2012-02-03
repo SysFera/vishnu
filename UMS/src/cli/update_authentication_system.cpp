@@ -21,9 +21,9 @@ using namespace vishnu;
 
 struct UpdateAuthenticationSystemFunc {
 
-  UMS_Data::AuthSystems mnewAuthsystem;
+  UMS_Data::AuthSystem mnewAuthsystem;
 
-  UpdateAuthenticationSystemFunc(const UMS_Data::AuthSystems& newAuthsystem ):
+  UpdateAuthenticationSystemFunc(const UMS_Data::AuthSystem& newAuthsystem ):
      mnewAuthsystem(newAuthsystem)
   {};
 
@@ -49,26 +49,26 @@ int main (int ac, char* av[]){
   std::string ldapBase;
   /********** EMF data ************/
 
-  UMS_Data::AuthSystems newAuthsystem;
-  UMS_Data::AuthSystemsOptions options;
+  UMS_Data::AuthSystem newAuthsystem;
+  UMS_Data::AuthSystemOptions options;
   std::string authSystemId;
   /******** Callback functions ******************/
 
-  StringcallBackType fName( boost::bind(&UMS_Data::AuthSystems::setName,boost::ref(newAuthsystem),_1));
+  StringcallBackType fName( boost::bind(&UMS_Data::AuthSystem::setName,boost::ref(newAuthsystem),_1));
   
-  StringcallBackType fURI( boost::bind(&UMS_Data::AuthSystems::setURI,boost::ref(newAuthsystem),_1));
+  StringcallBackType fURI( boost::bind(&UMS_Data::AuthSystem::setURI,boost::ref(newAuthsystem),_1));
   
-  StringcallBackType fAuthLogin( boost::bind(&UMS_Data::AuthSystems::setAuthLogin,boost::ref(newAuthsystem),_1));
+  StringcallBackType fAuthLogin( boost::bind(&UMS_Data::AuthSystem::setAuthLogin,boost::ref(newAuthsystem),_1));
  
-  StringcallBackType fAuthPassword(boost::bind(&UMS_Data::AuthSystems::setAuthPassword,boost::ref(newAuthsystem),_1)); 
+  StringcallBackType fAuthPassword(boost::bind(&UMS_Data::AuthSystem::setAuthPassword,boost::ref(newAuthsystem),_1)); 
   
- EncryptioncallBackType fUserPasswordEncryption( boost::bind(&UMS_Data::AuthSystems::setUserPasswordEncryption,boost::ref(newAuthsystem),_1));
+ EncryptioncallBackType fUserPasswordEncryption( boost::bind(&UMS_Data::AuthSystem::setUserPasswordEncryption,boost::ref(newAuthsystem),_1));
 
 
-  AuthcallBackType fType( boost::bind(&UMS_Data::AuthSystems::setType,boost::ref(newAuthsystem),_1));
+  AuthcallBackType fType( boost::bind(&UMS_Data::AuthSystem::setType,boost::ref(newAuthsystem),_1));
 
 
-StatuscallBackType fStatus ( boost::bind(&UMS_Data::AuthSystems::setStatus,boost::ref(newAuthsystem),_1));
+StatuscallBackType fStatus ( boost::bind(&UMS_Data::AuthSystem::setStatus,boost::ref(newAuthsystem),_1));
   
   /**************** Describe options *************/
 
@@ -110,7 +110,7 @@ CLICmd cmd = CLICmd (ac, av, opt);
   if(opt->count ("ldapBase")){
 
   UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
- UMS_Data::AuthSystemsOptions_ptr options_ptr = ecoreFactory->createAuthSystemsOptions();
+ UMS_Data::AuthSystemOptions_ptr options_ptr = ecoreFactory->createAuthSystemOptions();
 options_ptr->setLdapBase(ldapBase);
 newAuthsystem.setOptions(options_ptr);
 

@@ -752,7 +752,7 @@ int
 
 
 int
-  vishnu::addAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSystems& newAuthSys)
+  vishnu::addAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSystem& newAuthSys)
                                      throw(UserException, SystemException){
                                      
                                        std::cout << "name "  << newAuthSys.getName() << "\n";                                 
@@ -777,7 +777,7 @@ int
 
 
 int
-vishnu::updateAuthenticationSystem(const std::string& sessionKey,  UMS_Data::AuthSystems& AuthSys)
+vishnu::updateAuthenticationSystem(const std::string& sessionKey,  UMS_Data::AuthSystem& AuthSys)
                                      throw(UserException, SystemException){
                                        std::cout << "name "  << AuthSys.getName() << "\n";                                 
                                        std::cout << "URI "  << AuthSys.getURI() << "\n";                                 

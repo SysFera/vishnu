@@ -149,13 +149,13 @@ namespace UMS_Data
     class ListOptOptions;
     typedef ListOptOptions* ListOptOptions_ptr;
 
-    // AuthSystems
-    class AuthSystems;
-    typedef AuthSystems* AuthSystems_ptr;
+    // AuthSystem
+    class AuthSystem;
+    typedef AuthSystem* AuthSystem_ptr;
 
-    // AuthSystemsOptions
-    class AuthSystemsOptions;
-    typedef AuthSystemsOptions* AuthSystemsOptions_ptr;
+    // AuthSystemOptions
+    class AuthSystemOptions;
+    typedef AuthSystemOptions* AuthSystemOptions_ptr;
 
     // ListAuthSystems
     class ListAuthSystems;
