@@ -231,6 +231,22 @@ PRIMARY KEY(numjobid),
     FOREIGN KEY(vsession_numsessionid)
     REFERENCES vsession(numsessionid) ON DELETE CASCADE);
 
+CREATE TABLE authsystem (
+  numauthsystemid SERIAL NOT NULL,
+  vishnu_vishnuid INTEGER UNSIGNED  NOT NULL  ,
+  authsystemid VARCHAR(255)    ,
+  name VARCHAR(255)  ,
+  uri VARCHAR(255)  ,
+  authlogin VARCHAR(255)  ,
+  authpassword VARCHAR(255)  ,
+  userpwdencryption INTEGER UNSIGNED  ,
+  types INTEGER UNSIGNED  ,
+  state INTEGER UNSIGNED  ,
+PRIMARY KEY(authsystemid),
+  FOREIGN KEY(vishnu_vishnuid)
+     REFERENCES vishnu(vishnuid)
+);    
+
 CREATE TABLE authaccount (
   authaccountid SERIAL NOT NULL,
   authsystem_authsystemid INTEGER UNSIGNED  NOT NULL  ,
@@ -252,20 +268,6 @@ PRIMARY KEY(ldapauthsystid),
     REFERENCES authsystem(authsystemid)
 );
 
-CREATE TABLE authsystem (
-  authsystemid SERIAL NOT NULL,
-  vishnu_vishnuid INTEGER UNSIGNED  NOT NULL  ,
-  name VARCHAR(255)  ,
-  uri VARCHAR(255)  ,
-  authlogin VARCHAR(255)  ,
-  authpassword VARCHAR(255)  ,
-  userpwdencryption INTEGER UNSIGNED  ,
-  types INTEGER UNSIGNED  ,
-  state INTEGER UNSIGNED  ,
-PRIMARY KEY(authsystemid),
-  FOREIGN KEY(vishnu_vishnuid)
-     REFERENCES vishnu(vishnuid)
-);    
 
 
 -- Role Creation;
