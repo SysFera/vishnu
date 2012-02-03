@@ -664,7 +664,7 @@ UMSMapper::decodeListUser(vector<int> separator, const string& msg){
   res += (mmap.find(VISHNU_LIST_USERS))->second;
   a = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
   if(a.compare(" ")){
-    res +=" -i ";
+    res +=" -u ";
     res +=a;
   }
   return res;
