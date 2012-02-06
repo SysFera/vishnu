@@ -267,9 +267,9 @@ CREATE TABLE authsystem (
   authlogin VARCHAR(255)    ,
   authpassword VARCHAR(255)    ,
   userpwdencryption INTEGER    ,
-  types INTEGER    ,
+  type INTEGER    ,
   state INTEGER      ,
-PRIMARY KEY(authsystemid)  ,
+PRIMARY KEY(numauthsystemid)  ,
   FOREIGN KEY(vishnu_vishnuid)
     REFERENCES vishnu(vishnuid));
 

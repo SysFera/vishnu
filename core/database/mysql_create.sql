@@ -240,12 +240,12 @@ CREATE TABLE authsystem (
   authlogin VARCHAR(255)  ,
   authpassword VARCHAR(255)  ,
   userpwdencryption INTEGER UNSIGNED  ,
-  types INTEGER UNSIGNED  ,
+  type INTEGER UNSIGNED  ,
   state INTEGER UNSIGNED  ,
-PRIMARY KEY(authsystemid),
+PRIMARY KEY(numauthsystemid),
   FOREIGN KEY(vishnu_vishnuid)
      REFERENCES vishnu(vishnuid)
-);    
+);
 
 CREATE TABLE authaccount (
   authaccountid SERIAL NOT NULL,
