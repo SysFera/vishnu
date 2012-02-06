@@ -66,8 +66,9 @@ if(NOT CLIENT_ONLY)
     server/MachineServer.cpp
     server/LocalAccountServer.cpp
     server/ConfigurationServer.cpp
-    server/CommandServer.cpp)
-  # server/ListUsersServer.cpp)
+    server/CommandServer.cpp
+    server/AuthSystemServer.cpp
+    )
 
   add_library(vishnu-ums-server ${server_SRCS})
   set_target_properties(vishnu-ums-server PROPERTIES VERSION ${VISHNU_VERSION})
