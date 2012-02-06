@@ -1558,7 +1558,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_READONLY_ACCOUNT</para></entry>
-                <entry><para>You can modify information. This account is read-only. </para></entry>
+                <entry><para>You can modify information. This account is read-only</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_AUTHENTERR</para></entry>
@@ -3207,7 +3207,7 @@
               <row>
                 <entry><para>newAuthSys</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="AuthSystems">AuthSystems</link></para></entry>
+                <entry><para><link linkend="AuthSystem">AuthSystem</link></para></entry>
                 <entry><para>is an object which encapsulates the information of the user-authentication system which will be added in VISHNU</para></entry>
                 <entry><para>INOUT</para></entry>
               </row>
@@ -3266,8 +3266,8 @@
                 <entry><para>The encryption method is unknown</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_AUTHSYSTEM_ALREADY_EXIST</para></entry>
-                <entry><para>The name of the user-authentication system already exists</para></entry>
+                <entry><para>ERRCODE_AUTH_SYSTEM_ALREADY_EXIST</para></entry>
+                <entry><para>The identifier of the user-authentication system already exists</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
@@ -3327,7 +3327,7 @@
               <row>
                 <entry><para>newAuthSys</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="AuthSystems">AuthSystems</link></para></entry>
+                <entry><para><link linkend="AuthSystem">AuthSystem</link></para></entry>
                 <entry><para>is an object which encapsulates the information of the user-authentication system which will be added in VISHNU</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -3376,14 +3376,14 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_AUTH_SYSTEM</para></entry>
-                <entry><para>The user-authentication system is unknown</para></entry>
+                <entry><para>The user-authentication system is unknown or locked</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_ENCRYPTION_METHOD</para></entry>
                 <entry><para>The encryption method is unknown</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_AUTHSYSTEM_ALREADY_LOCKED</para></entry>
+                <entry><para>ERRCODE_AUTH_SYSTEM_ALREADY_LOCKED</para></entry>
                 <entry><para>The user-authentication system is already locked</para></entry>
               </row>
               <row>
@@ -3493,7 +3493,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_AUTH_SYSTEM</para></entry>
-                <entry><para>The user-authentication system is unknown</para></entry>
+                <entry><para>The user-authentication system is unknown or locked</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
@@ -3608,7 +3608,7 @@
                 <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_UNKNOWN_AUTH_TYPE</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE</para></entry>
                 <entry><para>The type of the user-authentication system is unknown</para></entry>
               </row>
               <row>
@@ -3726,11 +3726,11 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_AUTH_SYSTEM</para></entry>
-                <entry><para>The user-authentication system is unknown</para></entry>
+                <entry><para>The user-authentication system is unknown or locked</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_LOCAL_AUTH_ACCOUNT_EXIST</para></entry>
-                <entry><para>The local user-authentication configuration already exists</para></entry>
+                <entry><para>ERRCODE_AUTH_ACCOUNT_EXIST</para></entry>
+                <entry><para>The user-authentication account already exists</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
@@ -3847,11 +3847,11 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_AUTH_SYSTEM</para></entry>
-                <entry><para>The user-authentication system is unknown</para></entry>
+                <entry><para>The user-authentication system is unknown or locked</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_UNKNOWN_LOCAL_AUTH_ACCOUNT</para></entry>
-                <entry><para>The local user-authentication account is unknown</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_AUTH_ACCOUNT</para></entry>
+                <entry><para>The user-authentication account is unknown</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
@@ -3975,11 +3975,11 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_AUTH_SYSTEM</para></entry>
-                <entry><para>The user-authentication system is unknown</para></entry>
+                <entry><para>The user-authentication system is unknown or locked</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_UNKNOWN_LOCAL_AUTH_ACCOUNT</para></entry>
-                <entry><para>The local user-authentication account is unknown</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_AUTH_ACCOUNT</para></entry>
+                <entry><para>The user-authentication account is unknown</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
@@ -4103,11 +4103,11 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_AUTH_SYSTEM</para></entry>
-                <entry><para>The user-authentication system is unknown</para></entry>
+                <entry><para>The user-authentication system is unknown or locked</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_UNKNOWN_LOCAL_AUTH_ACCOUNT</para></entry>
-                <entry><para>The local user-authentication account is unknown</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_AUTH_ACCOUNT</para></entry>
+                <entry><para>The user-authentication account is unknown</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
