@@ -54,6 +54,14 @@
               
             <para>Prise en compte de SLURM.</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>05</revnumber>
+        <date>18/01/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+              
+            <para>Mise à jour de versions manquantes.</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
