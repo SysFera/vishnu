@@ -981,12 +981,12 @@ vishnu::listAuthAccounts(const std::string& sessionKey, UMS_Data::ListAuthAccoun
       UMS_Data::AuthAccount_ptr auth = ecoreFactory->createAuthAccount();
       //To copy the content and not the pointer
       *auth = *list->getAuthAccounts().get(i);
-      listAuthAccounts.getAuthAccounts().push_back(account);
+      listAuthAccounts.getAuthAccounts().push_back(auth);
     }
     delete list;
   }
 
-  return VISHNU_SUCCESS;
+  return 0;
 
 }
 

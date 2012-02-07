@@ -373,7 +373,7 @@ std::string  convertAuthTypeToString (const UMS_Data::AuthType& type) {
 
 /**
  * \brief Helper function to display an authentication system
- * \param os: The output stream in which the authentication system will be printed 
+ * \param os: The output stream in which the authentication system will be printed
  * \param authSystem: The authentication system  to display
  * \return The output stream in which the authentication system has been printed
  */
@@ -408,7 +408,7 @@ operator<<(std::ostream& os, const UMS_Data::AuthSystem_ptr& authSystem){
 
 /**
  * \brief Helper function to display a list of authentication systems
- * \param os: The output stream in which the list will be printed 
+ * \param os: The output stream in which the list will be printed
  * \param lsAuthSystems: The list to display
  * \return The output stream in which the list of authentication systems has been printed
  */
@@ -462,7 +462,7 @@ operator<<(std::ostream& os, UMS_Data::ListAuthSystems& lsAuthSystems) {
 
 /**
  * \brief Helper function to display an authentication account
- * \param os: The output stream in which the authentication account will be printed 
+ * \param os: The output stream in which the authentication account will be printed
  * \param authSystem: The authentication account  to display
  * \return The output stream in which the authentication account has been printed
  */
@@ -487,7 +487,7 @@ operator<<(std::ostream& os, const UMS_Data::AuthAccount_ptr& authAccount) {
 
 /**
  * \brief Helper function to display a list of authentication accounts
- * \param os: The output stream in which the list will be printed 
+ * \param os: The output stream in which the list will be printed
  * \param lsAuthAccounts: The list to display
  * \return The output stream in which the list of authentication accounts has been printed
  */
@@ -503,15 +503,15 @@ operator<<(std::ostream& os, UMS_Data::ListAuthAccounts& lsAuthAccounts) {
   std::string userId;
   std::string acLogin;
 
-  for(unsigned int i = 0; i < lsAuthAccounts.getLocalAuthAccounts().size(); i++) {
+  for(unsigned int i = 0; i < lsAuthAccounts.getAuthAccounts().size(); i++) {
 
-    authAccountId = (lsAuthAccounts.getLocalAuthAccounts().get(i))->getAuthSystemId();
+    authAccountId = (lsAuthAccounts.getAuthAccounts().get(i))->getAuthSystemId();
     maxAuthAccountIdSize = max(maxAuthAccountIdSize, authAccountId.size());
 
-    userId = (lsAuthAccounts.getLocalAuthAccounts().get(i))->getUserId();
+    userId = (lsAuthAccounts.getAuthAccounts().get(i))->getUserId();
     maxUserIdSize = max(maxUserIdSize, userId.size());
 
-    acLogin = (lsAuthAccounts.getLocalAuthAccounts().get(i))->getAcLogin();
+    acLogin = (lsAuthAccounts.getAuthAccounts().get(i))->getAcLogin();
     maxAcLoginSize = max(maxAcLoginSize, acLogin.size());
 
   }
@@ -523,10 +523,10 @@ operator<<(std::ostream& os, UMS_Data::ListAuthAccounts& lsAuthAccounts) {
   setFill(maxAcLoginSize, os);
   os << endl;
 
-  for(unsigned int i = 0; i < lsAuthAccounts.getLocalAuthAccounts().size(); i++) {
-    authAccountId = (lsAuthAccounts.getLocalAuthAccounts().get(i))->getAuthSystemId();
-    userId = (lsAuthAccounts.getLocalAuthAccounts().get(i))->getUserId();
-    acLogin = (lsAuthAccounts.getLocalAuthAccounts().get(i))->getAcLogin();
+  for(unsigned int i = 0; i < lsAuthAccounts.getAuthAccounts().size(); i++) {
+    authAccountId = (lsAuthAccounts.getAuthAccounts().get(i))->getAuthSystemId();
+    userId = (lsAuthAccounts.getAuthAccounts().get(i))->getUserId();
+    acLogin = (lsAuthAccounts.getAuthAccounts().get(i))->getAcLogin();
     os << setw(maxAuthAccountIdSize+2) << left << authAccountId;
     os << setw(maxUserIdSize+2) << left << userId;
     os << setw(maxAcLoginSize+2) << left <<  acLogin;
@@ -692,7 +692,7 @@ std::ostream&
 operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
 
    std::string commandId;
-   std::string commandDesc; 
+   std::string commandDesc;
    int status;
    size_t maxCommandIdSize = std::string("CommandId").size();
    size_t maxCommandDescSize = std::string("Vishnu Command").size();
@@ -704,7 +704,7 @@ operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
      maxCommandIdSize = max(maxCommandIdSize, commandId.size());
 
      commandDesc = (lsCommand.getCommands().get(i))->getCmdDescription();
-     maxCommandDescSize = max(maxCommandDescSize, commandDesc.size()); 
+     maxCommandDescSize = max(maxCommandDescSize, commandDesc.size());
   }
 
   os << setw(maxCommandIdSize+2) << left << "CommandId";

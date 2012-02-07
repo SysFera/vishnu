@@ -1,6 +1,6 @@
 /**
  * \file list_authentication_accounts.cpp
- * This file defines the VISHNU list authentication accounts command 
+ * This file defines the VISHNU list authentication accounts command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -35,7 +35,7 @@ struct ListAuthenticationAccountsFunc {
       //cout << mlsAuthAccounts << endl;
     }
     else {
-      for(unsigned int i = 0; i < mlsAuthAccounts.getLocalAuthAccounts().size(); i++) {
+      for(unsigned int i = 0; i < mlsAuthAccounts.getAuthAccounts().size(); i++) {
         //cout << mlsAuthAccounts.getAuthAccounts().get(i) ;
       }
     }
@@ -106,7 +106,7 @@ int main (int ac, char* av[]){
   if(isEmpty|| (opt->count("listAll"))) {
     full = true;
   }
-  
+
   ListAuthenticationAccountsFunc listAuthenticationAccountsFunc (lsAuthAccounts, listOptions, full);
   return GenericCli().run(listAuthenticationAccountsFunc, dietConfig, ac, av);
 }// end of main
