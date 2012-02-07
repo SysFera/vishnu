@@ -73,7 +73,7 @@ namespace UMS_Data
          * \return A reference to a list of AuthAccounts
          **/
         ::ecorecpp::mapping::EList< ::UMS_Data::AuthAccount >
-                & getLocalAuthAccounts();
+                & getAuthAccounts();
 
         /*PROTECTED REGION ID(ListAuthAccounts) START*/
         // Please, enable the protected region if you add manually written code.
@@ -101,7 +101,7 @@ namespace UMS_Data
         // References
 
         ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList<
-                ::UMS_Data::AuthAccount > > m_LocalAuthAccounts;
+                ::UMS_Data::AuthAccount > > m_AuthAccounts;
 
     };
 

@@ -633,11 +633,11 @@ UMS_DataPackage::UMS_DataPackage()
     m_ListAuthAccountsEClass->setClassifierID(LISTAUTHACCOUNTS);
     m_ListAuthAccountsEClass->setEPackage(this);
     getEClassifiers().push_back(m_ListAuthAccountsEClass);
-    m_ListAuthAccounts__LocalAuthAccounts = new ::ecore::EReference();
-    m_ListAuthAccounts__LocalAuthAccounts->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::LISTAUTHACCOUNTS__LOCALAUTHACCOUNTS);
+    m_ListAuthAccounts__AuthAccounts = new ::ecore::EReference();
+    m_ListAuthAccounts__AuthAccounts->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::LISTAUTHACCOUNTS__AUTHACCOUNTS);
     m_ListAuthAccountsEClass->getEStructuralFeatures().push_back(
-            m_ListAuthAccounts__LocalAuthAccounts);
+            m_ListAuthAccounts__AuthAccounts);
 
     // ListAuthAccOptions
     m_ListAuthAccOptionsEClass = new ::ecore::EClass();
@@ -2104,19 +2104,19 @@ UMS_DataPackage::UMS_DataPackage()
     m_ListAuthAccountsEClass->setName("ListAuthAccounts");
     m_ListAuthAccountsEClass->setAbstract(false);
     m_ListAuthAccountsEClass->setInterface(false);
-    m_ListAuthAccounts__LocalAuthAccounts->setEType(m_AuthAccountEClass);
-    m_ListAuthAccounts__LocalAuthAccounts->setName("LocalAuthAccounts");
-    m_ListAuthAccounts__LocalAuthAccounts->setDefaultValueLiteral("");
-    m_ListAuthAccounts__LocalAuthAccounts->setLowerBound(0);
-    m_ListAuthAccounts__LocalAuthAccounts->setUpperBound(-1);
-    m_ListAuthAccounts__LocalAuthAccounts->setTransient(false);
-    m_ListAuthAccounts__LocalAuthAccounts->setVolatile(false);
-    m_ListAuthAccounts__LocalAuthAccounts->setChangeable(true);
-    m_ListAuthAccounts__LocalAuthAccounts->setContainment(true);
-    m_ListAuthAccounts__LocalAuthAccounts->setResolveProxies(true);
-    m_ListAuthAccounts__LocalAuthAccounts->setUnique(true);
-    m_ListAuthAccounts__LocalAuthAccounts->setDerived(false);
-    m_ListAuthAccounts__LocalAuthAccounts->setOrdered(true);
+    m_ListAuthAccounts__AuthAccounts->setEType(m_AuthAccountEClass);
+    m_ListAuthAccounts__AuthAccounts->setName("AuthAccounts");
+    m_ListAuthAccounts__AuthAccounts->setDefaultValueLiteral("");
+    m_ListAuthAccounts__AuthAccounts->setLowerBound(0);
+    m_ListAuthAccounts__AuthAccounts->setUpperBound(-1);
+    m_ListAuthAccounts__AuthAccounts->setTransient(false);
+    m_ListAuthAccounts__AuthAccounts->setVolatile(false);
+    m_ListAuthAccounts__AuthAccounts->setChangeable(true);
+    m_ListAuthAccounts__AuthAccounts->setContainment(true);
+    m_ListAuthAccounts__AuthAccounts->setResolveProxies(true);
+    m_ListAuthAccounts__AuthAccounts->setUnique(true);
+    m_ListAuthAccounts__AuthAccounts->setDerived(false);
+    m_ListAuthAccounts__AuthAccounts->setOrdered(true);
     // ListAuthAccOptions
     m_ListAuthAccOptionsEClass->setName("ListAuthAccOptions");
     m_ListAuthAccOptionsEClass->setAbstract(false);
@@ -2833,9 +2833,9 @@ UMS_DataPackage::UMS_DataPackage()
 {
     return m_AuthAccount__acLogin;
 }
-::ecore::EReference_ptr UMS_DataPackage::getListAuthAccounts__LocalAuthAccounts()
+::ecore::EReference_ptr UMS_DataPackage::getListAuthAccounts__AuthAccounts()
 {
-    return m_ListAuthAccounts__LocalAuthAccounts;
+    return m_ListAuthAccounts__AuthAccounts;
 }
 ::ecore::EAttribute_ptr UMS_DataPackage::getListAuthAccOptions__listAll()
 {
