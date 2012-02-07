@@ -1118,63 +1118,7 @@ solveGenerique(diet_profile_t* pb) {
 */
 int
 solveListUsers(diet_profile_t* pb) {
-#if 0
-  char* sessionKey = NULL;
-  char* option = NULL;
-  std::string listUsersSerialized = "";
-  std::string empty = "";
-  std::string errorInfo;
-  int mapperkey;
-  std::string cmd;
-  std::string finishError ="";
-
-
-  //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &option, NULL);
-
-  SessionServer sessionServer  = SessionServer(std::string(sessionKey));
-  ListUsersServer queryUsers(std::string(option), sessionServer);
-
-  UMS_Data::ListUsers_ptr listUsers = NULL;
-
-  try {
-     //MAPPER CREATION
-    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_list_users");
-    mapper->code(std::string(option), mapperkey);
-    cmd = mapper->finalize(mapperkey);
-
-    listUsers  = queryUsers.list();
-
-    ::ecorecpp::serializer::serializer _ser;
-    listUsersSerialized =  _ser.serialize_str(listUsers);
-
-    //OUT Parameters
-    diet_string_set(diet_parameter(pb,2), strdup(listUsersSerialized.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
-    //To save the connection
-    sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
-  } catch (VishnuException& e) {
-      try {
-          sessionServer.finish(cmd, UMS, vishnu::CMDFAILED);
-      } catch (VishnuException& fe) {
-          finishError =  fe.what();
-          finishError +="\n";
-      }
-      e.appendMsgComp(finishError);
-      errorInfo =  e.buildExceptionString();
-      //OUT Parameters
-      diet_string_set(diet_parameter(pb,2), strdup(listUsersSerialized.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
-  }
-  delete listUsers;
-  return 0;
-#endif
-
   return solveGenerique<UMS_Data::ListUsersOptions, UMS_Data::ListUsers, ListUsersServer>(pb);
-
-
 }
 
 /**
@@ -1258,5 +1202,101 @@ solveRestore(diet_profile_t* pb) {
     errorInfo =  e.buildExceptionString();
   }
   diet_string_set(diet_parameter(pb,1), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  return 0;
+}
+
+/**
+* \brief Function to solve the service solveSystemAuthenticationCreate
+* \fn    int solveSystemAuthenticationCreate(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveSystemAuthenticationCreate(diet_profile_t* pb) {
+
+  return 0;
+}
+
+/**
+* \brief Function to solve the service solveSystemAuthenticationUpdate
+* \fn    int solveSystemAuthenticationUpdate(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveSystemAuthenticationUpdate(diet_profile_t* pb) {
+
+  return 0;
+}
+
+/**
+* \brief Function to solve the service solveSystemAuthenticationDelete
+* \fn    int solveSystemAuthenticationDelete(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveSystemAuthenticationDelete(diet_profile_t* pb) {
+
+  return 0;
+}
+
+/**
+* \brief Function to solve the service solveSystemAuthenticationList
+* \fn    int solveSystemAuthenticationList(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveSystemAuthenticationList(diet_profile_t* pb) {
+
+  return 0;
+}
+
+/**
+* \brief Function to solve the service solveAccountAuthCreate
+* \fn    int solveAccountAuthCreate(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveAccountAuthCreate(diet_profile_t* pb) {
+
+  return 0;
+}
+
+/**
+* \brief Function to solve the service solveAccountAuthUpdate
+* \fn    int solveAccountAuthUpdate(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveAccountAuthUpdate(diet_profile_t* pb) {
+
+  return 0;
+}
+
+/**
+* \brief Function to solve the service solveAccountAuthDelete
+* \fn    int solveAccountAuthDelete(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveAccountAuthDelete(diet_profile_t* pb) {
+
+  return 0;
+}
+
+/**
+* \brief Function to solve the service solveAccountAuthList
+* \fn    int solveAccountAuthList(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveAccountAuthList(diet_profile_t* pb) {
+
   return 0;
 }
