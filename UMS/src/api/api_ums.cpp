@@ -19,6 +19,7 @@
 #include "UtilsProxy.hpp"
 #include "utilVishnu.hpp"
 #include "NetrcReader.hpp"
+#include "AuthSystemProxy.hpp"
 
 using namespace std;
 
@@ -752,20 +753,33 @@ int
 
 
 int
-  vishnu::addAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSystem& newAuthSys)
-                                     throw(UserException, SystemException){
+vishnu::addAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSystem& newAuthSys)
+  throw(UserException, SystemException){
 
-                                       std::cout << "name "  << newAuthSys.getName() << "\n";
-                                       std::cout << "URI "  << newAuthSys.getURI() << "\n";
-                                       std::cout << "authLogin "  << newAuthSys.getAuthLogin() << "\n";
-                                       std::cout << "authPassword "  << newAuthSys.getAuthPassword() << "\n";
-                                       std::cout << "UserPasswordEncryption "  << newAuthSys.getUserPasswordEncryption() << "\n";
-                                       std::cout << "type "  << newAuthSys.getType() << "\n";
-                                       if (newAuthSys.getOptions() != NULL) {
-                                         std::cout << "LdapBase "  << newAuthSys.getOptions()->getLdapBase() << "\n";
-                                       }
+  std::cout << "name "  << newAuthSys.getName() << "\n";
+  std::cout << "URI "  << newAuthSys.getURI() << "\n";
+  std::cout << "authLogin "  << newAuthSys.getAuthLogin() << "\n";
+  std::cout << "authPassword "  << newAuthSys.getAuthPassword() << "\n";
+  std::cout << "UserPasswordEncryption "  << newAuthSys.getUserPasswordEncryption() << "\n";
+  std::cout << "type "  << newAuthSys.getType() << "\n";
+  if (newAuthSys.getOptions() != NULL) {
+    std::cout << "LdapBase "  << newAuthSys.getOptions()->getLdapBase() << "\n";
+  }
 
-                                     }
+  checkIfTextIsEmpty(newAuthSys.getAuthSystemId(), "The local account userId is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newAuthSys.getName(), "The local account machineId is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newAuthSys.getURI(), "The local account acLogin is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newAuthSys.getAuthLogin(), "The local sshPublicKeyPath is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newAuthSys.getAuthPassword(), "The local account home directory is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newAuthSys.getUserPasswordEncryption(), "The local account home directory is empty", ERRCODE_INVALID_PARAM);
+  int res;
+
+  SessionProxy sessionProxy(sessionKey);
+  AuthSystemProxy auth(newAuthSys, sessionProxy);
+
+  return auth.add();
+
+}
 
 /***
  * \brief Function to add a new user-authentication system in VISHNU
@@ -777,19 +791,23 @@ int
 
 
 int
-vishnu::updateAuthenticationSystem(const std::string& sessionKey,  UMS_Data::AuthSystem& AuthSys)
-                                     throw(UserException, SystemException){
-                                       std::cout << "name "  << AuthSys.getName() << "\n";
-                                       std::cout << "URI "  << AuthSys.getURI() << "\n";
-                                       std::cout << "authLogin "  << AuthSys.getAuthLogin() << "\n";
-                                       std::cout << "authPassword "  << AuthSys.getAuthPassword() << "\n";
-                                       std::cout << "UserPasswordEncryption "  << AuthSys.getUserPasswordEncryption() << "\n";
-                                       std::cout << "status "  << AuthSys.getStatus() << "\n";
-                                       std::cout << "type "  << AuthSys.getType() << "\n";
-                                    if (AuthSys.getOptions() != NULL) {
-                                         std::cout << "LdapBase "  << AuthSys.getOptions()->getLdapBase() << "\n";
-                                       }
-                                     }
+vishnu::updateAuthenticationSystem(const std::string& sessionKey,  UMS_Data::AuthSystem& authSys)
+  throw(UserException, SystemException){
+  std::cout << "name "  << authSys.getName() << "\n";
+  std::cout << "URI "  << authSys.getURI() << "\n";
+  std::cout << "authLogin "  << authSys.getAuthLogin() << "\n";
+  std::cout << "authPassword "  << authSys.getAuthPassword() << "\n";
+  std::cout << "UserPasswordEncryption "  << authSys.getUserPasswordEncryption() << "\n";
+  std::cout << "status "  << authSys.getStatus() << "\n";
+  std::cout << "type "  << authSys.getType() << "\n";
+  if (authSys.getOptions() != NULL) {
+    std::cout << "LdapBase "  << authSys.getOptions()->getLdapBase() << "\n";
+  }
+  SessionProxy sessionProxy(sessionKey);
+  AuthSystemProxy auth(authSys, sessionProxy);
+
+  return auth.update();
+}
 
 /***
  * \brief Function to remove a user-authentication system from VISHNU
@@ -800,12 +818,17 @@ vishnu::updateAuthenticationSystem(const std::string& sessionKey,  UMS_Data::Aut
 
 int
 vishnu::deleteAuthenticationSystem(const std::string& sessionKey, const std::string& authSystemId)
-                                    throw(UserException, SystemException){
+  throw(UserException, SystemException){
 
 
-                                       std::cout << "ID "  << authSystemId << "\n";
+  std::cout << "ID "  << authSystemId << "\n";
+  UMS_Data::AuthSystem sys;
+  sys.setAuthSystemId(authSystemId);
+  SessionProxy sessionProxy(sessionKey);
+  AuthSystemProxy auth(sys, sessionProxy);
 
-                                    }
+  return auth.deleteAuthSystem();
+}
 
 
 /***
@@ -823,7 +846,11 @@ vishnu::deleteAuthenticationSystem(const std::string& sessionKey, const std::str
 
 int
 vishnu::listAuthenticationSystems(const std::string& sessionKey, UMS_Data::ListAuthSystems& listAuthSys, const UMS_Data::ListAuthSysOptions& options )
-                                     throw(UserException, SystemException){}
+                                     throw(UserException, SystemException){
+  SessionProxy sessionProxy(sessionKey);
+  QueryProxy<UMS_Data::ListAuthSysOptions, UMS_Data::ListAuthSys> query(options, sessionProxy, "localAccountList");
+
+}
 
 
 /***

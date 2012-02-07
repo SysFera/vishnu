@@ -7,6 +7,8 @@ include_directories(client api
   ${UTILVISHNU_SOURCE_DIR})
 
 set(client_SRCS client/SessionProxy.cpp
+  client/AuthAccountProxy.cpp
+  client/AuthSystemProxy.cpp
   client/UserProxy.cpp
   client/MachineProxy.cpp
   client/LocalAccountProxy.cpp
