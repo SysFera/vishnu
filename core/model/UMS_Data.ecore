@@ -707,7 +707,7 @@
     <eLiterals name="SSHA" value="1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListAuthAccounts" instanceTypeName="ListAuthAccounts">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="LocalAuthAccounts" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="AuthAccounts" upperBound="-1"
         eType="#//AuthAccount" containment="true">
       <eAnnotations source="Description">
         <details key="content" value="is the list of users objects"/>
