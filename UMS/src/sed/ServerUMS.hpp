@@ -12,7 +12,7 @@
 /**
  * \brief Number of service in UMS
  */
-#define NB_SRV 25
+#define NB_SRV 33
 #include "DIET_server.h"
 #include "UMSMapper.hpp"
 #include "TMSMapper.hpp"
@@ -50,7 +50,15 @@ static const char* SRV[NB_SRV] = {
   "commandList",
   "optionValueList",
   "userList",
-  "restore"};
+  "restore",
+  "systemAuthenticationCreate",
+  "systemAuthenticationUpdate",
+  "systemAuthenticationDelete",
+  "systemAuthenticationList",
+  "accountAuthCreate",
+  "accountAuthUpdate",
+  "accountAuthDelete",
+  "accountAuthList"};
 /**
  * \class ServerUMS
  * \brief This class describes the UMS server

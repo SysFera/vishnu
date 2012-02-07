@@ -30,6 +30,7 @@ int
 AuthSystemServer::add(int vishnuId) {
 
   std::string idGenerated = "TOTO";
+  std::string numAuth;
   std::string sqlInsert = "insert into authsystem (numauthsystemid, vishnu_vishnuid, "
   "authsystemid, name, uri, authlogin, authpassword, userpwdencryption, authtype, state) values ";
 
@@ -51,6 +52,17 @@ AuthSystemServer::add(int vishnuId) {
                                   +convertToString(mauthsystem->getUserPasswordEncryption())+ ","
                                   +convertToString(mauthsystem->getType()) +", 1)"
                                 );
+
+        //If the Ldap base is defined and the type is ldap
+        if ((mauthsystem->getOptions()->getLdapBase().size() != 0)
+          && mauthsystem->getType() == 1 ) {
+
+          numAuth = getAttribut("where authsystemid='"+idGenerated+"'");
+
+          mdatabaseVishnu->process("insert into ldapauthsystem (authsystem_authsystemid, ldapbase) values "
+                                   "("+numAuth+ ", '"+mauthsystem->getOptions()->getLdapBase()+"')");
+
+        }
       }// End if the id generated does not exists
       else {
         UMSVishnuException e (ERRCODE_AUTH_SYSTEM_ALREADY_EXIST);
@@ -125,7 +137,7 @@ AuthSystemServer::update() {
         " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");
         }
 
-        //if a new status has been defined
+        //if a new status has been defined TODO
         /*if (mauthsystem->getStatus().size() != 0) {
         sqlCommand.append("UPDATE authsystem SET status='"+convertToString(mauthsystem->getStatus())+"'"
         " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");

@@ -233,6 +233,7 @@ ServerUMS::init(int vishnuId,
     return 1;
   }
   diet_profile_desc_free(mprofile);
+
   /* solveMachineUpdate */
 
   mprofile = diet_profile_desc_alloc(SRV[9], 1, 1, 2);
@@ -428,6 +429,95 @@ ServerUMS::init(int vishnuId,
     return 1;
   }
   diet_profile_desc_free(mprofile);
+
+  /* solveSystemAuthenticationCreate */
+
+  mprofile = diet_profile_desc_alloc(SRV[25], 1, 1, 3);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
+  if (diet_service_table_add(mprofile, NULL, solveSystemAuthenticationCreate)) {
+    return 1;
+  }
+  diet_profile_desc_free(mprofile);
+
+
+  /* solveSystemAuthenticationUpdate */
+
+  mprofile = diet_profile_desc_alloc(SRV[26], 1, 1, 2);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  if (diet_service_table_add(mprofile, NULL, solveSystemAuthenticationUpdate)) {
+    return 1;
+  }
+  diet_profile_desc_free(mprofile);
+
+  /* solveSystemAuthenticationDelete */
+
+  mprofile = diet_profile_desc_alloc(SRV[27], 1, 1, 2);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  if (diet_service_table_add(mprofile, NULL, solveSystemAuthenticationDelete)) {
+    return 1;
+  }
+  diet_profile_desc_free(mprofile);
+
+  /* solveSystemAuthenticationList */
+
+  mprofile = diet_profile_desc_alloc(SRV[28], 1, 1, 3);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
+  if (diet_service_table_add(mprofile, NULL, solveSystemAuthenticationList)) {
+    return 1;
+  }
+  diet_profile_desc_free(mprofile);
+
+
+  /* solveAccountAuthCreate */
+
+  mprofile = diet_profile_desc_alloc(SRV[29], 1, 1, 2);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  if (diet_service_table_add(mprofile, NULL, solveAccountAuthCreate)) {
+    return 1;
+  }
+
+  /* solveAccountAuthUpdate */
+
+  mprofile = diet_profile_desc_alloc(SRV[30], 1, 1, 2);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  if (diet_service_table_add(mprofile, NULL, solveAccountAuthUpdate)) {
+    return 1;
+  }
+
+  /* solveAccountAuthDelete */
+
+  mprofile = diet_profile_desc_alloc(SRV[31], 2, 2, 3);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  if (diet_service_table_add(mprofile, NULL, solveAccountAuthDelete)) {
+    return 1;
+  }
+
+  /* solveAccountAuthList */
+
+  mprofile = diet_profile_desc_alloc(SRV[32], 1, 1, 3);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
+  if (diet_service_table_add(mprofile, NULL, solveAccountAuthList)) {
+    return 1;
+  }
 
   return 0;
 }

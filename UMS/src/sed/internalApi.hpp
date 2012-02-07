@@ -242,4 +242,69 @@ solveListSessions(diet_profile_t* pb);
 */
 int
 solveRestore(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveSystemAuthenticationCreate
+* \fn    int solveSystemAuthenticationCreate(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveSystemAuthenticationCreate(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveSystemAuthenticationUpdate
+* \fn    int solveSystemAuthenticationUpdate(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveSystemAuthenticationUpdate(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveSystemAuthenticationDelete
+* \fn    int solveSystemAuthenticationDelete(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveSystemAuthenticationDelete(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveSystemAuthenticationList
+* \fn    int solveSystemAuthenticationList(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveSystemAuthenticationList(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveAccountAuthCreate
+* \fn    int solveAccountAuthCreate(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveAccountAuthCreate(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveAccountAuthUpdate
+* \fn    int solveAccountAuthUpdate(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveAccountAuthUpdate(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveAccountAuthDelete
+* \fn    int solveAccountAuthDelete(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveAccountAuthDelete(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveAccountAuthList
+* \fn    int solveAccountAuthList(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveAccountAuthList(diet_profile_t* pb);
+
 #endif // SERVERUMS
