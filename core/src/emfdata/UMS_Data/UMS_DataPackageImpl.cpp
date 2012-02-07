@@ -2279,9 +2279,19 @@ UMS_DataPackage::UMS_DataPackage()
 
     {
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // UNDEFINED
+        _el->setName("UNDEFINED");
+        _el->setValue(0);
+        _el->setLiteral("UNDEFINED");
+        _el->setEEnum(m_AuthTypeEEnum);
+        m_AuthTypeEEnum->getELiterals().push_back(_el);
+    }
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // LDAP
         _el->setName("LDAP");
-        _el->setValue(0);
+        _el->setValue(1);
         _el->setLiteral("LDAP");
         _el->setEEnum(m_AuthTypeEEnum);
         m_AuthTypeEEnum->getELiterals().push_back(_el);
@@ -2293,9 +2303,19 @@ UMS_DataPackage::UMS_DataPackage()
 
     {
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // UNDEFINED
+        _el->setName("UNDEFINED");
+        _el->setValue(0);
+        _el->setLiteral("UNDEFINED");
+        _el->setEEnum(m_EncryptionMethodEEnum);
+        m_EncryptionMethodEEnum->getELiterals().push_back(_el);
+    }
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // SSHA
         _el->setName("SSHA");
-        _el->setValue(0);
+        _el->setValue(1);
         _el->setLiteral("SSHA");
         _el->setEEnum(m_EncryptionMethodEEnum);
         m_EncryptionMethodEEnum->getELiterals().push_back(_el);

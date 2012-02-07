@@ -673,7 +673,8 @@
     <eAnnotations source="Description">
       <details key="content" value="represents the type of the user-authentication systems"/>
     </eAnnotations>
-    <eLiterals name="LDAP"/>
+    <eLiterals name="UNDEFINED" literal="UNDEFINED"/>
+    <eLiterals name="LDAP" value="1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AuthAccount" instanceTypeName="AuthAccount">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="authSystemId" lowerBound="1"
@@ -702,7 +703,8 @@
     <eAnnotations source="Description">
       <details key="content" value="represents the name of the encryption method "/>
     </eAnnotations>
-    <eLiterals name="SSHA"/>
+    <eLiterals name="UNDEFINED" literal="UNDEFINED"/>
+    <eLiterals name="SSHA" value="1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListAuthAccounts" instanceTypeName="ListAuthAccounts">
     <eStructuralFeatures xsi:type="ecore:EReference" name="LocalAuthAccounts" upperBound="-1"

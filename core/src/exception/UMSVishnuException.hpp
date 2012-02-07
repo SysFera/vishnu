@@ -43,6 +43,15 @@ static const int ERRCODE_INCORRECT_TRANSFER_CMD = 44;
 static const int ERRCODE_ROOT_USER_ONLY = 45;
 static const int ERRCODE_LOGIN_ALREADY_USED = 46;
 
+static const int ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE = 47;
+static const int ERRCODE_UNKNOWN_AUTH_SYSTEM = 48;
+static const int ERRCODE_AUTH_SYSTEM_ALREADY_LOCKED = 49;
+static const int ERRCODE_AUTH_SYSTEM_ALREADY_EXIST = 50;
+static const int ERRCODE_AUTH_ACCOUNT_EXIST = 51;
+static const int ERRCODE_UNKNOWN_AUTH_ACCOUNT = 52;
+static const int ERRCODE_UNKNOWN_ENCRYPTION_METHOD = 53;
+static const int ERRCODE_READONLY_ACCOUNT = 54;
+
 /**
  * \class UMSVishnuException
  * \brief Specialisation of the user exception for the UMS module
