@@ -34,7 +34,7 @@ using namespace ::UMS_Data;
 ListAuthAccounts::ListAuthAccounts()
 {
 
-    m_LocalAuthAccounts.reset(new ::ecorecpp::mapping::ReferenceEListImpl<
+    m_AuthAccounts.reset(new ::ecorecpp::mapping::ReferenceEListImpl<
             ::UMS_Data::AuthAccount, -1, true, false >(this, NULL));
 
     /*PROTECTED REGION ID(ListAuthAccountsImpl__ListAuthAccountsImpl) START*/
@@ -55,8 +55,8 @@ ListAuthAccounts::~ListAuthAccounts()
 // Attributes
 
 // References
-::ecorecpp::mapping::EList< ::UMS_Data::AuthAccount >& ListAuthAccounts::getLocalAuthAccounts()
+::ecorecpp::mapping::EList< ::UMS_Data::AuthAccount >& ListAuthAccounts::getAuthAccounts()
 {
-    return *m_LocalAuthAccounts;
+    return *m_AuthAccounts;
 }
 

@@ -684,9 +684,9 @@ namespace UMS_Data
         static const int AUTHACCOUNT__ACLOGIN = 93;
 
         /**
-         * \brief Constant for LISTAUTHACCOUNTS__LOCALAUTHACCOUNTS feature
+         * \brief Constant for LISTAUTHACCOUNTS__AUTHACCOUNTS feature
          */
-        static const int LISTAUTHACCOUNTS__LOCALAUTHACCOUNTS = 94;
+        static const int LISTAUTHACCOUNTS__AUTHACCOUNTS = 94;
 
         /**
          * \brief Constant for LISTAUTHACCOPTIONS__LISTALL feature
@@ -1478,11 +1478,10 @@ namespace UMS_Data
         virtual ::ecore::EAttribute_ptr getAuthAccount__acLogin();
 
         /**
-         * \brief Returns the reflective object for feature LocalAuthAccounts of class ListAuthAccounts
+         * \brief Returns the reflective object for feature AuthAccounts of class ListAuthAccounts
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EReference_ptr
-                getListAuthAccounts__LocalAuthAccounts();
+        virtual ::ecore::EReference_ptr getListAuthAccounts__AuthAccounts();
 
         /**
          * \brief Returns the reflective object for feature listAll of class ListAuthAccOptions
@@ -2156,9 +2155,9 @@ namespace UMS_Data
         ::ecore::EAttribute_ptr m_AuthAccount__acLogin;
 
         /**
-         * \brief The instance for the feature LocalAuthAccounts of class ListAuthAccounts
+         * \brief The instance for the feature AuthAccounts of class ListAuthAccounts
          */
-        ::ecore::EReference_ptr m_ListAuthAccounts__LocalAuthAccounts;
+        ::ecore::EReference_ptr m_ListAuthAccounts__AuthAccounts;
 
         /**
          * \brief The instance for the feature listAll of class ListAuthAccOptions

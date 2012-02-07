@@ -20,6 +20,7 @@
 #include "utilVishnu.hpp"
 #include "NetrcReader.hpp"
 #include "AuthSystemProxy.hpp"
+#include "AuthAccountProxy.hpp"
 
 using namespace std;
 
@@ -766,13 +767,11 @@ vishnu::addAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSys
     std::cout << "LdapBase "  << newAuthSys.getOptions()->getLdapBase() << "\n";
   }
 
-  checkIfTextIsEmpty(newAuthSys.getAuthSystemId(), "The local account userId is empty", ERRCODE_INVALID_PARAM);
-  checkIfTextIsEmpty(newAuthSys.getName(), "The local account machineId is empty", ERRCODE_INVALID_PARAM);
-  checkIfTextIsEmpty(newAuthSys.getURI(), "The local account acLogin is empty", ERRCODE_INVALID_PARAM);
-  checkIfTextIsEmpty(newAuthSys.getAuthLogin(), "The local sshPublicKeyPath is empty", ERRCODE_INVALID_PARAM);
-  checkIfTextIsEmpty(newAuthSys.getAuthPassword(), "The local account home directory is empty", ERRCODE_INVALID_PARAM);
-  checkIfTextIsEmpty(newAuthSys.getUserPasswordEncryption(), "The local account home directory is empty", ERRCODE_INVALID_PARAM);
-  int res;
+  checkIfTextIsEmpty(newAuthSys.getAuthSystemId(), "The authentication system Id is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newAuthSys.getName(), "The authentication name is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newAuthSys.getURI(), "The authentication item is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newAuthSys.getAuthLogin(), "The authentication login is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newAuthSys.getAuthPassword(), "The authentication password is empty", ERRCODE_INVALID_PARAM);
 
   SessionProxy sessionProxy(sessionKey);
   AuthSystemProxy auth(newAuthSys, sessionProxy);
@@ -848,8 +847,21 @@ int
 vishnu::listAuthenticationSystems(const std::string& sessionKey, UMS_Data::ListAuthSystems& listAuthSys, const UMS_Data::ListAuthSysOptions& options )
                                      throw(UserException, SystemException){
   SessionProxy sessionProxy(sessionKey);
-  QueryProxy<UMS_Data::ListAuthSysOptions, UMS_Data::ListAuthSys> query(options, sessionProxy, "localAccountList");
+  QueryProxy<UMS_Data::ListAuthSysOptions, UMS_Data::ListAuthSystems> query(options, sessionProxy, "authSystemList");
 
+  UMS_Data::ListAuthSystems* list = query.list();
+
+  if (list!=NULL){
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+    for(unsigned int i = 0; i < list->getAuthSystems().size(); i++) {
+      UMS_Data::AuthSystem_ptr auth = ecoreFactory->createAuthSystem();
+      //To copy the content and not the pointer
+      *auth = *list->getAuthSystems().get(i);
+      listAuthSys.getAuthSystems().push_back(auth);
+    }
+    delete list;
+  }
+  return 0;
 }
 
 
@@ -865,12 +877,19 @@ int
 vishnu::addAuthAccount(const std::string& sessionKey, const UMS_Data::AuthAccount& authAccount)
                                      throw(UserException, SystemException){
 
-                                         std::cout << "authSystemId "  << authAccount.getAuthSystemId() << "\n";
-                                       std::cout << "UserId "  << authAccount.getUserId() << "\n";
-                                       std::cout << "acLogin "  << authAccount.getAcLogin() << "\n";
+  std::cout << "authSystemId "  << authAccount.getAuthSystemId() << "\n";
+  std::cout << "UserId "  << authAccount.getUserId() << "\n";
+  std::cout << "acLogin "  << authAccount.getAcLogin() << "\n";
 
+  checkIfTextIsEmpty(authAccount.getAuthSystemId(), "The authentication account systemId is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(authAccount.getUserId(), "The authentication account userId is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(authAccount.getAcLogin(), "The authentication acc login is empty", ERRCODE_INVALID_PARAM);
 
-                                     }
+  SessionProxy sessionProxy(sessionKey);
+  AuthAccountProxy auth(authAccount, sessionProxy);
+
+  return auth.add();
+}
 
 
 /***
@@ -882,17 +901,21 @@ vishnu::addAuthAccount(const std::string& sessionKey, const UMS_Data::AuthAccoun
  */
 
 int
-vishnu::updateAuthAccount(const std::string& sessionKey, const UMS_Data::AuthAccount& authenAccount)
+vishnu::updateAuthAccount(const std::string& sessionKey, const UMS_Data::AuthAccount& authAccount)
                                      throw(UserException, SystemException){
 
 
-                                         std::cout << "authSystemId "  << authenAccount.getAuthSystemId() << "\n";
-                                       std::cout << "UserId "  << authenAccount.getUserId() << "\n";
-                                       std::cout << "acLogin "  << authenAccount.getAcLogin() << "\n";
+  std::cout << "authSystemId "  << authAccount.getAuthSystemId() << "\n";
+  std::cout << "UserId "  << authAccount.getUserId() << "\n";
+  std::cout << "acLogin "  << authAccount.getAcLogin() << "\n";
+
+  SessionProxy sessionProxy(sessionKey);
+  AuthAccountProxy auth(authAccount, sessionProxy);
+
+  return auth.update();
 
 
-
-                                     }
+}
 
 
 /***
@@ -912,12 +935,19 @@ vishnu::deleteAuthAccount(const std::string& sessionKey, const std::string& auth
                                      throw(UserException, SystemException){
 
 
-                                         std::cout << "authSystemId "  << authSystemId<< "\n";
-                                       std::cout << "UserId "  << userId << "\n";
+  std::cout << "authSystemId "  << authSystemId<< "\n";
+  std::cout << "UserId "  << userId << "\n";
+
+  UMS_Data::AuthAccount authAccount;
+  authAccount.setUserId(userId);
+  authAccount.setAuthSystemId(authSystemId);
+  SessionProxy sessionProxy(sessionKey);
+  AuthAccountProxy authAccountProxy(authAccount, sessionProxy);
+
+  return authAccountProxy.deleteAuthAccount();
 
 
-
-                                     }
+}
 
 /***
  * \brief Function to lists local user-authentication configurations
@@ -936,12 +966,29 @@ int
 vishnu::listAuthAccounts(const std::string& sessionKey, UMS_Data::ListAuthAccounts& listAuthAccounts, const UMS_Data::ListAuthAccOptions& options)
                             throw(UserException, SystemException){
 
-                              std::cout << "userId :" <<  options.getUserId() << "\n";
-                              std::cout << "AuthSystemId: " <<  options.getAuthSystemId() << "\n";
-                              std::cout << "listAll: " << std::boolalpha <<  options.isListAll() << "\n";
+  std::cout << "userId :" <<  options.getUserId() << "\n";
+  std::cout << "AuthSystemId: " <<  options.getAuthSystemId() << "\n";
+  std::cout << "listAll: " << std::boolalpha <<  options.isListAll() << "\n";
 
+  SessionProxy sessionProxy(sessionKey);
+  QueryProxy<UMS_Data::ListAuthAccOptions, UMS_Data::ListAuthAccounts> query(options, sessionProxy, "authAccountList");
 
-                            }
+  UMS_Data::ListAuthAccounts* list = query.list();
+
+  if(list!=NULL) {
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+    for(unsigned int i = 0; i < list->getAuthAccounts().size(); i++) {
+      UMS_Data::AuthAccount_ptr auth = ecoreFactory->createAuthAccount();
+      //To copy the content and not the pointer
+      *auth = *list->getAuthAccounts().get(i);
+      listAuthAccounts.getAuthAccounts().push_back(account);
+    }
+    delete list;
+  }
+
+  return VISHNU_SUCCESS;
+
+}
 
 
 /**

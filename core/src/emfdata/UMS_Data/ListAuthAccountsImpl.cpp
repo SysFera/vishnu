@@ -39,12 +39,12 @@ void ListAuthAccounts::_initialize()
     // Supertypes
 
     // Rerefences
-    for (size_t i = 0; i < m_LocalAuthAccounts->size(); i++)
+    for (size_t i = 0; i < m_AuthAccounts->size(); i++)
     {
-        (*m_LocalAuthAccounts)[i]->_initialize();
-        (*m_LocalAuthAccounts)[i]->_setEContainer(
+        (*m_AuthAccounts)[i]->_initialize();
+        (*m_AuthAccounts)[i]->_setEContainer(
                 this,
-                ::UMS_Data::UMS_DataPackage::_instance()->getListAuthAccounts__LocalAuthAccounts());
+                ::UMS_Data::UMS_DataPackage::_instance()->getListAuthAccounts__AuthAccounts());
     }
 
     /*PROTECTED REGION ID(ListAuthAccountsImpl__initialize) START*/
@@ -63,9 +63,9 @@ void ListAuthAccounts::_initialize()
     ::ecore::EJavaObject _any;
     switch (_featureID)
     {
-    case ::UMS_Data::UMS_DataPackage::LISTAUTHACCOUNTS__LOCALAUTHACCOUNTS:
+    case ::UMS_Data::UMS_DataPackage::LISTAUTHACCOUNTS__AUTHACCOUNTS:
     {
-        _any = m_LocalAuthAccounts->asEListOf< ::ecore::EObject > ();
+        _any = m_AuthAccounts->asEListOf< ::ecore::EObject > ();
     }
         return _any;
 
@@ -78,13 +78,13 @@ void ListAuthAccounts::eSet(::ecore::EInt _featureID,
 {
     switch (_featureID)
     {
-    case ::UMS_Data::UMS_DataPackage::LISTAUTHACCOUNTS__LOCALAUTHACCOUNTS:
+    case ::UMS_Data::UMS_DataPackage::LISTAUTHACCOUNTS__AUTHACCOUNTS:
     {
         ::ecorecpp::mapping::EList_ptr _t0 =
                 ::ecorecpp::mapping::any::any_cast<
                         ::ecorecpp::mapping::EList_ptr >(_newValue);
-        ::UMS_Data::ListAuthAccounts::getLocalAuthAccounts().clear();
-        ::UMS_Data::ListAuthAccounts::getLocalAuthAccounts().insert_all(*_t0);
+        ::UMS_Data::ListAuthAccounts::getAuthAccounts().clear();
+        ::UMS_Data::ListAuthAccounts::getAuthAccounts().insert_all(*_t0);
     }
         return;
 
@@ -96,8 +96,8 @@ void ListAuthAccounts::eSet(::ecore::EInt _featureID,
 {
     switch (_featureID)
     {
-    case ::UMS_Data::UMS_DataPackage::LISTAUTHACCOUNTS__LOCALAUTHACCOUNTS:
-        return m_LocalAuthAccounts && m_LocalAuthAccounts->size();
+    case ::UMS_Data::UMS_DataPackage::LISTAUTHACCOUNTS__AUTHACCOUNTS:
+        return m_AuthAccounts && m_AuthAccounts->size();
 
     }
     throw "Error";
