@@ -1558,7 +1558,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_READONLY_ACCOUNT</para></entry>
-                <entry><para>You can modify information. This account is read-only. </para></entry>
+                <entry><para>You can modify information. This account is read-only</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_AUTHENTERR</para></entry>
@@ -3176,7 +3176,7 @@
         <para>UMS::configureDefaultOption</para>
       </section>
       <section>
-        <title>Service SystemAuthenticationCreate</title>
+        <title>Service systemAuthenticationCreate</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This service can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3207,7 +3207,7 @@
               <row>
                 <entry><para>newAuthSys</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="AuthSystems">AuthSystems</link></para></entry>
+                <entry><para><link linkend="AuthSystem">AuthSystem</link></para></entry>
                 <entry><para>is an object which encapsulates the information of the user-authentication system which will be added in VISHNU</para></entry>
                 <entry><para>INOUT</para></entry>
               </row>
@@ -3229,7 +3229,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The SystemAuthenticationCreate() function adds a new user-authentication system in VISHNU</para>
+        <para>The systemAuthenticationCreate() function adds a new user-authentication system in VISHNU</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
@@ -3266,8 +3266,8 @@
                 <entry><para>The encryption method is unknown</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_AUTHSYSTEM_ALREADY_EXIST</para></entry>
-                <entry><para>The name of the user-authentication system already exists</para></entry>
+                <entry><para>ERRCODE_AUTH_SYSTEM_ALREADY_EXIST</para></entry>
+                <entry><para>The identifier of the user-authentication system already exists</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
@@ -3296,7 +3296,7 @@
         <para>UMS::addAuthenticationSystem</para>
       </section>
       <section>
-        <title>Service SystemAuthenticationUpdate</title>
+        <title>Service systemAuthenticationUpdate</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This service can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3327,7 +3327,7 @@
               <row>
                 <entry><para>newAuthSys</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="AuthSystems">AuthSystems</link></para></entry>
+                <entry><para><link linkend="AuthSystem">AuthSystem</link></para></entry>
                 <entry><para>is an object which encapsulates the information of the user-authentication system which will be added in VISHNU</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -3342,7 +3342,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The SystemAuthenticationUpdate() function updates a user-authentication system in VISHNU</para>
+        <para>The systemAuthenticationUpdate() function updates a user-authentication system in VISHNU</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
@@ -3376,14 +3376,14 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_AUTH_SYSTEM</para></entry>
-                <entry><para>The user-authentication system is unknown</para></entry>
+                <entry><para>The user-authentication system is unknown or locked</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_ENCRYPTION_METHOD</para></entry>
                 <entry><para>The encryption method is unknown</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_AUTHSYSTEM_ALREADY_LOCKED</para></entry>
+                <entry><para>ERRCODE_AUTH_SYSTEM_ALREADY_LOCKED</para></entry>
                 <entry><para>The user-authentication system is already locked</para></entry>
               </row>
               <row>
@@ -3413,7 +3413,7 @@
         <para>UMS::updateAuthenticationSystem</para>
       </section>
       <section>
-        <title>Service SystemAuthenticationDelete</title>
+        <title>Service systemAuthenticationDelete</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This service can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3459,7 +3459,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The SystemAuthenticationDelete() function remove a user-authentication system from VISHNU</para>
+        <para>The systemAuthenticationDelete() function remove a user-authentication system from VISHNU</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
@@ -3493,7 +3493,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_AUTH_SYSTEM</para></entry>
-                <entry><para>The user-authentication system is unknown</para></entry>
+                <entry><para>The user-authentication system is unknown or locked</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
@@ -3522,7 +3522,7 @@
         <para>UMS::deleteAuthenticationSystem</para>
       </section>
       <section>
-        <title>Service SystemAuthenticationList</title>
+        <title>Service systemAuthenticationList</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This service can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3575,7 +3575,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The SystemAuthenticationList() function remove a user-authentication system from VISHNU</para>
+        <para>The systemAuthenticationList() function remove a user-authentication system from VISHNU</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
@@ -3608,7 +3608,7 @@
                 <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_UNKNOWN_AUTH_TYPE</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE</para></entry>
                 <entry><para>The type of the user-authentication system is unknown</para></entry>
               </row>
               <row>
@@ -3638,7 +3638,7 @@
         <para>UMS::listAuthenticationSystems</para>
       </section>
       <section>
-        <title>Service AccountAuthCreate</title>
+        <title>Service accountAuthCreate</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This service can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3684,7 +3684,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The AccountAuthCreate() function adds a new local user-authentication configuration</para>
+        <para>The accountAuthCreate() function adds a new local user-authentication configuration</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
@@ -3726,11 +3726,11 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_AUTH_SYSTEM</para></entry>
-                <entry><para>The user-authentication system is unknown</para></entry>
+                <entry><para>The user-authentication system is unknown or locked</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_LOCAL_AUTH_ACCOUNT_EXIST</para></entry>
-                <entry><para>The local user-authentication configuration already exists</para></entry>
+                <entry><para>ERRCODE_AUTH_ACCOUNT_EXIST</para></entry>
+                <entry><para>The user-authentication account already exists</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
@@ -3759,7 +3759,7 @@
         <para>UMS::addAuthAccount</para>
       </section>
       <section>
-        <title>Service AccountAuthUpdate</title>
+        <title>Service accountAuthUpdate</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This service can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3805,7 +3805,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The AccountAuthUpdate() function updates a local user-authentication configuration</para>
+        <para>The accountAuthUpdate() function updates a local user-authentication configuration</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
@@ -3847,11 +3847,11 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_AUTH_SYSTEM</para></entry>
-                <entry><para>The user-authentication system is unknown</para></entry>
+                <entry><para>The user-authentication system is unknown or locked</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_UNKNOWN_LOCAL_AUTH_ACCOUNT</para></entry>
-                <entry><para>The local user-authentication account is unknown</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_AUTH_ACCOUNT</para></entry>
+                <entry><para>The user-authentication account is unknown</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
@@ -3880,7 +3880,7 @@
         <para>UMS::updateAuthAccount</para>
       </section>
       <section>
-        <title>Service AccountAuthDelete</title>
+        <title>Service accountAuthDelete</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This service can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3933,7 +3933,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The AccountAuthDelete() function removes a local user-authentication configuration from VISHNU</para>
+        <para>The accountAuthDelete() function removes a local user-authentication configuration from VISHNU</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
@@ -3975,11 +3975,11 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_AUTH_SYSTEM</para></entry>
-                <entry><para>The user-authentication system is unknown</para></entry>
+                <entry><para>The user-authentication system is unknown or locked</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_UNKNOWN_LOCAL_AUTH_ACCOUNT</para></entry>
-                <entry><para>The local user-authentication account is unknown</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_AUTH_ACCOUNT</para></entry>
+                <entry><para>The user-authentication account is unknown</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
@@ -4008,7 +4008,7 @@
         <para>UMS::deleteAuthAccount</para>
       </section>
       <section>
-        <title>Service AccountAuthList</title>
+        <title>Service accountAuthList</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This service can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -4061,7 +4061,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The AccountAuthList() function lists local user-authentication configurations</para>
+        <para>The accountAuthList() function lists local user-authentication configurations</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
@@ -4103,11 +4103,11 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_AUTH_SYSTEM</para></entry>
-                <entry><para>The user-authentication system is unknown</para></entry>
+                <entry><para>The user-authentication system is unknown or locked</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_UNKNOWN_LOCAL_AUTH_ACCOUNT</para></entry>
-                <entry><para>The local user-authentication account is unknown</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_AUTH_ACCOUNT</para></entry>
+                <entry><para>The user-authentication account is unknown</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
