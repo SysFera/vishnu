@@ -3212,13 +3212,6 @@
                 <entry><para>INOUT</para></entry>
               </row>
               <row>
-                <entry><para>options</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para><link linkend="AuthSystemsOptions">AuthSystemsOptions</link></para></entry>
-                <entry><para>is an object which encapsulates the user-authentication system options</para></entry>
-                <entry><para>IN</para></entry>
-              </row>
-              <row>
                 <entry><para>errorInfo</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
@@ -3909,17 +3902,17 @@
                 <entry><para>IN</para></entry>
               </row>
               <row>
-                <entry><para>userIdOption</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>n/a</para></entry>
-                <entry><para>is an admin option which represents the VISHNU identifier of the user whose local user-authentication configuration will be deleted</para></entry>
-                <entry><para>IN</para></entry>
-              </row>
-              <row>
                 <entry><para>authSystemId</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
                 <entry><para>is the identifier of the user-authentication system to remove</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>is an admin option which represents the VISHNU identifier of the user whose local user-authentication configuration will be deleted</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
