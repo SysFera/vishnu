@@ -35,7 +35,7 @@ using namespace vishnu;
  * \return The built option
  */
 boost::shared_ptr<Options>
-makeDefineIdentifierOptions(string pgName, 
+makeDefineIdentifierOptions(string pgName,
     string& dietConfig,
     string& newFormat){
 
@@ -65,7 +65,8 @@ typedef enum{
   JOB,
   MACHINE,
   TRANSFER,
-  USER
+  USER,
+  AUTH
 } DefineIdentifierType;
 
 
@@ -106,6 +107,9 @@ struct DefineIdentifierFunc {
         break;
       case USER:
         res = defineUserIdentifier(sessionKey, mnewFormat);
+        break;
+      case AUTH:
+        res = defineAuthIdentifier(sessionKey, mnewFormat);
         break;
       default:
         break;

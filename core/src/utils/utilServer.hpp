@@ -48,7 +48,8 @@ namespace vishnu {
     MACHINE = 0,/*!< For the machines*/
     USER = 1, /*!< For The users */
     JOB = 2, /*!< For the jobs */
-    FILETRANSFERT = 3  /*!< For the file tranfers*/
+    FILETRANSFERT = 3,  /*!< For the file tranfers*/
+    AUTH = 4  /*!< For the authentication system*/
   } IdType;
   /**
    * \enum CmdStatus

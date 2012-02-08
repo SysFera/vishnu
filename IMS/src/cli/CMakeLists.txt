@@ -37,6 +37,7 @@ set(ALLCLI
   define_machine_identifier
   define_transfer_identifier
   define_job_identifier
+  define_auth_identifier
   set_system_threshold
   get_system_threshold
   restart

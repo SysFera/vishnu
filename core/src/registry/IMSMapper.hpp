@@ -84,6 +84,10 @@ const int VISHNU_RESTART    = 16;
  * \brief Get system info
  */
 const int VISHNU_GET_SYSINF = 17;
+/**
+ * \brief Define authentication system id
+ */
+const int VISHNU_DEFINE_AID = 18;
 
 /**
  * \class IMSMapper
@@ -116,7 +120,7 @@ public :
    * \fn virtual int unregisterMapper()
    * \return 0 on success, an error code otherwise
    */
-  virtual int 
+  virtual int
   unregisterMapper();
 
   /**
@@ -245,6 +249,14 @@ protected:
    */
   virtual string
   decodeTid(vector<int> separator, const string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual string
+  decodeAid(vector<int> separator, const string& msg);
   /**
    * \brief To decode the close call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
