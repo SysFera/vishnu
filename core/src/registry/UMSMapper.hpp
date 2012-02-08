@@ -113,6 +113,38 @@ const int VISHNU_CONFIGURE_DEFAULT_OPTION = 23;
  * \brief Configure option key
  */
 const int VISHNU_CONFIGURE_OPTION	  = 24;
+/**
+ * \brief Add authentication system
+ */
+const int VISHNU_ADD_AUTHSYS 	          = 25;
+/**
+ * \brief Update authentication system
+ */
+const int VISHNU_UPDATE_AUTHSYS          = 26;
+/**
+ * \brief Delete authentication system
+ */
+const int VISHNU_DELETE_AUTHSYS           = 27;
+/**
+ * \brief List authentication system
+ */
+const int VISHNU_LIST_AUTHSYS             = 28;
+/**
+ * \brief Add authentification account
+ */
+const int VISHNU_ADD_AUTHACC 	          = 29;
+/**
+ * \brief Update authentication account
+ */
+const int VISHNU_UPDATE_AUTHACC           = 30;
+/**
+ * \brief Delete authentication account
+ */
+const int VISHNU_DELETE_AUTHACC           = 31;
+/**
+ * \brief List authentication account
+ */
+const int VISHNU_LIST_AUTHACC       = 32;
 
 
 /**
@@ -237,6 +269,60 @@ protected:
   decodeDelUser(vector<int> separator, const string& msg);
 
   /**
+   * \brief To decode the add authentication system call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like add user command
+   */
+  virtual string
+  decodeAddAuthSys(vector<int> separator, const string& msg);
+
+  /**
+   * \brief To decode the update authentication system call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like update user command
+   */
+  virtual string
+  decodeUpAuthSys(vector<int> separator, const string& msg);
+
+  /**
+   * \brief To decode the delete authentication account call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like delete user command
+   */
+  virtual string
+  decodeDelAuthSys(vector<int> separator, const string& msg);
+
+  /**
+   * \brief To decode the add authentication account call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like add user command
+   */
+  virtual string
+  decodeAddAuthAcc(vector<int> separator, const string& msg);
+
+  /**
+   * \brief To decode the update authentication account call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like update user command
+   */
+  virtual string
+  decodeUpAuthAcc(vector<int> separator, const string& msg);
+
+  /**
+   * \brief To decode the delete authentication account call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like delete user command
+   */
+  virtual string
+  decodeDelAuthAcc(vector<int> separator, const string& msg);
+
+  /**
    * \brief To decode the add user call sequence of the string returned by finalize
    * \fn string decodeChangePwd(vector<int> separator, const string& msg)
    * \param separator A vector containing the position of the separator in the message msg
@@ -275,7 +361,7 @@ protected:
    */
   virtual string
   decodeUpAcc(vector<int> separator, const string& msg);
-  
+
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
    * \fn string decodeDelAcc(vector<int> separator, const string& msg)
@@ -285,7 +371,7 @@ protected:
    */
   virtual string
   decodeDelAcc(vector<int> separator, const string& msg);
-  
+
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
    * \fn string decodeSaveConf(vector<int> separator, const string& msg)
@@ -345,6 +431,24 @@ protected:
    */
   virtual string
   decodeListAcc(vector<int> separator, const string& msg);
+
+  /**
+   * \brief To decode the list authentication system call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like list account command
+   */
+  virtual string
+  decodeListAuthSys(vector<int> separator, const string& msg);
+
+  /**
+   * \brief To decode the list authentication account call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like list account command
+   */
+  virtual string
+  decodeListAuthAcc(vector<int> separator, const string& msg);
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
@@ -416,7 +520,7 @@ protected:
   virtual string
   decodeConfOp(vector<int> separator, const string& msg);
 
-  
+
   /**
    * \brief To deserialize the serial string, make a user objet, and get the values in the same string
    * \fn string getU(string serial)

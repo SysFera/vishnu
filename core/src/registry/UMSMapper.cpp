@@ -51,6 +51,14 @@ UMSMapper::UMSMapper(MapperRegistry* reg, string na):Mapper(reg){
   mmap.insert (pair<int, string>(VISHNU_LIST_SESSIONS 	        , "vishnu_list_sessions"));
   mmap.insert (pair<int, string>(VISHNU_CONFIGURE_DEFAULT_OPTION, "vishnu_configure_default_option"));
   mmap.insert (pair<int, string>(VISHNU_CONFIGURE_OPTION	, "vishnu_configure_option"));
+  mmap.insert (pair<int, string>(VISHNU_ADD_AUTHSYS 	        , "vishnu_add_authentication_system"));
+  mmap.insert (pair<int, string>(VISHNU_UPDATE_AUTHSYS 	   	, "vishnu_update_authentication_system"));
+  mmap.insert (pair<int, string>(VISHNU_DELETE_AUTHSYS 	   	, "vishnu_delete_authentication_system"));
+  mmap.insert (pair<int, string>(VISHNU_LIST_AUTHSYS            , "vishnu_list_authentication_systems"));
+  mmap.insert (pair<int, string>(VISHNU_ADD_AUTHACC 	        , "vishnu_add_authentication_account"));
+  mmap.insert (pair<int, string>(VISHNU_UPDATE_AUTHACC 	   	, "vishnu_update_authentication_account"));
+  mmap.insert (pair<int, string>(VISHNU_DELETE_AUTHACC 	   	, "vishnu_delete_authentication_account"));
+  mmap.insert (pair<int, string>(VISHNU_LIST_AUTHACC            , "vishnu_list_authentication_accounts"));
 };
 
 int
@@ -217,6 +225,30 @@ UMSMapper::decode (const string& msg){
   case VISHNU_CONFIGURE_OPTION	:
     res = decodeConfOp(separatorPos, msg);
     break;
+  case VISHNU_ADD_AUTHSYS 	:
+    res = decodeAddAuthSys(separatorPos, msg);
+    break;
+  case VISHNU_UPDATE_AUTHSYS    :
+    res = decodeUpAuthSys(separatorPos, msg);
+    break;
+  case VISHNU_DELETE_AUTHSYS    :
+    res = decodeDelAuthSys(separatorPos, msg);
+    break;
+  case VISHNU_ADD_AUTHACC 	:
+    res = decodeAddAuthAcc(separatorPos, msg);
+    break;
+  case VISHNU_UPDATE_AUTHACC    :
+    res = decodeUpAuthAcc(separatorPos, msg);
+    break;
+  case VISHNU_DELETE_AUTHACC    :
+    res = decodeDelAuthAcc(separatorPos, msg);
+    break;
+  case VISHNU_LIST_AUTHSYS 	        :
+    res = decodeListAuthSys(separatorPos, msg);
+    break;
+  case VISHNU_LIST_AUTHACC 	        :
+    res = decodeListAuthAcc(separatorPos, msg);
+    break;
   default :
     res = "";
     break;
@@ -319,6 +351,81 @@ UMSMapper::decodeAddAcc(vector<int> separator, const string& msg){
 }
 
 string
+UMSMapper::decodeAddAuthAcc(vector<int> separator, const string& msg){
+  string res = string("");
+  string a;
+  res += (mmap.find(VISHNU_ADD_AUTHACC))->second;
+  a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+
+  AuthAccount_ptr ac = NULL;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
+
+  res+=" ";
+  res += ac->getAuthSystemId();
+  res+=" ";
+  res += ac->getAcLogin();
+
+  a = ac->getUserId();
+  if (a.compare("")){
+    res+=" -u ";
+    res += a;
+  }
+
+  if (ac != NULL) {
+    delete ac;
+  }
+
+  return res;
+}
+
+string
+UMSMapper::decodeAddAuthSys(vector<int> separator, const string& msg){
+  string res = string("");
+  string a;
+  res += (mmap.find(VISHNU_ADD_AUTHSYS))->second;
+  a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+
+  AuthSystem_ptr ac = NULL;
+  UMS_Data::AuthSystemOptions_ptr op;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
+
+  res+=" ";
+  res += ac->getName();
+  res+=" ";
+  res += ac->getURI();
+  res+=" ";
+  res += ac->getAuthLogin();
+  res+=" ";
+  res += ac->getAuthPassword();
+  res+=" ";
+  res += ac->getUserPasswordEncryption();
+  res+=" ";
+  res += convertToString(ac->getType());
+
+  op = ac->getOptions();
+  if (op->getLdapBase().compare("")){
+    res+=" -b ";
+    res += op->getLdapBase();
+  }
+
+  if (ac != NULL) {
+    delete ac;
+  }
+
+  return res;
+}
+
+
+
+string
 UMSMapper::decodeUpAcc(vector<int> separator, const string& msg){
   string res = string("");
   string a;
@@ -358,6 +465,110 @@ UMSMapper::decodeUpAcc(vector<int> separator, const string& msg){
   return res;
 }
 
+
+string
+UMSMapper::decodeUpAuthAcc(vector<int> separator, const string& msg){
+  string res = string("");
+  string a;
+  res += (mmap.find(VISHNU_UPDATE_AUTHACC))->second;
+  a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+
+  AuthAccount_ptr ac = NULL;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
+
+  res+=" ";
+  res += ac->getAuthSystemId();
+
+  a = ac->getAcLogin();
+  if (a.compare("")){
+    res+=" -l ";
+    res += a;
+  }
+
+  a = ac->getUserId();
+  if (a.compare("")){
+    res+=" -u ";
+    res += a;
+  }
+
+  if (ac != NULL) {
+    delete ac;
+  }
+  return res;
+}
+
+string
+UMSMapper::decodeUpAuthSys(vector<int> separator, const string& msg){
+  string res = string("");
+  string a;
+  res += (mmap.find(VISHNU_UPDATE_AUTHSYS))->second;
+  a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+
+  AuthSystem_ptr ac = NULL;
+  UMS_Data::AuthSystemOptions_ptr op;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
+
+  res+=" ";
+  res += ac->getAuthSystemId();
+
+  a = ac->getName();
+  if (a.compare("")){
+    res+=" -n ";
+    res += a;
+  }
+
+  a = ac->getURI();
+  if (a.compare("")){
+    res+=" -i ";
+    res += a;
+  }
+
+  a = ac->getAuthLogin();
+  if (a.compare("")){
+    res+=" -u ";
+    res += a;
+  }
+
+  a = ac->getAuthPassword();
+  if (a.compare("")){
+    res+=" -w ";
+    res += a;
+  }
+
+  a = ac->getUserPasswordEncryption();
+  if (a.compare("")){
+    res+=" -e ";
+    res += a;
+  }
+
+  a = convertToString(ac->getType());
+  if (a.compare("")){
+    res+=" -t ";
+    res += a;
+  }
+
+  op = ac->getOptions();
+  if (op->getLdapBase().compare("")){
+    res+=" -b ";
+    res += op->getLdapBase();
+  }
+
+  if (ac != NULL) {
+    delete ac;
+  }
+
+  return res;
+}
+
+
 string
 UMSMapper::decodeDelAcc(vector<int> separator, const string& msg){
   string res = string("");
@@ -371,6 +582,111 @@ UMSMapper::decodeDelAcc(vector<int> separator, const string& msg){
   res += u;
   return res;
 }
+
+string
+UMSMapper::decodeDelAuthSys(vector<int> separator, const string& msg){
+  string res = string("");
+  string u;
+  res += (mmap.find(VISHNU_DELETE_AUTHSYS))->second;
+  res+= " ";
+  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(1));
+  res += u;
+  return res;
+}
+
+string
+UMSMapper::decodeDelAuthAcc(vector<int> separator, const string& msg){
+  string res = string("");
+  string u;
+  res += (mmap.find(VISHNU_DELETE_LOCAL_ACCOUNT))->second;
+  u    = msg.substr(separator.at(0)+1, separator.at(1)-3);
+  res += " ";
+  res += u;
+  res+= " ";
+  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
+  if (u.compare("")){
+    res += " -u ";
+    res += u;
+  }
+
+  return res;
+}
+
+string
+UMSMapper::decodeListAuthAcc(vector<int> separator, const string& msg){
+  string res = string("");
+  string a;
+  res += (mmap.find(VISHNU_LIST_AUTHACC))->second;
+  a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+
+  ListAuthAccOptions_ptr ac = NULL;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
+
+  if (ac->isListAll()){
+    res+=" -a ";
+  }
+  a = ac->getUserId();
+  if (a.compare("")){
+    res+=" -u ";
+    res+=a;
+  }
+  a = ac->getAuthSystemId();
+  if (a.compare("")){
+    res+=" -i ";
+    res+=a;
+  }
+
+  if (ac != NULL) {
+    delete ac;
+  }
+
+  return res;
+}
+
+string
+UMSMapper::decodeListAuthSys(vector<int> separator, const string& msg){
+  string res = string("");
+  string a;
+  res += (mmap.find(VISHNU_LIST_AUTHSYS))->second;
+  a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+
+  ListAuthSysOptions_ptr ac = NULL;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
+
+  if (ac->isListAllAuthSystems()){
+    res+=" -a ";
+  }
+
+  if (ac->isListFullInfo()){
+    res+=" -a ";
+  }
+
+  a = ac->getUserId();
+  if (a.compare("")){
+    res+=" -u ";
+    res+=a;
+  }
+  a = ac->getAuthSystemId();
+  if (a.compare("")){
+    res+=" -i ";
+    res+=a;
+  }
+
+  if (ac != NULL) {
+    delete ac;
+  }
+
+  return res;
+}
+
 
 // %RELAX<MISRA_0_1_3> Because no explicit parameter to close session, useless to parse, just return the function name
 string
