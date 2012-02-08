@@ -157,7 +157,7 @@ protected:
    * \return The converted value
    */
   long long convertToTimeType(std::string date) {
-    if(date.size()==0 || 
+    if(date.size()==0 ||
         // For mysql, the empty date is 0000-00-00, not empty, need this test to avoid problem in ptime
         date.find("0000-00-00")!=std::string::npos) {
       return 0;
@@ -273,7 +273,20 @@ protected:
         throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
       }
     }
- 
+
+    /**
+   * \brief Function to check if a given authSystem identifier exists
+   * \param authSystemId the authSystem identifier
+   */
+  void
+    checkAuthSystemId(std::string authSystemId) {
+      std::string sqlJobRequest = "SELECT authsystemid from authsystem where authsystemid='"+authSystemId+"'";
+      boost::scoped_ptr<DatabaseResult> result (mdatabaseVishnu->getResult(sqlJobRequest.c_str()));
+      if(result->getNbTuples() == 0) {
+        throw TMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM);
+      }
+    }
+
 protected:
 
   /////////////////////////////////
