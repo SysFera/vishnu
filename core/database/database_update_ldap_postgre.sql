@@ -33,7 +33,7 @@ PRIMARY KEY(authaccountid)    ,
   FOREIGN KEY(users_numuserid)
     REFERENCES users(numuserid) ON DELETE CASCADE,
   FOREIGN KEY(authsystem_authsystemid)
-    REFERENCES authsystem(authsystemid) ON DELETE CASCADE);
+    REFERENCES authsystem(numauthsystemid) ON DELETE CASCADE);
 
 CREATE TABLE ldapauthsystem (
   ldapauthsystid SERIAL  NOT NULL ,
@@ -41,7 +41,7 @@ CREATE TABLE ldapauthsystem (
   ldapbase VARCHAR(255)      ,
 PRIMARY KEY(ldapauthsystid)  ,
   FOREIGN KEY(authsystem_authsystemid)
-    REFERENCES authsystem(authsystemid) ON DELETE CASCADE);
+    REFERENCES authsystem(numauthsystemid) ON DELETE CASCADE);
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON authaccount TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON authsystem TO "vishnu_db_admin";

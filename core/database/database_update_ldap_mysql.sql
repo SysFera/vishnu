@@ -33,7 +33,7 @@ PRIMARY KEY(authaccountid),
   FOREIGN KEY(users_numuserid)
     REFERENCES users(numuserid) ON DELETE CASCADE,
   FOREIGN KEY(authsystem_authsystemid)
-    REFERENCES authsystem(authsystemid) ON DELETE CASCADE
+    REFERENCES authsystem(numauthsystemid) ON DELETE CASCADE
 );
 
 
@@ -43,7 +43,7 @@ CREATE TABLE ldapauthsystem (
   ldapbase VARCHAR(255)  ,
 PRIMARY KEY(ldapauthsystid),
   FOREIGN KEY(authsystem_authsystemid)
-    REFERENCES authsystem(authsystemid) ON DELETE CASCADE
+    REFERENCES authsystem(numauthsystemid) ON DELETE CASCADE
 );
 
 
