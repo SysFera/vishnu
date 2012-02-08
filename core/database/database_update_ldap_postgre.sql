@@ -51,9 +51,9 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON authaccount TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON authsystem TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON ldapauthsystem TO "vishnu_user";
 
-GRANT ALL ON SEQUENCE authaccount TO "vishnu_user";
-GRANT ALL ON SEQUENCE authsystem TO "vishnu_user";
-GRANT ALL ON SEQUENCE ldapauthsystem TO "vishnu_user";
+GRANT ALL ON SEQUENCE authaccount_authaccountid_seq TO "vishnu_user";
+GRANT ALL ON SEQUENCE authsystem_numauthsystemid_seq TO "vishnu_user";
+GRANT ALL ON SEQUENCE ldapauthsystem_ldapauthsystid_seq TO "vishnu_user";
 
 ALTER TABLE vsession ADD COLUMN authid VARCHAR(255);
 

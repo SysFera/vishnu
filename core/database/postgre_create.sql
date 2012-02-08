@@ -370,8 +370,8 @@ GRANT ALL ON SEQUENCE users_numuserid_seq TO vishnu_user;
 GRANT ALL ON SEQUENCE vishnu_vishnuid_seq TO vishnu_user;
 GRANT ALL ON SEQUENCE vsession_numsessionid_seq TO vishnu_user;
 GRANT ALL ON SEQUENCE process_numprocess_seq TO vishnu_user;
-GRANT ALL ON SEQUENCE authaccount TO "vishnu_user";
-GRANT ALL ON SEQUENCE authsystem TO "vishnu_user";
-GRANT ALL ON SEQUENCE ldapauthsystem TO "vishnu_user";
+GRANT ALL ON SEQUENCE authaccount_authaccountid_seq TO "vishnu_user";
+GRANT ALL ON SEQUENCE authsystem_numauthsystemid_seq TO "vishnu_user";
+GRANT ALL ON SEQUENCE ldapauthsystem_ldapauthsystid_seq TO "vishnu_user";
 
 
