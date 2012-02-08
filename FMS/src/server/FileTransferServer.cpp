@@ -24,7 +24,7 @@ using namespace std;
 
 namespace ba=boost::algorithm;
 
-// {{RELAX<MISRA_0_1_3> Two static variables 
+// {{RELAX<MISRA_0_1_3> Two static variables
 unsigned int FileTransferServer::msshPort=22;
 std::string FileTransferServer::msshCommand="/usr/bin/ssh";
 
@@ -101,8 +101,8 @@ FileTransferServer::FileTransferServer(const SessionServer& sessionServer,
 
 void FileTransferServer::getUserInfo( std::string& clientMachineName, std::string& userId) {
 
-  std::vector<std::string> result;  
-  std::vector<std::string>::const_iterator iter;  
+  std::vector<std::string> result;
+  std::vector<std::string>::const_iterator iter;
   std::string sessionId = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "vsessionid");
 
   std::string sqlTransferRequest="SELECT name, userid,vsessionid from clmachine,users,vsession where vsession.clmachine_numclmachineid=clmachine.numclmachineid  "
@@ -135,9 +135,9 @@ const FMS_Data::FileTransfer& FileTransferServer::getFileTransfer() const{
 
 void FileTransferServer::setFileTransfer( const FMS_Data::FileTransfer& fileTransfer) const{
   mfileTransfer=fileTransfer;
-} 
+}
 
-// To log data into database 
+// To log data into database
 
 void FileTransferServer::logIntoDatabase(int processId, const std::string& errorMsg){
 
@@ -164,7 +164,7 @@ void FileTransferServer::updateData(){
   std::string userId;
   getUserInfo( clientMachineName,  userId);
 
-  std::string vishnuFileTransferId = vishnu::getObjectId(mvishnuId, "filesubcpt", "formatidfiletransfer", FILETRANSFERT,clientMachineName);
+  std::string vishnuFileTransferId = vishnu::getObjectId(mvishnuId, "formatidfiletransfer", FILETRANSFERT,clientMachineName);
 
   mfileTransfer.setClientMachineId(clientMachineName);
   mfileTransfer.setUserId(userId);
@@ -189,7 +189,7 @@ int FileTransferServer::addTransferThread(const std::string& srcUser,const std::
     boost::scoped_ptr<DatabaseResult> dbResult(FileTransferServer::getDatabaseInstance()->getResult(sqlCommand.c_str()));
 
     if(dbResult->getNbTuples()!=0){
-      std::string numuserId= dbResult->getFirstElement(); 
+      std::string numuserId= dbResult->getFirstElement();
       OptionValueServer optionValueServer;
       newOptions.setTrCommand(optionValueServer.getOptionValueForUser
 (numuserId, TRANSFERCMD_OPT));
@@ -283,7 +283,7 @@ void FileTransferServer::copy(const TransferExec& transferExec, const std::strin
 
   }
 
-  // Clean the output message 
+  // Clean the output message
   std::string allOutputMsg (FileTransferServer::cleanOutputMsg(trResult.first+trResult.second));
 
 
@@ -470,8 +470,8 @@ FileTransferServer::processOptions(const FMS_Data::StopTransferOptions& options,
 
   //To check if the fromMachineId is defined
   if (machineName.size() != 0) {
-    
-    sqlRequest.append(" and (sourceMachineId='"+machineName+"'"+" or destinationMachineId='"+machineName+"')"); 
+
+    sqlRequest.append(" and (sourceMachineId='"+machineName+"'"+" or destinationMachineId='"+machineName+"')");
   }
 
   //Creation of the object user
@@ -503,7 +503,7 @@ FileTransferServer::processOptions(const FMS_Data::StopTransferOptions& options,
 
 }
 
-// Cancel  file transfers 
+// Cancel  file transfers
 
 int FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options ){
 
@@ -548,7 +548,7 @@ int FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options 
 
 
 
-// cancel a file transfer 
+// cancel a file transfer
 
 
 int FileTransferServer::stopThread(const std::string& transferid,const int& pid ){
@@ -598,7 +598,7 @@ void FileTransferServer::setSSHCommand(const std::string& sshCommand){
 // get the ssh port
 const unsigned int FileTransferServer::getSSHPort(){
   return msshPort;
-} 
+}
 const std::string& FileTransferServer::getSSHCommand( ){
   return msshCommand;
 }
@@ -609,9 +609,9 @@ std::string FileTransferServer::filterString(  const std::string& toFilter){
 
   std::string cleanString=ba::erase_all_copy( ba::erase_all_copy( ba::erase_all_copy(ba::erase_all_copy(toFilter,":"),"'"),"`"),"\"");
 
-  return cleanString; 
+  return cleanString;
 
-} 
+}
 
 
 // TransferExec Class
@@ -631,7 +631,7 @@ TransferExec::TransferExec (const SessionServer& sessionServer,
   msrcUserKey(srcUserKey),
   mdestUser(destUser),
   mdestMachineName(destMachineName),
-  mdestPath(destPath),                            
+  mdestPath(destPath),
   mtransferId(transferId){
 
     mprocessId=-1;
@@ -763,26 +763,26 @@ std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) c
   for (unsigned int i=0; i<tokens.size(); ++i){
     argv[i]=strdup(tokens[i].c_str());
   }
- 
+
   if (pipe(transferComPipeOut)==-1) {
     for (unsigned int i=0; i<tokens.size(); ++i){
       free(argv[i]);
     }
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error creating communication pipe");
   }
- 
+
   if (pipe(transferComPipeErr)==-1) {
- 
+
     for (unsigned int i=0; i<tokens.size(); ++i){
- 
+
       free(argv[i]);
- 
+
     }
     close(transferComPipeOut[0]);
     close(transferComPipeOut[1]);
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error creating communication pipe");
   }
- 
+
   pid = fork();
 
   if (pid==-1) {
@@ -818,7 +818,7 @@ std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) c
   while (read(transferComPipeErr[0], &c, 1)){
     result.second+=c;
   }
- 
+
   if (waitpid(pid, &status, 0)==-1) {
     close(transferComPipeOut[0]);
     close(transferComPipeErr[0]);

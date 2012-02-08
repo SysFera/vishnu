@@ -56,3 +56,8 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON authsystem TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON ldapauthsystem TO "vishnu_user";
 
 ALTER TABLE vsession ADD COLUMN authid VARCHAR(255);
+ALTER TABLE vishnu ADD COLUMN formatidauth VARCHAR(255);
+ALTER TABLE vishnu DROP COLUMN usercpt;
+ALTER TABLE vishnu DROP COLUMN machinecpt;
+ALTER TABLE vishnu DROP COLUMN jobcpt;
+ALTER TABLE vishnu DROP COLUMN fileSubcpt;

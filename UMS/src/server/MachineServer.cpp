@@ -62,7 +62,7 @@ MachineServer::add(int vishnuId) {
 
       //To get the counter
       int counter;
-      counter = getVishnuCounter("machinecpt", vishnuid);
+      counter = getVishnuCounter(vishnuid);
 
       machineCpt = counter;
 

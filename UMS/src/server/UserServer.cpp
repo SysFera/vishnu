@@ -80,7 +80,7 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
 
       //To get the counter
       int counter;
-      counter = getVishnuCounter("userCpt", vishnuid);
+      counter = getVishnuCounter(vishnuid);
 
       //To get the user counter
       userCpt = counter;
