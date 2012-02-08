@@ -48,6 +48,11 @@ public:
    */
   void
   setFID(string fmt);
+  /**
+   * \brief To set the format of the authentication system
+   */
+  void
+  setAID(string fmt);
 protected :
 private :
   /**

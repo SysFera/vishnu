@@ -17,7 +17,7 @@
 
 using namespace vishnu;
 
-// {{RELAX<MISRA_0_1_3> Three static variables 
+// {{RELAX<MISRA_0_1_3> Three static variables
 ServerIMS *ServerIMS::minstance       = NULL;
 Database  *ServerIMS::mdatabaseVishnu = NULL;
 UMSMapper *ServerIMS::mmapperUMS      = NULL;
@@ -321,6 +321,18 @@ ServerIMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
 
   if (diet_service_table_add(mprofile, NULL, solveGetSysInfo)) {
+    return 1;
+  }
+  diet_profile_desc_free(mprofile);
+
+  /* solveSetAID */
+
+  mprofile = diet_profile_desc_alloc(SRV[17], 1, 1, 2);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+
+  if (diet_service_table_add(mprofile, NULL, solveSetAID)) {
     return 1;
   }
   diet_profile_desc_free(mprofile);

@@ -98,6 +98,26 @@ ObjectIdServer::setMID(string fmt) {
   }
 }
 
+void
+ObjectIdServer::setAID(string fmt) {
+  if (!msession.isAdmin()){
+    throw UMSVishnuException(ERRCODE_NO_ADMIN, "define authentication id  format is an admin function. A user cannot call it");
+  }
+  if (fmt.find_first_of('@')!=string::npos) {
+    throw UserException(10, "Invalid format, it cannot contain the @ character. ");
+  }
+  string request = "update  vishnu set  formatidauth ='"+fmt+"' where  vishnuid='";
+  request += convertToString(mvishnuId);
+  request += "'";
+  try{
+    mdatabase->process(request.c_str());
+  }catch(SystemException& e){
+    e.appendMsgComp("Failed to set the machine format to "+fmt);
+    throw(e);
+  }
+}
+
+
 bool
 ObjectIdServer::containCpt(string fmt) {
   return (fmt.find("$CPT")!=string::npos);
