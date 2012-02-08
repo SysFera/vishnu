@@ -212,6 +212,17 @@ vishnu::defineTransferIdentifier(const string sessionKey,
   return IMS_SUCCESS;
 }
 
+int
+vishnu::defineAuthIdentifier(const string sessionKey,
+			 string fmt)
+  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+  SessionProxy sessionProxy(sessionKey);
+
+  ObjectIdProxy ob(sessionProxy);
+  ob.setAID(fmt);
+  return IMS_SUCCESS;
+}
+
 
 int
 vishnu::loadShed(const string sessionKey,
@@ -231,7 +242,7 @@ int
 vishnu::setUpdateFrequency(const string sessionKey,
 		   int freq)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
-  SessionProxy sessionProxy(sessionKey);  
+  SessionProxy sessionProxy(sessionKey);
 
   MetricProxy met(sessionProxy);
   met.setUpFreq(freq);
@@ -243,7 +254,7 @@ int
 vishnu::getUpdateFrequency(const string sessionKey,
 		   int& freq)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
-  SessionProxy sessionProxy(sessionKey);  
+  SessionProxy sessionProxy(sessionKey);
 
   MetricProxy met(sessionProxy);
   freq = met.getUpFreq();

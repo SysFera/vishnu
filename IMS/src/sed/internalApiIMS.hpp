@@ -17,7 +17,7 @@
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
-int 
+int
 solveExport(diet_profile_t* pb);
 /**
 * \brief Function to solve the service to get hte current metric
@@ -25,7 +25,7 @@ solveExport(diet_profile_t* pb);
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
-int 
+int
 solveCurMetric(diet_profile_t* pb);
 /**
 * \brief Function to solve the service to get the metric history
@@ -33,7 +33,7 @@ solveCurMetric(diet_profile_t* pb);
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
-int 
+int
 solveOldMetric(diet_profile_t* pb);
 /**
 * \brief Function to solve the service to get the processes
@@ -41,7 +41,7 @@ solveOldMetric(diet_profile_t* pb);
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
-int 
+int
 solvePS(diet_profile_t* pb);
 /**
 * \brief Function to solve the service to set the system info
@@ -49,7 +49,7 @@ solvePS(diet_profile_t* pb);
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
-int 
+int
 solveSetSysInfo(diet_profile_t* pb);
 /**
 * \brief Function to solve the service to set a threshold
@@ -57,7 +57,7 @@ solveSetSysInfo(diet_profile_t* pb);
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
-int 
+int
 solveSetThreshold(diet_profile_t* pb);
 /**
 * \brief Function to solve the service get a threshold
@@ -65,7 +65,7 @@ solveSetThreshold(diet_profile_t* pb);
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
-int 
+int
 solveGetThreshold(diet_profile_t* pb);
 /**
 * \brief Function to solve the service to set the user id format
@@ -73,7 +73,7 @@ solveGetThreshold(diet_profile_t* pb);
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
-int 
+int
 solveSetUID(diet_profile_t* pb);
 /**
 * \brief Function to solve the service to set the job id format
@@ -81,7 +81,7 @@ solveSetUID(diet_profile_t* pb);
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
-int 
+int
 solveSetJID(diet_profile_t* pb);
 /**
 * \brief Function to solve the service to the the transfer id format
@@ -89,7 +89,7 @@ solveSetJID(diet_profile_t* pb);
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
-int 
+int
 solveSetTID(diet_profile_t* pb);
 /**
 * \brief Function to solve the service to set the machine id format
@@ -97,15 +97,22 @@ solveSetTID(diet_profile_t* pb);
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
-int 
+int
 solveSetMID(diet_profile_t* pb);
+/**
+* \brief Function to solve the service to set the machine id format
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveSetAID(diet_profile_t* pb);
 /**
 * \brief Function to solve the service to load shed
 * \fn    int solveLoadShed(diet_profile_t* pb)
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
-int 
+int
 solveLoadShed(diet_profile_t* pb);
 /**
 * \brief Function to solve the service to set the update frequency
@@ -113,7 +120,7 @@ solveLoadShed(diet_profile_t* pb);
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
-int 
+int
 solveSetUpFreq(diet_profile_t* pb);
 /**
 * \brief Function to solve the service export
@@ -121,7 +128,7 @@ solveSetUpFreq(diet_profile_t* pb);
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
-int 
+int
 solveGetUpFreq(diet_profile_t* pb);
 /**
 * \brief Function to solve the service export
@@ -129,7 +136,7 @@ solveGetUpFreq(diet_profile_t* pb);
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
-int 
+int
 solveRestart(diet_profile_t* pb);
 /**
 * \brief Function to solve the service export
@@ -137,7 +144,7 @@ solveRestart(diet_profile_t* pb);
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
-int 
+int
 solveStop(diet_profile_t* pb);
 /**
 * \brief Function to solve the service export
@@ -145,7 +152,7 @@ solveStop(diet_profile_t* pb);
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
-int 
+int
 solveGetSysInfo(diet_profile_t* pb);
 
 #endif // Internal api IMS

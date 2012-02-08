@@ -36,6 +36,7 @@ IMSMapper::IMSMapper(MapperRegistry* reg, string na):Mapper(reg){
   mmap.insert (pair<int, string>(VISHNU_STOP, "vishnu_stop"));
   mmap.insert (pair<int, string>(VISHNU_RESTART, "vishnu_restart"));
   mmap.insert (pair<int, string>(VISHNU_GET_SYSINF, "vishnu_get_system_info"));
+  mmap.insert (pair<int, string>(VISHNU_DEFINE_AID, "vishnu_define_auth_identifier"));
 };
 
 int
@@ -182,6 +183,9 @@ IMSMapper::decode (const string& msg){
     break;
   case VISHNU_GET_SYSINF 	:
     res = decodeGetSys(separatorPos, msg);
+    break;
+  case VISHNU_DEFINE_AID 	:
+    res = decodeAid(separatorPos, msg);
     break;
   default:
     res = "";
@@ -385,11 +389,23 @@ IMSMapper::decodeFid(vector<int> separator, const string& msg) {
   res += u;
   return res;
 }
+
 string
 IMSMapper::decodeMid(vector<int> separator, const string& msg) {
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_DEFINE_MID))->second;
+  res += " ";
+  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+  res += u;
+  return res;
+}
+
+string
+IMSMapper::decodeAid(vector<int> separator, const string& msg) {
+  string res = string("");
+  string u;
+  res += (mmap.find(VISHNU_DEFINE_AID))->second;
   res += " ";
   u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
   res += u;

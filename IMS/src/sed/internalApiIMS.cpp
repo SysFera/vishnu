@@ -136,7 +136,7 @@ solveCurMetric(diet_profile_t* pb){
     // Setting out diet param
     diet_string_set(diet_parameter(pb,3), strdup(curSer.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,4), strdup(retErr.c_str()), DIET_VOLATILE);
-    
+
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
   } catch (VishnuException& e){
@@ -713,6 +713,55 @@ solveSetMID(diet_profile_t* pb){
 
     // Listing the old metric
     ob.setMID(fmt);
+    // Setting out diet param
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+
+    // Finishing the command as a success
+    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+
+  }catch(VishnuException& e){
+    try{
+      // Finishing the command as an error
+      sessionServer.finish(cmd, IMS, CMDFAILED);
+    }catch(VishnuException& fe){
+      error = fe.what();
+    }
+    e.appendMsgComp(error);
+    retErr = e.buildExceptionString();
+    // Setting diet output parameters
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+  }
+  return 0;
+}
+
+int
+solveSetAID(diet_profile_t* pb){
+  char *sessionKey   = NULL;
+  char* fmt = NULL;
+  string error;
+  string retErr = "";
+  int mapperkey;
+  string cmd;
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
+  diet_string_get(diet_parameter(pb,1), &fmt,NULL);
+
+  SessionServer sessionServer = SessionServer(string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+  try {
+    userServer.init();
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_define_auth_identifier");
+    mapper->code(string(fmt), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+    sessionServer.check();
+
+    // Creating the process server with the options
+    ObjectIdServer ob(userServer);
+
+    // Listing the old metric
+    ob.setAID(fmt);
     // Setting out diet param
     diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
 
