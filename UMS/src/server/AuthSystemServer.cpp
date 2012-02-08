@@ -32,7 +32,7 @@ AuthSystemServer::add(int vishnuId) {
   std::string idGenerated = "TOTO";
   std::string numAuth;
   std::string sqlInsert = "insert into authsystem (numauthsystemid, vishnu_vishnuid, "
-  "authsystemid, name, uri, authlogin, authpassword, userpwdencryption, authtype, state) values ";
+  "authsystemid, name, uri, authlogin, authpassword, userpwdencryption, authtype, status) values ";
 
   //Creation of the object user
   UserServer userServer = UserServer(msessionServer);
@@ -137,11 +137,33 @@ AuthSystemServer::update() {
         " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");
         }
 
-        //if a new status has been defined TODO
-        /*if (mauthsystem->getStatus().size() != 0) {
+        //if a new status has been defined
+        //TODO : Ajouter UNDEFINED dans statuType et dans user,machine, authenSystem
+        //mettre status 3
+        //Coté api quand status et à 3 dans ADD le mettre à un et dans update faire
+        //un test getStatus != 3 pour machine / user/ authSystem
+        //Poster bug et dans list user prendre en compte status 3 à l'affichage
+         /*if (mauthsystem->getStatus().size() != 0) {
         sqlCommand.append("UPDATE authsystem SET status='"+convertToString(mauthsystem->getStatus())+"'"
         " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");
         }*/
+
+        //if the authsystem will be locked
+        if (mauthsystem->getStatus() == 0) {
+          //if the authsystem is not already locked
+          if (convertToInt(getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'", "status")) != 0) {
+            sqlCommand.append("UPDATE authsystem SET status="+convertToString(mauthsystem->getStatus())+""
+            " where  authsystemid='"+mauthsystem->getAuthSystemId()+"';");
+          } //End if the user is not already locked
+          else {
+            UMSVishnuException e (ERRCODE_AUTH_SYSTEM_ALREADY_LOCKED);
+            throw e;
+          }
+        } //End if the authsystem will be locked
+        else {
+          sqlCommand.append("UPDATE authsystem SET status="+convertToString(mauthsystem->getStatus())+""
+          " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");
+        }
 
         mdatabaseVishnu->process(sqlCommand.c_str());
       } //End if the user-authentication system exists
