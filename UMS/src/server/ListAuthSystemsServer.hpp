@@ -4,8 +4,8 @@
  * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
  * \date February 2012
  */
-#ifndef _LIST_USERS_H_SERVER_
-#define _LIST_USERS_H_SERVER_
+#ifndef _LIST_AUTH_SYSTEMS_SERVER_
+#define _LIST_AUTH_SYSTEMS_SERVER_
 
 #include <string>
 #include <vector>
