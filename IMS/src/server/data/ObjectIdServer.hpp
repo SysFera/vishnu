@@ -50,6 +50,11 @@ public:
    */
   void
   setMID(string fmt);
+  /**
+   * \brief To set the format of an authentication system id
+   */
+  void
+  setAID(string fmt);
 protected:
 private:
   /**

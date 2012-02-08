@@ -163,6 +163,17 @@ namespace vishnu {
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
   /**
+   * \brief To define the format of the authentication system id automatically generated in VISHNU
+   * \param sessionKey: The session key gotten after connection
+   * \param fmt: The new format
+   * \return int : an error code
+   */
+  int
+  defineAuthIdentifier(const string sessionKey,
+                           string fmt)
+    throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
+
+  /**
    * \brief To load shed a machine
    * \param sessionKey: The session key gotten after connection
    * \param machineId: The id of the machine to load shed
