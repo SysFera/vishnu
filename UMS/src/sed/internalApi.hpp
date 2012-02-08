@@ -27,6 +27,8 @@
 #include "CommandServer.hpp"
 #include "UMSMapper.hpp"
 #include "MapperRegistry.hpp"
+#include "AuthSystemServer.hpp"
+#include "ListAuthSystemsServer.hpp"
 
 /**
 * \brief Function to solve the service sessionConnect
