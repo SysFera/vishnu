@@ -209,7 +209,7 @@ namespace vishnu {
    * \return The int counter value
    */
   int
-  getVishnuCounter(std::string counterName, std::string vishnuId);
+  getVishnuCounter(std::string vishnuId);
 
   /**
    * \brief Function to get information from the table vishnu
@@ -241,7 +241,6 @@ namespace vishnu {
   */
   std::string
   getObjectId(int vishnuId,
-              std::string counterName,
               std::string formatName,
               IdType type,
               std::string stringforgeneration);

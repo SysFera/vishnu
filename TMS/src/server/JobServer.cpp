@@ -112,7 +112,7 @@ int JobServer::submitJob(const std::string& scriptContent,
   mjob.setSessionId(sessionId);
 
   std::string BatchJobId=mjob.getJobId();
-  std::string vishnuJobId = vishnu::getObjectId(vishnuId, "jobcpt", "formatidjob", JOB, mmachineId);
+  std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", JOB, mmachineId);
   mjob.setJobId(vishnuJobId);
 
   string scriptContentStr = std::string(convertedScript);
