@@ -1395,7 +1395,7 @@ solveSystemAuthenticationDelete(diet_profile_t* pb) {
 int
 solveSystemAuthenticationList(diet_profile_t* pb) {
 
-  //return solveGenerique<UMS_Data::ListAuthSysOptions, UMS_Data::ListAuthSystems, ListAuthSystemsServer>(pb);
+  return solveGenerique<UMS_Data::ListAuthSysOptions, UMS_Data::ListAuthSystems, ListAuthSystemsServer>(pb);
 }
 
 /**
