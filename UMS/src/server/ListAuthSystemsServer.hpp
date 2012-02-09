@@ -34,7 +34,7 @@ public:
    * \brief Constructor, raises an exception on error
    */
    ListAuthSystemsServer(const SessionServer& session):
-   QueryServer<UMS_Data::ListAuthSysOptions, UMS_Data::ListAuthSystems>(session), mcommandName("vishnu_list_authentication_systems")
+   QueryServer<UMS_Data::ListAuthSysOptions, UMS_Data::ListAuthSystems>(session), mcommandName("vishnu_list_auth_systems")
   {
 
     }
@@ -47,7 +47,7 @@ public:
    * \brief Constructor, raises an exception on error
    */
   ListAuthSystemsServer(UMS_Data::ListAuthSysOptions_ptr params, const SessionServer& session):
-  QueryServer<UMS_Data::ListAuthSysOptions, UMS_Data::ListAuthSystems>(params,session), mcommandName("vishnu_list_authentication_systems")
+  QueryServer<UMS_Data::ListAuthSysOptions, UMS_Data::ListAuthSystems>(params,session), mcommandName("vishnu_list_auth_systems")
   {
 
   }

@@ -60,14 +60,6 @@ class AuthSystemProxy
 
   private:
 
-    /**
-     * \brief Function to combine add() and update() into one function
-     * \param name The name of the service
-     * \return raises an exception on error
-     */
-  int
-  _addAuthSystemInformation(std::string name);
-
     /////////////////////////////////
     // Attributes
     /////////////////////////////////
