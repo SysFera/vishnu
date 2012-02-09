@@ -29,7 +29,6 @@ mauthsystem(authsystem), msessionServer(session) {
 int
 AuthSystemServer::add(int vishnuId) {
 
-  std::string idGenerated = "TOTO";
   std::string numAuth;
   std::string sqlInsert = "insert into authsystem (vishnu_vishnuid, "
   "authsystemid, name, uri, authlogin, authpassword, userpwdencryption, authtype, status) values ";
@@ -43,7 +42,7 @@ AuthSystemServer::add(int vishnuId) {
     //if the user is an admin
     if (userServer.isAdmin()) {
       //TODO: generated authentication system identifier using kevin ninja function
-      mauthsystem->setAuthSystemId(idGenerated);
+      mauthsystem->setAuthSystemId(vishnu::getObjectId(vishnuId, "formatidauth", AUTH, ""));
       //To check if the authenid generated does no exists
       if (getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'").size() == 0) {
         mdatabaseVishnu->process( sqlInsert + "(" + convertToString(vishnuId)+", "
@@ -252,6 +251,7 @@ std::string
 AuthSystemServer::getAttribut(std::string condition, std::string attrname) {
 
   std::string sqlCommand("SELECT "+attrname+" FROM authsystem "+condition);
+  std::cout << "sqlCommand**************" << sqlCommand << std::endl;
   boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
   return result->getFirstElement();
 }
@@ -263,5 +263,5 @@ AuthSystemServer::getAttribut(std::string condition, std::string attrname) {
 */
 bool
 AuthSystemServer::exist() {
-  return (getAttribut("where authsystemid="+mauthsystem->getAuthSystemId()+"").size() != 0);
+  return (getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'").size() != 0);
 }
