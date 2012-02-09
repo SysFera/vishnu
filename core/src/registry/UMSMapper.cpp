@@ -364,14 +364,14 @@ UMSMapper::decodeAddAuthAcc(vector<int> separator, const string& msg){
     throw UMSVishnuException(ERRCODE_INVALID_PARAM);
   }
 
-  res+=" ";
+  res += " ";
   res += ac->getAuthSystemId();
-  res+=" ";
+  res += " ";
   res += ac->getAcLogin();
 
   a = ac->getUserId();
   if (a.compare("")){
-    res+=" -u ";
+    res +=" -u ";
     res += a;
   }
 
@@ -397,23 +397,25 @@ UMSMapper::decodeAddAuthSys(vector<int> separator, const string& msg){
     throw UMSVishnuException(ERRCODE_INVALID_PARAM);
   }
 
-  res+=" ";
+  res +=" ";
   res += ac->getName();
-  res+=" ";
+  res +=" ";
   res += ac->getURI();
-  res+=" ";
+  res +=" ";
   res += ac->getAuthLogin();
-  res+=" ";
+  res +=" ";
   res += ac->getAuthPassword();
-  res+=" ";
-  res += ac->getUserPasswordEncryption();
-  res+=" ";
+  res +=" ";
+  res += convertToString(ac->getUserPasswordEncryption());
+  res +=" ";
   res += convertToString(ac->getType());
 
   op = ac->getOptions();
-  if (op->getLdapBase().compare("")){
-    res+=" -b ";
-    res += op->getLdapBase();
+  if(op){
+    if (op->getLdapBase().compare("")){
+      res +=" -b ";
+      res += op->getLdapBase();
+    }
   }
 
   if (ac != NULL) {
