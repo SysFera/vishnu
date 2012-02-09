@@ -92,8 +92,7 @@ public:
   */
   UMS_Data::ListAuthSystems* list() {
 
-  std::string sqlListofAuthSystems = "SELECT authsystemid, name, uri, authlogin, authpassword, userpwdencryption, authtype, status from authsystem "
-                              "where not userid='"+ ROOTUSERNAME +"'";
+  std::string sqlListofAuthSystems = "SELECT authsystemid, name, uri, authlogin, authpassword, userpwdencryption, authtype, status from authsystem ";
 
   std::vector<std::string>::iterator ii;
   std::vector<std::string> results;
