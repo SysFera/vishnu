@@ -557,10 +557,12 @@ UMSMapper::decodeUpAuthSys(vector<int> separator, const string& msg){
     res += a;
   }
 
-  op = ac->getOptions();
-  if (op->getLdapBase().compare("")){
-    res+=" -b ";
-    res += op->getLdapBase();
+  if(op){
+    op = ac->getOptions();
+    if (op->getLdapBase().compare("")){
+      res+=" -b ";
+      res += op->getLdapBase();
+    }
   }
 
   if (ac != NULL) {
