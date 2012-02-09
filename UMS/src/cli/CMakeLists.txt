@@ -21,14 +21,14 @@ set(ALLCLI current_session_id connect connect_m reconnect reconnect_m close
   configure_default_option configure_option
   list_local_accounts list_machines list_history_cmd list_options
   list_users list_sessions
-  add_authentication_system
-  update_authentication_system
-  delete_authentication_system
-  list_authentication_systems 
-  add_authentication_account
-  update_authentication_account
-  delete_authentication_account
-  list_authentication_accounts 
+  add_auth_system
+  update_auth_system
+  delete_auth_system
+  list_auth_systems 
+  add_auth_account
+  update_auth_account
+  delete_auth_account
+  list_auth_accounts 
   )
 
 #set the prefix of command
