@@ -65,9 +65,7 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
 
   std::string idUserGenerated;
   std::string passwordCrypted;
-  int userCpt;
   std::string formatiduser;
-  std::string vishnuid;
 
   if (exist()) {
     if (isAdmin()) {
@@ -76,61 +74,32 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
       pwd = generatePassword(user->getLastname(), user->getFirstname());
       user->setPassword(pwd.substr(0,PASSWORD_MAX_SIZE));
 
-      vishnuid = convertToString(vishnuId);
+      //Generation of userid
+      idUserGenerated = vishnu::getObjectId(vishnuId,
+                                            "formatiduser",
+                                            USER,
+                                            user->getLastname());
+      user->setUserId(idUserGenerated);
+      //To get the password encrypted
+      passwordCrypted = vishnu::cryptPassword(user->getUserId(), user->getPassword());
 
-      //To get the counter
-      int counter;
-      counter = getVishnuCounter(vishnuid);
+      //If the user to add does not exists
+      if (getAttribut("where userid='"+user->getUserId()+"'").size() == 0) {
 
-      //To get the user counter
-      userCpt = counter;
+        //To insert user on the database
+        mdatabaseVishnu->process(sqlInsert + "(" + convertToString(vishnuId)+", "
+        "'"+user->getUserId()+"','"+passwordCrypted+"','"
+        + user->getFirstname()+"','"+user->getLastname()+"',"+
+        convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', "
+        "0, "+convertToString(user->getStatus())+")");
 
-      //To get the formatiduser
-      formatiduser = getAttrVishnu("formatiduser", vishnuid).c_str();
+        //Send email
+        std::string emailBody = getMailContent(*user, true);
+        sendMailToUser(*user, emailBody, "Vishnu message: user created", sendmailScriptPath);
 
-      //if the formatiduser is defined
-      if (formatiduser.size() != 0) {
-        //Generation of userid
-        idUserGenerated =
-        getGeneratedName(formatiduser.c_str(),
-                          userCpt,
-                          USER,
-                          user->getLastname());
-
-        //if the userId is generated
-        if (idUserGenerated.size() != 0) {
-
-          user->setUserId(idUserGenerated);
-          //To get the password encrypted
-          passwordCrypted = vishnu::cryptPassword(user->getUserId(), user->getPassword());
-
-          //If the user to add exists
-          if (getAttribut("where userid='"+user->getUserId()+"'").size() == 0) {
-
-            //To insert user on the database
-            mdatabaseVishnu->process(sqlInsert + "(" + vishnuid+", "
-            "'"+user->getUserId()+"','"+passwordCrypted+"','"
-            + user->getFirstname()+"','"+user->getLastname()+"',"+
-            convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', "
-            "0, "+convertToString(user->getStatus())+")");
-
-            //Send email
-            std::string emailBody = getMailContent(*user, true);
-            sendMailToUser(*user, emailBody, "Vishnu message: user created", sendmailScriptPath);
-
-          }// END If the user to add exists
-          else {
-            UMSVishnuException e (ERRCODE_USERID_EXISTING);
-            throw e;
-          }
-        }//END if the userId is generated
-        else {
-          SystemException e (ERRCODE_SYSTEM, "There is a problem to parse the formatiduser");
-          throw e;
-        }
-      }//END if the formatiduser is defined
+      }// END If the user to add exists
       else {
-        SystemException e (ERRCODE_SYSTEM, "The formatiduser is not defined");
+        UMSVishnuException e (ERRCODE_USERID_EXISTING);
         throw e;
       }
     } //END if the user is an admin
