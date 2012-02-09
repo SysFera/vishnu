@@ -1246,6 +1246,7 @@ solveSystemAuthenticationCreate(diet_profile_t* pb) {
 
     //To serialize the user object
     ::ecorecpp::serializer::serializer _ser;
+    cout << "Before serialize" << endl;
     std::string authSystemSerializedUpdate = _ser.serialize_str(authSystem);
 
     //OUT Parameters

@@ -31,7 +31,7 @@ AuthSystemServer::add(int vishnuId) {
 
   std::string idGenerated = "TOTO";
   std::string numAuth;
-  std::string sqlInsert = "insert into authsystem (numauthsystemid, vishnu_vishnuid, "
+  std::string sqlInsert = "insert into authsystem (vishnu_vishnuid, "
   "authsystemid, name, uri, authlogin, authpassword, userpwdencryption, authtype, status) values ";
 
   //Creation of the object user
@@ -43,25 +43,27 @@ AuthSystemServer::add(int vishnuId) {
     //if the user is an admin
     if (userServer.isAdmin()) {
       //TODO: generated authentication system identifier using kevin ninja function
+      mauthsystem->setAuthSystemId(idGenerated);
       //To check if the authenid generated does no exists
-      if (getAttribut("where authsystemid='"+idGenerated+"'").size() != 0) {
+      if (getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'").size() == 0) {
         mdatabaseVishnu->process( sqlInsert + "(" + convertToString(vishnuId)+", "
-                                  "'"+idGenerated+"','"+mauthsystem->getName()+"','"
+                                  "'"+mauthsystem->getAuthSystemId()+"','"+mauthsystem->getName()+"','"
                                   + mauthsystem->getName()+"','"+mauthsystem->getURI()+"', '"+
                                   mauthsystem->getAuthPassword() + "',"
                                   +convertToString(mauthsystem->getUserPasswordEncryption())+ ","
                                   +convertToString(mauthsystem->getType()) +", 1)"
                                 );
+        if (mauthsystem->getOptions() != NULL) {
+          //If the Ldap base is defined and the type is ldap
+          if ((mauthsystem->getOptions()->getLdapBase().size() != 0)
+            && mauthsystem->getType() == 1 ) {
 
-        //If the Ldap base is defined and the type is ldap
-        if ((mauthsystem->getOptions()->getLdapBase().size() != 0)
-          && mauthsystem->getType() == 1 ) {
+            numAuth = getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'");
 
-          numAuth = getAttribut("where authsystemid='"+idGenerated+"'");
+            mdatabaseVishnu->process("insert into ldapauthsystem (authsystem_authsystemid, ldapbase) values "
+                                    "("+numAuth+ ", '"+mauthsystem->getOptions()->getLdapBase()+"')");
 
-          mdatabaseVishnu->process("insert into ldapauthsystem (authsystem_authsystemid, ldapbase) values "
-                                   "("+numAuth+ ", '"+mauthsystem->getOptions()->getLdapBase()+"')");
-
+          }
         }
       }// End if the id generated does not exists
       else {
