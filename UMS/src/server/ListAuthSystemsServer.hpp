@@ -64,23 +64,53 @@ public:
    */
   void processOptions(UserServer userServer, const UMS_Data::ListAuthSysOptions_ptr& options, std::string& sqlRequest) {
 
-    if(!userServer.isAdmin()) {
+
+    mfullInfo = options->isListFullInfo();
+    //If the full option is defined, the user must be an admin
+    if (mfullInfo) {
+      if(!userServer.isAdmin()) {
       UMSVishnuException e (ERRCODE_NO_ADMIN);
       throw e;
+      }
     }
 
-    std::string  userId = options->getUserId();
-    if(userId.size()!=0) {
-      //To check if the user id is correct
-      checkUserId(options->getUserId());
-      addOptionRequest("userid", userId, sqlRequest);
-    }
+    if (options != NULL) {
+      std::string  userId = options->getUserId();
+      if(userId.size()!=0) {
+        //If the user is an admin
+        if(!userServer.isAdmin()) {
 
-    std::string  authSystemId = options->getAuthSystemId();
-    if(authSystemId.size()!=0) {
-      //To check if the authSystem identifier is correct
-      checkAuthSystemId(options->getAuthSystemId());
-      addOptionRequest("authsystemid", authSystemId, sqlRequest);
+        //To check if the user id is correct
+        //TODO: A faire quand les authAccount seront prêts
+         /* checkUserId(userId);
+          addOptionRequest("userid", userId, sqlRequest);
+          */
+        }//End If the user is an admin
+        else {
+          UMSVishnuException e (ERRCODE_NO_ADMIN);
+          throw e;
+        }
+      }
+
+      std::string  authSystemId = options->getAuthSystemId();
+      if(authSystemId.size()!=0) {
+        //To check if the authSystem identifier is correct
+        checkAuthSystemId(authSystemId);
+        addOptionRequest("authsystemid", authSystemId, sqlRequest);
+      }
+
+      //If the option for listing all authSystem has not defined
+      if (!options->isListAllAuthSystems()) {
+        //If the option userId has not
+        if ((userId.size() == 0) && (authSystemId.size() == 0)) {
+          //TODO: A faire quand les authAccounts seront prêts
+          //addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
+        }
+      }
+    }
+    else {
+      //TODO: A faire quand les authAccounts seront prêt
+      //addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
     }
   }
 
@@ -92,7 +122,8 @@ public:
   */
   UMS_Data::ListAuthSystems* list() {
 
-  std::string sqlListofAuthSystems = "SELECT authsystemid, name, uri, authlogin, authpassword, userpwdencryption, authtype, status from authsystem ";
+  std::string sqlListofAuthSystems = "SELECT authsystemid, name, uri, authlogin, authpassword, userpwdencryption, authtype, status, ldapbase from authsystem, ldapauthsystem "
+                                     " where ldapauthsystem.authsystem_authsystemid = authsystem.numauthsystemid ";
 
   std::vector<std::string>::iterator ii;
   std::vector<std::string> results;
@@ -107,6 +138,7 @@ public:
 
     processOptions(userServer, mparameters, sqlListofAuthSystems);
     sqlListofAuthSystems.append(" order by authsystemid");
+    std::cout << "sql *****************************"<< sqlListofAuthSystems << std::endl;
     //To get the list of users from the database
     boost::scoped_ptr<DatabaseResult> ListofAuthSystems (mdatabaseVishnu->getResult(sqlListofAuthSystems.c_str()));
     if (ListofAuthSystems->getNbTuples() != 0){
@@ -118,11 +150,14 @@ public:
         authSystem->setAuthSystemId(*ii);
         authSystem->setName(*(++ii));
         authSystem->setURI(*(++ii));
-        authSystem->setAuthLogin(*(++ii));
-        authSystem->setAuthPassword(*(++ii));
-        authSystem->setUserPasswordEncryption(convertToInt(*(++ii)));
-        authSystem->setType(convertToInt(*(++ii)));
+        if (mfullInfo) {
+          authSystem->setAuthLogin(*(++ii));
+          authSystem->setAuthPassword(*(++ii));
+          authSystem->setUserPasswordEncryption(convertToInt(*(++ii)));
+          authSystem->setType(convertToInt(*(++ii)));
+        }
         authSystem->setStatus(convertToInt(*(++ii)));
+        authSystem->getOptions()->setLdapBase(*(++ii));
         mlistObject->getAuthSystems().push_back(authSystem);
         }
     }
@@ -162,7 +197,10 @@ public:
   * \brief The name of the ListMachinesServer command line
   */
   std::string mcommandName;
-
+  /**
+  * \brief An option to have full information
+  */
+  bool mfullInfo;
 };
 
 #endif

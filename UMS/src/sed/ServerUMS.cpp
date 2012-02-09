@@ -430,49 +430,49 @@ ServerUMS::init(int vishnuId,
   }
   diet_profile_desc_free(mprofile);
 
-  /* solveSystemAuthenticationCreate */
+  /* solveSystemAuthCreate */
 
   mprofile = diet_profile_desc_alloc(SRV[25], 1, 1, 3);
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveSystemAuthenticationCreate)) {
+  if (diet_service_table_add(mprofile, NULL, solveSystemAuthCreate)) {
     return 1;
   }
   diet_profile_desc_free(mprofile);
 
 
-  /* solveSystemAuthenticationUpdate */
+  /* solveSystemAuthUpdate */
 
   mprofile = diet_profile_desc_alloc(SRV[26], 1, 1, 2);
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveSystemAuthenticationUpdate)) {
+  if (diet_service_table_add(mprofile, NULL, solveSystemAuthUpdate)) {
     return 1;
   }
   diet_profile_desc_free(mprofile);
 
-  /* solveSystemAuthenticationDelete */
+  /* solveSystemAuthDelete */
 
   mprofile = diet_profile_desc_alloc(SRV[27], 1, 1, 2);
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveSystemAuthenticationDelete)) {
+  if (diet_service_table_add(mprofile, NULL, solveSystemAuthDelete)) {
     return 1;
   }
   diet_profile_desc_free(mprofile);
 
-  /* solveSystemAuthenticationList */
+  /* solveSystemAuthList */
 
   mprofile = diet_profile_desc_alloc(SRV[28], 1, 1, 3);
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveSystemAuthenticationList)) {
+  if (diet_service_table_add(mprofile, NULL, solveSystemAuthList)) {
     return 1;
   }
   diet_profile_desc_free(mprofile);

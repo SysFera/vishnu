@@ -1,6 +1,6 @@
 /**
  * \file add_authentication_system.cpp
- * This file defines the VISHNU add authentication system command 
+ * This file defines the VISHNU add authentication system command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -30,8 +30,8 @@ struct AddAuthenticationSystemFunc {
   int operator()(std::string sessionKey) {
 
 
-     int res=addAuthenticationSystem(sessionKey,mnewAuthsystem);
-    
+     int res=addAuthSystem(sessionKey,mnewAuthsystem);
+
       cout <<"The new authentication system identifier is " << mnewAuthsystem.getAuthSystemId() << endl;
 
     return res;
@@ -49,18 +49,18 @@ int main (int ac, char* av[]){
   /********** EMF data ************/
 
   UMS_Data::AuthSystem newAuthsystem;
-  
+
   std::string ldapBase;
   /******** Callback functions ******************/
 
   StringcallBackType fName( boost::bind(&UMS_Data::AuthSystem::setName,boost::ref(newAuthsystem),_1));
-  
+
   StringcallBackType fURI( boost::bind(&UMS_Data::AuthSystem::setURI,boost::ref(newAuthsystem),_1));
-  
+
   StringcallBackType fAuthLogin( boost::bind(&UMS_Data::AuthSystem::setAuthLogin,boost::ref(newAuthsystem),_1));
- 
-  StringcallBackType fAuthPassword(boost::bind(&UMS_Data::AuthSystem::setAuthPassword,boost::ref(newAuthsystem),_1)); 
-  
+
+  StringcallBackType fAuthPassword(boost::bind(&UMS_Data::AuthSystem::setAuthPassword,boost::ref(newAuthsystem),_1));
+
  EncryptioncallBackType fUserPasswordEncryption( boost::bind(&UMS_Data::AuthSystem::setUserPasswordEncryption,boost::ref(newAuthsystem),_1));
 
 
@@ -72,7 +72,7 @@ int main (int ac, char* av[]){
 
 boost::shared_ptr<Options> opt= makeAuthSystemOptions(av[0],dietConfig, fName,
 fURI,fAuthLogin,fAuthPassword,fUserPasswordEncryption,fType,ldapBase,1);
-  
+
 
 CLICmd cmd = CLICmd (ac, av, opt);
 

@@ -245,37 +245,37 @@ solveListSessions(diet_profile_t* pb);
 int
 solveRestore(diet_profile_t* pb);
 /**
-* \brief Function to solve the service solveSystemAuthenticationCreate
-* \fn    int solveSystemAuthenticationCreate(diet_profile_t* pb)
+* \brief Function to solve the service solveSystemAuthCreate
+* \fn    int solveSystemAuthCreate(diet_profile_t* pb)
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
 int
-solveSystemAuthenticationCreate(diet_profile_t* pb);
+solveSystemAuthCreate(diet_profile_t* pb);
 /**
-* \brief Function to solve the service solveSystemAuthenticationUpdate
-* \fn    int solveSystemAuthenticationUpdate(diet_profile_t* pb)
+* \brief Function to solve the service solveSystemAuthUpdate
+* \fn    int solveSystemAuthUpdate(diet_profile_t* pb)
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
 int
-solveSystemAuthenticationUpdate(diet_profile_t* pb);
+solveSystemAuthUpdate(diet_profile_t* pb);
 /**
-* \brief Function to solve the service solveSystemAuthenticationDelete
-* \fn    int solveSystemAuthenticationDelete(diet_profile_t* pb)
+* \brief Function to solve the service solveSystemAuthDelete
+* \fn    int solveSystemAuthDelete(diet_profile_t* pb)
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
 int
-solveSystemAuthenticationDelete(diet_profile_t* pb);
+solveSystemAuthDelete(diet_profile_t* pb);
 /**
-* \brief Function to solve the service solveSystemAuthenticationList
-* \fn    int solveSystemAuthenticationList(diet_profile_t* pb)
+* \brief Function to solve the service solveSystemAuthList
+* \fn    int solveSystemAuthList(diet_profile_t* pb)
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
 int
-solveSystemAuthenticationList(diet_profile_t* pb);
+solveSystemAuthList(diet_profile_t* pb);
 /**
 * \brief Function to solve the service solveAccountAuthCreate
 * \fn    int solveAccountAuthCreate(diet_profile_t* pb)

@@ -1,6 +1,6 @@
 /**
  * \file list_authentication_systems.cpp
- * This file defines the VISHNU list authentication systems command 
+ * This file defines the VISHNU list authentication systems command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -29,7 +29,7 @@ struct ListAuthenticationsystemsFunc {
   {};
 
   int operator()(std::string sessionKey) {
-    int res =  listAuthenticationSystems(sessionKey,mlsAuthSystems,mlistOptions);
+    int res =  listAuthSystems(sessionKey,mlsAuthSystems,mlistOptions);
     // Display the list
     if(mfull) {
       //cout << mlsAuthSystems << endl;
@@ -116,7 +116,7 @@ int main (int ac, char* av[]){
   if(isEmpty|| (opt->count("listAllAuthSystems"))) {
     full = true;
   }
-  
+
   ListAuthenticationsystemsFunc listAuthenticationsystemsFunc (lsAuthSystems, listOptions, full);
   return GenericCli().run(listAuthenticationsystemsFunc, dietConfig, ac, av);
 }// end of main

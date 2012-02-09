@@ -1,6 +1,6 @@
 /**
  * \file update_authentication_system.cpp
- * This file defines the VISHNU update authentication system command 
+ * This file defines the VISHNU update authentication system command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -30,7 +30,7 @@ struct UpdateAuthenticationSystemFunc {
   int operator()(std::string sessionKey) {
 
 
-     int res=updateAuthenticationSystem(sessionKey,mnewAuthsystem);
+     int res=updateAuthSystem(sessionKey,mnewAuthsystem);
 
     return res;
   }
@@ -50,7 +50,7 @@ int main (int ac, char* av[]){
   UMS_Data::AuthSystem newAuthsystem;
   UMS_Data::AuthSystemOptions options;
   std::string authSystemId;
-  
+
   /******** Callback functions ******************/
 
   StringcallBackType fName( boost::bind(&UMS_Data::AuthSystem::setName,boost::ref(newAuthsystem),_1));
@@ -59,10 +59,10 @@ int main (int ac, char* av[]){
 
   StringcallBackType fAuthLogin( boost::bind(&UMS_Data::AuthSystem::setAuthLogin,boost::ref(newAuthsystem),_1));
 
-  StringcallBackType fAuthPassword(boost::bind(&UMS_Data::AuthSystem::setAuthPassword,boost::ref(newAuthsystem),_1)); 
+  StringcallBackType fAuthPassword(boost::bind(&UMS_Data::AuthSystem::setAuthPassword,boost::ref(newAuthsystem),_1));
 
   EncryptioncallBackType fUserPasswordEncryption( boost::bind(&UMS_Data::AuthSystem::setUserPasswordEncryption,boost::ref(newAuthsystem),_1));
-  
+
   StringcallBackType fAuthSystemId( boost::bind(&UMS_Data::AuthSystem::setAuthSystemId,boost::ref(newAuthsystem),_1));
 
 
@@ -107,7 +107,7 @@ CLICmd cmd = CLICmd (ac, av, opt);
     helpUsage(*opt,"[option] authSystemId");
     return 0;
   }
- 
+
   if(opt->count ("ldapBase")){
 
   UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();

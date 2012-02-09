@@ -1,6 +1,6 @@
 /**
  * \file delete_authentication_system.cpp
- * This file defines the VISHNU delete authentication system command 
+ * This file defines the VISHNU delete authentication system command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -30,7 +30,7 @@ struct DeleteAuthenticationSystemFunc {
   int operator()(std::string sessionKey) {
 
 
-     int res=deleteAuthenticationSystem(sessionKey,mauthSystemId);
+     int res=deleteAuthSystem(sessionKey,mauthSystemId);
 
     return res;
   }
@@ -47,11 +47,11 @@ int main (int ac, char* av[]){
   /********** EMF data ************/
 
   UMS_Data::AuthSystem newAuthsystem;
-  
+
   std::string authSystemId;
   /******** Callback functions ******************/
 
-  
+
     boost::shared_ptr<Options> opt(new Options(av[0]));
 
 
@@ -59,7 +59,7 @@ int main (int ac, char* av[]){
       "The diet config file",
       ENV,
       dietConfig);
-  
+
   opt->add("authSystemId",
       "the identifier of the user-authentication system",
       HIDDEN,

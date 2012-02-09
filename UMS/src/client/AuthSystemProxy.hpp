@@ -54,6 +54,12 @@ class AuthSystemProxy
     SessionProxy
     getSessionProxy() const;
     /**
+     * \brief Function get AuthSystem information
+     * \return the AuthSystem data structure
+     */
+    UMS_Data::AuthSystem
+    getData() const;
+    /**
      * \brief Destructor, raises an exception on error
      */
     ~AuthSystemProxy();
