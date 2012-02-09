@@ -835,6 +835,7 @@ vishnu::addAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSys
 int
 vishnu::updateAuthenticationSystem(const std::string& sessionKey,  UMS_Data::AuthSystem& authSys)
   throw(UserException, SystemException){
+  std::cout << "id "  << authSys.getAuthSystemId() << "\n";
   std::cout << "name "  << authSys.getName() << "\n";
   std::cout << "URI "  << authSys.getURI() << "\n";
   std::cout << "authLogin "  << authSys.getAuthLogin() << "\n";
@@ -890,7 +891,7 @@ int
 vishnu::listAuthenticationSystems(const std::string& sessionKey, UMS_Data::ListAuthSystems& listAuthSys, const UMS_Data::ListAuthSysOptions& options )
                                      throw(UserException, SystemException){
   SessionProxy sessionProxy(sessionKey);
-  QueryProxy<UMS_Data::ListAuthSysOptions, UMS_Data::ListAuthSystems> query(options, sessionProxy, "authSystemList");
+  QueryProxy<UMS_Data::ListAuthSysOptions, UMS_Data::ListAuthSystems> query(options, sessionProxy, "systemAuthList");
 
   UMS_Data::ListAuthSystems* list = query.list();
 
