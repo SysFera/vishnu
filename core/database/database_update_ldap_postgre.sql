@@ -62,3 +62,4 @@ ALTER TABLE vishnu DROP COLUMN machinecpt;
 ALTER TABLE vishnu DROP COLUMN jobcpt;
 ALTER TABLE vishnu DROP COLUMN fileSubcpt;
 
+update vishnu set formatidauth = "auth_$CPT"

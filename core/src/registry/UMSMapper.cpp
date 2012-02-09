@@ -51,14 +51,14 @@ UMSMapper::UMSMapper(MapperRegistry* reg, string na):Mapper(reg){
   mmap.insert (pair<int, string>(VISHNU_LIST_SESSIONS 	        , "vishnu_list_sessions"));
   mmap.insert (pair<int, string>(VISHNU_CONFIGURE_DEFAULT_OPTION, "vishnu_configure_default_option"));
   mmap.insert (pair<int, string>(VISHNU_CONFIGURE_OPTION	, "vishnu_configure_option"));
-  mmap.insert (pair<int, string>(VISHNU_ADD_AUTHSYS 	        , "vishnu_add_authentication_system"));
-  mmap.insert (pair<int, string>(VISHNU_UPDATE_AUTHSYS 	   	, "vishnu_update_authentication_system"));
-  mmap.insert (pair<int, string>(VISHNU_DELETE_AUTHSYS 	   	, "vishnu_delete_authentication_system"));
-  mmap.insert (pair<int, string>(VISHNU_LIST_AUTHSYS            , "vishnu_list_authentication_systems"));
-  mmap.insert (pair<int, string>(VISHNU_ADD_AUTHACC 	        , "vishnu_add_authentication_account"));
-  mmap.insert (pair<int, string>(VISHNU_UPDATE_AUTHACC 	   	, "vishnu_update_authentication_account"));
-  mmap.insert (pair<int, string>(VISHNU_DELETE_AUTHACC 	   	, "vishnu_delete_authentication_account"));
-  mmap.insert (pair<int, string>(VISHNU_LIST_AUTHACC            , "vishnu_list_authentication_accounts"));
+  mmap.insert (pair<int, string>(VISHNU_ADD_AUTHSYS 	        , "vishnu_add_auth_system"));
+  mmap.insert (pair<int, string>(VISHNU_UPDATE_AUTHSYS 	   	, "vishnu_update_auth_system"));
+  mmap.insert (pair<int, string>(VISHNU_DELETE_AUTHSYS 	   	, "vishnu_delete_auth_system"));
+  mmap.insert (pair<int, string>(VISHNU_LIST_AUTHSYS            , "vishnu_list_auth_systems"));
+  mmap.insert (pair<int, string>(VISHNU_ADD_AUTHACC 	        , "vishnu_add_auth_account"));
+  mmap.insert (pair<int, string>(VISHNU_UPDATE_AUTHACC 	   	, "vishnu_update_auth_account"));
+  mmap.insert (pair<int, string>(VISHNU_DELETE_AUTHACC 	   	, "vishnu_delete_auth_account"));
+  mmap.insert (pair<int, string>(VISHNU_LIST_AUTHACC            , "vishnu_list_auth_accounts"));
 };
 
 int
