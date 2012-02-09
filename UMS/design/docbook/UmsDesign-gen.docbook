@@ -3176,7 +3176,7 @@
         <para>UMS::configureDefaultOption</para>
       </section>
       <section>
-        <title>Service systemAuthenticationCreate</title>
+        <title>Service systemAuthCreate</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This service can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3222,7 +3222,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The systemAuthenticationCreate() function adds a new user-authentication system in VISHNU</para>
+        <para>The systemAuthCreate() function adds a new user-authentication system in VISHNU</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
@@ -3289,7 +3289,7 @@
         <para>UMS::addAuthSystem</para>
       </section>
       <section>
-        <title>Service systemAuthenticationUpdate</title>
+        <title>Service systemAuthUpdate</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This service can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3335,7 +3335,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The systemAuthenticationUpdate() function updates a user-authentication system in VISHNU</para>
+        <para>The systemAuthUpdate() function updates a user-authentication system in VISHNU</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
@@ -3406,7 +3406,7 @@
         <para>UMS::updateAuthSystem</para>
       </section>
       <section>
-        <title>Service systemAuthenticationDelete</title>
+        <title>Service systemAuthDelete</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This service can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3452,7 +3452,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The systemAuthenticationDelete() function remove a user-authentication system from VISHNU</para>
+        <para>The systemAuthDelete() function remove a user-authentication system from VISHNU</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
@@ -3515,7 +3515,7 @@
         <para>UMS::deleteAuthSystem</para>
       </section>
       <section>
-        <title>Service systemAuthenticationList</title>
+        <title>Service systemAuthList</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This service can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3568,7 +3568,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The systemAuthenticationList() function remove a user-authentication system from VISHNU</para>
+        <para>The systemAuthList() function remove a user-authentication system from VISHNU</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>

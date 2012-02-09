@@ -3559,7 +3559,7 @@
         <funcsynopsis><funcprototype><funcdef>int <function>vishnu::vishnuFinalize</function></funcdef><paramdef/></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function UMS::addAuthenticationSystem</title>
+        <title>Function UMS::addAuthSystem</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3603,7 +3603,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The addAuthenticationSystem() function adds a new user-authentication system in VISHNU</para>
+        <para>The addAuthSystem() function adds a new user-authentication system in VISHNU</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -3667,10 +3667,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::addAuthenticationSystem</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>AuthSystem&amp; <parameter>newAuthSys</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::addAuthSystem</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>AuthSystem&amp; <parameter>newAuthSys</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function UMS::updateAuthenticationSystem</title>
+        <title>Function UMS::updateAuthSystem</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3714,7 +3714,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The updateAuthenticationSystem() function updates a user-authentication system in VISHNU</para>
+        <para>The updateAuthSystem() function updates a user-authentication system in VISHNU</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -3782,10 +3782,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::updateAuthenticationSystem</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const AuthSystem&amp; <parameter>AuthSys</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::updateAuthSystem</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const AuthSystem&amp; <parameter>AuthSys</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function UMS::deleteAuthenticationSystem</title>
+        <title>Function UMS::deleteAuthSystem</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3829,7 +3829,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The deleteAuthenticationSystem() function removes a user-authentication system from VISHNU</para>
+        <para>The deleteAuthSystem() function removes a user-authentication system from VISHNU</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -3889,10 +3889,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::deleteAuthenticationSystem</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>authSystemId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::deleteAuthSystem</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>authSystemId</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function UMS::listAuthenticationSystems</title>
+        <title>Function UMS::listAuthSystems</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3943,7 +3943,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listAuthenticationSystems() function lists VISHNU user-authentification systems</para>
+        <para>The listAuthSystems() function lists VISHNU user-authentification systems</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -4003,7 +4003,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listAuthenticationSystems</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthSystems&amp; <parameter>listAuthSys</parameter></paramdef><paramdef>const ListAuthSysOptions&amp; <parameter>options = ListAuthSysOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listAuthSystems</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthSystems&amp; <parameter>listAuthSys</parameter></paramdef><paramdef>const ListAuthSysOptions&amp; <parameter>options = ListAuthSysOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::addAuthAccount</title>
@@ -4814,7 +4814,7 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>LocalAuthAccounts</para></entry>
+              <entry><para>AuthAccounts</para></entry>
               <entry><para>List of <link linkend="AuthAccount">AuthAccount</link></para></entry>
               <entry><para>is the list of users objects</para></entry>
             </row>
