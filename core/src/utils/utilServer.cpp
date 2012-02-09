@@ -301,7 +301,7 @@ vishnu::getVishnuCounter(std::string vishnuIdString){
   std::string fields;
   std::string val;
 
-  fields = " (updatefreq, formatiduser, formatidjob, formatidfiletransfer, formatidmachine, formmatidauth) ";
+  fields = " (updatefreq, formatiduser, formatidjob, formatidfiletransfer, formatidmachine, formatidauth) ";
   val = " (1, 't', 't', 't', 't', 't') ";
   table = "vishnu";
 
