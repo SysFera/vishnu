@@ -1232,7 +1232,7 @@ solveSystemAuthenticationCreate(diet_profile_t* pb) {
   try {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_add_authentication_system");
+    mapperkey = mapper->code("vishnu_add_auth_system");
     mapper->code(std::string(authSystemSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
 
@@ -1246,6 +1246,7 @@ solveSystemAuthenticationCreate(diet_profile_t* pb) {
 
     //To serialize the user object
     ::ecorecpp::serializer::serializer _ser;
+    cout << "Before serialize" << endl;
     std::string authSystemSerializedUpdate = _ser.serialize_str(authSystem);
 
     //OUT Parameters
@@ -1298,7 +1299,7 @@ solveSystemAuthenticationUpdate(diet_profile_t* pb) {
 
      //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_update_authentication_system");
+    mapperkey = mapper->code("vishnu_update_auth_system");
     mapper->code(std::string(authSystemSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
 
@@ -1359,7 +1360,7 @@ solveSystemAuthenticationDelete(diet_profile_t* pb) {
   try {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_delete_authentication_system");
+    mapperkey = mapper->code("vishnu_delete_auth_system");
     mapper->code(std::string(authSystemId), mapperkey);
     cmd = mapper->finalize(mapperkey);
 
