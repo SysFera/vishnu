@@ -3286,7 +3286,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>UMS::addAuthenticationSystem</para>
+        <para>UMS::addAuthSystem</para>
       </section>
       <section>
         <title>Service systemAuthenticationUpdate</title>
@@ -3403,7 +3403,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>UMS::updateAuthenticationSystem</para>
+        <para>UMS::updateAuthSystem</para>
       </section>
       <section>
         <title>Service systemAuthenticationDelete</title>
@@ -3512,7 +3512,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>UMS::deleteAuthenticationSystem</para>
+        <para>UMS::deleteAuthSystem</para>
       </section>
       <section>
         <title>Service systemAuthenticationList</title>
@@ -3628,7 +3628,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>UMS::listAuthenticationSystems</para>
+        <para>UMS::listAuthSystems</para>
       </section>
       <section>
         <title>Service accountAuthCreate</title>
