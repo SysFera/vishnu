@@ -1973,13 +1973,13 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_add_authentication_system</title>
+        <title>vishnu_add_auth_system</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_add_authentication_system command adds a new user-authentication system in VISHNU</para>
+        <para>The vishnu_add_auth_system command adds a new user-authentication system in VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_add_authentication_system</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_add_auth_system</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-b <replaceable>ldapBase</replaceable></option></arg><arg
               choice="plain"><replaceable>name</replaceable></arg><arg choice="plain"><replaceable>URI</replaceable></arg><arg
               choice="plain"><replaceable>authLogin</replaceable></arg><arg choice="plain"><replaceable>authPassword</replaceable></arg><arg
@@ -2064,13 +2064,13 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_update_authentication_system</title>
+        <title>vishnu_update_auth_system</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_update_authentication_system command updates a user-authentication system in VISHNU</para>
+        <para>The vishnu_update_auth_system command updates a user-authentication system in VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_update_authentication_system</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_update_auth_system</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
               choice="opt"><option>-i <replaceable>URI</replaceable></option></arg><arg
               choice="opt"><option>-u <replaceable>authLogin</replaceable></option></arg><arg
@@ -2173,13 +2173,13 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_delete_authentication_system</title>
+        <title>vishnu_delete_auth_system</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_delete_authentication_system command removes a user-authentication system from VISHNU</para>
+        <para>The vishnu_delete_auth_system command removes a user-authentication system from VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_delete_authentication_system</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_delete_auth_system</command><arg choice="opt"><option>-h</option></arg><arg
               choice="plain"><replaceable>authSystemId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -2218,13 +2218,13 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_list_authentication_systems</title>
+        <title>vishnu_list_auth_systems</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_list_authentication_systems command lists VISHNU user-authentification systems</para>
+        <para>The vishnu_list_auth_systems command lists VISHNU user-authentification systems</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_list_authentication_systems</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_list_auth_systems</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-a</option></arg><arg choice="opt"><option>-f</option></arg><arg
               choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
               choice="opt"><option>-i <replaceable>authSystemId</replaceable></option></arg></cmdsynopsis>
