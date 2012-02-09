@@ -1206,13 +1206,13 @@ solveRestore(diet_profile_t* pb) {
 }
 
 /**
-* \brief Function to solve the service solveSystemAuthenticationCreate
-* \fn    int solveSystemAuthenticationCreate(diet_profile_t* pb)
+* \brief Function to solve the service solveSystemAuthCreate
+* \fn    int solveSystemAuthCreate(diet_profile_t* pb)
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
 int
-solveSystemAuthenticationCreate(diet_profile_t* pb) {
+solveSystemAuthCreate(diet_profile_t* pb) {
   char *sessionKey = NULL;
   char *authSystemSerialized = NULL;
   std::string empty("");
@@ -1241,12 +1241,12 @@ solveSystemAuthenticationCreate(diet_profile_t* pb) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
 
+    cout << "#############authSystemSerialized=========>" << authSystemSerialized << endl;
     AuthSystemServer authSystemServer(authSystem, sessionServer);
     authSystemServer.add(ServerUMS::getInstance()->getVishnuId());
 
     //To serialize the user object
     ::ecorecpp::serializer::serializer _ser;
-    cout << "Before serialize" << endl;
     std::string authSystemSerializedUpdate = _ser.serialize_str(authSystem);
 
     //OUT Parameters
@@ -1273,13 +1273,13 @@ solveSystemAuthenticationCreate(diet_profile_t* pb) {
 }
 
 /**
-* \brief Function to solve the service solveSystemAuthenticationUpdate
-* \fn    int solveSystemAuthenticationUpdate(diet_profile_t* pb)
+* \brief Function to solve the service solveSystemAuthUpdate
+* \fn    int solveSystemAuthUpdate(diet_profile_t* pb)
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
 int
-solveSystemAuthenticationUpdate(diet_profile_t* pb) {
+solveSystemAuthUpdate(diet_profile_t* pb) {
   char *sessionKey = NULL;
   char *authSystemSerialized = NULL;
   std::string empty("");
@@ -1332,13 +1332,13 @@ solveSystemAuthenticationUpdate(diet_profile_t* pb) {
 }
 
 /**
-* \brief Function to solve the service solveSystemAuthenticationDelete
-* \fn    int solveSystemAuthenticationDelete(diet_profile_t* pb)
+* \brief Function to solve the service solveSystemAuthDelete
+* \fn    int solveSystemAuthDelete(diet_profile_t* pb)
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
 int
-solveSystemAuthenticationDelete(diet_profile_t* pb) {
+solveSystemAuthDelete(diet_profile_t* pb) {
   char *sessionKey = NULL;
   char *authSystemId = NULL;
   std::string empty("");
@@ -1388,13 +1388,13 @@ solveSystemAuthenticationDelete(diet_profile_t* pb) {
 }
 
 /**
-* \brief Function to solve the service solveSystemAuthenticationList
-* \fn    int solveSystemAuthenticationList(diet_profile_t* pb)
+* \brief Function to solve the service solveSystemAuthList
+* \fn    int solveSystemAuthList(diet_profile_t* pb)
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
 int
-solveSystemAuthenticationList(diet_profile_t* pb) {
+solveSystemAuthList(diet_profile_t* pb) {
 
   return solveGenerique<UMS_Data::ListAuthSysOptions, UMS_Data::ListAuthSystems, ListAuthSystemsServer>(pb);
 }

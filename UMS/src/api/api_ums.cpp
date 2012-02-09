@@ -798,7 +798,7 @@ int
 
 
 int
-vishnu::addAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSystem& newAuthSys)
+vishnu::addAuthSystem(const std::string& sessionKey, UMS_Data::AuthSystem& newAuthSys)
   throw(UserException, SystemException){
 
   std::cout << "name "  << newAuthSys.getName() << "\n";
@@ -818,8 +818,10 @@ vishnu::addAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSys
 
   SessionProxy sessionProxy(sessionKey);
   AuthSystemProxy auth(newAuthSys, sessionProxy);
+  auth.add();
+  newAuthSys = auth.getData();
 
-  return auth.add();
+  return 0;
 
 }
 
@@ -833,7 +835,7 @@ vishnu::addAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSys
 
 
 int
-vishnu::updateAuthenticationSystem(const std::string& sessionKey,  UMS_Data::AuthSystem& authSys)
+vishnu::updateAuthSystem(const std::string& sessionKey,  UMS_Data::AuthSystem& authSys)
   throw(UserException, SystemException){
   std::cout << "id "  << authSys.getAuthSystemId() << "\n";
   std::cout << "name "  << authSys.getName() << "\n";
@@ -849,7 +851,9 @@ vishnu::updateAuthenticationSystem(const std::string& sessionKey,  UMS_Data::Aut
   SessionProxy sessionProxy(sessionKey);
   AuthSystemProxy auth(authSys, sessionProxy);
 
-  return auth.update();
+  auth.update();
+  authSys = auth.getData();
+  return 0;
 }
 
 /***
@@ -860,7 +864,7 @@ vishnu::updateAuthenticationSystem(const std::string& sessionKey,  UMS_Data::Aut
  */
 
 int
-vishnu::deleteAuthenticationSystem(const std::string& sessionKey, const std::string& authSystemId)
+vishnu::deleteAuthSystem(const std::string& sessionKey, const std::string& authSystemId)
   throw(UserException, SystemException){
 
 
@@ -888,7 +892,7 @@ vishnu::deleteAuthenticationSystem(const std::string& sessionKey, const std::str
 
 
 int
-vishnu::listAuthenticationSystems(const std::string& sessionKey, UMS_Data::ListAuthSystems& listAuthSys, const UMS_Data::ListAuthSysOptions& options )
+vishnu::listAuthSystems(const std::string& sessionKey, UMS_Data::ListAuthSystems& listAuthSys, const UMS_Data::ListAuthSysOptions& options )
                                      throw(UserException, SystemException){
   SessionProxy sessionProxy(sessionKey);
   QueryProxy<UMS_Data::ListAuthSysOptions, UMS_Data::ListAuthSystems> query(options, sessionProxy, "systemAuthList");

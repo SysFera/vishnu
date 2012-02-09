@@ -360,7 +360,7 @@ connect(UMS_Data::ListUsers& users,
 
 
 int
-  addAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSystem& newAuthSys)
+  addAuthSystem(const std::string& sessionKey, UMS_Data::AuthSystem& newAuthSys)
   throw(UserException, SystemException);
 
 /***
@@ -373,7 +373,7 @@ int
 
 
 int
-updateAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSystem& AuthSys)
+updateAuthSystem(const std::string& sessionKey, UMS_Data::AuthSystem& AuthSys)
                                      throw(UserException, SystemException);
 
 /***
@@ -384,7 +384,7 @@ updateAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSystem& 
  */
 
 int
-deleteAuthenticationSystem(const std::string& sessionKey, const std::string& authSystemId)
+deleteAuthSystem(const std::string& sessionKey, const std::string& authSystemId)
                                     throw(UserException, SystemException);
 
 
@@ -403,7 +403,7 @@ deleteAuthenticationSystem(const std::string& sessionKey, const std::string& aut
 
 
 int
-listAuthenticationSystems(const std::string& sessionKey, UMS_Data::ListAuthSystems& listAuthSys, const UMS_Data::ListAuthSysOptions& options = UMS_Data::ListAuthSysOptions())
+listAuthSystems(const std::string& sessionKey, UMS_Data::ListAuthSystems& listAuthSys, const UMS_Data::ListAuthSysOptions& options = UMS_Data::ListAuthSysOptions())
                                      throw(UserException, SystemException);
 
 

@@ -39,6 +39,8 @@ AuthSystemProxy::add() {
   ::ecorecpp::serializer::serializer _ser;
   //To serialize the mauthSystem object in to authSystemToString
   authSystemToString =  _ser.serialize_str(const_cast<UMS_Data::AuthSystem_ptr>(&mauthSystem));
+  std::cout << "LdapBase dans Proxy:"  << mauthSystem.getOptions()->getLdapBase() << "\n";
+  std::cout << "authSystemToString dans Proxy:"  << authSystemToString << "\n";
 
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
@@ -188,6 +190,14 @@ AuthSystemProxy::deleteAuthSystem()
   return 0;
 }
 
+/**
+  * \brief Function get AuthSystem information
+  * \return the AuthSystem data structure
+  */
+UMS_Data::AuthSystem
+AuthSystemProxy::getData() const {
+  return mauthSystem;
+}
 /**
  * \brief Function get SessionProxy object which contains the VISHNU session identifier
  * \fn SessionProxy getSessionProxy()
