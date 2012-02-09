@@ -811,7 +811,6 @@ vishnu::addAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSys
     std::cout << "LdapBase "  << newAuthSys.getOptions()->getLdapBase() << "\n";
   }
 
-  checkIfTextIsEmpty(newAuthSys.getAuthSystemId(), "The authentication system Id is empty", ERRCODE_INVALID_PARAM);
   checkIfTextIsEmpty(newAuthSys.getName(), "The authentication name is empty", ERRCODE_INVALID_PARAM);
   checkIfTextIsEmpty(newAuthSys.getURI(), "The authentication item is empty", ERRCODE_INVALID_PARAM);
   checkIfTextIsEmpty(newAuthSys.getAuthLogin(), "The authentication login is empty", ERRCODE_INVALID_PARAM);
