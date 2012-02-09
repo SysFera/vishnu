@@ -527,6 +527,7 @@ UMSMapper::decodeUpAuthSys(vector<int> separator, const string& msg){
     res += a;
   }
 
+
   a = ac->getURI();
   if (a.compare("")){
     res+=" -i ";
@@ -545,7 +546,7 @@ UMSMapper::decodeUpAuthSys(vector<int> separator, const string& msg){
     res += a;
   }
 
-  a = ac->getUserPasswordEncryption();
+  a = convertToString(ac->getUserPasswordEncryption());
   if (a.compare("")){
     res+=" -e ";
     res += a;
@@ -557,8 +558,8 @@ UMSMapper::decodeUpAuthSys(vector<int> separator, const string& msg){
     res += a;
   }
 
+  op = ac->getOptions();
   if(op){
-    op = ac->getOptions();
     if (op->getLdapBase().compare("")){
       res+=" -b ";
       res += op->getLdapBase();
