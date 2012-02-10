@@ -58,6 +58,12 @@
 %include "UMS_Data/OptionValue.hpp"
 %include "UMS_Data/ListOptionsValues.hpp"
 %include "UMS_Data/ListOptOptions.hpp"
+%include "UMS_Data/AuthAccount.hpp"
+%include "UMS_Data/AuthSystem.hpp"
+%include "UMS_Data/ListAuthSysOptions.hpp"
+%include "UMS_Data/ListAuthSystems.hpp"
+%include "UMS_Data/ListAuthAccOptions.hpp"
+%include "UMS_Data/ListAuthAccounts.hpp"
 
 
 // All EMF includes (same as in TMS_Data.hpp)

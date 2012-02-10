@@ -811,6 +811,20 @@ vishnu::addAuthSystem(const std::string& sessionKey, UMS_Data::AuthSystem& newAu
 
   std::cout << "LdapBase "  << newAuthSys.getLdapBase() << "\n";
 
+  if (newAuthSys.getType()<=0 || newAuthSys.getType()>1){
+    throw UMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE, "Invalid type");
+  }
+
+  if (newAuthSys.getType()==1 && (string(newAuthSys.getLdapBase()).size()==0)){
+    throw UMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE, "Missing ldap base");
+  }
+
+  if (newAuthSys.getUserPasswordEncryption()<=0 ||
+      newAuthSys.getUserPasswordEncryption()>1 ){
+    throw UMSVishnuException(ERRCODE_UNKNOWN_ENCRYPTION_METHOD, "Invalid encryption method");
+  }
+
+
   checkIfTextIsEmpty(newAuthSys.getName(), "The authentication name is empty", ERRCODE_INVALID_PARAM);
   checkIfTextIsEmpty(newAuthSys.getURI(), "The authentication item is empty", ERRCODE_INVALID_PARAM);
   checkIfTextIsEmpty(newAuthSys.getAuthLogin(), "The authentication login is empty", ERRCODE_INVALID_PARAM);
@@ -847,6 +861,15 @@ vishnu::updateAuthSystem(const std::string& sessionKey,  UMS_Data::AuthSystem& a
     std::cout << "LdapBase "  << authSys.getLdapBase() << "\n";
   SessionProxy sessionProxy(sessionKey);
   AuthSystemProxy auth(authSys, sessionProxy);
+
+  if (authSys.getType()<0 || authSys.getType()>1){
+    throw UMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE, "Invalid type");
+  }
+
+  if (authSys.getUserPasswordEncryption()<0 ||
+      authSys.getUserPasswordEncryption()>1 ){
+    throw UMSVishnuException(ERRCODE_UNKNOWN_ENCRYPTION_METHOD, "Invalid encryption method");
+  }
 
   auth.update();
   authSys = auth.getData();
