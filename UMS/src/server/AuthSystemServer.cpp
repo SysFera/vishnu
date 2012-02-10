@@ -47,32 +47,24 @@ AuthSystemServer::add(int vishnuId) {
       if (getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'").size() == 0) {
         mdatabaseVishnu->process( sqlInsert + "(" + convertToString(vishnuId)+", "
                                   "'"+mauthsystem->getAuthSystemId()+"','"+mauthsystem->getName()+"','"
-                                  + mauthsystem->getName()+"','"+mauthsystem->getURI()+"', '"+
+                                  + mauthsystem->getURI()+"','"+mauthsystem->getAuthLogin()+"', '"+
                                   mauthsystem->getAuthPassword() + "',"
                                   +convertToString(mauthsystem->getUserPasswordEncryption())+ ","
                                   +convertToString(mauthsystem->getType()) +", 1)"
                                 );
 
-        std::cout << "mauthsystem->getOptions()*****************************" << std::endl;
 
-        if (mauthsystem->getOptions() != NULL) {
-          std::cout << "mauthsystem->getOptions()******NOT NULL****************" << std::endl;
-          std::cout << " mauthsystem->getType()L****************" <<  mauthsystem->getType() << std::endl;
-          std::cout << " mauthsystem->getOptions()->getLdapBase()****************" <<
-          mauthsystem->getOptions()->getLdapBase() << std::endl;
           //If the Ldap base is defined and the type is ldap
-          if ((mauthsystem->getOptions()->getLdapBase().size() != 0)
+          if ((mauthsystem->getLdapBase().size() != 0)
             && (mauthsystem->getType() == 1) ) { // 1 for LDAP
-            std::cout << "TO insert" << std::endl;
 
             numAuth = getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'");
 
-            std::cout << "TO insert numAuth************" << numAuth << std::endl;
             mdatabaseVishnu->process("insert into ldapauthsystem (authsystem_authsystemid, ldapbase) values "
-                                    "("+numAuth+ ", '"+mauthsystem->getOptions()->getLdapBase()+"')");
+                                    "("+numAuth+ ", '"+mauthsystem->getLdapBase()+"')");
 
           }
-        }
+        
       }// End if the id generated does not exists
       else {
         UMSVishnuException e (ERRCODE_AUTH_SYSTEM_ALREADY_EXIST);

@@ -401,6 +401,10 @@ operator<<(std::ostream& os, const UMS_Data::AuthSystem_ptr& authSystem){
   os << setw(25) << right << "type: " << type << " (" << typeStr << ")" << endl;
   os << setw(25) << right << "meth: " << meth << " (" << userPasswordEncryption<< ")" << endl;
 
+  std::string ldapBase=authSystem->getLdapBase();
+  if(false == ldapBase.empty() ){
+  os << setw(25) << right << "ldapBase: " << ldapBase  << endl;
+  }
   return os;
 
 
@@ -445,6 +449,7 @@ operator<<(std::ostream& os, UMS_Data::ListAuthSystems& lsAuthSystems) {
   os << endl;
 
   for(unsigned int i = 0; i < lsAuthSystems.getAuthSystems().size(); i++) {
+    
     authSystemId = (lsAuthSystems.getAuthSystems().get(i))->getAuthSystemId();
     name = (lsAuthSystems.getAuthSystems().get(i))->getName();
     URI = (lsAuthSystems.getAuthSystems().get(i))->getURI();
@@ -455,7 +460,7 @@ operator<<(std::ostream& os, UMS_Data::ListAuthSystems& lsAuthSystems) {
   }
 
 //#endif
-
+return os;
 }
 
 

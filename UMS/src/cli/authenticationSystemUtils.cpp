@@ -29,7 +29,7 @@ using namespace std;
  */
 
 
-boost::shared_ptr<Options> makeAuthSystemOptions(std::string pgName,std::string & dietConfig,StringcallBackType& fName,StringcallBackType& fURI, StringcallBackType& fAuthLogin,StringcallBackType& fAuthPassword,EncryptioncallBackType&fUserPasswordEncryption,AuthcallBackType& fType, std::string& ldapBase,int type){
+boost::shared_ptr<Options> makeAuthSystemOptions(std::string pgName,std::string & dietConfig,StringcallBackType& fName,StringcallBackType& fURI, StringcallBackType& fAuthLogin,StringcallBackType& fAuthPassword,EncryptioncallBackType&fUserPasswordEncryption,AuthcallBackType& fType,StringcallBackType& fLdapBase,int type){
 
 
   boost::shared_ptr<Options> opt(new Options(pgName));
@@ -119,7 +119,7 @@ boost::shared_ptr<Options> makeAuthSystemOptions(std::string pgName,std::string 
       "is an option for user-authentication system based"
       "on LDAP which specifies the DN of the root entry",
       CONFIG,
-      ldapBase);
+      fLdapBase);
 
 
   return opt;

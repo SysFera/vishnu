@@ -50,7 +50,6 @@ int main (int ac, char* av[]){
 
   UMS_Data::AuthSystem newAuthsystem;
 
-  std::string ldapBase;
   /******** Callback functions ******************/
 
   StringcallBackType fName( boost::bind(&UMS_Data::AuthSystem::setName,boost::ref(newAuthsystem),_1));
@@ -66,12 +65,13 @@ int main (int ac, char* av[]){
 
   AuthcallBackType fType( boost::bind(&UMS_Data::AuthSystem::setType,boost::ref(newAuthsystem),_1));
 
+  StringcallBackType fLdapBase(boost::bind(&UMS_Data::AuthSystem::setLdapBase,boost::ref(newAuthsystem),_1));
 
 
   /**************** Describe options *************/
 
 boost::shared_ptr<Options> opt= makeAuthSystemOptions(av[0],dietConfig, fName,
-fURI,fAuthLogin,fAuthPassword,fUserPasswordEncryption,fType,ldapBase,1);
+fURI,fAuthLogin,fAuthPassword,fUserPasswordEncryption,fType,fLdapBase,1);
 
 
 CLICmd cmd = CLICmd (ac, av, opt);
@@ -90,18 +90,6 @@ CLICmd cmd = CLICmd (ac, av, opt);
     helpUsage(*opt,"name URI authLogin authPassword userPasswordEncryption type");
     return 0;
   }
-
-if(opt->count ("ldapBase")){
-
-  UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
- UMS_Data::AuthSystemOptions_ptr options_ptr = ecoreFactory->createAuthSystemOptions();
-options_ptr->setLdapBase(ldapBase);
-newAuthsystem.setOptions(options_ptr);
-
-
-
-}
-
 
   AddAuthenticationSystemFunc apiFunc(newAuthsystem);
   return GenericCli().run(apiFunc, dietConfig, ac, av);

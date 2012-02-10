@@ -138,8 +138,7 @@ public:
 
     processOptions(userServer, mparameters, sqlListofAuthSystems);
     sqlListofAuthSystems.append(" order by authsystemid");
-    std::cout << "sql *****************************"<< sqlListofAuthSystems << std::endl;
-    //To get the list of users from the database
+    //To get the list of authSystems from the database
     boost::scoped_ptr<DatabaseResult> ListofAuthSystems (mdatabaseVishnu->getResult(sqlListofAuthSystems.c_str()));
     if (ListofAuthSystems->getNbTuples() != 0){
       for (size_t i = 0; i < ListofAuthSystems->getNbTuples(); ++i) {
@@ -157,7 +156,7 @@ public:
           authSystem->setType(convertToInt(*(++ii)));
         }
         authSystem->setStatus(convertToInt(*(++ii)));
-        authSystem->getOptions()->setLdapBase(*(++ii));
+        authSystem->setLdapBase(*(++ii));
         mlistObject->getAuthSystems().push_back(authSystem);
         }
     }

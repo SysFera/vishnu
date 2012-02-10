@@ -19,7 +19,6 @@
 
 #include "AuthSystem.hpp"
 #include <UMS_Data/UMS_DataPackage.hpp>
-#include <UMS_Data/AuthSystemOptions.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include <ecore/EStructuralFeature.hpp>
@@ -102,9 +101,10 @@ void AuthSystem::_initialize()
                 m_status);
     }
         return _any;
-    case ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__OPTIONS:
+    case ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__LDAPBASE:
     {
-        _any = static_cast< ::ecore::EObject* > (m_options);
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_ldapBase);
     }
         return _any;
 
@@ -165,13 +165,10 @@ void AuthSystem::eSet(::ecore::EInt _featureID,
                 _newValue, m_status);
     }
         return;
-    case ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__OPTIONS:
+    case ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__LDAPBASE:
     {
-        ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast<
-                ::ecore::EObject_ptr >(_newValue);
-        ::UMS_Data::AuthSystemOptions_ptr _t1 =
-                dynamic_cast< ::UMS_Data::AuthSystemOptions_ptr > (_t0);
-        ::UMS_Data::AuthSystem::setOptions(_t1);
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_ldapBase);
     }
         return;
 
@@ -199,8 +196,8 @@ void AuthSystem::eSet(::ecore::EInt _featureID,
         return m_type != 0;
     case ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__STATUS:
         return m_status != 1;
-    case ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__OPTIONS:
-        return m_options;
+    case ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__LDAPBASE:
+        return m_ldapBase != "";
 
     }
     throw "Error";
