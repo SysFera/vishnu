@@ -356,7 +356,7 @@ std::string  convertAuthTypeToString (const UMS_Data::AuthType& type) {
 
   switch (type){
 
-    case 0:
+    case 1:
       result="LDAP";
       break;
 
@@ -449,7 +449,7 @@ operator<<(std::ostream& os, UMS_Data::ListAuthSystems& lsAuthSystems) {
   os << endl;
 
   for(unsigned int i = 0; i < lsAuthSystems.getAuthSystems().size(); i++) {
-    
+
     authSystemId = (lsAuthSystems.getAuthSystems().get(i))->getAuthSystemId();
     name = (lsAuthSystems.getAuthSystems().get(i))->getName();
     URI = (lsAuthSystems.getAuthSystems().get(i))->getURI();
