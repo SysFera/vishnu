@@ -594,7 +594,7 @@ UMSMapper::decodeDelAuthSys(vector<int> separator, const string& msg){
   string u;
   res += (mmap.find(VISHNU_DELETE_AUTHSYS))->second;
   res+= " ";
-  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(1));
+  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
   res += u;
   return res;
 }

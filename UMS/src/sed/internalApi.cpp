@@ -1351,7 +1351,7 @@ solveSystemAuthDelete(diet_profile_t* pb) {
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   diet_string_get(diet_parameter(pb,1), &authSystemId, NULL);
 
-  UMS_Data::AuthSystem_ptr authSystem;
+  UMS_Data::AuthSystem_ptr authSystem = new UMS_Data::AuthSystem();
   authSystem->setAuthSystemId(authSystemId);
 
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
