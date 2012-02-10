@@ -51,14 +51,14 @@ static const char* SRV[NB_SRV] = {
   "optionValueList",
   "userList",
   "restore",
-  "systemAuthCreate",
-  "systemAuthUpdate",
-  "systemAuthDelete",
-  "systemAuthList",
-  "accountAuthCreate",
-  "accountAuthUpdate",
-  "accountAuthDelete",
-  "accountAuthList"};
+  "authSystemCreate",
+  "authSystemUpdate",
+  "authSystemDelete",
+  "authSystemList",
+  "authAccountCreate",
+  "authAccountUpdate",
+  "authAccountDelete",
+  "authAccountList"};
 /**
  * \class ServerUMS
  * \brief This class describes the UMS server
