@@ -27,6 +27,12 @@ public:
   * \brief Constructor
   * \fn AuthSystemServer(UMS_Data::AuthSystem*& account, SessionServer& session)
   * \param authSystem The AuthSystem data structure
+  */
+  AuthSystemServer(UMS_Data::AuthSystem*& authSystem);
+  /**
+  * \brief Constructor
+  * \fn AuthSystemServer(UMS_Data::AuthSystem*& account, SessionServer& session)
+  * \param authSystem The AuthSystem data structure
   * \param session The object which encapsulates session data
   */
   AuthSystemServer(UMS_Data::AuthSystem*& authSystem, SessionServer& session);

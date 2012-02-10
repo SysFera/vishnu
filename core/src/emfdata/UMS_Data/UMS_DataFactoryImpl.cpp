@@ -40,7 +40,6 @@
 #include <UMS_Data/ListOptionsValues.hpp>
 #include <UMS_Data/ListOptOptions.hpp>
 #include <UMS_Data/AuthSystem.hpp>
-#include <UMS_Data/AuthSystemOptions.hpp>
 #include <UMS_Data/ListAuthSystems.hpp>
 #include <UMS_Data/ListAuthSysOptions.hpp>
 #include <UMS_Data/AuthAccount.hpp>
@@ -103,8 +102,6 @@ UMS_DataFactory::UMS_DataFactory()
         return createListOptOptions();
     case UMS_DataPackage::AUTHSYSTEM:
         return createAuthSystem();
-    case UMS_DataPackage::AUTHSYSTEMOPTIONS:
-        return createAuthSystemOptions();
     case UMS_DataPackage::LISTAUTHSYSTEMS:
         return createListAuthSystems();
     case UMS_DataPackage::LISTAUTHSYSOPTIONS:
@@ -319,10 +316,6 @@ ListOptOptions_ptr UMS_DataFactory::createListOptOptions()
 AuthSystem_ptr UMS_DataFactory::createAuthSystem()
 {
     return new AuthSystem();
-}
-AuthSystemOptions_ptr UMS_DataFactory::createAuthSystemOptions()
-{
-    return new AuthSystemOptions();
 }
 ListAuthSystems_ptr UMS_DataFactory::createListAuthSystems()
 {

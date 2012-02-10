@@ -48,7 +48,6 @@
 #include "UMS_Data/ListOptionsValues.hpp"
 #include "UMS_Data/ListOptOptions.hpp"
 #include "UMS_Data/AuthSystem.hpp"
-#include "UMS_Data/AuthSystemOptions.hpp"
 #include "UMS_Data/ListAuthSystems.hpp"
 #include "UMS_Data/ListAuthSysOptions.hpp"
 #include "UMS_Data/AuthAccount.hpp"

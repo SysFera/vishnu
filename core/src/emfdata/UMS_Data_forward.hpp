@@ -153,10 +153,6 @@ namespace UMS_Data
     class AuthSystem;
     typedef AuthSystem* AuthSystem_ptr;
 
-    // AuthSystemOptions
-    class AuthSystemOptions;
-    typedef AuthSystemOptions* AuthSystemOptions_ptr;
-
     // ListAuthSystems
     class ListAuthSystems;
     typedef ListAuthSystems* ListAuthSystems_ptr;

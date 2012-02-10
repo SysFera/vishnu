@@ -80,7 +80,7 @@ typedef  boost::function1<void,UMS_Data::StatusType> StatuscallBackType;
  */
 
 
-boost::shared_ptr<Options> makeAuthSystemOptions(std::string pgName,std::string & dietConfig,StringcallBackType& fName,StringcallBackType& fURI, StringcallBackType& fAuthLogin,StringcallBackType& fAuthPassword, EncryptioncallBackType&fUserPasswordEncryption,AuthcallBackType& fType, std::string& ldapBase,int type=0);
+boost::shared_ptr<Options> makeAuthSystemOptions(std::string pgName,std::string & dietConfig,StringcallBackType& fName,StringcallBackType& fURI, StringcallBackType& fAuthLogin,StringcallBackType& fAuthPassword, EncryptioncallBackType&fUserPasswordEncryption,AuthcallBackType& fType, StringcallBackType& fLdapBase,int type=0);
 
 #endif
 

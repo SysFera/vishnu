@@ -390,7 +390,6 @@ UMSMapper::decodeAddAuthSys(vector<int> separator, const string& msg){
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
   AuthSystem_ptr ac = NULL;
-  UMS_Data::AuthSystemOptions_ptr op;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(a)), ac)) {
@@ -410,13 +409,10 @@ UMSMapper::decodeAddAuthSys(vector<int> separator, const string& msg){
   res +=" ";
   res += convertToString(ac->getType());
 
-  op = ac->getOptions();
-  if(op){
-    if (op->getLdapBase().compare("")){
+    if (ac->getLdapBase().compare("")){
       res +=" -b ";
-      res += op->getLdapBase();
+      res += ac->getLdapBase();
     }
-  }
 
   if (ac != NULL) {
     delete ac;
@@ -511,7 +507,6 @@ UMSMapper::decodeUpAuthSys(vector<int> separator, const string& msg){
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
   AuthSystem_ptr ac = NULL;
-  UMS_Data::AuthSystemOptions_ptr op;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(a)), ac)) {
@@ -558,13 +553,10 @@ UMSMapper::decodeUpAuthSys(vector<int> separator, const string& msg){
     res += a;
   }
 
-  op = ac->getOptions();
-  if(op){
-    if (op->getLdapBase().compare("")){
+    if (ac->getLdapBase().compare("")){
       res+=" -b ";
-      res += op->getLdapBase();
+      res += ac->getLdapBase();
     }
-  }
 
   if (ac != NULL) {
     delete ac;

@@ -18,7 +18,6 @@
  */
 
 #include "AuthSystem.hpp"
-#include <UMS_Data/AuthSystemOptions.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include "UMS_Data/UMS_DataPackage.hpp"
@@ -34,7 +33,7 @@ using namespace ::UMS_Data;
 AuthSystem::AuthSystem() :
     m_authSystemId(""), m_name(""), m_URI(""), m_authLogin(""), m_authPassword(
             ""), m_userPasswordEncryption(0), m_type(0), m_status(1),
-            m_options(0)
+            m_ldapBase("")
 {
 
     /*PROTECTED REGION ID(AuthSystemImpl__AuthSystemImpl) START*/
@@ -263,31 +262,31 @@ void AuthSystem::setStatus(::UMS_Data::StatusType _status)
 #endif
 }
 
-// References
-::UMS_Data::AuthSystemOptions_ptr AuthSystem::getOptions()
+::ecore::EString const& AuthSystem::getLdapBase() const
 {
-    return m_options;
+    return m_ldapBase;
 }
 
-void AuthSystem::setOptions(::UMS_Data::AuthSystemOptions_ptr _options)
+void AuthSystem::setLdapBase(::ecore::EString const& _ldapBase)
 {
-    ::UMS_Data::AuthSystemOptions_ptr _old_options = m_options;
-
-    m_options = _options;
-
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_ldapBase = m_ldapBase;
+#endif
+    m_ldapBase = _ldapBase;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getAuthSystem__options(),
-                _old_options,
-                m_options
+                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getAuthSystem__ldapBase(),
+                _old_ldapBase,
+                m_ldapBase
         );
         eNotify(&notification);
     }
 #endif
-
 }
+
+// References
 
