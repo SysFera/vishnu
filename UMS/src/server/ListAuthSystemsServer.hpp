@@ -149,11 +149,15 @@ public:
         authSystem->setAuthSystemId(*ii);
         authSystem->setName(*(++ii));
         authSystem->setURI(*(++ii));
+        std::string authLogin(*(++ii)); 
+        std::string authPassword(*(++ii));
+        int userPasswordEncryption(convertToInt(*(++ii)));
+        int type(convertToInt(*(++ii)));
         if (mfullInfo) {
-          authSystem->setAuthLogin(*(++ii));
-          authSystem->setAuthPassword(*(++ii));
-          authSystem->setUserPasswordEncryption(convertToInt(*(++ii)));
-          authSystem->setType(convertToInt(*(++ii)));
+          authSystem->setAuthLogin(authLogin);
+          authSystem->setAuthPassword(authPassword);
+          authSystem->setUserPasswordEncryption(userPasswordEncryption);
+          authSystem->setType(type);
         }
         authSystem->setStatus(convertToInt(*(++ii)));
         authSystem->setLdapBase(*(++ii));
