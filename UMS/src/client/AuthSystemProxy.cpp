@@ -32,7 +32,7 @@ AuthSystemProxy::add() {
   char* errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc("systemAuthCreate", 1, 1, 3);
+  profile = diet_profile_alloc("authSystemCreate", 1, 1, 3);
 
   sessionKey = msessionProxy.getSessionKey();
 
@@ -102,7 +102,7 @@ AuthSystemProxy::update() {
   char* authSystemInString;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc("systemAuthUpdate", 1, 1, 2);
+  profile = diet_profile_alloc("authSystemUpdate", 1, 1, 2);
 
   sessionKey = msessionProxy.getSessionKey();
 
@@ -155,7 +155,7 @@ AuthSystemProxy::deleteAuthSystem()
   char* errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc("systemAuthDelete", 1, 1, 2);
+  profile = diet_profile_alloc("authSystemDelete", 1, 1, 2);
   sessionKey = msessionProxy.getSessionKey();
   sysId = mauthSystem.getAuthSystemId();
 
