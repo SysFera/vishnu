@@ -28,6 +28,7 @@
 #include "UMSMapper.hpp"
 #include "MapperRegistry.hpp"
 #include "AuthSystemServer.hpp"
+#include "AuthAccountServer.hpp"
 #include "ListAuthSystemsServer.hpp"
 
 /**

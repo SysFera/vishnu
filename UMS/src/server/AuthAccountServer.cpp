@@ -31,7 +31,7 @@ AuthAccountServer::add() {
 
   std::string numAuthSystem;
   std::string numUser;
-  std::string sqlInsert = "insert into authentification account (authsystem_authsystemid, users_numuserid, "
+  std::string sqlInsert = "insert into authaccount (authsystem_authsystemid, users_numuserid, "
   "aclogin) values ";
 
   //Creation of the object user
@@ -234,7 +234,7 @@ AuthAccountServer::getData() {
 std::string
 AuthAccountServer::getAttribut(std::string condition, std::string attrname) {
 
-  std::string sqlCommand("SELECT "+attrname+" FROM authentification account "+condition);
+  std::string sqlCommand("SELECT "+attrname+" FROM authaccount "+condition);
   boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
   return result->getFirstElement();
 }
