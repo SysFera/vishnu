@@ -553,22 +553,11 @@ UMS_DataPackage::UMS_DataPackage()
     m_AuthSystem__status->setFeatureID(
             ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__STATUS);
     m_AuthSystemEClass->getEStructuralFeatures().push_back(m_AuthSystem__status);
-    m_AuthSystem__options = new ::ecore::EReference();
-    m_AuthSystem__options->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__OPTIONS);
+    m_AuthSystem__ldapBase = new ::ecore::EAttribute();
+    m_AuthSystem__ldapBase->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__LDAPBASE);
     m_AuthSystemEClass->getEStructuralFeatures().push_back(
-            m_AuthSystem__options);
-
-    // AuthSystemOptions
-    m_AuthSystemOptionsEClass = new ::ecore::EClass();
-    m_AuthSystemOptionsEClass->setClassifierID(AUTHSYSTEMOPTIONS);
-    m_AuthSystemOptionsEClass->setEPackage(this);
-    getEClassifiers().push_back(m_AuthSystemOptionsEClass);
-    m_AuthSystemOptions__ldapBase = new ::ecore::EAttribute();
-    m_AuthSystemOptions__ldapBase->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::AUTHSYSTEMOPTIONS__LDAPBASE);
-    m_AuthSystemOptionsEClass->getEStructuralFeatures().push_back(
-            m_AuthSystemOptions__ldapBase);
+            m_AuthSystem__ldapBase);
 
     // ListAuthSystems
     m_ListAuthSystemsEClass = new ::ecore::EClass();
@@ -1946,37 +1935,20 @@ UMS_DataPackage::UMS_DataPackage()
     m_AuthSystem__status->setUnique(true);
     m_AuthSystem__status->setDerived(false);
     m_AuthSystem__status->setOrdered(true);
-    m_AuthSystem__options->setEType(m_AuthSystemOptionsEClass);
-    m_AuthSystem__options->setName("options");
-    m_AuthSystem__options->setDefaultValueLiteral("");
-    m_AuthSystem__options->setLowerBound(0);
-    m_AuthSystem__options->setUpperBound(1);
-    m_AuthSystem__options->setTransient(false);
-    m_AuthSystem__options->setVolatile(false);
-    m_AuthSystem__options->setChangeable(true);
-    m_AuthSystem__options->setContainment(false);
-    m_AuthSystem__options->setResolveProxies(true);
-    m_AuthSystem__options->setUnique(true);
-    m_AuthSystem__options->setDerived(false);
-    m_AuthSystem__options->setOrdered(true);
-    // AuthSystemOptions
-    m_AuthSystemOptionsEClass->setName("AuthSystemOptions");
-    m_AuthSystemOptionsEClass->setAbstract(false);
-    m_AuthSystemOptionsEClass->setInterface(false);
-    m_AuthSystemOptions__ldapBase->setEType(
+    m_AuthSystem__ldapBase->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_AuthSystemOptions__ldapBase->setName("ldapBase");
-    m_AuthSystemOptions__ldapBase->setDefaultValueLiteral("" "");
-    m_AuthSystemOptions__ldapBase->setLowerBound(0);
-    m_AuthSystemOptions__ldapBase->setUpperBound(1);
-    m_AuthSystemOptions__ldapBase->setTransient(false);
-    m_AuthSystemOptions__ldapBase->setVolatile(false);
-    m_AuthSystemOptions__ldapBase->setChangeable(true);
-    m_AuthSystemOptions__ldapBase->setUnsettable(false);
-    m_AuthSystemOptions__ldapBase->setID(false);
-    m_AuthSystemOptions__ldapBase->setUnique(true);
-    m_AuthSystemOptions__ldapBase->setDerived(false);
-    m_AuthSystemOptions__ldapBase->setOrdered(true);
+    m_AuthSystem__ldapBase->setName("ldapBase");
+    m_AuthSystem__ldapBase->setDefaultValueLiteral("" "");
+    m_AuthSystem__ldapBase->setLowerBound(0);
+    m_AuthSystem__ldapBase->setUpperBound(1);
+    m_AuthSystem__ldapBase->setTransient(false);
+    m_AuthSystem__ldapBase->setVolatile(false);
+    m_AuthSystem__ldapBase->setChangeable(true);
+    m_AuthSystem__ldapBase->setUnsettable(false);
+    m_AuthSystem__ldapBase->setID(false);
+    m_AuthSystem__ldapBase->setUnique(true);
+    m_AuthSystem__ldapBase->setDerived(false);
+    m_AuthSystem__ldapBase->setOrdered(true);
     // ListAuthSystems
     m_ListAuthSystemsEClass->setName("ListAuthSystems");
     m_ListAuthSystemsEClass->setAbstract(false);
@@ -2424,10 +2396,6 @@ UMS_DataPackage::UMS_DataPackage()
 {
     return m_AuthSystemEClass;
 }
-::ecore::EClass_ptr UMS_DataPackage::getAuthSystemOptions()
-{
-    return m_AuthSystemOptionsEClass;
-}
 ::ecore::EClass_ptr UMS_DataPackage::getListAuthSystems()
 {
     return m_ListAuthSystemsEClass;
@@ -2793,13 +2761,9 @@ UMS_DataPackage::UMS_DataPackage()
 {
     return m_AuthSystem__status;
 }
-::ecore::EReference_ptr UMS_DataPackage::getAuthSystem__options()
+::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystem__ldapBase()
 {
-    return m_AuthSystem__options;
-}
-::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystemOptions__ldapBase()
-{
-    return m_AuthSystemOptions__ldapBase;
+    return m_AuthSystem__ldapBase;
 }
 ::ecore::EReference_ptr UMS_DataPackage::getListAuthSystems__AuthSystems()
 {
