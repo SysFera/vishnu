@@ -83,7 +83,7 @@ LocalAccountServer::add() {
       }
     }//End if the session key is for the owner of the local account or the user is an admin
     else {
-      UMSVishnuException e (ERRCODE_SESSIONKEY_NOT_FOUND);
+      UMSVishnuException e (ERRCODE_NO_ADMIN);
       throw e;
     }
   }//End if the user exists

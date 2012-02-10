@@ -70,6 +70,7 @@ if(NOT CLIENT_ONLY)
     server/ConfigurationServer.cpp
     server/CommandServer.cpp
     server/AuthSystemServer.cpp
+    server/AuthAccountServer.cpp
     )
 
   add_library(vishnu-ums-server ${server_SRCS})

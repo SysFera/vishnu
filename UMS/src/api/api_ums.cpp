@@ -806,10 +806,10 @@ vishnu::addAuthSystem(const std::string& sessionKey, UMS_Data::AuthSystem& newAu
   std::cout << "authLogin "  << newAuthSys.getAuthLogin() << "\n";
   std::cout << "authPassword "  << newAuthSys.getAuthPassword() << "\n";
   std::cout << "UserPasswordEncryption "  << newAuthSys.getUserPasswordEncryption() << "\n";
+  
   std::cout << "type "  << newAuthSys.getType() << "\n";
-  if (newAuthSys.getOptions() != NULL) {
-    std::cout << "LdapBase "  << newAuthSys.getOptions()->getLdapBase() << "\n";
-  }
+  
+  std::cout << "LdapBase "  << newAuthSys.getLdapBase() << "\n";
 
   checkIfTextIsEmpty(newAuthSys.getName(), "The authentication name is empty", ERRCODE_INVALID_PARAM);
   checkIfTextIsEmpty(newAuthSys.getURI(), "The authentication item is empty", ERRCODE_INVALID_PARAM);
@@ -820,7 +820,6 @@ vishnu::addAuthSystem(const std::string& sessionKey, UMS_Data::AuthSystem& newAu
   AuthSystemProxy auth(newAuthSys, sessionProxy);
   auth.add();
   newAuthSys = auth.getData();
-
   return 0;
 
 }
@@ -845,9 +844,7 @@ vishnu::updateAuthSystem(const std::string& sessionKey,  UMS_Data::AuthSystem& a
   std::cout << "UserPasswordEncryption "  << authSys.getUserPasswordEncryption() << "\n";
   std::cout << "status "  << authSys.getStatus() << "\n";
   std::cout << "type "  << authSys.getType() << "\n";
-  if (authSys.getOptions() != NULL) {
-    std::cout << "LdapBase "  << authSys.getOptions()->getLdapBase() << "\n";
-  }
+    std::cout << "LdapBase "  << authSys.getLdapBase() << "\n";
   SessionProxy sessionProxy(sessionKey);
   AuthSystemProxy auth(authSys, sessionProxy);
 
@@ -898,8 +895,12 @@ vishnu::listAuthSystems(const std::string& sessionKey, UMS_Data::ListAuthSystems
   QueryProxy<UMS_Data::ListAuthSysOptions, UMS_Data::ListAuthSystems> query(options, sessionProxy, "systemAuthList");
 
   UMS_Data::ListAuthSystems* list = query.list();
-
+  
   if (list!=NULL){
+  
+    std::cout <<" list->getAuthSystems().size() " << list->getAuthSystems().size() << "\n";
+  
+  
     UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     for(unsigned int i = 0; i < list->getAuthSystems().size(); i++) {
       UMS_Data::AuthSystem_ptr auth = ecoreFactory->createAuthSystem();
