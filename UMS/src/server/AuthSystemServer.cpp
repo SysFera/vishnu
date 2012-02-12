@@ -61,7 +61,8 @@ AuthSystemServer::add(int vishnuId) {
                                   + mauthsystem->getURI()+"','"+mauthsystem->getAuthLogin()+"', '"+
                                   mauthsystem->getAuthPassword() + "',"
                                   +convertToString(mauthsystem->getUserPasswordEncryption())+ ","
-                                  +convertToString(mauthsystem->getType()) +", 1)"
+                                  +convertToString(mauthsystem->getType()) +","
+                                  +convertToString(mauthsystem->getStatus())+")"
                                 );
 
 
