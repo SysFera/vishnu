@@ -1,9 +1,9 @@
 /**
  * \file ListUsersServer.hpp
  * \brief This file contains the VISHNU QueryServer class.
- * \author Daouda Traore (daouda.traore@sysfera.com) and 
+ * \author Daouda Traore (daouda.traore@sysfera.com) and
  *   Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
- * \date February 2011 
+ * \date February 2011
  */
 #ifndef _LIST_USERS_H_SERVER_
 #define _LIST_USERS_H_SERVER_
@@ -21,14 +21,14 @@
 
 
 /**
- * \class ListUsersServer 
- * \brief ListUsersServer class implementation 
+ * \class ListUsersServer
+ * \brief ListUsersServer class implementation
  */
 class ListUsersServer: public QueryServer<UMS_Data::ListUsersOptions, UMS_Data::ListUsers>
 {
 
 public:
-  
+
   /**
    * \fn ListUsersServer(const SessionServer& session)
    * \param session The object which encapsulates the session information (ex: identifier of the session)
@@ -43,12 +43,12 @@ public:
   /**
    * \fn ListUsersServer(const std::string& option,
    *                     const SessionServer& session)
-   * \param option The ListUsersServer option 
+   * \param option The ListUsersServer option
    * \param params The object which encapsulates the information of ListUsersServer  options
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \brief Constructor, raises an exception on error
    */
-  ListUsersServer(UMS_Data::ListUsersOptions_ptr params, const SessionServer& session): 
+  ListUsersServer(UMS_Data::ListUsersOptions_ptr params, const SessionServer& session):
   QueryServer<UMS_Data::ListUsersOptions, UMS_Data::ListUsers>(params,session), mcommandName("vishnu_list_users")
   {
 
@@ -58,7 +58,7 @@ public:
   }
 
   /**
-   * \brief Function to treat the ListUsersServer options 
+   * \brief Function to treat the ListUsersServer options
    * \fn void processOptions(UserServer userServer,
    *                         const std::string& options,
    *                         std::string& sqlRequest)
@@ -77,30 +77,25 @@ public:
   std::string  userId = options->getUserId();
   if(userId.size()!=0) {
     //To check if the user id is correct
-
     checkUserId(options->getUserId());
-
-
     addOptionRequest("userid", userId, sqlRequest);
-
-
-    /*sqlRequest.append(" and userid=");
-    sqlRequest.append("'"+userId+"'");
-    boost::scoped_ptr<DatabaseResult> ListofUsers (mdatabaseVishnu->getResult(sqlRequest.c_str()));
-    if(ListofUsers->getNbTuples()==0) {
-      UMSVishnuException e(ERRCODE_UNKNOWN_USERID);
-      throw e ;
-    }     */
-
-
-
   }
 
+  std::string  authSystemId = options->getAuthSystemId();
+  if(authSystemId.size()!=0) {
+    //To check if the authSystem identifier is correct
+    checkAuthSystemId(authSystemId);
+    //addOptionRequest("authsystemid", authSystemId, sqlRequest);
+    sqlRequest.append(" and userid IN (SELECT userid from authsystem, users,"
+                            "authaccount where authsystemid='"+authSystemId+"'"
+                            "and authaccount.authsystem_authsystemid=authsystem.numauthsystemid and authaccount.users_numuserid=users.numuserid)"
+                            );
+  }
 
   }
 
  /**
-  * \brief Function to list machines information 
+  * \brief Function to list machines information
   * \fn UMS_Data::ListUsers* list()
   * \return The pointer to the UMS_Data::ListUsers containing users information
   * \return raises an exception on error
@@ -151,7 +146,7 @@ public:
 
 
   }
-  
+
   /**
    * \brief Function to get the name of the ListUsersServer command line
    * \fn std::string getCommandName()
@@ -168,7 +163,7 @@ public:
    * \fn ~ListUsersServer()
    * \brief Destructor, raises an exception on error
    */
-  ~ListUsersServer() { } 
+  ~ListUsersServer() { }
 
  private:
 
@@ -184,7 +179,7 @@ public:
 
 #if 0
  /**
-  * \brief The ListUsersServer option 
+  * \brief The ListUsersServer option
   */
   UMS_Data::ListUsersOptions_ptr moption;
  /**
@@ -193,7 +188,7 @@ public:
   */
   SessionServer msessionServer;
  /**
-  * \brief The Object containing users information 
+  * \brief The Object containing users information
   */
   ListUsers* mlistUsers;
  /**
