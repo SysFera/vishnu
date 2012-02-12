@@ -1588,5 +1588,5 @@ solveAccountAuthDelete(diet_profile_t* pb) {
 int
 solveAccountAuthList(diet_profile_t* pb) {
 
-  return 0;
+  return solveGenerique<UMS_Data::ListAuthAccOptions, UMS_Data::ListAuthAccounts, ListAuthAccountsServer>(pb);
 }
