@@ -337,7 +337,7 @@ std::string  convertEncryptionMethodToString (const UMS_Data::EncryptionMethod& 
 
   switch (meth){
 
-    case 0:
+    case 1:
       result="SSHA";
       break;
 
@@ -356,7 +356,7 @@ std::string  convertAuthTypeToString (const UMS_Data::AuthType& type) {
 
   switch (type){
 
-    case 0:
+    case 1:
       result="LDAP";
       break;
 
@@ -395,8 +395,10 @@ operator<<(std::ostream& os, const UMS_Data::AuthSystem_ptr& authSystem){
 
   os << "============ authentication system  " << name << "===========" << std::endl;
   os << setw(25) << right << "authSystemId: " << authSystemId<< endl;
-  os << setw(25) << right << "name : " << name  << endl;
+  os << setw(25) << right << "name: " << name  << endl;
   os << setw(25) << right << "URI: "  << URI << endl;
+  os << setw(25) << right << "login: "  << authSystem->getAuthLogin() << endl;
+  os << setw(25) << right << "password: "  << authSystem->getAuthPassword() << endl;
   os << setw(25) << right << "Status: " << status << " (" << statusStr << ")" << endl;
   os << setw(25) << right << "type: " << type << " (" << typeStr << ")" << endl;
   os << setw(25) << right << "meth: " << meth << " (" << userPasswordEncryption<< ")" << endl;
@@ -449,7 +451,7 @@ operator<<(std::ostream& os, UMS_Data::ListAuthSystems& lsAuthSystems) {
   os << endl;
 
   for(unsigned int i = 0; i < lsAuthSystems.getAuthSystems().size(); i++) {
-    
+
     authSystemId = (lsAuthSystems.getAuthSystems().get(i))->getAuthSystemId();
     name = (lsAuthSystems.getAuthSystems().get(i))->getName();
     URI = (lsAuthSystems.getAuthSystems().get(i))->getURI();

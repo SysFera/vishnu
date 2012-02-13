@@ -78,13 +78,12 @@ public:
       std::string  userId = options->getUserId();
       if(userId.size()!=0) {
         //If the user is an admin
-        if(!userServer.isAdmin()) {
-
-        //To check if the user id is correct
-        //TODO: A faire quand les authAccount seront prêts
-         /* checkUserId(userId);
-          addOptionRequest("userid", userId, sqlRequest);
-          */
+        if(userServer.isAdmin()) {
+          checkUserId(userId);
+          sqlRequest.append(" and authsystemid IN (SELECT authsystemid from authsystem, users,"
+                            "authaccount where userid='"+userId+"'"
+                            "and authaccount.authsystem_authsystemid=authsystem.numauthsystemid and authaccount.users_numuserid=users.numuserid)"
+                            );
         }//End If the user is an admin
         else {
           UMSVishnuException e (ERRCODE_NO_ADMIN);
@@ -103,14 +102,18 @@ public:
       if (!options->isListAllAuthSystems()) {
         //If the option userId has not
         if ((userId.size() == 0) && (authSystemId.size() == 0)) {
-          //TODO: A faire quand les authAccounts seront prêts
-          //addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
+          sqlRequest.append(" and authsystemid IN (SELECT authsystemid from authsystem, users,"
+                            "authaccount where userid='"+userServer.getData().getUserId()+"'"
+                            "and authaccount.authsystem_authsystemid=authsystem.numauthsystemid and authaccount.users_numuserid=users.numuserid)"
+                            );
         }
       }
     }
     else {
-      //TODO: A faire quand les authAccounts seront prêt
-      //addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
+      sqlRequest.append(" and authsystemid IN (SELECT authsystemid from authsystem, users, "
+                        "authaccount where userid='"+userServer.getData().getUserId()+"'"
+                        "and authaccount.authsystem_authsystemid=authsystem.numauthsystemid and authaccount.users_numuserid=users.numuserid)"
+      );
     }
   }
 
@@ -149,7 +152,7 @@ public:
         authSystem->setAuthSystemId(*ii);
         authSystem->setName(*(++ii));
         authSystem->setURI(*(++ii));
-        std::string authLogin(*(++ii)); 
+        std::string authLogin(*(++ii));
         std::string authPassword(*(++ii));
         int userPasswordEncryption(convertToInt(*(++ii)));
         int type(convertToInt(*(++ii)));

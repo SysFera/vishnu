@@ -60,45 +60,29 @@ MachineServer::add(int vishnuId) {
 
       vishnuid = convertToString(vishnuId);
 
-      //To get the counter
-      int counter;
-      counter = getVishnuCounter(vishnuid);
+      //Generation of machineid
+      idMachineGenerated = vishnu::getObjectId(vishnuId,
+                                               "formatidmachine",
+                                               MACHINE,
+                                               mmachine->getName());
 
-      machineCpt = counter;
+      //if the machine id is generated
+      if (idMachineGenerated.size() != 0) {
+        mmachine->setMachineId(idMachineGenerated);
 
-      //To get the formatidmachine
-      formatidmachine = getAttrVishnu("formatidmachine", vishnuid);
-      //if the formatidmachine is defined
-      if (formatidmachine.size() != 0) {
-        //Generation of userid
-        idMachineGenerated =
-        getGeneratedName(formatidmachine.c_str(),
-                          machineCpt,
-                          MACHINE,
-                          mmachine->getName());
+        //if the machineId does not exist
+        if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() == 0) {
 
-        //if the machine id is generated
-        if (idMachineGenerated.size() != 0) {
-          mmachine->setMachineId(idMachineGenerated);
-
-          //if the machineId does not exist
-          if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() == 0) {
-
-            mdatabaseVishnu->process(sqlInsert + "("+vishnuid+",'"+mmachine->getName()+"'\
+          mdatabaseVishnu->process(sqlInsert + "("+vishnuid+",'"+mmachine->getName()+"'\
             ,'"+ mmachine->getSite()+"','"+mmachine->getMachineId()+"',"+convertToString(mmachine->getStatus())+", \
             '"+mmachine->getSshPublicKey()+"')");
 
-            //To insert the description of the machine
-            mdatabaseVishnu->process("insert into description (machine_nummachineid, lang, \
-            description) values \
-            ("+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+",\
+          //To insert the description of the machine
+          mdatabaseVishnu->process("insert into description (machine_nummachineid, lang, \
+            description) values                                         \
+            ("+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+", \
             '"+ mmachine->getLanguage()+"','"+mmachine->getMachineDescription()+"')");
 
-          } //if the machineId does not exist
-          else {
-            UMSVishnuException e (ERRCODE_MACHINE_EXISTING);
-            throw e;
-          }
         }//if the machine id is generated
         else {
           SystemException e (ERRCODE_SYSTEM, "There is a problem to parse the formatidmachine");
@@ -111,8 +95,8 @@ MachineServer::add(int vishnuId) {
       }
     } //End if the user is an admin
     else {
-        UMSVishnuException e (ERRCODE_NO_ADMIN);
-        throw e;
+      UMSVishnuException e (ERRCODE_NO_ADMIN);
+      throw e;
     }
   }//End if the user exists
   else {

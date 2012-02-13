@@ -12,6 +12,17 @@
 * \brief Constructor
 * \fn AuthSystemServer(AuthSystem authsystem, SessionServer session)
 * \param authsystem The AuthSystem data structure
+*/
+AuthSystemServer::AuthSystemServer(UMS_Data::AuthSystem*& authsystem):
+mauthsystem(authsystem) {
+  DbFactory factory;
+  mdatabaseVishnu = factory.getDatabaseInstance();
+}
+
+/**
+* \brief Constructor
+* \fn AuthSystemServer(AuthSystem authsystem, SessionServer session)
+* \param authsystem The AuthSystem data structure
 * \param session The object which encapsulates session data
 */
 AuthSystemServer::AuthSystemServer(UMS_Data::AuthSystem*& authsystem, SessionServer& session):
@@ -64,7 +75,7 @@ AuthSystemServer::add(int vishnuId) {
                                     "("+numAuth+ ", '"+mauthsystem->getLdapBase()+"')");
 
           }
-        
+
       }// End if the id generated does not exists
       else {
         UMSVishnuException e (ERRCODE_AUTH_SYSTEM_ALREADY_EXIST);
