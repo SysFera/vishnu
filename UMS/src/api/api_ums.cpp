@@ -592,8 +592,6 @@ vishnu::listSessions(const std::string& sessionKey,
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid status value: its value must be 0 or 1");
   }
 
-  cout << "options.getStatus()" << options.getStatus() << endl;
-
   SessionProxy sessionProxy(sessionKey);
   QueryProxy<UMS_Data::ListSessionOptions, UMS_Data::ListSessions> query(options, sessionProxy, "sessionList");
 
@@ -813,16 +811,16 @@ vishnu::addAuthSystem(const std::string& sessionKey, UMS_Data::AuthSystem& newAu
 
   std::cout << "LdapBase "  << newAuthSys.getLdapBase() << "\n";
 
-  if (newAuthSys.getType()<=0 || newAuthSys.getType()>1){
+  if (newAuthSys.getType()<-1 || newAuthSys.getType()>0){
     throw UMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE, "Invalid type");
   }
 
-  if (newAuthSys.getType()==1 && (string(newAuthSys.getLdapBase()).size()==0)){
+  if (newAuthSys.getType()==0 && (string(newAuthSys.getLdapBase()).size()==0)){
     throw UMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE, "Missing ldap base");
   }
 
-  if (newAuthSys.getUserPasswordEncryption()<=0 ||
-      newAuthSys.getUserPasswordEncryption()>1 ){
+  if (newAuthSys.getUserPasswordEncryption()<=-1 ||
+      newAuthSys.getUserPasswordEncryption()>0 ){
     throw UMSVishnuException(ERRCODE_UNKNOWN_ENCRYPTION_METHOD, "Invalid encryption method");
   }
 
@@ -864,12 +862,12 @@ vishnu::updateAuthSystem(const std::string& sessionKey,  UMS_Data::AuthSystem& a
   SessionProxy sessionProxy(sessionKey);
   AuthSystemProxy auth(authSys, sessionProxy);
 
-  if (authSys.getType()<0 || authSys.getType()>1){
+  if (authSys.getType()<-1 || authSys.getType()>0){
     throw UMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE, "Invalid type");
   }
 
-  if (authSys.getUserPasswordEncryption()<0 ||
-      authSys.getUserPasswordEncryption()>1 ){
+  if (authSys.getUserPasswordEncryption()<-1 ||
+      authSys.getUserPasswordEncryption()>0 ){
     throw UMSVishnuException(ERRCODE_UNKNOWN_ENCRYPTION_METHOD, "Invalid encryption method");
   }
 
