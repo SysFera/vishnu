@@ -4099,6 +4099,10 @@
                 <entry><para>The user-authentication account already exists</para></entry>
               </row>
               <row>
+                <entry><para>ERRCODE_LOGIN_ALREADY_USED</para></entry>
+                <entry><para>The system account login is already used by another vishnu user</para></entry>
+              </row>
+              <row>
                 <entry><para>ERRCODE_DIET</para></entry>
                 <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
@@ -4159,7 +4163,7 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>authenAccount</para></entry>
+                <entry><para>authAccount</para></entry>
                 <entry><para><link linkend="AuthAccount">AuthAccount</link></para></entry>
                 <entry><para>is an object which encapsulates the information of the local user-authentication configuration which will be updated</para></entry>
                 <entry><para>IN</para></entry>
@@ -4241,7 +4245,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::updateAuthAccount</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const AuthAccount&amp; <parameter>authenAccount</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::updateAuthAccount</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const AuthAccount&amp; <parameter>authAccount</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::deleteAuthAccount</title>
@@ -4524,7 +4528,7 @@
             <row>
               <entry><para>userId</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>represents an admin option to add a local user-authentication configuration of a specific user</para></entry>
+              <entry><para>represents an admin option to add a user-authentication account of a specific user</para></entry>
             </row>
             <row>
               <entry><para>acLogin</para></entry>
@@ -4592,32 +4596,6 @@
               <entry><para><link linkend="StatusType">StatusType</link></para></entry>
               <entry><para>represents the status of the user-authentication system</para></entry>
             </row>
-            <row>
-              <entry><para>options</para></entry>
-              <entry><para><link linkend="AuthSystemOptions">AuthSystemOptions</link></para></entry>
-              <entry><para>is an object which encapsulates the options of the user-authentication system</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="AuthSystemOptions"><emphasis role="bold">Class UMS::AuthSystemOptions Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
             <row>
               <entry><para>ldapBase</para></entry>
               <entry><para>string</para></entry>

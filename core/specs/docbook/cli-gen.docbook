@@ -2329,7 +2329,7 @@
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>u</para></entry>
-                <entry><para>represents an admin option to add a local user-authentication configuration of a specific user</para></entry>
+                <entry><para>represents an admin option to add a user-authentication account of a specific user</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -2390,7 +2390,7 @@
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>u</para></entry>
-                <entry><para>represents the VISHNU user identifier</para></entry>
+                <entry><para>represents an admin option to add a user-authentication account of a specific user</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>

@@ -806,9 +806,9 @@ vishnu::addAuthSystem(const std::string& sessionKey, UMS_Data::AuthSystem& newAu
   std::cout << "authLogin "  << newAuthSys.getAuthLogin() << "\n";
   std::cout << "authPassword "  << newAuthSys.getAuthPassword() << "\n";
   std::cout << "UserPasswordEncryption "  << newAuthSys.getUserPasswordEncryption() << "\n";
-  
+
   std::cout << "type "  << newAuthSys.getType() << "\n";
-  
+
   std::cout << "LdapBase "  << newAuthSys.getLdapBase() << "\n";
 
   checkIfTextIsEmpty(newAuthSys.getName(), "The authentication name is empty", ERRCODE_INVALID_PARAM);
@@ -892,15 +892,12 @@ int
 vishnu::listAuthSystems(const std::string& sessionKey, UMS_Data::ListAuthSystems& listAuthSys, const UMS_Data::ListAuthSysOptions& options )
                                      throw(UserException, SystemException){
   SessionProxy sessionProxy(sessionKey);
-  QueryProxy<UMS_Data::ListAuthSysOptions, UMS_Data::ListAuthSystems> query(options, sessionProxy, "systemAuthList");
+  QueryProxy<UMS_Data::ListAuthSysOptions, UMS_Data::ListAuthSystems> query(options, sessionProxy, "authSystemList");
 
   UMS_Data::ListAuthSystems* list = query.list();
-  
-  if (list!=NULL){
-  
-    std::cout <<" list->getAuthSystems().size() " << list->getAuthSystems().size() << "\n";
-  
-  
+
+  if (list!=NULL) {
+
     UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     for(unsigned int i = 0; i < list->getAuthSystems().size(); i++) {
       UMS_Data::AuthSystem_ptr auth = ecoreFactory->createAuthSystem();
@@ -931,7 +928,6 @@ vishnu::addAuthAccount(const std::string& sessionKey, const UMS_Data::AuthAccoun
   std::cout << "acLogin "  << authAccount.getAcLogin() << "\n";
 
   checkIfTextIsEmpty(authAccount.getAuthSystemId(), "The authentication account systemId is empty", ERRCODE_INVALID_PARAM);
-  checkIfTextIsEmpty(authAccount.getUserId(), "The authentication account userId is empty", ERRCODE_INVALID_PARAM);
   checkIfTextIsEmpty(authAccount.getAcLogin(), "The authentication acc login is empty", ERRCODE_INVALID_PARAM);
 
   SessionProxy sessionProxy(sessionKey);
