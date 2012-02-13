@@ -244,8 +244,8 @@ protected:
    * \param status The status to check
    */
   void checkStatus(const int& status) {
-    if((status < 0) || (status > 1)) {
-      throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION, "Invalid Status value: its value must be 0 or 1");
+    if((status < -1) || (status > 1)) {
+      throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION, "Invalid value: its value must be 0 or 1");
     }
   }
 

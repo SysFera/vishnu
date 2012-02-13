@@ -218,7 +218,7 @@
         <details key="shortOption" value=""/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//AuthType"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="ecore:EEnum UMS_Data.ecore#//AuthType"
         defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="content" value="represents the type of the user-authentication systems"/>
@@ -276,7 +276,7 @@
         <details key="shortOption" value="e"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//AuthType"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EEnum UMS_Data.ecore#//AuthType"
         defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="content" value="represents the type of the user-authentication system"/>
@@ -297,12 +297,6 @@
         <details key="shortOption" value="b"/>
       </eAnnotations>
     </eStructuralFeatures>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="AuthType" instanceTypeName="AuthType">
-    <eAnnotations source="Description">
-      <details key="content" value="represents the type of the user-authentication systems"/>
-    </eAnnotations>
-    <eLiterals name="LDAP"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="UpdateLocalAuthAccOptions" instanceTypeName="UpdateLocalAuthAccOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="authSystemId" lowerBound="1"
@@ -326,11 +320,5 @@
         <details key="shortOption" value="l"/>
       </eAnnotations>
     </eStructuralFeatures>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="EncryptionMethod" instanceTypeName="EncryptionMethod">
-    <eAnnotations source="Description">
-      <details key="content" value="represents the name of the encryption method "/>
-    </eAnnotations>
-    <eLiterals name="SSHA"/>
   </eClassifiers>
 </ecore:EPackage>

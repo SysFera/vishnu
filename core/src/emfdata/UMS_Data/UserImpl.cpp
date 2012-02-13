@@ -174,7 +174,7 @@ void User::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_email);
     case ::UMS_Data::UMS_DataPackage::USER__STATUS:
-        return m_status != 1;
+        return m_status != -1;
 
     }
     throw "Error";

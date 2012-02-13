@@ -7,6 +7,7 @@
 
 #include "AuthSystemServer.hpp"
 #include "DbFactory.hpp"
+#include "utilVishnu.hpp"
 
 /**
 * \brief Constructor
@@ -56,6 +57,8 @@ AuthSystemServer::add(int vishnuId) {
       mauthsystem->setAuthSystemId(vishnu::getObjectId(vishnuId, "formatidauth", AUTH, ""));
       //To check if the authenid generated does no exists
       if (getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'").size() == 0) {
+        //To active the user-authentication system
+        mauthsystem->setStatus(ACTIVE_STATUS);
         mdatabaseVishnu->process( sqlInsert + "(" + convertToString(vishnuId)+", "
                                   "'"+mauthsystem->getAuthSystemId()+"','"+mauthsystem->getName()+"','"
                                   + mauthsystem->getURI()+"','"+mauthsystem->getAuthLogin()+"', '"+
@@ -68,7 +71,7 @@ AuthSystemServer::add(int vishnuId) {
 
           //If the Ldap base is defined and the type is ldap
           if ((mauthsystem->getLdapBase().size() != 0)
-            && (mauthsystem->getType() == 1) ) { // 1 for LDAP
+            && (mauthsystem->getType() == LDAPTYPE) ) { // LDAP
 
             numAuth = getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'");
 
@@ -152,31 +155,23 @@ AuthSystemServer::update() {
         }
 
         //if a new status has been defined
-        //TODO : Ajouter UNDEFINED dans statuType et dans user,machine, authenSystem
-        //mettre status 3
-        //Coté api quand status et à 3 dans ADD le mettre à un et dans update faire
-        //un test getStatus != 3 pour machine / user/ authSystem
-        //Poster bug et dans list user prendre en compte status 3 à l'affichage
-         /*if (mauthsystem->getStatus().size() != 0) {
-        sqlCommand.append("UPDATE authsystem SET status='"+convertToString(mauthsystem->getStatus())+"'"
-        " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");
-        }*/
-
-        //if the authsystem will be locked
-        if (mauthsystem->getStatus() == 0) {
-          //if the authsystem is not already locked
-          if (convertToInt(getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'", "status")) != 0) {
-            sqlCommand.append("UPDATE authsystem SET status="+convertToString(mauthsystem->getStatus())+""
-            " where  authsystemid='"+mauthsystem->getAuthSystemId()+"';");
-          } //End if the user is not already locked
+        if (mauthsystem->getStatus() != UNDEFINED_VALUE) {
+          //if the authsystem will be locked
+          if (mauthsystem->getStatus() == 0) {
+            //if the authsystem is not already locked
+            if (convertToInt(getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'", "status")) != 0) {
+              sqlCommand.append("UPDATE authsystem SET status="+convertToString(mauthsystem->getStatus())+""
+              " where  authsystemid='"+mauthsystem->getAuthSystemId()+"';");
+            } //End if the user is not already locked
+            else {
+              UMSVishnuException e (ERRCODE_AUTH_SYSTEM_ALREADY_LOCKED);
+              throw e;
+            }
+          } //End if the authsystem will be locked
           else {
-            UMSVishnuException e (ERRCODE_AUTH_SYSTEM_ALREADY_LOCKED);
-            throw e;
+            sqlCommand.append("UPDATE authsystem SET status="+convertToString(mauthsystem->getStatus())+""
+            " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");
           }
-        } //End if the authsystem will be locked
-        else {
-          sqlCommand.append("UPDATE authsystem SET status="+convertToString(mauthsystem->getStatus())+""
-          " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");
         }
 
         mdatabaseVishnu->process(sqlCommand.c_str());

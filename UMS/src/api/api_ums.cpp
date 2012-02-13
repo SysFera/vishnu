@@ -182,7 +182,7 @@ vishnu::addUser(const string& sessionKey, UMS_Data::User& newUser)
   if((newUser.getPrivilege() < 0) || (newUser.getPrivilege() > 1)) {
     throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION, "Invalid Privilege value: its value must be 0 or 1");
   }
-  if((newUser.getStatus() < 0) || (newUser.getStatus() > 1)) {
+  if((newUser.getStatus() < -1) || (newUser.getStatus() > 1)) {
     throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION, "Invalid Status value: its value must be 0 or 1");
   }
 
@@ -302,7 +302,7 @@ vishnu::addMachine(const std::string& sessionKey,
                                                 throw(UserException, SystemException)
 {
 
-  if((newMachine.getStatus() < 0) || (newMachine.getStatus() > 1)) {
+  if((newMachine.getStatus() < -1) || (newMachine.getStatus() > 1)) {
     throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION, "Invalid Status value: its value must be 0 or 1");
   }
 
@@ -589,8 +589,10 @@ vishnu::listSessions(const std::string& sessionKey,
   }
 
   if((options.getStatus() < 0) || (options.getStatus() > 1)) {
-    throw UserException(ERRCODE_INVALID_PARAM, "Invalid Privilege value: its value must be 0 or 1");
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid status value: its value must be 0 or 1");
   }
+
+  cout << "options.getStatus()" << options.getStatus() << endl;
 
   SessionProxy sessionProxy(sessionKey);
   QueryProxy<UMS_Data::ListSessionOptions, UMS_Data::ListSessions> query(options, sessionProxy, "sessionList");

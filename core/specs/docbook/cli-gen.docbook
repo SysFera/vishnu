@@ -2538,11 +2538,11 @@
           <tbody>
             <row>
               <entry><para>UNDEFINED</para></entry>
-              <entry><para>0</para></entry>
+              <entry><para>-1</para></entry>
             </row>
             <row>
               <entry><para>LDAP</para></entry>
-              <entry><para>1</para></entry>
+              <entry><para>0</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -2588,11 +2588,11 @@
           <tbody>
             <row>
               <entry><para>UNDEFINED</para></entry>
-              <entry><para>0</para></entry>
+              <entry><para>-1</para></entry>
             </row>
             <row>
               <entry><para>SSHA</para></entry>
-              <entry><para>1</para></entry>
+              <entry><para>0</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -2637,7 +2637,7 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>UNDEFINED</para></entry>
+              <entry><para>DEFAULT</para></entry>
               <entry><para>0</para></entry>
             </row>
             <row>
@@ -2665,6 +2665,10 @@
             </row>
           </thead>
           <tbody>
+            <row>
+              <entry><para>UNDEFINED</para></entry>
+              <entry><para>-1</para></entry>
+            </row>
             <row>
               <entry><para>INACTIVE</para></entry>
               <entry><para>0</para></entry>

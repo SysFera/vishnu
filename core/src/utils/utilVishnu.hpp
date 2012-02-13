@@ -39,6 +39,9 @@ typedef enum {
 static const std::string AUTOMATIC_SUBMIT_JOB_KEYWORD="autom";
 static const std::string LIST_JOBS_ON_MACHINES_KEYWORD="all";
 
+static const int UNDEFINED_VALUE=-1;
+static const int LDAPTYPE=0;
+static const int ACTIVE_STATUS=1;
 /**
 * \brief Function to encrypt data and password
 * \param clef is the data to be encrypted
