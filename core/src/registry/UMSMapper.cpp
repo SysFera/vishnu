@@ -409,10 +409,10 @@ UMSMapper::decodeAddAuthSys(vector<int> separator, const string& msg){
   res +=" ";
   res += convertToString(ac->getType());
 
-    if (ac->getLdapBase().compare("")){
-      res +=" -b ";
-      res += ac->getLdapBase();
-    }
+  if (ac->getLdapBase().compare("")){
+    res +=" -b ";
+    res += ac->getLdapBase();
+  }
 
   if (ac != NULL) {
     delete ac;
@@ -553,10 +553,10 @@ UMSMapper::decodeUpAuthSys(vector<int> separator, const string& msg){
     res += a;
   }
 
-    if (ac->getLdapBase().compare("")){
-      res+=" -b ";
-      res += ac->getLdapBase();
-    }
+  if (ac->getLdapBase().compare("")){
+    res+=" -b ";
+    res += ac->getLdapBase();
+  }
 
   if (ac != NULL) {
     delete ac;

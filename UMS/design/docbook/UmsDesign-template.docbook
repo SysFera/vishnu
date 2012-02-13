@@ -48,8 +48,8 @@
           <authorinitials>SysFera</authorinitials>
           <revdescription>
 	    <para>Modified UserList (added structure ListUsersOptions)</para>
-	    <para> Added Services: SystemAuthenticationCreate, SystemAuthenticationUpdate, Service SystemAuthenticationDelete, 
-		  Service SystemAuthenticationList, Service AccountAuthCreate, AccountAuthUpdate, AccountAuthDelete, AccountAuthList.
+	    <para> Added Services: SystemAuthenticationCreate, SystemAuthenticationUpdate, SystemAuthenticationDelete, 
+		   SystemAuthenticationList, AccountAuthCreate, AccountAuthUpdate, AccountAuthDelete, AccountAuthList.
 	    </para>
           </revdescription>
         </revision>
