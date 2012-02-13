@@ -6,7 +6,9 @@ include_directories(client api
   ${FMS_EMF_DATA_DIR}
   ${UMS_CLIENT_PROXY_SOURCE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
-  ${VISHNU_EXCEPTION_INCLUDE_DIR})
+  ${VISHNU_EXCEPTION_INCLUDE_DIR}
+  ${Boost_INCLUDE_DIRS}
+)
 
 set(client_SRCS client/FileProxy
   client/LocalFileProxy
