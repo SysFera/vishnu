@@ -4,7 +4,9 @@ include_directories(client api
   ${EMF_DATA_DIR}
   ${UMS_EMF_DATA_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
-  ${UTILVISHNU_SOURCE_DIR})
+  ${UTILVISHNU_SOURCE_DIR}
+  ${Boost_INCLUDE_DIRS}
+)
 
 set(client_SRCS client/SessionProxy.cpp
   client/AuthAccountProxy.cpp
