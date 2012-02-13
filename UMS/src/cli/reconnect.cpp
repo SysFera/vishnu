@@ -67,6 +67,12 @@ int main (int ac, char* av[]){
 		checkVishnuConfig(*opt);
 
 
+    if ( opt->count("help")){
+      helpUsage(*opt,"[option] ");
+      exit(VISHNU_OK);
+    }
+
+
     //Fix me
 
     if(0==opt->count("password") && 1==opt->count("userId")){
