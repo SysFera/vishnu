@@ -86,6 +86,8 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
       //If the user to add does not exists
       if (getAttribut("where userid='"+user->getUserId()+"'").size() == 0) {
 
+        //To active the user status
+        user->setStatus(ACTIVE_STATUS);
         //To insert user on the database
         mdatabaseVishnu->process(sqlInsert + "(" + convertToString(vishnuId)+", "
         "'"+user->getUserId()+"','"+passwordCrypted+"','"
@@ -148,23 +150,25 @@ UserServer::update(UMS_Data::User *user) {
           " where userid='"+user->getUserId()+"';");
         }
 
-        //if the user will be locked
-        if (user->getStatus() == 0) {
-          //if the user is not already locked
-          if (convertToInt(getAttribut("where userid='"+user->getUserId()+"'", "status")) != 0) {
+        //If a new status has been defined
+        if (user->getStatus() != UNDEFINED_VALUE) {
+          //if the user will be locked
+          if (user->getStatus() == 0) {
+            //if the user is not already locked
+            if (convertToInt(getAttribut("where userid='"+user->getUserId()+"'", "status")) != 0) {
+              sqlCommand.append("UPDATE users SET status="+convertToString(user->getStatus())+""
+              " where userid='"+user->getUserId()+"';");
+            } //End if the user is not already locked
+            else {
+              UMSVishnuException e (ERRCODE_USER_ALREADY_LOCKED);
+              throw e;
+            }
+          } //End if the user will be locked
+          else {
             sqlCommand.append("UPDATE users SET status="+convertToString(user->getStatus())+""
             " where userid='"+user->getUserId()+"';");
-          } //End if the user is not already locked
-          else {
-            UMSVishnuException e (ERRCODE_USER_ALREADY_LOCKED);
-            throw e;
           }
-        } //End if the user will be locked
-        else {
-          sqlCommand.append("UPDATE users SET status="+convertToString(user->getStatus())+""
-          " where userid='"+user->getUserId()+"';");
         }
-
         // if the user whose privilege will be updated is not an admin
         if (convertToInt(getAttribut("where userid='"+user->getUserId()+"'", "privilege")) != 1) {
           sqlCommand.append("UPDATE users SET privilege="+convertToString(user->getPrivilege())+""

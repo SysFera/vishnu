@@ -525,7 +525,7 @@ SessionServer::solveConnectionMode(UMS_Data::ConnectOptions* connectOpt, std::st
   OptionValueServer optionValueServer;
 
   switch (connectOpt->getClosePolicy()) {
-    ////The closure mode is undefined
+    ////The closure mode is default
     case 0:
       msession.setClosePolicy(optionValueServer.getOptionValueForUser(numuserId, CLOSEPOLICY_OPT));
         //If the policy is not 2 (CLOSE_ON_DISCONNECT)

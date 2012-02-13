@@ -1117,7 +1117,7 @@ UMS_DataPackage::UMS_DataPackage()
     m_User__email->setOrdered(true);
     m_User__status->setEType(m_StatusTypeEEnum);
     m_User__status->setName("status");
-    m_User__status->setDefaultValueLiteral("1");
+    m_User__status->setDefaultValueLiteral("-1");
     m_User__status->setLowerBound(0);
     m_User__status->setUpperBound(1);
     m_User__status->setTransient(false);
@@ -1582,7 +1582,7 @@ UMS_DataPackage::UMS_DataPackage()
     m_Machine__language->setOrdered(true);
     m_Machine__status->setEType(m_StatusTypeEEnum);
     m_Machine__status->setName("status");
-    m_Machine__status->setDefaultValueLiteral("1");
+    m_Machine__status->setDefaultValueLiteral("-1");
     m_Machine__status->setLowerBound(0);
     m_Machine__status->setUpperBound(1);
     m_Machine__status->setTransient(false);
@@ -1898,7 +1898,7 @@ UMS_DataPackage::UMS_DataPackage()
     m_AuthSystem__authPassword->setOrdered(true);
     m_AuthSystem__userPasswordEncryption->setEType(m_EncryptionMethodEEnum);
     m_AuthSystem__userPasswordEncryption->setName("userPasswordEncryption");
-    m_AuthSystem__userPasswordEncryption->setDefaultValueLiteral("0");
+    m_AuthSystem__userPasswordEncryption->setDefaultValueLiteral("-1");
     m_AuthSystem__userPasswordEncryption->setLowerBound(1);
     m_AuthSystem__userPasswordEncryption->setUpperBound(1);
     m_AuthSystem__userPasswordEncryption->setTransient(false);
@@ -1911,7 +1911,7 @@ UMS_DataPackage::UMS_DataPackage()
     m_AuthSystem__userPasswordEncryption->setOrdered(true);
     m_AuthSystem__type->setEType(m_AuthTypeEEnum);
     m_AuthSystem__type->setName("type");
-    m_AuthSystem__type->setDefaultValueLiteral("0");
+    m_AuthSystem__type->setDefaultValueLiteral("-1");
     m_AuthSystem__type->setLowerBound(0);
     m_AuthSystem__type->setUpperBound(1);
     m_AuthSystem__type->setTransient(false);
@@ -1924,7 +1924,7 @@ UMS_DataPackage::UMS_DataPackage()
     m_AuthSystem__type->setOrdered(true);
     m_AuthSystem__status->setEType(m_StatusTypeEEnum);
     m_AuthSystem__status->setName("status");
-    m_AuthSystem__status->setDefaultValueLiteral("1");
+    m_AuthSystem__status->setDefaultValueLiteral("-1");
     m_AuthSystem__status->setLowerBound(0);
     m_AuthSystem__status->setUpperBound(1);
     m_AuthSystem__status->setTransient(false);
@@ -2145,10 +2145,10 @@ UMS_DataPackage::UMS_DataPackage()
 
     {
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // UNDEFINED
-        _el->setName("UNDEFINED");
+        // DEFAULT
+        _el->setName("DEFAULT");
         _el->setValue(0);
-        _el->setLiteral("UNDEFINED");
+        _el->setLiteral("DEFAULT");
         _el->setEEnum(m_SessionCloseTypeEEnum);
         m_SessionCloseTypeEEnum->getELiterals().push_back(_el);
     }
@@ -2203,9 +2203,19 @@ UMS_DataPackage::UMS_DataPackage()
 
     {
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // UNDEFINED
+        _el->setName("UNDEFINED");
+        _el->setValue(0);
+        _el->setLiteral("UNDEFINED");
+        _el->setEEnum(m_StatusTypeEEnum);
+        m_StatusTypeEEnum->getELiterals().push_back(_el);
+    }
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // INACTIVE
         _el->setName("INACTIVE");
-        _el->setValue(0);
+        _el->setValue(1);
         _el->setLiteral("INACTIVE");
         _el->setEEnum(m_StatusTypeEEnum);
         m_StatusTypeEEnum->getELiterals().push_back(_el);
@@ -2215,7 +2225,7 @@ UMS_DataPackage::UMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // ACTIVE
         _el->setName("ACTIVE");
-        _el->setValue(1);
+        _el->setValue(2);
         _el->setLiteral("ACTIVE");
         _el->setEEnum(m_StatusTypeEEnum);
         m_StatusTypeEEnum->getELiterals().push_back(_el);

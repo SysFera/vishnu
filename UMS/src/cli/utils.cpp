@@ -337,7 +337,7 @@ std::string  convertEncryptionMethodToString (const UMS_Data::EncryptionMethod& 
 
   switch (meth){
 
-    case 1:
+    case 0:
       result="SSHA";
       break;
 
@@ -356,7 +356,7 @@ std::string  convertAuthTypeToString (const UMS_Data::AuthType& type) {
 
   switch (type){
 
-    case 1:
+    case 0:
       result="LDAP";
       break;
 
