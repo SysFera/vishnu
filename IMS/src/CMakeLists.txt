@@ -10,7 +10,9 @@ include_directories(client api utils
   ${UMS_API_SOURCE_DIR}
   ${FMS_API_SOURCE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
-  ${VISHNU_EXCEPTION_INCLUDE_DIR})
+  ${VISHNU_EXCEPTION_INCLUDE_DIR}
+  ${Boost_INCLUDE_DIRS}
+)
 
 
 set(client_SRCS
