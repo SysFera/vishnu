@@ -15,7 +15,9 @@
 #ifdef HAVE_SLURM
 #include "SlurmServer.hpp"
 #endif
-
+#ifdef HAVE_LSF
+#include "LSFServer.hpp"
+#endif
 /**
  * \brief Constructor
  */
@@ -49,6 +51,13 @@ BatchFactory::getBatchServerInstance(BatchType batchType) {
     case SLURM:
 #ifdef HAVE_SLURM
       mbatchServer = new SlurmServer();
+#else
+      mbatchServer = NULL;
+#endif
+      break;
+    case LSF:
+#ifdef HAVE_LSF
+      mbatchServer = new LSFServer();
 #else
       mbatchServer = NULL;
 #endif
