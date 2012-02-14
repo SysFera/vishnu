@@ -5,8 +5,8 @@
  * \date July 2011
  */
 
-#ifndef TMS_SLURM_SERVER_H
-#define TMS_SLURM_SERVER_H
+#ifndef TMS_LSF_SERVER_H
+#define TMS_LSF_SERVER_H
 
 #include "BatchServer.hpp"
 
