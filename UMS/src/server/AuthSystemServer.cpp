@@ -53,7 +53,7 @@ AuthSystemServer::add(int vishnuId) {
   if (userServer.exist()) {
     //if the user is an admin
     if (userServer.isAdmin()) {
-
+      checkValues();
       mauthsystem->setAuthSystemId(vishnu::getObjectId(vishnuId, "formatidauth", AUTH, ""));
       //To check if the authenid generated does no exists
       if (getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'").size() == 0) {
@@ -271,4 +271,22 @@ AuthSystemServer::getAttribut(std::string condition, std::string attrname) {
 bool
 AuthSystemServer::exist() {
   return (getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'").size() != 0);
+}
+
+
+int
+AuthSystemServer::checkValues() {
+
+  if (mauthsystem->getType() != LDAPTYPE){
+    throw UMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE, "Invalid type");
+  }
+
+  if (mauthsystem->getType()==LDAPTYPE && (std::string(mauthsystem->getLdapBase()).size()==0)){
+    throw UMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE, "Missing ldap base");
+  }
+
+  if (mauthsystem->getUserPasswordEncryption() != SSHA_METHOD ){
+    throw UMSVishnuException(ERRCODE_UNKNOWN_ENCRYPTION_METHOD, "Invalid encryption method");
+  }
+  return 0;
 }

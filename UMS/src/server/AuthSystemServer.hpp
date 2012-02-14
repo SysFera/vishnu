@@ -108,5 +108,11 @@ private:
   */
   bool
   exist();
+  /**
+  * \brief Function to check the user-authentication system parameters values
+  *\return raises an exception on error
+  */
+  int
+  checkValues();
 };
 #endif
