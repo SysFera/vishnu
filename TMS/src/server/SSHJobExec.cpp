@@ -212,6 +212,9 @@ std::string SSHJobExec::convertBatchTypeToString(BatchType batchType) {
     case SLURM:
       value = "SLURM";
       break;
+    case LSF:
+      value = "LSF";
+      break;
     default:
       value = "UNKNOWN_BATCH_TYPE";
       break;
