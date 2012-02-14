@@ -103,6 +103,9 @@ ObjectIdServer::setAID(string fmt) {
   if (!msession.isAdmin()){
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "define authentication id  format is an admin function. A user cannot call it");
   }
+  if (!containCpt(fmt)) {
+    throw UserException(10, "Invalid format, it does not contain any counter. ");
+  }
   if (fmt.find_first_of('@')!=string::npos) {
     throw UserException(10, "Invalid format, it cannot contain the @ character. ");
   }
