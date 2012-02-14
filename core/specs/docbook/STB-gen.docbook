@@ -62,6 +62,14 @@
               
             <para>Mise à jour de versions manquantes.</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>06</revnumber>
+        <date>14/02/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+              
+            <para>Prise en compte du support de LDAP.</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -406,12 +414,12 @@ de SHA-1.</para>
             <row>
               <entry><para>1.2.6</para></entry>
               <entry><para>Logiciels de gestion de jobs batch supportés</para></entry>
-              <entry><para>- Torque 2.3.6</para><para>- IBM LoadLeveler</para><para>- SLURM 2.2.1</para></entry>
+              <entry><para>- Torque 2.3.6</para><para>- IBM LoadLeveler 3.5.1.14</para><para>- SLURM 2.2.1 (ou 2.2.7)</para></entry>
             </row>
             <row>
               <entry><para>1.2.7</para></entry>
               <entry><para>Logiciels requis</para></entry>
-              <entry><para>SysFera DS, OmniORB, SSH (client/serveur), RSync, Client database (Oracle ou PostGreSQL)</para></entry>
+              <entry><para>SysFera DS, OmniORB, SSH (client/serveur), RSync, Client database (MySQL ou PostGreSQL)</para></entry>
             </row>
             <row>
               <entry><para>1.2.8</para></entry>
@@ -521,17 +529,17 @@ de SHA-1.</para>
             <row>
               <entry><para>1.4.3</para></entry>
               <entry><para>Machine virtuelle Java</para></entry>
-              <entry><para>Java SDK v1.6.0 ou ultérieure</para></entry>
+              <entry><para>Java SDK v1.6.0</para></entry>
             </row>
             <row>
               <entry><para>1.4.4</para></entry>
               <entry><para>Serveur web d'applications</para></entry>
-              <entry><para>JBoss AS 5.1.0 ou ultérieure</para></entry>
+              <entry><para>JBoss AS 5.1.0</para></entry>
             </row>
             <row>
               <entry><para>1.4.5</para></entry>
               <entry><para>Module Web Services</para></entry>
-              <entry><para>Module JBossWS version Stack CXF Server 3.3.1.GA ou ultérieure</para></entry>
+              <entry><para>Module JBossWS version Stack CXF Server 3.3.1.GA</para></entry>
             </row>
             <row>
               <entry><para>1.4.6</para></entry>
@@ -656,22 +664,22 @@ de SHA-1.</para>
             <row>
               <entry><para>2.1</para></entry>
               <entry><para>SSH</para></entry>
-              <entry><para>serveur ssh et client ssh - version minimum</para></entry>
+              <entry><para>Serveur ssh et client ssh - version openSSH 4.2</para></entry>
             </row>
             <row>
               <entry><para>2.1.1</para></entry>
               <entry><para>SSL</para></entry>
-              <entry><para>Open SSL 0.9.8k minimum</para></entry>
+              <entry><para>OpenSSL 0.9.8k</para></entry>
             </row>
             <row>
               <entry><para>2.2</para></entry>
               <entry><para>CORBA</para></entry>
-              <entry><para>OmniORB v4.1.4 minimum</para></entry>
+              <entry><para>OmniORB v4.1.4</para></entry>
             </row>
             <row>
               <entry><para>2.3</para></entry>
               <entry><para>Librairie BOOST C++</para></entry>
-              <entry><para>v1.46 minimum</para></entry>
+              <entry><para>v1.46.1 minimum</para></entry>
             </row>
             <row>
               <entry><para>2.4</para></entry>
@@ -681,27 +689,27 @@ de SHA-1.</para>
             <row>
               <entry><para>2.5</para></entry>
               <entry><para>Logiciels de transferts de fichiers</para></entry>
-              <entry><para>RSync v3.0 ou ultérieure</para></entry>
+              <entry><para>RSync v3.0</para></entry>
             </row>
             <row>
               <entry><para>2.6</para></entry>
               <entry><para>SysFera-DS</para></entry>
-              <entry><para>Une version de SysFera-DS supérieure ou égale à 2.6 et strictement inférieure à la version 3.0 doit être disponible</para></entry>
+              <entry><para>Version 2.8</para></entry>
             </row>
             <row>
               <entry><para>2.7</para></entry>
               <entry><para>Modules SysFera-DS</para></entry>
-              <entry><para>Le module LogService de SysFera-DS devra faire partie de l'installation de SysFera-DS.</para></entry>
+              <entry><para>LogService version 2.8</para></entry>
             </row>
             <row>
               <entry><para>2.8</para></entry>
               <entry><para>Client database</para></entry>
-              <entry><para>- Oracle Database Client 11g (v11.1.0.6 minimum)</para><para>- PostgreSQL client v8.0</para><para>- MySQL v5.1.49</para></entry>
+              <entry><para>- PostgreSQL client v8.0</para><para>- MySQL v5.1.49</para></entry>
             </row>
             <row>
               <entry><para>2.9</para></entry>
               <entry><para>LDAP</para></entry>
-              <entry><para>LDAP version 1.2.4 at least</para></entry>
+              <entry><para>OpenLDAP version 2.4</para></entry>
             </row>
             <row>
               <entry><para>3.</para></entry>
@@ -721,7 +729,7 @@ de SHA-1.</para>
             <row>
               <entry><para>3.3</para></entry>
               <entry><para>SWIG</para></entry>
-              <entry><para>SWIG v1.3.40 minimum</para></entry>
+              <entry><para>SWIG v1.3.40</para></entry>
             </row>
             <row>
               <entry><para>3.4</para></entry>
@@ -731,7 +739,7 @@ de SHA-1.</para>
             <row>
               <entry><para>3.5</para></entry>
               <entry><para>Java</para></entry>
-              <entry><para>JDK 1.6 minimum</para></entry>
+              <entry><para>JDK 1.6</para></entry>
             </row>
             <row>
               <entry><para>3.6</para></entry>
