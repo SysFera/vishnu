@@ -984,13 +984,13 @@ UMSMapper::decodeListUser(vector<int> separator, const string& msg){
     throw UMSVishnuException(ERRCODE_INVALID_PARAM);
   }
 
-  a = ac.getUserId();
+  a = ac->getUserId();
   if(a.compare("")){
     res +=" -u ";
     res +=a;
   }
 
-  a = ac.getAuthSystemId();
+  a = ac->getAuthSystemId();
   if(a.compare("")){
     res +=" -i ";
     res +=a;
