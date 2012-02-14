@@ -217,6 +217,39 @@ TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
     res += " -e ";
     res += u;
   }
+  u = ac->getMailNotification();
+  if (u.compare("")){
+    res += " -M ";
+    res += u;
+  }
+  u = ac->getMailNotifyUser();
+  if (u.compare("")){
+    res += " -u ";
+    res += u;
+  }
+  u = ac->getGroup();
+  if (u.compare("")){
+    res += " -g ";
+    res += u;
+  }
+  u = ac->getWorkingDir();
+  if (u.compare("")){
+    res += " -D ";
+    res += u;
+  }
+  if (ac->isSelectQueueAutom()){
+    res += " -Q  ";
+  }
+  u = ac->getWorkingDir();
+  if (u.compare("")){
+    res += " -D ";
+    res += u;
+  }
+  if(ac->getCriterion()!=NULL) {
+    res += " -L ";
+    res += convertToString((ac->getCriterion())->getLoadType());  
+  }    
+
   u    = msg.substr(separator.at(2)+1, msg.size()-separator.at(2));
   TMS_Data::Job_ptr j = NULL;
 
@@ -229,6 +262,7 @@ TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
     res += " ";
     res += u;
   }
+ 
   return res;
 }
 
@@ -340,6 +374,14 @@ TMSMapper::decodeListJob(vector<int> separator, const string& msg){
   if (u.compare("")){
     res += " -q ";
     res += u;
+  } 
+  u = j->getMultipleStatus();
+  if (u.compare("")){
+    res += " -S ";
+    res += u;
+  }
+  if (j->isBatchJob()){
+    res += " -b ";
   }
   return res;
 }
