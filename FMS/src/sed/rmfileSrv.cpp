@@ -59,6 +59,7 @@ int solveRemoveFile(diet_profile_t* profile) {
       Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
       mapperkey = mapper->code("vishnu_remove_file");
       mapper->code(std::string(host)+":"+std::string(path), mapperkey);
+      mapper->code(std::string(optionsSerialized), mapperkey);
       cmd = mapper->finalize(mapperkey);
 
   // check the sessionKey
