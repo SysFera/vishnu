@@ -669,6 +669,8 @@
 	<para> The <emphasis role = "italic">"There is no session in this terminal"</emphasis> error can be solved by connecting to VISHNU using 
 	  the <emphasis role = "bold">vishnu_connect</emphasis> command.
 	</para>
+	<para> If a message similar to "warning input stream error" happens when calling vishnu_connect but the call is successful, try cleaning the .vishnu directory.
+	</para>
       </section>
     </section>
   </chapter> <!-- PART 1 : VISHNU Presentation -->
