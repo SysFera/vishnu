@@ -19,8 +19,6 @@ line to allow the listing of jobs on all machines
 
 * Fixed bugzilla #326 where with the option -h of connect command did not work 
 
-* Fixed bugzilla #331 : Not a real bug
-
 * Fixed bugzilla #337 : Problem with boost installed in user space
 
 +--------------+
