@@ -19,6 +19,8 @@ line to allow the listing of jobs on all machines
 
 * Fixed bugzilla #326 where with the option -h of connect command did not work 
 
+* Fixed bugzilla #337 with boost installed in user space include problem
+
 +--------------+
 | VISHNU 1.2.6 |
 +--------------+
