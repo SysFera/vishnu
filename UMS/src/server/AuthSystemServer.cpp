@@ -159,7 +159,7 @@ AuthSystemServer::update() {
 
             std::string type = getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'", "authtype");
             //If the authentication system is not an ldap type
-            if (convertToInt(type) != mauthsystem->getType() == LDAPTYPE) {
+            if (convertToInt(type) != LDAPTYPE) {
               UMSVishnuException e (ERRCODE_INVALID_PARAM, "The ldap base option is incompatible with the user"
               " authentication system type");
               throw e;
