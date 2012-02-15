@@ -65,7 +65,7 @@
         <revdescription>
 	    
 	    
-          <para>Modified UserList (added structure ListUsersOptions)</para><para> Added Services: SystemAuthenticationCreate, SystemAuthenticationUpdate, SystemAuthenticationDelete, 
+          <para> Added LDAP support. Modified UserList (added structure ListUsersOptions)</para><para> Added Services: SystemAuthenticationCreate, SystemAuthenticationUpdate, SystemAuthenticationDelete, 
 		   SystemAuthenticationList, AccountAuthCreate, AccountAuthUpdate, AccountAuthDelete, AccountAuthList.
 	    </para></revdescription>
       </revision>
@@ -209,7 +209,10 @@
 	    </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">LDAP</emphasis> is an external component used for authentication.
+            <para><emphasis role="bold">LDAP</emphasis> is an external component used for authentication. It can be used in order to extend the UMS database authentication. 
+	    A user authentication can be achieved using the UMS database only, LDAP systems only, or a combination of the UMS database and one or several LDAPs. 
+
+
 	    </para>
           </listitem>
         </itemizedlist>
