@@ -203,5 +203,6 @@ LDAPProxy::bind() {
 }
 
 LDAPProxy::~LDAPProxy() {
-  ldap_unbind_ext_s ( mld, NULL, NULL );
+  //TODO: faire un unbind à la fin
+  //ldap_unbind_ext_s ( mld, NULL, NULL );
 }

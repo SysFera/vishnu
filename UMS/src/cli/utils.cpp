@@ -502,7 +502,6 @@ operator<<(std::ostream& os, const UMS_Data::AuthAccount_ptr& authAccount) {
 std::ostream&
 operator<<(std::ostream& os, UMS_Data::ListAuthAccounts& lsAuthAccounts) {
 
-  //#if 0
   size_t maxAuthAccountIdSize = std::string("authAccountId").size();
   size_t maxUserIdSize = std::string("userId").size();
   size_t maxAcLoginSize = std::string("acLogin").size();
@@ -540,7 +539,7 @@ operator<<(std::ostream& os, UMS_Data::ListAuthAccounts& lsAuthAccounts) {
     os << endl;
   }
 
-//#endif
+ return os;
 
 }
 
