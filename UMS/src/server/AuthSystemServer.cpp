@@ -143,16 +143,33 @@ AuthSystemServer::update() {
         }
 
         //if a password encryption method has been defined
-        if (mauthsystem->getUserPasswordEncryption() != 0) {
+        if (mauthsystem->getUserPasswordEncryption() != UNDEFINED_VALUE) {
         sqlCommand.append("UPDATE authsystem SET userpwdencryption='"+convertToString(mauthsystem->getUserPasswordEncryption())+"'"
         " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");
         }
 
         //if a type has been defined
-        if (mauthsystem->getType() != 0) {
+        if (mauthsystem->getType() != UNDEFINED_VALUE) {
         sqlCommand.append("UPDATE authsystem SET authtype='"+convertToString(mauthsystem->getType())+"'"
         " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");
         }
+
+        //If an ldap base has been defined
+        if (mauthsystem->getLdapBase().size() != 0) {
+
+            std::string type = getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'", "authtype");
+            //If the authentication system is not an ldap type
+            if (convertToInt(type) != mauthsystem->getType() == LDAPTYPE) {
+              UMSVishnuException e (ERRCODE_INVALID_PARAM, "The ldap base option is incompatible with the user"
+              " authentication system type");
+              throw e;
+            }
+
+            sqlCommand.append("UPDATE ldapauthsystem SET ldapbase='"+mauthsystem->getLdapBase()+"'"
+            " where authsystem_authsystemid IN (SELECT numauthsystemid from authsystem where authsystemid='"+mauthsystem->getAuthSystemId()+"');");
+
+          }
+
 
         //if a new status has been defined
         if (mauthsystem->getStatus() != UNDEFINED_VALUE) {
