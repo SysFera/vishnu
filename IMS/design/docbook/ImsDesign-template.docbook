@@ -36,7 +36,7 @@
       </revision>
       <revision>
         <revnumber>3</revnumber>
-        <date>16/12/2011</date>
+        <date>16/02/2012</date>
         <authorinitials>SysFera</authorinitials>
         <revdescription>
           <para>New service defineAuthIdentifier</para>
