@@ -811,19 +811,17 @@ vishnu::addAuthSystem(const std::string& sessionKey, UMS_Data::AuthSystem& newAu
 
   std::cout << "LdapBase "  << newAuthSys.getLdapBase() << "\n";
 
-  if (newAuthSys.getType()<-1 || newAuthSys.getType()>0){
+  if (newAuthSys.getType() != LDAPTYPE){
     throw UMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE, "Invalid type");
   }
 
-  if (newAuthSys.getType()==0 && (string(newAuthSys.getLdapBase()).size()==0)){
+  if (newAuthSys.getType()==LDAPTYPE && (string(newAuthSys.getLdapBase()).size()==0)){
     throw UMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE, "Missing ldap base");
   }
 
-  if (newAuthSys.getUserPasswordEncryption()<=-1 ||
-      newAuthSys.getUserPasswordEncryption()>0 ){
+  if (newAuthSys.getUserPasswordEncryption() != SSHA_METHOD ){
     throw UMSVishnuException(ERRCODE_UNKNOWN_ENCRYPTION_METHOD, "Invalid encryption method");
   }
-
 
   checkIfTextIsEmpty(newAuthSys.getName(), "The authentication name is empty", ERRCODE_INVALID_PARAM);
   checkIfTextIsEmpty(newAuthSys.getURI(), "The authentication item is empty", ERRCODE_INVALID_PARAM);

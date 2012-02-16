@@ -32,11 +32,11 @@ struct ListAuthenticationAccountsFunc {
     int res =  listAuthAccounts(sessionKey,mlsAuthAccounts,mlistOptions);
     // Display the list
     if(mfull) {
-      //cout << mlsAuthAccounts << endl;
+      cout << mlsAuthAccounts << endl;
     }
     else {
       for(unsigned int i = 0; i < mlsAuthAccounts.getAuthAccounts().size(); i++) {
-        //cout << mlsAuthAccounts.getAuthAccounts().get(i) ;
+        cout << mlsAuthAccounts.getAuthAccounts().get(i) ;
       }
     }
 

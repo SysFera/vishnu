@@ -34,6 +34,14 @@
           <para>Replace all Oracle occurrences by MySQL</para>
         </revdescription>
       </revision>
+      <revision>
+        <revnumber>3</revnumber>
+        <date>16/02/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>New service defineAuthIdentifier</para>
+        </revdescription>
+      </revision>
 
     </revhistory>
     </info>

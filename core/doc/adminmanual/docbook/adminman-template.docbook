@@ -327,7 +327,7 @@
           <para>Dépendances requises pour le module TMS:</para>
           <itemizedlist>
             <listitem>
-              <para>Torque API v3.2.6</para>
+              <para>Torque API v2.3.6</para>
             </listitem>
             <listitem>
               <para>IBM LoadLeveler API</para>
