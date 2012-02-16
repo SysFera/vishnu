@@ -42,6 +42,7 @@ static const std::string LIST_JOBS_ON_MACHINES_KEYWORD="all";
 
 static const int UNDEFINED_VALUE=-1;
 static const int LDAPTYPE=0;
+static const int SSHA_METHOD=0;
 static const int ACTIVE_STATUS=1;
 /**
 * \brief Function to encrypt data and password

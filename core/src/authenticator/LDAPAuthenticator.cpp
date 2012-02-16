@@ -13,6 +13,11 @@
 #include "boost/archive/iterators/transform_width.hpp"
 #include <openssl/sha.h>
 #include "ldap/LDAPProxy.hpp"
+#include "DatabaseResult.hpp"
+#include "DbFactory.hpp"
+#include "utilVishnu.hpp"
+#include "UMSVishnuException.hpp"
+
 
 using namespace std;
 using namespace boost::archive::iterators;
@@ -59,24 +64,84 @@ LDAPAuthenticator::~LDAPAuthenticator(){
 bool
 LDAPAuthenticator::authenticate(UMS_Data::User& user) {
   bool authenticated = false;
-  LDAPMessage *searchResult;
+  std::string uri, authlogin, authpassword, ldapbase, userpwdencryption, userid, pwd;
 
-  LDAPProxy ldapPoxy("ldap://127.0.0.1:389/",
-                      "cn=ldapadmin,dc=edf,dc=fr",
+  DbFactory factory;
+  Database* databaseVishnu = factory.getDatabaseInstance();
+
+  //TODO: rajouter le status et vérifier le status (authsystem not locked)
+  std::string sqlCommand = "SELECT uri, authlogin, authpassword, ldapbase, userpwdencryption, userid, pwd"
+                           " FROM ldapauthsystem, authsystem, authaccount, users "
+                           "where aclogin='"+user.getUserId()+"' and authsystem.authtype="+vishnu::convertToString(LDAPTYPE)
+                           +" and authaccount.authsystem_authsystemid=authsystem.numauthsystemid and "
+                            "ldapauthsystem.authsystem_authsystemid=authsystem.numauthsystemid and "
+                            "authaccount.users_numuserid=users.numuserid";
+
+  boost::scoped_ptr<DatabaseResult> result(databaseVishnu->getResult(sqlCommand.c_str()));
+
+  //If there is no results
+  if (result->getNbTuples() == 0) {
+    UMSVishnuException e (ERRCODE_UNKNOWN_USERID, "There is no user-authentication account declared in VISHNU with this identifier");
+    throw e;
+  }
+
+  std::vector<std::string> tmp;
+  std::vector<std::string>::iterator ii;
+  for (int i = 0; i < static_cast <int> (result->getNbTuples()); ++i) {
+    LDAPMessage *searchResult;
+    tmp.clear();
+    tmp = result->get(i);
+
+    ii=tmp.begin();
+    uri = *ii;
+    std::cout << "uri:" << uri << std::endl; ii++;
+    authlogin = *ii;
+    std::cout << "authlogin:" << authlogin << std::endl; ii++;
+    authpassword = *ii;
+    std::cout << "authpassword:" << authpassword << std::endl; ii++;
+    ldapbase = *ii;
+    std::cout << "ldapbase:" << ldapbase << std::endl; ii++;
+    userpwdencryption = *ii;
+    //TODO: faire une fonction pour vérifier le type d'encryption
+    std::cout << "userpwdencryption:" << userpwdencryption << std::endl; ii++;
+    userid = *ii;
+    std::cout << "userid:" << userid << std::endl; ii++;
+    pwd = *ii;
+    std::cout << "pwd:" << pwd << std::endl;
+    std::cout << std::endl;
+    /*LDAPProxy ldapPoxy("ldap://127.0.0.1:389/",
+                    "cn=ldapadmin,dc=edf,dc=fr",
+                    "",
+                    "secret");
+    */
+    //TODO: Faire un try catch pour tester les différents systèmes d'authentification
+    try {
+      LDAPProxy ldapPoxy(uri,
+                      authlogin,
                       "",
-                      "secret");
+                      authpassword);
+      ldapPoxy.connectLDAP();
+      ldapPoxy.searchLDAP(ldapbase,
+                          string("uid=").append(user.getUserId()),
+                          &searchResult);
 
-  ldapPoxy.connectLDAP();
-  ldapPoxy.searchLDAP("dc=edf,dc=fr",
-                      string("uid=").append(user.getUserId()),
-                      &searchResult);
-
-  if (ldapPoxy.hasResults(&searchResult)) {
-      if (checkPassword(ldapPoxy.getUserPassword(&searchResult),user.getPassword())) {
-        authenticated = true;
+      if (ldapPoxy.hasResults(&searchResult)) {
+          if (checkPassword(ldapPoxy.getUserPassword(&searchResult),user.getPassword())) {
+            authenticated = true;
+            user.setUserId(userid);
+            user.setPassword(pwd);
+            ldap_msgfree(searchResult);
+            return authenticated;
+        }
+      }
+      ldap_msgfree(searchResult);
+    }
+    catch (UMSVishnuException& e) {
+      if (e.getMsgI() != ERRCODE_UNKNOWN_USER) {
+        throw e;
+      }
     }
   }
-  ldap_msgfree(searchResult);
 
   return authenticated;
 }

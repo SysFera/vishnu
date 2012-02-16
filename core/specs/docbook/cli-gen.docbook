@@ -458,7 +458,8 @@
         <cmdsynopsis><command>vishnu_connect_m</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-p <replaceable>closePolicy</replaceable></option></arg><arg
               choice="opt"><option>-d <replaceable>sessionInactivityDelay</replaceable></option></arg><arg
-              choice="opt"><option>-s <replaceable>substituteUserId</replaceable></option></arg></cmdsynopsis>
+              choice="opt"><option>-s <replaceable>substituteUserId</replaceable></option></arg><arg
+              choice="plain"><replaceable>userId</replaceable></arg><arg choice="plain"><replaceable>pwd</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -502,6 +503,20 @@
                 <entry><para>s</para></entry>
                 <entry><para>is an admin option which allows an admin to open a session as if she was another user identified by her userId</para></entry>
                 <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>userId represents the VISHNU user identifier. There may be various users id used set alternatively with the corresponding password.</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>pwd</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>represents the password of the user. There may be various password used set alternatively with the corresponding userId.</para></entry>
+                <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -613,7 +628,8 @@
         <para>The vishnu_reconnect_m command reconnects to a session that is still active by trying multiple couples (userId, password) each in turn</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_reconnect_m</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>sessionId</replaceable></arg></cmdsynopsis>
+              choice="plain"><replaceable>sessionId</replaceable></arg><arg choice="plain"><replaceable>userId</replaceable></arg><arg
+              choice="plain"><replaceable>pwd</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -642,6 +658,20 @@
                 <entry><para>string</para></entry>
                 <entry/>
                 <entry><para>sessionId is the identifier of the session defined in the database</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>userId represents the VISHNU user identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>pwd</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>represents the password of the user</para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>
