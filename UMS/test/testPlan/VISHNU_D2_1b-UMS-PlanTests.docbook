@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
 <book lang="fr-FR">
-  <?ooogenerator OpenOffice.org/3.2$Linux OpenOffice.org_project/320m12$Build-9483?>
+  <?ooogenerator OpenOffice.org/3.2$Linux OpenOffice.org_project/320m19$Build-9505?>
   <?oooversion 3.2$Linux?>
   <bookinfo>
     <title> </title>
-    <date>2011-12-15T16:44:17</date>
+    <date>2012-02-02T15:54:56</date>
     <keywordset/>
     <confgroup/>
   </bookinfo>
@@ -191,6 +191,12 @@
         <listitem>
           <para>Catégorie 4 : regroupe les fonctionnalités permettant la gestion des machines qui sont : <emphasis>addMachine, updateMachine, deleteMachine et listMachines.</emphasis></para>
         </listitem>
+        <listitem>
+          <para>Catégorie 5 : regroupe les fonctionnalités permettant la gestion des systèmes d'authentification utilisateurs qui sont :<emphasis> add</emphasis><emphasis>AuthenticationSystem</emphasis><emphasis>, update</emphasis><emphasis>AuthenticationSystem</emphasis><emphasis>, delete</emphasis><emphasis>AuthenticationSystem</emphasis><emphasis> et list</emphasis><emphasis>AuthenticationSystem</emphasis><emphasis>.</emphasis></para>
+        </listitem>
+        <listitem>
+          <para>Catégorie 6 : regroupe les fonctionnalités permettant la gestion des configurations associés aux systèmes d'authentification utilisateurs  :<emphasis> add</emphasis><emphasis>AuthAccount</emphasis><emphasis>, update</emphasis><emphasis>AuthAccount</emphasis><emphasis>, delete</emphasis><emphasis>AuthAccount</emphasis><emphasis> et listAuthAccounts</emphasis><emphasis>.</emphasis></para>
+        </listitem>
       </itemizedlist>
       <para>Nous allons dans cette section présenter les différentes stratégies de tests en utilisant des programmes exécutables ou des fonctions de l'API UMS puis en observant les résultats obtenus. Les deux conditions à vérifier sont :</para>
       <itemizedlist>
@@ -249,7 +255,7 @@
                   <?border-left 0.002cm solid #000000?>
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
-                      <para><emphasis role="strong">Cas de test</emphasis> : les paramètres sont corrects et enregistrés dans la base de données.</para>
+                      <para><emphasis role="strong">Cas de test</emphasis> 1: les paramètres sont corrects et enregistrés dans la base de données.</para>
                     </listitem>
                     <listitem>
                       <para>Vérifier qu'il n'y a aucune session ouverte sur la machine de test. Sinon désactiver la session ouverte.</para>
@@ -293,12 +299,23 @@
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <para><emphasis role="strong">Cas de test</emphasis> : utilisation du fichier .netrc. Les paramètres du fichier .netrc sont corrects et enregistrés dans la base de données.</para>
+                      <para>Cas 1 : Connect avec userId et mot de passe vides</para>
                     </listitem>
                     <listitem>
                       <para>Vérifier qu'il n'y a aucune session ouverte sur la machine de test. Sinon désactiver la session ouverte.</para>
                     </listitem>
                     <listitem>
-                      <para>Lancer le programme <emphasis>connect</emphasis> sans donner en entrée le userId (login) et le mot de passe de l'utilisateur (ou donner des chaînes vides si c'est l'interface C++ ou Python qui est utilisées). </para>
+                      <para>Lancer le programme <emphasis>connect</emphasis> sans donner en entrée le userId <phrase id="__DdeLink__4608_337821222"/>(login) et le mot de passe de l'utilisateur (ou donner des chaînes vides si c'est l'interface C++ ou Python qui est utilisées). </para>
+                    </listitem>
+                    <listitem>
+                      <para>Un certificat de session est créé et envoyé à l'utilisateur. Lancer la commande <emphasis>listSessions</emphasis><emphasis> </emphasis>avec la valeur du certificat retourné. Si le certificat est valide, l'exécution de <emphasis>listSessions</emphasis> réussit donc la connexion est validée.</para>
+                      <para>Cas 2 : Connect avec une liste de couples (userId, mot de passe)</para>
+                    </listitem>
+                    <listitem>
+                      <para><emphasis role="strong"/>Vérifier qu'il n'y a aucune session ouverte sur la machine de test. Sinon désactiver la session ouverte.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer le programme <emphasis>connect</emphasis> avec une liste de couples userId (login)/ mot de passe et au moins un couple enregistré dans la base de données.</para>
                     </listitem>
                     <listitem>
                       <para>Un certificat de session est créé et envoyé à l'utilisateur. Lancer la commande <emphasis>listSessions</emphasis><emphasis> </emphasis>avec la valeur du certificat retourné. Si le certificat est valide, l'exécution de <emphasis>listSessions</emphasis> réussit donc la connexion est validée.</para>
@@ -368,6 +385,9 @@
                         </listitem>
                         <listitem>
                           <para>Cas E7 : le mot de passe n'est pas défini dans le fichier .netrc. </para>
+                        </listitem>
+                        <listitem>
+                          <para>Cas E8 : Aucun couple dans la liste de couple (userId, mot de passe) n'est présent dans la base de données.</para>
                           <para/>
                         </listitem>
                       </itemizedlist>
@@ -376,7 +396,7 @@
                       <para>Vérifier qu'il n'y a aucune session ouverte sur la machine de test. Sinon désactiver la session ouverte.</para>
                     </listitem>
                     <listitem>
-                      <para>Lancer le programme <emphasis>connect </emphasis>avec le cas de test correspondant (E1, E2, E3, E4, E5, E6, E7)</para>
+                      <para>Lancer le programme <emphasis>connect </emphasis>avec le cas de test correspondant (E1, E2, E3, E4, E5, E6, E7, E8).</para>
                       <para/>
                     </listitem>
                     <listitem>
@@ -439,7 +459,7 @@
                       <para>Un certificat de session est créé et envoyé à l'utilisateur.</para>
                     </listitem>
                     <listitem>
-                      <para>Lancer la commande <emphasis>listSessions</emphasis><emphasis> </emphasis>avec la valeur du certificat retourné. Si le certificat est valide, l'exécution de <emphasis>listSessions</emphasis> réussit (Cici permet de vérifier que la session a été correctement ouverte).</para>
+                      <para>Lancer la commande <emphasis>listSessions</emphasis><emphasis> </emphasis>avec la valeur du certificat retourné. Si le certificat est valide, l'exécution de <emphasis>listSessions</emphasis> réussit (Ceci permet de vérifier que la session a été correctement ouverte).</para>
                     </listitem>
                   </orderedlist>
                   <para><emphasis role="strong">Pour le cas B1 </emphasis>:</para>
@@ -589,6 +609,7 @@
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <para><emphasis role="strong">Cas de test</emphasis> : utilisation du fichier .netrc. Les paramètres du fichier .netrc sont corrects et enregistrés dans la base de données.</para>
+                      <para>Cas 1 : Reconnect avec userId et mot de passe vides</para>
                     </listitem>
                     <listitem>
                       <para>Lancer le programme<emphasis role="strong"> </emphasis><emphasis>connect</emphasis> dans deux environnements capables de se connecter à VISHNU pour avoir deux identifiants de session dans la base de données par le même utilisateur.</para>
@@ -598,6 +619,19 @@
                     </listitem>
                     <listitem>
                       <para>Essayer de se reconnecter sans login et sans mot de passe en utilisant l'identifiant de session de l'autre environnement.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Vérifier que la reconnexion s'est bien passée dans les deux environnements.</para>
+                      <para>Cas 2 : Reconnect avec une liste de couples (userId, mot de passe)</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer le programme<emphasis role="strong"> </emphasis><emphasis>connect</emphasis> dans deux environnements capables de se connecter à VISHNU pour avoir deux identifiants de session dans la base de données par le même utilisateur.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Faire un <emphasis role="strong"/><emphasis>listSessions </emphasis>dans chacun des environnements et récupérer l'identifiant de session.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Essayer de se reconnecter en utilisant une liste de couples userId (login)/ mot de passe et au moins un couple enregistré dans la base de données.</para>
                     </listitem>
                     <listitem>
                       <para>Vérifier que la reconnexion s'est bien passée dans les deux environnements.</para>
@@ -644,6 +678,7 @@
                       <para>Cas 5 : la machine vishnu est introuvable dans le fichier .netrc.</para>
                       <para>Cas 6 : le login n'est pas défini ou ne précède pas le mot de passe dans le fichier .netrc.</para>
                       <para>Cas 7 : le mot de passe n'est pas défini dans le fichier .netrc. </para>
+                      <para>Cas 8 : Aucun couple dans la liste de couple (userId, mot de passe) n'est présent dans la base de données.</para>
                       <para/>
                     </listitem>
                     <listitem>
@@ -694,7 +729,6 @@
                     </listitem>
                     <listitem>
                       <para>Désactiver les sessions ouvertes en utilisant plusieurs fois la commande <emphasis>close</emphasis> </para>
-                      <para/>
                     </listitem>
                   </orderedlist>
                 </entry>
@@ -818,7 +852,7 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
-                  <para>UA5.2-B:listSessions</para>
+                  <para>UA5.1-B:listSessions</para>
                 </entry>
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
@@ -859,7 +893,7 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
-                  <para>UA5.2-E:listSessions</para>
+                  <para>UA5.1-E:listSessions</para>
                 </entry>
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
@@ -1089,7 +1123,6 @@
                     </listitem>
                     <listitem>
                       <para>Désactiver la session courante à l'aide de la commande<emphasis> close.</emphasis></para>
-                      <para/>
                     </listitem>
                   </orderedlist>
                 </entry>
@@ -1270,7 +1303,6 @@
                     </listitem>
                     <listitem>
                       <para>Lancer le programme <emphasis>listUsers</emphasis> pour vérifier que l'utilisateur n'existe plus dans la liste.</para>
-                      <para/>
                     </listitem>
                   </orderedlist>
                 </entry>
@@ -1296,19 +1328,15 @@
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
                   <orderedlist continuation="restarts" numeration="arabic">
-                    <listitem>
-                      <para><emphasis role="strong">Cas de test</emphasis> : paramètres non valides</para>
-                      <para/>
-                      <orderedlist continuation="restarts" numeration="arabic">
-                        <listitem>
-                          <para>Cas E1 : le nom de l'utilisateur est inconnu</para>
-                        </listitem>
-                        <listitem>
-                          <para>Cas E2 : l'utilisateur n'est pas un administrateur VISHNU</para>
-                          <para/>
-                        </listitem>
-                      </orderedlist>
-                    </listitem>
+                    <orderedlist continuation="restarts" numeration="arabic">
+                      <listitem>
+                        <para>Cas E1 : le nom de l'utilisateur est inconnu</para>
+                      </listitem>
+                      <listitem>
+                        <para>Cas E2 : l'utilisateur n'est pas un administrateur VISHNU</para>
+                        <para/>
+                      </listitem>
+                    </orderedlist>
                     <listitem>
                       <para>Lancer le programme <emphasis role="strong">delete</emphasis><emphasis>User</emphasis> avec les paramètres correspondant à chaque cas.</para>
                       <para/>
@@ -1334,7 +1362,7 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
-                  <para>U4.3-B:listUser</para>
+                  <para>UA5.2-B:listUser</para>
                 </entry>
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
@@ -1366,7 +1394,6 @@
                     </listitem>
                     <listitem>
                       <para>Désactiver la session courante à l'aide de la commande<emphasis> close.</emphasis></para>
-                      <para/>
                     </listitem>
                   </orderedlist>
                 </entry>
@@ -1385,8 +1412,8 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
-                  <para>U4.3-E1:listUser</para>
-                  <para>U4.3-E2:listUser</para>
+                  <para>UA5.2-E1:listUser</para>
+                  <para>UA5.2-E2:listUser</para>
                 </entry>
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
@@ -1453,7 +1480,6 @@
                     </listitem>
                     <listitem>
                       <para>Vérifier que le changement a été bien effectuer en lançant la commande <emphasis>connect</emphasis> avec l'identifiant de l'utilisateur et son nouveau mot de passe. </para>
-                      <para/>
                     </listitem>
                   </orderedlist>
                 </entry>
@@ -1698,7 +1724,7 @@
                       </orderedlist>
                     </listitem>
                     <listitem>
-                      <para>Lancer le programme <emphasis role="strong">addLOcalAccount</emphasis> avec les paramètres correspondant à chaque cas.</para>
+                      <para>Lancer le programme <emphasis role="strong">addLocalAccount</emphasis> avec les paramètres correspondant à chaque cas.</para>
                       <para/>
                     </listitem>
                     <listitem>
@@ -2327,7 +2353,7 @@
         </informaltable>
       </section>
       <section>
-        <title>Tests de catégorie 4 </title>
+        <title>Tests de catégorie 4</title>
         <informaltable>
           <tgroup cols="4">
             <colspec colname="c1" colwidth="3cm"/>
@@ -2477,7 +2503,7 @@
                       <para>-Cas E1 : aucune session n'est ouverte</para>
                     </listitem>
                     <listitem>
-                      <para>Lancer la commande <emphasis>update</emphasis><emphasis>Machine</emphasis></para>
+                      <para>Lancer la commande <emphasis>updateMachine</emphasis></para>
                     </listitem>
                     <listitem>
                       <para>Son exécution échoue </para>
@@ -2545,7 +2571,7 @@
                       <para>-Cas E1 : l'identifiant de la machine n'existe pas</para>
                     </listitem>
                     <listitem>
-                      <para>Lancer la commande <emphasis>delete</emphasis><emphasis>Machine</emphasis></para>
+                      <para>Lancer la commande <emphasis>deleteMachine</emphasis></para>
                     </listitem>
                     <listitem>
                       <para>Son exécution échoue </para>
@@ -2610,10 +2636,622 @@
                       <para>-Cas E1 : aucune session n'est ouverte</para>
                     </listitem>
                     <listitem>
-                      <para>Lancer la commande <emphasis>list</emphasis><emphasis>Machine</emphasis><emphasis>s</emphasis></para>
+                      <para>Lancer la commande <emphasis>listMachines</emphasis></para>
                     </listitem>
                     <listitem>
                       <para>Son exécution échoue </para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Un message d'erreur est affiché correspondant au cas d'erreur</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>Tests de catégorie 5</title>
+        <informaltable>
+          <tgroup cols="4">
+            <colspec colname="c1" colwidth="3cm"/>
+            <colspec colname="c2" colwidth="7.9cm"/>
+            <colspec colname="c3" colwidth="3.4cm"/>
+            <colspec colname="c4" colwidth="2.8cm"/>
+            <tbody>
+              <row>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Identifiant de tests</para>
+                </entry>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Actions</para>
+                </entry>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Résultats</para>
+                </entry>
+                <entry>
+                  <?border 0.002cm solid #000000?>
+                  <para>Considérations particulières</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>UA8-B:addAuthenticationSystem, </para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>list</emphasis><emphasis>AuthenticationSystem</emphasis><emphasis> </emphasis>et enregistrer le nombre de systèmes d'authentification utilisateurs déjà enregistrés.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <phrase id="__DdeLink__4270_13030205921"/><emphasis>add</emphasis><emphasis>AuthenticationSystem</emphasis><emphasis> </emphasis>avec le nom du système d'authentification, son adresse de connexion et les autres paramètres nécessaires.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>list</emphasis><emphasis>AuthenticationSystem</emphasis><emphasis> </emphasis>pour vérifier l'ajout du système d'authentification utilisateurs.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>La nouveau système d'authentification utilisateurs est ajouté dans VISHNU.</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>UA8-E1:addAuthenticationSystem</para>
+                  <para>UA8-E2:addAuthenticationSystem</para>
+                  <para>UA8-E3:addAuthenticationSystem</para>
+                  <para>UA8-E4:addAuthenticationSystem</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>add</emphasis><emphasis>AuthenticationSystem </emphasis>avec les cas précédents et vérifier que son exécution échoue. </para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>-Un message d'erreur est affiché</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>UA8.1-B:updateAuthenticationSystem</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>list</emphasis><emphasis>AuthenticationSystem </emphasis>avec l'option -f permettant d'avoir toutes les informations sur une machine.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>update</emphasis><emphasis>AuthenticationSystem </emphasis>avec l'identifiant du système d'authentification et l'information à mettre jour.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>list</emphasis><emphasis>AuthenticationSystem</emphasis><emphasis> </emphasis>pour vérifier la mise à jour de l'information.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Les informations sur le système d'authentification ont été mises à jour</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>UA8.1-E1:updateAuthenticationSystem</para>
+                  <para>UA8.1-E2:updateAuthenticationSystem</para>
+                  <para>UA8.1-E3:updateAuthenticationSystem</para>
+                  <para>UA8.1-E4:updateAuthenticationSystem</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>update</emphasis><emphasis>AuthenticationSystem </emphasis>et vérifier que son exécution échoue. </para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Un message d'erreur est affiché</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>UA8.2-B:deleteAuthenticationSystem</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>list</emphasis><emphasis>AuthenticationSystem</emphasis> et récupérer dans la liste l'identifiant du système d'authentification à supprimer.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>delete</emphasis><emphasis>AuthenticationSystem</emphasis><emphasis role="strong"> </emphasis>avec l'identifiant du système d'authentification à supprimer de l'étape précédente.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>listAuthenticationSystem</emphasis> pour vérifier que le système d'authentification utilisateurs n'existe plus dans la liste.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Le système d'authentification est supprimée dans VISHNU.</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>UA8.2-E1:deleteAuthenticationSystem</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>delete</emphasis><emphasis>AuthenticationSystem </emphasis>et vérifier que<emphasis> s</emphasis>on exécution échoue. </para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Un message d'erreur est affiché correspondant au cas d'erreur</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>U5-B:listAuthenticationSystem</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande avec l'option -a pour avoir la liste de tous les systèmes d'authentification utilisateurs</para>
+                    </listitem>
+                    <listitem>
+                      <para>Inspecter la base de données pour vérifier que le nombre retourné par la commande <emphasis>list</emphasis><emphasis>AuthenticationSystem</emphasis> est égal au nombre de systèmes d'authentification utilisateurs dans la base de données</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>La liste des systèmes d'authentification utilisateur est affichée</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>U5-E1:listAuthenticationSystem</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>list</emphasis><emphasis>AuthenticationSystem </emphasis>et vérifier que son exécution échoue </para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Un message d'erreur est affiché correspondant au cas d'erreur</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>Tests de catégorie 6</title>
+        <informaltable>
+          <tgroup cols="4">
+            <colspec colname="c1" colwidth="3cm"/>
+            <colspec colname="c2" colwidth="7.9cm"/>
+            <colspec colname="c3" colwidth="3.4cm"/>
+            <colspec colname="c4" colwidth="2.8cm"/>
+            <tbody>
+              <row>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Identifiant de tests</para>
+                </entry>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Actions</para>
+                </entry>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Résultats</para>
+                </entry>
+                <entry>
+                  <?border 0.002cm solid #000000?>
+                  <para>Considérations particulières</para>
+                </entry>
+              </row>
+              <row>
+                <entry align="justify">
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>U6-B1: addAuthAccount</para>
+                  <para>U6-B2: addAuthAccount</para>
+                </entry>
+                <entry align="left">
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para><emphasis role="strong">Cas de test B1</emphasis>: paramètres valides avec un utilisateur sans privilège d'administration.</para>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>listAuthAccounts</emphasis><emphasis> </emphasis>et enregistrer les configurations d'authentification. </para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>addAuthAccount </emphasis>avec l'identifiant du système d'authentification utilisateur auquel la configuration sera rattachée et l'identifiant (uid) du compte utilisateur dans le système d'authentification précédent. </para>
+                    </listitem>
+                    <listitem>
+                      <para>Vérifier qu'une nouvelle configuration a été ajoutée à l'aide de la commande <emphasis>listAuthAccounts </emphasis><emphasis/>et la liste enregistrée précédemment.</para>
+                    </listitem>
+                  </orderedlist>
+                  <para><emphasis role="strong">Cas de test B2</emphasis>: paramètres valides et l'utilisateur est un administrateur.</para>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>listAuthAccounts</emphasis><emphasis> </emphasis>avec l'option -u<emphasis> </emphasis>et l'identifiant de l'utilisateur dont on veut définir une configuration pour l'authentification, puis enregistrer les configurations associées à l'utilisateur. </para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>addAuthAccount </emphasis>avec l'identifiant du système d'authentification utilisateurs auquel la configuration sera rattachée, l'identifiant (uid) du compte utilisateur dans le système d'authentification précédent et l'identifiant de l'utilisateur auquel la configuration sera rajoutée. </para>
+                    </listitem>
+                    <listitem>
+                      <para>Vérifier qu'une nouvelle configuration a été ajoutée à l'aide de la commande <emphasis>listAuthAccounts </emphasis>avec l'option -u suivie l'identifiant de l'utilisateur précédent<emphasis> </emphasis>et la liste enregistrée précédemment.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Une nouvelle configuration a été créée pour l'utilisateur donné</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>U6-E1:addAuthAccount</para>
+                  <para>U6- E2:addAuthAccount</para>
+                  <para>U6-E3:addAuthAccount</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para><emphasis role="strong">Cas de test</emphasis> : paramètres non valides</para>
+                  <para>- Cas E1 : l'identifiant du système d'authentification est inconnu</para>
+                  <para>- Cas E2 : l'identifiant de l'utilisateur est inconnu</para>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <orderedlist continuation="restarts" numeration="arabic"/>
+                      <para/>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer le programme <emphasis>addAuthAccount</emphasis> avec les paramètres correspondant à chaque cas et vérifier que son exécution échoue.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>U6.1-B1:updateAuthAccount</para>
+                  <para>U6.1-B2:updateAuthAccount</para>
+                </entry>
+                <entry align="left">
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para><emphasis role="strong">Cas de test B1</emphasis>: paramètres valides avec un utilisateur sans privilège d'administration.</para>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>listAuthAccounts</emphasis><emphasis> </emphasis>et enregistrer les configurations d'authentification. </para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>update</emphasis><emphasis>AuthAccount </emphasis>avec l'identifiant du système d'authentification et le nouvel identifiant (uid) du compte utilisateur dans le système d'authentification précédent. </para>
+                    </listitem>
+                    <listitem>
+                      <para>Vérifier que la configuration précédente a été modifiée à l'aide de la commande <emphasis>listAuthAccounts </emphasis>avec l'option -i et l'identifiant du système d'authentification de l'étape 2.</para>
+                    </listitem>
+                  </orderedlist>
+                  <para><emphasis role="strong">Cas de test B2</emphasis>: paramètres valides et l'utilisateur est un administrateur.</para>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>listAuthAccounts</emphasis><emphasis> </emphasis>avec l'option -u<emphasis> </emphasis>et l'identifiant de l'utilisateur dont on veut modifier une configuration pour l'authentification, puis enregistrer les configurations associées à l'utilisateur. </para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>updateAuthAccount </emphasis>avec l'identifiant du système d'authentification utilisateur auquel la configuration sera rattachée, et l'option -l avec le nouvel identifiant (uid) du compte utilisateur dans le système d'authentification précédent et l'option -u avec l'identifiant de l'utilisateur dont la configuration sera modifiée. </para>
+                    </listitem>
+                    <listitem>
+                      <para>Vérifier la configuration correspondante a été modifiée à l'aide de la commande <emphasis>listAuthAccounts </emphasis>avec l'option -u suivie l'identifiant de l'utilisateur précédent<emphasis> </emphasis>et la liste enregistrée précédemment.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Les informations sur la configuration donnée ont été mises à jour</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>U6.1-E1:updateAuthAccount</para>
+                  <para>U6.1-E2:updateAuthAccount</para>
+                  <para>U6.1-E3:updateAuthAccount</para>
+                  <para>U6.1-E4:updateAuthAccount</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para><emphasis role="strong">Cas de test</emphasis> : paramètres non valides</para>
+                  <para>- Cas E1 : l'identifiant du système d'authentification est inconnu</para>
+                  <para>- Cas E2 : l'identifiant de l'utilisateur est inconnu</para>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <orderedlist continuation="restarts" numeration="arabic"/>
+                      <para/>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer le programme <emphasis>updateAuthAccount</emphasis> avec les paramètres correspondant à chaque cas.</para>
+                      <para/>
+                    </listitem>
+                    <listitem>
+                      <para>L'exécution de la commande échoue et un message d'erreur est affiché.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry align="justify">
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>U6.2-B1: deleteAuthAccount</para>
+                  <para>U6.2-B2: deleteAuthAccount</para>
+                </entry>
+                <entry align="left">
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para><emphasis role="strong">Cas de test B1</emphasis>: paramètres valides avec un utilisateur sans privilège d'administration.</para>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>listAuthAccounts</emphasis> et récupérer l'identifiant du système d'authentification de la configuration à supprimer.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>delete</emphasis><emphasis>AuthAccount</emphasis><emphasis role="strong"> </emphasis>avec l'identifiant du système d'authentification de l'étape précédente.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande<emphasis> listAuthAccounts</emphasis> pour vérifier que la configuration n'existe plus dans la liste.</para>
+                    </listitem>
+                  </orderedlist>
+                  <para><emphasis role="strong">Cas de test B2</emphasis>: paramètres valides et l'utilisateur est un administrateur.</para>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>listAuthAccounts</emphasis> avec l'option -u suivie de l'identifiant de l'utilisateur dont la configuration sera supprimée. Puis récupérer l'identifiant du système d'authentification de la configuration à supprimer.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>delete</emphasis><emphasis>AuthAccount</emphasis><emphasis role="strong"> </emphasis>avec l'option -u suivie de l'identifiant de l'utilisateur dont on veut supprimer la configuration et l'identifiant du système d'authentification de l'étape précédente.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer Lancer la commande <emphasis>listAuthAccounts</emphasis> pour avec l'option -u suivie de l'identifiant de l'utilisateur de l'étape précédente et vérifier que la configuration n'existe plus dans la liste.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>La configuration d'authentification est supprimée dans VISHNU</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry align="justify">
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>U6.2-E1: deleteAuthAccount</para>
+                  <para>U6.2-E2: deleteAuthAccount</para>
+                  <para>U6.2-E3: deleteAuthAccount</para>
+                  <para>U6.2-E4: deleteAuthAccount</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic"/>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Un message d'erreur est affiché correspondant au cas d'erreur</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry align="justify">
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>U6.2-B1: listAuthAccounts</para>
+                  <para>U6.2-B2: listAuthAccounts</para>
+                </entry>
+                <entry align="left">
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para><emphasis role="strong">Cas de test B1: </emphasis>paramètres valides avec un utilisateur sans privilège d'administration.</para>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>listAuthAccounts </emphasis>avec pour avoir la liste des configurations.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Inspecter la base de données pour vérifier que le nombre retourné par la commande <emphasis>listAuthAccounts</emphasis> est égal au nombre de configurations d'authentification pour l'utilisateur dans la base de données.</para>
+                    </listitem>
+                  </orderedlist>
+                  <para><emphasis role="strong">Cas de test B2</emphasis>: paramètres valides et l'utilisateur est un administrateur.</para>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>listAuthAccounts </emphasis>avec l'option -u suivie de l'identifiant de l'utilisateur et enregistrer la liste des configurations.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Inspecter la base de données pour vérifier que le nombre retourné par la commande <emphasis>listAuthAccounts</emphasis> est égal au nombre de configurations d'authentification pour l'utilisateur dans la base de données</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>La liste des configurations d'authentification est affichée</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>U6.3-E1:listAuthAccounts</para>
+                  <para>U6.3-E2:listAuthAccounts</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>listAuthAccounts</emphasis><emphasis> </emphasis>et vérifier que son exécution échoue </para>
                     </listitem>
                   </orderedlist>
                 </entry>
