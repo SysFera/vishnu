@@ -40,19 +40,16 @@ NetrcReader::NetrcReader(std::string path) {
 /**
   * \brief Function to read the netrc file for getting the login and the password for
   * a specific machine
-  * \param login the login returned which is associated to the machine
-  * \param pwd the password returned which is associated to the machine
+  * \param auth all the couples login/password returned which is associated to the machine
   * \param machineName the name of the machine defined on the netrc file
   * \return the corresponding couple (login, password)
   */
 void
-NetrcReader::read(string& login, string& pwd, const string& machineName) {
+NetrcReader::read(map<size_t, pair<string,string> > &auth, const string& machineName) {
   NetrcReader netrcReader;
   netrcReader.check();
 
-  pair<string, string> resPair = netrcReader.getNetrcInfo(machineName);
-  login = resPair.first;
-  pwd = resPair.second;
+  auth = netrcReader.getNetrcInfo(machineName);
 }
 
 
@@ -181,7 +178,7 @@ NetrcReader::check() {
   * \param machineName the name of the machine
   * \return the corresponding couple (login, password)
   */
-pair< string, string >
+map<size_t, pair<string,string> >&
 NetrcReader::getNetrcInfo(const std::string& machineName) {
 
   ifstream infile;
@@ -192,7 +189,7 @@ NetrcReader::getNetrcInfo(const std::string& machineName) {
 
   infile.open (mpath.c_str());
 
-  std::map<size_t, pair<string,string> > tab;
+  static std::map<size_t, pair<string,string> > tab;
   std::string fileContent;
 
   if (infile.is_open()) {
@@ -243,7 +240,8 @@ NetrcReader::getNetrcInfo(const std::string& machineName) {
         break;
       }
     }
-    return getIdentifiers(tab, machineName);
+//    return getIdentifiers(tab, machineName);
+    return tab;
   }
   else {
     throw UserException(ERRCODE_INVALID_PARAM,
