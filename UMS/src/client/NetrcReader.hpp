@@ -38,13 +38,12 @@ class NetrcReader {
     /**
      * \brief Function to get the login and the password associated to a specific machine
      * defined on the netrc file
-     * \param login the login returned which is associated to the machine
-     * \param pwd the password returned which is associated to the machine
+     * \param auth all the login and password returned which is associated to the machine
      * \param machineName the name of the machine defined on the netrc file
      * \return the corresponding couple (login, password)
      */
     void
-    read(string& login, string& pwd, const string& machineName = "vishnu");
+    read(map<size_t, pair<string,string> >& auth, const string& machineName = "vishnu");
 
     /**
      * \fn ~NetrcReader()
@@ -86,9 +85,9 @@ class NetrcReader {
      * \brief Function to get the login and the password associated to a specific machine
      * by parsing the netrc file
      * \param machineName the name of the machine
-     * \return the corresponding couple (login, password)
+     * \return all the corresponding couple (login, password)
      */
-    pair<string,string>
+    map<size_t, pair<string,string> >&
     getNetrcInfo(const string& machineName);
 
     /**
