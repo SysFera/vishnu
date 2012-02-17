@@ -7,7 +7,11 @@
 #define __FMSVISHNUEXCEPTION__
 
 #include "UserException.hpp"
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 // Definitions of FMS specific error codes
 static const int ERRCODE_INVALID_PATH = 201;
 static const int ERRCODE_RUNTIME_ERROR = 202;
@@ -21,7 +25,7 @@ static const int ERRCODE_UNKNOWN_FILETRANSFERID = 203;
  * \class FMSVishnuException
  * \brief Specialisation of the user exception for the FMS module
  */
-class FMSVishnuException: public UserException{
+class VISHNU_API_LIB FMSVishnuException: public UserException{
 
   public:
   /**

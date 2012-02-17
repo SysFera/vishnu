@@ -97,7 +97,8 @@ FMSMapper::code(const string& cmd, unsigned int code){
   }
 
   // Else creating a new unique key and insert in the map
-  pthread_mutex_lock(&mutex);
+  /*pthread_mutex_lock(&mutex);*/
+  mutex.lock();
   size = mcmd.size() + 1;
   while (true){
     it = mcmd.find(size);
@@ -109,7 +110,8 @@ FMSMapper::code(const string& cmd, unsigned int code){
   getKey(cmd, keycode);
   key = convertToString(keycode);
   mcmd.insert(pair<int, string>(size, key));
-  pthread_mutex_unlock(&mutex);
+  /*pthread_mutex_unlock(&mutex);*/
+  mutex.lock();
   return size;
 }
 

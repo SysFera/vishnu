@@ -28,14 +28,18 @@
 
 #include <ecore/EFactory.hpp>
 #include <UMS_Data.hpp>
-
+#ifdef WIN32
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 namespace UMS_Data
 {
     /**
      * \class UMS_DataFactory
      * \brief The factory class for generated model UMS_Data
      */
-    class UMS_DataFactory: public virtual ::ecore::EFactory
+    class VISHNU_API_LIB UMS_DataFactory: public virtual ::ecore::EFactory
     {
     public:
 

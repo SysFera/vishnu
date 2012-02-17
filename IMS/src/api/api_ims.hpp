@@ -21,7 +21,11 @@
 #include "IMSVishnuException.hpp"
 // Include added because of swig generation of python, otherwise should not be used
 #include "api_ums.hpp"
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 using namespace std;
 
 namespace vishnu {
@@ -33,7 +37,7 @@ namespace vishnu {
    * \param op: The options for the export, currently the export type as shell format is the only possibility
    * \return int : an error code
    */
-  int
+  VISHNU_API_LIB int
   exportCommands(const string sessionKey,
 		 const string oldSessionId,
 		 string filename,
@@ -48,7 +52,7 @@ namespace vishnu {
    * \param op: The options (the type of the metric only)
    * \return int : an error code
    */
-  int
+  VISHNU_API_LIB int
   getMetricCurrentValue(const string sessionKey,
 			string machineId,
 			IMS_Data::ListMetric& val,
@@ -63,7 +67,7 @@ namespace vishnu {
    * \param op: The options to get the metrics
    * \return int : an error code
    */
-  int
+  VISHNU_API_LIB int
   getMetricHistory(const string sessionKey,
 		   string machineId,
 		   IMS_Data::ListMetric& list,
@@ -77,7 +81,7 @@ namespace vishnu {
    * \param op: Options to get the processes
    * \return int : an error code
    */
-  int
+  VISHNU_API_LIB int
   getProcesses(const string sessionKey,
 	       IMS_Data::ListProcesses& list,
 	       IMS_Data::ProcessOp op)
@@ -90,7 +94,7 @@ namespace vishnu {
    * \return int : an error code
    */
 
-  int
+  VISHNU_API_LIB int
   setSystemInfo(const string sessionKey,
 		IMS_Data::SystemInfo sys)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
@@ -100,7 +104,7 @@ namespace vishnu {
    * \param threshold: The threshold to set
    * \return int : an error code
    */
-  int
+  VISHNU_API_LIB int
   setSystemThreshold(const string sessionKey,
 		     IMS_Data::Threshold threshold)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
@@ -112,7 +116,7 @@ namespace vishnu {
    * \param op: The options to get the thresholds
    * \return int : an error code
    */
-  int
+  VISHNU_API_LIB int
   getSystemThreshold(const string sessionKey,
 		     IMS_Data::ListThreshold& list,
 		     IMS_Data::ThresholdOp op)
@@ -124,7 +128,7 @@ namespace vishnu {
    * \param fmt: The new format
    * \return int : an error code
    */
-  int
+  VISHNU_API_LIB int
   defineUserIdentifier(const string sessionKey,
 		       string fmt)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
@@ -135,7 +139,7 @@ namespace vishnu {
    * \param fmt: The new format
    * \return int : an error code
    */
-  int
+  VISHNU_API_LIB int
   defineMachineIdentifier(const string sessionKey,
 		       string fmt)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
@@ -146,7 +150,7 @@ namespace vishnu {
    * \param fmt: The new format
    * \return int : an error code
    */
-  int
+  VISHNU_API_LIB int
   defineJobIdentifier(const string sessionKey,
 		       string fmt)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
@@ -157,7 +161,7 @@ namespace vishnu {
    * \param fmt: The new format
    * \return int : an error code
    */
-  int
+  VISHNU_API_LIB int
   defineTransferIdentifier(const string sessionKey,
 		       string fmt)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
@@ -169,7 +173,7 @@ namespace vishnu {
    * \param loadShedType: The type of load shedding, HARD or SOFT. HARD stops all whereas SOFT stops jobs but they can be restarted later
    * \return int : an error code
    */
-  int
+  VISHNU_API_LIB int
   loadShed(const string sessionKey,
 	   string machineId,
 	   IMS_Data::LoadShedType loadShedType)
@@ -181,7 +185,7 @@ namespace vishnu {
    * \param freq: The new frequency to use for the history maker to record the machines' states
    * \return int : an error code
    */
-  int
+  VISHNU_API_LIB int
   setUpdateFrequency(const string sessionKey,
 		     int freq)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
@@ -191,7 +195,7 @@ namespace vishnu {
    * \param freq: The frequency used for the history maker to record the machines' states (OUT)
    * \return int : an error code
    */
-  int
+  VISHNU_API_LIB int
   getUpdateFrequency(const string sessionKey,
 		     int& freq)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
@@ -202,7 +206,7 @@ namespace vishnu {
    * \param proc: The vishnu process to stop
    * \return int : an error code
    */
-  int
+  VISHNU_API_LIB int
   stop(const string sessionKey,
        IMS_Data::Process proc)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
@@ -214,7 +218,7 @@ namespace vishnu {
    * \param op: The options, the id of the machine to get the system information about
    * \return int : an error code
    */
-  int
+  VISHNU_API_LIB int
   getSystemInfo(const string sessionKey,
 		IMS_Data::ListSysInfo& list,
 		IMS_Data::SysInfoOp op)
@@ -227,7 +231,7 @@ namespace vishnu {
    * \param op: The options for the restart, the vishnuConfigurationFile and the type of sed to be restarted on the machine
    * \return int : an error code
    */
-  int
+  VISHNU_API_LIB int
   restart(const string sessionKey,
 	  string machineId,
 	  IMS_Data::RestartOp op)

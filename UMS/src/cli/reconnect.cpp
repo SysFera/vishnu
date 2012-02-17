@@ -14,6 +14,9 @@
 #include "daemon_cleaner.hpp"
 #include "utilVishnu.hpp"
 #include "UserException.hpp"
+#ifdef WIN32
+#include "OSIndependance.hpp"
+#endif
 namespace po = boost::program_options;
 
 using namespace std;
@@ -106,7 +109,12 @@ int main (int ac, char* av[]){
     // store the session information
 
     //storeLastSession(session.getSessionKey(),session.getClosePolicy(),getppid());
+#ifndef WIN32
     storeLastSession(session,getppid());
+#else
+    DWORD cpid = GetCurrentProcessId();
+    storeLastSession(session,(int)GetParentProcessID(cpid));
+#endif
     
     printSuccessMessage();
 

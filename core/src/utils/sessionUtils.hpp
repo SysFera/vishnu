@@ -23,6 +23,11 @@
 
 // object to serialize
 #include "UMS_Data.hpp"
+#ifdef WIN32
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 using namespace boost::archive;
 
 class VishnuException;
@@ -31,7 +36,7 @@ class VishnuException;
  * \class SessionEntry
  * \brief A helper class to handle session authentication
  */
-class SessionEntry{
+class VISHNU_API_LIB SessionEntry{
   public:
     
     /**
@@ -133,7 +138,7 @@ typedef std::list<SessionEntry> SessionContainer;
  */
 
 template <class T>
-void
+VISHNU_API_LIB void
 saveIntoFile(SessionContainer& allSessions, const char* file);
 
 
@@ -145,7 +150,7 @@ saveIntoFile(SessionContainer& allSessions, const char* file);
  */
 
 template <class T>
-void
+VISHNU_API_LIB void
 getFromFile(SessionContainer& allSessions, const char* file);
 
 /**
@@ -156,7 +161,7 @@ getFromFile(SessionContainer& allSessions, const char* file);
  * \return all sessions stored into the file or an empty container
  */
 
-SessionContainer
+VISHNU_API_LIB SessionContainer
 getAllSessions(const std::string& terminal);
 
 /**
@@ -164,7 +169,7 @@ getAllSessions(const std::string& terminal);
  * \param session : the current session
  * \param terminal: The terminal in which the session is running
  */
-void
+VISHNU_API_LIB void
 storeLastSession(const SessionEntry& session ,const std::string& terminal);
 
 /**
@@ -174,7 +179,7 @@ storeLastSession(const SessionEntry& session ,const std::string& terminal);
  */
 
 
-void
+VISHNU_API_LIB void
 storeLastSession(const UMS_Data::Session& session_,int ppid);
 
 /** 
@@ -184,14 +189,14 @@ storeLastSession(const UMS_Data::Session& session_,int ppid);
  * \return The last stored session
  */
 
-SessionEntry
+VISHNU_API_LIB SessionEntry
 getLastSession(const std::string& terminal);
 
 /**
  * \brief To remove the last entry of session from the file
  * \param terminal : The terminal in which the session was running
  */
-void
+VISHNU_API_LIB void
 removeLastSession(const std::string & terminal);
 
 /**
@@ -202,7 +207,7 @@ removeLastSession(const std::string & terminal);
  * been stored
  */
 
-std::string
+VISHNU_API_LIB std::string
 getSessionLocation(int tpid);
 
 /**
@@ -212,7 +217,7 @@ getSessionLocation(int tpid);
  * \param ppid: The identifier of the terminal as process
  */
 
-void
+VISHNU_API_LIB void
 storeLastSession(const std::string& sessionKey,int closePolicy,int ppid);
 
 /**
@@ -222,7 +227,7 @@ storeLastSession(const std::string& sessionKey,int closePolicy,int ppid);
  * \return The key of the last session open from the terminal
  */
 
-std::string
+VISHNU_API_LIB std::string
 getLastSessionKey(int ppid);
 
 /**
@@ -232,7 +237,7 @@ getLastSessionKey(int ppid);
  * \return The identifier of the last session open from the terminal
  */
 
-std::string
+VISHNU_API_LIB std::string
 getLastSessionId(int ppid);
 
 
@@ -241,7 +246,7 @@ getLastSessionId(int ppid);
  * \param ppid : The process identifier of the terminal in which the session had
  * been open.
  */ 
-void
+VISHNU_API_LIB void
 removeBadSessionKeyFromFile(int ppid);
 
 
@@ -251,7 +256,7 @@ removeBadSessionKeyFromFile(int ppid);
  *\param e: a given VishnuException
  *\return   : true if it's a bad session key or false otherwhise
  */
-bool
+VISHNU_API_LIB bool
 checkBadSessionKeyError(const VishnuException& e);
 
 

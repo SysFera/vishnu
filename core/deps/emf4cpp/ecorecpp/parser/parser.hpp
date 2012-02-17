@@ -21,13 +21,17 @@
 #define    _ECORECPPPARSER_HPP
 
 #include <ecore.hpp>
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 namespace ecorecpp
 {
 namespace parser
 {
 
-class parser
+class VISHNU_API_LIB parser
 {
 public:
 

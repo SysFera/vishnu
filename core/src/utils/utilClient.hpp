@@ -21,20 +21,25 @@
 #include "TMSVishnuException.hpp"
 #include "IMSVishnuException.hpp"
 #include "FMSVishnuException.hpp"
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 
 /**
  * \brief Function to spread error message to C++ API, Python API, Web service API and command line program
  * \fn void raiseDietMsgException(const std::string& msg)
  * \param msg to spread
  */
-void raiseDietMsgException(const std::string& msg);
+VISHNU_API_LIB void  raiseDietMsgException(const std::string& msg);
 
 /**
  * \brief Function to split the receiving message into error code and message error
  * \fn void raiseExceptionIfNotEmptyMsg(const std::string& msg)
  * \param msg to split
  */
-void raiseExceptionIfNotEmptyMsg(const std::string& msg);
+VISHNU_API_LIB void raiseExceptionIfNotEmptyMsg(const std::string& msg);
 
 /**
  * \brief Function to parse the EMF object
@@ -44,7 +49,7 @@ void raiseExceptionIfNotEmptyMsg(const std::string& msg);
  * \return raises an exception on error
  */
 template<class T>
-void parseEmfObject(const std::string& objectSerialized, T*& object_ptr, const std::string msgComp=std::string()) {
+VISHNU_API_LIB void parseEmfObject(const std::string& objectSerialized, T*& object_ptr, const std::string msgComp=std::string()) {
 
   object_ptr = NULL;
   try {

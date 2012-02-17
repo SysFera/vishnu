@@ -9,6 +9,10 @@
 #include "cliUtil.hpp"
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
+#ifdef WIN32
+#include "OSIndependance.hpp"
+#endif
+
 
 namespace po = boost::program_options;
 
@@ -56,8 +60,12 @@ class GenericCli {
           }
 
           // get the sessionKey
+#ifndef WIN32
           std::string sessionKey=getLastSessionKey(getppid());
-
+#else
+          DWORD currentpid = GetCurrentProcessId();
+          std::string sessionKey=getLastSessionKey((int)GetParentProcessID(currentpid));
+#endif
           // DIET call 
           if(false==sessionKey.empty()){
             printSessionKeyMessage();
@@ -78,7 +86,12 @@ class GenericCli {
           errorUsage(av[0], msg,EXECERROR);
           //check the bad session key
           if (checkBadSessionKeyError(e)){
+#ifndef WIN32
             removeBadSessionKeyFromFile(getppid());
+#else
+            DWORD cpid = GetCurrentProcessId();
+            removeBadSessionKeyFromFile((int)GetParentProcessID(cpid));
+#endif            
           }
           return e.getMsgI() ;
         } catch(std::exception& e){// catch all std runtime error

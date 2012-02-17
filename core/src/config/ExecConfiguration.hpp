@@ -14,14 +14,18 @@
 #include "CommonParser.hpp"
 #include "FileParser.hpp"
 #include "UserException.hpp"
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 /**
  * \class simple_cast_traits
  * \brief traits class used by simple cast that sets zero_value
  * by default to 0, specialize for each type that requires.
  */
 template <typename T>
-class simple_cast_traits {
+class VISHNU_API_LIB simple_cast_traits {
 public:
   /**
    * \brief To store the zero value
@@ -33,7 +37,7 @@ public:
  * \brief A specialization of the simple_cast_traits class for string type
  */
 template <>
-class simple_cast_traits<std::string> {
+class VISHNU_API_LIB simple_cast_traits<std::string> {
 public:
   /**
    * \brief To store the empty string
@@ -61,7 +65,7 @@ T simple_cast(const S& arg) {
  * \class ExecConfiguration
  * \brief Program configuration based on key/value pairs stored in a file
  */
-class ExecConfiguration {
+class VISHNU_API_LIB ExecConfiguration {
 
 public:
   ExecConfiguration();

@@ -1,84 +1,84 @@
-\hypertarget{classJobOutPutProxy}{
-\section{JobOutPutProxy Class Reference}
-\label{classJobOutPutProxy}\index{JobOutPutProxy@{JobOutPutProxy}}
+\hypertarget{classJobOutputProxy}{
+\section{JobOutputProxy Class Reference}
+\label{classJobOutputProxy}\index{JobOutputProxy@{JobOutputProxy}}
 }
 
 
-\hyperlink{classJobOutPutProxy}{JobOutPutProxy} class implementation.  
+\hyperlink{classJobOutputProxy}{JobOutputProxy} class implementation.  
 
 
 
 
-{\ttfamily \#include $<$JobOutPutProxy.hpp$>$}
+{\ttfamily \#include $<$JobOutputProxy.hpp$>$}
 
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classJobOutPutProxy_afbbc12843cc8190bfddeb40f90d296cb}{JobOutPutProxy} (const \hyperlink{classSessionProxy}{SessionProxy} \&session, const std::string \&machineId, const std::string \&outDir)
+\hyperlink{classJobOutputProxy_aee2c0babf8b2c1c82d9051f29acadb69}{JobOutputProxy} (const \hyperlink{classSessionProxy}{SessionProxy} \&session, const std::string \&machineId, const std::string \&outDir)
 \begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
-TMS\_\-Data::JobResult \hyperlink{classJobOutPutProxy_a5530ecd609a5946165e32934d5a5880c}{getJobOutPut} (const std::string \&jobId)
+TMS\_\-Data::JobResult \hyperlink{classJobOutputProxy_a11bec7120c3cf89c233e9983aef0e5a3}{getJobOutPut} (const std::string \&jobId)
 \begin{DoxyCompactList}\small\item\em Function to get the job results. \item\end{DoxyCompactList}\item 
-TMS\_\-Data::ListJobResults\_\-ptr \hyperlink{classJobOutPutProxy_a8cca32ed991e7d30143302612ac1bc0f}{getAllJobsOutPut} ()
+TMS\_\-Data::ListJobResults\_\-ptr \hyperlink{classJobOutputProxy_a9ab79137e768f983f378553195f8b615}{getCompletedJobsOutput} ()
 \begin{DoxyCompactList}\small\item\em Function to get the results of all job submitted. \item\end{DoxyCompactList}\item 
-\hypertarget{classJobOutPutProxy_a3df8bc7ea259e9612a669da59b63c4fa}{
-\hyperlink{classJobOutPutProxy_a3df8bc7ea259e9612a669da59b63c4fa}{$\sim$JobOutPutProxy} ()}
-\label{classJobOutPutProxy_a3df8bc7ea259e9612a669da59b63c4fa}
+\hypertarget{classJobOutputProxy_ab183c53ebb3d04181abc86da377a5b6a}{
+\hyperlink{classJobOutputProxy_ab183c53ebb3d04181abc86da377a5b6a}{$\sim$JobOutputProxy} ()}
+\label{classJobOutputProxy_ab183c53ebb3d04181abc86da377a5b6a}
 
 \begin{DoxyCompactList}\small\item\em Destructor, raises an exception on error. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classJobOutPutProxy_afeb6b6fe40d7f159911cfbf8ed5ff2d2}{
-\hyperlink{classSessionProxy}{SessionProxy} \hyperlink{classJobOutPutProxy_afeb6b6fe40d7f159911cfbf8ed5ff2d2}{msessionProxy}}
-\label{classJobOutPutProxy_afeb6b6fe40d7f159911cfbf8ed5ff2d2}
+\hypertarget{classJobOutputProxy_a6f0f045935267e8d242813c4299ae099}{
+\hyperlink{classSessionProxy}{SessionProxy} \hyperlink{classJobOutputProxy_a6f0f045935267e8d242813c4299ae099}{msessionProxy}}
+\label{classJobOutputProxy_a6f0f045935267e8d242813c4299ae099}
 
 \begin{DoxyCompactList}\small\item\em The object to manipulate the session data. \item\end{DoxyCompactList}\item 
-\hypertarget{classJobOutPutProxy_a36f5108289942a2f96b37b7693d7dc0a}{
-std::string \hyperlink{classJobOutPutProxy_a36f5108289942a2f96b37b7693d7dc0a}{mmachineId}}
-\label{classJobOutPutProxy_a36f5108289942a2f96b37b7693d7dc0a}
+\hypertarget{classJobOutputProxy_ab698b525683b1c76d58be81e82336830}{
+std::string \hyperlink{classJobOutputProxy_ab698b525683b1c76d58be81e82336830}{mmachineId}}
+\label{classJobOutputProxy_ab698b525683b1c76d58be81e82336830}
 
 \begin{DoxyCompactList}\small\item\em The id of the machine. \item\end{DoxyCompactList}\item 
-\hypertarget{classJobOutPutProxy_a6091084e2d6d9bf71b03289e0263bfea}{
-std::string {\bfseries moutDir}}
-\label{classJobOutPutProxy_a6091084e2d6d9bf71b03289e0263bfea}
+\hypertarget{classJobOutputProxy_a2d864d915f82bd34e8c9453170a1cb35}{
+std::string \hyperlink{classJobOutputProxy_a2d864d915f82bd34e8c9453170a1cb35}{moutDir}}
+\label{classJobOutputProxy_a2d864d915f82bd34e8c9453170a1cb35}
 
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em The output directory where the files will be stored. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-\hyperlink{classJobOutPutProxy}{JobOutPutProxy} class implementation. 
+\hyperlink{classJobOutputProxy}{JobOutputProxy} class implementation. 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classJobOutPutProxy_afbbc12843cc8190bfddeb40f90d296cb}{
-\index{JobOutPutProxy@{JobOutPutProxy}!JobOutPutProxy@{JobOutPutProxy}}
-\index{JobOutPutProxy@{JobOutPutProxy}!JobOutPutProxy@{JobOutPutProxy}}
-\subsubsection[{JobOutPutProxy}]{\setlength{\rightskip}{0pt plus 5cm}JobOutPutProxy::JobOutPutProxy (
+\hypertarget{classJobOutputProxy_aee2c0babf8b2c1c82d9051f29acadb69}{
+\index{JobOutputProxy@{JobOutputProxy}!JobOutputProxy@{JobOutputProxy}}
+\index{JobOutputProxy@{JobOutputProxy}!JobOutputProxy@{JobOutputProxy}}
+\subsubsection[{JobOutputProxy}]{\setlength{\rightskip}{0pt plus 5cm}JobOutputProxy::JobOutputProxy (
 \begin{DoxyParamCaption}
 \item[{const {\bf SessionProxy} \&}]{ session, }
 \item[{const std::string \&}]{ machineId, }
 \item[{const std::string \&}]{ outDir}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
-\label{classJobOutPutProxy_afbbc12843cc8190bfddeb40f90d296cb}
+\label{classJobOutputProxy_aee2c0babf8b2c1c82d9051f29acadb69}
 
 
 Constructor, raises an exception on error. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em session}]The object which encapsulates the session information \item[{\em machine}]The object which encapsulates the machine information \item[{\em jobResult}]The job results data structure \item[{\em outDir}]The output directory where the files will be stored (default is current directory) \end{DoxyParams}
+\item[{\em session}]The object which encapsulates the session information \item[{\em machineId}]The machine identifier where has been submitted \item[{\em outDir}]The output directory where the files will be stored (default is current directory) \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classJobOutPutProxy_a8cca32ed991e7d30143302612ac1bc0f}{
-\index{JobOutPutProxy@{JobOutPutProxy}!getAllJobsOutPut@{getAllJobsOutPut}}
-\index{getAllJobsOutPut@{getAllJobsOutPut}!JobOutPutProxy@{JobOutPutProxy}}
-\subsubsection[{getAllJobsOutPut}]{\setlength{\rightskip}{0pt plus 5cm}TMS\_\-Data::ListJobResults\_\-ptr JobOutPutProxy::getAllJobsOutPut (
+\hypertarget{classJobOutputProxy_a9ab79137e768f983f378553195f8b615}{
+\index{JobOutputProxy@{JobOutputProxy}!getCompletedJobsOutput@{getCompletedJobsOutput}}
+\index{getCompletedJobsOutput@{getCompletedJobsOutput}!JobOutputProxy@{JobOutputProxy}}
+\subsubsection[{getCompletedJobsOutput}]{\setlength{\rightskip}{0pt plus 5cm}TMS\_\-Data::ListJobResults\_\-ptr JobOutputProxy::getCompletedJobsOutput (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )}}
-\label{classJobOutPutProxy_a8cca32ed991e7d30143302612ac1bc0f}
+\label{classJobOutputProxy_a9ab79137e768f983f378553195f8b615}
 
 
 Function to get the results of all job submitted. 
@@ -86,15 +86,15 @@ Function to get the results of all job submitted.
 \begin{DoxyReturn}{Returns}
 The list of the job results 
 \end{DoxyReturn}
-\hypertarget{classJobOutPutProxy_a5530ecd609a5946165e32934d5a5880c}{
-\index{JobOutPutProxy@{JobOutPutProxy}!getJobOutPut@{getJobOutPut}}
-\index{getJobOutPut@{getJobOutPut}!JobOutPutProxy@{JobOutPutProxy}}
-\subsubsection[{getJobOutPut}]{\setlength{\rightskip}{0pt plus 5cm}TMS\_\-Data::JobResult JobOutPutProxy::getJobOutPut (
+\hypertarget{classJobOutputProxy_a11bec7120c3cf89c233e9983aef0e5a3}{
+\index{JobOutputProxy@{JobOutputProxy}!getJobOutPut@{getJobOutPut}}
+\index{getJobOutPut@{getJobOutPut}!JobOutputProxy@{JobOutputProxy}}
+\subsubsection[{getJobOutPut}]{\setlength{\rightskip}{0pt plus 5cm}TMS\_\-Data::JobResult JobOutputProxy::getJobOutPut (
 \begin{DoxyParamCaption}
 \item[{const std::string \&}]{ jobId}
 \end{DoxyParamCaption}
 )}}
-\label{classJobOutPutProxy_a5530ecd609a5946165e32934d5a5880c}
+\label{classJobOutputProxy_a11bec7120c3cf89c233e9983aef0e5a3}
 
 
 Function to get the job results. 
@@ -109,4 +109,4 @@ The job results data structure
 
 The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
 \item 
-TMS/src/client/\hyperlink{JobOutPutProxy_8hpp}{JobOutPutProxy.hpp}\end{DoxyCompactItemize}
+TMS/src/client/\hyperlink{JobOutputProxy_8hpp}{JobOutputProxy.hpp}\end{DoxyCompactItemize}

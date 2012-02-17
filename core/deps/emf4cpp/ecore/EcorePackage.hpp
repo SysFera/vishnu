@@ -22,11 +22,15 @@
 
 #include <ecore/EPackage.hpp>
 #include <ecore_forward.hpp>
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 namespace ecore
 {
 
-    class EcorePackage: public virtual ::ecore::EPackage
+    class VISHNU_API_LIB EcorePackage: public virtual ::ecore::EPackage
     {
     public:
 

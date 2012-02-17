@@ -126,8 +126,16 @@ set(ecorecpp_HEADERS
 
 include_directories(
   ${EMF4CPP_INCLUDE_DIR}
+  ${DEPS_INCLUDE_DIR}
 )
 
-add_library(emf4cpp-vishnu ${ecore_SRCS} ${ecorecpp_SRCS})
+IF (WIN32)
+  add_library(emf4cpp-vishnu ${ecore_SRCS} ${ecorecpp_SRCS} OSIndependance.cpp)
+ELSE (WIN32)
+  add_library(emf4cpp-vishnu ${ecore_SRCS} ${ecorecpp_SRCS})
+ENDIF (WIN32)
+IF (WIN32)
+target_link_libraries(emf4cpp-vishnu ws2_32.lib)
+ENDIF (WIN32)
 set_target_properties(emf4cpp-vishnu PROPERTIES VERSION ${VISHNU_VERSION})
 install(TARGETS emf4cpp-vishnu DESTINATION ${LIB_INSTALL_DIR})

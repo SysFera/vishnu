@@ -10,7 +10,10 @@
 // C++ Headers
 #include <string>
 #include <stdexcept>
+#ifndef __WIN32__
 #include <pthread.h>
+#endif
+
 
 
 //Boost Headers

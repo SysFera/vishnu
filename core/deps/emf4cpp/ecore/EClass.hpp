@@ -40,11 +40,15 @@
 #include <map>
 #endif // ECORECPP_USE_UNORDERED_MAP
 /*PROTECTED REGION END*/
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 namespace ecore
 {
 
-    class EClass: public virtual ::ecore::EClassifier
+    class VISHNU_API_LIB EClass: public virtual ::ecore::EClassifier
     {
     public:
         EClass();

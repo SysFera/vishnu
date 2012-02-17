@@ -24,13 +24,17 @@
 #include "Notifier.hpp"
 
 #include <ecore/EStructuralFeature.hpp>
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 namespace ecorecpp
 {
 namespace notify
 {
 
-class Notification
+class VISHNU_API_LIB Notification
 {
 public:
 

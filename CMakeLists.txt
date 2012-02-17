@@ -14,6 +14,25 @@ set( VISHNU_VERSION "1.2.7" CACHE STRING " the version of the source ")
 # Options set to ON by default
 option(BUILD_SHARED_LIBS "disable shared libraries usage" ON)
 
+
+string(COMPARE EQUAL ${CMAKE_SYSTEM_NAME} "Windows" WINDOWS)
+
+if(WINDOWS)
+  message(STATUS "XXX System name Windows native")
+  add_definitions(-DWIN32)
+  # __WIN32__ is also used by omniorb for the good use of omnithread.h
+  add_definitions(-D__WIN32__)
+  # definitions to add for the compilation of something using omniORB under windows
+  # with native compilation
+  # these definitions are taken from the omniORB user's guide
+  #
+  # These definitions prevent the fatal error compilation with VS9 looking like  
+  # omniORB-4.1.4\include\omniORB4/CORBA_sysdep_trad.h(609) : fatal error C1189: #error :  "The byte order of this platform is unknown"
+  add_definitions(-D__OSVERSION__=4)
+  # definition added to prevent some warnings due to strcpy being deprecated on windows
+  add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+endif(WINDOWS)
+
 find_package(POSTGRESQL)
 if (POSTGRESQL_FOUND)
   option(ENABLE_POSTGRESQL "compile with postgresql support" ON)
@@ -215,8 +234,10 @@ set(Boost_LIBRARIES ${Boost_LIBRARIES} ${THREADS_LIB})
 
 add_definitions("-DBOOST_FILESYSTEM_VERSION=3")
 
+find_package(OpenSSL)
 #Core
 set(EMF4CPP_INCLUDE_DIR ${VISHNU_SOURCE_DIR}/core/deps/emf4cpp)
+set(DEPS_INCLUDE_DIR ${VISHNU_SOURCE_DIR}/core/deps)
 set(VISHNU_EXCEPTION_INCLUDE_DIR ${VISHNU_SOURCE_DIR}/core/src/exception)
 set(DATA_BASE_INCLUDE_DIR ${VISHNU_SOURCE_DIR}/core/src/database)
 set(REGISTRY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/registry)

@@ -3,6 +3,11 @@
 #ifndef CORECLIUTIL_HPP
 #define CORECLIUTIL_HPP
 
+#ifdef WIN32
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 /**
  * \brief Contains a generic diet error message
  */
@@ -52,7 +57,7 @@ EXECERROR /*!<  for any runtime error */
  * \param opt: describes all options allowed by the command
  * \param signature: defines the usage of the command
  */
-void
+VISHNU_API_LIB void
 helpUsage (const Options& opt,const std::string& signature);
 
 /**
@@ -62,7 +67,7 @@ helpUsage (const Options& opt,const std::string& signature);
  * \param err   : The error type
  */
 
-void
+VISHNU_API_LIB void
 errorUsage (const std::string& cli,const std::string& errMsg,const ErrorType& err=PARAMERROR);
 
 /**
@@ -73,7 +78,7 @@ errorUsage (const std::string& cli,const std::string& errMsg,const ErrorType& er
  * \return 0 if an help is required or 1 if an error must me displayed
  */
 
-int
+VISHNU_API_LIB int
 usage (const Options& opt,const std::string& mess,const std::string& ewhat);
 
 
@@ -82,7 +87,7 @@ usage (const Options& opt,const std::string& mess,const std::string& ewhat);
  *\param opt: describes all options allowed by the command
  *\exception raise a runtime exception if the VISHNU_CONFIG_FILE is not set
  */
-void
+VISHNU_API_LIB void
 checkVishnuConfig(const Options& opt);
 
 #endif

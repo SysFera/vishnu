@@ -33,7 +33,11 @@
 #include <ecore_forward.hpp>
 
 #include <ecore/EObject.hpp>
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 /*PROTECTED REGION ID(CpFileOptions_pre) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
@@ -46,7 +50,7 @@ namespace FMS_Data
      * \class CpFileOptions
      * \brief Implementation of the CpFileOptions class
      */
-    class CpFileOptions: public virtual ::ecore::EObject
+    class VISHNU_API_LIB CpFileOptions: public virtual ::ecore::EObject
 
     {
     public:

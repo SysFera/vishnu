@@ -50,7 +50,9 @@
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
 #include "displayer.hpp"
-
+#ifdef __WIN32__
+#include "OSIndependance.hpp"
+#endif
 namespace po = boost::program_options;
 
 using namespace std;
@@ -278,7 +280,12 @@ int main (int argc, char* argv[]){
     }
 
     // get the sessionKey
+#ifdef __WIN32__
+    DWORD cpid = GetCurrentProcessId();
+    sessionKey=getLastSessionKey((int)GetParentProcessID(cpid));
+#else
     sessionKey=getLastSessionKey(getppid());
+#endif    
 
     // DIET call : submit
     if(false==sessionKey.empty()){
@@ -298,7 +305,12 @@ int main (int argc, char* argv[]){
     errorUsage(argv[0], msg,EXECERROR);
     //check the bad session key
     if (checkBadSessionKeyError(e)){
+#ifdef __WIN32__
+      DWORD rcpid = GetCurrentProcessId();
+      removeBadSessionKeyFromFile((int)GetParentProcessID(rcpid));
+#else
       removeBadSessionKeyFromFile(getppid());
+#endif       
     }
     return e.getMsgI() ;
   } catch(std::exception& e){// catch all std runtime error

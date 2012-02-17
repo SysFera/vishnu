@@ -7,7 +7,11 @@
 #define __SYSTEMEXCEPTION__
 
 #include "VishnuException.hpp"
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 // RESERVED CODES FROM 1 TO 9
 static const int ERRCODE_DIET = 1;
 static const int ERRCODE_DBERR = 2;
@@ -23,7 +27,7 @@ static const int ERRCODE_SSH = 9;
  * \brief This class represents the exception that are due to the system
  * \class SystemException
  */
-class SystemException : public VishnuException {
+class VISHNU_API_LIB SystemException : public VishnuException {
 
 public:
 

@@ -26,11 +26,15 @@
 /*PROTECTED REGION ID(EObject_pre) ENABLED START*/
 #include <ecorecpp/notify_forward.hpp>
 /*PROTECTED REGION END*/
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 namespace ecore
 {
 
-    class EObject
+    class VISHNU_API_LIB EObject
     {
     public:
         EObject();

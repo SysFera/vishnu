@@ -11,7 +11,7 @@
 #include "Database.hpp"
 #include "DbConfiguration.hpp"
 #include "libpq-fe.h"
-#include <pthread.h>
+#include <boost/thread/mutex.hpp>
 
 /**
  * \class POSTGREDatabase
@@ -126,7 +126,8 @@ private :
     /**
      * \brief The associated mutex
      */
-    pthread_mutex_t mmutex;
+    /*pthread_mutex_t mmutex;*/
+    boost::mutex mmutex;
   }pool_t;
 
   /**

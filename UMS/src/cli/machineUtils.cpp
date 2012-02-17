@@ -10,6 +10,7 @@
 #include "connectUtils.hpp"
 #include "localAccountUtils.hpp"
 #include<iostream>
+#include "machineUtils.hpp"
 using namespace std;
 
 

@@ -14,10 +14,16 @@
 #include <cstdio>
 #include <cstring>
 #include <csignal>
+#ifndef __WIN32__
 #include <syslog.h>
+#endif
 #include <sys/stat.h>
 #include <sys/types.h>
+#ifndef __WIN32__
 #include <unistd.h>
+#else
+#include <Windows.h>
+#endif
 /* C standard library */
 #include <cstdlib>
 /* C++ standard library */
@@ -44,7 +50,12 @@ namespace bpt = boost::posix_time;
  * \param pid The given pid
  * \return True if the pid exists
  */
-bool 
+#ifdef WIN32
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
+VISHNU_API_LIB bool 
 pid_exists(const std::string& pid);
 
 /**
@@ -53,7 +64,7 @@ pid_exists(const std::string& pid);
  * \param ac: The number of command parameters
  * \param av: The names of parameters
  */
-void 
+VISHNU_API_LIB void 
 deleter(char* dietConfig,int ac,char* av[]);
 
 /**
@@ -63,7 +74,7 @@ deleter(char* dietConfig,int ac,char* av[]);
  * \param av: The names of parameters
  */
 
-void 
+VISHNU_API_LIB void 
 cleaner(char* dietConfig,int ac,char* av[]);
 
 #endif

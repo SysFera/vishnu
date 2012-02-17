@@ -4,7 +4,7 @@
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
-#ifndef FMSCONSTANTS_HPP
+#ifndef FFMSCONSTANTS_HPP
 #define FFMSCONSTANTS_HPP
 
 
@@ -12,6 +12,10 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+
+#ifdef __WIN32__
+#include "OSIndependance.hpp"
+#endif
 
 /**
  * \brief default access permissions used for new file

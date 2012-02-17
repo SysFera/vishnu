@@ -28,14 +28,18 @@
 
 #include <ecore/EFactory.hpp>
 #include <TMS_Data.hpp>
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 namespace TMS_Data
 {
     /**
      * \class TMS_DataFactory
      * \brief The factory class for generated model TMS_Data
      */
-    class TMS_DataFactory: public virtual ::ecore::EFactory
+    class VISHNU_API_LIB TMS_DataFactory: public virtual ::ecore::EFactory
     {
     public:
 

@@ -11,19 +11,36 @@
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/lexical_cast.hpp>
 #include <sstream>
 #include <sys/stat.h>
+#include <fcntl.h>
 // Headers for getaddrinfo function
+#ifdef __WIN32__
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#include <process.h>
+#else
 #include <netdb.h>
 #include <sys/param.h>
+#endif 
+
+
 #include<iostream>
 #include<string>
 #include<cstring>
 
+#ifdef __WIN32__
+#include "OSIndependance.hpp"
+#include "openssl/des.h"
+#endif
 
 #include "UserException.hpp"
 #include "SystemException.hpp"
 #include "TMS_Data.hpp"
+#ifdef __WIN32__ 
+#  define MAXHOSTNAMELEN MAX_COMPUTERNAME_LENGTH
+#endif 
 
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespace
 
@@ -75,7 +92,12 @@ std::string
 vishnu::cryptPassword(const std::string& salt, const std::string& password) {
 
   std::string saltTmp="$6$"+salt+"$";
+
+#ifdef __WIN32__ 
+  std::string encryptedPassword=DES_crypt(password.c_str(),saltTmp.c_str());
+#else 
   std::string encryptedPassword=crypt(password.c_str(),saltTmp.c_str());
+#endif
 
   return encryptedPassword.substr(saltTmp.size());
 }
@@ -550,11 +572,13 @@ void vishnu::createTmpFile(char* fileName, const std::string& file_content) {
     throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: Cannot create new tmp file");
   }
 
+#ifndef __WIN32__
   if(fchmod(file_descriptor, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH )!=0) {
     close(file_descriptor);
     throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: reading or writing rights have"
                                            " not been change on the path. This can lead to an error");
   }
+#endif
 
   if( write(file_descriptor, file_content.c_str(), file_size) != file_size ) {
     close(file_descriptor);
@@ -576,11 +600,13 @@ void vishnu::createTmpFile(char* fileName) {
     throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: Cannot create new tmp file");
   }
 
+#ifndef __WIN32__
   if(fchmod(file_descriptor, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH ) !=0) {
      close(file_descriptor);
      throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: reading or writing rights have not been"
                                            "  change on the path. This can lead to an error");
   }
+#endif
 
   close(file_descriptor);
 }
@@ -627,10 +653,18 @@ vishnu::checkRemotePath(const std::string& path){
 
 bool
 vishnu::process_exists(const std::string& pid, const bfs::path& proc_dir){
-
+#ifdef __WIN32__
+  int ipid = boost::lexical_cast< int >( pid );
+  HANDLE process = OpenProcess(SYNCHRONIZE, FALSE,ipid );
+  DWORD ret = WaitForSingleObject(process, 0);
+  CloseHandle(process);
+  return ret == WAIT_TIMEOUT;
+#else
   bfs::path token(proc_dir);
   token /= pid;
   return bfs::exists(token);
+#endif
+  
 }
 
 

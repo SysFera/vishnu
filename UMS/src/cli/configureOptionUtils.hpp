@@ -15,7 +15,11 @@
 #include "sessionUtils.hpp"
 //Boost Headers
 #include <boost/function.hpp>
-
+#ifdef WIN32
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif 
 
 /**
  * \brief A convenient function type taking a string parameter and
@@ -45,7 +49,7 @@ boost::function2<int,const std::string&,const UMS_Data::OptionValue&> ConfigureC
  * \param fValue      : A callback for the option value
  */
 
-void
+VISHNU_API_LIB void
 makeConfigureOptions(boost::shared_ptr<Options> opt,std::string& dietConfig,
 		                      StringcallBackType& fOptionName,StringcallBackType& fValue
                          );
@@ -59,7 +63,7 @@ makeConfigureOptions(boost::shared_ptr<Options> opt,std::string& dietConfig,
  * ConfigureDefaultOption
  * \return 0 if the function succeeds, an error code otherwise
  */
-int
+VISHNU_API_LIB int
 commonConfigure(boost::shared_ptr<Options> opt, int ac, char* av[] , const ConfigureCallBackType& conf_func);
 
 

@@ -28,14 +28,18 @@
 
 #include <ecore/EFactory.hpp>
 #include <FMS_Data.hpp>
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 namespace FMS_Data
 {
     /**
      * \class FMS_DataFactory
      * \brief The factory class for generated model FMS_Data
      */
-    class FMS_DataFactory: public virtual ::ecore::EFactory
+    class VISHNU_API_LIB FMS_DataFactory: public virtual ::ecore::EFactory
     {
     public:
 

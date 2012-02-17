@@ -31,7 +31,11 @@
 #include <ecorecpp/mapping_forward.hpp>
 
 #include <ecore/EObject.hpp>
-
+#ifdef WIN32
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 /*PROTECTED REGION ID(ListMachines_pre) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
@@ -44,7 +48,7 @@ namespace UMS_Data
      * \class ListMachines
      * \brief Implementation of the ListMachines class
      */
-    class ListMachines: public virtual ::ecore::EObject
+    class VISHNU_API_LIB ListMachines: public virtual ::ecore::EObject
 
     {
     public:

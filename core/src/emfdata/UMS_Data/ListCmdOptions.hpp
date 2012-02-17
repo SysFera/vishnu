@@ -34,7 +34,11 @@
 #include <ecore_forward.hpp>
 
 #include <ecore/EObject.hpp>
-
+#ifdef WIN32
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 /*PROTECTED REGION ID(ListCmdOptions_pre) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
@@ -47,7 +51,7 @@ namespace UMS_Data
      * \class ListCmdOptions
      * \brief Implementation of the ListCmdOptions class
      */
-    class ListCmdOptions: public virtual ::ecore::EObject
+    class VISHNU_API_LIB ListCmdOptions: public virtual ::ecore::EObject
 
     {
     public:

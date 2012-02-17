@@ -24,7 +24,11 @@
 using namespace boost::posix_time;
 using namespace boost::gregorian;
 namespace bfs=boost::filesystem;
-
+#ifdef WIN32
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 /**
 * \enum BatchType
 * \brief The type of the Batch
@@ -45,7 +49,9 @@ static const std::string LIST_JOBS_ON_MACHINES_KEYWORD="all";
 * \param salt This string is used to perturb the algorithm
 * \return the string encrypted
 */
+#ifndef __WIN32__
 char* crypt(const char* clef, const char* salt);
+#endif
 /**
  * \namespace vishnu
  * \brief This naspace contains utils functions of the vishnu system
@@ -84,7 +90,7 @@ namespace vishnu {
   * \param  val a value to convert to int
   * \return int value of the corresponding string
   */
-  int
+  VISHNU_API_LIB int
   convertToInt(std::string val);
 
   /**
@@ -93,7 +99,7 @@ namespace vishnu {
    * \param password The password to crypt
    * \return The crypted password
    */
-  std::string
+  VISHNU_API_LIB std::string
   cryptPassword(const std::string& salt, const std::string& password) ;
 
   /**
@@ -101,7 +107,7 @@ namespace vishnu {
   * \fn    int generateNumbers()
   * \return the number generated
   */
-  int
+  VISHNU_API_LIB int
   generateNumbers();
 
   /**
@@ -109,7 +115,7 @@ namespace vishnu {
    * \param prompt: The message inviting the user to enter his/her password
    * \return The password entered.
    */
-  std::string
+  VISHNU_API_LIB std::string
   takePassword(const std::string& prompt);
 
   /**
@@ -119,7 +125,7 @@ namespace vishnu {
    * \param ts: the time in string format
    * \return the time in long integer format in seconds
    */
-  std::time_t
+  VISHNU_API_LIB std::time_t
   string_to_time_t(const std::string& ts);
 
 /**
@@ -132,7 +138,7 @@ namespace vishnu {
  */
 
 
-std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& utcOffset);
+VISHNU_API_LIB std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& utcOffset);
 
 
   /**
@@ -140,7 +146,7 @@ std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& ut
    * \param filePath: the path to the file
    * \return The content of the file
    */
-  std::string
+  VISHNU_API_LIB std::string
   get_file_content(const std::string& filePath);
 
   /**
@@ -150,7 +156,7 @@ std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& ut
   * \param filename: the name of the file in dest
   * \return raises an exception on error
   */
-  int
+  VISHNU_API_LIB int
   boostMoveFile(const std::string& src, const std::string& dest,  const std::string& filename="");
 
   /**
@@ -158,28 +164,28 @@ std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& ut
    * \param value The value to check
    * \return raises an exception on error
    */
-  bool isNumericalValue(const std::string& value);
+  VISHNU_API_LIB bool isNumericalValue(const std::string& value);
 
   /**
    * \brief Function a given walltime into string
    * \param walltime The walltime to convert
    * \return the walltime converted to string
    */
-   std::string convertWallTimeToString(const long& walltime);
+   VISHNU_API_LIB std::string convertWallTimeToString(const long& walltime);
 
    /**
     * \brief Function a given walltime into seconds
     * \param walltime The walltime to convert
     * \return the walltime converted to seconds
     */
-   long convertStringToWallTime(const std::string& walltime);
+   VISHNU_API_LIB long convertStringToWallTime(const std::string& walltime);
 
    /**
     * \brief Function to check the job status
     * \param status the status of the job
     * \return raises an exception on error
     */
-   void
+   VISHNU_API_LIB void
    checkJobStatus(const int& status);
 
    /**
@@ -187,7 +193,7 @@ std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& ut
     * \param priority the priority of the job
     * \return raises an exception on error
     */
-   void
+   VISHNU_API_LIB void
    checkJobPriority(const int& priority);
 
    /**
@@ -195,59 +201,59 @@ std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& ut
     * \param nbNodesAndCpuPerNode the number of nodes and cpu per node
     * \return raises an exception on error
     */
-   void
+   VISHNU_API_LIB void
    checkJobNbNodesAndNbCpuPerNode(const std::string& nbNodesAndCpuPerNode);
 
    /**
     * \brief Function to get current time in seconds (UTC)
     * \return the time as the number of seconds since the Epoch, 1970-01-01 00:00:00 +0000 (UTC)
     */
-   time_t getCurrentTimeInUTC();
+   VISHNU_API_LIB time_t getCurrentTimeInUTC();
 
    /**
     * \brief Function to convert UTC time into localtime (seconds)
     * \param localtime the local time
     * \return the correspondant localtime (seconds)
     */
-   time_t convertUTCtimeINLocaltime(const time_t& localtime);
+   VISHNU_API_LIB time_t convertUTCtimeINLocaltime(const time_t& localtime);
 
    /**
     * \brief Function to localtime into UTC (seconds)
     * \param localtime the local time
     * \return the diffence time (seconds)
     */
-   time_t convertLocaltimeINUTCtime(const time_t& localtime);
+   VISHNU_API_LIB time_t convertLocaltimeINUTCtime(const time_t& localtime);
 
    /**
     * \brief Function to return the difference between localtime and UTC time (seconds)
     * \return the difference time (seconds)
     */
-    long diffLocaltimeUTCtime();
+    VISHNU_API_LIB long diffLocaltimeUTCtime();
 
    /**
     * \brief Function to create temporary file
     * \param fileName The name of the file to create
     * \param file_content The content of the file
     */
-   void createTmpFile(char* fileName, const std::string& file_content);
+  VISHNU_API_LIB  void createTmpFile(char* fileName, const std::string& file_content);
 
    /**
     * \brief Function to create temporary file
     * \param fileName The name of the file to create
     */
-   void createTmpFile(char* fileName);
+   VISHNU_API_LIB void createTmpFile(char* fileName);
 
    /**
     * \brief Function to delete file
     * \param fileName The name of the file to create
     * \return 0 in case of success, another value otherwise
     */
-   int deleteFile(const char* fileName);
+   VISHNU_API_LIB int deleteFile(const char* fileName);
 
    /**
     * \brief Function to print success message
     */
-   inline void printSuccessMessage() {
+   VISHNU_API_LIB inline void printSuccessMessage() {
      // can be used to display a message when vishnu service was performed successfully
      ;
    }
@@ -255,7 +261,7 @@ std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& ut
    /**
     * \brief Function to display the session key
     */
-   inline void printSessionKeyMessage() {
+   VISHNU_API_LIB inline void printSessionKeyMessage() {
      // can be used to display a message containing the current session key
      ;
    }
@@ -265,7 +271,7 @@ std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& ut
     * \param metric: the metric value
     * \return raises an exception on error
     */
-   void
+   VISHNU_API_LIB void
    checkMetricHistoryValue(const int& metric);
 
    /**
@@ -273,7 +279,7 @@ std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& ut
     * \param path the remote file path
     * \return raises an exception on error
     */
-   void
+   VISHNU_API_LIB void
    checkRemotePath(const std::string& path);
 
    /**
@@ -282,7 +288,7 @@ std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& ut
     * \param proc_dir The given process info directory
     * \return True if the pid exists
     */
-   bool
+   VISHNU_API_LIB bool
      process_exists(const std::string& pid, const bfs::path& proc_dir="/proc");
 
    /**
@@ -290,7 +296,7 @@ std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& ut
     * \param port the port
     * \return the fully qualified name for the current system
     */
-   std::string getLocalMachineName(const std::string& port );
+   VISHNU_API_LIB std::string getLocalMachineName(const std::string& port );
 
    /**
     * \brief Function to check if a string is empty
@@ -298,7 +304,7 @@ std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& ut
     * \param compMsg The complementary message to print
     * \return raises an exception on error
     */
-   void
+   VISHNU_API_LIB void
      checkEmptyString(const std::string& str,
          const std::string& compMsg);  
 

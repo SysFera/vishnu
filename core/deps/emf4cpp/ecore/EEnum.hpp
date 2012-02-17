@@ -29,11 +29,15 @@
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 namespace ecore
 {
 
-    class EEnum: public virtual ::ecore::EDataType
+    class VISHNU_API_LIB EEnum: public virtual ::ecore::EDataType
     {
     public:
         EEnum();

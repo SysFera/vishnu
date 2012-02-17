@@ -8,6 +8,11 @@
 
 #include "UserException.hpp"
 
+#ifdef WIN32
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif 
 
 static const int ERRCODE_UNKNOWN_USER = 20;
 static const int ERRCODE_UNKNOWN_USERID = 21;
@@ -43,11 +48,12 @@ static const int ERRCODE_INCORRECT_TRANSFER_CMD = 44;
 static const int ERRCODE_ROOT_USER_ONLY = 45;
 static const int ERRCODE_LOGIN_ALREADY_USED = 46;
 
+
 /**
  * \class UMSVishnuException
  * \brief Specialisation of the user exception for the UMS module
  */
-class UMSVishnuException: public UserException{
+class VISHNU_API_LIB UMSVishnuException: public UserException{
 
 public:
   /**

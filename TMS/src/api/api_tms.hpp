@@ -17,7 +17,11 @@
 #include "TMSVishnuException.hpp"
 
 #include "TMS_Data.hpp"
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 using namespace TMS_Data;
 
 namespace vishnu {
@@ -30,7 +34,7 @@ namespace vishnu {
   * \param options : Is an instance of the class SubmitOptions. Each optionnal value is associated to a set operation (e.g: setNbCpu(...)) in the class SubmitOptions.  If no set operation is not called on the instance object  options, the job is submitted with the options defined in the scriptFilePath. Otherewise the job is submitted with the optionnal values set by the options object and optionnal values defined in the scriptFilePath, but optionnal values set by SubmitOptions object take precedence over those in scriptFilePath. With in the object options or within the scriptFilePath, the last occurance of an optionnal value takes precedence over earlier occurance.
   * \return int : an error code
   */
-  int
+  VISHNU_API_LIB int
   submitJob(const std::string& sessionKey,
             const std::string& machineId,
             const std::string& scriptFilePath,
@@ -45,7 +49,7 @@ namespace vishnu {
   * \param jobId : The Id of the job
   * \return int : an error code
   */
-  int
+  VISHNU_API_LIB int
   cancelJob(const std::string& sessionKey,
             const std::string& machineId,
             const std::string& jobId)
@@ -59,7 +63,7 @@ namespace vishnu {
   * \param jobInfos : The resulting information on the job
   * \return int : an error code
   */
-  int
+  VISHNU_API_LIB int
   getJobInfo(const std::string& sessionKey,
              const std::string& machineId,
              const std::string& jobId,
@@ -74,7 +78,7 @@ namespace vishnu {
   * \param options : Additional options for jobs listing
   * \return int : an error code
   */
-  int
+  VISHNU_API_LIB int
   listJobs(const std::string& sessionKey,
            const std::string& machineId,
            ListJobs& listOfJobs,
@@ -89,7 +93,7 @@ namespace vishnu {
   * \param options : Is an object containing the available options jobs for progression .
   * \return int : an error code
   */
-  int
+  VISHNU_API_LIB int
   getJobProgress(const std::string& sessionKey,
                  const std::string& machineId,
                  ListProgression& listOfProgress,
@@ -104,7 +108,7 @@ namespace vishnu {
   * \param queueName The option value, if it is given, listQueues gives information only of this queue
   * \return int : an error code
   */
-  int
+  VISHNU_API_LIB int
   listQueues(const std::string& sessionKey,
              const std::string& machineId,
              ListQueues& listofQueues,
@@ -121,7 +125,7 @@ namespace vishnu {
    * \param outDir : The output directory where the files will be stored (default is current directory)
    * \return int : an error code
    */
-  int
+  VISHNU_API_LIB int
   getJobOutput(const std::string& sessionKey,
                const std::string& machineId,
                const std::string& jobId,
@@ -138,7 +142,7 @@ namespace vishnu {
    * \param listOfResults : Is the list of jobs results
    * \return int : an error code
    */
-  int
+  VISHNU_API_LIB int
   getCompletedJobsOutput(const std::string& sessionKey,
                    const std::string& machineId,
                    ListJobResults& listOfResults,

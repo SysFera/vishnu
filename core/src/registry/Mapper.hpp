@@ -11,7 +11,7 @@
 #include <map>
 #include <vector>
 
-#include <pthread.h>
+#include <boost/thread/mutex.hpp>
 #include "MapperRegistry.hpp"
 
 class MapperRegistry;
@@ -45,6 +45,8 @@ public :
    * \param m The mapper to copy
    */
   Mapper(const Mapper& m);
+
+  Mapper & operator= (const Mapper &);
   /**
    * \brief To register a mapper in the list of active mapper
    * \fn virtual int registerMapper()
@@ -140,7 +142,8 @@ protected:
   /**
    * \brief Mutex to protect the id generation for the mcmd map
    */
-  pthread_mutex_t mutex;
+  /*pthread_mutex_t mutex;*/
+  boost::mutex mutex;
 private:
 };
 

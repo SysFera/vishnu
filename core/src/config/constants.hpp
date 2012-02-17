@@ -3,7 +3,11 @@
 #define _CONSTANTS_HPP_
 
 #include <string>
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 namespace vishnu {
   /**
    * \brief Define a constant type
@@ -65,7 +69,7 @@ namespace vishnu {
   /**
    * \brief An arry to store all paraeters
    */
-  extern param_t params[]; //%RELAX<MISRA_3_1_3> Because this table is defined in constants.cpp 
+  extern "C" VISHNU_API_LIB param_t params[]; //%RELAX<MISRA_3_1_3> Because this table is defined in constants.cpp 
 }
 
 #endif /* _CONSTANTS_HPP_ */

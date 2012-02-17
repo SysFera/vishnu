@@ -13,10 +13,17 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#ifndef __WIN32__
 #include <pwd.h>
 #include <grp.h>
-#include <errno.h>
 #include <dirent.h>
+#else
+#include <Windows.h>
+#include <Lmcons.h>
+#endif
+
+#include <errno.h>
+
 
 #include "DIET_client.h"
 #include "DIET_Dagda.h"
@@ -88,9 +95,18 @@ int LocalFileProxy::transferFile(const string& dest,
 
   std::string srcHost(vishnu::getLocalMachineName("22"));
 
+#ifndef __WIN32__
   uid_t uid = getuid();
   struct passwd*  pw = getpwuid(uid);
   char* localUser = pw->pw_name;
+#else
+  DWORD cchBuff = 256; // size of user name
+  LPTSTR lpszSystemInfo; 
+  char tchBuffer[UNLEN + 1]; // buffer for expanded string
+  lpszSystemInfo = tchBuffer;
+  GetUserName(lpszSystemInfo, &cchBuff);
+  char* localUser = lpszSystemInfo;
+#endif
   
 
   char *optionsToString = NULL; 

@@ -93,7 +93,8 @@ POSTGREDatabase::POSTGREDatabase(DbConfiguration dbConfig)
   int i;
   mpool = new pool_t[mconfig.getDbPoolSize()];
   for (i=0;i<mconfig.getDbPoolSize();i++){
-    pthread_mutex_init(&(mpool[i].mmutex), NULL);
+    //pthread_mutex_init(&(mpool[i].mmutex), NULL);
+    mpool[i].mmutex.initialize();
     mpool[i].mused = false;
     mpool[i].mconn = NULL;
   }
@@ -121,7 +122,8 @@ POSTGREDatabase::disconnect(){
     if (mpool[i].mconn != NULL) {
       PQfinish(mpool[i].mconn);
     }
-    pthread_mutex_destroy(&(mpool[i].mmutex));
+    //pthread_mutex_destroy(&(mpool[i].mmutex));
+    mpool[i].mmutex.destroy();
   }
   return SUCCESS;
 }
@@ -178,14 +180,15 @@ POSTGREDatabase::getResult(std::string request, int transacId) {
 
 PGconn* POSTGREDatabase::getConnection(int& id){
   int i = 0;
-  int locked;
+  bool locked;
   // Looking for an unused connection
   while (true) {
     // If the connection is not used
     if(!mpool[i].mused) {
-      locked = pthread_mutex_trylock(&(mpool[i].mmutex));
+      /*locked = pthread_mutex_trylock(&(mpool[i].mmutex));*/
+      locked = mpool[i].mmutex.try_lock();
       // If lock fails-> the mutex was taken before trylock call
-      if (locked) {
+      if (!locked) {
       // Try next connexion
       continue;
       }
@@ -205,11 +208,12 @@ PGconn* POSTGREDatabase::getConnection(int& id){
 }
 
 void POSTGREDatabase::releaseConnection(int pos){
-  int ret;
+  /*int ret;
   ret = pthread_mutex_unlock(&(mpool[pos].mmutex));
   if (ret) {
     throw SystemException(ERRCODE_DBCONN, "Fail to release a mutex");
-  }
+  }*/
+  mpool[pos].mmutex.unlock(); 
   mpool[pos].mused = false;
 }
 

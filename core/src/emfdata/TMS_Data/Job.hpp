@@ -34,7 +34,11 @@
 #include <ecore_forward.hpp>
 
 #include <ecore/EObject.hpp>
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 /*PROTECTED REGION ID(Job_pre) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
@@ -47,7 +51,7 @@ namespace TMS_Data
      * \class Job
      * \brief Implementation of the Job class
      */
-    class Job: public virtual ::ecore::EObject
+    class VISHNU_API_LIB Job: public virtual ::ecore::EObject
 
     {
     public:

@@ -17,7 +17,11 @@
 #include <boost/program_options.hpp>
 #include <boost/function.hpp>
 #include <boost/shared_ptr.hpp>
-
+#ifdef WIN32
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 namespace po = boost::program_options;
 class Options;
 
@@ -26,7 +30,7 @@ class Options;
 * \brief Standard configuration class.
 */
 
-class Configuration {
+class VISHNU_API_LIB Configuration {
 
   public:
     /**
@@ -100,7 +104,7 @@ class Configuration {
   * \class Options
   * \brief Used to process the users command line parameters
   */
-  class Options {
+  class VISHNU_API_LIB Options {
 
     public:
 
@@ -281,7 +285,7 @@ class Configuration {
 
       /**
         * \brief to print the set of options allowed by a command
-        * \param os: Where options wiil be printed.
+        * \param os: Where options will be printed.
         * \param opt: the options to print.
         * \return the stream where the options are printed.
         */

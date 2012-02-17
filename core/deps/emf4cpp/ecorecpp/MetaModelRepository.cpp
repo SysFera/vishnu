@@ -41,19 +41,32 @@ MetaModelRepository::~MetaModelRepository()
 }
 
 ::ecore::EPackage_ptr MetaModelRepository::getByNSPrefix(
-        ::ecore::EString const & _prefix) const
+        ::ecore::EString const&  _prefix) const
 {
-    return m_by_nsPrefix.at(_prefix);
+#ifdef __WIN32__
+  return m_by_nsPrefix.find(_prefix)->second;
+#else 
+  return m_by_nsPrefix.at(_prefix);
+#endif    
 }
 
 ::ecore::EPackage_ptr MetaModelRepository::getByNSURI(::ecore::EString const& _uri) const
 {
-    return m_by_nsURI.at(_uri);
+#ifdef __WIN32__
+  return m_by_nsURI.find(_uri)->second;
+#else 
+  return m_by_nsURI.at(_uri);
+#endif 
+
 }
 
 ::ecore::EPackage_ptr MetaModelRepository::getByName(::ecore::EString const& _name) const
 {
-    return m_by_name.at(_name);
+#ifdef __WIN32__
+  return m_by_name.find(_name)->second;
+#else 
+  return m_by_name.at(_name);
+#endif     
 }
 
 void MetaModelRepository::load(::ecore::EPackage_ptr _mm)

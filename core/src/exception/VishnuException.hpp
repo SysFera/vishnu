@@ -10,7 +10,11 @@
 #include <cstdlib>
 #include <exception>
 #include <map>
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 /**
  * \brief If everything is ok , no need to define exception so
 */
@@ -19,7 +23,7 @@ static const int VISHNU_OK = 0;
  * \brief This class represents the root of all the exception of the system
  * \class VishnuException
  */
-class VishnuException :
+class VISHNU_API_LIB VishnuException :
   public std::exception {
 public:
 

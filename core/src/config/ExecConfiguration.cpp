@@ -2,17 +2,25 @@
  * \file ExecConfiguration.cpp
  */
 
+#ifdef __WIN32__
+#include <Windows.h>
+#else
 #include <regex.h>
+#endif
 #include <stdexcept>
 
 #include "ExecConfiguration.hpp"
 #include "constants.hpp"
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 #define MAXPATHLEN 200   // make this larger if you need to.
 
 using namespace std;
 
-const std::string simple_cast_traits<std::string>::zero_value = "";
+VISHNU_API_LIB const std::string simple_cast_traits<std::string>::zero_value = "";
 
 /**
  * \brief Constructor
@@ -86,7 +94,11 @@ ExecConfiguration::getCurrentBinaryDir()
   * points to we have the full path of the executable.
   */
 
+#ifdef __WIN32__ 
+  length = GetModuleFileName(NULL,fullpath,MAXPATHLEN);
+#else  
   length = readlink("/proc/self/exe", fullpath, sizeof(fullpath));
+#endif
 
   // Catch some errors
   if (length < 0) {

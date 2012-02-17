@@ -18,7 +18,11 @@
 
 #include<boost/function.hpp>
 
-
+#ifdef WIN32
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 
 class Options;
 
@@ -67,7 +71,7 @@ boost::function1<void,int> IntcallBackType;
  */
 
 
-boost::shared_ptr<Options>
+VISHNU_API_LIB boost::shared_ptr<Options>
 makeListHistoryCmdOptions(std::string pgName,StringcallBackType& fUserId,
                           std::string & dietConfig, StringcallBackType& fSessionId,
 												  std::string& startDateOption, std::string& endDateOption);

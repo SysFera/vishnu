@@ -14,6 +14,10 @@
 #include "UserProxy.hpp"
 #include "UMSVishnuException.hpp"
 #include "utilsClient.hpp"
+#ifdef __WIN32__
+#include "OSIndependance.hpp"
+#include "openssl/des.h"
+#endif
 
 /**
  * \fn explicit SessionProxy(const std::string& sessionKey)
@@ -138,7 +142,11 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   ifile.close();
 
   std::string salt = "$6$"+user.getData().getUserId()+"$";
+#ifndef __WIN32__
   encryptedKey = crypt(key, salt.c_str());
+#else
+  encryptedKey = DES_crypt(key, salt.c_str());
+#endif
 
   if(connect) {
     // SERIALIZE DATA MODEL

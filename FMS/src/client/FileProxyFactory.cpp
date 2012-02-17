@@ -1,8 +1,13 @@
 #include <string>
 
+#ifndef __WIN32__
 #include <unistd.h>
-#include <sys/types.h>
 #include <pwd.h>
+#else
+#include <Lmcons.h>
+#endif
+
+#include <sys/types.h>
 
 #include "SessionProxy.hpp"
 
@@ -22,9 +27,18 @@ FileProxy* FileProxyFactory::getFileProxy(const SessionProxy& sessionProxy,const
   }
  
   if (user=="") {
+#ifndef __WIN32__
     uid_t uid = getuid();
     struct passwd*  pw = getpwuid(uid);
     distUser = pw->pw_name;
+#else
+    DWORD cchBuff = 256; // size of user name
+    LPTSTR lpszSystemInfo; 
+    char tchBuffer[UNLEN + 1]; // buffer for expanded string
+    lpszSystemInfo = tchBuffer;
+    GetUserName(lpszSystemInfo, &cchBuff);
+    distUser = lpszSystemInfo;
+#endif  
   }
   return new RemoteFileProxy(sessionProxy,path, distUser);
 }

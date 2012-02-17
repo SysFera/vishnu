@@ -14,7 +14,9 @@
 #include "utilVishnu.hpp"
 #include "UMSVishnuException.hpp"
 #include "UserException.hpp"
-
+#ifdef WIN32
+#include "OSIndependance.hpp"
+#endif
 namespace po = boost::program_options;
 
 using namespace std;
@@ -105,7 +107,12 @@ int main (int ac, char* av[]){
 
     vishnuFinalize();
 
+#ifndef WIN32
     storeLastSession(session,getppid()); // store sessionKey into $HOME/.vishnu/sessions
+#else
+    DWORD cpid = GetCurrentProcessId();
+    storeLastSession(session,(int)GetParentProcessID(cpid));
+#endif    
     std::cout << "sessionId: " << session.getSessionId() << "\n";
 
     printSuccessMessage();

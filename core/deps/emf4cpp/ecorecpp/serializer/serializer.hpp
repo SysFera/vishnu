@@ -25,7 +25,11 @@
 #include "../mapping.hpp"
 #include "greedy_serializer.hpp"
 #include <fstream>
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 namespace ecorecpp
 {
 namespace serializer
@@ -33,7 +37,7 @@ namespace serializer
 
 typedef ::ecorecpp::mapping::type_traits::string_t string_t;
 
-class serializer
+class VISHNU_API_LIB serializer
 {
 public:
 

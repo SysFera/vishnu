@@ -1,11 +1,22 @@
-include_directories(client api
-  ${DIET_INCLUDE_DIR}
-  ${EMF4CPP_INCLUDE_DIR}
-  ${EMF_DATA_DIR}
-  ${UMS_EMF_DATA_DIR}
-  ${VISHNU_EXCEPTION_INCLUDE_DIR}
-  ${UTILVISHNU_SOURCE_DIR})
-
+IF (WIN32)
+  include_directories(client api
+    ${DIET_INCLUDE_DIR}
+    ${EMF4CPP_INCLUDE_DIR}
+    ${EMF_DATA_DIR}
+    ${UMS_EMF_DATA_DIR}
+    ${VISHNU_EXCEPTION_INCLUDE_DIR}
+    ${UTILVISHNU_SOURCE_DIR}
+    ${DEPS_INCLUDE_DIR}
+    ${OPENSSL_INCLUDE_DIR})
+ELSE (WIN32)    
+  include_directories(client api
+    ${DIET_INCLUDE_DIR}
+    ${EMF4CPP_INCLUDE_DIR}
+    ${EMF_DATA_DIR}
+    ${UMS_EMF_DATA_DIR}
+    ${VISHNU_EXCEPTION_INCLUDE_DIR}
+    ${UTILVISHNU_SOURCE_DIR})   
+ENDIF (WIN32)
 set(client_SRCS client/SessionProxy.cpp
   client/UserProxy.cpp
   client/MachineProxy.cpp
@@ -30,12 +41,19 @@ set(api_HEADERS api/api_ums.hpp)
 
 add_library(vishnu-ums-client ${client_SRCS} ${cli_SRCS} ${api_SRCS})
 set_target_properties(vishnu-ums-client PROPERTIES VERSION ${VISHNU_VERSION})
+
+IF (WIN32)
+target_link_libraries(vishnu-ums-client
+  ${DIET_CLIENT_LIBRARIES}
+  emf4cpp-vishnu
+  vishnu-core)
+ELSE (WIN32)
 target_link_libraries(vishnu-ums-client
   ${DIET_CLIENT_LIBRARIES}
   ${Boost_LIBRARIES}
   emf4cpp-vishnu
   vishnu-core)
-
+ENDIF (WIN32)
 install(TARGETS vishnu-ums-client DESTINATION ${LIB_INSTALL_DIR})
 install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
 

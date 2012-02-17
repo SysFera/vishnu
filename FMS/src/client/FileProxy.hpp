@@ -18,6 +18,9 @@
 #include "FMS_Data_forward.hpp"
 #include "FMS_Data.hpp"
 #include "FMSConstants.hpp"
+#ifdef __WIN32__
+#include "OSIndependance.hpp"
+#endif
 using namespace FMS_Data;
 
 

@@ -29,11 +29,15 @@
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 namespace ecore
 {
 
-    class EStructuralFeature: public virtual ::ecore::ETypedElement
+    class VISHNU_API_LIB EStructuralFeature: public virtual ::ecore::ETypedElement
     {
     public:
         EStructuralFeature();

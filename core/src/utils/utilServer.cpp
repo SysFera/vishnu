@@ -6,6 +6,7 @@
  */
 
 #include <boost/scoped_ptr.hpp>
+#include <boost/thread.hpp>
 #include "DatabaseResult.hpp"
 #include "utilServer.hpp"
 #include "utilVishnu.hpp"
@@ -14,7 +15,11 @@
 #include "DbFactory.hpp"
 
 // To get the hostname
+#ifdef WIN32
+#include "OSIndependance.hpp" 
+#else
 #include <unistd.h>
+#endif
 
 using namespace std;
 
@@ -370,9 +375,11 @@ vishnu::getObjectId(int vishnuId,
 
   std::string vishnuIdString = convertToString(vishnuId);
 
-  pthread_mutex_t mutex;
+  boost::mutex mutex;
+  /*pthread_mutex_t mutex;
   pthread_mutex_init(&(mutex), NULL);
-  pthread_mutex_lock(&(mutex));
+  pthread_mutex_lock(&(mutex));*/
+  mutex.lock();
 
   //To get the counter
   int counter;
@@ -387,16 +394,19 @@ vishnu::getObjectId(int vishnuId,
     if (idGenerated.size() != 0) {
     } else {
       SystemException e (ERRCODE_SYSTEM, "There is a problem during the id generation with the format:"+ formatName);
-      pthread_mutex_unlock(&(mutex));
+      /*pthread_mutex_unlock(&(mutex));*/
+      mutex.unlock();
       throw e;
     }
 
   } else {
-    pthread_mutex_unlock(&(mutex));
+    /*pthread_mutex_unlock(&(mutex));*/
+    mutex.unlock();
     SystemException e (ERRCODE_SYSTEM, "The format "+ formatName +" is undefined");
     throw e;
   }
-  pthread_mutex_unlock(&(mutex));
+  /*pthread_mutex_unlock(&(mutex));*/
+  mutex.unlock();
   return idGenerated;
 }
 /**

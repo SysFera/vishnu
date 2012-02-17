@@ -12,6 +12,9 @@
 #include "sessionUtils.hpp"
 #include "utilVishnu.hpp"
 #include "GenericCli.hpp"
+#ifdef WIN32
+#include "OSIndependance.hpp"
+#endif
 
 namespace po = boost::program_options;
 
@@ -25,7 +28,12 @@ struct CloseFunc {
     
     int res = close(sessionKey);
       
+#ifndef WIN32
     std::string sessionFile=getSessionLocation(getppid());
+#else
+    DWORD currentpid = GetCurrentProcessId();
+    std::string sessionFile=getSessionLocation((int)GetParentProcessID(currentpid));
+#endif    
       
     removeLastSession(sessionFile);
     

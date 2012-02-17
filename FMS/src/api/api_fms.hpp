@@ -15,9 +15,16 @@
 #include "UMSVishnuException.hpp"
 #include "FMSVishnuException.hpp"
 #include <sys/types.h>
+#ifdef __WIN32__
+#include "OSIndependance.hpp"
+#endif
 //FMS data  declarations
 #include <FMS_Data.hpp>
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 
 // Namespaces area
 using namespace std;
@@ -31,7 +38,7 @@ namespace vishnu{
    * \param path  the file path using host:path format
    * \return 0 if everything is OK, another value otherwise
    */
-  int
+  VISHNU_API_LIB int
     createFile(const string& sessionKey,const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
@@ -42,7 +49,7 @@ namespace vishnu{
    * \param path  the file path using host:path format
    * \return 0 if everything is OK, another value otherwise
    */
-  int
+  VISHNU_API_LIB int
     chGrp(const string& sessionKey, const string& group, const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
@@ -53,7 +60,7 @@ namespace vishnu{
    * \param path  the file path using host:path format
    * \return 0 if everything is OK, another value otherwise
    */
-  int chMod(const string& sessionKey, const mode_t& mode, const string& path)
+  VISHNU_API_LIB int chMod(const string& sessionKey, const mode_t& mode, const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -64,7 +71,7 @@ namespace vishnu{
    * \param options contains the options 
    * \return 0 if everything is OK, another value otherwise
    */
-  int copyFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options= CpFileOptions())
+  VISHNU_API_LIB int copyFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options= CpFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -77,7 +84,7 @@ namespace vishnu{
    * \param options contains options used to perform the file transfer
    * \return 0 if everything is OK, another value otherwise
    */
-  int copyAsyncFile(const string& sessionKey,const string& src, const string& dest,
+  VISHNU_API_LIB int copyAsyncFile(const string& sessionKey,const string& src, const string& dest,
       FileTransfer& transferInfo, const CpFileOptions& options = CpFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
@@ -89,7 +96,7 @@ namespace vishnu{
    * \param options   contains the options used to perform the service (like the maximum number of lines to get)
    * \return 0 if everything is OK, another value otherwise
    */
-  int headOfFile(const string& sessionKey,const string& path, string& contentOfFile, const HeadOfFileOptions& options = HeadOfFileOptions())
+  VISHNU_API_LIB int headOfFile(const string& sessionKey,const string& path, string& contentOfFile, const HeadOfFileOptions& options = HeadOfFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
   
   /** 
@@ -99,7 +106,7 @@ namespace vishnu{
    * \param contentOfFile  the content of specified the file
    * \return 0 if everything is OK, another value otherwise
    */
-  int contentOfFile(const string& sessionKey,const string& path, string& contentOfFile)
+  VISHNU_API_LIB int contentOfFile(const string& sessionKey,const string& path, string& contentOfFile)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
 
@@ -112,7 +119,7 @@ namespace vishnu{
    * \return 0 if everything is OK, another value otherwise
    */
  
-  int listDir(const string& sessionKey,const string& path, DirEntryList& dirContent,const LsDirOptions& options=LsDirOptions())
+  VISHNU_API_LIB int listDir(const string& sessionKey,const string& path, DirEntryList& dirContent,const LsDirOptions& options=LsDirOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -122,7 +129,7 @@ namespace vishnu{
    * \param options   contains the options used to perform the service (like the recursive creation)
    * \return 0 if everything is OK, another value otherwise
    */
-  int createDir(const string& sessionKey,const string& path,const CreateDirOptions& options= CreateDirOptions())
+  VISHNU_API_LIB int createDir(const string& sessionKey,const string& path,const CreateDirOptions& options= CreateDirOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -133,7 +140,7 @@ namespace vishnu{
    * \param options   contains the options used to perform the service (like the transfer command :scp or rsync)
    * \return 0 if everything is OK, another value otherwise
    */
-  int moveFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options= CpFileOptions() )
+  VISHNU_API_LIB int moveFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options= CpFileOptions() )
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -146,7 +153,7 @@ namespace vishnu{
    * \param options   contains the options used to perform the service (like the transfer command :scp or rsync)
    * \return 0 if everything is OK, another value otherwise
    */
-  int moveAsyncFile(const string& sessionKey,const string& src, const string& dest,
+  VISHNU_API_LIB int moveAsyncFile(const string& sessionKey,const string& src, const string& dest,
       FileTransfer& transferInfo, const CpFileOptions& options= CpFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
@@ -156,7 +163,7 @@ namespace vishnu{
    * \param options contains options used to perform the remove file function
    \return 0 if everything is OK, another value otherwise
    */
-  int removeFile(const string& sessionKey,const string& path,const RmFileOptions& options= RmFileOptions())
+  VISHNU_API_LIB int removeFile(const string& sessionKey,const string& path,const RmFileOptions& options= RmFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -165,7 +172,7 @@ namespace vishnu{
    * \param path    the directory path using host:path format
    * \return 0 if everything is OK, another value otherwise
    */
-  int removeDir(const string& sessionKey,const string& path)
+  VISHNU_API_LIB int removeDir(const string& sessionKey,const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -177,7 +184,7 @@ namespace vishnu{
    * \param contentOfFile  an user-allocated buffer to store the result
    * \return 0 if everything is OK, another value otherwise
    */
-  int tailOfFile(const string& sessionKey,const string& path, string& contentOfFile,const TailOfFileOptions& options = TailOfFileOptions())
+  VISHNU_API_LIB int tailOfFile(const string& sessionKey,const string& path, string& contentOfFile,const TailOfFileOptions& options = TailOfFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -187,7 +194,7 @@ namespace vishnu{
    * \param filesInfo  the file informations
    * \return 0 if everything is OK, another value otherwise
    */
-  int getFileInfo(const string& sessionKey,const string& path, FileStat& filesInfo)
+  VISHNU_API_LIB int getFileInfo(const string& sessionKey,const string& path, FileStat& filesInfo)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
 
@@ -198,7 +205,7 @@ namespace vishnu{
    *          moveAsyncFile )
    \return 0 if everything is OK, another value otherwise
    */
-  int stopFileTransfer(const string& sessionKey,const StopTransferOptions& options = StopTransferOptions() )
+  VISHNU_API_LIB int stopFileTransfer(const string& sessionKey,const StopTransferOptions& options = StopTransferOptions() )
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
 
@@ -210,7 +217,7 @@ namespace vishnu{
    moveAsyncFile)
    \return 0 if everything is OK, another value otherwise
    */
-  int listFileTransfers(const string& sessionKey,FileTransferList& fileTransferList, const LsTransferOptions& options = LsTransferOptions())
+  VISHNU_API_LIB int listFileTransfers(const string& sessionKey,FileTransferList& fileTransferList, const LsTransferOptions& options = LsTransferOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
 

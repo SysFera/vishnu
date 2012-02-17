@@ -23,14 +23,18 @@
 #include <ecore/EPackage.hpp>
 #include <map>
 #include <memory>
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 namespace ecorecpp
 {
 
 class MetaModelRepository;
 typedef MetaModelRepository* MetaModelRepository_ptr;
 
-class MetaModelRepository
+class VISHNU_API_LIB MetaModelRepository
 {
 public:
 
@@ -53,7 +57,8 @@ protected:
     MetaModelRepository();
 
     typedef std::map< ::ecore::EString, ::ecore::EPackage_ptr > by_nsPrefix_t;
-    by_nsPrefix_t m_by_nsPrefix;
+    //by_nsPrefix_t m_by_nsPrefix;
+    std::map< ::ecore::EString, ::ecore::EPackage_ptr > m_by_nsPrefix;
 
     typedef std::map< ::ecore::EString, ::ecore::EPackage_ptr > by_nsURI_t;
     by_nsURI_t m_by_nsURI;

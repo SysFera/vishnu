@@ -20,18 +20,22 @@
 #include "UserProxy.hpp"
 #include "Session.hpp"
 #include "ConnectOptions.hpp"
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 class UserProxy;
 /**
  * \brief Constant that defines the max size of the hostname
  */
-const int HOST_NAME_MAX_SIZE = 256;
+const size_t HOST_NAME_MAX_SIZE = 256;
 
 /**
  * \class SessionProxy 
  * \brief SessionProxy class implementation 
  */
-class SessionProxy
+class VISHNU_API_LIB SessionProxy
 {
 
   public:

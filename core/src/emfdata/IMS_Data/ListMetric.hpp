@@ -31,7 +31,11 @@
 #include <ecorecpp/mapping_forward.hpp>
 
 #include <ecore/EObject.hpp>
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 /*PROTECTED REGION ID(ListMetric_pre) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
@@ -44,7 +48,7 @@ namespace IMS_Data
      * \class ListMetric
      * \brief Implementation of the ListMetric class
      */
-    class ListMetric: public virtual ::ecore::EObject
+    class VISHNU_API_LIB ListMetric: public virtual ::ecore::EObject
 
     {
     public:

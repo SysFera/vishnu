@@ -10,6 +10,11 @@
 
 #include "UMS_Data.hpp"
 #include <iostream>
+#ifdef WIN32
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 class Options;
 
 
@@ -19,7 +24,7 @@ class Options;
  * \param os The output stream in which the display will be done.
  */
 
-void 
+VISHNU_API_LIB void 
 setFill(int size, std::ostream& os) ;
 
 /**
@@ -31,7 +36,7 @@ setFill(int size, std::ostream& os) ;
 
 
 
-std::ostream&
+VISHNU_API_LIB std::ostream&
 operator<<(std::ostream& os, const UMS_Data::Session_ptr& session);
 
 /**
@@ -41,7 +46,7 @@ operator<<(std::ostream& os, const UMS_Data::Session_ptr& session);
  * \return The output stream in which the list of sessions has been printed
  */
 
-std::ostream&
+VISHNU_API_LIB std::ostream&
 operator<<(std::ostream& os, UMS_Data::ListSessions& listSession);
 
 /**
@@ -52,7 +57,7 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession);
  */
 
 
-std::ostream&
+VISHNU_API_LIB std::ostream&
 operator<<(std::ostream& os, const UMS_Data::LocalAccount_ptr& account);
 
 /**
@@ -63,7 +68,7 @@ operator<<(std::ostream& os, const UMS_Data::LocalAccount_ptr& account);
  */
 
 
-std::ostream&
+VISHNU_API_LIB std::ostream&
 operator<<(std::ostream& os, UMS_Data::ListLocalAccounts& lsLocalAccounts);
 
 
@@ -76,7 +81,7 @@ operator<<(std::ostream& os, UMS_Data::ListLocalAccounts& lsLocalAccounts);
 
 
 
-std::ostream&
+VISHNU_API_LIB std::ostream&
 operator<<(std::ostream& os, const UMS_Data::Machine_ptr& machine);
 
 
@@ -87,7 +92,7 @@ operator<<(std::ostream& os, const UMS_Data::Machine_ptr& machine);
  * \return The output stream in which the list of machines has been printed
  */
 
-std::ostream&
+VISHNU_API_LIB std::ostream&
 operator<<(std::ostream& os, UMS_Data::ListMachines& lsMachine);
 
 
@@ -99,7 +104,7 @@ operator<<(std::ostream& os, UMS_Data::ListMachines& lsMachine);
  */
 
 
-std::ostream&
+VISHNU_API_LIB std::ostream&
 operator<<(std::ostream& os, const UMS_Data::Command_ptr& command);
 
 /**
@@ -110,7 +115,7 @@ operator<<(std::ostream& os, const UMS_Data::Command_ptr& command);
  */
 
 
-std::ostream& 
+VISHNU_API_LIB std::ostream& 
 operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand);
 
 /**
@@ -122,7 +127,7 @@ operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand);
 
 
 
-std::ostream&
+VISHNU_API_LIB std::ostream&
 operator<<(std::ostream& os,const UMS_Data::OptionValue_ptr& optionValue);
 
 /**
@@ -133,7 +138,7 @@ operator<<(std::ostream& os,const UMS_Data::OptionValue_ptr& optionValue);
  */
 
 
-std::ostream&
+VISHNU_API_LIB std::ostream&
 operator<<(std::ostream& os, UMS_Data::ListOptionsValues& lsOptions);
 
 /**
@@ -143,7 +148,7 @@ operator<<(std::ostream& os, UMS_Data::ListOptionsValues& lsOptions);
  * \return The output stream in which the user has been printed
  */
 
-std::ostream&
+VISHNU_API_LIB std::ostream&
 operator<<(std::ostream& os, const UMS_Data::User_ptr& user);
 
 /**
@@ -153,7 +158,7 @@ operator<<(std::ostream& os, const UMS_Data::User_ptr& user);
  * \return The output stream in which the list of users has been printed
  */
 
-std::ostream&
+VISHNU_API_LIB std::ostream&
 operator<<(std::ostream& os, UMS_Data::ListUsers& lsUsers);
 
 

@@ -18,7 +18,11 @@
 
 #include<boost/function.hpp>
 
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif 
 class Options;
 
 /**
@@ -48,7 +52,7 @@ boost::function1<void,UMS_Data::PrivilegeType> privilegeCallBackType;
  */
 
 
-boost::shared_ptr<Options> 
+VISHNU_API_LIB boost::shared_ptr<Options> 
 makeUserOptions(std::string pgName,std::string & dietConfig,
                 privilegeCallBackType & fPrivilege, StringcallBackType& fFirstname,
                 StringcallBackType& fLastName, StringcallBackType & fEmail, int type=0);

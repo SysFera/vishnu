@@ -11,7 +11,9 @@
 #include "utils.hpp"
 #include "utilVishnu.hpp"
 #include <boost/bind.hpp>
-
+#ifdef WIN32
+#include "OSIndependance.hpp"
+#endif
 using namespace vishnu;
 
 /**
@@ -126,9 +128,13 @@ int commonConfigure(boost::shared_ptr<Options> opt, int ac, char* av[], const Co
 
 
   /********************************************/
-
-
+#ifndef WIN32
   sessionKey=getLastSessionKey(getppid());
+#else
+  DWORD cpid = GetCurrentProcessId();
+  sessionKey=getLastSessionKey((int)GetParentProcessID(cpid));
+#endif  
+
 
 
     if(false==sessionKey.empty()){
@@ -164,7 +170,13 @@ int commonConfigure(boost::shared_ptr<Options> opt, int ac, char* av[], const Co
 
     if (checkBadSessionKeyError(e)){
 
+#ifndef WIN32
       removeBadSessionKeyFromFile(getppid());
+#else
+      DWORD ccpid = GetCurrentProcessId();
+      removeBadSessionKeyFromFile((int)GetParentProcessID(ccpid));
+#endif
+
     }
 
 

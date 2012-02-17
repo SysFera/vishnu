@@ -39,7 +39,11 @@
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 namespace TMS_Data
 {
 
@@ -47,7 +51,7 @@ namespace TMS_Data
      * \class SubmitOptions
      * \brief Implementation of the SubmitOptions class
      */
-    class SubmitOptions: public virtual ::ecore::EObject
+    class VISHNU_API_LIB SubmitOptions: public virtual ::ecore::EObject
 
     {
     public:

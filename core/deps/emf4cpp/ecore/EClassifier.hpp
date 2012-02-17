@@ -24,7 +24,11 @@
 #include <ecorecpp/mapping_forward.hpp>
 
 #include <ecore/ENamedElement.hpp>
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 /*PROTECTED REGION ID(EClassifier_pre) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
@@ -33,7 +37,7 @@
 namespace ecore
 {
 
-    class EClassifier: public virtual ::ecore::ENamedElement
+    class VISHNU_API_LIB EClassifier: public virtual ::ecore::ENamedElement
     {
     public:
         EClassifier();

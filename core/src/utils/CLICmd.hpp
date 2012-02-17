@@ -8,14 +8,18 @@
 
 #include "Options.hpp"
 #include "cliError.hpp"
-
+#ifdef WIN32
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 using namespace std;
 
 /**
  * \brief This class represents the class to parse the cli
  * \class CLICmd
  */
-class CLICmd{
+class VISHNU_API_LIB CLICmd{
 private :
   /**
    * \brief The argc value

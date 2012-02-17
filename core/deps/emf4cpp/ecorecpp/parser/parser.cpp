@@ -27,8 +27,16 @@
 #include <stdexcept>
 
 #ifdef DEBUG
+
+#ifdef __WIN32__
+#include "OSIndependance.hpp"
+#else
 #include <sys/time.h>
 #include <unistd.h>
+#endif
+
+
+
 #endif
 
 using namespace ::ecorecpp::parser;

@@ -6,7 +6,11 @@
 #include <sstream>
 
 #include <sys/types.h>
+#ifndef __WIN32__
 #include <pwd.h>
+#else
+#include <Lmcons.h>
+#endif
 
 #include "DIET_data.h"
 #include "DIET_client.h"
@@ -835,9 +839,18 @@ int RemoteFileProxy::transferFile(const std::string& dest,
 
 	  destHost =vishnu::getLocalMachineName("22");
 
+#ifndef __WIN32__
 	  uid_t uid = getuid();
 	  struct passwd*  pw = getpwuid(uid);
 	  localUser = pw->pw_name;
+#else
+    DWORD cchBuff = 256; // size of user name
+    LPTSTR lpszSystemInfo; 
+    char tchBuffer[UNLEN + 1]; // buffer for expanded string
+    lpszSystemInfo = tchBuffer;
+    GetUserName(lpszSystemInfo, &cchBuff);
+    localUser = lpszSystemInfo;
+#endif
 
 	  if(dest.compare(".")==0){
 		  destPath=bfs::current_path();

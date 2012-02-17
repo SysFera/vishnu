@@ -1,3 +1,4 @@
+IF (WIN32)
 include_directories(client api
   ${DIET_INCLUDE_DIR}
   ${EMF4CPP_INCLUDE_DIR}
@@ -6,8 +7,22 @@ include_directories(client api
   ${FMS_EMF_DATA_DIR}
   ${UMS_CLIENT_PROXY_SOURCE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
-  ${VISHNU_EXCEPTION_INCLUDE_DIR})
-
+  ${VISHNU_EXCEPTION_INCLUDE_DIR}
+  ${DEPS_INCLUDE_DIR}
+  ${OPENSSL_INCLUDE_DIR}
+  )
+ELSE (WIN32)
+include_directories(client api
+  ${DIET_INCLUDE_DIR}
+  ${EMF4CPP_INCLUDE_DIR}
+  ${EMF_DATA_DIR} 
+  ${UMS_EMF_DATA_DIR}
+  ${FMS_EMF_DATA_DIR}
+  ${UMS_CLIENT_PROXY_SOURCE_DIR}
+  ${UTILVISHNU_SOURCE_DIR}
+  ${VISHNU_EXCEPTION_INCLUDE_DIR}
+  )
+ENDIF (WIN32)
 set(client_SRCS client/FileProxy
   client/LocalFileProxy
   client/RemoteFileProxy
@@ -19,12 +34,22 @@ set(api_HEADERS api/api_fms.hpp)
 
 add_library(vishnu-fms-client ${client_SRCS} ${api_SRCS})
 SET_TARGET_PROPERTIES(vishnu-fms-client PROPERTIES VERSION ${VISHNU_VERSION})
+
+IF (WIN32)
+target_link_libraries(vishnu-fms-client
+  ${DIET_CLIENT_LIBRARIES}
+  emf4cpp-vishnu
+  vishnu-core
+  vishnu-ums-client
+  crypt32)
+ELSE (WIN32)
 target_link_libraries(vishnu-fms-client
   ${DIET_CLIENT_LIBRARIES}
   ${Boost_LIBRARIES}
   emf4cpp-vishnu
   vishnu-core
   crypt)
+ENDIF (WIN32)
 
 ## client CLI
 add_subdirectory(cli)

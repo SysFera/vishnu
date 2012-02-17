@@ -751,8 +751,8 @@ int
 
 
 int
-  addAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSystems& newAuthSys, const UMS_Data::AuthSystemsOptions& options =UMS_Data::AuthSystemsOptions())
-                                     throw(UserException, SystemException){}
+addAuthenticationSystem(const std::string& sessionKey, UMS_Data::AuthSystems& newAuthSys, const UMS_Data::AuthSystemsOptions& options =UMS_Data::AuthSystemsOptions())
+                                     throw(UserException, SystemException){return 0;}
 
 /***
  * \brief Function to add a new user-authentication system in VISHNU
@@ -765,7 +765,7 @@ int
 
 int
 updateAuthenticationSystem(const std::string& sessionKey, const UMS_Data::AuthSystems& AuthSys)
-                                     throw(UserException, SystemException){}
+                                     throw(UserException, SystemException){return 0;}
 
 /***
  * \brief Function to remove a user-authentication system from VISHNU  
@@ -776,7 +776,7 @@ updateAuthenticationSystem(const std::string& sessionKey, const UMS_Data::AuthSy
 
 int
 deleteAuthenticationSystem(const std::string& sessionKey, const std::string& authSystemId)
-                                    throw(UserException, SystemException){}
+                                    throw(UserException, SystemException){return 0;}
  
 
 
@@ -795,7 +795,7 @@ deleteAuthenticationSystem(const std::string& sessionKey, const std::string& aut
 
 int 
 listAuthenticationSystems(const std::string& sessionKey, UMS_Data::ListAuthSystems& listAuthSys, const UMS_Data::ListAuthSysOptions& options = UMS_Data::ListAuthSysOptions())
-                                     throw(UserException, SystemException){}
+                                     throw(UserException, SystemException){return 0;}
 
 
 /***
@@ -808,7 +808,7 @@ listAuthenticationSystems(const std::string& sessionKey, UMS_Data::ListAuthSyste
 
 int
 addAuthAccount(const std::string& sessionKey, const UMS_Data::AuthAccount& authAccount)
-                                     throw(UserException, SystemException){}
+                                     throw(UserException, SystemException){return 0;}
 
 
 /***
@@ -821,7 +821,7 @@ addAuthAccount(const std::string& sessionKey, const UMS_Data::AuthAccount& authA
 
 int 
 updateAuthAccount(const std::string& sessionKey, const UMS_Data::AuthAccount& authenAccount)
-                                     throw(UserException, SystemException){}
+                                     throw(UserException, SystemException){return 0;}
 
 
 /***
@@ -838,7 +838,7 @@ updateAuthAccount(const std::string& sessionKey, const UMS_Data::AuthAccount& au
 
 int 
 deleteAuthAccount(const std::string& sessionKey, const std::string& authSystemId, const std::string& userIdOption = "")
-                                     throw(UserException, SystemException){}
+                                     throw(UserException, SystemException){return 0;}
 
 /***
  * \brief Function to lists local user-authentication configurations 
@@ -855,7 +855,7 @@ deleteAuthAccount(const std::string& sessionKey, const std::string& authSystemId
 
 int 
 listAuthAccount(const std::string& sessionKey, UMS_Data::ListAuthAccounts& listAuthAccounts, const UMS_Data::ListAuthAccOptions& options = UMS_Data::ListAuthAccOptions())
-                            throw(UserException, SystemException){}
+                            throw(UserException, SystemException){return 0;}
 
 
 

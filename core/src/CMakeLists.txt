@@ -1,10 +1,19 @@
-include_directories(${Boost_INCLUDE_DIRS}
-  config exception utils emfdata database
-  ../deps/emf4cpp ${UMS_SERVER_SOURCE_DIR} ${TMS_SERVER_SOURCE_DIR}
-  ${IMS_SERVER_SOURCE_DIR} ${FMS_SERVER_SOURCE_DIR}
-  ${PROJECT_BINARY_DIR}
-  ${DATABASE_INCLUDE_DIR})
-
+IF (WIN32)
+  include_directories(${Boost_INCLUDE_DIRS}
+    config exception utils emfdata database
+    ../deps/emf4cpp ${UMS_SERVER_SOURCE_DIR} ${TMS_SERVER_SOURCE_DIR}
+    ${IMS_SERVER_SOURCE_DIR} ${FMS_SERVER_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
+    ${DEPS_INCLUDE_DIR}
+    ${OPENSSL_INCLUDE_DIR})
+ELSE (WIN32)
+  include_directories(${Boost_INCLUDE_DIRS}
+    config exception utils emfdata database
+    ../deps/emf4cpp ${UMS_SERVER_SOURCE_DIR} ${TMS_SERVER_SOURCE_DIR}
+    ${IMS_SERVER_SOURCE_DIR} ${FMS_SERVER_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
+    ${DATABASE_INCLUDE_DIR})
+ENDIF (WIN32)
 #################### config ###################################################
 set(config_SRCS config/CommonParser.cpp
   config/FileParser.cpp
@@ -315,10 +324,16 @@ add_library(vishnu-core ${config_SRCS}
   ${FMS_Data_SRCS}
 )
 
-target_link_libraries(vishnu-core
-  emf4cpp-vishnu
-  crypt)
-
+IF (WIN32)
+  target_link_libraries(vishnu-core
+    ${OPENSSL_LIBRARIES}
+    emf4cpp-vishnu
+    crypt32)
+ELSE (WIN32)
+  target_link_libraries(vishnu-core
+    emf4cpp-vishnu
+    crypt)
+ENDIF (WIN32)
 
 set(EMF-ECORE-HEADERS
   ${EMF4CPP_INCLUDE_DIR}/ecore/EAnnotation.hpp
@@ -399,7 +414,9 @@ install(FILES ${EMF4CPP_INCLUDE_DIR}/ecore_forward.hpp DESTINATION ${INCLUDE_INS
 
 install(FILES ${PROJECT_BINARY_DIR}/vishnu_version.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
 
+if (NOT WIN32)
 target_link_libraries(vishnu-core ${Boost_LIBRARIES})
+endif (NOT WIN32)
 
 if(NOT CLIENT_ONLY)
   set(database_SRCS 

@@ -17,7 +17,11 @@
 //Boost Headers
 
 #include<boost/function.hpp>
-
+#ifdef WIN32
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 
 
 
@@ -41,7 +45,7 @@ boost::function1<void,std::string> StringcallBackType;
  * \return The description of all options allowed by the command
  */
 
-boost::shared_ptr<Options>
+VISHNU_API_LIB boost::shared_ptr<Options>
 makeListMachineOptions(std::string pgName,StringcallBackType& fUserId,
                        std::string & dietConfig,StringcallBackType& fMachineId);
 

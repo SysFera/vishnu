@@ -7,7 +7,11 @@
 #define __USEREXCEPTION__
 
 #include "VishnuException.hpp"
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 // RESERVED CODES FROM 10 TO 19
 static const int ERRCODE_INVALID_PARAM = 10;
 static const int ERRCODE_FILENOTFOUND = 11;
@@ -20,7 +24,7 @@ static const int ERRCODE_CLI_ERROR_RUNTIME = 16;
  * \brief This class represents the exception due to a user misuse
  * \class UserException
  */
-class UserException :
+class VISHNU_API_LIB UserException :
   public VishnuException {
 public:
 

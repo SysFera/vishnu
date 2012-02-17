@@ -33,7 +33,11 @@
 #include <ecore_forward.hpp>
 
 #include <ecore/EObject.hpp>
-
+#ifdef __WIN32__
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif
 /*PROTECTED REGION ID(ListJobResults_pre) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
@@ -46,7 +50,7 @@ namespace TMS_Data
      * \class ListJobResults
      * \brief Implementation of the ListJobResults class
      */
-    class ListJobResults: public virtual ::ecore::EObject
+    class VISHNU_API_LIB ListJobResults: public virtual ::ecore::EObject
 
     {
     public:

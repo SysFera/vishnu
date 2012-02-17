@@ -2,7 +2,11 @@
 #include "sessionUtils.hpp"
 #include "api_ums.hpp"
 #include <fstream>
-
+#include <boost/lexical_cast.hpp>
+#ifdef WIN32
+#include <windows.h>
+#include <process.h>
+#endif
 //{{RELAX<MISRA_0_1_3> Because these variables are used in this file or other files
 
 /**
@@ -47,10 +51,19 @@ using namespace vishnu;
 
 bool
 pid_exists(const std::string& pid){
+ 
+#ifdef __WIN32__
+  int ipid = boost::lexical_cast< int >( pid );
+  HANDLE process = OpenProcess(SYNCHRONIZE, FALSE,ipid );
+  DWORD ret = WaitForSingleObject(process, 0);
+  CloseHandle(process);
+  return ret == WAIT_TIMEOUT;
+#else
   extern bfs::path proc_dir;
   bfs::path token(proc_dir);
   token /= pid;
   return bfs::exists(token);
+#endif
 }
 
 
@@ -106,7 +119,9 @@ deleter(char* dietConfig,int ac,char* av[]){
 
                 if (vishnuInitialize(dietConfig, ac, av)) {
 
+#ifndef __WIN32__
                   syslog(LOG_ERR,"DIET initialization failed !");
+#endif
 
                   exit (EXIT_FAILURE);
 
@@ -121,7 +136,9 @@ deleter(char* dietConfig,int ac,char* av[]){
                  
                   if (false==checkBadSessionKeyError(e)){// check if we need to stop the daemon
                     
+#ifndef __WIN32__
                      syslog(LOG_ERR, "The file is corrupted");
+#endif
                     
                      exit(e.getMsgI());
 
@@ -191,12 +208,17 @@ cleaner(char* dietConfig,int ac,char* av[]){
 
     bfs::ofstream f (daemon_file);
 
+#ifndef __WIN32__
     f<<getpid();    // record daemon pid
+#else
+    f<<_getpid();
+#endif
 
     f.close();
 
   }
 
+#ifndef __WIN32__
   pid_t pid = fork();// create a process resident to delete and close  all sessions corresponding on close terminal
 
   if (pid < 0) {
@@ -204,6 +226,32 @@ cleaner(char* dietConfig,int ac,char* av[]){
   } else if (0 == pid) {
     deleter(dietConfig,ac,av);
   }
+#else
+
+  string exepath("deleter.exe");
+  TCHAR* cmdlineP;
+  string cmdline;
+  STARTUPINFO         startup_info;
+  PROCESS_INFORMATION process_info;
+  memset(&startup_info, 0, sizeof(startup_info)); 
+  memset(&process_info, 0, sizeof(process_info)); 
+  startup_info.cb = sizeof(startup_info); 
+  cmdlineP = GetCommandLine();
+  cmdline.append(exepath);
+  cmdline.append(" ");
+  cmdline.append(dietConfig);
+  cmdline.append(" ");
+  cmdline.append(cmdlineP);
+
+  if (CreateProcess(const_cast<LPCSTR>(exepath.c_str()), 
+    const_cast<LPSTR>(cmdline.c_str()), 0, 0, false, 
+    CREATE_DEFAULT_ERROR_MODE, 0, 0, 
+    &startup_info, &process_info) == false) 
+  { 
+    /* CreateProcess failed */ 
+    std::cerr << "cleaning process: CreateProcess() failed" << std::endl;
+  } 
+#endif
 
   return;
 }

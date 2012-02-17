@@ -12,7 +12,9 @@
 #include "sessionUtils.hpp"
 #include "GenericCli.hpp"
 #include "UserException.hpp"
-
+#ifdef __WIN32__
+#include "OSIndependance.hpp"
+#endif
 namespace po = boost::program_options;
 
 using namespace std;
@@ -28,7 +30,12 @@ int main (int ac, char* av[]){
   boost::shared_ptr< Options> opt(new Options(av[0]) );
 
   // get the sessionId
+#ifdef __WIN32__
+  DWORD cpid = GetCurrentProcessId();
+  std::string sessionId=getLastSessionId((int)GetParentProcessID(cpid));
+#else
   std::string sessionId=getLastSessionId(getppid());
+#endif
 
   // DIET call 
   if(false==sessionId.empty()){
@@ -47,7 +54,12 @@ int main (int ac, char* av[]){
     errorUsage(av[0], msg,EXECERROR);
     //check the bad session key
     if (checkBadSessionKeyError(e)){
+#ifdef __WIN32__
+      DWORD rcpid = GetCurrentProcessId();
+      removeBadSessionKeyFromFile((int)GetParentProcessID(rcpid));
+#else
       removeBadSessionKeyFromFile(getppid());
+#endif      
     }
     return e.getMsgI() ;
   } catch(std::exception& e){// catch all std runtime error

@@ -4,10 +4,8 @@
  * update and delte commands
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
-
-
 #ifndef MACHINEUTILS__HH
-#define MACHNINEUTILS__HH
+#define MACHINEUTILS__HH
 
 
 #include<iostream>
@@ -16,7 +14,11 @@
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
 #include "UMS_Data.hpp"
-
+#ifdef WIN32
+#define VISHNU_API_LIB __declspec(dllexport)
+#else
+#define VISHNU_API_LIB
+#endif 
 
 class Options;
 
@@ -43,7 +45,7 @@ typedef  boost::function1<void,std::string> StringcallBackType;
  */
 
 
-boost::shared_ptr<Options> makeMachineOptions(std::string pgName,StringcallBackType& fName,std::string & dietConfig,
+VISHNU_API_LIB boost::shared_ptr<Options> makeMachineOptions(std::string pgName,StringcallBackType& fName,std::string & dietConfig,
                                               StringcallBackType & fSite, StringcallBackType& fLanguage,
                                               std::string& sshPublicKeyPath, StringcallBackType& fMachineDescription,int type=0);
 
