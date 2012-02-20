@@ -70,7 +70,8 @@ vishnu::connect(const string& userId,
 
     // Convert to list of users
     for (iter = auth.begin(); iter!=auth.end(); iter++){
-      pair<string,string> couple = iter->second;
+       pair<string,string> couple = iter->second;
+      
       if(couple.first.compare("login")==0) {
         user->setUserId(couple.second);
         state |= 0x0001;

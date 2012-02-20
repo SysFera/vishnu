@@ -1,4 +1,4 @@
--- This script is for update of the VISHNU database content
+﻿-- This script is for update of the VISHNU database content
 -- Script name          : database_update_ldap_postgre.sql
 -- Script owner         : SysFera SAS
 
@@ -62,4 +62,4 @@ ALTER TABLE vishnu DROP COLUMN machinecpt;
 ALTER TABLE vishnu DROP COLUMN jobcpt;
 ALTER TABLE vishnu DROP COLUMN fileSubcpt;
 
-update vishnu set formatidauth = "auth_$CPT"
+update vishnu set formatidauth = 'auth_$CPT'
