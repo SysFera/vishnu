@@ -98,6 +98,15 @@ class NetrcReader {
     void
     check();
 
+    /**
+     * \brief Function to analyze the couple key and value table 
+     * \param tab a table in which the couple key and value are registered
+     * \param machineName the machine name used for searching the couple
+     * \return The analyzed tab
+     */
+    map<size_t, pair<string,string> >&
+     analyze(std::map<size_t, pair<string,string> >& tab, const string& machineName);
+
     /////////////////////////////////
     // Attributes
     /////////////////////////////////

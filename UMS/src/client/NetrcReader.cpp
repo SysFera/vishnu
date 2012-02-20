@@ -101,7 +101,7 @@ NetrcReader::searchValueFromKey(const string& key,
   * \brief Function to get the login and the password associated to a specific machine from a map
   * \param tab a table in which the couple key and value are registered
   * \param machineName the machine name used for searching the couple
-  * \return the login and password associated to the corresponding machineName
+  * \return the login and password: associated to the corresponding machineName
   */
 pair<string,string>
 NetrcReader::getIdentifiers(std::map<size_t, pair<string,string> >& tab, const string& machineName) {
@@ -130,6 +130,48 @@ NetrcReader::getIdentifiers(std::map<size_t, pair<string,string> >& tab, const s
   std::string password = (iter->second).second;
   //return login and password values
   return pair<string, string>(login, password);
+}
+
+
+/**
+  * \brief Function to analyze the couple key and value table 
+  * \param tab a table in which the couple key and value are registered
+  * \param machineName the machine name used for searching the couple
+  * \return The analyszed tab
+  */
+map<size_t, pair<string,string> >&
+NetrcReader::analyze(std::map<size_t, pair<string,string> >& tab, const string& machineName) {
+
+  static std::map<size_t, pair<string,string> > analyzedTab;
+  std::map<size_t, pair<string,string> >::iterator iter;
+  std::map<size_t, pair<string,string> >::iterator end = tab.end();
+  bool machineNameIsNotFound = true;
+  for(iter = tab.begin(); iter!=tab.end(); ++iter) {
+    if(iter->second == pair<string,string> ("machine", machineName)) {
+      if(machineNameIsNotFound) {
+        machineNameIsNotFound = false;
+      }
+      ++iter; //to go to the next element
+      if (iter == end  || (iter->second).first.compare("login") != 0) {
+        throw UserException(ERRCODE_INVALID_PARAM,
+            "The login is undefined. The password must follow the login");
+      }
+      std::string login = (iter->second).second;
+      analyzedTab[iter->first] = pair<string, string>("login", login);
+      ++iter; //go to to the next element
+      if (iter == end  || (iter->second).first.compare("password") != 0) {
+        throw UserException(ERRCODE_INVALID_PARAM, "The password is undefined");
+      }
+      std::string password = (iter->second).second;
+      analyzedTab[iter->first] = pair<string, string>("password", password);
+    }
+  }
+  //if the machine name is not found
+  if(machineNameIsNotFound) {
+     throw UserException(ERRCODE_INVALID_PARAM, "The machine " + machineName + " is undefined");
+  }
+
+  return analyzedTab;
 }
 
 /**
@@ -241,7 +283,8 @@ NetrcReader::getNetrcInfo(const std::string& machineName) {
       }
     }
 //    return getIdentifiers(tab, machineName);
-    return tab;
+//    return tab;
+    return analyze(tab, machineName);
   }
   else {
     throw UserException(ERRCODE_INVALID_PARAM,
