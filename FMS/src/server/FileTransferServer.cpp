@@ -557,7 +557,7 @@ int FileTransferServer::stopThread(const std::string& transferid,const int& pid 
 
 if (pid!=-1){
 
-  if(result=kill(pid, SIGTERM)){
+  if(result=kill(pid, SIGKILL)){
 
     updateStatus(3,transferid,strerror(errno));
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,strerror(errno));

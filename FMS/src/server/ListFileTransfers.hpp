@@ -12,11 +12,13 @@
 #include <vector>
 #include <list>
 #include <iostream>
+#include <sstream>
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include "QueryServer.hpp"
 #include "SessionServer.hpp"
 #include "FMS_Data.hpp"
-
+#include "FileTypes.hpp"
+#include "utilVishnu.hpp"
 /**
  * \class ListFileTransfers
  * \brief ListFileTransfers class implementation
@@ -155,7 +157,11 @@ public:
           filetransfer->setDestinationMachineId(*(++iter));
           filetransfer->setSourceFilePath(*(++iter));
           filetransfer->setDestinationFilePath(*(++iter));
-          filetransfer->setSize(convertToInt(*(++iter)));
+          //std::istringstream  iss(*(++iter));
+         // file_size_t fileSize;
+
+          //iss >> fileSize;
+          filetransfer->setSize(vishnu::lexical_convertor<file_size_t>(*(++iter)));
           //convert the endDate into UTC date
           std::string tmpTime = *(++iter);
           startTime = convertLocaltimeINUTCtime(convertToTimeType(tmpTime)); 

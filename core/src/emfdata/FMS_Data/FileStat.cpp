@@ -208,15 +208,15 @@ void FileStat::setGid(::ecore::ELong _gid)
 #endif
 }
 
-::ecore::ELong FileStat::getSize() const
+::ecore::EBigInteger FileStat::getSize() const
 {
     return m_size;
 }
 
-void FileStat::setSize(::ecore::ELong _size)
+void FileStat::setSize(::ecore::EBigInteger _size)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::ELong _old_size = m_size;
+    ::ecore::EBigInteger _old_size = m_size;
 #endif
     m_size = _size;
 #ifdef ECORECPP_NOTIFICATION_API

@@ -155,15 +155,15 @@ void DirEntry::setPerms(::ecore::EInt _perms)
 #endif
 }
 
-::ecore::ELong DirEntry::getSize() const
+::ecore::EBigInteger DirEntry::getSize() const
 {
     return m_size;
 }
 
-void DirEntry::setSize(::ecore::ELong _size)
+void DirEntry::setSize(::ecore::EBigInteger _size)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::ELong _old_size = m_size;
+    ::ecore::EBigInteger _old_size = m_size;
 #endif
     m_size = _size;
 #ifdef ECORECPP_NOTIFICATION_API

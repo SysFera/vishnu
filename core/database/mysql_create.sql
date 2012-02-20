@@ -178,7 +178,7 @@ CREATE TABLE filetransfer (
   destinationMachineId VARCHAR(255),
   sourceFilePath VARCHAR(255),
   destinationFilePath VARCHAR(255),
-  fileSize INTEGER,
+  fileSize BIGINT UNSIGNED,
   startTime TIMESTAMP,
   trCommand INTEGER,
   processId INTEGER,
