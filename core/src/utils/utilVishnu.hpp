@@ -80,12 +80,25 @@ namespace vishnu {
   long long convertToTimeType(std::string date);
 
   /**
-  * \brief Function to convert a string to int
-  * \param  val a value to convert to int
-  * \return int value of the corresponding string
-  */
+   * \brief generic Function to convert a string to int
+   * \param  val a value to convert to int
+   * \return int value of the corresponding string
+   */
+  template<typename Target>
+    Target
+    lexical_convertor (const std::string& source){
+      Target intValue;
+      std::istringstream str(source);
+      str >> intValue;
+      return intValue;
+    }
+  /**
+   * \brief Function to convert a string to int
+   * \param  val a value to convert to int
+   * \return int value of the corresponding string
+   */
   int
-  convertToInt(std::string val);
+    convertToInt(std::string val);
 
   /**
    * \brief To crypt a password

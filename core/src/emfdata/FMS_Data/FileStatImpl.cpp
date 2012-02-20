@@ -89,7 +89,8 @@ void FileStat::_initialize()
         return _any;
     case ::FMS_Data::FMS_DataPackage::FILESTAT__SIZE:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::toAny(_any, m_size);
+        ::ecorecpp::mapping::any_traits< ::ecore::EBigInteger >::toAny(_any,
+                m_size);
     }
         return _any;
     case ::FMS_Data::FMS_DataPackage::FILESTAT__ATIME:
@@ -161,8 +162,8 @@ void FileStat::eSet(::ecore::EInt _featureID,
         return;
     case ::FMS_Data::FMS_DataPackage::FILESTAT__SIZE:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::fromAny(_newValue,
-                m_size);
+        ::ecorecpp::mapping::any_traits< ::ecore::EBigInteger >::fromAny(
+                _newValue, m_size);
     }
         return;
     case ::FMS_Data::FMS_DataPackage::FILESTAT__ATIME:

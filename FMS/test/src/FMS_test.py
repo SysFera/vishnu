@@ -90,6 +90,7 @@ def displayFileTransfer(filetransfer):
   print "Client Machine Id:", filetransfer.getClientMachineId()
   print "Source Machine Id:", filetransfer.getSourceMachineId()
   print "source path:", filetransfer.getSourceFilePath()
+  print "source file size : ", filetransfer.getSize()
   print "Destination MachineId:", filetransfer.getDestinationMachineId()
   print "Destination path:", filetransfer.getDestinationFilePath()
 
@@ -107,8 +108,8 @@ userId = "root";
 groupTest = "adm"; # userLogin must belong to groupTest on host 1
 sep = ":";
 slash = "/";
-machineId1 = "MA_1"; 
-machineId2 = "MA_1";
+machineId1 = "MA_193"; 
+machineId2 = "MA_193";
 
 #The first argument in command line corresponds to the machine name
 if len(sys.argv) > 1:

@@ -53,7 +53,7 @@
         <details key="content" value="The group identifier of the owner"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="size" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="size" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="The size of the file in bytes"/>
@@ -221,7 +221,7 @@
         <details key="content" value="The destination file path"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="size" eType="ecore:EDataType Ecore.ecore#//ELong"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="size" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="The size of the file "/>
@@ -311,7 +311,7 @@
         <details key="content" value="The protection of the remote  file"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="size" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="size" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="The size of the remote  file in bytes"/>

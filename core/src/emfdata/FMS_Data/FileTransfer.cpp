@@ -261,15 +261,15 @@ void FileTransfer::setDestinationFilePath(
 #endif
 }
 
-::ecore::ELong FileTransfer::getSize() const
+::ecore::EBigInteger FileTransfer::getSize() const
 {
     return m_size;
 }
 
-void FileTransfer::setSize(::ecore::ELong _size)
+void FileTransfer::setSize(::ecore::EBigInteger _size)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::ELong _old_size = m_size;
+    ::ecore::EBigInteger _old_size = m_size;
 #endif
     m_size = _size;
 #ifdef ECORECPP_NOTIFICATION_API

@@ -49,7 +49,6 @@ vishnu::convertToTimeType(std::string date) {
   return (long long) time_t(time);
 }
 
-
 /**
 * \brief Function to convert a string to int
 * \param  val a value to convert to int
@@ -57,11 +56,19 @@ vishnu::convertToTimeType(std::string date) {
 */
 int
 vishnu::convertToInt(std::string val) {
+#if 0
   int intValue;
   std::istringstream str(val);
   str >> intValue;
   return intValue;
+#endif
+  return vishnu::lexical_convertor<int>(val);
 }
+
+
+
+
+
 
 /**
  * \brief To crypt a password

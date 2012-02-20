@@ -116,12 +116,12 @@ namespace FMS_Data
          * \brief To get the size
          * \return The size attribute value
          **/
-        ::ecore::ELong getSize() const;
+        ::ecore::EBigInteger getSize() const;
         /**
          * \brief To set the size
          * \param _size The size value
          **/
-        void setSize(::ecore::ELong _size);
+        void setSize(::ecore::EBigInteger _size);
 
         /**
          * \brief To get the creationTime
@@ -178,7 +178,7 @@ namespace FMS_Data
 
         ::ecore::EInt m_perms;
 
-        ::ecore::ELong m_size;
+        ::ecore::EBigInteger m_size;
 
         ::ecore::EString m_creationTime;
 

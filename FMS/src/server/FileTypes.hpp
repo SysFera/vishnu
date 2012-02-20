@@ -78,7 +78,7 @@ typedef struct stat64 file_stat_t;
 /**
  * \brief A defintion of object size type
  */
-typedef long file_size_t;
+typedef off64_t file_size_t;
 /**
  * \brief The default defintion of stat function
  */

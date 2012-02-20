@@ -467,7 +467,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_FileStat__gid->setDerived(false);
     m_FileStat__gid->setOrdered(true);
     m_FileStat__size->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEBigInteger());
     m_FileStat__size->setName("size");
     m_FileStat__size->setDefaultValueLiteral("-1");
     m_FileStat__size->setLowerBound(0);
@@ -836,7 +836,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_FileTransfer__destinationFilePath->setDerived(false);
     m_FileTransfer__destinationFilePath->setOrdered(true);
     m_FileTransfer__size->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEBigInteger());
     m_FileTransfer__size->setName("size");
     m_FileTransfer__size->setDefaultValueLiteral("-1");
     m_FileTransfer__size->setLowerBound(0);
@@ -1040,7 +1040,7 @@ FMS_DataPackage::FMS_DataPackage()
     m_DirEntry__perms->setDerived(false);
     m_DirEntry__perms->setOrdered(true);
     m_DirEntry__size->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEBigInteger());
     m_DirEntry__size->setName("size");
     m_DirEntry__size->setDefaultValueLiteral("-1");
     m_DirEntry__size->setLowerBound(0);
