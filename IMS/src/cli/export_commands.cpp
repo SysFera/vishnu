@@ -93,7 +93,7 @@ int main (int argc, char* argv[]){
 
   bool isEmpty;
   //To process list options
-  GenericCli().processListOpt(opt, isEmpty, argc, argv, "[options] oldSessionId filename");
+  GenericCli().processListOpt(opt, isEmpty, argc, argv, "oldSessionId filename");
 
   //call of the api function
   ExportFunc exportFunc(oldSessionId, filename, exportOp);
