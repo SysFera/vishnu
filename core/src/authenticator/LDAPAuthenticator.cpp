@@ -17,6 +17,7 @@
 #include "DbFactory.hpp"
 #include "utilVishnu.hpp"
 #include "UMSVishnuException.hpp"
+#include "SystemException.hpp"
 
 
 using namespace std;
@@ -109,12 +110,7 @@ LDAPAuthenticator::authenticate(UMS_Data::User& user) {
     pwd = *ii;
     std::cout << "pwd:" << pwd << std::endl;
     std::cout << std::endl;
-    /*LDAPProxy ldapPoxy("ldap://127.0.0.1:389/",
-                    "cn=ldapadmin,dc=edf,dc=fr",
-                    "",
-                    "secret");
-    */
-    //TODO: Faire un try catch pour tester les différents systèmes d'authentification
+
     try {
       LDAPProxy ldapPoxy(uri,
                       authlogin,
@@ -138,6 +134,12 @@ LDAPAuthenticator::authenticate(UMS_Data::User& user) {
     }
     catch (UMSVishnuException& e) {
       if (e.getMsgI() != ERRCODE_UNKNOWN_USER) {
+        throw e;
+      }
+    }
+    catch (SystemException& e) {
+      //If there is a connection problem to LDAP and it is not the last LDAP account to check
+      if ((e.getMsgI() == ERRCODE_AUTHENTERR) && (i == (static_cast <int> (result->getNbTuples())-1))) {
         throw e;
       }
     }

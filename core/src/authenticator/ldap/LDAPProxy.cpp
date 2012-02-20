@@ -191,7 +191,7 @@ LDAPProxy::bind() {
   cred.bv_val = const_cast<char*>(mcredential.c_str());
   cred.bv_len = strlen(const_cast<char*>(mcredential.c_str()));
 
-  /* Bind to the server anonymously */
+  /* Bind to the server */
   return ldap_sasl_bind_s (
   mld,
   const_cast<char*>(mdistName.c_str()),
@@ -203,6 +203,7 @@ LDAPProxy::bind() {
 }
 
 LDAPProxy::~LDAPProxy() {
-  //TODO: faire un unbind à la fin
-  //ldap_unbind_ext_s ( mld, NULL, NULL );
+  if (mld != NULL) {
+    ldap_unbind_ext_s ( mld, NULL, NULL );
+  }
 }

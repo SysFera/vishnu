@@ -9,6 +9,8 @@
 #include "UMSLDAPAuthenticator.hpp"
 #include "LDAPAuthenticator.hpp"
 #include "UMSAuthenticator.hpp"
+#include "UMSVishnuException.hpp"
+#include "SystemException.hpp"
 
 UMSLDAPAuthenticator::UMSLDAPAuthenticator(){
 }
@@ -26,13 +28,21 @@ UMSLDAPAuthenticator::authenticate(UMS_Data::User& user) {
   //The password changed on the authenticate of UMS that is why the clear version is saved
   string ldapPassword = user.getPassword();
 
-  if (umsAuthenticator.authenticate(user)) {
-    authenticated = true;
+  //To avoid to return an exception when the first authenticator failed
+  try {
+    authenticated = umsAuthenticator.authenticate(user);
+  } catch (UMSVishnuException& e) {
+    //Do nothing
+  } catch (SystemException& e) {
+    //Do nothing
+  }
+
+  if (authenticated) {
+    return authenticated;
   }
   else {
     user.setPassword(ldapPassword);
-    authenticated = ldapAuthenticator.authenticate(user);
+    return ldapAuthenticator.authenticate(user);
   }
-  return authenticated;
 }
 

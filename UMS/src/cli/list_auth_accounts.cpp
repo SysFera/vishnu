@@ -76,20 +76,20 @@ int main (int ac, char* av[]){
 
 
   opt->add("userId,u",
-      "is an admin option for listing all local user-authentication "
-      "configurations of a specific user identified by his/her userId",
+      "is an admin option for listing all user-authentication "
+      "accounts of a specific user identified by his/her userId",
       CONFIG,
       fUserId);
 
   opt->add("authSystemId,i",
-      "is an option for listing local user-configuration of"
+      "is an option for listing user-authentication account of "
        "a specific user-authentication system",
       CONFIG,
       fAuthSystemId);
 
   opt->add("listAll,a",
-      "is an admin option for listing all local"
-      "user-authentication configurations of VISHNU",
+      "is an admin option for listing all"
+      " user-authentication accounts of VISHNU",
       CONFIG
       );
 

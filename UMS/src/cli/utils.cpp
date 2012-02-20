@@ -64,6 +64,7 @@ operator<<(std::ostream& os, const UMS_Data::Session_ptr& session) {
 
 
   std::string  userId = session->getUserId();
+  std::string  authenId = session->getAuthenId();
 
   long dateLastConnect = session->getDateLastConnect();
   if(dateLastConnect <= 0) {
@@ -104,7 +105,8 @@ operator<<(std::ostream& os, const UMS_Data::Session_ptr& session) {
   os << setw(25) << right << "DateClosure: " << dateCloseStr << endl;
   os << setw(25) << right << "Status: " << status << " (" << statusStr << ")" << endl;
   os << setw(25) << right << "ClosePolicy: " << closePolicy << " (" << closePolicyStr << ")"  << endl;
-  os << setw(25) << right << "TimeOut: " << timeOut << " seconds";
+  os << setw(25) << right << "TimeOut: " << timeOut << " seconds" << endl;
+  os << setw(25) << right << "AuthId: " << authenId;
   os << endl;
 
  return os;
@@ -127,6 +129,7 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
 
   boost::posix_time::ptime pt;
   size_t maxSessionIdSize = std::string("SessionId").size();
+  size_t maxAuthIdSize = std::string("AuthId").size();
   size_t maxUserIdSize = std::string("UserId").size();
   size_t maxDateLastConnectSize = std::string("DateLastConnect").size();
   size_t maxDateCreateSize = std::string("DateCreation").size();
@@ -136,6 +139,7 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
   std::string blank = "  ----  ";
   std::string sessionId;
   std::string userId;
+  std::string authId;
   std::string dateLastConnectStr = blank;
   std::string dateCreateStr = blank;
   std::string dateCloseStr = blank;
@@ -183,7 +187,7 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
 
   os << setw(maxSessionIdSize+2) << left << "SessionId" << setw(maxUserIdSize+2) << left << "UserId" << setw(maxDateLastConnectSize+2) ;
   os << left << "DateLastConnect" << setw(maxDateCreateSize+2) << left << "DateCreation" << setw(maxDateCloseSize+2) << left << "DateClosure";
-  os << setw(8) << left << "Status" << setw(13) << left << "ClosePolicy" << setw(maxTimeOutSize+2) << left << "TimeOut" << endl ;
+  os << setw(8) << left << "Status" << setw(13) << left << "ClosePolicy" << setw(maxTimeOutSize+2) << left << "TimeOut" << setw(maxAuthIdSize+2) << left << "AuthId" <<endl ;
   setFill(maxSessionIdSize, os);
   setFill(maxUserIdSize, os);
   setFill(maxDateLastConnectSize, os);
@@ -192,6 +196,7 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
   setFill(6, os);
   setFill(11, os);
   setFill(maxTimeOutSize, os);
+  setFill(maxAuthIdSize, os);
   os << endl;
 
 
@@ -199,7 +204,7 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
     sessionId = (listSession.getSessions().get(i))->getSessionId();
 
     userId = (listSession.getSessions().get(i))->getUserId();
-
+    authId = (listSession.getSessions().get(i))->getAuthenId();
 
     dateLastConnect = (listSession.getSessions().get(i))->getDateLastConnect();
     if(dateLastConnect <= 0) {
@@ -238,7 +243,8 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
     os << setw(maxDateCloseSize+2) << left << dateCloseStr;
     os << setw(8) << left << status;
     os << setw(13) << left << closePolicy;
-    os << setw(maxTimeOutSize) << left << timeOut;
+    os << setw(maxTimeOutSize+2) << left << timeOut;
+    os << setw(maxAuthIdSize) << left << authId;
     os << endl;
 
   }
