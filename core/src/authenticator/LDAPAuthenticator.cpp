@@ -8,52 +8,12 @@
 #include <iostream>
 #include <boost/scoped_ptr.hpp>
 #include "LDAPAuthenticator.hpp"
-#include "boost/archive/iterators/base64_from_binary.hpp"
-#include "boost/archive/iterators/binary_from_base64.hpp"
-#include "boost/archive/iterators/transform_width.hpp"
-#include <openssl/sha.h>
 #include "ldap/LDAPProxy.hpp"
 #include "DatabaseResult.hpp"
 #include "DbFactory.hpp"
 #include "utilVishnu.hpp"
 #include "UMSVishnuException.hpp"
 #include "SystemException.hpp"
-
-
-using namespace std;
-using namespace boost::archive::iterators;
-
-typedef
-    base64_from_binary<
-        transform_width<string::const_iterator, 6, 8>
-> base64_t;
-
-typedef
-    transform_width<
-        binary_from_base64<string::const_iterator>, 8, 6
-> binary_t;
-
-
-bool
-checkPassword(string sshaLdapPassword, string clearPassword) {
-  unsigned char hash[20];
-  string s = sshaLdapPassword.substr(6);
-
-  string decodeds(
-        binary_t(s.begin()),
-        binary_t(s.begin() + s.length())
-        );
-
-  string salt = decodeds.substr(20);
-  string digest = decodeds.substr(0,20);
-
-  string  newStr = clearPassword;
-  newStr.append(salt);
-
-  SHA1((unsigned char*)newStr.c_str(), newStr.size(), hash);
-
-  return (digest.compare(string(reinterpret_cast< char const * >(hash))) == 0);
-}
 
 
 LDAPAuthenticator::LDAPAuthenticator(){
@@ -113,10 +73,14 @@ LDAPAuthenticator::authenticate(UMS_Data::User& user) {
 
     try {
       LDAPProxy ldapPoxy(uri,
-                         authlogin,
+                         user.getUserId(),
                          "",
-                         authpassword);
+                         user.getPassword());
       ldapPoxy.connectLDAP(ldapbase);
+      authenticated = true;
+      user.setUserId(userid);
+      user.setPassword(pwd);
+      break;
     }
     catch (UMSVishnuException& e) {
       if (e.getMsgI() != ERRCODE_UNKNOWN_USER) {
@@ -130,7 +94,6 @@ LDAPAuthenticator::authenticate(UMS_Data::User& user) {
       }
     }
   }
-
   return authenticated;
 }
 
