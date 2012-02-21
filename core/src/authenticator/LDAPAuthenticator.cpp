@@ -113,24 +113,24 @@ LDAPAuthenticator::authenticate(UMS_Data::User& user) {
 
     try {
       LDAPProxy ldapPoxy(uri,
-                      authlogin,
-                      "",
-                      authpassword);
-      ldapPoxy.connectLDAP();
-      ldapPoxy.searchLDAP(ldapbase,
-                          string("uid=").append(user.getUserId()),
-                          &searchResult);
+                         user.getUserId(),
+                         "",
+                         user.getPassword());
+      ldapPoxy.connectLDAP(ldapbase);
+//      ldapPoxy.searchLDAP(ldapbase,
+//                          string("uid=").append(user.getUserId()),
+//                          &searchResult);
 
-      if (ldapPoxy.hasResults(&searchResult)) {
-          if (checkPassword(ldapPoxy.getUserPassword(&searchResult),user.getPassword())) {
-            authenticated = true;
-            user.setUserId(userid);
-            user.setPassword(pwd);
-            ldap_msgfree(searchResult);
-            return authenticated;
-        }
-      }
-      ldap_msgfree(searchResult);
+//      if (ldapPoxy.hasResults(&searchResult)) {
+//          if (checkPassword(ldapPoxy.getUserPassword(&searchResult),user.getPassword())) {
+//            authenticated = true;
+//            user.setUserId(userid);
+//            user.setPassword(pwd);
+//            ldap_msgfree(searchResult);
+//            return authenticated;
+//        }
+//      }
+//      ldap_msgfree(searchResult);
     }
     catch (UMSVishnuException& e) {
       if (e.getMsgI() != ERRCODE_UNKNOWN_USER) {
