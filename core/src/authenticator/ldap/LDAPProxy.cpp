@@ -1,23 +1,25 @@
 #include "LDAPProxy.hpp"
 #include "SystemException.hpp"
+#include "UMSVishnuException.hpp"
 
 /**
 * \param uri The LDAP uri by of the form host:port
-* \param distName the distinguished name of the entry used to bind
+* \param userName the distinguished name of the entry used to bind
 * \param authMechanism the authentication method used to bind
-* \param credential the credential of the distName name used for authentication
+* \param password the password of the user
 * \param serverCtrls A list of LDAP server controls
 * \param clientCtrls A list of LDAP client controls
 * \brief Constructor
 */
 LDAPProxy::LDAPProxy(const string& uri,
-                    const string& distName,
-                    const string& authMechanism,
-                    const string& credential,
-                    LDAPControl* serverCtrls,
-                    LDAPControl* clientCtrls) : muri(uri), mdistName(distName),
-                    mauthMechanism(authMechanism), mcredential(credential)
-                   {
+                     const string& userName,
+                     const string& authMechanism,
+                     const string& password,
+                     LDAPControl* serverCtrls,
+                     LDAPControl* clientCtrls) :
+  muri(uri), muserName(userName),
+  mauthMechanism(authMechanism), mpwd(password)
+{
 
    mld = NULL;
    mserverCtrls =  serverCtrls;
@@ -28,7 +30,7 @@ LDAPProxy::LDAPProxy(const string& uri,
 * \brief Function to initialize a connection on a LDAP server
 */
 int
-LDAPProxy::connectLDAP() {
+LDAPProxy::connectLDAP(const string& ldapbase) {
   int ret;
 
   /* Initialize the LDAP session */
@@ -40,7 +42,10 @@ LDAPProxy::connectLDAP() {
 
   ret = bind();
   if (ret != LDAP_SUCCESS ) {
+    if (ret != LDAP_INVALID_CREDENTIALS ) {
       throw SystemException(ERRCODE_AUTHENTERR, ldap_err2string(ret));
+    }
+    throw UserException(ERRCODE_UNKNOWN_USER, "The user is unknown");
   }
   return 0;
 }
@@ -63,36 +68,36 @@ LDAPProxy::connectLDAP() {
 * \return resutls
 * \brief Function to search data
 */
-int
-LDAPProxy::searchLDAP(  string          base,
-                        string          filter,
-                        LDAPMessage     **res,
-                        int             scope,
-                        char            **attrs,
-                        int             attrsonly,
-                        LDAPControl     **serverctrls,
-                        LDAPControl     **clientctrls,
-                        struct timeval  *timeout,
-                        int             sizelimit) {
-
-  int result = ldap_search_ext_s( mld,
-                                  base.c_str(),
-                                  scope,
-                                  filter.c_str(),
-                                  attrs,
-                                  attrsonly,
-                                  serverctrls,
-                                  clientctrls,
-                                  timeout,
-                                  sizelimit,
-                                  res);
-  if (result != LDAP_SUCCESS) {
-    ldap_msgfree(*res);
-    throw SystemException(ERRCODE_AUTHENTERR, ldap_err2string(result));
-  }
-
-  return 0;
-}
+//int
+//LDAPProxy::searchLDAP(  string          base,
+//                        string          filter,
+//                        LDAPMessage     **res,
+//                        int             scope,
+//                        char            **attrs,
+//                        int             attrsonly,
+//                        LDAPControl     **serverctrls,
+//                        LDAPControl     **clientctrls,
+//                        struct timeval  *timeout,
+//                        int             sizelimit) {
+//
+//  int result = ldap_search_ext_s( mld,
+//                                  base.c_str(),
+//                                  scope,
+//                                  filter.c_str(),
+//                                  attrs,
+//                                  attrsonly,
+//                                  serverctrls,
+//                                  clientctrls,
+//                                  timeout,
+//                                  sizelimit,
+//                                  res);
+//  if (result != LDAP_SUCCESS) {
+//    ldap_msgfree(*res);
+//    throw SystemException(ERRCODE_AUTHENTERR, ldap_err2string(result));
+//  }
+//
+//  return 0;
+//}
 
 /**
 * \brief Function to display the search results
@@ -188,13 +193,13 @@ LDAPProxy::getUserPassword(LDAPMessage **res) {
 int
 LDAPProxy::bind() {
   struct berval cred;
-  cred.bv_val = const_cast<char*>(mcredential.c_str());
-  cred.bv_len = strlen(const_cast<char*>(mcredential.c_str()));
+  cred.bv_val = const_cast<char*>(mpwd.c_str());
+  cred.bv_len = strlen(const_cast<char*>(mpwd.c_str()));
 
   /* Bind to the server */
   return ldap_sasl_bind_s (
   mld,
-  const_cast<char*>(mdistName.c_str()),
+  const_cast<char*>(muserName.c_str()),
   LDAP_SASL_SIMPLE,
   &cred,
   &mserverCtrls,

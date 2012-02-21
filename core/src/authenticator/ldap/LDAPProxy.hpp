@@ -27,26 +27,27 @@ class LDAPProxy {
 
   /**
   * \param uri The LDAP uri by of the form host:port
-  * \param distName the distinguished name of the entry used to bind
+  * \param userName the user name
   * \param authMechanism the authentication method used to bind
-  * \param credential the credential of the distName name used for authentication
+  * \param password the password of the user
   * \param serverCtrls A list of LDAP server controls
   * \param clientCtrls A list of LDAP client controls
   * \brief Constructor
   */
   explicit LDAPProxy(const string& uri,
-                     const string& distName,
+                     const string& userName,
                      const string& authMechanism,
-                     const string& credential,
+                     const string& password,
                      LDAPControl* serverCtrls=NULL,
                      LDAPControl* clientCtrls=NULL
                     );
 
   /**
   * \brief Function to initialize a connection on a LDAP server
+  * \param ldapbase the ldapbase of the ldap system
   */
   int
-  connectLDAP();
+  connectLDAP(const string& ldapbase);
 
   /**
   * \param base specifies the DN of the entry at which to start the search
@@ -66,17 +67,17 @@ class LDAPProxy {
   * \return resutls
   * \brief Function to search data
   */
-  int
-  searchLDAP( string          base,
-              string          filter,
-              LDAPMessage     **res,
-              int             scope=LDAP_SCOPE_SUBTREE,
-              char            **attrs=NULL,
-              int             attrsonly=0,
-              LDAPControl     **serverctrls=NULL,
-              LDAPControl     **clientctrls=NULL,
-              struct timeval  *timeout=NULL,
-              int             sizelimit=LDAP_NO_LIMIT);
+//  int
+//  searchLDAP( string          base,
+//              string          filter,
+//              LDAPMessage     **res,
+//              int             scope=LDAP_SCOPE_SUBTREE,
+//              char            **attrs=NULL,
+//              int             attrsonly=0,
+//              LDAPControl     **serverctrls=NULL,
+//              LDAPControl     **clientctrls=NULL,
+//              struct timeval  *timeout=NULL,
+//              int             sizelimit=LDAP_NO_LIMIT);
   /**
   * \brief Function to display the search results
   */
@@ -120,7 +121,7 @@ class LDAPProxy {
   /**
   * \brief the distinguished name of the entry used to bind
   */
-   string mdistName;
+   string muserName;
   /**
   * \brief the authentication method used
   */
@@ -128,7 +129,7 @@ class LDAPProxy {
    /**
   * \brief the credential to use for authentication
   */
-   string mcredential;
+   string mpwd;
 
    LDAPControl* mserverCtrls;
    LDAPControl* mclientCtrls;
