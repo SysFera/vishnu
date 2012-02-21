@@ -24,10 +24,10 @@ UMSLDAPAuthenticator::authenticate(UMS_Data::User& user) {
 
   UMSAuthenticator umsAuthenticator;
   LDAPAuthenticator ldapAuthenticator;
+  SystemException excep;
 
   //The password changed on the authenticate of UMS that is why the clear version is saved
   string ldapPassword = user.getPassword();
-
   //To avoid to return an exception when the first authenticator failed
   try {
     authenticated = umsAuthenticator.authenticate(user);
@@ -35,6 +35,9 @@ UMSLDAPAuthenticator::authenticate(UMS_Data::User& user) {
     //Do nothing
   } catch (SystemException& e) {
     //Do nothing
+    excep.setMsgComp(e.getMsgComp());
+    excep.setType(e.getTypeI());
+    excep.setMsg(e.getMsgI());
   }
 
   if (authenticated) {
@@ -42,7 +45,15 @@ UMSLDAPAuthenticator::authenticate(UMS_Data::User& user) {
   }
   else {
     user.setPassword(ldapPassword);
-    return ldapAuthenticator.authenticate(user);
+    authenticated = ldapAuthenticator.authenticate(user);
+    //if the user is not authenticated
+    if (!authenticated) {
+      //If an exception has been found
+      if (excep.getTypeS().compare("NONE")!=0) {
+        throw excep;
+      }
+    }
+    return authenticated;
   }
 }
 
