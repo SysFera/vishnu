@@ -24,8 +24,7 @@ LDAPUMSAuthenticator::authenticate(UMS_Data::User& user) {
 
   UMSAuthenticator umsAuthenticator;
   LDAPAuthenticator ldapAuthenticator;
-  bool exceptionSystemFound = false;
-  bool exceptionUMSFound = false;
+  SystemException excep;
 
   //To avoid to return an exception when the first authenticator failed
   try {
@@ -34,13 +33,24 @@ LDAPUMSAuthenticator::authenticate(UMS_Data::User& user) {
     //Do nothing
   } catch (SystemException& e) {
     //Do nothing
+    excep.setMsgComp(e.getMsgComp());
+    excep.setType(e.getTypeI());
+    excep.setMsg(e.getMsgI());
   }
 
   if (authenticated) {
     return authenticated;
   }
   else {
-    return umsAuthenticator.authenticate(user);
+     authenticated = umsAuthenticator.authenticate(user);
+    //if the user is not authenticated
+    if (!authenticated) {
+      //If an exception has been found
+      if (excep.getTypeS().compare("NONE")!=0) {
+        throw excep;
+      }
+    }
+    return authenticated;
   }
 }
 
