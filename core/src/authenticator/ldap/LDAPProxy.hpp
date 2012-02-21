@@ -50,61 +50,13 @@ class LDAPProxy {
   connectLDAP(const string& ldapbase);
 
   /**
-  * \param base specifies the DN of the entry at which to start the search
-  * \param filter specifies a string representation of the filter to apply in the search
-  * \param scope specifies the scope of the search. It can be LDAP_SCOPE_BASE
-  * (to search the object itself), or LDAP_SCOPE_ONELEVEL (to search the object's immediate children),
-  * or LDAP_SCOPE_SUBTREE (to search the object and all its descendents)
-  * \param attrs specifies a null-terminated array of character string attribute types
-  * to return from entries that match filter. If NULL is specified, all attributes will be returned.
-  * \param attrsonly Specifies attribute information. Attrsonly should be set to 1.
-  * to request attribute types only. Set to 0 to request both attributes types and attribute values.
-  * \param serverCtrls A list of LDAP server controls
-  * \param clientCtrls A list of LDAP client controls
-  * \param timeout The local search timeout value
-  * and the operation time limit that is sent to the server within the search request.
-  * \param sizelimit specifies the maximum number of entries to return.
-  * \return resutls
-  * \brief Function to search data
-  */
-//  int
-//  searchLDAP( string          base,
-//              string          filter,
-//              LDAPMessage     **res,
-//              int             scope=LDAP_SCOPE_SUBTREE,
-//              char            **attrs=NULL,
-//              int             attrsonly=0,
-//              LDAPControl     **serverctrls=NULL,
-//              LDAPControl     **clientctrls=NULL,
-//              struct timeval  *timeout=NULL,
-//              int             sizelimit=LDAP_NO_LIMIT);
-  /**
-  * \brief Function to display the search results
-  */
-  int
-  print(LDAPMessage **res);
-
-  /**
-  * \brief Function to know if results have found
-  * \return true if results have found else false
-  */
-  bool
-  hasResults(LDAPMessage **res);
-
-  /**
-  * \brief Function to get the user's password
-  */
-  string
-  getUserPassword(LDAPMessage **res);
-
-  /**
     * \brief Destructor
     */
   ~LDAPProxy();
 
   private:
   int
-  bind();
+  bind(string& fullUserPath);
   /////////////////////////////////
   // Attributes
   /////////////////////////////////
