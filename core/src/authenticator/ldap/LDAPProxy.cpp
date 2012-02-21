@@ -32,6 +32,7 @@ LDAPProxy::LDAPProxy(const string& uri,
 int
 LDAPProxy::connectLDAP(const string& ldapbase) {
   int ret;
+  mld = ldapbase;
 
   /* Initialize the LDAP session */
   if ((ldap_initialize(&mld, const_cast<char*>(muri.c_str()))) != LDAP_SUCCESS) {
