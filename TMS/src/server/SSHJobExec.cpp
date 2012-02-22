@@ -174,19 +174,23 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
     merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
   }
 
-  if((mbatchType==LOADLEVELER) && (wellSubmitted==false)) {
+  if((mbatchType==LOADLEVELER || mbatchType==LSF) && (wellSubmitted==false)) {
     boost::filesystem::path stderrFile(stderrFilePath.c_str());
     if(!boost::filesystem::is_empty(stderrFile)) {
       merrorInfo = vishnu::get_file_content(stderrFilePath);
 
       std::ostringstream errorMsgSerialized;
-      errorMsgSerialized << ERRCODE_BATCH_SCHEDULER_ERROR << "#" << "LOADLEVELER ERROR: ";
+      if(mbatchType==LOADLEVELER){
+        errorMsgSerialized << ERRCODE_BATCH_SCHEDULER_ERROR << "#" << "LOADLEVELER ERROR: ";
+      }
+      if(mbatchType==LSF){
+        errorMsgSerialized << ERRCODE_BATCH_SCHEDULER_ERROR << "#" << "LSF ERROR: ";
+      }
       errorMsgSerialized << merrorInfo;
       merrorInfo = errorMsgSerialized.str();
       merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
     }
   }
-
 
   vishnu::deleteFile(jobSerializedPath.c_str());
   vishnu::deleteFile(submitOptionsSerializedPath.c_str());
