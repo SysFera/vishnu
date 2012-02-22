@@ -155,7 +155,10 @@ LocalAccountServer::update() {
           " where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
           }
 
-          mdatabaseVishnu->process(sqlCommand.c_str());
+          //If there is a change
+          if (!sqlCommand.empty()) {
+            mdatabaseVishnu->process(sqlCommand.c_str());
+          }
 
         }//END if the local account exists
         else {
