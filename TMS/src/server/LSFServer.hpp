@@ -8,6 +8,7 @@
 #ifndef TMS_LSF_SERVER_H
 #define TMS_LSF_SERVER_H
 
+#include <lsf/lsbatch.h>
 #include "BatchServer.hpp"
 
 /**
@@ -103,7 +104,7 @@ class LSFServer : public BatchServer
      * \return VISHNU state 
      */
     int
-    convertLSFStateToVishnuState(const uint16_t& state); 
+    convertLSFStateToVishnuState(const unsigned int& state); 
 
     /**
      * \brief Function to convert the LSF priority into VISHNU priority
@@ -119,15 +120,14 @@ class LSFServer : public BatchServer
      * \param jobId: The identifier of the job to load
      */
     void
-    fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId);
-
+    fillJobInfo(TMS_Data::Job &job, const LS_LONG_INT& jobId);
+    
     /**
      * \brief Function To convert vishnu job Id to LSF job Id 
      * \param jobId: vishnu job Id
      * \return the converted LSF job id
-     */  
-    uint32_t
-    convertToLSFJobId(const std::string& jobId);
+     */
+    LS_LONG_INT convertToLSFJobId(const std::string& jobId); 
 
     /**
      * \brief ListQueues returned

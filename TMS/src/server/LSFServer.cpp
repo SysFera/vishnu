@@ -13,10 +13,7 @@
 
 #include <boost/algorithm/string.hpp>
 
-#include <unistd.h>
-#include <pwd.h>
-#include <grp.h>
-
+#include <lsf/lsbatch.h>
 
 #include "LSFServer.hpp"
 #include "BatchServer.hpp"
@@ -57,6 +54,51 @@ LSFServer::submit(const char* scriptPath,
   for(int i=0; i < cmdsOptions.size(); i++) {
     argv[i+1] = const_cast<char*>(cmdsOptions[i].c_str());
   }
+
+  struct submit  req;
+  struct submitReply  reply;
+  LS_LONG_INT  batchJobId;
+  int  i;
+
+  if (lsb_init(NULL) < 0) {
+    lsb_perror((char*)"vishnu_submit_job: lsb_init() failed");
+    return -1;//error messages are written to stderr, VISHNU redirects these messages into a file
+  }
+
+  /* Initialize 0 in req */
+  memset(&req, 0, sizeof(struct submit));
+
+  req.options = 0;
+  req.resReq = NULL;
+  
+  for (i = 0; i < LSF_RLIM_NLIMITS; i++)
+    req.rLimits[i] = DEFAULT_RLIMIT;
+
+  req.hostSpec = NULL;
+  req.numProcessors = 1;
+  req.maxNumProcessors = 1;
+  req.beginTime = 0;
+  req.termTime  = 0;
+  req.command = const_cast<char*>(scriptPath);;
+  req.nxf = 0;
+  req.delOptions = 0;
+
+  batchJobId = lsb_submit(&req, &reply);
+
+  if (batchJobId < 0) {
+    switch (lsberrno) {
+      case LSBE_QUEUE_USE:
+      case LSBE_QUEUE_CLOSED:
+        lsb_perror(reply.queue);
+        return -1;//error messages are written to stderr, VISHNU redirects these messages into a file
+      default:
+        lsb_perror(NULL);
+        return -1;//error messages are written to stderr, VISHNU redirects these messages into a file
+     }
+  }
+
+  //Fill the vishnu job structure 
+  fillJobInfo(job, batchJobId);
 
   return 0;
 }
@@ -177,8 +219,8 @@ LSFServer::processOptions(const char* scriptPath,
     istringstream isNode;
     std::string optionNodesValue = options.getNbNodesAndCpuPerNode();
     if(optionNodesValue.empty()) {
-      std::string nodeStr = getLSFResourceValue(scriptPath, "-N", "--nodes");
-      std::string cpuStr =  getLSFResourceValue(scriptPath, "", "--mincpus");
+      std::string nodeStr = ""/*getLSFResourceValue(scriptPath, "-N", "--nodes")*/;
+      std::string cpuStr =  ""/*getLSFResourceValue(scriptPath, "", "--mincpus")*/;
       if(!nodeStr.empty()) {
         if(nodeStr.find('-')!=std::string::npos) {
           istringstream isNodeStr(nodeStr);
@@ -216,7 +258,7 @@ LSFServer::processOptions(const char* scriptPath,
         if(queue->getNode()>=node){
           std::string queueName = queue->getName();
 
-          std::string walltimeStr = getLSFResourceValue(scriptPath, "-t", "--time");
+          std::string walltimeStr = ""/*getLSFResourceValue(scriptPath, "-t", "--time")*/;
           long walltime = options.getWallTime()==-1?vishnu::convertStringToWallTime(walltimeStr):options.getWallTime();
           long qwalltimeMax = queue->getWallTime();
           int qCpuMax = queue->getMaxProcCpu();
@@ -239,13 +281,13 @@ LSFServer::processOptions(const char* scriptPath,
  * \param jobId: vishnu job Id
  * \return the converted LSF job id
  */
-uint32_t LSFServer::convertToLSFJobId(const std::string& jobId) {
+LS_LONG_INT LSFServer::convertToLSFJobId(const std::string& jobId) {
 
-  uint32_t LSFJobId;
+  LS_LONG_INT lsfJobId;
   std::istringstream is(jobId);
-  is >> LSFJobId;
+  is >> lsfJobId;
 
-return LSFJobId;
+return lsfJobId;
 }
 
 /**
@@ -256,17 +298,14 @@ return LSFJobId;
 int
 LSFServer::cancel(const char* jobId) {
   
-  uint32_t LSFJobId = convertToLSFJobId(jobId);
-  
-  int res = LSF_kill_job(LSFJobId, SIGKILL, false);
+  LS_LONG_INT lsfJobId = convertToLSFJobId(jobId); 
+
+  int res = lsb_deletejob(lsfJobId, NULL, 0);
   if(res) {
-    char* errorMsg = LSF_strerror(res);
-    if(errorMsg!=NULL) {
-      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: "+std::string(errorMsg));
-    } else {
-      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: LSFServer::cancel: Unknown error");
-    }
-  } 
+    lsb_perror(NULL);
+    return res;//error messages are written to stderr, VISHNU redirects these messages into a file
+  }
+
   return 0;
 }
 
@@ -278,24 +317,29 @@ LSFServer::cancel(const char* jobId) {
 int 
 LSFServer::getJobState(const std::string& jobId) {
 
-  uint32_t LSFJobId = convertToLSFJobId(jobId);
-
-  int res;
-  job_info_msg_t * job_buffer_ptr = NULL;
-  res = LSF_load_job(&job_buffer_ptr, LSFJobId, 1);
-
   int state = 5; //TERMINATED 
-  if(!res) {
-    job_info_t LSFJobInfo = job_buffer_ptr->job_array[0];
-    state = convertLSFStateToVishnuState(LSFJobInfo.job_state);
-  } else {
-    if(res==SLURM_PROTOCOL_SOCKET_IMPL_TIMEOUT || res==SLURM_PROTOCOL_VERSION_ERROR) {
-      state = -1;
-    }
+  LS_LONG_INT lsfJobId = convertToLSFJobId(jobId);
+
+  struct jobInfoEnt *jobInfo;
+  int numJobs = 0;
+
+  if (lsb_init(NULL) < 0) {
+    return -1;
   }
 
-  if(job_buffer_ptr!=NULL) {
-    LSF_free_job_info_msg(job_buffer_ptr);
+  jobInfo = lsb_readjobinfo(&numJobs);
+
+  if (jobInfo == NULL) {
+    return -1;
+  }
+
+  bool jobIsFound=false;
+  int i;
+  for (i = 0; i < numJobs; i++) {
+    if(jobInfo[i].jobId==lsfJobId) {
+      state = convertLSFStateToVishnuState(jobInfo[i].status);
+      break;
+    }
   }
 
   return state;
@@ -311,19 +355,27 @@ LSFServer::getJobStartTime(const std::string& jobId) {
 
   time_t startTime = 0; 
 
-  uint32_t LSFJobId = convertToLSFJobId(jobId);
+  LS_LONG_INT lsfJobId = convertToLSFJobId(jobId);
+  struct jobInfoEnt *jobInfo;
+  int numJobs = 0;
 
-  int res;
-  job_info_msg_t * job_buffer_ptr = NULL;
-  res = LSF_load_job(&job_buffer_ptr, LSFJobId, 1);
-
-  if(!res) {
-    job_info_t LSFJobInfo = job_buffer_ptr->job_array[0];
-    startTime = LSFJobInfo.start_time;
+  if (lsb_init(NULL) < 0) {
+    return startTime;
   }
 
-  if(job_buffer_ptr!=NULL) {
-    LSF_free_job_info_msg(job_buffer_ptr);
+  jobInfo = lsb_readjobinfo(&numJobs);
+
+  if (jobInfo == NULL) {
+    return startTime;
+  }
+
+  bool jobIsFound=false;
+  int i;
+  for (i = 0; i < numJobs; i++) {
+    if(jobInfo[i].jobId==lsfJobId) {
+      startTime = convertLSFStateToVishnuState(jobInfo[i].startTime);
+      break;
+    }
   }
 
   return startTime;
@@ -335,20 +387,20 @@ LSFServer::getJobStartTime(const std::string& jobId) {
  * \return VISHNU state 
  */
 int 
-LSFServer::convertLSFStateToVishnuState(const uint16_t& state) {
+LSFServer::convertLSFStateToVishnuState(const unsigned int& state) {
 
   int res = 0;
   switch(state) {
-    case JOB_PENDING:case JOB_SUSPENDED:
+    case JOB_STAT_PEND:case JOB_STAT_PSUSP:case JOB_STAT_SSUSP:case JOB_STAT_USUSP:case JOB_STAT_WAIT:
       res = 3;//WAITING
       break;
-    case JOB_RUNNING:
+    case JOB_STAT_RUN:
       res = 4;//RUNNING
       break;
-    case JOB_COMPLETE:case JOB_FAILED:case JOB_NODE_FAIL:case JOB_TIMEOUT:
+    case JOB_STAT_DONE:case JOB_STAT_PDONE:case JOB_STAT_PERR: case JOB_STAT_UNKWN:
       res = 5; //TERMINATED
       break;
-    case JOB_CANCELLED:
+    case JOB_STAT_EXIT:
       res = 6; //CANCELLED
       break;
     default:
@@ -386,8 +438,62 @@ LSFServer::convertLSFPrioToVishnuPrio(const uint32_t& prio) {
  * \param jobId: The identifier of the job to load
  */
 void
-LSFServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId){
+LSFServer::fillJobInfo(TMS_Data::Job &job, const LS_LONG_INT& jobId){
 
+  struct jobInfoEnt *jobInfo;
+  int numJobs = 0;
+
+  if (lsb_init(NULL) < 0) {
+    //error messages are written to stderr, VISHNU redirects these messages into a file
+    lsb_perror((char*)"LSFServer::fillJobInfo: lsb_init() failed");
+    return;
+  }
+
+  jobInfo = lsb_readjobinfo(&numJobs);
+
+  if (jobInfo == NULL) {
+    //error messages are written to stderr, VISHNU redirects these messages into a file
+    lsb_perror((char*)"LSFServer::fillJobInfo: lsb_redjobinfo() failed");
+    return;
+  }
+
+  bool jobIsFound=false;
+  int i;
+  for (i = 0; i < numJobs; i++) {
+    if(jobInfo[i].jobId==jobId) {
+      jobIsFound=true; 
+      break;
+    }
+  }
+
+  if(jobIsFound) {
+    job.setJobId(lsb_jobid2str(jobId));
+    job.setOutputPath(jobInfo[i].submit.outFile) ;
+    job.setErrorPath(jobInfo[i].submit.errFile);
+    job.setStatus(convertLSFStateToVishnuState(jobInfo[i].status));
+    job.setJobName(jobInfo[i].submit.jobName);
+    job.setSubmitDate(jobInfo[i].submitTime);
+    job.setOwner(jobInfo[i].user);
+    job.setJobQueue(jobInfo[i].submit.queue);
+    job.setWallClockLimit(jobInfo[i].submit.runtimeEstimation);
+    job.setEndDate(jobInfo[i].endTime);
+    job.setGroupName(jobInfo[i].submit.userGroup);
+    job.setJobDescription(jobInfo[i].submit.jobDescription);
+    job.setJobPrio(convertLSFPrioToVishnuPrio(jobInfo[i].jobPriority));
+
+    job.setMemLimit(jobInfo[i].submit.rLimits[LSF_RLIMIT_RSS]);
+    int nbCpu = jobInfo[i].submit.numProcessors;
+    job.setNbCpus(nbCpu);
+    int node = jobInfo[i].submit.numAskedHosts;
+    job.setNbNodes(node);
+    if(node!=-1) {
+      job.setNbNodesAndCpuPerNode(vishnu::convertToString(node)+":"+vishnu::convertToString(nbCpu));
+    }
+    //To fill the job working dir
+    job.setJobWorkingDir(jobInfo[i].cwd);
+  } else {
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: problem to fill the submitted job information");
+  }
 
 }
 
@@ -399,6 +505,65 @@ LSFServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId){
 TMS_Data::ListQueues*
 LSFServer::listQueues(const std::string& OptqueueName) { 
 
+    struct queueInfoEnt *queueInfo;
+    char **queues = NULL;
+    int numQueues = 0;
+    char *host = NULL;
+    char *user = NULL;
+    int options = 0;
+
+   if (lsb_init(NULL) < 0) {
+      //error messages are written to stderr, VISHNU redirects these messages into a file
+      lsb_perror((char*)"listQueues: lsb_init() failed");
+      return mlistQueues;
+    }
+
+    queueInfo = lsb_queueinfo(queues, &numQueues, host, user, options);
+
+    if (queueInfo == NULL) {
+      //error messages are written to stderr, VISHNU redirects these messages into a file
+      lsb_perror((char*)"listQueues: lsb_queueinfo() failed");
+      return mlistQueues;
+    }
+
+    TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
+    mlistQueues = ecoreFactory->createListQueues();
+    
+    for (int i = 0; i < numQueues; i++, queueInfo++) {
+
+      TMS_Data::Queue_ptr queue = ecoreFactory->createQueue();
+
+      if (queueInfo->qStatus & QUEUE_STAT_ACTIVE) {
+        if (!queueInfo->qStatus & QUEUE_STAT_OPEN) {
+          queue->setState(0);
+        } 
+        if (queueInfo->qStatus & QUEUE_STAT_RUN) {
+          queue->setState(2);
+        } else {
+          queue->setState(1);
+        }
+      } else {
+        queue->setState(1);
+      }
+
+      queue->setName(queueInfo->queue);
+      queue->setPriority(convertLSFPrioToVishnuPrio(queueInfo->priority));
+      queue->setNbRunningJobs(queueInfo->numRUN);
+      queue->setNbJobsInQueue(queueInfo->numJobs-queueInfo->numRUN);
+      queue->setDescription(queueInfo->description);
+      queue->setMemory(queueInfo->rLimits[LSF_RLIMIT_RSS]);
+      queue->setMaxProcCpu(queueInfo->rLimits[LSF_RLIMIT_CPU]);
+      queue->setMaxJobCpu(-1);//Undefined
+      queue->setNode(queueInfo->procLimit);
+
+      // Adding created queue to the list
+      mlistQueues->getQueues().push_back(queue);
+    }
+
+    mlistQueues->setNbQueues(mlistQueues->getQueues().size());
+
+    return mlistQueues;
+
 }
 
 /**
@@ -409,6 +574,40 @@ LSFServer::listQueues(const std::string& OptqueueName) {
 void LSFServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
     const std::vector<string>& ignoredIds) {
 
+  if (lsb_init(NULL) < 0) {
+    lsb_perror((char*)"LSFServer::fillListOfJobs: lsb_init() failed");
+    return;
+  }
+
+  int numJobs = 0;
+  struct jobInfoEnt *jobInfo = lsb_readjobinfo(&numJobs);
+
+  if (jobInfo == NULL) {
+    lsb_perror((char*)"LSFServer::fillListOfJobs: lsb_readjobinfo failed");
+    return;
+  }
+
+  int jobStatus;
+  long nbRunningJobs = 0;
+  long nbWaitingJobs = 0;
+  for(int i=0; i < numJobs; i++) {
+    std::vector<std::string>::const_iterator iter;
+    iter = std::find(ignoredIds.begin(), ignoredIds.end(), convertToString(jobInfo[i].jobId));
+    if(iter==ignoredIds.end()) {
+      TMS_Data::Job_ptr job = new TMS_Data::Job();
+      fillJobInfo(*job, jobInfo[i].jobId);
+      jobStatus = job->getStatus();
+      if(jobStatus==4) {
+        nbRunningJobs++;
+      } else if(jobStatus >= 1 && jobStatus <= 3) {
+        nbWaitingJobs++;
+      }
+      listOfJobs->getJobs().push_back(job);
+    }
+  }
+  listOfJobs->setNbJobs(listOfJobs->getJobs().size());
+  listOfJobs->setNbRunningJobs(listOfJobs->getNbRunningJobs()+nbRunningJobs);
+  listOfJobs->setNbWaitingJobs(listOfJobs->getNbWaitingJobs()+nbWaitingJobs);
 
 }
 
