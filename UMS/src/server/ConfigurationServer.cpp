@@ -79,7 +79,8 @@ ConfigurationServer::save() {
           user->setLastname(*(++ii));
           user->setPrivilege(convertToInt(*(++ii)));
           user->setEmail(*(++ii));
-          user->setStatus(convertToInt(*(++ii)));
+          //Add 1 on status because of the storage of EMF litteral on file which is shifted
+          user->setStatus(1+convertToInt(*(++ii)));
           mconfiguration->getListConfUsers().push_back(user);
         }
       }
@@ -97,7 +98,8 @@ ConfigurationServer::save() {
           machine->setMachineId(*ii);
           machine->setName(*(++ii));
           machine->setSite(*(++ii));
-          machine->setStatus(convertToInt(*(++ii)));
+          //Add 1 on status because of the storage of EMF litteral on file which is shifted
+          machine->setStatus(1+convertToInt(*(++ii)));
           machine->setSshPublicKey(*(++ii));
           machine->setLanguage(*(++ii));
           machine->setMachineDescription(*(++ii));
