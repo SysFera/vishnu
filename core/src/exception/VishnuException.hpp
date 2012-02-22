@@ -182,6 +182,12 @@ public :
   */
   std::string
   buildExceptionString() const;
+  /**
+  * \brief Implementation of the equal operator
+  * \return the object exception with the new values
+  */
+  VishnuException&
+  operator=(const VishnuException &e);
 };
 
 #endif // VISHNUEXCEPTION

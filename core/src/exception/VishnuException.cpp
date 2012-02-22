@@ -67,3 +67,14 @@ VishnuException::buildExceptionString() const {
 
   return errorInfo;
 }
+
+/**
+* \brief Implementation of the equal operator
+* \return the object exception with the new values
+*/
+VishnuException&
+VishnuException::operator=(const VishnuException &e) {
+  mmsgc = e.getMsgComp();
+  mtype = e.getTypeI();
+  mval  = e.getMsgI();
+}
