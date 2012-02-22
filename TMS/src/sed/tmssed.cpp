@@ -96,7 +96,7 @@ int main(int argc, char* argv[], char* envp[]) {
       batchType = SLURM;
     
     } else if (batchTypeStr == "LSF") { 
-#ifndef HAVE_SLURM
+#ifndef HAVE_LSF
       std::cerr << std::endl;
       std::cerr << "Error: can't initialize LSF batch type because this server has not compiled with LSF library" << std::endl;
       std::cerr << std::endl;
