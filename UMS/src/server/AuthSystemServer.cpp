@@ -191,7 +191,10 @@ AuthSystemServer::update() {
           }
         }
 
-        mdatabaseVishnu->process(sqlCommand.c_str());
+        //If there is a change
+        if (!sqlCommand.empty()) {
+          mdatabaseVishnu->process(sqlCommand.c_str());
+        }
       } //End if the user-authentication system exists
       else {
         UMSVishnuException e (ERRCODE_UNKNOWN_AUTH_SYSTEM);
