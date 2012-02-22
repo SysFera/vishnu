@@ -31,14 +31,14 @@ void AuthenticatorConfiguration::check() throw (UserException)
     mauthType = AuthenticatorConfiguration::UMS;
   } else if (authenTypeStr == "ldap") {
     mauthType = AuthenticatorConfiguration::LDAP;
-  } else if (authenTypeStr == "umsandldap") {
+  } else if (authenTypeStr == "umsldap") {
     mauthType = AuthenticatorConfiguration::UMSLDAP;
-  } else if (authenTypeStr == "ldapandums") {
+  } else if (authenTypeStr == "ldapums") {
     mauthType = AuthenticatorConfiguration::LDAPUMS;
   } else {
     throw UserException(ERRCODE_INVALID_PARAM,
                         "Configuration for authentification type is invalid"
-                        "(must be 'UMS' or 'LDAP' or 'UMSANDLDAP' or 'LDAPANDUMS')");
+                        "(must be 'UMS' or 'LDAP' or 'UMSLDAP' or 'LDAPUMS')");
   }
 }
 
