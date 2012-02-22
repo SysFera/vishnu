@@ -79,8 +79,6 @@ LSFServer::submit(const char* scriptPath,
   if(req.jobName!=NULL) std::cout << "********req.jobName=" << req.jobName << std::endl; 
   if(req.outFile!=NULL) std::cout << "********req.outFile=" << req.outFile << std::endl;
   
-  std::cout << "********getJobState(285)=" << getJobState("285") << std::endl;
-  
   batchJobId = lsb_submit(&req, &reply);
 
   if (batchJobId < 0) {
