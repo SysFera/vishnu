@@ -79,7 +79,8 @@ ConfigurationServer::save() {
           user->setLastname(*(++ii));
           user->setPrivilege(convertToInt(*(++ii)));
           user->setEmail(*(++ii));
-          user->setStatus(convertToInt(*(++ii)));
+          //Add 1 on status because of the storage of EMF litteral on file which is shifted
+          user->setStatus(1+convertToInt(*(++ii)));
           mconfiguration->getListConfUsers().push_back(user);
         }
       }
@@ -97,7 +98,8 @@ ConfigurationServer::save() {
           machine->setMachineId(*ii);
           machine->setName(*(++ii));
           machine->setSite(*(++ii));
-          machine->setStatus(convertToInt(*(++ii)));
+          //Add 1 on status because of the storage of EMF litteral on file which is shifted
+          machine->setStatus(1+convertToInt(*(++ii)));
           machine->setSshPublicKey(*(++ii));
           machine->setLanguage(*(++ii));
           machine->setMachineDescription(*(++ii));
@@ -230,11 +232,12 @@ ConfigurationServer::userToSql(UMS_Data::User_ptr user, int vishnuId) {
   std::string sqlInsert = "insert into users (vishnu_vishnuid, userid, pwd, firstname, lastname,"
  " privilege, email, passwordstate, status) values ";
 
+  //Remove 1 on status because of the storage of EMF litteral on file which is shifted of 1
   return (sqlInsert + "(" + convertToString(vishnuId) +", "
   "'"+user->getUserId()+"','"+user->getPassword()+"','"
   + user->getFirstname()+"','"+user->getLastname()+"',"+
   convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', "
-  "1, "+convertToString(user->getStatus())+");");
+  "1, "+convertToString(user->getStatus()-1)+");");
 }
 
 /**
@@ -248,9 +251,10 @@ std::string
 ConfigurationServer::machineToSql(UMS_Data::Machine_ptr machine, int vishnuId) {
   std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status, sshpublickey) values ";
 
+  //Remove 1 on status because of the storage of EMF litteral on file which is shifted of 1
   sqlInsert.append("("+convertToString(vishnuId)+",'"+machine->getName()+"'"
   ",'"+ machine->getSite()+"','"+machine->getMachineId()+"',"
-  +convertToString(machine->getStatus())+",'"+machine->getSshPublicKey() +"');");
+  +convertToString(machine->getStatus()-1)+",'"+machine->getSshPublicKey() +"');");
 
   return sqlInsert;
 }
