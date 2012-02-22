@@ -175,8 +175,10 @@ UserServer::update(UMS_Data::User *user) {
           " where userid='"+user->getUserId()+"';");
         }
 
-        mdatabaseVishnu->process(sqlCommand.c_str());
-
+        //If there is a change
+        if (!sqlCommand.empty()) {
+          mdatabaseVishnu->process(sqlCommand.c_str());
+        }
       } // End if the user whose information will be updated exists
       else {
         UMSVishnuException e (ERRCODE_UNKNOWN_USERID);

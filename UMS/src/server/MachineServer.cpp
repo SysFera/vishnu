@@ -167,7 +167,10 @@ MachineServer::update() {
           " where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
         }
 
-        mdatabaseVishnu->process(sqlCommand.c_str());
+        //If there is a change
+        if (!sqlCommand.empty()) {
+          mdatabaseVishnu->process(sqlCommand.c_str());
+        }
 
       } //End if the machine to update exists
       else {
