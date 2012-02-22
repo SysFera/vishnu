@@ -25,29 +25,36 @@ LDAPUMSAuthenticator::authenticate(UMS_Data::User& user) {
   UMSAuthenticator umsAuthenticator;
   LDAPAuthenticator ldapAuthenticator;
   SystemException excep;
+  UMSVishnuException umsexcep;
+  bool umsexcepfound = false;
+  bool excepfound = false;
 
   //To avoid to return an exception when the first authenticator failed
   try {
     authenticated = ldapAuthenticator.authenticate(user);
   } catch (UMSVishnuException& e) {
-    //Do nothing
+    //Do not throw exception
+    umsexcep = e;
+    umsexcepfound = true;
   } catch (SystemException& e) {
-    //Do nothing
-    excep.setMsgComp(e.getMsgComp());
-    excep.setType(e.getTypeI());
-    excep.setMsg(e.getMsgI());
+    //Do not throw exception
+    excep = e;
+    excepfound = true;
   }
 
   if (authenticated) {
     return authenticated;
   }
   else {
-     authenticated = umsAuthenticator.authenticate(user);
+   authenticated = umsAuthenticator.authenticate(user);
     //if the user is not authenticated
     if (!authenticated) {
       //If an exception has been found
-      if (excep.getTypeS().compare("NONE")!=0) {
+      if (excepfound) {
         throw excep;
+      }
+      if (umsexcepfound) {
+        throw umsexcep;
       }
     }
     return authenticated;
