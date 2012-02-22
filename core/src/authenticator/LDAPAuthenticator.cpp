@@ -25,13 +25,12 @@ LDAPAuthenticator::~LDAPAuthenticator(){
 bool
 LDAPAuthenticator::authenticate(UMS_Data::User& user) {
   bool authenticated = false;
-  std::string uri, authlogin, authpassword, ldapbase, userpwdencryption, userid, pwd;
+  std::string uri, authlogin, authpassword, ldapbase, authSystemStatus, userid, pwd;
 
   DbFactory factory;
   Database* databaseVishnu = factory.getDatabaseInstance();
 
-  //TODO: rajouter le status et vérifier le status (authsystem not locked)
-  std::string sqlCommand = "SELECT uri, authlogin, authpassword, ldapbase, userpwdencryption, userid, pwd"
+  std::string sqlCommand = "SELECT uri, authlogin, authpassword, ldapbase, authsystem.status, userid, pwd"
                            " FROM ldapauthsystem, authsystem, authaccount, users "
                            "where aclogin='"+user.getUserId()+"' and authsystem.authtype="+vishnu::convertToString(LDAPTYPE)
                            +" and authaccount.authsystem_authsystemid=authsystem.numauthsystemid and "
@@ -54,22 +53,18 @@ LDAPAuthenticator::authenticate(UMS_Data::User& user) {
     tmp = result->get(i);
 
     ii=tmp.begin();
-    uri = *ii;
-    std::cout << "uri:" << uri << std::endl; ii++;
-    authlogin = *ii;
-    std::cout << "authlogin:" << authlogin << std::endl; ii++;
-    authpassword = *ii;
-    std::cout << "authpassword:" << authpassword << std::endl; ii++;
-    ldapbase = *ii;
-    std::cout << "ldapbase:" << ldapbase << std::endl; ii++;
-    userpwdencryption = *ii;
-    //TODO: faire une fonction pour vérifier le type d'encryption
-    std::cout << "userpwdencryption:" << userpwdencryption << std::endl; ii++;
-    userid = *ii;
-    std::cout << "userid:" << userid << std::endl; ii++;
+    uri = *ii; ii++;
+    authlogin = *ii; ii++;
+    authpassword = *ii; ii++;
+    ldapbase = *ii; ii++;
+    authSystemStatus = *ii; ii++;
+    userid = *ii; ii++;
     pwd = *ii;
-    std::cout << "pwd:" << pwd << std::endl;
-    std::cout << std::endl;
+
+    if (vishnu::convertToInt(authSystemStatus) != ACTIVE_STATUS) {
+      UMSVishnuException e (ERRCODE_UNKNOWN_AUTH_SYSTEM, "It is locked");
+      throw e;
+    }
 
     try {
       LDAPProxy ldapPoxy(uri,
