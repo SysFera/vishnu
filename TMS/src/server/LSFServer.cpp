@@ -79,7 +79,7 @@ LSFServer::submit(const char* scriptPath,
   req.maxNumProcessors = 1;
   req.beginTime = 0;
   req.termTime  = 0;
-  req.command = argv[1];
+  req.command = const_cast<char*>(scriptPath);;
   req.nxf = 0;
   req.delOptions = 0;
 
@@ -97,8 +97,8 @@ LSFServer::submit(const char* scriptPath,
      }
   }
 
-  char* jobId = lsb_jobid2str(batchJobId);
-
+  //Fill the vishnu job structure 
+  fillJobInfo(job, batchJobId);
 
   return 0;
 }
