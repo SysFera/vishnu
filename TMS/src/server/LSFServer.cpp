@@ -77,7 +77,9 @@ LSFServer::submit(const char* scriptPath,
   processOptions(scriptPath, options, &req);
  
   if(req.jobName!=NULL) std::cout << "********req.jobName=" << req.jobName << std::endl; 
-  if(req.outFile!=NULL) std::cout << "********req.outFile=" << req.outFile << std::endl; 
+  if(req.outFile!=NULL) std::cout << "********req.outFile=" << req.outFile << std::endl;
+  
+  std::cout << "********getJobState(285)=" << getJobState("285") << std::endl;
   
   batchJobId = lsb_submit(&req, &reply);
 
@@ -318,7 +320,7 @@ LSFServer::getJobState(const std::string& jobId) {
   int numJobs;
 
   if (lsb_init(NULL) < 0) {
-    return -1;
+    return state;
   }
 
   
@@ -327,7 +329,7 @@ LSFServer::getJobState(const std::string& jobId) {
   lsb_closejobinfo();
 
   if (jobInfo == NULL) {
-    return -1;
+    return state;
   }
 
   state = convertLSFStateToVishnuState(jobInfo->status);
