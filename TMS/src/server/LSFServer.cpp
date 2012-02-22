@@ -43,18 +43,6 @@ LSFServer::submit(const char* scriptPath,
     const TMS_Data::SubmitOptions& options, 
     TMS_Data::Job& job, char** envp) {
 
-  std::vector<std::string> cmdsOptions;
-  //processes the vishnu options
-  processOptions(scriptPath, options, cmdsOptions);
-
-  int argc = cmdsOptions.size()+2;
-  char* argv[argc];
-  argv[0] = (char*) "vishnu_submit_job";
-  argv[argc-1] = const_cast<char*>(scriptPath);
-  for(int i=0; i < cmdsOptions.size(); i++) {
-    argv[i+1] = const_cast<char*>(cmdsOptions[i].c_str());
-  }
-
   struct submit  req;
   struct submitReply  reply;
   LS_LONG_INT  batchJobId;
@@ -79,10 +67,18 @@ LSFServer::submit(const char* scriptPath,
   req.maxNumProcessors = 1;
   req.beginTime = 0;
   req.termTime  = 0;
-  req.command = const_cast<char*>(scriptPath);;
+  std::string cmd = std::string(vishnu::get_file_content(scriptPath));
+  std::cout << "********cmd=" << const_cast<char*>(cmd.c_str()) << std::endl; 
+  req.command = const_cast<char*>(cmd.c_str());
   req.nxf = 0;
   req.delOptions = 0;
-
+   
+  //processes the vishnu options
+  processOptions(scriptPath, options, &req);
+ 
+  if(req.jobName!=NULL) std::cout << "********req.jobName=" << req.jobName << std::endl; 
+  if(req.outFile!=NULL) std::cout << "********req.outFile=" << req.outFile << std::endl; 
+  
   batchJobId = lsb_submit(&req, &reply);
 
   if (batchJobId < 0) {
@@ -96,7 +92,7 @@ LSFServer::submit(const char* scriptPath,
         return -1;//error messages are written to stderr, VISHNU redirects these messages into a file
      }
   }
-
+  std::cout << "**********batchJobId= " << batchJobId << std::endl;
   //Fill the vishnu job structure 
   fillJobInfo(job, batchJobId);
 
@@ -108,171 +104,169 @@ LSFServer::submit(const char* scriptPath,
  * \brief Function to treat the submission options
  * \param scriptPath The job script path
  * \param options the object which contains the SubmitOptions options values
- * \param cmdsOptions The list of the option value
+ * \param struct submit The LSF submit request
  * \return raises an exception on error
  */
 void 
 LSFServer::processOptions(const char* scriptPath,
                             const TMS_Data::SubmitOptions& options, 
-                            std::vector<std::string>&cmdsOptions) {
+                            struct submit* req) {
 
-  if(!options.getNbNodesAndCpuPerNode().empty() && options.getNbCpu()!=-1) {
-    throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use the NbCpu option and NbNodesAndCpuPerNode option together.\n");
-  }
+	if(!options.getNbNodesAndCpuPerNode().empty() && options.getNbCpu()!=-1) {
+		throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use the NbCpu option and NbNodesAndCpuPerNode option together.\n");
+	}
 
-  if(options.isSelectQueueAutom() && !options.getQueue().empty() ) {
-    throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use the SelectQueueAutom (-Q) and getQueue (-q) options together.\n");
-  }
+	if(options.isSelectQueueAutom() && !options.getQueue().empty() ) {
+		throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use the SelectQueueAutom (-Q) and getQueue (-q) options together.\n");
+	}
 
-  if(options.getName().size()!=0){
-    cmdsOptions.push_back("-J");
-    cmdsOptions.push_back(options.getName());
-  }
-  if(options.getQueue().size()!=0) {
-    cmdsOptions.push_back("-p");
-    cmdsOptions.push_back(options.getQueue());
-  }
-  if(options.getOutputPath().size()!=0) {
-    cmdsOptions.push_back("-o");
-    cmdsOptions.push_back(options.getOutputPath());
-  }
-  if(options.getErrorPath().size()!=0) {
-    cmdsOptions.push_back("-e");
-    cmdsOptions.push_back(options.getErrorPath());
-  }
-  if(options.getWallTime()!=-1) {
-    cmdsOptions.push_back("-t"); 
-    std::string timeStr = vishnu::convertWallTimeToString(options.getWallTime());
-    size_t pos = timeStr.rfind(":");
-    int i=0;
-    while(pos!=std::string::npos){
-      i++;
-      if(i==3) {
-        timeStr = timeStr.replace(pos, 1, "-");
-        break;
-      }
-      if(pos==0) {
-        break;
-      } else {
-        pos = timeStr.rfind(":", pos-1);
-      }
-    }
-    cmdsOptions.push_back(timeStr);
-  }
-  if(options.getNbCpu()!=-1) {
-    std::ostringstream os_str;
-    os_str << options.getNbCpu();
-    cmdsOptions.push_back("--mincpus="+os_str.str());
-  }
-  if(options.getMemory()!=-1) {
-    std::ostringstream os_str;
-    os_str << options.getMemory();
-    cmdsOptions.push_back("--mem="+os_str.str());
-  }
-  if(options.getNbNodesAndCpuPerNode()!="") {
-    std::string NbNodesAndCpuPerNode = options.getNbNodesAndCpuPerNode();
-    size_t posNbNodes = NbNodesAndCpuPerNode.find(":");
-    if(posNbNodes!=std::string::npos) {
-      std::string nbNodes = NbNodesAndCpuPerNode.substr(0, posNbNodes);
-      std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1); 
-      cmdsOptions.push_back("--nodes="+nbNodes);
-      cmdsOptions.push_back("--mincpus="+cpuPerNode);
-    }
-  }
+	if(options.getName().size()!=0){
+		req->options |=SUB_JOB_NAME;
+		req->jobName = const_cast<char*>(options.getName().c_str());
+	} else {
+		req->options |=SUB_JOB_NAME;
+		req->jobName = const_cast<char*>(scriptPath);
+	}
+	if(options.getQueue().size()!=0) {
+		req->options |=SUB_QUEUE;
+		req->queue = const_cast<char*>(options.getQueue().c_str());
+	}
+	if(options.getOutputPath().size()!=0) {
+		req->options |=SUB_OUT_FILE;
+		req->outFile = const_cast<char*>(options.getOutputPath().c_str());
+	}
+	if(options.getErrorPath().size()!=0) {
+		req->options |=SUB_ERR_FILE;
+		req->errFile = const_cast<char*>(options.getErrorPath().c_str());
+	}
+	if(options.getWallTime()!=-1) {
+		//cmdsOptions.push_back("-t"); 
+		std::string timeStr = vishnu::convertWallTimeToString(options.getWallTime());
+		size_t pos = timeStr.rfind(":");
+		int i=0;
+		while(pos!=std::string::npos){
+			i++;
+			if(i==3) {
+				timeStr = timeStr.replace(pos, 1, "-");
+				break;
+			}
+			if(pos==0) {
+				break;
+			} else {
+				pos = timeStr.rfind(":", pos-1);
+			}
+		}
 
-  if(options.getMailNotification()!="") {
-    std::string notification = options.getMailNotification();
-    if(notification.compare("BEGIN")==0) {
-      cmdsOptions.push_back("--mail-type=BEGIN");
-    } else if(notification.compare("END")==0) {
-      cmdsOptions.push_back("--mail-type=END");
-    } else if(notification.compare("ERROR")==0) {
-      cmdsOptions.push_back("--mail-type=FAIL");
-    } else if(notification.compare("ALL")==0) {
-      cmdsOptions.push_back("--mail-type=ALL");
-    } else {
-      throw UserException(ERRCODE_INVALID_PARAM, notification+" is an invalid notification type:"+" consult the vishnu user manuel");
-    }
-  }
+		//cmdsOptions.push_back(timeStr);
+	}
+	if(options.getNbCpu()!=-1) {
+	}
+	if(options.getMemory()!=-1) {
+	}
+	if(options.getNbNodesAndCpuPerNode()!="") {
+		std::string NbNodesAndCpuPerNode = options.getNbNodesAndCpuPerNode();
+		size_t posNbNodes = NbNodesAndCpuPerNode.find(":");
+		if(posNbNodes!=std::string::npos) {
+			std::string nbNodes = NbNodesAndCpuPerNode.substr(0, posNbNodes);
+			std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1); 
+			//cmdsOptions.push_back("--nodes="+nbNodes);
+			//cmdsOptions.push_back("--mincpus="+cpuPerNode);
+		}
+	}
 
-  if(options.getMailNotifyUser()!="") {
-    cmdsOptions.push_back("--mail-user="+options.getMailNotifyUser());
-  }
+	if(options.getMailNotification()!="") {
+		std::string notification = options.getMailNotification();
+		if(notification.compare("BEGIN")==0) {
+			//cmdsOptions.push_back("--mail-type=BEGIN");
+		} else if(notification.compare("END")==0) {
+			//cmdsOptions.push_back("--mail-type=END");
+		} else if(notification.compare("ERROR")==0) {
+			//cmdsOptions.push_back("--mail-type=FAIL");
+		} else if(notification.compare("ALL")==0) {
+			//cmdsOptions.push_back("--mail-type=ALL");
+		} else {
+			throw UserException(ERRCODE_INVALID_PARAM, notification+" is an invalid notification type:"+" consult the vishnu user manuel");
+		}
+	}
 
-  if(options.getGroup()!="") {
-    cmdsOptions.push_back("--gid="+options.getGroup());
-  }
+	if(options.getMailNotifyUser()!="") {
+		//cmdsOptions.push_back("--mail-user="+options.getMailNotifyUser());
+	}
 
-  if(options.getWorkingDir()!="") {
-    cmdsOptions.push_back("-D");
-    cmdsOptions.push_back(options.getWorkingDir());
-  }
+	if(options.getGroup()!="") {
+		//cmdsOptions.push_back("--gid="+options.getGroup());
+	}
 
-  if(options.getCpuTime()!="") {
-    cmdsOptions.push_back("-t");
-    cmdsOptions.push_back(options.getCpuTime());
-  }
+	if(options.getWorkingDir()!="") {
+		//cmdsOptions.push_back("-D");
+		//cmdsOptions.push_back(options.getWorkingDir());
+	}
 
-  if(options.isSelectQueueAutom()) {
-    int node = 0;
-    int cpu = -1;
-    istringstream isNode;
-    std::string optionNodesValue = options.getNbNodesAndCpuPerNode();
-    if(optionNodesValue.empty()) {
-      std::string nodeStr = ""/*getLSFResourceValue(scriptPath, "-N", "--nodes")*/;
-      std::string cpuStr =  ""/*getLSFResourceValue(scriptPath, "", "--mincpus")*/;
-      if(!nodeStr.empty()) {
-        if(nodeStr.find('-')!=std::string::npos) {
-          istringstream isNodeStr(nodeStr);
-          int minnode;
-          int maxNode;
-          char sparator;
-          isNodeStr >> minnode;
-          isNodeStr >> sparator;
-          isNodeStr >> maxNode;
-          node = maxNode; 
-        } else {
-          node = vishnu::convertToInt(nodeStr);
-        }
-      }
-      if(!cpuStr.empty()) {
-        cpu = vishnu::convertToInt(cpuStr);
-      }
-      if(options.getNbCpu()!=-1) {
-        cpu=options.getNbCpu();
-      } 
-    } else {
-      isNode.str(optionNodesValue);
-      isNode >> node;
-      char colon;
-      isNode >> colon;
-      isNode >> cpu;
-    }
-    if(node <=0) {
-      node = 1;
-    }
-    TMS_Data::ListQueues* listOfQueues = listQueues();
-    if(listOfQueues != NULL) {
-      for(unsigned int i = 0; i < listOfQueues->getNbQueues(); i++) {
-        TMS_Data::Queue* queue =  listOfQueues->getQueues().get(i);
-        if(queue->getNode()>=node){
-          std::string queueName = queue->getName();
+	if(options.getCpuTime()!="") {
+		//cmdsOptions.push_back("-t");
+		//cmdsOptions.push_back(options.getCpuTime());
+	}
 
-          std::string walltimeStr = ""/*getLSFResourceValue(scriptPath, "-t", "--time")*/;
-          long walltime = options.getWallTime()==-1?vishnu::convertStringToWallTime(walltimeStr):options.getWallTime();
-          long qwalltimeMax = queue->getWallTime();
-          int qCpuMax = queue->getMaxProcCpu();
+	if(options.isSelectQueueAutom()) {
+		int node = 0;
+		int cpu = -1;
+		istringstream isNode;
+		std::string optionNodesValue = options.getNbNodesAndCpuPerNode();
+		if(optionNodesValue.empty()) {
+			std::string nodeStr = ""/*getLSFResourceValue(scriptPath, "-N", "--nodes")*/;
+			std::string cpuStr =  ""/*getLSFResourceValue(scriptPath, "", "--mincpus")*/;
+			if(!nodeStr.empty()) {
+				if(nodeStr.find('-')!=std::string::npos) {
+					istringstream isNodeStr(nodeStr);
+					int minnode;
+					int maxNode;
+					char sparator;
+					isNodeStr >> minnode;
+					isNodeStr >> sparator;
+					isNodeStr >> maxNode;
+					node = maxNode; 
+				} else {
+					node = vishnu::convertToInt(nodeStr);
+				}
+			}
+			if(!cpuStr.empty()) {
+				cpu = vishnu::convertToInt(cpuStr);
+			}
+			if(options.getNbCpu()!=-1) {
+				cpu=options.getNbCpu();
+			} 
+		} else {
+			isNode.str(optionNodesValue);
+			isNode >> node;
+			char colon;
+			isNode >> colon;
+			isNode >> cpu;
+		}
+		if(node <=0) {
+			node = 1;
+		}
+		TMS_Data::ListQueues* listOfQueues = listQueues();
+		if(listOfQueues != NULL) {
+			for(unsigned int i = 0; i < listOfQueues->getNbQueues(); i++) {
+				TMS_Data::Queue* queue =  listOfQueues->getQueues().get(i);
+				if(queue->getNode()>=node){
+					std::string queueName = queue->getName();
 
-          if((walltime <= qwalltimeMax || qwalltimeMax==0) &&
-              (cpu <= qCpuMax)){
-            cmdsOptions.push_back("-p");
-            cmdsOptions.push_back(queueName);
-            break;
-          }
-        };
-      }
-    }
-  }
+					std::string walltimeStr = ""/*getLSFResourceValue(scriptPath, "-t", "--time")*/;
+					long walltime = options.getWallTime()==-1?vishnu::convertStringToWallTime(walltimeStr):options.getWallTime();
+					long qwalltimeMax = queue->getWallTime();
+					int qCpuMax = queue->getMaxProcCpu();
+
+					if((walltime <= qwalltimeMax || qwalltimeMax==0) &&
+							(cpu <= qCpuMax)){
+						//cmdsOptions.push_back("-p");
+						//cmdsOptions.push_back(queueName);
+						break;
+					}
+				};
+			}
+		}
+	}
 
 }
 
@@ -321,26 +315,22 @@ LSFServer::getJobState(const std::string& jobId) {
   LS_LONG_INT lsfJobId = convertToLSFJobId(jobId);
 
   struct jobInfoEnt *jobInfo;
-  int numJobs = 0;
+  int numJobs;
 
   if (lsb_init(NULL) < 0) {
     return -1;
   }
 
+  
+  numJobs = lsb_openjobinfo(lsfJobId, NULL, NULL, NULL, NULL, 0);
   jobInfo = lsb_readjobinfo(&numJobs);
+  lsb_closejobinfo();
 
   if (jobInfo == NULL) {
     return -1;
   }
 
-  bool jobIsFound=false;
-  int i;
-  for (i = 0; i < numJobs; i++) {
-    if(jobInfo[i].jobId==lsfJobId) {
-      state = convertLSFStateToVishnuState(jobInfo[i].status);
-      break;
-    }
-  }
+  state = convertLSFStateToVishnuState(jobInfo->status);
 
   return state;
 }
@@ -353,32 +343,27 @@ LSFServer::getJobState(const std::string& jobId) {
 time_t 
 LSFServer::getJobStartTime(const std::string& jobId) {
 
-  time_t startTime = 0; 
+	time_t startTime = 0; 
 
-  LS_LONG_INT lsfJobId = convertToLSFJobId(jobId);
-  struct jobInfoEnt *jobInfo;
-  int numJobs = 0;
+	LS_LONG_INT lsfJobId = convertToLSFJobId(jobId);
+	struct jobInfoEnt *jobInfo;
+	int numJobs;
 
-  if (lsb_init(NULL) < 0) {
-    return startTime;
-  }
+	if (lsb_init(NULL) < 0) {
+		return startTime;
+	}
 
-  jobInfo = lsb_readjobinfo(&numJobs);
+	numJobs = lsb_openjobinfo(lsfJobId, NULL, NULL, NULL, NULL, 0);
+	jobInfo = lsb_readjobinfo(&numJobs);
+	lsb_closejobinfo();
 
-  if (jobInfo == NULL) {
-    return startTime;
-  }
+	if (jobInfo == NULL) {
+		return startTime;
+	}
 
-  bool jobIsFound=false;
-  int i;
-  for (i = 0; i < numJobs; i++) {
-    if(jobInfo[i].jobId==lsfJobId) {
-      startTime = convertLSFStateToVishnuState(jobInfo[i].startTime);
-      break;
-    }
-  }
+	startTime = convertLSFStateToVishnuState(jobInfo->startTime);
 
-  return startTime;
+	return startTime;
 } 
 
 /**
@@ -440,60 +425,49 @@ LSFServer::convertLSFPrioToVishnuPrio(const uint32_t& prio) {
 void
 LSFServer::fillJobInfo(TMS_Data::Job &job, const LS_LONG_INT& jobId){
 
-  struct jobInfoEnt *jobInfo;
-  int numJobs = 0;
 
-  if (lsb_init(NULL) < 0) {
-    //error messages are written to stderr, VISHNU redirects these messages into a file
-    lsb_perror((char*)"LSFServer::fillJobInfo: lsb_init() failed");
-    return;
-  }
+	struct jobInfoEnt *jobInfo;
+        int numJobs;
 
-  jobInfo = lsb_readjobinfo(&numJobs);
+	if (lsb_init(NULL) < 0) {
+		//error messages are written to stderr, VISHNU redirects these messages into a file
+		lsb_perror((char*)"LSFServer::fillJobInfo: lsb_init() failed");
+		return;
+	}
 
-  if (jobInfo == NULL) {
-    //error messages are written to stderr, VISHNU redirects these messages into a file
-    lsb_perror((char*)"LSFServer::fillJobInfo: lsb_redjobinfo() failed");
-    return;
-  }
+        numJobs = lsb_openjobinfo(jobId, NULL, NULL, NULL, NULL, 0);
+	jobInfo = lsb_readjobinfo(&numJobs);
+	lsb_closejobinfo();
+	if (jobInfo == NULL) {
+		//error messages are written to stderr, VISHNU redirects these messages into a file
+		lsb_perror((char*)"LSFServer::fillJobInfo: lsb_redjobinfo() failed");
+		return;
+	}
 
-  bool jobIsFound=false;
-  int i;
-  for (i = 0; i < numJobs; i++) {
-    if(jobInfo[i].jobId==jobId) {
-      jobIsFound=true; 
-      break;
-    }
-  }
+	job.setJobId(lsb_jobid2str(jobId));
+	job.setOutputPath(jobInfo->submit.outFile) ;
+	job.setErrorPath(jobInfo->submit.errFile);
+	job.setStatus(convertLSFStateToVishnuState(jobInfo->status));
+	job.setJobName(jobInfo->submit.jobName);
+	job.setSubmitDate(jobInfo->submitTime);
+	job.setOwner(jobInfo->user);
+	job.setJobQueue(jobInfo->submit.queue);
+	job.setWallClockLimit(jobInfo->submit.runtimeEstimation);
+	job.setEndDate(jobInfo->endTime);
+	job.setGroupName(jobInfo->submit.userGroup);
+	job.setJobDescription(jobInfo->submit.jobDescription);
+	job.setJobPrio(convertLSFPrioToVishnuPrio(jobInfo->jobPriority));
 
-  if(jobIsFound) {
-    job.setJobId(lsb_jobid2str(jobId));
-    job.setOutputPath(jobInfo[i].submit.outFile) ;
-    job.setErrorPath(jobInfo[i].submit.errFile);
-    job.setStatus(convertLSFStateToVishnuState(jobInfo[i].status));
-    job.setJobName(jobInfo[i].submit.jobName);
-    job.setSubmitDate(jobInfo[i].submitTime);
-    job.setOwner(jobInfo[i].user);
-    job.setJobQueue(jobInfo[i].submit.queue);
-    job.setWallClockLimit(jobInfo[i].submit.runtimeEstimation);
-    job.setEndDate(jobInfo[i].endTime);
-    job.setGroupName(jobInfo[i].submit.userGroup);
-    job.setJobDescription(jobInfo[i].submit.jobDescription);
-    job.setJobPrio(convertLSFPrioToVishnuPrio(jobInfo[i].jobPriority));
-
-    job.setMemLimit(jobInfo[i].submit.rLimits[LSF_RLIMIT_RSS]);
-    int nbCpu = jobInfo[i].submit.numProcessors;
-    job.setNbCpus(nbCpu);
-    int node = jobInfo[i].submit.numAskedHosts;
-    job.setNbNodes(node);
-    if(node!=-1) {
-      job.setNbNodesAndCpuPerNode(vishnu::convertToString(node)+":"+vishnu::convertToString(nbCpu));
-    }
-    //To fill the job working dir
-    job.setJobWorkingDir(jobInfo[i].cwd);
-  } else {
-    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: problem to fill the submitted job information");
-  }
+	job.setMemLimit(jobInfo->submit.rLimits[LSF_RLIMIT_RSS]);
+	int nbCpu = jobInfo->submit.numProcessors;
+	job.setNbCpus(nbCpu);
+	int node = jobInfo->submit.numAskedHosts;
+	job.setNbNodes(node);
+	if(node!=-1) {
+		job.setNbNodesAndCpuPerNode(vishnu::convertToString(node)+":"+vishnu::convertToString(nbCpu));
+	}
+	//To fill the job working dir
+	job.setJobWorkingDir(jobInfo->cwd);
 
 }
 
@@ -579,8 +553,10 @@ void LSFServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
     return;
   }
 
-  int numJobs = 0;
-  struct jobInfoEnt *jobInfo = lsb_readjobinfo(&numJobs);
+  int numJobs=lsb_openjobinfo(NULL, NULL, NULL, NULL, NULL, 0);
+  int more = numJobs;
+  struct jobInfoEnt *jobInfo = lsb_readjobinfo(&more);
+  lsb_closejobinfo();
 
   if (jobInfo == NULL) {
     lsb_perror((char*)"LSFServer::fillListOfJobs: lsb_readjobinfo failed");
