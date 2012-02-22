@@ -1,4 +1,7 @@
 DELETE FROM account;
+DELETE FROM authaccount;
+DELETE FROM ldapauthsystem;
+DELETE FROM authsystem;
 DELETE FROM command;
 DELETE FROM description;
 DELETE FROM filesub;
