@@ -14,7 +14,8 @@
 #include <sys/types.h>
 #include <pwd.h>
 
-#include <boost/algorithm/string.hpp>
+#include "boost/filesystem.hpp"
+#include<boost/algorithm/string.hpp>
 
 #include <lsf/lsbatch.h>
 
@@ -23,10 +24,12 @@
 #include "TMSVishnuException.hpp"
 #include "UMSVishnuException.hpp"
 #include "utilVishnu.hpp"
+#include "LSFParser.hpp"
 
 using namespace std;
 using namespace vishnu;
-
+namespace bfs=boost::filesystem;
+namespace ba=boost::algorithm;
 /**
  * \brief Constructor
  */
@@ -77,12 +80,21 @@ LSFServer::submit(const char* scriptPath,
   req.nxf = 0;
   req.delOptions = 0;
 
+  LSFParser::parse_file(scriptPath, &req);
   //processes the vishnu options
   processOptions(scriptPath, options, &req);
 
   if(req.jobName!=NULL) std::cout << "********req.jobName=" << req.jobName << std::endl; 
-  if(req.outFile!=NULL) std::cout << "********req.outFile=" << req.outFile << std::endl;
-
+  if(req.outFile!=NULL) {
+     bfs::path outPath(bfs::system_complete(bfs::path(req.outFile)));
+     req.outFile = strdup((outPath.native()).c_str()) ;
+     std::cout << "********req.outFile=" << req.outFile << std::endl;
+  }
+  if(req.errFile!=NULL) {
+     bfs::path errPath(bfs::system_complete(bfs::path(req.errFile)));
+     req.errFile = strdup((errPath.native()).c_str()) ;
+     std::cout << "********req.errFile=" << req.errFile << std::endl;
+  }
   //Check the job output path 
   std::string errorMsg = checkLSFOutPutPath(req.outFile);
   if(errorMsg.size()!=0) {
@@ -107,6 +119,8 @@ LSFServer::submit(const char* scriptPath,
         return -1;//error messages are written to stderr, VISHNU redirects these messages into a file
     }
   }
+  if(req.jobName!=NULL) std::cout << "********2req.jobName=" << req.jobName << std::endl;
+  if(req.outFile!=NULL) std::cout << "********2req.outFile=" << req.outFile << std::endl;
   std::cout << "**********batchJobId= " << batchJobId << std::endl;
   int numJobs = lsb_openjobinfo(batchJobId, NULL, NULL, NULL, NULL, JOBID_ONLY);
   struct jobInfoEnt *jobInfo = lsb_readjobinfo(&numJobs);
@@ -138,6 +152,9 @@ LSFServer::submit(const char* scriptPath,
     job.setErrorPath(jobErrorPath);
   }
 
+  if(req.jobName!=NULL) std::cout << "********jobOutputPath=" << jobOutputPath << ":" << req.jobName << std::endl;
+  if(req.outFile!=NULL) std::cout << "********jobErrorPath=" << jobErrorPath << ":" << req.outFile << std::endl;
+
 
   return 0;
 }
@@ -166,10 +183,7 @@ LSFServer::processOptions(const char* scriptPath,
   if(options.getName().size()!=0){
     req->options |=SUB_JOB_NAME;
     req->jobName = const_cast<char*>(options.getName().c_str());
-  } else {
-    req->options |=SUB_JOB_NAME;
-    req->jobName = const_cast<char*>(scriptPath);
-  }
+  } 
   if(options.getQueue().size()!=0) {
     req->options |=SUB_QUEUE;
     req->queue = const_cast<char*>(options.getQueue().c_str());
