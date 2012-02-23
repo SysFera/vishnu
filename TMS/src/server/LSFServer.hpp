@@ -117,10 +117,10 @@ class LSFServer : public BatchServer
     /**
      * \brief Function To fill the info concerning a job
      * \param job: The job to fill
-     * \param jobId: The identifier of the job to load
+     * \param jobInfo: The LSF job structure information
      */
     void
-    fillJobInfo(TMS_Data::Job &job, const LS_LONG_INT& jobId);
+    fillJobInfo(TMS_Data::Job &job, struct jobInfoEnt* jobInfo);
     
     /**
      * \brief Function To convert vishnu job Id to LSF job Id 
@@ -129,11 +129,39 @@ class LSFServer : public BatchServer
      */
     LS_LONG_INT convertToLSFJobId(const std::string& jobId); 
 
+    /* \brief Function to replace LSF job identifer symbol by its real value in to a path
+     * \param path The path containing the job symbol
+     */
+    void
+    replaceSymbolInToJobPath(std::string& path);
+
+    /**
+     * \brief Function to cheick if a path contains an excluded LSF symbol by vishnu
+     * \param path The path to check
+     * \param symbol The excluded symbol
+     * \return true if the path contain an exlude symbol
+     */
+    bool
+    containsAnExcludedLSFSymbols(const std::string& path, std::string& symbol);
+
+    /**
+     * \brief Function to check if LSF path syntax is correct
+     * \param path the path to check
+     * \param pathInfo The information on path to print
+     * \return an error message
+     */
+    std::string
+    checkLSFOutPutPath(char*& path, const std::string& pathInfo="job output path"); 
+   
     /**
      * \brief ListQueues returned
      */
     TMS_Data::ListQueues_ptr mlistQueues;
 
+    /**
+     * \brief msymbolMap contains the LSF partern symbols of job output and error path
+     */
+    std::map<std::string, std::string> msymbolMap;
 };
 
 #endif
