@@ -45,7 +45,6 @@ int
 MachineServer::add(int vishnuId) {
   std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status, sshpublickey) values ";
   std::string idMachineGenerated;
-  int machineCpt;
   std::string formatidmachine;
 
   UserServer userServer = UserServer(msessionServer);

@@ -8,6 +8,8 @@
 #include "ConfigurationServer.hpp"
 #include "MachineServer.hpp"
 #include "LocalAccountServer.hpp"
+#include "AuthAccountServer.hpp"
+#include "AuthSystemServer.hpp"
 #include "DbFactory.hpp"
 
 /**
@@ -50,6 +52,12 @@ ConfigurationServer::save() {
   std::string sqlListofLocalAccount = "SELECT machineid, userid, aclogin, sshpathkey, home "
   "from account, machine, users where account.machine_nummachineid=machine.nummachineid and "
   "account.users_numuserid=users.numuserid";
+
+  std::string sqlListofAuthSystems = "SELECT authsystemid, name, uri, authlogin, authpassword, userpwdencryption, authtype, status, ldapbase from authsystem, ldapauthsystem "
+                                     " where ldapauthsystem.authsystem_authsystemid = authsystem.numauthsystemid";
+
+  std::string sqlListofAuthAccounts = "SELECT authsystemid, userid, aclogin "
+    " from authaccount, authsystem, users where authaccount.authsystem_authsystemid=authsystem.numauthsystemid and authaccount.users_numuserid=users.numuserid";
 
   std::vector<std::string>::iterator ii;
   std::vector<std::string> results;
@@ -125,6 +133,47 @@ ConfigurationServer::save() {
           mconfiguration->getListConfLocalAccounts().push_back(localAccount);
         }
       }
+
+      //To get the list of user-authentication systems from the database
+      boost::scoped_ptr<DatabaseResult> ListofAuthSystems (mdatabaseVishnu->getResult(sqlListofAuthSystems.c_str()));
+
+      if (ListofAuthSystems->getNbTuples() != 0){
+        for (size_t i = 0; i < ListofAuthSystems->getNbTuples(); ++i) {
+          results.clear();
+          results = ListofAuthSystems->get(i);
+          ii = results.begin();
+
+          UMS_Data::AuthSystem_ptr authSystem = ecoreFactory->createAuthSystem();
+          authSystem->setAuthSystemId(*ii);
+          authSystem->setName(*(++ii));
+          authSystem->setURI(*(++ii));
+          authSystem->setAuthLogin(*(++ii));
+          authSystem->setAuthPassword(*(++ii));
+          //Add 1 for all enum types because of the storage of EMF litteral on file which is shifted
+          authSystem->setUserPasswordEncryption(1+convertToInt(*(++ii)));
+          authSystem->setType(1+convertToInt(*(++ii)));
+          authSystem->setStatus(1+convertToInt(*(++ii)));
+          authSystem->setLdapBase(*(++ii));
+          mconfiguration->getListConfAuthSystems().push_back(authSystem);
+        }
+      }
+
+      //To get the list of user-authentication systems from the database
+      boost::scoped_ptr<DatabaseResult> ListofAuthAccounts (mdatabaseVishnu->getResult(sqlListofAuthAccounts.c_str()));
+
+      if (ListofAuthAccounts->getNbTuples() != 0){
+        for (size_t i = 0; i < ListofAuthAccounts->getNbTuples(); ++i) {
+          results.clear();
+          results = ListofAuthAccounts->get(i);
+          ii = results.begin();
+
+          UMS_Data::AuthAccount_ptr authAccount = ecoreFactory->createAuthAccount();
+          authAccount->setAuthSystemId(*ii);
+          authAccount->setUserId(*(++ii));
+          authAccount->setAcLogin(*(++ii));
+          mconfiguration->getListConfAuthAccounts().push_back(authAccount);
+        }
+      }
     } //End if the user is an admin
     else {
       UMSVishnuException e (ERRCODE_NO_ADMIN);
@@ -147,6 +196,8 @@ ConfigurationServer::save() {
 int ConfigurationServer::restore(int vishnuId) {
   std::string sqlcode = "";
   std::string sqlCodeDescMachine = "";
+  std::string sqlcodeAuthSystem = "";
+  std::string sqlcodeLdapAuthSystem = "";
 
   //Creation of the object user
   UserServer userServer = UserServer(msessionServer);
@@ -157,7 +208,7 @@ int ConfigurationServer::restore(int vishnuId) {
     if (userServer.exist()) {
 
       mdatabaseVishnu->process("DELETE FROM users where not userid='"+ROOTUSERNAME+"';"
-      "DELETE FROM machine; DELETE FROM account;");
+      "DELETE FROM machine; DELETE FROM account; DELETE FROM authsystem; delete FROM authaccount;");
 
       //To get all users
       for(unsigned int i = 0; i < mconfiguration->getListConfUsers().size(); i++) {
@@ -189,6 +240,36 @@ int ConfigurationServer::restore(int vishnuId) {
         UMS_Data::LocalAccount_ptr localAccount = mconfiguration->getListConfLocalAccounts().get(i);
         LocalAccountServer localAccountServer = LocalAccountServer (localAccount, msessionServer);
         localAccountServer.add();
+      }
+
+       //To get all user-authentication systems
+      for(unsigned int i = 0; i < mconfiguration->getListConfAuthSystems().size(); i++) {
+        UMS_Data::AuthSystem_ptr authsystem = mconfiguration->getListConfAuthSystems().get(i);
+        sqlcodeAuthSystem.append(authSystemToSql(authsystem, vishnuId));
+      }
+
+      //If authSystem has been defined
+      if (!sqlcodeAuthSystem.empty()) {
+        //To insert user-authentication systems
+        mdatabaseVishnu->process(sqlcodeAuthSystem.c_str());
+
+        //To get all ldap systems in a second time in order to be
+        //sure that recording has been done before
+        for(unsigned int i = 0; i < mconfiguration->getListConfAuthSystems().size(); i++) {
+          UMS_Data::AuthSystem_ptr authsystem = mconfiguration->getListConfAuthSystems().get(i);
+          sqlcodeLdapAuthSystem.append(ldapAuthSystemToSql(authsystem));
+        }
+        //If ldapsystem has been defined
+        if (!sqlcodeLdapAuthSystem.empty()) {
+          mdatabaseVishnu->process(sqlcodeLdapAuthSystem.c_str());
+        }
+
+        //To insert authAccount
+        for(unsigned int i = 0; i < mconfiguration->getListConfAuthAccounts().size(); i++) {
+          UMS_Data::AuthAccount_ptr authAccount = mconfiguration->getListConfAuthAccounts().get(i);
+          AuthAccountServer authAccountServer = AuthAccountServer (authAccount, msessionServer);
+          authAccountServer.add();
+        }
       }
     } //End if the user exists
     else {
@@ -230,7 +311,7 @@ std::string
 ConfigurationServer::userToSql(UMS_Data::User_ptr user, int vishnuId) {
 
   std::string sqlInsert = "insert into users (vishnu_vishnuid, userid, pwd, firstname, lastname,"
- " privilege, email, passwordstate, status) values ";
+  " privilege, email, passwordstate, status) values ";
 
   //Remove 1 on status because of the storage of EMF litteral on file which is shifted of 1
   return (sqlInsert + "(" + convertToString(vishnuId) +", "
@@ -277,4 +358,49 @@ ConfigurationServer::machineDescToSql(UMS_Data::Machine_ptr machine) {
 
   delete machinetmp;
   return res;
+}
+
+/**
+* \brief Function to get the sql code of user-authentication system from a VISHNU configuration
+* \fn authSystemToSql(UMS_Data::AuthSystem_ptr authSystem, int vishnuId)
+* \param authSystem The authSystem object
+* \param vishnuId The identifier of the vishnu instance
+* \return the sql code containing the sql code of authentication systems
+*/
+std::string
+ConfigurationServer::authSystemToSql(UMS_Data::AuthSystem_ptr authsystem, int vishnuId) {
+  std::string sqlInsert= "insert into authsystem (vishnu_vishnuid, "
+  "authsystemid, name, uri, authlogin, authpassword, userpwdencryption, authtype, status) values ";
+
+  //Remove 1 on enum types because of the storage of EMF litteral on file which is shifted of 1
+  return (sqlInsert + "(" + convertToString(vishnuId)+", "
+                                  "'"+authsystem->getAuthSystemId()+"','"+authsystem->getName()+"','"
+                                  + authsystem->getURI()+"','"+authsystem->getAuthLogin()+"', '"+
+                                  authsystem->getAuthPassword() + "',"
+                                  +convertToString(authsystem->getUserPasswordEncryption()-1)+ ","
+                                  +convertToString(authsystem->getType()-1) +","
+                                  +convertToString(authsystem->getStatus()-1)+");");
+
+}
+
+/**
+* \brief Function to get the sql code of machines description from a VISHNU configuration
+* \fn std::string machineDescToSql(UMS_Data::Machine_ptr machine)
+* \param authSystem The authSystem object
+* \return the sql code containing the sql code of authentication systems based on ldap
+*/
+std::string
+ConfigurationServer::ldapAuthSystemToSql(UMS_Data::AuthSystem_ptr authsystem) {
+
+  AuthSystemServer authSystemServer(authsystem);
+
+  //If the Ldap base is defined and the type is ldap
+  if ((authsystem->getLdapBase().size() != 0)
+    //Remove 1 on enum types because of the storage of EMF litteral on file which is shifted of 1
+    && ((authsystem->getType()-1) == LDAPTYPE) ) { // LDAP
+
+    std::string numAuth = authSystemServer.getAttribut("where authsystemid='"+authsystem->getAuthSystemId()+"'");
+    return (" insert into ldapauthsystem (authsystem_authsystemid, ldapbase) values "
+                            "("+numAuth+", '"+authsystem->getLdapBase()+"');");
+  }
 }
