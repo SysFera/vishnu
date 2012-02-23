@@ -99,7 +99,6 @@ AuthSystemProxy::update() {
   std::string sessionKey;
   std::string authSystemToString;
   char* errorInfo;
-  char* authSystemInString;
   std::string msg = "call of function diet_string_set is rejected ";
 
   profile = diet_profile_alloc("authSystemUpdate", 1, 1, 2);

@@ -479,6 +479,18 @@
         <details key="content" value="is the list of LocalAccount objects"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ListConfAuthSystems" upperBound="-1"
+        eType="#//AuthSystem" containment="true">
+      <eAnnotations source="Description">
+        <details key="content" value="is the list of user-authentication systems"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ListConfAuthAccounts" upperBound="-1"
+        eType="#//AuthAccount" containment="true">
+      <eAnnotations source="Description">
+        <details key="content" value="is the list of users objects"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="filePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="the full path to the file that contains the saved configuration"/>

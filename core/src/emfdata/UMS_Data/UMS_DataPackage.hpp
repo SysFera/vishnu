@@ -554,144 +554,154 @@ namespace UMS_Data
         static const int CONFIGURATION__LISTCONFLOCALACCOUNTS = 68;
 
         /**
+         * \brief Constant for CONFIGURATION__LISTCONFAUTHSYSTEMS feature
+         */
+        static const int CONFIGURATION__LISTCONFAUTHSYSTEMS = 69;
+
+        /**
+         * \brief Constant for CONFIGURATION__LISTCONFAUTHACCOUNTS feature
+         */
+        static const int CONFIGURATION__LISTCONFAUTHACCOUNTS = 70;
+
+        /**
          * \brief Constant for CONFIGURATION__FILEPATH feature
          */
-        static const int CONFIGURATION__FILEPATH = 69;
+        static const int CONFIGURATION__FILEPATH = 71;
 
         /**
          * \brief Constant for OPTIONVALUE__OPTIONNAME feature
          */
-        static const int OPTIONVALUE__OPTIONNAME = 70;
+        static const int OPTIONVALUE__OPTIONNAME = 72;
 
         /**
          * \brief Constant for OPTIONVALUE__VALUE feature
          */
-        static const int OPTIONVALUE__VALUE = 71;
+        static const int OPTIONVALUE__VALUE = 73;
 
         /**
          * \brief Constant for LISTOPTIONSVALUES__OPTIONVALUES feature
          */
-        static const int LISTOPTIONSVALUES__OPTIONVALUES = 72;
+        static const int LISTOPTIONSVALUES__OPTIONVALUES = 74;
 
         /**
          * \brief Constant for LISTOPTOPTIONS__LISTALLDEFTVALUE feature
          */
-        static const int LISTOPTOPTIONS__LISTALLDEFTVALUE = 73;
+        static const int LISTOPTOPTIONS__LISTALLDEFTVALUE = 75;
 
         /**
          * \brief Constant for LISTOPTOPTIONS__USERID feature
          */
-        static const int LISTOPTOPTIONS__USERID = 74;
+        static const int LISTOPTOPTIONS__USERID = 76;
 
         /**
          * \brief Constant for LISTOPTOPTIONS__OPTIONNAME feature
          */
-        static const int LISTOPTOPTIONS__OPTIONNAME = 75;
+        static const int LISTOPTOPTIONS__OPTIONNAME = 77;
 
         /**
          * \brief Constant for AUTHSYSTEM__AUTHSYSTEMID feature
          */
-        static const int AUTHSYSTEM__AUTHSYSTEMID = 76;
+        static const int AUTHSYSTEM__AUTHSYSTEMID = 78;
 
         /**
          * \brief Constant for AUTHSYSTEM__NAME feature
          */
-        static const int AUTHSYSTEM__NAME = 77;
+        static const int AUTHSYSTEM__NAME = 79;
 
         /**
          * \brief Constant for AUTHSYSTEM__URI feature
          */
-        static const int AUTHSYSTEM__URI = 78;
+        static const int AUTHSYSTEM__URI = 80;
 
         /**
          * \brief Constant for AUTHSYSTEM__AUTHLOGIN feature
          */
-        static const int AUTHSYSTEM__AUTHLOGIN = 79;
+        static const int AUTHSYSTEM__AUTHLOGIN = 81;
 
         /**
          * \brief Constant for AUTHSYSTEM__AUTHPASSWORD feature
          */
-        static const int AUTHSYSTEM__AUTHPASSWORD = 80;
+        static const int AUTHSYSTEM__AUTHPASSWORD = 82;
 
         /**
          * \brief Constant for AUTHSYSTEM__USERPASSWORDENCRYPTION feature
          */
-        static const int AUTHSYSTEM__USERPASSWORDENCRYPTION = 81;
+        static const int AUTHSYSTEM__USERPASSWORDENCRYPTION = 83;
 
         /**
          * \brief Constant for AUTHSYSTEM__TYPE feature
          */
-        static const int AUTHSYSTEM__TYPE = 82;
+        static const int AUTHSYSTEM__TYPE = 84;
 
         /**
          * \brief Constant for AUTHSYSTEM__STATUS feature
          */
-        static const int AUTHSYSTEM__STATUS = 83;
+        static const int AUTHSYSTEM__STATUS = 85;
 
         /**
          * \brief Constant for AUTHSYSTEM__LDAPBASE feature
          */
-        static const int AUTHSYSTEM__LDAPBASE = 84;
+        static const int AUTHSYSTEM__LDAPBASE = 86;
 
         /**
          * \brief Constant for LISTAUTHSYSTEMS__AUTHSYSTEMS feature
          */
-        static const int LISTAUTHSYSTEMS__AUTHSYSTEMS = 85;
+        static const int LISTAUTHSYSTEMS__AUTHSYSTEMS = 87;
 
         /**
          * \brief Constant for LISTAUTHSYSOPTIONS__LISTALLAUTHSYSTEMS feature
          */
-        static const int LISTAUTHSYSOPTIONS__LISTALLAUTHSYSTEMS = 86;
+        static const int LISTAUTHSYSOPTIONS__LISTALLAUTHSYSTEMS = 88;
 
         /**
          * \brief Constant for LISTAUTHSYSOPTIONS__LISTFULLINFO feature
          */
-        static const int LISTAUTHSYSOPTIONS__LISTFULLINFO = 87;
+        static const int LISTAUTHSYSOPTIONS__LISTFULLINFO = 89;
 
         /**
          * \brief Constant for LISTAUTHSYSOPTIONS__USERID feature
          */
-        static const int LISTAUTHSYSOPTIONS__USERID = 88;
+        static const int LISTAUTHSYSOPTIONS__USERID = 90;
 
         /**
          * \brief Constant for LISTAUTHSYSOPTIONS__AUTHSYSTEMID feature
          */
-        static const int LISTAUTHSYSOPTIONS__AUTHSYSTEMID = 89;
+        static const int LISTAUTHSYSOPTIONS__AUTHSYSTEMID = 91;
 
         /**
          * \brief Constant for AUTHACCOUNT__AUTHSYSTEMID feature
          */
-        static const int AUTHACCOUNT__AUTHSYSTEMID = 90;
+        static const int AUTHACCOUNT__AUTHSYSTEMID = 92;
 
         /**
          * \brief Constant for AUTHACCOUNT__USERID feature
          */
-        static const int AUTHACCOUNT__USERID = 91;
+        static const int AUTHACCOUNT__USERID = 93;
 
         /**
          * \brief Constant for AUTHACCOUNT__ACLOGIN feature
          */
-        static const int AUTHACCOUNT__ACLOGIN = 92;
+        static const int AUTHACCOUNT__ACLOGIN = 94;
 
         /**
          * \brief Constant for LISTAUTHACCOUNTS__AUTHACCOUNTS feature
          */
-        static const int LISTAUTHACCOUNTS__AUTHACCOUNTS = 93;
+        static const int LISTAUTHACCOUNTS__AUTHACCOUNTS = 95;
 
         /**
          * \brief Constant for LISTAUTHACCOPTIONS__LISTALL feature
          */
-        static const int LISTAUTHACCOPTIONS__LISTALL = 94;
+        static const int LISTAUTHACCOPTIONS__LISTALL = 96;
 
         /**
          * \brief Constant for LISTAUTHACCOPTIONS__USERID feature
          */
-        static const int LISTAUTHACCOPTIONS__USERID = 95;
+        static const int LISTAUTHACCOPTIONS__USERID = 97;
 
         /**
          * \brief Constant for LISTAUTHACCOPTIONS__AUTHSYSTEMID feature
          */
-        static const int LISTAUTHACCOPTIONS__AUTHSYSTEMID = 96;
+        static const int LISTAUTHACCOPTIONS__AUTHSYSTEMID = 98;
 
         // EClassifiers methods
 
@@ -1309,6 +1319,19 @@ namespace UMS_Data
          */
         virtual ::ecore::EReference_ptr
                 getConfiguration__listConfLocalAccounts();
+
+        /**
+         * \brief Returns the reflective object for feature ListConfAuthSystems of class Configuration
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EReference_ptr getConfiguration__ListConfAuthSystems();
+
+        /**
+         * \brief Returns the reflective object for feature ListConfAuthAccounts of class Configuration
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EReference_ptr
+                getConfiguration__ListConfAuthAccounts();
 
         /**
          * \brief Returns the reflective object for feature filePath of class Configuration
@@ -2001,6 +2024,16 @@ namespace UMS_Data
          * \brief The instance for the feature listConfLocalAccounts of class Configuration
          */
         ::ecore::EReference_ptr m_Configuration__listConfLocalAccounts;
+
+        /**
+         * \brief The instance for the feature ListConfAuthSystems of class Configuration
+         */
+        ::ecore::EReference_ptr m_Configuration__ListConfAuthSystems;
+
+        /**
+         * \brief The instance for the feature ListConfAuthAccounts of class Configuration
+         */
+        ::ecore::EReference_ptr m_Configuration__ListConfAuthAccounts;
 
         /**
          * \brief The instance for the feature filePath of class Configuration
