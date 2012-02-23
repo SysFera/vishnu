@@ -115,6 +115,16 @@
             Modified U1.1, U1.5 and UA5.2. Added U5, U6, U6.1, U6.2, U6.3, UA8, UA8.1, UA8.2.
           </para></revdescription>
       </revision>
+      <revision>
+        <revnumber>10</revnumber>
+        <date>23/02/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+        <para>
+            Modified UA3 - Save configuration : added the list of user-authentication systems and the list of local user-authentication configs on file saved.
+          </para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -1605,7 +1615,7 @@
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. The administrator requests to save the configuration in a file</para><para>2. The System creates a configuration file containing: the list  of users, the list of local users configs and the list of machines according to the local users configs</para></entry>
+                <entry><para>1. The administrator requests to save the configuration in a file</para><para>2. The System creates a configuration file containing: the list  of users, the list of local users configs, the list of machines according to the local users configs,  the list of local users authentication configs and the list of user-authentication systems according to the local users authentication configs</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
