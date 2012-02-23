@@ -187,6 +187,15 @@
 	    UMS::listAuthenticationSystem, UMS::addAuthAccount, UMS::updateAuthAccount, UMS::deleteAuthAccount, UMS::listAuthAccounts.
 	  </para><para>Updates of IMS:</para><para>Added IMS::defineAuthIdentifier</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>13</revnumber>
+        <date>23/02/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+            
+        <para>Updates of UMS:</para><para>Modified structure Configuration: added ListConfAuthSystems and ListConfAuthAcconts.</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -4692,6 +4701,16 @@
               <entry><para>listConfLocalAccounts</para></entry>
               <entry><para>List of <link linkend="LocalAccount">LocalAccount</link></para></entry>
               <entry><para>is the list of LocalAccount objects</para></entry>
+            </row>
+            <row>
+              <entry><para>ListConfAuthSystems</para></entry>
+              <entry><para>List of <link linkend="AuthSystem">AuthSystem</link></para></entry>
+              <entry><para>is the list of user-authentication systems</para></entry>
+            </row>
+            <row>
+              <entry><para>ListConfAuthAccounts</para></entry>
+              <entry><para>List of <link linkend="AuthAccount">AuthAccount</link></para></entry>
+              <entry><para>is the list of users objects</para></entry>
             </row>
             <row>
               <entry><para>filePath</para></entry>
