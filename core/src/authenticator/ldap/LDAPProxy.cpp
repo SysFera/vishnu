@@ -34,8 +34,6 @@ LDAPProxy::connectLDAP(const string& ldapbase) {
   int ret;
   string fullUserPath = muserName +","+ldapbase;
 
-  cout << "fullUserPath***********" << fullUserPath << endl ;
-
   /* Initialize the LDAP session */
   if ((ldap_initialize(&mld, const_cast<char*>(muri.c_str()))) != LDAP_SUCCESS) {
       throw SystemException(ERRCODE_AUTHENTERR, "LDAP session initialization failed");
