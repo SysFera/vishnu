@@ -22,6 +22,8 @@
 #include <UMS_Data/User.hpp>
 #include <UMS_Data/Machine.hpp>
 #include <UMS_Data/LocalAccount.hpp>
+#include <UMS_Data/AuthSystem.hpp>
+#include <UMS_Data/AuthAccount.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include <ecore/EStructuralFeature.hpp>
@@ -62,6 +64,20 @@ void Configuration::_initialize()
                 this,
                 ::UMS_Data::UMS_DataPackage::_instance()->getConfiguration__listConfLocalAccounts());
     }
+    for (size_t i = 0; i < m_ListConfAuthSystems->size(); i++)
+    {
+        (*m_ListConfAuthSystems)[i]->_initialize();
+        (*m_ListConfAuthSystems)[i]->_setEContainer(
+                this,
+                ::UMS_Data::UMS_DataPackage::_instance()->getConfiguration__ListConfAuthSystems());
+    }
+    for (size_t i = 0; i < m_ListConfAuthAccounts->size(); i++)
+    {
+        (*m_ListConfAuthAccounts)[i]->_initialize();
+        (*m_ListConfAuthAccounts)[i]->_setEContainer(
+                this,
+                ::UMS_Data::UMS_DataPackage::_instance()->getConfiguration__ListConfAuthAccounts());
+    }
 
     /*PROTECTED REGION ID(ConfigurationImpl__initialize) START*/
     // Please, enable the protected region if you add manually written code.
@@ -92,6 +108,16 @@ void Configuration::_initialize()
     case ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFLOCALACCOUNTS:
     {
         _any = m_listConfLocalAccounts->asEListOf< ::ecore::EObject > ();
+    }
+        return _any;
+    case ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFAUTHSYSTEMS:
+    {
+        _any = m_ListConfAuthSystems->asEListOf< ::ecore::EObject > ();
+    }
+        return _any;
+    case ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFAUTHACCOUNTS:
+    {
+        _any = m_ListConfAuthAccounts->asEListOf< ::ecore::EObject > ();
     }
         return _any;
     case ::UMS_Data::UMS_DataPackage::CONFIGURATION__FILEPATH:
@@ -137,6 +163,24 @@ void Configuration::eSet(::ecore::EInt _featureID,
         ::UMS_Data::Configuration::getListConfLocalAccounts().insert_all(*_t0);
     }
         return;
+    case ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFAUTHSYSTEMS:
+    {
+        ::ecorecpp::mapping::EList_ptr _t0 =
+                ::ecorecpp::mapping::any::any_cast<
+                        ::ecorecpp::mapping::EList_ptr >(_newValue);
+        ::UMS_Data::Configuration::getListConfAuthSystems().clear();
+        ::UMS_Data::Configuration::getListConfAuthSystems().insert_all(*_t0);
+    }
+        return;
+    case ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFAUTHACCOUNTS:
+    {
+        ::ecorecpp::mapping::EList_ptr _t0 =
+                ::ecorecpp::mapping::any::any_cast<
+                        ::ecorecpp::mapping::EList_ptr >(_newValue);
+        ::UMS_Data::Configuration::getListConfAuthAccounts().clear();
+        ::UMS_Data::Configuration::getListConfAuthAccounts().insert_all(*_t0);
+    }
+        return;
     case ::UMS_Data::UMS_DataPackage::CONFIGURATION__FILEPATH:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
@@ -158,6 +202,10 @@ void Configuration::eSet(::ecore::EInt _featureID,
         return m_listConfMachines && m_listConfMachines->size();
     case ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFLOCALACCOUNTS:
         return m_listConfLocalAccounts && m_listConfLocalAccounts->size();
+    case ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFAUTHSYSTEMS:
+        return m_ListConfAuthSystems && m_ListConfAuthSystems->size();
+    case ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFAUTHACCOUNTS:
+        return m_ListConfAuthAccounts && m_ListConfAuthAccounts->size();
     case ::UMS_Data::UMS_DataPackage::CONFIGURATION__FILEPATH:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_filePath);
