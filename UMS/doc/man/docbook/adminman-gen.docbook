@@ -236,7 +236,7 @@ The value must be an integer. Predefined values are: 0 (USER), 1 (ADMIN).</para>
             <term><option>-s <replaceable>status</replaceable></option></term>
             <listitem>
               <para>represents the status of the user (LOCKED or ACTIVE).
-The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</para>
+The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE), 1 (ACTIVE).</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -910,7 +910,7 @@ have to add it to the authorized keys of their own account on the machine.</para
             <term><option>-t <replaceable>status</replaceable></option></term>
             <listitem>
               <para>represents the status of the machine.
-The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</para>
+The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE), 1 (ACTIVE).</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -1114,7 +1114,8 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_list_users</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-i <replaceable>userIdOption</replaceable></option></arg></cmdsynopsis>
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-i <replaceable>authSystemId</replaceable></option></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -1130,9 +1131,15 @@ The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><option>-i <replaceable>userIdOption</replaceable></option></term>
+            <term><option>-u <replaceable>userId</replaceable></option></term>
             <listitem>
               <para>allows an admin to get information about a specific user identified by his/her userId.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-i <replaceable>authSystemId</replaceable></option></term>
+            <listitem>
+              <para>is an option to list users who have local user-authentication configurations on a specific user-authentication system.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1326,6 +1333,400 @@ that option using the vishnu_configure_option command.</para>
         <title>EXAMPLE</title>
         <para>To configure the option VISHNU_TIMEOUT with the value 42:</para>
         <para>vishnu_configure_default_option VISHNU_TIMEOUT 42</para>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_add_auth_system</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_add_auth_system</refname>
+        <refpurpose>adds a new user-authentication system in VISHNU</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_add_auth_system</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-b <replaceable>ldapBase</replaceable></option></arg><arg
+              choice="plain"><replaceable>name</replaceable></arg><arg choice="plain"><replaceable>URI</replaceable></arg><arg
+              choice="plain"><replaceable>authLogin</replaceable></arg><arg choice="plain"><replaceable>authPassword</replaceable></arg><arg
+              choice="plain"><replaceable>userPasswordEncryption</replaceable></arg><arg
+              choice="plain"><replaceable>type</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This command allows an admin to add a new user-authentication system in VISHNU.
+Several user-authentication system's information are mandatory such as: URI,  login, password, 
+type and optionally for LDAP the DN of the root entry. By default, the type of the user-authentication system is LDAP. </para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-b <replaceable>ldapBase</replaceable></option></term>
+            <listitem>
+              <para>is an option for user-authentication system based on LDAP which specifies the DN of the root entry .</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The identifier of the user-authentication system already exists&quot; [50]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The encryption method is unknown&quot; [53]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To add an LDAP's user-authentication system on VISHNU named CLAMART with the parameters which follows: URI ldap://127.0.0.1:389/ , login cn=ldapadmin,dc=edf,dc=fr, password secret and DN root entry dc=edf,dc=fr: </para>
+        <para>vishnu_add_auth_system CLAMART ldap://127.0.0.1:389/ cn=ldapadmin,dc=edf,dc=fr secret -b dc=edf,dc=fr </para>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_update_auth_system</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_update_auth_system</refname>
+        <refpurpose>updates a user-authentication system in VISHNU</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_update_auth_system</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
+              choice="opt"><option>-i <replaceable>URI</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>authLogin</replaceable></option></arg><arg
+              choice="opt"><option>-w <replaceable>authPassword</replaceable></option></arg><arg
+              choice="opt"><option>-e <replaceable>userPasswordEncryption</replaceable></option></arg><arg
+              choice="opt"><option>-t <replaceable>type</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>status</replaceable></option></arg><arg
+              choice="opt"><option>-b <replaceable>ldapBase</replaceable></option></arg><arg
+              choice="plain"><replaceable>authSystemId</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This command allows an admin to update a user-authentication system in VISHNU.
+It is possible to change the parameters which follow: URI,  login, password, 
+type and optionally for LDAP the DN of the root entry. By default, the type of the user-authentication system is LDAP. </para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-n <replaceable>name</replaceable></option></term>
+            <listitem>
+              <para>corresponds to the user-authentication system's name.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-i <replaceable>URI</replaceable></option></term>
+            <listitem>
+              <para>is the URI of the user-authentication systems (by the form host:port for LDAP).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-u <replaceable>authLogin</replaceable></option></term>
+            <listitem>
+              <para>is the login used to connect to the user-authentication system.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-w <replaceable>authPassword</replaceable></option></term>
+            <listitem>
+              <para>is the password used to connect to the user-authentication system.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-e <replaceable>userPasswordEncryption</replaceable></option></term>
+            <listitem>
+              <para>represents the encryption method used to encrypt user's password.
+The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (SSHA).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-t <replaceable>type</replaceable></option></term>
+            <listitem>
+              <para>represents the type of the user-authentication system.
+The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (LDAP).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-s <replaceable>status</replaceable></option></term>
+            <listitem>
+              <para>represents the status of the user-authentication system.
+The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE), 1 (ACTIVE).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-b <replaceable>ldapBase</replaceable></option></term>
+            <listitem>
+              <para>is an option for user-authentication system based on LDAP which specifies the DN of the root entry .</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The user-authentication system is unknown or locked&quot; [48]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The user-authentication system is already locked&quot; [49]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The encryption method is unknown&quot; [53]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To change the address of a user-authentication system whose identifier is AUTHENLDAP_1:</para>
+        <para>vishnu_update_auth_system -i ldap://192.128.1.1:389/ AUTHENLDAP_1</para>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_delete_auth_system</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_delete_auth_system</refname>
+        <refpurpose>removes a user-authentication system from VISHNU</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_delete_auth_system</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>authSystemId</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This command allows an admin to remove a user-authentication system from VISHNU.</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The user-authentication system is unknown or locked&quot; [48]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To remove a user-authentication system whose identifier is AUTHENLDAP_1:</para>
+        <para>vishnu_delete_auth_system AUTHENLDAP_1</para>
       </refsect1>
     </refentry>
   </reference>
@@ -2068,7 +2469,7 @@ have to add it to the authorized keys of their own account on the machine.</para
         <refpurpose>lists VISHNU users</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listUsers</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers&amp; <parameter>listuser</parameter></paramdef><paramdef>const string&amp; <parameter>userIdOption = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listUsers</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers&amp; <parameter>listuser</parameter></paramdef><paramdef>const ListUsersOptions&amp; <parameter>options = ListUsersOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2090,9 +2491,9 @@ have to add it to the authorized keys of their own account on the machine.</para
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><emphasis>userIdOption</emphasis></term>
+            <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>Input argument. Allows an admin to get information about a specific user identified by his/her userId.</para>
+              <para>Input argument. Allows an admin to get information about a specific user identified by his/her userId or to get information about users authenticated by a specific user-authentication system.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2224,6 +2625,250 @@ that option using the vishnu_configure_option command.</para>
           </varlistentry>
           <varlistentry>
             <term>&quot;The value of the transfer command is incorrect&quot; [44]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>addAuthSystem</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>addAuthSystem</refname>
+        <refpurpose>adds a new user-authentication system in VISHNU</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::addAuthSystem</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>AuthSystem&amp; <parameter>newAuthSys</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This command allows an admin to add a new user-authentication system in VISHNU.
+Several user-authentication system's information are mandatory such as: URI,  login, password, 
+type and optionally for LDAP the DN of the root entry. By default, the type of the user-authentication system is LDAP. </para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>newAuthSys</emphasis></term>
+            <listitem>
+              <para>Input/Output argument. Is an object which encapsulates the information of the user-authentication system which will be added in VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The identifier of the user-authentication system already exists&quot; [50]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The encryption method is unknown&quot; [53]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>updateAuthSystem</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>updateAuthSystem</refname>
+        <refpurpose>updates a user-authentication system in VISHNU</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::updateAuthSystem</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const AuthSystem&amp; <parameter>AuthSys</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This command allows an admin to update a user-authentication system in VISHNU.
+It is possible to change the parameters which follow: URI,  login, password, 
+type and optionally for LDAP the DN of the root entry. By default, the type of the user-authentication system is LDAP. </para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>AuthSys</emphasis></term>
+            <listitem>
+              <para>Input argument. Is an object which encapsulates the information of the user-authentication system which will be added in VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The user-authentication system is unknown or locked&quot; [48]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The user-authentication system is already locked&quot; [49]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The encryption method is unknown&quot; [53]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>deleteAuthSystem</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>deleteAuthSystem</refname>
+        <refpurpose>removes a user-authentication system from VISHNU</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::deleteAuthSystem</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>authSystemId</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This command allows an admin to remove a user-authentication system from VISHNU.</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>authSystemId</emphasis></term>
+            <listitem>
+              <para>Input argument. AuthSystemId is the identifier of the user-authentication system.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The user-authentication system is unknown or locked&quot; [48]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3082,7 +3727,7 @@ have to add it to the authorized keys of their own account on the machine.</para
         <refpurpose>lists VISHNU users</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listUsers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers <parameter>listuser</parameter></paramdef><paramdef>string <parameter>userIdOption = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listUsers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers <parameter>listuser</parameter></paramdef><paramdef>ListUsersOptions <parameter>options = ListUsersOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3104,9 +3749,9 @@ have to add it to the authorized keys of their own account on the machine.</para
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><emphasis>userIdOption</emphasis></term>
+            <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>Input argument. Allows an admin to get information about a specific user identified by his/her userId.</para>
+              <para>Input argument. Allows an admin to get information about a specific user identified by his/her userId or to get information about users authenticated by a specific user-authentication system.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -3262,6 +3907,286 @@ that option using the vishnu_configure_option command.</para>
           </varlistentry>
           <varlistentry>
             <term>UMSVishnuException(&quot;The value of the transfer command is incorrect&quot; [44])</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>VISHNU.addAuthSystem</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>VISHNU.addAuthSystem</refname>
+        <refpurpose>adds a new user-authentication system in VISHNU</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.addAuthSystem</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>AuthSystem <parameter>newAuthSys</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This command allows an admin to add a new user-authentication system in VISHNU.
+Several user-authentication system's information are mandatory such as: URI,  login, password, 
+type and optionally for LDAP the DN of the root entry. By default, the type of the user-authentication system is LDAP. </para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>newAuthSys</emphasis></term>
+            <listitem>
+              <para>Input/Output argument. Is an object which encapsulates the information of the user-authentication system which will be added in VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry/>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The identifier of the user-authentication system already exists&quot; [50])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The encryption method is unknown&quot; [53])</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>VISHNU.updateAuthSystem</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>VISHNU.updateAuthSystem</refname>
+        <refpurpose>updates a user-authentication system in VISHNU</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.updateAuthSystem</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>AuthSystem <parameter>AuthSys</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This command allows an admin to update a user-authentication system in VISHNU.
+It is possible to change the parameters which follow: URI,  login, password, 
+type and optionally for LDAP the DN of the root entry. By default, the type of the user-authentication system is LDAP. </para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>AuthSys</emphasis></term>
+            <listitem>
+              <para>Input argument. Is an object which encapsulates the information of the user-authentication system which will be added in VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry/>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The user-authentication system is unknown or locked&quot; [48])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The user-authentication system is already locked&quot; [49])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The encryption method is unknown&quot; [53])</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>VISHNU.deleteAuthSystem</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>VISHNU.deleteAuthSystem</refname>
+        <refpurpose>removes a user-authentication system from VISHNU</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.deleteAuthSystem</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>authSystemId</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This command allows an admin to remove a user-authentication system from VISHNU.</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>authSystemId</emphasis></term>
+            <listitem>
+              <para>Input argument. AuthSystemId is the identifier of the user-authentication system.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry/>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The user-authentication system is unknown or locked&quot; [48])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
