@@ -28,23 +28,18 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-VISHNU.connect \- opens a session
+VISHNU.connect \- opens a session by trying multiple couples (userId, password) each in turn
 .SH "SYNOPSIS"
 .HP \w'ret=VISHNU\&.connect('u
-.BI "ret=VISHNU\&.connect(string\ " "userId" ", string\ " "password" ", Session\ " "session" ", ConnectOptions\ " "options\ =\ ConnectOptions()" ");"
+.BI "ret=VISHNU\&.connect(ListUsers\ " "listUsers" ", Session\ " "session" ", ConnectOptions\ " "options\ =\ ConnectOptions()" ");"
 .SH "DESCRIPTION"
 .PP
-Opening a VISHNU session is the first step before using any other VISHNU command\&. This command authenticates you\&. You must have been registered in the VISHNU system by an administrator\&. It also creates a session that remains open after the command is completed and until the session is either manually or automatically closed\&. The userId and password may be given through the options, or if no userId and password are specified, vishnu_connect will read them in the \&.netrc file located in the home of the user\&.
+Opening a VISHNU session is the first step before using any other VISHNU command\&. This command authenticates you\&. You must have been registered in the VISHNU system by an administrator\&. It also creates a session that remains open after the command is completed and until the session is either manually or automatically closed\&. It is possible to define multiple VISHNU couples (userId, password)\&. In this case, vishnu_connect_m read them and tries each couple to make a connection\&.
 .SH "ARGUMENTS"
 .PP
-\fIuserId\fR
+\fIlistUsers\fR
 .RS 4
-Input argument\&. UserId represents the VISHNU user identifier\&. If userId and password are empty, vishnu connect will read them in the \&.netrc file located in the home of the user\&.
-.RE
-.PP
-\fIpassword\fR
-.RS 4
-Input argument\&. Password represents the password of the user\&. If userId and password are empty, vishnu connect will read them in the \&.netrc file located in the home of the user\&.
+Input argument\&. The list containing one or more couple (userId and password) potentially usable for connection\&.
 .RE
 .PP
 \fIsession\fR
@@ -68,6 +63,10 @@ Output parameter\&. Contains 0 on success and the error code on failure\&.
 .SH "EXCEPTIONS"
 .PP
 The following exceptions may be thrown:
+.PP
+SystemException("Vishnu not available (Authenticator error)" [\-1])
+.RS 4
+.RE
 .PP
 SystemException("Vishnu not available (Service bus failure)" [1])
 .RS 4

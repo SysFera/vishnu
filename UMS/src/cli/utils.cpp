@@ -549,7 +549,7 @@ operator<<(std::ostream& os, UMS_Data::ListAuthAccounts& lsAuthAccounts) {
 
   }
 
-  os << setw(maxAuthAccountIdSize+2) << left << "authAccountId" << setw(maxUserIdSize+2) << left << "userId" << setw(maxAcLoginSize+2) << left << "acLogin";
+  os << setw(maxAuthAccountIdSize+2) << left << "authSystemId" << setw(maxUserIdSize+2) << left << "userId" << setw(maxAcLoginSize+2) << left << "acLogin";
   os << endl;
   setFill(maxAuthAccountIdSize, os);
   setFill(maxUserIdSize, os);
