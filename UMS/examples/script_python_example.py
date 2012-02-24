@@ -56,8 +56,8 @@ try:
   # Getting the account in the first position in the list
   print "Number of local accounts", lacc.getAccounts().size()
   if lacc.getAccounts().size() > 0:
-    print "Getting the account in the first position in the list", lacc.getAccounts().get(0)
-
+    print "Getting the account in the first position in the list", "userId:", lacc.getAccounts().get(0).getUserId(), "machineId:", lacc.getAccounts().get(0).getMachineId() 
+    
   # Creation of a list machine object
   l = VISHNU.ListMachines()
   # Listing machines
@@ -65,7 +65,7 @@ try:
   # Creation of the option for the machines
   op = VISHNU.ListMachineOptions()
   # Setting the option to list all machines
-  op.setListAllmachine(1)
+  op.setListAllMachine(1)
   # Listing with the options
   VISHNU.listMachines(k,l,op)
   # Showing the name of the first machine
@@ -84,6 +84,15 @@ try:
   VISHNU.connect("","", sess2)
   k = sess2.getSessionKey()
   print "Session key: ",k
+  # Test addAuthSystem
+  #print "Test addAuthSystem"
+  #newAuthSys = VISHNU.AuthSystem
+  #newAuthSys.setName("MyPython")
+  #newAuthSys.setURI("http://pythonHome.Fr")
+  #newAuthSys.setAuthLogin("myPythonAuth")
+  #newAuthSys.setAuthPassword("myPythonPwd")
+  #newAuthSys.setUserPasswordEncryption(0)
+  #addAuthSystem(k, newAuthSys)
   VISHNU.close(k)
 
 
