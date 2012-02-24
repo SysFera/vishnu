@@ -10,7 +10,7 @@
       <ports name="password" usage="CLI_ONLY" dataType="//@typeList/@types.0" description="password represents the password of the user" optional="true" shortOptionLetter="w" defaultValueLiteral="&quot;&quot;"/>
       <usedServices href="UMS_Internal.apim#//@modules.0/@services.1"/>
       <details key="description" value="Opening a VISHNU session is the first step before using any other VISHNU command.&#xA;This command authenticates you. You must have been registered in the VISHNU system&#xA;by an administrator.  It also creates a session that remains open after the command is&#xA;completed and until the session is either manually or automatically closed.&#xA;The userId and password may be given through the options, or if no userId and password &#xA;are specified, vishnu_connect will read them in the  .netrc file located in the home of the user. &#xA;"/>
-      <details key="exCLI" value="To connect the user user_1:&#xA;vishnu_connect user_1 pwd1 user_2 pwd2"/>
+      <details key="exCLI" value="To connect the user user_1:&#xA;vishnu_connect -u user_1 -w pwd1"/>
     </services>
     <services name="connect" description="opens a session by trying multiple couples (userId, password) each in turn" resultCodes="VISHNU_OK ERRCODE_UNKNOWN_USER ERRCODE_UNKNOWN_CLOSURE_MODE ERRCODE_INCORRECT_TIMEOUT ERRCODE_UNKNOWN_USERID ERRCODE_NO_ADMIN ERRCODE_USER_LOCKED ERRCODE_AUTHENTERR ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_UNDEFINED ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="listUsers" usage="API_ONLY" dataType="//@typeList/@types.4" description="The list containing one or more couple (userId and password) potentially usable for connection" shortOptionLetter="" defaultValueLiteral=""/>
@@ -31,7 +31,7 @@
       <ports name="password" usage="CLI_ONLY" dataType="//@typeList/@types.0" description="password represents the password of the user" optional="true" shortOptionLetter="w" defaultValueLiteral=""/>
       <usedServices href="UMS_Internal.apim#//@modules.0/@services.2"/>
       <details key="description" value="This command allows you to resume a session that has been opened previously and that has not yet&#xA;been closed. You can disconnect from a session without closing it (for example if there are running&#xA;commands in that session) by setting the session's close policy (at connection time) to CLOSE_ON_TIMEOUT.&#xA;As sessions are linked to a specific client system, you cannot reconnect to a &#xA;session that was opened on another client system.&#xA;The userId and password may be given through the options, or if no userId and password &#xA;are specified, vishnu_reconnect will read them in the  .netrc file located in the home of the user."/>
-      <details key="exCLI" value="To reconnect the user user_1 to the session S01:&#xA;vishnu_reconnect user_1 S01"/>
+      <details key="exCLI" value="To reconnect the user user_1 to the session S01:&#xA;vishnu_reconnect -u user_1 S01"/>
     </services>
     <services name="reconnect" description="reconnects to a session that is still active by trying multiple couples (userId, password) each in turn" resultCodes="VISHNU_OK ERRCODE_UNKNOWN_USER ERRCODE_USER_LOCKED ERRCODE_UNUSABLE_MACHINE ERRCODE_UNKNOWN_SESSION_ID ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_AUTHENTERR ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_UNDEFINED ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="listUsers" usage="API_ONLY" dataType="//@typeList/@types.4" description="The list containing one or more couple (userId and password) potentially usable for connection" shortOptionLetter="" defaultValueLiteral=""/>
@@ -253,7 +253,7 @@
       <ports name="newAuthSys" usage="CLI_ONLY" dataType="//@typeList/@types.38" description="is an object which encapsulates the information of the user-authentication system which will be added in VISHNU" shortOptionLetter="" longOptionName=""/>
       <usedServices href="UMS_Internal.apim#//@modules.0/@services.24"/>
       <details key="description" value="This command allows an admin to add a new user-authentication system in VISHNU.&#xA;Several user-authentication system's information are mandatory such as: URI,  login, password, &#xA;type and optionally for LDAP the DN of the root entry. By default, the type of the user-authentication system is LDAP. "/>
-      <details key="exCLI" value="To add an LDAP's user-authentication system on VISHNU named CLAMART with the parameters which follows: URI ldap://127.0.0.1:389/ , login cn=ldapadmin,dc=edf,dc=fr, password secret and DN root entry dc=edf,dc=fr: &#xA;vishnu_add_authentication_system CLAMART ldap://127.0.0.1:389/ cn=ldapadmin,dc=edf,dc=fr secret -b dc=edf,dc=fr &#xA;"/>
+      <details key="exCLI" value="To add an LDAP's user-authentication system on VISHNU named CLAMART with the parameters which follows: URI ldap://127.0.0.1:389/ , login cn=ldapadmin,dc=edf,dc=fr, password secret and DN root entry dc=edf,dc=fr: &#xA;vishnu_add_auth_system CLAMART ldap://127.0.0.1:389/ cn=ldapadmin,dc=edf,dc=fr secret -b dc=edf,dc=fr &#xA;"/>
     </services>
     <services name="updateAuthSystem" description="updates a user-authentication system in VISHNU" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_NO_ADMIN ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_SESSIONKEY_EXPIRED ERRCODE_UNKNOWN_AUTH_SYSTEM ERRCODE_UNKNOWN_ENCRYPTION_METHOD ERRCODE_AUTH_SYSTEM_ALREADY_LOCKED ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_UNDEFINED ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The sessionKey is the encrypted identifier of the session generated by VISHNU" longOptionName=""/>
@@ -261,14 +261,14 @@
       <ports name="AuthSys" usage="CLI_ONLY" dataType="//@typeList/@types.39" description="is an object which encapsulates the information of the user-authentication system which will be added in VISHNU" shortOptionLetter="" longOptionName=""/>
       <usedServices href="UMS_Internal.apim#//@modules.0/@services.25"/>
       <details key="description" value="This command allows an admin to update a user-authentication system in VISHNU.&#xA;It is possible to change the parameters which follow: URI,  login, password, &#xA;type and optionally for LDAP the DN of the root entry. By default, the type of the user-authentication system is LDAP. "/>
-      <details key="exCLI" value="To change the address of a user-authentication system whose identifier is AUTHENLDAP_1:&#xA;vishnu_update_authentication_system -i ldap://192.128.1.1:389/ AUTHENLDAP_1"/>
+      <details key="exCLI" value="To change the address of a user-authentication system whose identifier is AUTHENLDAP_1:&#xA;vishnu_update_auth_system -i ldap://192.128.1.1:389/ AUTHENLDAP_1"/>
     </services>
     <services name="deleteAuthSystem" description="removes a user-authentication system from VISHNU" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_NO_ADMIN ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_SESSIONKEY_EXPIRED ERRCODE_UNKNOWN_AUTH_SYSTEM ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_UNDEFINED ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The sessionKey is the encrypted identifier of the session generated by VISHNU" longOptionName=""/>
       <ports name="authSystemId" dataType="//@typeList/@types.0" description="authSystemId is the identifier of the user-authentication system" shortOptionLetter=""/>
       <usedServices href="UMS_Internal.apim#//@modules.0/@services.26"/>
       <details key="description" value="This command allows an admin to remove a user-authentication system from VISHNU."/>
-      <details key="exCLI" value="To remove a user-authentication system whose identifier is AUTHENLDAP_1:&#xA;vishnu_delete_authentication_system AUTHENLDAP_1"/>
+      <details key="exCLI" value="To remove a user-authentication system whose identifier is AUTHENLDAP_1:&#xA;vishnu_delete_auth_system AUTHENLDAP_1"/>
     </services>
     <services name="listAuthSystems" description="lists VISHNU user-authentification systems" resultCodes="ERRCODE_NO_ADMIN ERRCODE_UNKNOWN_USERID ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_UNDEFINED ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The sessionKey is the identifier of the session generated by VISHNU" longOptionName=""/>
@@ -276,14 +276,14 @@
       <ports name="options" dataType="//@typeList/@types.30" description="allows an admin to list all user-authentication systems used by a specific user or a user to list all user-authentication systems declared in VISHNU (and not only those where a local user-authentication configs are defined). It also allows to list user-authentication systems of a specific type" optional="true" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <usedServices href="UMS_Internal.apim#//@modules.0/@services.27"/>
       <details key="description" value="This command allows to display all user-authentication systems. By default, the user-authentication systems where the user has a local user-authentication config are listed."/>
-      <details key="exCLI" value="To list all user-authentication systems:&#xA;vishnu_list_authentication_systems"/>
+      <details key="exCLI" value="To list all user-authentication systems:&#xA;vishnu_list_auth_systems"/>
     </services>
     <services name="addAuthAccount" description="adds a new local user-authentication configuration" resultCodes="VISHNU_OK ERRCODE_NO_ADMIN ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_SESSIONKEY_EXPIRED ERRCODE_UNKNOWN_USERID ERRCODE_USER_LOCKED ERRCODE_UNKNOWN_AUTH_SYSTEM ERRCODE_AUTH_ACCOUNT_EXIST ERRCODE_LOGIN_ALREADY_USED ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_UNDEFINED ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The sessionKey is the encrypted identifier of the session generated by VISHNU" longOptionName=""/>
       <ports name="authAccount" dataType="//@typeList/@types.32" description="is an object which encapsulates the information of the local user-authentication configuration which will be added in VISHNU" shortOptionLetter="" longOptionName=""/>
       <usedServices href="UMS_Internal.apim#//@modules.0/@services.28"/>
       <details key="description" value="This command allows to add a local user-authentication configuration in VISHNU.&#xA;The required parameters are : the VISHNU user identifier, the user-authentication system identifier and the uid of the user on the corresponding user-authentication system"/>
-      <details key="exCLI" value="To add the local user-authentication configuration whose account is toto on the user-authentication system identified by AUTHENLDAP_1: &#xA;vishnu_add_authen_account AUTHENLDAP_1 toto&#xA;"/>
+      <details key="exCLI" value="To add the local user-authentication configuration whose account is toto on the user-authentication system identified by AUTHENLDAP_1: &#xA;vishnu_add_auth_account AUTHENLDAP_1 toto&#xA;"/>
     </services>
     <services name="updateAuthAccount" description="updates a local user-authentication configuration" resultCodes="VISHNU_OK ERRCODE_NO_ADMIN ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_SESSIONKEY_EXPIRED ERRCODE_UNKNOWN_USERID ERRCODE_USER_LOCKED ERRCODE_UNKNOWN_AUTH_SYSTEM ERRCODE_UNKNOWN_AUTH_ACCOUNT ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_UNDEFINED ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The sessionKey is the encrypted identifier of the session generated by VISHNU" longOptionName=""/>
@@ -291,7 +291,7 @@
       <ports name="authAccount" usage="CLI_ONLY" dataType="//@typeList/@types.33" description="is an object which encapsulates the information of the local user-authentication configuration which will be updated" shortOptionLetter="" longOptionName=""/>
       <usedServices href="UMS_Internal.apim#//@modules.0/@services.29"/>
       <details key="description" value="This command allows to update a local user-authentication configuration in VISHNU. Only &#xA;the local user's login in the user-authentication system can be updated.&#xA;"/>
-      <details key="exCLI" value="To change the uid  of a local user-authentication configuration to aramis whose user-authentication system is AUTHENLDAP_1: &#xA;vishnu_update_authen_account -l aramis AUTHENLDAP_1"/>
+      <details key="exCLI" value="To change the uid  of a local user-authentication configuration to aramis whose user-authentication system is AUTHENLDAP_1: &#xA;vishnu_update_auth_account -l aramis AUTHENLDAP_1"/>
     </services>
     <services name="deleteAuthAccount" description="removes a local user-authentication configuration from VISHNU" resultCodes="VISHNU_OK ERRCODE_NO_ADMIN ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_SESSIONKEY_EXPIRED ERRCODE_UNKNOWN_USERID ERRCODE_USER_LOCKED ERRCODE_UNKNOWN_AUTH_SYSTEM ERRCODE_UNKNOWN_AUTH_ACCOUNT ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_UNDEFINED ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The sessionKey is the encrypted identifier of the session generated by VISHNU" longOptionName=""/>
@@ -299,7 +299,7 @@
       <ports name="userId" dataType="//@typeList/@types.0" description="is an admin option which represents the VISHNU identifier of the user whose local user-authentication configuration will be deleted" optional="true" shortOptionLetter="u" longOptionName="" defaultValueLiteral="&quot;&quot;"/>
       <usedServices href="UMS_Internal.apim#//@modules.0/@services.30"/>
       <details key="description" value="This command allows to remove a local user-authentication configuration from VISHNU.&#xA;The required parameters are : the VISHNU user identifier, the user-authentication system identifier and the uid of the user on the corresponding user-authentication system"/>
-      <details key="exCLI" value="To remove a local user-authentication configuration whose user-authentication system is AUTHENLDAP_1: &#xA;vishnu_delete_authen_account AUTHENLDAP_1"/>
+      <details key="exCLI" value="To remove a local user-authentication configuration whose user-authentication system is AUTHENLDAP_1: &#xA;vishnu_delete_auth_account AUTHENLDAP_1"/>
     </services>
     <services name="listAuthAccounts" description="lists local user-authentication configurations" resultCodes="VISHNU_OK ERRCODE_NO_ADMIN ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_SESSIONKEY_EXPIRED ERRCODE_UNKNOWN_USERID ERRCODE_USER_LOCKED ERRCODE_UNKNOWN_AUTH_SYSTEM ERRCODE_UNKNOWN_AUTH_ACCOUNT ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_UNDEFINED ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The sessionKey is the encrypted identifier of the session generated by VISHNU" longOptionName=""/>
@@ -307,7 +307,7 @@
       <ports name="options" dataType="//@typeList/@types.36" description="allows an admin to list all local user-authentication configurations or to list local user-authentication configurations of a specific user or for a user to list local user-authentication configuration defined for a specific user-authentication system" optional="true" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <usedServices href="UMS_Internal.apim#//@modules.0/@services.31"/>
       <details key="description" value="This command allows to list local user-authentication configurations of VISHNU.&#xA;"/>
-      <details key="exCLI" value="To list local user-authentication configurations: &#xA;vishnu_list_authen_account"/>
+      <details key="exCLI" value="To list local user-authentication configurations: &#xA;vishnu_list_auth_accounts"/>
     </services>
     <resultCodeList>
       <resultCodes name="ERRCODE_UNKNOWN_USER" description="The user is unknown or the password is wrong" value="20" diagnostic=""/>
