@@ -44,12 +44,12 @@ help about the command\&.
 .PP
 \fB\-t \fR\fB\fIstatus\fR\fR
 .RS 4
-specifies the status of the sessions which will be listed\&. The value must be an integer\&. Predefined values are: 0 (INACTIVE), 1 (ACTIVE)\&.
+specifies the status of the sessions which will be listed\&. The value must be an integer\&. Predefined values are: \-1 (UNDEFINED), 0 (INACTIVE), 1 (ACTIVE)\&.
 .RE
 .PP
 \fB\-p \fR\fB\fIsessionClosePolicy\fR\fR
 .RS 4
-specifies the closure mode of the sessions which will be listed (CLOSE_ON_TIMEOUT or CLOSE_ON_DISCONNECT)\&. The value must be an integer\&. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_TIMEOUT), 2 (CLOSE_ON_DISCONNECT)\&.
+specifies the closure mode of the sessions which will be listed (CLOSE_ON_TIMEOUT or CLOSE_ON_DISCONNECT)\&. The value must be an integer\&. Predefined values are: 0 (DEFAULT), 1 (CLOSE_ON_TIMEOUT), 2 (CLOSE_ON_DISCONNECT)\&.
 .RE
 .PP
 \fB\-d \fR\fB\fIsessionInactivityDelay\fR\fR
@@ -59,7 +59,7 @@ specifies the inactivity delay in seconds of the sessions which will be listed\&
 .PP
 \fB\-m \fR\fB\fImachineId\fR\fR
 .RS 4
-allows the user to list sessions opened on a specific machine\&.
+allows the user to list sessions opened on a specific client\*(Aqs machine by using its name\&.
 .RE
 .PP
 \fB\-a \fR\fB\fIadminListOption\fR\fR
