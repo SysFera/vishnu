@@ -153,6 +153,8 @@
 %template(ELocalAccList) ::ecorecpp::mapping::EList<::UMS_Data::LocalAccount>;
 %template(ECommandList) ::ecorecpp::mapping::EList<::UMS_Data::Command>;
 %template(EOptionList) ::ecorecpp::mapping::EList<::UMS_Data::OptionValue>;
+%template(EAuthSystemList) ::ecorecpp::mapping::EList<::UMS_Data::AuthSystem>;
+%template(EAuthAccountList) ::ecorecpp::mapping::EList<::UMS_Data::AuthAccount>;
 
 %template(EJobList) ::ecorecpp::mapping::EList<::TMS_Data::Job>;
 %template(EProgressionList) ::ecorecpp::mapping::EList<::TMS_Data::Progression>;
