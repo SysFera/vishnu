@@ -61,6 +61,10 @@ Contains the path to the local configuration file for VISHNU\&.
 .PP
 The following diagnostics may be issued on stderr and the command will return the code provided within brackets:
 .PP
+"Vishnu not available (Authenticator error)" [\-1]
+.RS 4
+.RE
+.PP
 "Vishnu not available (Service bus failure)" [1]
 .RS 4
 .RE
@@ -124,7 +128,7 @@ The following diagnostics may be issued on stderr and the command will return th
 .PP
 To reconnect the user user_1 to the session S01:
 .PP
-vishnu_reconnect user_1 S01
+vishnu_reconnect \-u user_1 S01
 .SH "AUTHOR"
 .PP
 \fB SysFera SAS\fR <\&info@sysfera.com\&>
