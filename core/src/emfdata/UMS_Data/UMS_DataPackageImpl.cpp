@@ -463,6 +463,16 @@ UMS_DataPackage::UMS_DataPackage()
             ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFLOCALACCOUNTS);
     m_ConfigurationEClass->getEStructuralFeatures().push_back(
             m_Configuration__listConfLocalAccounts);
+    m_Configuration__ListConfAuthSystems = new ::ecore::EReference();
+    m_Configuration__ListConfAuthSystems->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFAUTHSYSTEMS);
+    m_ConfigurationEClass->getEStructuralFeatures().push_back(
+            m_Configuration__ListConfAuthSystems);
+    m_Configuration__ListConfAuthAccounts = new ::ecore::EReference();
+    m_Configuration__ListConfAuthAccounts->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFAUTHACCOUNTS);
+    m_ConfigurationEClass->getEStructuralFeatures().push_back(
+            m_Configuration__ListConfAuthAccounts);
 
     // OptionValue
     m_OptionValueEClass = new ::ecore::EClass();
@@ -1727,6 +1737,32 @@ UMS_DataPackage::UMS_DataPackage()
     m_Configuration__listConfLocalAccounts->setUnique(true);
     m_Configuration__listConfLocalAccounts->setDerived(false);
     m_Configuration__listConfLocalAccounts->setOrdered(true);
+    m_Configuration__ListConfAuthSystems->setEType(m_AuthSystemEClass);
+    m_Configuration__ListConfAuthSystems->setName("ListConfAuthSystems");
+    m_Configuration__ListConfAuthSystems->setDefaultValueLiteral("");
+    m_Configuration__ListConfAuthSystems->setLowerBound(0);
+    m_Configuration__ListConfAuthSystems->setUpperBound(-1);
+    m_Configuration__ListConfAuthSystems->setTransient(false);
+    m_Configuration__ListConfAuthSystems->setVolatile(false);
+    m_Configuration__ListConfAuthSystems->setChangeable(true);
+    m_Configuration__ListConfAuthSystems->setContainment(true);
+    m_Configuration__ListConfAuthSystems->setResolveProxies(true);
+    m_Configuration__ListConfAuthSystems->setUnique(true);
+    m_Configuration__ListConfAuthSystems->setDerived(false);
+    m_Configuration__ListConfAuthSystems->setOrdered(true);
+    m_Configuration__ListConfAuthAccounts->setEType(m_AuthAccountEClass);
+    m_Configuration__ListConfAuthAccounts->setName("ListConfAuthAccounts");
+    m_Configuration__ListConfAuthAccounts->setDefaultValueLiteral("");
+    m_Configuration__ListConfAuthAccounts->setLowerBound(0);
+    m_Configuration__ListConfAuthAccounts->setUpperBound(-1);
+    m_Configuration__ListConfAuthAccounts->setTransient(false);
+    m_Configuration__ListConfAuthAccounts->setVolatile(false);
+    m_Configuration__ListConfAuthAccounts->setChangeable(true);
+    m_Configuration__ListConfAuthAccounts->setContainment(true);
+    m_Configuration__ListConfAuthAccounts->setResolveProxies(true);
+    m_Configuration__ListConfAuthAccounts->setUnique(true);
+    m_Configuration__ListConfAuthAccounts->setDerived(false);
+    m_Configuration__ListConfAuthAccounts->setOrdered(true);
     // OptionValue
     m_OptionValueEClass->setName("OptionValue");
     m_OptionValueEClass->setAbstract(false);
@@ -2710,6 +2746,14 @@ UMS_DataPackage::UMS_DataPackage()
 ::ecore::EReference_ptr UMS_DataPackage::getConfiguration__listConfLocalAccounts()
 {
     return m_Configuration__listConfLocalAccounts;
+}
+::ecore::EReference_ptr UMS_DataPackage::getConfiguration__ListConfAuthSystems()
+{
+    return m_Configuration__ListConfAuthSystems;
+}
+::ecore::EReference_ptr UMS_DataPackage::getConfiguration__ListConfAuthAccounts()
+{
+    return m_Configuration__ListConfAuthAccounts;
 }
 ::ecore::EAttribute_ptr UMS_DataPackage::getConfiguration__filePath()
 {

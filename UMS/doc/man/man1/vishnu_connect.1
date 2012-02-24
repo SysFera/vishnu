@@ -44,7 +44,7 @@ help about the command\&.
 .PP
 \fB\-p \fR\fB\fIclosePolicy\fR\fR
 .RS 4
-is an option for closing session automatically\&. The value must be an integer\&. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_TIMEOUT), 2 (CLOSE_ON_DISCONNECT)\&.
+is an option for closing session automatically\&. The value must be an integer\&. Predefined values are: 0 (DEFAULT), 1 (CLOSE_ON_TIMEOUT), 2 (CLOSE_ON_DISCONNECT)\&.
 .RE
 .PP
 \fB\-d \fR\fB\fIsessionInactivityDelay\fR\fR
@@ -80,6 +80,10 @@ Contains the path to the local configuration file for VISHNU\&.
 .SH "DIAGNOSTICS"
 .PP
 The following diagnostics may be issued on stderr and the command will return the code provided within brackets:
+.PP
+"Vishnu not available (Authenticator error)" [\-1]
+.RS 4
+.RE
 .PP
 "Vishnu not available (Service bus failure)" [1]
 .RS 4
@@ -144,7 +148,7 @@ The following diagnostics may be issued on stderr and the command will return th
 .PP
 To connect the user user_1:
 .PP
-vishnu_connect user_1
+vishnu_connect \-u user_1 \-w pwd1
 .SH "AUTHOR"
 .PP
 \fB SysFera SAS\fR <\&info@sysfera.com\&>

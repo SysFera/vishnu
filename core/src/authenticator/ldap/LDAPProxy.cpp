@@ -34,7 +34,6 @@ LDAPProxy::connectLDAP(const string& ldapbase) {
   int ret;
   string fullUserPath = muserName +","+ldapbase;
 
-
   /* Initialize the LDAP session */
   if ((ldap_initialize(&mld, const_cast<char*>(muri.c_str()))) != LDAP_SUCCESS) {
       throw SystemException(ERRCODE_AUTHENTERR, "LDAP session initialization failed");
@@ -47,7 +46,7 @@ LDAPProxy::connectLDAP(const string& ldapbase) {
     if (ret != LDAP_INVALID_CREDENTIALS ) {
       throw SystemException(ERRCODE_AUTHENTERR, ldap_err2string(ret));
     }
-    throw UserException(ERRCODE_UNKNOWN_USER, "The user is unknown");
+    throw UserException(ERRCODE_UNKNOWN_USER, "The user is unrecognized on LDAP system");
   }
   return 0;
 }

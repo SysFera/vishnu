@@ -71,7 +71,7 @@ vishnu::connect(const string& userId,
     // Convert to list of users
     for (iter = auth.begin(); iter!=auth.end(); iter++){
        pair<string,string> couple = iter->second;
-      
+
       if(couple.first.compare("login")==0) {
         user->setUserId(couple.second);
         state |= 0x0001;
@@ -457,7 +457,7 @@ vishnu::updateMachine(const std::string& sessionKey,
                                                       throw(UserException, SystemException)
 {
 
-  if((machine.getStatus() < 0) || (machine.getStatus() > 1)) {
+  if((machine.getStatus() < -1) || (machine.getStatus() > 1)) {
     throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION, "Invalid Status value: its value must be 0 or 1");
   }
 
