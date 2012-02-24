@@ -432,9 +432,14 @@ operator<<(std::ostream& os, UMS_Data::ListAuthSystems& lsAuthSystems) {
   size_t maxAuthSystemIdSize = std::string("authSystemId").size();
   size_t maxNameSize = std::string("name").size();
   size_t maxURISize = std::string("URI").size();
+  size_t maxLdapbaseSize = std::string("ldapBase").size();
+  size_t maxStatusSize = std::string("Status").size();
   std::string authSystemId;
   std::string name;
   std::string URI;
+  std::string ldapbase;
+  int status;
+  string statusStr;
 
   for(unsigned int i = 0; i < lsAuthSystems.getAuthSystems().size(); i++) {
 
@@ -447,13 +452,22 @@ operator<<(std::ostream& os, UMS_Data::ListAuthSystems& lsAuthSystems) {
     URI = (lsAuthSystems.getAuthSystems().get(i))->getURI();
     maxURISize = max(maxURISize, URI.size());
 
+    ldapbase = (lsAuthSystems.getAuthSystems().get(i))->getLdapBase();
+    maxLdapbaseSize = max(maxLdapbaseSize, ldapbase.size());
+
+    status = (lsAuthSystems.getAuthSystems().get(i))->getStatus();
+    statusStr = (status?"ACTIVE":"INACTIVE");
+    maxStatusSize = max(maxStatusSize, statusStr.size());
   }
 
-  os << setw(maxAuthSystemIdSize+2) << left << "authSystemId" << setw(maxNameSize+2) << left << "name" << setw(maxURISize+2) << left << "URI";
+  os << setw(maxAuthSystemIdSize+2) << left << "authSystemId" << setw(maxNameSize+2) << left << "name" << setw(maxURISize+2) << left << "URI" <<
+  setw(maxLdapbaseSize+2) << left << "ldapBase" << setw(maxStatusSize+2) << left << "status";
   os << endl;
   setFill(maxAuthSystemIdSize, os);
   setFill(maxNameSize, os);
   setFill(maxURISize, os);
+  setFill(maxLdapbaseSize, os);
+  setFill(maxStatusSize, os);
   os << endl;
 
   for(unsigned int i = 0; i < lsAuthSystems.getAuthSystems().size(); i++) {
@@ -461,9 +475,16 @@ operator<<(std::ostream& os, UMS_Data::ListAuthSystems& lsAuthSystems) {
     authSystemId = (lsAuthSystems.getAuthSystems().get(i))->getAuthSystemId();
     name = (lsAuthSystems.getAuthSystems().get(i))->getName();
     URI = (lsAuthSystems.getAuthSystems().get(i))->getURI();
+    ldapbase = (lsAuthSystems.getAuthSystems().get(i))->getLdapBase();
+
     os << setw(maxAuthSystemIdSize+2) << left << authSystemId;
     os << setw(maxNameSize+2) << left << name;
     os << setw(maxURISize+2) << left <<  URI;
+
+    os << setw(maxLdapbaseSize+2) << left << ldapbase;
+    status = (lsAuthSystems.getAuthSystems().get(i))->getStatus();
+    statusStr = (status?"ACTIVE":"INACTIVE");
+    os << setw(maxStatusSize+2) << left <<  statusStr;
     os << endl;
   }
 
@@ -528,7 +549,7 @@ operator<<(std::ostream& os, UMS_Data::ListAuthAccounts& lsAuthAccounts) {
 
   }
 
-  os << setw(maxAuthAccountIdSize+2) << left << "authAccountId" << setw(maxUserIdSize+2) << left << "userId" << setw(maxAcLoginSize+2) << left << "acLogin";
+  os << setw(maxAuthAccountIdSize+2) << left << "authSystemId" << setw(maxUserIdSize+2) << left << "userId" << setw(maxAcLoginSize+2) << left << "acLogin";
   os << endl;
   setFill(maxAuthAccountIdSize, os);
   setFill(maxUserIdSize, os);

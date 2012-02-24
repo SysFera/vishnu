@@ -131,7 +131,10 @@ AuthAccountServer::update() {
         " where authsystem_authsystemid="+numAuthSystem+" and users_numuserid="+numUser+";");
         }
 
-        mdatabaseVishnu->process(sqlCommand.c_str());
+        //If there is a change
+        if (!sqlCommand.empty()) {
+            mdatabaseVishnu->process(sqlCommand.c_str());
+          }
       }//END if the authentification account exists
       else {
         UMSVishnuException e (ERRCODE_UNKNOWN_AUTH_ACCOUNT);

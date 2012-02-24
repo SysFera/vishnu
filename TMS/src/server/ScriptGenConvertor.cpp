@@ -86,7 +86,10 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[torqueSec]            = "";
     mendScript="";
 
-  } else {
+  } else if(mbatchType==LSF) {
+     std::cerr << "LSF Batch type " << std::endl;
+  }
+  else {
     std::cerr << "Unknown Batch type " << std::endl;
   }
 

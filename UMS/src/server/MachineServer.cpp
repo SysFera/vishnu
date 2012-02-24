@@ -45,7 +45,6 @@ int
 MachineServer::add(int vishnuId) {
   std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status, sshpublickey) values ";
   std::string idMachineGenerated;
-  int machineCpt;
   std::string formatidmachine;
 
   UserServer userServer = UserServer(msessionServer);
@@ -167,7 +166,10 @@ MachineServer::update() {
           " where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
         }
 
-        mdatabaseVishnu->process(sqlCommand.c_str());
+        //If there is a change
+        if (!sqlCommand.empty()) {
+          mdatabaseVishnu->process(sqlCommand.c_str());
+        }
 
       } //End if the machine to update exists
       else {

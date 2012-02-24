@@ -21,6 +21,8 @@
 #include <UMS_Data/User.hpp>
 #include <UMS_Data/Machine.hpp>
 #include <UMS_Data/LocalAccount.hpp>
+#include <UMS_Data/AuthSystem.hpp>
+#include <UMS_Data/AuthAccount.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include "UMS_Data/UMS_DataPackage.hpp"
@@ -42,6 +44,10 @@ Configuration::Configuration()
             ::UMS_Data::Machine, -1, true, false >(this, NULL));
     m_listConfLocalAccounts.reset(new ::ecorecpp::mapping::ReferenceEListImpl<
             ::UMS_Data::LocalAccount, -1, true, false >(this, NULL));
+    m_ListConfAuthSystems.reset(new ::ecorecpp::mapping::ReferenceEListImpl<
+            ::UMS_Data::AuthSystem, -1, true, false >(this, NULL));
+    m_ListConfAuthAccounts.reset(new ::ecorecpp::mapping::ReferenceEListImpl<
+            ::UMS_Data::AuthAccount, -1, true, false >(this, NULL));
 
     /*PROTECTED REGION ID(ConfigurationImpl__ConfigurationImpl) START*/
     // Please, enable the protected region if you add manually written code.
@@ -100,5 +106,15 @@ void Configuration::setFilePath(::ecore::EString const& _filePath)
 ::ecorecpp::mapping::EList< ::UMS_Data::LocalAccount >& Configuration::getListConfLocalAccounts()
 {
     return *m_listConfLocalAccounts;
+}
+
+::ecorecpp::mapping::EList< ::UMS_Data::AuthSystem >& Configuration::getListConfAuthSystems()
+{
+    return *m_ListConfAuthSystems;
+}
+
+::ecorecpp::mapping::EList< ::UMS_Data::AuthAccount >& Configuration::getListConfAuthAccounts()
+{
+    return *m_ListConfAuthAccounts;
 }
 

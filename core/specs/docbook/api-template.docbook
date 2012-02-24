@@ -173,6 +173,15 @@
 	  <para>Added IMS::defineAuthIdentifier</para>
         </revdescription>
       </revision>
+      <revision>
+        <revnumber>13</revnumber>
+        <date>23/02/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Updates of UMS:</para>
+            <para>Modified structure Configuration: added ListConfAuthSystems and ListConfAuthAcconts.</para>
+        </revdescription>
+      </revision>
       </revhistory>
     </info>
     
