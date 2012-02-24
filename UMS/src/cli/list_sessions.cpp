@@ -1,6 +1,6 @@
 /**
  * \file list_sessions.cpp
- * This file defines the VISHNU list sessions command 
+ * This file defines the VISHNU list sessions command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -40,7 +40,7 @@ struct ListSessionFunc {
         cout << mlistSession.getSessions().get(i) << endl;
       }
     }
-  
+
    return res;
   }
 };
@@ -54,7 +54,7 @@ int main (int ac, char* av[]){
   string dietConfig;
 
   std::string startDateOption;
-  
+
   std::string endDateOption;
 
   /********** EMF data ************/
@@ -102,7 +102,7 @@ int main (int ac, char* av[]){
 
   opt->add("machineId,m",
            "allows the user to list sessions\n"
-           "opened on a specific machine",
+           "opened on a specific client's machine using its name",
            CONFIG,
            fMachineId);
 
@@ -117,7 +117,7 @@ int main (int ac, char* av[]){
     listOptions.setAdminListOption(true);
   }
 
-  //convert the date in long format 
+  //convert the date in long format
   if(opt->count("startDateOption")){
     listOptions.setStartDateOption(string_to_time_t(startDateOption));
   }
