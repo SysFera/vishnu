@@ -77,4 +77,7 @@ VishnuException::operator=(const VishnuException &e) {
   mmsgc = e.getMsgComp();
   mtype = e.getTypeI();
   mval  = e.getMsgI();
+  mfullMsg = e.mfullMsg;
+  mp = e.mp;
+  return (*this);
 }

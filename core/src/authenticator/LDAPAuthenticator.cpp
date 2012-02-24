@@ -41,25 +41,24 @@ LDAPAuthenticator::authenticate(UMS_Data::User& user) {
 
   //If there is no results
   if (result->getNbTuples() == 0) {
-    UMSVishnuException e (ERRCODE_UNKNOWN_USERID, "There is no user-authentication account declared in VISHNU with this identifier");
+    UMSVishnuException e (ERRCODE_UNKNOWN_USER, "There is no user-authentication account declared in VISHNU with this identifier");
     throw e;
   }
 
   std::vector<std::string> tmp;
   std::vector<std::string>::iterator ii;
   for (int i = 0; i < static_cast <int> (result->getNbTuples()); ++i) {
-    LDAPMessage *searchResult;
     tmp.clear();
     tmp = result->get(i);
 
     ii=tmp.begin();
-    uri = *ii; ii++;
-    authlogin = *ii; ii++;
-    authpassword = *ii; ii++;
-    ldapbase = *ii; ii++;
-    authSystemStatus = *ii; ii++;
-    userid = *ii; ii++;
-    pwd = *ii;
+    uri = *ii;
+    authlogin = *(++ii);
+    authpassword = *(++ii);
+    ldapbase = *(++ii);
+    authSystemStatus = *(++ii);
+    userid = *(++ii);
+    pwd = *(++ii);
 
     if (vishnu::convertToInt(authSystemStatus) != ACTIVE_STATUS) {
       UMSVishnuException e (ERRCODE_UNKNOWN_AUTH_SYSTEM, "It is locked");
@@ -79,13 +78,13 @@ LDAPAuthenticator::authenticate(UMS_Data::User& user) {
     }
     catch (UMSVishnuException& e) {
       if (e.getMsgI() != ERRCODE_UNKNOWN_USER) {
-        throw e;
+        throw UMSVishnuException(e);
       }
     }
     catch (SystemException& e) {
       //If there is a connection problem to LDAP and it is not the last LDAP account to check
       if ((e.getMsgI() == ERRCODE_AUTHENTERR) && (i == (static_cast <int> (result->getNbTuples())-1))) {
-        throw e;
+        throw SystemException(e);
       }
     }
   }
