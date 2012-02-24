@@ -64,6 +64,8 @@ LSFServer::submit(const char* scriptPath,
   memset(&req, 0, sizeof(struct submit));
 
   req.options = 0;
+  req.options2 = 0;
+  req.options3 = 0;
   req.resReq = NULL;
 
   for (i = 0; i < LSF_RLIM_NLIMITS; i++)
@@ -75,8 +77,8 @@ LSFServer::submit(const char* scriptPath,
   req.beginTime = 0;
   req.termTime  = 0;
   std::string cmd = std::string(vishnu::get_file_content(scriptPath));
-  std::cout << "********cmd=" << const_cast<char*>(cmd.c_str()) << std::endl; 
-  req.command = const_cast<char*>(cmd.c_str());
+  std::cout << "********cmd=" << strdup(cmd.c_str()) << std::endl; 
+  req.command = strdup(cmd.c_str());
   req.nxf = 0;
   req.delOptions = 0;
 
@@ -152,8 +154,8 @@ LSFServer::submit(const char* scriptPath,
     job.setErrorPath(jobErrorPath);
   }
 
-  if(req.jobName!=NULL) std::cout << "********jobOutputPath=" << jobOutputPath << ":" << req.jobName << std::endl;
-  if(req.outFile!=NULL) std::cout << "********jobErrorPath=" << jobErrorPath << ":" << req.outFile << std::endl;
+  if(req.jobName!=NULL) std::cout << "********jobOutputPath=" << jobOutputPath << ": " << req.jobName << std::endl;
+  if(req.outFile!=NULL) std::cout << "********jobErrorPath=" << jobErrorPath << ": " << req.jobName << std::endl;
 
 
   return 0;
@@ -181,20 +183,28 @@ LSFServer::processOptions(const char* scriptPath,
   }
 
   if(options.getName().size()!=0){
-    req->options |=SUB_JOB_NAME;
-    req->jobName = const_cast<char*>(options.getName().c_str());
+    if((req->options && SUB_JOB_NAME)!=SUB_JOB_NAME) {
+       req->options |=SUB_JOB_NAME;
+    }
+    req->jobName = strdup(options.getName().c_str());
   } 
   if(options.getQueue().size()!=0) {
-    req->options |=SUB_QUEUE;
-    req->queue = const_cast<char*>(options.getQueue().c_str());
+    if((req->options && SUB_QUEUE)!=SUB_QUEUE){
+      req->options |=SUB_QUEUE;
+    }
+    req->queue = strdup(options.getQueue().c_str());
   }
   if(options.getOutputPath().size()!=0) {
-    req->options |=SUB_OUT_FILE;
-    req->outFile = const_cast<char*>(options.getOutputPath().c_str());
+    if((req->options && SUB_OUT_FILE)!=SUB_OUT_FILE){
+      req->options |=SUB_OUT_FILE;
+    }
+    req->outFile = strdup(options.getOutputPath().c_str());
   }
   if(options.getErrorPath().size()!=0) {
-    req->options |=SUB_ERR_FILE;
-    req->errFile = const_cast<char*>(options.getErrorPath().c_str());
+    if((req->options && SUB_ERR_FILE)!=SUB_ERR_FILE){ 
+      req->options |=SUB_ERR_FILE;
+    }
+    req->errFile = strdup(options.getErrorPath().c_str());
   }
   if(options.getWallTime()!=-1) {
     //cmdsOptions.push_back("-t"); 
@@ -216,10 +226,14 @@ LSFServer::processOptions(const char* scriptPath,
 
     //cmdsOptions.push_back(timeStr);
   }
+
   if(options.getNbCpu()!=-1) {
+   //UNDER CONSTRUCTION
   }
   if(options.getMemory()!=-1) {
+   //UNDER CONSTRUCTION
   }
+
   if(options.getNbNodesAndCpuPerNode()!="") {
     std::string NbNodesAndCpuPerNode = options.getNbNodesAndCpuPerNode();
     size_t posNbNodes = NbNodesAndCpuPerNode.find(":");
@@ -234,30 +248,48 @@ LSFServer::processOptions(const char* scriptPath,
   if(options.getMailNotification()!="") {
     std::string notification = options.getMailNotification();
     if(notification.compare("BEGIN")==0) {
-      //cmdsOptions.push_back("--mail-type=BEGIN");
+     if((req->options && SUB_NOTIFY_BEGIN)!=SUB_NOTIFY_BEGIN){
+       req->options |=SUB_NOTIFY_BEGIN;
+     }
     } else if(notification.compare("END")==0) {
-      //cmdsOptions.push_back("--mail-type=END");
+      if((req->options && SUB_NOTIFY_END)!=SUB_NOTIFY_END){
+        req->options |=SUB_NOTIFY_END;
+      }
     } else if(notification.compare("ERROR")==0) {
-      //cmdsOptions.push_back("--mail-type=FAIL");
+      //TO VIRIFY
     } else if(notification.compare("ALL")==0) {
-      //cmdsOptions.push_back("--mail-type=ALL");
+      if((req->options && SUB_NOTIFY_BEGIN)!=SUB_NOTIFY_BEGIN){
+        req->options |=SUB_NOTIFY_BEGIN;
+      }
+      if((req->options && SUB_NOTIFY_END)!=SUB_NOTIFY_END){
+      req->options |=SUB_NOTIFY_END;
+      }
     } else {
       throw UserException(ERRCODE_INVALID_PARAM, notification+" is an invalid notification type:"+" consult the vishnu user manuel");
     }
   }
 
   if(options.getMailNotifyUser()!="") {
-    //cmdsOptions.push_back("--mail-user="+options.getMailNotifyUser());
+    if((req->options && SUB_MAIL_USER)!=SUB_MAIL_USER){
+      req->options |=SUB_MAIL_USER;
+    }
+    req->mailUser = strdup(options.getMailNotifyUser().c_str());
   }
 
   if(options.getGroup()!="") {
-    //cmdsOptions.push_back("--gid="+options.getGroup());
+     if((req->options && SUB_USER_GROUP)!=SUB_USER_GROUP){
+       req->options |=SUB_USER_GROUP;
+     }
+     req->userGroup = strdup(options.getGroup().c_str());
   }
 
   if(options.getWorkingDir()!="") {
-    //cmdsOptions.push_back("-D");
-    //cmdsOptions.push_back(options.getWorkingDir());
-  }
+      if((req->options3 && SUB3_CWD)!=SUB3_CWD){
+       req->options3 |= SUB3_CWD;
+      }
+     req->cwd = strdup(options.getWorkingDir().c_str());
+    
+   }
 
   if(options.getCpuTime()!="") {
     //cmdsOptions.push_back("-t");

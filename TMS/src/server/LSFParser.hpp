@@ -8,6 +8,11 @@
 #ifndef _LSFPARSER_H_
 #define _LSFPARSER_H_
 
+static const unsigned int LONG_OPT_WE = 0x100;
+static const unsigned int LONG_OPT_RN = 0x101;
+static const unsigned int LONG_OPT_APP = 0x102;
+static const unsigned int LONG_OPT_CWD = 0x103;
+static const unsigned int LONG_OPT_USER_SHELL_LIMITS = 0x104;
 
 /**
  * \class LSFParser
