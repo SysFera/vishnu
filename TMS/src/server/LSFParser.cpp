@@ -6,6 +6,7 @@
 #include <sstream>
 #include <fstream>
 #include <vector>
+#include <algorithm>
 
 #include <boost/algorithm/string.hpp>
 #include "TMSVishnuException.hpp"
@@ -43,8 +44,24 @@ static struct option long_options[] = {
          {"XF", no_argument, 0, LONG_OPT_XF}
 };
 
+bool isEndByQuot(const string& str) {
+  return (*(str.end()-1)=='\"');
+}
 
+bool isStartByQuot(const string& str) {
+  return (*(str.begin())=='\"');
+}
 
+void cleanString(string& str) {
+   if(!str.empty()){
+      if(*(str.begin())=='\"'){
+         str.replace(str.begin(), str.begin()+1, "");
+      }
+      if(*(str.end()-1)=='\"'){
+          str.replace(str.end()-1, str.end(), "");
+      }
+   }
+}
 /**
  * \brief Constructor
  */
@@ -86,6 +103,12 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
       line = line.erase(0, pos);
       if(boost::algorithm::starts_with(line, LSF_PREFIX)){
          line = line.substr(std::string(LSF_PREFIX).size());
+         size_t pos = line.find(LSF_PREFIX);
+         //search the other LSF_PREFIX in the line
+         while(pos!=std::string::npos){
+           line.replace(pos, LSF_PREFIX.size(), " ");
+           pos = line.find(LSF_PREFIX);
+         }
          cmd = cmd+" "+line;
        }  
     }
@@ -98,12 +121,36 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
 
   }
   
-  int argc = tokens.size()+1;
+  std::string argvStr;
+  std::vector<std::string>::iterator iter;
+  std::vector<std::string>::iterator end = tokens.end();
+  std::vector<std::string> tokensArgs;
+  for(iter=tokens.begin(); iter!=tokens.end(); ++iter) {
+     argvStr = *iter;
+     if(isStartByQuot(argvStr)){
+        std::vector<std::string>::iterator found_iter;
+        found_iter = std::find_if(iter, end, isEndByQuot);
+        if(found_iter!=end) {
+          while(iter!=found_iter) {
+            iter++;
+            argvStr = argvStr+" "+*iter;
+          }
+        } else {
+           std::string errorMsg = "Error: invalid argument "+argvStr;
+           errorMsg +=". It must be closed by the character \"";
+           throw UMSVishnuException(ERRCODE_INVALID_PARAM, errorMsg);
+        }
+     }
+     tokensArgs.push_back((argvStr.c_str()));
+  }
+
+  int argc = tokensArgs.size()+1; 
   char* argv[argc];
   argv[0] = (char*) "vishnu_submit_job";
+  std::cout << "**********argc=" << argc << std::endl;
   std::cout << "**********cmd=" << argv[0] << " ";
-  for(int i=0; i < tokens.size(); i++) {
-    argv[i+1] = const_cast<char*>(tokens[i].c_str());
+  for(int i=0; i < tokensArgs.size(); ++i) {
+    argv[i+1] = strdup(tokensArgs[i].c_str());
     std::cout << argv[i+1] << " ";
   }
   std::cout << std::endl;
@@ -121,7 +168,13 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
  std::string max_proc_str;
  int min_proc;
  int max_proc;
- char separator;
+ char separator=',';
+ std::string chkpnt;
+ std::vector<std::string> chkpnt_tokens;
+ std::istringstream stream_chkpnt;
+ std::string timeStr;
+ std::string wHostSpec;
+ std::string errHead = "Error in your script: "; 
  while ((c = getopt_long_only(argc, argv, GETOPT_ARGS, long_options, &option_index)) != EOF) {
    switch (c) {
      case 'J':
@@ -134,7 +187,17 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         break;
      case 'm':
         req->options |=SUB_HOST;
+        std::cout << "***********optarg=" << optarg << std::endl;
         host_list = strdup(optarg);
+        if(!host_list.empty()){
+          if(*(host_list.begin())=='\"'){
+             host_list.replace(host_list.begin(), host_list.begin()+1, "");
+          }
+          if(*(host_list.end()-1)=='\"'){
+             host_list.replace(host_list.end()-1, host_list.end(), "");
+          }
+        }
+        std::cout << "***********host_list=" << host_list << std::endl;
         stream_host_list.str(host_list);
         host_tokens.clear();
         std::copy(istream_iterator<string>(stream_host_list),
@@ -142,8 +205,9 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
               back_inserter<vector<string> >(host_tokens));
         req->numAskedHosts = host_tokens.size();
         req->askedHosts = new char*[host_tokens.size()];
-        for(int i=0; i < tokens.size(); i++) {
-              req->askedHosts[i] = strdup(tokens[i].c_str());
+        std::cout << "***********req->numAskedHosts=" << req->numAskedHosts << std::endl;
+        for(int i=0; i < host_tokens.size(); i++) {
+              req->askedHosts[i] = strdup(host_tokens[i].c_str());
               std::cout << "***********host" << i << " is " << req->askedHosts[i] << std::endl;
         }
         break;
@@ -152,10 +216,14 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
          if(procsStr.find(',')!=std::string::npos) {
             stream_procs.str(procsStr);
             stream_procs >> min_proc_str;
-            stream_procs >> separator;
-            stream_procs >> max_proc_str;
+            min_proc_str = procsStr.substr(0,procsStr.find(separator));
+            if(procsStr.find(separator)+1!=std::string::npos){
+              max_proc_str = procsStr.substr(procsStr.find(separator)+1);
+            }
+            std::cout << "***********min_proc_str=" << min_proc_str  << " and max_proc_str=" << max_proc_str << std::endl;
             if(!isNumerical(min_proc_str) || !isNumerical(max_proc_str)){
-              std::cerr << optarg << " is an invalid value for -n option" << std::endl;
+              throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(optarg)+"is an invalid"
+               " value for -n option. Correct format is -n min_processors[,max_processors]");
             }
             min_proc = vishnu::convertToInt(min_proc_str);
             max_proc = vishnu::convertToInt(max_proc_str);
@@ -164,14 +232,13 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
              min_proc = vishnu::convertToInt(procsStr);
              max_proc = min_proc;
             } else {
-             std::cerr << optarg << " is an invalid value for -n option" << std::endl;
-             return -1;
+             throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(optarg)+" is an invalid"
+                    " value for -n option. Correct format is -n min_processors[,max_processors]");
             }   
           }
           req->numProcessors=min_proc;
           req->maxNumProcessors=max_proc;
           std::cout << "***********min_prc=" << min_proc  << " and max_proc=" << max_proc << std::endl;
-        //TODO; -n min_processors[,max_processors]
         break;
      case 'i':
         req->options |=SUB_IN_FILE;
@@ -200,35 +267,75 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         std::cout << "*********user-group-optarg=" << optarg << std::endl;
         break;
      case 'k':
-        //req->options |=SUB_CHKPNT_DIR and req->options |=SUB_CHKPNT_PERIOD
+        req->options |=SUB_CHKPNT_DIR;
+        chkpnt = strdup(optarg);
+        cleanString(chkpnt);
+        std::cout << "*****************chkpnt=" << chkpnt << std::endl;
+        stream_chkpnt.str(chkpnt);
+        chkpnt_tokens.clear();
+        std::copy(istream_iterator<string>(stream_chkpnt),
+              istream_iterator<string>(),
+              back_inserter<vector<string> >(chkpnt_tokens));
+       
+        for(vector<std::string>::iterator iter=chkpnt_tokens.begin(); iter!=chkpnt_tokens.end(); ++iter){
+          std::cout << "*iter=" << *iter << std::endl;
+        }
+        req->chkpntDir = strdup(chkpnt_tokens[0].c_str());
+        if(chkpnt_tokens.size() >=2) {
+           if(boost::algorithm::starts_with(chkpnt_tokens[1], "init=")) {
+            chkpnt_tokens[1] = chkpnt_tokens[1].substr(std::string("init=").size());
+            if(isNumerical(chkpnt_tokens[1])) {
+              req->initChkpntPeriod = vishnu::convertToInt(chkpnt_tokens[1]);
+            } else {
+               throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+chkpnt_tokens[1]+" is an invalid"
+                    " initial checkpoint period value for -k option.");
+            }
+           } else {
+             if(isNumerical(chkpnt_tokens[1])) {
+               req->chkpntPeriod= vishnu::convertToInt(chkpnt_tokens[1]);
+             } else {
+                 throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+chkpnt_tokens[1]+" is an invalid"
+                    " checkpoint period value for -k option.");
+               }
+           }
+        }
+        if(chkpnt_tokens.size() >=3) {
+           if(!boost::algorithm::starts_with(chkpnt_tokens[2], "method=")) {
+             req->options |=SUB_CHKPNT_PERIOD;
+             if(isNumerical(chkpnt_tokens[2])) {
+               req->chkpntPeriod= vishnu::convertToInt(chkpnt_tokens[2]);
+             }  else {
+                throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+chkpnt_tokens[2]+" is an invalid"
+                    " checkpoint period value for -k option.");
+             }
+           } 
+        }
+         std::cout << "*****************req->initChkpntPeriod=" << req->initChkpntPeriod << std::endl;
+         std::cout << "*****************req->chkpntPeriod=" << req->chkpntPeriod << std::endl;
         //TODO: -k chkpnt_dir [init=initial_chkpnt_period] [chkpnt_period] [method=method_name]
-        //req->chkpntPeriod = ?;
-        //std::cout << "*********-optarg=" << optarg << std::endl;
         break;
      case 'r':
         req->options |=SUB_RERUNNABLE;
         break;
      case 'w':
-        /*req->options |=SUB_DEPEND_COND;
-        std::cout << "*********user-group-optarg=" << optarg << std::endl;
-        break;*/
+        req->options |=SUB_DEPEND_COND;
+        req->dependCond = strdup(optarg);
+        break;
      case 'R':
-         //req->options |=SUB_RES_REQ;
-         //TODO; -R res_req
-        //std::cout << "*********-optarg=" << optarg << std::endl;
+         req->options |=SUB_RES_REQ;
+         req->resReq=strdup(optarg);
         break;
      case 'E':
-         //req->options |=SUB_PRE_EXEX;
-        //std::cout << "*********-optarg=" << optarg << std::endl;
+         req->options |=SUB_PRE_EXEC;
+         req->preExecCmd = strdup(optarg);
         break;
      case 'L':
-         //req->options |=SUB_LOGIN_SHELL;
-        //std::cout << "*********-optarg=" << optarg << std::endl;
+         req->options |=SUB_LOGIN_SHELL;
+         req->loginShell = strdup(optarg);
         break;
      case 'P':
-         //TODO; -P project_name
-         //req->options |=SUB_PROJECT_NAME;
-        //std::cout << "*********-optarg=" << optarg << std::endl;
+         req->options |=SUB_PROJECT_NAME;
+         req->projectName = strdup(optarg);
         break;
      case 'u':
         req->options |=SUB_MAIL_USER;
@@ -236,15 +343,27 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         std::cout << "*********mail-user-optarg=" << optarg << std::endl;
         break;
      case 'U':
-        //TODO; -U reservation_id
+        req->options |=SUB2_USE_RSV;
+        req->rsvId = strdup(optarg);
         break;
      case 'K':
-         //req->options2 |=?; //A voir
+         req->options2 |=SUB2_BSUB_BLOCK; //A voir
         break;
      case 'W':
          //-W run_limit[/host_spec]
-         //TODO; req->rlimits[LSF_RLIMIT_RUN]
-         //req->options |= SUB_HOST_SPEC;
+         timeStr = strdup(optarg);
+         if(timeStr.find("\\")!=std::string::npos) {
+            if((timeStr.find("\\")+1)!=std::string::npos) {
+              if(req->options && SUB_HOST_SPEC !=SUB_HOST_SPEC){
+                req->options |= SUB_HOST_SPEC;
+              }
+              req->rLimits[LSF_RLIMIT_RUN] = vishnu::convertToInt(timeStr.substr(0, timeStr.find("\\")));
+              wHostSpec = timeStr.substr(timeStr.find("\\")+1);
+              req->hostSpec = strdup(wHostSpec.c_str());
+            }
+         } else {
+            req->rLimits[LSF_RLIMIT_RUN] = vishnu::convertToInt(timeStr);//TODO: replace by convertToDate()
+         }
         std::cout << "*********-optarg=" << optarg << std::endl;
         break;
      case 'g':
@@ -257,28 +376,75 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
        std::cout << "*********hold-optarg=" << optarg << std::endl;
        break;
      case 'c':
-       //TODO; req->rlimits[LSF_RLIMIT_CPU]
-       break;
+        timeStr = strdup(optarg);
+        if(timeStr.find("\\")!=std::string::npos) {
+           if((timeStr.find("\\")+1)!=std::string::npos) {
+             if(req->options && SUB_HOST_SPEC !=SUB_HOST_SPEC){
+               req->options |= SUB_HOST_SPEC;
+             }
+             req->rLimits[LSF_RLIMIT_CPU] = vishnu::convertToInt(timeStr.substr(0, timeStr.find("\\")));
+             wHostSpec = timeStr.substr(timeStr.find("\\")+1);
+             req->hostSpec = strdup(wHostSpec.c_str());
+           }
+        } else {
+         req->rLimits[LSF_RLIMIT_CPU] = vishnu::convertToInt(timeStr);//TODO: replace by convertToDate()
+        }
+        break;
      case 'F':
-       //TODO; req->rlimits[LSF_RLIMIT_FSIZE]
+        if(isNumerical(strdup(optarg))) {
+          req->rLimits[LSF_RLIMIT_FSIZE]=vishnu::convertToInt(strdup(optarg));
+        }  else {
+            throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(strdup(optarg))+" is an invalid"
+                 " file_limit value for -F option.");
+        }
        break;
      case 'p':
-       //TODO; req->rlimits[LSF_RLIMIT_PROCESS]
+        if(isNumerical(strdup(optarg))) {
+          req->rLimits[LSF_RLIMIT_PROCESS]=vishnu::convertToInt(strdup(optarg));
+        }  else {
+            throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(strdup(optarg))+" is an invalid"
+                 " process_limit value for -F option.");
+        }
        break;
      case 'M':
-       //TODO; req->rlimits[LSF_RLIMIT_RSS]
+        if(isNumerical(strdup(optarg))) {
+          req->rLimits[LSF_RLIMIT_RSS]=vishnu::convertToInt(strdup(optarg));
+        }  else {
+            throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(strdup(optarg))+" is an invalid"
+                 " mem_limit value for -M option.");
+        }
        break;
      case 'D':
-       //TODO; req->rlimits[LSF_RLIMIT_DATA]
+        if(isNumerical(strdup(optarg))) {
+          req->rLimits[LSF_RLIMIT_DATA]=vishnu::convertToInt(strdup(optarg));
+        }  else {
+            throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(strdup(optarg))+" is an invalid"
+                 " data_limit value for -s option.");
+        }
        break;
      case 'S':
-       //TODO; req->rlimits[LSF_RLIMIT_STACK]
+        if(isNumerical(strdup(optarg))) {
+          req->rLimits[LSF_RLIMIT_STACK]=vishnu::convertToInt(strdup(optarg));
+        }  else {
+            throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(strdup(optarg))+" is an invalid"
+                 " stack_limit value for -S option.");
+        }
        break;
      case 'v':
-       //TODO; req->rlimits[LSF_RLIMIT_SWAP]
+        if(isNumerical(strdup(optarg))) {
+          req->rLimits[LSF_RLIMIT_SWAP]=vishnu::convertToInt(strdup(optarg));
+        }  else {
+            throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(strdup(optarg))+" is an invalid"
+                 " swap_limit value for -v option.");
+        }
        break;
      case 'T':
-       //TODO; req->rlimits[LSF_RLIMIT_THREAD]
+        if(isNumerical(strdup(optarg))) {
+          req->rLimits[LSF_RLIMIT_THREAD]=vishnu::convertToInt(strdup(optarg));
+        }  else {
+            throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(strdup(optarg))+" is an invalid"
+                 " thread_limit value for -T option.");
+        }
        break;
      case 'b':
        //TODO; begin_time
@@ -295,18 +461,16 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
      case LONG_OPT_APP:
        req->options3 |= SUB3_APP;
        req->app= strdup(optarg);
-       std::cout << "*********app-optarg=" << optarg << std::endl;
      case LONG_OPT_CWD:
        req->options3 |= SUB3_CWD;
        req->cwd= strdup(optarg);
-       std::cout << "*********cwd-optarg=" << optarg << std::endl;
        break;
      case LONG_OPT_UL:
-       //req->options3 |= SUB3_USER_SHELL_LIMITS;
-       std::cout << "*********LONG_OPT_CWD-optarg=" << optarg << std::endl;
+       req->options3 |= SUB3_USER_SHELL_LIMITS;
        break;
      case LONG_OPT_WE:
-       //req->options2 |= SUB3_RUNTIME_ESTIMATION;
+       req->options2 |= SUB3_RUNTIME_ESTIMATION;
+       req->runtimeEstimation = vishnu::convertToInt(strdup(optarg)); //TODO:convertToDate(); 
        std::cout << "---------------------IN LONG_OPT_WE" << std::endl;
        std::cout << "*********we-optarg=" << optarg << std::endl;
        break;
@@ -315,58 +479,80 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
        std::cout << "*********rn-optarg=" << optarg << std::endl;
        break;
      case LONG_OPT_JD:
-       //TODO: -Jd job_description
+       req->options3 |= SUB3_JOB_DESCRIPTION;
+       req->jobDescription = strdup(optarg);
        break;
      case LONG_OPT_IS:
-       //TODO: -is in_file
+       if(req->options && SUB_IN_FILE!=SUB_IN_FILE){
+         req->options |=SUB_IN_FILE;//TODO: to complete
+       } 
+       req->inFile = strdup(optarg);
        break;
      case LONG_OPT_EO:
-       //TODO: -eo in_file
+       if(req->options && SUB_ERR_FILE!=SUB_ERR_FILE){
+         req->options |=SUB_ERR_FILE;//TODO: to complete
+       } 
+       req->errFile = strdup(optarg);
        break;
      case LONG_OPT_OO:
-       //TODO: -oo in_file
+       if(req->options && SUB_OUT_FILE!=SUB_OUT_FILE){
+         req->options |=SUB_OUT_FILE;//TODO: to complete
+       } 
+       req->outFile = strdup(optarg);
        break;
      case LONG_OPT_AR:
        //TODO: ar (boolean)
        break;
      case LONG_OPT_WA:
-       //TODO: -wa job_warning_action
+       req->options2 |=SUB2_WARNING_ACTION;
+       //TODO: to complete
        break;
      case LONG_OPT_WT:
-       //TODO: -wt job_action_warning_time
+       req->options2 |= SUB2_WARNING_TIME_PERIOD;
+       //TODO: to complete
        break;
      case LONG_OPT_ZS:
        //TODO: -Zs (boolean)
        break;
      case LONG_OPT_EP:
-       //TODO: -Ep "post_exec_command [argument ...]"
+       req->options3 |= SUB3_POST_EXEC;
+       //TODO: to complete
        break;
      case LONG_OPT_SP:
-       //TODO: -sp job_priority
+       req->options2 |= SUB2_JOB_PRIORITY;
+        //TODO: to complete
        break;
      case LONG_OPT_MIG:
-       //TODO: -mig migration_threshold
+       req->options3 |=SUB3_MIG_THRESHOLD;
+        //TODO: to complete
        break;
      case LONG_OPT_SLA:
-       //TODO: -sla service_class
+       req->options2 |=SUB2_SLA;
+        //TODO: to complete
        break;
      case LONG_OPT_EXT:
-       //TODO: -ext "external_scheduler_options"
+       req->options2 |=SUB2_EXTSCHED;
+         //TODO: to complete
        break;
      case LONG_OPT_LP:
-       //TODO: -Lp "license_project"
+       req->options2 |=SUB2_LICENSE_PROJECT;
+        //TODO: to complete
        break;
      case LONG_OPT_JSDL:
-       //TODO: -jsdl JSDL_file
+       //TODO -jsdl JSDL_file
        break;
      case LONG_OPT_JSDL_STRICT:
        //TODO: -jsdl_strict JSDL_file
        break;
      case LONG_OPT_RNC:
-       //TODO: -rnc resize_notify_command
+       //-rnc resize_notify_command
+       req->options3 |=SUB3_RESIZE_NOTIFY_CMD;
+        //TODO: to complete
        break;
      case LONG_OPT_XF:
-       //TODO: -XF (boolean)
+       //-XF (boolean): A voir
+       // //TODO: to see
+       req->options3 |=SUB3_XFJOB;
        break;
     default: /* '?' */
       std::cerr << "invalid option " << optarg << std::endl;
