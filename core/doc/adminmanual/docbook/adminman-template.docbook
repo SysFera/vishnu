@@ -307,7 +307,7 @@
               <para>CMAKE version 2.8 minimum si DIET 2.8, à partir de 2.6 sinon</para>
             </listitem>
             <listitem>
-              <para>BOOST version 1.45 minimum si DIET 2.7 ou inférieur, 1.46.1 si DIET 2.8 ou supérieur</para>
+              <para>BOOST version 1.45 minimum si DIET 2.7 ou inférieur, 1.46.1 si DIET 2.8 ou supérieur. Les librairies de boost nécessaires sont : program_options, date_time, thread, filesystem, system, unit_test_framework, serialization, random et regex </para>
             </listitem>
             <listitem>
               <para>OMNIORB version 4.1.4</para>
