@@ -314,7 +314,7 @@
               <para>CMAKE version 2.8 minimum si DIET 2.8, à partir de 2.6 sinon</para>
             </listitem>
             <listitem>
-              <para>BOOST version 1.45 minimum si DIET 2.7 ou inférieur, 1.46.1 si DIET 2.8 ou supérieur</para>
+              <para>BOOST version 1.45 minimum si DIET 2.7 ou inférieur, 1.46.1 si DIET 2.8 ou supérieur. Les librairies de boost nécessaires sont : program_options, date_time, thread, filesystem, system, unit_test_framework, serialization, random et regex </para>
             </listitem>
             <listitem>
               <para>OMNIORB version 4.1.4</para>
@@ -3053,7 +3053,7 @@ type and optionally for LDAP the DN of the root entry. By default, the type of t
       <refsect1 id="example">
         <title>EXAMPLE</title>
         <para>To add an LDAP's user-authentication system on VISHNU named CLAMART with the parameters which follows: URI ldap://127.0.0.1:389/ , login cn=ldapadmin,dc=edf,dc=fr, password secret and DN root entry dc=edf,dc=fr: </para>
-        <para>vishnu_add_authentication_system CLAMART ldap://127.0.0.1:389/ cn=ldapadmin,dc=edf,dc=fr secret -b dc=edf,dc=fr </para>
+        <para>vishnu_add_auth_system CLAMART ldap://127.0.0.1:389/ cn=ldapadmin,dc=edf,dc=fr secret -b dc=edf,dc=fr </para>
       </refsect1>
     </refentry>
     <refentry>
@@ -3225,7 +3225,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE
       <refsect1 id="example">
         <title>EXAMPLE</title>
         <para>To change the address of a user-authentication system whose identifier is AUTHENLDAP_1:</para>
-        <para>vishnu_update_authentication_system -i ldap://192.128.1.1:389/ AUTHENLDAP_1</para>
+        <para>vishnu_update_auth_system -i ldap://192.128.1.1:389/ AUTHENLDAP_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -3328,7 +3328,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE
       <refsect1 id="example">
         <title>EXAMPLE</title>
         <para>To remove a user-authentication system whose identifier is AUTHENLDAP_1:</para>
-        <para>vishnu_delete_authentication_system AUTHENLDAP_1</para>
+        <para>vishnu_delete_auth_system AUTHENLDAP_1</para>
       </refsect1>
     </refentry>
   </reference>
