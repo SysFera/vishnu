@@ -69,7 +69,7 @@ vishnu::connect(const string& userId,
  */
 
     // Convert to list of users
-    for (iter = auth.begin(); iter!=auth.end(); iter++){
+    for (iter = auth.begin(); iter!=auth.end(); ++iter){
        pair<string,string> couple = iter->second;
 
       if(couple.first.compare("login")==0) {
@@ -239,7 +239,7 @@ vishnu::reconnect(const string& userId,
  */
 
     // Convert to list of users
-    for (iter = auth.begin(); iter!=auth.end(); iter++){
+    for (iter = auth.begin(); iter!=auth.end(); ++iter){
       pair<string,string> couple = iter->second;
       if(couple.first.compare("login")==0) {
         user->setUserId(couple.second);
@@ -926,15 +926,6 @@ int
 vishnu::addAuthSystem(const std::string& sessionKey, UMS_Data::AuthSystem& newAuthSys)
   throw(UserException, SystemException){
 
-  std::cout << "name "  << newAuthSys.getName() << "\n";
-  std::cout << "URI "  << newAuthSys.getURI() << "\n";
-  std::cout << "authLogin "  << newAuthSys.getAuthLogin() << "\n";
-  std::cout << "authPassword "  << newAuthSys.getAuthPassword() << "\n";
-  std::cout << "UserPasswordEncryption "  << newAuthSys.getUserPasswordEncryption() << "\n";
-
-  std::cout << "type "  << newAuthSys.getType() << "\n";
-
-  std::cout << "LdapBase "  << newAuthSys.getLdapBase() << "\n";
 
   if (newAuthSys.getType() != LDAPTYPE){
     throw UMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE, "Invalid type");
@@ -973,15 +964,6 @@ vishnu::addAuthSystem(const std::string& sessionKey, UMS_Data::AuthSystem& newAu
 int
 vishnu::updateAuthSystem(const std::string& sessionKey,  UMS_Data::AuthSystem& authSys)
   throw(UserException, SystemException){
-  std::cout << "id "  << authSys.getAuthSystemId() << "\n";
-  std::cout << "name "  << authSys.getName() << "\n";
-  std::cout << "URI "  << authSys.getURI() << "\n";
-  std::cout << "authLogin "  << authSys.getAuthLogin() << "\n";
-  std::cout << "authPassword "  << authSys.getAuthPassword() << "\n";
-  std::cout << "UserPasswordEncryption "  << authSys.getUserPasswordEncryption() << "\n";
-  std::cout << "status "  << authSys.getStatus() << "\n";
-  std::cout << "type "  << authSys.getType() << "\n";
-    std::cout << "LdapBase "  << authSys.getLdapBase() << "\n";
   SessionProxy sessionProxy(sessionKey);
   AuthSystemProxy auth(authSys, sessionProxy);
 
@@ -1011,7 +993,6 @@ vishnu::deleteAuthSystem(const std::string& sessionKey, const std::string& authS
   throw(UserException, SystemException){
 
 
-  std::cout << "ID "  << authSystemId << "\n";
   UMS_Data::AuthSystem sys;
   sys.setAuthSystemId(authSystemId);
   SessionProxy sessionProxy(sessionKey);
@@ -1069,10 +1050,6 @@ int
 vishnu::addAuthAccount(const std::string& sessionKey, const UMS_Data::AuthAccount& authAccount)
                                      throw(UserException, SystemException){
 
-  std::cout << "authSystemId "  << authAccount.getAuthSystemId() << "\n";
-  std::cout << "UserId "  << authAccount.getUserId() << "\n";
-  std::cout << "acLogin "  << authAccount.getAcLogin() << "\n";
-
   checkIfTextIsEmpty(authAccount.getAuthSystemId(), "The authentication account systemId is empty", ERRCODE_INVALID_PARAM);
   checkIfTextIsEmpty(authAccount.getAcLogin(), "The authentication acc login is empty", ERRCODE_INVALID_PARAM);
 
@@ -1095,10 +1072,6 @@ int
 vishnu::updateAuthAccount(const std::string& sessionKey, const UMS_Data::AuthAccount& authAccount)
                                      throw(UserException, SystemException){
 
-
-  std::cout << "authSystemId "  << authAccount.getAuthSystemId() << "\n";
-  std::cout << "UserId "  << authAccount.getUserId() << "\n";
-  std::cout << "acLogin "  << authAccount.getAcLogin() << "\n";
 
   SessionProxy sessionProxy(sessionKey);
   AuthAccountProxy auth(authAccount, sessionProxy);
@@ -1125,9 +1098,6 @@ int
 vishnu::deleteAuthAccount(const std::string& sessionKey, const std::string& authSystemId, const std::string& userId )
                                      throw(UserException, SystemException){
 
-
-  std::cout << "authSystemId "  << authSystemId<< "\n";
-  std::cout << "UserId "  << userId << "\n";
 
   UMS_Data::AuthAccount authAccount;
   authAccount.setUserId(userId);
@@ -1156,10 +1126,6 @@ vishnu::deleteAuthAccount(const std::string& sessionKey, const std::string& auth
 int
 vishnu::listAuthAccounts(const std::string& sessionKey, UMS_Data::ListAuthAccounts& listAuthAccounts, const UMS_Data::ListAuthAccOptions& options)
                             throw(UserException, SystemException){
-
-  std::cout << "userId :" <<  options.getUserId() << "\n";
-  std::cout << "AuthSystemId: " <<  options.getAuthSystemId() << "\n";
-  std::cout << "listAll: " << std::boolalpha <<  options.isListAll() << "\n";
 
   SessionProxy sessionProxy(sessionKey);
   QueryProxy<UMS_Data::ListAuthAccOptions, UMS_Data::ListAuthAccounts> query(options, sessionProxy, "authAccountList");
