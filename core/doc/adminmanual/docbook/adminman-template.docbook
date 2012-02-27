@@ -157,6 +157,16 @@
             Modifie les requirements en fonction de la version de DIET
         </para></revdescription>
       </revision>
+      <revision>
+        <revnumber>16</revnumber>
+        <date>27/02/2012</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+          <para>
+            Liste les libs de boost nécessaire
+        </para></revdescription>
+      </revision>
+
     </revhistory>
   </info>
   <chapter>
