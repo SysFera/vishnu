@@ -62,6 +62,37 @@ void cleanString(string& str) {
       }
    }
 }
+
+void verifyQuotaCharacter(const string& str) {
+
+ std::string errorMsg = "Error: invalid value option in option "+str;
+ errorMsg +=". A text started by the quota character \" must be closed by the quota character \"";
+ //First character quota
+ size_t pos = str.find('\"');
+ if(pos!=std::string::npos) {
+   //Second character quota
+   pos = str.find('\"', pos+1);
+   if(pos==std::string::npos) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM, errorMsg);
+   }
+  
+   //First character quota 
+   pos = str.find('\"', pos+1);
+   while(pos!=std::string::npos) {
+     if(pos!=std::string::npos) {
+        //Second character quota
+        pos = str.find('\"', pos+1);
+        if(pos==std::string::npos) {
+          throw UMSVishnuException(ERRCODE_INVALID_PARAM, errorMsg);
+        }
+     }
+     //First character quota
+     pos = str.find('\"', pos+1);
+   }
+ }
+
+}
+
 /**
  * \brief Constructor
  */
@@ -109,6 +140,9 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
            line.replace(pos, LSF_PREFIX.size(), " ");
            pos = line.find(LSF_PREFIX);
          }
+         //virify quota characters
+         verifyQuotaCharacter(line);
+         //add line to cmd
          cmd = cmd+" "+line;
        }  
     }
@@ -456,8 +490,21 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
        break;
      case 'f':
        //TODO; -f "lfile op [rfile]"
+       // struct xFile *xf
        //nxf = xf_tokens.size();
-       //req->xf = ?
+       //(req->xf)->subFn = lfile 
+       //(req->xf)->execFn = rfile
+       /*{
+           //#define  XF_OP_SUB2EXEC         0x1     ( Transfer files from submit peer to 
+                                         * execution peer )
+             //#define XF_OP_EXEC2SUB         0x2     ( Transfer files from execution peer to 
+                //                         * submit peer )
+            //#define  XF_OP_SUB2EXEC_APPEND  0x4     ( Transfer files from submit peer to 
+              //                           * execution peer with appending mode )
+           //#define  XF_OP_EXEC2SUB_APPEND  0x8     ( Transfer files from execution peer to 
+             //                            * submit peer with appending mode )
+           //#define  XF_OP_URL_SOURCE       0x10 
+        }*/ 
        break;
      case 'Q':
        //TODO; -Q requeue_exit_values
