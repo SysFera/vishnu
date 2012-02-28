@@ -44,11 +44,11 @@ static struct option long_options[] = {
          {"XF", no_argument, 0, LONG_OPT_XF}
 };
 
-bool isEndByQuot(const string& str) {
+bool isEndByQuote(const string& str) {
   return (*(str.end()-1)=='\"');
 }
 
-bool isStartByQuot(const string& str) {
+bool isStartByQuote(const string& str) {
   return (*(str.begin())=='\"');
 }
 
@@ -66,27 +66,27 @@ void cleanString(string& str) {
 void verifyQuotaCharacter(const string& str) {
 
  std::string errorMsg = "Error: invalid value option in option "+str;
- errorMsg +=". A text started by the quota character \" must be closed by the quota character \"";
- //First character quota
+ errorMsg +=". A text started by the quote character \" must be closed by the quote character \"";
+ //First character quote
  size_t pos = str.find('\"');
  if(pos!=std::string::npos) {
-   //Second character quota
+   //Second character quote
    pos = str.find('\"', pos+1);
    if(pos==std::string::npos) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, errorMsg);
    }
   
-   //First character quota 
+   //First character quote 
    pos = str.find('\"', pos+1);
    while(pos!=std::string::npos) {
      if(pos!=std::string::npos) {
-        //Second character quota
+        //Second character quote
         pos = str.find('\"', pos+1);
         if(pos==std::string::npos) {
           throw UMSVishnuException(ERRCODE_INVALID_PARAM, errorMsg);
         }
      }
-     //First character quota
+     //First character quote
      pos = str.find('\"', pos+1);
    }
  }
@@ -137,7 +137,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
          
          size_t pos = line.find(LSF_PREFIX);
          size_t vbeg = 0;
-         //virify quota characters in line
+         //virify quote characters in line
          while(pos!=std::string::npos){
            verifyQuotaCharacter(line.substr(vbeg, pos-vbeg));
            vbeg = pos+LSF_PREFIX.size();
@@ -149,7 +149,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
            line.replace(pos, LSF_PREFIX.size(), " ");
            pos = line.find(LSF_PREFIX);
          }
-         //virify quota characters
+         //virify quote characters
          verifyQuotaCharacter(line);
          //add line to cmd
          cmd = cmd+" "+line;
@@ -170,9 +170,9 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
   std::vector<std::string> tokensArgs;
   for(iter=tokens.begin(); iter!=tokens.end(); ++iter) {
      argvStr = *iter;
-     if(isStartByQuot(argvStr)){
+     if(isStartByQuote(argvStr)){
         std::vector<std::string>::iterator found_iter;
-        found_iter = std::find_if(iter, end, isEndByQuot);
+        found_iter = std::find_if(iter, end, isEndByQuote);
         if(found_iter!=end) {
           while(iter!=found_iter) {
             iter++;
