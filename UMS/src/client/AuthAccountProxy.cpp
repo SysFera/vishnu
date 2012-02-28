@@ -110,8 +110,6 @@ AuthAccountProxy::deleteAuthAccount()
   userId = mauthAccount.getUserId();
   sysId = mauthAccount.getAuthSystemId();
 
-  std::cout <<"Auth acc to delete : " << userId << ", " << sysId << std::endl;
-
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
