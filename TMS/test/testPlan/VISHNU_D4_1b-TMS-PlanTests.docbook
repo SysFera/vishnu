@@ -5,7 +5,7 @@
   <?oooversion 3.2$Unix?>
   <bookinfo>
     <title> </title>
-    <date>2012-01-18T17:38:30</date>
+    <date>2012-02-28T15:52:32</date>
     <keywordset/>
     <confgroup/>
   </bookinfo>
@@ -95,7 +95,7 @@
     <title>Environnements et outils de tests</title>
     <section>
       <title>Environnements de tests</title>
-      <para>Pour ces tests, nous allons utiliser les trois environnements de tests suivants avec des systèmes dédiés aux tests:</para>
+      <para>Pour ces tests, nous allons utiliser les quatres environnements de tests suivants avec des systèmes dédiés aux tests:</para>
       <para>Environnement 1 :</para>
       <itemizedlist>
         <listitem>
@@ -136,6 +136,21 @@
         </listitem>
         <listitem>
           <para>Nombre de machines serveurs: un serveur TMS sur une machine sur laquelle est installée un gestionnaire de ressources SLURM [ARCH]. </para>
+        </listitem>
+        <listitem>
+          <para>Un serveur SysFera-DS dédié décrit dans [ARCH].</para>
+        </listitem>
+      </itemizedlist>
+      <para>Environnement 4 :</para>
+      <itemizedlist>
+        <listitem>
+          <para>Système d'exploitation : c'est le système Linux décrit dans [STB] qui sera installé sur toutes les machines clientes et serveurs.</para>
+        </listitem>
+        <listitem>
+          <para>Nombre de machines clientes : une machine cliente décrite dans [STB] pour pouvoir lancer des tests à distance (selon le cas de test).</para>
+        </listitem>
+        <listitem>
+          <para>Nombre de machines serveurs: un serveur TMS sur une machine sur laquelle est installée un gestionnaire de ressources LSF [ARCH]. </para>
         </listitem>
         <listitem>
           <para>Un serveur SysFera-DS dédié décrit dans [ARCH].</para>
@@ -1096,7 +1111,9 @@
                   <para><emphasis role="strong">Cas 2 : </emphasis>le Batch scheduler est LoadLeveler</para>
                   <para>- Lancer la commande <emphasis>llclass </emphasis>et vérifier que la liste des queues obtenue est la même que celle qui précède.</para>
                   <para><emphasis role="strong">Cas </emphasis><emphasis role="strong">3</emphasis><emphasis role="strong"> : </emphasis>le Batch scheduler est SLURM </para>
-                  <para>- Lancer la commande <emphasis role="strong">scontrol </emphasis><emphasis role="strong">show</emphasis><emphasis role="strong"> partition</emphasis><emphasis> </emphasis>et vérifier que la liste des queues obtenue est la même que celle qui précède. </para>
+                  <para>- Lancer la commande <emphasis role="strong">scontrol show partition</emphasis><emphasis> </emphasis>et vérifier que la liste des queues obtenue est la même que celle qui précède. </para>
+                  <para><emphasis role="strong">Cas </emphasis><emphasis role="strong">4</emphasis><emphasis role="strong"> : </emphasis>le Batch scheduler est LSF </para>
+                  <para>- Lancer la commande <emphasis role="strong">bqueues</emphasis><emphasis> </emphasis>et vérifier que la liste des queues obtenue est la même que celle qui précède. </para>
                 </entry>
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
@@ -1266,8 +1283,24 @@
                         </listitem>
                       </itemizedlist>
                     </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
-                      <para>Lancer la commande <emphasis>vishnu_list_jobs </emphasis>avec l'identifiant de la machine sur laquelle le job a été soumis et avec l'option <emphasis>batch</emphasis> (<emphasis role="strong">-b</emphasis> pour la ligne de commande). Vérifier à l'aide de la commande (<emphasis>qstat</emphasis> pour <emphasis>TORQUE</emphasis>, <emphasis>squeue</emphasis> pour <emphasis>SLURM</emphasis> et <emphasis>llq</emphasis> pour <emphasis>LoadLeveler</emphasis>) du batch sous-jacent sur la machine que les jobs soumis précédemment sont bien affichés.</para>
+                      <itemizedlist>
+                        <listitem>
+                          <para><emphasis role="strong">Cas </emphasis><emphasis role="strong">4</emphasis> : Le Batch scheduler LSF est installé sur la machine cible</para>
+                          <orderedlist continuation="restarts" numeration="arabic">
+                            <listitem>
+                              <para>Lancer la commande <emphasis>'ssh &lt;host&gt; </emphasis><emphasis>bsub</emphasis><emphasis>'</emphasis> </para>
+                            </listitem>
+                          </orderedlist>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_list_jobs </emphasis>avec l'identifiant de la machine sur laquelle le job a été soumis et avec l'option <emphasis>batch</emphasis> (<emphasis role="strong">-b</emphasis> pour la ligne de commande). Vérifier à l'aide de la commande (<emphasis>qstat</emphasis> pour <emphasis>TORQUE</emphasis>, <emphasis>squeue</emphasis> pour <emphasis>SLURM,</emphasis> <emphasis>llq</emphasis> pour <emphasis>LoadLeveler </emphasis><emphasis>et </emphasis><emphasis>bjobs </emphasis>pour <emphasis>LSF</emphasis>) du batch sous-jacent sur la machine que les jobs soumis précédemment sont bien affichés.</para>
                     </listitem>
                   </orderedlist>
                 </entry>
@@ -1588,6 +1621,8 @@
                   <para>Lancer une commande <emphasis>'ssh &lt;host&gt; </emphasis><emphasis>llsubmit'</emphasis> sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
                   <para><emphasis role="strong">Cas </emphasis><emphasis role="strong">3</emphasis> :Batch scheduler SLURM</para>
                   <para>Lancer une commande <emphasis>'ssh &lt;host&gt; </emphasis><emphasis>sbatch</emphasis><emphasis>'</emphasis> sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
+                  <para><emphasis role="strong">Cas </emphasis><emphasis role="strong">4</emphasis> :Batch scheduler LSF</para>
+                  <para>Lancer une commande <emphasis>'ssh &lt;host&gt; </emphasis><emphasis>bsub</emphasis><emphasis>'</emphasis> sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
                   <para>- Lancer la commande <emphasis>vishnu_submit_job</emphasis><emphasis role="strong"> </emphasis>en mesurant le temps de réponse</para>
                 </entry>
                 <entry>
@@ -1613,6 +1648,9 @@
                   <para><emphasis role="strong">Cas </emphasis><emphasis role="strong">3</emphasis> :Batch scheduler SLURM</para>
                   <para>Lancer une commande <emphasis>'ssh &lt;host&gt; </emphasis><emphasis>s</emphasis><emphasis>c</emphasis><emphasis>ancel</emphasis><emphasis>'</emphasis> sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
                   <para>- Lancer la commande <emphasis>vishnu_cancel_job</emphasis><emphasis role="strong"> </emphasis>en mesurant le temps de réponse</para>
+                  <para><emphasis role="strong">Cas </emphasis><emphasis role="strong">4</emphasis> :Batch scheduler LSF</para>
+                  <para>Lancer une commande <emphasis>'ssh &lt;host&gt; </emphasis><emphasis>bkill</emphasis><emphasis>'</emphasis> sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
+                  <para>- Lancer la commande <emphasis>vishnu_cancel_job</emphasis><emphasis role="strong"> </emphasis>en mesurant le temps de réponse</para>
                 </entry>
                 <entry>
                   <?border-right 0.002cm solid #000000?>
@@ -1635,7 +1673,9 @@
                   <para><emphasis role="strong">Cas 2</emphasis> :Batch scheduler LoadLeveler</para>
                   <para>Lancer une commande <emphasis>'ssh &lt;host&gt; llq'</emphasis> sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
                   <para><emphasis role="strong">Cas </emphasis><emphasis role="strong">3</emphasis> :Batch scheduler SLURM</para>
-                  <para>Lancer une commande <emphasis>'ssh &lt;host&gt; </emphasis><emphasis>squeue</emphasis><emphasis>'</emphasis> sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
+                  <para>Lancer une commande <emphasis>'ssh &lt;host&gt; squeue'</emphasis> sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
+                  <para><emphasis role="strong">Cas </emphasis><emphasis role="strong">4</emphasis> :Batch scheduler LSF</para>
+                  <para>Lancer une commande <emphasis>'ssh &lt;host&gt; </emphasis><emphasis>b</emphasis><emphasis>job</emphasis><emphasis>s</emphasis><emphasis>'</emphasis> sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
                   <para>- Lancer la commande <emphasis>vishnu_list_jobs</emphasis><emphasis role="strong"> </emphasis>en mesurant le temps de réponse temps de réponse (temps de référence).</para>
                 </entry>
                 <entry>
@@ -1659,7 +1699,9 @@
                   <para><emphasis role="strong">Cas 2</emphasis> :Batch scheduler LoadLeveler</para>
                   <para>Lancer une commande <emphasis>'ssh &lt;host&gt; llclass'</emphasis> sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
                   <para><emphasis role="strong">Cas </emphasis><emphasis role="strong">3</emphasis> :Batch scheduler SLURM</para>
-                  <para>Lancer une commande <emphasis>'ssh &lt;host&gt; </emphasis><emphasis>scontrol show partition</emphasis><emphasis>'</emphasis> sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
+                  <para>Lancer une commande <emphasis>'ssh &lt;host&gt; scontrol show partition'</emphasis> sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
+                  <para><emphasis role="strong">Cas </emphasis><emphasis role="strong">4</emphasis> :Batch scheduler LSF</para>
+                  <para>Lancer une commande <emphasis>'ssh &lt;host&gt; </emphasis><emphasis>bqueues</emphasis><emphasis>'</emphasis> sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
                   <para>- Lancer la commande <emphasis>vishnu_list_queues</emphasis><emphasis role="strong"> </emphasis>en mesurant le temps de réponse</para>
                 </entry>
                 <entry>
