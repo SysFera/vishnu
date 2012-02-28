@@ -1,3 +1,6 @@
+DELETE FROM authaccount;
+DELETE FROM ldapauthsystem;
+DELETE FROM authsystem;
 DELETE FROM account;
 DELETE FROM command;
 DELETE FROM description;
