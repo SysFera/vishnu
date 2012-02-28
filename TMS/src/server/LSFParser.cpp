@@ -134,8 +134,17 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
       line = line.erase(0, pos);
       if(boost::algorithm::starts_with(line, LSF_PREFIX)){
          line = line.substr(std::string(LSF_PREFIX).size());
+         
          size_t pos = line.find(LSF_PREFIX);
-         //search the other LSF_PREFIX in the line
+         size_t vbeg = 0;
+         //virify quota characters in line
+         while(pos!=std::string::npos){
+           verifyQuotaCharacter(line.substr(vbeg, pos-vbeg));
+           vbeg = pos+LSF_PREFIX.size();
+           pos = line.find(LSF_PREFIX, pos+vbeg);
+         }
+         //search LSF_PREFIX in the line and replace by empty string
+         pos = line.find(LSF_PREFIX);
          while(pos!=std::string::npos){
            line.replace(pos, LSF_PREFIX.size(), " ");
            pos = line.find(LSF_PREFIX);
