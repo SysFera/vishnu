@@ -10,6 +10,22 @@
 import VISHNU
 import os
 
+def displayAuthSystems(li):
+  print "li.getAuthSystems().size()", li.getAuthSystems().size()
+  for i in range(li.getAuthSystems().size()):    
+    displayAuthSys(li.getAuthSystems().get(i))
+    print " " 
+
+def displayAuthSys(newAuthSys):
+  print "AuthSystemId: ", newAuthSys.getAuthSystemId()
+  print "Name: ", newAuthSys.getName()
+  print "URI: ", newAuthSys.getURI()
+  print "AuthLogin: ", newAuthSys.getAuthLogin()
+  print "AuthPassword: ", newAuthSys.getAuthPassword()
+  print "UserPasswordEncryption: ", newAuthSys.getUserPasswordEncryption()
+  print "Type: ", newAuthSys.getType()
+  print "LdapBase: ", newAuthSys.getLdapBase()
+ 
 try:
   sess = VISHNU.Session()
   # Initialisation of vishnu, the parameter is the path to the configuration file (cf shell script for the content of this file)
@@ -30,7 +46,7 @@ try:
   print "Getting the userid of the first session of the list:", l.getSessions().get(0).getUserId()
   # Getting the session id of the 24th session of the list
   print "Getting the session id of the first session of the list:", l.getSessions().get(0).getSessionId()
-  id = l.getSessions().get(1).getSessionId()
+  id = l.getSessions().get(0).getSessionId()
   # Creating a user object
   u = VISHNU.User()
   # Setting the user namefirst
@@ -85,14 +101,37 @@ try:
   k = sess2.getSessionKey()
   print "Session key: ",k
   # Test addAuthSystem
-  #print "Test addAuthSystem"
-  #newAuthSys = VISHNU.AuthSystem
-  #newAuthSys.setName("MyPython")
-  #newAuthSys.setURI("http://pythonHome.Fr")
-  #newAuthSys.setAuthLogin("myPythonAuth")
-  #newAuthSys.setAuthPassword("myPythonPwd")
-  #newAuthSys.setUserPasswordEncryption(0)
-  #addAuthSystem(k, newAuthSys)
+  print "Test addAuthSystem"
+  newAuthSys = VISHNU.AuthSystem()
+  newAuthSys.setName("MyPython")
+  newAuthSys.setURI("http://pythonHome.Fr")
+  newAuthSys.setAuthLogin("myPythonAuth")
+  newAuthSys.setAuthPassword("myPythonPwd")
+  newAuthSys.setUserPasswordEncryption(0)
+  newAuthSys.setType(0)
+  newAuthSys.setLdapBase("myLdapBase")
+  VISHNU.addAuthSystem(k, newAuthSys)
+  
+  print "Test listAuthSystems"
+  li = VISHNU.ListAuthSystems()
+  liopt = VISHNU.ListAuthSysOptions()
+  liopt.setListAllAuthSystems(1)
+  VISHNU.listAuthSystems(k,li, liopt)
+  displayAuthSystems(li)
+  
+  #displayAuthSys(newAuthSys)
+  print "Test updateAuthSystem"
+  newAuthSys.setName("MyPythonUpdated")
+  VISHNU.updateAuthSystem(k, newAuthSys)
+  
+  print "Test listAuthSystems"
+  li = VISHNU.ListAuthSystems()
+  liopt = VISHNU.ListAuthSysOptions()
+  liopt.setListAllAuthSystems(1)
+  VISHNU.listAuthSystems(k,li, liopt)
+  displayAuthSystems(li)
+  
+  
   VISHNU.close(k)
 
 
