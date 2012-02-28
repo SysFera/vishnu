@@ -448,15 +448,20 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
        break;
      case 'b':
        //TODO; begin_time
+       //req->beginTime = LSFParser::convertToTime(strdup(optarg));
        break;
      case 't':
        //TODO; end_time
+       //req->termTime = LSFParser::convertToTime(strdup(optarg));
        break;
      case 'f':
        //TODO; -f "lfile op [rfile]"
+       //nxf = xf_tokens.size();
+       //req->xf = ?
        break;
      case 'Q':
        //TODO; -Q requeue_exit_values
+       //req->requeueEValues = strdup(optarg);
        break;
      case LONG_OPT_APP:
        req->options3 |= SUB3_APP;
@@ -505,54 +510,68 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
        break;
      case LONG_OPT_WA:
        req->options2 |=SUB2_WARNING_ACTION;
-       //TODO: to complete
+       req->warningAction = strdup(optarg);
        break;
      case LONG_OPT_WT:
        req->options2 |= SUB2_WARNING_TIME_PERIOD;
-       //TODO: to complete
+       if(isNumerical(strdup(optarg))) {
+          req->warningTimePeriod = vishnu::convertToInt(optarg);
+        }  else {
+            throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(strdup(optarg))+" is an invalid"
+                 " job action warning time  value for --wt option.");
+        }
        break;
      case LONG_OPT_ZS:
        //TODO: -Zs (boolean)
        break;
      case LONG_OPT_EP:
        req->options3 |= SUB3_POST_EXEC;
-       //TODO: to complete
+       req->postExecCmd = strdup(optarg);
        break;
      case LONG_OPT_SP:
        req->options2 |= SUB2_JOB_PRIORITY;
-        //TODO: to complete
+       if(isNumerical(strdup(optarg))) {
+          req->userPriority =  vishnu::convertToInt(strdup(optarg));
+       } else {
+           throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(strdup(optarg))+" is an invalid"
+               " job priority value for -sp option.");
+       }
        break;
      case LONG_OPT_MIG:
        req->options3 |=SUB3_MIG_THRESHOLD;
-        //TODO: to complete
+       if(isNumerical(strdup(optarg))) {
+         req->migThreshold = vishnu::convertToInt(strdup(optarg));
+       } else {
+           throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(strdup(optarg))+" is an invalid"
+               " job migration threshold value for -sp option.");
+       }
        break;
      case LONG_OPT_SLA:
        req->options2 |=SUB2_SLA;
-        //TODO: to complete
+       req->sla = strdup(optarg);
        break;
      case LONG_OPT_EXT:
        req->options2 |=SUB2_EXTSCHED;
-         //TODO: to complete
+       req->extsched = strdup(optarg);
        break;
      case LONG_OPT_LP:
        req->options2 |=SUB2_LICENSE_PROJECT;
-        //TODO: to complete
+       req->licenseProject = strdup(optarg);
        break;
      case LONG_OPT_JSDL:
-       //TODO -jsdl JSDL_file
+       req->jsdlFlag = 1;
        break;
      case LONG_OPT_JSDL_STRICT:
-       //TODO: -jsdl_strict JSDL_file
+       req->jsdlFlag = 0;
        break;
      case LONG_OPT_RNC:
        //-rnc resize_notify_command
        req->options3 |=SUB3_RESIZE_NOTIFY_CMD;
-        //TODO: to complete
+       req->notifyCmd = strdup(optarg); 
        break;
      case LONG_OPT_XF:
-       //-XF (boolean): A voir
-       // //TODO: to see
-       req->options3 |=SUB3_XFJOB;
+       //-XF (boolean): To see
+       //req->options3 |=SUB3_XFJOB;
        break;
     default: /* '?' */
       std::cerr << "invalid option " << optarg << std::endl;
