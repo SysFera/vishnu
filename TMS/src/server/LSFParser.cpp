@@ -169,17 +169,20 @@ LSFParser::convertDateToTime(const std::string& date, const std::string& compErr
    minute = vishnu::convertToInt(tokens[0]);
    if(minute < 0 || minute > 59) {
      errMsg += " minute number range must be 0-59.";
+     throw UMSVishnuException(ERRCODE_INVALID_PARAM, errMsg+" "+compErrMsg);
    } 
    //hour 
    hour = vishnu::convertToInt(tokens[1]);
    if(hour < 0 || hour > 23) {
      errMsg += " hour number range must be 0-23.";
+     throw UMSVishnuException(ERRCODE_INVALID_PARAM, errMsg+" "+compErrMsg);
    } 
    //day 
    if(tokens.size() >= 3) {
      day = vishnu::convertToInt(tokens[2]);
      if(day < 1 || day > 31) {
        errMsg += " day number range must be 1-31.";
+       throw UMSVishnuException(ERRCODE_INVALID_PARAM, errMsg+" "+compErrMsg);
      }
      hasDayField = true;
    }
@@ -188,6 +191,7 @@ LSFParser::convertDateToTime(const std::string& date, const std::string& compErr
      month = vishnu::convertToInt(tokens[3]);
      if(month < 1 || month > 12) {
        errMsg += " month number range must be 1-31.";
+       throw UMSVishnuException(ERRCODE_INVALID_PARAM, errMsg+" "+compErrMsg);
      }
      hasMonthField = true;
    }
@@ -196,6 +200,7 @@ LSFParser::convertDateToTime(const std::string& date, const std::string& compErr
      year = vishnu::convertToInt(tokens[4]);
      if(year < 1970) {
        errMsg += " year must after 1970.";
+       throw UMSVishnuException(ERRCODE_INVALID_PARAM, errMsg+" "+compErrMsg);
      }
      hasYearField = true;
    }
@@ -216,7 +221,8 @@ LSFParser::convertDateToTime(const std::string& date, const std::string& compErr
  if(hasDayField) {
    totalTimeTm.tm_mday = day;
  } else {
-   if(hour!=-1 && ((hour < timeNowTm->tm_hour)|| (hour==timeNowTm->tm_hour && minute < timeNowTm->tm_min))) {
+   if((hour < timeNowTm->tm_hour)|| (hour==timeNowTm->tm_hour && minute < timeNowTm->tm_min)) 
+   {
      totalTimeTm.tm_mday = timeNowTm->tm_mday+1;
    } else {
      totalTimeTm.tm_mday = timeNowTm->tm_mday;
@@ -226,8 +232,11 @@ LSFParser::convertDateToTime(const std::string& date, const std::string& compErr
  if(hasMonthField) {
    totalTimeTm.tm_mon = month-1;
  } else {
-   if(day!=-1 && (day < timeNowTm->tm_mday)) {
-     totalTimeTm.tm_mon = timeNowTm->tm_mon+1;
+   if((day!=-1 && (day < timeNowTm->tm_mday))
+      || (day==timeNowTm->tm_mday && hour < timeNowTm->tm_hour)
+      || (day==timeNowTm->tm_mday && hour==timeNowTm->tm_hour && minute < timeNowTm->tm_min))
+   {
+         totalTimeTm.tm_mon = timeNowTm->tm_mon+1;
    } else {
      totalTimeTm.tm_mon = timeNowTm->tm_mon;
    }
@@ -236,7 +245,12 @@ LSFParser::convertDateToTime(const std::string& date, const std::string& compErr
  if(hasYearField) {
    totalTimeTm.tm_year = year-1900;
  } else {
-   if(month!=-1 && ((month-1) < timeNowTm->tm_mon)) {
+   if((month!=-1 && ((month-1) < timeNowTm->tm_mon))
+      ||((month-1)==timeNowTm->tm_mon && day < timeNowTm->tm_mday)
+      || ((month-1)==timeNowTm->tm_mon && day==timeNowTm->tm_mday && hour < timeNowTm->tm_hour)
+      || ((month-1)==timeNowTm->tm_mon && day==timeNowTm->tm_mday 
+      && hour==timeNowTm->tm_hour && minute < timeNowTm->tm_min)) 
+   {
      totalTimeTm.tm_year = timeNowTm->tm_year+1;
    } else {
      totalTimeTm.tm_year = timeNowTm->tm_year;
@@ -383,6 +397,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
   time_t test4 = convertDateToTime("08:30");
   time_t test5 = convertDateToTime("01:07:08:30");
   time_t test6 = convertDateToTime("2013:01:07:08:30");
+  time_t test7 = convertDateToTime("02:29:16:30");
  
   std::cout << "+++++++++++++++++localtime(test1)=" << ctime(&test1) << std::endl;
   std::cout << "+++++++++++++++++localtime(test2)=" << ctime(&test2) << std::endl;
@@ -390,6 +405,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
   std::cout << "+++++++++++++++++localtime(test4)=" << ctime(&test4) << std::endl;
   std::cout << "+++++++++++++++++localtime(test5)=" << ctime(&test5) << std::endl;
   std::cout << "+++++++++++++++++localtime(test6)=" << ctime(&test6) << std::endl;
+  std::cout << "+++++++++++++++++localtime(test7)=" << ctime(&test7) << std::endl;
   time_t test = time(NULL);
   std::cout << "+++++++++++++++++localtime(&time(NULL))=" << ctime(&test) << std::endl;
  
