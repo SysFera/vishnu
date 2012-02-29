@@ -931,26 +931,26 @@ try {
   BOOST_CHECK_THROW(addAuthSystem(sess.getSessionKey(), asys), VishnuException);
   BOOST_CHECK(close          (sess.getSessionKey()      )==0);
 
-  // Add auth system bad status
-  BOOST_MESSAGE(" Testing add auth system already exist UA8"    );
-  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
-  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
-  asys.setName("ldap2");
-  asys.setURI("httm://www.graal.ens-lyon.fr2");
-  asys.setAuthLogin("toto2");
-  asys.setAuthPassword("toto2");
-  asys.setUserPasswordEncryption(enc);
-  tsys = 0;
-  ssys = 7;
-  asys.setType(tsys);
-  asys.setStatus(ssys);
-  asys.setLdapBase("base2");
-  BOOST_CHECK_THROW(addAuthSystem(sess.getSessionKey(), asys), VishnuException);
-  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+//  // Add auth system bad status
+//  BOOST_MESSAGE(" Testing add auth system already exist UA8"    );
+//  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+//  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+//  asys.setName("ldap2");
+//  asys.setURI("httm://www.graal.ens-lyon.fr2");
+//  asys.setAuthLogin("toto2");
+//  asys.setAuthPassword("toto2");
+//  asys.setUserPasswordEncryption(enc);
+//  tsys = 0;
+//  ssys = 7;
+//  asys.setType(tsys);
+//  asys.setStatus(ssys);
+//  asys.setLdapBase("base2");
+//  BOOST_CHECK_THROW(addAuthSystem(sess.getSessionKey(), asys), VishnuException);
+//  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
 
 
   // Update auth system
-  BOOST_MESSAGE(" Testing update auth system already exist UA8.1"    );
+  BOOST_MESSAGE(" Testing update auth system  UA8.1"    );
   BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
   asys.setName("ldap3");
@@ -969,10 +969,10 @@ try {
   BOOST_CHECK(close          (sess.getSessionKey()      )==0);
 
   // Update auth syste bad type
-  BOOST_MESSAGE(" Testing update auth system already exist UA8.1"    );
+  BOOST_MESSAGE(" Testing update auth system bad type UA8.1"    );
   BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
-  asys.setName("ldap4");
+  asys.setName("ldap8");
   asys.setURI("httm://www.graal.ens-lyon.fr");
   asys.setAuthLogin("toto4");
   asys.setAuthPassword("toto4");
@@ -988,7 +988,7 @@ try {
   BOOST_CHECK(close          (sess.getSessionKey()      )==0);
 
   // Update auth syste bad status
-  BOOST_MESSAGE(" Testing update auth system already exist UA8.1"    );
+  BOOST_MESSAGE(" Testing update auth system bad status UA8.1"    );
   BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
   asys.setName("ldap3");
@@ -1043,7 +1043,7 @@ try {
   BOOST_CHECK(close          (sess.getSessionKey()      )==0);
 
   // List auth system
-  BOOST_MESSAGE(" Testing update auth system already exist U5"    );
+  BOOST_MESSAGE(" Testing list auth system  U5"    );
   BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
   liaso.setListAllAuthSystems(true);
@@ -1052,7 +1052,7 @@ try {
   BOOST_CHECK(close          (sess.getSessionKey()      )==0);
 
   // List auth system bad user
-  BOOST_MESSAGE(" Testing update auth system already exist U5"    );
+  BOOST_MESSAGE(" Testing list auth system bad user U5"    );
   BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
   liaso.setListAllAuthSystems(true);
