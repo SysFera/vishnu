@@ -51,7 +51,6 @@
         <date>22/07/2011</date>
         <authorinitials>SysFera</authorinitials>
         <revdescription>
-              
             <para>Prise en compte de SLURM.</para></revdescription>
       </revision>
       <revision>
@@ -70,7 +69,17 @@
               
             <para>Prise en compte du support de LDAP.</para></revdescription>
       </revision>
+  
+      <revision>
+        <revnumber>07</revnumber>
+        <date>28/02/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+            <para>Prise en compte du support de LSF.</para></revdescription>
+      </revision>
+   
     </revhistory>
+
   </info>
   <chapter>
     <title>Présentation du document</title>
@@ -414,7 +423,7 @@ de SHA-1.</para>
             <row>
               <entry><para>1.2.6</para></entry>
               <entry><para>Logiciels de gestion de jobs batch supportés</para></entry>
-              <entry><para>- Torque 2.3.6</para><para>- IBM LoadLeveler 3.5.1.14</para><para>- SLURM 2.2.1 (ou 2.2.7)</para></entry>
+              <entry><para>- Torque 2.3.6</para><para>- IBM LoadLeveler 3.5.1.14</para><para>- SLURM 2.2.1 (ou 2.2.7)</para><para>- LSF 7.0.6.134609</para></entry>
             </row>
             <row>
               <entry><para>1.2.7</para></entry>
@@ -684,7 +693,7 @@ de SHA-1.</para>
             <row>
               <entry><para>2.4</para></entry>
               <entry><para>Librairies des Batch schedulers</para></entry>
-              <entry><para>Torque API, LoadLeveler API  et SLURM API</para></entry>
+              <entry><para>API Torque, API LoadLeveler, API SLURM et API LSF</para></entry>
             </row>
             <row>
               <entry><para>2.5</para></entry>
