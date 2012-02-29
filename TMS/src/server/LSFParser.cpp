@@ -44,50 +44,64 @@ static struct option long_options[] = {
          {"XF", no_argument, 0, LONG_OPT_XF}
 };
 
-bool isEndByQuote(const string& str) {
-  return (*(str.end()-1)=='\"');
+struct IsEndByQuote {
+  
+  char mquote;
+  IsEndByQuote(const char quote):mquote(quote){};
+
+  bool operator()(const string& str) {
+    return (*(str.end()-1)==mquote);
+  }
+};
+
+bool isStartByQuote(const string& str, const char quote) {
+  return (*(str.begin())==quote);
 }
 
-bool isStartByQuote(const string& str) {
-  return (*(str.begin())=='\"');
-}
+bool cleanString(string& str, const char& quote) {
 
-void cleanString(string& str) {
+   bool begIsClean = false;
+   bool endIsClean = false;
    if(!str.empty()){
-      if(*(str.begin())=='\"'){
+      if(*(str.begin())==quote){
          str.replace(str.begin(), str.begin()+1, "");
+         begIsClean = true;
       }
-      if(*(str.end()-1)=='\"'){
+      if(*(str.end()-1)==quote){
           str.replace(str.end()-1, str.end(), "");
+          endIsClean = true;
       }
    }
+ return (begIsClean && endIsClean);
 }
 
-void verifyQuotaCharacter(const string& str) {
+void verifyQuotaCharacter(const string& str, const char& quote) {
 
+ std::string quoteStr;
+ quoteStr.push_back(quote);
  std::string errorMsg = "Error: invalid value option in option "+str;
- errorMsg +=". A text started by the quote character \" must be closed by the quote character \"";
+ errorMsg +=". A text started by the quote character "+quoteStr+" must be closed by the quote character "+quoteStr;
  //First character quote
- size_t pos = str.find('\"');
+ size_t pos = str.find(quote);
  if(pos!=std::string::npos) {
    //Second character quote
-   pos = str.find('\"', pos+1);
+   pos = str.find(quote, pos+1);
    if(pos==std::string::npos) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, errorMsg);
    }
   
    //First character quote 
-   pos = str.find('\"', pos+1);
+   pos = str.find(quote, pos+1);
    while(pos!=std::string::npos) {
      if(pos!=std::string::npos) {
         //Second character quote
-        pos = str.find('\"', pos+1);
+        pos = str.find(quote, pos+1);
         if(pos==std::string::npos) {
           throw UMSVishnuException(ERRCODE_INVALID_PARAM, errorMsg);
         }
      }
      //First character quote
-     pos = str.find('\"', pos+1);
+     pos = str.find(quote, pos+1);
    }
  }
 
@@ -124,33 +138,65 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
   static std::map<size_t, pair<string,string> > tab;
   std::string cmd;
   vector<string> tokens;
+  std::string tmpLine="";
+  size_t escapePos;
+  bool escapeFound = false;
+
   if (fileStream.is_open()) {
     while (!fileStream.eof()) {
+
       getline(fileStream, line);
-      size_t pos = line.find('#');
-      if(pos==string::npos) {
+ 
+     //Treating of the escape character int the script content
+     if(boost::algorithm::ends_with(boost::algorithm::erase_all_copy(line, " "),"\\")){
+       escapePos = line.rfind("\\");
+       if(escapePos!=std::string::npos) {
+         tmpLine += line.substr(0, escapePos);
+         escapeFound = true;
+         continue;
+       }
+     }
+
+     if(escapeFound) {
+       tmpLine +=line;
+       line = tmpLine;
+       escapeFound = false;
+       tmpLine = "";
+     }
+
+     // erase all white space until
+     while(boost::algorithm::starts_with(line, " ")){
+       line.erase(0,1);
+     };
+
+     /*search # character*/ 
+     size_t pos = line.find('#');
+     if(pos == string::npos) {
         continue;
-      }
-      line = line.erase(0, pos);
-      if(boost::algorithm::starts_with(line, LSF_PREFIX)){
+     }
+
+     if(boost::algorithm::starts_with(line, LSF_PREFIX)){
          line = line.substr(std::string(LSF_PREFIX).size());
          
          size_t pos = line.find(LSF_PREFIX);
          size_t vbeg = 0;
-         //virify quote characters in line
+         //verify quote characters in line
          while(pos!=std::string::npos){
-           verifyQuotaCharacter(line.substr(vbeg, pos-vbeg));
+           verifyQuotaCharacter(line.substr(vbeg, pos-vbeg), '\"');
+           verifyQuotaCharacter(line.substr(vbeg, pos-vbeg), '\'');
            vbeg = pos+LSF_PREFIX.size();
-           pos = line.find(LSF_PREFIX, pos+vbeg);
+           pos = line.find(LSF_PREFIX, vbeg);
          }
+         //To verify the laste option
+         verifyQuotaCharacter(line.substr(vbeg), '\"');
+         verifyQuotaCharacter(line.substr(vbeg), '\'');
+
          //search LSF_PREFIX in the line and replace by empty string
          pos = line.find(LSF_PREFIX);
          while(pos!=std::string::npos){
            line.replace(pos, LSF_PREFIX.size(), " ");
            pos = line.find(LSF_PREFIX);
          }
-         //virify quote characters
-         verifyQuotaCharacter(line);
          //add line to cmd
          cmd = cmd+" "+line;
        }  
@@ -168,11 +214,17 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
   std::vector<std::string>::iterator iter;
   std::vector<std::string>::iterator end = tokens.end();
   std::vector<std::string> tokensArgs;
+  char quote = '\0';
   for(iter=tokens.begin(); iter!=tokens.end(); ++iter) {
      argvStr = *iter;
-     if(isStartByQuote(argvStr)){
+     if(isStartByQuote(argvStr, '\"')) {
+       quote = '\"';
+     } else if(isStartByQuote(argvStr, '\'')){
+        quote = '\''; 
+     }
+     if(quote!='\0'){
         std::vector<std::string>::iterator found_iter;
-        found_iter = std::find_if(iter, end, isEndByQuote);
+        found_iter = std::find_if(iter, end, IsEndByQuote(quote));
         if(found_iter!=end) {
           while(iter!=found_iter) {
             iter++;
@@ -180,10 +232,11 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
           }
         } else {
            std::string errorMsg = "Error: invalid argument "+argvStr;
-           errorMsg +=". It must be closed by the character \"";
+           errorMsg +=". It must be closed by the character quote character (\' or \")";
            throw UMSVishnuException(ERRCODE_INVALID_PARAM, errorMsg);
         }
      }
+     quote='\0';
      tokensArgs.push_back((argvStr.c_str()));
   }
 
@@ -232,13 +285,8 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         req->options |=SUB_HOST;
         std::cout << "***********optarg=" << optarg << std::endl;
         host_list = strdup(optarg);
-        if(!host_list.empty()){
-          if(*(host_list.begin())=='\"'){
-             host_list.replace(host_list.begin(), host_list.begin()+1, "");
-          }
-          if(*(host_list.end()-1)=='\"'){
-             host_list.replace(host_list.end()-1, host_list.end(), "");
-          }
+        if(!cleanString(host_list, '\"')) {
+          cleanString(host_list, '\'');
         }
         std::cout << "***********host_list=" << host_list << std::endl;
         stream_host_list.str(host_list);
@@ -312,7 +360,10 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
      case 'k':
         req->options |=SUB_CHKPNT_DIR;
         chkpnt = strdup(optarg);
-        cleanString(chkpnt);
+        if(!cleanString(chkpnt, '\"')) {
+          cleanString(chkpnt, '\'');
+        }
+
         std::cout << "*****************chkpnt=" << chkpnt << std::endl;
         stream_chkpnt.str(chkpnt);
         chkpnt_tokens.clear();
