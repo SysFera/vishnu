@@ -949,7 +949,6 @@ TorqueServer::getFormatedCpuPerNode(const int& cpu,
             char delim = '+';
             size_t beginPosTonken = 0;
             size_t endPosToken = nodeValue.find(delim);
-            std::string tmp;
             if(endPosToken==std::string::npos) {
               findAndInsert(ppn, ppn+nbCpuStr, beginPosTonken, endPosToken, nodeValue);
             } 
