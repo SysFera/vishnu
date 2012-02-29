@@ -55,8 +55,9 @@ AuthSystemServer::add(int vishnuId) {
     if (userServer.isAdmin()) {
       checkValues();
       mauthsystem->setAuthSystemId(vishnu::getObjectId(vishnuId, "formatidauth", AUTH, ""));
-      //To check if the authenid generated does no exists
-      if (getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'").size() == 0) {
+      //To check if the authentication id generated and the name to save do not exist
+      if (getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'"
+        " or name='"+mauthsystem->getName()+"'").size() == 0) {
         //To active the user-authentication system
         mauthsystem->setStatus(ACTIVE_STATUS);
         mdatabaseVishnu->process( sqlInsert + "(" + convertToString(vishnuId)+", "
