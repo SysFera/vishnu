@@ -264,6 +264,39 @@ LSFParser::convertDateToTime(const std::string& date, const std::string& compErr
   return totalTime;
 }
 
+
+int 
+LSFParser::convertWallTimeToTime(const std::string& date, const std::string& compErrMsg) {
+ 
+  int wallTime; 
+  int minute = -1;
+  int hour   = -1;
+ 
+  std::string errMsg = "illegal time  option value "+date+":";
+  vector<std::string> tokens = getTimeToKens(date);
+  if(tokens.size()==0) {
+    errMsg += " Empty time value. At least one fields must be specified.";
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, errMsg+" "+compErrMsg);
+  }
+  for(std::vector<std::string>::iterator iter = tokens.begin(); iter!=tokens.end(); ++iter) {
+    if(!isNumerical(*iter)) {
+      errMsg += " The fields values must be intergers.";
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM, errMsg+" "+compErrMsg);
+    }
+  }
+
+  //hour 
+  minute = vishnu::convertToInt(tokens[0]);
+  wallTime = minute;
+  //day 
+  if(tokens.size() >= 2) {
+     hour = vishnu::convertToInt(tokens[1]);
+     wallTime += hour*60;
+  }
+
+  return wallTime;
+}
+
 bool LSFParser::isNumerical(const std::string& value) {
 
   if(value.size()==0) {
@@ -420,7 +453,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
   }
   std::cout << std::endl;
 
-#define GETOPT_ARGS "J:q:m:n:i:o:e:xNBG:k:rw:R:E:L:P:u:U:K:Wg:Hc:F:p:M:D:S:v:T:b:t:f:Q"
+#define GETOPT_ARGS "J:q:m:n:i:o:e:xNBG:k:rw:R:E:L:P:u:U:K:W:g:Hc:F:p:M:D:S:v:T:b:t:f:Q"
 
   int option_index = 0;
   int c;
@@ -614,20 +647,23 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         break;
       case 'W':
         //-W run_limit[/host_spec]
-        timeStr = strdup(optarg);
-        if(timeStr.find("\\")!=std::string::npos) {
-          if((timeStr.find("\\")+1)!=std::string::npos) {
+        std::cout << "*********optarg=" << optarg << std::endl;
+        timeStr = std::string(strdup(optarg));
+        std::cout << "*********timeStr=" << timeStr << std::endl;
+        if(timeStr.find("/")!=std::string::npos) {
+          if((timeStr.find("/")+1)!=std::string::npos) {
             if(req->options && SUB_HOST_SPEC !=SUB_HOST_SPEC){
               req->options |= SUB_HOST_SPEC;
             }
-            req->rLimits[LSF_RLIMIT_RUN] = vishnu::convertToInt(timeStr.substr(0, timeStr.find("\\")));
-            wHostSpec = timeStr.substr(timeStr.find("\\")+1);
+            req->rLimits[LSF_RLIMIT_RUN] = convertWallTimeToTime(timeStr.substr(0, timeStr.find("/")));
+            wHostSpec = timeStr.substr(timeStr.find("/")+1);
             req->hostSpec = strdup(wHostSpec.c_str());
           }
         } else {
-          req->rLimits[LSF_RLIMIT_RUN] = vishnu::convertToInt(timeStr);//TODO: replace by convertToDate()
+          req->rLimits[LSF_RLIMIT_RUN] = convertWallTimeToTime(timeStr);
         }
-        std::cout << "*********-optarg=" << optarg << std::endl;
+        std::cout << "*****hostSpec=" << wHostSpec << std::endl;
+        std::cout << "*********req->rLimits[LSF_RLIMIT_RUN]=" << req->rLimits[LSF_RLIMIT_RUN] << std::endl;
         break;
       case 'g':
         req->options2 |= SUB2_JOB_GROUP;
@@ -639,19 +675,21 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         std::cout << "*********hold-optarg=" << optarg << std::endl;
         break;
       case 'c':
-        timeStr = strdup(optarg);
-        if(timeStr.find("\\")!=std::string::npos) {
-          if((timeStr.find("\\")+1)!=std::string::npos) {
+        timeStr = std::string(strdup(optarg));
+        if(timeStr.find("/")!=std::string::npos) {
+          if((timeStr.find("/")+1)!=std::string::npos) {
             if(req->options && SUB_HOST_SPEC !=SUB_HOST_SPEC){
               req->options |= SUB_HOST_SPEC;
             }
-            req->rLimits[LSF_RLIMIT_CPU] = vishnu::convertToInt(timeStr.substr(0, timeStr.find("\\")));
-            wHostSpec = timeStr.substr(timeStr.find("\\")+1);
+            req->rLimits[LSF_RLIMIT_CPU] = convertWallTimeToTime(timeStr.substr(0, timeStr.find("/")));
+            wHostSpec = timeStr.substr(timeStr.find("/")+1);
             req->hostSpec = strdup(wHostSpec.c_str());
           }
         } else {
-          req->rLimits[LSF_RLIMIT_CPU] = vishnu::convertToInt(timeStr);//TODO: replace by convertToDate()
+          req->rLimits[LSF_RLIMIT_CPU] = convertWallTimeToTime(timeStr);
         }
+        std::cout << "*****hostSpec=" << wHostSpec << std::endl;
+        std::cout << "*********req->rLimits[LSF_RLIMIT_CPU]=" << req->rLimits[LSF_RLIMIT_CPU] << std::endl;
         break;
       case 'F':
         if(isNumerical(strdup(optarg))) {
@@ -749,7 +787,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         break;
       case LONG_OPT_WE:
         req->options2 |= SUB3_RUNTIME_ESTIMATION;
-        req->runtimeEstimation = vishnu::convertToInt(strdup(optarg)); //TODO:convertToDate(); 
+        req->runtimeEstimation = convertWallTimeToTime(strdup(optarg)); //TODO: to complete; 
         std::cout << "---------------------IN LONG_OPT_WE" << std::endl;
         std::cout << "*********we-optarg=" << optarg << std::endl;
         break;
@@ -788,12 +826,8 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         break;
       case LONG_OPT_WT:
         req->options2 |= SUB2_WARNING_TIME_PERIOD;
-        if(isNumerical(strdup(optarg))) {
-          req->warningTimePeriod = vishnu::convertToInt(optarg);
-        }  else {
-          throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(strdup(optarg))+" is an invalid"
+        req->warningTimePeriod = convertWallTimeToTime(strdup(optarg), "is an invalid"
               " job action warning time  value for --wt option.");
-        }
         break;
       case LONG_OPT_ZS:
         //TODO: -Zs (boolean)

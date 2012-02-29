@@ -54,6 +54,9 @@ public :
   static bool 
   isNumerical(const std::string& value); 
 
+  static int
+  convertWallTimeToTime(const std::string& date, const std::string& compErrMsg="");
+
   static time_t 
   convertDateToTime(const std::string& date, const std::string& compErrMsg="");
    /**
