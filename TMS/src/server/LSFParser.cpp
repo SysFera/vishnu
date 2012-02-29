@@ -107,10 +107,147 @@ void verifyQuotaCharacter(const string& str, const char& quote) {
 
 }
 
+std::vector<std::string> 
+getTimeToKens(const std::string& timeFormat, const char& separator=':') {
+
+  size_t beginPosToken = timeFormat.rfind(separator);
+  size_t endPosToken = timeFormat.size()-1;
+  std::vector<std::string> timeTokens;
+  if(beginPosToken==std::string::npos) {
+     timeTokens.push_back(timeFormat);
+   }
+   while(beginPosToken!=std::string::npos) {
+      timeTokens.push_back(timeFormat.substr(beginPosToken+1, endPosToken-beginPosToken));
+      endPosToken = beginPosToken-1;
+      beginPosToken = timeFormat.rfind(separator, endPosToken);
+      //last token
+      if(beginPosToken==std::string::npos){
+         timeTokens.push_back(timeFormat.substr(0, endPosToken+1));  
+      }
+   }
+
+  return timeTokens;
+}
+
 /**
  * \brief Constructor
  */
 LSFParser::LSFParser(){
+}
+
+time_t 
+LSFParser::convertDateToTime(const std::string& date, const std::string& compErrMsg) {
+
+ time_t totalTime;
+ time_t timeNow;
+ struct tm totalTimeTm;
+ struct tm *timeNowTm;
+ int minute = -1;
+ int hour   = -1;
+ int day    = -1;
+ int month  = -1;
+ int year   = -1;
+ bool hasDayField   = false;
+ bool hasMonthField = false;
+ bool hasYearField  = false;
+ 
+ std::string errMsg = "illegal date option value "+date+":";
+ vector<std::string> tokens = getTimeToKens(date);
+ for(std::vector<std::string>::iterator iter = tokens.begin(); iter!=tokens.end(); ++iter) {
+   if(!isNumerical(*iter)) {
+     errMsg += " The fields values must be intergers.";
+     throw UMSVishnuException(ERRCODE_INVALID_PARAM, errMsg+" "+compErrMsg);
+   }
+ }
+
+ if(tokens.size() < 2) {
+   errMsg += " At least two fields must be specified.";
+   throw UMSVishnuException(ERRCODE_INVALID_PARAM, errMsg+" "+compErrMsg);  
+ } else {
+   
+   //minute 
+   minute = vishnu::convertToInt(tokens[0]);
+   if(minute < 0 || minute > 59) {
+     errMsg += " minute number range must be 0-59.";
+   } 
+   //hour 
+   hour = vishnu::convertToInt(tokens[1]);
+   if(hour < 0 || hour > 23) {
+     errMsg += " hour number range must be 0-23.";
+   } 
+   //day 
+   if(tokens.size() >= 3) {
+     day = vishnu::convertToInt(tokens[2]);
+     if(day < 1 || day > 31) {
+       errMsg += " day number range must be 1-31.";
+     }
+     hasDayField = true;
+   }
+   //month
+   if(tokens.size() >= 4) {
+     month = vishnu::convertToInt(tokens[3]);
+     if(month < 1 || month > 12) {
+       errMsg += " month number range must be 1-31.";
+     }
+     hasMonthField = true;
+   }
+   //year
+   if(tokens.size() >= 5) {
+     year = vishnu::convertToInt(tokens[4]);
+     if(year < 1970) {
+       errMsg += " year must after 1970.";
+     }
+     hasYearField = true;
+   }
+ }
+
+ std::cout << "--------------minute=" << minute << std::endl;
+ std::cout << "--------------hour=" << hour << std::endl;
+ std::cout << "--------------day=" << day << std::endl;
+ std::cout << "--------------month=" << month << std::endl;
+ std::cout << "--------------year=" << year << std::endl;
+
+ timeNow = std::time(NULL);
+ timeNowTm = std::localtime(&timeNow);
+
+ totalTimeTm.tm_min = minute;
+ totalTimeTm.tm_hour = hour;
+ //day
+ if(hasDayField) {
+   totalTimeTm.tm_mday = day;
+ } else {
+   if(hour!=-1 && ((hour < timeNowTm->tm_hour)|| (hour==timeNowTm->tm_hour && minute < timeNowTm->tm_min))) {
+     totalTimeTm.tm_mday = timeNowTm->tm_mday+1;
+   } else {
+     totalTimeTm.tm_mday = timeNowTm->tm_mday;
+   }
+ }
+ //month
+ if(hasMonthField) {
+   totalTimeTm.tm_mon = month-1;
+ } else {
+   if(day!=-1 && (day < timeNowTm->tm_mday)) {
+     totalTimeTm.tm_mon = timeNowTm->tm_mon+1;
+   } else {
+     totalTimeTm.tm_mon = timeNowTm->tm_mon;
+   }
+ }
+ //month
+ if(hasYearField) {
+   totalTimeTm.tm_year = year-1900;
+ } else {
+   if(month!=-1 && ((month-1) < timeNowTm->tm_mon)) {
+     totalTimeTm.tm_year = timeNowTm->tm_year+1;
+   } else {
+     totalTimeTm.tm_year = timeNowTm->tm_year;
+   }
+ }
+
+ totalTimeTm.tm_sec = 0;
+ totalTimeTm.tm_isdst = -1;
+ totalTime = std::mktime(&totalTimeTm); 
+
+ return totalTime;
 }
 
 bool LSFParser::isNumerical(const std::string& value) {
@@ -239,7 +376,23 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
      quote='\0';
      tokensArgs.push_back((argvStr.c_str()));
   }
-
+ 
+  time_t test1 = convertDateToTime("1980:11:07:08:30");
+  time_t test2 = convertDateToTime("11:07:08:30");
+  time_t test3 = convertDateToTime("07:08:30");
+  time_t test4 = convertDateToTime("08:30");
+  time_t test5 = convertDateToTime("01:07:08:30");
+  time_t test6 = convertDateToTime("2013:01:07:08:30");
+ 
+  std::cout << "+++++++++++++++++localtime(test1)=" << ctime(&test1) << std::endl;
+  std::cout << "+++++++++++++++++localtime(test2)=" << ctime(&test2) << std::endl;
+  std::cout << "+++++++++++++++++localtime(test3)=" << ctime(&test3) << std::endl;
+  std::cout << "+++++++++++++++++localtime(test4)=" << ctime(&test4) << std::endl;
+  std::cout << "+++++++++++++++++localtime(test5)=" << ctime(&test5) << std::endl;
+  std::cout << "+++++++++++++++++localtime(test6)=" << ctime(&test6) << std::endl;
+  time_t test = time(NULL);
+  std::cout << "+++++++++++++++++localtime(&time(NULL))=" << ctime(&test) << std::endl;
+ 
   int argc = tokensArgs.size()+1; 
   char* argv[argc];
   argv[0] = (char*) "vishnu_submit_job";
@@ -541,12 +694,10 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         }
        break;
      case 'b':
-       //TODO; begin_time
-       //req->beginTime = LSFParser::convertToTime(strdup(optarg));
+       req->beginTime = convertDateToTime(strdup(optarg), " See LSF manual for -b option.");
        break;
      case 't':
-       //TODO; end_time
-       //req->termTime = LSFParser::convertToTime(strdup(optarg));
+       req->termTime = convertDateToTime(strdup(optarg), " See LSF manual for -t option.");
        break;
      case 'f':
        //TODO; -f "lfile op [rfile]"
