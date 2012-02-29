@@ -107,6 +107,18 @@ BOOST_AUTO_TEST_CASE( my_test )
   // Configuration
   Configuration           conf ;//= ecoreFactory->createConfiguration();
 
+  // auth account
+  ListAuthAccounts_ptr    liaa  = ecoreFactory->createListAuthAccounts();
+  ListAuthAccOptions      liaao;//= ecoreFactory->createListLocalAccOptions();
+  AuthAccount             aacc ;//= ecoreFactory->createLocalAccount();
+
+  // auth system
+  ListAuthSystems_ptr     lias  = ecoreFactory->createListAuthSystems();
+  ListAuthSysOptions      liaso;//= ecoreFactory->createListLocalAccOptions();
+  AuthSystem              asys ;//= ecoreFactory->createLocalAccount();
+  string authsysid;
+
+
   string np;
   // Setting value
   cop.setClosePolicy(sct);
@@ -851,6 +863,7 @@ try {
   BOOST_MESSAGE(" Testing restore conf"    );
   BOOST_REQUIRE(restore      	      (sqlScript+"/clean_session.sql"   )==0);
   BOOST_CHECK	 (connect      	      (root, pwdr  , sess  , cop)==0);
+  BOOST_MESSAGE("Configuration = "+conf.getFilePath());
   BOOST_CHECK	 (restoreConfiguration(sess.getSessionKey(), conf.getFilePath()            )==0);
   BOOST_CHECK    (changePassword(uid, pwd, pwd       )==0);
   BOOST_CHECK    (changePassword(root, pwdr, pwdr       )==0);
@@ -864,6 +877,307 @@ try {
   //  conf->setFilePath("bad");
   BOOST_CHECK_THROW	 (restoreConfiguration(sess.getSessionKey(), "toto"            ), VishnuException);
   BOOST_CHECK	 (close               (sess.getSessionKey()                   )==0);
+
+
+  // Add auth system
+  BOOST_MESSAGE(" Testing add auth system success UA8"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  asys.setName("ldap");
+  asys.setURI("httm://www.graal.ens-lyon.fr");
+  asys.setAuthLogin("toto");
+  asys.setAuthPassword("toto");
+  UMS_Data::EncryptionMethod enc = 0;
+  asys.setUserPasswordEncryption(enc);
+  AuthType tsys = 0;
+  StatusType ssys = 1;
+  asys.setType(tsys);
+  asys.setStatus(ssys);
+  asys.setLdapBase("base");
+  BOOST_CHECK(addAuthSystem(sess.getSessionKey(), asys)==0);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
+  // Add auth system already exist
+  BOOST_MESSAGE(" Testing add auth system already exist UA8"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  asys.setName("ldap");
+  asys.setURI("httm://www.graal.ens-lyon.fr");
+  asys.setAuthLogin("toto");
+  asys.setAuthPassword("toto");
+  asys.setUserPasswordEncryption(enc);
+  tsys = 0;
+  ssys = 1;
+  asys.setType(tsys);
+  asys.setStatus(ssys);
+  asys.setLdapBase("base");
+  BOOST_CHECK_THROW(addAuthSystem(sess.getSessionKey(), asys), VishnuException);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
+  // Add auth system bad type
+  BOOST_MESSAGE(" Testing add auth system already exist UA8"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  asys.setName("ldap2");
+  asys.setURI("httm://www.graal.ens-lyon.fr2");
+  asys.setAuthLogin("toto2");
+  asys.setAuthPassword("toto2");
+  asys.setUserPasswordEncryption(enc);
+  tsys = 7;
+  ssys = 1;
+  asys.setType(tsys);
+  asys.setStatus(ssys);
+  asys.setLdapBase("base2");
+  BOOST_CHECK_THROW(addAuthSystem(sess.getSessionKey(), asys), VishnuException);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
+  // Add auth system bad status
+  BOOST_MESSAGE(" Testing add auth system already exist UA8"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  asys.setName("ldap2");
+  asys.setURI("httm://www.graal.ens-lyon.fr2");
+  asys.setAuthLogin("toto2");
+  asys.setAuthPassword("toto2");
+  asys.setUserPasswordEncryption(enc);
+  tsys = 0;
+  ssys = 7;
+  asys.setType(tsys);
+  asys.setStatus(ssys);
+  asys.setLdapBase("base2");
+  BOOST_CHECK_THROW(addAuthSystem(sess.getSessionKey(), asys), VishnuException);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
+
+  // Update auth system
+  BOOST_MESSAGE(" Testing update auth system already exist UA8.1"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  asys.setName("ldap3");
+  asys.setURI("httm://www.graal.ens-lyon.fr");
+  asys.setAuthLogin("toto3");
+  asys.setAuthPassword("toto3");
+  asys.setUserPasswordEncryption(enc);
+  tsys = 0;
+  ssys = 1;
+  asys.setType(tsys);
+  asys.setStatus(ssys);
+  asys.setLdapBase("base");
+  BOOST_CHECK(addAuthSystem(sess.getSessionKey(), asys)==0);
+  asys.setName("ldap4");
+  BOOST_CHECK(updateAuthSystem(sess.getSessionKey(), asys)==0);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
+  // Update auth syste bad type
+  BOOST_MESSAGE(" Testing update auth system already exist UA8.1"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  asys.setName("ldap4");
+  asys.setURI("httm://www.graal.ens-lyon.fr");
+  asys.setAuthLogin("toto4");
+  asys.setAuthPassword("toto4");
+  asys.setUserPasswordEncryption(enc);
+  tsys = 0;
+  ssys = 1;
+  asys.setType(tsys);
+  asys.setStatus(ssys);
+  asys.setLdapBase("base");
+  BOOST_CHECK(addAuthSystem(sess.getSessionKey(), asys)==0);
+  tsys = 5;
+  BOOST_CHECK_THROW(updateAuthSystem(sess.getSessionKey(), asys), VishnuException);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
+  // Update auth syste bad status
+  BOOST_MESSAGE(" Testing update auth system already exist UA8.1"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  asys.setName("ldap3");
+  asys.setURI("httm://www.graal.ens-lyon.fr");
+  asys.setAuthLogin("toto3");
+  asys.setAuthPassword("toto3");
+  asys.setUserPasswordEncryption(enc);
+  tsys = 0;
+  ssys = 7;
+  asys.setType(tsys);
+  asys.setStatus(ssys);
+  asys.setLdapBase("base");
+  BOOST_CHECK(addAuthSystem(sess.getSessionKey(), asys)==0);
+  asys.setName("ldap");
+  BOOST_CHECK_THROW(updateAuthSystem(sess.getSessionKey(), asys), VishnuException);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
+  // Delete auth system
+  BOOST_MESSAGE(" Testing update auth system already exist UA8.1"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  asys.setName("ldap3");
+  asys.setURI("httm://www.graal.ens-lyon.fr");
+  asys.setAuthLogin("toto3");
+  asys.setAuthPassword("toto3");
+  asys.setUserPasswordEncryption(enc);
+  tsys = 0;
+  ssys = 1;
+  asys.setType(tsys);
+  asys.setStatus(ssys);
+  asys.setLdapBase("base");
+  BOOST_CHECK(addAuthSystem(sess.getSessionKey(), asys)==0);
+  BOOST_CHECK(deleteAuthSystem(sess.getSessionKey(), asys.getAuthSystemId())==0);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
+  // Delete auth system bad id
+  BOOST_MESSAGE(" Testing update auth system already exist UA8.1"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  asys.setName("ldap5");
+  asys.setURI("httm://www.graal.ens-lyon.fr");
+  asys.setAuthLogin("toto5");
+  asys.setAuthPassword("toto5");
+  asys.setUserPasswordEncryption(enc);
+  tsys = 0;
+  ssys = 1;
+  asys.setType(tsys);
+  asys.setStatus(ssys);
+  asys.setLdapBase("base2");
+  BOOST_CHECK(addAuthSystem(sess.getSessionKey(), asys)==0);
+  BOOST_CHECK_THROW(deleteAuthSystem(sess.getSessionKey(), "bad"), VishnuException);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
+  // List auth system
+  BOOST_MESSAGE(" Testing update auth system already exist U5"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  liaso.setListAllAuthSystems(true);
+  liaso.setListFullInfo(true);
+  BOOST_CHECK(listAuthSystems(sess.getSessionKey(), *lias, liaso));
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
+  // List auth system bad user
+  BOOST_MESSAGE(" Testing update auth system already exist U5"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  liaso.setListAllAuthSystems(true);
+  liaso.setListFullInfo(true);
+  liaso.setUserId("toto");
+  BOOST_CHECK_THROW(listAuthSystems(sess.getSessionKey(), *lias, liaso), VishnuException);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
+
+  // Add auth account
+  BOOST_MESSAGE(" Testing add auth account success U6"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  aacc.setAuthSystemId(asys.getAuthSystemId());
+  aacc.setUserId(uid);
+  aacc.setAcLogin("toto");
+  BOOST_CHECK(addAuthAccount(sess.getSessionKey(), aacc)==0);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
+  // Add auth account bad sys
+  BOOST_MESSAGE(" Testing add auth account success U6"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  aacc.setAuthSystemId("storm");
+  aacc.setUserId(uid);
+  aacc.setAcLogin("toto");
+  BOOST_CHECK_THROW(addAuthAccount(sess.getSessionKey(), aacc), VishnuException);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
+  // Add auth account bad user
+  BOOST_MESSAGE(" Testing add auth account success U6"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  aacc.setAuthSystemId(asys.getAuthSystemId());
+  aacc.setUserId("plop");
+  aacc.setAcLogin("toto");
+  BOOST_CHECK_THROW(addAuthAccount(sess.getSessionKey(), aacc), VishnuException);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
+  // Update auth account
+  BOOST_MESSAGE(" Testing update auth account success U6.1"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  aacc.setAuthSystemId(asys.getAuthSystemId());
+  aacc.setUserId(uid);
+  aacc.setAcLogin("titi");
+//  BOOST_CHECK(addAuthAccount(sess.getSessionKey(), aacc)==0);
+  BOOST_CHECK(updateAuthAccount(sess.getSessionKey(), aacc)==0);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
+  // Update auth account bad sys
+  BOOST_MESSAGE(" Testing update auth account success U6.1"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  aacc.setAuthSystemId(asys.getAuthSystemId());
+  aacc.setUserId(uid);
+//  aacc.setAcLogin("toto");
+//  BOOST_CHECK(addAuthAccount(sess.getSessionKey(), aacc)==0);
+  aacc.setAuthSystemId("toto");
+  BOOST_CHECK_THROW(updateAuthAccount(sess.getSessionKey(), aacc), VishnuException);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
+  // Update auth account bad user
+  BOOST_MESSAGE(" Testing update auth account success U6.1"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  aacc.setAuthSystemId(asys.getAuthSystemId());
+  aacc.setUserId(uid);
+  aacc.setAcLogin("toto");
+//  BOOST_CHECK(addAuthAccount(sess.getSessionKey(), aacc)==0);
+  aacc.setUserId("choco");
+  BOOST_CHECK_THROW(updateAuthAccount(sess.getSessionKey(), aacc), VishnuException);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
+
+  // Delete auth account
+  BOOST_MESSAGE(" Testing update auth account success U6.2"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  aacc.setAuthSystemId(asys.getAuthSystemId());
+  aacc.setUserId(root);
+  aacc.setAcLogin("toto2");
+  BOOST_CHECK(addAuthAccount(sess.getSessionKey(), aacc)==0);
+  BOOST_CHECK(deleteAuthAccount(sess.getSessionKey(), aacc.getAuthSystemId(), aacc.getUserId())==0);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
+  // Delete auth account bad uid
+  BOOST_MESSAGE(" Testing update auth account success U6.2"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+//  aacc.setAuthSystemId(asys.getAuthSystemId());
+//  aacc.setUserId(uid);
+//  BOOST_CHECK(addAuthAccount(sess.getSessionKey(), aacc)==0);
+  aacc.setUserId("plouf");
+  BOOST_CHECK_THROW(deleteAuthAccount(sess.getSessionKey(), aacc.getAuthSystemId(), aacc.getUserId()), VishnuException);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
+  // Delete auth account bad auth id
+  BOOST_MESSAGE(" Testing update auth account success U6.2"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  aacc.setAuthSystemId(asys.getAuthSystemId());
+  aacc.setUserId(uid);
+//  BOOST_CHECK(addAuthAccount(sess.getSessionKey(), aacc)==0);
+  aacc.setAuthSystemId("err");
+  BOOST_CHECK_THROW(deleteAuthAccount(sess.getSessionKey(), aacc.getAuthSystemId(), aacc.getUserId()), VishnuException);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
+  // List auth acc
+  BOOST_MESSAGE(" Testing update auth system already exist U6.3"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  liaao.setListAll(true);
+  BOOST_CHECK(listAuthAccounts(sess.getSessionKey(), *liaa, liaao)==0);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
+  // List auth acc bad user
+  BOOST_MESSAGE(" Testing update auth system already exist U6.3"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  liaao.setListAll(true);
+  liaao.setUserId("plouf");
+  BOOST_CHECK_THROW(listAuthAccounts(sess.getSessionKey(), *liaa, liaao), VishnuException);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
 
   // History, make all commands once and test list them
   BOOST_MESSAGE(" Testing history cmd"    );
@@ -880,7 +1194,7 @@ try {
   else{
     BOOST_MESSAGE("List session failed, reconnect not called");
   }
-  
+
   liuo.setUserId ("");
   BOOST_CHECK	 (listUsers             (sess.getSessionKey(), *liu , liuo       )==0);
   liom.setMachineId(mid);
