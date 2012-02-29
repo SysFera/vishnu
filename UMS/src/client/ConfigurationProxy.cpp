@@ -6,6 +6,7 @@
  */
 #include "UMSVishnuException.hpp"
 #include "utilsClient.hpp"
+#include "utilVishnu.hpp"
 
 #include "ConfigurationProxy.hpp"
 
@@ -113,21 +114,7 @@ int ConfigurationProxy::restore(bool fromFile)
   std::string msg = "call of function diet_string_set is rejected ";
 
   if(fromFile) { // To get the content of the mfile
-    size_t length;
-    std::ifstream ifile(mfilePath.c_str());
-
-    if(!ifile.is_open()) {
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM, "can't open file "+mfilePath);
-    }
-
-    ifile.seekg(0, std::ios::end);
-    length = ifile.tellg();
-    ifile.seekg(0, std::ios::beg);
-
-    configurationInString = new char[length];
-    //Put the content of the mfile in to configurationIntring variable
-    ifile.read(configurationInString, length);
-    ifile.close();
+    configurationInString = strdup(vishnu::get_file_content(mfilePath).c_str());
   }
   else { //To serialize the mconfiguration object in to configurationInString
     ::ecorecpp::serializer::serializer _ser;
