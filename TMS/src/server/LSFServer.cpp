@@ -2,7 +2,7 @@
  * \file LSFServer.hpp
  * \brief This file contains the VISHNU LSFServer class.
  * \author Daouda Traore (daouda.traore@sysfera.com)
- * \date April 2011
+ * \date February 2012
  */
 
 
