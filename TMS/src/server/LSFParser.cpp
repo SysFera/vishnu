@@ -362,7 +362,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         tmpLine = "";
       }
 
-      // erase all white space until
+      // erase all white space until # (excluded)
       while(boost::algorithm::starts_with(line, " ")){
         line.erase(0,1);
       };
@@ -373,26 +373,19 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         continue;
       }
 
-      if(boost::algorithm::starts_with(line, LSF_PREFIX)){
-        line = line.substr(std::string(LSF_PREFIX).size());
+      if(boost::algorithm::starts_with(boost::algorithm::erase_all_copy(line," "), LSF_PREFIX)){
+        
+        pos = line.find(LSF_PREFIX.substr(1));//skip the character # in  LSF_PREFIX
+        line = line.substr(pos+LSF_PREFIX.size()-1);
 
-        size_t pos = line.find(LSF_PREFIX);
-        size_t vbeg = 0;
-        //verify quote characters in line
-        while(pos!=std::string::npos){
-          verifyQuotaCharacter(line.substr(vbeg, pos-vbeg), '\"');
-          verifyQuotaCharacter(line.substr(vbeg, pos-vbeg), '\'');
-          vbeg = pos+LSF_PREFIX.size();
-          pos = line.find(LSF_PREFIX, vbeg);
-        }
-        //To verify the laste option
-        verifyQuotaCharacter(line.substr(vbeg), '\"');
-        verifyQuotaCharacter(line.substr(vbeg), '\'');
         //To skip a comment on the line
         pos = line.find('#');
         if(pos!=std::string::npos) {
            line = line.substr(0, pos); 
         }
+        //verify quote characters in line
+        verifyQuotaCharacter(line, '\"');
+        verifyQuotaCharacter(line, '\'');
         //add line to cmd
         cmd = cmd+" "+line;
       }  
@@ -744,12 +737,8 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
           cleanString(xFileStr, '\'');
         }
 
-        std::cout << "*****************xFileStr=" << xFileStr << std::endl;
         xFile_tokens = getStreamTokens(xFileStr);
 
-        for(vector<std::string>::iterator iter=xFile_tokens.begin(); iter!=xFile_tokens.end(); ++iter){
-          std::cout << "*iter=" << *iter << std::endl;
-        }
         if(xFile_tokens.size() < 2) {
               throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+xFileStr+" is an invalid"
                   " file transfer value for -f option. This must be taken at least two arguments ");
@@ -798,13 +787,6 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
             if(xFile_tokens.size() >=3) {
               req->xf[oldNxf].execFn = strdup(xFile_tokens[2].c_str());
             }
-        }
-        std::cout << "***********req->nxf=" << req->nxf << std::endl;
-        for(int i=0; i < req->nxf; i++) {
-          std::cout << "***********req->xf[" << i << "]:" << endl;
-           std::cout << "***********req->xf[" << i << "]=" << req->xf[i].subFn << std::endl;
-           std::cout << "***********req->xf[" << i << "]=" << req->xf[i].options << std::endl;
-           if(req->xf[i].execFn!=NULL) std::cout << "***********req->xf[" << i << "]=" << req->xf[i].execFn << std::endl;
         }
         break;
       case 'Q':
