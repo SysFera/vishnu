@@ -1,3 +1,10 @@
+/**
+ * \file LSFParser.cpp
+ * \brief This file presents the implementation of the LSF Parser
+ * \author daouda.traore (daouda.traore@sysfera.com)
+ * \date February 2012
+*/
+
 #include <unistd.h>
 #include <getopt.h>
 
@@ -112,13 +119,13 @@ getStreamTokens(const std::string& str) {
 
   std::istringstream stream_str;
   std::vector<std::string> streamTokens;
-        
+
   stream_str.str(str);
   std::copy(istream_iterator<string>(stream_str),
-            istream_iterator<string>(),
-            back_inserter<vector<string> >(streamTokens));
+      istream_iterator<string>(),
+      back_inserter<vector<string> >(streamTokens));
 
- return streamTokens;
+  return streamTokens;
 }
 
 std::vector<std::string> 
@@ -281,11 +288,11 @@ LSFParser::convertDateToTime(const std::string& date, const std::string& compErr
 
 int 
 LSFParser::convertWallTimeToTime(const std::string& date, const std::string& compErrMsg) {
- 
+
   int wallTime; 
   int minute = -1;
   int hour   = -1;
- 
+
   std::string errMsg = "illegal time  option value "+date+":";
   vector<std::string> tokens = getTimeToKens(date);
   if(tokens.size()==0) {
@@ -304,8 +311,8 @@ LSFParser::convertWallTimeToTime(const std::string& date, const std::string& com
   wallTime = minute;
   //day 
   if(tokens.size() >= 2) {
-     hour = vishnu::convertToInt(tokens[1]);
-     wallTime += hour*60;
+    hour = vishnu::convertToInt(tokens[1]);
+    wallTime += hour*60;
   }
 
   return wallTime;
@@ -374,14 +381,14 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
       }
 
       if(boost::algorithm::starts_with(boost::algorithm::erase_all_copy(line," "), LSF_PREFIX)){
-        
+
         pos = line.find(LSF_PREFIX.substr(1));//skip the character # in  LSF_PREFIX
         line = line.substr(pos+LSF_PREFIX.size()-1);
 
         //To skip a comment on the line
         pos = line.find('#');
         if(pos!=std::string::npos) {
-           line = line.substr(0, pos); 
+          line = line.substr(0, pos); 
         }
         //verify quote characters in line
         verifyQuotaCharacter(line, '\"');
@@ -461,7 +468,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
   std::string xFileStr;
   std::vector<std::string> xFile_tokens;
   int oldNxf;
- 
+
   std::string errHead = "Error in your script: "; 
   while ((c = getopt_long_only(argc, argv, GETOPT_ARGS, long_options, &option_index)) != EOF) {
     switch (c) {
@@ -624,7 +631,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         req->rsvId = strdup(optarg);
         break;
       case 'K':
-        req->options2 |=SUB2_BSUB_BLOCK; //A voir
+        req->options2 |=SUB2_BSUB_BLOCK; //To see
         break;
       case 'W':
         //-W run_limit[/host_spec]
@@ -740,53 +747,53 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         xFile_tokens = getStreamTokens(xFileStr);
 
         if(xFile_tokens.size() < 2) {
-              throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+xFileStr+" is an invalid"
-                  " file transfer value for -f option. This must be taken at least two arguments ");
+          throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+xFileStr+" is an invalid"
+              " file transfer value for -f option. This must be taken at least two arguments ");
         } else {
-            
-            if(req->nxf > 0) {
-              oldNxf=req->nxf;
-              tmpXfile = new xFile[req->nxf];
-              for(int i=0; i < oldNxf; ++i) {
-                tmpXfile[i]=req->xf[i];
-              }
-              delete [] req->xf;
-              req->nxf +=1;
-              req->xf = new xFile[req->nxf];
-              for(int i=0; i < oldNxf; ++i) {
-                req->xf[i]=tmpXfile[i];
-              }
-              delete [] tmpXfile;
-              
-            } else {
-              oldNxf=0;
-              req->nxf =1;
-              req->xf = new xFile[req->nxf];
+
+          if(req->nxf > 0) {
+            oldNxf=req->nxf;
+            tmpXfile = new xFile[req->nxf];
+            for(int i=0; i < oldNxf; ++i) {
+              tmpXfile[i]=req->xf[i];
             }
-        
-            req->xf[oldNxf].subFn = strdup(xFile_tokens[0].c_str()); 
-            if(xFile_tokens[1]==">") {
-              req->xf[oldNxf].options = XF_OP_SUB2EXEC; 
-            } 
-            else if(xFile_tokens[1]=="<") {
-              req->xf[oldNxf].options = XF_OP_EXEC2SUB;
-            } 
-            else if(xFile_tokens[1]=="<<") {
-              req->xf[oldNxf].options = XF_OP_EXEC2SUB_APPEND;
-            } 
-            else if(xFile_tokens[1]=="><") {
-              req->xf[oldNxf].options = (XF_OP_SUB2EXEC | XF_OP_EXEC2SUB);
-            } 
-            else if(xFile_tokens[1]=="<>") {
-              req->xf[oldNxf].options = (XF_OP_SUB2EXEC | XF_OP_EXEC2SUB); 
-            } else {
-              throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+xFile_tokens[1]+" is an invalid"
-                  " file transfer operator for -f option. See LSF manual.");
-            } 
-            
-            if(xFile_tokens.size() >=3) {
-              req->xf[oldNxf].execFn = strdup(xFile_tokens[2].c_str());
+            delete [] req->xf;
+            req->nxf +=1;
+            req->xf = new xFile[req->nxf];
+            for(int i=0; i < oldNxf; ++i) {
+              req->xf[i]=tmpXfile[i];
             }
+            delete [] tmpXfile;
+
+          } else {
+            oldNxf=0;
+            req->nxf =1;
+            req->xf = new xFile[req->nxf];
+          }
+
+          req->xf[oldNxf].subFn = strdup(xFile_tokens[0].c_str()); 
+          if(xFile_tokens[1]==">") {
+            req->xf[oldNxf].options = XF_OP_SUB2EXEC; 
+          } 
+          else if(xFile_tokens[1]=="<") {
+            req->xf[oldNxf].options = XF_OP_EXEC2SUB;
+          } 
+          else if(xFile_tokens[1]=="<<") {
+            req->xf[oldNxf].options = XF_OP_EXEC2SUB_APPEND;
+          } 
+          else if(xFile_tokens[1]=="><") {
+            req->xf[oldNxf].options = (XF_OP_SUB2EXEC | XF_OP_EXEC2SUB);
+          } 
+          else if(xFile_tokens[1]=="<>") {
+            req->xf[oldNxf].options = (XF_OP_SUB2EXEC | XF_OP_EXEC2SUB); 
+          } else {
+            throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+xFile_tokens[1]+" is an invalid"
+                " file transfer operator for -f option. See LSF manual.");
+          } 
+
+          if(xFile_tokens.size() >=3) {
+            req->xf[oldNxf].execFn = strdup(xFile_tokens[2].c_str());
+          }
         }
         break;
       case 'Q':
@@ -814,7 +821,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
             req->hostSpec = strdup(wHostSpec.c_str());
           }
         } else {
-           req->runtimeEstimation = convertWallTimeToTime(timeStr);  
+          req->runtimeEstimation = convertWallTimeToTime(timeStr);  
         }
         std::cout << "---------------------wHostSpec=" << wHostSpec << std::endl;
         std::cout << "*********req->runtimeEstimation=" << req->runtimeEstimation << std::endl;
@@ -855,7 +862,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
       case LONG_OPT_WT:
         req->options2 |= SUB2_WARNING_TIME_PERIOD;
         req->warningTimePeriod = convertWallTimeToTime(strdup(optarg), "is an invalid"
-              " job action warning time  value for --wt option.");
+            " job action warning time  value for --wt option.");
         break;
       case LONG_OPT_ZS:
         //TODO: -Zs (boolean)

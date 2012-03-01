@@ -2,7 +2,7 @@
  * \file LSFParser.hpp
  * \brief This file presents the implementation of the LSF Parser
  * \author daouda.traore (daouda.traore@sysfera.com)
- * \date April
+ * \date February 2012 
 */
 
 #ifndef _LSFPARSER_H_
