@@ -183,117 +183,73 @@ LSFServer::processOptions(const char* scriptPath,
   }
 
   if(options.getName().size()!=0){
-    if((req->options && SUB_JOB_NAME)!=SUB_JOB_NAME) {
-       req->options |=SUB_JOB_NAME;
-    }
+    req->options |=SUB_JOB_NAME;
     req->jobName = strdup(options.getName().c_str());
   } 
   if(options.getQueue().size()!=0) {
-    if((req->options && SUB_QUEUE)!=SUB_QUEUE){
-      req->options |=SUB_QUEUE;
-    }
+    req->options |=SUB_QUEUE;
     req->queue = strdup(options.getQueue().c_str());
   }
   if(options.getOutputPath().size()!=0) {
-    if((req->options && SUB_OUT_FILE)!=SUB_OUT_FILE){
-      req->options |=SUB_OUT_FILE;
-    }
+    req->options |=SUB_OUT_FILE;
     req->outFile = strdup(options.getOutputPath().c_str());
   }
   if(options.getErrorPath().size()!=0) {
-    if((req->options && SUB_ERR_FILE)!=SUB_ERR_FILE){ 
-      req->options |=SUB_ERR_FILE;
-    }
+    req->options |=SUB_ERR_FILE;
     req->errFile = strdup(options.getErrorPath().c_str());
   }
   if(options.getWallTime()!=-1) {
-    //cmdsOptions.push_back("-t"); 
-    std::string timeStr = vishnu::convertWallTimeToString(options.getWallTime());
-    size_t pos = timeStr.rfind(":");
-    int i=0;
-    while(pos!=std::string::npos){
-      i++;
-      if(i==3) {
-        timeStr = timeStr.replace(pos, 1, "-");
-        break;
-      }
-      if(pos==0) {
-        break;
-      } else {
-        pos = timeStr.rfind(":", pos-1);
-      }
-    }
-
-    //cmdsOptions.push_back(timeStr);
+   //UNDER CONSTRUCTION 
   }
-
   if(options.getNbCpu()!=-1) {
    //UNDER CONSTRUCTION
   }
   if(options.getMemory()!=-1) {
    //UNDER CONSTRUCTION
   }
-
   if(options.getNbNodesAndCpuPerNode()!="") {
     std::string NbNodesAndCpuPerNode = options.getNbNodesAndCpuPerNode();
     size_t posNbNodes = NbNodesAndCpuPerNode.find(":");
     if(posNbNodes!=std::string::npos) {
       std::string nbNodes = NbNodesAndCpuPerNode.substr(0, posNbNodes);
       std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1); 
-      //cmdsOptions.push_back("--nodes="+nbNodes);
-      //cmdsOptions.push_back("--mincpus="+cpuPerNode);
+     //UNDER CONSTRUCTION
     }
   }
 
   if(options.getMailNotification()!="") {
     std::string notification = options.getMailNotification();
     if(notification.compare("BEGIN")==0) {
-     if((req->options && SUB_NOTIFY_BEGIN)!=SUB_NOTIFY_BEGIN){
        req->options |=SUB_NOTIFY_BEGIN;
-     }
     } else if(notification.compare("END")==0) {
-      if((req->options && SUB_NOTIFY_END)!=SUB_NOTIFY_END){
-        req->options |=SUB_NOTIFY_END;
-      }
-    } else if(notification.compare("ERROR")==0) {
-      //TO VIRIFY
+       req->options |=SUB_NOTIFY_END;
+    } else if(notification.compare("ERROR")==0) {//not exist in LSF
+       req->options |=SUB_NOTIFY_END; //send mail after execution or failure of the job
     } else if(notification.compare("ALL")==0) {
-      if((req->options && SUB_NOTIFY_BEGIN)!=SUB_NOTIFY_BEGIN){
-        req->options |=SUB_NOTIFY_BEGIN;
-      }
-      if((req->options && SUB_NOTIFY_END)!=SUB_NOTIFY_END){
+      req->options |=SUB_NOTIFY_BEGIN;
       req->options |=SUB_NOTIFY_END;
-      }
     } else {
       throw UserException(ERRCODE_INVALID_PARAM, notification+" is an invalid notification type:"+" consult the vishnu user manuel");
     }
   }
 
   if(options.getMailNotifyUser()!="") {
-    if((req->options && SUB_MAIL_USER)!=SUB_MAIL_USER){
-      req->options |=SUB_MAIL_USER;
-    }
+    req->options |=SUB_MAIL_USER;
     req->mailUser = strdup(options.getMailNotifyUser().c_str());
   }
 
   if(options.getGroup()!="") {
-     if((req->options && SUB_USER_GROUP)!=SUB_USER_GROUP){
-       req->options |=SUB_USER_GROUP;
-     }
+     req->options |=SUB_USER_GROUP;
      req->userGroup = strdup(options.getGroup().c_str());
   }
 
   if(options.getWorkingDir()!="") {
-      if((req->options3 && SUB3_CWD)!=SUB3_CWD){
-       req->options3 |= SUB3_CWD;
-      }
+     req->options3 |= SUB3_CWD;
      req->cwd = strdup(options.getWorkingDir().c_str());
-    
    }
 
   if(options.getCpuTime()!="") {
-    //cmdsOptions.push_back("-t");
-    //cmdsOptions.push_back(options.getCpuTime());
+    //UNDER CONSTRUCTION
   }
 
   if(options.isSelectQueueAutom()) {
@@ -348,9 +304,8 @@ LSFServer::processOptions(const char* scriptPath,
 
           if((walltime <= qwalltimeMax || qwalltimeMax==0) &&
               (cpu <= qCpuMax)){
-            //cmdsOptions.push_back("-p");
-            //cmdsOptions.push_back(queueName);
-            break;
+              //UNDER CONSTRUCTION
+              break;
           }
         };
       }
