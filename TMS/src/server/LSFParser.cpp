@@ -107,6 +107,20 @@ void verifyQuotaCharacter(const string& str, const char& quote) {
 
 }
 
+std::vector<std::string>
+getStreamTokens(const std::string& str) {
+
+  std::istringstream stream_str;
+  std::vector<std::string> streamTokens;
+        
+  stream_str.str(str);
+  std::copy(istream_iterator<string>(stream_str),
+            istream_iterator<string>(),
+            back_inserter<vector<string> >(streamTokens));
+
+ return streamTokens;
+}
+
 std::vector<std::string> 
 getTimeToKens(const std::string& timeFormat, const char& separator=':') {
 
@@ -374,12 +388,10 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         //To verify the laste option
         verifyQuotaCharacter(line.substr(vbeg), '\"');
         verifyQuotaCharacter(line.substr(vbeg), '\'');
-
-        //search LSF_PREFIX in the line and replace by empty string
-        pos = line.find(LSF_PREFIX);
-        while(pos!=std::string::npos){
-          line.replace(pos, LSF_PREFIX.size(), " ");
-          pos = line.find(LSF_PREFIX);
+        //To skip a comment on the line
+        pos = line.find('#');
+        if(pos!=std::string::npos) {
+           line = line.substr(0, pos); 
         }
         //add line to cmd
         cmd = cmd+" "+line;
@@ -424,24 +436,6 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
     tokensArgs.push_back((argvStr.c_str()));
   }
 
-  time_t test1 = convertDateToTime("1980:11:07:08:30");
-  time_t test2 = convertDateToTime("11:07:08:30");
-  time_t test3 = convertDateToTime("07:08:30");
-  time_t test4 = convertDateToTime("08:30");
-  time_t test5 = convertDateToTime("01:07:08:30");
-  time_t test6 = convertDateToTime("2013:01:07:08:30");
-  time_t test7 = convertDateToTime("02:29:16:30");
-
-  std::cout << "+++++++++++++++++localtime(test1)=" << ctime(&test1) << std::endl;
-  std::cout << "+++++++++++++++++localtime(test2)=" << ctime(&test2) << std::endl;
-  std::cout << "+++++++++++++++++localtime(test3)=" << ctime(&test3) << std::endl;
-  std::cout << "+++++++++++++++++localtime(test4)=" << ctime(&test4) << std::endl;
-  std::cout << "+++++++++++++++++localtime(test5)=" << ctime(&test5) << std::endl;
-  std::cout << "+++++++++++++++++localtime(test6)=" << ctime(&test6) << std::endl;
-  std::cout << "+++++++++++++++++localtime(test7)=" << ctime(&test7) << std::endl;
-  time_t test = time(NULL);
-  std::cout << "+++++++++++++++++localtime(&time(NULL))=" << ctime(&test) << std::endl;
-
   int argc = tokensArgs.size()+1; 
   char* argv[argc];
   argv[0] = (char*) "vishnu_submit_job";
@@ -459,7 +453,6 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
   int c;
   std::string host_list;
   std::vector<std::string> host_tokens;
-  std::istringstream stream_host_list;
   std::string procsStr;
   std::istringstream stream_procs;
   std::string min_proc_str;
@@ -469,9 +462,13 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
   char separator=',';
   std::string chkpnt;
   std::vector<std::string> chkpnt_tokens;
-  std::istringstream stream_chkpnt;
   std::string timeStr;
   std::string wHostSpec;
+  struct xFile *tmpXfile;
+  std::string xFileStr;
+  std::vector<std::string> xFile_tokens;
+  int oldNxf;
+ 
   std::string errHead = "Error in your script: "; 
   while ((c = getopt_long_only(argc, argv, GETOPT_ARGS, long_options, &option_index)) != EOF) {
     switch (c) {
@@ -491,11 +488,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
           cleanString(host_list, '\'');
         }
         std::cout << "***********host_list=" << host_list << std::endl;
-        stream_host_list.str(host_list);
-        host_tokens.clear();
-        std::copy(istream_iterator<string>(stream_host_list),
-            istream_iterator<string>(),
-            back_inserter<vector<string> >(host_tokens));
+        host_tokens=getStreamTokens(host_list);
         req->numAskedHosts = host_tokens.size();
         req->askedHosts = new char*[host_tokens.size()];
         std::cout << "***********req->numAskedHosts=" << req->numAskedHosts << std::endl;
@@ -567,12 +560,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         }
 
         std::cout << "*****************chkpnt=" << chkpnt << std::endl;
-        stream_chkpnt.str(chkpnt);
-        chkpnt_tokens.clear();
-        std::copy(istream_iterator<string>(stream_chkpnt),
-            istream_iterator<string>(),
-            back_inserter<vector<string> >(chkpnt_tokens));
-
+        chkpnt_tokens=getStreamTokens(chkpnt); 
         for(vector<std::string>::iterator iter=chkpnt_tokens.begin(); iter!=chkpnt_tokens.end(); ++iter){
           std::cout << "*iter=" << *iter << std::endl;
         }
@@ -652,9 +640,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         std::cout << "*********timeStr=" << timeStr << std::endl;
         if(timeStr.find("/")!=std::string::npos) {
           if((timeStr.find("/")+1)!=std::string::npos) {
-            if(req->options && SUB_HOST_SPEC !=SUB_HOST_SPEC){
-              req->options |= SUB_HOST_SPEC;
-            }
+            req->options |= SUB_HOST_SPEC;
             req->rLimits[LSF_RLIMIT_RUN] = convertWallTimeToTime(timeStr.substr(0, timeStr.find("/")));
             wHostSpec = timeStr.substr(timeStr.find("/")+1);
             req->hostSpec = strdup(wHostSpec.c_str());
@@ -678,9 +664,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         timeStr = std::string(strdup(optarg));
         if(timeStr.find("/")!=std::string::npos) {
           if((timeStr.find("/")+1)!=std::string::npos) {
-            if(req->options && SUB_HOST_SPEC !=SUB_HOST_SPEC){
-              req->options |= SUB_HOST_SPEC;
-            }
+            req->options |= SUB_HOST_SPEC;
             req->rLimits[LSF_RLIMIT_CPU] = convertWallTimeToTime(timeStr.substr(0, timeStr.find("/")));
             wHostSpec = timeStr.substr(timeStr.find("/")+1);
             req->hostSpec = strdup(wHostSpec.c_str());
@@ -754,22 +738,74 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         req->termTime = convertDateToTime(strdup(optarg), " See LSF manual for -t option.");
         break;
       case 'f':
-        //TODO; -f "lfile op [rfile]"
-        // struct xFile *xf
-        //nxf = xf_tokens.size();
-        //(req->xf)->subFn = lfile 
-        //(req->xf)->execFn = rfile
-        /*{
-        //#define  XF_OP_SUB2EXEC         0x1     ( Transfer files from submit peer to 
-         * execution peer )
-        //#define XF_OP_EXEC2SUB         0x2     ( Transfer files from execution peer to 
-        //                         * submit peer )
-        //#define  XF_OP_SUB2EXEC_APPEND  0x4     ( Transfer files from submit peer to 
-        //                           * execution peer with appending mode )
-        //#define  XF_OP_EXEC2SUB_APPEND  0x8     ( Transfer files from execution peer to 
-        //                            * submit peer with appending mode )
-        //#define  XF_OP_URL_SOURCE       0x10 
-        }*/ 
+        //-f "lfile op [rfile]"
+        xFileStr = strdup(optarg);
+        if(!cleanString(xFileStr, '\"')) {
+          cleanString(xFileStr, '\'');
+        }
+
+        std::cout << "*****************xFileStr=" << xFileStr << std::endl;
+        xFile_tokens = getStreamTokens(xFileStr);
+
+        for(vector<std::string>::iterator iter=xFile_tokens.begin(); iter!=xFile_tokens.end(); ++iter){
+          std::cout << "*iter=" << *iter << std::endl;
+        }
+        if(xFile_tokens.size() < 2) {
+              throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+xFileStr+" is an invalid"
+                  " file transfer value for -f option. This must be taken at least two arguments ");
+        } else {
+            
+            if(req->nxf > 0) {
+              oldNxf=req->nxf;
+              tmpXfile = new xFile[req->nxf];
+              for(int i=0; i < oldNxf; ++i) {
+                tmpXfile[i]=req->xf[i];
+              }
+              delete [] req->xf;
+              req->nxf +=1;
+              req->xf = new xFile[req->nxf];
+              for(int i=0; i < oldNxf; ++i) {
+                req->xf[i]=tmpXfile[i];
+              }
+              delete [] tmpXfile;
+              
+            } else {
+              oldNxf=0;
+              req->nxf =1;
+              req->xf = new xFile[req->nxf];
+            }
+        
+            req->xf[oldNxf].subFn = strdup(xFile_tokens[0].c_str()); 
+            if(xFile_tokens[1]==">") {
+              req->xf[oldNxf].options = XF_OP_SUB2EXEC; 
+            } 
+            else if(xFile_tokens[1]=="<") {
+              req->xf[oldNxf].options = XF_OP_EXEC2SUB;
+            } 
+            else if(xFile_tokens[1]=="<<") {
+              req->xf[oldNxf].options = XF_OP_EXEC2SUB_APPEND;
+            } 
+            else if(xFile_tokens[1]=="><") {
+              req->xf[oldNxf].options = (XF_OP_SUB2EXEC | XF_OP_EXEC2SUB);
+            } 
+            else if(xFile_tokens[1]=="<>") {
+              req->xf[oldNxf].options = (XF_OP_SUB2EXEC | XF_OP_EXEC2SUB); 
+            } else {
+              throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+xFile_tokens[1]+" is an invalid"
+                  " file transfer operator for -f option. See LSF manual.");
+            } 
+            
+            if(xFile_tokens.size() >=3) {
+              req->xf[oldNxf].execFn = strdup(xFile_tokens[2].c_str());
+            }
+        }
+        std::cout << "***********req->nxf=" << req->nxf << std::endl;
+        for(int i=0; i < req->nxf; i++) {
+          std::cout << "***********req->xf[" << i << "]:" << endl;
+           std::cout << "***********req->xf[" << i << "]=" << req->xf[i].subFn << std::endl;
+           std::cout << "***********req->xf[" << i << "]=" << req->xf[i].options << std::endl;
+           if(req->xf[i].execFn!=NULL) std::cout << "***********req->xf[" << i << "]=" << req->xf[i].execFn << std::endl;
+        }
         break;
       case 'Q':
         //TODO; -Q requeue_exit_values
@@ -787,9 +823,19 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         break;
       case LONG_OPT_WE:
         req->options2 |= SUB3_RUNTIME_ESTIMATION;
-        req->runtimeEstimation = convertWallTimeToTime(strdup(optarg)); //TODO: to complete; 
-        std::cout << "---------------------IN LONG_OPT_WE" << std::endl;
-        std::cout << "*********we-optarg=" << optarg << std::endl;
+        timeStr = strdup(optarg);
+        if(timeStr.find("/")!=std::string::npos) {
+          if((timeStr.find("/")+1)!=std::string::npos) {
+            req->options |= SUB_HOST_SPEC;
+            req->runtimeEstimation = convertWallTimeToTime(timeStr.substr(0, timeStr.find("/")));
+            wHostSpec = timeStr.substr(timeStr.find("/")+1);
+            req->hostSpec = strdup(wHostSpec.c_str());
+          }
+        } else {
+           req->runtimeEstimation = convertWallTimeToTime(timeStr);  
+        }
+        std::cout << "---------------------wHostSpec=" << wHostSpec << std::endl;
+        std::cout << "*********req->runtimeEstimation=" << req->runtimeEstimation << std::endl;
         break;
       case LONG_OPT_RN:
         req->options3 |= SUB3_NOT_RERUNNABLE;
