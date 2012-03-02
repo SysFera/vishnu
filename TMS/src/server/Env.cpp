@@ -121,7 +121,7 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
         //To replace VISHNU_BATCHJOB_NUM_NODES
         replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(cat "+fileName+" | sort | uniq | wc -l)");
         replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat "+fileName+" | sort | uniq | wc -l)"); 
-        //scriptContent.insert(scriptContent.size()-1, "\n rm "+fileName+"\n");
+        scriptContent.insert(scriptContent.size()-1, "\n rm "+fileName+"\n");
       }
     default:
       break;
