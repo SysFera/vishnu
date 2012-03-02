@@ -49,6 +49,7 @@ displayJob(TMS_Data::Job& j){
   cout << " Machine Id           : " << j.getSubmitMachineId() << endl;
   cout << " Machine name         : " << j.getSubmitMachineName() << endl;
   cout << " Job Id               : " << j.getJobId() << endl;
+  cout << " Batch Job Id         : " << j.getBatchJobId() << endl;
   cout << " Job name             : " << j.getJobName() << endl;
   cout << " Job path             : " << j.getJobPath() << endl;
   cout << " Output path (remote) : " << j.getOutputPath() << endl;
