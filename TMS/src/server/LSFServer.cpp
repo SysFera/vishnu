@@ -157,7 +157,6 @@ LSFServer::submit(const char* scriptPath,
   if(req.jobName!=NULL) std::cout << "********jobOutputPath=" << jobOutputPath << ": " << req.jobName << std::endl;
   if(req.outFile!=NULL) std::cout << "********jobErrorPath=" << jobErrorPath << ": " << req.jobName << std::endl;
 
-
   return 0;
 }
 
