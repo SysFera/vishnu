@@ -642,6 +642,7 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
 
   // Creating job
   job.setJobId(jobid);
+  job.setBatchJobId(jobid);
   job.setJobName(name);
   job.setOwner(owner);
   if (state.compare("")!=0) {

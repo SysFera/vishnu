@@ -604,6 +604,7 @@ void
 LSFServer::fillJobInfo(TMS_Data::Job &job, struct jobInfoEnt* jobInfo){
 
   job.setJobId(lsb_jobid2str(jobInfo->jobId));
+  job.setBatchJobId(lsb_jobid2str(jobInfo->jobId));
   /*if(jobInfo->cwd!=NULL) {
     job.setOutputPath(std::string(jobInfo->cwd)+"/LSF-"+std::string(lsb_jobid2str(jobInfo->jobId))+".out");//default path
     job.setErrorPath(std::string(jobInfo->cwd)+"/LSF-"+std::string(lsb_jobid2str(jobInfo->jobId))+".err");//default path

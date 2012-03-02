@@ -185,6 +185,12 @@ void Job::_initialize()
                 m_nbNodesAndCpuPerNode);
     }
         return _any;
+    case ::TMS_Data::TMS_DataPackage::JOB__BATCHJOBID:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_batchJobId);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -326,6 +332,12 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
                 m_nbNodesAndCpuPerNode);
     }
         return;
+    case ::TMS_Data::TMS_DataPackage::JOB__BATCHJOBID:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_batchJobId);
+    }
+        return;
 
     }
     throw "Error";
@@ -393,6 +405,9 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
     case ::TMS_Data::TMS_DataPackage::JOB__NBNODESANDCPUPERNODE:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_nbNodesAndCpuPerNode);
+    case ::TMS_Data::TMS_DataPackage::JOB__BATCHJOBID:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_batchJobId);
 
     }
     throw "Error";
