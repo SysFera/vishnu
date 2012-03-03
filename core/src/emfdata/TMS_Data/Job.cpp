@@ -624,5 +624,31 @@ void Job::setNbNodesAndCpuPerNode(::ecore::EString const& _nbNodesAndCpuPerNode)
 #endif
 }
 
+::ecore::EString const& Job::getBatchJobId() const
+{
+    return m_batchJobId;
+}
+
+void Job::setBatchJobId(::ecore::EString const& _batchJobId)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_batchJobId = m_batchJobId;
+#endif
+    m_batchJobId = _batchJobId;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__batchJobId(),
+                _old_batchJobId,
+                m_batchJobId
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
 // References
 

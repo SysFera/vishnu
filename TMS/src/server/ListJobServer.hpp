@@ -229,7 +229,8 @@ public:
     boost::scoped_ptr<DatabaseResult> ListOfJobs (mdatabaseVishnu->getResult(sqlListOfJobs.c_str()));
     long nbRunningJobs = 0;
     long nbWaitingJobs = 0;
-    int jobStatus ;
+    int jobStatus;
+    std::string batchJobId;
     time_t submitDate;
     time_t endDate;
     std::vector<string> ignoredIds;
@@ -274,8 +275,10 @@ public:
         job->setMemLimit(convertToInt(*(++ii)));
         job->setNbNodes(convertToInt(*(++ii)));
         job->setNbNodesAndCpuPerNode(*(++ii)); 
-
-        ignoredIds.push_back(*(++ii));
+        
+        batchJobId = *(++ii);
+        job->setBatchJobId(batchJobId);
+        ignoredIds.push_back(batchJobId);
 
         mlistObject->getJobs().push_back(job);
       }
