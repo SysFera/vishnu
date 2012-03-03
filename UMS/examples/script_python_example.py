@@ -10,12 +10,17 @@
 import VISHNU
 import os
 
-def displayAuthSystems(li):
-  print "li.getAuthSystems().size()", li.getAuthSystems().size()
-  for i in range(li.getAuthSystems().size()):    
-    displayAuthSys(li.getAuthSystems().get(i))
-    print " " 
 
+def displayAuthAcc(newAuthAcc):
+  print "AuthSystemId: ", newAuthAcc.getAuthSystemId()
+  print "AcLogin: ", newAuthAcc.getAcLogin()
+  
+def displayAuthAccounts(li):
+  print "li.getAuthAccounts.size()", li.getAuthAccounts().size()
+  for i in range(li.getAuthAccounts().size()):    
+    displayAuthAcc(li.getAuthAccounts().get(i))
+    print " " 
+    
 def displayAuthSys(newAuthSys):
   print "AuthSystemId: ", newAuthSys.getAuthSystemId()
   print "Name: ", newAuthSys.getName()
@@ -25,6 +30,12 @@ def displayAuthSys(newAuthSys):
   print "UserPasswordEncryption: ", newAuthSys.getUserPasswordEncryption()
   print "Type: ", newAuthSys.getType()
   print "LdapBase: ", newAuthSys.getLdapBase()
+ 
+def displayAuthSystems(li):
+  print "li.getAuthSystems().size()", li.getAuthSystems().size()
+  for i in range(li.getAuthSystems().size()):    
+    displayAuthSys(li.getAuthSystems().get(i))
+    print " "  
  
 try:
   sess = VISHNU.Session()
@@ -120,7 +131,7 @@ try:
   displayAuthSystems(li)
   
   #displayAuthSys(newAuthSys)
-  print "Test updateAuthSystem"
+  print "Test updateAuthSystem : name modified to MyPythonUpdated"
   newAuthSys.setName("MyPythonUpdated")
   VISHNU.updateAuthSystem(k, newAuthSys)
   
@@ -131,7 +142,86 @@ try:
   VISHNU.listAuthSystems(k,li, liopt)
   displayAuthSystems(li)
   
+  print "Test deleteAuthSystem"
+  print "AUTH_ID", newAuthSys.getAuthSystemId()
+  VISHNU.deleteAuthSystem(k, newAuthSys.getAuthSystemId())
+  li = VISHNU.ListAuthSystems()
+  liopt = VISHNU.ListAuthSysOptions()
+  liopt.setListAllAuthSystems(1)
+  VISHNU.listAuthSystems(k,li, liopt)
+  displayAuthSystems(li)
   
+  print "Test addAuthAccount"
+  VISHNU.addAuthSystem(k, newAuthSys)
+  newAuthAcc = VISHNU.AuthAccount()
+  newAuthAcc.setAuthSystemId(newAuthSys.getAuthSystemId())
+  newAuthAcc.setAcLogin("MyPythonAcLogin")
+  VISHNU.addAuthAccount(k, newAuthAcc)
+  liacc = VISHNU.ListAuthAccounts()
+  VISHNU.listAuthAccounts(k, liacc)
+  displayAuthAccounts(liacc)
+  
+  print "Test updateAuthAccount"
+  liacc =  VISHNU.ListAuthAccounts()
+  newAuthAcc.setAcLogin("AcLoginUpdated")
+  VISHNU.updateAuthAccount(k, newAuthAcc)
+  VISHNU.listAuthAccounts(k, liacc)
+  displayAuthAccounts(liacc)
+  
+  print "Test deleteAuthAccount"
+  liacc =  VISHNU.ListAuthAccounts()
+  VISHNU.deleteAuthAccount(k,newAuthSys.getAuthSystemId())
+  VISHNU.listAuthAccounts(k, liacc)
+  displayAuthAccounts(liacc)
+  
+  VISHNU.deleteAuthSystem(k, newAuthSys.getAuthSystemId())
+  
+  print "Test Connect multi-users"
+  lu = VISHNU.ListUsers()
+  VISHNU.listUsers(k, lu)
+  sesslu = VISHNU.Session()
+  VISHNU.connect(lu, sesslu)
+  print "Session key: ",sesslu.getSessionKey()
+  
+  lu.getUsers().push_back(u)
+  VISHNU.connect(lu, sesslu)
+  print "Session key: ",sesslu.getSessionKey()
+  
+  u2 = VISHNU.User()
+  u2.setUserId("root")
+  u2.setPassword("vishnu_user")
+  lu.getUsers().push_back(u2)
+  VISHNU.connect(lu, sesslu)
+  print "Session key: ",sesslu.getSessionKey()
+  
+  
+  #User u
+  #u = VISHNU.User()
+  #u.setUserId("s")
+  #u.setPassword("s")
+  #lu.getUsers().push_back(u)
+  
+  #User u1
+  #u1 = VISHNU.User()
+  #u1.setUserId("Leo")
+  #u1.setPassword("Cleo")
+  #lu.getUsers().push_back(u1)
+  
+  #User u2
+  #u2 = VISHNU.User()
+  #u2.setUserId("root")
+  #u2.setPassword("vishnu_user")
+  #lu.getUsers().push_back(u2)
+  #sesslu = VISHNU.Session()
+  #VISHNU.connect(lu, sesslu)
+    
+  #try:
+    #sesslu = VISHNU.Session()
+    #VISHNU.connect(lu, sesslu)
+   # print "Test Multiple connect"
+  #except VISHNU.VishnuException, e:
+   # print e.what()
+   
   VISHNU.close(k)
 
 
