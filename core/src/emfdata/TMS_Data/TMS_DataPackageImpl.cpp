@@ -127,6 +127,10 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__nbNodesAndCpuPerNode->setFeatureID(
             ::TMS_Data::TMS_DataPackage::JOB__NBNODESANDCPUPERNODE);
     m_JobEClass->getEStructuralFeatures().push_back(m_Job__nbNodesAndCpuPerNode);
+    m_Job__batchJobId = new ::ecore::EAttribute();
+    m_Job__batchJobId->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::JOB__BATCHJOBID);
+    m_JobEClass->getEStructuralFeatures().push_back(m_Job__batchJobId);
 
     // ListJobs
     m_ListJobsEClass = new ::ecore::EClass();
@@ -820,6 +824,20 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__nbNodesAndCpuPerNode->setUnique(true);
     m_Job__nbNodesAndCpuPerNode->setDerived(false);
     m_Job__nbNodesAndCpuPerNode->setOrdered(true);
+    m_Job__batchJobId->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Job__batchJobId->setName("batchJobId");
+    m_Job__batchJobId->setDefaultValueLiteral("");
+    m_Job__batchJobId->setLowerBound(0);
+    m_Job__batchJobId->setUpperBound(1);
+    m_Job__batchJobId->setTransient(false);
+    m_Job__batchJobId->setVolatile(false);
+    m_Job__batchJobId->setChangeable(true);
+    m_Job__batchJobId->setUnsettable(false);
+    m_Job__batchJobId->setID(false);
+    m_Job__batchJobId->setUnique(true);
+    m_Job__batchJobId->setDerived(false);
+    m_Job__batchJobId->setOrdered(true);
     // ListJobs
     m_ListJobsEClass->setName("ListJobs");
     m_ListJobsEClass->setAbstract(false);
@@ -2122,6 +2140,10 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getJob__nbNodesAndCpuPerNode()
 {
     return m_Job__nbNodesAndCpuPerNode;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getJob__batchJobId()
+{
+    return m_Job__batchJobId;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobs__nbJobs()
 {

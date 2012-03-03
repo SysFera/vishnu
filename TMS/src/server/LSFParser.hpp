@@ -2,7 +2,7 @@
  * \file LSFParser.hpp
  * \brief This file presents the implementation of the LSF Parser
  * \author daouda.traore (daouda.traore@sysfera.com)
- * \date April
+ * \date February 2012 
 */
 
 #ifndef _LSFPARSER_H_
@@ -53,6 +53,9 @@ public :
 
   static bool 
   isNumerical(const std::string& value); 
+
+  static int
+  convertWallTimeToTime(const std::string& date, const std::string& compErrMsg="");
 
   static time_t 
   convertDateToTime(const std::string& date, const std::string& compErrMsg="");
