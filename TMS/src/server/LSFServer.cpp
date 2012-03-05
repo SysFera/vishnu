@@ -380,7 +380,6 @@ std::string LSFServer::checkLSFOutPutPath(char*& path, const std::string& pathIn
 void LSFServer::replaceSymbolInToJobPath(std::string& path) {
 
   std::string widthStr;
-  int width;
   std::ostringstream os;
 
   std::map<std::string, std::string>::const_iterator iter;
@@ -762,7 +761,6 @@ void LSFServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
   int jobStatus;
   long nbRunningJobs = 0;
   long nbWaitingJobs = 0;
-  int cpt = 0; 
   while(more) {
     jobInfo = lsb_readjobinfo(&more);
     if (jobInfo == NULL) {

@@ -295,7 +295,7 @@ LSFParser::convertWallTimeToTime(const std::string& date, const std::string& com
 
   std::string errMsg = "illegal time  option value "+date+":";
   vector<std::string> tokens = getTimeToKens(date);
-  if(tokens.size()==0) {
+  if(tokens.empty()) {
     errMsg += " Empty time value. At least one fields must be specified.";
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, errMsg+" "+compErrMsg);
   }
@@ -423,8 +423,10 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
       found_iter = std::find_if(iter, end, IsEndByQuote(quote));
       if(found_iter!=end) {
         while(iter!=found_iter) {
-          iter++;
-          argvStr = argvStr+" "+*iter;
+          if(iter!=end) {
+            ++iter;
+            argvStr = argvStr+" "+*iter;
+          }
         }
       } else {
         std::string errorMsg = "Error: invalid argument "+argvStr;
@@ -835,21 +837,15 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         req->jobDescription = strdup(optarg);
         break;
       case LONG_OPT_IS:
-        if(req->options && SUB_IN_FILE!=SUB_IN_FILE){
-          req->options |=SUB_IN_FILE;//TODO: to complete
-        } 
+        req->options |=SUB_IN_FILE;//TODO: to complete
         req->inFile = strdup(optarg);
         break;
       case LONG_OPT_EO:
-        if(req->options && SUB_ERR_FILE!=SUB_ERR_FILE){
-          req->options |=SUB_ERR_FILE;//TODO: to complete
-        } 
+        req->options |=SUB_ERR_FILE;//TODO: to complete
         req->errFile = strdup(optarg);
         break;
       case LONG_OPT_OO:
-        if(req->options && SUB_OUT_FILE!=SUB_OUT_FILE){
-          req->options |=SUB_OUT_FILE;//TODO: to complete
-        } 
+        req->options |=SUB_OUT_FILE;//TODO: to complete
         req->outFile = strdup(optarg);
         break;
       case LONG_OPT_AR:
