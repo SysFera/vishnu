@@ -118,6 +118,9 @@ BOOST_AUTO_TEST_CASE( my_test )
   AuthSystem              asys ;//= ecoreFactory->createLocalAccount();
   string authsysid;
 
+// list user to connect
+  ListUsers_ptr      	  liuc  = ecoreFactory->createListUsers();
+
 
   string np;
   // Setting value
@@ -276,6 +279,38 @@ try {
   BOOST_CHECK_THROW (connect("", "", sess, cop ), VishnuException);
   BOOST_REQUIRE(setenv("HOME", homebefore.c_str(), 1)==0);
   putOnFile(netrcpath, oldContent);
+
+  // Connect with a list of user
+  BOOST_REQUIRE(restore    (sqlScript+"/clean_session.sql")==0);
+  BOOST_MESSAGE(" Testing normal connection U1-B1" );
+  User_ptr u1  = ecoreFactory->createUser();
+  u1->setUserId   (uid)  ;
+  u1->setPassword (pwd);
+  liuc->getUsers().push_back(u1);
+  BOOST_CHECK  (connect    (*liuc, sess, cop )==0);
+  BOOST_CHECK  (listSessions(sess.getSessionKey(), *li , opt      )==0);
+  BOOST_MESSAGE("Sess.GetSessionKey() generated : " << sess.getSessionKey() );
+
+  // Connect with a list of user bad user
+  BOOST_REQUIRE(restore    (sqlScript+"/clean_session.sql")==0);
+  BOOST_MESSAGE(" Testing normal connection U1-B1" );
+  liuc  = ecoreFactory->createListUsers();
+  u1  = ecoreFactory->createUser();
+  u1->setUserId   ("bad")  ;
+  u1->setPassword (pass);
+  liuc->getUsers().push_back(u1);
+  BOOST_CHECK_THROW  (connect    (*liuc, sess, cop ), VishnuException);
+
+  // Connect with a list of user bad pwd
+  BOOST_REQUIRE(restore    (sqlScript+"/clean_session.sql")==0);
+  BOOST_MESSAGE(" Testing normal connection U1-B1" );
+  liuc  = ecoreFactory->createListUsers();
+  u1  = ecoreFactory->createUser();
+  u1->setUserId   (cu)  ;
+  u1->setPassword ("bad");
+  liuc->getUsers().push_back(u1);
+  BOOST_CHECK_THROW  (connect    (*liuc, sess, cop ), VishnuException);
+
 
    // ReConnect normal call
    // -> connect
@@ -636,8 +671,18 @@ try {
   BOOST_CHECK (liu->getUsers().size()>0);
   BOOST_CHECK (liu->getUsers()[0]->getUserId() == "admin_1");
 
+  // Test list user bad authsysid
+  liuo.setUserId ("");
+  liuo.setAuthSystemId ("lapin");
+  BOOST_REQUIRE(restore  (sqlScript+"/clean_session.sql")==0);
+  BOOST_MESSAGE(" Testing normal list user UA5.2B" );
+  BOOST_CHECK  (connect  (uid, pwd, sess, cop )==0);
+  BOOST_CHECK_THROW  (listUsers(sess.getSessionKey(), *liu, liuo       ), VishnuException);
+  BOOST_CHECK  (close    (sess.getSessionKey()                )==0);
+
   // Test list user option user
   liuo.setUserId ("admin_1");
+  liuo.setAuthSystemId ("");
   BOOST_REQUIRE(restore  (sqlScript+"/clean_session.sql")==0);
   BOOST_MESSAGE(" Testing list user with userid UA5.2B" );
   BOOST_CHECK  (connect  (uid, pwd, sess, cop )==0);
@@ -984,6 +1029,7 @@ try {
   asys.setLdapBase("base");
   BOOST_CHECK(addAuthSystem(sess.getSessionKey(), asys)==0);
   tsys = 5;
+  asys.setType(tsys);
   BOOST_CHECK_THROW(updateAuthSystem(sess.getSessionKey(), asys), VishnuException);
   BOOST_CHECK(close          (sess.getSessionKey()      )==0);
 
@@ -1002,7 +1048,9 @@ try {
   asys.setStatus(ssys);
   asys.setLdapBase("base");
   BOOST_CHECK(addAuthSystem(sess.getSessionKey(), asys)==0);
+  asys.setStatus(ssys);
   asys.setName("ldap");
+  ssys = 7;
   BOOST_CHECK_THROW(updateAuthSystem(sess.getSessionKey(), asys), VishnuException);
   BOOST_CHECK(close          (sess.getSessionKey()      )==0);
 
@@ -1010,7 +1058,7 @@ try {
   BOOST_MESSAGE(" Testing update auth system already exist UA8.1"    );
   BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
-  asys.setName("ldap3");
+  asys.setName("ldap9");
   asys.setURI("httm://www.graal.ens-lyon.fr");
   asys.setAuthLogin("toto3");
   asys.setAuthPassword("toto3");

@@ -1,6 +1,6 @@
 -- This script is for initialization of the VISHNU database content
 -- Script name          : database_init.sql
--- Script owner         : SysFera SAS
+-- Script owner         : SysFera SA
 
 -- REVISIONS
 -- Revision nb          : 1.0

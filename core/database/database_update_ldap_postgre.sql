@@ -1,6 +1,6 @@
 ﻿-- This script is for update of the VISHNU database content
 -- Script name          : database_update_ldap_postgre.sql
--- Script owner         : SysFera SAS
+-- Script owner         : SysFera SA
 
 -- REVISIONS
 -- Revision nb          : 1.2.8
