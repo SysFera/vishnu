@@ -1,6 +1,6 @@
 -- This script is for upgrade of the VISHNU PostgreSQL database
 -- Script name          : postgre_update.sql
--- Script owner         : SysFera SAS
+-- Script owner         : SysFera SA
 
 -- REVISIONS
 -- Revision nb          : 1.0
