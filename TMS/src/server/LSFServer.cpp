@@ -108,17 +108,21 @@ LSFServer::submit(const char* scriptPath,
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, errorMsg);
   }
 
-  batchJobId = lsb_submit(&req, &reply);
+  batchJobId = selectQueueAutom(options, &req, &reply);
+  if(batchJobId < 0){  
 
-  if (batchJobId < 0) {
-    switch (lsberrno) {
-      case LSBE_QUEUE_USE:
-      case LSBE_QUEUE_CLOSED:
-        lsb_perror(reply.queue);
-        return -1;//error messages are written to stderr, VISHNU redirects these messages into a file
-      default:
+    batchJobId = lsb_submit(&req, &reply);
+
+    if (batchJobId < 0) {
+      switch (lsberrno) {
+        case LSBE_QUEUE_USE:
+        case LSBE_QUEUE_CLOSED:
+          lsb_perror(reply.queue);
+          return -1;//error messages are written to stderr, VISHNU redirects these messages into a file
+        default:
         lsb_perror(NULL);
         return -1;//error messages are written to stderr, VISHNU redirects these messages into a file
+     }
     }
   }
   if(req.jobName!=NULL) std::cout << "********2req.jobName=" << req.jobName << std::endl;
@@ -160,6 +164,44 @@ LSFServer::submit(const char* scriptPath,
   return 0;
 }
 
+LS_LONG_INT  
+LSFServer::selectQueueAutom(const TMS_Data::SubmitOptions& options, struct submit* req, struct submitReply *reply) {
+
+  LS_LONG_INT batchJobId=-1;
+  if(options.isSelectQueueAutom()) {
+
+    TMS_Data::ListQueues* listOfQueues = listQueues();
+    if(listOfQueues != NULL) {
+
+      for(unsigned int i = 0; i < listOfQueues->getNbQueues(); i++) {
+         TMS_Data::Queue* queue =  listOfQueues->getQueues().get(i);
+         req->options |=SUB_QUEUE;
+         req->queue = strdup(queue->getName().c_str()); 
+         std::cout << "==============================Candidated queue name is :" << req->queue << std::endl;
+         batchJobId = lsb_submit(&(*req), &(*reply));
+
+         if (batchJobId < 0) {
+            if(lsberrno==LSBE_QUEUE_USE || lsberrno==LSBE_QUEUE_WINDOW 
+              || lsberrno==LSBE_QUEUE_HOST || lsberrno==LSBE_QUEUE_CLOSED)
+             {
+                if(i==listOfQueues->getNbQueues()){
+                   throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF: not queue corresponding"
+                         " of the constraint to submit this job.");
+                }
+                continue;
+             } else {
+               lsb_perror(NULL);
+               batchJobId=-1;
+               break;
+             }
+          }
+          break;
+      }
+    }
+  }
+  std::cout << "==============================Selected queue name is :" << req->queue << std::endl;
+  return batchJobId;
+}
 
 /**
  * \brief Function to treat the submission options
@@ -275,66 +317,6 @@ LSFServer::processOptions(const char* scriptPath,
 
   if(options.getCpuTime()!="") {
      req->rLimits[LSF_RLIMIT_CPU] = convertStringToWallTime(options.getCpuTime())/60;
-  }
-
-  if(options.isSelectQueueAutom()) {
-    int node = 0;
-    int cpu = -1;
-    istringstream isNode;
-    std::string optionNodesValue = options.getNbNodesAndCpuPerNode();
-    if(optionNodesValue.empty()) {
-      std::string nodeStr = ""/*getLSFResourceValue(scriptPath, "-N", "--nodes")*/;
-      std::string cpuStr =  ""/*getLSFResourceValue(scriptPath, "", "--mincpus")*/;
-      if(!nodeStr.empty()) {
-        if(nodeStr.find('-')!=std::string::npos) {
-          istringstream isNodeStr(nodeStr);
-          int minnode;
-          int maxNode;
-          char sparator;
-          isNodeStr >> minnode;
-          isNodeStr >> sparator;
-          isNodeStr >> maxNode;
-          node = maxNode; 
-        } else {
-          node = vishnu::convertToInt(nodeStr);
-        }
-      }
-      if(!cpuStr.empty()) {
-        cpu = vishnu::convertToInt(cpuStr);
-      }
-      if(options.getNbCpu()!=-1) {
-        cpu=options.getNbCpu();
-      } 
-    } else {
-      isNode.str(optionNodesValue);
-      isNode >> node;
-      char colon;
-      isNode >> colon;
-      isNode >> cpu;
-    }
-    if(node <=0) {
-      node = 1;
-    }
-    TMS_Data::ListQueues* listOfQueues = listQueues();
-    if(listOfQueues != NULL) {
-      for(unsigned int i = 0; i < listOfQueues->getNbQueues(); i++) {
-        TMS_Data::Queue* queue =  listOfQueues->getQueues().get(i);
-        if(queue->getNode()>=node){
-          std::string queueName = queue->getName();
-
-          std::string walltimeStr = ""/*getLSFResourceValue(scriptPath, "-t", "--time")*/;
-          long walltime = options.getWallTime()==-1?vishnu::convertStringToWallTime(walltimeStr):options.getWallTime();
-          long qwalltimeMax = queue->getWallTime();
-          int qCpuMax = queue->getMaxProcCpu();
-
-          if((walltime <= qwalltimeMax || qwalltimeMax==0) &&
-              (cpu <= qCpuMax)){
-              //UNDER CONSTRUCTION
-              break;
-          }
-        };
-      }
-    }
   }
 
 }
@@ -684,8 +666,15 @@ LSFServer::listQueues(const std::string& OptqueueName) {
     lsb_perror((char*)"listQueues: lsb_init() failed");
     return mlistQueues;
   }
-
-  queueInfo = lsb_queueinfo(queues, &numQueues, host, user, options);
+  if(!OptqueueName.empty()) {
+   queues = new char*[1];
+   queues[0]= strdup(OptqueueName.c_str());
+   numQueues = 1; 
+   queueInfo = lsb_queueinfo(queues, &numQueues, host, user, options);
+   delete queues;
+  } else {
+    queueInfo = lsb_queueinfo(queues, &numQueues, host, user, options);
+  }
 
   if (queueInfo == NULL) {
     //error messages are written to stderr, VISHNU redirects these messages into a file
