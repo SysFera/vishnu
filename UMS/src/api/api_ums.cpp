@@ -970,6 +970,10 @@ vishnu::updateAuthSystem(const std::string& sessionKey,  UMS_Data::AuthSystem& a
   if (authSys.getType()<-1 || authSys.getType()>0){
     throw UMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE, "Invalid type");
   }
+  if((authSys.getStatus() < -1) || (authSys.getStatus() > 1)) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION, "Invalid Status value: its value must be 0 or 1");
+  }
+
 
   if (authSys.getUserPasswordEncryption()<-1 ||
       authSys.getUserPasswordEncryption()>0 ){

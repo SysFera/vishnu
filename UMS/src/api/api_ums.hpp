@@ -61,7 +61,7 @@ namespace vishnu {
 int
 connect(UMS_Data::ListUsers& users,
                 UMS_Data::Session& session,
-                const UMS_Data::ConnectOptions& connectOpt)
+                const UMS_Data::ConnectOptions& connectOpt=UMS_Data::ConnectOptions())
   throw(UserException, SystemException);
 
 
