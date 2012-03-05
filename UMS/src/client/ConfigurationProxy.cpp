@@ -150,10 +150,6 @@ int ConfigurationProxy::restore(bool fromFile)
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
-  if(fromFile && (configurationInString!=NULL)) {
-    delete [] configurationInString;
-  }
-
   diet_profile_free(profile);
 
   return 0;
