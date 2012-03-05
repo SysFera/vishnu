@@ -71,6 +71,7 @@ BOOST_AUTO_TEST_CASE(define_identifier_normal_call)
   string formatMachine = "MTEST_$CPT";
   string formatJob = "JTEST_$CPT";
   string formatFileTransfer = "FTTEST_$CPT";
+  string formatAuth = "ATEST_$CPT";
   //Job
   const std::string scriptFilePath= TMSSCRIPTPATH;
   SubmitOptions subOptions;
@@ -84,6 +85,8 @@ BOOST_AUTO_TEST_CASE(define_identifier_normal_call)
     BOOST_CHECK_EQUAL(defineJobIdentifier(sessionKey, formatJob),0 );
     //To define the file transfer format
     BOOST_CHECK_EQUAL(defineTransferIdentifier(sessionKey, formatFileTransfer),0 );
+    //To define the auth system format
+    BOOST_CHECK_EQUAL(defineAuthIdentifier(sessionKey, formatAuth),0 );
     //user
     User user;
     user.setFirstname("TestFirstname");
@@ -127,6 +130,7 @@ BOOST_AUTO_TEST_CASE(define_identifier_bad_format_call)
   string formatMachine = "MTEST_$TEST";
   string formatJob = "JTEST_$TEST";
   string formatFileTransfer = "FTTEST_$TEST";
+  string formatAuth = "ATTEST_$TEST";
 
   VishnuConnection vc(adminId, adminPwd);
   // get the session key and the machine identifier
@@ -139,6 +143,8 @@ BOOST_AUTO_TEST_CASE(define_identifier_bad_format_call)
   BOOST_CHECK_THROW(defineJobIdentifier(sessionKey, formatJob), VishnuException);
   //To define the file transfer format
   BOOST_CHECK_THROW(defineTransferIdentifier(sessionKey, formatFileTransfer), VishnuException);
+  //To define the auth system format
+  BOOST_CHECK_THROW(defineAuthIdentifier(sessionKey, formatAuth), VishnuException);
 }
 
 //IA3-E2: Define the identifier for no admin user
@@ -152,6 +158,7 @@ BOOST_AUTO_TEST_CASE(define_identifier_no_admin_call)
   string formatMachine = "MTEST_$CPT";
   string formatJob = "JTEST_$CPT";
   string formatFileTransfer = "FTTEST_$CPT";
+  string formatAuth = "ATTEST_$CPT";
   //no admin user
   VishnuConnection vc(userId, userPwd);
   // get the session key and the machine identifier
@@ -165,6 +172,8 @@ BOOST_AUTO_TEST_CASE(define_identifier_no_admin_call)
   BOOST_CHECK_THROW(defineJobIdentifier(sessionKey, formatJob), VishnuException);
   //To define the file transfer format
   BOOST_CHECK_THROW(defineTransferIdentifier(sessionKey, formatFileTransfer), VishnuException);
+  //To define the auth system format
+  BOOST_CHECK_THROW(defineAuthIdentifier(sessionKey, formatAuth), VishnuException);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
