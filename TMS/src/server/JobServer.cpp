@@ -269,7 +269,7 @@ TMS_Data::Job JobServer::getJobInfo() {
   std::string sqlRequest = "SELECT vsessionid, submitMachineId, submitMachineName, jobId, jobName, jobPath,"
                                 "outputPath, errorPath, jobPrio, nbCpus, jobWorkingDir, status, submitDate, endDate, owner,"
                                 "jobQueue,wallClockLimit, groupName, jobDescription, memLimit, nbNodes, "
-                                "nbNodesAndCpuPerNode from job, vsession "
+                                "nbNodesAndCpuPerNode, batchJobId from job, vsession "
                                 "where vsession.numsessionid=job.vsession_numsessionid "
                                 " and status > 0 and job.submitMachineId='"+mmachineId+"' and jobId='"+mjob.getJobId()+"'";
 
@@ -305,7 +305,9 @@ TMS_Data::Job JobServer::getJobInfo() {
       mjob.setJobDescription(*(++iter));
       mjob.setMemLimit(convertToInt(*(++iter)));
       mjob.setNbNodes(convertToInt(*(++iter)));
-      mjob.setNbNodesAndCpuPerNode(*(++iter)); // a remplacer par
+      mjob.setNbNodesAndCpuPerNode(*(++iter)); 
+      mjob.setBatchJobId(*(++iter)); 
+
   } else {
     throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
   }

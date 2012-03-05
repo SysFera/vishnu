@@ -312,6 +312,17 @@ namespace TMS_Data
         void setNbNodesAndCpuPerNode(
                 ::ecore::EString const& _nbNodesAndCpuPerNode);
 
+        /**
+         * \brief To get the batchJobId
+         * \return The batchJobId attribute value
+         **/
+        ::ecore::EString const& getBatchJobId() const;
+        /**
+         * \brief To set the batchJobId
+         * \param _batchJobId The batchJobId value
+         **/
+        void setBatchJobId(::ecore::EString const& _batchJobId);
+
         // References
 
 
@@ -380,6 +391,8 @@ namespace TMS_Data
         ::ecore::EInt m_nbNodes;
 
         ::ecore::EString m_nbNodesAndCpuPerNode;
+
+        ::ecore::EString m_batchJobId;
 
         // References
 
