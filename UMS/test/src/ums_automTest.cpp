@@ -284,8 +284,8 @@ try {
   BOOST_REQUIRE(restore    (sqlScript+"/clean_session.sql")==0);
   BOOST_MESSAGE(" Testing normal connection U1-B1" );
   User_ptr u1  = ecoreFactory->createUser();
-  u1->setUserId   (cu)  ;
-  u1->setPassword (pass);
+  u1->setUserId   (uid)  ;
+  u1->setPassword (pwd);
   liuc->getUsers().push_back(u1);
   BOOST_CHECK  (connect    (*liuc, sess, cop )==0);
   BOOST_CHECK  (listSessions(sess.getSessionKey(), *li , opt      )==0);
@@ -299,9 +299,7 @@ try {
   u1->setUserId   ("bad")  ;
   u1->setPassword (pass);
   liuc->getUsers().push_back(u1);
-  BOOST_CHECK  (connect    (*liuc, sess, cop )==0);
-  BOOST_CHECK  (listSessions(sess.getSessionKey(), *li , opt      )==0);
-  BOOST_MESSAGE("Sess.GetSessionKey() generated : " << sess.getSessionKey() );
+  BOOST_CHECK_THROW  (connect    (*liuc, sess, cop ), VishnuException);
 
   // Connect with a list of user bad pwd
   BOOST_REQUIRE(restore    (sqlScript+"/clean_session.sql")==0);
@@ -311,9 +309,7 @@ try {
   u1->setUserId   (cu)  ;
   u1->setPassword ("bad");
   liuc->getUsers().push_back(u1);
-  BOOST_CHECK  (connect    (*liuc, sess, cop )==0);
-  BOOST_CHECK  (listSessions(sess.getSessionKey(), *li , opt      )==0);
-  BOOST_MESSAGE("Sess.GetSessionKey() generated : " << sess.getSessionKey() );
+  BOOST_CHECK_THROW  (connect    (*liuc, sess, cop ), VishnuException);
 
 
    // ReConnect normal call
@@ -681,13 +677,12 @@ try {
   BOOST_REQUIRE(restore  (sqlScript+"/clean_session.sql")==0);
   BOOST_MESSAGE(" Testing normal list user UA5.2B" );
   BOOST_CHECK  (connect  (uid, pwd, sess, cop )==0);
-  BOOST_CHECK  (listUsers(sess.getSessionKey(), *liu, liuo       )==0);
+  BOOST_CHECK_THROW  (listUsers(sess.getSessionKey(), *liu, liuo       ), VishnuException);
   BOOST_CHECK  (close    (sess.getSessionKey()                )==0);
-  BOOST_CHECK (liu->getUsers().size()>0);
-  BOOST_CHECK (liu->getUsers()[0]->getUserId() == "admin_1");
 
   // Test list user option user
   liuo.setUserId ("admin_1");
+  liuo.setAuthSystemId ("");
   BOOST_REQUIRE(restore  (sqlScript+"/clean_session.sql")==0);
   BOOST_MESSAGE(" Testing list user with userid UA5.2B" );
   BOOST_CHECK  (connect  (uid, pwd, sess, cop )==0);
@@ -1063,7 +1058,7 @@ try {
   BOOST_MESSAGE(" Testing update auth system already exist UA8.1"    );
   BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
-  asys.setName("ldap3");
+  asys.setName("ldap9");
   asys.setURI("httm://www.graal.ens-lyon.fr");
   asys.setAuthLogin("toto3");
   asys.setAuthPassword("toto3");
