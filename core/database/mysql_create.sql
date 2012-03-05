@@ -1,6 +1,6 @@
 -- This script is for initialization of the VISHNU MYSQL database
 -- Script name          : mysql_create.sql
--- Script owner         : SysFera SAS
+-- Script owner         : SysFera SA
 
 -- REVISIONS
 -- Revision nb          : 1.0
