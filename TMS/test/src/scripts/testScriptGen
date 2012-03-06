@@ -9,12 +9,13 @@
 ##% vishnu_mailNotification= END 
 ##% vishnu_mailNotification= ALL
 #% vishnu_notify_user=daouda.traore@sysfera.com
-#% vishnu_wallclocklimit=02:00:00
+#% vishnu_wallclocklimit=01:00:00
+##% vishnu_wallclocklimit=02:00:00
 ##% vishnu_cput=1:10
 ##% vishnu_memory=1
 ##% vishnu_nb_cpu=2
 ##% vishnu_nbNodesAndCpuPerNode = "2:2"
-#% vishnu_nbNodesAndCpuPerNode = 1:1
+##% vishnu_nbNodesAndCpuPerNode = 1:1
 # PBS -l nodes=2:ppn=1+1+1:ppn=2
 # PBS -l nodes=2
 ##% vishnu_nb_cpu=2
