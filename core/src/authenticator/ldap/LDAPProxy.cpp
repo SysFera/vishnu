@@ -84,10 +84,10 @@ LDAPProxy::extract(const string& base, string& res){
   string templ = "$USERNAME";
   size_t pos = base.find(templ);
   if (pos==string::npos) {
-    throw UserException(ERRCODE_INVALID_PARAM, "No $USERNAME string found in the ldapbase. Cannot générate the login for ldap");
+    throw UserException(ERRCODE_INVALID_PARAM, "No $USERNAME string found in the ldapBase. Cannot generate the login for ldap");
   }
   p1 = base.substr(0, pos);
 // End of string after $username
-  p2 = base.substr(pos+1+templ.length());
+  p2 = base.substr(pos+templ.length());
   res = p1 + muserName + p2;
 }
