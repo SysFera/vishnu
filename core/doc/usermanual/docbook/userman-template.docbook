@@ -122,6 +122,14 @@
   </revision>
 
 
+  <revision>
+    <revnumber>11</revnumber>
+    <date>06/03/2012</date>
+    <authorinitials>SysFera</authorinitials>
+    <revdescription>
+      <para>Add of LSF batch scheduler </para></revdescription>
+  </revision> 
+
   </revhistory>
 
     <copyright>
@@ -446,7 +454,7 @@
 	  <para>
 	    To submit a job, via VISHNU, to the batch scheduler of a specific machine, the user needs: an active VISHNU session, 
 	    a local user configuration registered on VISHNU that corresponds to an existing UNIX account on the specified machine and a script that describes 
-	    the job to submit. In the current implementation of VISHNU, it is possible to use the directives for two batch schedulers: TORQUE, LoadLeveler and SLURM.
+	    the job to submit. In the current implementation of VISHNU, it is possible to use the directives for two batch schedulers: TORQUE, LoadLeveler, SLURM and LSF.
 	    In order to use the same script on different batch schedulers, a generic script with generic VISHNU directives is used.
 	    The <emphasis role="bold">vishnu_submit_job</emphasis> command allows a user to submit a job in the shell terminal.
 	    To obtain information on a job, the user can use the <emphasis role="bold">vishnu_get_job_info</emphasis> or 
@@ -514,7 +522,7 @@
 	      </itemizedlist>
 	    </para>
 	    <para>
-        It is important to note that the user can also add directives specific to a batch scheduler (TORQUE, LoadLeveler or SLURM). Such specific directives must be added directly after the generic directives. Here is an example:
+        It is important to note that the user can also add directives specific to a batch scheduler (TORQUE, LoadLeveler, SLURM or LSF). Such specific directives must be added directly after the generic directives. Here is an example:
       </para>
       <programlisting>
         #!/bin/sh
@@ -536,6 +544,12 @@
         #SBATCH -e myJob-%j.err
         #SBATCH -t 01:02:20
         #SBATCH -p myFavoritePartition
+        #The following lines are LSF specific section
+        #BSUB -J myFristJob
+        #BSUB -o myJob-%J.out
+        #BSUB -e myJob-%J.err
+        #BSUB -W 01:02
+        #BSUB -q priority
       </programlisting>
     </section> 
   </section>
