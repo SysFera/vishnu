@@ -634,7 +634,7 @@ try {
   ma.setName(mana);
 
   // Test update machine bad mid
-  BOOST_MESSAGE(" Testing update machine bad machien id UA6.4E"    );
+  BOOST_MESSAGE(" Testing update machine bad machine id UA6.4E"    );
   BOOST_REQUIRE(restore      (sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect      (uid, pwd, sess, cop )==0);
   BOOST_CHECK	 (addMachine   (sess.getSessionKey(), ma            )==0);
@@ -993,6 +993,23 @@ try {
 //  BOOST_CHECK_THROW(addAuthSystem(sess.getSessionKey(), asys), VishnuException);
 //  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
 
+  // Add auth system
+  BOOST_MESSAGE(" Testing add auth system with bad LDAP base UA8-E5"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  asys.setName("ldapBase-add");
+  asys.setURI("httm://www.graal.ens-lyon.fr");
+  asys.setAuthLogin("toto");
+  asys.setAuthPassword("toto");
+  enc = 0;
+  tsys = 0;
+  ssys = 1;
+  asys.setUserPasswordEncryption(enc);
+  asys.setType(tsys);
+  asys.setStatus(ssys);
+  asys.setLdapBase("base");
+  BOOST_CHECK_THROW(addAuthSystem(sess.getSessionKey(), asys), VishnuException);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
 
   // Update auth system
   BOOST_MESSAGE(" Testing update auth system  UA8.1"    );
@@ -1054,8 +1071,25 @@ try {
   BOOST_CHECK_THROW(updateAuthSystem(sess.getSessionKey(), asys), VishnuException);
   BOOST_CHECK(close          (sess.getSessionKey()      )==0);
 
+  BOOST_MESSAGE(" Testing update auth system with bad LDAP base UA8.1-E5"    );
+  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+  asys.setName("ldapBase-update");
+  asys.setURI("httm://www.graal.ens-lyon.fr");
+  asys.setAuthLogin("toto");
+  asys.setAuthPassword("toto");
+  enc = 0;
+  tsys = 0;
+  ssys = 1;
+  asys.setUserPasswordEncryption(enc);
+  asys.setType(tsys);
+  asys.setStatus(ssys);
+  asys.setLdapBase("base");
+  BOOST_CHECK_THROW(updateAuthSystem(sess.getSessionKey(), asys), VishnuException);
+  BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+
   // Delete auth system
-  BOOST_MESSAGE(" Testing update auth system already exist UA8.1"    );
+  BOOST_MESSAGE(" Testing delete auth system UA8.2"    );
   BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
   asys.setName("ldap9");
@@ -1073,7 +1107,7 @@ try {
   BOOST_CHECK(close          (sess.getSessionKey()      )==0);
 
   // Delete auth system bad id
-  BOOST_MESSAGE(" Testing update auth system already exist UA8.1"    );
+  BOOST_MESSAGE(" Testing delete auth system with bad identifier UA8.2"    );
   BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
   asys.setName("ldap5");
