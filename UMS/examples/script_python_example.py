@@ -120,7 +120,7 @@ try:
   newAuthSys.setAuthPassword("myPythonPwd")
   newAuthSys.setUserPasswordEncryption(0)
   newAuthSys.setType(0)
-  newAuthSys.setLdapBase("myLdapBase")
+  newAuthSys.setLdapBase("uid=$USERNAME,myLdapBase,dc=sysfera,dc=com")
   VISHNU.addAuthSystem(k, newAuthSys)
   
   print "Test listAuthSystems"
