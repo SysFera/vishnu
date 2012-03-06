@@ -321,7 +321,7 @@ int
 AuthSystemServer::checkLdapBase() {
   //If the ldap base does not contain the variable $USERNAME
   if (mauthsystem->getLdapBase().find("$USERNAME") == std::string::npos) {
-    throw UserException(ERRCODE_INVALID_PARAM, "The ldap base definition must contain $USERNAME");
+    throw UserException(ERRCODE_INVALID_PARAM, "No $USERNAME string found in the ldapBase");
   }
   return 0;
 }
