@@ -74,11 +74,11 @@ AuthSystemServer::add(int vishnuId) {
           if ((mauthsystem->getLdapBase().size() != 0)
             && (mauthsystem->getType() == LDAPTYPE) ) { // LDAP
 
+            checkLdapBase();
             numAuth = getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'");
 
             mdatabaseVishnu->process("insert into ldapauthsystem (authsystem_authsystemid, ldapbase) values "
                                     "("+numAuth+ ", '"+mauthsystem->getLdapBase()+"')");
-
           }
 
       }// End if the id generated does not exists
@@ -121,55 +121,56 @@ AuthSystemServer::update() {
       if (exist()) {
         //if a new name has been defined
         if (mauthsystem->getName().size() != 0) {
-        sqlCommand.append("UPDATE authsystem SET name='"+mauthsystem->getName()+"'"
-        " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");
+          sqlCommand.append("UPDATE authsystem SET name='"+mauthsystem->getName()+"'"
+          " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");
         }
 
         //if an URI has been defined
         if (mauthsystem->getURI().size() != 0) {
-        sqlCommand.append("UPDATE authsystem SET uri='"+mauthsystem->getURI()+"'"
-        " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");
+          sqlCommand.append("UPDATE authsystem SET uri='"+mauthsystem->getURI()+"'"
+          " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");
         }
 
         //if an authLogin has been defined
         if (mauthsystem->getAuthLogin().size() != 0) {
-        sqlCommand.append("UPDATE authsystem SET authlogin='"+mauthsystem->getAuthLogin()+"'"
-        " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");
+          sqlCommand.append("UPDATE authsystem SET authlogin='"+mauthsystem->getAuthLogin()+"'"
+          " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");
         }
 
         //if an authPassword has been defined
         if (mauthsystem->getAuthPassword().size() != 0) {
-        sqlCommand.append("UPDATE authsystem SET authpassword='"+mauthsystem->getAuthPassword()+"'"
-        " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");
+          sqlCommand.append("UPDATE authsystem SET authpassword='"+mauthsystem->getAuthPassword()+"'"
+          " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");
         }
 
         //if a password encryption method has been defined
         if (mauthsystem->getUserPasswordEncryption() != UNDEFINED_VALUE) {
-        sqlCommand.append("UPDATE authsystem SET userpwdencryption='"+convertToString(mauthsystem->getUserPasswordEncryption())+"'"
-        " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");
+          sqlCommand.append("UPDATE authsystem SET userpwdencryption='"+convertToString(mauthsystem->getUserPasswordEncryption())+"'"
+          " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");
         }
 
         //if a type has been defined
         if (mauthsystem->getType() != UNDEFINED_VALUE) {
-        sqlCommand.append("UPDATE authsystem SET authtype='"+convertToString(mauthsystem->getType())+"'"
-        " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");
+          sqlCommand.append("UPDATE authsystem SET authtype='"+convertToString(mauthsystem->getType())+"'"
+          " where authsystemid='"+mauthsystem->getAuthSystemId()+"';");
         }
 
         //If an ldap base has been defined
         if (mauthsystem->getLdapBase().size() != 0) {
 
-            std::string type = getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'", "authtype");
-            //If the authentication system is not an ldap type
-            if (convertToInt(type) != LDAPTYPE) {
-              UMSVishnuException e (ERRCODE_INVALID_PARAM, "The ldap base option is incompatible with the user"
-              " authentication system type");
-              throw e;
-            }
-
-            sqlCommand.append("UPDATE ldapauthsystem SET ldapbase='"+mauthsystem->getLdapBase()+"'"
-            " where authsystem_authsystemid IN (SELECT numauthsystemid from authsystem where authsystemid='"+mauthsystem->getAuthSystemId()+"');");
-
+          checkLdapBase();
+          std::string type = getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'", "authtype");
+          //If the authentication system is not an ldap type
+          if (convertToInt(type) != LDAPTYPE) {
+            UMSVishnuException e (ERRCODE_INVALID_PARAM, "The ldap base option is incompatible with the user"
+            " authentication system type");
+            throw e;
           }
+
+          sqlCommand.append("UPDATE ldapauthsystem SET ldapbase='"+mauthsystem->getLdapBase()+"'"
+          " where authsystem_authsystemid IN (SELECT numauthsystemid from authsystem where authsystemid='"+mauthsystem->getAuthSystemId()+"');");
+
+        }
 
 
         //if a new status has been defined
@@ -308,6 +309,19 @@ AuthSystemServer::checkValues() {
 
   if (mauthsystem->getUserPasswordEncryption() != SSHA_METHOD ){
     throw UMSVishnuException(ERRCODE_UNKNOWN_ENCRYPTION_METHOD, "Invalid encryption method");
+  }
+  return 0;
+}
+
+/**
+* \brief Function to check the $USERNAME string on the ldap base
+*\return raises an exception on error
+*/
+int
+AuthSystemServer::checkLdapBase() {
+  //If the ldap base does not contain the variable $USERNAME
+  if (mauthsystem->getLdapBase().find("$USERNAME") == std::string::npos) {
+    throw UserException(ERRCODE_INVALID_PARAM, "The ldap base definition must contain $USERNAME");
   }
   return 0;
 }
