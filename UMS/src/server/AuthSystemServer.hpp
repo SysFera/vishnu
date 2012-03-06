@@ -114,5 +114,11 @@ private:
   */
   int
   checkValues();
+  /**
+  * \brief Function to check the $USERNAME string on the ldap base
+  *\return raises an exception on error
+  */
+  int
+  checkLdapBase();
 };
 #endif
