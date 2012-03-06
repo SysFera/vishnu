@@ -938,7 +938,7 @@ try {
   StatusType ssys = 1;
   asys.setType(tsys);
   asys.setStatus(ssys);
-  asys.setLdapBase("base");
+  asys.setLdapBase("$USERNAME.base");
   BOOST_CHECK(addAuthSystem(sess.getSessionKey(), asys)==0);
   BOOST_CHECK(close          (sess.getSessionKey()      )==0);
 
@@ -955,7 +955,7 @@ try {
   ssys = 1;
   asys.setType(tsys);
   asys.setStatus(ssys);
-  asys.setLdapBase("base");
+  asys.setLdapBase("$USERNAME.base");
   BOOST_CHECK_THROW(addAuthSystem(sess.getSessionKey(), asys), VishnuException);
   BOOST_CHECK(close          (sess.getSessionKey()      )==0);
 
@@ -972,7 +972,7 @@ try {
   ssys = 1;
   asys.setType(tsys);
   asys.setStatus(ssys);
-  asys.setLdapBase("base2");
+  asys.setLdapBase("$USERNAME.base2");
   BOOST_CHECK_THROW(addAuthSystem(sess.getSessionKey(), asys), VishnuException);
   BOOST_CHECK(close          (sess.getSessionKey()      )==0);
 
@@ -1007,7 +1007,7 @@ try {
   ssys = 1;
   asys.setType(tsys);
   asys.setStatus(ssys);
-  asys.setLdapBase("base");
+  asys.setLdapBase("$USERNAME.base");
   BOOST_CHECK(addAuthSystem(sess.getSessionKey(), asys)==0);
   asys.setName("ldap4");
   BOOST_CHECK(updateAuthSystem(sess.getSessionKey(), asys)==0);
@@ -1026,7 +1026,7 @@ try {
   ssys = 1;
   asys.setType(tsys);
   asys.setStatus(ssys);
-  asys.setLdapBase("base");
+  asys.setLdapBase("$USERNAME.base");
   BOOST_CHECK(addAuthSystem(sess.getSessionKey(), asys)==0);
   tsys = 5;
   asys.setType(tsys);
@@ -1046,7 +1046,7 @@ try {
   ssys = 7;
   asys.setType(tsys);
   asys.setStatus(ssys);
-  asys.setLdapBase("base");
+  asys.setLdapBase("$USERNAME.base");
   BOOST_CHECK(addAuthSystem(sess.getSessionKey(), asys)==0);
   asys.setStatus(ssys);
   asys.setName("ldap");
@@ -1067,7 +1067,7 @@ try {
   ssys = 1;
   asys.setType(tsys);
   asys.setStatus(ssys);
-  asys.setLdapBase("base");
+  asys.setLdapBase("$USERNAME.base");
   BOOST_CHECK(addAuthSystem(sess.getSessionKey(), asys)==0);
   BOOST_CHECK(deleteAuthSystem(sess.getSessionKey(), asys.getAuthSystemId())==0);
   BOOST_CHECK(close          (sess.getSessionKey()      )==0);
@@ -1085,7 +1085,7 @@ try {
   ssys = 1;
   asys.setType(tsys);
   asys.setStatus(ssys);
-  asys.setLdapBase("base2");
+  asys.setLdapBase("$USERNAME.base2");
   BOOST_CHECK(addAuthSystem(sess.getSessionKey(), asys)==0);
   BOOST_CHECK_THROW(deleteAuthSystem(sess.getSessionKey(), "bad"), VishnuException);
   BOOST_CHECK(close          (sess.getSessionKey()      )==0);
