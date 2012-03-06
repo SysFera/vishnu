@@ -331,10 +331,10 @@ bool LSFParser::isNumerical(const std::string& value) {
   return true;
 }
 
-int 
-LSFParser::parse_file(const char* pathTofile, struct submit* req) {
+std::vector<std::string> 
+LSFParser::convertScriptIntoArgv(const char* pathTofile, 
+                                 const std::string& BATCH_PREFIX){
 
-  std::string LSF_PREFIX="#BSUB";
   ifstream fileStream;
   string line;
 
@@ -380,10 +380,10 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         continue;
       }
 
-      if(boost::algorithm::starts_with(boost::algorithm::erase_all_copy(line," "), LSF_PREFIX)){
+      if(boost::algorithm::starts_with(boost::algorithm::erase_all_copy(line," "), BATCH_PREFIX)){
 
-        pos = line.find(LSF_PREFIX.substr(1));//skip the character # in  LSF_PREFIX
-        line = line.substr(pos+LSF_PREFIX.size()-1);
+        pos = line.find(BATCH_PREFIX.substr(1));//skip the character # in  BATCH_PREFIX
+        line = line.substr(pos+BATCH_PREFIX.size()-1);
 
         //To skip a comment on the line
         pos = line.find('#');
@@ -436,9 +436,16 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
       }
     }
     quote='\0';
-    tokensArgs.push_back((argvStr.c_str()));
+    tokensArgs.push_back(argvStr);
   }
 
+ return tokensArgs;
+}
+
+int 
+LSFParser::parse_file(const char* pathTofile, struct submit* req) {
+
+  std::vector<std::string>  tokensArgs=convertScriptIntoArgv(pathTofile);
   int argc = tokensArgs.size()+1; 
   char* argv[argc];
   argv[0] = (char*) "vishnu_submit_job";
@@ -450,7 +457,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
   }
   std::cout << std::endl;
 
-#define GETOPT_ARGS "J:q:m:n:i:o:e:xNBG:k:rw:R:E:L:P:u:U:K:W:g:Hc:F:p:M:D:S:v:T:b:t:f:Q"
+  #define GETOPT_ARGS "J:q:m:n:i:o:e:xNBG:k:rw:R:E:L:P:u:U:K:W:g:Hc:F:p:M:D:S:v:T:b:t:f:Q"
 
   int option_index = 0;
   int c;
@@ -920,8 +927,105 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
 
   }
 
+  //search vishnu generic syntaxes and convert them
+  searchAndConvertVishnuScriptGenSyntax(pathTofile, &(*req));
+
   return 0;
 }
+
+
+void 
+LSFParser::searchAndConvertVishnuScriptGenSyntax(const char* pathTofile, struct submit* req) {
+
+  std::vector<std::string>  tokensArgs=convertScriptIntoArgv(pathTofile, "#%");
+  std::string nodesAndCpuPerNodeSyntax="-vishnuNbNodesAndCpuPerNode=";//Ref ScriptGenConvertor
+  std::string cpuSyntax="-vishnuCpu=";//Ref ScriptGenConvertor
+  std::string mailNotificationSyntax="-vishnuMailNofication="; //Ref ScriptGenConvertor
+  std::string wallTimeSyntax="-vishnuWaillClockLimit=";//Ref ScriptGenConvertor
+  size_t pos;
+ 
+  std::vector<std::string>::iterator iter;
+  for(iter=tokensArgs.begin(); iter!=tokensArgs.end(); ++iter) {
+      //to treat #% -vishnuNbNodesAndCpuPerNode=x:y
+      if((pos=(*iter).find(nodesAndCpuPerNodeSyntax))!=std::string::npos){
+         std::string nbNodesAndCpuPerNode = (*iter).substr(pos+nodesAndCpuPerNodeSyntax.size());
+         cleanString(nbNodesAndCpuPerNode,'\"');
+         cleanString(nbNodesAndCpuPerNode,'\'');
+         vishnu::checkJobNbNodesAndNbCpuPerNode(nbNodesAndCpuPerNode);
+     
+          size_t posNbNodes = nbNodesAndCpuPerNode.find(":");
+          if(posNbNodes!=std::string::npos) {
+              std::string nbNodesStr = nbNodesAndCpuPerNode.substr(0, posNbNodes);
+              std::string cpuPerNode = nbNodesAndCpuPerNode.substr(posNbNodes+1);
+               
+              //set the number of processor     
+              req->numProcessors = vishnu::convertToInt(cpuPerNode);
+              req->maxNumProcessors = req->numProcessors;
+
+              struct hostInfoEnt *hostInfo;
+              char **hosts = NULL;
+              int numhosts = 0;
+              int nbNodes = vishnu::convertToInt(nbNodesStr);
+              //select the candidates host
+              hostInfo = lsb_hostinfo(hosts, &numhosts);
+              if(nbNodes > numhosts) {
+                 throw UserException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERRROR: "
+                  "In your script: the number of nodes is greater than the number of total nodes.");
+              }
+              if(req->numAskedHosts > 0) {
+                delete [] req->askedHosts;
+              }
+              req->options |=SUB_HOST;//Set LSF option
+              req->askedHosts = new char*[nbNodes];
+              req->numAskedHosts = nbNodes;
+              for (int i = 0; i < nbNodes; i++, hostInfo++) {
+                req->askedHosts[i] = hostInfo->host;
+              }
+          }
+      }
+      //To treat cpu syntax 
+      if((pos=(*iter).find(cpuSyntax))!=std::string::npos){
+         std::string cpuStr = (*iter).substr(pos+cpuSyntax.size());
+         int cpu;
+         if(isNumerical(cpuStr)) {
+            cpu = vishnu::convertToInt(cpuStr);
+         } else {
+              throw UMSVishnuException(ERRCODE_INVALID_PARAM, "Illegal value in your script, the value of vishnu_nb_cpu"
+                  " must be integer value");
+         }
+         req->numProcessors = cpu;
+         req->maxNumProcessors= cpu;
+      }
+      //To treat mail notification syntax
+      if((pos=(*iter).find(mailNotificationSyntax))!=std::string::npos) {
+           std::string notification = (*iter).substr(pos+mailNotificationSyntax.size());
+           if(notification.compare("BEGIN")==0) {
+               req->options |=SUB_NOTIFY_BEGIN;
+               std::cout << "++++++++++++++notification=BEGIN" << std::endl; 
+           } else if(notification.compare("END")==0) {
+               req->options |=SUB_NOTIFY_END;
+               std::cout << "++++++++++++++notification=END" << std::endl;
+           } else if(notification.compare("ERROR")==0) {//not exist in LSF
+               req->options |=SUB_NOTIFY_END; //send mail after execution or failure of the job
+               std::cout << "++++++++++++++notification=ERROR" << std::endl;
+           } else if(notification.compare("ALL")==0) {
+               req->options |=SUB_NOTIFY_BEGIN;
+               req->options |=SUB_NOTIFY_END;
+               std::cout << "++++++++++++++notification=ALL" << std::endl;
+           } else {
+                 throw UserException(ERRCODE_INVALID_PARAM, "In your script: "+notification+" is an invalid notification"
+                               " type:"+" consult the vishnu user manuel");
+           }
+      }  
+      //To treat waill clock time limit 
+      if((pos=(*iter).find(wallTimeSyntax))!=std::string::npos) {
+         std::string waillTime = (*iter).substr(pos+wallTimeSyntax.size()); 
+         req->rLimits[LSF_RLIMIT_RUN] = vishnu::convertStringToWallTime(waillTime)/60;
+      }
+  }
+
+}
+
 
 /**
  * \brief Destructor

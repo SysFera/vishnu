@@ -59,12 +59,19 @@ public :
 
   static time_t 
   convertDateToTime(const std::string& date, const std::string& compErrMsg="");
+
+  static std::vector<std::string> 
+  convertScriptIntoArgv(const char* pathTofile, 
+                        const std::string& BATCH_PREFIX="#BSUB"); 
    /**
    * \brief To parse a given file
    * \return raises an exception
    */
   static int
   parse_file(const char* pathTofile, struct submit* req);
+
+  static void
+  searchAndConvertVishnuScriptGenSyntax(const char* pathTofile, struct submit* req);
 
 private :
 
