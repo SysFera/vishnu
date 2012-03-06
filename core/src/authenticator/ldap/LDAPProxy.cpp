@@ -32,7 +32,8 @@ LDAPProxy::LDAPProxy(const string& uri,
 int
 LDAPProxy::connectLDAP(const string& ldapbase) {
   int ret;
-  string fullUserPath = muserName +","+ldapbase;
+  string fullPath;
+  extract(ldapbase, fullPath);
 
   /* Initialize the LDAP session */
   if ((ldap_initialize(&mld, const_cast<char*>(muri.c_str()))) != LDAP_SUCCESS) {
@@ -41,7 +42,7 @@ LDAPProxy::connectLDAP(const string& ldapbase) {
 
   ldap_set_option(mld, LDAP_OPT_PROTOCOL_VERSION, &desired_version);
 
-  ret = bind(fullUserPath);
+  ret = bind(fullPath);
   if (ret != LDAP_SUCCESS ) {
     if (ret != LDAP_INVALID_CREDENTIALS ) {
       throw SystemException(ERRCODE_AUTHENTERR, ldap_err2string(ret));
@@ -74,4 +75,19 @@ LDAPProxy::~LDAPProxy() {
   if (mld != NULL) {
     ldap_unbind_ext_s ( mld, NULL, NULL );
   }
+}
+
+void
+LDAPProxy::extract(const string& base, string& res){
+  string p1;
+  string p2;
+  string templ = "$USERNAME";
+  size_t pos = base.find(templ);
+  if (pos==string::npos) {
+    throw UserException(ERRCODE_INVALID_PARAM, "No $USERNAME string found in the ldapbase. Cannot générate the login for ldap");
+  }
+  p1 = base.substr(0, pos);
+// End of string after $username
+  p2 = base.substr(pos+1+templ.length());
+  res = p1 + muserName + p2;
 }

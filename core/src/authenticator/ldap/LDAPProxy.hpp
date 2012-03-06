@@ -55,6 +55,14 @@ class LDAPProxy {
   ~LDAPProxy();
 
   private:
+/**
+ * \brief Function to extract and replace the $username part of the base and store it in res
+ * \param base ldap base to extract the $USERNAME substring
+ * \param res  the base string with $USERNAME replaced by the login
+ */
+  void
+  extract(const string& base, string& res);
+
   int
   bind(string& fullUserPath);
   /////////////////////////////////
