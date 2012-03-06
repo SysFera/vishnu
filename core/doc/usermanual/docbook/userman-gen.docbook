@@ -121,6 +121,13 @@
       
     <para>Updates of TMS:</para><para>Modified decription of vishnu_submit_job command (to take into account automatic submission).</para><para>Extended vishnu_submit_job options (added load criterion option for automatic submission, added option to select a queue automatically).</para><para>Modified decription of vishnu_list_jobs command (to take into account listing of jobs on all machines).</para><para>Extended vishnu_list_jobs options (added multipleStatus option for combination of several job states, added option to list all jobs submitted by the underlying batch scheduler (VISHNU jobs and jobs submitted out of VISHNU).</para><para>Modified decription of submitJob C++ and Python API function (to take into account automatic submission).</para><para>Modified decription of listJobs C++ and Python API function (to take into account listing of jobs on all machines).</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>11</revnumber>
+        <date>06/03/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+      <para>Add of LSF batch scheduler </para></revdescription>
+      </revision>
     </revhistory>
     <copyright>
       <year>2011</year>
@@ -418,7 +425,7 @@
           <para>
 	    To submit a job, via VISHNU, to the batch scheduler of a specific machine, the user needs: an active VISHNU session, 
 	    a local user configuration registered on VISHNU that corresponds to an existing UNIX account on the specified machine and a script that describes 
-	    the job to submit. In the current implementation of VISHNU, it is possible to use the directives for two batch schedulers: TORQUE, LoadLeveler and SLURM.
+	    the job to submit. In the current implementation of VISHNU, it is possible to use the directives for two batch schedulers: TORQUE, LoadLeveler, SLURM and LSF.
 	    In order to use the same script on different batch schedulers, a generic script with generic VISHNU directives is used.
 	    The <emphasis role="bold">vishnu_submit_job</emphasis> command allows a user to submit a job in the shell terminal.
 	    To obtain information on a job, the user can use the <emphasis role="bold">vishnu_get_job_info</emphasis> or 
@@ -482,7 +489,7 @@
               </itemizedlist>
 	    </para>
             <para>
-        It is important to note that the user can also add directives specific to a batch scheduler (TORQUE, LoadLeveler or SLURM). Such specific directives must be added directly after the generic directives. Here is an example:
+        It is important to note that the user can also add directives specific to a batch scheduler (TORQUE, LoadLeveler, SLURM or LSF). Such specific directives must be added directly after the generic directives. Here is an example:
       </para>
             <programlisting>
         #!/bin/sh
@@ -504,6 +511,12 @@
         #SBATCH -e myJob-%j.err
         #SBATCH -t 01:02:20
         #SBATCH -p myFavoritePartition
+        #The following lines are LSF specific section
+        #BSUB -J myFristJob
+        #BSUB -o myJob-%J.out
+        #BSUB -e myJob-%J.err
+        #BSUB -W 01:02
+        #BSUB -q priority
       </programlisting>
           </section>
         </section>
@@ -801,7 +814,7 @@ The value must be an integer. Predefined values are: 0 (DEFAULT), 1 (CLOSE_ON_TI
       <refsect1 id="example">
         <title>EXAMPLE</title>
         <para>To connect the user user_1:</para>
-        <para>vishnu_connect user_1 pwd1 user_2 pwd2</para>
+        <para>vishnu_connect -u user_1 -w pwd1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1085,7 +1098,7 @@ are specified, vishnu_reconnect will read them in the  .netrc file located in th
       <refsect1 id="example">
         <title>EXAMPLE</title>
         <para>To reconnect the user user_1 to the session S01:</para>
-        <para>vishnu_reconnect user_1 S01</para>
+        <para>vishnu_reconnect -u user_1 S01</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -2329,7 +2342,7 @@ The value must be an integer. Predefined values are: 0 (DEFAULT), 1 (CLOSE_ON_TI
           <varlistentry>
             <term><option>-m <replaceable>machineId</replaceable></option></term>
             <listitem>
-              <para>allows the user to list sessions opened on a specific machine.</para>
+              <para>allows the user to list sessions opened on a specific client's machine by using its name.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -2750,7 +2763,7 @@ authLogin, authPassword and userPasswordEncryption
       <refsect1 id="example">
         <title>EXAMPLE</title>
         <para>To list all user-authentication systems:</para>
-        <para>vishnu_list_authentication_systems</para>
+        <para>vishnu_list_auth_systems</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -2877,7 +2890,7 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
       <refsect1 id="example">
         <title>EXAMPLE</title>
         <para>To add the local user-authentication configuration whose account is toto on the user-authentication system identified by AUTHENLDAP_1: </para>
-        <para>vishnu_add_authen_account AUTHENLDAP_1 toto</para>
+        <para>vishnu_add_auth_account AUTHENLDAP_1 toto</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -3008,7 +3021,7 @@ the local user's login in the user-authentication system can be updated.
       <refsect1 id="example">
         <title>EXAMPLE</title>
         <para>To change the uid  of a local user-authentication configuration to aramis whose user-authentication system is AUTHENLDAP_1: </para>
-        <para>vishnu_update_authen_account -l aramis AUTHENLDAP_1</para>
+        <para>vishnu_update_auth_account -l aramis AUTHENLDAP_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -3131,7 +3144,7 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
       <refsect1 id="example">
         <title>EXAMPLE</title>
         <para>To remove a local user-authentication configuration whose user-authentication system is AUTHENLDAP_1: </para>
-        <para>vishnu_delete_authen_account AUTHENLDAP_1</para>
+        <para>vishnu_delete_auth_account AUTHENLDAP_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -3266,7 +3279,7 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
       <refsect1 id="example">
         <title>EXAMPLE</title>
         <para>To list local user-authentication configurations: </para>
-        <para>vishnu_list_authen_account</para>
+        <para>vishnu_list_auth_accounts</para>
       </refsect1>
     </refentry>
   </reference>
