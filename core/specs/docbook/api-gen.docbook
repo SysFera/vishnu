@@ -3659,7 +3659,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_AUTH_SYSTEM_ALREADY_EXIST</para></entry>
-                <entry><para>The identifier of the user-authentication system already exists</para></entry>
+                <entry><para>The identifier (name or generated identifier) of the user-authentication system already exists</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
