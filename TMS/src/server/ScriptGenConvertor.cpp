@@ -88,18 +88,18 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
 
   } else if(mbatchType==LSF) {
      
-    mconversionTable[group]                = "#BSUB -G";
+    mconversionTable[group]                = "#BSUB -G ";
     mconversionTable[workingDir]           = "#BSUB -cwd ";
     mconversionTable[jobName]              = "#BSUB -J ";
     mconversionTable[jobOutput]            = "#BSUB -o ";
     mconversionTable[jobError]             = "#BSUB -e ";
-    mconversionTable[jobWallClockLimit]    = "#BSUB -W ";
+    mconversionTable[jobWallClockLimit]    = "#% -vishnuWaillClockLimit="; //spacial case: treated in LSFParser
     mconversionTable[cpuTime]              = "#BSUB -c ";
-    mconversionTable[nbCpu]                = "#BSUB -n";
-    mconversionTable[nbNodesAndCpuPerNode] = "##BSUB "; //spacial case
-    mconversionTable[mem]                  = "##BSUB -R \"req=mem=";//special case;
-    mconversionTable[mailNotification]     = "##BSUB "; //special case; 
-    mconversionTable[mailNotifyUser]       = "#BSUB -u";
+    mconversionTable[nbCpu]                = "#% -vishnuCpu=";  //spacial case: treated in LSFParser
+    mconversionTable[nbNodesAndCpuPerNode] = "#% -vishnuNbNodesAndCpuPerNode="; //spacial case: treated in LSFParser
+    mconversionTable[mem]                  = "#BSUB -M ";
+    mconversionTable[mailNotification]     = "#% -vishnuMailNofication="; //special case; treated in LSFParser 
+    mconversionTable[mailNotifyUser]       = "#BSUB -u ";
     mconversionTable[queue]                = "#BSUB -q ";
     
     mconversionTable[lsfSec]             = "";
