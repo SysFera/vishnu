@@ -51,7 +51,7 @@ UMSVishnuException::initMsg(){
   mp.insert(std::pair<int, std::string>(ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE, std::string("The type of the user-authentication system is unknown")));
   mp.insert(std::pair<int, std::string>(ERRCODE_UNKNOWN_AUTH_SYSTEM, std::string("The user-authentication system is unknown or locked")));
   mp.insert(std::pair<int, std::string>(ERRCODE_AUTH_SYSTEM_ALREADY_LOCKED, std::string("The user-authentication system is already locked")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_AUTH_SYSTEM_ALREADY_EXIST, std::string("The identifier of the user-authentication system already exists")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_AUTH_SYSTEM_ALREADY_EXIST, std::string("The identifier (name or generated identifier) of the user-authentication system already exists")));
   mp.insert(std::pair<int, std::string>(ERRCODE_AUTH_ACCOUNT_EXIST, std::string("The user-authentication account already exists")));
   mp.insert(std::pair<int, std::string>(ERRCODE_UNKNOWN_AUTH_ACCOUNT, std::string("The user-authentication account is unknown")));
   mp.insert(std::pair<int, std::string>(ERRCODE_UNKNOWN_ENCRYPTION_METHOD, std::string("The encryption method is unknown")));
