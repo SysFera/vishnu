@@ -11,7 +11,7 @@
       <author>
         <personname>
           <firstname></firstname>
-          <surname>SysFera SAS</surname>
+          <surname>SysFera SA</surname>
         </personname>
         <contrib>Developed the first version of these man pages as part of the VISHNU project.</contrib>
         <address>
@@ -20,7 +20,7 @@
       </author>
       <copyright>
               <year>2011</year>
-              <holder>SysFera SAS</holder>
+              <holder>SysFera SA</holder>
       </copyright>
       <legalnotice>
               <para>These manual pages are provided under the following conditions:</para>
