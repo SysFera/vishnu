@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
 <book lang="fr-FR">
-  <?ooogenerator OpenOffice.org/3.2$Linux OpenOffice.org_project/320m19$Build-9505?>
+  <?ooogenerator OpenOffice.org/3.2$Linux OpenOffice.org_project/320m12$Build-9483?>
   <?oooversion 3.2$Linux?>
   <bookinfo>
     <title> </title>
-    <date>2012-02-02T15:54:56</date>
+    <date>2012-03-06T17:28:23</date>
     <keywordset/>
     <confgroup/>
   </bookinfo>
@@ -2731,6 +2731,7 @@
                   <para>UA8-E2:addAuthenticationSystem</para>
                   <para>UA8-E3:addAuthenticationSystem</para>
                   <para>UA8-E4:addAuthenticationSystem</para>
+                  <para>UA8-E5:addAuthenticationSystem</para>
                 </entry>
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
@@ -2792,6 +2793,7 @@
                   <para>UA8.1-E2:updateAuthenticationSystem</para>
                   <para>UA8.1-E3:updateAuthenticationSystem</para>
                   <para>UA8.1-E4:updateAuthenticationSystem</para>
+                  <para>UA8.1-E5:updateAuthenticationSystem</para>
                 </entry>
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
