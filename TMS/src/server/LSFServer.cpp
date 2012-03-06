@@ -56,7 +56,7 @@ LSFServer::submit(const char* scriptPath,
   int  i;
 
   if (lsb_init(NULL) < 0) {
-    lsb_perror((char*)"vishnu_submit_job: lsb_init() failed");
+    lsb_perror((char*)"LSFServer::submit: lsb_init() failed");
     return -1;//error messages are written to stderr, VISHNU redirects these messages into a file
   }
 
@@ -444,21 +444,15 @@ int
 LSFServer::cancel(const char* jobId) {
 
   LS_LONG_INT lsfJobId = convertToLSFJobId(jobId); 
-  std::cout << "*****************lsfJobId=" << lsfJobId << std::endl;
-  /*//int res = lsb_signaljob(lsfJobId, SIGKILL);
-  //int res = lsb_forcekilljob(lsfJobId);
-  std::cout << "*****************res=" << res << std::endl;
+  if (lsb_init(NULL) < 0) {
+    lsb_perror((char*)"LSFServer::cancel: lsb_init() failed");
+    return -1;//error messages are written to stderr, VISHNU redirects these messages into a file
+  }
+
+  int res = lsb_signaljob(lsfJobId, SIGKILL);
   if(res) {
-  lsb_perror(NULL);
-  return res;//error messages are written to stderr, VISHNU redirects these messages into a file
-  }*/
-
-  std::ostringstream cmd;
-  std::string  cancelCommand="bkill";
-
-  cmd << cancelCommand << " " << jobId;
-  if(system((cmd.str()).c_str())) {
-    return -1; //error messages are written to stderr, VISHNU redirects these messages into a file
+    lsb_perror(NULL);
+    return res;//error messages are written to stderr, VISHNU redirects these messages into a file
   }
 
   return 0;
@@ -481,7 +475,6 @@ LSFServer::getJobState(const std::string& jobId) {
   if (lsb_init(NULL) < 0) {
     return state;
   }
-
 
   numJobs = lsb_openjobinfo(lsfJobId, NULL, NULL, NULL, NULL, JOBID_ONLY);
   jobInfo = lsb_readjobinfo(&numJobs);
@@ -656,7 +649,7 @@ LSFServer::listQueues(const std::string& OptqueueName) {
 
   if (lsb_init(NULL) < 0) {
     //error messages are written to stderr, VISHNU redirects these messages into a file
-    lsb_perror((char*)"listQueues: lsb_init() failed");
+    lsb_perror((char*)"LSFServer::listQueues: lsb_init() failed");
     return mlistQueues;
   }
   if(!OptqueueName.empty()) {
