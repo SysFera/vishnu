@@ -1096,7 +1096,7 @@ try {
   BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
   liaso.setListAllAuthSystems(true);
   liaso.setListFullInfo(true);
-  BOOST_CHECK(listAuthSystems(sess.getSessionKey(), *lias, liaso));
+  BOOST_CHECK(listAuthSystems(sess.getSessionKey(), *lias, liaso)==0);
   BOOST_CHECK(close          (sess.getSessionKey()      )==0);
 
   // List auth system bad user
