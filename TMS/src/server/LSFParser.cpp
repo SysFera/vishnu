@@ -423,10 +423,11 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
       found_iter = std::find_if(iter, end, IsEndByQuote(quote));
       if(found_iter!=end) {
         while(iter!=found_iter) {
-          if(iter!=end) {
-            ++iter;
-            argvStr = argvStr+" "+*iter;
+          if(iter==end) {
+            break;
           }
+          ++iter;
+          argvStr = argvStr+" "+*iter;
         }
       } else {
         std::string errorMsg = "Error: invalid argument "+argvStr;
