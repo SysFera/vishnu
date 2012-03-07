@@ -82,8 +82,10 @@ LSFServer::submit(const char* scriptPath,
   req.nxf = 0;
   req.delOptions = 0;
   req.numAskedHosts = 0;
-
-  LSFParser::parse_file(scriptPath, &req);
+  //parse the file
+  if(LSFParser::parse_file(scriptPath, &req) < 0) {
+    return -1; 
+  };
   //processes the vishnu options
   processOptions(scriptPath, options, &req);
 
