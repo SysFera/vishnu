@@ -422,10 +422,7 @@ LSFParser::convertScriptIntoArgv(const char* pathTofile,
       std::vector<std::string>::iterator found_iter;
       found_iter = std::find_if(iter, end, IsEndByQuote(quote));
       if(found_iter!=end) {
-        while(iter!=found_iter) {
-          if(iter==end) {
-            break;
-          }
+        while(iter!=end && iter!=found_iter) {
           ++iter;
           argvStr = argvStr+" "+*iter;
         }
@@ -460,6 +457,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
   #define GETOPT_ARGS "J:q:m:n:i:o:e:xNBG:k:rw:R:E:L:P:u:U:K:W:g:Hc:F:p:M:D:S:v:T:b:t:f:Q"
 
   int option_index = 0;
+  optind=0;
   int c;
   std::string host_list;
   std::vector<std::string> host_tokens;
@@ -478,9 +476,10 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
   std::string xFileStr;
   std::vector<std::string> xFile_tokens;
   int oldNxf;
+  std::string resReq;
 
   std::string errHead = "Error in your script: "; 
-  while ((c = getopt_long_only(argc, argv, GETOPT_ARGS, long_options, &option_index)) != EOF) {
+  while ((c = getopt_long_only(argc, argv, GETOPT_ARGS, long_options, &option_index)) != -1) {
     switch (c) {
       case 'J':
         req->options |=SUB_JOB_NAME;
@@ -492,19 +491,15 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         break;
       case 'm':
         req->options |=SUB_HOST;
-        std::cout << "***********optarg=" << optarg << std::endl;
         host_list = strdup(optarg);
         if(!cleanString(host_list, '\"')) {
           cleanString(host_list, '\'');
         }
-        std::cout << "***********host_list=" << host_list << std::endl;
         host_tokens=getStreamTokens(host_list);
         req->numAskedHosts = host_tokens.size();
         req->askedHosts = new char*[host_tokens.size()];
-        std::cout << "***********req->numAskedHosts=" << req->numAskedHosts << std::endl;
         for(int i=0; i < host_tokens.size(); i++) {
           req->askedHosts[i] = strdup(host_tokens[i].c_str());
-          std::cout << "***********host" << i << " is " << req->askedHosts[i] << std::endl;
         }
         break;
       case 'n':
@@ -516,7 +511,6 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
           if(procsStr.find(separator)+1!=std::string::npos){
             max_proc_str = procsStr.substr(procsStr.find(separator)+1);
           }
-          std::cout << "***********min_proc_str=" << min_proc_str  << " and max_proc_str=" << max_proc_str << std::endl;
           if(!isNumerical(min_proc_str) || !isNumerical(max_proc_str)){
             throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(optarg)+"is an invalid"
                 " value for -n option. Correct format is -n min_processors[,max_processors]");
@@ -534,7 +528,6 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         }
         req->numProcessors=min_proc;
         req->maxNumProcessors=max_proc;
-        std::cout << "***********min_prc=" << min_proc  << " and max_proc=" << max_proc << std::endl;
         break;
       case 'i':
         req->options |=SUB_IN_FILE;
@@ -560,7 +553,6 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
       case 'G':
         req->options |=SUB_USER_GROUP;
         req->userGroup = strdup(optarg);
-        std::cout << "*********user-group-optarg=" << optarg << std::endl;
         break;
       case 'k':
         req->options |=SUB_CHKPNT_DIR;
@@ -569,11 +561,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
           cleanString(chkpnt, '\'');
         }
 
-        std::cout << "*****************chkpnt=" << chkpnt << std::endl;
         chkpnt_tokens=getStreamTokens(chkpnt); 
-        for(vector<std::string>::iterator iter=chkpnt_tokens.begin(); iter!=chkpnt_tokens.end(); ++iter){
-          std::cout << "*iter=" << *iter << std::endl;
-        }
         req->chkpntDir = strdup(chkpnt_tokens[0].c_str());
         if(chkpnt_tokens.size() >=2) {
           if(boost::algorithm::starts_with(chkpnt_tokens[1], "init=")) {
@@ -604,20 +592,25 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
             }
           } 
         }
-        std::cout << "*****************req->initChkpntPeriod=" << req->initChkpntPeriod << std::endl;
-        std::cout << "*****************req->chkpntPeriod=" << req->chkpntPeriod << std::endl;
         //TODO: -k chkpnt_dir [init=initial_chkpnt_period] [chkpnt_period] [method=method_name]
         break;
       case 'r':
         req->options |=SUB_RERUNNABLE;
+        std::cout << "req->options |=SUB_RERUNNABLE+++++++++++" << std::endl;
         break;
       case 'w':
         req->options |=SUB_DEPEND_COND;
         req->dependCond = strdup(optarg);
+        std::cout << "req->dependCond=" << req->dependCond << std::endl;
         break;
       case 'R':
         req->options |=SUB_RES_REQ;
-        req->resReq=strdup(optarg);
+        resReq = strdup(optarg);
+        if(!cleanString(resReq, '\"')) {
+          cleanString(resReq, '\'');
+        } 
+        req->resReq=strdup(resReq.c_str());
+        std::cout << "req->resReq=" << req->resReq << std::endl;
         break;
       case 'E':
         req->options |=SUB_PRE_EXEC;
@@ -813,12 +806,15 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
       case LONG_OPT_APP:
         req->options3 |= SUB3_APP;
         req->app= strdup(optarg);
+        std::cout << "*********app-optarg=" << optarg << std::endl;
       case LONG_OPT_CWD:
         req->options3 |= SUB3_CWD;
         req->cwd= strdup(optarg);
+        std::cout << "*********cwd-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_UL:
         req->options3 |= SUB3_USER_SHELL_LIMITS;
+        std::cout << "*********ul-optarg=" << std::endl;
         break;
       case LONG_OPT_WE:
         req->options2 |= SUB3_RUNTIME_ESTIMATION;
@@ -838,42 +834,52 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         break;
       case LONG_OPT_RN:
         req->options3 |= SUB3_NOT_RERUNNABLE;
-        std::cout << "*********rn-optarg=" << optarg << std::endl;
+        std::cout << "*********rn-optarg=" << std::endl;
         break;
       case LONG_OPT_JD:
         req->options3 |= SUB3_JOB_DESCRIPTION;
         req->jobDescription = strdup(optarg);
+        std::cout << "*********jd-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_IS:
         req->options |=SUB_IN_FILE;//TODO: to complete
         req->inFile = strdup(optarg);
+        std::cout << "*********jsdlFlag-optarg=" << std::endl;
         break;
       case LONG_OPT_EO:
         req->options |=SUB_ERR_FILE;//TODO: to complete
         req->errFile = strdup(optarg);
+        std::cout << "*********eo-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_OO:
         req->options |=SUB_OUT_FILE;//TODO: to complete
         req->outFile = strdup(optarg);
+        std::cout << "*********oo-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_AR:
         //TODO: ar (boolean)
+        std::cout << "*********ar-optarg=" << std::endl;
         break;
       case LONG_OPT_WA:
         req->options2 |=SUB2_WARNING_ACTION;
         req->warningAction = strdup(optarg);
+        std::cout << "*********wa-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_WT:
         req->options2 |= SUB2_WARNING_TIME_PERIOD;
         req->warningTimePeriod = convertWallTimeToTime(strdup(optarg), "is an invalid"
             " job action warning time  value for --wt option.");
+        std::cout << "*********warningTimePeriod-optarg=" << optarg << std::endl;
+        std::cout << "*********warningTimePeriod-optargConverted=" << req->warningTimePeriod << std::endl;
         break;
       case LONG_OPT_ZS:
         //TODO: -Zs (boolean)
+        std::cout << "*********Zs-optarg=" << std::endl;
         break;
       case LONG_OPT_EP:
         req->options3 |= SUB3_POST_EXEC;
         req->postExecCmd = strdup(optarg);
+        std::cout << "*********EP-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_SP:
         req->options2 |= SUB2_JOB_PRIORITY;
@@ -883,6 +889,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
           throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(strdup(optarg))+" is an invalid"
               " job priority value for -sp option.");
         }
+        std::cout << "*********SP-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_MIG:
         req->options3 |=SUB3_MIG_THRESHOLD;
@@ -892,41 +899,55 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
           throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(strdup(optarg))+" is an invalid"
               " job migration threshold value for -sp option.");
         }
+        std::cout << "*********mig-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_SLA:
         req->options2 |=SUB2_SLA;
         req->sla = strdup(optarg);
+        std::cout << "*********sla-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_EXT:
         req->options2 |=SUB2_EXTSCHED;
         req->extsched = strdup(optarg);
+        std::cout << "*********ext-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_LP:
         req->options2 |=SUB2_LICENSE_PROJECT;
         req->licenseProject = strdup(optarg);
+        std::cout << "*********LP-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_JSDL:
         req->jsdlFlag = 1;
+        std::cout << "*********jsdlFlag-optarg=" << std::endl;
         break;
       case LONG_OPT_JSDL_STRICT:
         req->jsdlFlag = 0;
+        std::cout << "*********jsdlStrictFlag-optarg=" << std::endl;
         break;
       case LONG_OPT_RNC:
         //-rnc resize_notify_command
         req->options3 |=SUB3_RESIZE_NOTIFY_CMD;
-        req->notifyCmd = strdup(optarg); 
+        req->notifyCmd = strdup(optarg);
+        std::cout << "*********rnc-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_XF:
         //-XF (boolean): To see
         //req->options3 |=SUB3_XFJOB;
+        std::cout << "*********xF-optarg=" << std::endl;
         break;
-      default: /* '?' */
-        std::cerr << "invalid option " << optarg << std::endl;
-        break;             
+      default: 
+       throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+"Invalid option: "
+                  +std::string(argv[optind-1])); 
+       break;             
     }
 
   }
-
+  std::cout << "argc=" << argc << std::endl;
+  std::cout << "optind=" << optind << std::endl;  
+  if(optind < argc) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+"Invalid argument: "
+                             +std::string(argv[optind]));  
+  }
   //search vishnu generic syntaxes and convert them
   searchAndConvertVishnuScriptGenSyntax(pathTofile, &(*req));
 

@@ -104,8 +104,8 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
       replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$LSB_JOBID");
       replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$LSB_JOBID");
       //To replace VISHNU_BATCHJOB_NAME
-      replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$LSB_JOB_NAME");
-      replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$LSB_JOB_NAME");
+      replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$LSB_JOBNAME");
+      replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$LSB_JOBNAME");
       //To replace VISHNU_BATCHJOB_NODEFILE
       replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$VISHNU_BATCHJOB_NODEFILE");      
       pos = scriptContent.find("$VISHNU_BATCHJOB_NODEFILE");

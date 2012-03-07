@@ -98,6 +98,7 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
   std::string errorPath;
   std::string stderrFilePath;
   bool wellSubmitted = false;
+  bool errorMsgIsSet = false;
 
   jobSerializedPath = TMS_SERVER_FILES_DIR+"/jobSerializedXXXXXX";
   vishnu::createTmpFile(const_cast<char*>(jobSerializedPath.c_str()), mjobSerialized);
@@ -172,9 +173,10 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
   if(!boost::filesystem::is_empty(errorFile)) {
     merrorInfo = vishnu::get_file_content(errorPath);
     merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
+    errorMsgIsSet=true;
   }
 
-  if((mbatchType==LOADLEVELER || mbatchType==LSF) && (wellSubmitted==false)) {
+  if((mbatchType==LOADLEVELER || mbatchType==LSF) && (wellSubmitted==false) && (errorMsgIsSet==false)) {
     boost::filesystem::path stderrFile(stderrFilePath.c_str());
     if(!boost::filesystem::is_empty(stderrFile)) {
       merrorInfo = vishnu::get_file_content(stderrFilePath);
