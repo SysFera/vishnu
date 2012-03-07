@@ -57,12 +57,12 @@ struct IsEndByQuote {
   IsEndByQuote(const char quote):mquote(quote){};
 
   bool operator()(const string& str) {
-    return (*(str.end()-1)==mquote);
+    return (str.size() > 1 && *(str.end()-1)==mquote);
   }
 };
 
 bool isStartByQuote(const string& str, const char quote) {
-  return (*(str.begin())==quote);
+  return (str.size() >= 1 && *(str.begin())==quote);
 }
 
 bool cleanString(string& str, const char& quote) {
@@ -78,6 +78,10 @@ bool cleanString(string& str, const char& quote) {
       str.replace(str.end()-1, str.end(), "");
       endIsClean = true;
     }
+    // erase all white space at a begining
+    while(boost::algorithm::starts_with(str, " ")){
+       str.erase(0,1);
+    };
   }
   return (begIsClean && endIsClean);
 }
@@ -388,7 +392,14 @@ LSFParser::convertScriptIntoArgv(const char* pathTofile,
         //To skip a comment on the line
         pos = line.find('#');
         if(pos!=std::string::npos) {
-          line = line.substr(0, pos); 
+           if(pos-1 >=0) {
+              std::string tmp = line.substr(pos-1);
+              if(boost::algorithm::starts_with(boost::algorithm::erase_all_copy(tmp, " "), "#")) {
+                line = line.substr(0, pos); 
+              }
+           } else {
+             line = line.substr(0, pos);
+           }
         }
         //verify quote characters in line
         verifyQuotaCharacter(line, '\"');
@@ -433,6 +444,9 @@ LSFParser::convertScriptIntoArgv(const char* pathTofile,
       }
     }
     quote='\0';
+    if(!cleanString(argvStr, '\"')) {
+       cleanString(argvStr, '\'');
+    }
     tokensArgs.push_back(argvStr);
   }
 
@@ -454,7 +468,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
   }
   std::cout << std::endl;
 
-  #define GETOPT_ARGS "J:q:m:n:i:o:e:xNBG:k:rw:R:E:L:P:u:U:K:W:g:Hc:F:p:M:D:S:v:T:b:t:f:Q"
+  #define GETOPT_ARGS "J:q:m:n:i:o:e:xNBG:k:rw:R:E:L:P:u:U:KW:g:Hc:F:p:M:D:S:v:T:b:t:f:Q"
 
   int option_index = 0;
   optind=0;
@@ -476,7 +490,6 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
   std::string xFileStr;
   std::vector<std::string> xFile_tokens;
   int oldNxf;
-  std::string resReq;
 
   std::string errHead = "Error in your script: "; 
   while ((c = getopt_long_only(argc, argv, GETOPT_ARGS, long_options, &option_index)) != -1) {
@@ -488,13 +501,11 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
       case 'q':
         req->options |=SUB_QUEUE;
         req->queue = strdup(optarg);
+        std::cout << "req->queue=" << req->queue  << std::endl;
         break;
       case 'm':
         req->options |=SUB_HOST;
         host_list = strdup(optarg);
-        if(!cleanString(host_list, '\"')) {
-          cleanString(host_list, '\'');
-        }
         host_tokens=getStreamTokens(host_list);
         req->numAskedHosts = host_tokens.size();
         req->askedHosts = new char*[host_tokens.size()];
@@ -534,9 +545,9 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         req->inFile = strdup(optarg);
         break;
       case 'o':
-        req->options |=SUB_OUT_FILE;
-        req->outFile = strdup(optarg);
-        break;
+         req->options |=SUB_OUT_FILE;
+         req->outFile = strdup(optarg);
+         break;
       case 'e':
         req->options |=SUB_ERR_FILE;
         req->errFile = strdup(optarg);
@@ -557,10 +568,6 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
       case 'k':
         req->options |=SUB_CHKPNT_DIR;
         chkpnt = strdup(optarg);
-        if(!cleanString(chkpnt, '\"')) {
-          cleanString(chkpnt, '\'');
-        }
-
         chkpnt_tokens=getStreamTokens(chkpnt); 
         req->chkpntDir = strdup(chkpnt_tokens[0].c_str());
         if(chkpnt_tokens.size() >=2) {
@@ -596,21 +603,14 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         break;
       case 'r':
         req->options |=SUB_RERUNNABLE;
-        std::cout << "req->options |=SUB_RERUNNABLE+++++++++++" << std::endl;
         break;
       case 'w':
         req->options |=SUB_DEPEND_COND;
         req->dependCond = strdup(optarg);
-        std::cout << "req->dependCond=" << req->dependCond << std::endl;
         break;
       case 'R':
         req->options |=SUB_RES_REQ;
-        resReq = strdup(optarg);
-        if(!cleanString(resReq, '\"')) {
-          cleanString(resReq, '\'');
-        } 
-        req->resReq=strdup(resReq.c_str());
-        std::cout << "req->resReq=" << req->resReq << std::endl;
+        req->resReq = strdup(optarg);
         break;
       case 'E':
         req->options |=SUB_PRE_EXEC;
@@ -627,20 +627,19 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
       case 'u':
         req->options |=SUB_MAIL_USER;
         req->mailUser = strdup(optarg);
-        std::cout << "*********mail-user-optarg=" << optarg << std::endl;
         break;
       case 'U':
-        req->options |=SUB2_USE_RSV;
+        req->options2 |=SUB2_USE_RSV;
         req->rsvId = strdup(optarg);
         break;
       case 'K':
-        req->options2 |=SUB2_BSUB_BLOCK; //To see
+        req->options2 |=SUB2_BSUB_BLOCK; 
+        throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+" option -K is "
+                  " not treated by VISHNU.");   
         break;
       case 'W':
         //-W run_limit[/host_spec]
-        std::cout << "*********optarg=" << optarg << std::endl;
         timeStr = std::string(strdup(optarg));
-        std::cout << "*********timeStr=" << timeStr << std::endl;
         if(timeStr.find("/")!=std::string::npos) {
           if((timeStr.find("/")+1)!=std::string::npos) {
             req->options |= SUB_HOST_SPEC;
@@ -651,17 +650,13 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         } else {
           req->rLimits[LSF_RLIMIT_RUN] = convertWallTimeToTime(timeStr);
         }
-        std::cout << "*****hostSpec=" << wHostSpec << std::endl;
-        std::cout << "*********req->rLimits[LSF_RLIMIT_RUN]=" << req->rLimits[LSF_RLIMIT_RUN] << std::endl;
         break;
       case 'g':
         req->options2 |= SUB2_JOB_GROUP;
         req->jobGroup = strdup(optarg);
-        std::cout << "*********jobGroup-optarg=" << optarg << std::endl;
         break;
       case 'H':
         req->options2 |= SUB2_HOLD;
-        std::cout << "*********hold-optarg=" << optarg << std::endl;
         break;
       case 'c':
         timeStr = std::string(strdup(optarg));
@@ -675,8 +670,6 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         } else {
           req->rLimits[LSF_RLIMIT_CPU] = convertWallTimeToTime(timeStr);
         }
-        std::cout << "*****hostSpec=" << wHostSpec << std::endl;
-        std::cout << "*********req->rLimits[LSF_RLIMIT_CPU]=" << req->rLimits[LSF_RLIMIT_CPU] << std::endl;
         break;
       case 'F':
         if(isNumerical(strdup(optarg))) {
@@ -691,7 +684,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
           req->rLimits[LSF_RLIMIT_PROCESS]=vishnu::convertToInt(strdup(optarg));
         }  else {
           throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(strdup(optarg))+" is an invalid"
-              " process_limit value for -F option.");
+              " process_limit value for -p option.");
         }
         break;
       case 'M':
@@ -707,7 +700,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
           req->rLimits[LSF_RLIMIT_DATA]=vishnu::convertToInt(strdup(optarg));
         }  else {
           throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(strdup(optarg))+" is an invalid"
-              " data_limit value for -s option.");
+              " data_limit value for -D option.");
         }
         break;
       case 'S':
@@ -817,7 +810,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         std::cout << "*********ul-optarg=" << std::endl;
         break;
       case LONG_OPT_WE:
-        req->options2 |= SUB3_RUNTIME_ESTIMATION;
+        req->options3 |= SUB3_RUNTIME_ESTIMATION;
         timeStr = strdup(optarg);
         if(timeStr.find("/")!=std::string::npos) {
           if((timeStr.find("/")+1)!=std::string::npos) {

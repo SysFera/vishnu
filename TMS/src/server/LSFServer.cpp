@@ -111,23 +111,20 @@ LSFServer::submit(const char* scriptPath,
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, errorMsg);
   }
 
-  batchJobId = selectQueueAutom(options, &req, &reply);
-  if(batchJobId < 0){  
+  batchJobId = lsb_submit(&req, &reply);
 
-    batchJobId = lsb_submit(&req, &reply);
-
-    if (batchJobId < 0) {
-      switch (lsberrno) {
-        case LSBE_QUEUE_USE:
-        case LSBE_QUEUE_CLOSED:
-          lsb_perror(reply.queue);
-          return -1;//error messages are written to stderr, VISHNU redirects these messages into a file
-        default:
-        lsb_perror(NULL);
-        return -1;//error messages are written to stderr, VISHNU redirects these messages into a file
-     }
+  if (batchJobId < 0) {
+    switch (lsberrno) {
+      case LSBE_QUEUE_USE:
+      case LSBE_QUEUE_CLOSED:
+        lsb_perror(reply.queue);
+       return -1;//error messages are written to stderr, VISHNU redirects these messages into a file
+      default:
+       lsb_perror(NULL);
+      return -1;//error messages are written to stderr, VISHNU redirects these messages into a file
     }
   }
+
   if(req.jobName!=NULL) std::cout << "********2req.jobName=" << req.jobName << std::endl;
   if(req.outFile!=NULL) std::cout << "********2req.outFile=" << req.outFile << std::endl;
   std::cout << "**********batchJobId= " << batchJobId << std::endl;
@@ -167,44 +164,6 @@ LSFServer::submit(const char* scriptPath,
   return 0;
 }
 
-LS_LONG_INT  
-LSFServer::selectQueueAutom(const TMS_Data::SubmitOptions& options, struct submit* req, struct submitReply *reply) {
-
-  LS_LONG_INT batchJobId=-1;
-  if(options.isSelectQueueAutom()) {
-
-    TMS_Data::ListQueues* listOfQueues = listQueues();
-    if(listOfQueues != NULL) {
-
-      for(unsigned int i = 0; i < listOfQueues->getNbQueues(); i++) {
-         TMS_Data::Queue* queue =  listOfQueues->getQueues().get(i);
-         req->options |=SUB_QUEUE;
-         req->queue = strdup(queue->getName().c_str()); 
-         std::cout << "==============================Candidated queue name is :" << req->queue << std::endl;
-         batchJobId = lsb_submit(&(*req), &(*reply));
-
-         if (batchJobId < 0) {
-            if(lsberrno==LSBE_QUEUE_USE || lsberrno==LSBE_QUEUE_WINDOW 
-              || lsberrno==LSBE_QUEUE_HOST || lsberrno==LSBE_QUEUE_CLOSED)
-             {
-                if(i==listOfQueues->getNbQueues()){
-                   throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF: not queue corresponding"
-                         " of the constraint to submit this job.");
-                }
-                continue;
-             } else {
-               lsb_perror(NULL);
-               batchJobId=-1;
-               break;
-             }
-          }
-          break;
-      }
-    }
-  }
-  if(req->queue!=NULL) std::cout << "==============================Selected queue name is :" << req->queue << std::endl;
-  return batchJobId;
-}
 
 /**
  * \brief Function to treat the submission options
@@ -320,6 +279,25 @@ LSFServer::processOptions(const char* scriptPath,
 
   if(!(options.getCpuTime().empty())) {
      req->rLimits[LSF_RLIMIT_CPU] = convertStringToWallTime(options.getCpuTime())/60;
+  }
+
+  if(options.isSelectQueueAutom()) {
+    std::string queuesList;
+    TMS_Data::ListQueues* listOfQueues = listQueues();
+    if(listOfQueues != NULL) {
+      TMS_Data::Queue* queue;
+      for(unsigned int i = 0; i < listOfQueues->getNbQueues(); i++) {
+         queue =  listOfQueues->getQueues().get(i);
+         if(!queuesList.empty()) {
+           queuesList = queuesList+" "+queue->getName(); 
+         } else {
+           queuesList = queue->getName();
+         }
+      }
+    }
+    req->options |=SUB_QUEUE;
+    req->queue = strdup(queuesList.c_str());
+    std::cout << "-----------------------queuesList=" << queuesList << std::endl;
   }
 
 }

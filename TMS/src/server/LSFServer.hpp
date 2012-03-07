@@ -153,10 +153,6 @@ class LSFServer : public BatchServer
     std::string
       checkLSFOutPutPath(char*& path, const std::string& pathInfo="job output path"); 
 
-    LS_LONG_INT
-    selectQueueAutom(const TMS_Data::SubmitOptions& options, 
-                     struct submit* req, 
-                     struct submitReply *reply);
     /**
      * \brief ListQueues returned
      */
