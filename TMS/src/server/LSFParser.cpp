@@ -736,10 +736,6 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
       case 'f':
         //-f "lfile op [rfile]"
         xFileStr = strdup(optarg);
-        if(!cleanString(xFileStr, '\"')) {
-          cleanString(xFileStr, '\'');
-        }
-
         xFile_tokens = getStreamTokens(xFileStr);
 
         if(xFile_tokens.size() < 2) {
