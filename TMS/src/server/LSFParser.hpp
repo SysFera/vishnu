@@ -31,7 +31,13 @@ static const unsigned int LONG_OPT_JSDL        = 0x115;
 static const unsigned int LONG_OPT_JSDL_STRICT = 0x116;
 static const unsigned int LONG_OPT_RNC         = 0x117;
 static const unsigned int LONG_OPT_XF          = 0x118;
-
+static const unsigned int LONG_OPT_I           = 0x119;
+static const unsigned int LONG_OPT_Ip          = 0x11a;
+static const unsigned int LONG_OPT_Is          = 0x11b;
+static const unsigned int LONG_OPT_IS2         = 0x11c;
+static const unsigned int LONG_OPT_ISp         = 0x11d;
+static const unsigned int LONG_OPT_ISs         = 0x11e;
+static const unsigned int LONG_OPT_IX          = 0x11f;
 
 /**
  * \class LSFParser

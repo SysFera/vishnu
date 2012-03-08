@@ -48,7 +48,14 @@ static struct option long_options[] = {
   {"jsdl", required_argument, 0, LONG_OPT_JSDL},
   {"jsdl_strict", required_argument, 0, LONG_OPT_JSDL_STRICT},
   {"rnc", required_argument, 0, LONG_OPT_RNC},
-  {"XF", no_argument, 0, LONG_OPT_XF}
+  {"XF", no_argument, 0, LONG_OPT_XF},
+  {"I", no_argument, 0, LONG_OPT_I},
+  {"Ip", no_argument, 0, LONG_OPT_Ip},
+  {"Is", no_argument, 0, LONG_OPT_Is},
+  {"IS", no_argument, 0, LONG_OPT_IS2},
+  {"ISp", no_argument, 0, LONG_OPT_ISp},
+  {"ISs", no_argument, 0, LONG_OPT_ISs},
+  {"IX", no_argument, 0, LONG_OPT_IX}
 };
 
 struct IsEndByQuote {
@@ -541,6 +548,9 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         req->maxNumProcessors=max_proc;
         break;
       case 'i':
+        if((req->options2 & SUB2_IN_FILE_SPOOL)==SUB2_IN_FILE_SPOOL) {
+          throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+" is|i options are exclusive");
+        }
         req->options |=SUB_IN_FILE;
         req->inFile = strdup(optarg);
         break;
@@ -833,9 +843,12 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         req->jobDescription = strdup(optarg);
         break;
       case LONG_OPT_IS:
-        req->options |=SUB_IN_FILE;//TODO: to complete
+        if((req->options & SUB_IN_FILE)==SUB_IN_FILE) {
+          throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+" is|i options are exclusive");
+        }
+        req->options |=SUB_IN_FILE;
+        req->options2 |=SUB2_IN_FILE_SPOOL;
         req->inFile = strdup(optarg);
-        std::cout << "*********is-optarg=" << std::endl;
         break;
       case LONG_OPT_EO:
         req->options |=SUB_ERR_FILE;
@@ -848,24 +861,22 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         req->outFile = strdup(optarg);
         break;
       case LONG_OPT_AR:
-        //TODO: ar (boolean)
-        std::cout << "*********ar-optarg=" << std::endl;
+        req->options3 |= SUB3_AUTO_RESIZE;
         break;
       case LONG_OPT_WA:
         req->options2 |=SUB2_WARNING_ACTION;
         req->warningAction = strdup(optarg);
-        std::cout << "*********wa-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_WT:
         req->options2 |= SUB2_WARNING_TIME_PERIOD;
-        req->warningTimePeriod = convertWallTimeToTime(strdup(optarg), "is an invalid"
-            " job action warning time  value for --wt option.");
-        std::cout << "*********warningTimePeriod-optarg=" << optarg << std::endl;
-        std::cout << "*********warningTimePeriod-optargConverted=" << req->warningTimePeriod << std::endl;
+        req->warningTimePeriod = convertWallTimeToTime(strdup(optarg), "Is an invalid"
+            " job action warning time  value for -wt option.");
         break;
       case LONG_OPT_ZS:
-        //TODO: -Zs (boolean)
-        std::cout << "*********Zs-optarg=" << std::endl;
+        throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+" -Zs is not supported for VISHNU"
+                                 " because LSF is unable to determine the first command"
+                                 " to be spooled in an embedded job command"
+                                 "(VISHNU job is considered by LSF as embedded job commands)");
         break;
       case LONG_OPT_EP:
         req->options3 |= SUB3_POST_EXEC;
@@ -926,6 +937,11 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         //req->options3 |=SUB3_XFJOB;
         std::cout << "*********xF-optarg=" << std::endl;
         break;
+      case LONG_OPT_I: case LONG_OPT_Ip: case LONG_OPT_Is: 
+      case LONG_OPT_IS2: case LONG_OPT_ISp: case LONG_OPT_ISs: case LONG_OPT_IX:
+        throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+" LSF batch interactive job " 
+                                 "option "+std::string(argv[optind-1])+" is not supported by VISHNU");
+       break;
       default: 
        throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+"Invalid option: "
                   +std::string(argv[optind-1])); 
@@ -1013,17 +1029,13 @@ LSFParser::searchAndConvertVishnuScriptGenSyntax(const char* pathTofile, struct 
            std::string notification = (*iter).substr(pos+mailNotificationSyntax.size());
            if(notification.compare("BEGIN")==0) {
                req->options |=SUB_NOTIFY_BEGIN;
-               std::cout << "++++++++++++++notification=BEGIN" << std::endl; 
            } else if(notification.compare("END")==0) {
                req->options |=SUB_NOTIFY_END;
-               std::cout << "++++++++++++++notification=END" << std::endl;
            } else if(notification.compare("ERROR")==0) {//not exist in LSF
                req->options |=SUB_NOTIFY_END; //send mail after execution or failure of the job
-               std::cout << "++++++++++++++notification=ERROR" << std::endl;
            } else if(notification.compare("ALL")==0) {
                req->options |=SUB_NOTIFY_BEGIN;
                req->options |=SUB_NOTIFY_END;
-               std::cout << "++++++++++++++notification=ALL" << std::endl;
            } else {
                  throw UserException(ERRCODE_INVALID_PARAM, "In your script: "+notification+" is an invalid notification"
                                " type:"+" consult the vishnu user manuel");
