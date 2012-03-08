@@ -30,7 +30,7 @@ static struct option long_options[] = {
   {"rn", no_argument, 0, LONG_OPT_RN},
   {"app", required_argument, 0, LONG_OPT_APP},
   {"cwd", required_argument, 0, LONG_OPT_CWD},
-  {"ul", required_argument, 0, LONG_OPT_UL},
+  {"ul", no_argument, 0, LONG_OPT_UL},
   {"Jd", required_argument, 0, LONG_OPT_JD},
   {"is", required_argument, 0, LONG_OPT_IS},
   {"eo", required_argument, 0, LONG_OPT_EO},
@@ -603,6 +603,10 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         break;
       case 'r':
         req->options |=SUB_RERUNNABLE;
+        if((req->options3 & SUB3_NOT_RERUNNABLE)==SUB3_NOT_RERUNNABLE) {
+          throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+" You cannot set a job to be rerunnable"
+                                   "and not-rerunnable at the same time");
+        }
         break;
       case 'w':
         req->options |=SUB_DEPEND_COND;
@@ -795,15 +799,13 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
       case LONG_OPT_APP:
         req->options3 |= SUB3_APP;
         req->app= strdup(optarg);
-        std::cout << "*********app-optarg=" << optarg << std::endl;
+        break;
       case LONG_OPT_CWD:
         req->options3 |= SUB3_CWD;
         req->cwd= strdup(optarg);
-        std::cout << "*********cwd-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_UL:
         req->options3 |= SUB3_USER_SHELL_LIMITS;
-        std::cout << "*********ul-optarg=" << std::endl;
         break;
       case LONG_OPT_WE:
         req->options3 |= SUB3_RUNTIME_ESTIMATION;
@@ -818,32 +820,32 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         } else {
           req->runtimeEstimation = convertWallTimeToTime(timeStr);  
         }
-        std::cout << "---------------------wHostSpec=" << wHostSpec << std::endl;
-        std::cout << "*********req->runtimeEstimation=" << req->runtimeEstimation << std::endl;
         break;
       case LONG_OPT_RN:
         req->options3 |= SUB3_NOT_RERUNNABLE;
-        std::cout << "*********rn-optarg=" << std::endl;
+        if((req->options & SUB_RERUNNABLE)==SUB_RERUNNABLE) {
+          throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+" You cannot set a job to be rerunnable"
+                                   "and not-rerunnable at the same time");
+        }
         break;
       case LONG_OPT_JD:
         req->options3 |= SUB3_JOB_DESCRIPTION;
         req->jobDescription = strdup(optarg);
-        std::cout << "*********jd-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_IS:
         req->options |=SUB_IN_FILE;//TODO: to complete
         req->inFile = strdup(optarg);
-        std::cout << "*********jsdlFlag-optarg=" << std::endl;
+        std::cout << "*********is-optarg=" << std::endl;
         break;
       case LONG_OPT_EO:
-        req->options |=SUB_ERR_FILE;//TODO: to complete
+        req->options |=SUB_ERR_FILE;
+        req->options2 |= SUB2_OVERWRITE_ERR_FILE;
         req->errFile = strdup(optarg);
-        std::cout << "*********eo-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_OO:
-        req->options |=SUB_OUT_FILE;//TODO: to complete
+        req->options |=SUB_OUT_FILE;
+        req->options2 |= SUB2_OVERWRITE_OUT_FILE;
         req->outFile = strdup(optarg);
-        std::cout << "*********oo-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_AR:
         //TODO: ar (boolean)
