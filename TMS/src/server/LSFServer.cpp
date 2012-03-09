@@ -82,6 +82,7 @@ LSFServer::submit(const char* scriptPath,
   req.nxf = 0;
   req.delOptions = 0;
   req.numAskedHosts = 0;
+  req.jsdlFlag = -1;
   //parse the file
   if(LSFParser::parse_file(scriptPath, &req) < 0) {
     return -1; 
