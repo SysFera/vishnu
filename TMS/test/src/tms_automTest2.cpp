@@ -407,6 +407,9 @@ BOOST_AUTO_TEST_CASE(list_batch_jobs_normal_call)
     } else if(BATCHTYPE=="SLURM") {
       createCommand << "sbatch " << scriptFilePath << " > " << stdOutResult;
       BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0);
+    } else if(BATCHTYPE=="LSF") {
+      createCommand << "bsub < " << scriptFilePath << " > " << stdOutResult;
+      BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0);
     }
   
     ListJobs lsJobs;
