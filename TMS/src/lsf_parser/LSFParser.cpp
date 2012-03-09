@@ -475,7 +475,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
   }
   std::cout << std::endl;
 
-  #define GETOPT_ARGS "J:q:m:n:i:o:e:xNBG:k:rw:R:E:L:P:u:U:KW:g:Hc:F:p:M:D:S:v:T:b:t:f:Q"
+  #define GETOPT_ARGS "J:q:m:n:i:o:e:xNBG:k:rw:R:E:L:P:u:U:KW:g:Hc:F:p:M:D:S:v:T:b:t:f:Q:"
 
   int option_index = 0;
   optind=0;
@@ -609,7 +609,6 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
             }
           } 
         }
-        //TODO: -k chkpnt_dir [init=initial_chkpnt_period] [chkpnt_period] [method=method_name]
         break;
       case 'r':
         req->options |=SUB_RERUNNABLE;
@@ -647,7 +646,6 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         req->rsvId = strdup(optarg);
         break;
       case 'K':
-        req->options2 |=SUB2_BSUB_BLOCK; 
         throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+" option -K is "
                   " not treated by VISHNU.");   
         break;
@@ -803,8 +801,8 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         }
         break;
       case 'Q':
-        //TODO; -Q requeue_exit_values
-        //req->requeueEValues = strdup(optarg);
+        req->options3 |= SUB3_JOB_REQUEUE;
+        req->requeueEValues = strdup(optarg);
         break;
       case LONG_OPT_APP:
         req->options3 |= SUB3_APP;
@@ -881,7 +879,6 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
       case LONG_OPT_EP:
         req->options3 |= SUB3_POST_EXEC;
         req->postExecCmd = strdup(optarg);
-        std::cout << "*********EP-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_SP:
         req->options2 |= SUB2_JOB_PRIORITY;
@@ -891,7 +888,6 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
           throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(strdup(optarg))+" is an invalid"
               " job priority value for -sp option.");
         }
-        std::cout << "*********SP-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_MIG:
         req->options3 |=SUB3_MIG_THRESHOLD;
@@ -899,43 +895,44 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
           req->migThreshold = vishnu::convertToInt(strdup(optarg));
         } else {
           throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(strdup(optarg))+" is an invalid"
-              " job migration threshold value for -sp option.");
+              " job migration threshold value for -mig option.");
         }
-        std::cout << "*********mig-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_SLA:
         req->options2 |=SUB2_SLA;
         req->sla = strdup(optarg);
-        std::cout << "*********sla-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_EXT:
         req->options2 |=SUB2_EXTSCHED;
         req->extsched = strdup(optarg);
-        std::cout << "*********ext-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_LP:
         req->options2 |=SUB2_LICENSE_PROJECT;
         req->licenseProject = strdup(optarg);
-        std::cout << "*********LP-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_JSDL:
+        if(req->jsdlFlag == 0) {
+          throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+" conflict: you cannot set jsdl"
+                                   " and jsdl_strict at the same time");
+        }
         req->jsdlFlag = 1;
-        std::cout << "*********jsdlFlag-optarg=" << std::endl;
+        req->jsdlDoc = strdup(optarg);
         break;
       case LONG_OPT_JSDL_STRICT:
+        if(req->jsdlFlag == 1) {
+          throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+" conflict: you cannot set jsdl"
+                                   " and jsdl_strict at the same time");
+        }
         req->jsdlFlag = 0;
-        std::cout << "*********jsdlStrictFlag-optarg=" << std::endl;
+        req->jsdlDoc = strdup(optarg);
         break;
       case LONG_OPT_RNC:
-        //-rnc resize_notify_command
         req->options3 |=SUB3_RESIZE_NOTIFY_CMD;
         req->notifyCmd = strdup(optarg);
-        std::cout << "*********rnc-optarg=" << optarg << std::endl;
         break;
       case LONG_OPT_XF:
-        //-XF (boolean): To see
-        //req->options3 |=SUB3_XFJOB;
-        std::cout << "*********xF-optarg=" << std::endl;
+        throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+" option -XF is "
+                  " not treated by VISHNU.");   
         break;
       case LONG_OPT_I: case LONG_OPT_Ip: case LONG_OPT_Is: 
       case LONG_OPT_IS2: case LONG_OPT_ISp: case LONG_OPT_ISs: case LONG_OPT_IX:
@@ -949,8 +946,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
     }
 
   }
-  std::cout << "argc=" << argc << std::endl;
-  std::cout << "optind=" << optind << std::endl;  
+  
   if(optind < argc) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+"Invalid argument: "
                              +std::string(argv[optind]));  

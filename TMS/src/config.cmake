@@ -40,7 +40,8 @@ if (VISHNU_USE_SLURM)
 endif(VISHNU_USE_SLURM)
 
 if(VISHNU_USE_LSF)
-  set(LSFSERVER server/LSFServer.cpp server/LSFParser.cpp)
+  set(LSFSERVER server/LSFServer.cpp 
+      lsf_parser/LSFParser.cpp)
   set(LSF_ALL_INCLUDE_DIR ${LSF_INCLUDE_DIR})
   set(LSF_ALL_LIB_DIR ${LSF_LIB} ${LSBATCH_LIB})
 endif(VISHNU_USE_LSF) 
