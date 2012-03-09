@@ -475,7 +475,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
   }
   std::cout << std::endl;
 
-  #define GETOPT_ARGS "J:q:m:n:i:o:e:xNBG:k:rw:R:E:L:P:u:U:KW:g:Hc:F:p:M:D:S:v:T:b:t:f:Q:"
+  #define GETOPT_ARGS "J:q:m:n:i:o:e:xNBG:k:rw:R:E:L:P:u:U:KW:g:Hc:F:p:M:D:S:v:T:b:t:f:Q:s:"
 
   int option_index = 0;
   optind=0;
@@ -804,6 +804,14 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         req->options3 |= SUB3_JOB_REQUEUE;
         req->requeueEValues = strdup(optarg);
         break;
+      case 's':
+        if(isNumerical(strdup(optarg))) {
+          req->sigValue = vishnu::convertToInt(strdup(optarg));
+        } else {
+          throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(strdup(optarg))+" is an invalid"
+              " job migration threshold value for -s option.");
+        }
+        break;  
       case LONG_OPT_APP:
         req->options3 |= SUB3_APP;
         req->app= strdup(optarg);
