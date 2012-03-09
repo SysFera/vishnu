@@ -2,6 +2,7 @@
 #include <boost/assign/list_of.hpp>
 #include <boost/assign/std/vector.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/filesystem/fstream.hpp>
 #include <boost/process/all.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/test/unit_test.hpp>
@@ -11,7 +12,7 @@ using namespace std;
 namespace bp = boost::process;
 
 namespace ba = boost::assign;
-namespace bf = boost::filesystem;
+namespace bfs = boost::filesystem;
 namespace bs = boost::system;
 
 VishnuConnexion::VishnuConnexion(const string& uid, const string& upwd, const UMS_Data::ConnectOptions& co):muid(uid),mupwd(upwd),mco(co),open(false){
@@ -64,12 +65,34 @@ bool operator== (const Job& lJob,const Job& rJob ){
 
 std::string findValue(const std::string& content, const std::string& key) {
  
-  size_t pos = content.find(key);
+  size_t pos = content.rfind(key);
   std::string tmp = content.substr(pos+key.size());
   std::istringstream iss(tmp);
   std::string value;
   iss >> value;
  return value;
+}
+
+std::string
+getFileContent(const std::string& filePath){
+
+  bfs::path file (filePath);
+
+  // Check the existence of file
+  if (((false==bfs::exists(file)) || (true==bfs::is_empty(file)))
+    || (false==bfs::is_regular_file(file))) {
+    throw UserException(ERRCODE_INVALID_PARAM, "can not read the file: " + filePath);
+  }
+
+  bfs::ifstream ifs (file);
+
+  // Read the whole file into string
+
+  std::stringstream ss;
+  ss << ifs.rdbuf();
+
+  return ss.str();
+
 }
 
 

@@ -283,6 +283,7 @@ set(TMS_SED_SOURCE_DIR ${VISHNU_SOURCE_DIR}/TMS/src/sed)
 set(TMS_UTILS_DIR ${VISHNU_SOURCE_DIR}/TMS/src/utils/)
 set(UTILS_TORQUE_DIR ${VISHNU_SOURCE_DIR}/TMS/src/utils_torque/)
 set(SLURM_PARSER_DIR ${VISHNU_SOURCE_DIR}/TMS/src/slurm_parser/)
+set(LSF_PARSER_DIR ${VISHNU_SOURCE_DIR}/TMS/src/lsf_parser/)
 
 #IMS
 set(IMS_EMF_DATA_DIR ${EMF_DATA_DIR}/IMS_Data)
@@ -366,6 +367,7 @@ if (BUILD_TESTING)
   set(TEST_TMS_SCRIPT_NAME_WAITING testScriptGenWaiting CACHE STRING " The name of the with an option to put job on waiting state")
   set(TMS_SCRIPT_PATH ${VISHNU_SOURCE_DIR}/TMS/test/src/scripts CACHE STRING " The path to the script to submit")
   set(TEST_CONFIG_DIR ${VISHNU_SOURCE_DIR}/TMS/test/src/scripts/ CACHE PATH "Tests configuration directory")
+  set(LSF_QUEUES_CONFIG_DIR /opt/lsf7u6/conf/lsbatch/cluster1/configdir/lsb.queues CACHE PATH "LSF queues configuration directory")
   set(TEST_AUTHENTYPE "UMS" CACHE STRING "The type of authentication")
 
   mark_as_advanced(TEST_DB_TYPE)

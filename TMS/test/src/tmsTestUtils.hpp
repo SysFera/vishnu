@@ -34,4 +34,6 @@ bool operator== (const Job& lJob,const Job& rJob );
 
 std::string findValue(const std::string& content, const std::string& key);
 
+std::string getFileContent(const std::string& filePath);
+
 #endif

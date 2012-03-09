@@ -43,8 +43,6 @@ namespace bfs= boost::filesystem;
 
 BOOST_FIXTURE_TEST_SUITE(submit_a_job, TMSSeDFixture)
 
-
-
 // submit a job: normal call
 BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call)
 {
@@ -88,7 +86,6 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call)
     BOOST_CHECK(false);
   }
 }
-
 
 // submit a job: normal call
 BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
@@ -150,7 +147,8 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
       oss << ifile.rdbuf();
       jobOutputContent = oss.str();
       ifile.close();
-
+            
+      BOOST_TEST_MESSAGE("*********************** jobOutputContent=" << jobOutputContent);
       vishnuEnvId = findValue(jobOutputContent, "#TEST_JOB_ID:");
       batchEnvId = findValue(jobOutputContent, "#BATCH_JOB_ID:");
       vishnuEnvName  = findValue(jobOutputContent, "#TEST_JOB_NAME:");
@@ -196,7 +194,6 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
     BOOST_CHECK(false);
   }
 }
-
 
 // submit a job: normal call
 BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call3)
@@ -260,7 +257,6 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call3)
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------
-
 // submit a job: bad parameters: bad sessionKey
 BOOST_AUTO_TEST_CASE(submit_a_Job_bad_sessionKey)
 {
@@ -310,7 +306,6 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_bad_machineId)
 
 }
 
-
 // submit a job: bad parameters: bad script content
 
 BOOST_AUTO_TEST_CASE(submit_a_Job_bad_script_content)
@@ -331,6 +326,8 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_bad_script_content)
     scriptFilePath=TMSCONFIGDIR "/bad_torque_script";
   } else if(BATCHTYPE=="SLURM") {
     scriptFilePath=TMSCONFIGDIR "/bad_slurm_script";
+  } else if(BATCHTYPE=="LSF") {
+    scriptFilePath=TMSCONFIGDIR "/bad_lsf_script";
   } else {
     scriptFilePath=TMSCONFIGDIR "/bad_unknow_batch_type_script";
   }
@@ -344,6 +341,7 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_bad_script_content)
 
 
 }
+
 // submit a job: bad parameters: bad script path
 
 BOOST_AUTO_TEST_CASE(submit_a_Job_bad_script_path)
@@ -367,6 +365,7 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_bad_script_path)
   BOOST_CHECK_THROW( submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),VishnuException );
 
 }
+
 
 // automatic submit a job: normal call
 BOOST_AUTO_TEST_CASE(automatic_submit_a_Job_normal_call)
@@ -452,7 +451,6 @@ BOOST_AUTO_TEST_CASE(automatic_submit_a_Job_with_user_no_local_accounts)
     BOOST_CHECK(false);
   }
 }
-
 
 BOOST_AUTO_TEST_SUITE_END()
 

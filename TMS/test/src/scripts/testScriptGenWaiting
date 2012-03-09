@@ -29,6 +29,9 @@
 # PBS -q second_queue
 #PBS -a 1230
 #SBATCH --begin=now+1hour
+#BSUB -b 12:30
+#BSUB -q normal
+
 echo "The name of the submitted server is: " $HOSTNAME
  sleep 60
   ls -l
