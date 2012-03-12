@@ -62,6 +62,7 @@ macro(genCli NAME )
   target_link_libraries(${CMDNAME}
     ${Boost_LIBRARIES}
     ${VISHNU_EXCEPTION_LIB}
+    ${LOG_LIBRARY}
     vishnu-fms-client
     vishnu-ums-client)
   install(TARGETS ${CMDNAME} DESTINATION ${BIN_INSTALL_DIR})
