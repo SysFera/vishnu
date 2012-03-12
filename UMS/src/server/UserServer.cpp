@@ -248,22 +248,33 @@ int
 UserServer::changePassword(std::string newPassword) {
   std::string sqlChangePwd;
   std::string sqlUpdatePwdState;
+  //the flagForChangePwd is set to true to avoid the password state checking
 
-  //If the user exist (the flagForChangePwd is set to true to avoid the password state checking)
+  //If the user exist
   if (isAuthenticate(true)) {
-    //sql code to change the user password
-    sqlChangePwd = "UPDATE users SET pwd='"+newPassword+"'where "
-    "userid='"+muser.getUserId()+"' and pwd='"+muser.getPassword()+"';";
+    //If the identifiers used for the connection are a global VISHNU identifiers registered on UMS database
+    if (getAttribut("where userid='"+muser.getUserId()+"'").size() != 0) {
+      //To encrypt password with the global userId as a salt
+      newPassword = vishnu::cryptPassword(muser.getUserId(), newPassword);
 
-    //sql code to update the passwordstate
-    sqlUpdatePwdState = "UPDATE users SET passwordstate=1 "
-    "where userid='"+muser.getUserId()+"' and pwd='"+newPassword+"';";
+      //sql code to change the user password
+      sqlChangePwd = "UPDATE users SET pwd='"+newPassword+"'where "
+      "userid='"+muser.getUserId()+"' and pwd='"+muser.getPassword()+"';";
 
-    sqlChangePwd.append(sqlUpdatePwdState);
-    mdatabaseVishnu->process(sqlChangePwd.c_str());
+      //sql code to update the passwordstate
+      sqlUpdatePwdState = "UPDATE users SET passwordstate=1 "
+      "where userid='"+muser.getUserId()+"' and pwd='"+newPassword+"';";
 
-    //Put the new user's password
-    muser.setPassword(newPassword);
+      sqlChangePwd.append(sqlUpdatePwdState);
+      mdatabaseVishnu->process(sqlChangePwd.c_str());
+
+      //Put the new user's password
+      muser.setPassword(newPassword);
+    }//End //If the identifiers used for the connection are a global VISHNU identifiers
+    else {
+      UMSVishnuException e (ERRCODE_READONLY_ACCOUNT);
+      throw e;
+    }
   } //End If the user exist with the flagForChangePwd to true ti avoid the passwordstate checking
   else {
     UMSVishnuException e (ERRCODE_UNKNOWN_USER);
@@ -318,7 +329,7 @@ UserServer::resetPassword(UMS_Data::User& user, std::string sendmailScriptPath) 
         sendMailToUser(user, emailBody, "Vishnu message: password reset", sendmailScriptPath);
       } // End if the user whose password will be reset exists
       else {
-        UMSVishnuException e (ERRCODE_UNKNOWN_USERID);
+        UMSVishnuException e (ERRCODE_UNKNOWN_USERID, "You must use a global VISHNU identifier");
         throw e;
       }
     } //END if the user is an admin
