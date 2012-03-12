@@ -441,8 +441,9 @@ LSFParser::convertScriptIntoArgv(const char* pathTofile,
       found_iter = std::find_if(iter, end, IsEndByQuote(quote));
       if(found_iter!=end) {
         while(iter!=end && iter!=found_iter) {
-          ++iter;
-          argvStr = argvStr+" "+*iter;
+          if(++iter!=end) {
+            argvStr = argvStr+" "+*iter;
+          }
         }
       } else {
         std::string errorMsg = "Error: invalid argument "+argvStr;

@@ -40,7 +40,6 @@ namespace bfs= boost::filesystem;
 
 BOOST_FIXTURE_TEST_SUITE(list_jobs, TMSSeDFixture)
 
-
   //  list job : normal call
 BOOST_AUTO_TEST_CASE(list_job_normal_call)
 {
@@ -420,7 +419,6 @@ BOOST_AUTO_TEST_CASE(list_batch_jobs_normal_call)
     int i=0;
     std::string line;
     std::string batchJobId;
-    std::istringstream isBatchJobId;
     int nbJobs =  lsJobs.getNbJobs();
     BOOST_TEST_MESSAGE("************ Number of total jobs:" << nbJobs);
     while ( ( false==found ) && ( i < nbJobs) ){
@@ -428,8 +426,6 @@ BOOST_AUTO_TEST_CASE(list_batch_jobs_normal_call)
       if (ifile.is_open()) {
         while (!ifile.eof()) {
           getline(ifile, line);
-          isBatchJobId.str(line);
-          isBatchJobId >> batchJobId;
           if(line.find(((lsJobs.getJobs().get(i))->getJobId()))!=std::string::npos) {
             BOOST_TEST_MESSAGE("************ batch Job Id info: " << line);
             BOOST_TEST_MESSAGE("************ result Job Id: " << (lsJobs.getJobs().get(i))->getJobId());
