@@ -47,6 +47,7 @@ macro(genCli NAME )
 
   #Configuration de l'edition de liens
   target_link_libraries(${CMDNAME}
+                        ${LOG_LIBRARY}
                         ${Boost_LIBRARIES}
                         vishnu-core
                         vishnu-ums-client

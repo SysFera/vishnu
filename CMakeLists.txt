@@ -238,9 +238,7 @@ if (VISHNU_USE_LDAP AND NOT CLIENT_ONLY)
 endif(VISHNU_USE_LDAP AND NOT CLIENT_ONLY)
 
 
-if(COMPILE_IMS AND NOT CLIENT_ONLY)
-  find_package(LOGSERVICE REQUIRED)
-endif(COMPILE_IMS AND NOT CLIENT_ONLY)
+find_package(LOGSERVICE REQUIRED)
 
 find_package(Boost 1.45
   REQUIRED program_options date_time thread filesystem system unit_test_framework serialization random)
