@@ -1,5 +1,6 @@
 #!/bin/sh
 
+#BSUB -J first_job
 #% vishnu_job_name=first_job
 #          % vishnu_queue=first_queue
 #% vishnu_output=my_first_job_gen.out
