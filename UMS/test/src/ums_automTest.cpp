@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
 
   string sqlScript = UMSSQLPATH;
-
+  string umsAuthType = UMSAUTHENTYPE;
 
   ////
   // Parameters
@@ -48,8 +48,13 @@ BOOST_AUTO_TEST_CASE( my_test )
   int                	  idl  = 4        ;
   string             	  key  = ""       ;
   string                  key2 = ""       ;
-  string 	     	  pwd  = "admin"  ;
-  string 	     	  uid  = "admin_1";
+
+  string          pwd  = UMSADMINVISHNUPWD  ;
+  string          uid  = UMSADMINVISHNULOGIN;
+
+  string          pwdUMSDb  = "admin"  ;
+  string          uidUMSDb  = "admin_1";
+
   string             	  sid  = "1"      ;
   string             	  sub  = ""       ;
   SessionCloseType   	  sct  = 1        ;
@@ -61,8 +66,12 @@ BOOST_AUTO_TEST_CASE( my_test )
   string 	     	  pwdu = "toto"  ;
   string 	     	  uidu = "user_1";
 
-  string                  root = "root";
-  string                  pwdr = "vishnu_user";
+  string                  rootUMSDb= "root";
+  string                  pwdrUMSDb = "vishnu_user";
+
+  string                  root = UMSROOTVISHNULOGIN;
+  string                  pwdr = UMSROOTVISHNUPWD;
+
   // connect as
   string const&      	  subs = "user_1";
   // user
@@ -137,9 +146,16 @@ BOOST_AUTO_TEST_CASE( my_test )
 
 try {
 
+  BOOST_MESSAGE("UMS Authentication Type : "+ umsAuthType);
+
+  if (umsAuthType.compare("UMS") != 0) {
+    BOOST_REQUIRE(restore    (sqlScript+"/UMSinitAuthSystem.sql")==0);
+  }
+
   // Connect normal call
   BOOST_REQUIRE(restore    (sqlScript+"/clean_session.sql")==0);
   BOOST_MESSAGE(" Testing normal connection U1-B1" );
+
   BOOST_CHECK  (connect    (uid, pwd, sess, cop )==0);
   BOOST_CHECK  (listSessions(sess.getSessionKey(), *li , opt      )==0);
   BOOST_MESSAGE("Sess.GetSessionKey() generated : " << sess.getSessionKey() );
@@ -187,13 +203,14 @@ try {
   sct = 0;
   cop.setClosePolicy(sct);
 
-  // Connect with a temporary password
-  BOOST_MESSAGE(" Testing temporary pwd U1.1-E4");
-  BOOST_CHECK  (connect    (uid, pwd, sess, cop         )==0);
-  BOOST_CHECK    (resetPassword(sess.getSessionKey(), uid, np       )==0);
-  BOOST_CHECK    (changePassword(uid, np, pwd       )==0);
-  BOOST_CHECK  (listSessions(sess.getSessionKey(), *li , opt              )==0);
-
+  if (umsAuthType.compare("LDAP") != 0) {
+    // Connect with a temporary password
+    BOOST_MESSAGE(" Testing temporary pwd U1.1-E4");
+    BOOST_CHECK  (connect    (uid, pwd, sess, cop         )==0);
+    BOOST_CHECK    (resetPassword(sess.getSessionKey(), uidUMSDb, np       )==0);
+    BOOST_CHECK    (changePassword(uidUMSDb, np, pwdUMSDb       )==0);
+    BOOST_CHECK  (listSessions(sess.getSessionKey(), *li , opt              )==0);
+  }
   // Connect as an other user
   cop.setSubstituteUserId(subs);
   BOOST_REQUIRE(restore    (sqlScript+"/clean_session.sql")==0);
@@ -473,51 +490,57 @@ try {
   BOOST_CHECK	 (close     (sess.getSessionKey()                )==0);
 
 
-  // Change pwd ok
-  BOOST_MESSAGE(" Testing change password normal U1.3.3"    );
-  BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql"       )==0);
-  BOOST_CHECK	 (connect       (uid, pwd , sess, cop)==0);
-  BOOST_CHECK	 (changePassword(uid , pwd, "newPwd")==0);
-  BOOST_CHECK	 (changePassword(uid , "newPwd", pwd)==0);
-  BOOST_CHECK	 (close         (sess.getSessionKey()                )==0);
+  if (umsAuthType.compare("LDAP") != 0) {
+    uid = uidUMSDb;
+    pwd = pwdUMSDb;
+    // Change pwd ok
+    BOOST_MESSAGE(" Testing change password normal U1.3.3"    );
+    BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql"       )==0);
+    BOOST_CHECK	 (connect       (uid, pwd , sess, cop)==0);
+    BOOST_CHECK	 (changePassword(uid , pwd, "newPwd")==0);
+    BOOST_CHECK	 (changePassword(uid , "newPwd", pwd)==0);
+    BOOST_CHECK	 (close         (sess.getSessionKey()                )==0);
 
-  // Change pwd bad uid
-  BOOST_MESSAGE(" Testing change password bad uid U1.3.3E"    );
-  BOOST_REQUIRE(restore	(sqlScript+"/clean_session.sql"  )==0);
-  BOOST_CHECK	 (connect	(uid  , pwd, sess, cop )==0);
-  BOOST_CHECK	 (addUser (sess.getSessionKey()  , *use           )==0);
-  BOOST_CHECK_THROW	 (changePassword("bad", pass, "newPwd"), VishnuException);
-  BOOST_CHECK	 (close         (sess.getSessionKey()                  )==0);
+    // Change pwd bad uid
+    BOOST_MESSAGE(" Testing change password bad uid U1.3.3E"    );
+    BOOST_REQUIRE(restore	(sqlScript+"/clean_session.sql"  )==0);
+    BOOST_CHECK	 (connect	(uid  , pwd, sess, cop )==0);
+    BOOST_CHECK	 (addUser (sess.getSessionKey()  , *use           )==0);
+    BOOST_CHECK_THROW	 (changePassword("bad", pass, "newPwd"), VishnuException);
+    BOOST_CHECK	 (close         (sess.getSessionKey()                  )==0);
 
-  // Change pwd bad pwd
-  BOOST_MESSAGE(" Testing change password bad pwd U1.3.3E"    );
-  BOOST_REQUIRE(restore	(sqlScript+"/clean_session.sql")==0);
-  BOOST_CHECK	 (connect	(uid, pwd , sess, cop)==0);
-  BOOST_CHECK	 (addUser (sess.getSessionKey(), *use           )==0);
-  BOOST_CHECK_THROW	 (changePassword(cu, "bad", "newPwd"), VishnuException);
-  BOOST_CHECK	 (close         (sess.getSessionKey()                )==0);
+    // Change pwd bad pwd
+    BOOST_MESSAGE(" Testing change password bad pwd U1.3.3E"    );
+    BOOST_REQUIRE(restore	(sqlScript+"/clean_session.sql")==0);
+    BOOST_CHECK	 (connect	(uid, pwd , sess, cop)==0);
+    BOOST_CHECK	 (addUser (sess.getSessionKey(), *use           )==0);
+    BOOST_CHECK_THROW	 (changePassword(cu, "bad", "newPwd"), VishnuException);
+    BOOST_CHECK	 (close         (sess.getSessionKey()                )==0);
 
-  // Reset pwd ok
-  BOOST_MESSAGE(" Testing reset password normal UA2-B"    );
-  BOOST_REQUIRE(restore      (sqlScript+"/clean_session.sql")==0);
-  BOOST_CHECK	 (connect      (uid, pwd, sess, cop )==0);
-  BOOST_CHECK    (resetPassword(sess.getSessionKey(), uid, np       )==0);
-  BOOST_CHECK    (changePassword(uid, np, pwd       )==0);
-  BOOST_CHECK	 (close        (sess.getSessionKey()                )==0);
+    // Reset pwd ok
+    BOOST_MESSAGE(" Testing reset password normal UA2-B"    );
+    BOOST_REQUIRE(restore      (sqlScript+"/clean_session.sql")==0);
+    BOOST_CHECK	 (connect      (uid, pwd, sess, cop )==0);
+    BOOST_CHECK    (resetPassword(sess.getSessionKey(), uid, np       )==0);
+    BOOST_CHECK    (changePassword(uid, np, pwd       )==0);
+    BOOST_CHECK	 (close        (sess.getSessionKey()                )==0);
 
-  // Reset pwd bad uid
-  BOOST_MESSAGE(" Testing reset password bad uid UA2-E"    );
-  BOOST_REQUIRE(restore      (sqlScript+"/clean_session.sql" )==0);
-  BOOST_CHECK	 (connect      (uid, pwd  , sess, cop)==0);
-  BOOST_CHECK	 (addUser(sess.getSessionKey(), *use            )==0);
-  BOOST_CHECK_THROW	 (resetPassword(sess.getSessionKey(), "bad", np          ), VishnuException);
-  BOOST_CHECK	 (close        (sess.getSessionKey()                 )==0);
+    // Reset pwd bad uid
+    BOOST_MESSAGE(" Testing reset password bad uid UA2-E"    );
+    BOOST_REQUIRE(restore      (sqlScript+"/clean_session.sql" )==0);
+    BOOST_CHECK	 (connect      (uid, pwd  , sess, cop)==0);
+    BOOST_CHECK	 (addUser(sess.getSessionKey(), *use            )==0);
+    BOOST_CHECK_THROW	 (resetPassword(sess.getSessionKey(), "bad", np          ), VishnuException);
+    BOOST_CHECK	 (close        (sess.getSessionKey()                 )==0);
 
+    pwd  = UMSADMINVISHNUPWD  ;
+    uid  = UMSADMINVISHNULOGIN;
+  }
   // Add local account
   BOOST_MESSAGE(" Testing add local account success U4-B"    );
   BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
-  lacc.setUserId       (uid);
+  lacc.setUserId       (uidUMSDb);
   lacc.setMachineId    (mid);
   lacc.setAcLogin     (accL);
   lacc.setSshKeyPath   (ssh);
@@ -541,7 +564,7 @@ try {
   lacc.setUserId("bad");
   BOOST_CHECK_THROW	 (addLocalAccount(sess.getSessionKey(), lacc, key2    ), VishnuException);
   BOOST_CHECK	 (close          (sess.getSessionKey()      	     )==0);
-  lacc.setUserId(uid);
+  lacc.setUserId(uidUMSDb);
 
   // Update local account
   BOOST_MESSAGE(" Testing update local account success U4.1-B"    );
@@ -577,13 +600,13 @@ try {
   BOOST_MESSAGE(" Testing delete local account normal U4.2B"    );
   BOOST_REQUIRE(restore           (sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect           (uid, pwd , sess, cop)==0);
-  lacc.setUserId       (uid);
+  lacc.setUserId       (uidUMSDb);
   lacc.setMachineId    (mid);
   lacc.setAcLogin     (accL);
   lacc.setSshKeyPath   (ssh);
   lacc.setHomeDirectory(home);
   //  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2    )==0);
-  BOOST_CHECK	 (deleteLocalAccount(sess.getSessionKey(), uid , mid     )==0);
+  BOOST_CHECK	 (deleteLocalAccount(sess.getSessionKey(), uidUMSDb , mid     )==0);
   BOOST_CHECK	 (close             (sess.getSessionKey()                )==0);
 
   // Delete local accountbad uid
@@ -599,7 +622,7 @@ try {
   BOOST_REQUIRE(restore           (sqlScript+"/clean_session.sql"  )==0);
   BOOST_CHECK  (connect           (uid, pwd , sess  , cop)==0);
   //  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2      )==0);
-  BOOST_CHECK_THROW	 (deleteLocalAccount(sess.getSessionKey(), uid , "bad"     ), VishnuException);
+  BOOST_CHECK_THROW	 (deleteLocalAccount(sess.getSessionKey(), uidUMSDb , "bad"     ), VishnuException);
   BOOST_CHECK	 (close             (sess.getSessionKey()                  )==0);
 
   // Test add machine normal
@@ -1149,7 +1172,7 @@ try {
   BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
   aacc.setAuthSystemId(asys.getAuthSystemId());
-  aacc.setUserId(uid);
+  aacc.setUserId(uidUMSDb);
   aacc.setAcLogin("toto");
   BOOST_CHECK(addAuthAccount(sess.getSessionKey(), aacc)==0);
   BOOST_CHECK(close          (sess.getSessionKey()      )==0);
@@ -1159,7 +1182,7 @@ try {
   BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
   aacc.setAuthSystemId("storm");
-  aacc.setUserId(uid);
+  aacc.setUserId(uidUMSDb);
   aacc.setAcLogin("toto");
   BOOST_CHECK_THROW(addAuthAccount(sess.getSessionKey(), aacc), VishnuException);
   BOOST_CHECK(close          (sess.getSessionKey()      )==0);
@@ -1179,7 +1202,7 @@ try {
   BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
   aacc.setAuthSystemId(asys.getAuthSystemId());
-  aacc.setUserId(uid);
+  aacc.setUserId(uidUMSDb);
   aacc.setAcLogin("titi");
 //  BOOST_CHECK(addAuthAccount(sess.getSessionKey(), aacc)==0);
   BOOST_CHECK(updateAuthAccount(sess.getSessionKey(), aacc)==0);
@@ -1190,7 +1213,7 @@ try {
   BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
   aacc.setAuthSystemId(asys.getAuthSystemId());
-  aacc.setUserId(uid);
+  aacc.setUserId(uidUMSDb);
 //  aacc.setAcLogin("toto");
 //  BOOST_CHECK(addAuthAccount(sess.getSessionKey(), aacc)==0);
   aacc.setAuthSystemId("toto");
@@ -1202,7 +1225,7 @@ try {
   BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
   aacc.setAuthSystemId(asys.getAuthSystemId());
-  aacc.setUserId(uid);
+  aacc.setUserId(uidUMSDb);
   aacc.setAcLogin("toto");
 //  BOOST_CHECK(addAuthAccount(sess.getSessionKey(), aacc)==0);
   aacc.setUserId("choco");
@@ -1215,7 +1238,7 @@ try {
   BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
   aacc.setAuthSystemId(asys.getAuthSystemId());
-  aacc.setUserId(root);
+  aacc.setUserId(rootUMSDb);
   aacc.setAcLogin("toto2");
   BOOST_CHECK(addAuthAccount(sess.getSessionKey(), aacc)==0);
   BOOST_CHECK(deleteAuthAccount(sess.getSessionKey(), aacc.getAuthSystemId(), aacc.getUserId())==0);
@@ -1237,7 +1260,7 @@ try {
   BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
   aacc.setAuthSystemId(asys.getAuthSystemId());
-  aacc.setUserId(uid);
+  aacc.setUserId(uidUMSDb);
 //  BOOST_CHECK(addAuthAccount(sess.getSessionKey(), aacc)==0);
   aacc.setAuthSystemId("err");
   BOOST_CHECK_THROW(deleteAuthAccount(sess.getSessionKey(), aacc.getAuthSystemId(), aacc.getUserId()), VishnuException);
@@ -1290,10 +1313,16 @@ try {
   BOOST_CHECK	 (updateUser            (sess.getSessionKey(), *use 	     )==0);
   BOOST_CHECK	 (deleteUser            (sess.getSessionKey(), use->getUserId()  	     )==0);
   BOOST_CHECK	 (deleteMachine         (sess.getSessionKey(), mid	     )==0);
-  BOOST_CHECK	 (resetPassword         (sess.getSessionKey(), uid, np	     )==0);
-  BOOST_CHECK	 (changePassword        (uid, np , pwd      )==0);
+
+
+  BOOST_CHECK	 (resetPassword         (sess.getSessionKey(), uidUMSDb, np	     )==0);
+
+  if (umsAuthType.compare("LDAP") != 0) {
+    BOOST_CHECK	 (changePassword        (uidUMSDb, np , pwdUMSDb      )==0);
+  }
+
   BOOST_CHECK	 (addMachine            (sess.getSessionKey(), ma	     )==0);
-  lacc.setUserId       (uid);
+  lacc.setUserId       (uidUMSDb);
   lacc.setMachineId    (ma.getMachineId());
   lacc.setAcLogin     (accL);
   lacc.setSshKeyPath   (ssh);
@@ -1302,7 +1331,7 @@ try {
   BOOST_CHECK	 (updateMachine         (sess.getSessionKey(), ma	     )==0);
   lacc.setAcLogin("");  // to avoid changing acLogin
   BOOST_CHECK	 (updateLocalAccount    (sess.getSessionKey(), lacc           )==0);
-  BOOST_CHECK	 (deleteLocalAccount    (sess.getSessionKey(), uid , ma.getMachineId()      )==0);
+  BOOST_CHECK	 (deleteLocalAccount    (sess.getSessionKey(), uidUMSDb , ma.getMachineId()      )==0);
   opva.setValue(oval);
   BOOST_CHECK	 (configureDefaultOption(sess.getSessionKey(), opva	     )==0);
   BOOST_CHECK	 (configureOption       (sess.getSessionKey(), opva	     )==0);
