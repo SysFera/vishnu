@@ -423,7 +423,7 @@ LSFParser::convertScriptIntoArgv(const char* pathTofile,
   std::vector<std::string>::iterator end = tokens.end();
   std::vector<std::string> tokensArgs;
   char quote = '\0';
-  for(iter=tokens.begin(); iter!=tokens.end(); ++iter) {
+  for(iter=tokens.begin(); iter!=end; ++iter) {
     argvStr = *iter;
     if(isStartByQuote(argvStr, '\"')) {
       quote = '\"';
@@ -432,13 +432,14 @@ LSFParser::convertScriptIntoArgv(const char* pathTofile,
     }
     if(quote!='\0'){
       std::vector<std::string>::iterator found_iter;
-      found_iter = std::find_if(iter, end, IsEndByQuote(quote));
+      std::vector<std::string>::iterator beg_iter=iter;
+      found_iter = std::find_if(beg_iter, end, IsEndByQuote(quote));
       if(found_iter!=end) {
-        while(iter!=end && iter!=found_iter) {
-          if(++iter!=end) {
-            argvStr = argvStr+" "+*iter;
-          }
+        while(beg_iter!=found_iter) {
+           ++beg_iter;
+           argvStr = argvStr+" "+*beg_iter;
         }
+        iter=beg_iter;
       } else {
         std::string errorMsg = "Error: invalid argument "+argvStr;
         errorMsg +=". It must be closed by the character quote character (\' or \")";
@@ -512,7 +513,6 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
       case 'q':
         req->options |=SUB_QUEUE;
         req->queue = strdup(optarg);
-        std::cout << "req->queue=" << req->queue  << std::endl;
         break;
       case 'm':
         req->options |=SUB_HOST;
@@ -994,9 +994,6 @@ LSFParser::searchAndConvertVishnuScriptGenSyntax(const char* pathTofile, struct 
               std::string nbNodesStr = nbNodesAndCpuPerNode.substr(0, posNbNodes);
               std::string cpuPerNode = nbNodesAndCpuPerNode.substr(posNbNodes+1);
                
-              //set the number of processor     
-              req->numProcessors = vishnu::convertToInt(cpuPerNode);
-              req->maxNumProcessors = req->numProcessors;
 
               struct hostInfoEnt *hostInfo;
               char **hosts = NULL;
@@ -1017,6 +1014,10 @@ LSFParser::searchAndConvertVishnuScriptGenSyntax(const char* pathTofile, struct 
               for (int i = 0; i < nbNodes; i++, hostInfo++) {
                 req->askedHosts[i] = hostInfo->host;
               }
+              
+              //set the number of processor     
+              req->numProcessors = vishnu::convertToInt(cpuPerNode);
+              req->maxNumProcessors = req->numProcessors*nbNodes;
           }
       }
       //To treat cpu syntax 
@@ -1031,6 +1032,20 @@ LSFParser::searchAndConvertVishnuScriptGenSyntax(const char* pathTofile, struct 
          }
          req->numProcessors = cpu;
          req->maxNumProcessors= cpu;
+         //compte the number of unique nodes
+         std::vector<std::string> tmpHosts;
+         for(int i=0; i < req->numAskedHosts; i++) {
+           if(req->askedHosts[i]!=NULL) {
+             tmpHosts.push_back(req->askedHosts[i]);
+           }
+         }
+         std::vector<std::string>::iterator endTmp=std::unique(tmpHosts.begin(), tmpHosts.end());
+         int node = endTmp-tmpHosts.begin();
+         if(node <=0) {
+            node = 1;
+         } 
+         req->numProcessors = req->maxNumProcessors= req->numProcessors*node;
+ 
       }
       //To treat mail notification syntax
       if((pos=(*iter).find(mailNotificationSyntax))!=std::string::npos) {
