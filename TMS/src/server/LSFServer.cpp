@@ -170,7 +170,7 @@ LSFServer::submit(const char* scriptPath,
  * \brief Function to treat the submission options
  * \param scriptPath The job script path
  * \param options the object which contains the SubmitOptions options values
- * \param struct submit The LSF submit request
+ * \param req The LSF submit option structure to fill
  * \return raises an exception on error
  */
 void 
@@ -211,7 +211,7 @@ LSFServer::processOptions(const char* scriptPath,
   }
   if(options.getMemory()!=-1) {
     req->options |=SUB_RES_REQ;
-    req->rLimits[LSF_RLIMIT_RSS] = options.getMemory(); //To complete later
+    req->rLimits[LSF_RLIMIT_RSS] = options.getMemory();
   }
   if(!(options.getNbNodesAndCpuPerNode().empty())) {
     std::string NbNodesAndCpuPerNode = options.getNbNodesAndCpuPerNode();
@@ -585,7 +585,7 @@ LSFServer::fillJobInfo(TMS_Data::Job &job, struct jobInfoEnt* jobInfo){
     job.setJobDescription(jobInfo->submit.jobDescription);
   }
   job.setJobPrio(convertLSFPrioToVishnuPrio(jobInfo->jobPriority));
-  //mem limit
+  //mem limit 
   job.setMemLimit(jobInfo->submit.rLimits[LSF_RLIMIT_RSS]);
   
   int nbCpu = jobInfo->submit.numProcessors;

@@ -24,7 +24,7 @@
 #include <lsf/lsbatch.h>
 
 using namespace std;
-
+//long option table
 static struct option long_options[] = {
   {"We", required_argument, 0, LONG_OPT_WE},
   {"rn", no_argument, 0, LONG_OPT_RN},
@@ -237,12 +237,6 @@ LSFParser::convertDateToTime(const std::string& date, const std::string& compErr
       hasYearField = true;
     }
   }
-
-  std::cout << "--------------minute=" << minute << std::endl;
-  std::cout << "--------------hour=" << hour << std::endl;
-  std::cout << "--------------day=" << day << std::endl;
-  std::cout << "--------------month=" << month << std::endl;
-  std::cout << "--------------year=" << year << std::endl;
 
   timeNow = std::time(NULL);
   timeNowTm = std::localtime(&timeNow);
@@ -500,6 +494,15 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
   int oldNxf;
 
   std::string errHead = "Error in your script: "; 
+  //set default values for jobName and job output and error path
+  req->options |=SUB_JOB_NAME;
+  req->jobName = (char*) "NoName";  
+  req->options |=SUB_OUT_FILE;
+  req->outFile = (char*) "lsf-%J.out";
+  req->options |=SUB_ERR_FILE;
+  req->errFile = (char*) "lsf-%J.err";
+  
+  //Parse options in script file
   while ((c = getopt_long_only(argc, argv, GETOPT_ARGS, long_options, &option_index)) != -1) {
     switch (c) {
       case 'J':

@@ -87,7 +87,7 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
       replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$VISHNU_BATCHJOB_NODEFILE");      
       pos = scriptContent.find("$VISHNU_BATCHJOB_NODEFILE");
       if(pos!=std::string::npos) {
-        std::string fileName = std::string(getenv("HOME"))+"/NODELIST_XXXXXX";
+        std::string fileName = "/tmp/NODELIST_XXXXXX";
         vishnu::createTmpFile(const_cast<char*>(fileName.c_str()));
         pos = scriptContent.rfind("\n", pos-1);
         scriptContent.insert(pos+1, "echo $SLURM_JOB_NODELIST > "+fileName+"\n");
@@ -110,7 +110,7 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
       replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$VISHNU_BATCHJOB_NODEFILE");      
       pos = scriptContent.find("$VISHNU_BATCHJOB_NODEFILE");
       if(pos!=std::string::npos) {
-        std::string fileName = std::string(getenv("HOME"))+"/LSF_NODELIST_XXXXXX";
+        std::string fileName = "/tmp/LSF_NODELIST_XXXXXX";
         vishnu::createTmpFile(const_cast<char*>(fileName.c_str()));
         pos = scriptContent.rfind("\n", pos-1);
         scriptContent.insert(pos+1, "echo $LSB_HOSTS > "+fileName+"\n");
