@@ -7,7 +7,7 @@
 
 #ifndef _LSFPARSER_H_
 #define _LSFPARSER_H_
-/*getopt_long_only flag, integers and not valid characters*/
+//long options flag, integers and not valid characters
 static const unsigned int LONG_OPT_WE          = 0x100;
 static const unsigned int LONG_OPT_RN          = 0x101;
 static const unsigned int LONG_OPT_APP         = 0x102;
@@ -57,33 +57,61 @@ public :
    */
   ~LSFParser();
 
+ /**
+  * \brief Function to check a numerical value
+  * \param value The value to check
+  * \return true if the value is numerical otherwise false 
+  */
   static bool 
   isNumerical(const std::string& value); 
 
+ /**
+  * \brief Function to date in format [hour:]minute into int
+  * \param date The date to convert
+  * \param compErrMsg The error message to send as exception
+  * \return the converted value 
+  */
   static int
   convertWallTimeToTime(const std::string& date, const std::string& compErrMsg="");
 
+ /**
+  * \brief Function to date in format [[year:][month:]day:]hour:minute into time_t
+  * \param date The date to convert
+  * \param compErrMsg The error message to send as exception
+  * \return the converted value 
+  */
   static time_t 
   convertDateToTime(const std::string& date, const std::string& compErrMsg="");
 
+  
+ /**
+  * \brief Function to transform the batch directives in a script file to string arguments
+  * \param pathTofile The file to parse
+  * \param BATCH_PREFIX The batch directive to take into account
+  * \return The vector contains the arguments
+  */
   static std::vector<std::string> 
   convertScriptIntoArgv(const char* pathTofile, 
                         const std::string& BATCH_PREFIX="#BSUB"); 
-   /**
-   * \brief To parse a given file
-   * \return raises an exception
+ 
+  /**
+   * \brief Function to parse a batch script
+   * \param pathTofile The file to parse
+   * \param req The LSF option structure to fill
+   * \return zero on success, raises exception on error
    */
   static int
   parse_file(const char* pathTofile, struct submit* req);
 
+  
+  /**
+   * \brief Function search vishnu generic script syntax in a file
+   * \param pathTofile The file to parse
+   * \param req The LSF option structure to update or to fill
+   * \return raises exception on error
+   */
   static void
   searchAndConvertVishnuScriptGenSyntax(const char* pathTofile, struct submit* req);
-
-private :
-
-  /////////////////////////////////
-  // Attributes
-  /////////////////////////////////
 
 };
 #endif // LSFPARSER

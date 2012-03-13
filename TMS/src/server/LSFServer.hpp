@@ -90,7 +90,7 @@ class LSFServer : public BatchServer
      * \brief Function to treat the submission options
      * \param scriptPath The job script path
      * \param options the object which contains the SubmitOptions options values
-     * \param struct submit The LSF submit request
+     * \param req The LSF submit option structure to fill
      * \return raises an exception on error
      */
     void
@@ -129,7 +129,7 @@ class LSFServer : public BatchServer
      */
     LS_LONG_INT convertToLSFJobId(const std::string& jobId); 
 
-    /* \brief Function to replace LSF job identifer symbol by its real value in to a path
+    /** \brief Function to replace LSF job identifer symbol by its real value in to a path
      * \param path The path containing the job symbol
      */
     void
