@@ -205,10 +205,26 @@ LSFServer::processOptions(const char* scriptPath,
   if(options.getWallTime()!=-1) {
     req->rLimits[LSF_RLIMIT_RUN] = options.getWallTime()/60;
   }
+  //minimum nb nodes per per processor
   if(options.getNbCpu()!=-1) {
     req->numProcessors = options.getNbCpu();
     req->maxNumProcessors= options.getNbCpu();  
+    
+    //compte the number of unique nodes
+    std::vector<std::string> tmpHosts;
+    for(int i=0; i < req->numAskedHosts; i++) {
+      if(req->askedHosts[i]!=NULL) {
+       tmpHosts.push_back(req->askedHosts[i]);
+      }
+    }
+    std::vector<std::string>::iterator endTmp=std::unique(tmpHosts.begin(), tmpHosts.end());
+    int node = endTmp-tmpHosts.begin();
+    if(node <=0) {
+      node = 1;
+    } 
+    req->numProcessors = req->maxNumProcessors= req->numProcessors*node;
   }
+
   if(options.getMemory()!=-1) {
     req->options |=SUB_RES_REQ;
     req->rLimits[LSF_RLIMIT_RSS] = options.getMemory();
@@ -220,10 +236,6 @@ LSFServer::processOptions(const char* scriptPath,
       std::string nbNodesStr = NbNodesAndCpuPerNode.substr(0, posNbNodes);
       std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1); 
 
-      //set the number of processor     
-      req->numProcessors = vishnu::convertToInt(cpuPerNode);
-      req->maxNumProcessors = req->numProcessors; 
-    
       struct hostInfoEnt *hostInfo;
       char **hosts = NULL;
       int numhosts = 0;
@@ -244,7 +256,11 @@ LSFServer::processOptions(const char* scriptPath,
       for (int i = 0; i < nbNodes; i++, hostInfo++) {
           req->askedHosts[i] = hostInfo->host;
       } 
-    } 
+      
+      //set the number of processor     
+      req->numProcessors = vishnu::convertToInt(cpuPerNode);
+      req->maxNumProcessors = req->numProcessors = req->numProcessors*nbNodes; 
+     } 
   }
 
   if(!(options.getMailNotification().empty())) {
@@ -561,10 +577,6 @@ LSFServer::fillJobInfo(TMS_Data::Job &job, struct jobInfoEnt* jobInfo){
 
   job.setJobId(lsb_jobid2str(jobInfo->jobId));
   job.setBatchJobId(lsb_jobid2str(jobInfo->jobId));
-  /*if(jobInfo->cwd!=NULL) {
-    job.setOutputPath(std::string(jobInfo->cwd)+"/LSF-"+std::string(lsb_jobid2str(jobInfo->jobId))+".out");//default path
-    job.setErrorPath(std::string(jobInfo->cwd)+"/LSF-"+std::string(lsb_jobid2str(jobInfo->jobId))+".err");//default path
-    }*/
   job.setStatus(convertLSFStateToVishnuState(jobInfo->status));
   if(jobInfo->submit.jobName!=NULL){
     job.setJobName(jobInfo->submit.jobName);
@@ -588,8 +600,6 @@ LSFServer::fillJobInfo(TMS_Data::Job &job, struct jobInfoEnt* jobInfo){
   //mem limit 
   job.setMemLimit(jobInfo->submit.rLimits[LSF_RLIMIT_RSS]);
   
-  int nbCpu = jobInfo->submit.numProcessors;
-  job.setNbCpus(nbCpu);
   //compte the number of unique nodes
   std::vector<std::string> tmpHosts;
   for(int i=0; i < jobInfo->submit.numAskedHosts; i++) {
@@ -599,7 +609,12 @@ LSFServer::fillJobInfo(TMS_Data::Job &job, struct jobInfoEnt* jobInfo){
   }
   std::vector<std::string>::iterator endTmp=std::unique(tmpHosts.begin(), tmpHosts.end());
   int node = endTmp-tmpHosts.begin();
- 
+  if(node <= 0) {
+   node = 1;
+  }
+  int tmpNbCpu = jobInfo->submit.numProcessors/node;
+  int nbCpu = (tmpNbCpu*node < jobInfo->submit.numProcessors)?tmpNbCpu+1:tmpNbCpu;
+  job.setNbCpus(nbCpu);
   job.setNbNodes(node);
   if(node!=-1) {
     job.setNbNodesAndCpuPerNode(vishnu::convertToString(node)+":"+vishnu::convertToString(nbCpu));
