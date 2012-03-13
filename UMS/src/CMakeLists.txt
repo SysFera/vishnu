@@ -83,6 +83,7 @@ if(NOT CLIENT_ONLY)
 
   add_executable(umssed ${sed_SRCS})
   target_link_libraries(umssed ${DIET_SERVER_LIBRARIES}
+    ${LOG_LIBRARY}
     vishnu-ums-server
     emf4cpp-vishnu
     crypt)

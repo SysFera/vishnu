@@ -1,3 +1,11 @@
 machine vishnu
 login root 
 password vishnu_user 
+
+machine vishnu
+login @TEST_ROOT_UMS_LOGIN@ 
+password @TEST_ROOT_UMS_PWD@
+
+machine vishnu
+login @TEST_ADMIN_UMS_LOGIN@ 
+password @TEST_ADMIN_UMS_PWD@

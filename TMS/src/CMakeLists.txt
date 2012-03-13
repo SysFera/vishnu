@@ -79,6 +79,7 @@ if (NOT CLIENT_ONLY)
   add_executable(tmssed ${sed_SRCS})
   target_link_libraries(tmssed ${DIET_SERVER_LIBRARIES}
     ${Boost_LIBRARIES}
+    ${LOG_LIBRARY}
     ${DATABASE_LIBS}
     vishnu-core
     crypt

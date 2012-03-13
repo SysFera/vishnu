@@ -386,7 +386,7 @@ vishnu::changePassword(const std::string& userId,
   UserProxy userProxy(user);
 
   std::string encryptedPassword = vishnu::cryptPassword(userId, password, false);
-  std::string encryptedPasswordNew = vishnu::cryptPassword(userId, passwordNew);
+  std::string encryptedPasswordNew = vishnu::cryptPassword(userId, passwordNew, false);
 
   return userProxy.changePassword(encryptedPassword, encryptedPasswordNew);
 }
