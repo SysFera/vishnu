@@ -644,13 +644,16 @@ LSFServer::listQueues(const std::string& OptqueueName) {
   int options = 0;
   std::string errorMsg;
 
+  
+  boost::unique_lock<boost::shared_mutex> lock(vishnu::mutex);//To avoid muti-calls to lsb_queueinfo
+ 
   TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
   mlistQueues = ecoreFactory->createListQueues();
-  
   if (lsb_init(NULL) < 0) {
    errorMsg = "LSFServer::listQueues: lsb_init() failed";
    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg);    
   }
+  
   if(!OptqueueName.empty()) {
    queues = new char*[1];
    queues[0]= strdup(OptqueueName.c_str());
@@ -666,15 +669,15 @@ LSFServer::listQueues(const std::string& OptqueueName) {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg);    
   }
 
-  for (int i = 0; i < numQueues; i++, queueInfo++) {
+  for (int i = 0; i < numQueues; i++) {
 
     TMS_Data::Queue_ptr queue = ecoreFactory->createQueue();
 
-    if (queueInfo->qStatus & QUEUE_STAT_ACTIVE) {
-      if (!queueInfo->qStatus & QUEUE_STAT_OPEN) {
+    if (queueInfo[i].qStatus & QUEUE_STAT_ACTIVE) {
+      if (!queueInfo[i].qStatus & QUEUE_STAT_OPEN) {
         queue->setState(0);
       } 
-      if (queueInfo->qStatus & QUEUE_STAT_RUN) {
+      if (queueInfo[i].qStatus & QUEUE_STAT_RUN) {
         queue->setState(2);
       } else {
         queue->setState(1);
@@ -682,21 +685,20 @@ LSFServer::listQueues(const std::string& OptqueueName) {
     } else {
       queue->setState(1);
     }
-
-    queue->setName(queueInfo->queue);
-    queue->setPriority(convertLSFPrioToVishnuPrio(queueInfo->priority));
-    queue->setNbRunningJobs(queueInfo->numRUN);
-    queue->setNbJobsInQueue(queueInfo->numJobs-queueInfo->numRUN);
-    queue->setDescription(queueInfo->description);
-    queue->setMemory(queueInfo->rLimits[LSF_RLIMIT_RSS]);
-    queue->setMaxProcCpu(queueInfo->rLimits[LSF_RLIMIT_CPU]);
+    queue->setName(std::string(queueInfo[i].queue));
+    queue->setPriority(convertLSFPrioToVishnuPrio(queueInfo[i].priority));
+    queue->setNbRunningJobs(queueInfo[i].numRUN);
+    queue->setNbJobsInQueue(queueInfo[i].numJobs-queueInfo[i].numRUN);
+    queue->setDescription(std::string(queueInfo[i].description));
+    queue->setMemory(queueInfo[i].rLimits[LSF_RLIMIT_RSS]);
+    queue->setMaxProcCpu(-1);//TODO:to complete
     queue->setMaxJobCpu(-1);//Undefined
-    queue->setNode(queueInfo->procLimit);
+    queue->setNode(queueInfo[i].procLimit);
 
     // Adding created queue to the list
     mlistQueues->getQueues().push_back(queue);
   }
-
+  
   mlistQueues->setNbQueues(mlistQueues->getQueues().size());
 
   return mlistQueues;

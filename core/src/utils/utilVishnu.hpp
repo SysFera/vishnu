@@ -21,6 +21,8 @@
 
 #include "FMSVishnuException.hpp"
 #include <boost/filesystem.hpp>
+#include <boost/thread/shared_mutex.hpp>
+
 using namespace boost::posix_time;
 using namespace boost::gregorian;
 namespace bfs=boost::filesystem;
@@ -56,7 +58,7 @@ char* crypt(const char* clef, const char* salt);
  * \brief This naspace contains utils functions of the vishnu system
  */
 namespace vishnu {
-
+  
   static const std::string ROOTUSERNAME = "root";
   static const std::string UMSMAPPERNAME = "UMS";
   static const std::string TMSMAPPERNAME = "TMS";
@@ -64,6 +66,8 @@ namespace vishnu {
   static const std::string FMSMAPPERNAME = "FMS";
 
   static const int PASSWORD_MAX_SIZE = 8;
+
+  static boost::shared_mutex mutex;
   /**
   * \brief Generic function to convert an object to string
   * \param val is a generic data to be transformed to string
