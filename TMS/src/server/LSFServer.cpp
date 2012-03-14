@@ -642,11 +642,14 @@ LSFServer::listQueues(const std::string& OptqueueName) {
   char *host = NULL;
   char *user = NULL;
   int options = 0;
+  std::string errorMsg;
 
+  TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
+  mlistQueues = ecoreFactory->createListQueues();
+  
   if (lsb_init(NULL) < 0) {
-    //error messages are written to stderr, VISHNU redirects these messages into a file
-    lsb_perror((char*)"LSFServer::listQueues: lsb_init() failed");
-    return mlistQueues;
+   errorMsg = "LSFServer::listQueues: lsb_init() failed";
+   throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg);    
   }
   if(!OptqueueName.empty()) {
    queues = new char*[1];
@@ -659,13 +662,9 @@ LSFServer::listQueues(const std::string& OptqueueName) {
   }
 
   if (queueInfo == NULL) {
-    //error messages are written to stderr, VISHNU redirects these messages into a file
-    lsb_perror((char*)"listQueues: lsb_queueinfo() failed");
-    return mlistQueues;
+    std::string errorMsg = "LSFServer::listQueues: lsb_queueinfo() failed";
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg);    
   }
-
-  TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
-  mlistQueues = ecoreFactory->createListQueues();
 
   for (int i = 0; i < numQueues; i++, queueInfo++) {
 
@@ -712,9 +711,11 @@ LSFServer::listQueues(const std::string& OptqueueName) {
 void LSFServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
     const std::vector<string>& ignoredIds) {
 
+  std::string errorMsg;
+
   if (lsb_init(NULL) < 0) {
-    lsb_perror((char*)"LSFServer::fillListOfJobs: lsb_init() failed");
-    return;
+     errorMsg = "LSFServer::fillListOfJobs: lsb_init() failed";
+     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg); 
   }
 
   int numJobs = lsb_openjobinfo(0, NULL, (char*)"all", NULL, NULL, CUR_JOB);
@@ -723,7 +724,8 @@ void LSFServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
     if(lsberrno==LSBE_NO_JOB) {
       return;
     } else {
-      lsb_perror((char*)"LSFServer::fillListOfJobs: lsb_openjobinfo failed");
+      errorMsg = "LSFServer::fillListOfJobs: lsb_openjobinfo failed";
+      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg); 
     }
   }
 
@@ -735,8 +737,8 @@ void LSFServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
   while(more) {
     jobInfo = lsb_readjobinfo(&more);
     if (jobInfo == NULL) {
-      lsb_perror((char*)"LSFServer::fillListOfJobs: lsb_readjobinfo failed");
-      return;
+      errorMsg = "LSFServer::fillListOfJobs: lsb_readjobinfo failed";
+      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg); 
     } 
     std::vector<std::string>::const_iterator iter;
     iter = std::find(ignoredIds.begin(), ignoredIds.end(), convertToString(jobInfo->jobId));
