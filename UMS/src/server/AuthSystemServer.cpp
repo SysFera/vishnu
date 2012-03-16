@@ -71,10 +71,8 @@ AuthSystemServer::add(int vishnuId) {
 
 
           //If the Ldap base is defined and the type is ldap
-          if ((mauthsystem->getLdapBase().size() != 0)
-            && (mauthsystem->getType() == LDAPTYPE) ) { // LDAP
+          if (mauthsystem->getType() == LDAPTYPE ) { // LDAP
 
-            checkLdapBase();
             numAuth = getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'");
 
             mdatabaseVishnu->process("insert into ldapauthsystem (authsystem_authsystemid, ldapbase) values "
@@ -305,6 +303,9 @@ AuthSystemServer::checkValues() {
 
   if (mauthsystem->getType()==LDAPTYPE && (std::string(mauthsystem->getLdapBase()).size()==0)){
     throw UMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE, "Missing ldap base");
+  }
+  if (mauthsystem->getType()==LDAPTYPE){
+    checkLdapBase();
   }
 
   if (mauthsystem->getUserPasswordEncryption() != SSHA_METHOD ){
