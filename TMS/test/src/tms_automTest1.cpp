@@ -148,7 +148,6 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
       jobOutputContent = oss.str();
       ifile.close();
             
-      BOOST_TEST_MESSAGE("*********************** jobOutputContent=" << jobOutputContent);
       vishnuEnvId = findValue(jobOutputContent, "#TEST_JOB_ID:");
       batchEnvId = findValue(jobOutputContent, "#BATCH_JOB_ID:");
       vishnuEnvName  = findValue(jobOutputContent, "#TEST_JOB_NAME:");
