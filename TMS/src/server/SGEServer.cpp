@@ -24,7 +24,6 @@
 
 extern "C" {
 #include "drmaa.h"
-
 }
 
 #include "SGEServer.hpp"
@@ -36,6 +35,7 @@ extern "C" {
 using namespace std;
 using namespace vishnu;
 namespace bp = boost::process;
+
 /**
  * \brief Constructor
  */
@@ -69,6 +69,7 @@ SGEServer::submit(const char* scriptPath,
   char jobOutputPath[256] ;
   char jobErrorPath[256];
   char jobName[256];
+
   string Walltime;
   
   
@@ -76,7 +77,6 @@ SGEServer::submit(const char* scriptPath,
   drmaa_errno = drmaa_allocate_job_template(&jt, diagnosis, sizeof(diagnosis)-1);
   if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(diagnosis));
-   
   }
     
   std::string scriptContent = vishnu::get_file_content(scriptPath);
@@ -91,12 +91,10 @@ SGEServer::submit(const char* scriptPath,
     getline(iss, line);
     size_t pos = line.find('#');
     if(pos==string::npos) {
-      
       continue;
     }
     line = line.erase(0, pos);
     if(boost::algorithm::starts_with(line, "#$")){
-      
       line = line.substr(std::string("#$").size());
       pos = line.find("-N");
       if(pos!=std::string::npos){
@@ -108,11 +106,11 @@ SGEServer::submit(const char* scriptPath,
           throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
           
         }
+
       } else {
         
         pos = line.find("-o");
         if(pos!=std::string::npos){
-	  
           if(boost::algorithm::contains(line, ":")){
 	    
               value = line.substr(pos+3);
@@ -132,7 +130,6 @@ SGEServer::submit(const char* scriptPath,
           if(pos!=std::string::npos){
             
             if(boost::algorithm::contains(line, ":")){
-	      
               value = line.substr(pos+3);
 	      
             } else{
@@ -304,7 +301,6 @@ SGEServer::getJobState(const std::string& jobId) {
      break;
     
   } /* switch */
-  
   return ret;
 }
 
@@ -316,7 +312,6 @@ SGEServer::getJobState(const std::string& jobId) {
 time_t 
 SGEServer::getJobStartTime(const std::string& jobId) {
 
- 
   time_t startTime = 0;
   int status = 0;
   int state=-1;
@@ -572,7 +567,6 @@ SGEServer::processOptions(const char* scriptPath,
       cmdsOptions.push_back("abe");
     } else {
       throw UserException(ERRCODE_INVALID_PARAM, notification+" is an invalid notification type:"+" consult the vishnu user manuel.\n");
-      
     }
   }
 
