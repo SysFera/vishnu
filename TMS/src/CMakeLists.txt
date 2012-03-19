@@ -71,7 +71,8 @@ if (NOT CLIENT_ONLY)
     server/JobOutputServer.cpp
     server/ScriptGenConvertor.cpp
     server/Env.cpp)
-
+  message("coucou server_SRCS = ${server_SRCS}")
+  message("coucou USED_BATCH_LIB = ${USED_BATCH_LIB}")
   add_library(vishnu-tms-server ${server_SRCS})
   set_target_properties(vishnu-tms-server PROPERTIES VERSION ${VISHNU_VERSION})
   target_link_libraries(vishnu-tms-server ${USED_BATCH_LIB} vishnu-ums-server)
