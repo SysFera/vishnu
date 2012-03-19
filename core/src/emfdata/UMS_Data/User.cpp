@@ -31,7 +31,7 @@ using namespace ::UMS_Data;
 
 // Default constructor
 User::User() :
-    m_userId(""), m_privilege(0), m_status(1)
+    m_userId(""), m_privilege(0), m_status(-1)
 {
 
     /*PROTECTED REGION ID(UserImpl__UserImpl) START*/

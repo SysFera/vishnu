@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: reconnect
-.\"    Author:  SysFera SAS <info@sysfera.com>
+.\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-.\"      Date: December 2011
+.\"      Date: March 2012
 .\"    Manual: UMS C++ API Reference
-.\"    Source: VISHNU 1.2
+.\"    Source: VISHNU 1.3
 .\"  Language: English
 .\"
-.TH "RECONNECT" "3" "December 2011" "VISHNU 1.2" "UMS C++ API Reference"
+.TH "RECONNECT" "3" "March 2012" "VISHNU 1.3" "UMS C++ API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,23 +28,18 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-reconnect \- reconnects to a session that is still active
+reconnect \- reconnects to a session that is still active by trying multiple couples (userId, password) each in turn
 .SH "SYNOPSIS"
 .HP \w'int\ vishnu::reconnect('u
-.BI "int vishnu::reconnect(const\ string&\ " "userId" ", const\ string&\ " "password" ", const\ string&\ " "sessionId" ", Session&\ " "session" ");"
+.BI "int vishnu::reconnect(const\ ListUsers&\ " "listUsers" ", const\ string&\ " "sessionId" ", Session&\ " "session" ");"
 .SH "DESCRIPTION"
 .PP
-This command allows you to resume a session that has been opened previously and that has not yet been closed\&. You can disconnect from a session without closing it (for example if there are running commands in that session) by setting the session\*(Aqs close policy (at connection time) to CLOSE_ON_TIMEOUT\&. As sessions are linked to a specific client system, you cannot reconnect to a session that was opened on another client system\&. The userId and password may be given through the options, or if no userId and password are specified, vishnu_reconnect will read them in the \&.netrc file located in the home of the user\&.
+This command allows you to resume a session that has been opened previously and that has not yet been closed\&. You can disconnect from a session without closing it (for example if there are running commands in that session) by setting the session\*(Aqs close policy (at connection time) to CLOSE_ON_TIMEOUT\&. As sessions are linked to a specific client system, you cannot reconnect to a session that was opened on another client system\&. The vishnu_reconnect_m tries in turn multiple couples (userId, password)\&.
 .SH "ARGUMENTS"
 .PP
-\fIuserId\fR
+\fIlistUsers\fR
 .RS 4
-Input argument\&. UserId represents the VISHNU user identifier\&. If userId and password are empty, vishnu reconnect will read them in the \&.netrc file located in the home of the user\&.
-.RE
-.PP
-\fIpassword\fR
-.RS 4
-Input argument\&. Password represents the password of the user\&. If userId and password are empty, vishnu reconnect will read them in the \&.netrc file located in the home of the user\&.
+Input argument\&. The list containing one or more couple (userId and password) potentially usable for connection\&.
 .RE
 .PP
 \fIsessionId\fR
@@ -59,6 +54,10 @@ Output argument\&. The session object containing session information\&.
 .SH "EXCEPTIONS"
 .PP
 The following exceptions may be thrown:
+.PP
+"Vishnu not available (Authenticator error)" [\-1]
+.RS 4
+.RE
 .PP
 "Vishnu not available (Service bus failure)" [1]
 .RS 4
@@ -105,13 +104,13 @@ The following exceptions may be thrown:
 .RE
 .SH "AUTHOR"
 .PP
-\fB SysFera SAS\fR <\&info@sysfera.com\&>
+\fB SysFera SA\fR <\&info@sysfera.com\&>
 .RS 4
 Developed the first version of these man pages as part of the VISHNU project.
 .RE
 .SH "COPYRIGHT"
 .br
-Copyright \(co 2011 SysFera SAS
+Copyright \(co 2012 SysFera SA
 .br
 .PP
 These manual pages are provided under the following conditions:

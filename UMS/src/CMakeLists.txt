@@ -4,7 +4,9 @@ include_directories(client api
   ${EMF_DATA_DIR}
   ${UMS_EMF_DATA_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
-  ${UTILVISHNU_SOURCE_DIR})
+  ${UTILVISHNU_SOURCE_DIR}
+  ${Boost_INCLUDE_DIRS}
+)
 
 set(client_SRCS client/SessionProxy.cpp
   client/AuthAccountProxy.cpp
@@ -81,6 +83,7 @@ if(NOT CLIENT_ONLY)
 
   add_executable(umssed ${sed_SRCS})
   target_link_libraries(umssed ${DIET_SERVER_LIBRARIES}
+    ${LOG_LIBRARY}
     vishnu-ums-server
     emf4cpp-vishnu
     crypt)

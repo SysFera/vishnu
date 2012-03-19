@@ -64,6 +64,7 @@ operator<<(std::ostream& os, const UMS_Data::Session_ptr& session) {
 
 
   std::string  userId = session->getUserId();
+  std::string  authenId = session->getAuthenId();
 
   long dateLastConnect = session->getDateLastConnect();
   if(dateLastConnect <= 0) {
@@ -104,7 +105,8 @@ operator<<(std::ostream& os, const UMS_Data::Session_ptr& session) {
   os << setw(25) << right << "DateClosure: " << dateCloseStr << endl;
   os << setw(25) << right << "Status: " << status << " (" << statusStr << ")" << endl;
   os << setw(25) << right << "ClosePolicy: " << closePolicy << " (" << closePolicyStr << ")"  << endl;
-  os << setw(25) << right << "TimeOut: " << timeOut << " seconds";
+  os << setw(25) << right << "TimeOut: " << timeOut << " seconds" << endl;
+  os << setw(25) << right << "AuthId: " << authenId;
   os << endl;
 
  return os;
@@ -127,6 +129,7 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
 
   boost::posix_time::ptime pt;
   size_t maxSessionIdSize = std::string("SessionId").size();
+  size_t maxAuthIdSize = std::string("AuthId").size();
   size_t maxUserIdSize = std::string("UserId").size();
   size_t maxDateLastConnectSize = std::string("DateLastConnect").size();
   size_t maxDateCreateSize = std::string("DateCreation").size();
@@ -136,6 +139,7 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
   std::string blank = "  ----  ";
   std::string sessionId;
   std::string userId;
+  std::string authId;
   std::string dateLastConnectStr = blank;
   std::string dateCreateStr = blank;
   std::string dateCloseStr = blank;
@@ -183,7 +187,7 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
 
   os << setw(maxSessionIdSize+2) << left << "SessionId" << setw(maxUserIdSize+2) << left << "UserId" << setw(maxDateLastConnectSize+2) ;
   os << left << "DateLastConnect" << setw(maxDateCreateSize+2) << left << "DateCreation" << setw(maxDateCloseSize+2) << left << "DateClosure";
-  os << setw(8) << left << "Status" << setw(13) << left << "ClosePolicy" << setw(maxTimeOutSize+2) << left << "TimeOut" << endl ;
+  os << setw(8) << left << "Status" << setw(13) << left << "ClosePolicy" << setw(maxTimeOutSize+2) << left << "TimeOut" << setw(maxAuthIdSize+2) << left << "AuthId" <<endl ;
   setFill(maxSessionIdSize, os);
   setFill(maxUserIdSize, os);
   setFill(maxDateLastConnectSize, os);
@@ -192,6 +196,7 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
   setFill(6, os);
   setFill(11, os);
   setFill(maxTimeOutSize, os);
+  setFill(maxAuthIdSize, os);
   os << endl;
 
 
@@ -199,7 +204,7 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
     sessionId = (listSession.getSessions().get(i))->getSessionId();
 
     userId = (listSession.getSessions().get(i))->getUserId();
-
+    authId = (listSession.getSessions().get(i))->getAuthenId();
 
     dateLastConnect = (listSession.getSessions().get(i))->getDateLastConnect();
     if(dateLastConnect <= 0) {
@@ -238,7 +243,8 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
     os << setw(maxDateCloseSize+2) << left << dateCloseStr;
     os << setw(8) << left << status;
     os << setw(13) << left << closePolicy;
-    os << setw(maxTimeOutSize) << left << timeOut;
+    os << setw(maxTimeOutSize+2) << left << timeOut;
+    os << setw(maxAuthIdSize) << left << authId;
     os << endl;
 
   }
@@ -337,7 +343,7 @@ std::string  convertEncryptionMethodToString (const UMS_Data::EncryptionMethod& 
 
   switch (meth){
 
-    case 1:
+    case 0:
       result="SSHA";
       break;
 
@@ -356,7 +362,7 @@ std::string  convertAuthTypeToString (const UMS_Data::AuthType& type) {
 
   switch (type){
 
-    case 1:
+    case 0:
       result="LDAP";
       break;
 
@@ -426,9 +432,14 @@ operator<<(std::ostream& os, UMS_Data::ListAuthSystems& lsAuthSystems) {
   size_t maxAuthSystemIdSize = std::string("authSystemId").size();
   size_t maxNameSize = std::string("name").size();
   size_t maxURISize = std::string("URI").size();
+  size_t maxLdapbaseSize = std::string("ldapBase").size();
+  size_t maxStatusSize = std::string("Status").size();
   std::string authSystemId;
   std::string name;
   std::string URI;
+  std::string ldapbase;
+  int status;
+  string statusStr;
 
   for(unsigned int i = 0; i < lsAuthSystems.getAuthSystems().size(); i++) {
 
@@ -441,13 +452,22 @@ operator<<(std::ostream& os, UMS_Data::ListAuthSystems& lsAuthSystems) {
     URI = (lsAuthSystems.getAuthSystems().get(i))->getURI();
     maxURISize = max(maxURISize, URI.size());
 
+    ldapbase = (lsAuthSystems.getAuthSystems().get(i))->getLdapBase();
+    maxLdapbaseSize = max(maxLdapbaseSize, ldapbase.size());
+
+    status = (lsAuthSystems.getAuthSystems().get(i))->getStatus();
+    statusStr = (status?"ACTIVE":"INACTIVE");
+    maxStatusSize = max(maxStatusSize, statusStr.size());
   }
 
-  os << setw(maxAuthSystemIdSize+2) << left << "authSystemId" << setw(maxNameSize+2) << left << "name" << setw(maxURISize+2) << left << "URI";
+  os << setw(maxAuthSystemIdSize+2) << left << "authSystemId" << setw(maxNameSize+2) << left << "name" << setw(maxURISize+2) << left << "URI" <<
+  setw(maxLdapbaseSize+2) << left << "ldapBase" << setw(maxStatusSize+2) << left << "status";
   os << endl;
   setFill(maxAuthSystemIdSize, os);
   setFill(maxNameSize, os);
   setFill(maxURISize, os);
+  setFill(maxLdapbaseSize, os);
+  setFill(maxStatusSize, os);
   os << endl;
 
   for(unsigned int i = 0; i < lsAuthSystems.getAuthSystems().size(); i++) {
@@ -455,9 +475,16 @@ operator<<(std::ostream& os, UMS_Data::ListAuthSystems& lsAuthSystems) {
     authSystemId = (lsAuthSystems.getAuthSystems().get(i))->getAuthSystemId();
     name = (lsAuthSystems.getAuthSystems().get(i))->getName();
     URI = (lsAuthSystems.getAuthSystems().get(i))->getURI();
+    ldapbase = (lsAuthSystems.getAuthSystems().get(i))->getLdapBase();
+
     os << setw(maxAuthSystemIdSize+2) << left << authSystemId;
     os << setw(maxNameSize+2) << left << name;
     os << setw(maxURISize+2) << left <<  URI;
+
+    os << setw(maxLdapbaseSize+2) << left << ldapbase;
+    status = (lsAuthSystems.getAuthSystems().get(i))->getStatus();
+    statusStr = (status?"ACTIVE":"INACTIVE");
+    os << setw(maxStatusSize+2) << left <<  statusStr;
     os << endl;
   }
 
@@ -502,7 +529,6 @@ operator<<(std::ostream& os, const UMS_Data::AuthAccount_ptr& authAccount) {
 std::ostream&
 operator<<(std::ostream& os, UMS_Data::ListAuthAccounts& lsAuthAccounts) {
 
-  //#if 0
   size_t maxAuthAccountIdSize = std::string("authAccountId").size();
   size_t maxUserIdSize = std::string("userId").size();
   size_t maxAcLoginSize = std::string("acLogin").size();
@@ -523,7 +549,7 @@ operator<<(std::ostream& os, UMS_Data::ListAuthAccounts& lsAuthAccounts) {
 
   }
 
-  os << setw(maxAuthAccountIdSize+2) << left << "authAccountId" << setw(maxUserIdSize+2) << left << "userId" << setw(maxAcLoginSize+2) << left << "acLogin";
+  os << setw(maxAuthAccountIdSize+2) << left << "authSystemId" << setw(maxUserIdSize+2) << left << "userId" << setw(maxAcLoginSize+2) << left << "acLogin";
   os << endl;
   setFill(maxAuthAccountIdSize, os);
   setFill(maxUserIdSize, os);
@@ -540,7 +566,7 @@ operator<<(std::ostream& os, UMS_Data::ListAuthAccounts& lsAuthAccounts) {
     os << endl;
   }
 
-//#endif
+ return os;
 
 }
 

@@ -9,7 +9,7 @@ project(VISHNU)
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Cmake)
 
-set( VISHNU_VERSION "1.2.8" CACHE STRING " the version of the source ")
+set( VISHNU_VERSION "1.3.0" CACHE STRING " the version of the source ")
 
 # Options set to ON by default
 option(BUILD_SHARED_LIBS "disable shared libraries usage" ON)
@@ -41,6 +41,7 @@ option(COMPILE_IMS "compile the module IMS")
 option(VISHNU_USE_LOADLEVELER   "Build VISHNU with LoadLeveler support...")
 option(VISHNU_USE_TORQUE   "Build VISHNU with Torque support...")
 option(VISHNU_USE_SLURM   "Build VISHNU with SLURM support...")
+option(VISHNU_USE_LSF   "Build VISHNU with LSF support...")
 option(VISHNU_USE_LDAP   "Build VISHNU with LDAP support...")
 
 if (COMPILE_UMS AND COMPILE_TMS AND COMPILE_FMS AND COMPILE_IMS)
@@ -140,8 +141,8 @@ if (NOT CLIENT_ONLY AND NOT ENABLE_POSTGRESQL  AND NOT ENABLE_MYSQL)
    message(FATAL_ERROR  "You MUST set either ENABLE_POSTGRESQL or ENABLE_MYSQL")
 endif()
 
-if (COMPILE_TMS AND NOT CLIENT_ONLY AND NOT VISHNU_USE_LOADLEVELER AND NOT VISHNU_USE_TORQUE AND NOT VISHNU_USE_SLURM)
-   message(FATAL_ERROR "You MUST set either VISHNU_USE_TORQUE or VISHNU_USE_LOADLEVELER or VISHNU_USE_SLURM when compiling TMS server")
+if (COMPILE_TMS AND NOT CLIENT_ONLY AND NOT VISHNU_USE_LOADLEVELER AND NOT VISHNU_USE_TORQUE AND NOT VISHNU_USE_SLURM AND NOT VISHNU_USE_LSF)
+   message(FATAL_ERROR "You MUST set either VISHNU_USE_TORQUE or VISHNU_USE_LOADLEVELER or VISHNU_USE_SLURM or VISHNU_USE_LSF when compiling TMS server")
 endif()
 
 if (COMPILE_TMS)
@@ -200,7 +201,23 @@ if (VISHNU_USE_SLURM)
   endif(SLURM_FOUND)
 endif (VISHNU_USE_SLURM)
 
-if (VISHNU_USE_LDAP)
+if (VISHNU_USE_LSF)
+
+  add_definitions(-DHAVE_LSF)
+
+  find_package(LSF)
+  if (LSF_FOUND)
+  else (LSF_FOUND)
+    message("LSF installation was not found. Define the LSF_DIR variable to continue.")
+    message("     - You can define a LSF_DIR environment variable")
+    message("     - You can pass it as argument to cmake:")
+    message("       $ cmake <source root directory> -DLSF_DIR:PATH=/path/to/LSF")
+    message("     - You can use the ccmake GUI")
+    set(LSF_DIR "" cache path "LSF installation path")
+  endif(LSF_FOUND)
+endif (VISHNU_USE_LSF)
+
+if (VISHNU_USE_LDAP AND NOT CLIENT_ONLY)
   #To check if the module UMS is activated
   if (COMPILE_UMS)
     find_package(LDAP)
@@ -218,12 +235,10 @@ if (VISHNU_USE_LDAP)
   else (COMPILE_UMS)
     message("To use LDAP, the UMS module must be activated.")
   endif (COMPILE_UMS)
-endif(VISHNU_USE_LDAP)
+endif(VISHNU_USE_LDAP AND NOT CLIENT_ONLY)
 
 
-if(COMPILE_IMS AND NOT CLIENT_ONLY)
-  find_package(LOGSERVICE REQUIRED)
-endif(COMPILE_IMS AND NOT CLIENT_ONLY)
+find_package(LOGSERVICE REQUIRED)
 
 find_package(Boost 1.45
   REQUIRED program_options date_time thread filesystem system unit_test_framework serialization random)
@@ -266,6 +281,7 @@ set(TMS_SED_SOURCE_DIR ${VISHNU_SOURCE_DIR}/TMS/src/sed)
 set(TMS_UTILS_DIR ${VISHNU_SOURCE_DIR}/TMS/src/utils/)
 set(UTILS_TORQUE_DIR ${VISHNU_SOURCE_DIR}/TMS/src/utils_torque/)
 set(SLURM_PARSER_DIR ${VISHNU_SOURCE_DIR}/TMS/src/slurm_parser/)
+set(LSF_PARSER_DIR ${VISHNU_SOURCE_DIR}/TMS/src/lsf_parser/)
 
 #IMS
 set(IMS_EMF_DATA_DIR ${EMF_DATA_DIR}/IMS_Data)
@@ -349,7 +365,17 @@ if (BUILD_TESTING)
   set(TEST_TMS_SCRIPT_NAME_WAITING testScriptGenWaiting CACHE STRING " The name of the with an option to put job on waiting state")
   set(TMS_SCRIPT_PATH ${VISHNU_SOURCE_DIR}/TMS/test/src/scripts CACHE STRING " The path to the script to submit")
   set(TEST_CONFIG_DIR ${VISHNU_SOURCE_DIR}/TMS/test/src/scripts/ CACHE PATH "Tests configuration directory")
+  set(LSF_QUEUES_CONFIG_DIR /opt/lsf7u6/conf/lsbatch/cluster1/configdir/lsb.queues CACHE PATH "LSF queues configuration directory")
   set(TEST_AUTHENTYPE "UMS" CACHE STRING "The type of authentication")
+  set(TEST_ROOT_UMS_LOGIN "root" CACHE STRING "Vishnu root login registered on the user-authentication system and used for tests")
+  set(TEST_ROOT_UMS_PWD "vishnu_user" CACHE STRING "Vishnu root password registered on the user-authentication system and used for tests")
+  set(TEST_AUTHSYTEM_URI "ldap://127.0.0.1:389/" CACHE STRING "The URI of the authentication system")
+  set(TEST_AUTHSYTEM_BASE "uid=$USERNAME,ou=users,dc=edf,dc=fr" CACHE STRING "The base of the ldap authentication system")
+  set(TEST_ADMIN_UMS_LOGIN "admin_1" CACHE STRING "Vishnu admin login registered on the user-authentication system and used for tests")
+  set(TEST_ADMIN_UMS_PWD "admin" CACHE STRING "Vishnu admin password registered on the user-authentication system and used for tests")
+  set(TEST_USER_UMS_LOGIN "user_1" CACHE STRING "Vishnu user login registered on the user-authentication system and used for tests")
+  set(TEST_USER_UMS_PWD "toto" CACHE STRING "Vishnu user password registered on the user-authentication system and used for tests")
+
 
   mark_as_advanced(TEST_DB_TYPE)
   mark_as_advanced(TEST_DB_HOST)
@@ -367,6 +393,15 @@ if (BUILD_TESTING)
   mark_as_advanced(TEST_LOCAL_HOSTNAME)
   mark_as_advanced(TEST_REMOTE_HOSTNAME)
   mark_as_advanced(TEST_OMNINAMES_CFG_IP)
+  mark_as_advanced(TEST_ROOT_UMS_LOGIN)
+  mark_as_advanced(TEST_ROOT_UMS_PWD)
+  mark_as_advanced(TEST_AUTHSYTEM_URI)
+  mark_as_advanced(TEST_AUTHSYTEM_BASE)
+  mark_as_advanced(TEST_ADMIN_UMS_LOGIN)
+  mark_as_advanced(TEST_ADMIN_UMS_PWD)
+  mark_as_advanced(TEST_USER_UMS_LOGIN)
+  mark_as_advanced(TEST_USER_UMS_PWD)
+
 
   # Common directories for tests
   set(TEST_SQL_PATH "${PROJECT_BINARY_DIR}/test_files/sql" CACHE STRING "Contains SQL for tests")

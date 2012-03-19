@@ -642,6 +642,7 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
 
   // Creating job
   job.setJobId(jobid);
+  job.setBatchJobId(jobid);
   job.setJobName(name);
   job.setOwner(owner);
   if (state.compare("")!=0) {
@@ -949,7 +950,6 @@ TorqueServer::getFormatedCpuPerNode(const int& cpu,
             char delim = '+';
             size_t beginPosTonken = 0;
             size_t endPosToken = nodeValue.find(delim);
-            std::string tmp;
             if(endPosToken==std::string::npos) {
               findAndInsert(ppn, ppn+nbCpuStr, beginPosTonken, endPosToken, nodeValue);
             } 

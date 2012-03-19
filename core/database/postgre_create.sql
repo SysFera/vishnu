@@ -1,6 +1,6 @@
 -- This script is for initialization of the VISHNU PostgreSQL database
 -- Script name          : postgre_create.sql
--- Script owner         : SysFera SAS
+-- Script owner         : SysFera SA
 
 -- REVISIONS
 -- Revision nb          : 1.0

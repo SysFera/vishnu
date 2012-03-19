@@ -1,9 +1,10 @@
 /**
  * \file reconnect_m.cpp
- * This file defines the VISHNU reconnect command 
+ * This file defines the VISHNU reconnect command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
+#include <stdlib.h>
 #include "common.hpp"
 #include "cliUtil.hpp"
 #include "utils.hpp"
@@ -12,37 +13,30 @@
 #include "daemon_cleaner.hpp"
 #include "utilVishnu.hpp"
 #include "UserException.hpp"
-namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
 
+
 int main (int ac, char* av[]){
 
+  int counter;
 
-	string sessionId;
+  string sessionId;
 
-	string dietConfig;
+  string dietConfig;
+
+  string userId;
+
+  string password;
 
   /*********** In parameters **********************/
 
   UMS_Data::ListUsers listUsers;
-  
+  UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
 
-/********* Out parameters     *****************/
+  boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,0, dietConfig,CONFIG);
 
-  UMS_Data::Session session;
-
-  /**************** Describe options *************/
-
-
-
-  boost::shared_ptr< Options> opt(new Options(av[0]) );
-
-  opt->add("dietConfig,c",
-      "The diet config file",
-      ENV,
-      dietConfig);
 
 
   opt->add("sessionId,s",
@@ -51,69 +45,65 @@ int main (int ac, char* av[]){
            sessionId,1);
 
   opt->setPosition("sessionId",1);
- 
+
+
+  opt->add("password,w","To give the password ",CONFIG,password );
+
+/********* Out parameters     *****************/
+
+  UMS_Data::Session session;
+
+
 
   try {
 
-    /**************  Parse to retrieve option values  ********************/
-
-		opt->parse_cli(ac,av);
-
-		opt->parse_env(env_name_mapper());
-
-		opt->notify();
-
-
-/********  Process **************************/
-
-		checkVishnuConfig(*opt);
-    if ( opt->count("help")){
+    dietConfig = string(getenv("VISHNU_CONFIG_FILE"));
+    if (ac<2) {
       helpUsage(*opt,"[option] ");
-      exit(VISHNU_OK);
+      return ERRCODE_CLI_ERROR_MISSING_PARAMETER;
     }
 
+    sessionId = string(av[1]);
 
     /************** Call UMS reconnect service *******************************/
 
-    cleaner(const_cast<char*>(dietConfig.c_str()), ac, av);// lauch the daemon cleaner if it is not already running  
+    cleaner(const_cast<char*>(dietConfig.c_str()), ac, av);// lauch the daemon cleaner if it is not already running
+
+    /********* Get all the couples user/pwd ******************/
+    counter = 2;
+    while (counter<ac) {
+      string tmp(av[counter]);
+      if (counter+1>=ac) {
+        helpUsage(*opt,"[option] ");
+        return ERRCODE_CLI_ERROR_MISSING_PARAMETER;
+      }
+      UMS_Data::User_ptr user = ecoreFactory->createUser();
+      user->setUserId(tmp);
+      user->setPassword(string(av[counter+1]));
+      listUsers.getUsers().push_back(user);
+      counter += 2;
+    }
 
     // initializing DIET
-   
+
     if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
 
       errorUsage(av[0],dietErrorMsg,EXECERROR);
-    
+
       return  ERRCODE_CLI_ERROR_DIET ;
 
     }
 
-//    reconnect_m(listUsers,sessionId, session);
+    reconnect(listUsers, sessionId, session);
 
     // store the session information
 
     storeLastSession(session,getppid());
-    
+
     printSuccessMessage();
 
 
   }// End of try bloc
-
-  catch(po::required_option& e){//  a required parameter is missing
-
-    usage(*opt,"[options] sessionId",requiredParamMsg);
-   
-    return ERRCODE_CLI_ERROR_MISSING_PARAMETER;
-  }
-
-  // {{RELAX<CODEREDUCER> The error handling is the same in all command
-
-  catch(po::error& e){ // catch all other bad parameter errors
-
-    errorUsage(av[0], e.what());
-
-    return ERRCODE_INVALID_PARAM;
-  }
-
 
   catch(VishnuException& e){// catch all Vishnu runtime error
 

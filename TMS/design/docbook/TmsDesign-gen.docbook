@@ -70,6 +70,14 @@
           
         <para>Updates of TMS:</para><para>Added new internal service named jobSubmit_autom.</para><para>Added new internal service named getListOfJobs_all.</para><para>Modified TMS Data Class diagram.</para><para>Modified TMS Server Class diagram.</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>5</revnumber>
+        <date>24/02/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+        <para>Added LSF batch scheduler </para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -235,6 +243,10 @@ in the Vishnu Database.
             </para>
           </listitem>
           <listitem>
+            <para><emphasis role="bold">LSF API </emphasis> is the C API provided by the LSF batch scheduler..
+            </para>
+          </listitem>
+          <listitem>
             <para><emphasis role="bold">Vishnu Database</emphasis> stores all data manipulated by the TMS Server.
             </para>
           </listitem>
@@ -285,6 +297,9 @@ in the Vishnu Database.
                 <listitem>
                   <para>SLURM library</para>
                 </listitem>
+                <listitem>
+                  <para>LSF library</para>
+                </listitem>
               </itemizedlist> 
            </para>
           </listitem>
@@ -293,7 +308,7 @@ in the Vishnu Database.
     </section>
     <section>
       <title>Job owner and identifier</title>
-      <para> Each TMS server process runs using a specific local system account dedicated to VISHNU. To allow TMS server to submit job under user local account on the machine on which TMS server runs, TMS server calls an other service et asks the executor of the service to submit the job. We call this service executor  <emphasis>tmsSlave</emphasis>.  <emphasis>tmsSlave</emphasis> uses <emphasis>ssh executable command</emphasis> by switching the local system account dedicated to VISHNU to user local account, and after connexion on the user local account it calls the underlying batch scheduler API (LoadLeveler or Torque or SLURM API). For example a job submitted by user jdupond on a machine dedicated to LoadLeveler will be visible as a job with identifier &quot;hostname.344.0&quot; and owner &quot;jdupond&quot;. 
+      <para> Each TMS server process runs using a specific local system account dedicated to VISHNU. To allow TMS server to submit job under user local account on the machine on which TMS server runs, TMS server calls an other service et asks the executor of the service to submit the job. We call this service executor  <emphasis>tmsSlave</emphasis>.  <emphasis>tmsSlave</emphasis> uses <emphasis>ssh executable command</emphasis> by switching the local system account dedicated to VISHNU to user local account, and after connexion on the user local account it calls the underlying batch scheduler API (LoadLeveler or Torque or SLURM API or LSF API). For example a job submitted by user jdupond on a machine dedicated to LoadLeveler will be visible as a job with identifier &quot;hostname.344.0&quot; and owner &quot;jdupond&quot;. 
          From the VISHNU user point of view, the job owner corresponds of user job owner on the submitted machine and the  job identifier will be hidden and replaced by the generate global job identifier by VISHNU. For example the previous job will be visible in VISHNU as job &quot;JOB_6767&quot; and userId &quot;jdupond&quot;.</para>
       <para>This data translation is entirely transparent to the VISHNU user and simplifies job management. </para>
       <para>This <emphasis>tmsSlave</emphasis> is used only by two services: <emphasis>submitJob</emphasis> service and <emphasis>cancelJob</emphasis> service. </para>
@@ -356,7 +371,7 @@ in the Vishnu Database.
       </section>
       <section>
         <title>TMS server-side components</title>
-        <para>This diagram highlights the TMS server side components. Two services among all the services of the TMS internal API are shown here for example. These services are consumed by the TMS Client component through the SysFera-DS API. All the interfaces of the TMS Server component are shown. The TMS Server component uses the Torque, SLURM and IBM LoadLeveler API as underlying batch sheduler.</para>
+        <para>This diagram highlights the TMS server side components. Two services among all the services of the TMS internal API are shown here for example. These services are consumed by the TMS Client component through the SysFera-DS API. All the interfaces of the TMS Server component are shown. The TMS Server component uses the Torque, SLURM, LSF and IBM LoadLeveler API as underlying batch sheduler.</para>
         <itemizedlist>
           <listitem>
             <para><emphasis role="bold">JobServer</emphasis>

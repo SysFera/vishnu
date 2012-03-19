@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: connect
-.\"    Author:  SysFera SAS <info@sysfera.com>
+.\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-.\"      Date: December 2011
+.\"      Date: March 2012
 .\"    Manual: UMS C++ API Reference
-.\"    Source: VISHNU 1.2
+.\"    Source: VISHNU 1.3
 .\"  Language: English
 .\"
-.TH "CONNECT" "3" "December 2011" "VISHNU 1.2" "UMS C++ API Reference"
+.TH "CONNECT" "3" "March 2012" "VISHNU 1.3" "UMS C++ API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,23 +28,18 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-connect \- opens a session
+connect \- opens a session by trying multiple couples (userId, password) each in turn
 .SH "SYNOPSIS"
 .HP \w'int\ vishnu::connect('u
-.BI "int vishnu::connect(const\ string&\ " "userId" ", const\ string&\ " "password" ", Session&\ " "session" ", const\ ConnectOptions&\ " "options\ =\ ConnectOptions()" ");"
+.BI "int vishnu::connect(const\ ListUsers&\ " "listUsers" ", Session&\ " "session" ", const\ ConnectOptions&\ " "options\ =\ ConnectOptions()" ");"
 .SH "DESCRIPTION"
 .PP
-Opening a VISHNU session is the first step before using any other VISHNU command\&. This command authenticates you\&. You must have been registered in the VISHNU system by an administrator\&. It also creates a session that remains open after the command is completed and until the session is either manually or automatically closed\&. The userId and password may be given through the options, or if no userId and password are specified, vishnu_connect will read them in the \&.netrc file located in the home of the user\&.
+Opening a VISHNU session is the first step before using any other VISHNU command\&. This command authenticates you\&. You must have been registered in the VISHNU system by an administrator\&. It also creates a session that remains open after the command is completed and until the session is either manually or automatically closed\&. It is possible to define multiple VISHNU couples (userId, password)\&. In this case, vishnu_connect_m read them and tries each couple to make a connection\&.
 .SH "ARGUMENTS"
 .PP
-\fIuserId\fR
+\fIlistUsers\fR
 .RS 4
-Input argument\&. UserId represents the VISHNU user identifier\&. If userId and password are empty, vishnu connect will read them in the \&.netrc file located in the home of the user\&.
-.RE
-.PP
-\fIpassword\fR
-.RS 4
-Input argument\&. Password represents the password of the user\&. If userId and password are empty, vishnu connect will read them in the \&.netrc file located in the home of the user\&.
+Input argument\&. The list containing one or more couple (userId and password) potentially usable for connection\&.
 .RE
 .PP
 \fIsession\fR
@@ -59,6 +54,10 @@ Input argument\&. Options is an object which encapsulates the options available 
 .SH "EXCEPTIONS"
 .PP
 The following exceptions may be thrown:
+.PP
+"Vishnu not available (Authenticator error)" [\-1]
+.RS 4
+.RE
 .PP
 "Vishnu not available (Service bus failure)" [1]
 .RS 4
@@ -105,13 +104,13 @@ The following exceptions may be thrown:
 .RE
 .SH "AUTHOR"
 .PP
-\fB SysFera SAS\fR <\&info@sysfera.com\&>
+\fB SysFera SA\fR <\&info@sysfera.com\&>
 .RS 4
 Developed the first version of these man pages as part of the VISHNU project.
 .RE
 .SH "COPYRIGHT"
 .br
-Copyright \(co 2011 SysFera SAS
+Copyright \(co 2012 SysFera SA
 .br
 .PP
 These manual pages are provided under the following conditions:

@@ -121,7 +121,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
-        <details key="content" value="allows the user to list sessions opened on a specific machine"/>
+        <details key="content" value="allows the user to list sessions opened on a specific client's machine by using its name"/>
         <details key="shortOption" value="m"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -200,7 +200,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//StatusType"
-        defaultValueLiteral="1">
+        defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="represents the status of the user"/>
         <details key="shortOption" value="s"/>
@@ -417,7 +417,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//StatusType"
-        defaultValueLiteral="1">
+        defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="represents the status of the machine"/>
         <details key="shortOption" value="t"/>
@@ -479,6 +479,18 @@
         <details key="content" value="is the list of LocalAccount objects"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ListConfAuthSystems" upperBound="-1"
+        eType="#//AuthSystem" containment="true">
+      <eAnnotations source="Description">
+        <details key="content" value="is the list of user-authentication systems"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ListConfAuthAccounts" upperBound="-1"
+        eType="#//AuthAccount" containment="true">
+      <eAnnotations source="Description">
+        <details key="content" value="is the list of users objects"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="filePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="the full path to the file that contains the saved configuration"/>
@@ -534,7 +546,7 @@
     <eAnnotations source="Description">
       <details key="content" value="The SessionCloseType is an option for closing session automatically"/>
     </eAnnotations>
-    <eLiterals name="UNDEFINED" literal="UNDEFINED"/>
+    <eLiterals name="DEFAULT" literal="DEFAULT"/>
     <eLiterals name="CLOSE_ON_TIMEOUT" value="1" literal="CLOSE_ON_TIMEOUT"/>
     <eLiterals name="CLOSE_ON_DISCONNECT" value="2" literal="CLOSE_ON_DISCONNECT"/>
   </eClassifiers>
@@ -549,6 +561,7 @@
     <eAnnotations source="Description">
       <details key="content" value="represents the different states of a VISHNU object"/>
     </eAnnotations>
+    <eLiterals name="UNDEFINED" value="-1"/>
     <eLiterals name="INACTIVE" literal="INACTIVE"/>
     <eLiterals name="ACTIVE" value="1" literal="ACTIVE"/>
   </eClassifiers>
@@ -596,21 +609,21 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="userPasswordEncryption"
-        lowerBound="1" eType="#//EncryptionMethod" defaultValueLiteral="0">
+        lowerBound="1" eType="#//EncryptionMethod" defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="represents the encryption method used to encrypt user's password"/>
         <details key="shortOption" value=""/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//AuthType"
-        defaultValueLiteral="0">
+        defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="represents the type of the user-authentication system"/>
         <details key="shortOption" value="t"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//StatusType"
-        defaultValueLiteral="1">
+        defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="represents the status of the user-authentication system"/>
         <details key="shortOption" value="s"/>
@@ -665,8 +678,8 @@
     <eAnnotations source="Description">
       <details key="content" value="represents the type of the user-authentication systems"/>
     </eAnnotations>
-    <eLiterals name="UNDEFINED" literal="UNDEFINED"/>
-    <eLiterals name="LDAP" value="1"/>
+    <eLiterals name="UNDEFINED" value="-1" literal="UNDEFINED"/>
+    <eLiterals name="LDAP"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AuthAccount" instanceTypeName="AuthAccount">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="authSystemId" lowerBound="1"
@@ -695,8 +708,8 @@
     <eAnnotations source="Description">
       <details key="content" value="represents the name of the encryption method "/>
     </eAnnotations>
-    <eLiterals name="UNDEFINED" literal="UNDEFINED"/>
-    <eLiterals name="SSHA" value="1"/>
+    <eLiterals name="UNDEFINED" value="-1" literal="UNDEFINED"/>
+    <eLiterals name="SSHA"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListAuthAccounts" instanceTypeName="ListAuthAccounts">
     <eStructuralFeatures xsi:type="ecore:EReference" name="AuthAccounts" upperBound="-1"

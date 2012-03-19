@@ -32,7 +32,7 @@ using namespace ::UMS_Data;
 // Default constructor
 AuthSystem::AuthSystem() :
     m_authSystemId(""), m_name(""), m_URI(""), m_authLogin(""), m_authPassword(
-            ""), m_userPasswordEncryption(0), m_type(0), m_status(1),
+            ""), m_userPasswordEncryption(-1), m_type(-1), m_status(-1),
             m_ldapBase("")
 {
 

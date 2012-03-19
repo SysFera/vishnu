@@ -76,7 +76,7 @@ public:
        checkClientMachineName(options->getMachineId());
 
        sqlRequest = "SELECT vsessionid, userid, sessionkey, state, closepolicy, timeout, lastconnect,"
-         "creation, closure, name from vsession, users, clmachine where vsession.users_numuserid=users.numuserid"
+         "creation, closure, authid from vsession, users, clmachine where vsession.users_numuserid=users.numuserid"
          " and vsession.clmachine_numclmachineid=clmachine.numclmachineid";
        addOptionRequest("name", options->getMachineId(), sqlRequest);
      }
@@ -93,6 +93,9 @@ public:
      }
 
      int status = options->getStatus();
+     if (status == UNDEFINED_VALUE) {
+       status = 1;
+     }
      //To check the status value
      checkStatus(status);
 
@@ -146,7 +149,7 @@ public:
   UMS_Data::ListSessions* list()
   {
     std::string sqlListOfSessions = "SELECT vsessionid, userid, sessionkey, state, closepolicy, timeout, lastconnect, "
-    "creation, closure from vsession, users where vsession.users_numuserid=users.numuserid";
+    "creation, closure, authid from vsession, users where vsession.users_numuserid=users.numuserid";
 
     std::vector<std::string>::iterator ii;
     std::vector<std::string> results;
@@ -181,6 +184,7 @@ public:
             session->setDateLastConnect(convertToTimeType(*(++ii)));
             session->setDateCreation(convertToTimeType(*(++ii)));
             session->setDateClosure(convertToTimeType(*(++ii)));
+            session->setAuthenId(*(++ii));
 
             mlistObject->getSessions().push_back(session);
         }

@@ -21,6 +21,8 @@
 
 #include "FMSVishnuException.hpp"
 #include <boost/filesystem.hpp>
+#include <boost/thread/shared_mutex.hpp>
+
 using namespace boost::posix_time;
 using namespace boost::gregorian;
 namespace bfs=boost::filesystem;
@@ -33,12 +35,17 @@ typedef enum {
   TORQUE = 0,/*!< For TORQUE batch type */
   LOADLEVELER = 1,/*!< For LOADLEVELER batch type */
   SLURM = 2, /*!< For SLURM batch type */
-  UNDEFINED = 3 /*!< IF batch type is not defined*/
+  LSF = 3, /*!< For LSF batch type */
+  UNDEFINED = 4 /*!< IF batch type is not defined*/
 } BatchType;
 
 static const std::string AUTOMATIC_SUBMIT_JOB_KEYWORD="autom";
 static const std::string LIST_JOBS_ON_MACHINES_KEYWORD="all";
 
+static const int UNDEFINED_VALUE=-1;
+static const int LDAPTYPE=0;
+static const int SSHA_METHOD=0;
+static const int ACTIVE_STATUS=1;
 /**
 * \brief Function to encrypt data and password
 * \param clef is the data to be encrypted
@@ -51,7 +58,7 @@ char* crypt(const char* clef, const char* salt);
  * \brief This naspace contains utils functions of the vishnu system
  */
 namespace vishnu {
-
+  
   static const std::string ROOTUSERNAME = "root";
   static const std::string UMSMAPPERNAME = "UMS";
   static const std::string TMSMAPPERNAME = "TMS";
@@ -59,6 +66,8 @@ namespace vishnu {
   static const std::string FMSMAPPERNAME = "FMS";
 
   static const int PASSWORD_MAX_SIZE = 8;
+
+  static boost::shared_mutex mutex;
   /**
   * \brief Generic function to convert an object to string
   * \param val is a generic data to be transformed to string

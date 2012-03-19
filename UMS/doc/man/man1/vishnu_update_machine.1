@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: vishnu_update_machine
-.\"    Author:  SysFera SAS <info@sysfera.com>
+.\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-.\"      Date: December 2011
+.\"      Date: March 2012
 .\"    Manual: UMS Command reference
-.\"    Source: VISHNU 1.2
+.\"    Source: VISHNU 1.3
 .\"  Language: English
 .\"
-.TH "VISHNU_UPDATE_MACHIN" "1" "December 2011" "VISHNU 1.2" "UMS Command reference"
+.TH "VISHNU_UPDATE_MACHIN" "1" "March 2012" "VISHNU 1.3" "UMS Command reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -64,7 +64,7 @@ represents the language used for the description of the machine\&.
 .PP
 \fB\-t \fR\fB\fIstatus\fR\fR
 .RS 4
-represents the status of the machine\&. The value must be an integer\&. Predefined values are: 0 (INACTIVE), 1 (ACTIVE)\&.
+represents the status of the machine\&. The value must be an integer\&. Predefined values are: \-1 (UNDEFINED), 0 (INACTIVE), 1 (ACTIVE)\&.
 .RE
 .PP
 \fB\-k \fR\fB\fIsshPublicKeyFile\fR\fR
@@ -143,13 +143,13 @@ To change the name of the machine whose id is machine_1 to provencal:
 vishnu_update_machine machine_1 \-n provencal
 .SH "AUTHOR"
 .PP
-\fB SysFera SAS\fR <\&info@sysfera.com\&>
+\fB SysFera SA\fR <\&info@sysfera.com\&>
 .RS 4
 Developed the first version of these man pages as part of the VISHNU project.
 .RE
 .SH "COPYRIGHT"
 .br
-Copyright \(co 2011 SysFera SAS
+Copyright \(co 2012 SysFera SA
 .br
 .PP
 These manual pages are provided under the following conditions:

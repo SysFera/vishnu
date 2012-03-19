@@ -1,0 +1,2022 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?xml-stylesheet type="text/xsl"
+        href="http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl"?>
+
+<book  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
+   <info>
+      <title> VISHNU - UMS - Tests report</title>
+      <productname>VISHNU</productname>
+      <releaseinfo>1.3.0</releaseinfo>
+      <date>March 2012</date>
+    
+    <author>
+      <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
+    </author>  
+    <author>
+      <personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Eugène</firstname><surname>Pamba Capo-Chichi</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Kevin</firstname><surname>Coulomb</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
+    </author>
+    
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>14/03/2012</date>
+        <authorinitials>  SYSFERA SA</authorinitials>
+        <revdescription>
+          <para>First version</para>
+        </revdescription>
+      </revision>
+
+    </revhistory>
+    
+      <copyright>
+              <year>2012</year>
+              <holder>SysFera SA</holder>
+      </copyright>
+      <legalnotice>
+              <para>This report is provided under the following conditions:</para>
+              <para>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</para>
+              <orderedlist>
+                      <listitem>
+                              <para>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</para>
+                      </listitem>
+                      <listitem>
+                              <para>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</para>
+                      </listitem>
+              </orderedlist>
+<para>This software is governed by the CECILL licence under French law and
+abiding by the rules of distribution of free software.  You can  use, 
+modify and/ or redistribute the software under the terms of the CeCILL
+license as circulated by CEA, CNRS and INRIA at the following URL
+&quot;http://www.cecill.info&quot;.</para>
+<para>As a counterpart to the access to the source code and  rights to copy,
+modify and redistribute granted by the license, users are provided only
+with a limited warranty  and the software's author,  the holder of the
+economic rights,  and the successive licensors  have only  limited
+liability.</para>
+<para>In this respect, the user's attention is drawn to the risks associated
+with loading,  using,  modifying and/or developing or reproducing the
+software by the user in light of its specific status of free software,
+that may mean  that it is complicated to manipulate,  and  that  also
+therefore means  that it is reserved for developers  and  experienced
+professionals having in-depth computer knowledge. Users are therefore
+encouraged to load and test the software's suitability as regards their
+requirements in conditions enabling the security of their systems and/or 
+data to be ensured and,  more generally, to use and operate it in the 
+same conditions as regards security.</para>
+       </legalnotice>
+  </info>
+    
+  <chapter>
+    <title> Introduction </title>
+     <para>Author of the test code : Eugène PAMBA CAPO-CHICHI and Kevin COULOMB</para>
+     <para>Author of the test report : Kevin COULOMB</para>
+     
+     <para> The tests which follows have been done in the following environment: </para>
+      <para><itemizedlist>
+	  <listitem>
+            <para>Database used : PostgreSQL 8.4</para>
+          </listitem>
+	  <listitem>
+            <para>OS used for the test : Ubuntu 11.04</para>
+          </listitem>
+	  <listitem>
+            <para>Cmake version : V2.8</para>
+          </listitem>
+	  <listitem>
+            <para>gcc version : V4.4.5</para>
+          </listitem>
+	  <listitem>
+            <para>DIET version : V2.8</para>
+          </listitem>
+	 <listitem>
+	   <para> RAM memory : 4Gb </para>
+	 </listitem>
+        </itemizedlist>
+    </para>
+  </chapter>
+  
+    <chapter>
+    <title>Functional tests </title>
+      
+     <section>
+      <title> U1.1 - Connexion </title>
+      <para><emphasis role = "italic"> API command: connect</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>U1.1-B</para></entry>
+              <entry><para>Normal connexion login/password</para></entry>
+              <entry><para>A session is opened</para></entry>
+              <entry><para>A session is opened</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>U1.1-B2</para></entry>
+              <entry><para>Normal connexion using a netrc file</para></entry>
+              <entry><para>A session is opened</para></entry>
+              <entry><para>A session is opened</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+             <entry><para>U1.1-E1</para></entry>
+              <entry><para>Bad user id</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U1.1-E2</para></entry>
+              <entry><para>Bad password</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+             <entry><para>U1.1-E3</para></entry>
+              <entry><para>No netrc file defined</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U1.1-E4</para></entry>
+              <entry><para>Bad permission on the netrc file</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U1.1-E5</para></entry>
+              <entry><para>No vishnu machine in the netrc file</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U1.1-E6</para></entry>
+              <entry><para>No login in the netrc file</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U1.1-E7</para></entry>
+              <entry><para>No password in the netrc file</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U1.1-E8</para></entry>
+              <entry><para>Invalid account in the netrc file</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+        
+     <section>
+      <title> U1 - Close a session </title>
+      <para><emphasis role = "italic"> API command: close</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>U1-B1</para></entry>
+              <entry><para>Close a session on disconnexion</para></entry>
+              <entry><para>The session is closed</para></entry>
+              <entry><para>The session is closed</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>U1-B2</para></entry>
+              <entry><para>Close a session on timeout</para></entry>
+              <entry><para>The session is closed</para></entry>
+              <entry><para>The session is closed</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+             <entry><para>U1-E1</para></entry>
+              <entry><para>Invalid closure mode</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+             <entry><para>U1-E2</para></entry>
+              <entry><para>There is no open session</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> U1.5 - Reconnexion </title>
+      <para><emphasis role = "italic"> API command: reconnect</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>U1.1-B</para></entry>
+              <entry><para>Normal reconnexion login/password</para></entry>
+              <entry><para>A session is opened</para></entry>
+              <entry><para>A session is opened</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>U1.1-B2</para></entry>
+              <entry><para>Normal reconnexion using a netrc file</para></entry>
+              <entry><para>A session is opened</para></entry>
+              <entry><para>A session is opened</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+             <entry><para>U1.1-E1</para></entry>
+              <entry><para>Bad user id</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U1.1-E2</para></entry>
+              <entry><para>Bad password</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+             <entry><para>U1.1-E3</para></entry>
+              <entry><para>No netrc file defined</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U1.1-E4</para></entry>
+              <entry><para>Bad permission on the netrc file</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U1.1-E5</para></entry>
+              <entry><para>No vishnu machine in the netrc file</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U1.1-E6</para></entry>
+              <entry><para>No login in the netrc file</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U1.1-E7</para></entry>
+              <entry><para>No password in the netrc file</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U1.1-E8</para></entry>
+              <entry><para>Invalid account in the netrc file</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+
+    <section>
+      <title> U1.3.5 - List the sessions </title>
+      <para><emphasis role = "italic"> API command: listSession</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>U1.3.5-B</para></entry>
+              <entry><para>list the sessions</para></entry>
+              <entry><para>The sessions are listed</para></entry>
+              <entry><para>The sessions are listed</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>UA5.1-B</para></entry>
+              <entry><para>list the sessions as an admin</para></entry>
+              <entry><para>The sessions are listed</para></entry>
+              <entry><para>The sessions are listed</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+             <entry><para>U1.3.5-E1</para></entry>
+              <entry><para>Bad session key</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+             <entry><para>UA5.1-E1</para></entry>
+              <entry><para>Bad session identifier</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+             <entry><para>UA5.1-E2</para></entry>
+              <entry><para>Bad user identifier</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+    
+     <section>
+      <title> U1.3.4 - List history command </title>
+      <para><emphasis role = "italic"> API command: listHistoryCommand</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>U1.3.4-B</para></entry>
+              <entry><para>Normal execution of listHistoryCommand</para></entry>
+              <entry><para>The list of commands is returned</para></entry>
+              <entry><para>The list of commands is returned</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+             <entry><para>U1.3.4-E1</para></entry>
+              <entry><para>Bad session key</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U1.3.4-E2</para></entry>
+              <entry><para>Bad session Identifier</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> UA1 - Add a user command </title>
+      <para><emphasis role = "italic"> API command: addUser</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>UA1-B</para></entry>
+              <entry><para>Normal execution of addUser</para></entry>
+              <entry><para>The user is added</para></entry>
+              <entry><para>The user is added</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+             <entry><para>UA1-E1</para></entry>
+              <entry><para>Bad session key</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA1-E2</para></entry>
+              <entry><para>Not an administrator</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> UA4.1 - Update a user command </title>
+      <para><emphasis role = "italic"> API command: updateUser</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>UA4.1-B</para></entry>
+              <entry><para>Normal execution of updateUser</para></entry>
+              <entry><para>The user is updated</para></entry>
+              <entry><para>The user is updated</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA4.1-E1</para></entry>
+              <entry><para>Bad user identifier</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+             <entry><para>UA4.1-E2</para></entry>
+              <entry><para>Bad session key</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA4.1-E3</para></entry>
+              <entry><para>Not an administrator</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> UA4.2 - Delete a user </title>
+      <para><emphasis role = "italic"> API command: deleteUser</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>UA4.2-B</para></entry>
+              <entry><para>Normal execution of deleteUser</para></entry>
+              <entry><para>The user is deleted</para></entry>
+              <entry><para>The user is deleted</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA4.2-E1</para></entry>
+              <entry><para>Bad user identifier</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA4.2-E2</para></entry>
+              <entry><para>Not an administrator</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+     </section>
+
+     <section>
+      <title> UA5.2 - list the users </title>
+      <para><emphasis role = "italic"> API command: listUser</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>UA5.2-B</para></entry>
+              <entry><para>Normal execution of listUser</para></entry>
+              <entry><para>The list of users</para></entry>
+              <entry><para>The list of users</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA5.2-E1</para></entry>
+              <entry><para>No open session</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA4.2-E2</para></entry>
+              <entry><para>Not an administrator</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> U1.3.3 - Change the password </title>
+      <para><emphasis role = "italic"> API command: changePassword</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>U1.3.3-B</para></entry>
+              <entry><para>Change the password of the user</para></entry>
+              <entry><para>The password is changed </para></entry>
+              <entry><para>The password is changed</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U1.3.3-E1</para></entry>
+              <entry><para>Invalid user</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+
+     <section>
+      <title> UA2 - Reset the password </title>
+      <para><emphasis role = "italic"> API command: resetPassword</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>UA2-B</para></entry>
+              <entry><para>Reset the password of the user</para></entry>
+              <entry><para>The password is changed </para></entry>
+              <entry><para>The password is changed</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA2-E1</para></entry>
+              <entry><para>Invalid user</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA2-E2</para></entry>
+              <entry><para>Not an administrator</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> U4 - Add a local account </title>
+      <para><emphasis role = "italic"> API command: addLocalAccount</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>U4-B</para></entry>
+              <entry><para>Add a local account</para></entry>
+              <entry><para>A loccal account is added</para></entry>
+              <entry><para>A loccal account is added</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U4-E1</para></entry>
+              <entry><para>Invalid user</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U4-E2</para></entry>
+              <entry><para>Invalid machine</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> U4.1 - Update a local account </title>
+      <para><emphasis role = "italic"> API command: updateLocalAccount</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>U4.1-B</para></entry>
+              <entry><para>Update a local account</para></entry>
+              <entry><para>A loccal account is updated</para></entry>
+              <entry><para>A loccal account is updated</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U4.2-E1</para></entry>
+              <entry><para>Invalid machine</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U4.1-E2</para></entry>
+              <entry><para>Invalid user</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> U4.2 - Delete a local account </title>
+      <para><emphasis role = "italic"> API command: deleteLocalAccount</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>U4.2-B</para></entry>
+              <entry><para>Delete a local account</para></entry>
+              <entry><para>A loccal account is deleted</para></entry>
+              <entry><para>A loccal account is deleted</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U4.2-E1</para></entry>
+              <entry><para>Invalid machine</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U4.2-E2</para></entry>
+              <entry><para>Invalid user</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> UA3 - Save a configuration </title>
+      <para><emphasis role = "italic"> API command: saveConfiguration</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>UA3-B</para></entry>
+              <entry><para>Save a configuration</para></entry>
+              <entry><para>The current configuration is saved in a file</para></entry>
+              <entry><para>The current configuration is saved in a file</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA3-E1</para></entry>
+              <entry><para>Invalid file</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> UA4 - Restore a configuration </title>
+      <para><emphasis role = "italic"> API command: restoreConfiguration</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>UA4-B</para></entry>
+              <entry><para>Restore a configuration</para></entry>
+              <entry><para>The configuration is restored</para></entry>
+              <entry><para>The configuration is restored</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA4-E1</para></entry>
+              <entry><para>Invalid file</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+
+     <section>
+      <title> U4.3 - List the local account </title>
+      <para><emphasis role = "italic"> API command: listLocalAccount</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>U4.3-B</para></entry>
+              <entry><para>List the local account</para></entry>
+              <entry><para>The local account are returned</para></entry>
+              <entry><para>The local account are returned</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U4.3-E1</para></entry>
+              <entry><para>Invalid machine</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U4.3-E1</para></entry>
+              <entry><para>Invalid user</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+
+     <section>
+      <title> UA7 - Configure default option </title>
+      <para><emphasis role = "italic"> API command: configureDefaultOpt</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>UA7-B</para></entry>
+              <entry><para>Configure a default option</para></entry>
+              <entry><para>The option is set</para></entry>
+              <entry><para>The option is set</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA7-E1</para></entry>
+              <entry><para>Invalid option name</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA7-E2</para></entry>
+              <entry><para>Invalid option value</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> U1.3.2 - List options </title>
+      <para><emphasis role = "italic"> API command: listOptions</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>U1.3.2-B</para></entry>
+              <entry><para>List the options</para></entry>
+              <entry><para>The options are returned</para></entry>
+              <entry><para>The options are returned</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U1.3.2-E1</para></entry>
+              <entry><para>Invalid option name</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> U1.3.1 - Configure option </title>
+      <para><emphasis role = "italic"> API command: configureOption</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>U1.3.1-B</para></entry>
+              <entry><para>Configure an option</para></entry>
+              <entry><para>The option is set</para></entry>
+              <entry><para>The option is set</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U1.3.1-E1</para></entry>
+              <entry><para>Invalid option name</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U1.3.1-E2</para></entry>
+              <entry><para>Invalid option value</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> UA6.1 - Add a machine </title>
+      <para><emphasis role = "italic"> API command: addMachine</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>UA6.1-B</para></entry>
+              <entry><para>Add a machine</para></entry>
+              <entry><para>A machine is added</para></entry>
+              <entry><para>A machine is added</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA6.1-E1</para></entry>
+              <entry><para>Invalid session</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> UA6.1 - Update a machine </title>
+      <para><emphasis role = "italic"> API command: updateMachine</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>UA6.4-B</para></entry>
+              <entry><para>Update a machine</para></entry>
+              <entry><para>A machine is updated</para></entry>
+              <entry><para>A machine is updated</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA6.4-E1</para></entry>
+              <entry><para>Invalid session</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> UA6.2 - Delete a machine </title>
+      <para><emphasis role = "italic"> API command: deleteMachine</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>UA6.2-B</para></entry>
+              <entry><para>Delete a machine</para></entry>
+              <entry><para>A machine is deleted</para></entry>
+              <entry><para>A machine is deleted</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA6.4-E1</para></entry>
+              <entry><para>Invalid machine identifier</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> UA6.3 - List a machine </title>
+      <para><emphasis role = "italic"> API command: listMachine</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>UA6.3-B</para></entry>
+              <entry><para>List the machines</para></entry>
+              <entry><para>The machines are returned</para></entry>
+              <entry><para>The machines are returned</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA6.3-E1</para></entry>
+              <entry><para>Invalid session</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> UA8 - Add an authentication system </title>
+      <para><emphasis role = "italic"> API command: addAuthSystem</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>UA8-B</para></entry>
+              <entry><para>Add an authentication system</para></entry>
+              <entry><para>An authentication system is added</para></entry>
+              <entry><para>An authentication system is added</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA8-E1</para></entry>
+              <entry><para>Invalid session</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA8-E2</para></entry>
+              <entry><para>Not an admin</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA8-E3</para></entry>
+              <entry><para>Already existing system</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA8-E4</para></entry>
+              <entry><para>Unknown encryption method</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA8-E5</para></entry>
+              <entry><para>Missing ldapbase for ldap system</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> UA8.1 - Update an authentication system </title>
+      <para><emphasis role = "italic"> API command: updateAuthSystem</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>UA8.1-B</para></entry>
+              <entry><para>Update an authentication system</para></entry>
+              <entry><para>An authentication system is updated</para></entry>
+              <entry><para>An authentication system is updated</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA8.1-E1</para></entry>
+              <entry><para>Invalid session</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA8.1-E2</para></entry>
+              <entry><para>Invalid authentication system</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA8.1-E3</para></entry>
+              <entry><para>Unknown encryption method</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA8.1-E4</para></entry>
+              <entry><para>The system is already locked when trying to lock it</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA8.1-E5</para></entry>
+              <entry><para>Missing username variable in ldapbase field</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> UA8.2 - Delete an authentication system </title>
+      <para><emphasis role = "italic"> API command: deleteAuthSystem</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>UA8.2-B</para></entry>
+              <entry><para>Delete an authentication system</para></entry>
+              <entry><para>An authentication system is deleted</para></entry>
+              <entry><para>An authentication system is deleted</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>UA8.2-E1</para></entry>
+              <entry><para>Invalid authentication system</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+
+     <section>
+      <title> U5 - List the authentication system </title>
+      <para><emphasis role = "italic"> API command: listAuthSystem</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>U5-B</para></entry>
+              <entry><para>List the authentication system</para></entry>
+              <entry><para>The authentication system are returned</para></entry>
+              <entry><para>The authentication system are returned</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U5-E1</para></entry>
+              <entry><para>Invalid session</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> U6 - Add an authentication account </title>
+      <para><emphasis role = "italic"> API command: addAuthAccount</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>U6-B</para></entry>
+              <entry><para>Add an authentication account</para></entry>
+              <entry><para>The authentication account is added</para></entry>
+              <entry><para>The authentication account is added</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U6-E1</para></entry>
+              <entry><para>Invalid authentication system</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U6-E2</para></entry>
+              <entry><para>Invalid user identifier</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U6-E3</para></entry>
+              <entry><para>Cannot add as someone else if not an admin</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> U6.1 - Update an authentication account </title>
+      <para><emphasis role = "italic"> API command: updateAuthAccount</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>U6.1-B</para></entry>
+              <entry><para>Update an authentication account</para></entry>
+              <entry><para>The authentication account is updated</para></entry>
+              <entry><para>The authentication account is updated</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U6.1-E1</para></entry>
+              <entry><para>Invalid authentication system</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U6.1-E2</para></entry>
+              <entry><para>Invalid user identifier</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U6.1-E3</para></entry>
+              <entry><para>Cannot add as someone else if not an admin</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U6.1-E4</para></entry>
+              <entry><para>Unknown authentication account</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> U6.2 - Delete an authentication account </title>
+      <para><emphasis role = "italic"> API command: deleteAuthAccount</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>U6.2-B</para></entry>
+              <entry><para>Delete an authentication account</para></entry>
+              <entry><para>The authentication account is deleted</para></entry>
+              <entry><para>The authentication account is deleted</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U6.2-E1</para></entry>
+              <entry><para>Invalid authentication system</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U6.2-E2</para></entry>
+              <entry><para>Invalid user identifier</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U6.2-E3</para></entry>
+              <entry><para>Cannot add as someone else if not an admin</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U6.2-E4</para></entry>
+              <entry><para>Unknown authentication account</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+     <section>
+      <title> U6.3 - List the authentication accounts </title>
+      <para><emphasis role = "italic"> API command: deleteAuthAccount</emphasis></para>
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>U6.3-B</para></entry>
+              <entry><para>List the authentication accounts</para></entry>
+              <entry><para>The authentication account are returned</para></entry>
+              <entry><para>The authentication account are returned</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U6.3-E</para></entry>
+              <entry><para>Invalid authentication system</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U6.2-E1</para></entry>
+              <entry><para>Invalid user identifier</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    <row>
+             <entry><para>U6.2-E3</para></entry>
+              <entry><para>Cannot add as someone else if not an admin</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+    
+
+  </chapter> <!-- end Functionnal Tests --> 
+  
+  <chapter>
+    <title>Stress tests </title>
+    
+     <informaltable frame="all">
+         <tgroup cols="5">
+       <tbody>
+            <row>
+               <entry>
+                  <para>ID test</para>
+               </entry>
+               <entry>
+                  <para>Date</para>
+               </entry>
+               <entry>
+                  <para>Test description</para>
+               </entry>
+               <entry>
+                  <para>Command(s) tested</para>
+               </entry>
+               <entry>
+                  <para>Results</para>
+               </entry>
+               <entry>
+                  <para>Remarks</para>
+               </entry>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>14/03/12</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>connect</para>
+               </entry>
+               <entry>
+                  <para>Success - normal connexion</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-AGENT-DOWN</para>
+               </entry>
+               <entry>
+                  <para>14/03/12</para>
+               </entry>
+               <entry>
+                  <para>The SysFera-DS Agent is stopped and restarted </para>
+               </entry>
+               <entry/>
+               <entry>
+                  <para>failure</para>
+               </entry>
+               <entry>
+                  <para>The ums server must be restarted manually after the SysFera-DS is restarted</para>
+               </entry>
+            </row>
+	    
+           </tbody>
+      </tgroup>
+      </informaltable>
+
+  </chapter>  
+  
+  
+  <chapter>
+    <title>Load tests </title>
+    
+     <informaltable frame="all">
+      <tgroup cols="5">
+       <tbody>
+            <row>
+               <entry>
+                  <para>ID test</para>
+               </entry>
+               <entry>
+                  <para>Date</para>
+               </entry>
+               <entry>
+                  <para>Test description</para>
+               </entry>
+               <entry>
+                  <para>Command(s) tested</para>
+               </entry>
+               <entry>
+                  <para>Results</para>
+               </entry>
+            </row>
+            <row>
+               <entry>
+                  <para>LOAD-connect</para>
+               </entry>
+               <entry>
+                  <para>14/03/12</para>
+               </entry>
+               <entry>
+                  <para>Simultaneous launch of 100 commands</para>
+               </entry>
+               <entry>
+                  <para>connect</para>
+               </entry>
+               <entry>
+                  <para>Success - normal execution of all commands launched</para>
+               </entry>
+            </row>   
+	  </tbody>    
+      </tgroup>
+      </informaltable>
+    </chapter>
+  
+    
+  <chapter>
+    <title>Performance tests </title>
+    
+     <informaltable frame="all">
+      <tgroup cols="6">
+       <tbody>
+            <row>
+               <entry>
+                  <para>ID test</para>
+               </entry>
+               <entry>
+                  <para>Test description</para>
+               </entry>
+               <entry>
+                  <para>Command(s) tested</para>
+               </entry>
+               <entry>
+                  <para>VISHNU execution time</para>
+               </entry>
+	       <entry>
+                  <para>SSH execution time</para>
+               </entry>
+	       <entry>
+                  <para>Results</para>
+               </entry>
+            </row>
+            <row>
+               <entry>
+                  <para>CDP-3.1-connect</para>
+               </entry>
+               <entry>
+                  <para>Cannot guarantee the performance if ldap or multiple authentication system are used </para>
+               </entry>
+               <entry>
+                  <para>connect</para>
+               </entry>
+               <entry>
+                  <para>-</para>
+               </entry>
+	       <entry>
+                  <para>-</para>
+               </entry>
+	       <entry>
+                  <para>-</para>
+               </entry>
+            </row>   
+	    <row>
+               <entry>
+                  <para>CDP-3.1-close</para>
+               </entry>
+               <entry>
+                  <para>comparison with " ssh localhost uname " </para>
+               </entry>
+               <entry>
+                  <para>close</para>
+               </entry>
+               <entry>
+                  <para>0,1s</para>
+               </entry>
+	       <entry>
+                  <para>0,4s</para>
+               </entry>
+	       <entry>
+                  <para>Success</para>
+               </entry>
+            </row>   
+	    <row>
+               <entry>
+                  <para>CDP-3.1-listSession</para>
+               </entry>
+               <entry>
+                  <para>comparison with " ssh localhost uname " </para>
+               </entry>
+               <entry>
+                  <para>listJobs</para>
+               </entry>
+               <entry>
+                  <para>0,04s</para>
+               </entry>
+	       <entry>
+                  <para>0,4s</para>
+               </entry>
+	       <entry>
+                  <para>Success</para>
+               </entry>
+            </row>
+	    
+	    <row>
+               <entry>
+                  <para>CDP-3.2.1-listUsers</para>
+               </entry>
+               <entry>
+                  <para>execution time less than "ssh localhost uname" </para>
+               </entry>
+               <entry>
+                  <para>listUsers</para>
+               </entry>
+               <entry>
+                  <para>0,04s</para>
+               </entry>
+	       <entry>
+                  <para>0,4s</para>
+               </entry>
+	       <entry>
+                  <para>Success</para>
+               </entry>
+            </row>
+	  </tbody>    
+      </tgroup>
+      </informaltable>
+      
+      <informaltable frame="all">
+      <tgroup cols="5">
+       <tbody>    
+	    <row>
+               <entry>
+                  <para>ID test</para>
+               </entry>
+               <entry>
+                  <para>Test description</para>
+               </entry>
+               <entry>
+                  <para>Command(s) tested</para>
+               </entry>
+               <entry>
+                  <para>Memory comsumption</para>
+               </entry>
+	       <entry>
+                  <para>Results</para>
+               </entry>
+            </row>
+	    
+	      <row>
+               <entry>
+                  <para>CDP-3.2.1-connect</para>
+               </entry>
+               <entry>
+                  <para>memory consumption</para>
+               </entry>
+               <entry>
+                  <para>connect</para>
+               </entry>
+               <entry>
+                  <para>0,5% of the RAM memory</para>
+               </entry>
+	       <entry>
+                  <para>Success</para>
+               </entry>
+            </row>
+	    
+	    <row>
+               <entry>
+                  <para>CDP-Memserver</para>
+               </entry>
+               <entry>
+                  <para>Memory consumption of tms server running during 24 hours</para>
+               </entry>
+               <entry>
+                  <para>ums server</para>
+               </entry>
+               <entry>
+                  <para>0,9% of the RAM memory</para>
+               </entry>
+	       <entry>
+                  <para>Success</para>
+               </entry>
+            </row>
+	    
+	</tbody>    
+      </tgroup>
+      </informaltable>
+	    
+  </chapter>
+  
+  
+</book>

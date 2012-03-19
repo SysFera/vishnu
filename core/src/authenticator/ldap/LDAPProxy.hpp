@@ -27,74 +27,27 @@ class LDAPProxy {
 
   /**
   * \param uri The LDAP uri by of the form host:port
-  * \param distName the distinguished name of the entry used to bind
+  * \param userName the user name
   * \param authMechanism the authentication method used to bind
-  * \param credential the credential of the distName name used for authentication
+  * \param password the password of the user
   * \param serverCtrls A list of LDAP server controls
   * \param clientCtrls A list of LDAP client controls
   * \brief Constructor
   */
   explicit LDAPProxy(const string& uri,
-                     const string& distName,
+                     const string& userName,
                      const string& authMechanism,
-                     const string& credential,
+                     const string& password,
                      LDAPControl* serverCtrls=NULL,
                      LDAPControl* clientCtrls=NULL
                     );
 
   /**
   * \brief Function to initialize a connection on a LDAP server
+  * \param ldapbase the ldapbase of the ldap system
   */
   int
-  connectLDAP();
-
-  /**
-  * \param base specifies the DN of the entry at which to start the search
-  * \param filter specifies a string representation of the filter to apply in the search
-  * \param scope specifies the scope of the search. It can be LDAP_SCOPE_BASE
-  * (to search the object itself), or LDAP_SCOPE_ONELEVEL (to search the object's immediate children),
-  * or LDAP_SCOPE_SUBTREE (to search the object and all its descendents)
-  * \param attrs specifies a null-terminated array of character string attribute types
-  * to return from entries that match filter. If NULL is specified, all attributes will be returned.
-  * \param attrsonly Specifies attribute information. Attrsonly should be set to 1.
-  * to request attribute types only. Set to 0 to request both attributes types and attribute values.
-  * \param serverCtrls A list of LDAP server controls
-  * \param clientCtrls A list of LDAP client controls
-  * \param timeout The local search timeout value
-  * and the operation time limit that is sent to the server within the search request.
-  * \param sizelimit specifies the maximum number of entries to return.
-  * \return resutls
-  * \brief Function to search data
-  */
-  int
-  searchLDAP( string          base,
-              string          filter,
-              LDAPMessage     **res,
-              int             scope=LDAP_SCOPE_SUBTREE,
-              char            **attrs=NULL,
-              int             attrsonly=0,
-              LDAPControl     **serverctrls=NULL,
-              LDAPControl     **clientctrls=NULL,
-              struct timeval  *timeout=NULL,
-              int             sizelimit=LDAP_NO_LIMIT);
-  /**
-  * \brief Function to display the search results
-  */
-  int
-  print(LDAPMessage **res);
-
-  /**
-  * \brief Function to know if results have found
-  * \return true if results have found else false
-  */
-  bool
-  hasResults(LDAPMessage **res);
-
-  /**
-  * \brief Function to get the user's password
-  */
-  string
-  getUserPassword(LDAPMessage **res);
+  connectLDAP(const string& ldapbase);
 
   /**
     * \brief Destructor
@@ -102,8 +55,16 @@ class LDAPProxy {
   ~LDAPProxy();
 
   private:
+/**
+ * \brief Function to extract and replace the $username part of the base and store it in res
+ * \param base ldap base to extract the $USERNAME substring
+ * \param res  the base string with $USERNAME replaced by the login
+ */
+  void
+  extract(const string& base, string& res);
+
   int
-  bind();
+  bind(string& fullUserPath);
   /////////////////////////////////
   // Attributes
   /////////////////////////////////
@@ -120,7 +81,7 @@ class LDAPProxy {
   /**
   * \brief the distinguished name of the entry used to bind
   */
-   string mdistName;
+   string muserName;
   /**
   * \brief the authentication method used
   */
@@ -128,7 +89,7 @@ class LDAPProxy {
    /**
   * \brief the credential to use for authentication
   */
-   string mcredential;
+   string mpwd;
 
    LDAPControl* mserverCtrls;
    LDAPControl* mclientCtrls;

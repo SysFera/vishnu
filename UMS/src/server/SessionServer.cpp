@@ -50,6 +50,9 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
   std::string numSubstituteUserId;
   std::string numUserIdToconnect;
 
+  //To record the connection identifier
+  msession.setAuthenId(user.getData().getUserId());
+
   //if the user exist
   if (user.isAuthenticate()) {
     //if a user to substitute is defined
@@ -417,14 +420,15 @@ SessionServer::recordSessionServer(std::string idmachine, std::string iduser) {
 
   std::string sqlInsert = "insert into vsession "
   "(vsessionid, clmachine_numclmachineid, users_numuserid, lastconnect, "
-  "creation, sessionKey, state, closepolicy, timeout) values ";
+  "creation, sessionKey, state, closepolicy, timeout, authid) values ";
 
   std::string values = std::string("('" +msession.getSessionId()+"',"+idmachine+","+iduser+","
   "CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '"+msession.getSessionKey()+"',");
 
   values.append(convertToString(msession.getStatus())+",");
   values.append(convertToString(msession.getClosePolicy())+",");
-  values.append(convertToString(msession.getTimeout())+")");
+  values.append(convertToString(msession.getTimeout())+",'");
+  values.append(msession.getAuthenId()+"')");
 
   sqlInsert.append(values);
 
@@ -525,7 +529,7 @@ SessionServer::solveConnectionMode(UMS_Data::ConnectOptions* connectOpt, std::st
   OptionValueServer optionValueServer;
 
   switch (connectOpt->getClosePolicy()) {
-    ////The closure mode is undefined
+    ////The closure mode is default
     case 0:
       msession.setClosePolicy(optionValueServer.getOptionValueForUser(numuserId, CLOSEPOLICY_OPT));
         //If the policy is not 2 (CLOSE_ON_DISCONNECT)

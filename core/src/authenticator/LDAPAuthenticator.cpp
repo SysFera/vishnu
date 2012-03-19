@@ -8,46 +8,12 @@
 #include <iostream>
 #include <boost/scoped_ptr.hpp>
 #include "LDAPAuthenticator.hpp"
-#include "boost/archive/iterators/base64_from_binary.hpp"
-#include "boost/archive/iterators/binary_from_base64.hpp"
-#include "boost/archive/iterators/transform_width.hpp"
-#include <openssl/sha.h>
 #include "ldap/LDAPProxy.hpp"
-
-using namespace std;
-using namespace boost::archive::iterators;
-
-typedef
-    base64_from_binary<
-        transform_width<string::const_iterator, 6, 8>
-> base64_t;
-
-typedef
-    transform_width<
-        binary_from_base64<string::const_iterator>, 8, 6
-> binary_t;
-
-
-bool
-checkPassword(string sshaLdapPassword, string clearPassword) {
-  unsigned char hash[20];
-  string s = sshaLdapPassword.substr(6);
-
-  string decodeds(
-        binary_t(s.begin()),
-        binary_t(s.begin() + s.length())
-        );
-
-  string salt = decodeds.substr(20);
-  string digest = decodeds.substr(0,20);
-
-  string  newStr = clearPassword;
-  newStr.append(salt);
-
-  SHA1((unsigned char*)newStr.c_str(), newStr.size(), hash);
-
-  return (digest.compare(string(reinterpret_cast< char const * >(hash))) == 0);
-}
+#include "DatabaseResult.hpp"
+#include "DbFactory.hpp"
+#include "utilVishnu.hpp"
+#include "UMSVishnuException.hpp"
+#include "SystemException.hpp"
 
 
 LDAPAuthenticator::LDAPAuthenticator(){
@@ -59,25 +25,69 @@ LDAPAuthenticator::~LDAPAuthenticator(){
 bool
 LDAPAuthenticator::authenticate(UMS_Data::User& user) {
   bool authenticated = false;
-  LDAPMessage *searchResult;
+  std::string uri, authlogin, authpassword, ldapbase, authSystemStatus, userid, pwd;
 
-  LDAPProxy ldapPoxy("ldap://127.0.0.1:389/",
-                      "cn=ldapadmin,dc=edf,dc=fr",
-                      "",
-                      "secret");
+  DbFactory factory;
+  Database* databaseVishnu = factory.getDatabaseInstance();
 
-  ldapPoxy.connectLDAP();
-  ldapPoxy.searchLDAP("dc=edf,dc=fr",
-                      string("uid=").append(user.getUserId()),
-                      &searchResult);
+  std::string sqlCommand = "SELECT uri, authlogin, authpassword, ldapbase, authsystem.status, userid, pwd"
+                           " FROM ldapauthsystem, authsystem, authaccount, users "
+                           "where aclogin='"+user.getUserId()+"' and authsystem.authtype="+vishnu::convertToString(LDAPTYPE)
+                           +" and authaccount.authsystem_authsystemid=authsystem.numauthsystemid and "
+                            "ldapauthsystem.authsystem_authsystemid=authsystem.numauthsystemid and "
+                            "authaccount.users_numuserid=users.numuserid";
 
-  if (ldapPoxy.hasResults(&searchResult)) {
-      if (checkPassword(ldapPoxy.getUserPassword(&searchResult),user.getPassword())) {
-        authenticated = true;
+  boost::scoped_ptr<DatabaseResult> result(databaseVishnu->getResult(sqlCommand.c_str()));
+
+  //If there is no results
+  if (result->getNbTuples() == 0) {
+    UMSVishnuException e (ERRCODE_UNKNOWN_USER, "There is no user-authentication account declared in VISHNU with this identifier");
+    throw e;
+  }
+
+  std::vector<std::string> tmp;
+  std::vector<std::string>::iterator ii;
+  for (int i = 0; i < static_cast <int> (result->getNbTuples()); ++i) {
+    tmp.clear();
+    tmp = result->get(i);
+
+    ii=tmp.begin();
+    uri = *ii;
+    authlogin = *(++ii);
+    authpassword = *(++ii);
+    ldapbase = *(++ii);
+    authSystemStatus = *(++ii);
+    userid = *(++ii);
+    pwd = *(++ii);
+
+    if (vishnu::convertToInt(authSystemStatus) != ACTIVE_STATUS) {
+      UMSVishnuException e (ERRCODE_UNKNOWN_AUTH_SYSTEM, "It is locked");
+      throw e;
+    }
+
+    try {
+      LDAPProxy ldapPoxy(uri,
+                         user.getUserId(),
+                         "",
+                         user.getPassword());
+      ldapPoxy.connectLDAP(ldapbase);
+      authenticated = true;
+      user.setUserId(userid);
+      user.setPassword(pwd);
+      break;
+    }
+    catch (UMSVishnuException& e) {
+      if (e.getMsgI() != ERRCODE_UNKNOWN_USER) {
+        throw UMSVishnuException(e);
+      }
+    }
+    catch (SystemException& e) {
+      //If there is a connection problem to LDAP and it is not the last LDAP account to check
+      if ((e.getMsgI() == ERRCODE_AUTHENTERR) && (i == (static_cast <int> (result->getNbTuples())-1))) {
+        throw SystemException(e);
+      }
     }
   }
-  ldap_msgfree(searchResult);
-
   return authenticated;
 }
 

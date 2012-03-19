@@ -170,7 +170,7 @@ void Machine::eSet(::ecore::EInt _featureID,
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_language);
     case ::UMS_Data::UMS_DataPackage::MACHINE__STATUS:
-        return m_status != 1;
+        return m_status != -1;
     case ::UMS_Data::UMS_DataPackage::MACHINE__SSHPUBLICKEY:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_sshPublicKey);

@@ -1,5 +1,6 @@
 #!/bin/sh
 
+#BSUB -J first_job
 #% vishnu_job_name=first_job
 #          % vishnu_queue=first_queue
 #% vishnu_output=my_first_job_gen.out
@@ -29,6 +30,9 @@
 # PBS -q second_queue
 #PBS -a 1230
 #SBATCH --begin=now+1hour
+#BSUB -b 12:30
+#BSUB -q normal
+
 echo "The name of the submitted server is: " $HOSTNAME
  sleep 60
   ls -l

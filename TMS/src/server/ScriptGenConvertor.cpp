@@ -86,7 +86,27 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[torqueSec]            = "";
     mendScript="";
 
-  } else {
+  } else if(mbatchType==LSF) {
+     
+    mconversionTable[group]                = "#BSUB -G ";
+    mconversionTable[workingDir]           = "#BSUB -cwd ";
+    mconversionTable[jobName]              = "#BSUB -J ";
+    mconversionTable[jobOutput]            = "#BSUB -o ";
+    mconversionTable[jobError]             = "#BSUB -e ";
+    mconversionTable[jobWallClockLimit]    = "#% -vishnuWaillClockLimit="; //spacial case: treated in LSFParser
+    mconversionTable[cpuTime]              = "#BSUB -c ";
+    mconversionTable[nbCpu]                = "#% -vishnuCpu=";  //spacial case: treated in LSFParser
+    mconversionTable[nbNodesAndCpuPerNode] = "#% -vishnuNbNodesAndCpuPerNode="; //spacial case: treated in LSFParser
+    mconversionTable[mem]                  = "#BSUB -M ";
+    mconversionTable[mailNotification]     = "#% -vishnuMailNofication="; //special case; treated in LSFParser 
+    mconversionTable[mailNotifyUser]       = "#BSUB -u ";
+    mconversionTable[queue]                = "#BSUB -q ";
+    
+    mconversionTable[lsfSec]             = "";
+    mconversionTable[commandSec]           = "";
+    mendScript="";
+  }
+  else {
     std::cerr << "Unknown Batch type " << std::endl;
   }
 
@@ -208,6 +228,16 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
       }
     } 
 
+    // treats the specific directives here
+    //LSF 
+    if(ba::starts_with( ba::erase_all_copy(line," "),"#BSUB")){
+      if (mbatchType==LSF){
+        key=lsfSec;; 
+        mjobDescriptor.push_back (make_pair(key,line));
+      } else{
+        continue;
+      }
+    } 
     // SHEBANG
     if(ba::starts_with(line,"#!")){
       key=commandSec;
