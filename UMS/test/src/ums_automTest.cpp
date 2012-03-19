@@ -63,8 +63,11 @@ BOOST_AUTO_TEST_CASE( my_test )
   ListSessionOptions      opt  ;//= ecoreFactory->createListSessionOptions();
   Session                 sess ;
   Session                 sess2 ;
-  string 	     	  pwdu = "toto"  ;
-  string 	     	  uidu = "user_1";
+
+  string 	     	  pwdu = UMSUSERVISHNUPWD;
+  string 	     	  uidu = UMSUSERVISHNULOGIN;
+  string          uiduUMSDb = "user_1";
+  string          pwduUMSDb = "toto";
 
   string                  rootUMSDb= "root";
   string                  pwdrUMSDb = "vishnu_user";
@@ -146,7 +149,7 @@ BOOST_AUTO_TEST_CASE( my_test )
 
 try {
 
-  BOOST_MESSAGE("UMS Authentication Type : "+ umsAuthType);
+  BOOST_MESSAGE(" UMS Authentication Type : "+ umsAuthType);
 
   if (umsAuthType.compare("UMS") != 0) {
     BOOST_REQUIRE(restore    (sqlScript+"/UMSinitAuthSystem.sql")==0);
@@ -755,7 +758,7 @@ try {
   BOOST_CHECK  (close      (sess.getSessionKey()                   )==0);
 
   // Test list session opt
-  opt.setUserId(uidu);
+  opt.setUserId(uiduUMSDb);
   BOOST_REQUIRE(restore    (sqlScript+"/clean_session.sql"   )==0);
   BOOST_MESSAGE(" Testing list session base option 1.3.5B" );
   li = ecoreFactory->createListSessions();
@@ -1314,10 +1317,8 @@ try {
   BOOST_CHECK	 (deleteUser            (sess.getSessionKey(), use->getUserId()  	     )==0);
   BOOST_CHECK	 (deleteMachine         (sess.getSessionKey(), mid	     )==0);
 
-
-  BOOST_CHECK	 (resetPassword         (sess.getSessionKey(), uidUMSDb, np	     )==0);
-
   if (umsAuthType.compare("LDAP") != 0) {
+    BOOST_CHECK  (resetPassword         (sess.getSessionKey(), uidUMSDb, np      )==0);
     BOOST_CHECK	 (changePassword        (uidUMSDb, np , pwdUMSDb      )==0);
   }
 
