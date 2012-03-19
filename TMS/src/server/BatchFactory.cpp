@@ -18,6 +18,12 @@
 #ifdef HAVE_LSF
 #include "LSFServer.hpp"
 #endif
+#ifdef HAVE_SGE
+#include "SGEServer.hpp"
+extern "C" {
+#include "drmaa.h"
+}
+#endif
 /**
  * \brief Constructor
  */
@@ -62,6 +68,19 @@ BatchFactory::getBatchServerInstance(BatchType batchType) {
       mbatchServer = NULL;
 #endif
       break;
+    case SGE:
+#ifdef HAVE_SGE
+      mbatchServer = new SGEServer();
+      char diagnosis[DRMAA_ERROR_STRING_BUFFER];
+      setenv("SGE_ROOT","/home/absila/Workspace/SGE/",1);
+      if (drmaa_init(NULL, diagnosis, sizeof(diagnosis)-1) != DRMAA_ERRNO_SUCCESS) {
+        cout<<"********************" << diagnosis << endl;
+      }
+      
+#else
+      mbatchServer = NULL;
+#endif
+      break;      
     default:
       mbatchServer = NULL;
       break;
