@@ -373,6 +373,9 @@ if (BUILD_TESTING)
   set(TEST_AUTHSYTEM_BASE "uid=$USERNAME,ou=users,dc=edf,dc=fr" CACHE STRING "The base of the ldap authentication system")
   set(TEST_ADMIN_UMS_LOGIN "admin_1" CACHE STRING "Vishnu admin login registered on the user-authentication system and used for tests")
   set(TEST_ADMIN_UMS_PWD "admin" CACHE STRING "Vishnu admin password registered on the user-authentication system and used for tests")
+  set(TEST_USER_UMS_LOGIN "user_1" CACHE STRING "Vishnu user login registered on the user-authentication system and used for tests")
+  set(TEST_USER_UMS_PWD "toto" CACHE STRING "Vishnu user password registered on the user-authentication system and used for tests")
+
 
   mark_as_advanced(TEST_DB_TYPE)
   mark_as_advanced(TEST_DB_HOST)
@@ -396,6 +399,8 @@ if (BUILD_TESTING)
   mark_as_advanced(TEST_AUTHSYTEM_BASE)
   mark_as_advanced(TEST_ADMIN_UMS_LOGIN)
   mark_as_advanced(TEST_ADMIN_UMS_PWD)
+  mark_as_advanced(TEST_USER_UMS_LOGIN)
+  mark_as_advanced(TEST_USER_UMS_PWD)
 
 
   # Common directories for tests

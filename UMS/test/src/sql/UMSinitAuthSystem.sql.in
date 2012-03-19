@@ -3,3 +3,4 @@ INSERT INTO authsystem (numauthsystemid, vishnu_vishnuid, authsystemid, name, ur
 INSERT INTO ldapauthsystem (authsystem_authsystemid, ldapbase) VALUES (1, '@TEST_AUTHSYTEM_BASE@');
 INSERT INTO authaccount (authsystem_authsystemid, users_numuserid, aclogin) VALUES (1, 1, '@TEST_ROOT_UMS_LOGIN@')
 INSERT INTO authaccount (authsystem_authsystemid, users_numuserid, aclogin) VALUES (1, 2, '@TEST_ADMIN_UMS_LOGIN@')
+INSERT INTO authaccount (authsystem_authsystemid, users_numuserid, aclogin) VALUES (1, 3, '@TEST_USER_UMS_LOGIN@')
