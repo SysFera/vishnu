@@ -40,7 +40,8 @@ target_link_libraries(vishnu-ums-client
   ${DIET_CLIENT_LIBRARIES}
   ${Boost_LIBRARIES}
   emf4cpp-vishnu
-  vishnu-core)
+  vishnu-core
+  ${CMAKE_DL_LIBS})
 
 install(TARGETS vishnu-ums-client DESTINATION ${LIB_INSTALL_DIR})
 install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
@@ -79,7 +80,7 @@ if(NOT CLIENT_ONLY)
   set_target_properties(vishnu-ums-server PROPERTIES VERSION ${VISHNU_VERSION})
   install(TARGETS vishnu-ums-server DESTINATION ${LIB_INSTALL_DIR})
 
-  target_link_libraries(vishnu-ums-server vishnu-core vishnu-core-server)
+  target_link_libraries(vishnu-ums-server vishnu-core vishnu-core-server ${CMAKE_DL_LIBS})
 
   add_executable(umssed ${sed_SRCS})
   target_link_libraries(umssed ${DIET_SERVER_LIBRARIES}
@@ -88,7 +89,9 @@ if(NOT CLIENT_ONLY)
     emf4cpp-vishnu
     ${LIBCRYPT_LIB}
     ${LDAP_LIBRARIES}
+    ${CMAKE_DL_LIBS}
 )
+
 
   install(TARGETS umssed DESTINATION ${SBIN_INSTALL_DIR})
 endif()
