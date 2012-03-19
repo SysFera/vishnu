@@ -94,9 +94,18 @@ int main(int argc, char* argv[], char* envp[]) {
       exit(1);
 #endif
       batchType = SLURM;
+    
+    } else if (batchTypeStr == "LSF") { 
+#ifndef HAVE_LSF
+      std::cerr << std::endl;
+      std::cerr << "Error: can't initialize LSF batch type because this server has not compiled with LSF library" << std::endl;
+      std::cerr << std::endl;
+      exit(1);
+#endif
+      batchType = LSF;
     } else {
       std::cerr << std::endl;
-      std::cerr << "Error: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVELER' or 'SLURM')" << std::endl;
+      std::cerr << "Error: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVELER' or 'SLURM' or 'LSF')" << std::endl;
       std::cerr << std::endl;
       exit(1);
     }

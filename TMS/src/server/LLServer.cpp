@@ -48,6 +48,7 @@ LLServer::submit(const char* scriptPath,
   llJobId<< "." << (llJobInfo.step_list[0])->id.proc;
 
   job.setJobId(llJobId.str());
+  job.setBatchJobId(llJobId.str());
   job.setOutputPath(std::string(std::string(llJobInfo.step_list[0]->iwd)+"/"+(llJobInfo.step_list[0])->out)) ;
   job.setErrorPath(std::string(std::string(llJobInfo.step_list[0]->iwd)+"/"+(llJobInfo.step_list[0])->err));
   job.setStatus(convertLLStateToVishnuState(llJobInfo.step_list[0]->status));

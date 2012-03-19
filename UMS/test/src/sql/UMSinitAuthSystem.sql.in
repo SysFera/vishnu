@@ -1,0 +1,6 @@
+DELETE FROM authsystem;
+INSERT INTO authsystem (numauthsystemid, vishnu_vishnuid, authsystemid, name, uri, authlogin, authpassword, userpwdencryption, authtype, status) VALUES (1, 1, 'AUTH_TEST', 'AuthsystemTest', '@TEST_AUTHSYTEM_URI@', 'authlogin', 'authpassword', 0, 0, 1);
+INSERT INTO ldapauthsystem (authsystem_authsystemid, ldapbase) VALUES (1, '@TEST_AUTHSYTEM_BASE@');
+INSERT INTO authaccount (authsystem_authsystemid, users_numuserid, aclogin) VALUES (1, 1, '@TEST_ROOT_UMS_LOGIN@')
+INSERT INTO authaccount (authsystem_authsystemid, users_numuserid, aclogin) VALUES (1, 2, '@TEST_ADMIN_UMS_LOGIN@')
+INSERT INTO authaccount (authsystem_authsystemid, users_numuserid, aclogin) VALUES (1, 3, '@TEST_USER_UMS_LOGIN@')

@@ -31,7 +31,7 @@ using namespace ::UMS_Data;
 
 // Default constructor
 Machine::Machine() :
-    m_machineId(""), m_machineDescription(""), m_status(1)
+    m_machineId(""), m_machineDescription(""), m_status(-1)
 {
 
     /*PROTECTED REGION ID(MachineImpl__MachineImpl) START*/

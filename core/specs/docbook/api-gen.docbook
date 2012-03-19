@@ -187,6 +187,24 @@
 	    UMS::listAuthenticationSystem, UMS::addAuthAccount, UMS::updateAuthAccount, UMS::deleteAuthAccount, UMS::listAuthAccounts.
 	  </para><para>Updates of IMS:</para><para>Added IMS::defineAuthIdentifier</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>13</revnumber>
+        <date>23/02/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+            
+        <para>Updates of UMS:</para><para>Modified structure Configuration: added ListConfAuthSystems and ListConfAuthAcconts.</para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>14</revnumber>
+        <date>02/03/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+            
+        <para>Updates of TMS:</para><para>Added batchJobId field on TMS job data.</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -3641,7 +3659,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_AUTH_SYSTEM_ALREADY_EXIST</para></entry>
-                <entry><para>The identifier of the user-authentication system already exists</para></entry>
+                <entry><para>The identifier (name or generated identifier) of the user-authentication system already exists</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
@@ -4694,6 +4712,16 @@
               <entry><para>is the list of LocalAccount objects</para></entry>
             </row>
             <row>
+              <entry><para>ListConfAuthSystems</para></entry>
+              <entry><para>List of <link linkend="AuthSystem">AuthSystem</link></para></entry>
+              <entry><para>is the list of user-authentication systems</para></entry>
+            </row>
+            <row>
+              <entry><para>ListConfAuthAccounts</para></entry>
+              <entry><para>List of <link linkend="AuthAccount">AuthAccount</link></para></entry>
+              <entry><para>is the list of users objects</para></entry>
+            </row>
+            <row>
               <entry><para>filePath</para></entry>
               <entry><para>string</para></entry>
               <entry><para>the full path to the file that contains the saved configuration</para></entry>
@@ -5160,7 +5188,7 @@
             <row>
               <entry><para>machineId</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>allows the user to list sessions opened on a specific machine</para></entry>
+              <entry><para>allows the user to list sessions opened on a specific client's machine by using its name</para></entry>
             </row>
             <row>
               <entry><para>adminListOption</para></entry>
@@ -5549,11 +5577,11 @@
           <tbody>
             <row>
               <entry><para>UNDEFINED</para></entry>
-              <entry><para>0</para></entry>
+              <entry><para>-1</para></entry>
             </row>
             <row>
               <entry><para>LDAP</para></entry>
-              <entry><para>1</para></entry>
+              <entry><para>0</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -5599,11 +5627,11 @@
           <tbody>
             <row>
               <entry><para>UNDEFINED</para></entry>
-              <entry><para>0</para></entry>
+              <entry><para>-1</para></entry>
             </row>
             <row>
               <entry><para>SSHA</para></entry>
-              <entry><para>1</para></entry>
+              <entry><para>0</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -5648,7 +5676,7 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>UNDEFINED</para></entry>
+              <entry><para>DEFAULT</para></entry>
               <entry><para>0</para></entry>
             </row>
             <row>
@@ -5676,6 +5704,10 @@
             </row>
           </thead>
           <tbody>
+            <row>
+              <entry><para>UNDEFINED</para></entry>
+              <entry><para>-1</para></entry>
+            </row>
             <row>
               <entry><para>INACTIVE</para></entry>
               <entry><para>0</para></entry>
@@ -6854,6 +6886,11 @@
               <entry><para>nbNodesAndCpuPerNode</para></entry>
               <entry><para>string</para></entry>
               <entry><para>Is the number of nodes and processors per node used by the job (in the format nbNodes:nbCpuPerNode).</para></entry>
+            </row>
+            <row>
+              <entry><para>batchJobId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Represents the batch job id (given by the underlying batch scheduler ).</para></entry>
             </row>
           </tbody>
         </tgroup>

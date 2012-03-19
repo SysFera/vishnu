@@ -211,8 +211,22 @@ FMSMapper::decodeCreateDir(vector<int> separator, const string& msg){
   string u;
   res += (mmap.find(VISHNU_CREATE_DIR))->second;
   res+= " ";
-  u    = msg.substr(separator.at(0)+1);
+  u    = msg.substr(separator.at(0)+1, separator.at(1)-separator.at(0)-1);
   res += u;
+  res+= " ";
+
+  u  = msg.substr(separator.at(1)+1);
+  FMS_Data::CreateDirOptions_ptr ac = NULL;
+
+  //To parse the object serialized
+  if(!vishnu::parseEmfObject(u, ac)) {
+    throw SystemException(ERRCODE_INVMAPPER, "option: "+u);
+  }
+
+  if(ac->isIsRecursive()) {
+    res += " -p ";
+  }
+
   return res;
 }
     
@@ -222,8 +236,21 @@ FMSMapper::decodeRemoveFile(vector<int> separator, const string& msg){
   string u;
   res += (mmap.find(VISHNU_REMOVE_FILE))->second;
   res+= " ";
-  u    = msg.substr(separator.at(0)+1);
+  u   = msg.substr(separator.at(0)+1, separator.at(1)-separator.at(0)-1);
   res += u;
+  res+= " ";
+  
+  u  = msg.substr(separator.at(1)+1);
+  FMS_Data::RmFileOptions_ptr ac = NULL;
+
+  //To parse the object serialized
+  if(!vishnu::parseEmfObject(u, ac)) {
+    throw SystemException(ERRCODE_INVMAPPER, "option: "+u);
+  }
+
+  if(ac->isIsRecursive()) {
+    res += " -r ";
+  }
 
   return res;
 }

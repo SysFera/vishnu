@@ -17,6 +17,7 @@
 // C++ Headers
 #include <iostream>
 #include <sstream>
+#include <fstream>
 #include <cmath>
 
 // Boost Headers
@@ -47,6 +48,9 @@ BOOST_AUTO_TEST_CASE(list_job_queues_normal_call)
   BOOST_TEST_MESSAGE("Testing normal execution of the list job queues function corresponding to use case T2.3" );
 
   try {
+    
+    //Check the batch type    
+    BOOST_CHECK(BATCHTYPE=="TORQUE" || BATCHTYPE=="SLURM" || BATCHTYPE=="LSF");
 
     VishnuConnexion vc("root","vishnu_user");
 
@@ -55,6 +59,8 @@ BOOST_AUTO_TEST_CASE(list_job_queues_normal_call)
     string sessionKey=vc.getConnexion();
 
     string machineId="machine_1";
+    string lsfQueuesConfigdir;
+    string oldContentLSFQueuesConfigFile;
     // create queues
     std::ostringstream createCommand;
     if(BATCHTYPE=="TORQUE") {
@@ -67,6 +73,34 @@ BOOST_AUTO_TEST_CASE(list_job_queues_normal_call)
       createCommand.str("");
       createCommand << "scontrol create partition=" << "test_queue2";
       BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0);
+    } else if(BATCHTYPE=="LSF") {
+      lsfQueuesConfigdir = LSFQUEUESCONFIGDIR;
+      oldContentLSFQueuesConfigFile = getFileContent(lsfQueuesConfigdir);
+      std::ostringstream addedQueue;
+      //add of first queue
+      addedQueue << "Begin Queue \n";
+      addedQueue << "QUEUE_NAME   = test_queue1\n";
+      addedQueue << "PRIORITY     = 10\n";
+      addedQueue << "NICE         = 20\n";
+      addedQueue << "DESCRIPTION = First vishnu test queue.\n";
+      addedQueue << "End Queue \n";
+      //add of second queue 
+      addedQueue << "Begin Queue \n";
+      addedQueue << "QUEUE_NAME   = test_queue2\n";
+      addedQueue << "PRIORITY     = 10\n";
+      addedQueue << "NICE         = 20\n";
+      addedQueue << "DESCRIPTION = Second vishnu test queue.\n";
+      addedQueue << "End Queue \n";
+      //modify LSF configuration file
+      std::ofstream outfile(lsfQueuesConfigdir.c_str(), ios_base::app);
+      outfile << addedQueue.str();
+      outfile.close();
+      //reconfig queues list
+      createCommand << "badmin reconfig";
+      BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0);
+    } else {
+      BOOST_TEST_MESSAGE("***********************Unknown Batch Type*****************************");  
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM, "Unknown Batch Type");
     }
 
     ListQueues listofQueues;
@@ -101,6 +135,13 @@ BOOST_AUTO_TEST_CASE(list_job_queues_normal_call)
       BOOST_CHECK_EQUAL(system(delCommand.str().c_str()), 0);
       delCommand.str("");
       delCommand << "scontrol delete partition=" << "test_queue2";
+      BOOST_CHECK_EQUAL(system(delCommand.str().c_str()), 0);
+    } else if(BATCHTYPE=="LSF") {
+      //restore LSF configuration file
+      std::ofstream outfile(lsfQueuesConfigdir.c_str());
+      outfile << oldContentLSFQueuesConfigFile;
+      outfile.close();
+      delCommand << "badmin reconfig" ;
       BOOST_CHECK_EQUAL(system(delCommand.str().c_str()), 0);
     }
 
@@ -152,7 +193,6 @@ BOOST_AUTO_TEST_CASE(list_job_queues_bad_machineId)
 
   BOOST_TEST_MESSAGE("*********************** list job queues : bad machineId ok!!!!*****************************");
 }
-
 
 BOOST_AUTO_TEST_SUITE_END()
 

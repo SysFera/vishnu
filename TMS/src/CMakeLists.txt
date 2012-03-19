@@ -7,7 +7,9 @@ include_directories(client api
   ${TMS_EMF_DATA_DIR}
   ${UMS_CLIENT_PROXY_SOURCE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
-  ${VISHNU_EXCEPTION_INCLUDE_DIR})
+  ${VISHNU_EXCEPTION_INCLUDE_DIR}
+  ${Boost_INCLUDE_DIRS}
+)
 
 
 set(client_SRCS client/JobProxy.cpp
@@ -77,6 +79,7 @@ if (NOT CLIENT_ONLY)
   add_executable(tmssed ${sed_SRCS})
   target_link_libraries(tmssed ${DIET_SERVER_LIBRARIES}
     ${Boost_LIBRARIES}
+    ${LOG_LIBRARY}
     ${DATABASE_LIBS}
     vishnu-core
     crypt

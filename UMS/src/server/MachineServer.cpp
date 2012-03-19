@@ -45,7 +45,6 @@ int
 MachineServer::add(int vishnuId) {
   std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status, sshpublickey) values ";
   std::string idMachineGenerated;
-  int machineCpt;
   std::string formatidmachine;
 
   UserServer userServer = UserServer(msessionServer);
@@ -72,6 +71,8 @@ MachineServer::add(int vishnuId) {
 
         //if the machineId does not exist
         if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() == 0) {
+          //To active the machine status
+          mmachine->setStatus(ACTIVE_STATUS);
 
           mdatabaseVishnu->process(sqlInsert + "("+vishnuid+",'"+mmachine->getName()+"'\
             ,'"+ mmachine->getSite()+"','"+mmachine->getMachineId()+"',"+convertToString(mmachine->getStatus())+", \
@@ -141,9 +142,11 @@ MachineServer::update() {
           where machineId='"+mmachine->getMachineId()+"';");
         }
 
-        //Set the status of the machine
-        sqlCommand.append("UPDATE machine SET status="+convertToString(mmachine->getStatus())+
-        " where machineId='"+mmachine->getMachineId()+"';");
+        //If a new status has been defined
+        if (mmachine->getStatus() != UNDEFINED_VALUE) {
+          sqlCommand.append("UPDATE machine SET status="+convertToString(mmachine->getStatus())+
+          " where machineId='"+mmachine->getMachineId()+"';");
+        }
 
         //if a new ssh public key has been defined
         if (mmachine->getSshPublicKey().size() != 0) {
@@ -163,7 +166,10 @@ MachineServer::update() {
           " where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
         }
 
-        mdatabaseVishnu->process(sqlCommand.c_str());
+        //If there is a change
+        if (!sqlCommand.empty()) {
+          mdatabaseVishnu->process(sqlCommand.c_str());
+        }
 
       } //End if the machine to update exists
       else {

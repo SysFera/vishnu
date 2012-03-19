@@ -191,11 +191,11 @@ void AuthSystem::eSet(::ecore::EInt _featureID,
     case ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__AUTHPASSWORD:
         return m_authPassword != "";
     case ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__USERPASSWORDENCRYPTION:
-        return m_userPasswordEncryption != 0;
+        return m_userPasswordEncryption != -1;
     case ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__TYPE:
-        return m_type != 0;
+        return m_type != -1;
     case ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__STATUS:
-        return m_status != 1;
+        return m_status != -1;
     case ::UMS_Data::UMS_DataPackage::AUTHSYSTEM__LDAPBASE:
         return m_ldapBase != "";
 

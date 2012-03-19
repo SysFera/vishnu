@@ -100,6 +100,20 @@ namespace UMS_Data
         ::ecorecpp::mapping::EList< ::UMS_Data::LocalAccount >
                 & getListConfLocalAccounts();
 
+        /**
+         * \brief To get the list of AuthSystems
+         * \return A reference to a list of AuthSystems
+         **/
+        ::ecorecpp::mapping::EList< ::UMS_Data::AuthSystem >
+                & getListConfAuthSystems();
+
+        /**
+         * \brief To get the list of AuthAccounts
+         * \return A reference to a list of AuthAccounts
+         **/
+        ::ecorecpp::mapping::EList< ::UMS_Data::AuthAccount >
+                & getListConfAuthAccounts();
+
         /*PROTECTED REGION ID(Configuration) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
@@ -134,6 +148,12 @@ namespace UMS_Data
 
         ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList<
                 ::UMS_Data::LocalAccount > > m_listConfLocalAccounts;
+
+        ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList<
+                ::UMS_Data::AuthSystem > > m_ListConfAuthSystems;
+
+        ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList<
+                ::UMS_Data::AuthAccount > > m_ListConfAuthAccounts;
 
     };
 

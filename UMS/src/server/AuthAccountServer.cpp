@@ -127,22 +127,24 @@ AuthAccountServer::update() {
 
         //if a new acLogin has been defined
         if (mauthAccount->getAcLogin().size() != 0) {
-        sqlCommand.append("UPDATE account SET aclogin='"+mauthAccount->getAcLogin()+"'"
+        sqlCommand.append("UPDATE authaccount SET aclogin='"+mauthAccount->getAcLogin()+"'"
         " where authsystem_authsystemid="+numAuthSystem+" and users_numuserid="+numUser+";");
         }
 
-        mdatabaseVishnu->process(sqlCommand.c_str());
+        //If there is a change
+        if (!sqlCommand.empty()) {
+            mdatabaseVishnu->process(sqlCommand.c_str());
+          }
       }//END if the authentification account exists
       else {
-        UMSVishnuException e (ERRCODE_UNKNOWN_LOCAL_ACCOUNT);
+        UMSVishnuException e (ERRCODE_UNKNOWN_AUTH_ACCOUNT);
         throw e;
       }
-    } //End if the machine exists and it is not locked
+    } //End if the user-authentication system exists and it is not locked
     else {
-      UMSVishnuException e (ERRCODE_UNUSABLE_MACHINE);
+      UMSVishnuException e (ERRCODE_UNKNOWN_AUTH_SYSTEM);
       throw e;
     }
-
   }//End if the user exists
   else {
     UMSVishnuException e (ERRCODE_UNKNOWN_USER);

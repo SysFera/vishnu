@@ -6,7 +6,9 @@ include_directories(client api
   ${FMS_EMF_DATA_DIR}
   ${UMS_CLIENT_PROXY_SOURCE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
-  ${VISHNU_EXCEPTION_INCLUDE_DIR})
+  ${VISHNU_EXCEPTION_INCLUDE_DIR}
+  ${Boost_INCLUDE_DIRS}
+)
 
 set(client_SRCS client/FileProxy
   client/LocalFileProxy
@@ -21,6 +23,7 @@ add_library(vishnu-fms-client ${client_SRCS} ${api_SRCS})
 SET_TARGET_PROPERTIES(vishnu-fms-client PROPERTIES VERSION ${VISHNU_VERSION})
 target_link_libraries(vishnu-fms-client
   ${DIET_CLIENT_LIBRARIES}
+  ${LOG_LIBRARY}
   ${Boost_LIBRARIES}
   emf4cpp-vishnu
   vishnu-core

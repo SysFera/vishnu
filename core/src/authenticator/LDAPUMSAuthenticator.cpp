@@ -9,6 +9,8 @@
 #include "LDAPUMSAuthenticator.hpp"
 #include "LDAPAuthenticator.hpp"
 #include "UMSAuthenticator.hpp"
+#include "UMSVishnuException.hpp"
+#include "SystemException.hpp"
 
 LDAPUMSAuthenticator::LDAPUMSAuthenticator(){
 }
@@ -22,14 +24,40 @@ LDAPUMSAuthenticator::authenticate(UMS_Data::User& user) {
 
   UMSAuthenticator umsAuthenticator;
   LDAPAuthenticator ldapAuthenticator;
+  SystemException excep;
+  UMSVishnuException umsexcep;
+  bool umsexcepfound = false;
+  bool excepfound = false;
 
+  //To avoid to return an exception when the first authenticator failed
+  try {
+    authenticated = ldapAuthenticator.authenticate(user);
+  } catch (UMSVishnuException& e) {
+    //Do not throw exception
+    umsexcep = e;
+    umsexcepfound = true;
+  } catch (SystemException& e) {
+    //Do not throw exception
+    excep = e;
+    excepfound = true;
+  }
 
-  if (ldapAuthenticator.authenticate(user)) {
-    authenticated = true;
+  if (authenticated) {
+    return authenticated;
   }
   else {
-    authenticated = umsAuthenticator.authenticate(user);
+   authenticated = umsAuthenticator.authenticate(user);
+    //if the user is not authenticated
+    if (!authenticated) {
+      //If an exception has been found
+      if (excepfound) {
+        throw excep;
+      }
+      if (umsexcepfound) {
+        throw umsexcep;
+      }
+    }
+    return authenticated;
   }
-  return authenticated;
 }
 

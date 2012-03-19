@@ -409,10 +409,10 @@ UMSMapper::decodeAddAuthSys(vector<int> separator, const string& msg){
   res +=" ";
   res += convertToString(ac->getType());
 
-    if (ac->getLdapBase().compare("")){
-      res +=" -b ";
-      res += ac->getLdapBase();
-    }
+  if (ac->getLdapBase().compare("")){
+    res +=" -b ";
+    res += ac->getLdapBase();
+  }
 
   if (ac != NULL) {
     delete ac;
@@ -553,10 +553,10 @@ UMSMapper::decodeUpAuthSys(vector<int> separator, const string& msg){
     res += a;
   }
 
-    if (ac->getLdapBase().compare("")){
-      res+=" -b ";
-      res += ac->getLdapBase();
-    }
+  if (ac->getLdapBase().compare("")){
+    res+=" -b ";
+    res += ac->getLdapBase();
+  }
 
   if (ac != NULL) {
     delete ac;
@@ -976,10 +976,26 @@ UMSMapper::decodeListUser(vector<int> separator, const string& msg){
   string res = string("");
   res += (mmap.find(VISHNU_LIST_USERS))->second;
   a = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
-  if(a.compare(" ")){
+
+  ListUsersOptions_ptr ac = NULL;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
+
+  a = ac->getUserId();
+  if(a.compare("")){
     res +=" -u ";
     res +=a;
   }
+
+  a = ac->getAuthSystemId();
+  if(a.compare("")){
+    res +=" -i ";
+    res +=a;
+  }
+
   return res;
 }
 

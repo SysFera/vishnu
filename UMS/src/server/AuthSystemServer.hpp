@@ -17,6 +17,7 @@
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
 
+
 /**
 * \class AuthSystemServer
 * \brief AuthSystemServer class implementation
@@ -107,5 +108,17 @@ private:
   */
   bool
   exist();
+  /**
+  * \brief Function to check the user-authentication system parameters values
+  *\return raises an exception on error
+  */
+  int
+  checkValues();
+  /**
+  * \brief Function to check the $USERNAME string on the ldap base
+  *\return raises an exception on error
+  */
+  int
+  checkLdapBase();
 };
 #endif

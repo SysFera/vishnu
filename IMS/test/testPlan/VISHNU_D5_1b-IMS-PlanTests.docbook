@@ -1,1710 +1,2385 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE article
-  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
-<article lang="fr-FR">
-   <informaltable frame="all">
-      <tgroup cols="2"><tbody><row>
-            <entry>
-               <para>VISHNU_D5_1b-IMS-PlanTests<inlinegraphic fileref="embedded:images1" width="21.002cm" depth="5.922cm"/>
-               </para>
-            </entry>
-            <entry>
-               <para>Politique de tests du module IMS</para>
-            </entry>
-         </row></tbody></tgroup>
-   </informaltable>
-   <para/>
-   <para/>
-   <para/>
-   <para/>
-   <para/>
-   <para/>
-   <para/>
-   <para/>
-   <para>PROJET VISHNU</para>
-   <para/>
-   <para>DOCUMENTS DE REFERENCE</para>
-   <para/>
-   <para/>
-   <para/>
-   <para/>
-   <para>PLAN</para>
-   <para>DE</para>
-   <para/>
-   <para>TESTS</para>
-   <para/>
-   <para/>
-   <para/>
-   <para/>
-   <para/>
-   <informaltable frame="all">
-      <tgroup cols="2"><tbody><row>
-            <entry>
-               <para>Ref. document</para>
-            </entry>
-            <entry>
-               <para>VISHNU_D5_1b-IMS-PlanTests</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>Objet du document</para>
-            </entry>
-            <entry>
-               <para>Référentiel du plan de tests du module IMS du projet Vishnu</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para/>
-            </entry>
-            <entry>
-               <para/>
-            </entry>
-         </row></tbody></tgroup>
-   </informaltable>
-   <para/>
-   <para>TABLE DES REVISIONS</para>
-   <para/>
-   <informaltable frame="all">
-      <tgroup cols="4"><tbody><row>
-            <entry>
-               <para>Version</para>
-            </entry>
-            <entry>
-               <para>Date</para>
-            </entry>
-            <entry>
-               <para>Modifications</para>
-            </entry>
-            <entry>
-               <para>Auteur</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>V1.0</para>
-            </entry>
-            <entry>
-               <para>06/04/11</para>
-            </entry>
-            <entry>
-               <para>Version initiale</para>
-            </entry>
-            <entry>
-               <para>Ibrahima Cissé, Daouda Traoré, Benjamin Isnard,  Eugène Pamba Capo-Chichi</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>V1.1</para>
-            </entry>
-            <entry>
-               <para>15/06/11</para>
-            </entry>
-            <entry>
-               <para>Mise à jour pour la livraison du module du IMS</para>
-            </entry>
-            <entry>
-               <para>Ibrahima Cissé, Daouda Traoré, Benjamin Isnard,  Eugène Pamba Capo-Chichi</para>
-            </entry>
-         </row></tbody></tgroup>
-   </informaltable>
-   <para/>
-   <para>VALIDATION DU DOCUMENT</para>
-   <para/>
-   <informaltable frame="all">
-      <tgroup cols="2"><tbody><row>
-            <entry>
-               <para>Date</para>
-            </entry>
-            <entry>
-               <para>Personne</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para/>
-            </entry>
-            <entry>
-               <para/>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para/>
-            </entry>
-            <entry>
-               <para/>
-            </entry>
-         </row></tbody></tgroup>
-   </informaltable>
-   <para/>
-   <para>REFERENCES</para>
-   <para/>
-   <informaltable frame="all">
-      <tgroup cols="2"><tbody><row>
-            <entry>
-               <para>Ref. document</para>
-            </entry>
-            <entry>
-               <para>Description</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>VISHNU_D1_1e-POL-TESTS</para>
-            </entry>
-            <entry>
-               <para>Politique de tests du projet VISHNU </para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>VISHNU_D1_1a-SPECSGEN</para>
-            </entry>
-            <entry>
-               <para>Spécifications générales du projet VISHNU</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>VISHNU_D1_1b-STB</para>
-            </entry>
-            <entry>
-               <para>Spécifications Techniques des besoins</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>VISHNU_D1_1g-ARCH</para>
-            </entry>
-            <entry>
-               <para>VISHNU Technical  Architecture</para>
-            </entry>
-         </row></tbody></tgroup>
-   </informaltable>
-   <para/><sect1><title>        Présentation du document</title><sect2><title>        Objectifs du document</title>
-   <para>Les objectifs de ce document sont les suivants :</para>
-   <orderedlist>
-      <listitem>
-         <para>Présenter les fonctionnalités du module IMS à tester.</para>
-      </listitem>
-      <listitem>
-         <para>Présenter les différents types de tests  permettant  de valider les cas d'utilisation de chaque fonctionnalité du module IMS.</para>
-      </listitem>
-      <listitem>
-         <para>Présenter les méthodes et outils utilisés pour ces tests.</para>
-      </listitem>
-      <listitem>
-         <para>Donner des détails de l'environnement de test</para>
-      </listitem>
-   </orderedlist></sect2><sect2><title>        Structure du document</title>
-   <para>Le chapitre 1 présente le document.</para>
-   <para>Le chapitre 2 présente les environnements et outils de tests.</para>
-   <para>La chapitre 3 décrit la liste des tests qui s'appliquent aux fonctionnalités à tester.</para>
-   <para>La chapitre 4 présente les outils utilisés pour ces tests.</para></sect2><sect2><title>        Glossaire, abréviations et acronymes</title><sect3><title>        Glossaire</title>
-   <orderedlist>
-      <listitem>
-         <para>Script de test : c'est un programme qui contient les instructions permettant de réaliser les tests.</para>
-      </listitem>
-      <listitem>
-         <para>Certificat : correspond à la « session key » définie dans [SPECSGEN].</para>
-      </listitem>
-   </orderedlist></sect3><sect3><title>        Acronymes</title>
-   <orderedlist>
-      <listitem>
-         <para>STB : Spécification Technique des Besoins</para>
-      </listitem>
-      <listitem>
-         <para>DSG : Document de Spécification générale</para>
-      </listitem>
-      <listitem>
-         <para>DSD : Document de Spécification Détaillées</para>
-      </listitem>
-      <listitem>
-         <para>API : Application Programming Interface (Interface de programmation d'applications)</para>
-      </listitem>
-      <listitem>
-         <para>MPI : Message Passing Interface</para>
-         <para> </para>
-      </listitem>
-   </orderedlist></sect3><sect3><title>        Abréviations</title>
-   <orderedlist>
-      <listitem>
-         <para>Id.         Identifiant</para>
-      </listitem>
-      <listitem>
-         <para>Réf.        Référence</para>
-      </listitem>
-      <listitem>
-         <para>Rel.#        Numéro de release/version</para>
-      </listitem>
-      <listitem>
-         <para>Resp.        Responsable(s)</para>
-      </listitem>
-   </orderedlist></sect3></sect2></sect1><sect1><title>  Environnements et outils de tests</title><sect2><title> Environnements de tests</title>
-   <para>Pour ces tests, nous allons utiliser l'environnement de tests suivants avec des systèmes dédiés aux tests:</para>
-   <para/>
-   <orderedlist>
-      <listitem>
-         <para>Système d'exploitation : c'est le système Linux décrit dans [STB] qui sera installé sur toutes les machines clientes et serveurs.</para>
-      </listitem>
-      <listitem>
-         <para>Nombre de machines clientes : une machine cliente décrite dans [STB] pour pouvoir lancer des tests à distance (selon le cas de test).</para>
-      </listitem>
-      <listitem>
-         <para> Nombre de machines serveurs : deux serveurs IMS décrit dans [ARCH] .</para>
-      </listitem>
-      <listitem>
-         <para>Un serveur SysFera-DS dédié décrit dans [ARCH].</para>
-      </listitem>
-      <listitem>
-         <para>Un serveur UMS décrit dans [ARCH].</para>
-      </listitem>
-      <listitem>
-         <para>Un serveur TMS et FMS décrit dans [ARCH]</para>
-      </listitem>
-      <listitem>
-         <para>Le module LogService de SysFera-DS décrit dans [STB]. </para>
-      </listitem>
-   </orderedlist>
-   <para>       </para></sect2><sect2><title> Outils de tests </title>
-   <para>Les outils suivants seront utilisés pour les tests :</para>
-   <orderedlist>
-      <listitem>
-         <para>Hudson (serveur d'intégration)  sera utilisé pour les tests d'intégration continue (compilation, installation).</para>
-      </listitem>
-      <listitem>
-         <para>La librairie Boost test sera utilisée pour la réalisation des tests unitaires en C++.</para>
-      </listitem>
-      <listitem>
-         <para>Le framework JUnit sera utilisé pour  la réalisation des tests unitaires en JAVA.</para>
-      </listitem>
-      <listitem>
-         <para>Des scripts Python seront utilisés pour la réalisation des tests unitaires en Python.</para>
-      </listitem>
-      <listitem>
-         <para>Des scripts SHELL BASH seront utilisés pour la réalisation des tests unitaires de la ligne de commande.</para>
-      </listitem>
-      <listitem>
-         <para>Squore et Logiscope seront utilisés pour la qualité du code.</para>
-      </listitem>
-      <listitem>
-         <para>Valgrind sera utilisé pour la détection de fuite mémoire.</para>
-      </listitem>
-   </orderedlist></sect2></sect1><sect1><title>  Cycle de vie du test</title>
-   <para>Le schéma suivant donne une vue du plan de test sur un test à réaliser jusqu'à la réalisation du  </para>
-   <para>rapport de test :</para>
-   <para/>
-   <para/>
-   <para/></sect1><sect1><title> Liste des tests</title><sect2><title>        Tests fonctionnels</title>
-   <para>Les tests fonctionnels ou tests de boites noires permettent à partir des données en entrée d'observer les réactions du logiciel à tester.</para>
-   <para>Les fonctionnalités sont classées par catégories de tests :</para>
-   <para/>
-   <orderedlist>
-      <listitem>
-         <para>Catégorie 1 : comprend la fonctionnalité permettant d'exporter toutes les commandes ayant été exécutées durant une session: exportCommands.</para>
-      </listitem>
-      <listitem>
-         <para>Catégorie 2 : regroupe les fonctionnalités permettant d'agir physiquement sur un composant : </para>
-         <para>loadShed, stop, restart. </para>
-      </listitem>
-      <listitem>
-         <para>Catégorie 3 : comprend le service permettant de consulter l'ensemble des processus VISHNU : getProcesses.</para>
-      </listitem>
-      <listitem>
-         <para>Catégorie 4 :  regroupe les fonctionnalités permettant la consultation et modification des informations système : getMetricCurrentValue, getMetricHistory, getSystemThreshold, setSystemThreshold, getUpdateFrequency, setUpdateFrequency, defineUserIdentifier, defineMachineIdentifier, setSystemInfo,  getSystemInfo, defineJobIdentifier, defineTransferIdentifier.</para>
-      </listitem>
-   </orderedlist>
-   <para>Chaque test fonctionnel sera réalisé en utilisant chacune des interfaces d'accès suivantes : fonctions API/C++ et API/Python, ligne de commande utilisateur et API web services.</para>
-   <para>Nous allons dans cette section présenter les différentes stratégies de tests en utilisant des programmes exécutables ou des fonctions de l'API IMS puis en observant les résultats obtenus. Les deux conditions à vérifier sont :</para>
-   <orderedlist>
-      <listitem>
-         <para>Est ce que le programme réalise les fonctions attendues en accord avec les spécifications?</para>
-      </listitem>
-      <listitem>
-         <para>Est ce que le programme fonctionne correctement ?</para>
-      </listitem>
-   </orderedlist><sect3><title> Identifiant de tests</title>
-   <para>Les identifiants des tests sont de la forme: &lt;ID DSG&gt;-[B|E]:&lt;NOM_TEST&gt;-&lt;INTERFACE&gt; où 'ID DSG' est l'identifiant du cas d'utilisation dans le document [SDG] , 'B' la séquence de base (exécution du cas d'utilisation avec des paramètres valides), 'E' la séquence d'exception (comportement du cas d'utilisation en cas d'erreurs),  'NOM_TEST' le nom du test décrit dans [SDG] et 'INTERFACE' les différents codes des interfaces utilisées par VISHNU : fonctions API/C++(CPP), API/Python (PY), ligne de commande utilisateur (CLI) et API web services  (WS).  L'absence du code de l'interface signifie que le test s'applique à toutes les interfaces précédentes.</para>
-   <para>Il faut noter que les tests avec des paramètres corrects sont effectués dans une session active avec un mode de fermeture à la déconnexion (CLOSE_ON_DISCONNECT) et un certificat de session valide.</para></sect3><sect3><title>   Tests de la Catégorie 1</title>
-   <para/>
-   <informaltable frame="all">
-      <tgroup cols="4"><tbody><row>
-            <entry>
-               <para>Identifiant de tests</para>
-            </entry>
-            <entry>
-               <para>Actions</para>
-            </entry>
-            <entry>
-               <para>Résultats</para>
-            </entry>
-            <entry>
-               <para>Considérations particulières</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>I3-B: export and replay commands</para>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : Les paramètres sont corrects </para>
-                  </listitem>
-                  <listitem>
-                     <para>Ouvrir une session à l'aide de la commande vishnu_connect et enregistrer l'identifiant de la session.</para>
-                  </listitem>
-                  <listitem>
-                     <para>Lancer trois commandes VISHNU.</para>
-                  </listitem>
-                  <listitem>
-                     <para>Lancer la commande vishnu_list_history_cmd et enregistrer les commandes retournées.</para>
-                  </listitem>
-                  <listitem>
-                     <para>Fermer la session</para>
-                  </listitem>
-                  <listitem>
-                     <para>Ouvrir une nouvelle session</para>
-                  </listitem>
-                  <listitem>
-                     <para>Lancer la commande vishnu_export_commands avec comme paramètre le nom du fichier dans lequel les commandes seront exportées sous le format  SHELL et en utilisant l'identifiant de session de l'étape 2</para>
-                  </listitem>
-                  <listitem>
-                     <para>Vérifier que le fichier contient les trois commandes lancées (ceci est valable si les commandes sont ni connect, ni changePassword, ni resetPassword de UMS)</para>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-            </entry>
-            <entry>
-               <para/>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>I3-E1: export and replay commands</para>
-               <para/>
-               <para>I3-E2: export and replay commands</para>
-               <para/>
-               <para>I3-E3: export and replay commands</para>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : paramètres sont incorrects</para>
-                  </listitem>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-                  <listitem>
-                     <para>Test du cas E1 et E2 :</para>
-                  </listitem>
-               </orderedlist>
-               <para/>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <para/>
-            </entry>
-            <entry>
-               <para/>
-            </entry>
-         </row></tbody></tgroup>
-   </informaltable></sect3><sect3><title>  Tests de la catégorie 2</title>
-   <para>            </para>
-   <informaltable frame="all">
-      <tgroup cols="4"><tbody><row>
-            <entry>
-               <para>Identifiant de tests</para>
-            </entry>
-            <entry>
-               <para>Actions</para>
-            </entry>
-            <entry>
-               <para>Résultats</para>
-            </entry>
-            <entry>
-               <para>Considérations particulières</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>IA4.1-B :  Hard load schedding</para>
-               <para/>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : les paramètres sont corrects et l'utilisateur est un administrateur</para>
-                  </listitem>
-                  <listitem>
-                     <para>Si aucun serveur VISHNU n'a été lancé sur aucune machine se connecter sur les différentes machines et les lancer. Supposons les cas suivantes :</para>
-                  </listitem>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem>
-                     <para>Lancer  la commande vishnu_load_sched  avec comme option HARD et l'identifiant de la machine sur laquelle les processus seront stoppés (MA_2).</para>
-                  </listitem>
-                  <listitem>
-                     <para>Lancer la commande  vishnu_get_processes et vérifier qu'aucun processus VISHNU n'est en cours d'exécution sur la machine cible.</para>
-                     <para/>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <para>- Les processus en cours d'exécution sur la machine donnée ont été arrêtés et ne peuvent plus être redémarrés.</para>
-            </entry>
-            <entry>
-               <para>L'utilisateur doit être un administrateur</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>IA4.1-B :  Soft load schedding</para>
-               <para/>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : les paramètres sont corrects.</para>
-                  </listitem>
-                  <listitem>
-                     <para>Si aucun serveur VISHNU n'a été lancé sur aucune machine se connecter sur les différentes machines et les lancer. Supposons les cas suivantes :</para>
-                  </listitem>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem>
-                     <para>Soumettre deux jobs à l'aide de la commade vishnu_submit_job sur la machine MA_1</para>
-                  </listitem>
-                  <listitem>
-                     <para>Lancer  la commande vishnu_load_sched  avec comme option SOFT et l'identifiant de la machine sur laquelle les processus seront stoppés.</para>
-                  </listitem>
-                  <listitem>
-                     <para>Lancer la commande  vishnu_list_jobs et vérifier que le serveur TMS ne trouve pas les jobs précédents.</para>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <para>- Les processus en cours d'exécution sur la machine donnée deviennent inactifs.</para>
-            </entry>
-            <entry>
-               <para/>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>Stop IA9 B</para>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Lancer la plateforme VISHNU avec un sed IMS</para>
-                  </listitem>
-                  <listitem>
-                     <para>Appeler la fonction stop pour arreter un process sur une machine</para>
-                  </listitem>
-                  <listitem>
-                     <para>Attendre 10 secondes et vérifier que le processus n'a pas été relancé et est arreté</para>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-            </entry>
-            <entry>
-               <para>administrateur</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>Stop IA9 E</para>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>L'id de la machine est invalide,</para>
-                  </listitem>
-                  <listitem>
-                     <para>Le processus n'existe pas sur la machine</para>
-                  </listitem>
-                  <listitem>
-                     <para>L'appel est fait par un utilisateur est pas un administrateur</para>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para> Une exception paramètre invalide est retournée</para>
-                  </listitem>
-                  <listitem>
-                     <para> Une exception processus non valide est retournée</para>
-                  </listitem>
-                  <listitem>
-                     <para> Une exception est renvoyée</para>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <para>administrateur</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>Restart IA9 B</para>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Lancer une plateforme VISHNU avec un sed IMS</para>
-                  </listitem>
-                  <listitem>
-                     <para>Arrêter (sans utiliser la fonction stop) le sed UMS</para>
-                  </listitem>
-                  <listitem>
-                     <para>Vérifier que UMS tourne de nouveau, en faisant un vishnu_connect par exemple</para>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-            </entry>
-            <entry>
-               <para>administrateur</para>
-            </entry>
-         </row></tbody></tgroup>
-   </informaltable></sect3><sect3><title> Tests de la catégorie 3</title>
-   <para/>
-   <informaltable frame="all">
-      <tgroup cols="4"><tbody><row>
-            <entry>
-               <para>Identifiant de tests</para>
-            </entry>
-            <entry>
-               <para>Actions</para>
-            </entry>
-            <entry>
-               <para>Résultats</para>
-            </entry>
-            <entry>
-               <para>Considérations particulières</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>IA1-B: Get the running processes</para>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : Les paramètres sont corrects et l'utilisateur est un administrateur</para>
-                  </listitem>
-                  <listitem>
-                     <para>Si aucun serveur VISHNU n'a été lancé sur aucune machine se connecter sur les différentes machines et les lancer. Supposons les cas suivantes :</para>
-                  </listitem>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem>
-                     <para>Lancer la commande vishnu_get_processes  avec les paramètres correspondants .</para>
-                  </listitem>
-                  <listitem>
-                     <para>Vérifier que les processus VISHNU affichés correspondent bien aux processus VISHNU lancés sur les machines.</para>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-            </entry>
-            <entry>
-               <para>L'utilisateur doit être un administrateur</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>IA1-E1: Get the running processes</para>
-               <para/>
-               <para>IA1-E2: Get the running processes</para>
-               <para/>
-               <para/>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : paramètres incorrects</para>
-                  </listitem>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-                  <listitem>
-                     <para>Lancer la commande vishnu_get_processes avec le cas correspondant</para>
-                  </listitem>
-                  <listitem>
-                     <para> Vérifier que son exécution échoue avec le message d'erreur renvoyé.</para>
-                  </listitem>
-               </orderedlist>
-               <para/>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <para/>
-            </entry>
-            <entry>
-               <para/>
-            </entry>
-         </row></tbody></tgroup>
-   </informaltable></sect3><sect3><title>  Tests de catégorie 4 </title>
-   <para/>
-   <informaltable frame="all">
-      <tgroup cols="4"><tbody><row>
-            <entry>
-               <para>Identifiant de tests</para>
-            </entry>
-            <entry>
-               <para>Actions</para>
-            </entry>
-            <entry>
-               <para>Résultats</para>
-            </entry>
-            <entry>
-               <para>Considérations particulières</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>I2 – B: Get metric data </para>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : les paramètres sont corrects, la fréquence de mise à jour de la base de données est fixée à 10 secondes et aucun enregistrement concernant la métrique MEMORY n'est dans la base de données.</para>
-                     <para/>
-                  </listitem>
-                  <listitem>
-                     <para>Après 20 secondes, lancer la commande vishnu_get_metric_history avec l'identifiant de la machine sur laquelle la métrique sera récupérée  et la métrique MEMORY et vérifier que 2 enregistrements sont retournés.</para>
-                     <para/>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <para>L'historique de la métrique est retourné.</para>
-            </entry>
-            <entry>
-               <para>la fréquence de mise à jour de la base de donnée doit être au préalable enregistrée dans la base de données et fixée à 10 secondes.</para>
-               <para> </para>
-               <para>Aucun enregistrement concernant la métrique MEMORY n'est  enregistré dans la base de données.</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>I2 – E1: Get metric data </para>
-               <para/>
-               <para>I2 – E2: Get metric data </para>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : les paramètres sont incorrects.</para>
-                  </listitem>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem>
-                     <para>Lancer la commande vishnu_get_metric_history avec le cas de test correspondant (E1 ou E2) et vérifier que son exécution échoue.</para>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <para/>
-            </entry>
-            <entry>
-               <para/>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>I4 – B: Get data on the infrastructure </para>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : les paramètres sont corrects. </para>
-                     <para/>
-                  </listitem>
-                  <listitem>
-                     <para>Lancer la commande vishnu_get_metric_current_value avec l'identifiant de la machine sur laquelle la métrique sera récupérée  et la valeur ALL pour la métrique et vérifier que les valeurs suivantes sont retournées: le pourcentage d'utilisation de CPU, le nombre de CPU,  l'espace disque total, l'espace disque disponible, la mémoire RAM totale et l'espace RAM non utilisée .</para>
-                     <para/>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <para>Les valeurs suivantes sont retournées :le pourcentage d'utilisation de CPU, le nombre de CPU,  l'espace disque total, l'espace disque disponible, la mémoire RAM totale et l'espace RAM non utilisée.</para>
-            </entry>
-            <entry>
-               <para/>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>I4 – E1: Get data on the infrastructure </para>
-               <para/>
-               <para>I4 – E2: Get data on the infrastructure </para>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : les paramètres sont incorrects.</para>
-                  </listitem>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem>
-                     <para>Lancer la commande vishnu_get_metric_current_value avec le cas de test correspondant (E1 ou E2) et vérifier que son exécution échoue.</para>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <para/>
-            </entry>
-            <entry>
-               <para/>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>IA2.1 – B : Get a system load threshold </para>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : les paramètres sont corrects et la base de données a un seuil fixé à 2x106 pour l'espace disque disponible sur la machine MA_1. </para>
-                     <para/>
-                  </listitem>
-                  <listitem>
-                     <para>Lancer la commande vishnu_get_system_threshold sur MA_1 avec pour métrique DISKSPACE et vérifier que la valeur retournée est 2x106.</para>
-                     <para/>
-                  </listitem>
-                  <listitem>
-                     <para>Modifier le  seuil pour  l'espace disque disponible à 106  dans la base de données. </para>
-                     <para> </para>
-                  </listitem>
-                  <listitem>
-                     <para>Lancer la commande vishnu_get_system_threshold sur MA_1 avec pour métrique DISKSPACE et vérifier que la valeur  retournée est 106. </para>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <para>Le seuil correspondant est retourné.</para>
-            </entry>
-            <entry>
-               <para>L'utilisateur doit être un administrateur.</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>IA2.1 – E1 : Get a system load threshold </para>
-               <para>IA2.1 – E2 : Get a system load threshold </para>
-               <para/>
-               <para>IA2.1 – E3 : Get a system load threshold </para>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : les paramètres sont incorrects.</para>
-                  </listitem>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem>
-                     <para>Lancer la commande vishnu_get_system_threshold avec le cas de test correspondant (E1, E2 ou E3) et vérifier que son exécution échoue.</para>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <para/>
-            </entry>
-            <entry>
-               <para/>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>IA2 – B1 : Define a system load threshold</para>
-               <para/>
-               <para>IA2 – B2 : Define a system load threshold</para>
-               <para/>
-               <para>IA2 – B3 : Define a system load  threshold</para>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : les paramètres sont corrects et les seuils concernant l'espace disponible, la mémoire RAM non utilisée et le pourcentage d'utilisation de la machine MA_1 sont différents des valeurs définies dans les cas qui suivent. </para>
-                     <para/>
-                  </listitem>
-                  <listitem>
-                     <para>Lancer la commande vishnu_get_system_threshold sur MA_1 avec les métriques DISKPACE, FREEMORY et CPUUSE.</para>
-                     <para/>
-                  </listitem>
-                  <listitem>
-                     <para>Lancer la commande vishnu_set_system_threshold sur MA_1 avec les métriques DISKPACE, FREEMORY et CPUUSE puis rajouter 10 à chacune des valeurs retournées à l'étape 2.</para>
-                     <para/>
-                  </listitem>
-                  <listitem>
-                     <para>Lancer la commande vishnu_get_system_threshold sur MA_1 avec les métriques DISKPACE, FREEMORY et CPUUSE et vérifier que les modifications précedents ont été prises en compte.</para>
-                     <para/>
-                     <para/>
-                     <para> </para>
-                  </listitem>
-               </orderedlist>
-               <para/>
-            </entry>
-            <entry>
-               <para>Le seuil correspondant est retourné.</para>
-            </entry>
-            <entry>
-               <para>L'utilisateur doit être un administrateur.</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>IA2 – E1 : Define a system load threshold</para>
-               <para/>
-               <para>IA2 – E2: Define a system load threshold</para>
-               <para/>
-               <para>IA2 – E3 : Define a system load threshold</para>
-               <para/>
-               <para/>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : les paramètres sont incorrects.</para>
-                  </listitem>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-                  <listitem>
-                     <para>Lancer la commande vishnu_set_system_threshold avec le cas de test correspondant (E1, E2 ou E3) et vérifier que son exécution échoue.</para>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <para/>
-            </entry>
-            <entry>
-               <para/>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>I1– B : Get the update frequency </para>
-               <para/>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : les paramètres sont corrects et la fréquence de mise à jour de la base de donnée est fixée à 10 secondes.</para>
-                     <para/>
-                  </listitem>
-                  <listitem>
-                     <para>Lancer la commande vishnu_get_update_frequency et  vérifier que la valeur retournée est 10.</para>
-                     <para/>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-            </entry>
-            <entry>
-               <para>la fréquence de mise à jour de la base de donnée doit être au préalable enregistrée dans la base de données et fixée à 10 secondes.</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>IA6– B : Set the update frequency </para>
-               <para/>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : les paramètres sont corrects.</para>
-                  </listitem>
-               </orderedlist>
-               <para/>
-               <orderedlist>
-                  <listitem>
-                     <para>Lancer la commande vishnu_get_update_frequency  et enregister la valeur retournée.</para>
-                     <para/>
-                  </listitem>
-                  <listitem>
-                     <para>Lancer la commande vishnu_set_update_frequency  en ajoutant 10 à la valeur retournée à l'étape 2.</para>
-                     <para/>
-                  </listitem>
-                  <listitem>
-                     <para>Lancer la commande vishnu_get_update_frequency et vérifier que la modification de l'étape 2 a été bien prise en compte.</para>
-                     <para/>
-                     <para/>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-            </entry>
-            <entry>
-               <para>L'utilisateur doit être un administrateur.</para>
-               <para/>
-               <para>La valeur de la fréquence de mise à jour avant le lancement du test doit être différente de 10 secondes.</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>IA6– E1 : Set the update frequency</para>
-               <para/>
-               <para>IA6– E2 : Set the update frequency </para>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : les paramètres sont incorrects.</para>
-                  </listitem>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-                  <listitem>
-                     <para>Lancer la commande vishnu_set_update_frequency avec le cas de test correspondant (E1 ou E2) et vérifier que son exécution échoue.</para>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <para/>
-            </entry>
-            <entry>
-               <para/>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>IA3-B: Define the identifier : define User/Machine/Job/FileTransfer identifier</para>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>
-                        <anchor id="__DdeLink__3446_1533183960"/>Cas de test : les paramètres sont corrects.</para>
-                     <para> </para>
-                  </listitem>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <para/>
-               <orderedlist>
-                  <listitem>
-                     <para/>
-                  </listitem>
-                  <listitem>
-                     <para>Lancer les différentes commandes vishnu_ defineUserIdentifier, vishnu_ defineMachineIdentifier,  defineJobIdentifier, vishnu_ defineFileTransferIdentifier avec les formats définis respectivement dans cas de test correspondant (cas1, cas2, cas3 et cas4) . </para>
-                     <para/>
-                  </listitem>
-                  <listitem>
-                     <para>Lancer un certain nombre de fois les commandes d'ajout suivantes vishnu_addUser, vishnu_submitJob, vishnu_addMachine, vishnu_ copyFile et vérifier que les identifiants générés correspondent bien aux formats attendus.</para>
-                     <para/>
-                  </listitem>
-                  <listitem>
-                     <para>L'exécution de la commande est ainsi validée.</para>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <para>Le format d'identifiant demandé est généré.</para>
-            </entry>
-            <entry>
-               <para>Ces différentes commandes sont réservées aux administrateurs VISHNU</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>IA3-E1: Define User/Machine/Job/FileTransfer identifier</para>
-               <para/>
-               <para>IA3-E2: Define User/Machine/Job/FileTransfer identifier</para>
-               <para/>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : les paramètres sont incorrects.</para>
-                  </listitem>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem>
-                     <para>Lancer les différentes commandes  avec le cas de test correspondant (E1 ou E2 ou E3) et vérifier que son exécution échoue.</para>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <para/>
-            </entry>
-            <entry>
-               <para/>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>IA5: Set system info</para>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : les paramètres sont corrects.</para>
-                     <para>Mise à jour des données système de la machine MA_1 enregistré dans VISHNU.</para>
-                  </listitem>
-               </orderedlist>
-               <para/>
-               <orderedlist>
-                  <listitem>
-                     <para>Lancer la commande vishnu_setSystemInfo en lui fournissant MA_1 et les informations à mettre à jour.</para>
-                     <para/>
-                  </listitem>
-                  <listitem>
-                     <para>Lancer la commande vishnu_getSystemInfo avec comme paramètre MA_1 et vérifier que les données ont bien été mise à jour.</para>
-                     <para/>
-                  </listitem>
-                  <listitem>
-                     <para>L'exécution de la commande est ainsi validée.</para>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-            </entry>
-            <entry>
-               <para>Cette  commande est réservée aux administrateurs VISHNU</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>IA5-E1: set system info</para>
-               <para/>
-               <para>IA5-E2: set system info</para>
-               <para/>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : les paramètres sont incorrects.</para>
-                  </listitem>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem>
-                     <para>Lancer la commande vishnu_setSystemInfo  avec le cas de test correspondant (E1 ou E2) et vérifier que son exécution échoue.</para>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <para/>
-            </entry>
-            <entry>
-               <para/>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>I5-B: Get system info</para>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : les paramètres sont corrects et les valeurs de mémoire et d'espace disque pour la machine MA_1 sont respectivement 256 et 106.</para>
-                     <para/>
-                  </listitem>
-                  <listitem>
-                     <para>Lancer la commande vishnu_getSystemInfo en lui fournissant MA_1.</para>
-                     <para/>
-                  </listitem>
-                  <listitem>
-                     <para>Vérifier que les valeurs retournées pour la mémoire et l'espace disque de la machine MA_1 sont respectivement 256 et 106.</para>
-                     <para/>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-            </entry>
-            <entry>
-               <para>Avant le lancement du test les valeurs  de mémoire et d'espace disque pour la machine MA_1 sont respectivement 256 et 106.</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>I5-E1: Get system info</para>
-               <para/>
-               <para/>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem>
-                     <para>Cas de test : les paramètres sont incorrects.</para>
-                  </listitem>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem>
-                     <para>Lancer la commande vishnu_getSystemInfo  avec le cas de test E1  et vérifier que son exécution échoue.</para>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <para/>
-            </entry>
-            <entry>
-               <para/>
-            </entry>
-         </row></tbody></tgroup>
-   </informaltable>
-   <para/></sect3></sect2><sect2><title> Tests de stress        </title><sect3><title> Présentation</title>
-   <para>Ces tests permettent de vérifier que la cible de test peut réussir à basculer et à récupérer pour différents dysfonctionnements matériels, logiciels ou réseaux sans qu'il y ait perte de données. Ils vérifient que lorsqu'une défaillance survient un système alternatif ou un système de sauvegarde prends le relai correctement sans perte de données ou de transactions.</para></sect3><sect3><title> Environnement des tests</title>
-   <para>Nous utiliserons l'environnement de test 1.</para></sect3><sect3><title> Identifiants de tests</title>
-   <para>Les identifiants des tests sont de la forme: STR-&lt;Element stressé&gt;-&lt;Type de stress&gt;.</para></sect3><sect3><title> Liste des tests</title>
-   <para/>
-   <informaltable frame="all">
-      <tgroup cols="3"><tbody><row>
-            <entry>
-               <para>Identifiant de tests</para>
-            </entry>
-            <entry>
-               <para>Technique</para>
-            </entry>
-            <entry>
-               <para>Critère de complétion</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>STR-SERV-DOWN</para>
-               <para/>
-            </entry>
-            <entry>
-               <para>- Lancer la commande  vishnu_set_update_frequency avec une valeur de fréquence de 30 secondes</para>
-               <para>- Arrêter le serveur IMS après l'exécution de la commande</para>
-               <para>- Redémarrer le serveur IMS</para>
-               <para>- Lancer la commande  vishnu_get_update_frequency </para>
-               <para/>
-            </entry>
-            <entry>
-               <para>- Terminaison normale de la commande  vishnu_get_update_frequency avec la valeur 30.</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>STR-AGENT-DOWN</para>
-               <para/>
-            </entry>
-            <entry>
-               <para>- Lancer la commande vishnu_set_update_frequency avec une valeur de fréquence de 30 secondes</para>
-               <para>- Arrêter l'agent SysFera-DS après l'exécution de la commande</para>
-               <para>- Redémarrer l'agent SysFera-DS</para>
-               <para>- Lancer la commande  vishnu_get_update_frequency </para>
-            </entry>
-            <entry>
-               <para>- Terminaison normale de la commande vishnu_get_update_frequency avec la valeur 30.</para>
-               <para/>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>STR-DB-DOWN</para>
-            </entry>
-            <entry>
-               <para>- Se connecter</para>
-               <para>- Couper la base de données</para>
-               <para>- Redémarrer la base de données</para>
-               <para>- Faire appel à vishnu_get_update_frequency</para>
-            </entry>
-            <entry>
-               <para>- Terminaison normale de la commande</para>
-            </entry>
-         </row></tbody></tgroup>
-   </informaltable><sect4><title/></sect4></sect3></sect2><sect2><title> Contrôle des performances</title><sect3><title> Présentation</title>
-   <para>Ces tests ont pour objectif de vérifier que les exigences de performance quantifiées sont effectivement satisfaites. </para></sect3><sect3><title> Environnement de tests</title>
-   <para>Nous utiliserons l'environnement de test 1.</para></sect3><sect3><title> Identifiants des tests</title>
-   <para>Les identifiants des tests sont de la forme: CDP-&lt;ID STB&gt;-[NomdeCommande|IdentifiantDeTest] où 'ID STB' est l'identifiant de l'exigence spécifiée dans le document [STB] au paragraphe « performances, fiabilité et robustesse ». </para></sect3><sect3><title> Liste des tests</title>
-   <para/>
-   <informaltable frame="all">
-      <tgroup cols="3"><tbody><row>
-            <entry>
-               <para>Identifiant de tests</para>
-            </entry>
-            <entry>
-               <para>Technique</para>
-            </entry>
-            <entry>
-               <para> Critère de completion</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>CDP-3.1-get_metric_current_value</para>
-            </entry>
-            <entry>
-               <para>- Lancer la commande 'ssh &lt;host&gt; ps -efl' sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
-               <para>- Lancer la commande 'vishnu_ get_current_metric &lt;machineId&gt;' en mesurant le temps de réponse</para>
-            </entry>
-            <entry>
-               <para>temps inférieur au temps de référence (valeur moyenne sur 10 itérations)</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>CDP-3.1-get_metric_history</para>
-            </entry>
-            <entry>
-               <para>- Lancer une commande 'ssh &lt;host&gt; ps -efl' sur une machine serveur en mesurant le temps de réponse  (temps de référence).</para>
-               <para>- Lancer la commande 'vishnu_get_metric_history &lt;machineId&gt;' en mesurant le temps de réponse</para>
-            </entry>
-            <entry>
-               <para>temps inférieur au temps de référence (valeur moyenne sur 10 itérations)</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>CDP-3.2.1-get_metric_current_value</para>
-            </entry>
-            <entry>
-               <para>- Lancer la commande 'vishnu_get_metric_current_value &lt;machineId&gt;' 100 fois </para>
-            </entry>
-            <entry>
-               <para>Consommation en mémoire virtuelle sur le serveur IMS inférieure à 500 Mégaoctets.</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>CDP-3.2.1-get_metric_history</para>
-            </entry>
-            <entry>
-               <para>- Lancer la commande 'vishnu_get_metric_history &lt;machineId&gt;' 100 fois </para>
-            </entry>
-            <entry>
-               <para>Consommation en mémoire virtuelle sur le serveur IMS inférieure à 500 Mégaoctets.</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>CDP-3.2.2-get_metric_current_value</para>
-            </entry>
-            <entry>
-               <para>-  Lancer la commande 'vishnu_get_metric_current_value &lt;machineId&gt;'</para>
-            </entry>
-            <entry>
-               <para>Consommation CPU inférieure à 10%.</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>CDP-3.2.2-get_metric_history</para>
-            </entry>
-            <entry>
-               <para>-  Lancer la commande 'vishnu_get_metric_history &lt;machineId&gt;'</para>
-            </entry>
-            <entry>
-               <para>Consommation CPU inférieure à 10%.</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>CDP-MemServer</para>
-            </entry>
-            <entry>
-               <para>- Lancer le serveur IMS</para>
-               <para>- Laisser le serveur fonctionner sans utiliser les services pendant 24h</para>
-               <para>- Vérifier que l'espace mémoire consommé par le processus serveur n'a pas augmenté.</para>
-            </entry>
-            <entry>
-               <para>Consommation mémoire constante.</para>
-            </entry>
-         </row></tbody></tgroup>
-   </informaltable>
-   <para/></sect3></sect2><sect2><title> Tests de charge</title><sect3><title> Présentation</title>
-   <para>Les tests de charge ont pour objectif de vérifier que les exigences de capacité du système sont vérifiées.</para></sect3><sect3><title> Environnement de tests</title>
-   <para/>
-   <para>Nous utiliserons l'environnement de test 1 avec un nombre de clients ou de serveurs tels que spécifié dans le cas de tests. Ces clients ou serveurs seront simulés sur une seule machine.</para>
-   <para/>
-   <para>Par ailleurs, les requêtes envoyées en simultané seront en fait envoyées par une seule machine cliente avec un programme de synchronisation (MPI).</para></sect3><sect3><title> Identifiants de tests</title>
-   <para>Les identifiants des tests sont de la forme: LOAD-&lt;ID STB&gt;-[NomdeCommande|IdentifiantDeTest] où 'ID STB' est l'identifiant de l'exigence spécifiée dans le document [STB]. </para></sect3><sect3><title> Liste des tests</title>
-   <para/>
-   <informaltable frame="all">
-      <tgroup cols="3"><tbody><row>
-            <entry>
-               <para>Identifiant de tests</para>
-            </entry>
-            <entry>
-               <para>Technique</para>
-            </entry>
-            <entry>
-               <para>Résultats attendus</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>LOAD-2.1-get_metric_current_value</para>
-            </entry>
-            <entry>
-               <para>- Lancer  100 commandes 'vishnu_get_metric_current_value &lt;machineId&gt;'  simultanées</para>
-            </entry>
-            <entry>
-               <para>- Terminaison normale de toutes les commandes</para>
-               <para>- Etat normal du serveur IMS</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>LOAD-2.1-get_metric_history</para>
-            </entry>
-            <entry>
-               <para>- Lancer 100 commandes 'vishnu_get_metric_history &lt;machineId&gt;' simultanées</para>
-            </entry>
-            <entry>
-               <para>- Terminaison normale de toutes les commandes</para>
-               <para>- Etat normal du serveur IMS</para>
-            </entry>
-         </row></tbody></tgroup>
-   </informaltable></sect3></sect2><sect2><title> Contrôle de la qualité du code</title><sect3><title> Présentation</title>
-   <para>L'objectif de ces tests est de vérifier que le code source (C/C++ ou Java) respecte les contraintes de qualité logiciel fixées dans les spécifications et le cahier des charges.</para></sect3><sect3><title> Identifiants des tests</title>
-   <para>Les identifiants des tests sont de la forme: [IdentifiantDeTest]-[IdentifiantDesModules] où les identifiants sont les suivants:</para>
-   <orderedlist>
-      <listitem>
-         <para>Identifiants de tests</para>
-      </listitem>
-      <listitem>
-         <para>Identifiants de modules</para>
-      </listitem>
-   </orderedlist></sect3><sect3><title> Liste des tests</title>
-   <para/>
-   <informaltable frame="all">
-      <tgroup cols="3"><tbody><row>
-            <entry>
-               <para>Identifiant de tests</para>
-            </entry>
-            <entry>
-               <para>Technique</para>
-            </entry>
-            <entry>
-               <para>Résultats attendus</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>CRP-CSC</para>
-            </entry>
-            <entry>
-               <para>Audit du code C/C++ avec l'outil LOGISCOPE</para>
-            </entry>
-            <entry>
-               <para>Le code respecte toutes les règles de codage de catégorie «REQUIRED » spécifiées pour le projet [SCL] sauf dérogation clairement documentée dans le code. </para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>CRP-JSC</para>
-            </entry>
-            <entry>
-               <para>Audit du code Java avec l'outil LOGISCOPE</para>
-            </entry>
-            <entry>
-               <para>Le code respecte toutes les règles de codage de catégorie «REQUIRED » spécifiées pour le projet [SCL] sauf dérogation clairement documentée dans le code. </para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>MCC-CSC</para>
-            </entry>
-            <entry>
-               <para>Audit du code C/C++ avec l'outil SQUORE</para>
-            </entry>
-            <entry>
-               <para>Pas plus de 1% de composants classés « A risque » </para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>MCC-JSC</para>
-            </entry>
-            <entry>
-               <para>Audit du code Java avec l'outil SQUORE</para>
-            </entry>
-            <entry>
-               <para>Pas plus de 1% de composants classés « A risque » </para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>DDC-CSC</para>
-            </entry>
-            <entry>
-               <para>Audit du code C/C++ avec l'outil  SQUORE</para>
-            </entry>
-            <entry>
-               <para>Moins de 10% de code dupliqué. </para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>DDC-JSC</para>
-            </entry>
-            <entry>
-               <para>Audit du code Java avec l'outil SQUORE</para>
-            </entry>
-            <entry>
-               <para>Moins de 10% de code dupliqué. </para>
-            </entry>
-         </row></tbody></tgroup>
-   </informaltable>
-   <para/>
-   <para/></sect3></sect2><sect2><title>  Tests de compilation et d'installation</title><sect3><title> Présentation</title>
-   <para>La compilation des différents exécutables et librairies composant le module UMS sera réalisée par un serveur d'intégration continue (du type HUDSON).</para>
-   <para>Par ailleurs les tests d'installation ont pour objectif de valider la procédure d'installation de l'ensemble des différents composants d'une plateforme VISHNU (clients, serveurs, agents SysFera-DS).</para></sect3><sect3><title> Environnement des tests</title>
-   <para>Nous utiliserons l'environnement de test 1.</para></sect3><sect3><title> Liste des tests</title>
-   <para/>
-   <informaltable frame="all">
-      <tgroup cols="3"><tbody><row>
-            <entry>
-               <para>Identifiant de tests</para>
-            </entry>
-            <entry>
-               <para>Technique</para>
-            </entry>
-            <entry>
-               <para>Résultats attendus</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>COMP-CSC</para>
-            </entry>
-            <entry>
-               <para>Compilation du code C/C++ avec l'outil GCC/CMake</para>
-            </entry>
-            <entry>
-               <para>Compilation correcte de tous les exécutables</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>INS-SERVER-PGSQL</para>
-               <para>INS-SERVER-ORACLE</para>
-            </entry>
-            <entry>
-               <para>Installation des différents éléments serveur de la plateforme VISHNU</para>
-               <orderedlist>
-                  <listitem>
-                     <para>serveur de calcul</para>
-                  </listitem>
-                  <listitem>
-                     <para>serveur de stockage</para>
-                  </listitem>
-                  <listitem>
-                     <para>serveur dédié VISHNU</para>
-                  </listitem>
-                  <listitem>
-                     <para>serveur de base de données</para>
-                  </listitem>
-               </orderedlist>
-            </entry>
-            <entry>
-               <para>- Tous les processus démarrés et operationnels</para>
-               <para>- Documentation disponible (pages man)</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>INS-CLI</para>
-            </entry>
-            <entry>
-               <para>Installation du client VISHNU en ligne de commande</para>
-            </entry>
-            <entry>
-               <para>- Toutes les commandes installées</para>
-               <para>- Documentation disponible (pages man)</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>INS-PGAPI</para>
-            </entry>
-            <entry>
-               <para>Installation des librairies API VISHNU (C++ et Python)</para>
-            </entry>
-            <entry>
-               <para>- Librairie C++ installée</para>
-               <para>- Librairie Python installée et pouvant être chargée dans l'interpréteur Python 2.x</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>INS-WSAPI</para>
-            </entry>
-            <entry>
-               <para>Installation des services web VISHNU sur le serveur JBoss</para>
-            </entry>
-            <entry>
-               <para>- Services operationnels (contrôle via la console webservices de JBoss)</para>
-            </entry>
-         </row></tbody></tgroup>
-   </informaltable></sect3></sect2><sect2><title/></sect2><sect2><title> Contrôle de la documentation utilisateur</title><sect3><title> Présentation</title>
-   <para>L'objectif est de vérifier que la documentation utilisateur permet à l'utilisateur de comprendre et d'utiliser les fonctions spécifiées .</para></sect3><sect3><title> Liste des tests</title>
-   <para/>
-   <informaltable frame="all">
-      <tgroup cols="3"><tbody><row>
-            <entry>
-               <para>Identifiant de tests</para>
-            </entry>
-            <entry>
-               <para>Technique</para>
-            </entry>
-            <entry>
-               <para>Résultats attendus</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>CDU-MAN</para>
-            </entry>
-            <entry>
-               <para>Vérifier les pages de manuel attachées à chaque commande</para>
-            </entry>
-            <entry>
-               <para>Toutes les pages de manuel contiennent toutes les informations nécessaires à l'utilisateur pour utiliser les commandes.</para>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>CDU-USERGUIDE</para>
-            </entry>
-            <entry>
-               <para>Suivre le guide de l'utilisateur </para>
-            </entry>
-            <entry>
-               <para>Le guide permet une prise en main rapide des fonctions du logiciel</para>
-            </entry>
-         </row></tbody></tgroup>
-   </informaltable>
-   <para/></sect3></sect2></sect1><para/>
-   <informaltable frame="all">
-      <tgroup cols="4"><tbody><row>
-            <entry>
-               <para>SysFera</para>
-               <para>13 av. Einstein</para>
-               <para>69100 Villeurbanne</para>
-            </entry>
-            <entry>
-               <para/>
-            </entry>
-            <entry>
-               <para>Tel. + 33 (0)4 72 72 88 50</para>
-               <para>Fax + 33 (0)4 72 72 80 80</para>
-               <para>contact@sysfera.com</para>
-               <para>www.sysfera.com</para>
-            </entry>
-            <entry>
-               <para>18|18</para>
-            </entry>
-         </row></tbody></tgroup>
-   </informaltable>
-   <para/>
-</article>
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<book lang="fr-FR">
+  <?ooogenerator OpenOffice.org/3.2$Linux OpenOffice.org_project/320m12$Build-9483?>
+  <?oooversion 3.2$Linux?>
+  <bookinfo>
+    <title> </title>
+    <date>2012-02-14T10:08:18</date>
+    <keywordset/>
+    <confgroup/>
+  </bookinfo>
+  <chapter>
+    <title>Présentation du document</title>
+    <section>
+      <title>Objectifs du document</title>
+      <para>Les objectifs de ce document sont les suivants :</para>
+      <itemizedlist>
+        <listitem>
+          <para>Présenter les fonctionnalités du module IMS à tester.</para>
+        </listitem>
+        <listitem>
+          <para>Présenter les différents types de tests permettant de valider les cas d'utilisation de chaque fonctionnalité du module IMS.</para>
+        </listitem>
+        <listitem>
+          <para>Présenter les méthodes et outils utilisés pour ces tests.</para>
+        </listitem>
+        <listitem>
+          <para>Donner des détails de l'environnement de test</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Structure du document</title>
+      <para>Le chapitre 1 présente le document.</para>
+      <para>Le chapitre 2 présente les environnements et outils de tests.</para>
+      <para>La chapitre 3 décrit la liste des tests qui s'appliquent aux fonctionnalités à tester.</para>
+      <para>La chapitre 4 présente les outils utilisés pour ces tests.</para>
+    </section>
+    <section>
+      <title>Glossaire, abréviations et acronymes</title>
+      <section>
+        <title>Glossaire</title>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="strong">Script de test</emphasis> : c'est un programme qui contient les instructions permettant de réaliser les tests.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="strong">Certificat</emphasis> : correspond à la « <emphasis>session key »</emphasis> définie dans [SPECSGEN].</para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Acronymes</title>
+        <itemizedlist>
+          <listitem>
+            <para>STB : Spécification Technique des Besoins</para>
+          </listitem>
+          <listitem>
+            <para>DSG : Document de Spécification générale</para>
+          </listitem>
+          <listitem>
+            <para>DSD : Document de Spécification Détaillées</para>
+          </listitem>
+          <listitem>
+            <para>API : Application Programming Interface (Interface de programmation d'applications)</para>
+          </listitem>
+          <listitem>
+            <para>MPI : Message Passing Interface</para>
+            <para/>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Abréviations</title>
+        <itemizedlist>
+          <listitem>
+            <para>Id. Identifiant</para>
+          </listitem>
+          <listitem>
+            <para>Réf.Référence</para>
+          </listitem>
+          <listitem>
+            <para>Rel.#Numéro de release/version</para>
+          </listitem>
+          <listitem>
+            <para>Resp.Responsable(s)</para>
+          </listitem>
+        </itemizedlist>
+      </section>
+    </section>
+  </chapter>
+  <chapter>
+    <title>Environnements et outils de tests</title>
+    <section>
+      <title>Environnements de tests</title>
+      <para>Pour ces tests, nous allons utiliser l'environnement de tests suivants avec des systèmes dédiés aux tests:</para>
+      <itemizedlist>
+        <listitem>
+          <para>Système d'exploitation : c'est le système Linux décrit dans [STB] qui sera installé sur toutes les machines clientes et serveurs.</para>
+        </listitem>
+        <listitem>
+          <para>Nombre de machines clientes : une machine cliente décrite dans [STB] pour pouvoir lancer des tests à distance (selon le cas de test).</para>
+        </listitem>
+        <listitem>
+          <para>Nombre de machines serveurs : deux serveurs IMS décrit dans [ARCH] .</para>
+        </listitem>
+        <listitem>
+          <para>Un serveur SysFera-DS dédié décrit dans [ARCH].</para>
+        </listitem>
+        <listitem>
+          <para>Un serveur UMS décrit dans [ARCH].</para>
+        </listitem>
+        <listitem>
+          <para>Un serveur TMS et FMS décrit dans [ARCH]</para>
+        </listitem>
+        <listitem>
+          <para>Le module LogService de SysFera-DS décrit dans [STB]. </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Outils de tests </title>
+      <para>Les outils suivants seront utilisés pour les tests :</para>
+      <itemizedlist>
+        <listitem>
+          <para>Hudson (serveur d'intégration) sera utilisé pour les tests d'intégration continue (compilation, installation).</para>
+        </listitem>
+        <listitem>
+          <para>La librairie Boost test sera utilisée pour la réalisation des tests unitaires <emphasis>en C++.</emphasis></para>
+        </listitem>
+        <listitem>
+          <para>Le framework JUnit sera utilisé pour la réalisation des tests unitaires<emphasis> en JAVA.</emphasis></para>
+        </listitem>
+        <listitem>
+          <para>Des scripts Python seront utilisés pour la réalisation des tests unitaires<emphasis> en Python.</emphasis></para>
+        </listitem>
+        <listitem>
+          <para>Des scripts SHELL BASH seront utilisés pour la réalisation des tests unitaires<emphasis> de la ligne de commande.</emphasis></para>
+        </listitem>
+        <listitem>
+          <para>Squore et Logiscope seront utilisés pour la qualité du code.</para>
+        </listitem>
+        <listitem>
+          <para>Valgrind sera utilisé pour la détection de fuite mémoire.</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+  </chapter>
+  <chapter>
+    <title>Cycle de vie du test</title>
+    <para>Le schéma suivant donne une vue du plan de test sur un test à réaliser jusqu'à la réalisation du </para>
+    <para>rapport de test :</para>
+    <figure id="refIllustration0">
+      <title>: Schema du test</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/img001.jpg" width="15.355cm" depth="11.522cm"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    <para/>
+  </chapter>
+  <chapter>
+    <title>Liste des tests</title>
+    <section>
+      <title>Tests fonctionnels</title>
+      <para>Les tests fonctionnels ou tests de boites noires permettent à partir des données en entrée d'observer les réactions du logiciel à tester.</para>
+      <para>Les fonctionnalités sont classées par catégories de tests :</para>
+      <itemizedlist>
+        <listitem>
+          <para>Catégorie 1 : comprend la fonctionnalité permettant d'exporter toutes les commandes ayant été exécutées durant une session:<emphasis> </emphasis><emphasis>exportCommands</emphasis><emphasis>.</emphasis></para>
+        </listitem>
+        <listitem>
+          <para>Catégorie 2 : regroupe les fonctionnalités permettant d'agir physiquement sur un composant : </para>
+          <para>loadShed, stop, restart. </para>
+        </listitem>
+        <listitem>
+          <para>Catégorie 3 : comprend le service permettant de consulter l'ensemble des processus VISHNU : <emphasis>getProcesse</emphasis>s.</para>
+        </listitem>
+        <listitem>
+          <para>Catégorie 4 : regroupe les fonctionnalités permettant la consultation et modification des informations système : <emphasis>getMetricCurrentValue, getMetricHistory, getSystemThreshold, setSystemThreshold, getUpdateFrequency, setUpdateFrequency, defineUserIdentifier, defineMachineIdentifier, setSystemInfo, getSystemInfo, defineJobIdentifier, defineTransferIdentifier, </emphasis><emphasis>defineAuthIdentifier</emphasis><emphasis>.</emphasis></para>
+        </listitem>
+      </itemizedlist>
+      <para>
+        <emphasis>Chaque test fonctionnel sera réalisé en utilisant chacune des interfaces d'accès suivantes : </emphasis>
+        <emphasis>fonctions API/C++ et API/Python, ligne de commande utilisateur et API web services.</emphasis>
+      </para>
+      <para>Nous allons dans cette section présenter les différentes stratégies de tests en utilisant des programmes exécutables ou des fonctions de l'API IMS puis en observant les résultats obtenus. Les deux conditions à vérifier sont :</para>
+      <itemizedlist>
+        <listitem>
+          <para>Est ce que le programme réalise les fonctions attendues en accord avec les spécifications?</para>
+        </listitem>
+        <listitem>
+          <para>Est ce que le programme fonctionne correctement ?</para>
+        </listitem>
+      </itemizedlist>
+      <section>
+        <title>Identifiant de tests</title>
+        <para>Les identifiants des tests sont de la forme: &lt;ID DSG&gt;-[B|E]:&lt;NOM_TEST&gt;-&lt;INTERFACE&gt; où 'ID DSG' est l'identifiant du cas d'utilisation dans le document [SDG] , 'B' la séquence de base (exécution du cas d'utilisation avec des paramètres valides), 'E' la séquence d'exception (comportement du cas d'utilisation en cas d'erreurs), 'NOM_TEST' le nom du test décrit dans [SDG] et 'INTERFACE' les différents codes des interfaces utilisées par VISHNU : <emphasis>fonctions API/C++(CPP), API/Python (PY), ligne de commande utilisateur (CLI) et API web services</emphasis> (WS). L'absence du code de l'interface signifie que le test s'applique à toutes les interfaces précédentes.</para>
+        <para>Il faut noter que les tests avec des paramètres corrects sont effectués dans une session active avec un mode de fermeture à la déconnexion (CLOSE_ON_DISCONNECT) et un certificat de session valide.</para>
+      </section>
+      <section>
+        <title>Tests de la Catégorie 1</title>
+        <informaltable>
+          <tgroup cols="4">
+            <colspec colname="c1" colwidth="2.9cm"/>
+            <colspec colname="c2" colwidth="9cm"/>
+            <colspec colname="c3" colwidth="3.2cm"/>
+            <colspec colname="c4" colwidth="2cm"/>
+            <tbody>
+              <row>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Identifiant de tests</para>
+                </entry>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Actions</para>
+                </entry>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Résultats</para>
+                </entry>
+                <entry>
+                  <?border 0.002cm solid #000000?>
+                  <para>Considérations particulières</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>I3-B: export and replay commands</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis role="strong">Cas de test</emphasis> : Les paramètres sont corrects </para>
+                    </listitem>
+                    <listitem>
+                      <para>Ouvrir une session à l'aide de la commande <emphasis>vishnu_connect</emphasis> et enregistrer l'identifiant de la session.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer trois commandes VISHNU.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_list_history_cmd </emphasis>et enregistrer les commandes retournées.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Fermer la session</para>
+                    </listitem>
+                    <listitem>
+                      <para>Ouvrir une nouvelle session</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_export_commands</emphasis> avec comme paramètre le nom du fichier dans lequel les commandes seront exportées sous le format SHELL et en utilisant l'identifiant de session de l'étape 2</para>
+                    </listitem>
+                    <listitem>
+                      <para>Vérifier que le fichier contient les trois commandes lancées (ceci est valable si les commandes sont ni connect, ni changePassword, ni resetPassword de UMS)</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <itemizedlist>
+                    <listitem>
+                      <orderedlist continuation="continues" numeration="arabic"/>
+                    </listitem>
+                  </itemizedlist>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>I3-E1: export and replay commands</para>
+                  <para>I3-E2: export and replay commands</para>
+                  <para>I3-E3: export and replay commands</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis role="strong">Cas de test</emphasis> : paramètres sont incorrects</para>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas E1 : l'identifiant de la session est incorrect </para>
+                        </listitem>
+                        <listitem>
+                          <para>Cas E2 : le chemin du fichier est incorrect</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist/>
+                    </listitem>
+                    <listitem>
+                      <para>Test du cas E1 et E2 :</para>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Lancer la commande <emphasis role="strong"/><emphasis>vishnu_export_commands</emphasis><emphasis role="strong"> </emphasis><emphasis/></para>
+                        </listitem>
+                        <listitem>
+                          <para>Vérifier que son exécution échoue </para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <itemizedlist>
+                    <listitem>
+                      <orderedlist continuation="continues" numeration="arabic"/>
+                    </listitem>
+                  </itemizedlist>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>Tests de la catégorie 2</title>
+        <informaltable>
+          <tgroup cols="4">
+            <colspec colname="c1" colwidth="3cm"/>
+            <colspec colname="c2" colwidth="7.9cm"/>
+            <colspec colname="c3" colwidth="3.4cm"/>
+            <colspec colname="c4" colwidth="2.8cm"/>
+            <tbody>
+              <row>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Identifiant de tests</para>
+                </entry>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Actions</para>
+                </entry>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Résultats</para>
+                </entry>
+                <entry>
+                  <?border 0.002cm solid #000000?>
+                  <para>Considérations particulières</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>IA4.1-B : Hard load schedding</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis>Cas de test</emphasis><emphasis> : </emphasis>les paramètres sont corrects et l'utilisateur est un administrateur</para>
+                    </listitem>
+                    <listitem>
+                      <para>Si aucun serveur VISHNU n'a été lancé sur aucune machine se connecter sur les différentes machines et les lancer. Supposons les cas suivantes :</para>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Machine MA_1 : une machine sur laquelle sont lancés les serveurs suivants : <emphasis>omniNames</emphasis>, <emphasis>dietAgent</emphasis><emphasis>, </emphasis><emphasis>LogCentral, sed UMS, sed TMS et sed IMS</emphasis>.</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Machine MA_2 : une machine sur laquelle est lancé un <emphasis>sed UMS </emphasis>qui utilise les élements suivants de MA_1: <emphasis>omniNames</emphasis>, <emphasis>dietAgent</emphasis><emphasis> et le </emphasis><emphasis>LogCentral .</emphasis></para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande<emphasis role="strong"> </emphasis><emphasis>vishnu_load_sched</emphasis> avec comme option HARD et l'identifiant de la machine sur laquelle les processus seront stoppés (MA_2).</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_get_processes </emphasis>et vérifier qu'aucun processus VISHNU n'est en cours d'exécution sur la machine cible.</para>
+                      <para/>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Les processus en cours d'exécution sur la machine donnée ont été arrêtés et ne peuvent plus être redémarrés.</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>L'utilisateur doit être un administrateur</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>IA4.1-B : Soft load schedding</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis>Cas de test</emphasis><emphasis> : </emphasis>les paramètres sont corrects.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Si aucun serveur VISHNU n'a été lancé sur aucune machine se connecter sur les différentes machines et les lancer. Supposons les cas suivantes :</para>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Machine MA_1 : une machine sur laquelle sont lancés les serveurs suivants : <emphasis>omniNames</emphasis>, <emphasis>dietAgent</emphasis><emphasis>, </emphasis><emphasis>LogCentral, sed </emphasis><emphasis>UMS, sed TMS et sed IMS</emphasis>.</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Soumettre deux jobs à l'aide de la commade <emphasis>vishnu_submit_job </emphasis>sur la machine MA_1</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande<emphasis role="strong"> </emphasis><emphasis>vishnu_load_sched</emphasis> avec comme option SOFT et l'identifiant de la machine sur laquelle les processus seront stoppés.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_list_jobs </emphasis>et vérifier que le serveur TMS ne trouve pas les jobs précédents.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Les processus en cours d'exécution sur la machine donnée deviennent inactifs.</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Stop IA9 B</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la plateforme VISHNU avec un <emphasis>sed IMS</emphasis></para>
+                    </listitem>
+                    <listitem>
+                      <para>Appeler la fonction stop pour arreter un process sur une machine</para>
+                    </listitem>
+                    <listitem>
+                      <para>Attendre 10 secondes et vérifier que le processus n'a pas été relancé et est arreté</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <itemizedlist>
+                    <listitem>
+                      <orderedlist continuation="continues" numeration="arabic"/>
+                    </listitem>
+                  </itemizedlist>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>administrateur</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Stop IA9 E</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>L'id de la machine est invalide,</para>
+                    </listitem>
+                    <listitem>
+                      <para>Le processus n'existe pas sur la machine</para>
+                    </listitem>
+                    <listitem>
+                      <para>L'appel est fait par un utilisateur est pas un administrateur</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <itemizedlist>
+                    <listitem>
+                      <para>Une exception paramètre invalide est retournée</para>
+                    </listitem>
+                    <listitem>
+                      <para>Une exception processus non valide est retournée</para>
+                    </listitem>
+                    <listitem>
+                      <para>Une exception est renvoyée</para>
+                    </listitem>
+                  </itemizedlist>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>administrateur</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Restart IA9 B</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer une plateforme VISHNU avec un sed IMS</para>
+                    </listitem>
+                    <listitem>
+                      <para>Arrêter (sans utiliser la fonction stop) le sed UMS</para>
+                    </listitem>
+                    <listitem>
+                      <para>Vérifier que UMS tourne de nouveau, en faisant un vishnu_connect par exemple</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <itemizedlist>
+                    <listitem>
+                      <orderedlist continuation="continues" numeration="arabic"/>
+                    </listitem>
+                  </itemizedlist>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>administrateur</para>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>Tests de la catégorie 3</title>
+        <informaltable>
+          <tgroup cols="4">
+            <colspec colname="c1" colwidth="3cm"/>
+            <colspec colname="c2" colwidth="7.9cm"/>
+            <colspec colname="c3" colwidth="3.4cm"/>
+            <colspec colname="c4" colwidth="2.8cm"/>
+            <tbody>
+              <row>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Identifiant de tests</para>
+                </entry>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Actions</para>
+                </entry>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Résultats</para>
+                </entry>
+                <entry>
+                  <?border 0.002cm solid #000000?>
+                  <para>Considérations particulières</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>IA1-B: Get the running processes</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis>Cas de test</emphasis> : Les paramètres sont corrects et l'utilisateur est un administrateur</para>
+                    </listitem>
+                    <listitem>
+                      <para>Si aucun serveur VISHNU n'a été lancé sur aucune machine se connecter sur les différentes machines et les lancer. Supposons les cas suivantes :</para>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Machine MA_1 : une machine sur laquelle sont lancés les seveurs suivants : <emphasis>omniNames</emphasis>, <emphasis>dietAgent</emphasis><emphasis> </emphasis>et un <emphasis>LogCentral</emphasis>.</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Machine MA_2 : une machine sur laquelle sont lancés les seveurs suivants : un <emphasis>sed UMS</emphasis>, un <emphasis>sed</emphasis> T<emphasis>MS</emphasis><emphasis> et</emphasis> un <emphasis>sed IMS</emphasis>.</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_get_processes </emphasis>avec les paramètres correspondants .</para>
+                    </listitem>
+                    <listitem>
+                      <para>Vérifier que les processus VISHNU affichés correspondent bien aux processus VISHNU lancés sur les machines.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <itemizedlist>
+                    <listitem>
+                      <orderedlist continuation="continues" numeration="arabic"/>
+                    </listitem>
+                  </itemizedlist>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>L'utilisateur doit être un administrateur</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>IA1-E1: Get the running processes</para>
+                  <para>IA1-E2: Get the running processes</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis role="strong">Cas de test</emphasis> : paramètres incorrects</para>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas E1 : l'identifiant de la machine est incorrect</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas E2 : l'utilisateur n'est pas un administrateur</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist/>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_get_processes </emphasis>avec le cas correspondant</para>
+                    </listitem>
+                    <listitem>
+                      <para>Vérifier que son exécution échoue avec le message d'erreur renvoyé.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <itemizedlist>
+                    <listitem>
+                      <orderedlist continuation="continues" numeration="arabic"/>
+                    </listitem>
+                  </itemizedlist>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>Tests de catégorie 4 </title>
+        <informaltable>
+          <tgroup cols="4">
+            <colspec colname="c1" colwidth="3cm"/>
+            <colspec colname="c2" colwidth="7.9cm"/>
+            <colspec colname="c3" colwidth="3.4cm"/>
+            <colspec colname="c4" colwidth="2.8cm"/>
+            <tbody>
+              <row>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Identifiant de tests</para>
+                </entry>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Actions</para>
+                </entry>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Résultats</para>
+                </entry>
+                <entry>
+                  <?border 0.002cm solid #000000?>
+                  <para>Considérations particulières</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>I2 – B: Get metric data </para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis role="strong">Cas de test</emphasis> : les paramètres sont corrects, la fréquence de mise à jour de la base de données est fixée à 10 secondes et aucun enregistrement concernant la métrique <emphasis>MEMORY </emphasis>n'est dans la base de données.</para>
+                      <para/>
+                    </listitem>
+                    <listitem>
+                      <para>Après 20 secondes, lancer la commande <emphasis>vishnu_get_metric_history </emphasis>avec l'identifiant de la machine sur laquelle la métrique sera récupérée et la métrique <emphasis>MEMORY </emphasis>et vérifier que 2 enregistrements sont retournés.</para>
+                      <para/>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>L'historique de la métrique est retourné.</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>la fréquence de mise à jour de la base de donnée doit être au préalable enregistrée dans la base de données et fixée à 10 secondes.</para>
+                  <para>Aucun enregistrement concernant la métrique <emphasis>MEMORY </emphasis>n'est enregistré dans la base de données.</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>I2 – E1: Get metric data </para>
+                  <para>I2 – E2: Get metric data </para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis role="strong">Cas de test</emphasis> : les paramètres sont incorrects.</para>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas E1 : l'identifiant de la machine n'est pas enregistré dans VISHNU</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas E2 : le nom de la métrique n'est pas enregistré dans VISHNU</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_get_metric_history</emphasis> avec le cas de test correspondant (E1 ou E2) et vérifier que son exécution échoue.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <itemizedlist>
+                    <listitem>
+                      <orderedlist continuation="continues" numeration="arabic"/>
+                    </listitem>
+                  </itemizedlist>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>I4 – B: Get data on the infrastructure </para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis role="strong">Cas de test</emphasis> : les paramètres sont corrects. </para>
+                      <para/>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_get_metric_current_value </emphasis>avec l'identifiant de la machine sur laquelle la métrique sera récupérée et la valeur <emphasis>ALL</emphasis> pour la métrique et vérifier que les valeurs suivantes sont retournées: le pourcentage d'utilisation de <emphasis>CPU</emphasis>, le nombre de <emphasis>CPU</emphasis>, l'espace disque total, l'espace disque disponible, la mémoire RAM totale et l'espace RAM non utilisée .</para>
+                      <para/>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Les valeurs suivantes sont retournées :le pourcentage d'utilisation de <emphasis>CPU</emphasis>, le nombre de <emphasis>CPU</emphasis>, l'espace disque total, l'espace disque disponible, la mémoire RAM totale et l'espace RAM non utilisée.</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>I4 – E1: Get data on the infrastructure </para>
+                  <para>I4 – E2: Get data on the infrastructure </para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis role="strong">Cas de test</emphasis> : les paramètres sont incorrects.</para>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas E1 : l'identifiant de la machine n'est pas enregistré dans VISHNU</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas E2 : le nom de la métrique n'est pas enregistré dans VISHNU</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_get_metric_current_value</emphasis> avec le cas de test correspondant (E1 ou E2) et vérifier que son exécution échoue.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <itemizedlist>
+                    <listitem>
+                      <orderedlist continuation="continues" numeration="arabic"/>
+                    </listitem>
+                  </itemizedlist>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>IA2.1 – B : Get a system load threshold </para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis role="strong">Cas de test</emphasis> : les paramètres sont corrects et la base de données a un seuil fixé à 2x10<superscript>6</superscript> pour l'espace disque disponible sur la machine MA_1. </para>
+                      <para/>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_get_system_threshold </emphasis>sur MA_1<emphasis> </emphasis>avec pour métrique<emphasis> DISKSPACE </emphasis>et vérifier que la valeur retournée est 2x10<superscript>6</superscript>.</para>
+                      <para/>
+                    </listitem>
+                    <listitem>
+                      <para>Modifier le seuil pour l'espace disque disponible à 10<superscript>6 </superscript>dans la base de données. </para>
+                      <para/>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_get_system_threshold </emphasis>sur MA_1 avec pour métrique DISKSPACE et vérifier que la valeur retournée est 10<superscript>6</superscript>. </para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Le seuil correspondant est retourné.</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>L'utilisateur doit être un administrateur.</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>IA2.1 – E1 : Get a system load threshold </para>
+                  <para>IA2.1 – E2 : Get a system load threshold </para>
+                  <para>IA2.1 – E3 : Get a system load threshold </para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis role="strong">Cas de test</emphasis> : les paramètres sont incorrects.</para>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas E1 : l'identifiant de la machine n'est pas enregistré dans VISHNU</para>
+                        </listitem>
+                        <listitem>
+                          <para>Cas E2 : le nom de la métrique n'est pas enregistré dans VISHNU</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas E3 : l'utilisateur n'est pas un administrateur</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_get_system_threshold</emphasis> avec le cas de test correspondant (E1, E2 ou E3) et vérifier que son exécution échoue.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <itemizedlist>
+                    <listitem>
+                      <orderedlist continuation="continues" numeration="arabic"/>
+                    </listitem>
+                  </itemizedlist>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>IA2 – B1 : Define a system load threshold</para>
+                  <para>IA2 – B2 : Define a system load threshold</para>
+                  <para>IA2 – B3 : Define a system load threshold</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis role="strong">Cas de test</emphasis> : les paramètres sont corrects et les seuils concernant l'espace disponible, la mémoire RAM non utilisée et le pourcentage d'utilisation de la machine MA_1 sont différents des valeurs définies dans les cas qui suivent. </para>
+                      <para/>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_get_system_threshold </emphasis>sur MA_1<emphasis> </emphasis>avec les métriques<emphasis> DISKPACE, FREEMORY</emphasis> et <emphasis>CPUUSE</emphasis>.</para>
+                      <para/>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_set_system_threshold </emphasis>sur MA_1<emphasis> </emphasis>avec les métriques<emphasis> DISKPACE, FREEMORY</emphasis> et <emphasis>CPUUSE </emphasis>puis<emphasis> </emphasis>rajouter 10 à chacune des valeurs retournées à l'étape 2.</para>
+                      <para/>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_get_system_threshold </emphasis>sur MA_1<emphasis> </emphasis>avec les métriques<emphasis> DISKPACE, FREEMORY</emphasis> et <emphasis>CPUUSE </emphasis>et vérifier que les modifications précedents ont été prises en compte.</para>
+                      <para/>
+                      <para/>
+                      <para/>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Le seuil correspondant est retourné.</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>L'utilisateur doit être un administrateur.</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>IA2 – E1 : Define a system load threshold</para>
+                  <para>IA2 – E2: Define a system load threshold</para>
+                  <para>IA2 – E3 : Define a system load threshold</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis role="strong">Cas de test</emphasis> : les paramètres sont incorrects.</para>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas E1 : l'identifiant de la machine n'est pas enregistré dans VISHNU</para>
+                        </listitem>
+                        <listitem>
+                          <para>Cas E2 : le nom de la métrique n'est pas enregistré dans VISHNU</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas E3 : l'utilisateur n'est pas un administrateur</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_set_system_threshold</emphasis> avec le cas de test correspondant (E1, E2 ou E3) et vérifier que son exécution échoue.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <itemizedlist>
+                    <listitem>
+                      <orderedlist continuation="continues" numeration="arabic"/>
+                    </listitem>
+                  </itemizedlist>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>I1– B : Get the update frequency </para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis role="strong">Cas de test</emphasis> : les paramètres sont corrects et la fréquence de mise à jour de la base de donnée est fixée à 10 secondes.</para>
+                      <para/>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_get_update_frequency </emphasis>et vérifier que la valeur retournée est 10.</para>
+                      <para/>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <itemizedlist>
+                    <listitem>
+                      <orderedlist continuation="continues" numeration="arabic"/>
+                    </listitem>
+                  </itemizedlist>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>la fréquence de mise à jour de la base de donnée doit être au préalable enregistrée dans la base de données et fixée à 10 secondes.</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>IA6– B : Set the update frequency </para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis role="strong">Cas de test</emphasis> : les paramètres sont corrects.</para>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_get_update_frequency </emphasis>et enregister la valeur retournée.</para>
+                      <para/>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_set_update_frequency </emphasis>en ajoutant 10 à la valeur retournée à l'étape 2.</para>
+                      <para/>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_get_update_frequency </emphasis>et vérifier que la modification de l'étape 2 a été bien prise en compte.</para>
+                      <para/>
+                      <para/>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <itemizedlist>
+                    <listitem>
+                      <orderedlist continuation="continues" numeration="arabic"/>
+                    </listitem>
+                  </itemizedlist>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>L'utilisateur doit être un administrateur.</para>
+                  <para>La valeur de la fréquence de mise à jour avant le lancement du test doit être différente de 10 secondes.</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>IA6– E1 : Set the update frequency</para>
+                  <para>IA6– E2 : Set the update frequency </para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis role="strong">Cas de test</emphasis> : les paramètres sont incorrects.</para>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas E1 : la valeur de la fréquence de mise à jour de la base de données est égale à zéro</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas E2 : la valeur de la fréquence de mise à jour de la base de données est négative</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_set_update_frequency</emphasis> avec le cas de test correspondant (E1 ou E2) et vérifier que son exécution échoue.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>IA3-B: Define the identifier : define User/Machine/Job/FileTransfer/Auth identifier</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic"/>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas 1 : Définir le format d'identifiant utilisateur</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas 2 : Définir le format d'identifiant machine.</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas 3 : Définir le format d'identifiant job.</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas 4 : Définir le format d'identifiant de transfert de fichier.</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer les différentes commandes <emphasis>vishnu_</emphasis> <emphasis>define_</emphasis><emphasis>u</emphasis><emphasis>ser_</emphasis><emphasis>i</emphasis><emphasis>dentifier, vishnu_</emphasis> <emphasis>defineMachineIdentifier, </emphasis><emphasis>vishnu_</emphasis><emphasis>define_</emphasis><emphasis>j</emphasis><emphasis>ob_</emphasis><emphasis>i</emphasis><emphasis>dentifier, vishnu_</emphasis> <emphasis>define_</emphasis><emphasis>t</emphasis><emphasis>ransfer_</emphasis><emphasis>i</emphasis><emphasis>dentifier, </emphasis><emphasis>vishnu_define_auth_identifier</emphasis> avec les formats définis respectivement dans cas de test correspondant (cas1, cas2, cas3 et cas4) . </para>
+                      <para/>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer un certain nombre de fois les commandes d'ajout suivantes <emphasis>vishnu_addUser</emphasis>, <emphasis>vishnu_submitJob</emphasis>, <emphasis>vishnu_addMachine</emphasis>, <emphasis>vishnu_ copyFile</emphasis> et vérifier que les identifiants générés correspondent bien aux formats attendus.</para>
+                      <para/>
+                    </listitem>
+                    <listitem>
+                      <para>L'exécution de la commande est ainsi validée.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Le format d'identifiant demandé est généré.</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Ces différentes commandes sont réservées aux administrateurs VISHNU</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>IA3-E1: Define User/Machine/Job/FileTransfer/Auth identifier</para>
+                  <para>IA3-E2: Define User/Machine/Job/FileTransfer/Auth identifier</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic"/>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas E1 : Le format fourni comprend une variable inconnue du système VISHNU</para>
+                          <para/>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas E2 : La variable représentant le compteur n'apparaît pas dans le format fourni. </para>
+                        </listitem>
+                        <listitem>
+                          <para>Cas E3 : L'utilisateur n'est pas un administrateur</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer les différentes commandes avec le cas de test correspondant (E1 ou E2 ou E3) et vérifier que son exécution échoue.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <itemizedlist>
+                    <listitem>
+                      <orderedlist continuation="continues" numeration="arabic"/>
+                    </listitem>
+                  </itemizedlist>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>IA5: Set system info</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Cas de test : les paramètres sont corrects.</para>
+                      <para>Mise à jour des données système de la machine MA_1 enregistré dans VISHNU.</para>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_setSystemInfo</emphasis> en lui fournissant MA_1 et les informations à mettre à jour.</para>
+                      <para/>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_getSystemInfo</emphasis> avec comme paramètre MA_1 et vérifier que les données ont bien été mise à jour.</para>
+                      <para/>
+                    </listitem>
+                    <listitem>
+                      <para>L'exécution de la commande est ainsi validée.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <itemizedlist>
+                    <listitem>
+                      <orderedlist continuation="continues" numeration="arabic">
+                        <listitem>
+                          <orderedlist continuation="continues" numeration="arabic">
+                            <listitem>
+                              <orderedlist continuation="continues" numeration="arabic"/>
+                            </listitem>
+                          </orderedlist>
+                        </listitem>
+                      </orderedlist>
+                    </listitem>
+                  </itemizedlist>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Cette commande est réservée aux administrateurs VISHNU</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>IA5-E1: set system info</para>
+                  <para>IA5-E2: set system info</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis role="strong">Cas de test</emphasis> : les paramètres sont incorrects.</para>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas E1 : L'identifiant machine fourni n'est pas enregistré dans VISHNU</para>
+                          <para/>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas E2 : Les informations systèmes fournies sont incorrectes.</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_</emphasis><emphasis>setSystemInfo</emphasis> avec le cas de test correspondant (E1 ou E2) et vérifier que son exécution échoue.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <itemizedlist>
+                    <listitem>
+                      <orderedlist continuation="continues" numeration="arabic"/>
+                    </listitem>
+                  </itemizedlist>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>I5-B: Get system info</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Cas de test : les paramètres sont corrects et les valeurs de mémoire et d'espace disque pour la machine MA_1 sont respectivement 256 et 10<superscript>6</superscript>.</para>
+                      <para/>
+                    </listitem>
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_getSystemInfo</emphasis> en lui fournissant MA_1.</para>
+                      <para/>
+                    </listitem>
+                    <listitem>
+                      <para>Vérifier que les valeurs retournées pour la mémoire et l'espace disque de la machine MA_1 sont respectivement 256 et 10<superscript>6</superscript>.</para>
+                      <para/>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <itemizedlist>
+                    <listitem>
+                      <orderedlist continuation="continues" numeration="arabic">
+                        <listitem>
+                          <orderedlist continuation="continues" numeration="arabic">
+                            <listitem>
+                              <orderedlist continuation="continues" numeration="arabic"/>
+                            </listitem>
+                          </orderedlist>
+                        </listitem>
+                      </orderedlist>
+                    </listitem>
+                  </itemizedlist>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Avant le lancement du test les valeurs de mémoire et d'espace disque pour la machine MA_1 sont respectivement 256 et 10<superscript>6.</superscript></para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>I5-E1: Get system info</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para><emphasis role="strong">Cas de test</emphasis> : les paramètres sont incorrects.</para>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist>
+                        <listitem>
+                          <para>Cas E1 : L'identifiant machine fourni n'est pas enregistré dans VISHNU</para>
+                          <para/>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <itemizedlist/>
+                    </listitem>
+                  </orderedlist>
+                  <orderedlist continuation="restarts" numeration="arabic">
+                    <listitem>
+                      <para>Lancer la commande <emphasis>vishnu_</emphasis><emphasis>g</emphasis><emphasis>etSystemInfo</emphasis> avec le cas de test E1 et vérifier que son exécution échoue.</para>
+                    </listitem>
+                  </orderedlist>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <itemizedlist>
+                    <listitem>
+                      <orderedlist continuation="continues" numeration="arabic"/>
+                    </listitem>
+                  </itemizedlist>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+    </section>
+    <section>
+      <title>Tests de stress</title>
+      <section>
+        <title>Présentation</title>
+        <para>Ces tests permettent de vérifier que la cible de test peut réussir à basculer et à récupérer pour différents dysfonctionnements matériels, logiciels ou réseaux sans qu'il y ait perte de données. Ils vérifient que lorsqu'une défaillance survient un système alternatif ou un système de sauvegarde prends le relai correctement sans perte de données ou de transactions.</para>
+      </section>
+      <section>
+        <title>Environnement des tests</title>
+        <para>Nous utiliserons l'environnement de test 1.</para>
+      </section>
+      <section>
+        <title>Identifiants de tests</title>
+        <para>Les identifiants des tests sont de la forme: STR-&lt;Element stressé&gt;-&lt;Type de stress&gt;.</para>
+      </section>
+      <section>
+        <title>Liste des tests</title>
+        <informaltable>
+          <tgroup cols="3">
+            <colspec colname="c1" colwidth="4.3cm"/>
+            <colspec colname="c2" colwidth="6.9cm"/>
+            <colspec colname="c3" colwidth="5.9cm"/>
+            <tbody>
+              <row>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Identifiant de tests</para>
+                </entry>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Technique</para>
+                </entry>
+                <entry>
+                  <?border 0.002cm solid #000000?>
+                  <para>Critère de complétion</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>STR-SERV-DOWN</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Lancer la commande <emphasis/><emphasis>vishnu_set_update_frequency </emphasis>avec une valeur de fréquence de 30 secondes</para>
+                  <para>- Arrêter le serveur IMS après l'exécution de la commande</para>
+                  <para>- Redémarrer le serveur IMS</para>
+                  <para>- Lancer la commande <emphasis>vishnu_get_update_frequency</emphasis><emphasis> </emphasis></para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Terminaison normale de la commande <emphasis>vishnu_get_update_frequency </emphasis>avec la valeur 30.</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>STR-AGENT-DOWN</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Lancer la commande <emphasis>vishnu_set_update_frequency </emphasis>avec une valeur de fréquence de 30 secondes</para>
+                  <para>- Arrêter l'agent SysFera-DS après l'exécution de la commande</para>
+                  <para>- Redémarrer l'agent SysFera-DS</para>
+                  <para>- Lancer la commande <emphasis>vishnu_get_update_frequency</emphasis><emphasis> </emphasis></para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Terminaison normale de la commande <emphasis>vishnu_get_update_frequency </emphasis>avec la valeur 30.</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>STR-DB-DOWN</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Se connecter</para>
+                  <para>- Couper la base de données</para>
+                  <para>- Redémarrer la base de données</para>
+                  <para>- Faire appel à <emphasis role="strong">vishnu_get_update_frequency</emphasis></para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Terminaison normale de la commande</para>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <section>
+          <title/>
+        </section>
+      </section>
+    </section>
+    <section>
+      <title>Contrôle des performances</title>
+      <section>
+        <title>Présentation</title>
+        <para>Ces tests ont pour objectif de vérifier que les exigences de performance quantifiées sont effectivement satisfaites. </para>
+      </section>
+      <section>
+        <title>Environnement de tests</title>
+        <para>Nous utiliserons l'environnement de test 1.</para>
+      </section>
+      <section>
+        <title>Identifiants des tests</title>
+        <para>Les identifiants des tests sont de la forme: CDP-&lt;ID STB&gt;-[NomdeCommande|IdentifiantDeTest] où 'ID STB' est l'identifiant de l'exigence spécifiée dans le document [STB] au paragraphe « performances, fiabilité et robustesse ». </para>
+      </section>
+      <section>
+        <title>Liste des tests</title>
+        <informaltable>
+          <tgroup cols="3">
+            <colspec colname="c1" colwidth="5.2cm"/>
+            <colspec colname="c2" colwidth="6.6cm"/>
+            <colspec colname="c3" colwidth="5.3cm"/>
+            <tbody>
+              <row>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Identifiant de tests</para>
+                </entry>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Technique</para>
+                </entry>
+                <entry>
+                  <?border 0.002cm solid #000000?>
+                  <para>Critère de completion</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>CDP-3.1-<emphasis>get_metric_current_value</emphasis></para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Lancer la commande 'ssh &lt;host&gt; ps -efl' sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
+                  <para>- Lancer la commande<emphasis> 'vishnu_ get_current_metric &lt;machineId&gt;'</emphasis><emphasis role="strong"> </emphasis>en mesurant le temps de réponse</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>temps inférieur au temps de référence (valeur moyenne sur 10 itérations)</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>CDP-3.1-<emphasis>get_metric_history</emphasis></para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Lancer une commande 'ssh &lt;host&gt; ps -efl' sur une machine serveur en mesurant le temps de réponse (temps de référence).</para>
+                  <para>- Lancer la commande '<emphasis>vishnu_get_metric_history &lt;machineId&gt;'</emphasis><emphasis role="strong"> </emphasis>en mesurant le temps de réponse</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>temps inférieur au temps de référence (valeur moyenne sur 10 itérations)</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>CDP-3.2.1-<emphasis>get_metric_current_value</emphasis></para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Lancer la commande '<emphasis role="strong">vishnu_get_metric_current_value &lt;machineId&gt;</emphasis>' 100 fois </para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Consommation en mémoire virtuelle sur le serveur IMS inférieure à 500 Mégaoctets.</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>CDP-3.2.1-<emphasis>get_metric_history</emphasis></para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Lancer la commande '<emphasis role="strong">vishnu_get_metric_history &lt;machineId&gt;</emphasis>' 100 fois </para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Consommation en mémoire virtuelle sur le serveur IMS inférieure à 500 Mégaoctets.</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>CDP-3.2.2-<emphasis>get_metric_current_value</emphasis></para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Lancer la commande '<emphasis role="strong">vishnu_get_metric_current_value &lt;machineId&gt;</emphasis>'</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Consommation CPU inférieure à 10%.</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>CDP-3.2.2-<emphasis>get_metric_history</emphasis></para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Lancer la commande<emphasis role="strong"> 'vishnu_get_metric_history &lt;machineId&gt;</emphasis>'</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Consommation CPU inférieure à 10%.</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>CDP-MemServer</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Lancer le serveur IMS</para>
+                  <para>- Laisser le serveur fonctionner sans utiliser les services pendant 24h</para>
+                  <para>- Vérifier que l'espace mémoire consommé par le processus serveur n'a pas augmenté.</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Consommation mémoire constante.</para>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+    </section>
+    <section>
+      <title>Tests de charge</title>
+      <section>
+        <title>Présentation</title>
+        <para>Les tests de charge ont pour objectif de vérifier que les exigences de capacité du système sont vérifiées.</para>
+      </section>
+      <section>
+        <title>Environnement de tests</title>
+        <para>Nous utiliserons l'environnement de test 1 avec un nombre de clients ou de serveurs tels que spécifié dans le cas de tests. Ces clients ou serveurs seront simulés sur une seule machine.</para>
+        <para>Par ailleurs, les requêtes envoyées en simultané seront en fait envoyées par une seule machine cliente avec un programme de synchronisation (MPI).</para>
+      </section>
+      <section>
+        <title>Identifiants de tests</title>
+        <para>Les identifiants des tests sont de la forme: LOAD-&lt;ID STB&gt;-[NomdeCommande|IdentifiantDeTest] où 'ID STB' est l'identifiant de l'exigence spécifiée dans le document [STB]. </para>
+      </section>
+      <section>
+        <title>Liste des tests</title>
+        <informaltable>
+          <tgroup cols="3">
+            <colspec colname="c1" colwidth="5.4cm"/>
+            <colspec colname="c2" colwidth="6cm"/>
+            <colspec colname="c3" colwidth="5.7cm"/>
+            <tbody>
+              <row>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Identifiant de tests</para>
+                </entry>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Technique</para>
+                </entry>
+                <entry>
+                  <?border 0.002cm solid #000000?>
+                  <para>Résultats attendus</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>LOAD-2.1-<emphasis>get_metric_current_value</emphasis></para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Lancer 100 commandes '<emphasis role="strong">vishnu_get_metric_current_value &lt;machineId&gt;</emphasis>' simultanées</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Terminaison normale de toutes les commandes</para>
+                  <para>- Etat normal du serveur IMS</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>LOAD-2.1-<emphasis>get_metric_history</emphasis></para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Lancer 100 commandes <emphasis role="strong">'vishnu_get_metric_history &lt;machineId&gt;</emphasis>'<emphasis role="strong"> </emphasis>simultanées</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Terminaison normale de toutes les commandes</para>
+                  <para>- Etat normal du serveur IMS</para>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+    </section>
+    <section>
+      <title>Contrôle de la qualité du code</title>
+      <section>
+        <title>Présentation</title>
+        <para>L'objectif de ces tests est de vérifier que le code source (C/C++ ou Java) respecte les contraintes de qualité logiciel fixées dans les spécifications et le cahier des charges.</para>
+      </section>
+      <section>
+        <title>Identifiants des tests</title>
+        <para>Les identifiants des tests sont de la forme: [IdentifiantDeTest]-[IdentifiantDesModules] où les identifiants sont les suivants:</para>
+        <itemizedlist>
+          <listitem>
+            <para>Identifiants de tests</para>
+            <itemizedlist>
+              <listitem>
+                <para>CRP: Conformité aux Règles de Programmation</para>
+              </listitem>
+              <listitem>
+                <para>MCC: Mesure de la Complexité du Code</para>
+              </listitem>
+              <listitem>
+                <para>DDC: Détection de Duplication du Code</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>Identifiants de modules</para>
+            <itemizedlist>
+              <listitem>
+                <para>CSC : C/C++ source code</para>
+              </listitem>
+              <listitem>
+                <para>JSC : Java source code</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Liste des tests</title>
+        <informaltable>
+          <tgroup cols="3">
+            <colspec colname="c1" colwidth="4.4cm"/>
+            <colspec colname="c2" colwidth="6.3cm"/>
+            <colspec colname="c3" colwidth="6.4cm"/>
+            <tbody>
+              <row>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Identifiant de tests</para>
+                </entry>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Technique</para>
+                </entry>
+                <entry>
+                  <?border 0.002cm solid #000000?>
+                  <para>Résultats attendus</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>CRP-CSC</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Audit du code C/C++ avec l'outil LOGISCOPE</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Le code respecte toutes les règles de codage de catégorie «REQUIRED » spécifiées pour le projet [SCL] sauf dérogation clairement documentée dans le code. </para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>CRP-JSC</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Audit du code Java avec l'outil LOGISCOPE</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Le code respecte toutes les règles de codage de catégorie «REQUIRED » spécifiées pour le projet [SCL] sauf dérogation clairement documentée dans le code. </para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>MCC-CSC</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Audit du code C/C++ avec l'outil SQUORE</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Pas plus de 1% de composants classés « A risque » </para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>MCC-JSC</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Audit du code Java avec l'outil SQUORE</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Pas plus de 1% de composants classés « A risque » </para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>DDC-CSC</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Audit du code C/C++ avec l'outil SQUORE</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Moins de 10% de code dupliqué. </para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>DDC-JSC</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Audit du code Java avec l'outil SQUORE</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Moins de 10% de code dupliqué. </para>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+    </section>
+    <section>
+      <title>Tests de compilation et d'installation</title>
+      <section>
+        <title>Présentation</title>
+        <para>La compilation des différents exécutables et librairies composant le module UMS sera réalisée par un serveur d'intégration continue (du type HUDSON).</para>
+        <para>Par ailleurs les tests d'installation ont pour objectif de valider la procédure d'installation de l'ensemble des différents composants d'une plateforme VISHNU (clients, serveurs, agents SysFera-DS).</para>
+      </section>
+      <section>
+        <title>Environnement des tests</title>
+        <para>Nous utiliserons l'environnement de test 1.</para>
+      </section>
+      <section>
+        <title>Liste des tests</title>
+        <informaltable>
+          <tgroup cols="3">
+            <colspec colname="c1" colwidth="4.4cm"/>
+            <colspec colname="c2" colwidth="6.3cm"/>
+            <colspec colname="c3" colwidth="6.4cm"/>
+            <tbody>
+              <row>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Identifiant de tests</para>
+                </entry>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Technique</para>
+                </entry>
+                <entry>
+                  <?border 0.002cm solid #000000?>
+                  <para>Résultats attendus</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>COMP-CSC</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Compilation du code C/C++ avec l'outil GCC/CMake</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Compilation correcte de tous les exécutables</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>INS-SERVER-PGSQL</para>
+                  <para>INS-SERVER-ORACLE</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Installation des différents éléments serveur de la plateforme VISHNU</para>
+                  <itemizedlist>
+                    <listitem>
+                      <para>serveur de calcul</para>
+                    </listitem>
+                    <listitem>
+                      <para>serveur de stockage</para>
+                    </listitem>
+                    <listitem>
+                      <para>serveur dédié VISHNU</para>
+                    </listitem>
+                    <listitem>
+                      <para>serveur de base de données</para>
+                    </listitem>
+                  </itemizedlist>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Tous les processus démarrés et operationnels</para>
+                  <para>- Documentation disponible (pages man)</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>INS-CLI</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Installation du client VISHNU en ligne de commande</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Toutes les commandes installées</para>
+                  <para>- Documentation disponible (pages man)</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>INS-PGAPI</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Installation des librairies API VISHNU (C++ et Python)</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Librairie C++ installée</para>
+                  <para>- Librairie Python installée et pouvant être chargée dans l'interpréteur Python 2.x</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>INS-WSAPI</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Installation des services web VISHNU sur le serveur JBoss</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>- Services operationnels (contrôle via la console webservices de JBoss)</para>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+    </section>
+    <section>
+      <title/>
+    </section>
+    <section>
+      <title>Contrôle de la documentation utilisateur</title>
+      <section>
+        <title>Présentation</title>
+        <para>L'objectif est de vérifier que la documentation utilisateur permet à l'utilisateur de comprendre et d'utiliser les fonctions spécifiées .</para>
+      </section>
+      <section>
+        <title>Liste des tests</title>
+        <informaltable>
+          <tgroup cols="3">
+            <colspec colname="c1" colwidth="4.4cm"/>
+            <colspec colname="c2" colwidth="6.3cm"/>
+            <colspec colname="c3" colwidth="6.4cm"/>
+            <tbody>
+              <row>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Identifiant de tests</para>
+                </entry>
+                <entry>
+                  <?border-top 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Technique</para>
+                </entry>
+                <entry>
+                  <?border 0.002cm solid #000000?>
+                  <para>Résultats attendus</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>CDU-MAN</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Vérifier les pages de manuel attachées à chaque commande</para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Toutes les pages de manuel contiennent toutes les informations nécessaires à l'utilisateur pour utiliser les commandes.</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>CDU-USERGUIDE</para>
+                </entry>
+                <entry>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Suivre le guide de l'utilisateur </para>
+                </entry>
+                <entry>
+                  <?border-right 0.002cm solid #000000?>
+                  <?border-bottom 0.002cm solid #000000?>
+                  <?border-left 0.002cm solid #000000?>
+                  <para>Le guide permet une prise en main rapide des fonctions du logiciel</para>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+    </section>
+  </chapter>
+</book>

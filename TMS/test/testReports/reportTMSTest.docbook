@@ -52,6 +52,26 @@
           <para>Add tests for T1.2-B, T2.8-B and T2.4-B2</para>
         </revdescription>
       </revision>
+
+      <revision>
+        <revnumber>4</revnumber>
+        <date>14/03/2012</date>
+        <authorinitials>  SYSFERA SAS</authorinitials>
+        <revdescription>
+          <para>Merge of this report with SLURM tests report</para>
+        </revdescription>
+      </revision>
+
+      
+      <revision>
+        <revnumber>5</revnumber>
+        <date>15/03/2012</date>
+        <authorinitials>  SYSFERA SAS</authorinitials>
+        <revdescription>
+          <para>Added LSF tests report</para>
+        </revdescription>
+      </revision>
+
     </revhistory>
     
       <copyright>
@@ -94,33 +114,51 @@ same conditions as regards security.</para>
     
   <chapter>
     <title> Introduction </title>
-     <para>Author of the test code : Ibrahima CISSE</para>
-     <para>Author of the test report : Eugène PAMBA CAPO-CHICHI</para>
-     
-     <para> The tests which follows have been done in the following environment: </para>
-      <para><itemizedlist>
-	  <listitem>
-            <para>Database used : PostgreSQL 8.4</para>
-          </listitem>
-	  <listitem>
-            <para>OS used for the test : Ubuntu 10.10</para>
-          </listitem>
-	  <listitem>
-            <para>Cmake version : V2.6</para>
-          </listitem>
-	  <listitem>
-            <para>gcc version : V4.3.3</para>
-          </listitem>
-	  <listitem>
-            <para>DIET version : V2.6.1</para>
-          </listitem>
-	  <listitem>
-	   <para> Batch scheduler : TORQUE V2.5 </para>
-	 </listitem>
-	 <listitem>
-	   <para> RAM memory : 4Gb </para>
-	 </listitem>
-        </itemizedlist>
+    <para>Author of the test code : Ibrahima CISSE</para>
+    <para>Author of the test report : Eugène PAMBA CAPO-CHICHI</para>
+    <para>Author of the SLURM and LSF tests report : Daouda TRAORE</para>
+    <para> The tests which follows have been done in the following environment: </para>
+    <para><itemizedlist>
+        <listitem>
+          <para>Database used for TORQUE and SLURM: PostgreSQL 8.4</para>
+        </listitem>
+        <listitem>
+          <para>Database used for LSF: mysql 14.14</para>
+        </listitem>
+        <listitem>
+          <para>OS used for the TORQUE and SLURM tests: Ubuntu 10.10 </para>
+        </listitem>
+        <listitem>
+          <para>OS used for the LSF test: CentOS 6.2 </para>
+        </listitem>
+        <listitem>
+          <para>Cmake version for TORQUE test: V2.6 </para>
+        </listitem>
+        <listitem>
+          <para>Cmake version for SLURM and LSF tests: V2.8 </para>
+        </listitem>
+        <listitem>
+          <para>gcc version for TORQUE: V4.3.3</para>
+        </listitem>
+        <listitem>
+          <para>gcc version for SLURM: V4.4.5</para>
+        </listitem>
+        <listitem>
+          <para>gcc version for LSF: V4.4.6</para>
+        </listitem>
+        <listitem>
+          <para>DIET version for TORQUE: V2.6.1 </para>
+        </listitem>
+        <listitem>
+          <para>DIET version for SLURM and LSF: V2.7 </para>
+        </listitem>
+        <listitem>
+          <para> Batch schedulers : TORQUE V2.5, SLURM V2.2.1, LSF 7.0.6  </para>
+        </listitem>
+        <listitem>
+          <para> RAM memory : 4Gb </para>
+        </listitem>
+      </itemizedlist>
     </para>
   </chapter>
   
@@ -734,7 +772,9 @@ same conditions as regards security.</para>
                   <para>STR-SERV-DOWN</para>
                </entry>
                <entry>
-                  <para>05/05/11</para>
+                  <para>TORQUE: 05/05/11</para>
+                  <para>SLURM: 09/08/11</para>
+                  <para>LSF: 20/03/12</para>
                </entry>
                <entry>
                   <para>The tms sed is stopped and restarted</para>
@@ -752,7 +792,9 @@ same conditions as regards security.</para>
                   <para>STR-AGENT-DOWN</para>
                </entry>
                <entry>
-                  <para>05/05/11</para>
+                  <para>TORQUE: 05/05/11</para>
+                  <para>SLURM: 09/08/11 </para>
+                  <para>LSF: 20/03/12 </para>
                </entry>
                <entry>
                   <para>The SysFera-DS Agent is stopped and restarted </para>
@@ -771,7 +813,9 @@ same conditions as regards security.</para>
                   <para>STR-BATCH-DOWN</para>
                </entry>
                <entry>
-                  <para>05/05/11</para>
+                  <para>TORQUE: 05/05/11</para>
+                  <para>SLURM: 09/08/11</para>
+                  <para>LSF: 20/03/12</para>
                </entry>
                <entry>
                   <para> The batch scheduler is stopped and the command submitJob is launched</para>
@@ -821,7 +865,9 @@ same conditions as regards security.</para>
                   <para>LOAD-2.1-submitJob</para>
                </entry>
                <entry>
-                  <para>05/05/11</para>
+                  <para>TORQUE: 05/05/11</para>
+                  <para>SLURM: 09/08/11</para>
+                  <para>LSF: 20/03/12</para>
                </entry>
                <entry>
                   <para>Simultaneous launch of 100 commands</para>
@@ -838,7 +884,9 @@ same conditions as regards security.</para>
                   <para>LOAD-2.1-listJobs</para>
                </entry>
                <entry>
-                  <para>05/05/11</para>
+                  <para>TORQUE: 05/05/11</para>
+                  <para>SLURM: 09/08/11</para>
+                  <para>LSF: 20/03/12</para>
                </entry>
                <entry>
                   <para>Success - Simultaneous launch of 100 commands</para>
@@ -855,7 +903,9 @@ same conditions as regards security.</para>
                   <para>LOAD-2.1-listQueues</para>
                </entry>
                <entry>
-                  <para>05/05/11</para>
+                  <para>TORQUE: 05/05/11</para>
+                  <para>SLURM: 09/08/11</para>
+                  <para>LSF: 20/03/12</para>
                </entry>
                <entry>
                   <para>Simultaneous launch of 100 commands</para>
@@ -877,7 +927,7 @@ same conditions as regards security.</para>
   
     
   <chapter>
-    <title>Performance tests </title>
+    <title>Performance tests for TORQUE </title>
     
      <informaltable frame="all">
       <tgroup cols="6">
@@ -1049,6 +1099,354 @@ same conditions as regards security.</para>
       </informaltable>
 	    
   </chapter>
-  
+
+  <chapter>
+    <title>Performance tests for SLURM </title>
+
+    <informaltable frame="all">
+      <tgroup cols="6">
+        <tbody>
+          <row>
+            <entry>
+              <para>ID test</para>
+            </entry>
+            <entry>
+              <para>Test description</para>
+            </entry>
+            <entry>
+              <para>Command(s) tested</para>
+            </entry>
+            <entry>
+              <para>VISHNU execution time</para>
+            </entry>
+            <entry>
+              <para>SSH execution time</para>
+            </entry>
+            <entry>
+              <para>Results</para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>CDP-3.1-submitJob</para>
+            </entry>
+            <entry>
+              <para>comparison with " ssh localhost sbatch " </para>
+            </entry>
+            <entry>
+              <para>submitJob</para>
+            </entry>
+            <entry>
+              <para>0,28s</para>
+            </entry>
+            <entry>
+              <para>0,18s</para>
+            </entry>
+            <entry>
+              <para>Failure</para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>CDP-3.1-cancelJob</para>
+            </entry>
+            <entry>
+              <para>comparison with " ssh localhost scancel " </para>
+            </entry>
+            <entry>
+              <para>cancelJob</para>
+            </entry>
+            <entry>
+              <para>0,36s</para>
+            </entry>
+            <entry>
+              <para>0,18s</para>
+            </entry>
+            <entry>
+              <para>Failure</para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>CDP-3.1-listJobs</para>
+            </entry>
+            <entry>
+              <para>comparison with " ssh localhost squeue " </para>
+            </entry>
+            <entry>
+              <para>listJobs</para>
+            </entry>
+            <entry>
+              <para>0,09s</para>
+            </entry>
+            <entry>
+              <para>0,18s</para>
+            </entry>
+            <entry>
+              <para>Success</para>
+            </entry>
+          </row>
+
+          <row>
+            <entry>
+              <para>CDP-3.2.1-listQueues</para>
+            </entry>
+            <entry>
+              <para>execution time less than "ssh localhost scontrol show  partition" </para>
+            </entry>
+            <entry>
+              <para>listQueues</para>
+            </entry>
+            <entry>
+              <para>0,09s</para>
+            </entry>
+            <entry>
+              <para>0,17s</para>
+            </entry>
+            <entry>
+              <para>Success</para>
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </informaltable>
+
+    <informaltable frame="all">
+      <tgroup cols="5">
+        <tbody>
+          <row>
+            <entry>
+              <para>ID test</para>
+            </entry>
+            <entry>
+              <para>Test description</para>
+            </entry>
+            <entry>
+              <para>Command(s) tested</para>
+            </entry>
+            <entry>
+              <para>Memory comsumption</para>
+            </entry>
+            <entry>
+              <para>Results</para>
+            </entry>
+          </row>
+
+          <row>
+            <entry>
+              <para>CDP-3.2.2-submitJob</para>
+            </entry>
+            <entry>
+              <para>CPU consumption</para>
+            </entry>
+            <entry>
+              <para>submitJob</para>
+            </entry>
+            <entry>
+              <para>5% of the CPU used</para>
+            </entry>
+            <entry>
+              <para>Success</para>
+            </entry>
+          </row>
+
+          <row>
+            <entry>
+              <para>CDP-Memserver</para>
+            </entry>
+            <entry>
+              <para>Memory consumption of tms server running during 24 hours</para>
+            </entry>
+            <entry>
+              <para>tms server</para>
+            </entry>
+            <entry>
+              <para>0,5% of the RAM memory</para>
+            </entry>
+            <entry>
+              <para>Success</para>
+            </entry>
+          </row>
+
+        </tbody>
+      </tgroup>
+    </informaltable>
+
+  </chapter>
+
+
+  <chapter>
+    <title>Performance tests for LSF </title>
+
+    <informaltable frame="all">
+      <tgroup cols="6">
+        <tbody>
+          <row>
+            <entry>
+              <para>ID test</para>
+            </entry>
+            <entry>
+              <para>Test description</para>
+            </entry>
+            <entry>
+              <para>Command(s) tested</para>
+            </entry>
+            <entry>
+              <para>VISHNU execution time</para>
+            </entry>
+            <entry>
+              <para>SSH execution time</para>
+            </entry>
+            <entry>
+              <para>Results</para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>CDP-3.1-submitJob</para>
+            </entry>
+            <entry>
+              <para>comparison with " ssh localhost sbatch " </para>
+            </entry>
+            <entry>
+              <para>submitJob</para>
+            </entry>
+            <entry>
+              <para>1,05s</para>
+            </entry>
+            <entry>
+              <para>0,82s</para>
+            </entry>
+            <entry>
+              <para>Failure</para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>CDP-3.1-cancelJob</para>
+            </entry>
+            <entry>
+              <para>comparison with " ssh localhost scancel " </para>
+            </entry>
+            <entry>
+              <para>cancelJob</para>
+            </entry>
+            <entry>
+              <para>0,95s</para>
+            </entry>
+            <entry>
+              <para>0,82s</para>
+            </entry>
+            <entry>
+              <para>Failure</para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>CDP-3.1-listJobs</para>
+            </entry>
+            <entry>
+              <para>comparison with " ssh localhost squeue " </para>
+            </entry>
+            <entry>
+              <para>listJobs</para>
+            </entry>
+            <entry>
+              <para>0,10s</para>
+            </entry>
+            <entry>
+              <para>0,80s</para>
+            </entry>
+            <entry>
+              <para>Success</para>
+            </entry>
+          </row>
+
+          <row>
+            <entry>
+              <para>CDP-3.2.1-listQueues</para>
+            </entry>
+            <entry>
+              <para>execution time less than "ssh localhost scontrol show  partition" </para>
+            </entry>
+            <entry>
+              <para>listQueues</para>
+            </entry>
+            <entry>
+              <para>0,10s</para>
+            </entry>
+            <entry>
+              <para>0,85s</para>
+            </entry>
+            <entry>
+              <para>Success</para>
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </informaltable>
+
+    <informaltable frame="all">
+      <tgroup cols="5">
+        <tbody>
+          <row>
+            <entry>
+              <para>ID test</para>
+            </entry>
+            <entry>
+              <para>Test description</para>
+            </entry>
+            <entry>
+              <para>Command(s) tested</para>
+            </entry>
+            <entry>
+              <para>Memory comsumption</para>
+            </entry>
+            <entry>
+              <para>Results</para>
+            </entry>
+          </row>
+
+          <row>
+            <entry>
+              <para>CDP-3.2.2-submitJob</para>
+            </entry>
+            <entry>
+              <para>CPU consumption</para>
+            </entry>
+            <entry>
+              <para>submitJob</para>
+            </entry>
+            <entry>
+              <para>5% of the CPU used</para>
+            </entry>
+            <entry>
+              <para>Success</para>
+            </entry>
+          </row>
+
+          <row>
+            <entry>
+              <para>CDP-Memserver</para>
+            </entry>
+            <entry>
+              <para>Memory consumption of tms server running during 24 hours</para>
+            </entry>
+            <entry>
+              <para>tms server</para>
+            </entry>
+            <entry>
+              <para>0,5% of the RAM memory</para>
+            </entry>
+            <entry>
+              <para>Success</para>
+            </entry>
+          </row>
+
+        </tbody>
+      </tgroup>
+    </informaltable>
+
+  </chapter>
   
 </book>

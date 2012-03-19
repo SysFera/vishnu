@@ -58,6 +58,12 @@
 %include "UMS_Data/OptionValue.hpp"
 %include "UMS_Data/ListOptionsValues.hpp"
 %include "UMS_Data/ListOptOptions.hpp"
+%include "UMS_Data/AuthAccount.hpp"
+%include "UMS_Data/AuthSystem.hpp"
+%include "UMS_Data/ListAuthSysOptions.hpp"
+%include "UMS_Data/ListAuthSystems.hpp"
+%include "UMS_Data/ListAuthAccOptions.hpp"
+%include "UMS_Data/ListAuthAccounts.hpp"
 
 
 // All EMF includes (same as in TMS_Data.hpp)
@@ -147,6 +153,8 @@
 %template(ELocalAccList) ::ecorecpp::mapping::EList<::UMS_Data::LocalAccount>;
 %template(ECommandList) ::ecorecpp::mapping::EList<::UMS_Data::Command>;
 %template(EOptionList) ::ecorecpp::mapping::EList<::UMS_Data::OptionValue>;
+%template(EAuthSystemList) ::ecorecpp::mapping::EList<::UMS_Data::AuthSystem>;
+%template(EAuthAccountList) ::ecorecpp::mapping::EList<::UMS_Data::AuthAccount>;
 
 %template(EJobList) ::ecorecpp::mapping::EList<::TMS_Data::Job>;
 %template(EProgressionList) ::ecorecpp::mapping::EList<::TMS_Data::Progression>;

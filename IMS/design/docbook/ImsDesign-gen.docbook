@@ -50,6 +50,14 @@
           
         <para>Replace all Oracle occurrences by MySQL</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>3</revnumber>
+        <date>16/02/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+        <para>New service defineAuthIdentifier</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -641,11 +649,36 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Undefined error code</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>None</para>
+        <para>IMS::exportCommands</para>
       </section>
       <section>
         <title>Service int_getMetricCurrentValue</title>
@@ -716,11 +749,36 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Undefined error code</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>None</para>
+        <para>IMS::getMetricCurrentValue</para>
       </section>
       <section>
         <title>Service int_getMetricHistory</title>
@@ -791,11 +849,36 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Undefined error code</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>None</para>
+        <para>IMS::getMetricHistory</para>
       </section>
       <section>
         <title>Service int_getProcesses</title>
@@ -859,11 +942,20 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>None</para>
+        <para>IMS::getProcesses</para>
       </section>
       <section>
         <title>Service int_setSystemInfo</title>
@@ -920,11 +1012,24 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>None</para>
+        <para>IMS::setSystemInfo</para>
       </section>
       <section>
         <title>Service int_setSystemThreshold</title>
@@ -981,11 +1086,24 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>None</para>
+        <para>IMS::setSystemThreshold</para>
       </section>
       <section>
         <title>Service int_getSystemThreshold</title>
@@ -1049,11 +1167,24 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>None</para>
+        <para>IMS::getSystemThreshold</para>
       </section>
       <section>
         <title>Service int_defineUserIdentifier</title>
@@ -1110,11 +1241,24 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>None</para>
+        <para>IMS::defineUserIdentifier</para>
       </section>
       <section>
         <title>Service int_defineMachineIdentifier</title>
@@ -1171,11 +1315,24 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>None</para>
+        <para>IMS::defineMachineIdentifier</para>
       </section>
       <section>
         <title>Service int_defineJobIdentifier</title>
@@ -1232,11 +1389,24 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>None</para>
+        <para>IMS::defineJobIdentifier</para>
       </section>
       <section>
         <title>Service int_defineTransferIdentifier</title>
@@ -1293,11 +1463,98 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>None</para>
+        <para>IMS::defineTransferIdentifier</para>
+      </section>
+      <section>
+        <title>Service int_defineAuthIdentifier</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>format</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The new format to use</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The int_defineAuthIdentifier() function defines the shape of the identifiers automatically generated for the authentication systems</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>IMS::defineAuthIdentifier</para>
       </section>
       <section>
         <title>Service int_loadShed</title>
@@ -1361,11 +1618,28 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_COMPONENT_ERROR</para></entry>
+                <entry><para>If a component is unavailable</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>None</para>
+        <para>IMS::loadShed</para>
       </section>
       <section>
         <title>Service int_setUpdateFrequency</title>
@@ -1422,11 +1696,24 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>None</para>
+        <para>IMS::setUpdateFrequency</para>
       </section>
       <section>
         <title>Service int_getUpdateFrequency</title>
@@ -1483,11 +1770,36 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Undefined error code</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>None</para>
+        <para>IMS::getUpdateFrequency</para>
       </section>
       <section>
         <title>Service int_restart</title>
@@ -1558,16 +1870,29 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>None</para>
+        <para>IMS::restart</para>
       </section>
       <section>
         <title>Service int_stop</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This service can be used by any VISHNU user</para>
+        <para>This service can be used by ADMIN users only</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1619,11 +1944,24 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>None</para>
+        <para>IMS::stop</para>
       </section>
       <section>
         <title>Service int_getSystemInfo</title>
@@ -1687,11 +2025,36 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Undefined error code</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>None</para>
+        <para>IMS::getSystemInfo</para>
       </section>
     </section>
   </chapter>
