@@ -99,6 +99,20 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
       }
 
      break;
+    case SGE:
+      //To replace VISHNU_BATCHJOB_ID
+      replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$JOB_ID");
+      replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$JOB_ID");
+      //To replace VISHNU_BATCHJOB_NAME
+      replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$JOB_NAME");
+      replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$JOB_NAME");
+      //To replace VISHNU_BATCHJOB_NODEFILE
+      /*replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", "$PBS_NODEFILE");
+      //replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$PBS_NODEFILE");
+      //To replace VISHNU_BATCHJOB_NUM_NODES
+      replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");
+      replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");*/
+      break; 
     default:
       break;
 

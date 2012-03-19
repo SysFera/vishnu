@@ -48,6 +48,7 @@ macro(genCli NAME )
     ${Boost_LIBRARIES}
     ${VISHNU_EXCEPTION_LIB}
     vishnu-ums-client
+    ${CMAKE_DL_LIBS}
     )
   install(TARGETS ${CMDNAME} DESTINATION ${BIN_INSTALL_DIR})
 endmacro(genCli)

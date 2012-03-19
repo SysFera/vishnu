@@ -103,9 +103,17 @@ int main(int argc, char* argv[], char* envp[]) {
       exit(1);
 #endif
       batchType = LSF;
+    } else if (batchTypeStr == "SGE") {
+#ifndef HAVE_SGE
+      std::cerr << std::endl;
+      std::cerr << "Error: can't initialize SGE batch type because this server has not compiled with SGE library" << std::endl;
+      std::cerr << std::endl;
+      exit(1);
+#endif
+      batchType = SGE;
     } else {
       std::cerr << std::endl;
-      std::cerr << "Error: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVELER' or 'SLURM' or 'LSF')" << std::endl;
+      std::cerr << "Error: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVELER' or 'SLURM' or 'LSF' or 'SGE')" << std::endl;
       std::cerr << std::endl;
       exit(1);
     }

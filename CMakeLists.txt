@@ -41,6 +41,7 @@ option(COMPILE_IMS "compile the module IMS")
 option(VISHNU_USE_LOADLEVELER   "Build VISHNU with LoadLeveler support...")
 option(VISHNU_USE_TORQUE   "Build VISHNU with Torque support...")
 option(VISHNU_USE_SLURM   "Build VISHNU with SLURM support...")
+option(VISHNU_USE_SGE     "Build VISHNU with SGE support...")
 option(VISHNU_USE_LDAP   "Build VISHNU with LDAP support...")
 
 if (COMPILE_UMS AND COMPILE_TMS AND COMPILE_FMS AND COMPILE_IMS)
@@ -140,7 +141,7 @@ if (NOT CLIENT_ONLY AND NOT ENABLE_POSTGRESQL  AND NOT ENABLE_MYSQL)
    message(FATAL_ERROR  "You MUST set either ENABLE_POSTGRESQL or ENABLE_MYSQL")
 endif()
 
-if (COMPILE_TMS AND NOT CLIENT_ONLY AND NOT VISHNU_USE_LOADLEVELER AND NOT VISHNU_USE_TORQUE AND NOT VISHNU_USE_SLURM)
+if (COMPILE_TMS AND NOT CLIENT_ONLY AND NOT VISHNU_USE_LOADLEVELER AND NOT VISHNU_USE_TORQUE AND NOT VISHNU_USE_SLURM AND NOT VISHNU_USE_SGE) 
    message(FATAL_ERROR "You MUST set either VISHNU_USE_TORQUE or VISHNU_USE_LOADLEVELER or VISHNU_USE_SLURM when compiling TMS server")
 endif()
 
@@ -199,6 +200,22 @@ if (VISHNU_USE_SLURM)
     set(SLURM_DIR "" cache path "SLURM installation path")
   endif(SLURM_FOUND)
 endif (VISHNU_USE_SLURM)
+
+if (VISHNU_USE_SGE)
+
+  add_definitions(-DHAVE_SGE)
+
+  find_package(SGE)
+  if (SGE_FOUND)
+  else (SSGE_FOUND)
+    message("SGE installation was not found. Define the SGE_DIR variable to continue.")
+    message("     - You can define a SGE_DIR environment variable")
+    message("     - You can pass it as argument to cmake:")
+    message("       $ cmake <source root directory> -DSGE_DIR:PATH=/path/to/SGE")
+    message("     - You can use the ccmake GUI")
+    set(SGE_DIR "" cache path "SGE installation path")
+  endif(SGE_FOUND)
+endif (VISHNU_USE_SGE)
 
 if (VISHNU_USE_LDAP)
   #To check if the module UMS is activated
