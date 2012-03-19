@@ -101,9 +101,11 @@ main(int argc, char* argv[], char* envp[])
     batchType = SLURM;
   } else if (batchTypeStr == "LSF") {
     batchType = LSF;
+  } else if (batchTypeStr == "SGE") {
+    batchType = SGE;
   } else {
-    std::cerr << "Error: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVLER' or 'SLURM' or 'LSF')" << std::endl;
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVLER' or 'SLURM' or 'LSF')");
+    std::cerr << "Error: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVLER' or 'SLURM' or 'LSF' or 'SGE')" << std::endl;
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVLER' or 'SLURM' or 'LSF' or 'SGE')");
   }
 
   jobSerializedPath = argv[3];
