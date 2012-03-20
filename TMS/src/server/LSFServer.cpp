@@ -691,9 +691,19 @@ LSFServer::listQueues(const std::string& OptqueueName) {
     queue->setNbJobsInQueue(queueInfo[i].numJobs-queueInfo[i].numRUN);
     queue->setDescription(std::string(queueInfo[i].description));
     queue->setMemory(queueInfo[i].rLimits[LSF_RLIMIT_RSS]);
-    queue->setMaxProcCpu(-1);//TODO:to complete
-    queue->setMaxJobCpu(-1);//Undefined
-    queue->setNode(queueInfo[i].procLimit);
+
+     //To compute the number of nodes in the queue
+    string hostListSrt = queueInfo[i].hostList;
+    std::istringstream hostListStreamStr;
+    std::vector<std::string> hostListStreamTokens;
+    hostListStreamStr.str(hostListSrt);
+    std::copy(istream_iterator<string>(hostListStreamStr),
+      istream_iterator<string>(),
+      back_inserter<vector<string> >(hostListStreamTokens));
+    queue->setNode(hostListStreamTokens.size());
+ 
+    queue->setMaxProcCpu(queueInfo[i].procLimit);
+    queue->setMaxJobCpu(queueInfo[i].procJobLimit);//Undefined
 
     // Adding created queue to the list
     mlistQueues->getQueues().push_back(queue);
