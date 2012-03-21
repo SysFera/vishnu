@@ -207,7 +207,7 @@ if (VISHNU_USE_SGE)
 
   find_package(SGE)
   if (SGE_FOUND)
-  else (SSGE_FOUND)
+  else (SGE_FOUND)
     message("SGE installation was not found. Define the SGE_DIR variable to continue.")
     message("     - You can define a SGE_DIR environment variable")
     message("     - You can pass it as argument to cmake:")
