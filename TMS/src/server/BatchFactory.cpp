@@ -20,6 +20,7 @@
 #endif
 #ifdef HAVE_SGE
 #include "SGEServer.hpp"
+#include "SGEConfig.hpp"
 extern "C" {
 #include "drmaa.h"
 }
@@ -72,9 +73,10 @@ BatchFactory::getBatchServerInstance(BatchType batchType) {
 #ifdef HAVE_SGE
       mbatchServer = new SGEServer();
       char diagnosis[DRMAA_ERROR_STRING_BUFFER];
-      setenv("SGE_ROOT","/home/absila/Workspace/SGE/",1);
+      setenv("SGE_ROOT",SGE_ROOT_PATH,1);
       if (drmaa_init(NULL, diagnosis, sizeof(diagnosis)-1) != DRMAA_ERRNO_SUCCESS) {
-        cout<<"********************" << diagnosis << endl;
+        
+        throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
       }
       
 #else
