@@ -463,13 +463,9 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
   int argc = tokensArgs.size()+1; 
   char* argv[argc];
   argv[0] = (char*) "vishnu_submit_job";
-  std::cout << "**********argc=" << argc << std::endl;
-  std::cout << "**********cmd=" << argv[0] << " ";
   for(int i=0; i < tokensArgs.size(); ++i) {
     argv[i+1] = strdup(tokensArgs[i].c_str());
-    std::cout << argv[i+1] << " ";
   }
-  std::cout << std::endl;
 
   #define GETOPT_ARGS "J:q:m:n:i:o:e:xNBG:k:rw:R:E:L:P:u:U:KW:g:Hc:F:p:M:D:S:v:T:b:t:f:Q:s:"
 
