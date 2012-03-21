@@ -294,6 +294,7 @@ ServerTMS::setBatchLoadPerformance(diet_profile_t* pb, estVector_t perfValues) {
 
   BatchFactory factory;
   BatchType batchType  = ServerTMS::getInstance()->getBatchType();
+  
   boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType));
   TMS_Data::ListJobs* listOfJobs = new TMS_Data::ListJobs();
   batchServer->fillListOfJobs(listOfJobs);

@@ -22,8 +22,14 @@ find_library(SGE_LIB
   /opt/local/lib
 )
 
-if (SGE_INCLUDE_DIR AND  SGE_LIB)
+find_path(SGE_ROOT
+inst_sge
+paths
+$ENV{SGE_ROOT}/
+)
+if (SGE_INCLUDE_DIR AND  SGE_LIB AND SGE_ROOT)
   set(SGE_FOUND "Yes")
+  mark_as_advanced(SGE_ROOT)
   mark_as_advanced(SGE_INCLUDE_DIR)
   mark_as_advanced(SGE_LIB)
-endif(SGE_INCLUDE_DIR AND  SGE_LIB)
+endif(SGE_INCLUDE_DIR AND  SGE_LIB AND SGE_ROOT)

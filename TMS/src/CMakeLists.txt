@@ -9,8 +9,11 @@ include_directories(client api
   ${UTILVISHNU_SOURCE_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
   ${Boost_INCLUDE_DIRS}
+  ${PROJECT_BINARY_DIR}/include/
 )
 
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/server/SGEConfig.hpp.in
+  ${PROJECT_BINARY_DIR}/include/SGEConfig.hpp)
 
 set(client_SRCS client/JobProxy.cpp
   client/JobOutputProxy.cpp)
@@ -72,8 +75,6 @@ if (NOT CLIENT_ONLY)
     server/JobOutputServer.cpp
     server/ScriptGenConvertor.cpp
     server/Env.cpp)
-  message("coucou server_SRCS = ${server_SRCS}")
-  message("coucou USED_BATCH_LIB = ${USED_BATCH_LIB}")
   add_library(vishnu-tms-server ${server_SRCS})
   set_target_properties(vishnu-tms-server PROPERTIES VERSION ${VISHNU_VERSION})
   target_link_libraries(vishnu-tms-server ${USED_BATCH_LIB} vishnu-ums-server)

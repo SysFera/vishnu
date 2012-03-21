@@ -9,6 +9,8 @@
 #define TMS_BATCH_FACTORY_H
 
 #include "utilVishnu.hpp"
+#include "TMSVishnuException.hpp"
+#include "UMSVishnuException.hpp"
 #include "BatchServer.hpp"
 
 /**
