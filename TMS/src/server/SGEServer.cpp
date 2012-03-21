@@ -77,6 +77,7 @@ SGEServer::submit(const char* scriptPath,
   drmaa_errno = drmaa_allocate_job_template(&jt, diagnosis, sizeof(diagnosis)-1);
   if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(diagnosis));
+
   }
     
   std::string scriptContent = vishnu::get_file_content(scriptPath);
@@ -107,6 +108,7 @@ SGEServer::submit(const char* scriptPath,
           
         }
 
+
       } else {
         
         pos = line.find("-o");
@@ -120,7 +122,7 @@ SGEServer::submit(const char* scriptPath,
             }
           drmaa_errno = drmaa_set_attribute(jt,DRMAA_OUTPUT_PATH,value.c_str(),diagnosis, sizeof(diagnosis)-1);
           if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
-	    
+
             throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
             
           }
@@ -139,7 +141,7 @@ SGEServer::submit(const char* scriptPath,
             }
             drmaa_errno = drmaa_set_attribute(jt,DRMAA_ERROR_PATH,value.c_str(),diagnosis, sizeof(diagnosis)-1);
             if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
-	      
+
               throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
               
             }            
@@ -156,7 +158,7 @@ SGEServer::submit(const char* scriptPath,
   
   drmaa_errno = drmaa_set_attribute(jt, DRMAA_REMOTE_COMMAND, scriptPath , diagnosis, sizeof(diagnosis)-1);
   if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
-    
+
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
     
   } 
@@ -178,7 +180,7 @@ SGEServer::submit(const char* scriptPath,
   
   drmaa_errno = drmaa_set_attribute(jt, DRMAA_NATIVE_SPECIFICATION, scriptoption.c_str(),diagnosis, sizeof(diagnosis)-1);
   if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
-    
+
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
     
   }
@@ -196,7 +198,7 @@ SGEServer::submit(const char* scriptPath,
       
   
   if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
-    
+
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
     
   }   
@@ -209,8 +211,26 @@ SGEServer::submit(const char* scriptPath,
   char usage[DRMAA_ERROR_STRING_BUFFER];
   
   drmaa_errno = drmaa_get_attribute(jt,DRMAA_ERROR_PATH,jobErrorPath, size,diagnosis, sizeof(diagnosis)-1);
-  if (drmaa_errno==DRMAA_ERRNO_SUCCESS){
+
+  if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
     
+  }
+  drmaa_errno = drmaa_get_attribute(jt,DRMAA_OUTPUT_PATH,jobOutputPath, size,diagnosis, sizeof(diagnosis)-1);
+  if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
+    
+  }
+  drmaa_errno = drmaa_get_attribute(jt,DRMAA_JOB_NAME,jobName,size,diagnosis, sizeof(diagnosis)-1);
+  if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
+    
+  }
+  std::string jobErrorPathStr = jobErrorPath;
+  std::string jobOutputPathStr = jobOutputPath;
+  size_t pos;
+  if((pos=jobErrorPathStr.find(":"))!=std::string::npos) {
+    jobErrorPathStr = jobErrorPathStr.substr(pos+1);  
     std::string jobErrorPathStr = jobErrorPath;
     Env(SGE).replaceAllOccurences(jobErrorPathStr,"$JOB_ID",jobid);
     if(boost::algorithm::contains(jobErrorPathStr, "$")){
@@ -301,6 +321,7 @@ SGEServer::getJobState(const std::string& jobId) {
      break;
     
   } /* switch */
+
   return ret;
 }
 
@@ -567,6 +588,7 @@ SGEServer::processOptions(const char* scriptPath,
       cmdsOptions.push_back("abe");
     } else {
       throw UserException(ERRCODE_INVALID_PARAM, notification+" is an invalid notification type:"+" consult the vishnu user manuel.\n");
+      
     }
   }
 
