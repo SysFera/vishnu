@@ -127,7 +127,7 @@
     <date>06/03/2012</date>
     <authorinitials>SysFera</authorinitials>
     <revdescription>
-      <para>Add of LSF batch scheduler </para></revdescription>
+      <para>Add of LSF batch scheduler. </para></revdescription>
   </revision> 
   
   <revision>
@@ -135,7 +135,7 @@
     <date>08/03/2012</date>
     <authorinitials>SysFera</authorinitials>
     <revdescription>
-      <para>Add of VISHNU commands for LDAP support</para></revdescription>
+      <para>Add of VISHNU commands for LDAP support and for connection and reconnection using multiples VISHNU accounts.</para></revdescription>
   </revision> 
 
   </revhistory>
