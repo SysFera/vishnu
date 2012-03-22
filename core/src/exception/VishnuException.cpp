@@ -81,3 +81,4 @@ VishnuException::operator=(const VishnuException &e) {
   mp = e.mp;
   return (*this);
 }
+
