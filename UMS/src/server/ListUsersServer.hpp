@@ -30,7 +30,6 @@ class ListUsersServer: public QueryServer<UMS_Data::ListUsersOptions, UMS_Data::
 public:
 
   /**
-   * \fn ListUsersServer(const SessionServer& session)
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \brief Constructor, raises an exception on error
    */
@@ -41,9 +40,6 @@ public:
     // mcommandName ="vishnu_list_users";
     }
   /**
-   * \fn ListUsersServer(const std::string& option,
-   *                     const SessionServer& session)
-   * \param option The ListUsersServer option
    * \param params The object which encapsulates the information of ListUsersServer  options
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \brief Constructor, raises an exception on error
@@ -59,9 +55,6 @@ public:
 
   /**
    * \brief Function to treat the ListUsersServer options
-   * \fn void processOptions(UserServer userServer,
-   *                         const std::string& options,
-   *                         std::string& sqlRequest)
    * \param userServer the object which encapsulates user information
    * \param options The object which encapsulates the information of ListUsersServer  options
    * \param sqlRequest the sql data base request

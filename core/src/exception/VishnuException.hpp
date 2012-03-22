@@ -184,6 +184,7 @@ public :
   buildExceptionString() const;
   /**
   * \brief Implementation of the equal operator
+  * \param e the object to assign
   * \return the object exception with the new values
   */
   VishnuException&
