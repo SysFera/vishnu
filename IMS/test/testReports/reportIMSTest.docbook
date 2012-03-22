@@ -380,8 +380,8 @@ same conditions as regards security.</para>
     </section>
       
       <section>
-      <title> IA3-B: Define User/Machine/Job/FileTransfer identifier </title>
-      <para><emphasis role = "italic"> API command: define[User|Machine|Job|Transfer]Identifier</emphasis></para>
+      <title> IA3-B: Define User/Machine/Job/FileTransfer/Authentication identifier </title>
+      <para><emphasis role = "italic"> API command: define[User|Machine|Job|Transfer|Auth]Identifier</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -401,7 +401,7 @@ same conditions as regards security.</para>
           <tbody>
             <row>
               <entry><para>IA3-B</para></entry>
-              <entry><para>Normal execution of define[User|Machine|Job]Identifier</para></entry>
+              <entry><para>Normal execution of define[User|Machine|Job|Transfer|Auth]Identifier</para></entry>
               <entry><para>The corresponding identifier is set</para></entry>
               <entry><para>The corresponding identifier is set</para></entry>
               <entry><para>0</para></entry>
@@ -415,7 +415,7 @@ same conditions as regards security.</para>
             </row>
 	    <row>
              <entry><para>IA3-E2</para></entry>
-              <entry><para>define[User|Machine|Job]Identifier is launched by a user who is not an administrator</para></entry>
+              <entry><para>define[User|Machine|Job|Transfer|Auth]Identifier is launched by a user who is not an administrator</para></entry>
               <entry><para>VishnuException</para></entry>
               <entry><para>VishnuException</para></entry>
               <entry><para>0</para></entry>
@@ -423,7 +423,7 @@ same conditions as regards security.</para>
           </tbody>
         </tgroup>
       </informaltable>
-      <para> <emphasis role = "bold"> Remarks IA3-B </emphasis>: In this version of tests, only define[User|Machine|Job]Identifier is tested.
+      <para> <emphasis role = "bold"> Remarks IA3-B </emphasis>: In this version of tests, only define[User|Machine|Job|Transfer|Auth]Identifier is tested.
       </para>
     </section>
     
