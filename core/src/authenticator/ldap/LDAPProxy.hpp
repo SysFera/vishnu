@@ -45,6 +45,7 @@ class LDAPProxy {
   /**
   * \brief Function to initialize a connection on a LDAP server
   * \param ldapbase the ldapbase of the ldap system
+  * \return If the connection was a succes or an error code
   */
   int
   connectLDAP(const string& ldapbase);
@@ -63,6 +64,11 @@ class LDAPProxy {
   void
   extract(const string& base, string& res);
 
+/**
+ * \brief Perform the bind to the ldap object
+ * \param fullUserPath The path in the ldap to from the root to the user location
+ * \return 0 on success (same as ldap_bind)
+ */
   int
   bind(string& fullUserPath);
   /////////////////////////////////
@@ -91,7 +97,13 @@ class LDAPProxy {
   */
    string mpwd;
 
+/**
+ * \brief the server controls
+ */
    LDAPControl* mserverCtrls;
+/**
+ * \brief the client controls
+ */
    LDAPControl* mclientCtrls;
 };
 #endif //_LDAP_PROXY_H

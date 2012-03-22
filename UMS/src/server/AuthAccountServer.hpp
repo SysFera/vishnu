@@ -94,8 +94,8 @@ private:
   /////////////////////////////////
   /**
   * \brief Function to check authAccount on database
-  * \param idmachine The internal database id of the user-authentication system
-  * \param iduser The internal database id of the user
+  * \param idAuthSystem The internal database id of the user-authentication system
+  * \param idUser The internal database id of the user
   * \return true if the authAccount exists else false
   */
   bool
@@ -110,6 +110,7 @@ private:
   isLoginUsed(std::string numAuthSystem, std::string acLogin);
   /**
   * \brief Function to check the authAccount userId
+  * \param userServer The user server to use
   * \return raises an exception on error
   */
   int
