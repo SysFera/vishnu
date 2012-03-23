@@ -1,0 +1,93 @@
+\hypertarget{classAuthenticatorConfiguration}{
+\section{AuthenticatorConfiguration Class Reference}
+\label{classAuthenticatorConfiguration}\index{AuthenticatorConfiguration@{AuthenticatorConfiguration}}
+}
+
+
+Contains the configuration parameters for the Vishnu authenticator.  
+
+
+
+
+{\ttfamily \#include $<$AuthenticatorConfiguration.hpp$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classAuthenticatorConfiguration_ae99c4f5893fb52077ccfce3b0c09c973}{authentype\_\-t} \{ {\bfseries UMS}, 
+{\bfseries LDAP}, 
+{\bfseries UMSLDAP}, 
+{\bfseries LDAPUMS}
+ \}
+\begin{DoxyCompactList}\small\item\em The authenticator type. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classAuthenticatorConfiguration_aa05395e9818ff1bc709da5ad3c967271}{AuthenticatorConfiguration} (const \hyperlink{classExecConfiguration}{ExecConfiguration} \&execConfig)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classAuthenticatorConfiguration_aa0a3f4e490d2720409ea639e05ebfe04}{
+void \hyperlink{classAuthenticatorConfiguration_aa0a3f4e490d2720409ea639e05ebfe04}{check} ()  throw (UserException)}
+\label{classAuthenticatorConfiguration_aa0a3f4e490d2720409ea639e05ebfe04}
+
+\begin{DoxyCompactList}\small\item\em Check that the configuration is correct. \item\end{DoxyCompactList}\item 
+\hyperlink{classAuthenticatorConfiguration_ae99c4f5893fb52077ccfce3b0c09c973}{authentype\_\-t} \hyperlink{classAuthenticatorConfiguration_aada879ea10e5544be5d5812e1f7abd53}{getAuthenType} () const 
+\begin{DoxyCompactList}\small\item\em Get the authenticator type. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classAuthenticatorConfiguration_a874d89493bd9ebc981f835e0adf908d5}{
+const \hyperlink{classExecConfiguration}{ExecConfiguration} \& \hyperlink{classAuthenticatorConfiguration_a874d89493bd9ebc981f835e0adf908d5}{mexecConfig}}
+\label{classAuthenticatorConfiguration_a874d89493bd9ebc981f835e0adf908d5}
+
+\begin{DoxyCompactList}\small\item\em Reference to the main program configuration. \item\end{DoxyCompactList}\item 
+\hypertarget{classAuthenticatorConfiguration_afb4e72765420e4ec64cad65a051aac7e}{
+\hyperlink{classAuthenticatorConfiguration_ae99c4f5893fb52077ccfce3b0c09c973}{authentype\_\-t} \hyperlink{classAuthenticatorConfiguration_afb4e72765420e4ec64cad65a051aac7e}{mauthType}}
+\label{classAuthenticatorConfiguration_afb4e72765420e4ec64cad65a051aac7e}
+
+\begin{DoxyCompactList}\small\item\em Attribute type of authenticator. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Contains the configuration parameters for the Vishnu authenticator. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classAuthenticatorConfiguration_aa05395e9818ff1bc709da5ad3c967271}{
+\index{AuthenticatorConfiguration@{AuthenticatorConfiguration}!AuthenticatorConfiguration@{AuthenticatorConfiguration}}
+\index{AuthenticatorConfiguration@{AuthenticatorConfiguration}!AuthenticatorConfiguration@{AuthenticatorConfiguration}}
+\subsubsection[{AuthenticatorConfiguration}]{\setlength{\rightskip}{0pt plus 5cm}AuthenticatorConfiguration::AuthenticatorConfiguration (
+\begin{DoxyParamCaption}
+\item[{const {\bf ExecConfiguration} \&}]{ execConfig}
+\end{DoxyParamCaption}
+)}}
+\label{classAuthenticatorConfiguration_aa05395e9818ff1bc709da5ad3c967271}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em execConfig}]the configuration of the program \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classAuthenticatorConfiguration_aada879ea10e5544be5d5812e1f7abd53}{
+\index{AuthenticatorConfiguration@{AuthenticatorConfiguration}!getAuthenType@{getAuthenType}}
+\index{getAuthenType@{getAuthenType}!AuthenticatorConfiguration@{AuthenticatorConfiguration}}
+\subsubsection[{getAuthenType}]{\setlength{\rightskip}{0pt plus 5cm}{\bf authentype\_\-t} AuthenticatorConfiguration::getAuthenType (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classAuthenticatorConfiguration_aada879ea10e5544be5d5812e1f7abd53}
+
+
+Get the authenticator type. 
+
+\begin{DoxyReturn}{Returns}
+authenticator type 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+core/src/authenticator/\hyperlink{AuthenticatorConfiguration_8hpp}{AuthenticatorConfiguration.hpp}\end{DoxyCompactItemize}

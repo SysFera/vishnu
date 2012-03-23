@@ -55,6 +55,18 @@ virtual string \hyperlink{classUMSMapper_afc32e4e8ec824a76c57577d234a46f7c}{deco
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
 virtual string \hyperlink{classUMSMapper_a63cdc4905b7ad965c410cdccff455329}{decodeDelUser} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
+virtual string \hyperlink{classUMSMapper_a461de6b19368a9ddc8dad36f42cf55c8}{decodeAddAuthSys} (vector$<$ int $>$ separator, const string \&msg)
+\begin{DoxyCompactList}\small\item\em To decode the add authentication system call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
+virtual string \hyperlink{classUMSMapper_a1f7b3a34dc3cd5a92878a769c882f0a0}{decodeUpAuthSys} (vector$<$ int $>$ separator, const string \&msg)
+\begin{DoxyCompactList}\small\item\em To decode the update authentication system call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
+virtual string \hyperlink{classUMSMapper_a12e4e0cfd8efa04aebcee06065a48d97}{decodeDelAuthSys} (vector$<$ int $>$ separator, const string \&msg)
+\begin{DoxyCompactList}\small\item\em To decode the delete authentication account call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
+virtual string \hyperlink{classUMSMapper_abf680914eae5482fd6783b968fee2e79}{decodeAddAuthAcc} (vector$<$ int $>$ separator, const string \&msg)
+\begin{DoxyCompactList}\small\item\em To decode the add authentication account call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
+virtual string \hyperlink{classUMSMapper_a45cbf6f370b84da3bee46325ba66e0f8}{decodeUpAuthAcc} (vector$<$ int $>$ separator, const string \&msg)
+\begin{DoxyCompactList}\small\item\em To decode the update authentication account call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
+virtual string \hyperlink{classUMSMapper_ac00d6b0e9f7f44bc877de50adbcfc87f}{decodeDelAuthAcc} (vector$<$ int $>$ separator, const string \&msg)
+\begin{DoxyCompactList}\small\item\em To decode the delete authentication account call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
 virtual string \hyperlink{classUMSMapper_afc9f56ce3627876213876ebbb0c3cedb}{decodeChangePwd} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
 virtual string \hyperlink{classUMSMapper_a001ffc8295fb72cd937676973f0520cb}{decodeResetPwd} (vector$<$ int $>$ separator, const string \&msg)
@@ -77,6 +89,10 @@ virtual string \hyperlink{classUMSMapper_a8b218eb1620678b625db8444dab8226c}{deco
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
 virtual string \hyperlink{classUMSMapper_aca69a6e37499b1e2536521048ff40403}{decodeListAcc} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
+virtual string \hyperlink{classUMSMapper_a6f7a53785ea8ee15b34cc2843dd4b726}{decodeListAuthSys} (vector$<$ int $>$ separator, const string \&msg)
+\begin{DoxyCompactList}\small\item\em To decode the list authentication system call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
+virtual string \hyperlink{classUMSMapper_aa4cf98be3bbb9f06b886cf9271c26775}{decodeListAuthAcc} (vector$<$ int $>$ separator, const string \&msg)
+\begin{DoxyCompactList}\small\item\em To decode the list authentication account call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
 virtual string \hyperlink{classUMSMapper_af1a5337f43f288ba2f922f9876b8e0f8}{decodeListM} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
 virtual string \hyperlink{classUMSMapper_a54ef53fc918cfacdeda213fafdcc76de}{decodeListH} (vector$<$ int $>$ separator, const string \&msg)
@@ -187,6 +203,46 @@ To decode the add user call sequence of the string returned by finalize.
 \item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like add account command 
+\end{DoxyReturn}
+\hypertarget{classUMSMapper_abf680914eae5482fd6783b968fee2e79}{
+\index{UMSMapper@{UMSMapper}!decodeAddAuthAcc@{decodeAddAuthAcc}}
+\index{decodeAddAuthAcc@{decodeAddAuthAcc}!UMSMapper@{UMSMapper}}
+\subsubsection[{decodeAddAuthAcc}]{\setlength{\rightskip}{0pt plus 5cm}virtual string UMSMapper::decodeAddAuthAcc (
+\begin{DoxyParamCaption}
+\item[{vector$<$ int $>$}]{ separator, }
+\item[{const string \&}]{ msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classUMSMapper_abf680914eae5482fd6783b968fee2e79}
+
+
+To decode the add authentication account call sequence of the string returned by finalize. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The cli like add user command 
+\end{DoxyReturn}
+\hypertarget{classUMSMapper_a461de6b19368a9ddc8dad36f42cf55c8}{
+\index{UMSMapper@{UMSMapper}!decodeAddAuthSys@{decodeAddAuthSys}}
+\index{decodeAddAuthSys@{decodeAddAuthSys}!UMSMapper@{UMSMapper}}
+\subsubsection[{decodeAddAuthSys}]{\setlength{\rightskip}{0pt plus 5cm}virtual string UMSMapper::decodeAddAuthSys (
+\begin{DoxyParamCaption}
+\item[{vector$<$ int $>$}]{ separator, }
+\item[{const string \&}]{ msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classUMSMapper_a461de6b19368a9ddc8dad36f42cf55c8}
+
+
+To decode the add authentication system call sequence of the string returned by finalize. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The cli like add user command 
 \end{DoxyReturn}
 \hypertarget{classUMSMapper_a8b40c596d15368717b8a62a00d80df22}{
 \index{UMSMapper@{UMSMapper}!decodeAddM@{decodeAddM}}
@@ -328,6 +384,46 @@ To decode the add user call sequence of the string returned by finalize.
 \begin{DoxyReturn}{Returns}
 The cli like delete account command 
 \end{DoxyReturn}
+\hypertarget{classUMSMapper_ac00d6b0e9f7f44bc877de50adbcfc87f}{
+\index{UMSMapper@{UMSMapper}!decodeDelAuthAcc@{decodeDelAuthAcc}}
+\index{decodeDelAuthAcc@{decodeDelAuthAcc}!UMSMapper@{UMSMapper}}
+\subsubsection[{decodeDelAuthAcc}]{\setlength{\rightskip}{0pt plus 5cm}virtual string UMSMapper::decodeDelAuthAcc (
+\begin{DoxyParamCaption}
+\item[{vector$<$ int $>$}]{ separator, }
+\item[{const string \&}]{ msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classUMSMapper_ac00d6b0e9f7f44bc877de50adbcfc87f}
+
+
+To decode the delete authentication account call sequence of the string returned by finalize. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The cli like delete user command 
+\end{DoxyReturn}
+\hypertarget{classUMSMapper_a12e4e0cfd8efa04aebcee06065a48d97}{
+\index{UMSMapper@{UMSMapper}!decodeDelAuthSys@{decodeDelAuthSys}}
+\index{decodeDelAuthSys@{decodeDelAuthSys}!UMSMapper@{UMSMapper}}
+\subsubsection[{decodeDelAuthSys}]{\setlength{\rightskip}{0pt plus 5cm}virtual string UMSMapper::decodeDelAuthSys (
+\begin{DoxyParamCaption}
+\item[{vector$<$ int $>$}]{ separator, }
+\item[{const string \&}]{ msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classUMSMapper_a12e4e0cfd8efa04aebcee06065a48d97}
+
+
+To decode the delete authentication account call sequence of the string returned by finalize. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The cli like delete user command 
+\end{DoxyReturn}
 \hypertarget{classUMSMapper_a8b218eb1620678b625db8444dab8226c}{
 \index{UMSMapper@{UMSMapper}!decodeDelM@{decodeDelM}}
 \index{decodeDelM@{decodeDelM}!UMSMapper@{UMSMapper}}
@@ -381,6 +477,46 @@ The cli like delete user command
 
 
 To decode the add user call sequence of the string returned by finalize. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The cli like list account command 
+\end{DoxyReturn}
+\hypertarget{classUMSMapper_aa4cf98be3bbb9f06b886cf9271c26775}{
+\index{UMSMapper@{UMSMapper}!decodeListAuthAcc@{decodeListAuthAcc}}
+\index{decodeListAuthAcc@{decodeListAuthAcc}!UMSMapper@{UMSMapper}}
+\subsubsection[{decodeListAuthAcc}]{\setlength{\rightskip}{0pt plus 5cm}virtual string UMSMapper::decodeListAuthAcc (
+\begin{DoxyParamCaption}
+\item[{vector$<$ int $>$}]{ separator, }
+\item[{const string \&}]{ msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classUMSMapper_aa4cf98be3bbb9f06b886cf9271c26775}
+
+
+To decode the list authentication account call sequence of the string returned by finalize. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The cli like list account command 
+\end{DoxyReturn}
+\hypertarget{classUMSMapper_a6f7a53785ea8ee15b34cc2843dd4b726}{
+\index{UMSMapper@{UMSMapper}!decodeListAuthSys@{decodeListAuthSys}}
+\index{decodeListAuthSys@{decodeListAuthSys}!UMSMapper@{UMSMapper}}
+\subsubsection[{decodeListAuthSys}]{\setlength{\rightskip}{0pt plus 5cm}virtual string UMSMapper::decodeListAuthSys (
+\begin{DoxyParamCaption}
+\item[{vector$<$ int $>$}]{ separator, }
+\item[{const string \&}]{ msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classUMSMapper_a6f7a53785ea8ee15b34cc2843dd4b726}
+
+
+To decode the list authentication system call sequence of the string returned by finalize. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -567,6 +703,46 @@ To decode the add user call sequence of the string returned by finalize.
 \item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like update account command 
+\end{DoxyReturn}
+\hypertarget{classUMSMapper_a45cbf6f370b84da3bee46325ba66e0f8}{
+\index{UMSMapper@{UMSMapper}!decodeUpAuthAcc@{decodeUpAuthAcc}}
+\index{decodeUpAuthAcc@{decodeUpAuthAcc}!UMSMapper@{UMSMapper}}
+\subsubsection[{decodeUpAuthAcc}]{\setlength{\rightskip}{0pt plus 5cm}virtual string UMSMapper::decodeUpAuthAcc (
+\begin{DoxyParamCaption}
+\item[{vector$<$ int $>$}]{ separator, }
+\item[{const string \&}]{ msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classUMSMapper_a45cbf6f370b84da3bee46325ba66e0f8}
+
+
+To decode the update authentication account call sequence of the string returned by finalize. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The cli like update user command 
+\end{DoxyReturn}
+\hypertarget{classUMSMapper_a1f7b3a34dc3cd5a92878a769c882f0a0}{
+\index{UMSMapper@{UMSMapper}!decodeUpAuthSys@{decodeUpAuthSys}}
+\index{decodeUpAuthSys@{decodeUpAuthSys}!UMSMapper@{UMSMapper}}
+\subsubsection[{decodeUpAuthSys}]{\setlength{\rightskip}{0pt plus 5cm}virtual string UMSMapper::decodeUpAuthSys (
+\begin{DoxyParamCaption}
+\item[{vector$<$ int $>$}]{ separator, }
+\item[{const string \&}]{ msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classUMSMapper_a1f7b3a34dc3cd5a92878a769c882f0a0}
+
+
+To decode the update authentication system call sequence of the string returned by finalize. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The cli like update user command 
 \end{DoxyReturn}
 \hypertarget{classUMSMapper_a11c776ef36bfe7237e920dfdd3c0c1ec}{
 \index{UMSMapper@{UMSMapper}!decodeUpM@{decodeUpM}}

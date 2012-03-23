@@ -88,6 +88,8 @@ Protected Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check a close policy value.  <a href="#a73cc37f1e18f4e5028d8f4d68b9b148f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQueryServer.html#add7b3dc1799367f27cf0160a5ac63ecf">checkJobId</a> (std::string jobId)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check if a given job identifier exists.  <a href="#add7b3dc1799367f27cf0160a5ac63ecf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQueryServer.html#ad765a449dc41871997166fba5a57a854">checkAuthSystemId</a> (std::string authSystemId)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check if a given authSystem identifier exists.  <a href="#ad765a449dc41871997166fba5a57a854"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4cf1497aa9c56864e8119645ccc42dc7"></a><!-- doxytag: member="QueryServer::mparameters" ref="a4cf1497aa9c56864e8119645ccc42dc7" args="" -->
@@ -414,6 +416,34 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="ad765a449dc41871997166fba5a57a854"></a><!-- doxytag: member="QueryServer::checkAuthSystemId" ref="ad765a449dc41871997166fba5a57a854" args="(std::string authSystemId)" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class QueryParameters, class ListObject&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classQueryServer.html">QueryServer</a>&lt; QueryParameters, ListObject &gt;::checkAuthSystemId </td>
+          <td>(</td>
+          <td class="paramtype">std::string&nbsp;</td>
+          <td class="paramname"> <em>authSystemId</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline, protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to check if a given authSystem identifier exists. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>authSystemId</em>&nbsp;</td><td>the authSystem identifier </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="ab05f1d7e54ec0e7bc51772300a7fe9c2"></a><!-- doxytag: member="QueryServer::checkClientMachineName" ref="ab05f1d7e54ec0e7bc51772300a7fe9c2" args="(std::string clmachineId)" -->
 <div class="memitem">
 <div class="memproto">
@@ -689,7 +719,7 @@ template&lt;class QueryParameters, class ListObject&gt; </div>
 <p>Function to get the name of the query command line. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>The the name of the query command line </dd></dl>
 
-<p>Implemented in <a class="el" href="classListCommandsServer.html#ae51f623d61d994481bdc0e77025b1cd3">ListCommandsServer</a>, <a class="el" href="classListLocalAccountsServer.html#acc12358ea99501ac83097ed65570b3c0">ListLocalAccountsServer</a>, <a class="el" href="classListMachinesServer.html#a1009395b555efa83eac39fa139a3625b">ListMachinesServer</a>, <a class="el" href="classListOptionsValuesServer.html#a8ddf0e769f4a7582bf818e599a2a8f6e">ListOptionsValuesServer</a>, <a class="el" href="classListSessionsServer.html#addba2aae3573750b1dc32220ec88dc94">ListSessionsServer</a>, <a class="el" href="classListJobServer.html#ae4efce66451934990d0575d1b8151378">ListJobServer</a>, <a class="el" href="classListProgressServer.html#a9fefff901176f068962ab31ae42c25aa">ListProgressServer</a>, and <a class="el" href="classListFileTransfers.html#a6d7e7aba9de33a523a30e80e43664f43">ListFileTransfers</a>.</p>
+<p>Implemented in <a class="el" href="classListAuthAccountsServer.html#a016e94aa8daa9c91d79d71ff52394d89">ListAuthAccountsServer</a>, <a class="el" href="classListAuthSystemsServer.html#a798c4bacc3937d081cf39e599cbd8c37">ListAuthSystemsServer</a>, <a class="el" href="classListCommandsServer.html#ae51f623d61d994481bdc0e77025b1cd3">ListCommandsServer</a>, <a class="el" href="classListLocalAccountsServer.html#acc12358ea99501ac83097ed65570b3c0">ListLocalAccountsServer</a>, <a class="el" href="classListMachinesServer.html#a1009395b555efa83eac39fa139a3625b">ListMachinesServer</a>, <a class="el" href="classListOptionsValuesServer.html#a8ddf0e769f4a7582bf818e599a2a8f6e">ListOptionsValuesServer</a>, <a class="el" href="classListSessionsServer.html#addba2aae3573750b1dc32220ec88dc94">ListSessionsServer</a>, <a class="el" href="classListUsersServer.html#a570f6a88f82b9accd66946136b2fff21">ListUsersServer</a>, <a class="el" href="classListJobServer.html#ae4efce66451934990d0575d1b8151378">ListJobServer</a>, <a class="el" href="classListProgressServer.html#a9fefff901176f068962ab31ae42c25aa">ListProgressServer</a>, and <a class="el" href="classListFileTransfers.html#a6d7e7aba9de33a523a30e80e43664f43">ListFileTransfers</a>.</p>
 
 </div>
 </div>
@@ -715,7 +745,7 @@ template&lt;class QueryParameters, class ListObject&gt; </div>
 <dd>
 raises an exception on error </dd></dl>
 
-<p>Implemented in <a class="el" href="classListCommandsServer.html#ae256dad4b7cb57e73dd3dc2c5dcb3e7b">ListCommandsServer</a>, <a class="el" href="classListLocalAccountsServer.html#aab1471d2b577b25471f12652b6e78b31">ListLocalAccountsServer</a>, <a class="el" href="classListMachinesServer.html#abbaceb388d6ad47bc9e82a3f33e978a3">ListMachinesServer</a>, <a class="el" href="classListOptionsValuesServer.html#a193d667fd5fa247300cebd4af85785d6">ListOptionsValuesServer</a>, <a class="el" href="classListSessionsServer.html#a2ce41ba3a29999d9ef1799c990d29b29">ListSessionsServer</a>, <a class="el" href="classListJobServer.html#a88da8c8e36fce6142758dc5779e0adae">ListJobServer</a>, <a class="el" href="classListProgressServer.html#a638132aca020d8168e5185df47e881f0">ListProgressServer</a>, and <a class="el" href="classListFileTransfers.html#a51a0f5e3382378220277271122a619d7">ListFileTransfers</a>.</p>
+<p>Implemented in <a class="el" href="classListAuthAccountsServer.html#a0787fa2a4d9dd1b78ea1966d0fafc90d">ListAuthAccountsServer</a>, <a class="el" href="classListAuthSystemsServer.html#a4cfd9ed49c97646f1f29889e26246443">ListAuthSystemsServer</a>, <a class="el" href="classListCommandsServer.html#ae256dad4b7cb57e73dd3dc2c5dcb3e7b">ListCommandsServer</a>, <a class="el" href="classListLocalAccountsServer.html#aab1471d2b577b25471f12652b6e78b31">ListLocalAccountsServer</a>, <a class="el" href="classListMachinesServer.html#abbaceb388d6ad47bc9e82a3f33e978a3">ListMachinesServer</a>, <a class="el" href="classListOptionsValuesServer.html#a193d667fd5fa247300cebd4af85785d6">ListOptionsValuesServer</a>, <a class="el" href="classListSessionsServer.html#a2ce41ba3a29999d9ef1799c990d29b29">ListSessionsServer</a>, <a class="el" href="classListUsersServer.html#aa80dfdc8a71c1bbba1423f8b375e1624">ListUsersServer</a>, <a class="el" href="classListJobServer.html#a88da8c8e36fce6142758dc5779e0adae">ListJobServer</a>, <a class="el" href="classListProgressServer.html#a638132aca020d8168e5185df47e881f0">ListProgressServer</a>, and <a class="el" href="classListFileTransfers.html#a51a0f5e3382378220277271122a619d7">ListFileTransfers</a>.</p>
 
 </div>
 </div>
@@ -723,7 +753,7 @@ raises an exception on error </dd></dl>
 <li>core/src/utils/<a class="el" href="QueryServer_8hpp_source.html">QueryServer.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:46 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:18 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

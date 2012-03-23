@@ -52,54 +52,55 @@
 <a name="l00048"></a><a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1a18985dc599467035432920df9bcb2e8b">00048</a>     <a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1a18985dc599467035432920df9bcb2e8b">MACHINE</a> = 0,
 <a name="l00049"></a><a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1ae057d74230de0c43ca6fae4c80cd2898">00049</a>     <a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1ae057d74230de0c43ca6fae4c80cd2898">USER</a> = 1, 
 <a name="l00050"></a><a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1ac6a371f14311f16f9f476b7db284ac4f">00050</a>     <a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1ac6a371f14311f16f9f476b7db284ac4f">JOB</a> = 2, 
-<a name="l00051"></a><a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1afb06f51582220be5d9536a855abf0ae0">00051</a>     <a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1afb06f51582220be5d9536a855abf0ae0">FILETRANSFERT</a> = 3  
-<a name="l00052"></a>00052   } IdType;
-<a name="l00057"></a><a class="code" href="namespacevishnu.html#a5513f86dabac3cd717c915498a7679ad">00057</a>   <span class="keyword">typedef</span> <span class="keyword">enum</span>{
-<a name="l00058"></a><a class="code" href="namespacevishnu.html#a5513f86dabac3cd717c915498a7679adae7dab65b7ae704dfe53ba3db119c0777">00058</a>     <a class="code" href="namespacevishnu.html#a5513f86dabac3cd717c915498a7679adae7dab65b7ae704dfe53ba3db119c0777">CMDFAILED</a> = 0, 
-<a name="l00059"></a><a class="code" href="namespacevishnu.html#a5513f86dabac3cd717c915498a7679ada5a52e3ba3082e971180e246724851e1e">00059</a>     <a class="code" href="namespacevishnu.html#a5513f86dabac3cd717c915498a7679ada5a52e3ba3082e971180e246724851e1e">CMDSUCCESS</a> = 1,
-<a name="l00060"></a>00060   } CmdStatus;
-<a name="l00061"></a>00061 
-<a name="l00066"></a><a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532">00066</a>   <span class="keyword">typedef</span> <span class="keyword">enum</span>{
-<a name="l00067"></a><a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532aef0c4900387b5f9b2dd3b69461496076">00067</a>     <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532aef0c4900387b5f9b2dd3b69461496076">UMS</a> = 0,
-<a name="l00068"></a><a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532ac3d2bb0714b1648919ed78505187593e">00068</a>     <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532ac3d2bb0714b1648919ed78505187593e">TMS</a> = 1,
-<a name="l00069"></a><a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532a704905f0ffb93e17cd67290254367070">00069</a>     <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532a704905f0ffb93e17cd67290254367070">FMS</a> = 2,
-<a name="l00070"></a><a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532a018268bc806e44e84514c2c4f8cb7e71">00070</a>     <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532a018268bc806e44e84514c2c4f8cb7e71">IMS</a> = 3
-<a name="l00071"></a>00071   } CmdType;
-<a name="l00072"></a>00072 
-<a name="l00076"></a>00076   <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> PUNDEF = 0;
-<a name="l00080"></a>00080   <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> PRUNNING = 1;
-<a name="l00084"></a>00084   <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> PDOWN = 2;
-<a name="l00085"></a>00085 
-<a name="l00093"></a>00093   <span class="keywordtype">int</span>
-<a name="l00094"></a>00094   <a class="code" href="namespacevishnu.html#a9f137bd109d564a7366b3a847581d7f6" title="To register the server in the database.">registerSeD</a>(std::string type, <a class="code" href="classExecConfiguration.html" title="Program configuration based on key/value pairs stored in a file.">ExecConfiguration</a> config, std::string &amp;cfg);
-<a name="l00101"></a>00101   <span class="keywordtype">int</span>
-<a name="l00102"></a>00102   <a class="code" href="namespacevishnu.html#ac55cf69f136045543c4586d42e3731a7" title="To unregister the server in the database (set as stopped).">unregisterSeD</a>(std::string type, std::string mid);
-<a name="l00103"></a>00103 
-<a name="l00110"></a>00110   <span class="keywordtype">int</span> <a class="code" href="namespacevishnu.html#ae3f61f1465ef34d3cf2f20c67a019b43" title="Return true if the string starts with &amp;#39;MONTH&amp;#39;.">isMonth</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);
-<a name="l00117"></a>00117   <span class="keywordtype">int</span> <a class="code" href="namespacevishnu.html#a646794297931366c08502e5079154ccd" title="Return true if the string starts with &amp;#39;YEAR&amp;#39;.">isYear</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);
-<a name="l00124"></a>00124   <span class="keywordtype">int</span> <a class="code" href="namespacevishnu.html#a36b8edc2218c332a4a59f2e39109d627" title="Return true if the string starts with &amp;#39;SITE&amp;#39;.">isSite</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);
-<a name="l00131"></a>00131   <span class="keywordtype">int</span> <a class="code" href="namespacevishnu.html#abaf2c02608b3d96f1f883d65966595a5" title="Return true if the string starts with &amp;#39;TYPE&amp;#39;.">isType</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);
-<a name="l00138"></a>00138   <span class="keywordtype">int</span> <a class="code" href="namespacevishnu.html#ac123696febe0c4b8fa9f6d59daa6062b" title="Return true if the string starts with &amp;#39;UNAME&amp;#39;.">isUName</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);
-<a name="l00145"></a>00145   <span class="keywordtype">int</span> <a class="code" href="namespacevishnu.html#ad10441f9e198c7d70038dcd74963dc54" title="Return true if the string starts with &amp;#39;MANAME&amp;#39;.">isMaName</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);
-<a name="l00152"></a>00152   <span class="keywordtype">int</span> <a class="code" href="namespacevishnu.html#a11a59f26c9f250498ef8aed73e316c8b" title="Return true if the string starts with &amp;#39;DAY&amp;#39;.">isDay</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);
-<a name="l00159"></a>00159   <span class="keywordtype">int</span> <a class="code" href="namespacevishnu.html#a9f8370bcc63bc78bd464447eecbee191" title="Return true if the string starts with &amp;#39;CPT&amp;#39;.">isCpt</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);
-<a name="l00160"></a>00160 
-<a name="l00177"></a>00177   <span class="keywordtype">int</span>
-<a name="l00178"></a>00178   <a class="code" href="namespacevishnu.html#a04e3438b8bba4e8074e5102cccfd6cd1" title="Parse the format and fill the array with the variable and their value.">getKeywords</a> (<span class="keywordtype">int</span>* size, <a class="code" href="structFormat__t.html" title="The class used to get the variables of the string to parse.">Format_t</a>* array,
-<a name="l00179"></a>00179                <span class="keyword">const</span> <span class="keywordtype">char</span>* format,
-<a name="l00180"></a>00180                <span class="keywordtype">int</span> cpt, <a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1" title="The type of id generated.">IdType</a> type,
-<a name="l00181"></a>00181                std::string name,
-<a name="l00182"></a>00182                std::string site);
-<a name="l00183"></a>00183 
-<a name="l00198"></a>00198   std::string
-<a name="l00199"></a>00199   <a class="code" href="namespacevishnu.html#a1ac2452cabb31484e501d0e568a342c3" title="Function to generate an ID.">getGeneratedName</a> (<span class="keyword">const</span> <span class="keywordtype">char</span>* format,
-<a name="l00200"></a>00200                     <span class="keywordtype">int</span> cpt,
-<a name="l00201"></a>00201                     <a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1" title="The type of id generated.">IdType</a> type,
-<a name="l00202"></a>00202                     std::string name = <span class="stringliteral">&quot;&quot;</span>,
-<a name="l00203"></a>00203                     std::string site =<span class="stringliteral">&quot;&quot;</span>);
-<a name="l00204"></a>00204 
+<a name="l00051"></a><a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1afb06f51582220be5d9536a855abf0ae0">00051</a>     <a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1afb06f51582220be5d9536a855abf0ae0">FILETRANSFERT</a> = 3,  
+<a name="l00052"></a><a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1a0da08c20150dd243cbb21a9281fb62bc">00052</a>     <a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1a0da08c20150dd243cbb21a9281fb62bc">AUTH</a> = 4  
+<a name="l00053"></a>00053   } IdType;
+<a name="l00058"></a><a class="code" href="namespacevishnu.html#a5513f86dabac3cd717c915498a7679ad">00058</a>   <span class="keyword">typedef</span> <span class="keyword">enum</span>{
+<a name="l00059"></a><a class="code" href="namespacevishnu.html#a5513f86dabac3cd717c915498a7679adae7dab65b7ae704dfe53ba3db119c0777">00059</a>     <a class="code" href="namespacevishnu.html#a5513f86dabac3cd717c915498a7679adae7dab65b7ae704dfe53ba3db119c0777">CMDFAILED</a> = 0, 
+<a name="l00060"></a><a class="code" href="namespacevishnu.html#a5513f86dabac3cd717c915498a7679ada5a52e3ba3082e971180e246724851e1e">00060</a>     <a class="code" href="namespacevishnu.html#a5513f86dabac3cd717c915498a7679ada5a52e3ba3082e971180e246724851e1e">CMDSUCCESS</a> = 1,
+<a name="l00061"></a>00061   } CmdStatus;
+<a name="l00062"></a>00062 
+<a name="l00067"></a><a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532">00067</a>   <span class="keyword">typedef</span> <span class="keyword">enum</span>{
+<a name="l00068"></a><a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532aef0c4900387b5f9b2dd3b69461496076">00068</a>     <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532aef0c4900387b5f9b2dd3b69461496076">UMS</a> = 0,
+<a name="l00069"></a><a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532ac3d2bb0714b1648919ed78505187593e">00069</a>     <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532ac3d2bb0714b1648919ed78505187593e">TMS</a> = 1,
+<a name="l00070"></a><a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532a704905f0ffb93e17cd67290254367070">00070</a>     <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532a704905f0ffb93e17cd67290254367070">FMS</a> = 2,
+<a name="l00071"></a><a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532a018268bc806e44e84514c2c4f8cb7e71">00071</a>     <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532a018268bc806e44e84514c2c4f8cb7e71">IMS</a> = 3
+<a name="l00072"></a>00072   } CmdType;
+<a name="l00073"></a>00073 
+<a name="l00077"></a>00077   <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> PUNDEF = 0;
+<a name="l00081"></a>00081   <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> PRUNNING = 1;
+<a name="l00085"></a>00085   <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> PDOWN = 2;
+<a name="l00086"></a>00086 
+<a name="l00094"></a>00094   <span class="keywordtype">int</span>
+<a name="l00095"></a>00095   <a class="code" href="namespacevishnu.html#a9f137bd109d564a7366b3a847581d7f6" title="To register the server in the database.">registerSeD</a>(std::string type, <a class="code" href="classExecConfiguration.html" title="Program configuration based on key/value pairs stored in a file.">ExecConfiguration</a> config, std::string &amp;cfg);
+<a name="l00102"></a>00102   <span class="keywordtype">int</span>
+<a name="l00103"></a>00103   <a class="code" href="namespacevishnu.html#ac55cf69f136045543c4586d42e3731a7" title="To unregister the server in the database (set as stopped).">unregisterSeD</a>(std::string type, std::string mid);
+<a name="l00104"></a>00104 
+<a name="l00111"></a>00111   <span class="keywordtype">int</span> <a class="code" href="namespacevishnu.html#ae3f61f1465ef34d3cf2f20c67a019b43" title="Return true if the string starts with &amp;#39;MONTH&amp;#39;.">isMonth</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);
+<a name="l00118"></a>00118   <span class="keywordtype">int</span> <a class="code" href="namespacevishnu.html#a646794297931366c08502e5079154ccd" title="Return true if the string starts with &amp;#39;YEAR&amp;#39;.">isYear</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);
+<a name="l00125"></a>00125   <span class="keywordtype">int</span> <a class="code" href="namespacevishnu.html#a36b8edc2218c332a4a59f2e39109d627" title="Return true if the string starts with &amp;#39;SITE&amp;#39;.">isSite</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);
+<a name="l00132"></a>00132   <span class="keywordtype">int</span> <a class="code" href="namespacevishnu.html#abaf2c02608b3d96f1f883d65966595a5" title="Return true if the string starts with &amp;#39;TYPE&amp;#39;.">isType</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);
+<a name="l00139"></a>00139   <span class="keywordtype">int</span> <a class="code" href="namespacevishnu.html#ac123696febe0c4b8fa9f6d59daa6062b" title="Return true if the string starts with &amp;#39;UNAME&amp;#39;.">isUName</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);
+<a name="l00146"></a>00146   <span class="keywordtype">int</span> <a class="code" href="namespacevishnu.html#ad10441f9e198c7d70038dcd74963dc54" title="Return true if the string starts with &amp;#39;MANAME&amp;#39;.">isMaName</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);
+<a name="l00153"></a>00153   <span class="keywordtype">int</span> <a class="code" href="namespacevishnu.html#a11a59f26c9f250498ef8aed73e316c8b" title="Return true if the string starts with &amp;#39;DAY&amp;#39;.">isDay</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);
+<a name="l00160"></a>00160   <span class="keywordtype">int</span> <a class="code" href="namespacevishnu.html#a9f8370bcc63bc78bd464447eecbee191" title="Return true if the string starts with &amp;#39;CPT&amp;#39;.">isCpt</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);
+<a name="l00161"></a>00161 
+<a name="l00178"></a>00178   <span class="keywordtype">int</span>
+<a name="l00179"></a>00179   <a class="code" href="namespacevishnu.html#a04e3438b8bba4e8074e5102cccfd6cd1" title="Parse the format and fill the array with the variable and their value.">getKeywords</a> (<span class="keywordtype">int</span>* size, <a class="code" href="structFormat__t.html" title="The class used to get the variables of the string to parse.">Format_t</a>* array,
+<a name="l00180"></a>00180                <span class="keyword">const</span> <span class="keywordtype">char</span>* format,
+<a name="l00181"></a>00181                <span class="keywordtype">int</span> cpt, <a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1" title="The type of id generated.">IdType</a> type,
+<a name="l00182"></a>00182                std::string name,
+<a name="l00183"></a>00183                std::string site);
+<a name="l00184"></a>00184 
+<a name="l00199"></a>00199   std::string
+<a name="l00200"></a>00200   <a class="code" href="namespacevishnu.html#a1ac2452cabb31484e501d0e568a342c3" title="Function to generate an ID.">getGeneratedName</a> (<span class="keyword">const</span> <span class="keywordtype">char</span>* format,
+<a name="l00201"></a>00201                     <span class="keywordtype">int</span> cpt,
+<a name="l00202"></a>00202                     <a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1" title="The type of id generated.">IdType</a> type,
+<a name="l00203"></a>00203                     std::string name = <span class="stringliteral">&quot;&quot;</span>,
+<a name="l00204"></a>00204                     std::string site =<span class="stringliteral">&quot;&quot;</span>);
+<a name="l00205"></a>00205 
 <a name="l00211"></a>00211   <span class="keywordtype">int</span>
-<a name="l00212"></a>00212   <a class="code" href="namespacevishnu.html#a375f62c2679d5571765ec88609c2e58e" title="Function to get a specific vishnu counter.">getVishnuCounter</a>(std::string counterName, std::string vishnuId);
+<a name="l00212"></a>00212   <a class="code" href="namespacevishnu.html#a271d4c5985867ad070315d3176aee067" title="Function to get a specific vishnu counter.">getVishnuCounter</a>(std::string vishnuId);
 <a name="l00213"></a>00213 
 <a name="l00221"></a>00221   std::string
 <a name="l00222"></a>00222   <a class="code" href="namespacevishnu.html#a9fe5e4380f975a9464b670661facd3ba" title="Function to get information from the table vishnu.">getAttrVishnu</a>(std::string attrname, std::string vishnuid, <span class="keywordtype">int</span> transacId = -1);
@@ -107,40 +108,39 @@
 <a name="l00230"></a>00230   <span class="keywordtype">void</span>
 <a name="l00231"></a>00231   <a class="code" href="namespacevishnu.html#ad0a54a97a8e3dc594ab1b1be77e63e4a" title="Function to increment a counter of the table vishnu.">incrementCpt</a>(std::string cptName, <span class="keywordtype">int</span> cpt, <span class="keywordtype">int</span> transacId = -1);
 <a name="l00232"></a>00232 
-<a name="l00242"></a>00242   std::string
-<a name="l00243"></a>00243   <a class="code" href="namespacevishnu.html#a9349617bc14f92c6dfe67745dcbac8ff" title="Function to get an Id generated by VISHNU.">getObjectId</a>(<span class="keywordtype">int</span> vishnuId,
-<a name="l00244"></a>00244               std::string counterName,
-<a name="l00245"></a>00245               std::string formatName,
-<a name="l00246"></a>00246               <a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1" title="The type of id generated.">IdType</a> type,
-<a name="l00247"></a>00247               std::string stringforgeneration);
-<a name="l00248"></a>00248 
-<a name="l00256"></a>00256   <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;
-<a name="l00257"></a><a class="code" href="namespacevishnu.html#a864d60dc9a2f4fe9048e522718698e84">00257</a>   <span class="keywordtype">bool</span> <a class="code" href="namespacevishnu.html#a864d60dc9a2f4fe9048e522718698e84" title="Function to parse the EMF object.">parseEmfObject</a>(<span class="keyword">const</span> std::string&amp; objectSerialized, T*&amp; object_ptr, <span class="keyword">const</span> std::string msgComp=std::string()) {
-<a name="l00258"></a>00258 
-<a name="l00259"></a>00259     object_ptr = NULL;
-<a name="l00260"></a>00260     <span class="keywordflow">try</span> {
-<a name="l00261"></a>00261       <span class="comment">//CREATE DATA MODEL</span>
-<a name="l00262"></a>00262       T tmpObject;
-<a name="l00263"></a>00263       ecore::EPackage_ptr ecorePackage = tmpObject._eClass()-&gt;getEPackage();
-<a name="l00264"></a>00264       ecorecpp::MetaModelRepository::_instance()-&gt;load(ecorePackage);
-<a name="l00265"></a>00265 
-<a name="l00266"></a>00266       <span class="comment">//Parse the model</span>
-<a name="l00267"></a>00267       ecorecpp::parser::parser parser;
-<a name="l00268"></a>00268       object_ptr = parser.load_str(objectSerialized)-&gt;as&lt; T &gt;();
-<a name="l00269"></a>00269     }
-<a name="l00270"></a>00270     <span class="keywordflow">catch</span> (std::exception&amp; e) {
-<a name="l00271"></a>00271       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00272"></a>00272     }
-<a name="l00273"></a>00273     <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00274"></a>00274   }
-<a name="l00275"></a>00275 
-<a name="l00281"></a>00281 std::string <a class="code" href="namespacevishnu.html#aaf3976b9b53965c46bc9bcf847ba286f" title="Function to parse a system error message.">parseErrorMessage</a> (<span class="keyword">const</span> std::string&amp; errorMsg);
-<a name="l00282"></a>00282 
-<a name="l00283"></a>00283 }
-<a name="l00284"></a>00284 <span class="preprocessor">#endif //_UTILSERVER_H_</span>
+<a name="l00241"></a>00241   std::string
+<a name="l00242"></a>00242   <a class="code" href="namespacevishnu.html#a30bb53b4946eb95ea87bfc18f94e56f4" title="Function to get an Id generated by VISHNU.">getObjectId</a>(<span class="keywordtype">int</span> vishnuId,
+<a name="l00243"></a>00243               std::string formatName,
+<a name="l00244"></a>00244               <a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1" title="The type of id generated.">IdType</a> type,
+<a name="l00245"></a>00245               std::string stringforgeneration);
+<a name="l00246"></a>00246 
+<a name="l00254"></a>00254   <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;
+<a name="l00255"></a><a class="code" href="namespacevishnu.html#a864d60dc9a2f4fe9048e522718698e84">00255</a>   <span class="keywordtype">bool</span> <a class="code" href="namespacevishnu.html#a864d60dc9a2f4fe9048e522718698e84" title="Function to parse the EMF object.">parseEmfObject</a>(<span class="keyword">const</span> std::string&amp; objectSerialized, T*&amp; object_ptr, <span class="keyword">const</span> std::string msgComp=std::string()) {
+<a name="l00256"></a>00256 
+<a name="l00257"></a>00257     object_ptr = NULL;
+<a name="l00258"></a>00258     <span class="keywordflow">try</span> {
+<a name="l00259"></a>00259       <span class="comment">//CREATE DATA MODEL</span>
+<a name="l00260"></a>00260       T tmpObject;
+<a name="l00261"></a>00261       ecore::EPackage_ptr ecorePackage = tmpObject._eClass()-&gt;getEPackage();
+<a name="l00262"></a>00262       ecorecpp::MetaModelRepository::_instance()-&gt;load(ecorePackage);
+<a name="l00263"></a>00263 
+<a name="l00264"></a>00264       <span class="comment">//Parse the model</span>
+<a name="l00265"></a>00265       ecorecpp::parser::parser parser;
+<a name="l00266"></a>00266       object_ptr = parser.load_str(objectSerialized)-&gt;as&lt; T &gt;();
+<a name="l00267"></a>00267     }
+<a name="l00268"></a>00268     <span class="keywordflow">catch</span> (std::exception&amp; e) {
+<a name="l00269"></a>00269       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00270"></a>00270     }
+<a name="l00271"></a>00271     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00272"></a>00272   }
+<a name="l00273"></a>00273 
+<a name="l00279"></a>00279 std::string <a class="code" href="namespacevishnu.html#aaf3976b9b53965c46bc9bcf847ba286f" title="Function to parse a system error message.">parseErrorMessage</a> (<span class="keyword">const</span> std::string&amp; errorMsg);
+<a name="l00280"></a>00280 
+<a name="l00281"></a>00281 }
+<a name="l00282"></a>00282 <span class="preprocessor">#endif //_UTILSERVER_H_</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:42 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:13 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

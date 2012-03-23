@@ -1,0 +1,160 @@
+\hypertarget{classLDAPProxy}{
+\section{LDAPProxy Class Reference}
+\label{classLDAPProxy}\index{LDAPProxy@{LDAPProxy}}
+}
+
+
+\hyperlink{classLDAPProxy}{LDAPProxy} class implementation.  
+
+
+
+
+{\ttfamily \#include $<$LDAPProxy.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classLDAPProxy_aac822777e834894496c1e0f2458afd70}{LDAPProxy} (const string \&uri, const string \&userName, const string \&authMechanism, const string \&password, LDAPControl $\ast$serverCtrls=NULL, LDAPControl $\ast$clientCtrls=NULL)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+int \hyperlink{classLDAPProxy_a3bcc20d5a8830e21438e60143d014d11}{connectLDAP} (const string \&ldapbase)
+\begin{DoxyCompactList}\small\item\em Function to initialize a connection on a LDAP server. \item\end{DoxyCompactList}\item 
+\hypertarget{classLDAPProxy_aa232923a22cf311ecf941d7dc02ef896}{
+\hyperlink{classLDAPProxy_aa232923a22cf311ecf941d7dc02ef896}{$\sim$LDAPProxy} ()}
+\label{classLDAPProxy_aa232923a22cf311ecf941d7dc02ef896}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classLDAPProxy_a7cb44d3717d2654ac29f073de2e59c49}{extract} (const string \&base, string \&res)
+\begin{DoxyCompactList}\small\item\em Function to extract and replace the \$username part of the base and store it in res. \item\end{DoxyCompactList}\item 
+int \hyperlink{classLDAPProxy_a7c5ce7790b1fa23ca64cb5ada48266ca}{bind} (string \&fullUserPath)
+\begin{DoxyCompactList}\small\item\em Perform the bind to the ldap object. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classLDAPProxy_ae6204275667aa75aed99574a2cf0d4ec}{
+LDAP $\ast$ \hyperlink{classLDAPProxy_ae6204275667aa75aed99574a2cf0d4ec}{mld}}
+\label{classLDAPProxy_ae6204275667aa75aed99574a2cf0d4ec}
+
+\begin{DoxyCompactList}\small\item\em An LDAP structure. \item\end{DoxyCompactList}\item 
+\hypertarget{classLDAPProxy_ae31fa74098173a509b3d3032d5a32271}{
+string \hyperlink{classLDAPProxy_ae31fa74098173a509b3d3032d5a32271}{muri}}
+\label{classLDAPProxy_ae31fa74098173a509b3d3032d5a32271}
+
+\begin{DoxyCompactList}\small\item\em The LDAP uri by of the form host:port. \item\end{DoxyCompactList}\item 
+\hypertarget{classLDAPProxy_a6cc190dd28d1b2e04659eb1741691941}{
+string \hyperlink{classLDAPProxy_a6cc190dd28d1b2e04659eb1741691941}{muserName}}
+\label{classLDAPProxy_a6cc190dd28d1b2e04659eb1741691941}
+
+\begin{DoxyCompactList}\small\item\em the distinguished name of the entry used to bind \item\end{DoxyCompactList}\item 
+\hypertarget{classLDAPProxy_ac59af93b311ce931874d45b647d85936}{
+string \hyperlink{classLDAPProxy_ac59af93b311ce931874d45b647d85936}{mauthMechanism}}
+\label{classLDAPProxy_ac59af93b311ce931874d45b647d85936}
+
+\begin{DoxyCompactList}\small\item\em the authentication method used \item\end{DoxyCompactList}\item 
+\hypertarget{classLDAPProxy_a04e84336aebbd032b1e88b3042f918a0}{
+string \hyperlink{classLDAPProxy_a04e84336aebbd032b1e88b3042f918a0}{mpwd}}
+\label{classLDAPProxy_a04e84336aebbd032b1e88b3042f918a0}
+
+\begin{DoxyCompactList}\small\item\em the credential to use for authentication \item\end{DoxyCompactList}\item 
+\hypertarget{classLDAPProxy_a51bc2b18f5f1243833d088cdef7613d7}{
+LDAPControl $\ast$ \hyperlink{classLDAPProxy_a51bc2b18f5f1243833d088cdef7613d7}{mserverCtrls}}
+\label{classLDAPProxy_a51bc2b18f5f1243833d088cdef7613d7}
+
+\begin{DoxyCompactList}\small\item\em the server controls \item\end{DoxyCompactList}\item 
+\hypertarget{classLDAPProxy_aa73f8142e443cde01909d3d3046495af}{
+LDAPControl $\ast$ \hyperlink{classLDAPProxy_aa73f8142e443cde01909d3d3046495af}{mclientCtrls}}
+\label{classLDAPProxy_aa73f8142e443cde01909d3d3046495af}
+
+\begin{DoxyCompactList}\small\item\em the client controls \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classLDAPProxy}{LDAPProxy} class implementation. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classLDAPProxy_aac822777e834894496c1e0f2458afd70}{
+\index{LDAPProxy@{LDAPProxy}!LDAPProxy@{LDAPProxy}}
+\index{LDAPProxy@{LDAPProxy}!LDAPProxy@{LDAPProxy}}
+\subsubsection[{LDAPProxy}]{\setlength{\rightskip}{0pt plus 5cm}LDAPProxy::LDAPProxy (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{ uri, }
+\item[{const string \&}]{ userName, }
+\item[{const string \&}]{ authMechanism, }
+\item[{const string \&}]{ password, }
+\item[{LDAPControl $\ast$}]{ serverCtrls = {\ttfamily NULL}, }
+\item[{LDAPControl $\ast$}]{ clientCtrls = {\ttfamily NULL}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
+\label{classLDAPProxy_aac822777e834894496c1e0f2458afd70}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em uri}]The LDAP uri by of the form host:port \item[{\em userName}]the user name \item[{\em authMechanism}]the authentication method used to bind \item[{\em password}]the password of the user \item[{\em serverCtrls}]A list of LDAP server controls \item[{\em clientCtrls}]A list of LDAP client controls \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classLDAPProxy_a7c5ce7790b1fa23ca64cb5ada48266ca}{
+\index{LDAPProxy@{LDAPProxy}!bind@{bind}}
+\index{bind@{bind}!LDAPProxy@{LDAPProxy}}
+\subsubsection[{bind}]{\setlength{\rightskip}{0pt plus 5cm}int LDAPProxy::bind (
+\begin{DoxyParamCaption}
+\item[{string \&}]{ fullUserPath}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classLDAPProxy_a7c5ce7790b1fa23ca64cb5ada48266ca}
+
+
+Perform the bind to the ldap object. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em fullUserPath}]The path in the ldap to from the root to the user location \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success (same as ldap\_\-bind) 
+\end{DoxyReturn}
+\hypertarget{classLDAPProxy_a3bcc20d5a8830e21438e60143d014d11}{
+\index{LDAPProxy@{LDAPProxy}!connectLDAP@{connectLDAP}}
+\index{connectLDAP@{connectLDAP}!LDAPProxy@{LDAPProxy}}
+\subsubsection[{connectLDAP}]{\setlength{\rightskip}{0pt plus 5cm}int LDAPProxy::connectLDAP (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{ ldapbase}
+\end{DoxyParamCaption}
+)}}
+\label{classLDAPProxy_a3bcc20d5a8830e21438e60143d014d11}
+
+
+Function to initialize a connection on a LDAP server. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em ldapbase}]the ldapbase of the ldap system \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+If the connection was a succes or an error code 
+\end{DoxyReturn}
+\hypertarget{classLDAPProxy_a7cb44d3717d2654ac29f073de2e59c49}{
+\index{LDAPProxy@{LDAPProxy}!extract@{extract}}
+\index{extract@{extract}!LDAPProxy@{LDAPProxy}}
+\subsubsection[{extract}]{\setlength{\rightskip}{0pt plus 5cm}void LDAPProxy::extract (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{ base, }
+\item[{string \&}]{ res}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classLDAPProxy_a7cb44d3717d2654ac29f073de2e59c49}
+
+
+Function to extract and replace the \$username part of the base and store it in res. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em base}]ldap base to extract the \$USERNAME substring \item[{\em res}]the base string with \$USERNAME replaced by the login \end{DoxyParams}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+core/src/authenticator/ldap/\hyperlink{LDAPProxy_8hpp}{LDAPProxy.hpp}\end{DoxyCompactItemize}

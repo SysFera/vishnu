@@ -37,7 +37,7 @@
 <a name="l00013"></a>00013 <span class="keyword">class </span><a class="code" href="classOptions.html" title="Used to process the users command line parameters.">Options</a>;
 <a name="l00014"></a>00014 
 <a name="l00015"></a>00015 
-<a name="l00022"></a>00022 <span class="keywordtype">void</span> 
+<a name="l00022"></a>00022 <span class="keywordtype">void</span>
 <a name="l00023"></a>00023 <a class="code" href="utils_8hpp.html#abf3aa08d0f9d8488c285a7a142db9b75" title="Display a &amp;#39;-&amp;#39; caracter.">setFill</a>(<span class="keywordtype">int</span> size, std::ostream&amp; os) ;
 <a name="l00024"></a>00024 
 <a name="l00034"></a>00034 std::ostream&amp;
@@ -49,42 +49,61 @@
 <a name="l00055"></a>00055 std::ostream&amp;
 <a name="l00056"></a>00056 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os, <span class="keyword">const</span> UMS_Data::LocalAccount_ptr&amp; account);
 <a name="l00057"></a>00057 
-<a name="l00066"></a>00066 std::ostream&amp;
-<a name="l00067"></a>00067 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os, UMS_Data::ListLocalAccounts&amp; lsLocalAccounts);
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069 
-<a name="l00079"></a>00079 std::ostream&amp;
-<a name="l00080"></a>00080 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os, <span class="keyword">const</span> UMS_Data::Machine_ptr&amp; machine);
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082 
-<a name="l00090"></a>00090 std::ostream&amp;
-<a name="l00091"></a>00091 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os, UMS_Data::ListMachines&amp; lsMachine);
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093 
-<a name="l00102"></a>00102 std::ostream&amp;
-<a name="l00103"></a>00103 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os, <span class="keyword">const</span> UMS_Data::Command_ptr&amp; command);
-<a name="l00104"></a>00104 
-<a name="l00113"></a>00113 std::ostream&amp; 
-<a name="l00114"></a>00114 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os, UMS_Data::ListCommands&amp; lsCommand);
+<a name="l00065"></a>00065 std::ostream&amp;
+<a name="l00066"></a>00066 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os, UMS_Data::ListLocalAccounts&amp; lsLocalAccounts);
+<a name="l00067"></a>00067 
+<a name="l00075"></a>00075 std::ostream&amp;
+<a name="l00076"></a>00076 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os, <span class="keyword">const</span> UMS_Data::AuthSystem_ptr&amp; authSystem);
+<a name="l00077"></a>00077 
+<a name="l00085"></a>00085 std::ostream&amp;
+<a name="l00086"></a>00086 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os, UMS_Data::ListAuthSystems&amp; lsAuthSystems);
+<a name="l00087"></a>00087 
+<a name="l00088"></a>00088 
+<a name="l00096"></a>00096 std::ostream&amp;
+<a name="l00097"></a>00097 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os, <span class="keyword">const</span> UMS_Data::AuthAccount_ptr&amp; authAccount);
+<a name="l00098"></a>00098 
+<a name="l00106"></a>00106 std::ostream&amp;
+<a name="l00107"></a>00107 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os, UMS_Data::ListAuthAccounts&amp; lsAuthAccounts);
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109 
+<a name="l00110"></a>00110 
+<a name="l00111"></a>00111 
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113 
+<a name="l00114"></a>00114 
 <a name="l00115"></a>00115 
 <a name="l00125"></a>00125 std::ostream&amp;
-<a name="l00126"></a>00126 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os,<span class="keyword">const</span> UMS_Data::OptionValue_ptr&amp; optionValue);
+<a name="l00126"></a>00126 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os, <span class="keyword">const</span> UMS_Data::Machine_ptr&amp; machine);
 <a name="l00127"></a>00127 
+<a name="l00128"></a>00128 
 <a name="l00136"></a>00136 std::ostream&amp;
-<a name="l00137"></a>00137 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os, UMS_Data::ListOptionsValues&amp; lsOptions);
+<a name="l00137"></a>00137 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os, UMS_Data::ListMachines&amp; lsMachine);
 <a name="l00138"></a>00138 
-<a name="l00146"></a>00146 std::ostream&amp;
-<a name="l00147"></a>00147 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os, <span class="keyword">const</span> UMS_Data::User_ptr&amp; user);
-<a name="l00148"></a>00148 
-<a name="l00156"></a>00156 std::ostream&amp;
-<a name="l00157"></a>00157 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os, UMS_Data::ListUsers&amp; lsUsers);
-<a name="l00158"></a>00158 
-<a name="l00159"></a>00159 
-<a name="l00160"></a>00160 
-<a name="l00161"></a>00161 <span class="preprocessor">#endif</span>
+<a name="l00139"></a>00139 
+<a name="l00148"></a>00148 std::ostream&amp;
+<a name="l00149"></a>00149 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os, <span class="keyword">const</span> UMS_Data::Command_ptr&amp; command);
+<a name="l00150"></a>00150 
+<a name="l00159"></a>00159 std::ostream&amp;
+<a name="l00160"></a>00160 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os, UMS_Data::ListCommands&amp; lsCommand);
+<a name="l00161"></a>00161 
+<a name="l00171"></a>00171 std::ostream&amp;
+<a name="l00172"></a>00172 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os,<span class="keyword">const</span> UMS_Data::OptionValue_ptr&amp; optionValue);
+<a name="l00173"></a>00173 
+<a name="l00182"></a>00182 std::ostream&amp;
+<a name="l00183"></a>00183 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os, UMS_Data::ListOptionsValues&amp; lsOptions);
+<a name="l00184"></a>00184 
+<a name="l00192"></a>00192 std::ostream&amp;
+<a name="l00193"></a>00193 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os, <span class="keyword">const</span> UMS_Data::User_ptr&amp; user);
+<a name="l00194"></a>00194 
+<a name="l00202"></a>00202 std::ostream&amp;
+<a name="l00203"></a>00203 <a class="code" href="Options_8hpp.html#a1772ef9b3f0665605d4aea3794c7fde3" title="A helper function to simplify the display of vector.">operator&lt;&lt;</a>(std::ostream&amp; os, UMS_Data::ListUsers&amp; lsUsers);
+<a name="l00204"></a>00204 
+<a name="l00205"></a>00205 
+<a name="l00206"></a>00206 
+<a name="l00207"></a>00207 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:42 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:13 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

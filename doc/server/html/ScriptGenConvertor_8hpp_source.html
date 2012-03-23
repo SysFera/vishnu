@@ -70,64 +70,65 @@
 <a name="l00047"></a>00047 <span class="keyword">static</span> <span class="keyword">const</span> std::string loadLevelerSec      = <span class="stringliteral">&quot;loadleveler_sec&quot;</span>;
 <a name="l00048"></a>00048 <span class="keyword">static</span> <span class="keyword">const</span> std::string torqueSec           = <span class="stringliteral">&quot;torque_sec&quot;</span>;
 <a name="l00049"></a>00049 <span class="keyword">static</span> <span class="keyword">const</span> std::string slurmSec            = <span class="stringliteral">&quot;slurm_sec&quot;</span>;
-<a name="l00050"></a>00050 <span class="keyword">static</span> <span class="keyword">const</span> std::string commandSec          = <span class="stringliteral">&quot;command_sec&quot;</span>;
-<a name="l00051"></a>00051 
-<a name="l00056"></a><a class="code" href="classScriptGenConvertor.html">00056</a> <span class="keyword">class </span><a class="code" href="classScriptGenConvertor.html" title="ScriptGenConvertor class implementation.">ScriptGenConvertor</a> {
-<a name="l00057"></a>00057 
-<a name="l00058"></a>00058   <span class="keyword">public</span> :
-<a name="l00059"></a>00059 
-<a name="l00065"></a>00065     <a class="code" href="classScriptGenConvertor.html" title="ScriptGenConvertor class implementation.">ScriptGenConvertor</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> batchType, 
-<a name="l00066"></a>00066                        <span class="keyword">const</span> std::string&amp;  scriptGenContent);
-<a name="l00067"></a>00067 
-<a name="l00073"></a>00073     <span class="keywordtype">int</span> 
-<a name="l00074"></a>00074     parseFile(std::string&amp; errorMessage);
-<a name="l00075"></a>00075 
-<a name="l00079"></a>00079     std::string 
-<a name="l00080"></a>00080     getConvertedScript();
-<a name="l00081"></a>00081 
-<a name="l00085"></a>00085     <span class="keywordtype">void</span> 
-<a name="l00086"></a>00086     initializeTableOfSymbols(); 
-<a name="l00087"></a>00087 
-<a name="l00091"></a>00091     <span class="keywordtype">bool</span> 
-<a name="l00092"></a>00092     scriptIsGeneric();
-<a name="l00093"></a>00093 
-<a name="l00097"></a>00097     ~<a class="code" href="classScriptGenConvertor.html" title="ScriptGenConvertor class implementation.">ScriptGenConvertor</a>();
-<a name="l00098"></a>00098 
-<a name="l00099"></a>00099   <span class="keyword">private</span>:
-<a name="l00100"></a>00100 
-<a name="l00107"></a>00107     <span class="keywordtype">void</span>
-<a name="l00108"></a>00108       findAndReplace(<span class="keyword">const</span> std::string&amp; ppn,
-<a name="l00109"></a>00109           <span class="keyword">const</span> std::string&amp; nbCpuStr,
-<a name="l00110"></a>00110           std::string&amp; str);
-<a name="l00111"></a>00111 
-<a name="l00120"></a>00120     <span class="keywordtype">void</span>
-<a name="l00121"></a>00121       findAndInsert(<span class="keyword">const</span> std::string&amp; oldValue,
-<a name="l00122"></a>00122           <span class="keyword">const</span> std::string&amp; newValue,
-<a name="l00123"></a>00123           <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; begin,
-<a name="l00124"></a>00124           <span class="keywordtype">size_t</span>&amp; end,
-<a name="l00125"></a>00125           std::string&amp; str);
-<a name="l00126"></a>00126     
-<a name="l00130"></a><a class="code" href="classScriptGenConvertor.html#a5b172ac6cd19034e663f583316354a92">00130</a>     <span class="keyword">const</span> <span class="keywordtype">int</span> mbatchType;
-<a name="l00131"></a>00131     
-<a name="l00135"></a><a class="code" href="classScriptGenConvertor.html#aa991805a04d857ee01cacad20834bde8">00135</a>     <span class="keyword">const</span> std::string mscriptGenContent;
-<a name="l00136"></a>00136 
-<a name="l00141"></a><a class="code" href="classScriptGenConvertor.html#aaa03e9e80e98f8baf8774a8a5f99b338">00141</a>     std::vector&lt; pair&lt;std::string, std::string&gt; &gt; mjobDescriptor;
-<a name="l00142"></a>00142   
-<a name="l00147"></a><a class="code" href="classScriptGenConvertor.html#abcb4cef424940a8ffefe5fc56605b2a9">00147</a>     std::map&lt;std::string, std::string&gt;  mconversionTable;
-<a name="l00148"></a>00148   
-<a name="l00152"></a><a class="code" href="classScriptGenConvertor.html#a9678ded89d16c1d739e45991c663e6ad">00152</a>     std::vector&lt;std::string&gt; mtableOfSymbols;
-<a name="l00153"></a>00153   
-<a name="l00157"></a><a class="code" href="classScriptGenConvertor.html#aa57231ad5aa90bfaddf7a65c97686d03">00157</a>     std::string mendScript;
-<a name="l00158"></a>00158 };
-<a name="l00159"></a>00159 
-<a name="l00166"></a>00166 boost::shared_ptr&lt;ScriptGenConvertor&gt;  
-<a name="l00167"></a>00167 <a class="code" href="ScriptGenConvertor_8hpp.html#aea64fdbcefd645c62b4d036ecce93ef5" title="Function to return the generic script convertor.">vishnuScriptGenConvertor</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> batchType, 
-<a name="l00168"></a>00168                          <span class="keyword">const</span> std::string&amp; scriptGenContent);
-<a name="l00169"></a>00169 
-<a name="l00170"></a>00170 <span class="preprocessor">#endif</span>
+<a name="l00050"></a>00050 <span class="keyword">static</span> <span class="keyword">const</span> std::string lsfSec              = <span class="stringliteral">&quot;lsf_sec&quot;</span>;
+<a name="l00051"></a>00051 <span class="keyword">static</span> <span class="keyword">const</span> std::string commandSec          = <span class="stringliteral">&quot;command_sec&quot;</span>;
+<a name="l00052"></a>00052 
+<a name="l00057"></a><a class="code" href="classScriptGenConvertor.html">00057</a> <span class="keyword">class </span><a class="code" href="classScriptGenConvertor.html" title="ScriptGenConvertor class implementation.">ScriptGenConvertor</a> {
+<a name="l00058"></a>00058 
+<a name="l00059"></a>00059   <span class="keyword">public</span> :
+<a name="l00060"></a>00060 
+<a name="l00066"></a>00066     <a class="code" href="classScriptGenConvertor.html" title="ScriptGenConvertor class implementation.">ScriptGenConvertor</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> batchType, 
+<a name="l00067"></a>00067                        <span class="keyword">const</span> std::string&amp;  scriptGenContent);
+<a name="l00068"></a>00068 
+<a name="l00074"></a>00074     <span class="keywordtype">int</span> 
+<a name="l00075"></a>00075     parseFile(std::string&amp; errorMessage);
+<a name="l00076"></a>00076 
+<a name="l00080"></a>00080     std::string 
+<a name="l00081"></a>00081     getConvertedScript();
+<a name="l00082"></a>00082 
+<a name="l00086"></a>00086     <span class="keywordtype">void</span> 
+<a name="l00087"></a>00087     initializeTableOfSymbols(); 
+<a name="l00088"></a>00088 
+<a name="l00092"></a>00092     <span class="keywordtype">bool</span> 
+<a name="l00093"></a>00093     scriptIsGeneric();
+<a name="l00094"></a>00094 
+<a name="l00098"></a>00098     ~<a class="code" href="classScriptGenConvertor.html" title="ScriptGenConvertor class implementation.">ScriptGenConvertor</a>();
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100   <span class="keyword">private</span>:
+<a name="l00101"></a>00101 
+<a name="l00108"></a>00108     <span class="keywordtype">void</span>
+<a name="l00109"></a>00109       findAndReplace(<span class="keyword">const</span> std::string&amp; ppn,
+<a name="l00110"></a>00110           <span class="keyword">const</span> std::string&amp; nbCpuStr,
+<a name="l00111"></a>00111           std::string&amp; str);
+<a name="l00112"></a>00112 
+<a name="l00121"></a>00121     <span class="keywordtype">void</span>
+<a name="l00122"></a>00122       findAndInsert(<span class="keyword">const</span> std::string&amp; oldValue,
+<a name="l00123"></a>00123           <span class="keyword">const</span> std::string&amp; newValue,
+<a name="l00124"></a>00124           <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; begin,
+<a name="l00125"></a>00125           <span class="keywordtype">size_t</span>&amp; end,
+<a name="l00126"></a>00126           std::string&amp; str);
+<a name="l00127"></a>00127     
+<a name="l00131"></a><a class="code" href="classScriptGenConvertor.html#a5b172ac6cd19034e663f583316354a92">00131</a>     <span class="keyword">const</span> <span class="keywordtype">int</span> mbatchType;
+<a name="l00132"></a>00132     
+<a name="l00136"></a><a class="code" href="classScriptGenConvertor.html#aa991805a04d857ee01cacad20834bde8">00136</a>     <span class="keyword">const</span> std::string mscriptGenContent;
+<a name="l00137"></a>00137 
+<a name="l00142"></a><a class="code" href="classScriptGenConvertor.html#aaa03e9e80e98f8baf8774a8a5f99b338">00142</a>     std::vector&lt; pair&lt;std::string, std::string&gt; &gt; mjobDescriptor;
+<a name="l00143"></a>00143   
+<a name="l00148"></a><a class="code" href="classScriptGenConvertor.html#abcb4cef424940a8ffefe5fc56605b2a9">00148</a>     std::map&lt;std::string, std::string&gt;  mconversionTable;
+<a name="l00149"></a>00149   
+<a name="l00153"></a><a class="code" href="classScriptGenConvertor.html#a9678ded89d16c1d739e45991c663e6ad">00153</a>     std::vector&lt;std::string&gt; mtableOfSymbols;
+<a name="l00154"></a>00154   
+<a name="l00158"></a><a class="code" href="classScriptGenConvertor.html#aa57231ad5aa90bfaddf7a65c97686d03">00158</a>     std::string mendScript;
+<a name="l00159"></a>00159 };
+<a name="l00160"></a>00160 
+<a name="l00167"></a>00167 boost::shared_ptr&lt;ScriptGenConvertor&gt;  
+<a name="l00168"></a>00168 <a class="code" href="ScriptGenConvertor_8hpp.html#aea64fdbcefd645c62b4d036ecce93ef5" title="Function to return the generic script convertor.">vishnuScriptGenConvertor</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> batchType, 
+<a name="l00169"></a>00169                          <span class="keyword">const</span> std::string&amp; scriptGenContent);
+<a name="l00170"></a>00170 
+<a name="l00171"></a>00171 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:42 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:13 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

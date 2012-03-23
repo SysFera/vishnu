@@ -68,45 +68,50 @@
 <a name="l00116"></a>00116   <span class="keywordtype">bool</span>
 <a name="l00117"></a>00117   <a class="code" href="classUserServer.html#a26ccae7a3b8ee7e62e2224312119aece" title="Function to check user on database.">exist</a>(<span class="keywordtype">bool</span> flagForChangePwd = <span class="keyword">false</span>);
 <a name="l00123"></a>00123   <span class="keywordtype">bool</span>
-<a name="l00124"></a>00124   <a class="code" href="classUserServer.html#a7dab9117c2ca5a706bb674e43b183255" title="Function to check the VISHNU user privilege.">isAdmin</a>();
-<a name="l00132"></a>00132   <span class="keywordtype">bool</span>
-<a name="l00133"></a>00133   <a class="code" href="classUserServer.html#aecc5dd38cacf2460a187f6e751000c9a" title="Function to check the user attribut value.">isAttributOk</a>(std::string attributName, <span class="keywordtype">int</span> valueOk);<span class="comment">//return if the password state ok</span>
-<a name="l00141"></a>00141 <span class="comment"></span>  std::string
-<a name="l00142"></a>00142   <a class="code" href="classUserServer.html#aaabcde0c694987b990a3ba1af445f718" title="Function to get user information from the database vishnu.">getAttribut</a>(std::string condition, std::string attrname = <span class="stringliteral">&quot;numuserid&quot;</span>);
-<a name="l00149"></a>00149   <span class="keywordtype">bool</span>
-<a name="l00150"></a>00150   <a class="code" href="classUserServer.html#ac61e9715aa922ad746ecd8f788130834" title="Function to check a userId.">existuserId</a>(std::string userId);
-<a name="l00151"></a>00151 
-<a name="l00157"></a>00157   std::string
-<a name="l00158"></a>00158   <a class="code" href="classUserServer.html#a9ad90b441d2caa41be086f046bc58d62" title="Function to get the user account login.">getUserAccountLogin</a>(<span class="keyword">const</span> std::string&amp; machineId);
-<a name="l00159"></a>00159 
-<a name="l00160"></a>00160 
-<a name="l00161"></a>00161 <span class="keyword">private</span>:
-<a name="l00162"></a>00162 
-<a name="l00164"></a>00164   <span class="comment">// Attributes</span>
-<a name="l00166"></a>00166 <span class="comment"></span>
-<a name="l00169"></a><a class="code" href="classUserServer.html#ac6ce31683fb8b809052ddc54f1ec95b4">00169</a>   UMS_Data::User <a class="code" href="classUserServer.html#ac6ce31683fb8b809052ddc54f1ec95b4" title="The user data structure.">muser</a>;
-<a name="l00173"></a><a class="code" href="classUserServer.html#a7917e4e9597c28a5170d169e8ef09c9b">00173</a>   <a class="code" href="classDatabase.html" title="This class describes a database.">Database</a> *<a class="code" href="classUserServer.html#a7917e4e9597c28a5170d169e8ef09c9b" title="An instance of vishnu database.">mdatabaseVishnu</a>;
-<a name="l00177"></a><a class="code" href="classUserServer.html#a74e667762e96a81bc42c686a0e598e09">00177</a>   <a class="code" href="classSessionServer.html" title="UserServer class implementation.">SessionServer</a> *<a class="code" href="classUserServer.html#a74e667762e96a81bc42c686a0e598e09" title="An object which encapsulates session data.">msessionServer</a>;
-<a name="l00178"></a>00178 
-<a name="l00180"></a>00180   <span class="comment">// Functions</span>
-<a name="l00182"></a>00182 <span class="comment"></span>
-<a name="l00189"></a>00189   std::string
-<a name="l00190"></a>00190   <a class="code" href="classUserServer.html#a61f17775588f641c30035349e5e8bfef" title="Function to generate a password.">generatePassword</a>(std::string value1, std::string value2);
-<a name="l00191"></a>00191 
-<a name="l00200"></a>00200   <span class="keywordtype">int</span>
-<a name="l00201"></a>00201   <a class="code" href="classUserServer.html#ac4e5db25963346be0bc57f5b61a1ad59" title="Function to send an email to the user.">sendMailToUser</a>(<span class="keyword">const</span> UMS_Data::User&amp; user,
-<a name="l00202"></a>00202                  std::string content,
-<a name="l00203"></a>00203                  std::string subject,
-<a name="l00204"></a>00204                  std::string sendmailScriptPath);
-<a name="l00205"></a>00205 
-<a name="l00212"></a>00212   std::string
-<a name="l00213"></a>00213   <a class="code" href="classUserServer.html#a4896a5d7bd51b8ad24cf6864ba400487" title="Function to get the email content.">getMailContent</a>(<span class="keyword">const</span> UMS_Data::User&amp; user, <span class="keywordtype">bool</span> flagAdduser);
-<a name="l00214"></a>00214 
-<a name="l00215"></a>00215 };
-<a name="l00216"></a>00216 <span class="preprocessor">#endif</span>
+<a name="l00124"></a>00124   <a class="code" href="classUserServer.html#a42f6a347a80bcf6806c8f944f66cc713" title="Function to authenticate user by using an authentification system.">isAuthenticate</a>(<span class="keywordtype">bool</span> flagForChangePwd = <span class="keyword">false</span>);
+<a name="l00130"></a>00130   <span class="keywordtype">bool</span>
+<a name="l00131"></a>00131   <a class="code" href="classUserServer.html#a7dab9117c2ca5a706bb674e43b183255" title="Function to check the VISHNU user privilege.">isAdmin</a>();
+<a name="l00139"></a>00139   <span class="keywordtype">bool</span>
+<a name="l00140"></a>00140   <a class="code" href="classUserServer.html#aecc5dd38cacf2460a187f6e751000c9a" title="Function to check the user attribut value.">isAttributOk</a>(std::string attributName, <span class="keywordtype">int</span> valueOk);<span class="comment">//return if the password state ok</span>
+<a name="l00148"></a>00148 <span class="comment"></span>  std::string
+<a name="l00149"></a>00149   <a class="code" href="classUserServer.html#aaabcde0c694987b990a3ba1af445f718" title="Function to get user information from the database vishnu.">getAttribut</a>(std::string condition, std::string attrname = <span class="stringliteral">&quot;numuserid&quot;</span>);
+<a name="l00156"></a>00156   <span class="keywordtype">bool</span>
+<a name="l00157"></a>00157   <a class="code" href="classUserServer.html#ac61e9715aa922ad746ecd8f788130834" title="Function to check a userId.">existuserId</a>(std::string userId);
+<a name="l00158"></a>00158 
+<a name="l00164"></a>00164   std::string
+<a name="l00165"></a>00165   <a class="code" href="classUserServer.html#a9ad90b441d2caa41be086f046bc58d62" title="Function to get the user account login.">getUserAccountLogin</a>(<span class="keyword">const</span> std::string&amp; machineId);
+<a name="l00166"></a>00166 
+<a name="l00167"></a>00167 
+<a name="l00168"></a>00168 <span class="keyword">private</span>:
+<a name="l00169"></a>00169 
+<a name="l00171"></a>00171   <span class="comment">// Attributes</span>
+<a name="l00173"></a>00173 <span class="comment"></span>
+<a name="l00176"></a><a class="code" href="classUserServer.html#ac6ce31683fb8b809052ddc54f1ec95b4">00176</a>   UMS_Data::User <a class="code" href="classUserServer.html#ac6ce31683fb8b809052ddc54f1ec95b4" title="The user data structure.">muser</a>;
+<a name="l00180"></a><a class="code" href="classUserServer.html#a7917e4e9597c28a5170d169e8ef09c9b">00180</a>   <a class="code" href="classDatabase.html" title="This class describes a database.">Database</a> *<a class="code" href="classUserServer.html#a7917e4e9597c28a5170d169e8ef09c9b" title="An instance of vishnu database.">mdatabaseVishnu</a>;
+<a name="l00184"></a><a class="code" href="classUserServer.html#a74e667762e96a81bc42c686a0e598e09">00184</a>   <a class="code" href="classSessionServer.html" title="UserServer class implementation.">SessionServer</a> *<a class="code" href="classUserServer.html#a74e667762e96a81bc42c686a0e598e09" title="An object which encapsulates session data.">msessionServer</a>;
+<a name="l00185"></a>00185 
+<a name="l00187"></a>00187   <span class="comment">// Functions</span>
+<a name="l00189"></a>00189 <span class="comment"></span>
+<a name="l00196"></a>00196   std::string
+<a name="l00197"></a>00197   <a class="code" href="classUserServer.html#a61f17775588f641c30035349e5e8bfef" title="Function to generate a password.">generatePassword</a>(std::string value1, std::string value2);
+<a name="l00198"></a>00198 
+<a name="l00207"></a>00207   <span class="keywordtype">int</span>
+<a name="l00208"></a>00208   <a class="code" href="classUserServer.html#ac4e5db25963346be0bc57f5b61a1ad59" title="Function to send an email to the user.">sendMailToUser</a>(<span class="keyword">const</span> UMS_Data::User&amp; user,
+<a name="l00209"></a>00209                  std::string content,
+<a name="l00210"></a>00210                  std::string subject,
+<a name="l00211"></a>00211                  std::string sendmailScriptPath);
+<a name="l00212"></a>00212 
+<a name="l00219"></a>00219   std::string
+<a name="l00220"></a>00220   <a class="code" href="classUserServer.html#a4896a5d7bd51b8ad24cf6864ba400487" title="Function to get the email content.">getMailContent</a>(<span class="keyword">const</span> UMS_Data::User&amp; user, <span class="keywordtype">bool</span> flagAdduser);
+<a name="l00221"></a>00221 
+<a name="l00227"></a>00227   <span class="keywordtype">void</span>
+<a name="l00228"></a>00228   <a class="code" href="classUserServer.html#aeba9bcdce19abb3b8f73b217efb60352" title="Function to check the user state (locked or not) and to verify the password state.">CheckUserState</a>(<span class="keywordtype">bool</span> flagForChangePwd);
+<a name="l00229"></a>00229 
+<a name="l00230"></a>00230 };
+<a name="l00231"></a>00231 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:42 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:14 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
