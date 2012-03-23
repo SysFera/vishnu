@@ -18,7 +18,7 @@ int \hyperlink{classServerUMS_af5943e226e5d3122ae98771f34cbef79}{getVishnuId} ()
 \begin{DoxyCompactList}\small\item\em To get the vishnuId. \item\end{DoxyCompactList}\item 
 std::string \hyperlink{classServerUMS_aa8e658cdcdb326d25460948e5f5b91b9}{getSendmailScriptPath} () const 
 \begin{DoxyCompactList}\small\item\em To get the path to the sendmail script. \item\end{DoxyCompactList}\item 
-int \hyperlink{classServerUMS_a56a5c740db9e9c1b3e28fa4d0b05546b}{init} (int vishnuId, \hyperlink{classDbConfiguration}{DbConfiguration} dbConfig, std::string sendmailScriptPath)
+int \hyperlink{classServerUMS_a34e2bc6eff48a00a11299702b61a3dbd}{init} (int vishnuId, \hyperlink{classDbConfiguration}{DbConfiguration} dbConfig, std::string sendmailScriptPath, \hyperlink{classAuthenticatorConfiguration}{AuthenticatorConfiguration} authenticatorConfig)
 \begin{DoxyCompactList}\small\item\em To initialize the UMS server. \item\end{DoxyCompactList}\item 
 \hypertarget{classServerUMS_a9d94c92a660ecfda2930894dd4b772bf}{
 \hyperlink{classServerUMS_a9d94c92a660ecfda2930894dd4b772bf}{$\sim$ServerUMS} ()}
@@ -96,7 +96,12 @@ static \hyperlink{classFMSMapper}{FMSMapper} $\ast$ \hyperlink{classServerUMS_a8
 static \hyperlink{classIMSMapper}{IMSMapper} $\ast$ \hyperlink{classServerUMS_a1e8811f540a3e375794657a1d310d950}{mmapperIMS}}
 \label{classServerUMS_a1e8811f540a3e375794657a1d310d950}
 
-\begin{DoxyCompactList}\small\item\em Instance of \hyperlink{classUMSMapper}{UMSMapper}. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Instance of \hyperlink{classUMSMapper}{UMSMapper}. \item\end{DoxyCompactList}\item 
+\hypertarget{classServerUMS_a103660d444f02189d10ef63d96f1edf2}{
+static \hyperlink{classAuthenticator}{Authenticator} $\ast$ \hyperlink{classServerUMS_a103660d444f02189d10ef63d96f1edf2}{mauthenticator}}
+\label{classServerUMS_a103660d444f02189d10ef63d96f1edf2}
+
+\begin{DoxyCompactList}\small\item\em Instance of \hyperlink{classAuthenticator}{Authenticator}. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -135,24 +140,25 @@ To get the vishnuId.
 \begin{DoxyReturn}{Returns}
 the path of the configuration file 
 \end{DoxyReturn}
-\hypertarget{classServerUMS_a56a5c740db9e9c1b3e28fa4d0b05546b}{
+\hypertarget{classServerUMS_a34e2bc6eff48a00a11299702b61a3dbd}{
 \index{ServerUMS@{ServerUMS}!init@{init}}
 \index{init@{init}!ServerUMS@{ServerUMS}}
 \subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}int ServerUMS::init (
 \begin{DoxyParamCaption}
 \item[{int}]{ vishnuId, }
 \item[{{\bf DbConfiguration}}]{ dbConfig, }
-\item[{std::string}]{ sendmailScriptPath}
+\item[{std::string}]{ sendmailScriptPath, }
+\item[{{\bf AuthenticatorConfiguration}}]{ authenticatorConfig}
 \end{DoxyParamCaption}
 )}}
-\label{classServerUMS_a56a5c740db9e9c1b3e28fa4d0b05546b}
+\label{classServerUMS_a34e2bc6eff48a00a11299702b61a3dbd}
 
 
 To initialize the UMS server. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em vishnuId}]The identifier of the vishnu instance \item[{\em dbConfig}]The configuration of the database \item[{\em sendmailScriptPath}]The path to the script for sending emails \end{DoxyParams}
+\item[{\em vishnuId}]The identifier of the vishnu instance \item[{\em dbConfig}]The configuration of the database \item[{\em sendmailScriptPath}]The path to the script for sending emails \item[{\em authenticatorConfig}]The configuration of the authenticator \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 an error code (0 if success and 1 if an error occurs) 
 \end{DoxyReturn}

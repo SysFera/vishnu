@@ -1,0 +1,160 @@
+\hypertarget{classListAuthSystemsServer}{
+\section{ListAuthSystemsServer Class Reference}
+\label{classListAuthSystemsServer}\index{ListAuthSystemsServer@{ListAuthSystemsServer}}
+}
+
+
+\hyperlink{classListAuthSystemsServer}{ListAuthSystemsServer} class implementation.  
+
+
+
+
+{\ttfamily \#include $<$ListAuthSystemsServer.hpp$>$}
+
+Inheritance diagram for ListAuthSystemsServer:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classListAuthSystemsServer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classListAuthSystemsServer_a42cd15e8738c8102f6e41944c7f5b349}{ListAuthSystemsServer} (const \hyperlink{classSessionServer}{SessionServer} \&session)
+\begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
+\hyperlink{classListAuthSystemsServer_a02dff58c3556673b35b65a9af1384d2e}{ListAuthSystemsServer} (UMS\_\-Data::ListAuthSysOptions\_\-ptr params, const \hyperlink{classSessionServer}{SessionServer} \&session)
+\begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
+void \hyperlink{classListAuthSystemsServer_a6badd263bad4dd1b11fe6c1d87e74bd9}{processOptions} (\hyperlink{classUserServer}{UserServer} userServer, const UMS\_\-Data::ListAuthSysOptions\_\-ptr \&options, std::string \&sqlRequest)
+\begin{DoxyCompactList}\small\item\em Function to treat the \hyperlink{classListAuthSystemsServer}{ListAuthSystemsServer} options. \item\end{DoxyCompactList}\item 
+UMS\_\-Data::ListAuthSystems $\ast$ \hyperlink{classListAuthSystemsServer_a4cfd9ed49c97646f1f29889e26246443}{list} ()
+\begin{DoxyCompactList}\small\item\em Function to list machines information. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classListAuthSystemsServer_a798c4bacc3937d081cf39e599cbd8c37}{getCommandName} ()
+\begin{DoxyCompactList}\small\item\em Function to get the name of the \hyperlink{classListAuthSystemsServer}{ListAuthSystemsServer} command line. \item\end{DoxyCompactList}\item 
+\hypertarget{classListAuthSystemsServer_ac6761472369e84d903062c45de72f402}{
+\hyperlink{classListAuthSystemsServer_ac6761472369e84d903062c45de72f402}{$\sim$ListAuthSystemsServer} ()}
+\label{classListAuthSystemsServer_ac6761472369e84d903062c45de72f402}
+
+\begin{DoxyCompactList}\small\item\em Destructor, raises an exception on error. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classListAuthSystemsServer_a40fd0b75e55239a6a96b67fb9c14f477}{
+std::string \hyperlink{classListAuthSystemsServer_a40fd0b75e55239a6a96b67fb9c14f477}{mcommandName}}
+\label{classListAuthSystemsServer_a40fd0b75e55239a6a96b67fb9c14f477}
+
+\begin{DoxyCompactList}\small\item\em The name of the \hyperlink{classListMachinesServer}{ListMachinesServer} command line. \item\end{DoxyCompactList}\item 
+\hypertarget{classListAuthSystemsServer_aec94336e2c620c14cfbeee61de73317b}{
+bool \hyperlink{classListAuthSystemsServer_aec94336e2c620c14cfbeee61de73317b}{mfullInfo}}
+\label{classListAuthSystemsServer_aec94336e2c620c14cfbeee61de73317b}
+
+\begin{DoxyCompactList}\small\item\em An option to have full information. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classListAuthSystemsServer}{ListAuthSystemsServer} class implementation. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classListAuthSystemsServer_a42cd15e8738c8102f6e41944c7f5b349}{
+\index{ListAuthSystemsServer@{ListAuthSystemsServer}!ListAuthSystemsServer@{ListAuthSystemsServer}}
+\index{ListAuthSystemsServer@{ListAuthSystemsServer}!ListAuthSystemsServer@{ListAuthSystemsServer}}
+\subsubsection[{ListAuthSystemsServer}]{\setlength{\rightskip}{0pt plus 5cm}ListAuthSystemsServer::ListAuthSystemsServer (
+\begin{DoxyParamCaption}
+\item[{const {\bf SessionServer} \&}]{ session}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classListAuthSystemsServer_a42cd15e8738c8102f6e41944c7f5b349}
+
+
+Constructor, raises an exception on error. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \end{DoxyParams}
+\hypertarget{classListAuthSystemsServer_a02dff58c3556673b35b65a9af1384d2e}{
+\index{ListAuthSystemsServer@{ListAuthSystemsServer}!ListAuthSystemsServer@{ListAuthSystemsServer}}
+\index{ListAuthSystemsServer@{ListAuthSystemsServer}!ListAuthSystemsServer@{ListAuthSystemsServer}}
+\subsubsection[{ListAuthSystemsServer}]{\setlength{\rightskip}{0pt plus 5cm}ListAuthSystemsServer::ListAuthSystemsServer (
+\begin{DoxyParamCaption}
+\item[{UMS\_\-Data::ListAuthSysOptions\_\-ptr}]{ params, }
+\item[{const {\bf SessionServer} \&}]{ session}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classListAuthSystemsServer_a02dff58c3556673b35b65a9af1384d2e}
+
+
+Constructor, raises an exception on error. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em params}]The object which encapsulates the information of \hyperlink{classListAuthSystemsServer}{ListAuthSystemsServer} options \item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classListAuthSystemsServer_a798c4bacc3937d081cf39e599cbd8c37}{
+\index{ListAuthSystemsServer@{ListAuthSystemsServer}!getCommandName@{getCommandName}}
+\index{getCommandName@{getCommandName}!ListAuthSystemsServer@{ListAuthSystemsServer}}
+\subsubsection[{getCommandName}]{\setlength{\rightskip}{0pt plus 5cm}std::string ListAuthSystemsServer::getCommandName (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classListAuthSystemsServer_a798c4bacc3937d081cf39e599cbd8c37}
+
+
+Function to get the name of the \hyperlink{classListAuthSystemsServer}{ListAuthSystemsServer} command line. 
+
+\begin{DoxyReturn}{Returns}
+The the name of the \hyperlink{classListAuthSystemsServer}{ListAuthSystemsServer} command line 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classQueryServer_ad6b15831bd35508c3b5a393062d6e206}{QueryServer$<$ UMS\_\-Data::ListAuthSysOptions, UMS\_\-Data::ListAuthSystems $>$}.
+
+\hypertarget{classListAuthSystemsServer_a4cfd9ed49c97646f1f29889e26246443}{
+\index{ListAuthSystemsServer@{ListAuthSystemsServer}!list@{list}}
+\index{list@{list}!ListAuthSystemsServer@{ListAuthSystemsServer}}
+\subsubsection[{list}]{\setlength{\rightskip}{0pt plus 5cm}UMS\_\-Data::ListAuthSystems $\ast$ ListAuthSystemsServer::list (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classListAuthSystemsServer_a4cfd9ed49c97646f1f29889e26246443}
+
+
+Function to list machines information. 
+
+\begin{DoxyReturn}{Returns}
+The pointer to the UMS\_\-Data::ListAuthSystems containing users information 
+
+raises an exception on error 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classQueryServer_a2ad0f3f1b75e6f0705a9edbe4bab76b0}{QueryServer$<$ UMS\_\-Data::ListAuthSysOptions, UMS\_\-Data::ListAuthSystems $>$}.
+
+\hypertarget{classListAuthSystemsServer_a6badd263bad4dd1b11fe6c1d87e74bd9}{
+\index{ListAuthSystemsServer@{ListAuthSystemsServer}!processOptions@{processOptions}}
+\index{processOptions@{processOptions}!ListAuthSystemsServer@{ListAuthSystemsServer}}
+\subsubsection[{processOptions}]{\setlength{\rightskip}{0pt plus 5cm}void ListAuthSystemsServer::processOptions (
+\begin{DoxyParamCaption}
+\item[{{\bf UserServer}}]{ userServer, }
+\item[{const UMS\_\-Data::ListAuthSysOptions\_\-ptr \&}]{ options, }
+\item[{std::string \&}]{ sqlRequest}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classListAuthSystemsServer_a6badd263bad4dd1b11fe6c1d87e74bd9}
+
+
+Function to treat the \hyperlink{classListAuthSystemsServer}{ListAuthSystemsServer} options. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em userServer}]the object which encapsulates user information \item[{\em options}]The object which encapsulates the information of \hyperlink{classListAuthSystemsServer}{ListAuthSystemsServer} options \item[{\em sqlRequest}]the sql data base request \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+UMS/src/server/\hyperlink{ListAuthSystemsServer_8hpp}{ListAuthSystemsServer.hpp}\end{DoxyCompactItemize}

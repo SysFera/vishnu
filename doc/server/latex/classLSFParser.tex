@@ -1,0 +1,171 @@
+\hypertarget{classLSFParser}{
+\section{LSFParser Class Reference}
+\label{classLSFParser}\index{LSFParser@{LSFParser}}
+}
+
+
+This class describes the TMS Parser.  
+
+
+
+
+{\ttfamily \#include $<$LSFParser.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classLSFParser_aa69df5c03fef98020646c72bce099b85}{
+\hyperlink{classLSFParser_aa69df5c03fef98020646c72bce099b85}{LSFParser} ()}
+\label{classLSFParser_aa69df5c03fef98020646c72bce099b85}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classLSFParser_aec23d81a29c6b2dd3f3af2b8abb16f95}{
+\hyperlink{classLSFParser_aec23d81a29c6b2dd3f3af2b8abb16f95}{$\sim$LSFParser} ()}
+\label{classLSFParser_aec23d81a29c6b2dd3f3af2b8abb16f95}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \hyperlink{classLSFParser_a0f98e3bf5de259376f179f90359a1978}{isNumerical} (const std::string \&value)
+\begin{DoxyCompactList}\small\item\em Function to check a numerical value. \item\end{DoxyCompactList}\item 
+static int \hyperlink{classLSFParser_a99b5d60ac414871851810a60d6dd4df9}{convertWallTimeToTime} (const std::string \&date, const std::string \&compErrMsg=\char`\"{}\char`\"{})
+\begin{DoxyCompactList}\small\item\em Function to date in format \mbox{[}hour:\mbox{]}minute into int. \item\end{DoxyCompactList}\item 
+static time\_\-t \hyperlink{classLSFParser_a9e09af56ac1f1deda32c88d773ba32b8}{convertDateToTime} (const std::string \&date, const std::string \&compErrMsg=\char`\"{}\char`\"{})
+\begin{DoxyCompactList}\small\item\em Function to date in format \mbox{[}\mbox{[}year:\mbox{]}\mbox{[}month:\mbox{]}day:\mbox{]}hour:minute into time\_\-t. \item\end{DoxyCompactList}\item 
+static std::vector$<$ std::string $>$ \hyperlink{classLSFParser_a6d543399c7e7f45775f40c242f9ac66e}{convertScriptIntoArgv} (const char $\ast$pathTofile, const std::string \&BATCH\_\-PREFIX=\char`\"{}\#BSUB\char`\"{})
+\begin{DoxyCompactList}\small\item\em Function to transform the batch directives in a script file to string arguments. \item\end{DoxyCompactList}\item 
+static int \hyperlink{classLSFParser_ae570e490cd86f3f28be224a873306933}{parse\_\-file} (const char $\ast$pathTofile, struct submit $\ast$req)
+\begin{DoxyCompactList}\small\item\em Function to parse a batch script. \item\end{DoxyCompactList}\item 
+static void \hyperlink{classLSFParser_a8a4846ebc4d91a76bdfb43599ed134af}{searchAndConvertVishnuScriptGenSyntax} (const char $\ast$pathTofile, struct submit $\ast$req)
+\begin{DoxyCompactList}\small\item\em Function search vishnu generic script syntax in a file. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class describes the TMS Parser. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classLSFParser_a9e09af56ac1f1deda32c88d773ba32b8}{
+\index{LSFParser@{LSFParser}!convertDateToTime@{convertDateToTime}}
+\index{convertDateToTime@{convertDateToTime}!LSFParser@{LSFParser}}
+\subsubsection[{convertDateToTime}]{\setlength{\rightskip}{0pt plus 5cm}static time\_\-t LSFParser::convertDateToTime (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ date, }
+\item[{const std::string \&}]{ compErrMsg = {\ttfamily \char`\"{}\char`\"{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classLSFParser_a9e09af56ac1f1deda32c88d773ba32b8}
+
+
+Function to date in format \mbox{[}\mbox{[}year:\mbox{]}\mbox{[}month:\mbox{]}day:\mbox{]}hour:minute into time\_\-t. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em date}]The date to convert \item[{\em compErrMsg}]The error message to send as exception \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the converted value 
+\end{DoxyReturn}
+\hypertarget{classLSFParser_a6d543399c7e7f45775f40c242f9ac66e}{
+\index{LSFParser@{LSFParser}!convertScriptIntoArgv@{convertScriptIntoArgv}}
+\index{convertScriptIntoArgv@{convertScriptIntoArgv}!LSFParser@{LSFParser}}
+\subsubsection[{convertScriptIntoArgv}]{\setlength{\rightskip}{0pt plus 5cm}static std::vector$<$std::string$>$ LSFParser::convertScriptIntoArgv (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ pathTofile, }
+\item[{const std::string \&}]{ BATCH\_\-PREFIX = {\ttfamily \char`\"{}\#BSUB\char`\"{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classLSFParser_a6d543399c7e7f45775f40c242f9ac66e}
+
+
+Function to transform the batch directives in a script file to string arguments. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pathTofile}]The file to parse \item[{\em BATCH\_\-PREFIX}]The batch directive to take into account \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The vector contains the arguments 
+\end{DoxyReturn}
+\hypertarget{classLSFParser_a99b5d60ac414871851810a60d6dd4df9}{
+\index{LSFParser@{LSFParser}!convertWallTimeToTime@{convertWallTimeToTime}}
+\index{convertWallTimeToTime@{convertWallTimeToTime}!LSFParser@{LSFParser}}
+\subsubsection[{convertWallTimeToTime}]{\setlength{\rightskip}{0pt plus 5cm}static int LSFParser::convertWallTimeToTime (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ date, }
+\item[{const std::string \&}]{ compErrMsg = {\ttfamily \char`\"{}\char`\"{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classLSFParser_a99b5d60ac414871851810a60d6dd4df9}
+
+
+Function to date in format \mbox{[}hour:\mbox{]}minute into int. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em date}]The date to convert \item[{\em compErrMsg}]The error message to send as exception \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the converted value 
+\end{DoxyReturn}
+\hypertarget{classLSFParser_a0f98e3bf5de259376f179f90359a1978}{
+\index{LSFParser@{LSFParser}!isNumerical@{isNumerical}}
+\index{isNumerical@{isNumerical}!LSFParser@{LSFParser}}
+\subsubsection[{isNumerical}]{\setlength{\rightskip}{0pt plus 5cm}static bool LSFParser::isNumerical (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classLSFParser_a0f98e3bf5de259376f179f90359a1978}
+
+
+Function to check a numerical value. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em value}]The value to check \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the value is numerical otherwise false 
+\end{DoxyReturn}
+\hypertarget{classLSFParser_ae570e490cd86f3f28be224a873306933}{
+\index{LSFParser@{LSFParser}!parse\_\-file@{parse\_\-file}}
+\index{parse\_\-file@{parse\_\-file}!LSFParser@{LSFParser}}
+\subsubsection[{parse\_\-file}]{\setlength{\rightskip}{0pt plus 5cm}static int LSFParser::parse\_\-file (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ pathTofile, }
+\item[{struct submit $\ast$}]{ req}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classLSFParser_ae570e490cd86f3f28be224a873306933}
+
+
+Function to parse a batch script. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pathTofile}]The file to parse \item[{\em req}]The LSF option structure to fill \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+zero on success, raises exception on error 
+\end{DoxyReturn}
+\hypertarget{classLSFParser_a8a4846ebc4d91a76bdfb43599ed134af}{
+\index{LSFParser@{LSFParser}!searchAndConvertVishnuScriptGenSyntax@{searchAndConvertVishnuScriptGenSyntax}}
+\index{searchAndConvertVishnuScriptGenSyntax@{searchAndConvertVishnuScriptGenSyntax}!LSFParser@{LSFParser}}
+\subsubsection[{searchAndConvertVishnuScriptGenSyntax}]{\setlength{\rightskip}{0pt plus 5cm}static void LSFParser::searchAndConvertVishnuScriptGenSyntax (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ pathTofile, }
+\item[{struct submit $\ast$}]{ req}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classLSFParser_a8a4846ebc4d91a76bdfb43599ed134af}
+
+
+Function search vishnu generic script syntax in a file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pathTofile}]The file to parse \item[{\em req}]The LSF option structure to update or to fill \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises exception on error 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+TMS/src/lsf\_\-parser/\hyperlink{LSFParser_8hpp}{LSFParser.hpp}\end{DoxyCompactItemize}

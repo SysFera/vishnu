@@ -50,7 +50,7 @@
 <a name="l00028"></a>00028 <span class="keyword">using namespace </span>vishnu;
 <a name="l00029"></a>00029 
 <a name="l00037"></a>00037 boost::shared_ptr&lt;Options&gt;
-<a name="l00038"></a><a class="code" href="defineIdentifierUtils_8hpp.html#a1caacafedc5110f4dad4eb4605db9868">00038</a> <a class="code" href="defineIdentifierUtils_8hpp.html#a1caacafedc5110f4dad4eb4605db9868" title="To build options for the VISHNU copy of file command.">makeDefineIdentifierOptions</a>(<span class="keywordtype">string</span> pgName, 
+<a name="l00038"></a><a class="code" href="defineIdentifierUtils_8hpp.html#a1caacafedc5110f4dad4eb4605db9868">00038</a> <a class="code" href="defineIdentifierUtils_8hpp.html#a1caacafedc5110f4dad4eb4605db9868" title="To build options for the VISHNU copy of file command.">makeDefineIdentifierOptions</a>(<span class="keywordtype">string</span> pgName,
 <a name="l00039"></a>00039     <span class="keywordtype">string</span>&amp; dietConfig,
 <a name="l00040"></a>00040     <span class="keywordtype">string</span>&amp; newFormat){
 <a name="l00041"></a>00041 
@@ -76,48 +76,52 @@
 <a name="l00065"></a>00065   JOB,
 <a name="l00066"></a>00066   MACHINE,
 <a name="l00067"></a>00067   TRANSFER,
-<a name="l00068"></a>00068   <a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1ae057d74230de0c43ca6fae4c80cd2898">USER</a>
-<a name="l00069"></a>00069 } DefineIdentifierType;
-<a name="l00070"></a>00070 
+<a name="l00068"></a>00068   USER,
+<a name="l00069"></a>00069   <a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1a0da08c20150dd243cbb21a9281fb62bc">AUTH</a>
+<a name="l00070"></a>00070 } DefineIdentifierType;
 <a name="l00071"></a>00071 
-<a name="l00076"></a>00076 <span class="keyword">template</span>&lt;DefineIdentifierType defineIdentifierType&gt;
-<a name="l00077"></a><a class="code" href="structDefineIdentifierFunc.html">00077</a> <span class="keyword">struct </span><a class="code" href="structDefineIdentifierFunc.html" title="A functor to handle define identifier api function.">DefineIdentifierFunc</a> {
-<a name="l00081"></a><a class="code" href="structDefineIdentifierFunc.html#a38e539e8a79a4986e4a0137c09d00351">00081</a>   std::string mnewFormat;
-<a name="l00082"></a>00082 
-<a name="l00087"></a><a class="code" href="structDefineIdentifierFunc.html#ae82d70ecd0684ba7e2d25990f0435038">00087</a>   <a class="code" href="structDefineIdentifierFunc.html#ae82d70ecd0684ba7e2d25990f0435038" title="Constructor with parameters.">DefineIdentifierFunc</a>(<span class="keyword">const</span> std::string&amp; newFormat):mnewFormat(newFormat){};
-<a name="l00088"></a>00088 
-<a name="l00094"></a><a class="code" href="structDefineIdentifierFunc.html#aa41816da11f33dd30546a9571d7b9375">00094</a>   <span class="keywordtype">int</span> <a class="code" href="structDefineIdentifierFunc.html#aa41816da11f33dd30546a9571d7b9375" title="() operator">operator()</a>(<span class="keyword">const</span> std::string&amp; sessionKey) {
-<a name="l00095"></a>00095 
-<a name="l00096"></a>00096     <span class="keywordtype">int</span> res = -1;
-<a name="l00097"></a>00097     <span class="keywordflow">switch</span>(defineIdentifierType) {
-<a name="l00098"></a>00098       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1ac6a371f14311f16f9f476b7db284ac4f">JOB</a>:
-<a name="l00099"></a>00099         res = <a class="code" href="namespacevishnu.html#a1b44c77d6bccf4fd886be4028f27bb73" title="To define the format of the job id automatically generated in VISHNU.">defineJobIdentifier</a>(sessionKey, mnewFormat);
-<a name="l00100"></a>00100         <span class="keywordflow">break</span>;
-<a name="l00101"></a>00101       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1a18985dc599467035432920df9bcb2e8b">MACHINE</a>:
-<a name="l00102"></a>00102         res = <a class="code" href="namespacevishnu.html#ae271c5ecdd758dcc4bee27ba2b9c8a3c" title="To define the format of the machine id automatically generated in VISHNU.">defineMachineIdentifier</a>(sessionKey, mnewFormat);
-<a name="l00103"></a>00103         <span class="keywordflow">break</span>;
-<a name="l00104"></a>00104       <span class="keywordflow">case</span> TRANSFER:
-<a name="l00105"></a>00105         res = <a class="code" href="namespacevishnu.html#adc1d08f000cf50058dd8b0688ea7fb1f" title="To define the format of the file transfer id automatically generated in VISHNU.">defineTransferIdentifier</a>(sessionKey, mnewFormat);
-<a name="l00106"></a>00106         <span class="keywordflow">break</span>;
-<a name="l00107"></a>00107       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1ae057d74230de0c43ca6fae4c80cd2898">USER</a>:
-<a name="l00108"></a>00108         res = <a class="code" href="namespacevishnu.html#a6388e9aa2c64ef4dfeee9a253dfc2d55" title="To define the format of the user id automatically generated in VISHNU.">defineUserIdentifier</a>(sessionKey, mnewFormat);
-<a name="l00109"></a>00109         <span class="keywordflow">break</span>;
-<a name="l00110"></a>00110       <span class="keywordflow">default</span>:
-<a name="l00111"></a>00111         <span class="keywordflow">break</span>;
-<a name="l00112"></a>00112     }
-<a name="l00113"></a>00113 
-<a name="l00114"></a>00114     <span class="keywordflow">return</span> res;
-<a name="l00115"></a>00115   }
-<a name="l00116"></a>00116 };
+<a name="l00072"></a>00072 
+<a name="l00077"></a>00077 <span class="keyword">template</span>&lt;DefineIdentifierType defineIdentifierType&gt;
+<a name="l00078"></a><a class="code" href="structDefineIdentifierFunc.html">00078</a> <span class="keyword">struct </span><a class="code" href="structDefineIdentifierFunc.html" title="A functor to handle define identifier api function.">DefineIdentifierFunc</a> {
+<a name="l00082"></a><a class="code" href="structDefineIdentifierFunc.html#a38e539e8a79a4986e4a0137c09d00351">00082</a>   std::string mnewFormat;
+<a name="l00083"></a>00083 
+<a name="l00088"></a><a class="code" href="structDefineIdentifierFunc.html#ae82d70ecd0684ba7e2d25990f0435038">00088</a>   <a class="code" href="structDefineIdentifierFunc.html#ae82d70ecd0684ba7e2d25990f0435038" title="Constructor with parameters.">DefineIdentifierFunc</a>(<span class="keyword">const</span> std::string&amp; newFormat):mnewFormat(newFormat){};
+<a name="l00089"></a>00089 
+<a name="l00095"></a><a class="code" href="structDefineIdentifierFunc.html#aa41816da11f33dd30546a9571d7b9375">00095</a>   <span class="keywordtype">int</span> <a class="code" href="structDefineIdentifierFunc.html#aa41816da11f33dd30546a9571d7b9375" title="() operator">operator()</a>(<span class="keyword">const</span> std::string&amp; sessionKey) {
+<a name="l00096"></a>00096 
+<a name="l00097"></a>00097     <span class="keywordtype">int</span> res = -1;
+<a name="l00098"></a>00098     <span class="keywordflow">switch</span>(defineIdentifierType) {
+<a name="l00099"></a>00099       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1ac6a371f14311f16f9f476b7db284ac4f">JOB</a>:
+<a name="l00100"></a>00100         res = <a class="code" href="namespacevishnu.html#a1b44c77d6bccf4fd886be4028f27bb73" title="To define the format of the job id automatically generated in VISHNU.">defineJobIdentifier</a>(sessionKey, mnewFormat);
+<a name="l00101"></a>00101         <span class="keywordflow">break</span>;
+<a name="l00102"></a>00102       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1a18985dc599467035432920df9bcb2e8b">MACHINE</a>:
+<a name="l00103"></a>00103         res = <a class="code" href="namespacevishnu.html#ae271c5ecdd758dcc4bee27ba2b9c8a3c" title="To define the format of the machine id automatically generated in VISHNU.">defineMachineIdentifier</a>(sessionKey, mnewFormat);
+<a name="l00104"></a>00104         <span class="keywordflow">break</span>;
+<a name="l00105"></a>00105       <span class="keywordflow">case</span> TRANSFER:
+<a name="l00106"></a>00106         res = <a class="code" href="namespacevishnu.html#adc1d08f000cf50058dd8b0688ea7fb1f" title="To define the format of the file transfer id automatically generated in VISHNU.">defineTransferIdentifier</a>(sessionKey, mnewFormat);
+<a name="l00107"></a>00107         <span class="keywordflow">break</span>;
+<a name="l00108"></a>00108       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1ae057d74230de0c43ca6fae4c80cd2898">USER</a>:
+<a name="l00109"></a>00109         res = <a class="code" href="namespacevishnu.html#a6388e9aa2c64ef4dfeee9a253dfc2d55" title="To define the format of the user id automatically generated in VISHNU.">defineUserIdentifier</a>(sessionKey, mnewFormat);
+<a name="l00110"></a>00110         <span class="keywordflow">break</span>;
+<a name="l00111"></a>00111       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1a0da08c20150dd243cbb21a9281fb62bc">AUTH</a>:
+<a name="l00112"></a>00112         res = <a class="code" href="namespacevishnu.html#ae23ce09e4cf2ecf7dd2ccfa3917ef1df" title="To define the format of the authentication system id automatically generated in VISHNU.">defineAuthIdentifier</a>(sessionKey, mnewFormat);
+<a name="l00113"></a>00113         <span class="keywordflow">break</span>;
+<a name="l00114"></a>00114       <span class="keywordflow">default</span>:
+<a name="l00115"></a>00115         <span class="keywordflow">break</span>;
+<a name="l00116"></a>00116     }
 <a name="l00117"></a>00117 
-<a name="l00118"></a>00118 
-<a name="l00119"></a>00119 <span class="preprocessor">#endif</span>
-<a name="l00120"></a>00120 <span class="preprocessor"></span>
+<a name="l00118"></a>00118     <span class="keywordflow">return</span> res;
+<a name="l00119"></a>00119   }
+<a name="l00120"></a>00120 };
 <a name="l00121"></a>00121 
 <a name="l00122"></a>00122 
+<a name="l00123"></a>00123 <span class="preprocessor">#endif</span>
+<a name="l00124"></a>00124 <span class="preprocessor"></span>
+<a name="l00125"></a>00125 
+<a name="l00126"></a>00126 
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:42 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:13 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

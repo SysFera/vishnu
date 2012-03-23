@@ -48,8 +48,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4dd94f7d4a5cfafb4c668cde6f231e3e"></a><!-- doxytag: member="MonitorUMS::~MonitorUMS" ref="a4dd94f7d4a5cfafb4c668cde6f231e3e" args="()" -->
 &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMonitorUMS.html#a4dd94f7d4a5cfafb4c668cde6f231e3e">~MonitorUMS</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructor. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMonitorUMS.html#a14c0a0e214e1c3dd306314474d6a3ff8">init</a> (int vishnuId, <a class="el" href="classDbConfiguration.html">DbConfiguration</a> dbConfig)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To initialize the UMS monitor with individual parameters instead of configuration file.  <a href="#a14c0a0e214e1c3dd306314474d6a3ff8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMonitorUMS.html#ac472faf565e27fda5fa2be4f01e58e85">init</a> (int vishnuId, <a class="el" href="classDbConfiguration.html">DbConfiguration</a> dbConfig, <a class="el" href="classAuthenticatorConfiguration.html">AuthenticatorConfiguration</a> authenticatorConfig)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To initialize the UMS monitor with individual parameters instead of configuration file.  <a href="#ac472faf565e27fda5fa2be4f01e58e85"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMonitorUMS.html#aa4e9d26960b0519c7bfd4e470d1fc0a7">run</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To launch the UMS Monitor.  <a href="#aa4e9d26960b0519c7bfd4e470d1fc0a7"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
@@ -60,6 +60,9 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac1d6be2c23b3b81a2a06e2547f0aa34e"></a><!-- doxytag: member="MonitorUMS::mdatabaseVishnu" ref="ac1d6be2c23b3b81a2a06e2547f0aa34e" args="" -->
 <a class="el" href="classDatabase.html">Database</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMonitorUMS.html#ac1d6be2c23b3b81a2a06e2547f0aa34e">mdatabaseVishnu</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">An instance of vishnu database. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aecae830bd78d377f6e14773d8c30ffd0"></a><!-- doxytag: member="MonitorUMS::mauthenticator" ref="aecae830bd78d377f6e14773d8c30ffd0" args="" -->
+<a class="el" href="classAuthenticator.html">Authenticator</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMonitorUMS.html#aecae830bd78d377f6e14773d8c30ffd0">mauthenticator</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Instance of <a class="el" href="classAuthenticator.html" title="Authenticator.">Authenticator</a>. <br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>This class describes the UMS Monitor. </p>
@@ -91,7 +94,7 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a14c0a0e214e1c3dd306314474d6a3ff8"></a><!-- doxytag: member="MonitorUMS::init" ref="a14c0a0e214e1c3dd306314474d6a3ff8" args="(int vishnuId, DbConfiguration dbConfig)" -->
+<a class="anchor" id="ac472faf565e27fda5fa2be4f01e58e85"></a><!-- doxytag: member="MonitorUMS::init" ref="ac472faf565e27fda5fa2be4f01e58e85" args="(int vishnuId, DbConfiguration dbConfig, AuthenticatorConfiguration authenticatorConfig)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -105,7 +108,13 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classDbConfiguration.html">DbConfiguration</a>&nbsp;</td>
-          <td class="paramname"> <em>dbConfig</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>dbConfig</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classAuthenticatorConfiguration.html">AuthenticatorConfiguration</a>&nbsp;</td>
+          <td class="paramname"> <em>authenticatorConfig</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -121,6 +130,7 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>vishnuId</em>&nbsp;</td><td>The password of the root user vishnu_user for the connection with the database </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>dbConfig</em>&nbsp;</td><td>The configuration of the database </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>authenticatorConfig</em>&nbsp;</td><td>The configuration of the authenticator </td></tr>
   </table>
   </dd>
 </dl>
@@ -152,7 +162,7 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <li>UMS/src/sed/<a class="el" href="MonitorUMS_8hpp_source.html">MonitorUMS.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:45 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:18 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

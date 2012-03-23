@@ -1,0 +1,234 @@
+\hypertarget{classAuthAccountServer}{
+\section{AuthAccountServer Class Reference}
+\label{classAuthAccountServer}\index{AuthAccountServer@{AuthAccountServer}}
+}
+
+
+\hyperlink{classAuthAccountServer}{AuthAccountServer} class implementation.  
+
+
+
+
+{\ttfamily \#include $<$AuthAccountServer.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classAuthAccountServer_ab4a25981470df4ec4cd3be2ffcbc6833}{AuthAccountServer} (UMS\_\-Data::AuthAccount $\ast$\&account, \hyperlink{classSessionServer}{SessionServer} \&session)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+int \hyperlink{classAuthAccountServer_a9077e2f1b0fe7e7f96d867c7ecc199c3}{add} ()
+\begin{DoxyCompactList}\small\item\em Function to add a new VISHNU authAccount. \item\end{DoxyCompactList}\item 
+int \hyperlink{classAuthAccountServer_ac436fe62e92927384bdf1b288e8f410e}{update} ()
+\begin{DoxyCompactList}\small\item\em Function to update a VISHNU authAccount. \item\end{DoxyCompactList}\item 
+int \hyperlink{classAuthAccountServer_a99d011a6449a7cbbcdf9b630cacbe243}{deleteAuthAccount} ()
+\begin{DoxyCompactList}\small\item\em Function to delete a VISHNU authAccount. \item\end{DoxyCompactList}\item 
+\hypertarget{classAuthAccountServer_a64db8865f23f61952f0ce032c8c4bda5}{
+\hyperlink{classAuthAccountServer_a64db8865f23f61952f0ce032c8c4bda5}{$\sim$AuthAccountServer} ()}
+\label{classAuthAccountServer_a64db8865f23f61952f0ce032c8c4bda5}
+
+\begin{DoxyCompactList}\small\item\em Destructor,. \item\end{DoxyCompactList}\item 
+UMS\_\-Data::AuthAccount $\ast$ \hyperlink{classAuthAccountServer_a2c42535d2ea889389795be45f751a8ec}{getData} ()
+\begin{DoxyCompactList}\small\item\em Function to get authAccount data structure. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classAuthAccountServer_a8c83174b588552478c188e7a31baf3b8}{getAttribut} (std::string condition, std::string attrname=\char`\"{}authaccountid\char`\"{})
+\begin{DoxyCompactList}\small\item\em Function to get authAccount information from the database vishnu. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classAuthAccountServer_ae2fdc812129a52c5988c3efe69dc643b}{exist} (std::string idAuthSystem, std::string idUser)
+\begin{DoxyCompactList}\small\item\em Function to check authAccount on database. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classAuthAccountServer_a6fb1e6d4302d269aebdde700a085ff0c}{isLoginUsed} (std::string numAuthSystem, std::string acLogin)
+\begin{DoxyCompactList}\small\item\em Function to check if a given login is used on a user-\/authentication system. \item\end{DoxyCompactList}\item 
+int \hyperlink{classAuthAccountServer_a58740d1af7c203dca615c3ae1e0daad4}{checkAuthAccountUserId} (\hyperlink{classUserServer}{UserServer} \&userServer)
+\begin{DoxyCompactList}\small\item\em Function to check the authAccount userId. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classAuthAccountServer_a4415686e92e3d9327f5134cb1b74579b}{
+UMS\_\-Data::AuthAccount $\ast$ \hyperlink{classAuthAccountServer_a4415686e92e3d9327f5134cb1b74579b}{mauthAccount}}
+\label{classAuthAccountServer_a4415686e92e3d9327f5134cb1b74579b}
+
+\begin{DoxyCompactList}\small\item\em The authAccount data structure. \item\end{DoxyCompactList}\item 
+\hypertarget{classAuthAccountServer_abcf9eb17ff89047f24e38f2eea6c11e2}{
+\hyperlink{classSessionServer}{SessionServer} \hyperlink{classAuthAccountServer_abcf9eb17ff89047f24e38f2eea6c11e2}{msessionServer}}
+\label{classAuthAccountServer_abcf9eb17ff89047f24e38f2eea6c11e2}
+
+\begin{DoxyCompactList}\small\item\em An object which encapsulates session data. \item\end{DoxyCompactList}\item 
+\hypertarget{classAuthAccountServer_a86de212c4a5c6fb77a9680586c51db56}{
+\hyperlink{classDatabase}{Database} $\ast$ \hyperlink{classAuthAccountServer_a86de212c4a5c6fb77a9680586c51db56}{mdatabaseVishnu}}
+\label{classAuthAccountServer_a86de212c4a5c6fb77a9680586c51db56}
+
+\begin{DoxyCompactList}\small\item\em An instance of vishnu database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classAuthAccountServer}{AuthAccountServer} class implementation. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classAuthAccountServer_ab4a25981470df4ec4cd3be2ffcbc6833}{
+\index{AuthAccountServer@{AuthAccountServer}!AuthAccountServer@{AuthAccountServer}}
+\index{AuthAccountServer@{AuthAccountServer}!AuthAccountServer@{AuthAccountServer}}
+\subsubsection[{AuthAccountServer}]{\setlength{\rightskip}{0pt plus 5cm}AuthAccountServer::AuthAccountServer (
+\begin{DoxyParamCaption}
+\item[{UMS\_\-Data::AuthAccount $\ast$\&}]{ account, }
+\item[{{\bf SessionServer} \&}]{ session}
+\end{DoxyParamCaption}
+)}}
+\label{classAuthAccountServer_ab4a25981470df4ec4cd3be2ffcbc6833}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em account}]The AuthAccount data structure \item[{\em session}]The object which encapsulates session data \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classAuthAccountServer_a9077e2f1b0fe7e7f96d867c7ecc199c3}{
+\index{AuthAccountServer@{AuthAccountServer}!add@{add}}
+\index{add@{add}!AuthAccountServer@{AuthAccountServer}}
+\subsubsection[{add}]{\setlength{\rightskip}{0pt plus 5cm}int AuthAccountServer::add (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classAuthAccountServer_a9077e2f1b0fe7e7f96d867c7ecc199c3}
+
+
+Function to add a new VISHNU authAccount. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classAuthAccountServer_a58740d1af7c203dca615c3ae1e0daad4}{
+\index{AuthAccountServer@{AuthAccountServer}!checkAuthAccountUserId@{checkAuthAccountUserId}}
+\index{checkAuthAccountUserId@{checkAuthAccountUserId}!AuthAccountServer@{AuthAccountServer}}
+\subsubsection[{checkAuthAccountUserId}]{\setlength{\rightskip}{0pt plus 5cm}int AuthAccountServer::checkAuthAccountUserId (
+\begin{DoxyParamCaption}
+\item[{{\bf UserServer} \&}]{ userServer}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classAuthAccountServer_a58740d1af7c203dca615c3ae1e0daad4}
+
+
+Function to check the authAccount userId. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em userServer}]The user server to use \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classAuthAccountServer_a99d011a6449a7cbbcdf9b630cacbe243}{
+\index{AuthAccountServer@{AuthAccountServer}!deleteAuthAccount@{deleteAuthAccount}}
+\index{deleteAuthAccount@{deleteAuthAccount}!AuthAccountServer@{AuthAccountServer}}
+\subsubsection[{deleteAuthAccount}]{\setlength{\rightskip}{0pt plus 5cm}int AuthAccountServer::deleteAuthAccount (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classAuthAccountServer_a99d011a6449a7cbbcdf9b630cacbe243}
+
+
+Function to delete a VISHNU authAccount. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classAuthAccountServer_ae2fdc812129a52c5988c3efe69dc643b}{
+\index{AuthAccountServer@{AuthAccountServer}!exist@{exist}}
+\index{exist@{exist}!AuthAccountServer@{AuthAccountServer}}
+\subsubsection[{exist}]{\setlength{\rightskip}{0pt plus 5cm}bool AuthAccountServer::exist (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ idAuthSystem, }
+\item[{std::string}]{ idUser}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classAuthAccountServer_ae2fdc812129a52c5988c3efe69dc643b}
+
+
+Function to check authAccount on database. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em idAuthSystem}]The internal database id of the user-\/authentication system \item[{\em idUser}]The internal database id of the user \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the authAccount exists else false 
+\end{DoxyReturn}
+\hypertarget{classAuthAccountServer_a8c83174b588552478c188e7a31baf3b8}{
+\index{AuthAccountServer@{AuthAccountServer}!getAttribut@{getAttribut}}
+\index{getAttribut@{getAttribut}!AuthAccountServer@{AuthAccountServer}}
+\subsubsection[{getAttribut}]{\setlength{\rightskip}{0pt plus 5cm}AuthAccountServer::getAttribut (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ condition, }
+\item[{std::string}]{ attrname = {\ttfamily \char`\"{}authaccountid\char`\"{}}}
+\end{DoxyParamCaption}
+)}}
+\label{classAuthAccountServer_a8c83174b588552478c188e7a31baf3b8}
+
+
+Function to get authAccount information from the database vishnu. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em condition}]The condition of the select request \item[{\em attrname}]the name of the attribut to get \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the value of the attribut or empty string if no results 
+\end{DoxyReturn}
+\hypertarget{classAuthAccountServer_a2c42535d2ea889389795be45f751a8ec}{
+\index{AuthAccountServer@{AuthAccountServer}!getData@{getData}}
+\index{getData@{getData}!AuthAccountServer@{AuthAccountServer}}
+\subsubsection[{getData}]{\setlength{\rightskip}{0pt plus 5cm}UMS\_\-Data::AuthAccount AuthAccountServer::getData (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classAuthAccountServer_a2c42535d2ea889389795be45f751a8ec}
+
+
+Function to get authAccount data structure. 
+
+\begin{DoxyReturn}{Returns}
+The AuthAccount data structure 
+\end{DoxyReturn}
+\hypertarget{classAuthAccountServer_a6fb1e6d4302d269aebdde700a085ff0c}{
+\index{AuthAccountServer@{AuthAccountServer}!isLoginUsed@{isLoginUsed}}
+\index{isLoginUsed@{isLoginUsed}!AuthAccountServer@{AuthAccountServer}}
+\subsubsection[{isLoginUsed}]{\setlength{\rightskip}{0pt plus 5cm}bool AuthAccountServer::isLoginUsed (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ numAuthSystem, }
+\item[{std::string}]{ acLogin}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classAuthAccountServer_a6fb1e6d4302d269aebdde700a085ff0c}
+
+
+Function to check if a given login is used on a user-\/authentication system. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em numAuthSystem}]the internal id of the user-\/authentication system \item[{\em acLogin}]the account login \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the login is already used on the machine 
+\end{DoxyReturn}
+\hypertarget{classAuthAccountServer_ac436fe62e92927384bdf1b288e8f410e}{
+\index{AuthAccountServer@{AuthAccountServer}!update@{update}}
+\index{update@{update}!AuthAccountServer@{AuthAccountServer}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}int AuthAccountServer::update (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classAuthAccountServer_ac436fe62e92927384bdf1b288e8f410e}
+
+
+Function to update a VISHNU authAccount. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+UMS/src/server/\hyperlink{AuthAccountServer_8hpp}{AuthAccountServer.hpp}\end{DoxyCompactItemize}

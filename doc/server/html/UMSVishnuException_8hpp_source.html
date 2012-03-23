@@ -69,21 +69,30 @@
 <a name="l00043"></a>00043 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> ERRCODE_ROOT_USER_ONLY = 45;
 <a name="l00044"></a>00044 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> ERRCODE_LOGIN_ALREADY_USED = 46;
 <a name="l00045"></a>00045 
-<a name="l00050"></a><a class="code" href="classUMSVishnuException.html">00050</a> <span class="keyword">class </span><a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>: <span class="keyword">public</span> <a class="code" href="classUserException.html" title="This class represents the exception due to a user misuse.">UserException</a>{
-<a name="l00051"></a>00051 
-<a name="l00052"></a>00052 <span class="keyword">public</span>:
-<a name="l00057"></a>00057   <a class="code" href="classUMSVishnuException.html#aa71e0473dd7f135fec1d3bb796d249d4" title="Default constructor.">UMSVishnuException</a>();
-<a name="l00063"></a>00063   <a class="code" href="classUMSVishnuException.html#aa71e0473dd7f135fec1d3bb796d249d4" title="Default constructor.">UMSVishnuException</a>(<span class="keyword">const</span> <a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>&amp; e);
-<a name="l00070"></a>00070   <a class="code" href="classUMSVishnuException.html#aa71e0473dd7f135fec1d3bb796d249d4" title="Default constructor.">UMSVishnuException</a>(<span class="keywordtype">int</span> msg, std::string msgComp = <span class="stringliteral">&quot;&quot;</span>);
-<a name="l00075"></a><a class="code" href="classUMSVishnuException.html#a12d672982e0cedb3fe77dac2e449e837">00075</a>   <a class="code" href="classUMSVishnuException.html#a12d672982e0cedb3fe77dac2e449e837" title="Default constructor.">~UMSVishnuException</a>()throw (){};
-<a name="l00080"></a>00080   <span class="keywordtype">void</span>
-<a name="l00081"></a>00081   <a class="code" href="classUMSVishnuException.html#a6f684da55cc4be6c4c9158e8562709e0" title="Function to initialize all UMS generic messages.">initMsg</a>();
-<a name="l00082"></a>00082 };
-<a name="l00083"></a>00083 
-<a name="l00084"></a>00084 <span class="preprocessor">#endif // UMSVishnuException</span>
+<a name="l00046"></a>00046 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE = 47;
+<a name="l00047"></a>00047 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> ERRCODE_UNKNOWN_AUTH_SYSTEM = 48;
+<a name="l00048"></a>00048 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> ERRCODE_AUTH_SYSTEM_ALREADY_LOCKED = 49;
+<a name="l00049"></a>00049 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> ERRCODE_AUTH_SYSTEM_ALREADY_EXIST = 50;
+<a name="l00050"></a>00050 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> ERRCODE_AUTH_ACCOUNT_EXIST = 51;
+<a name="l00051"></a>00051 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> ERRCODE_UNKNOWN_AUTH_ACCOUNT = 52;
+<a name="l00052"></a>00052 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> ERRCODE_UNKNOWN_ENCRYPTION_METHOD = 53;
+<a name="l00053"></a>00053 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> ERRCODE_READONLY_ACCOUNT = 54;
+<a name="l00054"></a>00054 
+<a name="l00059"></a><a class="code" href="classUMSVishnuException.html">00059</a> <span class="keyword">class </span><a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>: <span class="keyword">public</span> <a class="code" href="classUserException.html" title="This class represents the exception due to a user misuse.">UserException</a>{
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061 <span class="keyword">public</span>:
+<a name="l00066"></a>00066   <a class="code" href="classUMSVishnuException.html#aa71e0473dd7f135fec1d3bb796d249d4" title="Default constructor.">UMSVishnuException</a>();
+<a name="l00072"></a>00072   <a class="code" href="classUMSVishnuException.html#aa71e0473dd7f135fec1d3bb796d249d4" title="Default constructor.">UMSVishnuException</a>(<span class="keyword">const</span> <a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>&amp; e);
+<a name="l00079"></a>00079   <a class="code" href="classUMSVishnuException.html#aa71e0473dd7f135fec1d3bb796d249d4" title="Default constructor.">UMSVishnuException</a>(<span class="keywordtype">int</span> msg, std::string msgComp = <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00084"></a><a class="code" href="classUMSVishnuException.html#a12d672982e0cedb3fe77dac2e449e837">00084</a>   <a class="code" href="classUMSVishnuException.html#a12d672982e0cedb3fe77dac2e449e837" title="Default constructor.">~UMSVishnuException</a>()throw (){};
+<a name="l00089"></a>00089   <span class="keywordtype">void</span>
+<a name="l00090"></a>00090   <a class="code" href="classUMSVishnuException.html#a6f684da55cc4be6c4c9158e8562709e0" title="Function to initialize all UMS generic messages.">initMsg</a>();
+<a name="l00091"></a>00091 };
+<a name="l00092"></a>00092 
+<a name="l00093"></a>00093 <span class="preprocessor">#endif // UMSVishnuException</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:42 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:13 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
