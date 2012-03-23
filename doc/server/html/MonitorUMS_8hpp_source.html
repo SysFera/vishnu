@@ -34,31 +34,35 @@
 <a name="l00010"></a>00010 <span class="preprocessor"></span>
 <a name="l00011"></a>00011 <span class="preprocessor">#include &lt;string&gt;</span>
 <a name="l00012"></a>00012 <span class="preprocessor">#include &quot;<a class="code" href="UMS_2src_2sed_2internalApi_8hpp.html" title="This file presents the internal api of UMS.">internalApi.hpp</a>&quot;</span>
-<a name="l00013"></a>00013 
-<a name="l00018"></a><a class="code" href="classMonitorUMS.html">00018</a> <span class="keyword">class </span><a class="code" href="classMonitorUMS.html" title="This class describes the UMS Monitor.">MonitorUMS</a> {
-<a name="l00019"></a>00019 <span class="keyword">public</span> :
-<a name="l00025"></a>00025   <span class="keyword">explicit</span> <a class="code" href="classMonitorUMS.html#ab3e7af32b9eb1e778ade65438d52fd8b" title="Constructor, raises an exception on error.">MonitorUMS</a>(<span class="keywordtype">int</span> interval = 1);
-<a name="l00026"></a>00026 
-<a name="l00031"></a>00031   <a class="code" href="classMonitorUMS.html#a4dd94f7d4a5cfafb4c668cde6f231e3e" title="Destructor.">~MonitorUMS</a>();
-<a name="l00032"></a>00032 
-<a name="l00039"></a>00039   <span class="keywordtype">void</span>
-<a name="l00040"></a>00040   <a class="code" href="classMonitorUMS.html#a14c0a0e214e1c3dd306314474d6a3ff8" title="To initialize the UMS monitor with individual parameters instead of configuration file...">init</a>(<span class="keywordtype">int</span> vishnuId, <a class="code" href="classDbConfiguration.html" title="Contains the configuration parameters for the Vishnu database.">DbConfiguration</a> dbConfig);
-<a name="l00041"></a>00041 
-<a name="l00047"></a>00047   <span class="keywordtype">int</span>
-<a name="l00048"></a>00048   <a class="code" href="classMonitorUMS.html#aa4e9d26960b0519c7bfd4e470d1fc0a7" title="To launch the UMS Monitor.">run</a>();
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050 <span class="keyword">private</span> :
-<a name="l00051"></a>00051 
-<a name="l00053"></a>00053   <span class="comment">// Attributes</span>
-<a name="l00055"></a>00055 <span class="comment"></span>
-<a name="l00059"></a><a class="code" href="classMonitorUMS.html#a1d5bb8d46af814421bd426bca2ea19b5">00059</a>   <span class="keywordtype">int</span> <a class="code" href="classMonitorUMS.html#a1d5bb8d46af814421bd426bca2ea19b5" title="The interval in seconds to check the database.">minterval</a>;
-<a name="l00063"></a><a class="code" href="classMonitorUMS.html#ac1d6be2c23b3b81a2a06e2547f0aa34e">00063</a>   <a class="code" href="classDatabase.html" title="This class describes a database.">Database</a> *<a class="code" href="classMonitorUMS.html#ac1d6be2c23b3b81a2a06e2547f0aa34e" title="An instance of vishnu database.">mdatabaseVishnu</a>;
-<a name="l00064"></a>00064 
-<a name="l00065"></a>00065 };
-<a name="l00066"></a>00066 <span class="preprocessor">#endif // MONITORUMS</span>
+<a name="l00013"></a>00013 <span class="keyword">class </span><a class="code" href="classAuthenticatorConfiguration.html" title="Contains the configuration parameters for the Vishnu authenticator.">AuthenticatorConfiguration</a>;
+<a name="l00014"></a>00014 <span class="keyword">class </span><a class="code" href="classAuthenticator.html" title="Authenticator.">Authenticator</a>;
+<a name="l00015"></a>00015 
+<a name="l00020"></a><a class="code" href="classMonitorUMS.html">00020</a> <span class="keyword">class </span><a class="code" href="classMonitorUMS.html" title="This class describes the UMS Monitor.">MonitorUMS</a> {
+<a name="l00021"></a>00021 <span class="keyword">public</span> :
+<a name="l00027"></a>00027   <span class="keyword">explicit</span> <a class="code" href="classMonitorUMS.html#ab3e7af32b9eb1e778ade65438d52fd8b" title="Constructor, raises an exception on error.">MonitorUMS</a>(<span class="keywordtype">int</span> interval = 1);
+<a name="l00028"></a>00028 
+<a name="l00033"></a>00033   <a class="code" href="classMonitorUMS.html#a4dd94f7d4a5cfafb4c668cde6f231e3e" title="Destructor.">~MonitorUMS</a>();
+<a name="l00034"></a>00034 
+<a name="l00042"></a>00042   <span class="keywordtype">void</span>
+<a name="l00043"></a>00043   <a class="code" href="classMonitorUMS.html#ac472faf565e27fda5fa2be4f01e58e85" title="To initialize the UMS monitor with individual parameters instead of configuration file...">init</a>(<span class="keywordtype">int</span> vishnuId, <a class="code" href="classDbConfiguration.html" title="Contains the configuration parameters for the Vishnu database.">DbConfiguration</a> dbConfig, <a class="code" href="classAuthenticatorConfiguration.html" title="Contains the configuration parameters for the Vishnu authenticator.">AuthenticatorConfiguration</a> authenticatorConfig);
+<a name="l00044"></a>00044 
+<a name="l00050"></a>00050   <span class="keywordtype">int</span>
+<a name="l00051"></a>00051   <a class="code" href="classMonitorUMS.html#aa4e9d26960b0519c7bfd4e470d1fc0a7" title="To launch the UMS Monitor.">run</a>();
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053 <span class="keyword">private</span> :
+<a name="l00054"></a>00054 
+<a name="l00056"></a>00056   <span class="comment">// Attributes</span>
+<a name="l00058"></a>00058 <span class="comment"></span>
+<a name="l00062"></a><a class="code" href="classMonitorUMS.html#a1d5bb8d46af814421bd426bca2ea19b5">00062</a>   <span class="keywordtype">int</span> <a class="code" href="classMonitorUMS.html#a1d5bb8d46af814421bd426bca2ea19b5" title="The interval in seconds to check the database.">minterval</a>;
+<a name="l00066"></a><a class="code" href="classMonitorUMS.html#ac1d6be2c23b3b81a2a06e2547f0aa34e">00066</a>   <a class="code" href="classDatabase.html" title="This class describes a database.">Database</a> *<a class="code" href="classMonitorUMS.html#ac1d6be2c23b3b81a2a06e2547f0aa34e" title="An instance of vishnu database.">mdatabaseVishnu</a>;
+<a name="l00067"></a>00067 
+<a name="l00071"></a><a class="code" href="classMonitorUMS.html#aecae830bd78d377f6e14773d8c30ffd0">00071</a>   <a class="code" href="classAuthenticator.html" title="Authenticator.">Authenticator</a> *<a class="code" href="classMonitorUMS.html#aecae830bd78d377f6e14773d8c30ffd0" title="Instance of Authenticator.">mauthenticator</a>;
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073 };
+<a name="l00074"></a>00074 <span class="preprocessor">#endif // MONITORUMS</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:42 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:13 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

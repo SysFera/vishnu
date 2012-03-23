@@ -53,6 +53,10 @@
 <code>#include &quot;<a class="el" href="CommandServer_8hpp_source.html">CommandServer.hpp</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="UMSMapper_8hpp_source.html">UMSMapper.hpp</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="MapperRegistry_8hpp_source.html">MapperRegistry.hpp</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="AuthSystemServer_8hpp_source.html">AuthSystemServer.hpp</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="AuthAccountServer_8hpp_source.html">AuthAccountServer.hpp</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="ListAuthSystemsServer_8hpp_source.html">ListAuthSystemsServer.hpp</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="ListAuthAccountsServer_8hpp_source.html">ListAuthAccountsServer.hpp</a>&quot;</code><br/>
 
 <p><a href="UMS_2src_2sed_2internalApi_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -111,12 +115,136 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to solve the service solveListLocalAccount.  <a href="#a7e420644f7e3562cc789a79ad0065dff"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="UMS_2src_2sed_2internalApi_8hpp.html#a53d7f3609dc67372f518a21e8ab26545">solveRestore</a> (diet_profile_t *pb)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to solve the service solveRestore.  <a href="#a53d7f3609dc67372f518a21e8ab26545"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="UMS_2src_2sed_2internalApi_8hpp.html#aa45caa71be42f52a5e20b9b5bcbb3eb2">solveSystemAuthCreate</a> (diet_profile_t *pb)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to solve the service solveSystemAuthCreate.  <a href="#aa45caa71be42f52a5e20b9b5bcbb3eb2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="UMS_2src_2sed_2internalApi_8hpp.html#af9e6ad2061681aa7222b36ae792e855e">solveSystemAuthUpdate</a> (diet_profile_t *pb)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to solve the service solveSystemAuthUpdate.  <a href="#af9e6ad2061681aa7222b36ae792e855e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="UMS_2src_2sed_2internalApi_8hpp.html#a95b16d91435b266a9b306fcdfa0a788c">solveSystemAuthDelete</a> (diet_profile_t *pb)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to solve the service solveSystemAuthDelete.  <a href="#a95b16d91435b266a9b306fcdfa0a788c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="UMS_2src_2sed_2internalApi_8hpp.html#a5d199437cfbf21a7716131a3ef47a210">solveSystemAuthList</a> (diet_profile_t *pb)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to solve the service solveSystemAuthList.  <a href="#a5d199437cfbf21a7716131a3ef47a210"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="UMS_2src_2sed_2internalApi_8hpp.html#af308a3cdcdc187575cd61014dfcec4fc">solveAccountAuthCreate</a> (diet_profile_t *pb)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to solve the service solveAccountAuthCreate.  <a href="#af308a3cdcdc187575cd61014dfcec4fc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="UMS_2src_2sed_2internalApi_8hpp.html#ad6621953e8782f3490521081a74ed7e1">solveAccountAuthUpdate</a> (diet_profile_t *pb)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to solve the service solveAccountAuthUpdate.  <a href="#ad6621953e8782f3490521081a74ed7e1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="UMS_2src_2sed_2internalApi_8hpp.html#a984b7ac07e325905f44d5050f342c60f">solveAccountAuthDelete</a> (diet_profile_t *pb)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to solve the service solveAccountAuthDelete.  <a href="#a984b7ac07e325905f44d5050f342c60f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="UMS_2src_2sed_2internalApi_8hpp.html#a0a78eefc570ce45ac9319987e9421463">solveAccountAuthList</a> (diet_profile_t *pb)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to solve the service solveAccountAuthList.  <a href="#a0a78eefc570ce45ac9319987e9421463"></a><br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>This file presents the internal api of UMS. </p>
 <dl class="author"><dt><b>Author:</b></dt><dd>Eugène PAMBA CAPO-CHICHI (<a href="mailto:eugene.capochichi@sysfera.com">eugene.capochichi@sysfera.com</a>) </dd></dl>
 <dl class="date"><dt><b>Date:</b></dt><dd>31/01/2001 </dd></dl>
 <hr/><h2>Function Documentation</h2>
+<a class="anchor" id="af308a3cdcdc187575cd61014dfcec4fc"></a><!-- doxytag: member="internalApi.hpp::solveAccountAuthCreate" ref="af308a3cdcdc187575cd61014dfcec4fc" args="(diet_profile_t *pb)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int solveAccountAuthCreate </td>
+          <td>(</td>
+          <td class="paramtype">diet_profile_t *&nbsp;</td>
+          <td class="paramname"> <em>pb</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to solve the service solveAccountAuthCreate. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pb</em>&nbsp;</td><td>is a structure which corresponds to the descriptor of a profile </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a984b7ac07e325905f44d5050f342c60f"></a><!-- doxytag: member="internalApi.hpp::solveAccountAuthDelete" ref="a984b7ac07e325905f44d5050f342c60f" args="(diet_profile_t *pb)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int solveAccountAuthDelete </td>
+          <td>(</td>
+          <td class="paramtype">diet_profile_t *&nbsp;</td>
+          <td class="paramname"> <em>pb</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to solve the service solveAccountAuthDelete. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pb</em>&nbsp;</td><td>is a structure which corresponds to the descriptor of a profile </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a0a78eefc570ce45ac9319987e9421463"></a><!-- doxytag: member="internalApi.hpp::solveAccountAuthList" ref="a0a78eefc570ce45ac9319987e9421463" args="(diet_profile_t *pb)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int solveAccountAuthList </td>
+          <td>(</td>
+          <td class="paramtype">diet_profile_t *&nbsp;</td>
+          <td class="paramname"> <em>pb</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to solve the service solveAccountAuthList. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pb</em>&nbsp;</td><td>is a structure which corresponds to the descriptor of a profile </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ad6621953e8782f3490521081a74ed7e1"></a><!-- doxytag: member="internalApi.hpp::solveAccountAuthUpdate" ref="ad6621953e8782f3490521081a74ed7e1" args="(diet_profile_t *pb)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int solveAccountAuthUpdate </td>
+          <td>(</td>
+          <td class="paramtype">diet_profile_t *&nbsp;</td>
+          <td class="paramname"> <em>pb</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to solve the service solveAccountAuthUpdate. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pb</em>&nbsp;</td><td>is a structure which corresponds to the descriptor of a profile </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ad37988e060094d37a101ff22c876b30c"></a><!-- doxytag: member="internalApi.hpp::solveConfigurationRestore" ref="ad37988e060094d37a101ff22c876b30c" args="(diet_profile_t *pb)" -->
 <div class="memitem">
 <div class="memproto">
@@ -694,6 +822,114 @@ template&lt;class QueryParameters , class List , class QueryType &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="aa45caa71be42f52a5e20b9b5bcbb3eb2"></a><!-- doxytag: member="internalApi.hpp::solveSystemAuthCreate" ref="aa45caa71be42f52a5e20b9b5bcbb3eb2" args="(diet_profile_t *pb)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int solveSystemAuthCreate </td>
+          <td>(</td>
+          <td class="paramtype">diet_profile_t *&nbsp;</td>
+          <td class="paramname"> <em>pb</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to solve the service solveSystemAuthCreate. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pb</em>&nbsp;</td><td>is a structure which corresponds to the descriptor of a profile </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a95b16d91435b266a9b306fcdfa0a788c"></a><!-- doxytag: member="internalApi.hpp::solveSystemAuthDelete" ref="a95b16d91435b266a9b306fcdfa0a788c" args="(diet_profile_t *pb)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int solveSystemAuthDelete </td>
+          <td>(</td>
+          <td class="paramtype">diet_profile_t *&nbsp;</td>
+          <td class="paramname"> <em>pb</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to solve the service solveSystemAuthDelete. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pb</em>&nbsp;</td><td>is a structure which corresponds to the descriptor of a profile </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5d199437cfbf21a7716131a3ef47a210"></a><!-- doxytag: member="internalApi.hpp::solveSystemAuthList" ref="a5d199437cfbf21a7716131a3ef47a210" args="(diet_profile_t *pb)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int solveSystemAuthList </td>
+          <td>(</td>
+          <td class="paramtype">diet_profile_t *&nbsp;</td>
+          <td class="paramname"> <em>pb</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to solve the service solveSystemAuthList. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pb</em>&nbsp;</td><td>is a structure which corresponds to the descriptor of a profile </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="af9e6ad2061681aa7222b36ae792e855e"></a><!-- doxytag: member="internalApi.hpp::solveSystemAuthUpdate" ref="af9e6ad2061681aa7222b36ae792e855e" args="(diet_profile_t *pb)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int solveSystemAuthUpdate </td>
+          <td>(</td>
+          <td class="paramtype">diet_profile_t *&nbsp;</td>
+          <td class="paramname"> <em>pb</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to solve the service solveSystemAuthUpdate. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pb</em>&nbsp;</td><td>is a structure which corresponds to the descriptor of a profile </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a99bc9c4a40258861b7804006e27fe815"></a><!-- doxytag: member="internalApi.hpp::solveUserCreate" ref="a99bc9c4a40258861b7804006e27fe815" args="(diet_profile_t *pb)" -->
 <div class="memitem">
 <div class="memproto">
@@ -830,7 +1066,7 @@ template&lt;class QueryParameters , class List , class QueryType &gt; </div>
 </div>
 </div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:42 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:14 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

@@ -50,8 +50,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get the vishnuId.  <a href="#af5943e226e5d3122ae98771f34cbef79"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerUMS.html#aa8e658cdcdb326d25460948e5f5b91b9">getSendmailScriptPath</a> () const </td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get the path to the sendmail script.  <a href="#aa8e658cdcdb326d25460948e5f5b91b9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerUMS.html#a56a5c740db9e9c1b3e28fa4d0b05546b">init</a> (int vishnuId, <a class="el" href="classDbConfiguration.html">DbConfiguration</a> dbConfig, std::string sendmailScriptPath)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To initialize the UMS server.  <a href="#a56a5c740db9e9c1b3e28fa4d0b05546b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerUMS.html#a34e2bc6eff48a00a11299702b61a3dbd">init</a> (int vishnuId, <a class="el" href="classDbConfiguration.html">DbConfiguration</a> dbConfig, std::string sendmailScriptPath, <a class="el" href="classAuthenticatorConfiguration.html">AuthenticatorConfiguration</a> authenticatorConfig)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To initialize the UMS server.  <a href="#a34e2bc6eff48a00a11299702b61a3dbd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d94c92a660ecfda2930894dd4b772bf"></a><!-- doxytag: member="ServerUMS::~ServerUMS" ref="a9d94c92a660ecfda2930894dd4b772bf" args="()" -->
 &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerUMS.html#a9d94c92a660ecfda2930894dd4b772bf">~ServerUMS</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructor, raises an exception on error. <br/></td></tr>
@@ -99,6 +99,9 @@ static <a class="el" href="classFMSMapper.html">FMSMapper</a> *&nbsp;</td><td cl
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1e8811f540a3e375794657a1d310d950"></a><!-- doxytag: member="ServerUMS::mmapperIMS" ref="a1e8811f540a3e375794657a1d310d950" args="" -->
 static <a class="el" href="classIMSMapper.html">IMSMapper</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerUMS.html#a1e8811f540a3e375794657a1d310d950">mmapperIMS</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Instance of <a class="el" href="classUMSMapper.html" title="Mapper implementation for the UMS module.">UMSMapper</a>. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a103660d444f02189d10ef63d96f1edf2"></a><!-- doxytag: member="ServerUMS::mauthenticator" ref="a103660d444f02189d10ef63d96f1edf2" args="" -->
+static <a class="el" href="classAuthenticator.html">Authenticator</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerUMS.html#a103660d444f02189d10ef63d96f1edf2">mauthenticator</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Instance of <a class="el" href="classAuthenticator.html" title="Authenticator.">Authenticator</a>. <br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>This class describes the UMS server. </p>
@@ -143,7 +146,7 @@ static <a class="el" href="classIMSMapper.html">IMSMapper</a> *&nbsp;</td><td cl
 
 </div>
 </div>
-<a class="anchor" id="a56a5c740db9e9c1b3e28fa4d0b05546b"></a><!-- doxytag: member="ServerUMS::init" ref="a56a5c740db9e9c1b3e28fa4d0b05546b" args="(int vishnuId, DbConfiguration dbConfig, std::string sendmailScriptPath)" -->
+<a class="anchor" id="a34e2bc6eff48a00a11299702b61a3dbd"></a><!-- doxytag: member="ServerUMS::init" ref="a34e2bc6eff48a00a11299702b61a3dbd" args="(int vishnuId, DbConfiguration dbConfig, std::string sendmailScriptPath, AuthenticatorConfiguration authenticatorConfig)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -163,7 +166,13 @@ static <a class="el" href="classIMSMapper.html">IMSMapper</a> *&nbsp;</td><td cl
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::string&nbsp;</td>
-          <td class="paramname"> <em>sendmailScriptPath</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>sendmailScriptPath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classAuthenticatorConfiguration.html">AuthenticatorConfiguration</a>&nbsp;</td>
+          <td class="paramname"> <em>authenticatorConfig</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -180,6 +189,7 @@ static <a class="el" href="classIMSMapper.html">IMSMapper</a> *&nbsp;</td><td cl
     <tr><td valign="top"></td><td valign="top"><em>vishnuId</em>&nbsp;</td><td>The identifier of the vishnu instance </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>dbConfig</em>&nbsp;</td><td>The configuration of the database </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>sendmailScriptPath</em>&nbsp;</td><td>The path to the script for sending emails </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>authenticatorConfig</em>&nbsp;</td><td>The configuration of the authenticator </td></tr>
   </table>
   </dd>
 </dl>
@@ -191,7 +201,7 @@ static <a class="el" href="classIMSMapper.html">IMSMapper</a> *&nbsp;</td><td cl
 <li>UMS/src/sed/<a class="el" href="ServerUMS_8hpp_source.html">ServerUMS.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:46 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:19 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

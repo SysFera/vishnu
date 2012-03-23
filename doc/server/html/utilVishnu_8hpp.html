@@ -46,6 +46,7 @@
 <code>#include &lt;boost/date_time/local_time/local_time.hpp&gt;</code><br/>
 <code>#include &quot;<a class="el" href="FMSVishnuException_8hpp_source.html">FMSVishnuException.hpp</a>&quot;</code><br/>
 <code>#include &lt;boost/filesystem.hpp&gt;</code><br/>
+<code>#include &lt;boost/thread/shared_mutex.hpp&gt;</code><br/>
 
 <p><a href="utilVishnu_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -58,10 +59,14 @@ Namespaces</h2></td></tr>
 </p>
 <tr><td colspan="2"><h2><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016ea">BatchType</a> { <a class="el" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016eaab14fe26ae2d673af2927fd2a8a1eb91f">TORQUE</a> =  0, 
+<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016ea">BatchType</a> { <br/>
+&nbsp;&nbsp;<a class="el" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016eaab14fe26ae2d673af2927fd2a8a1eb91f">TORQUE</a> =  0, 
 <a class="el" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016eaa56d623fdbafffe0800339f203ae1eecb">LOADLEVELER</a> =  1, 
 <a class="el" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016eaaf25f8a674c9d7350fe4656af2390e6e8">SLURM</a> =  2, 
-<a class="el" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016eaa605159e8a4c32319fd69b5d151369d93">UNDEFINED</a> =  3
+<a class="el" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016eaa26523f8b941f74217451eec331318264">LSF</a> =  3, 
+<br/>
+&nbsp;&nbsp;<a class="el" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016eaa605159e8a4c32319fd69b5d151369d93">UNDEFINED</a> =  4
+<br/>
  }</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><p>The type of the Batch. </p>
  <a href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016ea">More...</a><br/></td></tr>
@@ -76,8 +81,8 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to convert a given date into correspondant long value.  <a href="#ae4208edfb8924443b0971e68cccfce02"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066">vishnu::convertToInt</a> (std::string val)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to convert a string to int.  <a href="#ac1899fb2792ddd63a003a06081fc9066"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ae8aa2ffafe24d1f575e8953d1d9d026e">vishnu::cryptPassword</a> (const std::string &amp;salt, const std::string &amp;password)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To crypt a password.  <a href="#ae8aa2ffafe24d1f575e8953d1d9d026e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a6d55dd8303227aa0de9048abd043efdf">vishnu::cryptPassword</a> (const std::string &amp;salt, const std::string &amp;password, bool encrypted=true)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To crypt a password.  <a href="#a6d55dd8303227aa0de9048abd043efdf"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a93bc913d891933b4f9d7bc0382f72425">vishnu::generateNumbers</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get a random number.  <a href="#a93bc913d891933b4f9d7bc0382f72425"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a699510f2ba6cb03bd9a6f3696abd9860">vishnu::takePassword</a> (const std::string &amp;prompt)</td></tr>
@@ -160,6 +165,9 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 <tr><td valign="top"><em><a class="anchor" id="a864d748e7097d176552dd4c7635016eaaf25f8a674c9d7350fe4656af2390e6e8"></a><!-- doxytag: member="SLURM" ref="a864d748e7097d176552dd4c7635016eaaf25f8a674c9d7350fe4656af2390e6e8" args="" -->SLURM</em>&nbsp;</td><td>
 <p>For SLURM batch type </p>
 </td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a864d748e7097d176552dd4c7635016eaa26523f8b941f74217451eec331318264"></a><!-- doxytag: member="LSF" ref="a864d748e7097d176552dd4c7635016eaa26523f8b941f74217451eec331318264" args="" -->LSF</em>&nbsp;</td><td>
+<p>For LSF batch type </p>
+</td></tr>
 <tr><td valign="top"><em><a class="anchor" id="a864d748e7097d176552dd4c7635016eaa605159e8a4c32319fd69b5d151369d93"></a><!-- doxytag: member="UNDEFINED" ref="a864d748e7097d176552dd4c7635016eaa605159e8a4c32319fd69b5d151369d93" args="" -->UNDEFINED</em>&nbsp;</td><td>
 <p>IF batch type is not defined </p>
 </td></tr>
@@ -208,7 +216,7 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 </div>
 </div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:42 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:14 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

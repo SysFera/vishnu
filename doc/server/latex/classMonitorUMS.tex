@@ -21,7 +21,7 @@ This class describes the UMS Monitor.
 \label{classMonitorUMS_a4dd94f7d4a5cfafb4c668cde6f231e3e}
 
 \begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\item 
-void \hyperlink{classMonitorUMS_a14c0a0e214e1c3dd306314474d6a3ff8}{init} (int vishnuId, \hyperlink{classDbConfiguration}{DbConfiguration} dbConfig)
+void \hyperlink{classMonitorUMS_ac472faf565e27fda5fa2be4f01e58e85}{init} (int vishnuId, \hyperlink{classDbConfiguration}{DbConfiguration} dbConfig, \hyperlink{classAuthenticatorConfiguration}{AuthenticatorConfiguration} authenticatorConfig)
 \begin{DoxyCompactList}\small\item\em To initialize the UMS monitor with individual parameters instead of configuration file. \item\end{DoxyCompactList}\item 
 int \hyperlink{classMonitorUMS_aa4e9d26960b0519c7bfd4e470d1fc0a7}{run} ()
 \begin{DoxyCompactList}\small\item\em To launch the UMS Monitor. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -37,7 +37,12 @@ int \hyperlink{classMonitorUMS_a1d5bb8d46af814421bd426bca2ea19b5}{minterval}}
 \hyperlink{classDatabase}{Database} $\ast$ \hyperlink{classMonitorUMS_ac1d6be2c23b3b81a2a06e2547f0aa34e}{mdatabaseVishnu}}
 \label{classMonitorUMS_ac1d6be2c23b3b81a2a06e2547f0aa34e}
 
-\begin{DoxyCompactList}\small\item\em An instance of vishnu database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em An instance of vishnu database. \item\end{DoxyCompactList}\item 
+\hypertarget{classMonitorUMS_aecae830bd78d377f6e14773d8c30ffd0}{
+\hyperlink{classAuthenticator}{Authenticator} $\ast$ \hyperlink{classMonitorUMS_aecae830bd78d377f6e14773d8c30ffd0}{mauthenticator}}
+\label{classMonitorUMS_aecae830bd78d377f6e14773d8c30ffd0}
+
+\begin{DoxyCompactList}\small\item\em Instance of \hyperlink{classAuthenticator}{Authenticator}. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -63,23 +68,24 @@ Constructor, raises an exception on error.
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classMonitorUMS_a14c0a0e214e1c3dd306314474d6a3ff8}{
+\hypertarget{classMonitorUMS_ac472faf565e27fda5fa2be4f01e58e85}{
 \index{MonitorUMS@{MonitorUMS}!init@{init}}
 \index{init@{init}!MonitorUMS@{MonitorUMS}}
 \subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}void MonitorUMS::init (
 \begin{DoxyParamCaption}
 \item[{int}]{ vishnuId, }
-\item[{{\bf DbConfiguration}}]{ dbConfig}
+\item[{{\bf DbConfiguration}}]{ dbConfig, }
+\item[{{\bf AuthenticatorConfiguration}}]{ authenticatorConfig}
 \end{DoxyParamCaption}
 )}}
-\label{classMonitorUMS_a14c0a0e214e1c3dd306314474d6a3ff8}
+\label{classMonitorUMS_ac472faf565e27fda5fa2be4f01e58e85}
 
 
 To initialize the UMS monitor with individual parameters instead of configuration file. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em vishnuId}]The password of the root user vishnu\_\-user for the connection with the database \item[{\em dbConfig}]The configuration of the database \end{DoxyParams}
+\item[{\em vishnuId}]The password of the root user vishnu\_\-user for the connection with the database \item[{\em dbConfig}]The configuration of the database \item[{\em authenticatorConfig}]The configuration of the authenticator \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an execption 
 \end{DoxyReturn}

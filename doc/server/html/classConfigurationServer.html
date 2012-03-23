@@ -65,6 +65,10 @@ Private Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the sql code of machines from a VISHNU configuration.  <a href="#a6899508cf595a37a05d90b9efe8c9358"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfigurationServer.html#a10dc6a2581fce8e24144f9f49e08d58f">machineDescToSql</a> (UMS_Data::Machine_ptr machine)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the sql code of machines description from a VISHNU configuration.  <a href="#a10dc6a2581fce8e24144f9f49e08d58f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfigurationServer.html#a2015835e881f8bf36b3a82e2bbee6b95">authSystemToSql</a> (UMS_Data::AuthSystem_ptr authsystem, int vishnuId)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the sql code of user-authentication system from a VISHNU configuration.  <a href="#a2015835e881f8bf36b3a82e2bbee6b95"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfigurationServer.html#a8c5b91d69b6dafb7ec822d3c31389178">ldapAuthSystemToSql</a> (UMS_Data::AuthSystem_ptr authsystem)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the sql code of machines description from a VISHNU configuration.  <a href="#a8c5b91d69b6dafb7ec822d3c31389178"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca605c70418f29ec829030ed12406368"></a><!-- doxytag: member="ConfigurationServer::mconfiguration" ref="aca605c70418f29ec829030ed12406368" args="" -->
@@ -143,6 +147,43 @@ UMS_Data::Configuration *&nbsp;</td><td class="memItemRight" valign="bottom"><a 
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a2015835e881f8bf36b3a82e2bbee6b95"></a><!-- doxytag: member="ConfigurationServer::authSystemToSql" ref="a2015835e881f8bf36b3a82e2bbee6b95" args="(UMS_Data::AuthSystem_ptr authsystem, int vishnuId)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string ConfigurationServer::authSystemToSql </td>
+          <td>(</td>
+          <td class="paramtype">UMS_Data::AuthSystem_ptr&nbsp;</td>
+          <td class="paramname"> <em>authsystem</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>vishnuId</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to get the sql code of user-authentication system from a VISHNU configuration. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>authsystem</em>&nbsp;</td><td>The authSystem object </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>vishnuId</em>&nbsp;</td><td>The identifier of the vishnu instance </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the sql code containing the sql code of authentication systems </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ae1ce593072e5a6828128c5c80758604c"></a><!-- doxytag: member="ConfigurationServer::getData" ref="ae1ce593072e5a6828128c5c80758604c" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -160,6 +201,33 @@ UMS_Data::Configuration *&nbsp;</td><td class="memItemRight" valign="bottom"><a 
 
 <p>Function to get <a class="el" href="classConfiguration.html" title="Standard configuration class.">Configuration</a> data structure. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>The LocalAccount data structure </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a8c5b91d69b6dafb7ec822d3c31389178"></a><!-- doxytag: member="ConfigurationServer::ldapAuthSystemToSql" ref="a8c5b91d69b6dafb7ec822d3c31389178" args="(UMS_Data::AuthSystem_ptr authsystem)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string ConfigurationServer::ldapAuthSystemToSql </td>
+          <td>(</td>
+          <td class="paramtype">UMS_Data::AuthSystem_ptr&nbsp;</td>
+          <td class="paramname"> <em>authsystem</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to get the sql code of machines description from a VISHNU configuration. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>authsystem</em>&nbsp;</td><td>The authSystem object </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the sql code containing the sql code of authentication systems based on ldap </dd></dl>
 
 </div>
 </div>
@@ -315,7 +383,7 @@ UMS_Data::Configuration *&nbsp;</td><td class="memItemRight" valign="bottom"><a 
 <li>UMS/src/server/<a class="el" href="ConfigurationServer_8hpp_source.html">ConfigurationServer.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:42 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:14 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

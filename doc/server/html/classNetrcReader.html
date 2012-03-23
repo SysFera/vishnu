@@ -46,8 +46,8 @@
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNetrcReader.html#ab9005fa7effec542628d4dfb033f6969">NetrcReader</a> (std::string path)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor.  <a href="#ab9005fa7effec542628d4dfb033f6969"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNetrcReader.html#a24b6cd69a5a43dffca8ffeb335dad65c">read</a> (string &amp;login, string &amp;pwd, const string &amp;machineName=&quot;vishnu&quot;)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the login and the password associated to a specific machine defined on the netrc file.  <a href="#a24b6cd69a5a43dffca8ffeb335dad65c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNetrcReader.html#aaa144b4213f3e167308b8c770d4e49b4">read</a> (map&lt; size_t, pair&lt; string, string &gt; &gt; &amp;auth, const string &amp;machineName=&quot;vishnu&quot;)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the login and the password associated to a specific machine defined on the netrc file.  <a href="#aaa144b4213f3e167308b8c770d4e49b4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac5efff041a69f24199e82ca89fce9494"></a><!-- doxytag: member="NetrcReader::~NetrcReader" ref="ac5efff041a69f24199e82ca89fce9494" args="()" -->
 &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNetrcReader.html#ac5efff041a69f24199e82ca89fce9494">~NetrcReader</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructor. <br/></td></tr>
@@ -57,10 +57,14 @@ Private Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get value associated to a key.  <a href="#a502e087b9254713d86adcb750058b1a2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">pair&lt; string, string &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNetrcReader.html#af34324922c7b658e1cffdec4ebb2bff9">getIdentifiers</a> (std::map&lt; size_t, pair&lt; string, string &gt; &gt; &amp;tab, const string &amp;machineName)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the login and the password associated to a specific machine from a map.  <a href="#af34324922c7b658e1cffdec4ebb2bff9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">pair&lt; string, string &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNetrcReader.html#a0429aed611cf9065c277c011a977fa9d">getNetrcInfo</a> (const string &amp;machineName)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the login and the password associated to a specific machine by parsing the netrc file.  <a href="#a0429aed611cf9065c277c011a977fa9d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">map&lt; size_t, pair&lt; string, <br class="typebreak"/>
+string &gt; &gt; &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNetrcReader.html#a2561eb1c3d43af9f09b44087483c3510">getNetrcInfo</a> (const string &amp;machineName)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the login and the password associated to a specific machine by parsing the netrc file.  <a href="#a2561eb1c3d43af9f09b44087483c3510"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNetrcReader.html#ab4ad93bf19ce8654d56cd5f5eada7d20">check</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check the validity of the netrc file.  <a href="#ab4ad93bf19ce8654d56cd5f5eada7d20"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">map&lt; size_t, pair&lt; string, <br class="typebreak"/>
+string &gt; &gt; &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNetrcReader.html#a48590ae85fc7b2369ff042b72a5c44ef">analyze</a> (std::map&lt; size_t, pair&lt; string, string &gt; &gt; &amp;tab, const string &amp;machineName)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to analyze the couple key and value table.  <a href="#a48590ae85fc7b2369ff042b72a5c44ef"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a780a28e35c823c66ff62c75186fb7d15"></a><!-- doxytag: member="NetrcReader::mpath" ref="a780a28e35c823c66ff62c75186fb7d15" args="" -->
@@ -97,6 +101,43 @@ string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a48590ae85fc7b2369ff042b72a5c44ef"></a><!-- doxytag: member="NetrcReader::analyze" ref="a48590ae85fc7b2369ff042b72a5c44ef" args="(std::map&lt; size_t, pair&lt; string, string &gt; &gt; &amp;tab, const string &amp;machineName)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">map&lt;size_t, pair&lt;string,string&gt; &gt;&amp; NetrcReader::analyze </td>
+          <td>(</td>
+          <td class="paramtype">std::map&lt; size_t, pair&lt; string, string &gt; &gt; &amp;&nbsp;</td>
+          <td class="paramname"> <em>tab</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>machineName</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to analyze the couple key and value table. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>tab</em>&nbsp;</td><td>a table in which the couple key and value are registered </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>machineName</em>&nbsp;</td><td>the machine name used for searching the couple </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The analyzed tab </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ab4ad93bf19ce8654d56cd5f5eada7d20"></a><!-- doxytag: member="NetrcReader::check" ref="ab4ad93bf19ce8654d56cd5f5eada7d20" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -154,12 +195,12 @@ string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 
 </div>
 </div>
-<a class="anchor" id="a0429aed611cf9065c277c011a977fa9d"></a><!-- doxytag: member="NetrcReader::getNetrcInfo" ref="a0429aed611cf9065c277c011a977fa9d" args="(const string &amp;machineName)" -->
+<a class="anchor" id="a2561eb1c3d43af9f09b44087483c3510"></a><!-- doxytag: member="NetrcReader::getNetrcInfo" ref="a2561eb1c3d43af9f09b44087483c3510" args="(const string &amp;machineName)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">pair&lt;string,string&gt; NetrcReader::getNetrcInfo </td>
+          <td class="memname">map&lt;size_t, pair&lt;string,string&gt; &gt;&amp; NetrcReader::getNetrcInfo </td>
           <td>(</td>
           <td class="paramtype">const string &amp;&nbsp;</td>
           <td class="paramname"> <em>machineName</em></td>
@@ -177,25 +218,19 @@ string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>the corresponding couple (login, password) </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>all the corresponding couple (login, password) </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a24b6cd69a5a43dffca8ffeb335dad65c"></a><!-- doxytag: member="NetrcReader::read" ref="a24b6cd69a5a43dffca8ffeb335dad65c" args="(string &amp;login, string &amp;pwd, const string &amp;machineName=&quot;vishnu&quot;)" -->
+<a class="anchor" id="aaa144b4213f3e167308b8c770d4e49b4"></a><!-- doxytag: member="NetrcReader::read" ref="aaa144b4213f3e167308b8c770d4e49b4" args="(map&lt; size_t, pair&lt; string, string &gt; &gt; &amp;auth, const string &amp;machineName=&quot;vishnu&quot;)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void NetrcReader::read </td>
           <td>(</td>
-          <td class="paramtype">string &amp;&nbsp;</td>
-          <td class="paramname"> <em>login</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">string &amp;&nbsp;</td>
-          <td class="paramname"> <em>pwd</em>, </td>
+          <td class="paramtype">map&lt; size_t, pair&lt; string, string &gt; &gt; &amp;&nbsp;</td>
+          <td class="paramname"> <em>auth</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -215,8 +250,7 @@ string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <p>Function to get the login and the password associated to a specific machine defined on the netrc file. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>login</em>&nbsp;</td><td>the login returned which is associated to the machine </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>pwd</em>&nbsp;</td><td>the password returned which is associated to the machine </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>auth</em>&nbsp;</td><td>all the login and password returned which is associated to the machine </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>machineName</em>&nbsp;</td><td>the name of the machine defined on the netrc file </td></tr>
   </table>
   </dd>
@@ -287,7 +321,7 @@ string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <li>UMS/src/client/<a class="el" href="NetrcReader_8hpp_source.html">NetrcReader.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:46 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:18 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

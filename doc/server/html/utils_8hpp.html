@@ -51,6 +51,14 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Helper function to display a local account.  <a href="#a2a4e4278d35e12b33b324f50631ea1eb"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8hpp.html#aea7af2fc33f3de9727cb591ee7871e1a">operator&lt;&lt;</a> (std::ostream &amp;os, UMS_Data::ListLocalAccounts &amp;lsLocalAccounts)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Helper function to display a list of local accounts.  <a href="#aea7af2fc33f3de9727cb591ee7871e1a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8hpp.html#ab745a1959da07d6064fd7d5fe6abccef">operator&lt;&lt;</a> (std::ostream &amp;os, const UMS_Data::AuthSystem_ptr &amp;authSystem)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Helper function to display an authentication system.  <a href="#ab745a1959da07d6064fd7d5fe6abccef"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8hpp.html#aac6fa658506f591826cfb32af8d5d700">operator&lt;&lt;</a> (std::ostream &amp;os, UMS_Data::ListAuthSystems &amp;lsAuthSystems)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Helper function to display a list of authentication systems.  <a href="#aac6fa658506f591826cfb32af8d5d700"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8hpp.html#a2b5278aedbe97caf3e1513b0dec3e09d">operator&lt;&lt;</a> (std::ostream &amp;os, const UMS_Data::AuthAccount_ptr &amp;authAccount)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Helper function to display an authentication account.  <a href="#a2b5278aedbe97caf3e1513b0dec3e09d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8hpp.html#a281943a643967bf5ae713a545bf87842">operator&lt;&lt;</a> (std::ostream &amp;os, UMS_Data::ListAuthAccounts &amp;lsAuthAccounts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Helper function to display a list of authentication accounts.  <a href="#a281943a643967bf5ae713a545bf87842"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8hpp.html#a4848c3c727920b58b2c8ea3e99dd7f5f">operator&lt;&lt;</a> (std::ostream &amp;os, const UMS_Data::Machine_ptr &amp;machine)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Helper function to display a machine.  <a href="#a4848c3c727920b58b2c8ea3e99dd7f5f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8hpp.html#afbd9b0dae6f2ef4948c7b7c84de28ff2">operator&lt;&lt;</a> (std::ostream &amp;os, UMS_Data::ListMachines &amp;lsMachine)</td></tr>
@@ -146,7 +154,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac0ab9b7087e81b34d44e96624f2fe808"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="ac0ab9b7087e81b34d44e96624f2fe808" args="(std::ostream &amp;os, const UMS_Data::User_ptr &amp;user)" -->
+<a class="anchor" id="a2a4e4278d35e12b33b324f50631ea1eb"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="a2a4e4278d35e12b33b324f50631ea1eb" args="(std::ostream &amp;os, const UMS_Data::LocalAccount_ptr &amp;account)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -159,8 +167,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const UMS_Data::User_ptr &amp;&nbsp;</td>
-          <td class="paramname"> <em>user</em></td><td>&nbsp;</td>
+          <td class="paramtype">const UMS_Data::LocalAccount_ptr &amp;&nbsp;</td>
+          <td class="paramname"> <em>account</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -171,15 +179,15 @@ Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Helper function to display a user. </p>
+<p>Helper function to display a local account. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the user will be printed </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>user,:</em>&nbsp;</td><td>The user to display </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the local account will be printed </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>account,:</em>&nbsp;</td><td>The local account to display </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the user has been printed </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the local account has been printed </dd></dl>
 
 </div>
 </div>
@@ -294,7 +302,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a2a4e4278d35e12b33b324f50631ea1eb"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="a2a4e4278d35e12b33b324f50631ea1eb" args="(std::ostream &amp;os, const UMS_Data::LocalAccount_ptr &amp;account)" -->
+<a class="anchor" id="af52097d3ca43d66de877be2de334b2a2"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="af52097d3ca43d66de877be2de334b2a2" args="(std::ostream &amp;os, const UMS_Data::Command_ptr &amp;command)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -307,8 +315,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const UMS_Data::LocalAccount_ptr &amp;&nbsp;</td>
-          <td class="paramname"> <em>account</em></td><td>&nbsp;</td>
+          <td class="paramtype">const UMS_Data::Command_ptr &amp;&nbsp;</td>
+          <td class="paramname"> <em>command</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -319,15 +327,15 @@ Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Helper function to display a local account. </p>
+<p>Helper function to display a command. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the local account will be printed </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>account,:</em>&nbsp;</td><td>The local account to display </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the command will be printed </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>command,:</em>&nbsp;</td><td>The command to display </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the local account has been printed </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the command has been printed </dd></dl>
 
 </div>
 </div>
@@ -405,6 +413,154 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a281943a643967bf5ae713a545bf87842"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="a281943a643967bf5ae713a545bf87842" args="(std::ostream &amp;os, UMS_Data::ListAuthAccounts &amp;lsAuthAccounts)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&nbsp;</td>
+          <td class="paramname"> <em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">UMS_Data::ListAuthAccounts &amp;&nbsp;</td>
+          <td class="paramname"> <em>lsAuthAccounts</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Helper function to display a list of authentication accounts. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the list will be printed </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>lsAuthAccounts,:</em>&nbsp;</td><td>The list to display </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the list of authentication accounts has been printed </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a2b5278aedbe97caf3e1513b0dec3e09d"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="a2b5278aedbe97caf3e1513b0dec3e09d" args="(std::ostream &amp;os, const UMS_Data::AuthAccount_ptr &amp;authAccount)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&nbsp;</td>
+          <td class="paramname"> <em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const UMS_Data::AuthAccount_ptr &amp;&nbsp;</td>
+          <td class="paramname"> <em>authAccount</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Helper function to display an authentication account. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the authentication account will be printed </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>authAccount,:</em>&nbsp;</td><td>The authentication account to display </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the authentication account has been printed </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aac6fa658506f591826cfb32af8d5d700"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="aac6fa658506f591826cfb32af8d5d700" args="(std::ostream &amp;os, UMS_Data::ListAuthSystems &amp;lsAuthSystems)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&nbsp;</td>
+          <td class="paramname"> <em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">UMS_Data::ListAuthSystems &amp;&nbsp;</td>
+          <td class="paramname"> <em>lsAuthSystems</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Helper function to display a list of authentication systems. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the list will be printed </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>lsAuthSystems,:</em>&nbsp;</td><td>The list to display </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the list of authentication systems has been printed </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab745a1959da07d6064fd7d5fe6abccef"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="ab745a1959da07d6064fd7d5fe6abccef" args="(std::ostream &amp;os, const UMS_Data::AuthSystem_ptr &amp;authSystem)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&nbsp;</td>
+          <td class="paramname"> <em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const UMS_Data::AuthSystem_ptr &amp;&nbsp;</td>
+          <td class="paramname"> <em>authSystem</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Helper function to display an authentication system. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the authentication system will be printed </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>authSystem,:</em>&nbsp;</td><td>The authentication system to display </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the authentication system has been printed </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="aea7af2fc33f3de9727cb591ee7871e1a"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="aea7af2fc33f3de9727cb591ee7871e1a" args="(std::ostream &amp;os, UMS_Data::ListLocalAccounts &amp;lsLocalAccounts)" -->
 <div class="memitem">
 <div class="memproto">
@@ -442,7 +598,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af52097d3ca43d66de877be2de334b2a2"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="af52097d3ca43d66de877be2de334b2a2" args="(std::ostream &amp;os, const UMS_Data::Command_ptr &amp;command)" -->
+<a class="anchor" id="ac0ab9b7087e81b34d44e96624f2fe808"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="ac0ab9b7087e81b34d44e96624f2fe808" args="(std::ostream &amp;os, const UMS_Data::User_ptr &amp;user)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -455,8 +611,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const UMS_Data::Command_ptr &amp;&nbsp;</td>
-          <td class="paramname"> <em>command</em></td><td>&nbsp;</td>
+          <td class="paramtype">const UMS_Data::User_ptr &amp;&nbsp;</td>
+          <td class="paramname"> <em>user</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -467,15 +623,15 @@ Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Helper function to display a command. </p>
+<p>Helper function to display a user. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the command will be printed </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>command,:</em>&nbsp;</td><td>The command to display </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the user will be printed </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>user,:</em>&nbsp;</td><td>The user to display </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the command has been printed </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the user has been printed </dd></dl>
 
 </div>
 </div>
@@ -553,7 +709,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:42 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:14 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

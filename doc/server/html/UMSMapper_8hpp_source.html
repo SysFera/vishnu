@@ -65,114 +65,146 @@
 <a name="l00107"></a><a class="code" href="UMSMapper_8hpp.html#a3e6344e18041c1faf0364e570ed61ea2">00107</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="UMSMapper_8hpp.html#a3e6344e18041c1faf0364e570ed61ea2" title="List session key.">VISHNU_LIST_SESSIONS</a>            = 22;
 <a name="l00111"></a><a class="code" href="UMSMapper_8hpp.html#a004a3e2c40020f746d4e64b9047a42ff">00111</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="UMSMapper_8hpp.html#a004a3e2c40020f746d4e64b9047a42ff" title="Configure default option key.">VISHNU_CONFIGURE_DEFAULT_OPTION</a> = 23;
 <a name="l00115"></a><a class="code" href="UMSMapper_8hpp.html#ae128371bf0f5edab567b7cddbc3e503d">00115</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="UMSMapper_8hpp.html#ae128371bf0f5edab567b7cddbc3e503d" title="Configure option key.">VISHNU_CONFIGURE_OPTION</a>         = 24;
-<a name="l00116"></a>00116 
-<a name="l00117"></a>00117 
-<a name="l00122"></a><a class="code" href="classUMSMapper.html">00122</a> <span class="keyword">class </span><a class="code" href="classUMSMapper.html" title="Mapper implementation for the UMS module.">UMSMapper</a> : <a class="code" href="classMapper.html" title="Generic mapper.">Mapper</a>{
-<a name="l00123"></a>00123 <span class="keyword">public</span> :
-<a name="l00130"></a>00130   <a class="code" href="classUMSMapper.html" title="Mapper implementation for the UMS module.">UMSMapper</a>(<a class="code" href="classMapperRegistry.html" title="Registry of all the mapper.">MapperRegistry</a>* reg, <span class="keywordtype">string</span> name);
-<a name="l00135"></a>00135   <a class="code" href="classUMSMapper.html" title="Mapper implementation for the UMS module.">UMSMapper</a>();
-<a name="l00140"></a>00140   ~<a class="code" href="classUMSMapper.html" title="Mapper implementation for the UMS module.">UMSMapper</a>();
-<a name="l00146"></a>00146   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
-<a name="l00147"></a>00147   registerMapper();
+<a name="l00119"></a><a class="code" href="UMSMapper_8hpp.html#a37c684af19a083ab1e108ee50c930160">00119</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="UMSMapper_8hpp.html#a37c684af19a083ab1e108ee50c930160" title="Add authentication system.">VISHNU_ADD_AUTHSYS</a>              = 25;
+<a name="l00123"></a><a class="code" href="UMSMapper_8hpp.html#a8303884137c818cfa0378440fbff4df8">00123</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="UMSMapper_8hpp.html#a8303884137c818cfa0378440fbff4df8" title="Update authentication system.">VISHNU_UPDATE_AUTHSYS</a>          = 26;
+<a name="l00127"></a><a class="code" href="UMSMapper_8hpp.html#af294a1ec093d8ce7ee868e829034e8ae">00127</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="UMSMapper_8hpp.html#af294a1ec093d8ce7ee868e829034e8ae" title="Delete authentication system.">VISHNU_DELETE_AUTHSYS</a>           = 27;
+<a name="l00131"></a><a class="code" href="UMSMapper_8hpp.html#a24c9ff542634686b2df98af4467a3983">00131</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="UMSMapper_8hpp.html#a24c9ff542634686b2df98af4467a3983" title="List authentication system.">VISHNU_LIST_AUTHSYS</a>             = 28;
+<a name="l00135"></a><a class="code" href="UMSMapper_8hpp.html#a6fd1b0fddc03558f06ad9445a94af8e8">00135</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="UMSMapper_8hpp.html#a6fd1b0fddc03558f06ad9445a94af8e8" title="Add authentification account.">VISHNU_ADD_AUTHACC</a>              = 29;
+<a name="l00139"></a><a class="code" href="UMSMapper_8hpp.html#ab0bb45fa18a52e2191ea34cf0a1c05fc">00139</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="UMSMapper_8hpp.html#ab0bb45fa18a52e2191ea34cf0a1c05fc" title="Update authentication account.">VISHNU_UPDATE_AUTHACC</a>           = 30;
+<a name="l00143"></a><a class="code" href="UMSMapper_8hpp.html#abcdef99c523a22229e1ac803f9a1df10">00143</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="UMSMapper_8hpp.html#abcdef99c523a22229e1ac803f9a1df10" title="Delete authentication account.">VISHNU_DELETE_AUTHACC</a>           = 31;
+<a name="l00147"></a><a class="code" href="UMSMapper_8hpp.html#a4b72c42614160e64677127498014d77c">00147</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="UMSMapper_8hpp.html#a4b72c42614160e64677127498014d77c" title="List authentication account.">VISHNU_LIST_AUTHACC</a>       = 32;
 <a name="l00148"></a>00148 
-<a name="l00154"></a>00154   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
-<a name="l00155"></a>00155   unregisterMapper();
-<a name="l00156"></a>00156 
-<a name="l00164"></a>00164   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
-<a name="l00165"></a>00165   getCommand(<span class="keyword">const</span> <span class="keywordtype">int</span>&amp; key,<span class="keywordtype">string</span>&amp; command);
-<a name="l00166"></a>00166 
-<a name="l00174"></a>00174   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
-<a name="l00175"></a>00175   getKey(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; command, <span class="keywordtype">int</span>&amp; key);
-<a name="l00176"></a>00176 
-<a name="l00184"></a>00184   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
-<a name="l00185"></a>00185   code(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; cmd, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> code = 0);
-<a name="l00186"></a>00186 
-<a name="l00193"></a>00193   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00194"></a>00194   decode (<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00195"></a>00195 
-<a name="l00196"></a>00196 
-<a name="l00197"></a>00197 <span class="keyword">protected</span>:
+<a name="l00149"></a>00149 
+<a name="l00154"></a><a class="code" href="classUMSMapper.html">00154</a> <span class="keyword">class </span><a class="code" href="classUMSMapper.html" title="Mapper implementation for the UMS module.">UMSMapper</a> : <a class="code" href="classMapper.html" title="Generic mapper.">Mapper</a>{
+<a name="l00155"></a>00155 <span class="keyword">public</span> :
+<a name="l00162"></a>00162   <a class="code" href="classUMSMapper.html" title="Mapper implementation for the UMS module.">UMSMapper</a>(<a class="code" href="classMapperRegistry.html" title="Registry of all the mapper.">MapperRegistry</a>* reg, <span class="keywordtype">string</span> name);
+<a name="l00167"></a>00167   <a class="code" href="classUMSMapper.html" title="Mapper implementation for the UMS module.">UMSMapper</a>();
+<a name="l00172"></a>00172   ~<a class="code" href="classUMSMapper.html" title="Mapper implementation for the UMS module.">UMSMapper</a>();
+<a name="l00178"></a>00178   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
+<a name="l00179"></a>00179   registerMapper();
+<a name="l00180"></a>00180 
+<a name="l00186"></a>00186   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
+<a name="l00187"></a>00187   unregisterMapper();
+<a name="l00188"></a>00188 
+<a name="l00196"></a>00196   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
+<a name="l00197"></a>00197   getCommand(<span class="keyword">const</span> <span class="keywordtype">int</span>&amp; key,<span class="keywordtype">string</span>&amp; command);
 <a name="l00198"></a>00198 
-<a name="l00206"></a>00206   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00207"></a>00207   decodeClose(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00206"></a>00206   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
+<a name="l00207"></a>00207   getKey(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; command, <span class="keywordtype">int</span>&amp; key);
 <a name="l00208"></a>00208 
-<a name="l00216"></a>00216   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00217"></a>00217   decodeAddUser(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00216"></a>00216   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
+<a name="l00217"></a>00217   code(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; cmd, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> code = 0);
 <a name="l00218"></a>00218 
-<a name="l00226"></a>00226   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00227"></a>00227   decodeUpUser(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00225"></a>00225   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00226"></a>00226   decode (<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00227"></a>00227 
 <a name="l00228"></a>00228 
-<a name="l00236"></a>00236   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00237"></a>00237   decodeDelUser(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00238"></a>00238 
-<a name="l00246"></a>00246   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00247"></a>00247   decodeChangePwd(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00248"></a>00248 
-<a name="l00256"></a>00256   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00257"></a>00257   decodeResetPwd(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00258"></a>00258 
-<a name="l00266"></a>00266   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00267"></a>00267   decodeAddAcc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00268"></a>00268 
-<a name="l00276"></a>00276   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00277"></a>00277   decodeUpAcc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00278"></a>00278   
+<a name="l00229"></a>00229 <span class="keyword">protected</span>:
+<a name="l00230"></a>00230 
+<a name="l00238"></a>00238   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00239"></a>00239   decodeClose(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00240"></a>00240 
+<a name="l00248"></a>00248   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00249"></a>00249   decodeAddUser(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00250"></a>00250 
+<a name="l00258"></a>00258   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00259"></a>00259   decodeUpUser(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00260"></a>00260 
+<a name="l00268"></a>00268   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00269"></a>00269   decodeDelUser(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00270"></a>00270 
+<a name="l00277"></a>00277   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00278"></a>00278   decodeAddAuthSys(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00279"></a>00279 
 <a name="l00286"></a>00286   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00287"></a>00287   decodeDelAcc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00288"></a>00288   
-<a name="l00296"></a>00296   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00297"></a>00297   decodeSaveConf(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00298"></a>00298 
-<a name="l00306"></a>00306   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00307"></a>00307   decodeRestoreConf(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00308"></a>00308 
-<a name="l00316"></a>00316   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00317"></a>00317   decodeAddM(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00318"></a>00318 
-<a name="l00326"></a>00326   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00327"></a>00327   decodeUpM(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00328"></a>00328 
-<a name="l00336"></a>00336   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00337"></a>00337   decodeDelM(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00338"></a>00338 
-<a name="l00346"></a>00346   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00347"></a>00347   decodeListAcc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00348"></a>00348 
-<a name="l00356"></a>00356   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00357"></a>00357   decodeListM(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00358"></a>00358 
-<a name="l00366"></a>00366   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00367"></a>00367   decodeListH(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00368"></a>00368 
-<a name="l00376"></a>00376   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00377"></a>00377   decodeListOp(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00378"></a>00378 
-<a name="l00386"></a>00386   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00387"></a>00387   decodeListUser(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00388"></a>00388 
-<a name="l00396"></a>00396   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00397"></a>00397   decodeListSession(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00398"></a>00398 
-<a name="l00406"></a>00406   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00407"></a>00407   decodeConfDefaultOp(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00408"></a>00408 
-<a name="l00416"></a>00416   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00417"></a>00417   decodeConfOp(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00418"></a>00418 
-<a name="l00419"></a>00419   
-<a name="l00426"></a>00426   <span class="keywordtype">string</span>
-<a name="l00427"></a>00427   getU(<span class="keywordtype">string</span> serial);
-<a name="l00428"></a>00428 
-<a name="l00435"></a>00435   <span class="keywordtype">string</span>
-<a name="l00436"></a>00436   getUupdate(<span class="keywordtype">string</span> serial);
-<a name="l00437"></a>00437 <span class="keyword">private</span>:
-<a name="l00438"></a>00438 };
-<a name="l00439"></a>00439 
-<a name="l00440"></a>00440 
-<a name="l00441"></a>00441 <span class="preprocessor">#endif</span>
+<a name="l00287"></a>00287   decodeUpAuthSys(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00288"></a>00288 
+<a name="l00295"></a>00295   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00296"></a>00296   decodeDelAuthSys(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00297"></a>00297 
+<a name="l00304"></a>00304   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00305"></a>00305   decodeAddAuthAcc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00306"></a>00306 
+<a name="l00313"></a>00313   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00314"></a>00314   decodeUpAuthAcc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00315"></a>00315 
+<a name="l00322"></a>00322   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00323"></a>00323   decodeDelAuthAcc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00324"></a>00324 
+<a name="l00332"></a>00332   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00333"></a>00333   decodeChangePwd(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00334"></a>00334 
+<a name="l00342"></a>00342   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00343"></a>00343   decodeResetPwd(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00344"></a>00344 
+<a name="l00352"></a>00352   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00353"></a>00353   decodeAddAcc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00354"></a>00354 
+<a name="l00362"></a>00362   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00363"></a>00363   decodeUpAcc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00364"></a>00364 
+<a name="l00372"></a>00372   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00373"></a>00373   decodeDelAcc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00374"></a>00374 
+<a name="l00382"></a>00382   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00383"></a>00383   decodeSaveConf(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00384"></a>00384 
+<a name="l00392"></a>00392   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00393"></a>00393   decodeRestoreConf(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00394"></a>00394 
+<a name="l00402"></a>00402   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00403"></a>00403   decodeAddM(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00404"></a>00404 
+<a name="l00412"></a>00412   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00413"></a>00413   decodeUpM(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00414"></a>00414 
+<a name="l00422"></a>00422   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00423"></a>00423   decodeDelM(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00424"></a>00424 
+<a name="l00432"></a>00432   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00433"></a>00433   decodeListAcc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00434"></a>00434 
+<a name="l00441"></a>00441   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00442"></a>00442   decodeListAuthSys(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00443"></a>00443 
+<a name="l00450"></a>00450   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00451"></a>00451   decodeListAuthAcc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00452"></a>00452 
+<a name="l00460"></a>00460   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00461"></a>00461   decodeListM(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00462"></a>00462 
+<a name="l00470"></a>00470   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00471"></a>00471   decodeListH(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00472"></a>00472 
+<a name="l00480"></a>00480   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00481"></a>00481   decodeListOp(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00482"></a>00482 
+<a name="l00490"></a>00490   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00491"></a>00491   decodeListUser(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00492"></a>00492 
+<a name="l00500"></a>00500   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00501"></a>00501   decodeListSession(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00502"></a>00502 
+<a name="l00510"></a>00510   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00511"></a>00511   decodeConfDefaultOp(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00512"></a>00512 
+<a name="l00520"></a>00520   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00521"></a>00521   decodeConfOp(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00522"></a>00522 
+<a name="l00523"></a>00523 
+<a name="l00530"></a>00530   <span class="keywordtype">string</span>
+<a name="l00531"></a>00531   getU(<span class="keywordtype">string</span> serial);
+<a name="l00532"></a>00532 
+<a name="l00539"></a>00539   <span class="keywordtype">string</span>
+<a name="l00540"></a>00540   getUupdate(<span class="keywordtype">string</span> serial);
+<a name="l00541"></a>00541 <span class="keyword">private</span>:
+<a name="l00542"></a>00542 };
+<a name="l00543"></a>00543 
+<a name="l00544"></a>00544 
+<a name="l00545"></a>00545 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:42 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:13 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

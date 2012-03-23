@@ -58,27 +58,28 @@
 <a name="l00035"></a>00035     MACHINEID,
 <a name="l00036"></a>00036     REMOTEBINDIR,
 <a name="l00037"></a>00037     INTERVALMONITOR,
-<a name="l00038"></a>00038     DBPOOLSIZE
-<a name="l00039"></a>00039   } param_type_t;
-<a name="l00040"></a>00040 
-<a name="l00044"></a><a class="code" href="structvishnu_1_1param__t.html">00044</a>   <span class="keyword">struct </span><a class="code" href="structvishnu_1_1param__t.html" title="A convenient data type to store a parameter.">param_t</a>
-<a name="l00045"></a>00045   {
-<a name="l00049"></a><a class="code" href="structvishnu_1_1param__t.html#aa5ddc5895c65c3e15565c237767fe854">00049</a>     <a class="code" href="namespacevishnu.html#afa06c1bb0b3442d83acb7650e8df75d1" title="Define a parameter type.">param_type_t</a> <a class="code" href="structvishnu_1_1param__t.html#aa5ddc5895c65c3e15565c237767fe854" title="key to retrieve the parameter">key</a>;
-<a name="l00050"></a>00050 
+<a name="l00038"></a>00038     DBPOOLSIZE,
+<a name="l00039"></a>00039     AUTHENTYPE
+<a name="l00040"></a>00040   } param_type_t;
+<a name="l00041"></a>00041 
+<a name="l00045"></a><a class="code" href="structvishnu_1_1param__t.html">00045</a>   <span class="keyword">struct </span><a class="code" href="structvishnu_1_1param__t.html" title="A convenient data type to store a parameter.">param_t</a>
+<a name="l00046"></a>00046   {
+<a name="l00050"></a><a class="code" href="structvishnu_1_1param__t.html#aa5ddc5895c65c3e15565c237767fe854">00050</a>     <a class="code" href="namespacevishnu.html#afa06c1bb0b3442d83acb7650e8df75d1" title="Define a parameter type.">param_type_t</a> <a class="code" href="structvishnu_1_1param__t.html#aa5ddc5895c65c3e15565c237767fe854" title="key to retrieve the parameter">key</a>;
 <a name="l00051"></a>00051 
-<a name="l00055"></a><a class="code" href="structvishnu_1_1param__t.html#a0e0ab5147d45a0534874278b4b0d0b61">00055</a>     <span class="keyword">const</span> std::string <a class="code" href="structvishnu_1_1param__t.html#a0e0ab5147d45a0534874278b4b0d0b61" title="the value of the parameter">value</a>;
-<a name="l00056"></a>00056 
-<a name="l00061"></a><a class="code" href="structvishnu_1_1param__t.html#aea92abf3252828b48153b811a9396b2b">00061</a>     <a class="code" href="namespacevishnu.html#ad8abe82f8ea57792411b26b9ed15287e" title="Define a constant type.">c_type_t</a> <a class="code" href="structvishnu_1_1param__t.html#aea92abf3252828b48153b811a9396b2b" title="the type of the parameter">type</a>;
-<a name="l00062"></a>00062 
-<a name="l00063"></a>00063   };
-<a name="l00064"></a>00064 
-<a name="l00068"></a>00068   <span class="keyword">extern</span> <a class="code" href="structvishnu_1_1param__t.html" title="A convenient data type to store a parameter.">param_t</a> <a class="code" href="namespacevishnu.html#a1ca7d1d1baf7cebd2530d93b9f064bd9" title="An arry to store all paraeters.">params</a>[]; <span class="comment">//%RELAX&lt;MISRA_3_1_3&gt; Because this table is defined in constants.cpp </span>
-<a name="l00069"></a>00069 }
-<a name="l00070"></a>00070 
-<a name="l00071"></a>00071 <span class="preprocessor">#endif </span><span class="comment">/* _CONSTANTS_HPP_ */</span>
+<a name="l00052"></a>00052 
+<a name="l00056"></a><a class="code" href="structvishnu_1_1param__t.html#a0e0ab5147d45a0534874278b4b0d0b61">00056</a>     <span class="keyword">const</span> std::string <a class="code" href="structvishnu_1_1param__t.html#a0e0ab5147d45a0534874278b4b0d0b61" title="the value of the parameter">value</a>;
+<a name="l00057"></a>00057 
+<a name="l00062"></a><a class="code" href="structvishnu_1_1param__t.html#aea92abf3252828b48153b811a9396b2b">00062</a>     <a class="code" href="namespacevishnu.html#ad8abe82f8ea57792411b26b9ed15287e" title="Define a constant type.">c_type_t</a> <a class="code" href="structvishnu_1_1param__t.html#aea92abf3252828b48153b811a9396b2b" title="the type of the parameter">type</a>;
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064   };
+<a name="l00065"></a>00065 
+<a name="l00069"></a>00069   <span class="keyword">extern</span> <a class="code" href="structvishnu_1_1param__t.html" title="A convenient data type to store a parameter.">param_t</a> <a class="code" href="namespacevishnu.html#a1ca7d1d1baf7cebd2530d93b9f064bd9" title="An arry to store all paraeters.">params</a>[]; <span class="comment">//%RELAX&lt;MISRA_3_1_3&gt; Because this table is defined in constants.cpp</span>
+<a name="l00070"></a>00070 }
+<a name="l00071"></a>00071 
+<a name="l00072"></a>00072 <span class="preprocessor">#endif </span><span class="comment">/* _CONSTANTS_HPP_ */</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:42 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:13 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

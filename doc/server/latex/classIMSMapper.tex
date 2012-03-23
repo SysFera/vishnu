@@ -64,6 +64,8 @@ virtual string \hyperlink{classIMSMapper_abc943e621369332d9a03f9819d85fcbc}{deco
 \begin{DoxyCompactList}\small\item\em To decode the close call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
 virtual string \hyperlink{classIMSMapper_a7d6379e366a7271871a2916f01f4dfc2}{decodeTid} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the close call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
+virtual string \hyperlink{classIMSMapper_acf42261d8695e23bab65d61241716c20}{decodeAid} (vector$<$ int $>$ separator, const string \&msg)
+\begin{DoxyCompactList}\small\item\em To decode the close call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
 virtual string \hyperlink{classIMSMapper_abe6d2e3537b551aa184b657a349d8cb2}{decodeLoad} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the close call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
 virtual string \hyperlink{classIMSMapper_a1481e2aec04b986736f769c364659eda}{decodeGetF} (vector$<$ int $>$ separator, const string \&msg)
@@ -149,6 +151,26 @@ The cli like command
 
 Reimplemented from \hyperlink{classMapper_a5e51b9148704b25e26e5ec48bd643a0b}{Mapper}.
 
+\hypertarget{classIMSMapper_acf42261d8695e23bab65d61241716c20}{
+\index{IMSMapper@{IMSMapper}!decodeAid@{decodeAid}}
+\index{decodeAid@{decodeAid}!IMSMapper@{IMSMapper}}
+\subsubsection[{decodeAid}]{\setlength{\rightskip}{0pt plus 5cm}virtual string IMSMapper::decodeAid (
+\begin{DoxyParamCaption}
+\item[{vector$<$ int $>$}]{ separator, }
+\item[{const string \&}]{ msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classIMSMapper_acf42261d8695e23bab65d61241716c20}
+
+
+To decode the close call sequence of the string returned by finalize. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The cli like close command 
+\end{DoxyReturn}
 \hypertarget{classIMSMapper_ae8b518766957d35ee20737cd2dde4fec}{
 \index{IMSMapper@{IMSMapper}!decodeCur@{decodeCur}}
 \index{decodeCur@{decodeCur}!IMSMapper@{IMSMapper}}

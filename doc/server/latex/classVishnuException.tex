@@ -87,7 +87,9 @@ virtual void \hyperlink{classVishnuException_a2efc99faea879e45b372787a96ced5dd}{
 
 \begin{DoxyCompactList}\small\item\em Function to initialize all the generic messages. \item\end{DoxyCompactList}\item 
 std::string \hyperlink{classVishnuException_a22a9ad3e0f438accd20442a7a6ffcb58}{buildExceptionString} () const 
-\begin{DoxyCompactList}\small\item\em Function to get the string associated to the exception. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Function to get the string associated to the exception. \item\end{DoxyCompactList}\item 
+\hyperlink{classVishnuException}{VishnuException} \& \hyperlink{classVishnuException_a329095015a92f306599007ae27d836c1}{operator=} (const \hyperlink{classVishnuException}{VishnuException} \&e)
+\begin{DoxyCompactList}\small\item\em Implementation of the equal operator. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -268,6 +270,25 @@ Returns the type of the exception
 
 Reimplemented in \hyperlink{classSystemException_a6d413e18d659f3243a862e43e666666a}{SystemException}, and \hyperlink{classUserException_a3932494b3a537260b9b98c8bfc66e30a}{UserException}.
 
+\hypertarget{classVishnuException_a329095015a92f306599007ae27d836c1}{
+\index{VishnuException@{VishnuException}!operator=@{operator=}}
+\index{operator=@{operator=}!VishnuException@{VishnuException}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VishnuException}\& VishnuException::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf VishnuException} \&}]{ e}
+\end{DoxyParamCaption}
+)}}
+\label{classVishnuException_a329095015a92f306599007ae27d836c1}
+
+
+Implementation of the equal operator. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em e}]the object to assign \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the object exception with the new values 
+\end{DoxyReturn}
 \hypertarget{classVishnuException_a5a18ccd681b23f9b3c444bb69962ed24}{
 \index{VishnuException@{VishnuException}!setMsg@{setMsg}}
 \index{setMsg@{setMsg}!VishnuException@{VishnuException}}

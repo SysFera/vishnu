@@ -111,44 +111,49 @@
 <a name="l00162"></a>00162                        <span class="keywordtype">string</span> fmt)
 <a name="l00163"></a>00163     <span class="keywordflow">throw</span> (<a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>, <a class="code" href="classIMSVishnuException.html" title="This class allows to treat an error specific to IMS Module.">IMSVishnuException</a>, <a class="code" href="classUserException.html" title="This class represents the exception due to a user misuse.">UserException</a>, <a class="code" href="classSystemException.html" title="This class represents the exception that are due to the system.">SystemException</a>);
 <a name="l00164"></a>00164 
-<a name="l00172"></a>00172   <span class="keywordtype">int</span>
-<a name="l00173"></a>00173   <a class="code" href="namespacevishnu.html#ab088d903ec32abcb3ad6f1d2336c04ac" title="To load shed a machine.">loadShed</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> sessionKey,
-<a name="l00174"></a>00174            <span class="keywordtype">string</span> machineId,
-<a name="l00175"></a>00175            IMS_Data::LoadShedType loadShedType)
-<a name="l00176"></a>00176     <span class="keywordflow">throw</span> (<a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>, <a class="code" href="classIMSVishnuException.html" title="This class allows to treat an error specific to IMS Module.">IMSVishnuException</a>, <a class="code" href="classUserException.html" title="This class represents the exception due to a user misuse.">UserException</a>, <a class="code" href="classSystemException.html" title="This class represents the exception that are due to the system.">SystemException</a>);
-<a name="l00177"></a>00177 
-<a name="l00184"></a>00184   <span class="keywordtype">int</span>
-<a name="l00185"></a>00185   <a class="code" href="namespacevishnu.html#a860094ba973969b94110555d6bb3b557" title="To change the automatic update frequency of the machines&amp;#39; state.">setUpdateFrequency</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> sessionKey,
-<a name="l00186"></a>00186                      <span class="keywordtype">int</span> freq)
+<a name="l00171"></a>00171   <span class="keywordtype">int</span>
+<a name="l00172"></a>00172   <a class="code" href="namespacevishnu.html#ae23ce09e4cf2ecf7dd2ccfa3917ef1df" title="To define the format of the authentication system id automatically generated in VISHNU.">defineAuthIdentifier</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> sessionKey,
+<a name="l00173"></a>00173                            <span class="keywordtype">string</span> fmt)
+<a name="l00174"></a>00174     <span class="keywordflow">throw</span> (<a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>, <a class="code" href="classIMSVishnuException.html" title="This class allows to treat an error specific to IMS Module.">IMSVishnuException</a>, <a class="code" href="classUserException.html" title="This class represents the exception due to a user misuse.">UserException</a>, <a class="code" href="classSystemException.html" title="This class represents the exception that are due to the system.">SystemException</a>);
+<a name="l00175"></a>00175 
+<a name="l00183"></a>00183   <span class="keywordtype">int</span>
+<a name="l00184"></a>00184   <a class="code" href="namespacevishnu.html#ab088d903ec32abcb3ad6f1d2336c04ac" title="To load shed a machine.">loadShed</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> sessionKey,
+<a name="l00185"></a>00185            <span class="keywordtype">string</span> machineId,
+<a name="l00186"></a>00186            IMS_Data::LoadShedType loadShedType)
 <a name="l00187"></a>00187     <span class="keywordflow">throw</span> (<a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>, <a class="code" href="classIMSVishnuException.html" title="This class allows to treat an error specific to IMS Module.">IMSVishnuException</a>, <a class="code" href="classUserException.html" title="This class represents the exception due to a user misuse.">UserException</a>, <a class="code" href="classSystemException.html" title="This class represents the exception that are due to the system.">SystemException</a>);
-<a name="l00194"></a>00194   <span class="keywordtype">int</span>
-<a name="l00195"></a>00195   <a class="code" href="namespacevishnu.html#a5b13b2b9e19299c652246a9533f92717" title="To get the automatic update frequency of the machines&amp;#39; state.">getUpdateFrequency</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> sessionKey,
-<a name="l00196"></a>00196                      <span class="keywordtype">int</span>&amp; freq)
-<a name="l00197"></a>00197     <span class="keywordflow">throw</span> (<a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>, <a class="code" href="classIMSVishnuException.html" title="This class allows to treat an error specific to IMS Module.">IMSVishnuException</a>, <a class="code" href="classUserException.html" title="This class represents the exception due to a user misuse.">UserException</a>, <a class="code" href="classSystemException.html" title="This class represents the exception that are due to the system.">SystemException</a>);
-<a name="l00198"></a>00198 
+<a name="l00188"></a>00188 
+<a name="l00195"></a>00195   <span class="keywordtype">int</span>
+<a name="l00196"></a>00196   <a class="code" href="namespacevishnu.html#a860094ba973969b94110555d6bb3b557" title="To change the automatic update frequency of the machines&amp;#39; state.">setUpdateFrequency</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> sessionKey,
+<a name="l00197"></a>00197                      <span class="keywordtype">int</span> freq)
+<a name="l00198"></a>00198     <span class="keywordflow">throw</span> (<a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>, <a class="code" href="classIMSVishnuException.html" title="This class allows to treat an error specific to IMS Module.">IMSVishnuException</a>, <a class="code" href="classUserException.html" title="This class represents the exception due to a user misuse.">UserException</a>, <a class="code" href="classSystemException.html" title="This class represents the exception that are due to the system.">SystemException</a>);
 <a name="l00205"></a>00205   <span class="keywordtype">int</span>
-<a name="l00206"></a>00206   <a class="code" href="namespacevishnu.html#a0a5795c2a88415d758de3a05762850ce" title="To stop a vishnu process.">stop</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> sessionKey,
-<a name="l00207"></a>00207        IMS_Data::Process proc)
+<a name="l00206"></a>00206   <a class="code" href="namespacevishnu.html#a5b13b2b9e19299c652246a9533f92717" title="To get the automatic update frequency of the machines&amp;#39; state.">getUpdateFrequency</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> sessionKey,
+<a name="l00207"></a>00207                      <span class="keywordtype">int</span>&amp; freq)
 <a name="l00208"></a>00208     <span class="keywordflow">throw</span> (<a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>, <a class="code" href="classIMSVishnuException.html" title="This class allows to treat an error specific to IMS Module.">IMSVishnuException</a>, <a class="code" href="classUserException.html" title="This class represents the exception due to a user misuse.">UserException</a>, <a class="code" href="classSystemException.html" title="This class represents the exception that are due to the system.">SystemException</a>);
 <a name="l00209"></a>00209 
-<a name="l00217"></a>00217   <span class="keywordtype">int</span>
-<a name="l00218"></a>00218   <a class="code" href="namespacevishnu.html#ab6cc46ec3fc97e19d7a57bcf42dee328" title="To get system information about a machine.">getSystemInfo</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> sessionKey,
-<a name="l00219"></a>00219                 IMS_Data::ListSysInfo&amp; list,
-<a name="l00220"></a>00220                 IMS_Data::SysInfoOp op)
-<a name="l00221"></a>00221     <span class="keywordflow">throw</span> (<a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>, <a class="code" href="classIMSVishnuException.html" title="This class allows to treat an error specific to IMS Module.">IMSVishnuException</a>, <a class="code" href="classUserException.html" title="This class represents the exception due to a user misuse.">UserException</a>, <a class="code" href="classSystemException.html" title="This class represents the exception that are due to the system.">SystemException</a>);
-<a name="l00222"></a>00222 
-<a name="l00230"></a>00230   <span class="keywordtype">int</span>
-<a name="l00231"></a>00231   <a class="code" href="namespacevishnu.html#aa87ea9f13dc0bc74edd73e815c4bdf7c" title="To restart a vishnu process.">restart</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> sessionKey,
-<a name="l00232"></a>00232           <span class="keywordtype">string</span> machineId,
-<a name="l00233"></a>00233           IMS_Data::RestartOp op)
-<a name="l00234"></a>00234     <span class="keywordflow">throw</span> (<a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>, <a class="code" href="classIMSVishnuException.html" title="This class allows to treat an error specific to IMS Module.">IMSVishnuException</a>, <a class="code" href="classUserException.html" title="This class represents the exception due to a user misuse.">UserException</a>, <a class="code" href="classSystemException.html" title="This class represents the exception that are due to the system.">SystemException</a>);
-<a name="l00235"></a>00235 
-<a name="l00236"></a>00236 }<span class="comment">//END namespace vishnu</span>
-<a name="l00237"></a>00237 
-<a name="l00238"></a>00238 <span class="preprocessor">#endif</span>
+<a name="l00216"></a>00216   <span class="keywordtype">int</span>
+<a name="l00217"></a>00217   <a class="code" href="namespacevishnu.html#a0a5795c2a88415d758de3a05762850ce" title="To stop a vishnu process.">stop</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> sessionKey,
+<a name="l00218"></a>00218        IMS_Data::Process proc)
+<a name="l00219"></a>00219     <span class="keywordflow">throw</span> (<a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>, <a class="code" href="classIMSVishnuException.html" title="This class allows to treat an error specific to IMS Module.">IMSVishnuException</a>, <a class="code" href="classUserException.html" title="This class represents the exception due to a user misuse.">UserException</a>, <a class="code" href="classSystemException.html" title="This class represents the exception that are due to the system.">SystemException</a>);
+<a name="l00220"></a>00220 
+<a name="l00228"></a>00228   <span class="keywordtype">int</span>
+<a name="l00229"></a>00229   <a class="code" href="namespacevishnu.html#ab6cc46ec3fc97e19d7a57bcf42dee328" title="To get system information about a machine.">getSystemInfo</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> sessionKey,
+<a name="l00230"></a>00230                 IMS_Data::ListSysInfo&amp; list,
+<a name="l00231"></a>00231                 IMS_Data::SysInfoOp op)
+<a name="l00232"></a>00232     <span class="keywordflow">throw</span> (<a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>, <a class="code" href="classIMSVishnuException.html" title="This class allows to treat an error specific to IMS Module.">IMSVishnuException</a>, <a class="code" href="classUserException.html" title="This class represents the exception due to a user misuse.">UserException</a>, <a class="code" href="classSystemException.html" title="This class represents the exception that are due to the system.">SystemException</a>);
+<a name="l00233"></a>00233 
+<a name="l00241"></a>00241   <span class="keywordtype">int</span>
+<a name="l00242"></a>00242   <a class="code" href="namespacevishnu.html#aa87ea9f13dc0bc74edd73e815c4bdf7c" title="To restart a vishnu process.">restart</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> sessionKey,
+<a name="l00243"></a>00243           <span class="keywordtype">string</span> machineId,
+<a name="l00244"></a>00244           IMS_Data::RestartOp op)
+<a name="l00245"></a>00245     <span class="keywordflow">throw</span> (<a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a>, <a class="code" href="classIMSVishnuException.html" title="This class allows to treat an error specific to IMS Module.">IMSVishnuException</a>, <a class="code" href="classUserException.html" title="This class represents the exception due to a user misuse.">UserException</a>, <a class="code" href="classSystemException.html" title="This class represents the exception that are due to the system.">SystemException</a>);
+<a name="l00246"></a>00246 
+<a name="l00247"></a>00247 }<span class="comment">//END namespace vishnu</span>
+<a name="l00248"></a>00248 
+<a name="l00249"></a>00249 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:42 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:13 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

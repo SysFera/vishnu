@@ -1,0 +1,84 @@
+\hypertarget{classAuthenticatorFactory}{
+\section{AuthenticatorFactory Class Reference}
+\label{classAuthenticatorFactory}\index{AuthenticatorFactory@{AuthenticatorFactory}}
+}
+
+
+Authenticatorfactory.  
+
+
+
+
+{\ttfamily \#include $<$AuthenticatorFactory.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classAuthenticatorFactory_a1c9cea95a2b6d639eb893d24bdc25aa1}{
+\hyperlink{classAuthenticatorFactory_a1c9cea95a2b6d639eb893d24bdc25aa1}{AuthenticatorFactory} ()}
+\label{classAuthenticatorFactory_a1c9cea95a2b6d639eb893d24bdc25aa1}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classAuthenticatorFactory_ae6bd75da1a761daaeb06defa1c7c3bdd}{
+\hyperlink{classAuthenticatorFactory_ae6bd75da1a761daaeb06defa1c7c3bdd}{$\sim$AuthenticatorFactory} ()}
+\label{classAuthenticatorFactory_ae6bd75da1a761daaeb06defa1c7c3bdd}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\item 
+\hyperlink{classAuthenticator}{Authenticator} $\ast$ \hyperlink{classAuthenticatorFactory_a6c8275635615e09420d4ba04c6d7bd61}{createAuthenticatorInstance} (\hyperlink{classAuthenticatorConfiguration}{AuthenticatorConfiguration} AuthenticatorConfig)
+\begin{DoxyCompactList}\small\item\em Function to create an authenticator from a configuration. \item\end{DoxyCompactList}\item 
+\hyperlink{classAuthenticator}{Authenticator} $\ast$ \hyperlink{classAuthenticatorFactory_a7464e6bb428e1e6d3929fc5fa15fa5c7}{getAuthenticatorInstance} ()
+\begin{DoxyCompactList}\small\item\em Get the single instance of the database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classAuthenticatorFactory_a85602cb422881ba9489f5996d67e8fd5}{
+static \hyperlink{classAuthenticator}{Authenticator} $\ast$ \hyperlink{classAuthenticatorFactory_a85602cb422881ba9489f5996d67e8fd5}{mauth}}
+\label{classAuthenticatorFactory_a85602cb422881ba9489f5996d67e8fd5}
+
+\begin{DoxyCompactList}\small\item\em The unique instance of the database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Authenticatorfactory. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classAuthenticatorFactory_a6c8275635615e09420d4ba04c6d7bd61}{
+\index{AuthenticatorFactory@{AuthenticatorFactory}!createAuthenticatorInstance@{createAuthenticatorInstance}}
+\index{createAuthenticatorInstance@{createAuthenticatorInstance}!AuthenticatorFactory@{AuthenticatorFactory}}
+\subsubsection[{createAuthenticatorInstance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Authenticator}$\ast$ AuthenticatorFactory::createAuthenticatorInstance (
+\begin{DoxyParamCaption}
+\item[{{\bf AuthenticatorConfiguration}}]{ AuthenticatorConfig}
+\end{DoxyParamCaption}
+)}}
+\label{classAuthenticatorFactory_a6c8275635615e09420d4ba04c6d7bd61}
+
+
+Function to create an authenticator from a configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em AuthenticatorConfig}]the configuration of the authenticator \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An authenticator or a nil pointer 
+\end{DoxyReturn}
+\hypertarget{classAuthenticatorFactory_a7464e6bb428e1e6d3929fc5fa15fa5c7}{
+\index{AuthenticatorFactory@{AuthenticatorFactory}!getAuthenticatorInstance@{getAuthenticatorInstance}}
+\index{getAuthenticatorInstance@{getAuthenticatorInstance}!AuthenticatorFactory@{AuthenticatorFactory}}
+\subsubsection[{getAuthenticatorInstance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Authenticator}$\ast$ AuthenticatorFactory::getAuthenticatorInstance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classAuthenticatorFactory_a7464e6bb428e1e6d3929fc5fa15fa5c7}
+
+
+Get the single instance of the database. 
+
+\begin{DoxyReturn}{Returns}
+A authenticator or a nil pointer 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+core/src/authenticator/\hyperlink{AuthenticatorFactory_8hpp}{AuthenticatorFactory.hpp}\end{DoxyCompactItemize}

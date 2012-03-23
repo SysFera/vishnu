@@ -70,6 +70,8 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to initialize user data for constructor with sessionServer. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUserServer.html#a26ccae7a3b8ee7e62e2224312119aece">exist</a> (bool flagForChangePwd=false)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check user on database.  <a href="#a26ccae7a3b8ee7e62e2224312119aece"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUserServer.html#a42f6a347a80bcf6806c8f944f66cc713">isAuthenticate</a> (bool flagForChangePwd=false)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to authenticate user by using an authentification system.  <a href="#a42f6a347a80bcf6806c8f944f66cc713"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUserServer.html#a7dab9117c2ca5a706bb674e43b183255">isAdmin</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check the VISHNU user privilege.  <a href="#a7dab9117c2ca5a706bb674e43b183255"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUserServer.html#aecc5dd38cacf2460a187f6e751000c9a">isAttributOk</a> (std::string attributName, int valueOk)</td></tr>
@@ -88,6 +90,8 @@ Private Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to send an email to the user.  <a href="#ac4e5db25963346be0bc57f5b61a1ad59"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUserServer.html#a4896a5d7bd51b8ad24cf6864ba400487">getMailContent</a> (const UMS_Data::User &amp;user, bool flagAdduser)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the email content.  <a href="#a4896a5d7bd51b8ad24cf6864ba400487"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUserServer.html#aeba9bcdce19abb3b8f73b217efb60352">CheckUserState</a> (bool flagForChangePwd)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check the user state (locked or not) and to verify the password state.  <a href="#aeba9bcdce19abb3b8f73b217efb60352"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac6ce31683fb8b809052ddc54f1ec95b4"></a><!-- doxytag: member="UserServer::muser" ref="ac6ce31683fb8b809052ddc54f1ec95b4" args="" -->
@@ -260,6 +264,32 @@ UMS_Data::User&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aeba9bcdce19abb3b8f73b217efb60352"></a><!-- doxytag: member="UserServer::CheckUserState" ref="aeba9bcdce19abb3b8f73b217efb60352" args="(bool flagForChangePwd)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UserServer::CheckUserState </td>
+          <td>(</td>
+          <td class="paramtype">bool&nbsp;</td>
+          <td class="paramname"> <em>flagForChangePwd</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to check the user state (locked or not) and to verify the password state. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>flagForChangePwd</em>&nbsp;</td><td>A flag to check the password state </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -559,6 +589,33 @@ UMS_Data::User&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 
 </div>
 </div>
+<a class="anchor" id="a42f6a347a80bcf6806c8f944f66cc713"></a><!-- doxytag: member="UserServer::isAuthenticate" ref="a42f6a347a80bcf6806c8f944f66cc713" args="(bool flagForChangePwd=false)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool UserServer::isAuthenticate </td>
+          <td>(</td>
+          <td class="paramtype">bool&nbsp;</td>
+          <td class="paramname"> <em>flagForChangePwd</em> = <code>false</code></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to authenticate user by using an authentification system. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>flagForChangePwd</em>&nbsp;</td><td>A flag to check the password state </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>true if the user is authenticated else false </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ad25cf22ec48e1519df9fd68b1d66a36d"></a><!-- doxytag: member="UserServer::resetPassword" ref="ad25cf22ec48e1519df9fd68b1d66a36d" args="(UMS_Data::User &amp;user, std::string sendmailScriptPath)" -->
 <div class="memitem">
 <div class="memproto">
@@ -678,7 +735,7 @@ UMS_Data::User&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <li>UMS/src/server/<a class="el" href="UserServer_8hpp_source.html">UserServer.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:48 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:20 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
