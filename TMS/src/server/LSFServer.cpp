@@ -77,7 +77,6 @@ LSFServer::submit(const char* scriptPath,
   req.beginTime = 0;
   req.termTime  = 0;
   std::string cmd = std::string(vishnu::get_file_content(scriptPath));
-  std::cout << "********cmd=" << strdup(cmd.c_str()) << std::endl; 
   req.command = strdup(cmd.c_str());
   req.nxf = 0;
   req.delOptions = 0;
@@ -90,16 +89,13 @@ LSFServer::submit(const char* scriptPath,
   //processes the vishnu options
   processOptions(scriptPath, options, &req);
 
-  if(req.jobName!=NULL) std::cout << "********req.jobName=" << req.jobName << std::endl; 
   if(req.outFile!=NULL) {
      bfs::path outPath(bfs::system_complete(bfs::path(req.outFile)));
      req.outFile = strdup((outPath.native()).c_str()) ;
-     std::cout << "********req.outFile=" << req.outFile << std::endl;
   }
   if(req.errFile!=NULL) {
      bfs::path errPath(bfs::system_complete(bfs::path(req.errFile)));
      req.errFile = strdup((errPath.native()).c_str()) ;
-     std::cout << "********req.errFile=" << req.errFile << std::endl;
   }
   //Check the job output path 
   std::string errorMsg = checkLSFOutPutPath(req.outFile);
@@ -126,9 +122,6 @@ LSFServer::submit(const char* scriptPath,
     }
   }
 
-  if(req.jobName!=NULL) std::cout << "********2req.jobName=" << req.jobName << std::endl;
-  if(req.outFile!=NULL) std::cout << "********2req.outFile=" << req.outFile << std::endl;
-  std::cout << "**********batchJobId= " << batchJobId << std::endl;
   int numJobs = lsb_openjobinfo(batchJobId, NULL, NULL, NULL, NULL, JOBID_ONLY);
   struct jobInfoEnt *jobInfo = lsb_readjobinfo(&numJobs);
   lsb_closejobinfo();
@@ -158,9 +151,6 @@ LSFServer::submit(const char* scriptPath,
     replaceSymbolInToJobPath(jobErrorPath);
     job.setErrorPath(jobErrorPath);
   }
-
-  if(req.jobName!=NULL) std::cout << "********jobOutputPath=" << jobOutputPath << ": " << req.jobName << std::endl;
-  if(req.outFile!=NULL) std::cout << "********jobErrorPath=" << jobErrorPath << ": " << req.jobName << std::endl;
 
   return 0;
 }
@@ -242,7 +232,6 @@ LSFServer::processOptions(const char* scriptPath,
       int nbNodes = vishnu::convertToInt(nbNodesStr);
       //select the candidates host
       hostInfo = lsb_hostinfo(hosts, &numhosts);
-      std::cout << "-----------------------numhosts=" << numhosts << std::endl;
       if(nbNodes > numhosts) {
         throw UserException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERRROR: "
                   "The number of nodes is greater than the number of total nodes."); 
@@ -314,7 +303,6 @@ LSFServer::processOptions(const char* scriptPath,
     }
     req->options |=SUB_QUEUE;
     req->queue = strdup(queuesList.c_str());
-    std::cout << "-----------------------queuesList=" << queuesList << std::endl;
   }
 
 }
@@ -691,9 +679,19 @@ LSFServer::listQueues(const std::string& OptqueueName) {
     queue->setNbJobsInQueue(queueInfo[i].numJobs-queueInfo[i].numRUN);
     queue->setDescription(std::string(queueInfo[i].description));
     queue->setMemory(queueInfo[i].rLimits[LSF_RLIMIT_RSS]);
-    queue->setMaxProcCpu(-1);//TODO:to complete
-    queue->setMaxJobCpu(-1);//Undefined
-    queue->setNode(queueInfo[i].procLimit);
+
+     //To compute the number of nodes in the queue
+    string hostListSrt = queueInfo[i].hostList;
+    std::istringstream hostListStreamStr;
+    std::vector<std::string> hostListStreamTokens;
+    hostListStreamStr.str(hostListSrt);
+    std::copy(istream_iterator<string>(hostListStreamStr),
+      istream_iterator<string>(),
+      back_inserter<vector<string> >(hostListStreamTokens));
+    queue->setNode(hostListStreamTokens.size());
+ 
+    queue->setMaxProcCpu(queueInfo[i].procLimit);
+    queue->setMaxJobCpu(queueInfo[i].procJobLimit);//Undefined
 
     // Adding created queue to the list
     mlistQueues->getQueues().push_back(queue);
@@ -721,7 +719,6 @@ void LSFServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
   }
 
   int numJobs = lsb_openjobinfo(0, NULL, (char*)"all", NULL, NULL, CUR_JOB);
-  std::cout << "*****************numJobs=" << numJobs << std::endl;
   if(numJobs < 0 ){
     if(lsberrno==LSBE_NO_JOB) {
       return;

@@ -17,6 +17,7 @@ This file presents the utils functions of the vishnu system.
 {\ttfamily \#include $<$boost/date\_\-time/local\_\-time/local\_\-time.hpp$>$}\par
 {\ttfamily \#include \char`\"{}FMSVishnuException.hpp\char`\"{}}\par
 {\ttfamily \#include $<$boost/filesystem.hpp$>$}\par
+{\ttfamily \#include $<$boost/thread/shared\_\-mutex.hpp$>$}\par
 \subsection*{Namespaces}
 \begin{DoxyCompactItemize}
 \item 
@@ -29,10 +30,13 @@ namespace \hyperlink{namespacevishnu}{vishnu}
 \subsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
-enum \hyperlink{utilVishnu_8hpp_a864d748e7097d176552dd4c7635016ea}{BatchType} \{ \hyperlink{utilVishnu_8hpp_a864d748e7097d176552dd4c7635016eaab14fe26ae2d673af2927fd2a8a1eb91f}{TORQUE} =  0, 
+enum \hyperlink{utilVishnu_8hpp_a864d748e7097d176552dd4c7635016ea}{BatchType} \{ \par
+\hyperlink{utilVishnu_8hpp_a864d748e7097d176552dd4c7635016eaab14fe26ae2d673af2927fd2a8a1eb91f}{TORQUE} =  0, 
 \hyperlink{utilVishnu_8hpp_a864d748e7097d176552dd4c7635016eaa56d623fdbafffe0800339f203ae1eecb}{LOADLEVELER} =  1, 
 \hyperlink{utilVishnu_8hpp_a864d748e7097d176552dd4c7635016eaaf25f8a674c9d7350fe4656af2390e6e8}{SLURM} =  2, 
-\hyperlink{utilVishnu_8hpp_a864d748e7097d176552dd4c7635016eaa605159e8a4c32319fd69b5d151369d93}{UNDEFINED} =  3
+\hyperlink{utilVishnu_8hpp_a864d748e7097d176552dd4c7635016eaa26523f8b941f74217451eec331318264}{LSF} =  3, 
+\par
+\hyperlink{utilVishnu_8hpp_a864d748e7097d176552dd4c7635016eaa605159e8a4c32319fd69b5d151369d93}{UNDEFINED} =  4
  \}
 \begin{DoxyCompactList}\small\item\em The type of the Batch. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
@@ -46,7 +50,7 @@ long long \hyperlink{namespacevishnu_ae4208edfb8924443b0971e68cccfce02}{vishnu::
 \begin{DoxyCompactList}\small\item\em Function to convert a given date into correspondant long value. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_ac1899fb2792ddd63a003a06081fc9066}{vishnu::convertToInt} (std::string val)
 \begin{DoxyCompactList}\small\item\em Function to convert a string to int. \item\end{DoxyCompactList}\item 
-std::string \hyperlink{namespacevishnu_ae8aa2ffafe24d1f575e8953d1d9d026e}{vishnu::cryptPassword} (const std::string \&salt, const std::string \&password)
+std::string \hyperlink{namespacevishnu_a6d55dd8303227aa0de9048abd043efdf}{vishnu::cryptPassword} (const std::string \&salt, const std::string \&password, bool encrypted=true)
 \begin{DoxyCompactList}\small\item\em To crypt a password. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_a93bc913d891933b4f9d7bc0382f72425}{vishnu::generateNumbers} ()
 \begin{DoxyCompactList}\small\item\em Function to get a random number. \item\end{DoxyCompactList}\item 
@@ -142,7 +146,11 @@ LOADLEVELER}
 \hypertarget{utilVishnu_8hpp_a864d748e7097d176552dd4c7635016eaaf25f8a674c9d7350fe4656af2390e6e8}{
 SLURM}
 \label{utilVishnu_8hpp_a864d748e7097d176552dd4c7635016eaaf25f8a674c9d7350fe4656af2390e6e8}
-}]For SLURM batch type \index{UNDEFINED@{UNDEFINED}!utilVishnu.hpp@{utilVishnu.hpp}}\index{utilVishnu.hpp@{utilVishnu.hpp}!UNDEFINED@{UNDEFINED}}\item[{\em 
+}]For SLURM batch type \index{LSF@{LSF}!utilVishnu.hpp@{utilVishnu.hpp}}\index{utilVishnu.hpp@{utilVishnu.hpp}!LSF@{LSF}}\item[{\em 
+\hypertarget{utilVishnu_8hpp_a864d748e7097d176552dd4c7635016eaa26523f8b941f74217451eec331318264}{
+LSF}
+\label{utilVishnu_8hpp_a864d748e7097d176552dd4c7635016eaa26523f8b941f74217451eec331318264}
+}]For LSF batch type \index{UNDEFINED@{UNDEFINED}!utilVishnu.hpp@{utilVishnu.hpp}}\index{utilVishnu.hpp@{utilVishnu.hpp}!UNDEFINED@{UNDEFINED}}\item[{\em 
 \hypertarget{utilVishnu_8hpp_a864d748e7097d176552dd4c7635016eaa605159e8a4c32319fd69b5d151369d93}{
 UNDEFINED}
 \label{utilVishnu_8hpp_a864d748e7097d176552dd4c7635016eaa605159e8a4c32319fd69b5d151369d93}

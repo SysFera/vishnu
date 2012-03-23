@@ -37,6 +37,10 @@ std::string \hyperlink{classConfigurationServer_adfcf50dc485096fe1d109142d0acaaa
 std::string \hyperlink{classConfigurationServer_a6899508cf595a37a05d90b9efe8c9358}{machineToSql} (UMS\_\-Data::Machine\_\-ptr machine, int vishnuId)
 \begin{DoxyCompactList}\small\item\em Function to get the sql code of machines from a VISHNU configuration. \item\end{DoxyCompactList}\item 
 std::string \hyperlink{classConfigurationServer_a10dc6a2581fce8e24144f9f49e08d58f}{machineDescToSql} (UMS\_\-Data::Machine\_\-ptr machine)
+\begin{DoxyCompactList}\small\item\em Function to get the sql code of machines description from a VISHNU configuration. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classConfigurationServer_a2015835e881f8bf36b3a82e2bbee6b95}{authSystemToSql} (UMS\_\-Data::AuthSystem\_\-ptr authsystem, int vishnuId)
+\begin{DoxyCompactList}\small\item\em Function to get the sql code of user-\/authentication system from a VISHNU configuration. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classConfigurationServer_a8c5b91d69b6dafb7ec822d3c31389178}{ldapAuthSystemToSql} (UMS\_\-Data::AuthSystem\_\-ptr authsystem)
 \begin{DoxyCompactList}\small\item\em Function to get the sql code of machines description from a VISHNU configuration. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
@@ -98,6 +102,26 @@ Constructor.
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classConfigurationServer_a2015835e881f8bf36b3a82e2bbee6b95}{
+\index{ConfigurationServer@{ConfigurationServer}!authSystemToSql@{authSystemToSql}}
+\index{authSystemToSql@{authSystemToSql}!ConfigurationServer@{ConfigurationServer}}
+\subsubsection[{authSystemToSql}]{\setlength{\rightskip}{0pt plus 5cm}std::string ConfigurationServer::authSystemToSql (
+\begin{DoxyParamCaption}
+\item[{UMS\_\-Data::AuthSystem\_\-ptr}]{ authsystem, }
+\item[{int}]{ vishnuId}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classConfigurationServer_a2015835e881f8bf36b3a82e2bbee6b95}
+
+
+Function to get the sql code of user-\/authentication system from a VISHNU configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em authsystem}]The authSystem object \item[{\em vishnuId}]The identifier of the vishnu instance \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the sql code containing the sql code of authentication systems 
+\end{DoxyReturn}
 \hypertarget{classConfigurationServer_ae1ce593072e5a6828128c5c80758604c}{
 \index{ConfigurationServer@{ConfigurationServer}!getData@{getData}}
 \index{getData@{getData}!ConfigurationServer@{ConfigurationServer}}
@@ -113,6 +137,25 @@ Function to get \hyperlink{classConfiguration}{Configuration} data structure.
 
 \begin{DoxyReturn}{Returns}
 The LocalAccount data structure 
+\end{DoxyReturn}
+\hypertarget{classConfigurationServer_a8c5b91d69b6dafb7ec822d3c31389178}{
+\index{ConfigurationServer@{ConfigurationServer}!ldapAuthSystemToSql@{ldapAuthSystemToSql}}
+\index{ldapAuthSystemToSql@{ldapAuthSystemToSql}!ConfigurationServer@{ConfigurationServer}}
+\subsubsection[{ldapAuthSystemToSql}]{\setlength{\rightskip}{0pt plus 5cm}std::string ConfigurationServer::ldapAuthSystemToSql (
+\begin{DoxyParamCaption}
+\item[{UMS\_\-Data::AuthSystem\_\-ptr}]{ authsystem}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classConfigurationServer_a8c5b91d69b6dafb7ec822d3c31389178}
+
+
+Function to get the sql code of machines description from a VISHNU configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em authsystem}]The authSystem object \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the sql code containing the sql code of authentication systems based on ldap 
 \end{DoxyReturn}
 \hypertarget{classConfigurationServer_a10dc6a2581fce8e24144f9f49e08d58f}{
 \index{ConfigurationServer@{ConfigurationServer}!machineDescToSql@{machineDescToSql}}

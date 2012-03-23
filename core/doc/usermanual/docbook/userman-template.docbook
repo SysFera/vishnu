@@ -127,14 +127,22 @@
     <date>06/03/2012</date>
     <authorinitials>SysFera</authorinitials>
     <revdescription>
-      <para>Add of LSF batch scheduler </para></revdescription>
+      <para>Add of LSF batch scheduler. </para></revdescription>
+  </revision> 
+  
+  <revision>
+    <revnumber>12</revnumber>
+    <date>08/03/2012</date>
+    <authorinitials>SysFera</authorinitials>
+    <revdescription>
+      <para>Add of VISHNU commands for LDAP support and for connection and reconnection using multiples VISHNU accounts.</para></revdescription>
   </revision> 
 
   </revhistory>
 
     <copyright>
-      <year>2011</year>
-      <holder>SysFera SAS</holder>
+      <year>2012</year>
+      <holder>SysFera SA</holder>
     </copyright>
     <legalnotice>
       <para>These manual pages are provided under the following conditions:</para>
@@ -209,7 +217,7 @@
             <para>[D1.1b]: VISHNU "Spécifications techniques des besoins"</para>
           </listitem>
           <listitem>
-            <para>[DIETMAN]: DIET User's Manual v2.7 (available with the DIET distribution at http://graal.ens-lyon.fr/~diet)</para>
+            <para>[DIETMAN]: DIET User's Manual v2.8 (available with the DIET distribution at http://graal.ens-lyon.fr/~diet)</para>
           </listitem>
         <listitem>
           <para>[VISHNU_API] VISHNU API : Document that contain the VISHNU API description and all the datatypes used..</para>
@@ -259,10 +267,10 @@
 	  <para> OMNIORB 4.1.4 </para>
 	</listitem>
 	<listitem>
-	  <para> SYSFERA-DS V2.7 (available at: <ulink url="http://graal.ens-lyon.fr/DIET/"> http://graal.ens-lyon.fr/DIET/ </ulink>)</para>
+	  <para> SYSFERA-DS V2.8 (available at: <ulink url="http://graal.ens-lyon.fr/DIET/"> http://graal.ens-lyon.fr/DIET/ </ulink>)</para>
 	</listitem>
 	<listitem>
-	  <para> BOOST V1.45 </para>
+	  <para> BOOST V1.46.1 </para>
 	</listitem>
 	<listitem>
 	  <para> PYTHON V2.5 </para>
@@ -366,12 +374,18 @@
       <para> <emphasis role="bold">login</emphasis> toto </para>
       <para> <emphasis role="bold">password</emphasis> pwd </para> 
       <para>The values toto and pwd are respectively the userId and the password of a user registered in vishnu and the machine must be named <emphasis role = "bold">vishnu</emphasis>.</para>
+      <para>It is also possible to define a serie of VISHNU accounts on the .netrc file. The System will try them each in turn until one which will allow to make a connection. As the .netrc file, the <emphasis role = "bold"> vishnu_connect_m </emphasis> command allows
+      to give successively several couples login/password.
+      </para>
     </section>
 	
 	<section>
 	  <title> Reconnection to VISHNU </title>
 	  <para>
-	    Reconnection is done using the <emphasis role="bold">vishnu_reconnect</emphasis> command. This command allows using an existing session that was previously opened but not closed. It makes it possible to simultaneously use the same session in different shell terminals. A session is what authentifies a user once he has connected. The user does not need password or username when authenticated to use vishnu. Moreover, the session contains the commands made by a user, so he can retrieve the sequence of commands made in a previous work session. As previously defined for the connection, the .netrc file can be used for reconnection.
+	    Reconnection is done using the <emphasis role="bold">vishnu_reconnect</emphasis> command. This command allows using an existing session that was previously opened but not closed. It makes it possible to simultaneously use the same session in different shell terminals. A session is what authentifies a user once he has connected. The user does not need password or username when authenticated to use vishnu. Moreover, the session contains the commands made by a user, so he can retrieve the sequence of commands made in a previous work session. 
+	    As previously defined for the connection, the .netrc file can be used for reconnection. 
+	    The <emphasis role = "bold"> vishnu_reconnect_m </emphasis> command can use several couples login/password for the reconnection. In this previous case, the first parameter must be 
+	    the session identifer.
 	  </para>
 	</section>
 	
@@ -409,7 +423,7 @@
 	      To access a UNIX account on a specific machine defined on VISHNU, the user must create a local user configuration by using the 
 	      <emphasis role = "bold">vishnu_add_local_account</emphasis> command. The <emphasis role = "bold">vishnu_list_machines</emphasis> command
 	      gives information about the machines in which a local user configuration can be created or where a local user configuration has already been created. The information 
-	      required to create a new local user configuration is: the userId, the machineId, the login of the UNIX account on the specified machine,
+	      required to create a new local user configuration are: the userId, the machineId, the login of the UNIX account on the specified machine,
 	      the absolute path to the user's private SSH key (used for file transfers) and the home directory path. 
 	    </para>   
 	    <para><emphasis role = "bold">Warning: </emphasis>A unix login can only have one local account on a machine</para>
@@ -441,6 +455,41 @@
 												  role="bold">vishnu_list_options</emphasis> command, which 
 	    displays all the options configured by the user, or the <emphasis role="bold">vishnu_list_sessions</emphasis> command, which
 	    displays information about the sessions.
+	  </para>
+	</section>
+	
+	<section>
+	  <title> Local user-authentication configuration management </title>
+	  
+	  <section>
+	    <title> Local user-authentication configuration creation </title>
+	    <para>  
+	      To be authenticated using a VISHNU user-authentication system different of the UMS database, the user must create a local 
+	      user-authentication configuration by using the <emphasis role = "bold">vishnu_add_auth_account</emphasis> command. 
+	      The <emphasis role = "bold">vishnu_list_auth_systems </emphasis> command
+	      gives information about the user-authentication systems in which a local user-authentication configuration can be created. The information 
+	      required to create a new local user-authentication configuration are: the VISHNU identifier of the user-authentication system and 
+	      the login of the user on this user-authentication system. 
+	    </para>   
+	    <para><emphasis role = "bold">Warning: </emphasis> It is possible to define only one local user-authentication configuration on a specific user-authentication system for the same user.</para>	    
+	  </section>
+	  
+	  <section>
+	    <title> Local user-authentication configuration update </title>
+	    <para>  
+	      Only the login used to create a local user-authentication configuration can be updated by using the 
+	      <emphasis role = "bold">vishnu_update_auth_account</emphasis> command. 
+	    </para>
+	  </section>
+
+	  <section>
+	      <title> Local user-authentication configuration remove </title>
+	      <para> 
+		A local user-authentication configuration can be removed by using the <emphasis role = "bold">vishnu_delete_auth_account</emphasis> command.
+	      </para>
+	  </section>
+	  <para>
+	    It is possible to display the local user-authentication configurations with the <emphasis role="bold">vishnu_list_auth_accounts</emphasis> command.
 	  </para>
 	</section>
 	

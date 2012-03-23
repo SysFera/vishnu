@@ -57,71 +57,74 @@
 <a name="l00078"></a><a class="code" href="IMSMapper_8hpp.html#ab31862dde8db809fa86d9c1841e0b940">00078</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="IMSMapper_8hpp.html#ab31862dde8db809fa86d9c1841e0b940" title="Stop process.">VISHNU_STOP</a>       = 15;
 <a name="l00082"></a><a class="code" href="IMSMapper_8hpp.html#af4e85c9779e0494491ee67cc8ccb5483">00082</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="IMSMapper_8hpp.html#af4e85c9779e0494491ee67cc8ccb5483" title="Restart a process.">VISHNU_RESTART</a>    = 16;
 <a name="l00086"></a><a class="code" href="IMSMapper_8hpp.html#a353da5d9c9f9515e1a9dca8b6f84dafa">00086</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="IMSMapper_8hpp.html#a353da5d9c9f9515e1a9dca8b6f84dafa" title="Get system info.">VISHNU_GET_SYSINF</a> = 17;
-<a name="l00087"></a>00087 
-<a name="l00092"></a><a class="code" href="classIMSMapper.html">00092</a> <span class="keyword">class </span><a class="code" href="classIMSMapper.html" title="Mapper implementation for the IMS module.">IMSMapper</a> : <a class="code" href="classMapper.html" title="Generic mapper.">Mapper</a>{
-<a name="l00093"></a>00093 <span class="keyword">public</span> :
-<a name="l00100"></a>00100   <a class="code" href="classIMSMapper.html" title="Mapper implementation for the IMS module.">IMSMapper</a>(<a class="code" href="classMapperRegistry.html" title="Registry of all the mapper.">MapperRegistry</a>* reg, <span class="keywordtype">string</span> name);
-<a name="l00105"></a>00105   <a class="code" href="classIMSMapper.html" title="Mapper implementation for the IMS module.">IMSMapper</a>();
-<a name="l00111"></a>00111   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
-<a name="l00112"></a>00112   registerMapper();
-<a name="l00113"></a>00113 
-<a name="l00119"></a>00119   <span class="keyword">virtual</span> <span class="keywordtype">int</span> 
-<a name="l00120"></a>00120   unregisterMapper();
-<a name="l00121"></a>00121 
-<a name="l00129"></a>00129   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
-<a name="l00130"></a>00130   getCommand(<span class="keyword">const</span> <span class="keywordtype">int</span>&amp; key,<span class="keywordtype">string</span>&amp; command);
-<a name="l00131"></a>00131 
-<a name="l00139"></a>00139   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
-<a name="l00140"></a>00140   getKey(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; command, <span class="keywordtype">int</span>&amp; key);
-<a name="l00148"></a>00148   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
-<a name="l00149"></a>00149   code(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; cmd, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> code = 0);
-<a name="l00156"></a>00156   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00157"></a>00157   decode (<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00158"></a>00158 
-<a name="l00159"></a>00159 <span class="keyword">protected</span>:
-<a name="l00166"></a>00166   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00167"></a>00167   decodeExp(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00174"></a>00174   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00175"></a>00175   decodeCur(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00182"></a>00182   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00183"></a>00183   decodeHist(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00190"></a>00190   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00191"></a>00191   decodeProc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00198"></a>00198   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00199"></a>00199   decodeSetSys(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00206"></a>00206   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00207"></a>00207   decodeGetThre(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00214"></a>00214   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00215"></a>00215   decodeSetThre(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00222"></a>00222   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00223"></a>00223   decodeFid(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00230"></a>00230   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00231"></a>00231   decodeMid(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00238"></a>00238   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00239"></a>00239   decodeUid(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00246"></a>00246   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00247"></a>00247   decodeTid(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00254"></a>00254   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00255"></a>00255   decodeLoad(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00262"></a>00262   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00263"></a>00263   decodeGetF(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00270"></a>00270   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00271"></a>00271   decodeSetF(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00278"></a>00278   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00279"></a>00279   decodeStop(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00286"></a>00286   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00287"></a>00287   decodeRestart(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00294"></a>00294   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00295"></a>00295   decodeGetSys(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00296"></a>00296 
-<a name="l00297"></a>00297 <span class="keyword">private</span>:
-<a name="l00298"></a>00298 };
-<a name="l00299"></a>00299 
-<a name="l00300"></a>00300 
-<a name="l00301"></a>00301 <span class="preprocessor">#endif</span>
+<a name="l00090"></a><a class="code" href="IMSMapper_8hpp.html#abbe058e7d168dcd0fb3904c73c7fdc20">00090</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="IMSMapper_8hpp.html#abbe058e7d168dcd0fb3904c73c7fdc20" title="Define authentication system id.">VISHNU_DEFINE_AID</a> = 18;
+<a name="l00091"></a>00091 
+<a name="l00096"></a><a class="code" href="classIMSMapper.html">00096</a> <span class="keyword">class </span><a class="code" href="classIMSMapper.html" title="Mapper implementation for the IMS module.">IMSMapper</a> : <a class="code" href="classMapper.html" title="Generic mapper.">Mapper</a>{
+<a name="l00097"></a>00097 <span class="keyword">public</span> :
+<a name="l00104"></a>00104   <a class="code" href="classIMSMapper.html" title="Mapper implementation for the IMS module.">IMSMapper</a>(<a class="code" href="classMapperRegistry.html" title="Registry of all the mapper.">MapperRegistry</a>* reg, <span class="keywordtype">string</span> name);
+<a name="l00109"></a>00109   <a class="code" href="classIMSMapper.html" title="Mapper implementation for the IMS module.">IMSMapper</a>();
+<a name="l00115"></a>00115   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
+<a name="l00116"></a>00116   registerMapper();
+<a name="l00117"></a>00117 
+<a name="l00123"></a>00123   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
+<a name="l00124"></a>00124   unregisterMapper();
+<a name="l00125"></a>00125 
+<a name="l00133"></a>00133   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
+<a name="l00134"></a>00134   getCommand(<span class="keyword">const</span> <span class="keywordtype">int</span>&amp; key,<span class="keywordtype">string</span>&amp; command);
+<a name="l00135"></a>00135 
+<a name="l00143"></a>00143   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
+<a name="l00144"></a>00144   getKey(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; command, <span class="keywordtype">int</span>&amp; key);
+<a name="l00152"></a>00152   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
+<a name="l00153"></a>00153   code(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; cmd, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> code = 0);
+<a name="l00160"></a>00160   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00161"></a>00161   decode (<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00162"></a>00162 
+<a name="l00163"></a>00163 <span class="keyword">protected</span>:
+<a name="l00170"></a>00170   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00171"></a>00171   decodeExp(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00178"></a>00178   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00179"></a>00179   decodeCur(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00186"></a>00186   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00187"></a>00187   decodeHist(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00194"></a>00194   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00195"></a>00195   decodeProc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00202"></a>00202   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00203"></a>00203   decodeSetSys(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00210"></a>00210   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00211"></a>00211   decodeGetThre(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00218"></a>00218   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00219"></a>00219   decodeSetThre(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00226"></a>00226   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00227"></a>00227   decodeFid(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00234"></a>00234   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00235"></a>00235   decodeMid(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00242"></a>00242   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00243"></a>00243   decodeUid(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00250"></a>00250   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00251"></a>00251   decodeTid(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00258"></a>00258   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00259"></a>00259   decodeAid(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00266"></a>00266   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00267"></a>00267   decodeLoad(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00274"></a>00274   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00275"></a>00275   decodeGetF(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00282"></a>00282   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00283"></a>00283   decodeSetF(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00290"></a>00290   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00291"></a>00291   decodeStop(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00298"></a>00298   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00299"></a>00299   decodeRestart(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00306"></a>00306   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00307"></a>00307   decodeGetSys(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00308"></a>00308 
+<a name="l00309"></a>00309 <span class="keyword">private</span>:
+<a name="l00310"></a>00310 };
+<a name="l00311"></a>00311 
+<a name="l00312"></a>00312 
+<a name="l00313"></a>00313 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:42 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:13 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

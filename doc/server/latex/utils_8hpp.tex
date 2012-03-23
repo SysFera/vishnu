@@ -22,6 +22,14 @@ std::ostream \& \hyperlink{utils_8hpp_a2a4e4278d35e12b33b324f50631ea1eb}{operato
 \begin{DoxyCompactList}\small\item\em Helper function to display a local account. \item\end{DoxyCompactList}\item 
 std::ostream \& \hyperlink{utils_8hpp_aea7af2fc33f3de9727cb591ee7871e1a}{operator$<$$<$} (std::ostream \&os, UMS\_\-Data::ListLocalAccounts \&lsLocalAccounts)
 \begin{DoxyCompactList}\small\item\em Helper function to display a list of local accounts. \item\end{DoxyCompactList}\item 
+std::ostream \& \hyperlink{utils_8hpp_ab745a1959da07d6064fd7d5fe6abccef}{operator$<$$<$} (std::ostream \&os, const UMS\_\-Data::AuthSystem\_\-ptr \&authSystem)
+\begin{DoxyCompactList}\small\item\em Helper function to display an authentication system. \item\end{DoxyCompactList}\item 
+std::ostream \& \hyperlink{utils_8hpp_aac6fa658506f591826cfb32af8d5d700}{operator$<$$<$} (std::ostream \&os, UMS\_\-Data::ListAuthSystems \&lsAuthSystems)
+\begin{DoxyCompactList}\small\item\em Helper function to display a list of authentication systems. \item\end{DoxyCompactList}\item 
+std::ostream \& \hyperlink{utils_8hpp_a2b5278aedbe97caf3e1513b0dec3e09d}{operator$<$$<$} (std::ostream \&os, const UMS\_\-Data::AuthAccount\_\-ptr \&authAccount)
+\begin{DoxyCompactList}\small\item\em Helper function to display an authentication account. \item\end{DoxyCompactList}\item 
+std::ostream \& \hyperlink{utils_8hpp_a281943a643967bf5ae713a545bf87842}{operator$<$$<$} (std::ostream \&os, UMS\_\-Data::ListAuthAccounts \&lsAuthAccounts)
+\begin{DoxyCompactList}\small\item\em Helper function to display a list of authentication accounts. \item\end{DoxyCompactList}\item 
 std::ostream \& \hyperlink{utils_8hpp_a4848c3c727920b58b2c8ea3e99dd7f5f}{operator$<$$<$} (std::ostream \&os, const UMS\_\-Data::Machine\_\-ptr \&machine)
 \begin{DoxyCompactList}\small\item\em Helper function to display a machine. \item\end{DoxyCompactList}\item 
 std::ostream \& \hyperlink{utils_8hpp_afbd9b0dae6f2ef4948c7b7c84de28ff2}{operator$<$$<$} (std::ostream \&os, UMS\_\-Data::ListMachines \&lsMachine)
@@ -87,25 +95,25 @@ Helper function to display a list of users.
 \begin{DoxyReturn}{Returns}
 The output stream in which the list of users has been printed 
 \end{DoxyReturn}
-\hypertarget{utils_8hpp_ac0ab9b7087e81b34d44e96624f2fe808}{
+\hypertarget{utils_8hpp_a2a4e4278d35e12b33b324f50631ea1eb}{
 \index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
 \index{operator$<$$<$@{operator$<$$<$}!utils.hpp@{utils.hpp}}
 \subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
 \begin{DoxyParamCaption}
 \item[{std::ostream \&}]{ os, }
-\item[{const UMS\_\-Data::User\_\-ptr \&}]{ user}
+\item[{const UMS\_\-Data::LocalAccount\_\-ptr \&}]{ account}
 \end{DoxyParamCaption}
 )}}
-\label{utils_8hpp_ac0ab9b7087e81b34d44e96624f2fe808}
+\label{utils_8hpp_a2a4e4278d35e12b33b324f50631ea1eb}
 
 
-Helper function to display a user. 
+Helper function to display a local account. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em os,:}]The output stream in which the user will be printed \item[{\em user,:}]The user to display \end{DoxyParams}
+\item[{\em os,:}]The output stream in which the local account will be printed \item[{\em account,:}]The local account to display \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-The output stream in which the user has been printed 
+The output stream in which the local account has been printed 
 \end{DoxyReturn}
 \hypertarget{utils_8hpp_a842d29fcc4a18e3df54799bfe2559d1d}{
 \index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
@@ -167,25 +175,25 @@ Helper function to display a list of command.
 \begin{DoxyReturn}{Returns}
 The output stream in which the list of command has been printed 
 \end{DoxyReturn}
-\hypertarget{utils_8hpp_a2a4e4278d35e12b33b324f50631ea1eb}{
+\hypertarget{utils_8hpp_af52097d3ca43d66de877be2de334b2a2}{
 \index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
 \index{operator$<$$<$@{operator$<$$<$}!utils.hpp@{utils.hpp}}
 \subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
 \begin{DoxyParamCaption}
 \item[{std::ostream \&}]{ os, }
-\item[{const UMS\_\-Data::LocalAccount\_\-ptr \&}]{ account}
+\item[{const UMS\_\-Data::Command\_\-ptr \&}]{ command}
 \end{DoxyParamCaption}
 )}}
-\label{utils_8hpp_a2a4e4278d35e12b33b324f50631ea1eb}
+\label{utils_8hpp_af52097d3ca43d66de877be2de334b2a2}
 
 
-Helper function to display a local account. 
+Helper function to display a command. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em os,:}]The output stream in which the local account will be printed \item[{\em account,:}]The local account to display \end{DoxyParams}
+\item[{\em os,:}]The output stream in which the command will be printed \item[{\em command,:}]The command to display \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-The output stream in which the local account has been printed 
+The output stream in which the command has been printed 
 \end{DoxyReturn}
 \hypertarget{utils_8hpp_afbd9b0dae6f2ef4948c7b7c84de28ff2}{
 \index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
@@ -227,6 +235,86 @@ Helper function to display a machine.
 \begin{DoxyReturn}{Returns}
 The output stream in which the machine has been printed 
 \end{DoxyReturn}
+\hypertarget{utils_8hpp_a281943a643967bf5ae713a545bf87842}{
+\index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!utils.hpp@{utils.hpp}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std::ostream \&}]{ os, }
+\item[{UMS\_\-Data::ListAuthAccounts \&}]{ lsAuthAccounts}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8hpp_a281943a643967bf5ae713a545bf87842}
+
+
+Helper function to display a list of authentication accounts. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em os,:}]The output stream in which the list will be printed \item[{\em lsAuthAccounts,:}]The list to display \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream in which the list of authentication accounts has been printed 
+\end{DoxyReturn}
+\hypertarget{utils_8hpp_a2b5278aedbe97caf3e1513b0dec3e09d}{
+\index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!utils.hpp@{utils.hpp}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std::ostream \&}]{ os, }
+\item[{const UMS\_\-Data::AuthAccount\_\-ptr \&}]{ authAccount}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8hpp_a2b5278aedbe97caf3e1513b0dec3e09d}
+
+
+Helper function to display an authentication account. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em os,:}]The output stream in which the authentication account will be printed \item[{\em authAccount,:}]The authentication account to display \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream in which the authentication account has been printed 
+\end{DoxyReturn}
+\hypertarget{utils_8hpp_aac6fa658506f591826cfb32af8d5d700}{
+\index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!utils.hpp@{utils.hpp}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std::ostream \&}]{ os, }
+\item[{UMS\_\-Data::ListAuthSystems \&}]{ lsAuthSystems}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8hpp_aac6fa658506f591826cfb32af8d5d700}
+
+
+Helper function to display a list of authentication systems. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em os,:}]The output stream in which the list will be printed \item[{\em lsAuthSystems,:}]The list to display \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream in which the list of authentication systems has been printed 
+\end{DoxyReturn}
+\hypertarget{utils_8hpp_ab745a1959da07d6064fd7d5fe6abccef}{
+\index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!utils.hpp@{utils.hpp}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std::ostream \&}]{ os, }
+\item[{const UMS\_\-Data::AuthSystem\_\-ptr \&}]{ authSystem}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8hpp_ab745a1959da07d6064fd7d5fe6abccef}
+
+
+Helper function to display an authentication system. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em os,:}]The output stream in which the authentication system will be printed \item[{\em authSystem,:}]The authentication system to display \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream in which the authentication system has been printed 
+\end{DoxyReturn}
 \hypertarget{utils_8hpp_aea7af2fc33f3de9727cb591ee7871e1a}{
 \index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
 \index{operator$<$$<$@{operator$<$$<$}!utils.hpp@{utils.hpp}}
@@ -247,25 +335,25 @@ Helper function to display a list of local accounts.
 \begin{DoxyReturn}{Returns}
 The output stream in which the list of local accounts has been printed 
 \end{DoxyReturn}
-\hypertarget{utils_8hpp_af52097d3ca43d66de877be2de334b2a2}{
+\hypertarget{utils_8hpp_ac0ab9b7087e81b34d44e96624f2fe808}{
 \index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
 \index{operator$<$$<$@{operator$<$$<$}!utils.hpp@{utils.hpp}}
 \subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
 \begin{DoxyParamCaption}
 \item[{std::ostream \&}]{ os, }
-\item[{const UMS\_\-Data::Command\_\-ptr \&}]{ command}
+\item[{const UMS\_\-Data::User\_\-ptr \&}]{ user}
 \end{DoxyParamCaption}
 )}}
-\label{utils_8hpp_af52097d3ca43d66de877be2de334b2a2}
+\label{utils_8hpp_ac0ab9b7087e81b34d44e96624f2fe808}
 
 
-Helper function to display a command. 
+Helper function to display a user. 
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em os,:}]The output stream in which the command will be printed \item[{\em command,:}]The command to display \end{DoxyParams}
+\item[{\em os,:}]The output stream in which the user will be printed \item[{\em user,:}]The user to display \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-The output stream in which the command has been printed 
+The output stream in which the user has been printed 
 \end{DoxyReturn}
 \hypertarget{utils_8hpp_a51703811ea182465c7327b5a941fdc78}{
 \index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}

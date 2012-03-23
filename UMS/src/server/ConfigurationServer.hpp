@@ -106,7 +106,6 @@ private:
   machineToSql(UMS_Data::Machine_ptr machine, int vishnuId);
   /**
   * \brief Function to get the sql code of machines description from a VISHNU configuration
-  * \fn std::string machineDescToSql(UMS_Data::Machine_ptr machine)
   * \param machine The machine object
   * \return the sql code containing the sql code of machines description
   */
@@ -114,8 +113,7 @@ private:
   machineDescToSql(UMS_Data::Machine_ptr machine);
   /**
   * \brief Function to get the sql code of user-authentication system from a VISHNU configuration
-  * \fn authSystemToSql(UMS_Data::AuthSystem_ptr authsystem, int vishnuId)
-  * \param authSystem The authSystem object
+  * \param authsystem The authSystem object
   * \param vishnuId The identifier of the vishnu instance
   * \return the sql code containing the sql code of authentication systems
   */
@@ -123,8 +121,7 @@ private:
   authSystemToSql(UMS_Data::AuthSystem_ptr authsystem, int vishnuId);
   /**
   * \brief Function to get the sql code of machines description from a VISHNU configuration
-  * \fn std::string machineDescToSql(UMS_Data::Machine_ptr machine)
-  * \param authSystem The authSystem object
+  * \param authsystem The authSystem object
   * \return the sql code containing the sql code of authentication systems based on ldap
   */
   std::string

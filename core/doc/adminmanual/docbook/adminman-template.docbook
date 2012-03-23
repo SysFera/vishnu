@@ -173,6 +173,13 @@
       <revdescription>
         <para>Prise en compte du gestionnaire de resources LSF</para></revdescription>
       </revision>
+      <revision>
+      <revnumber>19</revnumber>
+      <date>22/03/2012</date>
+      <authorinitials>K. COULOMB</authorinitials>
+      <revdescription>
+        <para>Ajout pour le support de LDAP</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -233,6 +240,9 @@
 	</listitem>
 	<listitem>
 	  <para>IMS : Information Management Service</para>
+	</listitem>
+	<listitem>
+	  <para>LDAP : Lightweight Directory Access Protocol, protocole de gestion d'annuaires</para>
 	</listitem>
 	<listitem>
 	  <para> MA : "Master Agent": élément de Sysfera-DS distribuant les requêtes entre les clients et les services désirés.</para>
@@ -335,7 +345,15 @@
               <para>SSH</para>
             </listitem>
             <listitem>
-              <para>Sysfera-DS (DIET version 2.7 minimum + le module log service associé)</para>
+              <para>DIET version 2.8 + le module log service associé</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+        <listitem>
+          <para>Dépendances optionelles pour le module UMS:</para>
+          <itemizedlist>
+            <listitem>
+              <para>LDAP: OpenLDAP 2.4</para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -438,6 +456,11 @@
 	      ENABLE_JAVA, qui permet d'activer la compilation des sources JAVA pour les web services (OFF par défaut).
 	    </para>
 	  </listitem>
+	  <listitem>
+	    <para>
+	      VISHNU_USE_LDAP, qui permet d'activer le support LDAP pour l'authentification (OFF par défaut).
+	    </para>
+	  </listitem>
     <listitem>
       <para>
         ENABLE_SWIG, qui permet d'activer la generation du code des adapteurs Python et Java (OFF par défaut). Cette option doit obligatoirement être activée si on choisit de ne pas compiler tous les modules VISHNU c'est-à-dire si au moins l'une des options COMPILE_UMS, COMPILE_TMS, COMPILE_FMS ou COMPILE_IMS est à OFF. Si l'option ENABLE_SWIG est activée, le package SWIG (voir paragraphe 'Prérequis') est nécessaire pour compiler.
@@ -513,6 +536,35 @@
       <title>Utilisation d'une base de données MySQL</title>
       <para>Un guide pour installer une base MySQL peut être trouvé à cette adresse : <emphasis role="bold"> http://dev.mysql.com/doc/refman/5.0/fr/unix-post-installation.html</emphasis></para>
       <para>Pour une installation d'une nouvelle base de données, les scripts 'mysql_create.sql' et 'database_init.sql' doivent être utilisés par l'administrateur de la DB.</para>
+    </section>
+    <section>
+      <title>Utilisation de LDAP</title>
+      <para>Un guide pour installer un serveur LDAP est disponible à cette adresse : <emphasis role="bold"> http://ferry.eof.eu.org/lesjournaux/jar/public_html/x5073.html</emphasis></para>
+      <para>Pour pouvoir utiliser l'authentification avec LDAP, le flag de compilation VISHNU_USE_LDAP doit avoir été activé. Sous debian, les paquets suivants sont
+nécessaires : slapd libldap-2.4-2 libldap2-dev ldap-utils. Une fois VISHNU compilé, une option de configuration du serveur UMS doit être mise dans le fichier de configuration. Cette option est nommée 'authenticationType' et peut actuellement supporter 4 valeurs : 
+        <itemizedlist>
+	  <listitem>
+            <para>
+              UMS : Authentifie uniquement en utilisant la base de données
+            </para>
+          </listitem>
+	  <listitem>
+            <para>
+              LDAPUMS : Pour chaque couple (nom d'utilisateur, mot de passe), essaye d'authentifier avec LDAP en premier puis avec UMS
+            </para>
+          </listitem>
+	  <listitem>
+            <para>
+              UMSLDAP : Pour chaque couple (nom d'utilisateur, mot de passe), essaye d'authentifier avec UMS en premier puis avec LDAP
+            </para>
+          </listitem>
+	  <listitem>
+            <para>
+              LDAP : Authentifie uniquement en utilisant LDAP
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
     </section>
   </chapter>
 
@@ -737,6 +789,9 @@
 		<para> 'sendmailScriptPath=/usr/local/vishnu/sbin/sendmail.py' : Le script à utiliser pour envoyer les mails. Il est installé avec le module UMS
                   dans le sous-répertoire sbin/ du répertoire d'installation.</para>
 	      </listitem>
+              <listitem>
+                <para>'authenticationType=LDAP' : Utilise uniquement LDAP pour authentifier un utilisateur.</para>
+              </listitem>
             </itemizedlist>
           </para>
 	</listitem>
@@ -1153,6 +1208,7 @@
 	databaseConnectionsNb=5
 	sendmailScriptPath=/usr/local/sbin/sendmail.py
 	vishnuMachineId=machine_1
+        authenticationType=LDAP
       </programlisting>
     </section>
     <section>
@@ -1437,6 +1493,12 @@
 	    Un administrateur peut également définir les valeurs par défaut des options de VISHNU pour tout les utilisateurs (ces options sont le temps de déconnexion par défaut et le type de fermeture d'une session par défaut). Cela se fait en appellant 'vishnu_configure_default_option' en donnant le nom de l'option et sa nouvelle valeur.
 	  </para>
 	</listitem>
+	<listitem>
+	  <para>
+            Un administrateur peut ajouter ou modifier un système d'authentification. Par exemple il peut ajouter différents LDAP pour authentifier ses utilisateurs. Actuellement, pour un même LDAP, si les utilisateurs sont dans des branches différentes il faut ajouter un système d'authentification par branche. Ceci afin de faciliter la connexion de l'utilisateur, pour qu'il ne donne aucune information concernant son arbre LDAP, juste son login. C'est l'administrateur lorsqu'il crée son système d'authentification qui doit remplir le champs ldapbase avec le chemin complet dans l'arbre LDAP à utiliser pour authentifier un utilisateur. Lorsqu'un administrateur rempli le chemin menant aux utilisateurs, il doit remplacer le nom de l'utilisateur par la chaîne de caractère \$USERNAME, cette chaîne sera remplacée par vishnu par le login de l'utilisateur que l'on cherche à authentifier.
+            Fonctions associées : vishnu_add_auth_system, vishnu_update_auth_system, vishnu_delete_auth_system
+	  </para>
+	</listitem>
       </orderedlist>
     </section>
     <section>
@@ -1573,7 +1635,7 @@
 	      </listitem>
 	    </itemizedlist>
 	    Attention la variable conteur est obligatoire pour éviter la génération d'un identifiant déjà existant.
-	    Fonctions associées : define_file_format, define_machine_format, define_task_format, define_user_format.
+	    Fonctions associées : define_file_format, define_machine_format, define_task_format, define_user_format, define_auth_format.
 	  </para>
 	</listitem>
       </itemizedlist>

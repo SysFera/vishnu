@@ -3,8 +3,8 @@
   <info>
     <title>Vishnu Home Page</title>
     <productname>VISHNU</productname>
-    <releaseinfo>Version 1.2.6</releaseinfo>
-    <date>June 28, 2011</date>
+    <releaseinfo>Version 1.2.7</releaseinfo>
+    <date>March 19, 2012</date>
     <author>
       <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
     </author>
@@ -59,6 +59,14 @@
 	<authorinitials>SysFera</authorinitials>
 	<revdescription>
 	  <para>Update for release 1.2.6</para>
+        </revdescription>
+      </revision>
+      <revision>
+	<revnumber>4</revnumber>
+	<date>19/03/2012</date>
+	<authorinitials>SysFera</authorinitials>
+	<revdescription>
+	  <para>Late update for release 1.2.7</para>
         </revdescription>
       </revision>
     </revhistory>
@@ -128,6 +136,9 @@
       <title>Change log</title>
       <itemizedlist>
 	<listitem>
+          <para>V1.2.7 (19/03/2012): Fix bugs (337, 326), extend TMS options, TMS enhancement (autosubmit, list all as machine id, ...).</para>
+        </listitem>
+	<listitem>
           <para>V1.2.6 (11/01/2012): Fix bugs, add options, minor API changes.</para>
         </listitem>
 	<listitem>
@@ -175,7 +186,7 @@
       <para>VISHNU can be installed on Linux systems only (preferably Debian distributions), and requires the following software:</para>
       <itemizedlist>
         <listitem>
-          <para>Boost C++ libraries (1.45 or greater)</para>
+          <para>Boost C++ libraries (1.46.1 or greater)</para>
         </listitem>
         <listitem>
           <para>OmniORB (4.1.4 or greater)</para>
@@ -190,7 +201,7 @@
           <para>PostGreSQL (8.0 or greater) or MySQL (5.0 or greater)</para>
         </listitem>
         <listitem>
-          <para>Sysfera-DS (DIET version 2.7 minimum + le module log service associé)</para>
+          <para>DIET version 2.8  + the log service module asociated</para>
         </listitem>
         <listitem>
           <para>On all hosts providing task mgmt services (TMS module):</para>
@@ -264,7 +275,7 @@
     <section>
       <title>Install from source</title>
       <para>VISHNU must be compiled with G++ (4.4.3 or greater) and CMake (2.8 or greater).</para>
-      <para>Source tarball: vishnu_v1.2.6.tgz <ulink url="vishnu_v1.2.6.tgz">[download]</ulink> (added on 11th January 2012)</para>
+      <para>Source tarball: vishnu_v1.2.7.tgz <ulink url="vishnu_v1.2.7.tgz">[download]</ulink> (added on 11th January 2012)</para>
     </section>
     <section>
       <title>Launch the VISHNU platform</title>

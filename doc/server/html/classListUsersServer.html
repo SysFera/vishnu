@@ -33,11 +33,20 @@
 <h1>ListUsersServer Class Reference</h1>  </div>
 </div>
 <div class="contents">
-<!-- doxytag: class="ListUsersServer" -->
+<!-- doxytag: class="ListUsersServer" --><!-- doxytag: inherits="QueryServer&lt; UMS_Data::ListUsersOptions, UMS_Data::ListUsers &gt;" -->
 <p><a class="el" href="classListUsersServer.html" title="ListUsersServer class implementation.">ListUsersServer</a> class implementation.  
 <a href="#_details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="ListUsersServer_8hpp_source.html">ListUsersServer.hpp</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for ListUsersServer:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classListUsersServer.png" usemap="#ListUsersServer_map" alt=""/>
+  <map id="ListUsersServer_map" name="ListUsersServer_map">
+<area href="classQueryServer.html" alt="QueryServer&lt; UMS_Data::ListUsersOptions, UMS_Data::ListUsers &gt;" shape="rect" coords="0,0,397,24"/>
+</map>
+</div>
 
 <p><a href="classListUsersServer-members.html">List of all members.</a></p>
 <table class="memberdecls">
@@ -45,29 +54,22 @@
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListUsersServer.html#a21aa9106a1ff470ac479651188e2ac31">ListUsersServer</a> (const <a class="el" href="classSessionServer.html">SessionServer</a> &amp;session)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor, raises an exception on error.  <a href="#a21aa9106a1ff470ac479651188e2ac31"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListUsersServer.html#a1d16ddcf7d953a2bf2a708d227141147">ListUsersServer</a> (const std::string &amp;option, const <a class="el" href="classSessionServer.html">SessionServer</a> &amp;session)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor, raises an exception on error.  <a href="#a1d16ddcf7d953a2bf2a708d227141147"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListUsersServer.html#a00e4e9819b12580de6fc59dfcc4f6d26">processOptions</a> (<a class="el" href="classUserServer.html">UserServer</a> userServer, const std::string &amp;options, std::string &amp;sqlRequest)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to treat the <a class="el" href="classListUsersServer.html" title="ListUsersServer class implementation.">ListUsersServer</a> options.  <a href="#a00e4e9819b12580de6fc59dfcc4f6d26"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListUsersServer.html#ae243661035340448b24e3f6848068d56">ListUsersServer</a> (UMS_Data::ListUsersOptions_ptr params, const <a class="el" href="classSessionServer.html">SessionServer</a> &amp;session)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor, raises an exception on error.  <a href="#ae243661035340448b24e3f6848068d56"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListUsersServer.html#ab02a1b44d9a86b07b83f9b403575716f">processOptions</a> (<a class="el" href="classUserServer.html">UserServer</a> userServer, const UMS_Data::ListUsersOptions_ptr &amp;options, std::string &amp;sqlRequest)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to treat the <a class="el" href="classListUsersServer.html" title="ListUsersServer class implementation.">ListUsersServer</a> options.  <a href="#ab02a1b44d9a86b07b83f9b403575716f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">UMS_Data::ListUsers *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListUsersServer.html#aa80dfdc8a71c1bbba1423f8b375e1624">list</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to list machines information.  <a href="#aa80dfdc8a71c1bbba1423f8b375e1624"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListUsersServer.html#a570f6a88f82b9accd66946136b2fff21">getCommandName</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the name of the <a class="el" href="classListUsersServer.html" title="ListUsersServer class implementation.">ListUsersServer</a> command line.  <a href="#a570f6a88f82b9accd66946136b2fff21"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2ebe5504e39955f53b797dda01957ace"></a><!-- doxytag: member="ListUsersServer::~ListUsersServer" ref="a2ebe5504e39955f53b797dda01957ace" args="()" -->
 &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListUsersServer.html#a2ebe5504e39955f53b797dda01957ace">~ListUsersServer</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructor, raises an exception on error. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aef28d9ca8db9ec7b8b90ce24a8c17f58"></a><!-- doxytag: member="ListUsersServer::moption" ref="aef28d9ca8db9ec7b8b90ce24a8c17f58" args="" -->
-std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListUsersServer.html#aef28d9ca8db9ec7b8b90ce24a8c17f58">moption</a></td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The <a class="el" href="classListUsersServer.html" title="ListUsersServer class implementation.">ListUsersServer</a> option. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7f3daa6402f0f2f69bd2977250b48b87"></a><!-- doxytag: member="ListUsersServer::msessionServer" ref="a7f3daa6402f0f2f69bd2977250b48b87" args="" -->
-<a class="el" href="classSessionServer.html">SessionServer</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListUsersServer.html#a7f3daa6402f0f2f69bd2977250b48b87">msessionServer</a></td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The <a class="el" href="classSessionServer.html" title="UserServer class implementation.">SessionServer</a> object containing the encrypted identifier of the session generated by VISHNU. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab507882abaf0368f193879d58903382b"></a><!-- doxytag: member="ListUsersServer::mlistUsers" ref="ab507882abaf0368f193879d58903382b" args="" -->
-ListUsers *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListUsersServer.html#ab507882abaf0368f193879d58903382b">mlistUsers</a></td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The Object containing users information. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca827ba5f28c4f500d514f93ab474df0"></a><!-- doxytag: member="ListUsersServer::mdatabaseVishnu" ref="aca827ba5f28c4f500d514f93ab474df0" args="" -->
-<a class="el" href="classDatabase.html">Database</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListUsersServer.html#aca827ba5f28c4f500d514f93ab474df0">mdatabaseVishnu</a></td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">An instance of vishnu database. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeb121fa8532cfddea6ec0fa9669476c7"></a><!-- doxytag: member="ListUsersServer::mcommandName" ref="aeb121fa8532cfddea6ec0fa9669476c7" args="" -->
+std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListUsersServer.html#aeb121fa8532cfddea6ec0fa9669476c7">mcommandName</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The name of the <a class="el" href="classListMachinesServer.html" title="ListMachinesServer class implementation.">ListMachinesServer</a> command line. <br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p><a class="el" href="classListUsersServer.html" title="ListUsersServer class implementation.">ListUsersServer</a> class implementation. </p>
@@ -82,7 +84,7 @@ ListUsers *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
           <td class="paramtype">const <a class="el" href="classSessionServer.html">SessionServer</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>session</em></td>
           <td>&nbsp;)&nbsp;</td>
-          <td><code> [explicit]</code></td>
+          <td><code> [inline]</code></td>
         </tr>
       </table>
 </div>
@@ -98,15 +100,15 @@ ListUsers *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 </div>
 </div>
-<a class="anchor" id="a1d16ddcf7d953a2bf2a708d227141147"></a><!-- doxytag: member="ListUsersServer::ListUsersServer" ref="a1d16ddcf7d953a2bf2a708d227141147" args="(const std::string &amp;option, const SessionServer &amp;session)" -->
+<a class="anchor" id="ae243661035340448b24e3f6848068d56"></a><!-- doxytag: member="ListUsersServer::ListUsersServer" ref="ae243661035340448b24e3f6848068d56" args="(UMS_Data::ListUsersOptions_ptr params, const SessionServer &amp;session)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">ListUsersServer::ListUsersServer </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&nbsp;</td>
-          <td class="paramname"> <em>option</em>, </td>
+          <td class="paramtype">UMS_Data::ListUsersOptions_ptr&nbsp;</td>
+          <td class="paramname"> <em>params</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -117,7 +119,7 @@ ListUsers *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td></td>
+          <td></td><td></td><td><code> [inline]</code></td>
         </tr>
       </table>
 </div>
@@ -126,7 +128,7 @@ ListUsers *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Constructor, raises an exception on error. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>option</em>&nbsp;</td><td>The <a class="el" href="classListUsersServer.html" title="ListUsersServer class implementation.">ListUsersServer</a> option </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>params</em>&nbsp;</td><td>The object which encapsulates the information of <a class="el" href="classListUsersServer.html" title="ListUsersServer class implementation.">ListUsersServer</a> options </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>session</em>&nbsp;</td><td>The object which encapsulates the session information (ex: identifier of the session) </td></tr>
   </table>
   </dd>
@@ -135,6 +137,28 @@ ListUsers *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a570f6a88f82b9accd66946136b2fff21"></a><!-- doxytag: member="ListUsersServer::getCommandName" ref="a570f6a88f82b9accd66946136b2fff21" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string ListUsersServer::getCommandName </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline, virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to get the name of the <a class="el" href="classListUsersServer.html" title="ListUsersServer class implementation.">ListUsersServer</a> command line. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The the name of the <a class="el" href="classListUsersServer.html" title="ListUsersServer class implementation.">ListUsersServer</a> command line </dd></dl>
+
+<p>Implements <a class="el" href="classQueryServer.html#ad6b15831bd35508c3b5a393062d6e206">QueryServer&lt; UMS_Data::ListUsersOptions, UMS_Data::ListUsers &gt;</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="aa80dfdc8a71c1bbba1423f8b375e1624"></a><!-- doxytag: member="ListUsersServer::list" ref="aa80dfdc8a71c1bbba1423f8b375e1624" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -144,7 +168,7 @@ ListUsers *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
           <td>(</td>
           <td class="paramname"></td>
           <td>&nbsp;)&nbsp;</td>
-          <td></td>
+          <td><code> [inline, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -155,9 +179,11 @@ ListUsers *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <dd>
 raises an exception on error </dd></dl>
 
+<p>Implements <a class="el" href="classQueryServer.html#a2ad0f3f1b75e6f0705a9edbe4bab76b0">QueryServer&lt; UMS_Data::ListUsersOptions, UMS_Data::ListUsers &gt;</a>.</p>
+
 </div>
 </div>
-<a class="anchor" id="a00e4e9819b12580de6fc59dfcc4f6d26"></a><!-- doxytag: member="ListUsersServer::processOptions" ref="a00e4e9819b12580de6fc59dfcc4f6d26" args="(UserServer userServer, const std::string &amp;options, std::string &amp;sqlRequest)" -->
+<a class="anchor" id="ab02a1b44d9a86b07b83f9b403575716f"></a><!-- doxytag: member="ListUsersServer::processOptions" ref="ab02a1b44d9a86b07b83f9b403575716f" args="(UserServer userServer, const UMS_Data::ListUsersOptions_ptr &amp;options, std::string &amp;sqlRequest)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -170,7 +196,7 @@ raises an exception on error </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramtype">const UMS_Data::ListUsersOptions_ptr &amp;&nbsp;</td>
           <td class="paramname"> <em>options</em>, </td>
         </tr>
         <tr>
@@ -182,7 +208,7 @@ raises an exception on error </dd></dl>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td></td>
+          <td></td><td></td><td><code> [inline]</code></td>
         </tr>
       </table>
 </div>
@@ -192,7 +218,7 @@ raises an exception on error </dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>userServer</em>&nbsp;</td><td>the object which encapsulates user information </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>options</em>&nbsp;</td><td>option </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>options</em>&nbsp;</td><td>The object which encapsulates the information of <a class="el" href="classListUsersServer.html" title="ListUsersServer class implementation.">ListUsersServer</a> options </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>sqlRequest</em>&nbsp;</td><td>the sql data base request </td></tr>
   </table>
   </dd>
@@ -205,7 +231,7 @@ raises an exception on error </dd></dl>
 <li>UMS/src/server/<a class="el" href="ListUsersServer_8hpp_source.html">ListUsersServer.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:45 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:17 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

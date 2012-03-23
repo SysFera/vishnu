@@ -1,0 +1,80 @@
+\hypertarget{authenticationSystemUtils_8hpp}{
+\section{UMS/src/cli/authenticationSystemUtils.hpp File Reference}
+\label{authenticationSystemUtils_8hpp}\index{UMS/src/cli/authenticationSystemUtils.hpp@{UMS/src/cli/authenticationSystemUtils.hpp}}
+}
+
+
+This file declares useful functions and types for the VISHNU add update and delete authentication commands.  
+
+
+{\ttfamily \#include $<$iostream$>$}\par
+{\ttfamily \#include $<$boost/shared\_\-ptr.hpp$>$}\par
+{\ttfamily \#include $<$ecore.hpp$>$}\par
+{\ttfamily \#include $<$ecorecpp.hpp$>$}\par
+{\ttfamily \#include \char`\"{}UMS\_\-Data.hpp\char`\"{}}\par
+{\ttfamily \#include $<$boost/function.hpp$>$}\par
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{authenticationSystemUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{
+typedef boost::function1$<$ void, std::string $>$ \hyperlink{authenticationSystemUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{StringcallBackType}}
+\label{authenticationSystemUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}
+
+\begin{DoxyCompactList}\small\item\em A convenient function type taking a string parameter and without return value. \item\end{DoxyCompactList}\item 
+\hypertarget{authenticationSystemUtils_8hpp_a67169cd22cc6ae00899f887913b127f8}{
+typedef boost::function1$<$ void, UMS\_\-Data::EncryptionMethod $>$ \hyperlink{authenticationSystemUtils_8hpp_a67169cd22cc6ae00899f887913b127f8}{EncryptioncallBackType}}
+\label{authenticationSystemUtils_8hpp_a67169cd22cc6ae00899f887913b127f8}
+
+\begin{DoxyCompactList}\small\item\em A convenient function type taking a EncryptionMethod parameter and without return value. \item\end{DoxyCompactList}\item 
+\hypertarget{authenticationSystemUtils_8hpp_a33e9ed5a0c908a5046d3f98387af3346}{
+typedef boost::function1$<$ void, UMS\_\-Data::AuthType $>$ \hyperlink{authenticationSystemUtils_8hpp_a33e9ed5a0c908a5046d3f98387af3346}{AuthcallBackType}}
+\label{authenticationSystemUtils_8hpp_a33e9ed5a0c908a5046d3f98387af3346}
+
+\begin{DoxyCompactList}\small\item\em A convenient function type taking a AuthType parameter and without return value. \item\end{DoxyCompactList}\item 
+\hypertarget{authenticationSystemUtils_8hpp_a2577410234b4f3f417afd232c5d48864}{
+typedef boost::function1$<$ void, UMS\_\-Data::StatusType $>$ \hyperlink{authenticationSystemUtils_8hpp_a2577410234b4f3f417afd232c5d48864}{StatuscallBackType}}
+\label{authenticationSystemUtils_8hpp_a2577410234b4f3f417afd232c5d48864}
+
+\begin{DoxyCompactList}\small\item\em A convenient function type taking a StatusType parameter and without return value. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+boost::shared\_\-ptr$<$ \hyperlink{classOptions}{Options} $>$ \hyperlink{authenticationSystemUtils_8hpp_a78ac774efcaf24ca6f294e66b13e666d}{makeAuthSystemOptions} (std::string pgName, std::string \&dietConfig, \hyperlink{authenticationAccountUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{StringcallBackType} \&fName, \hyperlink{authenticationAccountUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{StringcallBackType} \&fURI, \hyperlink{authenticationAccountUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{StringcallBackType} \&fAuthLogin, \hyperlink{authenticationAccountUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{StringcallBackType} \&fAuthPassword, \hyperlink{authenticationSystemUtils_8hpp_a67169cd22cc6ae00899f887913b127f8}{EncryptioncallBackType} \&fUserPasswordEncryption, \hyperlink{authenticationSystemUtils_8hpp_a33e9ed5a0c908a5046d3f98387af3346}{AuthcallBackType} \&fType, \hyperlink{authenticationAccountUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{StringcallBackType} \&fLdapBase, int type=0)
+\begin{DoxyCompactList}\small\item\em To build options for the VISHNU system authentication commands. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file declares useful functions and types for the VISHNU add update and delete authentication commands. \begin{DoxyAuthor}{Author}
+Ibrahima Cisse (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sysfera.com}) 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\hypertarget{authenticationSystemUtils_8hpp_a78ac774efcaf24ca6f294e66b13e666d}{
+\index{authenticationSystemUtils.hpp@{authenticationSystemUtils.hpp}!makeAuthSystemOptions@{makeAuthSystemOptions}}
+\index{makeAuthSystemOptions@{makeAuthSystemOptions}!authenticationSystemUtils.hpp@{authenticationSystemUtils.hpp}}
+\subsubsection[{makeAuthSystemOptions}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<${\bf Options}$>$ makeAuthSystemOptions (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ pgName, }
+\item[{std::string \&}]{ dietConfig, }
+\item[{{\bf StringcallBackType} \&}]{ fName, }
+\item[{{\bf StringcallBackType} \&}]{ fURI, }
+\item[{{\bf StringcallBackType} \&}]{ fAuthLogin, }
+\item[{{\bf StringcallBackType} \&}]{ fAuthPassword, }
+\item[{{\bf EncryptioncallBackType} \&}]{ fUserPasswordEncryption, }
+\item[{{\bf AuthcallBackType} \&}]{ fType, }
+\item[{{\bf StringcallBackType} \&}]{ fLdapBase, }
+\item[{int}]{ type = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{authenticationSystemUtils_8hpp_a78ac774efcaf24ca6f294e66b13e666d}
+
+
+To build options for the VISHNU system authentication commands. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pgName}]: The name of the command \item[{\em dietConfig}]: Represents the VISHNU config file \item[{\em fName}]: The user-\/authentication system’s name option callback \item[{\em fURI}]: The URI of the user-\/authentication systems (by the form host:port for LDAP) option callback \item[{\em fAuthLogin}]: The login used to connect to the user-\/authentication system option callback \item[{\em fAuthPassword}]: The e password used to connect to the user-\/authentication system option callback \item[{\em fUserPasswordEncryption}]: The user encryption password option callback \item[{\em fType}]: user-\/authentication systems option callback \item[{\em fLdapBase}]: option for user-\/authentication system based on LDAP which specifies the DN of the root entry \item[{\em type}]: represents the type of operation to perform (add or update) \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The description of all options allowed by the command 
+\end{DoxyReturn}

@@ -44,6 +44,8 @@ void \hyperlink{classUserServer_a0aad281d77ffbe98423f3275884781c1}{init} ()}
 \begin{DoxyCompactList}\small\item\em Function to initialize user data for constructor with sessionServer. \item\end{DoxyCompactList}\item 
 bool \hyperlink{classUserServer_a26ccae7a3b8ee7e62e2224312119aece}{exist} (bool flagForChangePwd=false)
 \begin{DoxyCompactList}\small\item\em Function to check user on database. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classUserServer_a42f6a347a80bcf6806c8f944f66cc713}{isAuthenticate} (bool flagForChangePwd=false)
+\begin{DoxyCompactList}\small\item\em Function to authenticate user by using an authentification system. \item\end{DoxyCompactList}\item 
 bool \hyperlink{classUserServer_a7dab9117c2ca5a706bb674e43b183255}{isAdmin} ()
 \begin{DoxyCompactList}\small\item\em Function to check the VISHNU user privilege. \item\end{DoxyCompactList}\item 
 bool \hyperlink{classUserServer_aecc5dd38cacf2460a187f6e751000c9a}{isAttributOk} (std::string attributName, int valueOk)
@@ -62,7 +64,9 @@ std::string \hyperlink{classUserServer_a61f17775588f641c30035349e5e8bfef}{genera
 int \hyperlink{classUserServer_ac4e5db25963346be0bc57f5b61a1ad59}{sendMailToUser} (const UMS\_\-Data::User \&user, std::string content, std::string subject, std::string sendmailScriptPath)
 \begin{DoxyCompactList}\small\item\em Function to send an email to the user. \item\end{DoxyCompactList}\item 
 std::string \hyperlink{classUserServer_a4896a5d7bd51b8ad24cf6864ba400487}{getMailContent} (const UMS\_\-Data::User \&user, bool flagAdduser)
-\begin{DoxyCompactList}\small\item\em Function to get the email content. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Function to get the email content. \item\end{DoxyCompactList}\item 
+void \hyperlink{classUserServer_aeba9bcdce19abb3b8f73b217efb60352}{CheckUserState} (bool flagForChangePwd)
+\begin{DoxyCompactList}\small\item\em Function to check the user state (locked or not) and to verify the password state. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -179,6 +183,22 @@ Function to change VISHNU user password.
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
+\hypertarget{classUserServer_aeba9bcdce19abb3b8f73b217efb60352}{
+\index{UserServer@{UserServer}!CheckUserState@{CheckUserState}}
+\index{CheckUserState@{CheckUserState}!UserServer@{UserServer}}
+\subsubsection[{CheckUserState}]{\setlength{\rightskip}{0pt plus 5cm}void UserServer::CheckUserState (
+\begin{DoxyParamCaption}
+\item[{bool}]{ flagForChangePwd}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUserServer_aeba9bcdce19abb3b8f73b217efb60352}
+
+
+Function to check the user state (locked or not) and to verify the password state. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em flagForChangePwd}]A flag to check the password state \end{DoxyParams}
 \hypertarget{classUserServer_acb26d67e359123b9b4b80fa007d37423}{
 \index{UserServer@{UserServer}!deleteUser@{deleteUser}}
 \index{deleteUser@{deleteUser}!UserServer@{UserServer}}
@@ -366,6 +386,25 @@ Function to check the user attribut value.
 \item[{\em attributName}]The name of the attribut to check \item[{\em valueOk}]the value which will be compare to attribut name value \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 true if the attributName value is valueOk 
+\end{DoxyReturn}
+\hypertarget{classUserServer_a42f6a347a80bcf6806c8f944f66cc713}{
+\index{UserServer@{UserServer}!isAuthenticate@{isAuthenticate}}
+\index{isAuthenticate@{isAuthenticate}!UserServer@{UserServer}}
+\subsubsection[{isAuthenticate}]{\setlength{\rightskip}{0pt plus 5cm}bool UserServer::isAuthenticate (
+\begin{DoxyParamCaption}
+\item[{bool}]{ flagForChangePwd = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}
+\label{classUserServer_a42f6a347a80bcf6806c8f944f66cc713}
+
+
+Function to authenticate user by using an authentification system. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em flagForChangePwd}]A flag to check the password state \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the user is authenticated else false 
 \end{DoxyReturn}
 \hypertarget{classUserServer_ad25cf22ec48e1519df9fd68b1d66a36d}{
 \index{UserServer@{UserServer}!resetPassword@{resetPassword}}

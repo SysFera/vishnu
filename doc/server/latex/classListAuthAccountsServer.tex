@@ -1,0 +1,155 @@
+\hypertarget{classListAuthAccountsServer}{
+\section{ListAuthAccountsServer Class Reference}
+\label{classListAuthAccountsServer}\index{ListAuthAccountsServer@{ListAuthAccountsServer}}
+}
+
+
+\hyperlink{classListAuthAccountsServer}{ListAuthAccountsServer} class implementation.  
+
+
+
+
+{\ttfamily \#include $<$ListAuthAccountsServer.hpp$>$}
+
+Inheritance diagram for ListAuthAccountsServer:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classListAuthAccountsServer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classListAuthAccountsServer_a8bc351f0964a4f89311ad6a84f5dbe57}{ListAuthAccountsServer} (const \hyperlink{classSessionServer}{SessionServer} session)
+\begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
+\hyperlink{classListAuthAccountsServer_a79ce74e37213d631839ade590a9ec54c}{ListAuthAccountsServer} (UMS\_\-Data::ListAuthAccOptions\_\-ptr params, const \hyperlink{classSessionServer}{SessionServer} \&session)
+\begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
+void \hyperlink{classListAuthAccountsServer_a5af5cc404b4302676d3a484fbd10b9fc}{processOptions} (\hyperlink{classUserServer}{UserServer} userServer, const UMS\_\-Data::ListAuthAccOptions\_\-ptr \&options, std::string \&sqlRequest)
+\begin{DoxyCompactList}\small\item\em Function to treat the \hyperlink{classListAuthAccountsServer}{ListAuthAccountsServer} options. \item\end{DoxyCompactList}\item 
+UMS\_\-Data::ListAuthAccounts $\ast$ \hyperlink{classListAuthAccountsServer_a0787fa2a4d9dd1b78ea1966d0fafc90d}{list} ()
+\begin{DoxyCompactList}\small\item\em Function to list locoal accounts information. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classListAuthAccountsServer_a016e94aa8daa9c91d79d71ff52394d89}{getCommandName} ()
+\begin{DoxyCompactList}\small\item\em Function to get the name of the \hyperlink{classListAuthAccountsServer}{ListAuthAccountsServer} command line. \item\end{DoxyCompactList}\item 
+\hypertarget{classListAuthAccountsServer_a5222bb7402b5820b832de8de41e6994f}{
+\hyperlink{classListAuthAccountsServer_a5222bb7402b5820b832de8de41e6994f}{$\sim$ListAuthAccountsServer} ()}
+\label{classListAuthAccountsServer_a5222bb7402b5820b832de8de41e6994f}
+
+\begin{DoxyCompactList}\small\item\em Destructor, raises an exception on error. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classListAuthAccountsServer_afceab21e05c4a46ddb2a91c58e9e70cd}{
+std::string \hyperlink{classListAuthAccountsServer_afceab21e05c4a46ddb2a91c58e9e70cd}{mcommandName}}
+\label{classListAuthAccountsServer_afceab21e05c4a46ddb2a91c58e9e70cd}
+
+\begin{DoxyCompactList}\small\item\em The name of the \hyperlink{classListAuthAccountsServer}{ListAuthAccountsServer} command line. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classListAuthAccountsServer}{ListAuthAccountsServer} class implementation. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classListAuthAccountsServer_a8bc351f0964a4f89311ad6a84f5dbe57}{
+\index{ListAuthAccountsServer@{ListAuthAccountsServer}!ListAuthAccountsServer@{ListAuthAccountsServer}}
+\index{ListAuthAccountsServer@{ListAuthAccountsServer}!ListAuthAccountsServer@{ListAuthAccountsServer}}
+\subsubsection[{ListAuthAccountsServer}]{\setlength{\rightskip}{0pt plus 5cm}ListAuthAccountsServer::ListAuthAccountsServer (
+\begin{DoxyParamCaption}
+\item[{const {\bf SessionServer}}]{ session}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classListAuthAccountsServer_a8bc351f0964a4f89311ad6a84f5dbe57}
+
+
+Constructor, raises an exception on error. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \end{DoxyParams}
+\hypertarget{classListAuthAccountsServer_a79ce74e37213d631839ade590a9ec54c}{
+\index{ListAuthAccountsServer@{ListAuthAccountsServer}!ListAuthAccountsServer@{ListAuthAccountsServer}}
+\index{ListAuthAccountsServer@{ListAuthAccountsServer}!ListAuthAccountsServer@{ListAuthAccountsServer}}
+\subsubsection[{ListAuthAccountsServer}]{\setlength{\rightskip}{0pt plus 5cm}ListAuthAccountsServer::ListAuthAccountsServer (
+\begin{DoxyParamCaption}
+\item[{UMS\_\-Data::ListAuthAccOptions\_\-ptr}]{ params, }
+\item[{const {\bf SessionServer} \&}]{ session}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classListAuthAccountsServer_a79ce74e37213d631839ade590a9ec54c}
+
+
+Constructor, raises an exception on error. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em params}]The object which encapsulates the information of \hyperlink{classListAuthAccountsServer}{ListAuthAccountsServer} options \item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classListAuthAccountsServer_a016e94aa8daa9c91d79d71ff52394d89}{
+\index{ListAuthAccountsServer@{ListAuthAccountsServer}!getCommandName@{getCommandName}}
+\index{getCommandName@{getCommandName}!ListAuthAccountsServer@{ListAuthAccountsServer}}
+\subsubsection[{getCommandName}]{\setlength{\rightskip}{0pt plus 5cm}std::string ListAuthAccountsServer::getCommandName (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classListAuthAccountsServer_a016e94aa8daa9c91d79d71ff52394d89}
+
+
+Function to get the name of the \hyperlink{classListAuthAccountsServer}{ListAuthAccountsServer} command line. 
+
+\begin{DoxyReturn}{Returns}
+The the name of the \hyperlink{classListAuthAccountsServer}{ListAuthAccountsServer} command line 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classQueryServer_ad6b15831bd35508c3b5a393062d6e206}{QueryServer$<$ UMS\_\-Data::ListAuthAccOptions, UMS\_\-Data::ListAuthAccounts $>$}.
+
+\hypertarget{classListAuthAccountsServer_a0787fa2a4d9dd1b78ea1966d0fafc90d}{
+\index{ListAuthAccountsServer@{ListAuthAccountsServer}!list@{list}}
+\index{list@{list}!ListAuthAccountsServer@{ListAuthAccountsServer}}
+\subsubsection[{list}]{\setlength{\rightskip}{0pt plus 5cm}UMS\_\-Data::ListAuthAccounts $\ast$ ListAuthAccountsServer::list (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classListAuthAccountsServer_a0787fa2a4d9dd1b78ea1966d0fafc90d}
+
+
+Function to list locoal accounts information. 
+
+\begin{DoxyReturn}{Returns}
+The pointer to the UMS\_\-Data::ListAuthAccounts containing auth accounts information 
+
+raises an exception on error 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classQueryServer_a2ad0f3f1b75e6f0705a9edbe4bab76b0}{QueryServer$<$ UMS\_\-Data::ListAuthAccOptions, UMS\_\-Data::ListAuthAccounts $>$}.
+
+\hypertarget{classListAuthAccountsServer_a5af5cc404b4302676d3a484fbd10b9fc}{
+\index{ListAuthAccountsServer@{ListAuthAccountsServer}!processOptions@{processOptions}}
+\index{processOptions@{processOptions}!ListAuthAccountsServer@{ListAuthAccountsServer}}
+\subsubsection[{processOptions}]{\setlength{\rightskip}{0pt plus 5cm}void ListAuthAccountsServer::processOptions (
+\begin{DoxyParamCaption}
+\item[{{\bf UserServer}}]{ userServer, }
+\item[{const UMS\_\-Data::ListAuthAccOptions\_\-ptr \&}]{ options, }
+\item[{std::string \&}]{ sqlRequest}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classListAuthAccountsServer_a5af5cc404b4302676d3a484fbd10b9fc}
+
+
+Function to treat the \hyperlink{classListAuthAccountsServer}{ListAuthAccountsServer} options. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em userServer}]the object which encapsulates user information \item[{\em options}]the object which contains the \hyperlink{classListAuthAccountsServer}{ListAuthAccountsServer} options \item[{\em sqlRequest}]the sql data base request \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+UMS/src/server/\hyperlink{ListAuthAccountsServer_8hpp}{ListAuthAccountsServer.hpp}\end{DoxyCompactItemize}

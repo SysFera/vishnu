@@ -227,118 +227,121 @@
 <a name="l00229"></a>00229     boost::scoped_ptr&lt;DatabaseResult&gt; ListOfJobs (<a class="code" href="classQueryServer.html#ad6deb85a0f4526edbdfd97269f2acec5" title="An instance of vishnu database.">mdatabaseVishnu</a>-&gt;<a class="code" href="classDatabase.html#a4b87b83ddfcac9d2bbebf3805da602c2" title="To get the result of a select request.">getResult</a>(sqlListOfJobs.c_str()));
 <a name="l00230"></a>00230     <span class="keywordtype">long</span> nbRunningJobs = 0;
 <a name="l00231"></a>00231     <span class="keywordtype">long</span> nbWaitingJobs = 0;
-<a name="l00232"></a>00232     <span class="keywordtype">int</span> jobStatus ;
-<a name="l00233"></a>00233     time_t submitDate;
-<a name="l00234"></a>00234     time_t endDate;
-<a name="l00235"></a>00235     std::vector&lt;string&gt; ignoredIds;
-<a name="l00236"></a>00236 
-<a name="l00237"></a>00237     <span class="keywordflow">if</span> (ListOfJobs-&gt;getNbTuples() != 0){
-<a name="l00238"></a>00238       <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; ListOfJobs-&gt;getNbTuples(); ++i) {
-<a name="l00239"></a>00239         results.clear();
-<a name="l00240"></a>00240         results = ListOfJobs-&gt;get(i);
-<a name="l00241"></a>00241         ii = results.begin();
-<a name="l00242"></a>00242 
-<a name="l00243"></a>00243         TMS_Data::Job_ptr job = ecoreFactory-&gt;createJob();
-<a name="l00244"></a>00244 
-<a name="l00245"></a>00245         job-&gt;setSessionId(*ii);
-<a name="l00246"></a>00246         job-&gt;setSubmitMachineId(*(++ii));
-<a name="l00247"></a>00247         job-&gt;setSubmitMachineName(*(++ii));
-<a name="l00248"></a>00248         job-&gt;setJobId(*(++ii));
-<a name="l00249"></a>00249         job-&gt;setJobName(*(++ii));
-<a name="l00250"></a>00250         job-&gt;setJobPath(*(++ii));
-<a name="l00251"></a>00251         job-&gt;setOutputPath(*(++ii));
-<a name="l00252"></a>00252         job-&gt;setErrorPath(*(++ii));
-<a name="l00253"></a>00253         job-&gt;setJobPrio(<a class="code" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066" title="Function to convert a string to int.">convertToInt</a>(*(++ii)));
-<a name="l00254"></a>00254         job-&gt;setNbCpus(<a class="code" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066" title="Function to convert a string to int.">convertToInt</a>(*(++ii)));
-<a name="l00255"></a>00255         job-&gt;setJobWorkingDir(*(++ii));
-<a name="l00256"></a>00256         jobStatus = <a class="code" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066" title="Function to convert a string to int.">convertToInt</a>(*(++ii));
-<a name="l00257"></a>00257         <span class="keywordflow">if</span>(jobStatus==4) {
-<a name="l00258"></a>00258           nbRunningJobs++;
-<a name="l00259"></a>00259         } <span class="keywordflow">else</span> <span class="keywordflow">if</span>(jobStatus &gt;= 1 &amp;&amp; jobStatus &lt;= 3) {
-<a name="l00260"></a>00260           nbWaitingJobs++;
-<a name="l00261"></a>00261         }
-<a name="l00262"></a>00262         job-&gt;setStatus(jobStatus);
-<a name="l00263"></a>00263         <span class="comment">//convert the endDate into UTC date</span>
-<a name="l00264"></a>00264         submitDate = <a class="code" href="namespacevishnu.html#a7607f0891ab382dcb2343a36d9b25190" title="Function to localtime into UTC (seconds).">convertLocaltimeINUTCtime</a>(<a class="code" href="classQueryServer.html#a3b2becf9f1ae6ca1d0097d7400997aa8">convertToTimeType</a>(*(++ii)));
-<a name="l00265"></a>00265         job-&gt;setSubmitDate(submitDate);
-<a name="l00266"></a>00266         <span class="comment">//convert the endDate into UTC date</span>
-<a name="l00267"></a>00267         endDate = <a class="code" href="namespacevishnu.html#a7607f0891ab382dcb2343a36d9b25190" title="Function to localtime into UTC (seconds).">convertLocaltimeINUTCtime</a>(<a class="code" href="classQueryServer.html#a3b2becf9f1ae6ca1d0097d7400997aa8">convertToTimeType</a>(*(++ii)));
-<a name="l00268"></a>00268         job-&gt;setEndDate(endDate);
-<a name="l00269"></a>00269         job-&gt;setOwner(*(++ii));
-<a name="l00270"></a>00270         job-&gt;setJobQueue(*(++ii));
-<a name="l00271"></a>00271         job-&gt;setWallClockLimit(<a class="code" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066" title="Function to convert a string to int.">convertToInt</a>(*(++ii)));
-<a name="l00272"></a>00272         job-&gt;setGroupName(*(++ii));
-<a name="l00273"></a>00273         job-&gt;setJobDescription(*(++ii));
-<a name="l00274"></a>00274         job-&gt;setMemLimit(<a class="code" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066" title="Function to convert a string to int.">convertToInt</a>(*(++ii)));
-<a name="l00275"></a>00275         job-&gt;setNbNodes(<a class="code" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066" title="Function to convert a string to int.">convertToInt</a>(*(++ii)));
-<a name="l00276"></a>00276         job-&gt;setNbNodesAndCpuPerNode(*(++ii)); 
-<a name="l00277"></a>00277 
-<a name="l00278"></a>00278         ignoredIds.push_back(*(++ii));
-<a name="l00279"></a>00279 
-<a name="l00280"></a>00280         <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getJobs().push_back(job);
-<a name="l00281"></a>00281       }
-<a name="l00282"></a>00282       <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;setNbJobs(<a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getJobs().size());
-<a name="l00283"></a>00283       <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;setNbRunningJobs(nbRunningJobs);
-<a name="l00284"></a>00284       <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;setNbWaitingJobs(nbWaitingJobs);
-<a name="l00285"></a>00285     } 
-<a name="l00286"></a>00286  
-<a name="l00287"></a>00287     <span class="keywordflow">if</span>(<a class="code" href="classQueryServer.html#a4cf1497aa9c56864e8119645ccc42dc7" title="The pointer to the QueryParameters information.">mparameters</a>-&gt;isBatchJob() &amp;&amp; !<a class="code" href="classQueryServer.html#a4cf1497aa9c56864e8119645ccc42dc7" title="The pointer to the QueryParameters information.">mparameters</a>-&gt;getJobId().empty() &amp;&amp; <a class="code" href="classListJobServer.html#a7c6b50c7766fbd303eb4d494fb09e6b1" title="The name of the machine in which the jobs whill be listed.">mmachineId</a>.compare(LIST_JOBS_ON_MACHINES_KEYWORD)!=0){
-<a name="l00288"></a>00288       <a class="code" href="classBatchFactory.html" title="A factory class to manage the life of BatchServer instance.">BatchFactory</a> factory;
-<a name="l00289"></a>00289       <a class="code" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016ea" title="The type of the Batch.">BatchType</a> batchType  = <a class="code" href="classServerTMS.html#a8880ada96e5fa2e57b5ffdbe82cc3c56" title="To get the unique instance of the server.">ServerTMS::getInstance</a>()-&gt;<a class="code" href="classServerTMS.html#a60ed1874cf24873ad1ed23dedf4b8a52" title="To get the batchType.">getBatchType</a>();
-<a name="l00290"></a>00290       boost::scoped_ptr&lt;BatchServer&gt; batchServer(factory.<a class="code" href="classBatchFactory.html#af328351dea45d4725ef1cdad782a1a22" title="Function to create a batchServer.">getBatchServerInstance</a>(batchType));
-<a name="l00291"></a>00291 
-<a name="l00292"></a>00292       <span class="keywordflow">if</span>(<a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a> != NULL) {
-<a name="l00293"></a>00293         std::vector&lt;std::string&gt;::const_iterator iter = ignoredIds.begin();
-<a name="l00294"></a>00294         <span class="keywordflow">for</span>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getJobs().size(); i++) {
-<a name="l00295"></a>00295           <span class="keywordflow">if</span>(iter!=ignoredIds.end()){
-<a name="l00296"></a>00296             (<a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getJobs().get(i))-&gt;setJobId(*iter);
-<a name="l00297"></a>00297             <span class="keywordtype">int</span> state = batchServer-&gt;getJobState(*iter);
-<a name="l00298"></a>00298             ++iter;
-<a name="l00299"></a>00299             <span class="keywordflow">if</span>(state!=-1 &amp;&amp; (<a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getJobs().get(i))-&gt;getStatus()!=5 &amp;&amp;
-<a name="l00300"></a>00300                 (<a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getJobs().get(i))-&gt;getStatus()!=6 &amp;&amp;
-<a name="l00301"></a>00301                 (<a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getJobs().get(i))-&gt;getStatus()!=7) {
-<a name="l00302"></a>00302               (<a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getJobs().get(i))-&gt;setStatus(state);
-<a name="l00303"></a>00303             }
-<a name="l00304"></a>00304           }
-<a name="l00305"></a>00305         }
-<a name="l00306"></a>00306       }
-<a name="l00307"></a>00307       <span class="keywordflow">return</span> <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>;
-<a name="l00308"></a>00308     }
-<a name="l00309"></a>00309 
-<a name="l00310"></a>00310     <span class="keywordflow">if</span>(<a class="code" href="classQueryServer.html#a4cf1497aa9c56864e8119645ccc42dc7" title="The pointer to the QueryParameters information.">mparameters</a>-&gt;isBatchJob() &amp;&amp; <a class="code" href="classListJobServer.html#a7c6b50c7766fbd303eb4d494fb09e6b1" title="The name of the machine in which the jobs whill be listed.">mmachineId</a>.compare(LIST_JOBS_ON_MACHINES_KEYWORD)!=0 &amp;&amp; allOptionsAreNotSet){
-<a name="l00311"></a>00311       <a class="code" href="classBatchFactory.html" title="A factory class to manage the life of BatchServer instance.">BatchFactory</a> factory;
-<a name="l00312"></a>00312       <a class="code" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016ea" title="The type of the Batch.">BatchType</a> batchType  = <a class="code" href="classServerTMS.html#a8880ada96e5fa2e57b5ffdbe82cc3c56" title="To get the unique instance of the server.">ServerTMS::getInstance</a>()-&gt;<a class="code" href="classServerTMS.html#a60ed1874cf24873ad1ed23dedf4b8a52" title="To get the batchType.">getBatchType</a>();
-<a name="l00313"></a>00313       boost::scoped_ptr&lt;BatchServer&gt; batchServer(factory.<a class="code" href="classBatchFactory.html#af328351dea45d4725ef1cdad782a1a22" title="Function to create a batchServer.">getBatchServerInstance</a>(batchType));
-<a name="l00314"></a>00314 
-<a name="l00315"></a>00315       batchServer-&gt;fillListOfJobs(<a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>, ignoredIds);
-<a name="l00316"></a>00316     }
+<a name="l00232"></a>00232     <span class="keywordtype">int</span> jobStatus;
+<a name="l00233"></a>00233     std::string batchJobId;
+<a name="l00234"></a>00234     time_t submitDate;
+<a name="l00235"></a>00235     time_t endDate;
+<a name="l00236"></a>00236     std::vector&lt;string&gt; ignoredIds;
+<a name="l00237"></a>00237 
+<a name="l00238"></a>00238     <span class="keywordflow">if</span> (ListOfJobs-&gt;getNbTuples() != 0){
+<a name="l00239"></a>00239       <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; ListOfJobs-&gt;getNbTuples(); ++i) {
+<a name="l00240"></a>00240         results.clear();
+<a name="l00241"></a>00241         results = ListOfJobs-&gt;get(i);
+<a name="l00242"></a>00242         ii = results.begin();
+<a name="l00243"></a>00243 
+<a name="l00244"></a>00244         TMS_Data::Job_ptr job = ecoreFactory-&gt;createJob();
+<a name="l00245"></a>00245 
+<a name="l00246"></a>00246         job-&gt;setSessionId(*ii);
+<a name="l00247"></a>00247         job-&gt;setSubmitMachineId(*(++ii));
+<a name="l00248"></a>00248         job-&gt;setSubmitMachineName(*(++ii));
+<a name="l00249"></a>00249         job-&gt;setJobId(*(++ii));
+<a name="l00250"></a>00250         job-&gt;setJobName(*(++ii));
+<a name="l00251"></a>00251         job-&gt;setJobPath(*(++ii));
+<a name="l00252"></a>00252         job-&gt;setOutputPath(*(++ii));
+<a name="l00253"></a>00253         job-&gt;setErrorPath(*(++ii));
+<a name="l00254"></a>00254         job-&gt;setJobPrio(<a class="code" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066" title="Function to convert a string to int.">convertToInt</a>(*(++ii)));
+<a name="l00255"></a>00255         job-&gt;setNbCpus(<a class="code" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066" title="Function to convert a string to int.">convertToInt</a>(*(++ii)));
+<a name="l00256"></a>00256         job-&gt;setJobWorkingDir(*(++ii));
+<a name="l00257"></a>00257         jobStatus = <a class="code" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066" title="Function to convert a string to int.">convertToInt</a>(*(++ii));
+<a name="l00258"></a>00258         <span class="keywordflow">if</span>(jobStatus==4) {
+<a name="l00259"></a>00259           nbRunningJobs++;
+<a name="l00260"></a>00260         } <span class="keywordflow">else</span> <span class="keywordflow">if</span>(jobStatus &gt;= 1 &amp;&amp; jobStatus &lt;= 3) {
+<a name="l00261"></a>00261           nbWaitingJobs++;
+<a name="l00262"></a>00262         }
+<a name="l00263"></a>00263         job-&gt;setStatus(jobStatus);
+<a name="l00264"></a>00264         <span class="comment">//convert the endDate into UTC date</span>
+<a name="l00265"></a>00265         submitDate = <a class="code" href="namespacevishnu.html#a7607f0891ab382dcb2343a36d9b25190" title="Function to localtime into UTC (seconds).">convertLocaltimeINUTCtime</a>(<a class="code" href="classQueryServer.html#a3b2becf9f1ae6ca1d0097d7400997aa8">convertToTimeType</a>(*(++ii)));
+<a name="l00266"></a>00266         job-&gt;setSubmitDate(submitDate);
+<a name="l00267"></a>00267         <span class="comment">//convert the endDate into UTC date</span>
+<a name="l00268"></a>00268         endDate = <a class="code" href="namespacevishnu.html#a7607f0891ab382dcb2343a36d9b25190" title="Function to localtime into UTC (seconds).">convertLocaltimeINUTCtime</a>(<a class="code" href="classQueryServer.html#a3b2becf9f1ae6ca1d0097d7400997aa8">convertToTimeType</a>(*(++ii)));
+<a name="l00269"></a>00269         job-&gt;setEndDate(endDate);
+<a name="l00270"></a>00270         job-&gt;setOwner(*(++ii));
+<a name="l00271"></a>00271         job-&gt;setJobQueue(*(++ii));
+<a name="l00272"></a>00272         job-&gt;setWallClockLimit(<a class="code" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066" title="Function to convert a string to int.">convertToInt</a>(*(++ii)));
+<a name="l00273"></a>00273         job-&gt;setGroupName(*(++ii));
+<a name="l00274"></a>00274         job-&gt;setJobDescription(*(++ii));
+<a name="l00275"></a>00275         job-&gt;setMemLimit(<a class="code" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066" title="Function to convert a string to int.">convertToInt</a>(*(++ii)));
+<a name="l00276"></a>00276         job-&gt;setNbNodes(<a class="code" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066" title="Function to convert a string to int.">convertToInt</a>(*(++ii)));
+<a name="l00277"></a>00277         job-&gt;setNbNodesAndCpuPerNode(*(++ii)); 
+<a name="l00278"></a>00278         
+<a name="l00279"></a>00279         batchJobId = *(++ii);
+<a name="l00280"></a>00280         job-&gt;setBatchJobId(batchJobId);
+<a name="l00281"></a>00281         ignoredIds.push_back(batchJobId);
+<a name="l00282"></a>00282 
+<a name="l00283"></a>00283         <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getJobs().push_back(job);
+<a name="l00284"></a>00284       }
+<a name="l00285"></a>00285       <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;setNbJobs(<a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getJobs().size());
+<a name="l00286"></a>00286       <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;setNbRunningJobs(nbRunningJobs);
+<a name="l00287"></a>00287       <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;setNbWaitingJobs(nbWaitingJobs);
+<a name="l00288"></a>00288     } 
+<a name="l00289"></a>00289  
+<a name="l00290"></a>00290     <span class="keywordflow">if</span>(<a class="code" href="classQueryServer.html#a4cf1497aa9c56864e8119645ccc42dc7" title="The pointer to the QueryParameters information.">mparameters</a>-&gt;isBatchJob() &amp;&amp; !<a class="code" href="classQueryServer.html#a4cf1497aa9c56864e8119645ccc42dc7" title="The pointer to the QueryParameters information.">mparameters</a>-&gt;getJobId().empty() &amp;&amp; <a class="code" href="classListJobServer.html#a7c6b50c7766fbd303eb4d494fb09e6b1" title="The name of the machine in which the jobs whill be listed.">mmachineId</a>.compare(LIST_JOBS_ON_MACHINES_KEYWORD)!=0){
+<a name="l00291"></a>00291       <a class="code" href="classBatchFactory.html" title="A factory class to manage the life of BatchServer instance.">BatchFactory</a> factory;
+<a name="l00292"></a>00292       <a class="code" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016ea" title="The type of the Batch.">BatchType</a> batchType  = <a class="code" href="classServerTMS.html#a8880ada96e5fa2e57b5ffdbe82cc3c56" title="To get the unique instance of the server.">ServerTMS::getInstance</a>()-&gt;<a class="code" href="classServerTMS.html#a60ed1874cf24873ad1ed23dedf4b8a52" title="To get the batchType.">getBatchType</a>();
+<a name="l00293"></a>00293       boost::scoped_ptr&lt;BatchServer&gt; batchServer(factory.<a class="code" href="classBatchFactory.html#af328351dea45d4725ef1cdad782a1a22" title="Function to create a batchServer.">getBatchServerInstance</a>(batchType));
+<a name="l00294"></a>00294 
+<a name="l00295"></a>00295       <span class="keywordflow">if</span>(<a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a> != NULL) {
+<a name="l00296"></a>00296         std::vector&lt;std::string&gt;::const_iterator iter = ignoredIds.begin();
+<a name="l00297"></a>00297         <span class="keywordflow">for</span>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getJobs().size(); i++) {
+<a name="l00298"></a>00298           <span class="keywordflow">if</span>(iter!=ignoredIds.end()){
+<a name="l00299"></a>00299             (<a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getJobs().get(i))-&gt;setJobId(*iter);
+<a name="l00300"></a>00300             <span class="keywordtype">int</span> state = batchServer-&gt;getJobState(*iter);
+<a name="l00301"></a>00301             ++iter;
+<a name="l00302"></a>00302             <span class="keywordflow">if</span>(state!=-1 &amp;&amp; (<a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getJobs().get(i))-&gt;getStatus()!=5 &amp;&amp;
+<a name="l00303"></a>00303                 (<a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getJobs().get(i))-&gt;getStatus()!=6 &amp;&amp;
+<a name="l00304"></a>00304                 (<a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getJobs().get(i))-&gt;getStatus()!=7) {
+<a name="l00305"></a>00305               (<a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getJobs().get(i))-&gt;setStatus(state);
+<a name="l00306"></a>00306             }
+<a name="l00307"></a>00307           }
+<a name="l00308"></a>00308         }
+<a name="l00309"></a>00309       }
+<a name="l00310"></a>00310       <span class="keywordflow">return</span> <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>;
+<a name="l00311"></a>00311     }
+<a name="l00312"></a>00312 
+<a name="l00313"></a>00313     <span class="keywordflow">if</span>(<a class="code" href="classQueryServer.html#a4cf1497aa9c56864e8119645ccc42dc7" title="The pointer to the QueryParameters information.">mparameters</a>-&gt;isBatchJob() &amp;&amp; <a class="code" href="classListJobServer.html#a7c6b50c7766fbd303eb4d494fb09e6b1" title="The name of the machine in which the jobs whill be listed.">mmachineId</a>.compare(LIST_JOBS_ON_MACHINES_KEYWORD)!=0 &amp;&amp; allOptionsAreNotSet){
+<a name="l00314"></a>00314       <a class="code" href="classBatchFactory.html" title="A factory class to manage the life of BatchServer instance.">BatchFactory</a> factory;
+<a name="l00315"></a>00315       <a class="code" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016ea" title="The type of the Batch.">BatchType</a> batchType  = <a class="code" href="classServerTMS.html#a8880ada96e5fa2e57b5ffdbe82cc3c56" title="To get the unique instance of the server.">ServerTMS::getInstance</a>()-&gt;<a class="code" href="classServerTMS.html#a60ed1874cf24873ad1ed23dedf4b8a52" title="To get the batchType.">getBatchType</a>();
+<a name="l00316"></a>00316       boost::scoped_ptr&lt;BatchServer&gt; batchServer(factory.<a class="code" href="classBatchFactory.html#af328351dea45d4725ef1cdad782a1a22" title="Function to create a batchServer.">getBatchServerInstance</a>(batchType));
 <a name="l00317"></a>00317 
-<a name="l00318"></a>00318     <span class="keywordflow">return</span> <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>;
-<a name="l00319"></a>00319   }
+<a name="l00318"></a>00318       batchServer-&gt;fillListOfJobs(<a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>, ignoredIds);
+<a name="l00319"></a>00319     }
 <a name="l00320"></a>00320 
-<a name="l00321"></a>00321 
-<a name="l00326"></a><a class="code" href="classListJobServer.html#ae4efce66451934990d0575d1b8151378">00326</a>   std::string <a class="code" href="classListJobServer.html#ae4efce66451934990d0575d1b8151378" title="Function to get the name of the ListJobServer command line.">getCommandName</a>()
-<a name="l00327"></a>00327   {
-<a name="l00328"></a>00328     <span class="keywordflow">return</span> <a class="code" href="classListJobServer.html#acf64d32cd8de91a1346f73ffec28c7fb" title="The name of the ListJobServer command line.">mcommandName</a>;
-<a name="l00329"></a>00329   }
-<a name="l00330"></a>00330 
-<a name="l00334"></a><a class="code" href="classListJobServer.html#abf137539e02fc0d6f0d288d1b76cd58b">00334</a>   <a class="code" href="classListJobServer.html#abf137539e02fc0d6f0d288d1b76cd58b" title="Destructor, raises an exception on error.">~ListJobServer</a>()
-<a name="l00335"></a>00335   {
-<a name="l00336"></a>00336   }
-<a name="l00337"></a>00337 
-<a name="l00338"></a>00338   <span class="keyword">private</span>:
-<a name="l00339"></a>00339 
-<a name="l00341"></a>00341   <span class="comment">// Attributes</span>
-<a name="l00343"></a>00343 <span class="comment"></span>
-<a name="l00344"></a>00344 
-<a name="l00348"></a><a class="code" href="classListJobServer.html#acf64d32cd8de91a1346f73ffec28c7fb">00348</a>   std::string <a class="code" href="classListJobServer.html#acf64d32cd8de91a1346f73ffec28c7fb" title="The name of the ListJobServer command line.">mcommandName</a>;
-<a name="l00352"></a><a class="code" href="classListJobServer.html#a7c6b50c7766fbd303eb4d494fb09e6b1">00352</a>   std::string <a class="code" href="classListJobServer.html#a7c6b50c7766fbd303eb4d494fb09e6b1" title="The name of the machine in which the jobs whill be listed.">mmachineId</a>;
-<a name="l00353"></a>00353 };
-<a name="l00354"></a>00354 
-<a name="l00355"></a>00355 <span class="preprocessor">#endif</span>
+<a name="l00321"></a>00321     <span class="keywordflow">return</span> <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>;
+<a name="l00322"></a>00322   }
+<a name="l00323"></a>00323 
+<a name="l00324"></a>00324 
+<a name="l00329"></a><a class="code" href="classListJobServer.html#ae4efce66451934990d0575d1b8151378">00329</a>   std::string <a class="code" href="classListJobServer.html#ae4efce66451934990d0575d1b8151378" title="Function to get the name of the ListJobServer command line.">getCommandName</a>()
+<a name="l00330"></a>00330   {
+<a name="l00331"></a>00331     <span class="keywordflow">return</span> <a class="code" href="classListJobServer.html#acf64d32cd8de91a1346f73ffec28c7fb" title="The name of the ListJobServer command line.">mcommandName</a>;
+<a name="l00332"></a>00332   }
+<a name="l00333"></a>00333 
+<a name="l00337"></a><a class="code" href="classListJobServer.html#abf137539e02fc0d6f0d288d1b76cd58b">00337</a>   <a class="code" href="classListJobServer.html#abf137539e02fc0d6f0d288d1b76cd58b" title="Destructor, raises an exception on error.">~ListJobServer</a>()
+<a name="l00338"></a>00338   {
+<a name="l00339"></a>00339   }
+<a name="l00340"></a>00340 
+<a name="l00341"></a>00341   <span class="keyword">private</span>:
+<a name="l00342"></a>00342 
+<a name="l00344"></a>00344   <span class="comment">// Attributes</span>
+<a name="l00346"></a>00346 <span class="comment"></span>
+<a name="l00347"></a>00347 
+<a name="l00351"></a><a class="code" href="classListJobServer.html#acf64d32cd8de91a1346f73ffec28c7fb">00351</a>   std::string <a class="code" href="classListJobServer.html#acf64d32cd8de91a1346f73ffec28c7fb" title="The name of the ListJobServer command line.">mcommandName</a>;
+<a name="l00355"></a><a class="code" href="classListJobServer.html#a7c6b50c7766fbd303eb4d494fb09e6b1">00355</a>   std::string <a class="code" href="classListJobServer.html#a7c6b50c7766fbd303eb4d494fb09e6b1" title="The name of the machine in which the jobs whill be listed.">mmachineId</a>;
+<a name="l00356"></a>00356 };
+<a name="l00357"></a>00357 
+<a name="l00358"></a>00358 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 19 2012 09:38:42 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 22 2012 15:22:13 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

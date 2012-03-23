@@ -26,7 +26,11 @@ namespace \hyperlink{namespacevishnu}{vishnu}
 \item 
 int \hyperlink{namespacevishnu_ac58b058a6a467a21f7eb21192617c90f}{vishnu::connect} (const std::string \&userId, const std::string \&password, UMS\_\-Data::Session \&session, const UMS\_\-Data::ConnectOptions \&connectOpt=UMS\_\-Data::ConnectOptions())  throw (UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em Function to open a session. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a349fe8da0e64f8980dda154e8c5dac20}{vishnu::connect} (UMS\_\-Data::ListUsers \&users, UMS\_\-Data::Session \&session, const UMS\_\-Data::ConnectOptions \&connectOpt=UMS\_\-Data::ConnectOptions())  throw (UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em Function to open a session. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_ae120231ba899d68724dc972374206745}{vishnu::reconnect} (const std::string \&userId, const std::string \&password, const std::string \&sessionId, UMS\_\-Data::Session \&session)  throw (UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em Function to return the sessionKey of a session in which the user was disconnected previously without closing it. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a44abf20966c95a8549a485a36a1765ed}{vishnu::reconnect} (UMS\_\-Data::ListUsers \&users, const std::string \&sessionId, UMS\_\-Data::Session \&session)  throw (UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em Function to return the sessionKey of a session in which the user was disconnected previously without closing it. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_a925f5cdd60d012ebd98cd328ed60d398}{vishnu::close} (const std::string \&sessionKey)  throw (UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em Function to close the session identfied by the session key. \item\end{DoxyCompactList}\item 
@@ -70,8 +74,24 @@ int \hyperlink{namespacevishnu_a8576a50af31abe3869a61bec780aa5ef}{vishnu::listHi
 \begin{DoxyCompactList}\small\item\em Function to list the commands. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_a53106e021a6e98049b41106c12356e28}{vishnu::listOptions} (const std::string \&sessionKey, UMS\_\-Data::ListOptionsValues \&listOptValues, const UMS\_\-Data::ListOptOptions \&options=UMS\_\-Data::ListOptOptions())  throw (UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em Function to list the options of the user. \item\end{DoxyCompactList}\item 
-int \hyperlink{namespacevishnu_a6a0175686b0d2aff434015fc61c62ce6}{vishnu::listUsers} (const std::string \&sessionKey, UMS\_\-Data::ListUsers \&listUsers, const std::string \&userIdOption=std::string())  throw (UserException, SystemException)
+int \hyperlink{namespacevishnu_ab72e6be5f3640531fdc070333e54879c}{vishnu::listUsers} (const std::string \&sessionKey, UMS\_\-Data::ListUsers \&listUsers, const UMS\_\-Data::ListUsersOptions \&listOptions=UMS\_\-Data::ListUsersOptions())  throw (UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em Function to list VISHNU users. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a3210cf58a43ab36ebf12a2e5fbc809d5}{vishnu::addAuthSystem} (const std::string \&sessionKey, UMS\_\-Data::AuthSystem \&newAuthSys)  throw (UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em Function to add a new user-\/authentication system in VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_aaad7681eddec73ec2c46e3ba474f656a}{vishnu::updateAuthSystem} (const std::string \&sessionKey, UMS\_\-Data::AuthSystem \&AuthSys)  throw (UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em Function to update a user-\/authentication system in VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a829eb3b8d6cf4327a13274b610a1017e}{vishnu::deleteAuthSystem} (const std::string \&sessionKey, const std::string \&authSystemId)  throw (UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em Function to remove a user-\/authentication system from VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ac2dd07a2358b7731c7bdc520a77061e5}{vishnu::listAuthSystems} (const std::string \&sessionKey, UMS\_\-Data::ListAuthSystems \&listAuthSys, const UMS\_\-Data::ListAuthSysOptions \&options=UMS\_\-Data::ListAuthSysOptions())  throw (UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em Function to lists VISHNU user-\/authentification systems. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ad1ad98b9fe350f2b1ce5022c2798f315}{vishnu::addAuthAccount} (const std::string \&sessionKey, const UMS\_\-Data::AuthAccount \&authAccount)  throw (UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em Function to add a new local user-\/authentication configuration. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_af83a94862a8a0783ce0f7d5d3fbc5dbd}{vishnu::updateAuthAccount} (const std::string \&sessionKey, const UMS\_\-Data::AuthAccount \&authenAccount)  throw (UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em Function to add a new local user-\/authentication configuration. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_aa2c620da3c33e7f13c5b702075cae48a}{vishnu::deleteAuthAccount} (const std::string \&sessionKey, const std::string \&authSystemId, const std::string \&userIdOption=\char`\"{}\char`\"{})  throw (UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em Function to removes a local user-\/authentication configuration from VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a516fe9becd3be7e6ac1d9ed1aefe5c43}{vishnu::listAuthAccounts} (const std::string \&sessionKey, UMS\_\-Data::ListAuthAccounts \&listAuthAccounts, const UMS\_\-Data::ListAuthAccOptions \&options=UMS\_\-Data::ListAuthAccOptions())  throw (UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em Function to lists local user-\/authentication configurations. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_adc7892040980c12dd70ed3228f350313}{vishnu::vishnuInitialize} (char $\ast$cfg, int argc, char $\ast$$\ast$argv)
 \begin{DoxyCompactList}\small\item\em Function to initialize the SYSFERA-\/DS configuration. \item\end{DoxyCompactList}\item 
 \hypertarget{namespacevishnu_a5ef439295f52f8055a0771ae9f257b68}{
