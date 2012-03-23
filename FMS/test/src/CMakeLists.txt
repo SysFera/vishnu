@@ -68,6 +68,7 @@ fms_test(fms_automTest13)
 fms_test(fms_automTest14)
 fms_test(fms_automTest15)
 fms_test(fms_automTest16)
+fms_test(fms_automTest17)
 
 
 
