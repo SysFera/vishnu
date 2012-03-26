@@ -108,6 +108,8 @@ create_dir core/src/emfdata
 create_dir core/src/exception
 create_dir core/src/registry
 create_dir core/src/utils
+create_dir core/src/authenticator
+create_dir core/src/authenticator/ldap
 create_dir core/test
 create_dir core/test/cfgs
 create_dir core/test/src
@@ -123,6 +125,8 @@ copy_file core/src/registry/\*pp core/src/registry/
 copy_dir core/src/emfdata/\* core/src/emfdata/
 copy_file core/src/utils/\*pp core/src/utils/
 copy_file core/src/utils/\*i core/src/utils/
+copy_file core/src/authenticator/\*i core/src/authenticator/
+copy_file core/src/authenticator/ldap/\*i core/src/authenticator/ldap/
 copy_file core/test/src/\*pp core/test/src/
 copy_file core/test/src/\*h.in core/test/src/
 copy_file core/test/cfgs/\*cfg.in core/test/cfgs/
@@ -276,6 +280,7 @@ copy_dir TMS/src/server TMS/src
 copy_dir TMS/src/utils_torque TMS/src
 copy_dir TMS/src/slave TMS/src
 copy_dir TMS/src/slurm_parser TMS/src
+copy_dir TMS/src/lsf_parser TMS/src
 
 # Copy tests
 create_dir TMS/test
