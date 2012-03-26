@@ -644,7 +644,7 @@ de SHA-1.</para>
             <row>
               <entry><para>1.6.2</para></entry>
               <entry><para>Connexion entre clients (ou serveur web) et serveurs (calcul/stockage/VISHNU)</para></entry>
-              <entry/>
+              <entry><para>La connexion entre le client et le serveur se fait de manière non cryptée, ainsi les informations telles les mots de passe circulent en clair</para></entry>
             </row>
             <row>
               <entry><para>1.6.2.1</para></entry>
