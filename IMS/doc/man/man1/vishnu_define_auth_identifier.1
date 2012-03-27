@@ -1,5 +1,5 @@
 '\" t
-.\"     Title: vishnu_set_system_threshold
+.\"     Title: vishnu_define_auth_identifier
 .\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
 .\"      Date: December 2011
@@ -7,7 +7,7 @@
 .\"    Source: VISHNU 1.2
 .\"  Language: English
 .\"
-.TH "VISHNU_SET_SYSTEM_TH" "1" "December 2011" "VISHNU 1.2" "IMS Command reference"
+.TH "VISHNU_DEFINE_AUTH_I" "1" "December 2011" "VISHNU 1.2" "IMS Command reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,13 +28,13 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-vishnu_set_system_threshold \- sets a threshold on a machine of a system
+vishnu_define_auth_identifier \- defines the shape of the identifiers automatically generated for the authentication system
 .SH "SYNOPSIS"
-.HP \w'\fBvishnu_set_system_threshold\fR\ 'u
-\fBvishnu_set_system_threshold\fR [\fB\-h\fR] \fIvalue\fR \fImachineId\fR \fItype\fR \fIhandler\fR
+.HP \w'\fBvishnu_define_auth_identifier\fR\ 'u
+\fBvishnu_define_auth_identifier\fR [\fB\-h\fR] \fIformat\fR
 .SH "DESCRIPTION"
 .PP
-This function allows an administrator to set a threshold\&. Each time an IMS server records the state of a machine, it checks the values defined, if a threshold is reached (over a use of the cpu or under the free memory or diskspace available), the administrator responsible for the threshold will receive an mail\&. These threshold will help the administrator to be aware of critical situations on a machine\&. Warning, a mail is sent for each time the threshold is reached, if a value swings around a threshold, the administrator may receive lots of emails depending on the update frequency\&.
+This function allows an administrator to define the format of the identifier that will be automatically generated for the authentication\&. Once the format is defined, each time an authentication system is added, the format will be used to define its identifier\&. The format can contain various variables, a variable is preceded by the \*(Aq$\*(Aq symbol\&. Moreover, the counter variable \*(Aq$CPT\*(Aq MUST be present in the format, otherwise it will be rejected\&. The available variables are: $CPT: a counter $DAY: The day the file transfer is done $MONTH: The month the file transfer is done $YEAR: The year the file transfer is done $TYPE: The \*(AqF\*(Aq symb to remind it is a file transfer id
 .SH "OPTIONS"
 .PP
 \fB\-h \fR\fB\fIhelp\fR\fR
@@ -76,9 +76,9 @@ The following diagnostics may be issued on stderr and the command will return th
 .RE
 .SH "EXAMPLE"
 .PP
-To set a threshold of type use of the CPU(value=1) of value 99% on machine_1 and handled by the user admin_1:
+To define the format to transfer_$CPT:
 .PP
-vishnu_set_system_threshold 99 machine_1 1 admin_1
+vishnu_define_auth_identifier LDAP_\e$CPT
 .SH "AUTHOR"
 .PP
 \fB SysFera SA\fR <\&info@sysfera.com\&>
