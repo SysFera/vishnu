@@ -70,6 +70,21 @@
               
             <para>Prise en compte du support de LDAP.</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>07</revnumber>
+        <date>28/02/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+              <para>Prise en compte du support de LSF.</para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>08</revnumber>
+        <date>26/03/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+              
+            <para> Ajout des caractéristiques de circulation du mot de passe.</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -414,7 +429,7 @@ de SHA-1.</para>
             <row>
               <entry><para>1.2.6</para></entry>
               <entry><para>Logiciels de gestion de jobs batch supportés</para></entry>
-              <entry><para>- Torque 2.3.6</para><para>- IBM LoadLeveler 3.5.1.14</para><para>- SLURM 2.2.1 (ou 2.2.7)</para></entry>
+              <entry><para>- Torque 2.3.6</para><para>- IBM LoadLeveler 3.5.1.14</para><para>- SLURM 2.2.1 (ou 2.2.7)</para><para>- LSF 7.0.6.134609</para></entry>
             </row>
             <row>
               <entry><para>1.2.7</para></entry>
@@ -629,7 +644,7 @@ de SHA-1.</para>
             <row>
               <entry><para>1.6.2</para></entry>
               <entry><para>Connexion entre clients (ou serveur web) et serveurs (calcul/stockage/VISHNU)</para></entry>
-              <entry><para>Pas de cryptage, les mots de passe notamment circulent en clair</para></entry>
+              <entry><para>La connexion entre le client et le serveur se fait de manière non cryptée, ainsi les informations telles les mots de passe circulent en clair</para></entry>
             </row>
             <row>
               <entry><para>1.6.2.1</para></entry>
@@ -684,7 +699,7 @@ de SHA-1.</para>
             <row>
               <entry><para>2.4</para></entry>
               <entry><para>Librairies des Batch schedulers</para></entry>
-              <entry><para>Torque API, LoadLeveler API  et SLURM API</para></entry>
+              <entry><para>Torque API, LoadLeveler API, SLURM API et API LSF</para></entry>
             </row>
             <row>
               <entry><para>2.5</para></entry>
