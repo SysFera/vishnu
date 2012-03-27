@@ -177,45 +177,35 @@ SGEServer::submit(const char* scriptPath,
   char usage[DRMAA_ERROR_STRING_BUFFER];
   
   drmaa_errno = drmaa_get_attribute(jt,DRMAA_ERROR_PATH,jobErrorPath, size,diagnosis, sizeof(diagnosis)-1);
-  if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
-    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
+  if (drmaa_errno==DRMAA_ERRNO_SUCCESS){
+    std::string jobErrorPathStr = jobErrorPath;
+    Env(SGE).replaceAllOccurences(jobErrorPathStr,"$JOB_ID",jobid);
+    if(boost::algorithm::contains(jobErrorPathStr, "$")){
+      throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use another envirnment variable than $JOB_ID.\n");    
+    }
+    job.setErrorPath(jobErrorPathStr);
     
   }
   drmaa_errno = drmaa_get_attribute(jt,DRMAA_OUTPUT_PATH,jobOutputPath, size,diagnosis, sizeof(diagnosis)-1);
-  if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
-    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
+  if (drmaa_errno==DRMAA_ERRNO_SUCCESS){
+    std::string jobOutputPathStr = jobOutputPath;
+    Env(SGE).replaceAllOccurences(jobOutputPathStr,"$JOB_ID",jobid);
+    if(boost::algorithm::contains(jobOutputPathStr, "$")){
+      throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use another envirnment variable than $JOB_ID.\n");    
+    }
+    job.setOutputPath(jobOutputPathStr);
     
   }
   drmaa_errno = drmaa_get_attribute(jt,DRMAA_JOB_NAME,jobName,size,diagnosis, sizeof(diagnosis)-1);
-  if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
-    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
+  if (drmaa_errno==DRMAA_ERRNO_SUCCESS){
+    job.setJobName(jobName);
     
   }
-  std::string jobErrorPathStr = jobErrorPath;
-  std::string jobOutputPathStr = jobOutputPath;
-  size_t pos;
-  if((pos=jobErrorPathStr.find(":"))!=std::string::npos) {
-    jobErrorPathStr = jobErrorPathStr.substr(pos+1);
     
-  }
-  if((pos=jobOutputPathStr.find(":"))!=std::string::npos) {
-    jobOutputPathStr = jobOutputPathStr.substr(pos+1);
-    
-  }
-  Env(SGE).replaceAllOccurences(jobErrorPathStr,"$JOB_ID",jobid);
-  Env(SGE).replaceAllOccurences(jobOutputPathStr,"$JOB_ID",jobid);
   
-  if(boost::algorithm::contains(jobErrorPathStr, "$")){
-    throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use another envirnment variable than $JOB_ID.\n");    
-  }
-  if(boost::algorithm::contains(jobOutputPathStr, "$")){
-    throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use another envirnment variable than $JOB_ID.\n");    
-  }
-  job.setJobId(jobid);
-  job.setErrorPath(jobErrorPathStr);
-  job.setOutputPath(jobOutputPathStr);
   job.setStatus(getJobState(jobid));
-  job.setJobName(jobName);
+  job.setJobId(jobid);
+  
   drmaa_errno = drmaa_delete_job_template(jt, diagnosis, sizeof(diagnosis)-1);
   if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
@@ -404,14 +394,14 @@ SGEServer::processOptions(const char* scriptPath,
 
   }*/
   if(options.getMemory()!=-1) {
-    cmdsOptions.push_back("-l");
+    cmdsOptions.push_back(" -l ");
     std::ostringstream os_str;
     os_str << options.getMemory();
-    cmdsOptions.push_back("s_vmem="+os_str.str()+"M");
+    cmdsOptions.push_back(" s_vmem="+os_str.str()+"M");
   }
   
   if(options.getMailNotification()!="") {
-    cmdsOptions.push_back("-m");  
+    cmdsOptions.push_back(" -m ");  
     std::string notification = options.getMailNotification();
     if(notification.compare("BEGIN")==0) {
       cmdsOptions.push_back("b"); 
@@ -428,7 +418,7 @@ SGEServer::processOptions(const char* scriptPath,
   }
 
   if(options.getMailNotifyUser()!="") {
-    cmdsOptions.push_back("-M");
+    cmdsOptions.push_back(" -M ");
     cmdsOptions.push_back(options.getMailNotifyUser());
   } 
 
@@ -438,12 +428,12 @@ SGEServer::processOptions(const char* scriptPath,
   }*/
 
   if(options.getWorkingDir()!="") {
-    cmdsOptions.push_back("-wd");
+    cmdsOptions.push_back(" -wd ");
     cmdsOptions.push_back(options.getWorkingDir());
   }
 
   if(options.getCpuTime()!="") {
-    cmdsOptions.push_back("-l");
+    cmdsOptions.push_back(" -l ");
     cmdsOptions.push_back("s_cpu="+options.getCpuTime());
   }
   
