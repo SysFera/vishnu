@@ -15,7 +15,7 @@
       </address>
     </author>
     <title>User Manual</title>
-    <date>December 2011</date>
+    <date>March 2012</date>
     <copyright>
       <year>2011</year>
       <holder>SysFera SA</holder>
@@ -53,7 +53,7 @@ data to be ensured and,  more generally, to use and operate it in the
 same conditions as regards security.</para>
     </legalnotice>
     <productname>VISHNU</productname>
-    <releaseinfo>1.2</releaseinfo>
+    <releaseinfo>1.3</releaseinfo>
   </info>
   <reference>
     <title>IMS Command reference</title>
