@@ -5968,7 +5968,7 @@ type and optionally for LDAP the DN of the root entry. By default, the type of t
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6057,7 +6057,7 @@ type and optionally for LDAP the DN of the root entry. By default, the type of t
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6133,7 +6133,7 @@ type and optionally for LDAP the DN of the root entry. By default, the type of t
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6223,7 +6223,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6308,7 +6308,7 @@ $TYPE: The 'U' symb to remind it is a user id</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6393,7 +6393,7 @@ $TYPE: The 'M' symb to remind it is a machine id</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6475,7 +6475,7 @@ $TYPE: The 'J' symb to remind it is a job id</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6557,7 +6557,7 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6639,7 +6639,7 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6651,7 +6651,7 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
       <refsect1 id="example">
         <title>EXAMPLE</title>
         <para>To define the format to transfer_$CPT:</para>
-        <para>vishnu_define_authen_identifier LDAP_\$CPT</para>
+        <para>vishnu_define_auth_identifier LDAP_\$CPT</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -6717,7 +6717,7 @@ SOFT   = 2</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6796,7 +6796,7 @@ SOFT   = 2</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6874,7 +6874,7 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6964,7 +6964,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (UMS), 2 (
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
