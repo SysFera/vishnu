@@ -2,9 +2,10 @@
 | VISHNU 1.3.0 |
 +--------------+
 
+* Added LDAP support for users authentication
+* Added support for LSF batch scheduler
 * Fixed bugzilla #335 : Problem with big file transfer 
-
-
+* Fixed bugzilla #343 - Added batch job identifier on job structure
 
 +--------------+
 | VISHNU 1.2.7 |
