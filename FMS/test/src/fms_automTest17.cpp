@@ -22,7 +22,6 @@ using namespace vishnu;
 namespace ba = boost::assign;
 namespace bpt= boost::posix_time;
 namespace bfs= boost::filesystem;
-#define BIGINT 1125899906842624 // 1 petaoctet
 
 /***************************************************************************/
 int logFakeFileTransferIntoDatabase(const std::string& sessionKey, const FMS_Data::FileTransfer& transferInfo) {
@@ -82,7 +81,7 @@ BOOST_AUTO_TEST_CASE(AddFakeFileTransfer)
     transferInfo.setClientMachineId("clientMachine");
     transferInfo.setSourceMachineId("sourceMachine");
     transferInfo.setDestinationMachineId("sourceMachine");
-    transferInfo.setSize(BIGINT);
+    transferInfo.setSize(std::numeric_limits<std::size_t>::max());
     transferInfo.setTrCommand(0);
     transferInfo.setSourceFilePath("path/to/src");
     transferInfo.setDestinationFilePath("path/to/dest");
