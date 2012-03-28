@@ -1,13 +1,13 @@
 '\" t
-.\"     Title: getUpdateFrequency
+.\"     Title: VISHNU.defineAuthIdentifier
 .\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
 .\"      Date: March 2012
-.\"    Manual: IMS C++ API Reference
+.\"    Manual: IMS Python API Reference
 .\"    Source: VISHNU 1.3
 .\"  Language: English
 .\"
-.TH "GETUPDATEFREQUENCY" "3" "March 2012" "VISHNU 1.3" "IMS C++ API Reference"
+.TH "VISHNU\&.DEFINEAUTHI" "3" "March 2012" "VISHNU 1.3" "IMS Python API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,13 +28,13 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-getUpdateFrequency \- gets the update frequency of the IMS database
+VISHNU.defineAuthIdentifier \- defines the shape of the identifiers automatically generated for the authentication system
 .SH "SYNOPSIS"
-.HP \w'int\ vishnu::getUpdateFrequency('u
-.BI "int vishnu::getUpdateFrequency(const\ string&\ " "sessionKey" ", int&\ " "freq" ");"
+.HP \w'ret=VISHNU\&.defineAuthIdentifier('u
+.BI "ret=VISHNU\&.defineAuthIdentifier(string\ " "sessionKey" ", string\ " "format" ");"
 .SH "DESCRIPTION"
 .PP
-This function allows a user to get the update frequency, to know how often the state of the machines is automatically polled to get historical data\&.
+This function allows an administrator to define the format of the identifier that will be automatically generated for the authentication\&. Once the format is defined, each time an authentication system is added, the format will be used to define its identifier\&. The format can contain various variables, a variable is preceded by the \*(Aq$\*(Aq symbol\&. Moreover, the counter variable \*(Aq$CPT\*(Aq MUST be present in the format, otherwise it will be rejected\&. The available variables are: $CPT: a counter $DAY: The day the file transfer is done $MONTH: The month the file transfer is done $YEAR: The year the file transfer is done $TYPE: The \*(AqF\*(Aq symb to remind it is a file transfer id
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR
@@ -42,31 +42,28 @@ This function allows a user to get the update frequency, to know how often the s
 Input argument\&. The session key\&.
 .RE
 .PP
-\fIfreq\fR
+\fIformat\fR
 .RS 4
-Output argument\&. Frequency the data are updated, in second\&.
+Input argument\&. The new format to use\&.
+.RE
+.SH "RETURNED OBJECTS"
+.PP
+\fIerrorCode (integer)\fR
+.RS 4
+Output parameter\&. Contains 0 on success and the error code on failure\&.
+.RE
+.PP
+.RS 4
 .RE
 .SH "EXCEPTIONS"
 .PP
 The following exceptions may be thrown:
 .PP
-"The database generated an error" [2]
+SystemException("The database generated an error" [2])
 .RS 4
 .RE
 .PP
-"Undefined error code" [9]
-.RS 4
-.RE
-.PP
-"If a parameter is invalid" [10]
-.RS 4
-.RE
-.PP
-"The session key is unrecognized\&." [28]
-.RS 4
-.RE
-.PP
-"The session key has expired\&. The session is closed\&." [29]
+UserException("If a parameter is invalid" [10])
 .RS 4
 .RE
 .SH "AUTHOR"

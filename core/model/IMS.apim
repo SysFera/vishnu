@@ -93,7 +93,7 @@
       <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter=""/>
       <usedServices href="IMS_Internal.apim#//@modules.0/@services.11"/>
       <details key="description" value="This function allows an administrator to define the format of the identifier that will be automatically generated for the authentication. Once the format is defined, each time an authentication system is added, the format will be used to define its identifier.&#xA;The format can contain various variables, a variable is preceded by the '$' symbol. Moreover, the counter variable '$CPT' MUST be present in the format, otherwise it will be rejected.&#xA;The available variables are: &#xA;$CPT: a counter&#xA;$DAY: The day the file transfer is done&#xA;$MONTH: The month the file transfer is done&#xA;$YEAR: The year the file transfer is done&#xA;$TYPE: The 'F' symb to remind it is a file transfer id"/>
-      <details key="exCLI" value="To define the format to transfer_$CPT:&#xA;vishnu_define_authen_identifier LDAP_\$CPT"/>
+      <details key="exCLI" value="To define the format to transfer_$CPT:&#xA;vishnu_define_auth_identifier LDAP_\$CPT"/>
     </services>
     <services name="loadShed" description="sheds load on a machine" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_COMPONENT_ERROR ERRCODE_DBERR ERRCODE_INVALID_PARAMETER ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
@@ -151,7 +151,7 @@
       <resultCodes name="ERRCODE_UNDEFINED" description="Undefined error code" value="9" diagnostic=""/>
       <resultCodes name="ERRCODE_CLI_ERROR_NO_SESSION" description="There is no open session in this terminal" value="13" usage="CLI_ONLY" diagnostic=""/>
       <resultCodes name="ERRCODE_CLI_ERROR_MISSING_PARAMETER" description="Missing parameters" value="14" usage="CLI_ONLY" diagnostic=""/>
-      <resultCodes name="ERRCODE_CLI_ERROR_DIET" description="Vishnu initialization failes" value="15" usage="CLI_ONLY" diagnostic=""/>
+      <resultCodes name="ERRCODE_CLI_ERROR_DIET" description="Vishnu initialization failed" value="15" usage="CLI_ONLY" diagnostic=""/>
       <resultCodes name="ERRCODE_CLI_ERROR_RUNTIME" description="Undefined error" value="16" usage="CLI_ONLY" diagnostic=""/>
     </resultCodeList>
   </modules>
