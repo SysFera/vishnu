@@ -43,7 +43,7 @@ if(VISHNU_USE_LSF)
   set(LSFSERVER server/LSFServer.cpp 
       lsf_parser/LSFParser.cpp)
   set(LSF_ALL_INCLUDE_DIR ${LSF_INCLUDE_DIR} ${LSF_PARSER_DIR})
-  set(LSF_ALL_LIB_DIR ${LSF_LIB} ${LSBATCH_LIB})
+  set(LSF_ALL_LIB_DIR ${LSF_LIB} ${LSBATCH_LIB} nsl)
 endif(VISHNU_USE_LSF) 
 
 set(UsedBatchServer ${TORQUESERVER}  ${LOADLEVELERSERVER}  ${SLURMSERVER} ${LSFSERVER})
