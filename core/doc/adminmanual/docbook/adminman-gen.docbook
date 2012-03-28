@@ -464,30 +464,79 @@
           </listitem>
           <listitem>
             <para>
-	      VISHNU_USE_LOADLEVELER, compile le SeD TMS pour load leveler (OFF par défaut).
-	    </para>
+	      VISHNU_USE_LOADLEVELER, compile le SeD TMS pour load leveler (OFF par défaut). Les variables LOADLEVELER_INCLUDE_DIR et LOADLEVELER_LIB doivent être renseignées si le flag VISHNU_USE_SLURM est à ON.</para>
+            <itemizedlist>
+              <listitem>
+                <para>
+            LOADLEVELER_INCLUDE_DIR indique le chemin absolu vers le fichier llapi.h
+          </para>
+              </listitem>
+              <listitem>
+                <para>
+            LOADLEVELER_LIB indique le chemin absolu jusqu'à la librairie llapi.so
+          </para>
+              </listitem>
+            </itemizedlist>
           </listitem>
           <listitem>
             <para>
-	      VISHNU_USE_TORQUE, compile le SeD TMS pour torque (OFF par défaut).
-	    </para>
+	      VISHNU_USE_TORQUE, compile le SeD TMS pour torque (OFF par défaut). Les variables TORQUE_INCLUDE_DIR et TORQUE_LIB doivent être renseignées si le flag VISHNU_USE_TORQUE est à ON.</para>
+            <itemizedlist>
+              <listitem>
+                <para>
+            TORQUE_INCLUDE_DIR indique le chemin absolu vers le fichier pbs_ifl.h
+          </para>
+              </listitem>
+              <listitem>
+                <para>
+            TORQUE_LIB indique le chemin absolu jusqu'à la librairie libtorque.so
+          </para>
+              </listitem>
+            </itemizedlist>
           </listitem>
           <listitem>
             <para>
-        VISHNU_USE_SLURM, compile le SeD TMS pour SLURM (OFF par défaut).
-      </para>
+        VISHNU_USE_SLURM, compile le SeD TMS pour SLURM (OFF par défaut). Les variables SLURM_INCLUDE_DIR et SLURM_LIB doivent être renseignées si le flag VISHNU_USE_SLURM est à ON.</para>
+            <itemizedlist>
+              <listitem>
+                <para>
+            SLURM_INCLUDE_DIR indique le chemin absolu vers le fichier slurm/slurm.h
+          </para>
+              </listitem>
+              <listitem>
+                <para>
+            SLURM_LIB indique le chemin absolu jusqu'à la librairie libslurm.so
+          </para>
+              </listitem>
+            </itemizedlist>
           </listitem>
           <listitem>
             <para>
-        VISHNU_USE_LSF, compile le SeD TMS pour LSF (OFF par défaut).
-      </para>
+        VISHNU_USE_LSF, compile le SeD TMS pour LSF (OFF par défaut). Les variables LSF_INCLUDE_DIR, LSBATCH_LIB et LSF_LIB doivent être renseignées si le flag VISHNU_USE_LSF est à ON.</para>
+            <itemizedlist>
+              <listitem>
+                <para>
+            LSF_INCLUDE_DIR indique le chemin absolu vers le fichier lsf/lsbatch.h
+          </para>
+              </listitem>
+              <listitem>
+                <para>
+            LSBATCH_LIB indique le chemin absolu jusqu'à la librairie libbat.so
+          </para>
+              </listitem>
+              <listitem>
+                <para>
+            LSF_LIB indique le chemin absolu jusqu'à la librairie liblsf.so
+          </para>
+              </listitem>
+            </itemizedlist>
           </listitem>
         </itemizedlist>
-      </para>
+</para>
       <para>
-	Par exemple, pour compiler VISHNU (clients et serveurs) avec l'API
-	Python puis l'installer dans le répertoire /opt/vishnu sous *nix:
-      </para>
+  Par exemple, pour compiler VISHNU (clients et serveurs) avec l'API
+  Python puis l'installer dans le répertoire /opt/vishnu sous *nix:
+</para>
       <itemizedlist>
         <listitem>
           <para>1. créer un répertoire build à la racine du projet et se placer dedans</para>
@@ -527,7 +576,7 @@
         </listitem>
       </itemizedlist>
       <para><emphasis role="bold">Note</emphasis>: pensez à ajouter le répertoire d'installation dans le $PATH
-	utilisateur pour avoir accès à la commande.</para>
+  utilisateur pour avoir accès à la commande.</para>
     </section>
   </chapter>
   <chapter>
@@ -5968,7 +6017,7 @@ type and optionally for LDAP the DN of the root entry. By default, the type of t
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6057,7 +6106,7 @@ type and optionally for LDAP the DN of the root entry. By default, the type of t
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6133,7 +6182,7 @@ type and optionally for LDAP the DN of the root entry. By default, the type of t
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6223,7 +6272,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6308,7 +6357,7 @@ $TYPE: The 'U' symb to remind it is a user id</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6393,7 +6442,7 @@ $TYPE: The 'M' symb to remind it is a machine id</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6475,7 +6524,7 @@ $TYPE: The 'J' symb to remind it is a job id</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6557,7 +6606,7 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6639,7 +6688,7 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6651,7 +6700,7 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
       <refsect1 id="example">
         <title>EXAMPLE</title>
         <para>To define the format to transfer_$CPT:</para>
-        <para>vishnu_define_auth_identifier LDAP_\$CPT</para>
+        <para>vishnu_define_authen_identifier LDAP_\$CPT</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -6717,7 +6766,7 @@ SOFT   = 2</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6796,7 +6845,7 @@ SOFT   = 2</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6874,7 +6923,7 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6964,7 +7013,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (UMS), 2 (
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <term>&quot;Vishnu initialization failes&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
