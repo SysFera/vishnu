@@ -69,7 +69,8 @@ BOOST_FIXTURE_TEST_SUITE(BigFileTransfer, FMSSeDFixture)
 
 BOOST_AUTO_TEST_CASE(AddFakeFileTransfer)
 {
-  BOOST_TEST_MESSAGE("Testing Big file transfer ");
+BOOST_TEST_MESSAGE("Testing file transfer UC F2.CP1-B:Execute a synchronous copy of files");
+
   VishnuConnection vc(userId, userPwd);
   string sessionKey=vc.getSessionKey();
 
