@@ -69,6 +69,14 @@
 	  <para>Late update for release 1.2.7</para>
         </revdescription>
       </revision>
+      <revision>
+	<revnumber>5</revnumber>
+	<date>30/03/2012</date>
+	<authorinitials>SysFera</authorinitials>
+	<revdescription>
+	  <para>Release 1.3.0</para>
+        </revdescription>
+      </revision>
     </revhistory>
     
     <copyright>
@@ -135,6 +143,9 @@
     <section>
       <title>Change log</title>
       <itemizedlist>
+	<listitem>
+          <para>V1.3.0 (30/03/2012): LDAP support for authentication, LSF batch support, fixed bug 335, 343.</para>
+        </listitem>
 	<listitem>
           <para>V1.2.7 (19/03/2012): Fix bugs (337, 326), extend TMS options, TMS enhancement (autosubmit, list all as machine id, ...).</para>
         </listitem>
@@ -275,7 +286,7 @@
     <section>
       <title>Install from source</title>
       <para>VISHNU must be compiled with G++ (4.4.3 or greater) and CMake (2.8 or greater).</para>
-      <para>Source tarball: vishnu_v1.2.7.tgz <ulink url="vishnu_v1.2.7.tgz">[download]</ulink> (added on 11th January 2012)</para>
+      <para>Source tarball: vishnu_v1.3.0.tgz <ulink url="vishnu_v1.3.0.tgz">[download]</ulink> (added on 11th January 2012)</para>
     </section>
     <section>
       <title>Launch the VISHNU platform</title>
