@@ -125,8 +125,8 @@ copy_file core/src/registry/\*pp core/src/registry/
 copy_dir core/src/emfdata/\* core/src/emfdata/
 copy_file core/src/utils/\*pp core/src/utils/
 copy_file core/src/utils/\*i core/src/utils/
-copy_file core/src/authenticator/\*i core/src/authenticator/
-copy_file core/src/authenticator/ldap/\*i core/src/authenticator/ldap/
+copy_file core/src/authenticator/\*pp core/src/authenticator/
+copy_file core/src/authenticator/ldap/\*pp core/src/authenticator/ldap/
 copy_file core/test/src/\*pp core/test/src/
 copy_file core/test/src/\*h.in core/test/src/
 copy_file core/test/cfgs/\*cfg.in core/test/cfgs/
