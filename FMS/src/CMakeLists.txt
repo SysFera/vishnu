@@ -27,6 +27,7 @@ target_link_libraries(vishnu-fms-client
   ${Boost_LIBRARIES}
   emf4cpp-vishnu
   vishnu-core
+  vishnu-ums-client
   crypt)
 
 ## client CLI

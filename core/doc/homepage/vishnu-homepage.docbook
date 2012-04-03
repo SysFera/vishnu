@@ -3,7 +3,7 @@
   <info>
     <title>Vishnu Home Page</title>
     <productname>VISHNU</productname>
-    <releaseinfo>Version 1.2.7</releaseinfo>
+    <releaseinfo>Version 1.3.0</releaseinfo>
     <date>March 19, 2012</date>
     <author>
       <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
@@ -267,17 +267,17 @@
           <itemizedlist>
             <listitem><para>sysfera-ds-all-f15-sid-src.tar.gz<ulink url="sysfera-ds-all-f15-src.tar.gz">[download]</ulink></para></listitem>
           </itemizedlist>            
-          <para>i386 (32 bits) for fedora 16</para>
+          <para>i386 (32 bits) for fedora 16 (vishnu 1.2.6)</para>
           <itemizedlist>
             <listitem><para>sysfera-ds-all-f16-sid-i386.tar.gz<ulink url="sysfera-ds-all-f16-i386.tar.gz">[download]</ulink></para></listitem>
           </itemizedlist>
-          <para>x86_64 (64 bits) for fedora 16</para>
+          <para>x86_64 (64 bits) for fedora 16 (vishnu 1.2.6)</para>
           <itemizedlist>
             <listitem><para>sysfera-ds-all-f16-sid-amd64.tar.gz<ulink url="sysfera-ds-all-f16-x86_64.tar.gz">[download]</ulink></para></listitem>
           </itemizedlist>
           <para>Sources for fedora 16</para>
           <itemizedlist>
-            <listitem><para>sysfera-ds-all-f16-sid-src.tar.gz<ulink url="sysfera-ds-all-f16-src.tar.gz">[download]</ulink></para></listitem>
+            <listitem><para>sysfera-ds-all-f16-sid-src.tar.gz (vishnu 1.2.6)<ulink url="sysfera-ds-all-f16-src.tar.gz">[download]</ulink></para></listitem>
           </itemizedlist>            
         </listitem>
       </itemizedlist>            
