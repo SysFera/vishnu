@@ -1,12 +1,158 @@
+%%%% OPTION
+%% Change class according to your needs
+%%  - article (no chapter)
+%%  - report
+%%  - etc.
 \documentclass{article}
 
-\usepackage{a4}
+
+\IfFileExists{ifxetex.sty}{%
+  \usepackage{ifxetex}%
+}{%
+  \newif\ifxetex
+  \xetexfalse
+}
+  \ifxetex
+
+\usepackage{fontspec}
+\usepackage{xltxtra}
+\setmainfont{DejaVu Serif}
+\setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}
+\else
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\fi
+\usepackage{fancybox}
+\usepackage{makeidx}
+\usepackage{cmap}
+\usepackage{url}
+\usepackage{eurosym}
+
+\usepackage[hyperlink]{sysfera}
+
+
+
+%%%%
+%% TODO:
+%%  - ajouter une macro pour mettre l'objet du document
+%%  - faire les footers avec l'adresse et tels de SysFera
+%%  - enlever un max de paquets docbook
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                            CONFIGURATION                           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Use the following macros to configure your document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% OPTION
+%% Change language: fr/en
+%%  - for French: use french in babel, and fr in \setupsysferalocale
+%%  - for English: use english in babel, and en in \setupsysferalocale
+
 \usepackage[french]{babel}
-\usepackage{color}
+\setupsysferalocale{fr}
+\frenchbsetup{CompactItemize=false} % Fix itemize clash 
+\usepackage{enumitem}
+%%%% OPTION
+%% Title and author of the document
+\title{Utilisation des APIM}
+\author{K. Coulomb}
+
+%%%% OPTION
+%% Document reference
+%% Use command \SFdocumentreference to set the document reference.
+%% Latter on, you can use the \SFthisdocument macro to retrieve
+%% this reference.
+\SFdocumentreference{APIM2DB}
+\SFprojectname{VISHNU}
+\SFprojectleader{E.P. Capo-Chichi}
+\SFclient{EDF}
+
+
+%%%% OPTION
+%% Release information. If the argument is not empty, then a box with
+%% the content of the argument will be visible at the top of the document
+%\SFreleaseinfo{Réalisé} % will show "Travail en cours" at the
+                                 % top of the page
+%\SFreleaseinfo{} % won't show anything
+
+%%%% OPTION
+%% Draft watermark. You can also show a grey watermak on all pages of
+%% your document using the following command.
+%\showwatermark{DRAFT}
+
+
+%%%% OPTION
+%% Add a logo into the header.
+%% First parameter sets the width of the image relatively to the
+%% \textwidth
+%% Second parameter is the path to the image
+% \SFsetheadlogo{.25}{fig/logosysfera.pdf}
+
+%%%% OPTION
+%% Collaborators:
+%% You can redefine the Indexation of the document using the following command:
+\renewcommand{\SFindexation}{
+  \begin{SFindtable}
+    \SFinditem{\writtenby}{K. Coulomb}{04 avril 2012}
+%    \SFinditem{\verifiedby}{E.P. CapoChichi}{23 f\'evrier 2012}
+%    \SFinditem{\approvedby}{E.P. CapoChichi}{23 f\'evrier 2012}
+  \end{SFindtable}
+}
+% \renewcommand{\SFindexation}{} % disable this table
+
+
+%%%% OPTION
+%% Revision History Table:
+%% Add a new \SFrevitem entry for adding a new entry in the revision
+%% history table.
+\renewcommand{\SFrevhistory}{
+\begin{SFrevtable}
+  \SFrevitem{1}{02/04/2012}{Premiere version}{K. Coulomb}
+\end{SFrevtable}
+}
+% \renewcommand{\SFrevhistory}{} % disable this table
+
+
+%%%% OPTION
+%% References Table
+%% Add a new \SFrefitem entry for adding a new entry in the list of
+%% reference documents.
+%\renewcommand{\SFreferenceTable}{
+%\begin{SFreftable}
+%  \SFrefitem{ref1}{techDocument}{Ce document}
+%  \SFrefitem{ref2}{techDocument}{Ce document}
+%\end{SFreftable}
+%}
+\renewcommand{\SFreferenceTable}{} % disable this table
+
+%%%% OPTION
+%% Authorization Table
+%% Add a new \SFauthviewitem entry for adding a new entry in the list of
+%% authorized users.
+\renewcommand{\SFauthview}{
+\begin{SFauthviewtable}
+  \SFauthviewitem{SysFera}{L'équipe VISHNU}
+\end{SFauthviewtable}
+}
+% \renewcommand{\SFauthview}{} % disable this table
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                           /CONFIGURATION                           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\makeindex
+\makeglossary
 
 
 \begin{document}
-\tableofcontents
+
+\frontmatter % do not disable, this is used for page numbering
+\maketitle % do not disable, otherwise you won't have any title
+%%%% OPTION
+\tableofcontents % comment to disable the table of contents
+\mainmatter % do not disable, this is used for page numbering
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% SECTION INTRO
@@ -14,8 +160,6 @@
 
 \section*{Introduction}
 Ce document a pour but de pr\'esenter l'int\'er\^et des APIM\footnote{API Mod\`ele} faites \`a l'aide d'Eclipse\footnote{Eclipse est un framework populaire pour d\'evelopper en JAVA} et leur fonctionnement. La premi\`ere partie sera consacr\'ee \`a la pr\'esentation de ce qu'est une APIM. La seconde partie est li\'ee \`a comment la construire. La derni\`ere partie pr\'esentera comment utiliser le code g\'en\'erant la documentation se basant sur l'APIM en docbook.
-
-\textcolor{red}{Attention}, ce document a \'et\'e r\'edig\'e au d\'ebut de l'utilisation des APIM, il est possible que certaines informations soient obsol\`etes.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% SECTION APIM
@@ -25,7 +169,7 @@ Ce document a pour but de pr\'esenter l'int\'er\^et des APIM\footnote{API Mod\`e
 \subsection*{D\'efinition}
 Une APIM correspond \`a un mod\`ele d'API, c'est \`a dire une abstraction de l'API qui doit \^etre construite. Les APIM que nous avons construites se basent sur Eclipse et plus particuli\`erement sur EMF (Eclipse Modeling Framework) qui permet de g\'erer les mod\'elisations.
 \subsection*{Buts}
-Le but de l'APIM est de fournir une abstraction de telle sorte que l'on ne manipule plus qu'une abstraction de l'API. Ainsi une modification dans le mod\`ele est automatiquement r\'epercut\'ee dans tout les documents se basant sur l'API. Cela permet d'assurer une coh\'erence entre les divers documents bas\'es sur l'API mais \'egalement une justesse des documents issus du mod\`ele. En effet les documents \'etant automatiquement extraits du mod\`ele, cela supprime le risque d'erreur humaine lors du passage d'une API aux documents qui lui sont li\'es (la documentation, les manuels, etc...). \\
+Le but de l'APIM est de fournir une abstraction de telle sorte que l'on ne manipule plus qu'une abstraction de l'API. Ainsi une modification dans le mod\`ele est automatiquement r\'epercut\'ee dans tous les documents se basant sur l'API. Cela permet d'assurer une coh\'erence entre les divers documents bas\'es sur l'API mais \'egalement une justesse des documents issus du mod\`ele. En effet les documents \'etant automatiquement extraits du mod\`ele, cela supprime le risque d'erreur humaine lors du passage d'une API aux documents qui lui sont li\'es (la documentation, les manuels, etc...). \\
 De plus, le mod\`ele APIM \'etant simple (du XML), il est facile de parser la structure pour g\'en\'erer des documents qui vont bien.
 \subsection*{Pr\'erequis}
 Afin de pouvoir utiliser une APIM, nous avons eu besoin des \'el\'ements suivant~:
