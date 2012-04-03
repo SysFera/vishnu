@@ -64,7 +64,8 @@ macro(genCli NAME )
     ${VISHNU_EXCEPTION_LIB}
     ${LOG_LIBRARY}
     vishnu-fms-client
-    vishnu-ums-client)
+#    vishnu-ums-client
+)
   install(TARGETS ${CMDNAME} DESTINATION ${BIN_INSTALL_DIR})
 endmacro(genCli)
 

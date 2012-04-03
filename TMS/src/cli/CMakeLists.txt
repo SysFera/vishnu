@@ -50,7 +50,7 @@ macro(genCli NAME )
                         ${LOG_LIBRARY}
                         ${Boost_LIBRARIES}
                         vishnu-core
-                        vishnu-ums-client
+#                        vishnu-ums-client
                         vishnu-tms-client
                         crypt)
   install(TARGETS ${CMDNAME} DESTINATION ${BIN_INSTALL_DIR})
