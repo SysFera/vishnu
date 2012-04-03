@@ -1,7 +1,7 @@
 include_directories(${Boost_INCLUDE_DIRS}
   config exception utils emfdata database
   ../deps/emf4cpp ${UMS_SERVER_SOURCE_DIR} ${TMS_SERVER_SOURCE_DIR}
-  ${IMS_SERVER_SOURCE_DIR} ${FMS_SERVER_SOURCE_DIR}
+  ${IMS_SERVER_SOURCE_DIR} ${FMS_SERVER_SOURCE_DIR} 
   ${PROJECT_BINARY_DIR}
   ${DATABASE_INCLUDE_DIR}
   ${AUTHENTICATOR_INCLUDE_DIR})
@@ -302,6 +302,30 @@ set(FMS_Data_HEADERS
   emfdata/FMS_Data/DirEntryList.hpp
   )
 
+set(AMS_Data_SRCS
+  emfdata/AMS_Data.cpp
+  emfdata/AMS_Data/AMS_DataPackage.cpp
+  emfdata/AMS_Data/AMS_DataFactory.cpp
+  emfdata/AMS_Data/AMS_DataPackageImpl.cpp
+  emfdata/AMS_Data/AMS_DataFactoryImpl.cpp
+  emfdata/AMS_Data/Application.cpp
+  emfdata/AMS_Data/ListApplications.cpp
+  emfdata/AMS_Data/ApplicationImpl.cpp
+  emfdata/AMS_Data/ListApplicationsImpl.cpp
+  emfdata/AMS_Data/ListApplicationsOp.cpp
+  emfdata/AMS_Data/ListApplicationsOpImpl.cpp
+)
+
+
+set(AMS_Data_HEADERS
+  emfdata/AMS_Data.hpp
+  emfdata/AMS_Data_forward.hpp
+  emfdata/AMS_Data/AMS_DataPackage.hpp
+  emfdata/AMS_Data/AMS_DataFactory.hpp
+  emfdata/AMS_Data/Application.hpp
+  emfdata/AMS_Data/ListApplications.hpp
+  emfdata/AMS_Data/ListApplicationsOp.hpp
+)
 
 add_library(vishnu-core ${config_SRCS}
   ${exception_SRCS}
@@ -311,6 +335,7 @@ add_library(vishnu-core ${config_SRCS}
   ${TMS_Data_SRCS}
   ${IMS_Data_SRCS}
   ${FMS_Data_SRCS}
+  ${AMS_Data_SRCS}
 )
 
 target_link_libraries(vishnu-core
@@ -388,6 +413,10 @@ install(FILES ${FMS_Data_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/FMS_Data)
 install(FILES emfdata/IMS_Data.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
 install(FILES emfdata/IMS_Data_forward.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
 install(FILES ${IMS_Data_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/IMS_Data)
+
+install(FILES emfdata/AMS_Data.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
+install(FILES emfdata/AMS_Data_forward.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
+install(FILES ${AMS_Data_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/AMS_Data)
 
 install(FILES ${EMF-ECORE-HEADERS}  DESTINATION ${INCLUDE_INSTALL_DIR}/ecore)
 install(FILES ${EMF-ECORECPP-HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/ecorecpp)
