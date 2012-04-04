@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
+  <info>
+    <title>VISHNU - Modification pour l'ajout d'un nouveau batch scheduler dans TMS </title>
+    <author>
+      <personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
+    </author>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>29/03/2012</date>
+        <authorinitials>D. TRAORE</authorinitials>
+        <revdescription>
+          <para>Version initiale</para>
+        </revdescription>
+      </revision>
+    </revhistory>
+  </info>
+  <chapter>
+    <title>Ajout d'un nouveau batch scheduler dans TMS</title>
+    <section>
+      <title>Objectifs du document</title>
+      <para>L'objectif de ce document est de présenter les motifications à apporter dans TMS pour l'ajout d'un nouveau batch scheduler.
+      </para>
+    </section>
+
+    <section> <!--Document structure -->
+      <title>Structure du document</title>
+
+      <para>Ce document contient les parties suivantes:
+      </para>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para>Construction des classes concrètes</para>
+          </listitem>
+          <listitem>
+            <para>Construction de l'analyseur de script (parser)</para>
+          </listitem>
+          <listitem>
+            <para>Modification de la classe fabrique</para>
+          </listitem>
+          <listitem>
+            <para>Modification des fichiers permettant de construire des exécutables (tmssed et tmslave) </para>
+          </listitem>
+          <listitem>
+            <para>Modification de la classe SSHJobExec</para>
+          </listitem>
+          <listitem>
+            <para>Modifications des CMakeFiles</para>
+          </listitem>
+          <listitem>
+            <para>Résumé</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section> <!--Document structure -->
+  </chapter>
+
+  <chapter> 
+    <title>Construction des classes concrètes</title>
+    <section> 
+      <title>La classe abstraite BatchServer</title>
+      <para>
+        La classe implémentant le nouveau batch à ajouter dans TMS doit hériter de la classe abstraite  <emphasis role="bold">BatchServer</emphasis> définie dans  <emphasis>TMS/src/server</emphasis> . Cette classe abstraite déclare les méthodes virtuelles nécessaires pour la gestion des tâches dans TMS. Le document d'achitecture générale de TMS (<emphasis>TMS/design/docbook/TmsDesign-gen.docbook.pdf</emphasis>) donne plus de détails sur cette classe. Ci-dessous un exemple pour LSF :
+        <programlisting>
+          #ifndef TMS_LSF_SERVER_H
+          #define TMS_LSF_SERVER_H
+            #include &lt;lsf/lsbatch.h&gt;
+            #include "BatchServer.hpp"
+            /**
+            * \class LSFServer
+            * \brief LSFServer class implementation
+            */
+            class LSFServer : public BatchServer
+            {
+            public:
+
+              LSFServer();
+
+              int submit(const char* scriptPath,
+
+              const TMS_Data::SubmitOptions&amp; options,TMS_Data::Job&amp; job,char** envp=NULL);
+
+              int cancel(const char* jobId) ;
+
+              int getJobState(const std::string&amp; jobId);
+
+              time_t getJobStartTime(const std::string&amp; jobId);
+
+              TMS_Data::ListQueues* listQueues(const std::string&amp; optQueueName=std::string());
+
+              void fillListOfJobs(TMS_Data::ListJobs*&amp; listOfJobs,
+              const std::vector&lt;string&gt;&amp; ignoredIds=std::vector&lt;string&gt;());
+
+              ~LSFServer();
+            }
+          #endif
+         </programlisting> 
+      </para>
+    </section>
+  </chapter>
+
+  <chapter> 
+    <title>Construction de l'analyseur de script (parser)</title>
+    <para>
+      La directive permettant de récupérer les options et leurs valeurs associées dans le script à soumettre est spécifique à chaque batch scheduler. Par exemple la directive <emphasis role="bold">LSF</emphasis> est <emphasis>#BSUB</emphasis>. Pour pouvoir récupérer ces options et leurs valeurs, le script à soumettre doit être analysé. Certains batchs (LoadLeveler par exemple) analysent le script dans leur fonction de soumission, et dans ce cas le developpeur ne fera qu'appeler l'api de la fonction de soumission avec le script. Pour les autres batchs schedulers ne permettant pas l'analyse à travers la fonction de soumission le devéloppeur doit obligatoirement analyser le script et remplir la structure à fournir à la fonction de soumission avec les options et leurs valeurs associées récupérées dans le script. Le devéloppeur pourra se référer aux analyseurs proposés dans le code source des batchs qui sont des logiciels libres et écrire lui même l'analyseur (<emphasis>parser</emphasis>) si le batch est un logicel commercial (exemple dans <emphasis role="bold"> TMS/src/lsf_parser</emphasis>).
+    </para>
+  </chapter>
+
+  <chapter> 
+    <title>Modification de la classe fabrique</title>
+    <para>
+      La seule modification à ajouter dans cette classe est l'ajout dans le fichier <emphasis role="bold">TMS/src/server/BatchFactory.cpp</emphasis> le cas de test correspondant à la création de l'instance du type du nouveau batch dans la méthode <emphasis role="bold"><emphasis>getBatchServerInstance()</emphasis></emphasis>. Le nouveau type de batch doit aussi être ajouté dans le type <emphasis role="bold"> <emphasis>enum BatchType</emphasis> </emphasis> défini dans le  <emphasis role="bold">core/src/utils/utilVishnu.hpp</emphasis> (faire attention aux numéros des types enum pendant l'ajout). Ci-dessous les créations des instances de quatres batchs (TORQUE, LOADLEVELER, SLURM et LSF).
+
+      <programlisting>
+        BatchServer*
+        BatchFactory::getBatchServerInstance(BatchType batchType) {
+          switch (batchType){
+            case TORQUE:
+            #ifdef HAVE_TORQUE
+            mbatchServer = new TorqueServer();
+            #else
+            mbatchServer = NULL;
+            #endif
+            break;
+            case LOADLEVELER:
+            #ifdef HAVE_LOADLEVELER
+            mbatchServer = new LLServer();
+            #else
+            mbatchServer = NULL;
+            #endif
+            break;
+            case SLURM:
+            #ifdef HAVE_SLURM
+            mbatchServer = new SlurmServer();
+            #else
+            mbatchServer = NULL;
+            #endif
+            break;
+            case LSF:
+            #ifdef HAVE_LSF
+            mbatchServer = new LSFServer();
+            #else
+            mbatchServer = NULL;
+            #endif
+            break;
+            default:
+            mbatchServer = NULL;
+            break;
+          }
+          return mbatchServer;
+        }
+      </programlisting>
+    </para>
+
+  <para>
+   <emphasis role="bold"> <emphasis>enum BatchType</emphasis> </emphasis> défini dans le  <emphasis role="bold">core/src/utils/utilVishnu.hpp</emphasis> dans l'état actuel :
+   <programlisting>
+     /**
+     * \enum BatchType
+     * \brief The type of the Batch
+     */
+     typedef enum {
+     TORQUE = 0,/*!&lt; For TORQUE batch type */
+     LOADLEVELER = 1,/*!&lt; For LOADLEVELER batch type */
+     SLURM = 2, /*!&lt; For SLURM batch type */
+     LSF = 3, /*!&lt; For LSF batch type */
+     UNDEFINED = 4 /*!&lt; IF batch type is not defined*/
+     } BatchType;
+   </programlisting>
+  </para>
+
+  </chapter>
+
+
+  <chapter> 
+    <title>Modification des fichiers permettant de construire des exécutables (tmssed et tmslave) </title>
+    <para>
+      La modification à ajouter dans le fichier <emphasis role="bold">TMS/src/sed/tmssed.cpp</emphasis>  est le cas de test permettant d'initialiser le type du nouveau batch. Ci-dessous un exemple montrant les initialisations de quatres batchs (TORQUE, LOADLEVELER, SLUM et LSF).
+
+      <programlisting>
+        #ifndef HAVE_TORQUE
+        std::cerr &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "Error: can't initialize TORQUE batch type because this server has not compiled with TORQUE library" &lt;&lt; std::endl;
+        std::cerr &lt;&lt; std::endl;
+        exit(1);
+        #endif
+        batchType = TORQUE;
+        } else if (batchTypeStr == "LOADLEVELER") {
+        #ifndef HAVE_LOADLEVELER
+        std::cerr &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "Error: can't initialize LOADLEVELER batch type because this server has not compiled with LOADLEVELER library"  &lt;&lt; std::endl;
+        std::cerr &lt;&lt; std::endl;
+        exit(1);
+        #endif
+        batchType = LOADLEVELER;
+        } else if (batchTypeStr == "SLURM") {
+        #ifndef HAVE_SLURM
+        std::cerr &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "Error: can't initialize SLURM batch type because this server has not compiled with SLURM library"  &lt;&lt; std::endl;
+        std::cerr &lt;&lt; std::endl;
+        exit(1);
+        #endif
+        batchType = SLURM;
+
+        } else if (batchTypeStr == "LSF") {
+        #ifndef HAVE_LSF
+        std::cerr &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "Error: can't initialize LSF batch type because this server has not compiled with LSF library"  &lt;&lt; std::endl;
+        std::cerr &lt;&lt; std::endl;
+        exit(1);
+        #endif
+        batchType = LSF;
+        } else {
+        std::cerr &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "Error: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVELER' or 'SLURM' or 'LSF')"  &lt;&lt; std::endl;
+        std::cerr &lt;&lt; std::endl;
+        exit(1);
+        }
+      </programlisting>
+    </para>
+
+    <para>
+      La modification à ajouter dans le fichier <emphasis role="bold">TMS/src/slave/slave.cpp</emphasis>  est le cas de test permettant d'initialiser le type du nouveau batch. Ci-dessous un exemple montrant les initialisations de quatres batchs (TORQUE, LOADLEVELER, SLUM et LSF).
+
+      <programlisting>
+        batchTypeStr = argv[2];
+        if (batchTypeStr == "TORQUE") {
+        batchType = TORQUE;
+        } else if (batchTypeStr == "LOADLEVELER") {
+        batchType = LOADLEVELER;
+        } else if (batchTypeStr == "SLURM") {
+        batchType = SLURM;
+        } else if (batchTypeStr == "LSF") {
+        batchType = LSF;
+        } else {
+        std::cerr &lt;&lt; "Error: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVLER' or 'SLURM' or 'LSF')" &lt;&lt; std::endl;
+        throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVLER' or 'SLURM' or 'LSF')");
+        }
+      </programlisting>
+    </para>
+
+  </chapter>
+
+
+  <chapter> 
+    <title>Modification de la classe SSHJobExec</title>
+    <para>
+      La modification à ajouter dans la classe <emphasis role="bold">TMS/src/server/SSHJobExec.cpp</emphasis> est le cas de test correspondant au nouveau batch dans la méthode   <emphasis role="bold">SSHJobExec::convertBatchTypeToString()</emphasis>. Ci-dessous le code de la méthode avec les batchs actuels (TORQUE, LOADLEVELER, SLURM et LSF).
+
+      <programlisting>
+        std::string SSHJobExec::convertBatchTypeToString(BatchType batchType) {
+        std::string value;
+        switch(batchType) {
+        case TORQUE:
+        value = "TORQUE";
+        break;
+        case LOADLEVELER:
+        value = "LOADLEVELER";
+        break;
+        case SLURM:
+        value = "SLURM";
+        break;
+        case LSF:
+        value = "LSF";
+        break;
+        default:
+        value = "UNKNOWN_BATCH_TYPE";
+        break;
+        }
+        return value;
+        }
+      </programlisting>
+
+    </para>
+
+    <para>
+     Eventuellement la méthode <emphasis role="bold">SSHJobExec::sshexec</emphasis> pourrait être modifiée si le nouveau batch à ajouter envoie ses erreurs sur la sortie standard. Sa modification n'est pas nécessaire si le nouveau batch offre une fonction permettant de récupérer ces erreurs sous forme de chaîne de caractères, et dans ce cas le développeur pourra envoyer cette chaîne de caractère comme exception vishnu dans la classe concrète du nouveau batch server.
+    </para>
+
+  </chapter>
+
+
+  <chapter> 
+    <title>Modifications des CMakeFiles</title>
+    <para>
+      Le développeur doit d'abord créer le fichier Find<emphasis role="bold">NomDuNouveauBatch</emphasis> dans le repertoire <emphasis>Cmake</emphasis> de la racine VISHNU. Les fichiers CMake à modifier sont : <emphasis>CMakeLists.txt</emphasis> de la racine, <emphasis>TMS/src/CMakeLists.txt</emphasis> et <emphasis>TMS/src/config.cmake</emphasis>.  
+    </para>
+  </chapter>
+
+  
+  <chapter> 
+    <title>Résumé</title>
+    <para>Les modifications à faire pour l'ajout d'un nouveau batch dans TMS sont :
+      </para>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para>Création des fichiers TMS/src/server/<emphasis role="bold">NomDuNouveauBatch</emphasis>Server.hpp et TMS/src/server/<emphasis role="bold">NomDuNouveauBatch</emphasis>Server.cpp</para>
+          </listitem>
+          <listitem>
+            <para>Modification du fichier <emphasis>TMS/src/sed/tmssed.cpp</emphasis></para>
+          </listitem>
+          <listitem>
+            <para>Modification du fichier <emphasis>TMS/src/slave/slave.cpp</emphasis></para>
+          </listitem>
+          <listitem>
+            <para>Modification du fichier <emphasis>TMS/src/server/SSHJobExec.cpp</emphasis></para>
+          </listitem>
+          <listitem>
+            <para>Modification du fichier <emphasis>TMS/src/server/BatchFactory.cpp</emphasis></para>
+          </listitem>
+          <listitem>
+            <para>Création du fichier Find<emphasis role="bold">NomDuNouveauBatch</emphasis> dans le repertoire <emphasis>Cmake de la racine VISHNU</emphasis> </para>
+          </listitem>
+          <listitem>
+            <para>Modification du fichier <emphasis>CMakeLists.txt</emphasis> de la racine VISHNU</para>
+          </listitem>
+          <listitem>
+            <para>Modification du fichier <emphasis>TMS/src/CMakeLists.txt</emphasis></para>
+          </listitem>
+          <listitem>
+            <para>Modification du fichier <emphasis>TMS/src/config.cmake</emphasis></para>
+          </listitem>
+          <listitem>
+            <para>Modification des documents <emphasis>TMS/design/docbook/TmsDesign-template.docbook, TMS/design/Archi.asta, TMS/design/data.asta et TMS/design/Design.asta </emphasis></para>
+          </listitem>
+          <listitem>
+            <para>Modification des documents <emphasis>TMS/test/testPlan/VISHNU_D4_1b-TMS-PlanTests.odt et TMS/test/testReports/reportTMSTest.docbook</emphasis></para>
+          </listitem>
+          <listitem>
+            <para>Modification des documents <emphasis>core/doc/usermanual/docbook/userman-template.docbook et core/doc/adminmanual/docbook/adminman-template.docbook</emphasis></para>
+          </listitem>
+          <listitem>
+            <para>Modification du document <emphasis>core/specs/stb/STB_SoftHardWare.asta</emphasis></para>
+          </listitem>
+        </itemizedlist>
+      </para>
+   
+  </chapter>
+
+</book>
+
