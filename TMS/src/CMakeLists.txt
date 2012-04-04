@@ -26,6 +26,7 @@ target_link_libraries(vishnu-tms-client
   ${Boost_LIBRARIES}
   emf4cpp-vishnu
   vishnu-core
+  vishnu-ums-client
   crypt)
 
 install(TARGETS vishnu-tms-client DESTINATION ${LIB_INSTALL_DIR})
