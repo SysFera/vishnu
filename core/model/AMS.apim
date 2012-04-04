@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<API xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="com.sysfera.codegen.apimodel" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
+  <modules name="AMS">
+    <services name="listApplications" description="To list the applications" resultCodes="ERRCODE_APP ERRCODE_DBERR ERRCODE_INVALID_PARAMETER" usedServices="//@modules.0/@services.0" usedByServices="//@modules.0/@services.0">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
+      <ports name="listApplications" direction="OUT" dataType="//@typeList/@types.7" description="The list of the applications" shortOptionLetter="" longOptionName="" defaultValueLiteral="">
+        <envOption href="IMS.apim#VISHNU_CONFIG_FILE"/>
+      </ports>
+      <ports name="option" dataType="//@typeList/@types.8" description="options to list the applications" optional="true" defaultValueLiteral="">
+        <envOption href="IMS.apim#VISHNU_CONFIG_FILE"/>
+      </ports>
+    </services>
+    <resultCodeList>
+      <resultCodes name="VISHNU_OK" description="Error code returned if success"/>
+      <resultCodes name="ERRCODE_INVALID_PARAMETER" description="If a parameter is invalid" value="10"/>
+      <resultCodes name="ERRCODE_DBERR" description="The database generated an error" value="2"/>
+      <resultCodes name="ERRCODE_COMPONENT_ERROR" description="If a component is unavailable" value="301"/>
+      <resultCodes name="ERRCODE_SESSIONKEY_EXPIRED" description="The session key has expired. The session is closed." value="29" diagnostic=""/>
+      <resultCodes name="ERRCODE_SESSIONKEY_NOT_FOUND" description="The session key is unrecognized." value="28"/>
+      <resultCodes name="ERRCODE_UNDEFINED" description="Undefined error code" value="9" diagnostic=""/>
+      <resultCodes name="ERRCODE_CLI_ERROR_NO_SESSION" description="There is no open session in this terminal" value="13" usage="CLI_ONLY" diagnostic=""/>
+      <resultCodes name="ERRCODE_CLI_ERROR_MISSING_PARAMETER" description="Missing parameters" value="14" usage="CLI_ONLY" diagnostic=""/>
+      <resultCodes name="ERRCODE_CLI_ERROR_DIET" description="Vishnu initialization failed" value="15" usage="CLI_ONLY" diagnostic=""/>
+      <resultCodes name="ERRCODE_CLI_ERROR_RUNTIME" description="Undefined error" value="16" usage="CLI_ONLY" diagnostic=""/>
+      <resultCodes name="ERRCODE_APP" description="Error due to application" value="302" diagnostic=""/>
+    </resultCodeList>
+  </modules>
+  <envVariableList>
+    <envVariables name="VISHNU_CONFIG_FILE" description="Contains the path to the local configuration file for VISHNU"/>
+  </envVariableList>
+  <typeList>
+    <types name="string" description="String standard">
+      <ECoreType xsi:type="ecore:EDataType" href="Ecore.ecore#//EString"/>
+    </types>
+    <types name="int" description="int standard">
+      <ECoreType xsi:type="ecore:EDataType" href="Ecore.ecore#//EInt"/>
+    </types>
+    <types name="void" description="void"/>
+    <types name="double" description="Double precision numbers">
+      <ECoreType xsi:type="ecore:EDataType" href="Ecore.ecore#//EDouble"/>
+    </types>
+    <types name="object" description="Generic type">
+      <ECoreType xsi:type="ecore:EClass" href="Ecore.ecore#//EObject"/>
+    </types>
+    <types name="long" description="Long integers">
+      <ECoreType xsi:type="ecore:EDataType" href="Ecore.ecore#//ELong"/>
+    </types>
+    <types name="Application" description="">
+      <ECoreType xsi:type="ecore:EClass" href="AMS_Data.ecore#//Application"/>
+    </types>
+    <types name="ListApplication" description="">
+      <ECoreType xsi:type="ecore:EClass" href="AMS_Data.ecore#//ListApplication"/>
+    </types>
+    <types name="ListApplicationsOp" description="">
+      <ECoreType xsi:type="ecore:EClass" href="AMS_Data.ecore#//ListApplicationsOp"/>
+    </types>
+  </typeList>
+</API>
