@@ -60,7 +60,7 @@ target_link_libraries(ums_stresser
   ${Boost_LIBRARIES}
   vishnu-core
   vishnu-ums-client
-  crypt
+  ${LIBCRYPT_LIB}
   ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
 add_subdirectory(sql)

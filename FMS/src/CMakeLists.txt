@@ -28,7 +28,7 @@ target_link_libraries(vishnu-fms-client
   emf4cpp-vishnu
   vishnu-core
   vishnu-ums-client
-  crypt)
+  ${LIBCRYPT_LIB})
 
 ## client CLI
 add_subdirectory(cli)
@@ -79,6 +79,6 @@ if(NOT CLIENT_ONLY)
     vishnu-core-server
     vishnu-ums-server
     emf4cpp-vishnu
-    crypt)
+    ${LIBCRYPT_LIB})
 
 endif()

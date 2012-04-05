@@ -315,7 +315,7 @@ add_library(vishnu-core ${config_SRCS}
 
 target_link_libraries(vishnu-core
   emf4cpp-vishnu
-  crypt)
+  ${LIBCRYPT_LIB})
 
 
 set(EMF-ECORE-HEADERS
