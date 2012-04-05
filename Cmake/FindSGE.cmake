@@ -13,19 +13,19 @@ find_path(SGE_INCLUDE_DIR
 )
 
 find_library(SGE_LIB
-  libdrmaa 
+  drmaa 
   paths
         ${SGE_DIR}/lib
-  $ENV{SGE_DIR}/lib
+	$ENV{SGE_DIR}/lib/linux-x86
         /usr/lib
         /usr/local/lib
-  /opt/local/lib
+	/opt/local/lib
 )
 
 find_path(SGE_ROOT
-inst_sge
-paths
-$ENV{SGE_ROOT}/
+  inst_sge
+  paths
+      $ENV{SGE_ROOT}
 )
 if (SGE_INCLUDE_DIR AND  SGE_LIB AND SGE_ROOT)
   set(SGE_FOUND "Yes")
