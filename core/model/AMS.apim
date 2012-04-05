@@ -10,6 +10,24 @@
         <envOption href="IMS.apim#VISHNU_CONFIG_FILE"/>
       </ports>
     </services>
+    <services name="addApplication" description="To add the application" adminOnly="true" resultCodes="ERRCODE_APP ERRCODE_DBERR ERRCODE_INVALID_PARAMETER" usedServices="//@modules.0/@services.1" usedByServices="//@modules.0/@services.1">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
+      <ports name="application" dataType="//@typeList/@types.6" description="The application to add" shortOptionLetter="" longOptionName="" defaultValueLiteral="">
+        <envOption href="IMS.apim#VISHNU_CONFIG_FILE"/>
+      </ports>
+    </services>
+    <services name="updateApplication" description="To update an application" adminOnly="true" resultCodes="ERRCODE_APP ERRCODE_DBERR ERRCODE_INVALID_PARAMETER" usedServices="//@modules.0/@services.2" usedByServices="//@modules.0/@services.2">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
+      <ports name="application" dataType="//@typeList/@types.6" description="The application to update" shortOptionLetter="" longOptionName="" defaultValueLiteral="">
+        <envOption href="IMS.apim#VISHNU_CONFIG_FILE"/>
+      </ports>
+    </services>
+    <services name="deleteApplication" description="To delete an application" adminOnly="true" resultCodes="ERRCODE_APP ERRCODE_DBERR ERRCODE_INVALID_PARAMETER" usedServices="//@modules.0/@services.3" usedByServices="//@modules.0/@services.3">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
+      <ports name="application" dataType="//@typeList/@types.0" description="Id of the application to delete" shortOptionLetter="" longOptionName="" defaultValueLiteral="">
+        <envOption href="IMS.apim#VISHNU_CONFIG_FILE"/>
+      </ports>
+    </services>
     <resultCodeList>
       <resultCodes name="VISHNU_OK" description="Error code returned if success"/>
       <resultCodes name="ERRCODE_INVALID_PARAMETER" description="If a parameter is invalid" value="10"/>

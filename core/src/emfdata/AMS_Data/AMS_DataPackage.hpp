@@ -64,9 +64,9 @@ namespace AMS_Data
         static const int LISTAPPLICATIONSOP = 2;
 
         /**
-         * \brief Constant for APPLICATION__PROFILE feature
+         * \brief Constant for APPLICATION__NAME feature
          */
-        static const int APPLICATION__PROFILE = 0;
+        static const int APPLICATION__NAME = 0;
 
         /**
          * \brief Constant for APPLICATION__DESCRIPTION feature
@@ -84,14 +84,24 @@ namespace AMS_Data
         static const int APPLICATION__OUTPUT = 3;
 
         /**
+         * \brief Constant for APPLICATION__SCRIPT feature
+         */
+        static const int APPLICATION__SCRIPT = 4;
+
+        /**
+         * \brief Constant for APPLICATION__APPLICATIONID feature
+         */
+        static const int APPLICATION__APPLICATIONID = 5;
+
+        /**
          * \brief Constant for LISTAPPLICATIONS__APPL feature
          */
-        static const int LISTAPPLICATIONS__APPL = 4;
+        static const int LISTAPPLICATIONS__APPL = 6;
 
         /**
          * \brief Constant for LISTAPPLICATIONSOP__MACHINEID feature
          */
-        static const int LISTAPPLICATIONSOP__MACHINEID = 5;
+        static const int LISTAPPLICATIONSOP__MACHINEID = 7;
 
         // EClassifiers methods
 
@@ -116,10 +126,10 @@ namespace AMS_Data
         // EStructuralFeatures methods
 
         /**
-         * \brief Returns the reflective object for feature profile of class Application
+         * \brief Returns the reflective object for feature name of class Application
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getApplication__profile();
+        virtual ::ecore::EAttribute_ptr getApplication__name();
 
         /**
          * \brief Returns the reflective object for feature description of class Application
@@ -138,6 +148,18 @@ namespace AMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EAttribute_ptr getApplication__output();
+
+        /**
+         * \brief Returns the reflective object for feature script of class Application
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getApplication__script();
+
+        /**
+         * \brief Returns the reflective object for feature applicationId of class Application
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getApplication__applicationId();
 
         /**
          * \brief Returns the reflective object for feature appl of class ListApplications
@@ -186,9 +208,9 @@ namespace AMS_Data
         // EStructuralFeatures instances
 
         /**
-         * \brief The instance for the feature profile of class Application
+         * \brief The instance for the feature name of class Application
          */
-        ::ecore::EAttribute_ptr m_Application__profile;
+        ::ecore::EAttribute_ptr m_Application__name;
 
         /**
          * \brief The instance for the feature description of class Application
@@ -204,6 +226,16 @@ namespace AMS_Data
          * \brief The instance for the feature output of class Application
          */
         ::ecore::EAttribute_ptr m_Application__output;
+
+        /**
+         * \brief The instance for the feature script of class Application
+         */
+        ::ecore::EAttribute_ptr m_Application__script;
+
+        /**
+         * \brief The instance for the feature applicationId of class Application
+         */
+        ::ecore::EAttribute_ptr m_Application__applicationId;
 
         /**
          * \brief The instance for the feature appl of class ListApplications

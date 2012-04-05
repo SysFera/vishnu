@@ -55,10 +55,9 @@ void Application::_initialize()
     ::ecore::EJavaObject _any;
     switch (_featureID)
     {
-    case ::AMS_Data::AMS_DataPackage::APPLICATION__PROFILE:
+    case ::AMS_Data::AMS_DataPackage::APPLICATION__NAME:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_profile);
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any, m_name);
     }
         return _any;
     case ::AMS_Data::AMS_DataPackage::APPLICATION__DESCRIPTION:
@@ -77,6 +76,18 @@ void Application::_initialize()
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
                 m_output);
+    }
+        return _any;
+    case ::AMS_Data::AMS_DataPackage::APPLICATION__SCRIPT:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_script);
+    }
+        return _any;
+    case ::AMS_Data::AMS_DataPackage::APPLICATION__APPLICATIONID:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_applicationId);
     }
         return _any;
 
@@ -89,10 +100,10 @@ void Application::eSet(::ecore::EInt _featureID,
 {
     switch (_featureID)
     {
-    case ::AMS_Data::AMS_DataPackage::APPLICATION__PROFILE:
+    case ::AMS_Data::AMS_DataPackage::APPLICATION__NAME:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_profile);
+                m_name);
     }
         return;
     case ::AMS_Data::AMS_DataPackage::APPLICATION__DESCRIPTION:
@@ -113,6 +124,18 @@ void Application::eSet(::ecore::EInt _featureID,
                 m_output);
     }
         return;
+    case ::AMS_Data::AMS_DataPackage::APPLICATION__SCRIPT:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_script);
+    }
+        return;
+    case ::AMS_Data::AMS_DataPackage::APPLICATION__APPLICATIONID:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_applicationId);
+    }
+        return;
 
     }
     throw "Error";
@@ -122,14 +145,18 @@ void Application::eSet(::ecore::EInt _featureID,
 {
     switch (_featureID)
     {
-    case ::AMS_Data::AMS_DataPackage::APPLICATION__PROFILE:
-        return m_profile != "";
+    case ::AMS_Data::AMS_DataPackage::APPLICATION__NAME:
+        return m_name != "";
     case ::AMS_Data::AMS_DataPackage::APPLICATION__DESCRIPTION:
         return m_description != "";
     case ::AMS_Data::AMS_DataPackage::APPLICATION__INPUT:
         return m_input != "";
     case ::AMS_Data::AMS_DataPackage::APPLICATION__OUTPUT:
         return m_output != "";
+    case ::AMS_Data::AMS_DataPackage::APPLICATION__SCRIPT:
+        return m_script != "";
+    case ::AMS_Data::AMS_DataPackage::APPLICATION__APPLICATIONID:
+        return m_applicationId != "";
 
     }
     throw "Error";

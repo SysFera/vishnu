@@ -31,7 +31,8 @@ using namespace ::AMS_Data;
 
 // Default constructor
 Application::Application() :
-    m_profile(""), m_description(""), m_input(""), m_output("")
+    m_name(""), m_description(""), m_input(""), m_output(""), m_script(""),
+            m_applicationId("")
 {
 
     /*PROTECTED REGION ID(ApplicationImpl__ApplicationImpl) START*/
@@ -51,26 +52,26 @@ Application::~Application()
 
 // Attributes
 
-::ecore::EString const& Application::getProfile() const
+::ecore::EString const& Application::getName() const
 {
-    return m_profile;
+    return m_name;
 }
 
-void Application::setProfile(::ecore::EString const& _profile)
+void Application::setName(::ecore::EString const& _name)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_profile = m_profile;
+    ::ecore::EString _old_name = m_name;
 #endif
-    m_profile = _profile;
+    m_name = _name;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::AMS_Data::AMS_DataPackage::_instance()->getApplication__profile(),
-                _old_profile,
-                m_profile
+                (::ecore::EStructuralFeature_ptr) ::AMS_Data::AMS_DataPackage::_instance()->getApplication__name(),
+                _old_name,
+                m_name
         );
         eNotify(&notification);
     }
@@ -149,6 +150,58 @@ void Application::setOutput(::ecore::EString const& _output)
                 (::ecore::EStructuralFeature_ptr) ::AMS_Data::AMS_DataPackage::_instance()->getApplication__output(),
                 _old_output,
                 m_output
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EString const& Application::getScript() const
+{
+    return m_script;
+}
+
+void Application::setScript(::ecore::EString const& _script)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_script = m_script;
+#endif
+    m_script = _script;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::AMS_Data::AMS_DataPackage::_instance()->getApplication__script(),
+                _old_script,
+                m_script
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EString const& Application::getApplicationId() const
+{
+    return m_applicationId;
+}
+
+void Application::setApplicationId(::ecore::EString const& _applicationId)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_applicationId = m_applicationId;
+#endif
+    m_applicationId = _applicationId;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::AMS_Data::AMS_DataPackage::_instance()->getApplication__applicationId(),
+                _old_applicationId,
+                m_applicationId
         );
         eNotify(&notification);
     }

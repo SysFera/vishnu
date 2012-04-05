@@ -52,11 +52,10 @@ AMS_DataPackage::AMS_DataPackage()
     m_ApplicationEClass->setClassifierID(APPLICATION);
     m_ApplicationEClass->setEPackage(this);
     getEClassifiers().push_back(m_ApplicationEClass);
-    m_Application__profile = new ::ecore::EAttribute();
-    m_Application__profile->setFeatureID(
-            ::AMS_Data::AMS_DataPackage::APPLICATION__PROFILE);
-    m_ApplicationEClass->getEStructuralFeatures().push_back(
-            m_Application__profile);
+    m_Application__name = new ::ecore::EAttribute();
+    m_Application__name->setFeatureID(
+            ::AMS_Data::AMS_DataPackage::APPLICATION__NAME);
+    m_ApplicationEClass->getEStructuralFeatures().push_back(m_Application__name);
     m_Application__description = new ::ecore::EAttribute();
     m_Application__description->setFeatureID(
             ::AMS_Data::AMS_DataPackage::APPLICATION__DESCRIPTION);
@@ -72,6 +71,16 @@ AMS_DataPackage::AMS_DataPackage()
             ::AMS_Data::AMS_DataPackage::APPLICATION__OUTPUT);
     m_ApplicationEClass->getEStructuralFeatures().push_back(
             m_Application__output);
+    m_Application__script = new ::ecore::EAttribute();
+    m_Application__script->setFeatureID(
+            ::AMS_Data::AMS_DataPackage::APPLICATION__SCRIPT);
+    m_ApplicationEClass->getEStructuralFeatures().push_back(
+            m_Application__script);
+    m_Application__applicationId = new ::ecore::EAttribute();
+    m_Application__applicationId->setFeatureID(
+            ::AMS_Data::AMS_DataPackage::APPLICATION__APPLICATIONID);
+    m_ApplicationEClass->getEStructuralFeatures().push_back(
+            m_Application__applicationId);
 
     // ListApplications
     m_ListApplicationsEClass = new ::ecore::EClass();
@@ -116,20 +125,20 @@ AMS_DataPackage::AMS_DataPackage()
     m_ApplicationEClass->setName("Application");
     m_ApplicationEClass->setAbstract(false);
     m_ApplicationEClass->setInterface(false);
-    m_Application__profile->setEType(
+    m_Application__name->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_Application__profile->setName("profile");
-    m_Application__profile->setDefaultValueLiteral("" "");
-    m_Application__profile->setLowerBound(0);
-    m_Application__profile->setUpperBound(1);
-    m_Application__profile->setTransient(false);
-    m_Application__profile->setVolatile(false);
-    m_Application__profile->setChangeable(true);
-    m_Application__profile->setUnsettable(false);
-    m_Application__profile->setID(false);
-    m_Application__profile->setUnique(true);
-    m_Application__profile->setDerived(false);
-    m_Application__profile->setOrdered(true);
+    m_Application__name->setName("name");
+    m_Application__name->setDefaultValueLiteral("" "");
+    m_Application__name->setLowerBound(0);
+    m_Application__name->setUpperBound(1);
+    m_Application__name->setTransient(false);
+    m_Application__name->setVolatile(false);
+    m_Application__name->setChangeable(true);
+    m_Application__name->setUnsettable(false);
+    m_Application__name->setID(false);
+    m_Application__name->setUnique(true);
+    m_Application__name->setDerived(false);
+    m_Application__name->setOrdered(true);
     m_Application__description->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_Application__description->setName("description");
@@ -172,6 +181,34 @@ AMS_DataPackage::AMS_DataPackage()
     m_Application__output->setUnique(true);
     m_Application__output->setDerived(false);
     m_Application__output->setOrdered(true);
+    m_Application__script->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Application__script->setName("script");
+    m_Application__script->setDefaultValueLiteral("" "");
+    m_Application__script->setLowerBound(0);
+    m_Application__script->setUpperBound(1);
+    m_Application__script->setTransient(false);
+    m_Application__script->setVolatile(false);
+    m_Application__script->setChangeable(true);
+    m_Application__script->setUnsettable(false);
+    m_Application__script->setID(false);
+    m_Application__script->setUnique(true);
+    m_Application__script->setDerived(false);
+    m_Application__script->setOrdered(true);
+    m_Application__applicationId->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Application__applicationId->setName("applicationId");
+    m_Application__applicationId->setDefaultValueLiteral("" "");
+    m_Application__applicationId->setLowerBound(0);
+    m_Application__applicationId->setUpperBound(1);
+    m_Application__applicationId->setTransient(false);
+    m_Application__applicationId->setVolatile(false);
+    m_Application__applicationId->setChangeable(true);
+    m_Application__applicationId->setUnsettable(false);
+    m_Application__applicationId->setID(false);
+    m_Application__applicationId->setUnique(true);
+    m_Application__applicationId->setDerived(false);
+    m_Application__applicationId->setOrdered(true);
     // ListApplications
     m_ListApplicationsEClass->setName("ListApplications");
     m_ListApplicationsEClass->setAbstract(false);
@@ -227,9 +264,9 @@ AMS_DataPackage::AMS_DataPackage()
     return m_ListApplicationsOpEClass;
 }
 
-::ecore::EAttribute_ptr AMS_DataPackage::getApplication__profile()
+::ecore::EAttribute_ptr AMS_DataPackage::getApplication__name()
 {
-    return m_Application__profile;
+    return m_Application__name;
 }
 ::ecore::EAttribute_ptr AMS_DataPackage::getApplication__description()
 {
@@ -242,6 +279,14 @@ AMS_DataPackage::AMS_DataPackage()
 ::ecore::EAttribute_ptr AMS_DataPackage::getApplication__output()
 {
     return m_Application__output;
+}
+::ecore::EAttribute_ptr AMS_DataPackage::getApplication__script()
+{
+    return m_Application__script;
+}
+::ecore::EAttribute_ptr AMS_DataPackage::getApplication__applicationId()
+{
+    return m_Application__applicationId;
 }
 ::ecore::EReference_ptr AMS_DataPackage::getListApplications__appl()
 {

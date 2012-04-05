@@ -4,7 +4,7 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="AMS_Data"
     nsURI="http://www.sysfera.com/AMS/Data">
   <eClassifiers xsi:type="ecore:EClass" name="Application" instanceTypeName="Application">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="profile" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
         <details key="content" value="profile of the application"/>
@@ -26,6 +26,18 @@
         defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
         <details key="content" value="output of the application"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="script" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="profile of the application"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="applicationId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="profile of the application"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>

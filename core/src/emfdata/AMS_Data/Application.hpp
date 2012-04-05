@@ -69,15 +69,15 @@ namespace AMS_Data
 
         // Attributes
         /**
-         * \brief To get the profile
-         * \return The profile attribute value
+         * \brief To get the name
+         * \return The name attribute value
          **/
-        ::ecore::EString const& getProfile() const;
+        ::ecore::EString const& getName() const;
         /**
-         * \brief To set the profile
-         * \param _profile The profile value
+         * \brief To set the name
+         * \param _name The name value
          **/
-        void setProfile(::ecore::EString const& _profile);
+        void setName(::ecore::EString const& _name);
 
         /**
          * \brief To get the description
@@ -112,6 +112,28 @@ namespace AMS_Data
          **/
         void setOutput(::ecore::EString const& _output);
 
+        /**
+         * \brief To get the script
+         * \return The script attribute value
+         **/
+        ::ecore::EString const& getScript() const;
+        /**
+         * \brief To set the script
+         * \param _script The script value
+         **/
+        void setScript(::ecore::EString const& _script);
+
+        /**
+         * \brief To get the applicationId
+         * \return The applicationId attribute value
+         **/
+        ::ecore::EString const& getApplicationId() const;
+        /**
+         * \brief To set the applicationId
+         * \param _applicationId The applicationId value
+         **/
+        void setApplicationId(::ecore::EString const& _applicationId);
+
         // References
 
 
@@ -137,13 +159,17 @@ namespace AMS_Data
     protected:
         // Attributes
 
-        ::ecore::EString m_profile;
+        ::ecore::EString m_name;
 
         ::ecore::EString m_description;
 
         ::ecore::EString m_input;
 
         ::ecore::EString m_output;
+
+        ::ecore::EString m_script;
+
+        ::ecore::EString m_applicationId;
 
         // References
 
