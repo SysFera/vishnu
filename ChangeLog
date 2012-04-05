@@ -1,8 +1,9 @@
 +--------------+
-| VISHNU 1.3.0 |
+| VISHNU 1.3.1 |
 +--------------+
 
 * Fix mac compilation problem for the client. Now use libcrypto instead of libcrypt
+* Fix compilation problem where libldap was not linked to the sed
 
 +--------------+
 | VISHNU 1.3.0 |
