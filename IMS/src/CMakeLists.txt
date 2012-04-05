@@ -34,7 +34,7 @@ target_link_libraries(vishnu-ims-client
   ${Boost_LIBRARIES}
   emf4cpp-vishnu
   vishnu-core
-  crypt)
+  ${LIBCRYPT_LIB})
 if(COMPILE_FMS)
   target_link_libraries(vishnu-ims-client vishnu-fms-client)
 endif()
@@ -83,7 +83,7 @@ if(NOT CLIENT_ONLY)
     vishnu-core-server
     vishnu-ums-server
     emf4cpp-vishnu
-    crypt)
+    ${LIBCRYPT_LIB})
 
   install(TARGETS imssed DESTINATION ${SBIN_INSTALL_DIR})
 endif (NOT CLIENT_ONLY)  

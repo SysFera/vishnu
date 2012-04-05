@@ -81,7 +81,7 @@ target_link_libraries(fms_stresser
   ${LIBPQ_LIB}
   ${Boost_LIBRARIES}
   vishnu-core
-  crypt
+  ${LIBCRYPT_LIB}
   vishnu-ums-client
   vishnu-fms-client)
 

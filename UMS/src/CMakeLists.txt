@@ -86,7 +86,7 @@ if(NOT CLIENT_ONLY)
     ${LOG_LIBRARY}
     vishnu-ums-server
     emf4cpp-vishnu
-    crypt)
+    ${LIBCRYPT_LIB})
 
   install(TARGETS umssed DESTINATION ${SBIN_INSTALL_DIR})
 endif()
