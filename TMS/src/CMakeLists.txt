@@ -47,7 +47,8 @@ if (NOT CLIENT_ONLY)
     ${REGISTRY_SOURCE_DIR}
     ${UMS_SERVER_SOURCE_DIR}
     ${FMS_SERVER_SOURCE_DIR}
-    ${USED_BATCH_INCLUDE_DIR})
+    ${USED_BATCH_INCLUDE_DIR}
+    ${TESTVISHNU_SOURCE_DIR}/../third-party)
   
   set(slave_SRCS slave/slave.cpp)
   add_executable(tmsSlave ${slave_SRCS})
