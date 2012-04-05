@@ -24,6 +24,7 @@
 
 extern "C" {
 #include "drmaa.h"
+
 }
 
 #include "SGEServer.hpp"
@@ -92,10 +93,12 @@ SGEServer::submit(const char* scriptPath,
     getline(iss, line);
     size_t pos = line.find('#');
     if(pos==string::npos) {
+      
       continue;
     }
     line = line.erase(0, pos);
     if(boost::algorithm::starts_with(line, "#$")){
+      
       line = line.substr(std::string("#$").size());
       pos = line.find("-N");
       if(pos!=std::string::npos){
@@ -113,6 +116,7 @@ SGEServer::submit(const char* scriptPath,
         
         pos = line.find("-o");
         if(pos!=std::string::npos){
+	  
           if(boost::algorithm::contains(line, ":")){
 	    
               value = line.substr(pos+3);
@@ -132,6 +136,7 @@ SGEServer::submit(const char* scriptPath,
           if(pos!=std::string::npos){
             
             if(boost::algorithm::contains(line, ":")){
+	      
               value = line.substr(pos+3);
 	      
             } else{
@@ -212,19 +217,8 @@ SGEServer::submit(const char* scriptPath,
   
   drmaa_errno = drmaa_get_attribute(jt,DRMAA_ERROR_PATH,jobErrorPath, size,diagnosis, sizeof(diagnosis)-1);
 
-  if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
-    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));   
-  }
-  drmaa_errno = drmaa_get_attribute(jt,DRMAA_OUTPUT_PATH,jobOutputPath, size,diagnosis, sizeof(diagnosis)-1);
-  if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
-    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
+  if (drmaa_errno==DRMAA_ERRNO_SUCCESS){
     
-  }
-  std::string jobErrorPathStr = jobErrorPath;
-  std::string jobOutputPathStr = jobOutputPath;
-  size_t pos;
-  if((pos=jobErrorPathStr.find(":"))!=std::string::npos) {
-    jobErrorPathStr = jobErrorPathStr.substr(pos+1);  
     std::string jobErrorPathStr = jobErrorPath;
     Env(SGE).replaceAllOccurences(jobErrorPathStr,"$JOB_ID",jobid);
     if(boost::algorithm::contains(jobErrorPathStr, "$")){
@@ -235,8 +229,8 @@ SGEServer::submit(const char* scriptPath,
     job.setErrorPath(jobErrorPathStr);
     
   }
-  
-  if((pos=jobOutputPathStr.find(":"))!=std::string::npos) {    
+  drmaa_errno = drmaa_get_attribute(jt,DRMAA_OUTPUT_PATH,jobOutputPath, size,diagnosis, sizeof(diagnosis)-1);
+  if (drmaa_errno==DRMAA_ERRNO_SUCCESS){
     std::string jobOutputPathStr = jobOutputPath;
     Env(SGE).replaceAllOccurences(jobOutputPathStr,"$JOB_ID",jobid);
     if(boost::algorithm::contains(jobOutputPathStr, "$")){
@@ -325,6 +319,7 @@ SGEServer::getJobState(const std::string& jobId) {
 time_t 
 SGEServer::getJobStartTime(const std::string& jobId) {
 
+
   time_t startTime = 0;
   int status = 0;
   int state=-1;
@@ -366,8 +361,7 @@ SGEServer::getJobStartTime(const std::string& jobId) {
     
   }  
   
-  
-  
+
   return startTime;
 }
 
@@ -453,6 +447,7 @@ SGEServer::listQueues(const std::string& optqueueName) {
   }
   mlistQueues->setNbQueues(mlistQueues->getQueues().size());
     
+
   return mlistQueues;
 }
 
