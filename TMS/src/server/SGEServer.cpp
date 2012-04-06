@@ -81,6 +81,7 @@ SGEServer::submit(const char* scriptPath,
   if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
     drmaa_exit(NULL, 0);
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
+
    
   }
     
@@ -254,11 +255,13 @@ SGEServer::submit(const char* scriptPath,
   
   drmaa_errno = drmaa_delete_job_template(jt, diagnosis, sizeof(diagnosis)-1);
   if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
+
     drmaa_exit(NULL, 0);
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
     
   }
   drmaa_exit(NULL, 0);
+
   return 0;
 }
 
@@ -280,6 +283,7 @@ SGEServer::cancel(const char* jobId) {
     
   }
   drmaa_exit(NULL, 0);
+
   return 0;
 }
 
@@ -319,7 +323,9 @@ SGEServer::getJobState(const std::string& jobId) {
      break;
     
   } /* switch */
+
   drmaa_exit(NULL, 0);
+
   return ret;
 }
 
@@ -346,6 +352,7 @@ SGEServer::getJobStartTime(const std::string& jobId) {
   if ((drmaa_errno!= DRMAA_ERRNO_SUCCESS)&&(drmaa_errno!= DRMAA_ERRNO_ALREADY_ACTIVE_SESSION)){
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
   }
+
   drmaa_errno = drmaa_job_ps(jobId.c_str(), &state, diagnosis, sizeof(diagnosis)-1);
   
   if (state==DRMAA_PS_RUNNING){
@@ -380,6 +387,7 @@ SGEServer::getJobStartTime(const std::string& jobId) {
   
   
   drmaa_exit(NULL, 0);
+
   return startTime;
 }
 
@@ -390,7 +398,7 @@ SGEServer::getJobStartTime(const std::string& jobId) {
  */
 TMS_Data::ListQueues*
 SGEServer::listQueues(const std::string& optqueueName) { 
-  
+
   TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
   mlistQueues = ecoreFactory->createListQueues();
   std::string exe = boost::process::find_executable_in_path("qconf");
@@ -431,6 +439,7 @@ SGEServer::listQueues(const std::string& optqueueName) {
     if (iss){
       TMS_Data::Queue_ptr queue = ecoreFactory->createQueue();
       while (std::getline(iss, line)){
+
         if(boost::algorithm::starts_with(line, "qname")){
           line = line.substr(5);
           boost::algorithm::trim_left(line);
@@ -517,6 +526,7 @@ SGEServer::listQueues(const std::string& optqueueName) {
   mlistQueues->setNbQueues(mlistQueues->getQueues().size());
 
   drmaa_exit(NULL, 0);
+
   return mlistQueues;
 }
 

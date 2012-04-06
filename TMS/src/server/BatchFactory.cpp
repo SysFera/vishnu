@@ -25,9 +25,8 @@ extern "C" {
 #include "drmaa.h"
 }
 #endif
-#include <iostream>
 
-static int created=0;
+
 
 /**
  * \brief Constructor
@@ -75,6 +74,7 @@ BatchFactory::getBatchServerInstance(BatchType batchType) {
       break;
     case SGE:
 #ifdef HAVE_SGE
+
       mbatchServer = new SGEServer();   
 #else
       mbatchServer = NULL;

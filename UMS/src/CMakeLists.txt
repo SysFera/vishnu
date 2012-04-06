@@ -87,7 +87,11 @@ if(NOT CLIENT_ONLY)
     ${LOG_LIBRARY}
     vishnu-ums-server
     emf4cpp-vishnu
+<<<<<<< HEAD
     ${LIBCRYPT_LIB}
+=======
+    crypt
+>>>>>>> 9e1a0b2fb81b17d6af9a6c58266c255f7b1239b1
     ${CMAKE_DL_LIBS})
 
   install(TARGETS umssed DESTINATION ${SBIN_INSTALL_DIR})
