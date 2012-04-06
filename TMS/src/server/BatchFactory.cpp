@@ -26,6 +26,10 @@ extern "C" {
 #include "drmaa.h"
 }
 #endif
+#include <iostream>
+
+static int created=0;
+
 /**
  * \brief Constructor
  */

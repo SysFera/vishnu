@@ -272,20 +272,22 @@ solveListOfQueues(diet_profile_t* pb) {
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   diet_string_get(diet_parameter(pb,1), &machineId, NULL);
   diet_string_get(diet_parameter(pb,2), &option, NULL);
-
+    
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   TMS_Data::ListQueues_ptr listQueues = NULL;
-
+  
+    
   ListQueuesServer queryQueues(sessionServer, machineId, ServerTMS::getInstance()->getBatchType(), std::string(option));
-
+  
   try {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
+    
     mapperkey = mapper->code("vishnu_list_queues");
     mapper->code(std::string(machineId), mapperkey);
     mapper->code(std::string(option), mapperkey);
     cmd = mapper->finalize(mapperkey);
-
+    
     listQueues = queryQueues.list();
 
     ::ecorecpp::serializer::serializer _ser;
