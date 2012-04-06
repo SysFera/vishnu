@@ -692,11 +692,29 @@
       </section>
       <section>
         <title> Troubleshooting functions </title>
-        <para> The <emphasis role="italic">&quot;There is no session in this terminal&quot;</emphasis> error can be solved by connecting to VISHNU using 
-	  the <emphasis role="bold">vishnu_connect</emphasis> command.
-	</para>
-        <para> If a message similar to &quot;warning input stream error&quot; happens when calling vishnu_connect but the call is successful, try cleaning the .vishnu directory.
-	</para>
+        <itemizedlist>
+          <listitem>
+            <para> The <emphasis role="italic">&quot;There is no session in this terminal&quot;</emphasis> error can be solved by connecting to VISHNU using 
+		the <emphasis role="bold">vishnu_connect</emphasis> command.
+	    </para>
+          </listitem>
+          <listitem>
+            <para> If a message similar to <emphasis role="italic">&quot;warning input stream error&quot;</emphasis> happens when calling vishnu_connect but the call is successful, try cleaning the .vishnu directory.
+	    </para>
+          </listitem>
+          <listitem>
+            <para>
+		The <emphasis role="italic">&quot;DIET initialization failed&quot;</emphasis> error, possibly caused by the number of omniorb connection limit, can be solved in the previous case by 
+		using the variable maxGIOPConnectionPerServer on the omniorb configuration file as follows : maxGIOPConnectionPerServer = 1000. The value 1000 is an example value.
+	      </para>
+          </listitem>
+          <listitem>
+            <para>
+	      If the message <emphasis role="italic">&quot;locale::facet::_S_create_c_locale name not valid&quot;</emphasis> occurs after calling vishnu_connect command, you must export environment variable LANG 
+	      as follows : export LANG=C.
+	    </para>
+          </listitem>
+        </itemizedlist>
       </section>
     </section>
   </chapter>
@@ -6439,7 +6457,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (SHELL).</
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6537,7 +6555,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6646,7 +6664,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6732,7 +6750,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6825,7 +6843,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
