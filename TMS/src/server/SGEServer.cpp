@@ -70,12 +70,17 @@ SGEServer::submit(const char* scriptPath,
   char jobErrorPath[256];
   char jobName[256];
   string Walltime;
-  
-  
+
+  drmaa_errno = drmaa_init(NULL, diagnosis, sizeof(diagnosis)-1);
+  if ((drmaa_errno!= DRMAA_ERRNO_SUCCESS)&&(drmaa_errno!= DRMAA_ERRNO_ALREADY_ACTIVE_SESSION)){
+    
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
+  }
   
   drmaa_errno = drmaa_allocate_job_template(&jt, diagnosis, sizeof(diagnosis)-1);
   if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
-    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(diagnosis));
+    drmaa_exit(NULL, 0);
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
    
   }
     
@@ -104,7 +109,7 @@ SGEServer::submit(const char* scriptPath,
         value = line.substr(pos+3);
         drmaa_errno = drmaa_set_attribute(jt,DRMAA_JOB_NAME,value.c_str(),diagnosis, sizeof(diagnosis)-1);
         if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
-	  
+          drmaa_exit(NULL, 0);
           throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
           
         }
@@ -122,7 +127,7 @@ SGEServer::submit(const char* scriptPath,
             }
           drmaa_errno = drmaa_set_attribute(jt,DRMAA_OUTPUT_PATH,value.c_str(),diagnosis, sizeof(diagnosis)-1);
           if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
-	    
+            drmaa_exit(NULL, 0);
             throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
             
           }
@@ -142,7 +147,7 @@ SGEServer::submit(const char* scriptPath,
             }
             drmaa_errno = drmaa_set_attribute(jt,DRMAA_ERROR_PATH,value.c_str(),diagnosis, sizeof(diagnosis)-1);
             if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
-	      
+              drmaa_exit(NULL, 0);
               throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
               
             }            
@@ -159,7 +164,7 @@ SGEServer::submit(const char* scriptPath,
   
   drmaa_errno = drmaa_set_attribute(jt, DRMAA_REMOTE_COMMAND, scriptPath , diagnosis, sizeof(diagnosis)-1);
   if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
-    
+    drmaa_exit(NULL, 0);
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
     
   } 
@@ -168,7 +173,6 @@ SGEServer::submit(const char* scriptPath,
   for(int i=0; i < cmdsOptions.size(); i++) {
     
     scriptoption += const_cast<char*>(cmdsOptions[i].c_str());
-    cout << "command line is " << cmdsOptions[i] << endl;
     if (boost::algorithm::starts_with(cmdsOptions[i], "s_rt")){
       
       Walltime = cmdsOptions[i].substr(5);
@@ -181,7 +185,7 @@ SGEServer::submit(const char* scriptPath,
   
   drmaa_errno = drmaa_set_attribute(jt, DRMAA_NATIVE_SPECIFICATION, scriptoption.c_str(),diagnosis, sizeof(diagnosis)-1);
   if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
-    
+    drmaa_exit(NULL, 0);
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
     
   }
@@ -199,7 +203,7 @@ SGEServer::submit(const char* scriptPath,
       
   
   if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
-    
+    drmaa_exit(NULL, 0);
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
     
   }   
@@ -217,7 +221,7 @@ SGEServer::submit(const char* scriptPath,
     std::string jobErrorPathStr = jobErrorPath;
     Env(SGE).replaceAllOccurences(jobErrorPathStr,"$JOB_ID",jobid);
     if(boost::algorithm::contains(jobErrorPathStr, "$")){
-      
+      drmaa_exit(NULL, 0);
       throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use another envirnment variable than $JOB_ID.\n");
       
     }
@@ -230,7 +234,7 @@ SGEServer::submit(const char* scriptPath,
     std::string jobOutputPathStr = jobOutputPath;
     Env(SGE).replaceAllOccurences(jobOutputPathStr,"$JOB_ID",jobid);
     if(boost::algorithm::contains(jobOutputPathStr, "$")){
-      
+      drmaa_exit(NULL, 0);
       throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use another envirnment variable than $JOB_ID.\n"); 
       
     }
@@ -250,10 +254,11 @@ SGEServer::submit(const char* scriptPath,
   
   drmaa_errno = drmaa_delete_job_template(jt, diagnosis, sizeof(diagnosis)-1);
   if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
-    
+    drmaa_exit(NULL, 0);
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
     
   }
+  drmaa_exit(NULL, 0);
   return 0;
 }
 
@@ -261,15 +266,20 @@ int
 SGEServer::cancel(const char* jobId) {
   
   
-  
+
   char diagnosis[DRMAA_ERROR_STRING_BUFFER];
   int drmaa_errno;
+  drmaa_errno = drmaa_init(NULL, diagnosis, sizeof(diagnosis)-1);
+  if ((drmaa_errno!= DRMAA_ERRNO_SUCCESS)&&(drmaa_errno!= DRMAA_ERRNO_ALREADY_ACTIVE_SESSION)){
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
+  }
   drmaa_errno = drmaa_control(jobId, DRMAA_CONTROL_TERMINATE, diagnosis, sizeof(diagnosis)-1);
   if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
+    drmaa_exit(NULL, 0);
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
     
   }
-  
+  drmaa_exit(NULL, 0);
   return 0;
 }
 
@@ -283,7 +293,12 @@ SGEServer::getJobState(const std::string& jobId) {
   
   int ret=0;
   int state=-1;
+  int drmaa_errno;
   char diagnosis[DRMAA_ERROR_STRING_BUFFER];
+  drmaa_errno = drmaa_init(NULL, diagnosis, sizeof(diagnosis)-1);
+  if ((drmaa_errno!= DRMAA_ERRNO_SUCCESS)&&(drmaa_errno!= DRMAA_ERRNO_ALREADY_ACTIVE_SESSION)){
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
+  }
   drmaa_job_ps(jobId.c_str(), &state, diagnosis, sizeof(diagnosis)-1);
   
   switch (state) {
@@ -304,7 +319,7 @@ SGEServer::getJobState(const std::string& jobId) {
      break;
     
   } /* switch */
-  
+  drmaa_exit(NULL, 0);
   return ret;
 }
 
@@ -325,7 +340,12 @@ SGEServer::getJobStartTime(const std::string& jobId) {
   char jobid_out[DRMAA_JOBNAME_BUFFER];
   char diagnosis[DRMAA_ERROR_STRING_BUFFER];
   char usage[DRMAA_ERROR_STRING_BUFFER];
-  int drmaa_errno; 
+  int drmaa_errno;
+
+  drmaa_errno = drmaa_init(NULL, diagnosis, sizeof(diagnosis)-1);
+  if ((drmaa_errno!= DRMAA_ERRNO_SUCCESS)&&(drmaa_errno!= DRMAA_ERRNO_ALREADY_ACTIVE_SESSION)){
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
+  }
   drmaa_errno = drmaa_job_ps(jobId.c_str(), &state, diagnosis, sizeof(diagnosis)-1);
   
   if (state==DRMAA_PS_RUNNING){
@@ -359,7 +379,7 @@ SGEServer::getJobStartTime(const std::string& jobId) {
   }  
   
   
-  
+  drmaa_exit(NULL, 0);
   return startTime;
 }
 
@@ -370,7 +390,7 @@ SGEServer::getJobStartTime(const std::string& jobId) {
  */
 TMS_Data::ListQueues*
 SGEServer::listQueues(const std::string& optqueueName) { 
-
+  
   TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
   mlistQueues = ecoreFactory->createListQueues();
   std::string exe = boost::process::find_executable_in_path("qconf");
@@ -380,6 +400,12 @@ SGEServer::listQueues(const std::string& optqueueName) {
   boost::process::context ctx;
   ctx.streams[boost::process::stdout_id] = boost::process::behavior::pipe();
   args.push_back("-sq");
+  char diagnosis[DRMAA_ERROR_STRING_BUFFER];
+  int drmaa_errno;
+  drmaa_errno = drmaa_init(NULL, diagnosis, sizeof(diagnosis)-1);
+  if ((drmaa_errno!= DRMAA_ERRNO_SUCCESS)&&(drmaa_errno!= DRMAA_ERRNO_ALREADY_ACTIVE_SESSION)){
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
+  }
   if(optqueueName.size()!=0) {
     queueNames.push_back(optqueueName.c_str());
   } else {
@@ -401,50 +427,96 @@ SGEServer::listQueues(const std::string& optqueueName) {
     args.push_back((*it).c_str());
     boost::process::child c1 = boost::process::create_child(exe, args, ctx);
     boost::process::pistream iss(c1.get_handle(boost::process::stdout_id));
-    std::string line;
-    args.pop_back();
+    std::string line; 
     if (iss){
-
       TMS_Data::Queue_ptr queue = ecoreFactory->createQueue();
-    
       while (std::getline(iss, line)){
-
         if(boost::algorithm::starts_with(line, "qname")){
           line = line.substr(5);
           boost::algorithm::trim_left(line);
           queue->setName(line);
-
         }
         if(boost::algorithm::starts_with(line, "priority")){
           line = line.substr(8);
           boost::algorithm::trim_left(line);
           int priority = atoi(line.c_str());
           queue->setPriority(priority);
-
         }
-        /*if(boost::algorithm::starts_with(line, "qname")){
+        if(boost::algorithm::starts_with(line, "slots")){
+          line = line.substr(5);
+          boost::algorithm::trim_left(line);
+          size_t pos = line.find(",");
+          int MaxJob =0;
+          while(pos!=std::string::npos){
+            std::string jobnb = line.substr(0,pos);
+            size_t position;
+            position = jobnb.find("=");
+            if(position!=std::string::npos ){
+              jobnb = jobnb.substr(position +1);             
+            }
+            MaxJob += atoi(jobnb.c_str()); 
+            line = line.substr(pos+1);
+            pos = line.find(",");
+          }
           
+          queue->setMaxJobCpu(MaxJob);       
         }
-        if(boost::algorithm::starts_with(line, "qname")){
+        if(boost::algorithm::starts_with(line, "hostlist")){
+          line = line.substr(8);
+          boost::algorithm::trim_left(line);
+          int nodes =0 ;
+          if (line != "NONE"){
+            nodes = (int) std::count(line.begin(),line.end(),',') +1;
+          }
+          queue->setNode(nodes);
+        }
+        if(boost::algorithm::starts_with(line, "h_rt")){
+          line = line.substr(4);
+          boost::algorithm::trim_left(line);
+          if (line != "INFINITY"){
+            queue->setWallTime(vishnu::convertStringToWallTime(line));
+          }
+        }
 
-        }*/
-
-
+        
+        
       }
       queue->setState(2);
-      queue->setNbRunningJobs(1);
-      queue->setNbJobsInQueue(0);
+      std::vector<std::string> arg;
+      arg.push_back("-q");
+      arg.push_back((*it).c_str());
+      std::string ex = boost::process::find_executable_in_path("qstat");
+      boost::process::child c2 = boost::process::create_child(ex, arg, ctx);
+      boost::process::pistream isss(c2.get_handle(boost::process::stdout_id));
+      arg.pop_back();
+      std::string lines;
+      int nbrunningjobs = 0;
+      int nbjobsinqueue = 0;
+      if (isss){
+        while (std::getline(isss, lines)){
+          if (boost::algorithm::contains(lines, " r ")){
+            nbrunningjobs++;
+          }
+          if (boost::algorithm::contains(lines, " qw ")){
+            nbjobsinqueue++;
+          }          
+        }
+      }
+      queue->setNbRunningJobs(nbrunningjobs);
+      queue->setNbJobsInQueue(nbjobsinqueue);
+      
+      queue->setMemory(-1);//UNDEFINED in SGE
       queue->setDescription("");//UNDEFINED in SGE
-      queue->setMaxProcCpu(1);
-      queue->setMaxJobCpu(1);
-      queue->setNode(1);
+      queue->setMaxProcCpu(-1);//UNDEFINED in SGE
       
       mlistQueues->getQueues().push_back(queue);
     }
+    args.pop_back();
     
   }
   mlistQueues->setNbQueues(mlistQueues->getQueues().size());
-    
+
+  drmaa_exit(NULL, 0);
   return mlistQueues;
 }
 
@@ -457,13 +529,7 @@ void SGEServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
  * \brief Destructor
  */
 SGEServer::~SGEServer() {
-  char diagnosis[DRMAA_ERROR_STRING_BUFFER];
-  int drmaa_errno;
-  drmaa_errno = drmaa_exit(diagnosis, sizeof(diagnosis)-1);
-  if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
-    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
-    
-  }
+
 }
 
 

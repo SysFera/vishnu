@@ -25,6 +25,10 @@ extern "C" {
 #include "drmaa.h"
 }
 #endif
+#include <iostream>
+
+static int created=0;
+
 /**
  * \brief Constructor
  */
@@ -71,14 +75,7 @@ BatchFactory::getBatchServerInstance(BatchType batchType) {
       break;
     case SGE:
 #ifdef HAVE_SGE
-      mbatchServer = new SGEServer();
-      char diagnosis[DRMAA_ERROR_STRING_BUFFER];
-      setenv("SGE_ROOT",SGE_ROOT_PATH,1);
-      if (drmaa_init(NULL, diagnosis, sizeof(diagnosis)-1) != DRMAA_ERRNO_SUCCESS) {
-        
-        throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
-      }
-      
+      mbatchServer = new SGEServer();   
 #else
       mbatchServer = NULL;
 #endif
