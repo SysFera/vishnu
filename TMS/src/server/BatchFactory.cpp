@@ -76,7 +76,6 @@ BatchFactory::getBatchServerInstance(BatchType batchType) {
 #ifdef HAVE_SGE
 
       mbatchServer = new SGEServer();
-      setenv("SGE_ROOT",SGE_ROOT_PATH,1);
 #else
       mbatchServer = NULL;
 #endif

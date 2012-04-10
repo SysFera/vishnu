@@ -17,6 +17,7 @@ find_library(SGE_LIB
   paths
         ${SGE_DIR}/lib
 	$ENV{SGE_ROOT}/lib/linux-x86
+        $ENV{SGE_ROOT}/lib/linux-x64
         /usr/lib
         /usr/local/lib
 	/opt/local/lib
