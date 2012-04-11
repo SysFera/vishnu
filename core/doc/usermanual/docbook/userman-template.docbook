@@ -745,7 +745,8 @@
 	  <listitem>
 	    <para>
 		The <emphasis role = "italic">"DIET initialization failed"</emphasis> error, possibly caused by the number of omniorb connection limit, can be solved in the previous case by 
-		using the variable maxGIOPConnectionPerServer on the omniorb configuration file as follows : maxGIOPConnectionPerServer = 1000. The value 1000 is an example value.
+		using the variable maxGIOPConnectionPerServer on the omniorb configuration file as follows : maxGIOPConnectionPerServer = 1000. It is also advisable to put the variable maxServerThreadPoolSize to 1000. 
+		The value 1000 is an example value.
 	      </para>
 	  </listitem>
 	  
