@@ -33,6 +33,7 @@ extern "C" {
 #include "UMSVishnuException.hpp"
 #include "utilVishnu.hpp"
 #include "Env.hpp"
+#include "SGEConfig.hpp"
 using namespace std;
 using namespace vishnu;
 namespace bp = boost::process;
@@ -357,7 +358,7 @@ SGEServer::getJobStartTime(const std::string& jobId) {
   drmaa_errno = drmaa_job_ps(jobId.c_str(), &state, diagnosis, sizeof(diagnosis)-1);
   
   if (state==DRMAA_PS_RUNNING){
-    std::string exe = boost::process::find_executable_in_path("qstat"); 
+    std::string exe = boost::process::find_executable_in_path("qstat", SGE_BIN_PATH); 
     std::vector<std::string> args; 
     boost::process::context ctx; 
     ctx.streams[boost::process::stdout_id] = boost::process::behavior::pipe(); 
@@ -401,7 +402,7 @@ SGEServer::listQueues(const std::string& optqueueName) {
   
   TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
   mlistQueues = ecoreFactory->createListQueues();
-  std::string exe = boost::process::find_executable_in_path("qconf");
+  std::string exe = boost::process::find_executable_in_path("qconf", SGE_BIN_PATH);
   std::vector<std::string> args;
   std::vector<std::string> argss;
   std::vector<std::string> queueNames;
@@ -495,7 +496,7 @@ SGEServer::listQueues(const std::string& optqueueName) {
       argument.push_back("-f");
       argument.push_back("-q");
       argument.push_back((*it).c_str());
-      std::string exec = boost::process::find_executable_in_path("qstat");
+      std::string exec = boost::process::find_executable_in_path("qstat", SGE_BIN_PATH);
       boost::process::child c3 = boost::process::create_child(exec, argument, ctx);
       boost::process::pistream isstream(c3.get_handle(boost::process::stdout_id));
       argument.pop_back();
@@ -539,7 +540,7 @@ SGEServer::listQueues(const std::string& optqueueName) {
       std::vector<std::string> arg;
       arg.push_back("-q");
       arg.push_back((*it).c_str());
-      std::string ex = boost::process::find_executable_in_path("qstat");
+      std::string ex = boost::process::find_executable_in_path("qstat", SGE_BIN_PATH);
       boost::process::child c2 = boost::process::create_child(ex, arg, ctx);
       boost::process::pistream isss(c2.get_handle(boost::process::stdout_id));
       arg.pop_back();
