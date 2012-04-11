@@ -190,6 +190,13 @@
         <revdescription>
         <para>Ajout pour le support de LDAP</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>20</revnumber>
+        <date>11/04/2012</date>
+        <authorinitials>E. PAMBA CAPO-CHICHI</authorinitials>
+        <revdescription>
+        <para>Prise en compte du gestionnaire de resources Grid Engine</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -371,13 +378,16 @@
               <para>Torque API v2.3.6</para>
             </listitem>
             <listitem>
-              <para>IBM LoadLeveler API</para>
+              <para>ou IBM LoadLeveler API</para>
             </listitem>
             <listitem>
               <para>ou SLURM API v2.2.1</para>
             </listitem>
             <listitem>
               <para>ou LSF API v7.0.6.134609</para>
+            </listitem>
+            <listitem>
+              <para>ou Grid Engine API 2011.11</para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -423,7 +433,7 @@
           <listitem>
             <para>
 	      COMPILE_TMS, compile le module TMS si le flag est activé (OFF par défaut). Si ON, COMPILE_UMS doit aussi être à ON et
-              l'une des options VISHNU_USE_TORQUE, VISHNU_USE_LOADLEVELER, VISHNU_USE_SLURM ou VISHNU_USE_LSF doit être à ON.
+              l'une des options VISHNU_USE_TORQUE, VISHNU_USE_LOADLEVELER, VISHNU_USE_SLURM, VISHNU_USE_LSF ou VISHNU_USE_SGE doit être à ON.
 	    </para>
           </listitem>
           <listitem>
@@ -527,6 +537,27 @@
               <listitem>
                 <para>
             LSF_LIB indique le chemin absolu jusqu'à la librairie liblsf.so
+          </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>
+        VISHNU_USE_SGE, compile le SeD TMS pour Grid Engine (OFF par défaut). Les variables SGE_ROOT, SGE_INCLUDE_DIR et SGE_LIB doivent être renseignées si le flag VISHNU_USE_SGE est à ON.</para>
+            <itemizedlist>
+              <listitem>
+                <para>
+            SGE_ROOT indique le chemin absolu jusqu'au répertoire d'installation de Grid Engine
+          </para>
+              </listitem>
+              <listitem>
+                <para>
+            SGE_INCLUDE_DIR indique le chemin absolu vers le fichier drmaa.h
+          </para>
+              </listitem>
+              <listitem>
+                <para>
+            SGE_LIB indique le chemin absolu jusqu'à la librairie libdrmaa.so
           </para>
               </listitem>
             </itemizedlist>
@@ -939,7 +970,7 @@ nécessaires : slapd libldap-2.4-2 libldap2-dev ldap-utils. Une fois VISHNU comp
         </listitem>
         <listitem>
           <para>
-      Sur la machine hôte de LSF, lancer les excutables <emphasis/>hostsetup <emphasis>lsfstartup</emphasis>.
+      Sur la machine hôte de LSF, lancer les exécutables <emphasis/>hostsetup <emphasis>lsfstartup</emphasis>.
     </para>
         </listitem>
         <listitem>
@@ -959,9 +990,30 @@ nécessaires : slapd libldap-2.4-2 libldap2-dev ldap-utils. Une fois VISHNU comp
     </para>
         </listitem>
         <listitem>
+          <para>
+      Sur la machine hôte de Grid Engine, lancer les exécutables <emphasis> sge_qmaster </emphasis> et <emphasis>sge_execd</emphasis>.
+    </para>
+        </listitem>
+        <listitem>
+          <para>Lancer le SeD TMS sur la machine hôte de Grid Engine. La commande de lancement est : <emphasis
+                role="bold">tmssed ~/tms_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.6 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus :
+      <itemizedlist>
+              <listitem>
+                <para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des jobs.</para>
+              </listitem>
+              <listitem>
+                <para>'batchSchedulerType=SGE' : Le type du batch scheduler utilisé.</para>
+              </listitem>
+              <listitem>
+                <para>'vishnuMachineId=machine_2' : L'identifiant VISHNU de la machine ou le SeD TMS est lancé (obtenu en utilisant la commande vishnu_list_machines).</para>
+              </listitem>
+            </itemizedlist>
+    </para>
+        </listitem>
+        <listitem>
           <para>Lancer le SeD IMS sur toutes la machine préfrontale. La commande de lancement est : <emphasis
                 role="bold">imssed ~/ims_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.5 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS. Il faut noter que IMS doit être lancé sur toutes les machines à monitorer.
-	  </para>
+    </para>
         </listitem>
         <listitem>
           <para>Lancer le SeD FMS sur une machine (sur la figure exemple 4.1 elle est différente de la préfrontale et de la machine avec le batch, mais cela peut être n'importe laquelle). La commande de lancement est : <emphasis
@@ -1406,7 +1458,8 @@ nécessaires : slapd libldap-2.4-2 libldap2-dev ldap-utils. Une fois VISHNU comp
 	# Configuration propres à TMS
 	# batchSchedulerType=SLURM si le batchScheduler est de type SLURM
 	# batchSchedulerType=LSF si le batchScheduler est de type LSF
-  batchSchedulerType=TORQUE
+	# batchSchedulerType=SGE si le batchScheduler est de type Grid Engine
+	batchSchedulerType=TORQUE
 	intervalMonitor = 1
       </programlisting>
     </section>
@@ -6017,7 +6070,7 @@ type and optionally for LDAP the DN of the root entry. By default, the type of t
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6106,7 +6159,7 @@ type and optionally for LDAP the DN of the root entry. By default, the type of t
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6182,7 +6235,7 @@ type and optionally for LDAP the DN of the root entry. By default, the type of t
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6272,7 +6325,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6357,7 +6410,7 @@ $TYPE: The 'U' symb to remind it is a user id</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6442,7 +6495,7 @@ $TYPE: The 'M' symb to remind it is a machine id</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6524,7 +6577,7 @@ $TYPE: The 'J' symb to remind it is a job id</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6606,7 +6659,7 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6688,7 +6741,7 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6700,7 +6753,7 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
       <refsect1 id="example">
         <title>EXAMPLE</title>
         <para>To define the format to transfer_$CPT:</para>
-        <para>vishnu_define_authen_identifier LDAP_\$CPT</para>
+        <para>vishnu_define_auth_identifier LDAP_\$CPT</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -6766,7 +6819,7 @@ SOFT   = 2</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6845,7 +6898,7 @@ SOFT   = 2</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6923,7 +6976,7 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -7013,7 +7066,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (UMS), 2 (
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
