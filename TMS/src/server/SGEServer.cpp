@@ -489,7 +489,53 @@ SGEServer::listQueues(const std::string& optqueueName) {
         
         
       }
-      queue->setState(2);
+      /*get Queue Status*/ 
+
+      std::vector<std::string> argument;
+      argument.push_back("-f");
+      argument.push_back("-q");
+      argument.push_back((*it).c_str());
+      std::string exec = boost::process::find_executable_in_path("qstat");
+      boost::process::child c3 = boost::process::create_child(exec, argument, ctx);
+      boost::process::pistream isstream(c3.get_handle(boost::process::stdout_id));
+      argument.pop_back();
+      std::string cline;
+      if (isstream){
+        
+        while (std::getline(isstream, cline)){
+          int state =0;
+          if (boost::algorithm::starts_with(cline,(*it).c_str() )){
+            std::vector< std::string >  SplitVec; // #2: Search for tokens
+            boost::algorithm::split( SplitVec, cline, boost::algorithm::is_any_of(" "), boost::algorithm::token_compress_on ); // SplitVec == { "hello abc","ABC","aBc goodbye" }
+            
+            std::vector<std::string>::iterator itt;
+            
+            itt = SplitVec.end()-1;
+
+            if (boost::algorithm::contains(*itt, "u")){
+              queue->setState(0);
+              state =0;
+            } else if  (boost::algorithm::contains(*itt, "a")) {
+              queue->setState(2);
+              state =1;
+            } else if  (boost::algorithm::contains(*itt, "A") || boost::algorithm::contains(*itt, "C") || boost::algorithm::contains(*itt, "D") || boost::algorithm::contains(*itt, "s")){
+              queue->setState(1);
+              state =0;
+            } else if  (boost::algorithm::contains(*itt, "S") || boost::algorithm::contains(*itt, "d") || boost::algorithm::contains(*itt, "E") || boost::algorithm::contains(*itt, "o")){
+              state =0;
+            } else if (boost::algorithm::contains(*itt, "")){
+                queue->setState(2);
+                state =1;
+            }
+          }
+          if(state){
+            break;
+          }
+            
+        }
+      }
+      
+          
       std::vector<std::string> arg;
       arg.push_back("-q");
       arg.push_back((*it).c_str());
@@ -502,10 +548,10 @@ SGEServer::listQueues(const std::string& optqueueName) {
       int nbjobsinqueue = 0;
       if (isss){
         while (std::getline(isss, lines)){
-          if (boost::algorithm::contains(lines, " r ")){
+          if (boost::algorithm::contains(lines, " r ") || boost::algorithm::contains(lines, " t ") || boost::algorithm::contains(lines, " R ")){
             nbrunningjobs++;
           }
-          if (boost::algorithm::contains(lines, " qw ")){
+          if (boost::algorithm::contains(lines, " qw ") || boost::algorithm::contains(lines, " s ") || boost::algorithm::contains(lines, " w ")){
             nbjobsinqueue++;
           }          
         }
