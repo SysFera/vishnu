@@ -78,7 +78,16 @@
               <para> Ajout des caractéristiques de circulation du mot de passe.</para>
             </revdescription>
           </revision>
-
+	  
+	  <revision>
+            <revnumber>09</revnumber>
+            <date>11/04/2012</date>
+            <authorinitials>SysFera</authorinitials>
+            <revdescription>
+              <para> Prise en compte du support de Grid Engine.</para>
+            </revdescription>
+          </revision>
+	  
         </revhistory>
     </info>
     <chapter>
