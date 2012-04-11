@@ -28,10 +28,19 @@ find_path(SGE_ROOT
   paths
       $ENV{SGE_ROOT}
 )
-if (SGE_INCLUDE_DIR AND  SGE_LIB AND SGE_ROOT)
+
+find_path(SGE_BIN_DIR
+  qstat
+  paths
+      $ENV{SGE_ROOT}/bin/linux-x86
+      $ENV{SGE_ROOT}/bin/linux-x64
+)
+
+if (SGE_INCLUDE_DIR AND  SGE_LIB AND SGE_ROOT AND SGE_BIN_DIR)
   set(SGE_FOUND "Yes")
+  mark_as_advanced(SGE_BIN_DIR)
   mark_as_advanced(SGE_ROOT)
   mark_as_advanced(SGE_INCLUDE_DIR)
   mark_as_advanced(SGE_LIB)
-endif(SGE_INCLUDE_DIR AND  SGE_LIB AND SGE_ROOT)
+endif(SGE_INCLUDE_DIR AND  SGE_LIB AND SGE_ROOT AND SGE_BIN_DIR)
 
