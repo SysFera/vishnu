@@ -543,7 +543,7 @@
           </listitem>
           <listitem>
             <para>
-        VISHNU_USE_SGE, compile le SeD TMS pour Grid Engine (OFF par défaut). Les variables SGE_ROOT, SGE_INCLUDE_DIR et SGE_LIB doivent être renseignées si le flag VISHNU_USE_SGE est à ON.</para>
+        VISHNU_USE_SGE, compile le SeD TMS pour Grid Engine (OFF par défaut). Les variables SGE_ROOT, SGE_INCLUDE_DIR, SGE_BIN_DIR et SGE_LIB doivent être renseignées si le flag VISHNU_USE_SGE est à ON.</para>
             <itemizedlist>
               <listitem>
                 <para>
@@ -553,6 +553,11 @@
               <listitem>
                 <para>
             SGE_INCLUDE_DIR indique le chemin absolu vers le fichier drmaa.h
+          </para>
+              </listitem>
+              <listitem>
+                <para>
+            SGE_BIN_DIR indique le chemin absolu jusqu'aux binaires de Grid Engine
           </para>
               </listitem>
               <listitem>
