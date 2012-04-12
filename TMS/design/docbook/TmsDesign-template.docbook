@@ -64,7 +64,16 @@
           <para>Added LSF batch scheduler </para>
         </revdescription>
       </revision>
-
+      
+      <revision>
+        <revnumber>6</revnumber>
+        <date>12/04/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Added Grid Engine batch scheduler </para>
+        </revdescription>
+      </revision>
+      
     </revhistory>
     </info>
   <chapter>
