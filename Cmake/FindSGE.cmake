@@ -34,6 +34,9 @@ find_path(SGE_BIN_DIR
   paths
       $ENV{SGE_ROOT}/bin/linux-x86
       $ENV{SGE_ROOT}/bin/linux-x64
+      /usr/local/bin
+      /usr/bin
+      /opt/local/bin
 )
 
 if (SGE_INCLUDE_DIR AND  SGE_LIB AND SGE_ROOT AND SGE_BIN_DIR)
