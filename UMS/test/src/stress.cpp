@@ -14,13 +14,17 @@ void stress(){
   string 	     	  uid  = "admin_1";
   ConnectOptions 	  cop  ;//= ecoreFactory->createConnectOptions();
   Session                 sess ;
+  int res;
 
   // Setting value
   vishnuInitialize(getenv("VISHNU_CONFIG_FILE"), 0, NULL);
 
   for (i=0;i<5;i++){
     cout << " In loop : " <<  i << endl;
-    connect    (uid, pwd, sess, cop );
+    res = connect    (uid, pwd, sess, cop );
+    if (res) {
+      cout << "Connection failed !!! " << endl;
+    }
     close(sess.getSessionKey());
   }
   vishnuFinalize();
