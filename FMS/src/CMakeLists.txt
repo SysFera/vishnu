@@ -77,6 +77,7 @@ if(NOT CLIENT_ONLY)
     vishnu-core
     vishnu-core-server
     vishnu-ums-server
+    ${LDAP_LIBRARIES}
     emf4cpp-vishnu
     crypt)
 

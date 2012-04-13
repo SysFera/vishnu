@@ -55,7 +55,9 @@ if (NOT CLIENT_ONLY)
     vishnu-core-server
     vishnu-ums-server
     vishnu-tms-server
-    emf4cpp-vishnu)
+    ${LDAP_LIBRARIES}
+    emf4cpp-vishnu
+)
 
   set(sed_SRCS sed/tmssed.cpp
     sed/ServerTMS.cpp
