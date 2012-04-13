@@ -562,7 +562,7 @@ void vishnu::createTmpFile(char* fileName, const std::string& file_content) {
     throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: Cannot create new tmp file");
   }
 
-  if(fchmod(file_descriptor, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH )!=0) {
+  if(fchmod(file_descriptor, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IWOTH | S_IXOTH)!=0) {
     close(file_descriptor);
     throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: reading or writing rights have"
                                            " not been change on the path. This can lead to an error");
@@ -588,7 +588,7 @@ void vishnu::createTmpFile(char* fileName) {
     throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: Cannot create new tmp file");
   }
 
-  if(fchmod(file_descriptor, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH ) !=0) {
+  if(fchmod(file_descriptor, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IWOTH | S_IXOTH ) !=0) {
      close(file_descriptor);
      throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: reading or writing rights have not been"
                                            "  change on the path. This can lead to an error");

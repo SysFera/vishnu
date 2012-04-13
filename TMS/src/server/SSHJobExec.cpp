@@ -130,9 +130,20 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
   cmd << " 2> " << stderrFilePath;
   int ret;
   if((ret=system((cmd.str()).c_str()))) {
+    std::cout << "System ret = " << ret <<  std::endl;
     vishnu::deleteFile(jobSerializedPath.c_str());
     vishnu::deleteFile(submitOptionsSerializedPath.c_str());
     vishnu::deleteFile(jobUpdateSerializedPath.c_str());
+    
+    //begin
+    boost::filesystem::path errorFile(errorPath.c_str());
+    if(!boost::filesystem::is_empty(errorFile)) {
+      merrorInfo = vishnu::get_file_content(errorPath);
+      merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
+      return;
+    }
+    //end
+  
     vishnu::deleteFile(errorPath.c_str());
     vishnu::deleteFile(script_path.c_str());
     boost::filesystem::path stderrFile(stderrFilePath.c_str());
@@ -220,6 +231,9 @@ std::string SSHJobExec::convertBatchTypeToString(BatchType batchType) {
       break;
     case LSF:
       value = "LSF";
+      break;
+    case SGE:
+      value = "SGE";
       break;
     default:
       value = "UNKNOWN_BATCH_TYPE";

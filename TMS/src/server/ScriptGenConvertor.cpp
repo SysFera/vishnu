@@ -105,8 +105,28 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[lsfSec]             = "";
     mconversionTable[commandSec]           = "";
     mendScript="";
-  }
-  else {
+
+  } else if (mbatchType==SGE){
+
+    mconversionTable[group]                = "";
+    mconversionTable[workingDir]           = "#$ -wd ";
+    mconversionTable[jobName]              = "#$ -N ";
+    mconversionTable[jobOutput]            = "#$ -o ";
+    mconversionTable[jobError]             = "#$ -e ";
+    mconversionTable[jobWallClockLimit]    = "#$ -l s-rt=";
+    mconversionTable[cpuTime]              = "#$ -l s_cpu=";
+    mconversionTable[nbCpu]                = ""; 
+    mconversionTable[nbNodesAndCpuPerNode] = ""; 
+    mconversionTable[mem]                  = "#$ -l s_vmem=";
+    mconversionTable[mailNotification]     = "#$ -m "; //special case
+    mconversionTable[mailNotifyUser]       = "#$ -M ";
+    mconversionTable[queue]                = "#$ -q ";
+    
+    mconversionTable[sgeSec]               = "";
+    mconversionTable[commandSec]           = "";
+    mconversionTable[torqueSec]            = "";
+    mendScript="";
+  } else {
     std::cerr << "Unknown Batch type " << std::endl;
   }
 
