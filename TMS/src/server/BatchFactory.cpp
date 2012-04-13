@@ -18,6 +18,18 @@
 #ifdef HAVE_LSF
 #include "LSFServer.hpp"
 #endif
+#ifdef HAVE_SGE
+#include "SGEServer.hpp"
+#include "SGEConfig.hpp"
+
+extern "C" {
+#include "drmaa.h"
+}
+#endif
+#include <iostream>
+
+static int created=0;
+
 /**
  * \brief Constructor
  */
@@ -62,6 +74,14 @@ BatchFactory::getBatchServerInstance(BatchType batchType) {
       mbatchServer = NULL;
 #endif
       break;
+    case SGE:
+#ifdef HAVE_SGE
+      mbatchServer = new SGEServer();
+      setenv("SGE_ROOT",SGE_ROOT_PATH,1);   
+#else
+      mbatchServer = NULL;
+#endif
+      break;      
     default:
       mbatchServer = NULL;
       break;

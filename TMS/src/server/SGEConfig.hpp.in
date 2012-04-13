@@ -1,0 +1,2 @@
+#define SGE_ROOT_PATH "@SGE_ROOT@"
+#define SGE_BIN_PATH "@SGE_BIN_DIR@"

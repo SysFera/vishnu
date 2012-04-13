@@ -9,7 +9,7 @@ project(VISHNU)
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Cmake)
 
-set( VISHNU_VERSION "1.3.0" CACHE STRING " the version of the source ")
+set( VISHNU_VERSION "1.4.0" CACHE STRING " the version of the source ")
 
 # Options set to ON by default
 option(BUILD_SHARED_LIBS "disable shared libraries usage" ON)
@@ -42,6 +42,7 @@ option(VISHNU_USE_LOADLEVELER   "Build VISHNU with LoadLeveler support...")
 option(VISHNU_USE_TORQUE   "Build VISHNU with Torque support...")
 option(VISHNU_USE_SLURM   "Build VISHNU with SLURM support...")
 option(VISHNU_USE_LSF   "Build VISHNU with LSF support...")
+option(VISHNU_USE_SGE     "Build VISHNU with SGE support...")
 option(VISHNU_USE_LDAP   "Build VISHNU with LDAP support...")
 
 if (COMPILE_UMS AND COMPILE_TMS AND COMPILE_FMS AND COMPILE_IMS)
@@ -141,8 +142,8 @@ if (NOT CLIENT_ONLY AND NOT ENABLE_POSTGRESQL  AND NOT ENABLE_MYSQL)
    message(FATAL_ERROR  "You MUST set either ENABLE_POSTGRESQL or ENABLE_MYSQL")
 endif()
 
-if (COMPILE_TMS AND NOT CLIENT_ONLY AND NOT VISHNU_USE_LOADLEVELER AND NOT VISHNU_USE_TORQUE AND NOT VISHNU_USE_SLURM AND NOT VISHNU_USE_LSF)
-   message(FATAL_ERROR "You MUST set either VISHNU_USE_TORQUE or VISHNU_USE_LOADLEVELER or VISHNU_USE_SLURM or VISHNU_USE_LSF when compiling TMS server")
+if (COMPILE_TMS AND NOT CLIENT_ONLY AND NOT VISHNU_USE_LOADLEVELER AND NOT VISHNU_USE_TORQUE AND NOT VISHNU_USE_SLURM AND NOT VISHNU_USE_LSF AND NOT VISHNU_USE_SGE)
+   message(FATAL_ERROR "You MUST set either VISHNU_USE_TORQUE or VISHNU_USE_LOADLEVELER or VISHNU_USE_SLURM or VISHNU_USE_LSF or VISHNU_USE_SGE when compiling TMS server")
 endif()
 
 if (COMPILE_TMS)
@@ -216,6 +217,22 @@ if (VISHNU_USE_LSF)
     set(LSF_DIR "" cache path "LSF installation path")
   endif(LSF_FOUND)
 endif (VISHNU_USE_LSF)
+
+if (VISHNU_USE_SGE)
+
+  add_definitions(-DHAVE_SGE)
+
+  find_package(SGE)
+  if (SGE_FOUND)
+  else (SGE_FOUND)
+    message("SGE installation was not found. Define the SGE_DIR variable to continue.")
+    message("     - You can define a SGE_DIR environment variable")
+    message("     - You can pass it as argument to cmake:")
+    message("       $ cmake <source root directory> -DSGE_DIR:PATH=/path/to/SGE")
+    message("     - You can use the ccmake GUI")
+    set(SGE_DIR "" cache path "SGE installation path")
+  endif(SGE_FOUND)
+endif (VISHNU_USE_SGE)
 
 if (VISHNU_USE_LDAP AND NOT CLIENT_ONLY)
   #To check if the module UMS is activated

@@ -138,6 +138,13 @@
       <para>Add of VISHNU commands for LDAP support and for connection and reconnection using multiples VISHNU accounts.</para></revdescription>
   </revision> 
 
+  <revision>
+    <revnumber>13</revnumber>
+    <date>11/04/2012</date>
+    <authorinitials>SysFera</authorinitials>
+    <revdescription>
+      <para>Add of Grid Engine batch scheduler. </para></revdescription>
+  </revision> 
   </revhistory>
 
     <copyright>
@@ -503,7 +510,8 @@
 	  <para>
 	    To submit a job, via VISHNU, to the batch scheduler of a specific machine, the user needs: an active VISHNU session, 
 	    a local user configuration registered on VISHNU that corresponds to an existing UNIX account on the specified machine and a script that describes 
-	    the job to submit. In the current implementation of VISHNU, it is possible to use the directives for two batch schedulers: TORQUE, LoadLeveler, SLURM and LSF.
+	    the job to submit. In the current implementation of VISHNU, it is possible to use the directives for several batch schedulers: TORQUE, LoadLeveler, SLURM, LSF and
+	    Grid Engine.
 	    In order to use the same script on different batch schedulers, a generic script with generic VISHNU directives is used.
 	    The <emphasis role="bold">vishnu_submit_job</emphasis> command allows a user to submit a job in the shell terminal.
 	    To obtain information on a job, the user can use the <emphasis role="bold">vishnu_get_job_info</emphasis> or 
@@ -571,7 +579,7 @@
 	      </itemizedlist>
 	    </para>
 	    <para>
-        It is important to note that the user can also add directives specific to a batch scheduler (TORQUE, LoadLeveler, SLURM or LSF). Such specific directives must be added directly after the generic directives. Here is an example:
+        It is important to note that the user can also add directives specific to a batch scheduler (TORQUE, LoadLeveler, SLURM, LSF or Grid Engine). Such specific directives must be added directly after the generic directives. Here is an example:
       </para>
       <programlisting>
         #!/bin/sh
@@ -599,6 +607,12 @@
         #BSUB -e myJob-%J.err
         #BSUB -W 01:02
         #BSUB -q priority
+	#The following lines are Grid Engine specific section
+	#$ -N myFristJob
+	#$ -o myJob-$JOB_ID.out
+	#$ -e myJob-$JOB_ID.err 
+	#$ -l s_rt=01:02:20
+	#$ -q myFavoriteQueue
       </programlisting>
     </section> 
   </section>
@@ -745,7 +759,8 @@
 	  <listitem>
 	    <para>
 		The <emphasis role = "italic">"DIET initialization failed"</emphasis> error, possibly caused by the number of omniorb connection limit, can be solved in the previous case by 
-		using the variable maxGIOPConnectionPerServer on the omniorb configuration file as follows : maxGIOPConnectionPerServer = 1000. The value 1000 is an example value.
+		using the variable maxGIOPConnectionPerServer on the omniorb configuration file as follows : maxGIOPConnectionPerServer = 1000. It is also advisable to put the variable maxServerThreadPoolSize to 1000. 
+		The value 1000 is an example value.
 	      </para>
 	  </listitem>
 	  

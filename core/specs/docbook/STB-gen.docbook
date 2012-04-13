@@ -85,6 +85,14 @@
               
             <para> Ajout des caractéristiques de circulation du mot de passe.</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>09</revnumber>
+        <date>11/04/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+              
+            <para> Prise en compte du support de Grid Engine.</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -429,7 +437,7 @@ de SHA-1.</para>
             <row>
               <entry><para>1.2.6</para></entry>
               <entry><para>Logiciels de gestion de jobs batch supportés</para></entry>
-              <entry><para>- Torque 2.3.6</para><para>- IBM LoadLeveler 3.5.1.14</para><para>- SLURM 2.2.1 (ou 2.2.7)</para><para>- LSF 7.0.6.134609</para></entry>
+              <entry><para>- Torque 2.3.6</para><para>- IBM LoadLeveler 3.5.1.14</para><para>- SLURM 2.2.1 (ou 2.2.7)</para><para>- LSF 7.0.6.134609</para><para>- Grid Engine 2011.11</para></entry>
             </row>
             <row>
               <entry><para>1.2.7</para></entry>
@@ -699,7 +707,7 @@ de SHA-1.</para>
             <row>
               <entry><para>2.4</para></entry>
               <entry><para>Librairies des Batch schedulers</para></entry>
-              <entry><para>Torque API, LoadLeveler API, SLURM API et API LSF</para></entry>
+              <entry><para>Torque API, LoadLeveler API, SLURM API, LSF API et Grid Engine API</para></entry>
             </row>
             <row>
               <entry><para>2.5</para></entry>
@@ -734,7 +742,7 @@ de SHA-1.</para>
             <row>
               <entry><para>3.1</para></entry>
               <entry><para>CMake</para></entry>
-              <entry><para>CMake v2.6 minimum</para></entry>
+              <entry><para>CMake v2.8 minimum</para></entry>
             </row>
             <row>
               <entry><para>3.2</para></entry>

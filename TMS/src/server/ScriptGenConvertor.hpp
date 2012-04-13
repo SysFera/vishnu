@@ -48,6 +48,7 @@ static const std::string loadLevelerSec      = "loadleveler_sec";
 static const std::string torqueSec           = "torque_sec";
 static const std::string slurmSec            = "slurm_sec";
 static const std::string lsfSec              = "lsf_sec";
+static const std::string sgeSec              = "sge_sec";
 static const std::string commandSec          = "command_sec";
 
 /**
