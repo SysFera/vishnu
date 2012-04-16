@@ -398,6 +398,15 @@
           <para>Dépendances optionnelles:</para>
           <itemizedlist>
             <listitem>
+              <para>SWIG 1.3.40 (SWIG 2 n'est pas compatible)</para>
+            </listitem>
+            <listitem>
+              <para>JAVA SDK version 1.6</para>
+            </listitem>
+            <listitem>
+              <para>Python version 2.x x>=5</para>
+            </listitem>
+            <listitem>
               <para>Base de données, à mettre sur les machines avec des serveurs, au choix : </para>
               <itemizedlist>
                 <listitem>
@@ -452,7 +461,7 @@
           </listitem>
           <listitem>
             <para>
-	      COMPILE_UMS, compile le module UMS si le flag est activé (OFF par défaut).
+	      COMPILE_UMS, compile le module UMS si le flag est activé (ON par défaut).
 	    </para>
           </listitem>
           <listitem>
@@ -573,7 +582,7 @@
         </itemizedlist>
 </para>
       <para>
-  Par exemple, pour compiler VISHNU (clients et serveurs) avec l'API
+  Par exemple, pour compiler VISHNU (clients et serveurs) avec UMS et TMS (torque) avec l'API
   Python puis l'installer dans le répertoire /opt/vishnu sous *nix:
 </para>
       <itemizedlist>
@@ -821,7 +830,7 @@ nécessaires : slapd libldap-2.4-2 libldap2-dev ldap-utils. Une fois VISHNU comp
             </para>
           </listitem>
           <listitem>
-            <para>LD_LIBRARY_PATH : contient les chemins des répertoires contenant les librairies VISHNU, notamment libVISHNU_UMS.so.</para>
+            <para>LD_LIBRARY_PATH : contient les chemins des répertoires contenant les librairies VISHNU, notamment libVISHNU.so.</para>
           </listitem>
         </itemizedlist>
       </section>
