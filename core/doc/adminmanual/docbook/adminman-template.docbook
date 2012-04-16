@@ -308,6 +308,9 @@
 	    <para>Préfrontale : Cela désigne une machine mise avant la(les) frontale(s) des calculateurs. </para>
 	  </listitem>
 	  <listitem>
+	    <para>SeD fMS : Cela désigne le programme contenant et exécutant les services du module IMS. </para>
+	  </listitem>
+	  <listitem>
 	    <para>SeD IMS : Cela désigne le programme contenant et exécutant les services du module IMS. </para>
 	  </listitem>
 	  <listitem>
@@ -730,7 +733,7 @@ nécessaires : slapd libldap-2.4-2 libldap2-dev ldap-utils. Une fois VISHNU comp
       </itemizedlist>
     </section>
     <section>
-      <title>Installation des module WS dans JBoss</title>
+      <title>Installation des modules WS dans JBoss</title>
       <section>
         <title>Fichiers à installer</title>
         <itemizedlist>
@@ -760,7 +763,7 @@ nécessaires : slapd libldap-2.4-2 libldap2-dev ldap-utils. Une fois VISHNU comp
                     <itemizedlist>
                       <listitem><para>Aller dans le répertoire WSAPI, avoir le jar VISHNULib-1.0-SNAPSHOT.jar de déjà fait</para></listitem>
                       <listitem><para>Faire 'mvn install' (peut être long la première fois)</para></listitem>
-                      <listitem><para>Le fichier .jar produit se trouve dans le répertoire target/</para></listitem>
+                      <listitem><para>Le fichier .jar produit se trouve dans le répertoire target</para></listitem>
                       <listitem><para>Renommer le jar en WSAPI.jar avant de le mettre dans jboss, ceci est nécessaire</para></listitem>
                     </itemizedlist>
                 </para></listitem>
@@ -1463,7 +1466,7 @@ nécessaires : slapd libldap-2.4-2 libldap2-dev ldap-utils. Une fois VISHNU comp
                   </para>
                 </listitem>
                 <listitem>
-                  <para> La machine source source doit pouvoir se connecter sur la machine destination par ssh, avec la clé privée enregistrée dans la base de VISHNU lors de l'ajout du compte (local account) liant la machine source à VISHNU. Par ailleurs si le mécanisme d'agent forwarding (de ssh) est activée entre ces différentes machines, il n'est alors plus nécessaire qu'il y ait un autre couple de clés entre la machine source et destination. </para>
+                  <para> La machine source doit pouvoir se connecter sur la machine destination par ssh, avec la clé privée enregistrée dans la base de VISHNU lors de l'ajout du compte (local account) liant la machine source à VISHNU. Par ailleurs si le mécanisme d'agent forwarding (de ssh) est activée entre ces différentes machines, il n'est alors plus nécessaire qu'il y ait un autre couple de clés entre la machine source et destination. </para>
               </listitem>
             </itemizedlist>
             </para>

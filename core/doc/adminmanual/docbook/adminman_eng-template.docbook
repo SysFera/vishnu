@@ -1,0 +1,1825 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book label="UMS.apim#MAN(admin);UMS.apim#CPP(admin);UMS.apim#PYTHON(admin);IMS.apim#MAN(admin);IMS.apim#CPP(admin);IMS.apim#PYTHON(admin)" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
+  <!--<book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">-->
+  <info>
+    <title>VISHNU - The guide of the administrator</title>
+    <author>
+      <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Eugène</firstname><surname>Pamba Capo-Chichi</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Kevin</firstname><surname>Coulomb</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
+    </author>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>08/03/2011</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+          <para>Initial version of the document, only for the UMS module</para>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>2</revnumber>
+        <date>18/03/2011</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+          <para>Add a paragraph to launch manually using the forwarders and config files</para>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>3</revnumber>
+        <date>22/03/2011</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+          <para>Add the web services</para>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>4</revnumber>
+        <date>11/05/2011</date>
+        <authorinitials>K. COULOMB, B.ISNARD</authorinitials>
+        <revdescription>
+          <para>Rewrite how to deploy with the config files.</para>
+          <para>Add a paragraph for the sendmail function.</para>
+          <para>Add the TMS data.</para>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>5</revnumber>
+        <date>18/05/2011</date>
+        <authorinitials>B.ISNARD</authorinitials>
+        <revdescription>
+          <para>Add the configuration parameter dbConnectionsNb.</para>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>6</revnumber>
+        <date>10/06/2011</date>
+        <authorinitials>K.COULOMB</authorinitials>
+        <revdescription>
+          <para>Documentation for IMS.</para>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>7</revnumber>
+        <date>15/06/2011</date>
+        <authorinitials>I.CISSE</authorinitials>
+        <revdescription>
+          <para>Documentation for FMS.</para>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>8</revnumber>
+        <date>22/06/2011</date>
+        <authorinitials>B.ISNARD</authorinitials>
+        <revdescription>
+          <para>Add the option ENABLE_SWIG.</para>
+        </revdescription>
+      </revision>
+      
+      <revision>
+        <revnumber>9</revnumber>
+        <date>24/06/2011</date>
+        <authorinitials>I.CISSE</authorinitials>
+        <revdescription>
+          <para>Add the option vishnuMachineId in the UMS, IMS and FMS 
+            configuration files.</para>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>10</revnumber>
+        <date>13/07/2011</date>
+        <authorinitials>K.COULOMB</authorinitials>
+        <revdescription>
+          <para>Update document after the first feedbacks .</para>
+        </revdescription>
+      </revision>     
+      <revision>
+        <revnumber>11</revnumber>
+        <date>11/08/2011</date>
+        <authorinitials>D.TRAORE</authorinitials>
+        <revdescription>
+          <para>Take SLURM into account</para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>12</revnumber>
+        <date>23/08/2011</date>
+        <authorinitials>K.COULOMB</authorinitials>
+        <revdescription>
+          <para>Add link on ow to install postgre/mysql databases. Delete the update database part (the creation script contains everything). Add a reference to 'VISHNU_API'</para></revdescription>
+      </revision>
+
+      <revision>
+        <revnumber>13</revnumber>
+        <date>14/12/2011</date>
+        <authorinitials>K.COULOMB</authorinitials>
+        <revdescription>
+          <para>
+            Update for the new dietForwarder
+        </para></revdescription>
+      </revision>
+
+
+      <revision>
+        <revnumber>14</revnumber>
+        <date>15/12/2011</date>
+        <authorinitials>I.CISSE</authorinitials>
+        <revdescription>
+          <para>
+            Update the section concerning the configuration of the SSH keys for FMS.
+        </para></revdescription>
+      </revision>
+
+      <revision>
+        <revnumber>15</revnumber>
+        <date>16/12/2011</date>
+        <authorinitials>D.TRAORE</authorinitials>
+        <revdescription>
+          <para>
+            Add the section to configure the SSH keys in TMS.
+        </para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>16</revnumber>
+        <date>30/01/2012</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+          <para>
+            Update the DIET version dependency.
+        </para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>17</revnumber>
+        <date>27/02/2012</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+          <para>
+            Add the list of the boost libraries necessaries.
+        </para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>18</revnumber>
+        <date>02/03/2012</date>
+        <authorinitials>D.TRAORE</authorinitials>
+        <revdescription>
+          <para>Add the LSF batch</para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>19</revnumber>
+        <date>22/03/2012</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+          <para>Add the LDAP support</para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>20</revnumber>
+        <date>11/04/2012</date>
+        <authorinitials>E. PAMBA CAPO-CHICHI</authorinitials>
+        <revdescription>
+          <para>Add the Grid Engine batch handling</para></revdescription>
+      </revision>
+    </revhistory>
+  </info>
+  <chapter>
+    <title>Presentation of the document</title>
+    <section>
+      <title>Aim</title>
+      <para>This document present how to administrate the VISHNU platform.
+      </para>
+    </section>
+
+    <section> <!--Document structure -->
+      <title>Structure of the document</title>
+
+      <para>This document contains the following parts:
+      </para>
+      <para>
+	<itemizedlist>
+          <listitem>
+            <para>Definitions</para>
+          </listitem>
+	  <listitem>
+            <para>Installation</para>
+          </listitem>
+	  <listitem>
+            <para>Installation of the web services</para>
+          </listitem>
+	  <listitem>
+	    <para>How to deploy</para>
+	  </listitem>
+          <listitem>
+            <para>Administration</para>
+          </listitem>
+	  <listitem>
+            <para>Reference of the commands</para>
+          </listitem>
+	  <listitem>
+            <para>Reference of the C++ API </para>
+          </listitem>
+	  <listitem>
+            <para>Reference of the Python API</para>
+          </listitem>
+	</itemizedlist>
+      </para>
+    </section> <!--Document structure -->
+  </chapter>
+
+  <chapter> <!--Définition -->
+    <title>Definitions</title>
+    <section> <!-- Accronymes -->
+      <title>Acronyms</title>
+      <itemizedlist>
+	<listitem>
+	  <para>DB: Database: it is centralized and used to save all the data
+            manipulated by each module.</para>
+	</listitem>
+	<listitem>
+	  <para>FMS: File Management Service</para>
+	</listitem>
+	<listitem>
+	  <para>IMS: Information Management Service</para>
+	</listitem>
+	<listitem>
+	  <para>LDAP: Lightweight Directory Access Protocol, protocole for accessing and maintaining distributed directory information services</para>
+	</listitem>
+	<listitem>
+	  <para> MA: "Master Agent": SysFera-DS element that distributes the requests between the clients and the desired services.</para>
+	</listitem>
+	<listitem>
+	  <para>SQL: Language of request on the databases</para>
+	</listitem>
+	<listitem>
+	  <para>TMS: Task Management Service</para>
+	</listitem>
+	<listitem>
+	  <para>UMS: User Management Service</para>
+	</listitem>
+	<listitem>
+	  <para>WS: Web Services</para>
+	</listitem>
+      </itemizedlist>
+    </section> <!-- Accronymes -->
+    <section>
+      <title>References</title>
+      <itemizedlist>
+        <listitem>
+          <para>[ARCH] D1.1g-VISHNU Technical Architecture: description of the architecture of the VISHNU application </para>
+        </listitem>
+        <listitem>
+          <para>[DIET_USERGUIDE] DIET User Guide: DIET is an open source tool used by VISHNU.</para>
+        </listitem>
+        <listitem>
+          <para>[VISHNU_USERMANUAL] VISHNU User Manual.</para>
+        </listitem>
+        <listitem>
+          <para>[VISHNU_API] VISHNU API: API VISHNU containing the signatures and the definition of the objects used by VISHNU.</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section> <!-- Glossaire -->
+      <title>Glossary</title>
+      <para>
+	<itemizedlist>
+	  <listitem>
+	    <para>FMS Client: It represents the programs allowing one to access the services of the FMS SeD. </para>
+	  </listitem>
+	  <listitem>
+	    <para>IMS Client: It represents the programs allowing one to access the services of the IMS SeD. </para>
+	  </listitem>
+	  <listitem>
+	    <para>TMS Client: It represents the programs allowing one to access the services of the TMS SeD. </para>
+	  </listitem>
+	  <listitem>
+	    <para>UMS Client: It represents the programs allowing one to access the services of the UMS SeD. </para>
+	  </listitem>
+	  <listitem>
+	    <para>Prefrontale: It represents a machine sets before the frontal of the clusters. </para>
+	  </listitem>
+	  <listitem>
+	    <para>FMS SeD: It represents the program containing and executing the services of the FMS module. </para>
+	  </listitem>
+	  <listitem>
+	    <para>IMS SeD: It represents the program containing and executing the services of the IMS module. </para>
+	  </listitem>
+	  <listitem>
+	    <para>TMS SeD: It represents the program containing and executing the services of the TMS module. </para>
+	  </listitem>
+	  <listitem>
+	    <para>UMS SeD: It represents the program containing and executing the services of the UMS module. </para>
+	  </listitem>
+	  <listitem>
+	    <para>Sysfera-DS: Open source middleware developped by SysFera.</para>
+	  </listitem>
+	</itemizedlist>
+      </para>
+    </section>  <!-- Glossaire -->
+  </chapter><!-- end Definition -->
+  <chapter>
+    <title>Installing from the sources</title>
+    <section>
+      <title>Objectives</title>
+      <para> This chapter presents how to install VISHNU from the sources. It explains
+        how to install both clients and servers (the installation of a server implies the 
+        installation of the asociated client). The UMS module is necessary for all the, any other module 
+        can be installed independantly. It does not prevent using the services even thought servers
+        are on another machine. Nevertheless, to enable IMS to load shed a machine, the corresponding
+        modules (TMS and/or FMS) must be installed with IMS and running on the machine.</para>
+    </section>
+    <section>
+      <title>Prerequisite</title>
+      <para>THe following software must be installed on the system, with the devel packages (packages -dev):</para>
+      <itemizedlist>
+        <listitem>
+          <para>Dependency for all the modules VISHNU:</para>
+          <itemizedlist>
+            <listitem>
+              <para>GCC version 4.4.3 minimum</para>
+            </listitem>
+            <listitem>
+              <para>CMAKE version 2.8 minimum if DIET 2.8, from 2.6 otherwize</para>
+            </listitem>
+            <listitem>
+              <para>BOOST version 1.45 minimum if DIET 2.7 or inferior, 1.46.1 if DIET 2.8 or later. The necessaries libs are: program_options, date_time, thread, filesystem, system, unit_test_framework, serialization, random et regex </para>
+            </listitem>
+            <listitem>
+              <para>OMNIORB version 4.1.4</para>
+            </listitem>
+            <listitem>
+              <para>libcrypt</para>
+            </listitem>
+            <listitem>
+              <para>SSH</para>
+            </listitem>
+            <listitem>
+              <para>DIET version 2.8 + the associated log service</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+        <listitem>
+          <para>Optionnal dependencies for UMS:</para>
+          <itemizedlist>
+            <listitem>
+              <para>LDAP: OpenLDAP 2.4</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+        <listitem>
+          <para>Dependencies for TMS:</para>
+          <itemizedlist>
+            <listitem>
+              <para>Torque API v2.3.6</para>
+            </listitem>
+            <listitem>
+              <para>or IBM LoadLeveler API</para>
+            </listitem>
+            <listitem>
+              <para>or SLURM API v2.2.1</para>
+            </listitem>
+            <listitem>
+              <para>or LSF API v7.0.6.134609</para>
+            </listitem>
+	    <listitem>
+              <para>or Grid Engine API 2011.11</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+        <listitem>
+          <para>Optionnal dependency:</para>
+          <itemizedlist>
+            <listitem>
+              <para>SWIG 1.3.40 (SWIG 2 is not compatible)</para>
+            </listitem>
+            <listitem>
+              <para>JAVA SDK version 1.6</para>
+            </listitem>
+            <listitem>
+              <para>Python version 2.x x>=5</para>
+            </listitem>
+          </itemizedlist>
+          <itemizedlist>
+            <listitem>
+	      <para>Database, only on the server machines, can choose: </para>
+              <itemizedlist>
+		<listitem>
+		  <para>PGSQL-API (api PostGreSQL) version 8.0 minimum</para>
+		</listitem>
+		<listitem>
+		  <para>MYSQL-API (api MySQL) version 5.1 minimum</para>
+		</listitem>
+              </itemizedlist>
+	    </listitem>
+	  </itemizedlist>
+        </listitem>
+      </itemizedlist>
+    </section><!-- end prerequis -->
+    <section>
+      <title> Compilation of the sources </title>
+      <para>VISHNU uses CMake as compilation system and follows the actual uses.
+	The main options are:
+	<itemizedlist>
+	  <listitem>
+	    <para>
+	      BUILD_TESTING, compile the tests (OFF by default).
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      CLIENT_ONLY, do not compile the servers (OFF by defaut). Otherwize, both clients and servers are compiled.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      CMAKE_INSTALL_PREFIX, directory to install (/usr/local by default on the *nix plateformes)
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      COMPILE_TMS, compile the TMS module (OFF by default). If ON, COMPILE_UMS must be activated ON and
+              one of the following options VISHNU_USE_TORQUE, VISHNU_USE_LOADLEVELER, VISHNU_USE_SLURM, VISHNU_USE_LSF or VISHNU_USE_SGE must be activated.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      COMPILE_IMS, compile the IMS module (OFF by default). If ON, COMPILE_UMS must be activated.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      COMPILE_FMS, compile the FMS module (OFF by default). If ON, COMPILE_UMS must be activated.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      COMPILE_UMS, compile the UMS module (OFF by default).
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      ENABLE_PYTHON, to compile the python API (OFF by default).
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      ENABLE_JAVA, to compile the java for the WS API (OFF par default).
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      VISHNU_USE_LDAP, to activate the LDAP support to authenticate (OFF by default).
+	    </para>
+	  </listitem>
+          <listitem>
+            <para>
+              ENABLE_SWIG, to generate the code for the python and java modules (otherwise use a precompiled version if the flags are activated) (OFF by default). This option must be activated if some vishnu modules are not compiled. It requires the swig package to compile (see dependencies).
+            </para>
+          </listitem>
+	  <listitem>
+	    <para>
+	      VISHNU_USE_LOADLEVELER, compile the TMS SeD for load leveler (OFF by default). The LOADLEVELER_INCLUDE_DIR and LOADLEVELER_LIB variables must be filled if activated.</para>
+
+            <itemizedlist>
+              <listitem> 
+                <para>
+                  LOADLEVELER_INCLUDE_DIR indicate the absolute path to the llapi.h file
+                </para>
+              </listitem>
+              <listitem> 
+                <para>
+                  LOADLEVELER_LIB indicate the absolute path to the llapi.so library
+                </para>
+              </listitem>
+            </itemizedlist>
+            
+          </listitem>
+
+	  <listitem>
+	    <para>
+	      VISHNU_USE_TORQUE, compile the TMS SeD for torque (OFF by default). The TORQUE_INCLUDE_DIR and TORQUE_LIB variables must be filled if activated..</para>
+
+            <itemizedlist>
+              <listitem> 
+                <para>
+                  TORQUE_INCLUDE_DIR indicate the absolute path to the pbs_ifl.h file.
+                </para>
+              </listitem>
+              <listitem> 
+                <para>
+                  TORQUE_LIB indicates the absolute path to the libtorque.so library.
+                </para>
+              </listitem>
+            </itemizedlist>
+
+          </listitem>
+
+          <listitem>
+            <para>
+              VISHNU_USE_SLURM, compile the TMS SeD for SLURM (OFF by default). The SLURM_INCLUDE_DIR and SLURM_LIB variables must be filled if activated.</para>
+
+            <itemizedlist>
+              <listitem> 
+                <para>
+                  SLURM_INCLUDE_DIR indicate the absolute path to the file slurm/slurm.h
+                </para>
+              </listitem>
+              <listitem> 
+                <para>
+                  SLURM_LIB indicate the absolute path to the libslurm.so library.
+                </para>
+              </listitem>
+            </itemizedlist>
+
+          </listitem>
+          <listitem>
+            <para>
+              VISHNU_USE_LSF, compile the TMS SeD for LSF (OFF by default). The LSF_INCLUDE_DIR, LSBATCH_LIB and LSF_LIB variables must be filled if activated.</para> 
+
+            <itemizedlist>
+              <listitem> 
+                <para>
+                  LSF_INCLUDE_DIR indicate the absolute path to the lsf/lsbatch.h file
+                </para>
+              </listitem>
+              <listitem> 
+                <para>
+                  LSBATCH_LIB indicate the absolute path to the libbat.so library.
+                </para>
+              </listitem>
+              <listitem> 
+                <para>
+                  LSF_LIB indicate the absolute path to the liblsf.so  library
+                </para>
+              </listitem>
+            </itemizedlist>
+
+          </listitem>
+          <listitem>
+            <para>
+              VISHNU_USE_SGE, compile the TMS SeD for Grid Engine (OFF by default). 
+              The SGE_ROOT, SGE_INCLUDE_DIR, SGE_BIN_DIR and SGE_LIB variables must be filled if activated.</para> 
+
+            <itemizedlist>
+              <listitem> 
+                <para>
+                  SGE_ROOT indicate the absolute path to the directory where Grid Engine is installed
+                </para>
+              </listitem>
+	      <listitem> 
+                <para>
+                  SGE_INCLUDE_DIR indicate the absolute path to the drmaa.h file
+                </para>
+              </listitem>
+	      <listitem> 
+                <para>
+                  SGE_BIN_DIR indique the absolute path to the  Grid Engine binaries
+                </para>
+              </listitem>
+              <listitem> 
+                <para>
+                  SGE_LIB indicate the absolute path to the libdrmaa.so library
+                </para>
+              </listitem>
+              
+            </itemizedlist>
+
+          </listitem>
+
+        </itemizedlist>
+      </para>
+      <para>
+        For instance, to compile VISHNU (clients and servers) with the
+        Python API and install it in /opt/vishnu:
+      </para>
+      <itemizedlist>
+        <listitem><para>1. create a build repository at the root of the vishnu project and go in</para>
+          <itemizedlist>
+            <listitem><para>$ <emphasis role="bold">mkdir build</emphasis></para></listitem>
+            <listitem><para>$ <emphasis role="bold">cd build</emphasis></para></listitem>
+          </itemizedlist>
+        </listitem>
+        <listitem><para>2. generate the Makefile</para>
+          <itemizedlist>
+            <listitem><para>$ <emphasis role="bold">cmake -DENABLE_PYTHON=ON -DENABLE_SWIG=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu/ </emphasis></para>
+              <para> <emphasis role="bold">-DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DVISHNU_USE_TORQUE=0N -DTORQUE_DIR=/opt/torque ..</emphasis></para></listitem>
+          </itemizedlist>
+        </listitem>
+        <listitem><para>3. Compile using 2 threads</para>
+          <itemizedlist>
+            <listitem><para>$ <emphasis role="bold">make -j 2</emphasis></para></listitem>
+          </itemizedlist>
+        </listitem>	
+        <listitem><para>4. installation (may be super-user depending on the install directory)</para>
+          <itemizedlist>
+            <listitem><para># <emphasis role="bold">make install</emphasis></para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </itemizedlist>
+      <para><emphasis role="bold">Note</emphasis>: Do not forget to add the install 
+        directory/bin to the path to have access to the commands..</para>
+
+    </section> <!-- End compilation des sources -->
+  </chapter> <!-- End compilation -->
+
+  <chapter>
+    <title>Configuration of the database</title>
+    <para>The files to configure the DB are available in the core/database repository of the sources of VISHNU. Only postgresql and mysql are currently supported. All the servers on the platform must use the same database.</para>
+    <section>
+      <title>Use of a PostGreSQL DB</title>
+      <para>A guide (in French) to install a PostGreSLQ base can be found there: <emphasis role="bold">http://beuss.developpez.com/tutoriels/postgres/install/</emphasis></para>
+      <para>To install a new DB, the script 'postgre_create.sql' and 'database_init.sql' must be used by the admin to create and fill the database for a first use.</para>
+      <para>To update the DB after a new VISHNU version, there are update scripts that are available.</para>
+    </section>
+    <section>
+      <title>Use of a MySQL DB</title>
+      <para>A guide (in French) to install a MySQL base can be found there:<emphasis role="bold"> http://dev.mysql.com/doc/refman/5.0/fr/unix-post-installation.html</emphasis></para>
+      <para>To install a new DB, the script 'postgre_create.sql' and 'database_init.sql' must be used by the admin to create and fill the database for a first use.</para>
+    </section>
+    <section>
+      <title>Use of LDAP</title>
+      <para>A guide (in French) to install a LDAP server can be found there: <emphasis role="bold"> http://ferry.eof.eu.org/lesjournaux/jar/public_html/x5073.html</emphasis></para>
+      <para>To use the LDAP authentication system, the flag VISHNU_USE_LDAP must be set at the compilation. Under debian, the required packages are: slapd libldap-2.4-2 libldap2-dev ldap-utils. Once VISHNU is installed, a runtime option must be set in the UMS server config file. The option is called 'authenticationType' and can have 4 values: 
+        <itemizedlist>
+	  <listitem>
+            <para>
+              UMS: Authenticate using only the database
+            </para>
+          </listitem>
+	  <listitem>
+            <para>
+              LDAPUMS: For each couple (username, password), try to authenticate using LDAP first then UMS
+            </para>
+          </listitem>
+	  <listitem>
+            <para>
+              UMSLDAP: For each couple (username, password), try to authenticate using the UMS database first then LDAP
+            </para>
+          </listitem>
+	  <listitem>
+            <para>
+              LDAP: Authenticate using only LDAP
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+  </chapter>
+
+  <chapter>
+    <title>Installation of the web services</title>
+    <section>
+      <title>Prerequisite</title>
+      <itemizedlist>
+        <listitem>
+          <para>Install <emphasis role="bold">Java 1.6</emphasis> (command 'sudo apt-get install openjdk-6-jdk' or 'sudo apt-get install sun-java6-jdk' under Linux Debian) and check the value of the JAVA_HOME (set it if necessary).</para>
+        </listitem>
+	<listitem>
+	  <para>Install the desired modules (advice all with the flag CLIENT_ONLY)and the java options -DENABLE_JAVA=ON and -DENABLE_SWIG (<emphasis role="bold">Note</emphasis>:
+            This prerequisite is optionnal because the jars are already available in the distribution.</para>
+	</listitem>
+        <listitem>
+          <para>Install <emphasis role="bold">Maven 2</emphasis> to compile the jars (<emphasis role="bold">Note</emphasis>:
+            This prerequisite is optionnal because the jars are already available in the distribution. Moreover Maven needs an internet connexion</para>
+        </listitem>
+      </itemizedlist>
+
+    </section><!-- end prerequis -->
+    <section>
+      <title>Installation of JBoss</title>
+      <itemizedlist>
+	<listitem>
+	  <para>Download the package JBOSSAS: (the binary version is available) at http://www.jboss.org/jbossas/downloads => version 5.1.0.GA</para>
+	</listitem>
+	<listitem>
+	  <para>Download the package JBOSSWS: (the binary version is available) at http://www.jboss.org/jbossws/downloads/ => version 3.3.1.GA</para>
+	</listitem>
+	<listitem>
+	  <para>Unzip the archive of the package JBOSSAS 5.1.0</para>
+	</listitem>
+	<listitem>
+	  <para> Define the environment variable JBOSS_HOME on the unzipped repository. For instance in the .bashrc file:
+	    'export JBOSS_HOME=/home/toto/jboss-5.1.0.GA'</para>
+	</listitem>
+	<listitem>
+	  <para>Unzip the archive of the package JBOSSWS 3.3.1 and go in the created repository</para>
+	</listitem>
+	<listitem>
+	  <para> Copy the file 'ant.properties.example' in 'ant.properties'</para>
+	</listitem>
+	<listitem>
+	  <para> Edit the newly created 'ant.properties' file. Set the value of the jboss510.home variable to the value JBOSS_HOME value. Note, if a version a jboss different to 5.1.0 is used, it is the corresponding variable that must be set.</para>
+	</listitem>
+	<listitem>
+	  <para> Launch the command 'ant deploy-jboss510'. Note, if a version a jboss different to 5.1.0 is used, it is the corresponding version that must be used in the command.</para>
+	</listitem>
+	<listitem>
+          <para> Le server can be launched running the script in JBOSS_HOME/bin/run.sh. To make the server available from an other machine, the '-b adressIP' option must be used. With adressIP representing the IP of the jboss server. Do not forget to check if the firewall enables the 8080 port.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Verification of the installation:</emphasis>
+            To check that the jboss server is running and that the WS is avaible, you can go to the URL 'http://localhost:8080/jbossws' (or 'http://adresseIP:8080/jbossws') and check that the page display the right version of jboss (jbossws-cxf-3.3.1.GA).</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Installation of the WS modules with JBoss</title>
+      <section>
+        <title>Files to install</title>
+        <itemizedlist>
+          <listitem>
+            <para>VISHNULib-1.0-SNAPSHOT.jar
+              <itemizedlist>
+                <listitem><para>Contains the internal classes linking the JAVA (JNI) and the C++.</para></listitem>
+                <listitem><para>Copy in <emphasis role="bold">JBOSS_HOME/server/default/lib</emphasis>.</para></listitem>
+                <listitem><para>Changing the jar implies to restart the jboss server.</para></listitem>
+                <listitem><para>Compilation (if necessary)
+                    <itemizedlist>
+                      <listitem><para>Go to the VISHNULib directory</para></listitem>
+                      <listitem><para>Make 'mvn install' (may last long the first time)</para></listitem>
+                      <listitem><para>The .jar file created is in the target directory</para></listitem>
+                    </itemizedlist>
+                </para></listitem>
+              </itemizedlist>
+            </para>
+          </listitem>
+          <listitem>
+            <para>WSAPI.jar
+              <itemizedlist>
+                <listitem><para>Contain the classes from the WSDL and the implementation of the WS.</para></listitem>
+                <listitem><para>Copy in <emphasis role="bold">JBOSS_HOME/server/default/deploy</emphasis>.</para></listitem>
+                <listitem><para>Can be updated without restarting the JBOSS server.</para></listitem>
+                <listitem><para>Compilation (if necessary)
+                    <itemizedlist>
+                      <listitem><para>Go in the WSAPI directoy after having a valid VISHNULib-1.0-SNAPSHOT.jar jar</para></listitem>
+                      <listitem><para>Make 'mvn install' (may last long the first time) </para></listitem>
+                      <listitem><para>The .jar file created is in the target directory.</para></listitem>
+                      <listitem><para>Rename it to WSAP.jar and set it in JBOSS (necessary)</para></listitem>
+                    </itemizedlist>
+                </para></listitem>
+              </itemizedlist>
+            </para>
+          </listitem>
+          <listitem>
+            <para>libVISHNU.so
+              <itemizedlist>
+                <listitem><para> Necessary to use the WS in VISHNU. This library is obtained when compiling with the ENABLE_JAVA option.</para></listitem>
+                <listitem><para>It is installed in the lib directory with the other libs.</para></listitem>
+                <listitem><para>If there is a problem when deploying the JBOSS server, make sure it is located in the LD_LIBRARY_PATH.</para></listitem>
+              </itemizedlist>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+	<title>Environment variable to be defined</title>
+	<itemizedlist>
+          <listitem>
+            <para>VISHNU_CONFIG_FILE: contains the full path to the client configuration file. Si the user guide [VISHNU_USER_GUIDE] for its content.
+              If the execution fails with a message linked to the initialisation of the library, check this variable.
+            </para>
+          </listitem>
+          <listitem>
+            <para>LD_LIBRARY_PATH: contains the paths of the directories containing the VISHNU libraries, like libVISHNU_UMS.so.</para>
+          </listitem>
+	</itemizedlist>
+      </section>
+      <section>
+	<title>Starting the JBoss server with the WS</title>
+	<itemizedlist>
+          <listitem>
+            <para> After installing as presented previously, the JBoss server must be started..</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Verification of the installation:</emphasis> To check that the JBoss server is correctly running and that the UMS web service is activated, go to the URL at 'http://localhost:8080/jbossws/services' (ou 'http://adresseIP:8080/jbossws/services') and check that the
+              "service endPoint": <emphasis role="bold">VISHNUUMSPortImpl</emphasis> is actif.</para>
+          </listitem>
+	</itemizedlist>
+      </section>
+    </section>
+  </chapter><!-- End WS -->
+  <chapter>
+    <title>Deploying VISHNU </title>
+    <section>
+      <title>On a single network</title>
+      <para>Modules can be deployed manually. Deployement will be described using the 4.1 figure of the [ARCH] document as an example. To simplify, we suppose the elements on the same area  "dedicated to VISHNU"  will be deployed on the same machine called <emphasis role="bold">prefrontale</emphasis>.</para>
+      <para><emphasis role="bold">NOTE: It is advised to avoid launching the same SeD on a machine more than once.</emphasis></para>
+      <para><emphasis role="bold">NOTE: There is a known bug under debian with boost file system, used by VISHNU. The report can be found there: https://svn.boost.org/trac/boost/ticket/4688. If when launching a SeD the following error message appears: std::runtime_error: locale::facet::_S_create_c_locale name not valid, making "export LANG=C" should fix it.</emphasis></para>
+      <para><emphasis role="bold">NOTE: The VISHNU user 'root' must have a local account on each machine where there is an IMS server. The associated unix account will be used to relaunch the SeD.</emphasis></para>
+      <para>To have a better understanding of the architecture, one can refer to the [ARCH] document, the chapter 4, 'Technical Architecture'.</para>
+      <orderedlist>
+	<listitem>
+          <para> Having a database created and initialized.</para>
+	</listitem>
+	<listitem>
+          <para> Start the CORBA naming service on the prefrontale. The command is <emphasis role="bold">omniNames -start</emphasis> if starting for the first time, <emphasis role="bold">omniNames</emphasis> is enought otherwise. Warning, in the omninames configuration file, use the adress of the host and not 'localhost' or '127.0.0.1'. </para>
+	</listitem>
+	<listitem>
+          <para> Start the log service of DIET on the prefrontale. The command is <emphasis role="bold">LogCentral --config config.cfg</emphasis> with config.cfg a configuration file for the log central. </para>
+	</listitem>
+	<listitem>
+          <para> Start the MA with its configuration file on the prefrontale: <emphasis role="bold">dietAgent config.cfg</emphasis>. See the paragraphe 6.3 to have an example of configuration file. This configuration file can contain the 3 following lines:
+            <itemizedlist>
+	      <listitem>
+		<para> 'traceLevel = 0': The level of verbosity of the agent, can be between 0 and 100. (100 is fully verbose, with corba details). </para>
+	      </listitem>
+	      <listitem>
+		<para> 'agentType = DIET_MASTER_AGENT': The type of the agent, the other value possible is DIET_LOCAL_AGENT, but in our case it must be DIET_MASTER_AGENT.</para>
+	      </listitem>
+	      <listitem>
+		<para> 'name = MA0': The name of the agent, for instance MA0 here.</para>
+	      </listitem>
+            </itemizedlist>
+          </para>
+	</listitem>
+	<listitem>
+          <para>Launch the UMS SeD on the prefrontale with the command <emphasis role="bold">umssed ~/ums_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraphe 6.5 to see an example of configuration file. The parameters correspond to:
+            <itemizedlist>
+	      <listitem>
+		<para>
+                  'dietConfigFile=/usr/local/etc/SeD.cfg': the path until the DIET configuration file. See the paragraphe 6.4 for an example. The file can contains the two following lines:
+                  <itemizedlist>
+                    <listitem>
+		      <para>'traceLevel = 0':  The level of verbosity of the agent, can be between 0 and 100. (100 is fully verbose, with corba details).</para>
+                    </listitem>
+                    <listitem>
+		      <para> 'parentName = MA0': The name of the master agent to be linked to. It must be the exact same name as the one in the 'name' field in the corresponding MA. In this example, it is MA0.</para>
+                    </listitem>
+                    <listitem>
+		      <para> 'useLogService = 1': To use the log service of DIET.</para>
+                    </listitem>
+                  </itemizedlist>
+		</para>
+	      </listitem>
+	      <listitem>
+		<para> 'vishnuId=1': The id of the VISHNU deployement to use in te DB (1 by default).</para>
+	      </listitem>
+	      <listitem>
+		<para> 'databaseType=postgresql': To use a postgresql database. To use a MySQL database, one must set the value to 'mysql'.</para>
+	      </listitem>
+	      <listitem>
+		<para>
+                  'databaseHost=localhost': The DNS name of the DB server, or 'localhost' if the DB is local.
+		</para>
+	      </listitem>
+	      <listitem>
+		<para>'databaseName=vishnu': The DB name.</para>
+	      </listitem>
+	      <listitem>
+		<para> 'databaseUserName=vishnu_user': The username to connect to the DB.</para>
+	      </listitem>
+	      <listitem>
+		<para> 'databaseUserPassword=vishnu_user': The password to connect to the DB.</para>
+	      </listitem>
+	      <listitem>
+		<para> 'databaseConnectionsNb=5': The number of DB connexions that can be opened on the DB. By default it is 10.</para>
+	      </listitem>
+	      <listitem>
+		<para> 'sendmailScriptPath=/usr/local/vishnu/sbin/sendmail.py': The script used to send mails. It is installed with the UMS module in the sbin directory.</para>
+	      </listitem>
+              <listitem>
+                <para>'authenticationType=LDAP': Use only LDAP to authentify the users (see LDAP for the 4 values available).</para>
+              </listitem>
+            </itemizedlist>
+          </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    On a torque machine, launch the torque server (pbs_serv), the torque scheduler (pbs_sched) and the torque scheduler (pbs_mom) of Torque.
+	  </para>
+	</listitem>
+	<listitem>
+          <para>Start the TMS SeD on the Torque host machine. The command is: <emphasis role="bold">tmssed ~/tms_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraphe 6.6 to have an example. The parameters are the same as the ones of UMS plus:
+	    <itemizedlist>
+	      <listitem>
+		<para>'intervalMonitor = 1': The frequency (in second) when the database is updated with the jobs states.</para>
+	      </listitem>
+	      <listitem>
+		<para>'batchSchedulerType=TORQUE': The type of batch scheduler used.</para>
+	      </listitem>
+	      <listitem>
+		<para>'vishnuMachineId=machine_1': The VISHNU machine identifier where the TMS SeD is launched (the same as given by vishnu_list_machines).</para>
+	      </listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+
+        <listitem>
+          <para>
+            On the SLURM machine, launch the servers
+            <emphasis>slurmd, slurmctld</emphasis> and <emphasis>slurmdbd</emphasis>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>Start the TMS SeD on the Torque host machine. The command is: <emphasis role="bold">tmssed ~/tms_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraphe 6.6 to have an example. The parameters are the same as the ones of UMS plus:
+            <itemizedlist>
+	      <listitem>
+		<para>'intervalMonitor = 1': The frequency (in second) when the database is updated with the jobs states.</para>
+	      </listitem>
+	      <listitem>
+		<para>'batchSchedulerType=SLURM': The type of batch scheduler used.</para>
+	      </listitem>
+	      <listitem>
+		<para>'vishnuMachineId=machine_1': The VISHNU machine identifier where the TMS SeD is launched (the same as given by vishnu_list_machines).</para>
+	      </listitem>
+	    </itemizedlist>
+	  </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            On the LSF machine, launch the executables <emphasis>hostsetup</emphasis> <emphasis>lsfstartup</emphasis>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>Start the TMS SeD on the Torque host machine. The command is: <emphasis role="bold">tmssed ~/tms_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraphe 6.6 to have an example. The parameters are the same as the ones of UMS plus:
+            <itemizedlist>
+	      <listitem>
+	        <para>'intervalMonitor = 1': The frequency (in second) when the database is updated with the jobs states.</para>
+	      </listitem>
+	      <listitem>
+	        <para>'batchSchedulerType=LSF': The type of batch scheduler used.</para>
+	      </listitem>
+	      <listitem>
+	        <para>'vishnuMachineId=machine_1': The VISHNU machine identifier where the TMS SeD is launched (the same as given by vishnu_list_machines).</para>
+	      </listitem>
+            </itemizedlist>
+          </para>
+        </listitem> 
+        <listitem>
+          <para>
+            On the Grid Engine machine, launch the executables <emphasis>sge_qmaster </emphasis>and <emphasis>sge_execd</emphasis>.
+      </para>
+        </listitem>
+        <listitem>
+          <para>Start the TMS SeD on the Torque host machine. The command is: <emphasis role="bold">tmssed ~/tms_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraphe 6.6 to have an example. The parameters are the same as the ones of UMS plus:
+            <itemizedlist>
+	      <listitem>
+	        <para>'intervalMonitor = 1': The frequency (in second) when the database is updated with the jobs states.</para>
+	      </listitem>
+	      <listitem>
+	        <para>'batchSchedulerType=SGE': The type of batch scheduler used.</para>
+	      </listitem>
+	      <listitem>
+	        <para>'vishnuMachineId=machine_1': The VISHNU machine identifier where the TMS SeD is launched (the same as given by vishnu_list_machines).</para>
+	      </listitem>
+            </itemizedlist>
+          </para>
+        </listitem> 
+        
+        <listitem>
+          <para>Start the IMS SeD on all the desired machines. The command is: <emphasis role="bold">imssed ~/ims_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraphe 6.5 to have an example. The parameters are the same as the ones of UMS. Please note that an IMS SeD must be launched on each machine to monitor.
+          </para>
+        </listitem>
+        <listitem>
+          <para>Start the FMS SeD on a machine. The command is: <emphasis role="bold">fmssed ~/fms_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraphe 6.7 to have an example. The parameters are the same as the ones of UMS plus:
+	    <itemizedlist>
+	      <listitem>
+	        <para>'intervalMonitor = 1': The frequency (in second) when the database is updated with the file transfers.</para>
+	      </listitem>
+	    </itemizedlist>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            VISHNU modules are ready to be used. To do so, a client must connect and submit requests to VISHNU using the API of the modules (see the user guide for more information).
+          </para>
+        </listitem>
+      </orderedlist>
+    </section>
+    <section>
+      <title>Deployement on various networks <emphasis role="bold">with DIET version >= 2.8</emphasis></title>
+      <para>VISHNU modules can be deployed manually. The example of deployement will be based on figure 4.2 of the [ARCH] document, supposing to simplify that on a network, all the processes run on the same machine and that "network C" and "network D" are the same (no need of forwarder between them).
+      </para>
+      <orderedlist>
+        <listitem>
+          <para> Having a database created and initialized.</para>
+        </listitem>
+        <listitem>
+          <para> Start the CORBA naming service on the prefrontale. The command is <emphasis role="bold">omniNames -start</emphasis> if starting for the first time, <emphasis role="bold">omniNames</emphasis> is enought otherwise. Warning, in the omninames configuration file, use the adress of the host and not 'localhost' or '127.0.0.1'. </para>
+        </listitem>
+        <listitem>
+          <para> Start a daemon forwarder on the network B:  </para>
+          <para><emphasis role="bold">dietForwarder --name forwarder2</emphasis>
+	    <itemizedlist>
+	      <listitem><para>
+	          forwarder2: Name that identifies the forwarder
+	      </para></listitem>
+	    </itemizedlist>
+          </para>
+        </listitem>
+        <listitem>
+          <para> Start a daemon forwarder on the network C: </para>
+          <para><emphasis role="bold">dietForwarder --peer-name forwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name forwarder
+	      --remote-host localhost
+	      --ssh-login login</emphasis>
+          </para>
+          <para>
+	    <itemizedlist>
+	      <listitem><para>
+	          --peer-name: The name of the peer forwarder, here forwarder2.
+	  </para></listitem>
+	  <listitem><para>
+	      --ssh-host: The DNS name of the distant machine to connect the SSH tunnel.
+	  </para></listitem>
+	  <listitem><para>
+	      --remote-port: optionnal, the port to use, here 50005.
+	  </para></listitem>
+	  <listitem><para>
+	      --name: The name of the forwarder.
+	  </para></listitem>
+	  <listitem><para>
+	      --remote-host: The loopback adresse, here 'localhost'.
+	  </para></listitem>
+	  <listitem><para>
+	      --ssh-login: The login on the distant machine.
+	  </para></listitem>
+	</itemizedlist>
+      </para>
+    </listitem>
+    <listitem>
+      <para> If the SSH key is accessible and that the key is protected by a
+        passphrase, it is asked and the SSH connexion is established.
+      </para>
+    </listitem>
+    <listitem>
+      <para>  Start a daemon forwarder on the network B: </para>
+      <para><emphasis role="bold">logForwarder --name logforwarder2</emphasis>
+	<itemizedlist>
+	  <listitem><para>
+	      logforwarder2: Name that identifies the forwarder
+	  </para></listitem>
+	</itemizedlist>
+      </para>
+    </listitem>
+    <listitem>
+      <para> Start a daemon forwarder on the network C: </para>
+      <para><emphasis role="bold">logForwarder --peer-name logforwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name logforwarder
+	  --remote-host localhost
+	  --ssh-login login</emphasis>
+      </para>
+      <para>
+	<itemizedlist>
+	  <listitem><para>
+	      --peer-name: The name of the peer forwarder, here forwarder2.
+	  </para></listitem>
+	  <listitem><para>
+	      --ssh-host: The DNS name of the distant machine to connect the SSH tunnel.
+	  </para></listitem>
+	  <listitem><para>
+	      --remote-port: optionnal, the port to use, here 50005.
+	  </para></listitem>
+	  <listitem><para>
+	      --name: The name of the forwarder.
+	  </para></listitem>
+	  <listitem><para>
+	      --remote-host: The loopback adresse, here 'localhost'.
+	  </para></listitem>
+	  <listitem><para>
+	      --ssh-login: The login on the distant machine.
+	  </para></listitem>
+	</itemizedlist>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If the SSH key is accessible and that the key is protected by a
+        passphrase, it is asked and the SSH connexion is established.</para>
+    </listitem>
+    <listitem>
+      <para>  Start the log service of DIET on the prefrontale. The command is <emphasis role="bold">LogCentral --config config.cfg</emphasis> with config.cfg a configuration file for the log central.</para>
+    </listitem>
+    <listitem>
+      <para> Start the MA with its configuration file on the prefrontale: <emphasis role="bold">dietAgent config.cfg</emphasis>. See the paragraphe 6.3 to have an example of configuration file. This configuration file can contain the 3 following lines:
+	<itemizedlist>
+	  <listitem>
+	    <para> 'traceLevel = 0': The level of verbosity of the agent, can be between 0 and 100. (100 is fully verbose, with corba details). </para>
+	  </listitem>
+	  <listitem>
+	    <para> 'agentType = DIET_MASTER_AGENT': The type of the agent, the other value possible is DIET_LOCAL_AGENT, but in our case it must be DIET_MASTER_AGENT.</para>
+	  </listitem>
+	  <listitem>
+	    <para> 'name = MA0': The name of the agent, for instance MA0 here.</para>
+	  </listitem>
+	</itemizedlist>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Launch the UMS SeD on the network C with the command <emphasis role="bold">umssed ~/ums_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraphe 6.5 to see an example of configuration file. The parameters are the same as for deploying on a single network.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The UMS module is ready to be used. To do so, a client must connect et submit requests. If the client is on another network, other forwarders may be needed.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>
+<section>
+  <title>Deployement on various networks <emphasis role="bold">with DIET version 2.7</emphasis></title>
+  <para>VISHNU modules can be deployed manually. The example of deployement will be based on figure 4.2 of the [ARCH] document, supposing to simplify that on a network, all the processes run on the same machine and that "network C" and "network D" are the same (no need of forwarder between them).</para>
+  <orderedlist>
+    <listitem>
+      <para>Having a database created and initialized.</para>
+    </listitem>
+    <listitem>
+      <para> Start the CORBA naming service on the prefrontale. The command is <emphasis role="bold">omniNames -start</emphasis> if starting for the first time, <emphasis role="bold">omniNames</emphasis> is enought otherwise. Warning, in the omninames configuration file, use the adress of the host and not 'localhost' or '127.0.0.1'. </para>
+    </listitem>
+    <listitem>
+      <para> Start a daemon forwarder on the network B: </para>
+      <para><emphasis role="bold">dietForwarder --name forwarder2 --net-config forwarder2.cfg</emphasis>
+	<itemizedlist>
+	  <listitem><para>
+	      forwarder2: Name that identifies the forwarder
+	  </para></listitem>
+          <listitem><para>
+              forwarder2.cfg: Configuration file (see the paragraphe 6.8) containing the rules applied to the connexions between the networks. There are 2 rules: 'accept:' or 'reject:'. In the example of the paragraphe 6.8, 
+              rules are:
+              <itemizedlist>
+                <listitem>
+                  <para> a rule 'accept' corresponding to filters on the source of the accepted connexion. '.*' means all the connexions from all IP.</para>
+                </listitem>
+                <listitem>
+                  <para> 2 rules to reject 2 addresses. It contains the local IP of the server.</para>
+                </listitem>
+              </itemizedlist>
+            </para>
+          </listitem>
+	</itemizedlist>
+      </para>
+    </listitem>
+    <listitem>
+      <para> Start a daemon forwarder on the network C: </para>
+      <para><emphasis role="bold">dietForwarder -C --peer-name forwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name forwarder
+	  --remote-host localhost --net-config forwarder1.cfg
+	  --ssh-login login</emphasis>
+      </para>
+      <para>
+	<itemizedlist>
+          <listitem><para>
+              -C: indicate it is the client.
+          </para></listitem>
+	  <listitem><para>
+	      --net-config: the configuration file. Contains rules similar to forwarder2.cfg
+          </para></listitem>
+          <listitem><para>
+	      --peer-name: The name of the peer forwarder, here forwarder2.
+	  </para></listitem>
+	  <listitem><para>
+	      --ssh-host: The DNS name of the distant machine to connect the SSH tunnel.
+	  </para></listitem>
+	  <listitem><para>
+	      --remote-port: optionnal, the port to use.
+	  </para></listitem>
+	  <listitem><para>
+	      --name: The name of the forwarder.
+	  </para></listitem>
+	  <listitem><para>
+	      --remote-host: The loopback adresse, here 'localhost'.
+	  </para></listitem>
+	  <listitem><para>
+	      --ssh-login: The login on the distant machine.
+	  </para></listitem>
+	</itemizedlist>
+      </para>
+    </listitem>
+    <listitem>
+      <para>If the SSH key is accessible and that the key is protected by a
+        passphrase, it is asked and the SSH connexion is established.</para>
+    </listitem>
+    <listitem>
+      <para> Start a daemon forwarder on the network B: </para>
+      <para><emphasis role="bold">logForwarder --name logforwarder2 --net-config logforwarder2</emphasis>
+	<itemizedlist>
+	  <listitem><para>
+	      logforwarder2: Name that identifies the forwarder
+	  </para></listitem>
+          <listitem><para>
+              logforwarder2.cfg: Configuration file (see the paragraphe 6.8) containing the rules applied to the connexions between the networks. There are 2 rules: 'accept:' or 'reject:'. In the example of the paragraphe 6.8, 
+              rules are:
+              <itemizedlist>
+                <listitem>
+                  <para> a rule 'accept' corresponding to filters on the source of the accepted connexion. '.*' means all the connexions from all IP.</para>
+                </listitem>
+                <listitem>
+                  <para>  2 rules to reject 2 addresses. It contains the local IP of the server.</para>
+                </listitem>
+              </itemizedlist>
+            </para>
+          </listitem>
+	</itemizedlist>
+      </para>
+    </listitem>
+    <listitem>
+      <para> Start a daemon log forwarder on the network C:  </para>
+      <para><emphasis role="bold">logForwarder -C --peer-name logforwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name logforwarder
+	  --remote-host localhost --net-config logforwarder1.cfg
+	  --ssh-login login</emphasis>
+      </para>
+      <para>
+	<itemizedlist>
+          <listitem><para>
+              -C: indicate it is the client.
+          </para></listitem>
+	  <listitem><para>
+	      --peer-name: The name of the peer forwarder, here forwarder2.
+	  </para></listitem>
+          <listitem><para>
+              --net-config: the configuration file. Contains rules similar to forwarder2.cfg
+          </para></listitem>
+	  <listitem><para>
+	      --ssh-host: The DNS name of the distant machine to connect the SSH tunnel.
+	  </para></listitem>
+	  <listitem><para>
+	      --remote-port: optionnal, the port to use.
+	  </para></listitem>
+	  <listitem><para>
+	      --name: The name of the forwarder.
+	  </para></listitem>
+	  <listitem><para>
+	      --remote-host: The loopback adresse, here 'localhost'.
+	  </para></listitem>
+	  <listitem><para>
+	      --ssh-login: The login on the distant machine.
+	  </para></listitem>
+	</itemizedlist>
+      </para>
+    </listitem>
+    <listitem>
+      <para>If the SSH key is accessible and that the key is protected by a
+        passphrase, it is asked and the SSH connexion is established.</para>
+    </listitem>
+    <listitem>
+      <para> Start the log service of DIET on the prefrontale. The command is <emphasis role="bold">LogCentral --config config.cfg</emphasis> with config.cfg a configuration file for the log central. </para>
+    </listitem>
+    <listitem>
+      <para>  Start the MA with its configuration file on the prefrontale: <emphasis role="bold">dietAgent config.cfg</emphasis>. See the paragraphe 6.3 to have an example of configuration file. This configuration file can contain the 3 following lines:
+	<itemizedlist>
+	  <listitem>
+	    <para> 'traceLevel = 0': The level of verbosity of the agent, can be between 0 and 100. (100 is fully verbose, with corba details). </para>
+	  </listitem>
+	  <listitem>
+	    <para> 'agentType = DIET_MASTER_AGENT': The type of the agent, the other value possible is DIET_LOCAL_AGENT, but in our case it must be DIET_MASTER_AGENT.</para>
+	  </listitem>
+	  <listitem>
+	    <para> 'name = MA0': The name of the agent, for instance MA0 here.</para>
+	  </listitem>
+	</itemizedlist>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Launch the UMS SeD on the network C with the command <emphasis role="bold">umssed ~/ums_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraphe 6.5 to see an example of configuration file. The parameters correspond to:
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The UMS module is ready to be used. To do so, a client must connect et submit requests. If the client is on another network, other forwarders may be needed.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>
+<section>
+  <title>Example of a MA configuration file</title>
+  <programlisting>
+    traceLevel = 0
+    name = MA0
+    agentType = DIET_MASTER_AGENT
+  </programlisting>
+</section>
+<section>
+  <title>Example of a DIET SeD configuration file</title>
+  <programlisting>
+    traceLevel = 0
+    parentName = MA0
+    useLogService = 1
+  </programlisting>
+</section>
+<section>
+  <title>Example of a UMS configuration file</title>
+  <programlisting>
+    # Configuration of the VISHNU UMS SeD
+    dietConfigFile=/usr/local/etc/SeD.cfg
+    vishnuId=1
+    databaseType=postgresql
+    databaseHost=localhost
+    databaseName=vishnu
+    databaseUserName=vishnu_user
+    databaseUserPassword=vishnu_user
+    databaseConnectionsNb=5
+    sendmailScriptPath=/usr/local/sbin/sendmail.py
+    vishnuMachineId=machine_1
+    authenticationType=LDAP
+  </programlisting>
+</section>
+<section>
+  <title>Example of a TMS SeD configuration file </title>
+  <programlisting>
+    # Configuration of the VISHNU TMS SeD
+    dietConfigFile=/usr/local/etc/SeD.cfg
+    vishnuId=1
+    databaseType=postgresql
+    databaseHost=localhost
+    databaseName=vishnu
+    databaseUserName=vishnu_user
+    databaseUserPassword=vishnu_user
+    databaseConnectionsNb=5
+    sendmailScriptPath=/usr/local/sbin/sendmail.py
+    vishnuMachineId=machine_1
+    # TMS Configuration 
+    # batchSchedulerType=SLURM if the batchScheduler is SLURM
+    # batchSchedulerType=LSF if the batchScheduler is LSF
+    # batchSchedulerType=SGE if the batchScheduler is SGE
+    # batchSchedulerType=LOADLEVELER if the batchScheduler is LL
+    batchSchedulerType=TORQUE
+    intervalMonitor = 1
+  </programlisting>
+</section>
+<section>
+  <title>Example of a FMS SeD configuration file </title>
+  <programlisting>
+    # Configuration of the VISHNU FMS SeD
+    dietConfigFile=/usr/local/etc/SeD.cfg
+    vishnuId=1
+    databaseType=postgresql
+    databaseHost=localhost
+    databaseName=vishnu
+    databaseUserName=vishnu_user
+    databaseUserPassword=vishnu_user
+    databaseConnectionsNb=5
+    vishnuMachineId=machine_1
+    # FMS Configuration 
+    intervalMonitor = 1
+  </programlisting>
+</section>
+<section>
+  <title>Example of a forwarder configuration file </title>
+  <programlisting>
+    # accept everything from everyone
+    accept:.*
+    
+    # reject its own ip
+    reject:192\.168\.1\.6
+  </programlisting>
+</section>
+<section>
+  <title>Example of a LogCentral configuration file </title>
+  <programlisting>
+    # an empty configuration file for LogService
+    [General]
+    
+    [DynamicTagList]
+    [StaticTagList]
+    [UniqueTagList]
+    [VolatileTagList]
+  </programlisting>
+</section>
+<section>
+  <title>Configuration to send mails in VISHNU</title>
+  <para>The UMS SeD process use the 'sendmail.py' file (in the sbin/ directory)
+    to send mails to the users during some operations. This file can be updated by the administrator to configure it. By default, the configuration connects
+    to the SMTP of 'localhost' using the port 25, without authentication.</para>
+  <para>The following parameters can be configured sendmail.py:</para>
+  <informaltable>
+    <tgroup cols="2">
+      <colspec colwidth="2cm"/>
+      <colspec colwidth="15cm"/>
+      <thead>
+	<row>
+	  <entry>Option</entry>
+	  <entry>Line of the sendmail.py script to modify</entry>
+	</row>
+      </thead>
+      <tbody>
+	<row>
+	  <entry><para>login</para></entry>
+	  <entry><programlisting>parser.add_option("--login", dest="login", help="", default="[login_utilisateur]")</programlisting></entry>
+	</row>
+	<row>
+	  <entry><para>password</para></entry>
+	  <entry><programlisting>parser.add_option("--password", dest="password", help="smtp password", default="[password_utilisateur]")</programlisting></entry>
+	</row>
+	<row>
+	  <entry><para>hostname</para></entry>
+	  <entry><programlisting>parser.add_option("--hostname", dest="host", help="smtp host", default="[nom_serveur_SMTP]")</programlisting></entry>
+	</row>
+	<row>
+	  <entry><para>port</para></entry>
+	  <entry><programlisting>parser.add_option("--port", dest="port", help="smtp port [default: 25]", type=int, default="[no_port]")</programlisting></entry>
+	</row>
+	<row>
+	  <entry><para>SSL</para></entry>
+	  <entry><programlisting>parser.add_option("--ssl", action="store_true", dest="use_ssl", help="enable ssl support [default: %default - default port: 587
+	      ]", default=True)</programlisting></entry>
+	</row>
+      </tbody>
+    </tgroup>
+  </informaltable>
+</section>
+<section>
+  <title>Configuration of the private/public ssh keys for FMS</title>
+  <para>
+    All the FMS commands are launched throught SSH using the user that 
+    has submitted the request. FMS services are of 2 types: the ones using
+    one remote machine and the ones using two machines.
+    <itemizedlist>
+      <listitem>
+        <para>
+          In the first case, the SeD connects on the distant machine and
+          do the service. Consequently, the SeD's public key must be added to the
+          user authorized_keys file ($HOME/.ssh/authorized_keys) of the corresponding
+          distant machine.
+        </para>
+      </listitem>
+      <listitem>
+        <para> 
+          In the second case, 2 SSH connexions are necessary. Se SeD connects
+          to the source machine and starts the transfer (second connexion) to the distant
+          machine. Consequently:
+          <itemizedlist> 
+            <listitem>
+              <para> 
+                The SeD's public key must be added to the source machine authorized key file to enable the first connexion.
+              </para>
+            </listitem>
+            <listitem>
+              <para> 
+                The source machine must be able to connect to the destination
+                machine using ssh, using the private key registered in the VISHNU database adding
+                the user's local account linking the machine to VISHNU. Besides, if the machine
+                forward agent is activated between these machines, it is not necessary to use
+                another ssh key couple between te source and destination machine.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
+    To sum up, the SeD's SSH public key must be added on all the users' 
+    account of the machines used to fulfill the FMS services. All the
+    keys, protected by passphrases must be stocked by an SSH agent to
+    allow the automatic authentication.
+  </para>
+</section> 
+
+
+<section>
+  <title>Configuration of the private/public keys for TMS
+  </title>
+  <para>
+    The commands to submit, cancel and get the results of the jobs are 
+    executed throught SSH under the user name. To execute the commands,
+    the TMS SeD public key's account must be added to the
+    authorized_keys file ($HOME/.ssh/authorized_keys) of the user.
+    All passphrase protected keys must be stocked by an SSH agent
+    to allow the automatic authentication.
+  </para> 
+</section> 
+
+<section>
+  <title> Test to execute a client command throught the shell API
+  </title>
+  <orderedlist>
+    <listitem>
+      <para>
+        Once the platform is installed and deployed, go to a client 
+        machine with VISHNU client installed. See the VISHNU user guide
+        concerning this installation.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Export the environment variable VISHNU_CONFIG_FILE to a
+        client configuration file (see the VISHNU user guide again for more).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Type the shell command 'vishnu_connect -u root -w vishnu_user',
+        with root a user created in the database by our initialization script,
+        and vishnu_user it's asociated password.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        On the client, there should be a display of a session identifier, proving
+        that the connexion was a success. On the MA and the SeD, depending
+        on the verbosity level, there may be some information displayed.
+        The client display should be similar to:
+	<emphasis role="bold">sessionId: root-2011-Jul-11-14:22:14.403491:86690</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Close the session with the 'vishnu_close' command. No error should be raised during this test.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>
+</chapter><!-- End lancement  -->
+<chapter>
+  <title>Administration</title>
+  <section>
+    <title>Presentation</title>
+    <para>
+      The UMS module corresponds to user and machine handling in VISHNU. It
+      allows to save a VISHNU configuration and restore it if needed.
+      In this chapter, we will suppose that the user is connected as a VISHNU
+      administrator.
+      The commands presented are the shell one's, but all is the same
+      throught th other API (python, WS, C++).
+    </para>
+    <para>The API is available in [VISHNU_API]</para>
+  </section>
+  <section>
+    <title>User handling (UMS)</title>
+    <orderedlist>
+      <listitem>
+	<para>
+          Adding a user is made with vishnu_add_user. It takes as a parameter
+          the user name, it's familly name, it's accreditation level in VISHNU
+          (user or admin) and its mail address. All these are mandatory. An 
+          accreditation level of 1 means admin, 0 means simple user. The 
+          userid is generated and returned.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+          Updating a user must be done by an admin. It is made throught the
+          'vishnu_update_user' command and enables to update a user first and
+          last name, its status (can be locked), its mail address.
+          The generated userid must be used to indicate the user to update.
+	</para>
+	<para>Note: Setting a user status to 'INACTIVE' corresponds to 
+          locking its VISHNU account.
+        </para>
+      </listitem>
+      <listitem>
+	<para>
+          Deleting a user delete its data from the database and is made with
+          the vishnu_delete_user command.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+          Listing the users can be made by an admin only. The command is 
+          'vishnu_list_users' and can take options like a specific userid.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+          Only an admin can reinitialize a user password in VISHNU. The command
+          is 'vishnu_reset_password' with the userid of the user to change
+          its password.
+          At the following connexion, the user will be asked to change it's password (using the 'vishnu_change_password' command).
+	</para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section>
+    <title>Handling machines (UMS+IMS)</title>
+    <orderedlist>
+      <listitem>
+	<para>
+          Adding a machine is made with the 'vishnu_add_machine' command. It
+          takes as a parameter the machine name, its location, the language of
+          the given machine description and the SSH public key.
+          These parameters are mandatory. Once the machine is added, its
+          identifier is returned.
+        </para>
+      </listitem>
+      <listitem>
+	<para>
+          A machine is updated with the 'vishnu_update_machine'. The machine 
+          identifier is needed to update.
+	</para>
+	<para>
+          Note: Changing a machine status to 'INACTIVE' corresponds to
+          blocking it, the machine is unavailable to VISHNU users', but
+          the admin can still see it.
+        </para>
+      </listitem>
+      <listitem>
+	<para>
+          Deleting a machine is made with the 'vishnu_delete_machine', with 
+          the machine identifier returned at the machine creation. It
+          deletes from the database with all the asociated data.
+          Warning it is not reversible.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+          Users can list machines, but the admin have another option, a userid,
+          to list the machines where the given user as a VISHNU account.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+          Updating a machine technical description is made with the 
+          'vishnu_set_system_info' command. The machine identifier is
+          required.
+	</para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section>
+    <title>Handling the plateform (UMS)</title>
+    <orderedlist>
+      <listitem>
+	<para>
+          The admin can save at a given time VISHNU state's. It saves the users,
+          machines, users' account, authentication systems. The function
+          is 'vishnu_save_configuration' and does not need parameters and
+          generates a save file.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+          An admin can load a saved configuration of VISHNU using the 
+          'vishnu_restore_configuration' command that takes the saved file.
+          To start this command, all the VISHNU user's must de disconnected.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+          An admin can define user's option default values for all the users
+          (these options are the default time before the session is 
+          automatically closed, how the session closes: timeout or wait for an
+          explicit close call, default copy tool: scp or rsync).
+          The function is 'vishnu_configure_default_option' with the option
+          name and its new default value.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+          An admin can add or uptade the authentication systems. For instance,
+          it can add various LDAP to authenticate its users. Currently, for
+          the same LDAP, if the users are in different branches, we need to 
+          add twice the LDAP with different names, but it allows the user 
+          to only give its LDAP login and not its branch. It is the admin,
+          when he creates the authentication system, that defines the branch
+          to use in the DAP tree. When the admin fills the path in the LDAP 
+          tree, he must replace the username by the \$USERNAME string, this
+          string will be replaced by the actual user name.
+          associated functions: vishnu_add_auth_system, vishnu_update_auth_system, vishnu_delete_auth_system
+	</para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section>
+    <title>Admin options in user functions(UMS+FMS)</title>
+    <orderedlist>
+      <listitem>
+	<para> In 'vishnu_connect', an admin can give a VISHNU user identifier to connect as this user in VISHNU.</para>
+      </listitem>
+      <listitem>
+	<para>
+	  In 'vishnu_list_history_cmd', an admin can list all the commands
+          of all the users or the commands of a particular user giving
+          its identifier.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  In 'vishnu_list_local_accounts', an admin can list all the accounts
+          of all the users or the accounts of a particular user.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  In 'vishnu_list_options', an admin can list all the options of all
+          the users or the options of a particular user.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  In 'vishnu_list_sessions', an admin can list all the sessions of
+          all the users or the sessions of a user, filtering by a machine.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  In 'vishnu_list_file_transfers', an admin can list all the file
+          transfers of all the users, or the transfers of a particular user,
+          or the transfers on a machine (may be source or destination)
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  In 'vishnu_stop_file_transfers', an admin can stop the file transfers
+          of all the users, or a particular user, or on a machine
+	</para>
+      </listitem>
+
+    </orderedlist>
+  </section>
+  <section>
+    <title>Handling processes in VISHNU and load shedding(IMS)</title>
+    <itemizedlist>
+      <listitem>
+	<para>An admin can list all the running VISHNU processes, on all the platform or on a particular machine.
+          associated function: vishnu_get_processes.</para>
+      </listitem>
+      <listitem>
+	<para>An admin can stop a VISHNU process, it will not be automatically restarted.
+          Warning, the admin must have a local account on the machine.
+	  associated function: vishnu_stop </para>
+      </listitem>
+      <listitem>
+	<para>An admin can restart a VISHNU process on a machine, this process must have already runned and he must have an account on the machine.
+          associated function: vishnu_restart </para>
+      </listitem>
+      <listitem>
+	<para>An admin can load shed a machine using two modes. In the HARD
+          one, all the VISHNU processes are stopped on the machine, in the
+          SOFT, FMS and TMS have their jobs and file transfers cancelled.
+          associated function: vishnu_load_shed </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section>
+    <title>Monitoring the machines (IMS)</title>
+    <itemizedlist>
+      <listitem>
+	<para> An admin can fix the frequency the machine state is recorded.
+          associated function: vishnu_set_update_frequency</para>
+      </listitem>
+      <listitem>
+	<para> An admin can get the frequenc the machine state is saved.
+          associated function: vishnu_get_update_frequency</para>
+      </listitem>
+      <listitem>
+	<para>An admin can fix a threshold on a machine. It can be
+          the CPU use, the free remaining ram and the free remaining diskspace.
+          When recording a machine state, if a threshold is reached, a mail
+          is automatically sent to an admin responsible for the threshold on
+          the machine.
+          associated function: vishnu_set_threshold</para>
+      </listitem>
+      <listitem>
+	<para>An admin can get the defined thresholds.
+          associated function: vishnu_get_threshold</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section>
+    <title>Defining the format of the identifiers (IMS)</title>
+    <itemizedlist>
+      <listitem>
+	<para>
+          An admin can fix the format of the identifiers automatically 
+          generated for the users, machines, jobs, file transfers and 
+          authentication systems. These identifiers can contain various
+          variables:
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		'$DAY': Variable replaced by the day (1-31)
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		'$MONTH': Variable replaced by the month (1-12)
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		'$YEAR':  Variable replaced by the year (0-99)
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		'$CPT': Variable replaced by a counter value, to guarantee the unicity
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		'$SITE': For users and machines, replaced by the place
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		'$UNAME': For users, replaced by their first name
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		'$MANAME': For machines, replace by their name
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+          Warning, the counter variable is mandatory to avoid generating twice the same identifier.
+	  associated function: define_file_format, define_machine_format, define_task_format, define_user_format, define_auth_format.
+	</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+</chapter><!-- End administration -->
+</book>
+
