@@ -62,7 +62,7 @@ pid_exists(const std::string& pid){
  */
 
 
-void 
+void
 deleter(char* dietConfig,int ac,char* av[]){
 
   extern bfs::path daemon_file;
@@ -97,7 +97,7 @@ deleter(char* dietConfig,int ac,char* av[]){
           SessionContainer allSessions=getAllSessions(current_path.string());// get all sessions stored in file
 
           if (false==allSessions.empty()){ // is there a session?
-            
+
             BOOST_FOREACH (SessionEntry session, allSessions){
 
 
@@ -105,24 +105,27 @@ deleter(char* dietConfig,int ac,char* av[]){
 
 
                 if (vishnuInitialize(dietConfig, ac, av)) {
+// Triple call to avoid useless disconnexion problem
+                  if (vishnuInitialize(dietConfig, ac, av)) {
+                    if (vishnuInitialize(dietConfig, ac, av)) {
+                      syslog(LOG_ERR,"DIET initialization failed !");
 
-                  syslog(LOG_ERR,"DIET initialization failed !");
-
-                  exit (EXIT_FAILURE);
-
+                      exit (EXIT_FAILURE);
+                    }
+                  }
                 }
 
                 try{
 
                 close (session.getSessionKey()); // and need to be closed
-               
+
                 }
                 catch(VishnuException & e ){// if the close command fails
-                 
+
                   if (false==checkBadSessionKeyError(e)){// check if we need to stop the daemon
-                    
+
                      syslog(LOG_ERR, "The file is corrupted");
-                    
+
                      exit(e.getMsgI());
 
                   }
@@ -135,7 +138,7 @@ deleter(char* dietConfig,int ac,char* av[]){
 
           }
 
-          bfs::remove(current_path);// remove the file 
+          bfs::remove(current_path);// remove the file
 
         }
       }
@@ -158,7 +161,7 @@ deleter(char* dietConfig,int ac,char* av[]){
 
 
 
-void 
+void
 cleaner(char* dietConfig,int ac,char* av[]){
   // declare all global variables
   extern bfs::path home_dir;
@@ -180,7 +183,7 @@ cleaner(char* dietConfig,int ac,char* av[]){
   session_dir /= "sessions";
 
 
-  if (false==bfs::exists(session_dir)){ // make sure session_dir exists 
+  if (false==bfs::exists(session_dir)){ // make sure session_dir exists
 
     bfs::create_directories(session_dir);
 

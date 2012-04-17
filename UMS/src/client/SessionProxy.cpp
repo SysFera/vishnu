@@ -223,7 +223,16 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
  */
 int SessionProxy::connect(const UserProxy& user, const UMS_Data::ConnectOptions& options)
 {
-  return _connect(user, true, options);
+  try {
+    return _connect(user, true, options);
+  } catch (SystemException e) {
+    try {
+      return _connect(user, true, options);
+    } catch (SystemException e) {
+      return _connect(user, true, options);
+    }
+  }
+
 }
 
 /**
