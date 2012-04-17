@@ -113,13 +113,13 @@ void SSHFile::getInfos() const {
 
    file_size_t size;
   time_t atime, mtime, ctime;
-  
-  
+
+
   fileStat = ssh.exec(STATCMD+getPath());
 
 
-  if (fileStat.second.find("Warning")!=std::string::npos){   
- 
+  if (fileStat.second.find("Warning")!=std::string::npos){
+
     fileStat = ssh.exec(STATCMD+getPath());
 
   }
@@ -148,37 +148,37 @@ void SSHFile::getInfos() const {
   setAtime(atime);
   setMtime(mtime);
   setCtime(ctime);
-  
-  
-  
-  
+
+
+
+
   if (fileType=="block"){
     setType(block);
   }
   if (fileType=="character"){
     setType(character);
   }
- 
+
   if (fileType=="directory"){
     setType(directory);
   }
- 
+
   if (fileType=="symbolic"){
     setType(symboliclink);
   }
- 
+
   if (fileType=="socket"){
     setType(sckt);
   }
- 
+
   if (fileType=="fifo"){
     setType(fifo);
   }
-  
+
   if (fileType=="regular"){
     setType(regular);
   }
-  
+
   exists(true);
   upToDate=true;
   }
@@ -244,7 +244,7 @@ string SSHFile::head(const HeadOfFileOptions& options) {
 
 /* Get the file content through ssh. */
 string SSHFile::getContent() {
-  
+
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
       sshPublicKey, sshPrivateKey);
   pair<string,string> catResult;
@@ -263,15 +263,15 @@ string SSHFile::getContent() {
 }
 /* Create a file through ssh. */
 int SSHFile::mkfile(const mode_t mode) {
-  
+
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
               sshPublicKey, sshPrivateKey);
   pair<string,string> mkfileResult;
-  
+
   if (exists()){
     throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" already exists");
   }
-  
+
   mkfileResult = ssh.exec(MKFILECMD+getPath());
   if (mkfileResult.second.length()!=0) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error creating "+getPath()+": "+mkfileResult.second);
@@ -287,15 +287,15 @@ int SSHFile::mkdir(const CreateDirOptions& options) {
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
               sshPublicKey, sshPrivateKey);
   pair<string,string> mkdirResult;
-  
-  if (exists()){
+
+  if (exists() && !options.isIsRecursive()){
     throw FMSVishnuException(ERRCODE_INVALID_PATH,getPath()+" already exists");
   }
   //os << oct << mode;
   if (options.isIsRecursive() ) {
     os << " -p " ;
   }
-  
+
   mkdirResult = ssh.exec(MKDIRCMD+os.str()+" "+getPath());
   if (mkdirResult.second.length()!=0) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error creating "+getPath()+": "+mkdirResult.second);
@@ -311,7 +311,7 @@ int SSHFile::rm(const RmFileOptions& options) {
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
               sshPublicKey, sshPrivateKey);
   pair<string,string> rmResult;
-  
+
   if (!exists()){
     throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
   }
@@ -334,13 +334,13 @@ int SSHFile::rmdir() {
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
               sshPublicKey, sshPrivateKey);
   pair<string,string> rmdirResult;
-  
+
   if (!exists()){
     throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
   }
-  
+
   rmdirResult = ssh.exec(RMDIRCMD+getPath());
-  
+
   if (rmdirResult.second.length()!=0) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error removing "+getPath()+": "+rmdirResult.second);
   }
@@ -357,13 +357,13 @@ string SSHFile::tail(const TailOfFileOptions& options) {
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
               sshPublicKey, sshPrivateKey);
   pair<string,string> tailResult;
-  
+
   if (!exists()){
     throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
   }
   os << nline;
   tailResult = ssh.exec(TAILCMD+os.str()+" "+getPath());
-  
+
   if (tailResult.second.length()!=0) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error obtaining the head of the file: "+
                         tailResult.second);
@@ -399,17 +399,17 @@ FMS_Data::DirEntryList* SSHFile::ls(const LsDirOptions& options) const {
   if (lsResult.second.length()!=0){
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error listing directory: "+lsResult.second);
   }
-  
+
   istringstream is(lsResult.first);
-  
+
   char buffer[1024];
-  
+
   string line;
 
   while (!is.eof()) {
-   
+
     is.getline(buffer, 1024);
-  
+
     line = buffer;
     if (line.find("total") != std::string::npos || line.empty()) {
     continue;
@@ -417,9 +417,9 @@ FMS_Data::DirEntryList* SSHFile::ls(const LsDirOptions& options) const {
 
     FMS_Data::DirEntry_ptr dirEntry = ecoreFactory->createDirEntry();
 
-    // Get a Dir Entry struct from string 
+    // Get a Dir Entry struct from string
     File::getDirEntryFrom(line,dirEntry);
-    // store it into list 
+    // store it into list
     result->getDirEntries().push_back(dirEntry);
   }
   return result;
@@ -442,7 +442,7 @@ int SSHFile::mv(const string& dest, const CpFileOptions& options){
   if (getType()==directory){
 
    tmpOptions.setIsRecursive(true);
-  } 
+  }
 
 
   cp(dest,tmpOptions);
@@ -461,7 +461,7 @@ int SSHFile::mv(const string& dest, const CpFileOptions& options){
    boost::scoped_ptr<FileTransferCommand> tr (FileTransferCommand::getCopyCommand(getSession(),options) );
 
    string trCmd= tr->getCommand();
-  
+
    if (!exists()) { //if the file does not exist
      throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
    }
@@ -472,18 +472,18 @@ int SSHFile::mv(const string& dest, const CpFileOptions& options){
 
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
       sshPublicKey, sshPrivateKey);
-  
-  
+
+
   pair<string,string> trResult;
 
   trResult = ssh.exec(trCmd + " " +getPath()+" "+dest );
 
-  
+
   if (trResult.second.find("Warning")!=std::string::npos){
 
     trResult = ssh.exec(trCmd + " "+ getPath()+" "+dest);
 
-  } 
+  }
 
   if (trResult.second.length()!=0) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error transfering file: "+trResult.second);
@@ -532,7 +532,7 @@ void SSHExec::setProcessId(const int& processId) const {
 mprocessId=processId;
 }
 
-// exec a remote command 
+// exec a remote command
 
 pair<string, string> SSHExec::exec(const string& cmd) const {
   vector<string> tokens;
@@ -543,8 +543,8 @@ pair<string, string> SSHExec::exec(const string& cmd) const {
   int comPipeErr[2];
   int status;
   char c;
- 
-  // build the remote command  
+
+  // build the remote command
   string beginMarker("beginVishnuCommand");
 
   command << sshCommand  << " -l " << userName;
@@ -552,9 +552,9 @@ pair<string, string> SSHExec::exec(const string& cmd) const {
   command << " -o ForwardAgent=yes";
   command << " -p " << sshPort << " " << server << " " << "echo "<< beginMarker<< " && "<<  cmd;
 
-  
+
   istringstream is(command.str());
-  
+
   copy(istream_iterator<string>(is),
        istream_iterator<string>(),
        back_inserter<vector<string> >(tokens));
@@ -563,18 +563,18 @@ pair<string, string> SSHExec::exec(const string& cmd) const {
 
   char* argv[tokens.size()+1];
   argv[tokens.size()]=NULL;
-  
+
   for (unsigned int i=0; i<tokens.size(); ++i){
     argv[i]=strdup(tokens[i].c_str());
   }
-  
+
   if (pipe(comPipeOut)==-1) {
     for (unsigned int i=0; i<tokens.size(); ++i){
       free(argv[i]);
     }
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error creating communication pipe");
   }
- 
+
   if (pipe(comPipeErr)==-1) {
     for (unsigned int i=0; i<tokens.size(); ++i){
       free(argv[i]);
@@ -584,7 +584,7 @@ pair<string, string> SSHExec::exec(const string& cmd) const {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error creating communication pipe");
   }
   pid = fork();
-  
+
   if (pid==-1) {
     for (unsigned int i=0; i<tokens.size(); ++i){
       free(argv[i]);
@@ -610,7 +610,7 @@ pair<string, string> SSHExec::exec(const string& cmd) const {
 
   close(comPipeErr[1]);/* Close unused write end */
 
- 
+
   while (read(comPipeOut[0], &c, 1)){
     result.first+=c;
   }
@@ -635,7 +635,7 @@ pair<string, string> SSHExec::exec(const string& cmd) const {
   }
   lastExecStatus = status;
 
-  // Jump to the vishnu command output marker 
+  // Jump to the vishnu command output marker
   string output=result.first;
   size_t pos= output.find(beginMarker);
   if (pos!= std::string::npos){
