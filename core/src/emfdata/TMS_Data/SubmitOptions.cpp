@@ -423,6 +423,162 @@ void SubmitOptions::setSelectQueueAutom(::ecore::EBoolean _selectQueueAutom)
 #endif
 }
 
+std::vector< ::ecore::EString > const& SubmitOptions::getFileParams() const
+{
+    return m_fileParams;
+}
+
+void SubmitOptions::setFileParams(
+        std::vector< ::ecore::EString > const& _fileParams)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    std::vector< ::ecore::EString > _old_fileParams = m_fileParams;
+#endif
+    m_fileParams = _fileParams;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__fileParams(),
+                _old_fileParams,
+                m_fileParams
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+void SubmitOptions::addFileParams(
+        ::ecore::EString const& _new_element_in_fileParams)
+{
+    m_fileParams.push_back(_new_element_in_fileParams);
+}
+
+void SubmitOptions::setFileParamsAt(size_t _position,
+        ::ecore::EString const& _new_element_in_fileParams)
+{
+    if (_position >= m_fileParams.size())
+        m_fileParams.resize(_position + 1, 0);
+
+    m_fileParams[_position] = _new_element_in_fileParams;
+}
+
+void SubmitOptions::deleteFileParamsAt(size_t _position)
+{
+    if (_position >= m_fileParams.size())
+        throw "Attribute counter out of bounds!";
+
+    // TODO: This is not actually quite true
+    if (_position == m_fileParams.size() - 1)
+        m_fileParams.resize(_position);
+}
+
+std::vector< ::ecore::EString > const& SubmitOptions::getFileContents() const
+{
+    return m_fileContents;
+}
+
+void SubmitOptions::setFileContents(
+        std::vector< ::ecore::EString > const& _fileContents)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    std::vector< ::ecore::EString > _old_fileContents = m_fileContents;
+#endif
+    m_fileContents = _fileContents;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__fileContents(),
+                _old_fileContents,
+                m_fileContents
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+void SubmitOptions::addFileContents(
+        ::ecore::EString const& _new_element_in_fileContents)
+{
+    m_fileContents.push_back(_new_element_in_fileContents);
+}
+
+void SubmitOptions::setFileContentsAt(size_t _position,
+        ::ecore::EString const& _new_element_in_fileContents)
+{
+    if (_position >= m_fileContents.size())
+        m_fileContents.resize(_position + 1, 0);
+
+    m_fileContents[_position] = _new_element_in_fileContents;
+}
+
+void SubmitOptions::deleteFileContentsAt(size_t _position)
+{
+    if (_position >= m_fileContents.size())
+        throw "Attribute counter out of bounds!";
+
+    // TODO: This is not actually quite true
+    if (_position == m_fileContents.size() - 1)
+        m_fileContents.resize(_position);
+}
+
+std::vector< ::ecore::EString > const& SubmitOptions::getTextParams() const
+{
+    return m_textParams;
+}
+
+void SubmitOptions::setTextParams(
+        std::vector< ::ecore::EString > const& _textParams)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    std::vector< ::ecore::EString > _old_textParams = m_textParams;
+#endif
+    m_textParams = _textParams;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__textParams(),
+                _old_textParams,
+                m_textParams
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+void SubmitOptions::addTextParams(
+        ::ecore::EString const& _new_element_in_textParams)
+{
+    m_textParams.push_back(_new_element_in_textParams);
+}
+
+void SubmitOptions::setTextParamsAt(size_t _position,
+        ::ecore::EString const& _new_element_in_textParams)
+{
+    if (_position >= m_textParams.size())
+        m_textParams.resize(_position + 1, 0);
+
+    m_textParams[_position] = _new_element_in_textParams;
+}
+
+void SubmitOptions::deleteTextParamsAt(size_t _position)
+{
+    if (_position >= m_textParams.size())
+        throw "Attribute counter out of bounds!";
+
+    // TODO: This is not actually quite true
+    if (_position == m_textParams.size() - 1)
+        m_textParams.resize(_position);
+}
+
 // References
 ::TMS_Data::LoadCriterion_ptr SubmitOptions::getCriterion()
 {
