@@ -18,6 +18,7 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/local_time/local_time.hpp>
+#include "Options.hpp"
 
 #include "FMSVishnuException.hpp"
 #include <boost/filesystem.hpp>
@@ -65,7 +66,6 @@ namespace vishnu {
   static const std::string TMSMAPPERNAME = "TMS";
   static const std::string IMSMAPPERNAME = "IMS";
   static const std::string FMSMAPPERNAME = "FMS";
-
   static const int PASSWORD_MAX_SIZE = 8;
 
   static boost::shared_mutex mutex;
@@ -325,6 +325,22 @@ std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& ut
    void
      checkEmptyString(const std::string& str,
          const std::string& compMsg);
+
+   /**
+    * \brief Function to parse textual or file parameters
+    * \param IN opt A structure containing the set of submitted options
+    * \param OUT paramSet a vector containing all of parameters
+    * \param IN paramOptName the name of the option for a single parameter
+    * \param IN listParamsStr a string-like list of parameters
+    * \param IN isOfFileType tell whether the parameters are files or textual
+    * \return true if all parameters are syntaxicaly valid
+    */
+   int
+   validateParameters(const boost::shared_ptr<Options> & opt,
+			 std::vector<std::string> & paramSet,
+    		 const std::string & paramOptName,
+    		 const std::string & listParamsStr,
+    		 const bool & isOfFileType = false);
 
 }
 #endif // _UTILVISHNU_H_

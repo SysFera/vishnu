@@ -230,6 +230,21 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__SELECTQUEUEAUTOM);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
             m_SubmitOptions__selectQueueAutom);
+    m_SubmitOptions__fileParams = new ::ecore::EAttribute();
+    m_SubmitOptions__fileParams->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILEPARAMS);
+    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
+            m_SubmitOptions__fileParams);
+    m_SubmitOptions__fileContents = new ::ecore::EAttribute();
+    m_SubmitOptions__fileContents->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILECONTENTS);
+    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
+            m_SubmitOptions__fileContents);
+    m_SubmitOptions__textParams = new ::ecore::EAttribute();
+    m_SubmitOptions__textParams->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__TEXTPARAMS);
+    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
+            m_SubmitOptions__textParams);
     m_SubmitOptions__criterion = new ::ecore::EReference();
     m_SubmitOptions__criterion->setFeatureID(
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CRITERION);
@@ -1097,6 +1112,48 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__selectQueueAutom->setUnique(true);
     m_SubmitOptions__selectQueueAutom->setDerived(false);
     m_SubmitOptions__selectQueueAutom->setOrdered(true);
+    m_SubmitOptions__fileParams->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_SubmitOptions__fileParams->setName("fileParams");
+    m_SubmitOptions__fileParams->setDefaultValueLiteral("");
+    m_SubmitOptions__fileParams->setLowerBound(0);
+    m_SubmitOptions__fileParams->setUpperBound(-1);
+    m_SubmitOptions__fileParams->setTransient(false);
+    m_SubmitOptions__fileParams->setVolatile(false);
+    m_SubmitOptions__fileParams->setChangeable(true);
+    m_SubmitOptions__fileParams->setUnsettable(false);
+    m_SubmitOptions__fileParams->setID(false);
+    m_SubmitOptions__fileParams->setUnique(true);
+    m_SubmitOptions__fileParams->setDerived(false);
+    m_SubmitOptions__fileParams->setOrdered(true);
+    m_SubmitOptions__fileContents->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_SubmitOptions__fileContents->setName("fileContents");
+    m_SubmitOptions__fileContents->setDefaultValueLiteral("");
+    m_SubmitOptions__fileContents->setLowerBound(0);
+    m_SubmitOptions__fileContents->setUpperBound(-1);
+    m_SubmitOptions__fileContents->setTransient(false);
+    m_SubmitOptions__fileContents->setVolatile(false);
+    m_SubmitOptions__fileContents->setChangeable(true);
+    m_SubmitOptions__fileContents->setUnsettable(false);
+    m_SubmitOptions__fileContents->setID(false);
+    m_SubmitOptions__fileContents->setUnique(true);
+    m_SubmitOptions__fileContents->setDerived(false);
+    m_SubmitOptions__fileContents->setOrdered(true);
+    m_SubmitOptions__textParams->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_SubmitOptions__textParams->setName("textParams");
+    m_SubmitOptions__textParams->setDefaultValueLiteral("");
+    m_SubmitOptions__textParams->setLowerBound(0);
+    m_SubmitOptions__textParams->setUpperBound(-1);
+    m_SubmitOptions__textParams->setTransient(false);
+    m_SubmitOptions__textParams->setVolatile(false);
+    m_SubmitOptions__textParams->setChangeable(true);
+    m_SubmitOptions__textParams->setUnsettable(false);
+    m_SubmitOptions__textParams->setID(false);
+    m_SubmitOptions__textParams->setUnique(true);
+    m_SubmitOptions__textParams->setDerived(false);
+    m_SubmitOptions__textParams->setOrdered(true);
     m_SubmitOptions__criterion->setEType(m_LoadCriterionEClass);
     m_SubmitOptions__criterion->setName("criterion");
     m_SubmitOptions__criterion->setDefaultValueLiteral("");
@@ -2220,6 +2277,18 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EReference_ptr TMS_DataPackage::getSubmitOptions__criterion()
 {
     return m_SubmitOptions__criterion;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__fileParams()
+{
+    return m_SubmitOptions__fileParams;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__fileContents()
+{
+    return m_SubmitOptions__fileContents;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__textParams()
+{
+    return m_SubmitOptions__textParams;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__jobId()
 {

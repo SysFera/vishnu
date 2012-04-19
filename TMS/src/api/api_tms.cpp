@@ -5,10 +5,13 @@
  * \date March 2011
  */
 
+#include <vector>
 #include "api_tms.hpp"
 #include "utilVishnu.hpp"
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/regex.hpp>
+#include <boost/algorithm/string.hpp>
 
 //UMS include
 #include "SessionProxy.hpp"
@@ -25,12 +28,12 @@
 #include "JobOutputProxy.hpp"
 
 /**
-  * \brief The submitJob function submits job on a machine through the use of a script (scriptFilePath).
+  * \brief The submitJob function submits job on a machine through a script pointed by scriptFilePath.
   * \param sessionKey : The session key
   * \param machineId : Is the id of the machine on which the job must be submitted
   * \param scriptFilePath : The path to the file containing the characteristics (job command, and batch scheduler directive required or optional) of the job to submit.
   * \param jobInfo : The  Job object containing the output information (ex: jobId and jobPath) of the job to submit
-  * \param options : Is an instance of the class SubmitOptions. Each optionnal value is associated to a set operation (e.g: setNbCpu(...)) in the class SubmitOptions.  If no set operation is not called on the instance object  options, the job is submitted with the options defined in the scriptFilePath. Otherewise the job is submitted with the optionnal values set by the options object and optionnal values defined in the scriptFilePath, but optionnal values set by SubmitOptions object take precedence over those in scriptFilePath. With in the object options or within the scriptFilePath, the last occurance of an optionnal value takes precedence over earlier occurance.
+  * \param options : Is an instance of the class SubmitOptions. Each option is associated to a set operation (e.g: setNbCpu(...)) in the class.  If no set operation is not called on the instance object  options, the job is submitted with the options defined in the scriptFilePath. Otherewise the job is submitted with the optionnal values set by the options object and optionnal values defined in the scriptFilePath, but optionnal values set by SubmitOptions object take precedence over those in scriptFilePath. With in the object options or within the scriptFilePath, the last occurance of an optionnal value takes precedence over earlier occurance.
   * \return int : an error code
   */
 int
@@ -57,10 +60,17 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   JobProxy jobProxy(sessionProxy,
                     machineId,
                     jobInfo);
-
-  int ret = jobProxy.submitJob(scriptContent, options);
+  std::vector<std::string> fileParams = options.getFileParams() ;
+  std::vector<std::string> fileContents ;
+  for(std::vector<std::string>::iterator it = fileParams.begin() ; it != fileParams.end(); it++){
+	  std::vector<std::string> params ;
+	  boost::split(params, *it, boost::is_any_of("=")) ;  //Normally each entry of the vector (*it) is in form of VISHNU_FILE_PARAM<N>=/path/of/file
+	  fileContents.push_back( vishnu::get_file_content( params[1] ) ) ;
+  }
+  SubmitOptions optionsBuf = options ;
+  optionsBuf.setFileContents(fileContents) ;
+  int ret = jobProxy.submitJob(scriptContent, optionsBuf);
   jobInfo = jobProxy.getData();
-
   return ret;
 }
 
