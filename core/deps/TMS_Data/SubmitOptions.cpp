@@ -423,152 +423,78 @@ void SubmitOptions::setSelectQueueAutom(::ecore::EBoolean _selectQueueAutom)
 #endif
 }
 
-std::vector< ::ecore::EString > const& SubmitOptions::getFile() const
+::ecore::EString const& SubmitOptions::getFileParams() const
 {
-    return m_file;
+    return m_fileParams;
 }
 
-void SubmitOptions::setFile(std::vector< ::ecore::EString > const& _file)
+void SubmitOptions::setFileParams(::ecore::EString const& _fileParams)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    std::vector< ::ecore::EString > _old_file = m_file;
+    ::ecore::EString _old_fileParams = m_fileParams;
 #endif
-    m_file = _file;
+    m_fileParams = _fileParams;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__file(),
-                _old_file,
-                m_file
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__fileParams(),
+                _old_fileParams,
+                m_fileParams
         );
         eNotify(&notification);
     }
 #endif
 }
 
-void SubmitOptions::addFile(::ecore::EString const& _new_element_in_file)
+::ecore::EString const& SubmitOptions::getTextParams() const
 {
-    m_file.push_back(_new_element_in_file);
+    return m_textParams;
 }
 
-void SubmitOptions::setFileAt(size_t _position,
-        ::ecore::EString const& _new_element_in_file)
-{
-    if (_position >= m_file.size())
-        m_file.resize(_position + 1, 0);
-
-    m_file[_position] = _new_element_in_file;
-}
-
-void SubmitOptions::deleteFileAt(size_t _position)
-{
-    if (_position >= m_file.size())
-        throw "Attribute counter out of bounds!";
-
-    // TODO: This is not actually quite true
-    if (_position == m_file.size() - 1)
-        m_file.resize(_position);
-}
-
-::ecore::EString const& SubmitOptions::getListFiles() const
-{
-    return m_listFiles;
-}
-
-void SubmitOptions::setListFiles(::ecore::EString const& _listFiles)
+void SubmitOptions::setTextParams(::ecore::EString const& _textParams)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_listFiles = m_listFiles;
+    ::ecore::EString _old_textParams = m_textParams;
 #endif
-    m_listFiles = _listFiles;
+    m_textParams = _textParams;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__listFiles(),
-                _old_listFiles,
-                m_listFiles
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__textParams(),
+                _old_textParams,
+                m_textParams
         );
         eNotify(&notification);
     }
 #endif
 }
 
-std::vector< ::ecore::EString > const& SubmitOptions::getParam() const
+::ecore::EString const& SubmitOptions::getFileContents() const
 {
-    return m_param;
+    return m_fileContents;
 }
 
-void SubmitOptions::setParam(std::vector< ::ecore::EString > const& _param)
+void SubmitOptions::setFileContents(::ecore::EString const& _fileContents)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    std::vector< ::ecore::EString > _old_param = m_param;
+    ::ecore::EString _old_fileContents = m_fileContents;
 #endif
-    m_param = _param;
+    m_fileContents = _fileContents;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__param(),
-                _old_param,
-                m_param
-        );
-        eNotify(&notification);
-    }
-#endif
-}
-
-void SubmitOptions::addParam(::ecore::EString const& _new_element_in_param)
-{
-    m_param.push_back(_new_element_in_param);
-}
-
-void SubmitOptions::setParamAt(size_t _position,
-        ::ecore::EString const& _new_element_in_param)
-{
-    if (_position >= m_param.size())
-        m_param.resize(_position + 1, 0);
-
-    m_param[_position] = _new_element_in_param;
-}
-
-void SubmitOptions::deleteParamAt(size_t _position)
-{
-    if (_position >= m_param.size())
-        throw "Attribute counter out of bounds!";
-
-    // TODO: This is not actually quite true
-    if (_position == m_param.size() - 1)
-        m_param.resize(_position);
-}
-
-::ecore::EString const& SubmitOptions::getListParams() const
-{
-    return m_listParams;
-}
-
-void SubmitOptions::setListParams(::ecore::EString const& _listParams)
-{
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_listParams = m_listParams;
-#endif
-    m_listParams = _listParams;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__listParams(),
-                _old_listParams,
-                m_listParams
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__fileContents(),
+                _old_fileContents,
+                m_fileContents
         );
         eNotify(&notification);
     }

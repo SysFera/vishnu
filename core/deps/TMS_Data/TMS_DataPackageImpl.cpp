@@ -230,26 +230,21 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__SELECTQUEUEAUTOM);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
             m_SubmitOptions__selectQueueAutom);
-    m_SubmitOptions__file = new ::ecore::EAttribute();
-    m_SubmitOptions__file->setFeatureID(
-            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILE);
+    m_SubmitOptions__fileParams = new ::ecore::EAttribute();
+    m_SubmitOptions__fileParams->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILEPARAMS);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
-            m_SubmitOptions__file);
-    m_SubmitOptions__listFiles = new ::ecore::EAttribute();
-    m_SubmitOptions__listFiles->setFeatureID(
-            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__LISTFILES);
+            m_SubmitOptions__fileParams);
+    m_SubmitOptions__textParams = new ::ecore::EAttribute();
+    m_SubmitOptions__textParams->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__TEXTPARAMS);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
-            m_SubmitOptions__listFiles);
-    m_SubmitOptions__param = new ::ecore::EAttribute();
-    m_SubmitOptions__param->setFeatureID(
-            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__PARAM);
+            m_SubmitOptions__textParams);
+    m_SubmitOptions__fileContents = new ::ecore::EAttribute();
+    m_SubmitOptions__fileContents->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILECONTENTS);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
-            m_SubmitOptions__param);
-    m_SubmitOptions__listParams = new ::ecore::EAttribute();
-    m_SubmitOptions__listParams->setFeatureID(
-            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__LISTPARAMS);
-    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
-            m_SubmitOptions__listParams);
+            m_SubmitOptions__fileContents);
     m_SubmitOptions__criterion = new ::ecore::EReference();
     m_SubmitOptions__criterion->setFeatureID(
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CRITERION);
@@ -492,6 +487,17 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::LOADCRITERION__LOADTYPE);
     m_LoadCriterionEClass->getEStructuralFeatures().push_back(
             m_LoadCriterion__loadType);
+
+    // ListStrings
+    m_ListStringsEClass = new ::ecore::EClass();
+    m_ListStringsEClass->setClassifierID(LISTSTRINGS);
+    m_ListStringsEClass->setEPackage(this);
+    getEClassifiers().push_back(m_ListStringsEClass);
+    m_ListStrings__string = new ::ecore::EAttribute();
+    m_ListStrings__string->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::LISTSTRINGS__STRING);
+    m_ListStringsEClass->getEStructuralFeatures().push_back(
+            m_ListStrings__string);
 
     // Create enums
 
@@ -1117,62 +1123,48 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__selectQueueAutom->setUnique(true);
     m_SubmitOptions__selectQueueAutom->setDerived(false);
     m_SubmitOptions__selectQueueAutom->setOrdered(true);
-    m_SubmitOptions__file->setEType(
+    m_SubmitOptions__fileParams->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_SubmitOptions__file->setName("file");
-    m_SubmitOptions__file->setDefaultValueLiteral("");
-    m_SubmitOptions__file->setLowerBound(0);
-    m_SubmitOptions__file->setUpperBound(-1);
-    m_SubmitOptions__file->setTransient(false);
-    m_SubmitOptions__file->setVolatile(false);
-    m_SubmitOptions__file->setChangeable(true);
-    m_SubmitOptions__file->setUnsettable(false);
-    m_SubmitOptions__file->setID(false);
-    m_SubmitOptions__file->setUnique(true);
-    m_SubmitOptions__file->setDerived(false);
-    m_SubmitOptions__file->setOrdered(true);
-    m_SubmitOptions__listFiles->setEType(
+    m_SubmitOptions__fileParams->setName("fileParams");
+    m_SubmitOptions__fileParams->setDefaultValueLiteral("");
+    m_SubmitOptions__fileParams->setLowerBound(0);
+    m_SubmitOptions__fileParams->setUpperBound(1);
+    m_SubmitOptions__fileParams->setTransient(false);
+    m_SubmitOptions__fileParams->setVolatile(false);
+    m_SubmitOptions__fileParams->setChangeable(true);
+    m_SubmitOptions__fileParams->setUnsettable(false);
+    m_SubmitOptions__fileParams->setID(false);
+    m_SubmitOptions__fileParams->setUnique(true);
+    m_SubmitOptions__fileParams->setDerived(false);
+    m_SubmitOptions__fileParams->setOrdered(true);
+    m_SubmitOptions__textParams->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_SubmitOptions__listFiles->setName("listFiles");
-    m_SubmitOptions__listFiles->setDefaultValueLiteral("");
-    m_SubmitOptions__listFiles->setLowerBound(0);
-    m_SubmitOptions__listFiles->setUpperBound(1);
-    m_SubmitOptions__listFiles->setTransient(false);
-    m_SubmitOptions__listFiles->setVolatile(false);
-    m_SubmitOptions__listFiles->setChangeable(true);
-    m_SubmitOptions__listFiles->setUnsettable(false);
-    m_SubmitOptions__listFiles->setID(false);
-    m_SubmitOptions__listFiles->setUnique(true);
-    m_SubmitOptions__listFiles->setDerived(false);
-    m_SubmitOptions__listFiles->setOrdered(true);
-    m_SubmitOptions__param->setEType(
+    m_SubmitOptions__textParams->setName("textParams");
+    m_SubmitOptions__textParams->setDefaultValueLiteral("");
+    m_SubmitOptions__textParams->setLowerBound(0);
+    m_SubmitOptions__textParams->setUpperBound(1);
+    m_SubmitOptions__textParams->setTransient(false);
+    m_SubmitOptions__textParams->setVolatile(false);
+    m_SubmitOptions__textParams->setChangeable(true);
+    m_SubmitOptions__textParams->setUnsettable(false);
+    m_SubmitOptions__textParams->setID(false);
+    m_SubmitOptions__textParams->setUnique(true);
+    m_SubmitOptions__textParams->setDerived(false);
+    m_SubmitOptions__textParams->setOrdered(true);
+    m_SubmitOptions__fileContents->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_SubmitOptions__param->setName("param");
-    m_SubmitOptions__param->setDefaultValueLiteral("");
-    m_SubmitOptions__param->setLowerBound(0);
-    m_SubmitOptions__param->setUpperBound(-1);
-    m_SubmitOptions__param->setTransient(false);
-    m_SubmitOptions__param->setVolatile(false);
-    m_SubmitOptions__param->setChangeable(true);
-    m_SubmitOptions__param->setUnsettable(false);
-    m_SubmitOptions__param->setID(false);
-    m_SubmitOptions__param->setUnique(true);
-    m_SubmitOptions__param->setDerived(false);
-    m_SubmitOptions__param->setOrdered(true);
-    m_SubmitOptions__listParams->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_SubmitOptions__listParams->setName("listParams");
-    m_SubmitOptions__listParams->setDefaultValueLiteral("");
-    m_SubmitOptions__listParams->setLowerBound(0);
-    m_SubmitOptions__listParams->setUpperBound(1);
-    m_SubmitOptions__listParams->setTransient(false);
-    m_SubmitOptions__listParams->setVolatile(false);
-    m_SubmitOptions__listParams->setChangeable(true);
-    m_SubmitOptions__listParams->setUnsettable(false);
-    m_SubmitOptions__listParams->setID(false);
-    m_SubmitOptions__listParams->setUnique(true);
-    m_SubmitOptions__listParams->setDerived(false);
-    m_SubmitOptions__listParams->setOrdered(true);
+    m_SubmitOptions__fileContents->setName("fileContents");
+    m_SubmitOptions__fileContents->setDefaultValueLiteral("");
+    m_SubmitOptions__fileContents->setLowerBound(0);
+    m_SubmitOptions__fileContents->setUpperBound(1);
+    m_SubmitOptions__fileContents->setTransient(false);
+    m_SubmitOptions__fileContents->setVolatile(false);
+    m_SubmitOptions__fileContents->setChangeable(true);
+    m_SubmitOptions__fileContents->setUnsettable(false);
+    m_SubmitOptions__fileContents->setID(false);
+    m_SubmitOptions__fileContents->setUnique(true);
+    m_SubmitOptions__fileContents->setDerived(false);
+    m_SubmitOptions__fileContents->setOrdered(true);
     m_SubmitOptions__criterion->setEType(m_LoadCriterionEClass);
     m_SubmitOptions__criterion->setName("criterion");
     m_SubmitOptions__criterion->setDefaultValueLiteral("");
@@ -1773,6 +1765,24 @@ TMS_DataPackage::TMS_DataPackage()
     m_LoadCriterion__loadType->setUnique(true);
     m_LoadCriterion__loadType->setDerived(false);
     m_LoadCriterion__loadType->setOrdered(true);
+    // ListStrings
+    m_ListStringsEClass->setName("ListStrings");
+    m_ListStringsEClass->setAbstract(false);
+    m_ListStringsEClass->setInterface(false);
+    m_ListStrings__string->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_ListStrings__string->setName("string");
+    m_ListStrings__string->setDefaultValueLiteral("0");
+    m_ListStrings__string->setLowerBound(0);
+    m_ListStrings__string->setUpperBound(-1);
+    m_ListStrings__string->setTransient(false);
+    m_ListStrings__string->setVolatile(false);
+    m_ListStrings__string->setChangeable(true);
+    m_ListStrings__string->setUnsettable(false);
+    m_ListStrings__string->setID(false);
+    m_ListStrings__string->setUnique(true);
+    m_ListStrings__string->setDerived(false);
+    m_ListStrings__string->setOrdered(true);
 
     // TODO: Initialize data types
 
@@ -2128,6 +2138,10 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_LoadTypeEEnum;
 }
+::ecore::EClass_ptr TMS_DataPackage::getListStrings()
+{
+    return m_ListStringsEClass;
+}
 
 ::ecore::EAttribute_ptr TMS_DataPackage::getJob__sessionId()
 {
@@ -2297,21 +2311,17 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_SubmitOptions__criterion;
 }
-::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__file()
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__fileParams()
 {
-    return m_SubmitOptions__file;
+    return m_SubmitOptions__fileParams;
 }
-::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__listFiles()
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__textParams()
 {
-    return m_SubmitOptions__listFiles;
+    return m_SubmitOptions__textParams;
 }
-::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__param()
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__fileContents()
 {
-    return m_SubmitOptions__param;
-}
-::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__listParams()
-{
-    return m_SubmitOptions__listParams;
+    return m_SubmitOptions__fileContents;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__jobId()
 {
@@ -2472,5 +2482,9 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getLoadCriterion__loadType()
 {
     return m_LoadCriterion__loadType;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getListStrings__string()
+{
+    return m_ListStrings__string;
 }
 

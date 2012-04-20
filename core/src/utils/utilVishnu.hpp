@@ -335,11 +335,28 @@ std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& ut
     * \param IN isOfFileType tell whether the parameters are files or textual
     * \return true if all parameters are syntaxicaly valid
     */
-   int
+/*   int
    validateParameters(const boost::shared_ptr<Options> & opt,
-			 std::vector<std::string> & paramSet,
+			 std::vector<std::string> & paramsSet,
     		 const std::string & paramOptName,
     		 const std::string & listParamsStr,
+    		 const bool & isOfFileType = false);*/
+
+
+   /**
+    * \brief Function to parse textual or file parameters
+    * \param IN opt A structure containing the set of submitted options
+    * \param OUT paramStr a string containing all of parameters
+    * \param IN paramOptName the name of the option for a single parameter
+    * \param IN paramsVector a vector of parameters
+    * \param IN isOfFileType tell whether the parameters are files or textual
+    * \return true if all parameters are syntaxicaly valid
+    */
+   int
+   validateParameters(const boost::shared_ptr<Options> & opt,
+			 std::string & paramsStr,
+    		 const std::string & paramOptName,
+    		 const std::vector<std::string> & paramsVector,
     		 const bool & isOfFileType = false);
 
 }

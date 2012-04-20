@@ -60,10 +60,10 @@ makeSubJobOp(string pgName,
 		boost::function1<void, string>& fgroup,
 		boost::function1<void, string>& fworkingDir,
 		boost::function1<void, string>& fcpuTime,
-		boost::function1<void, vector<string> >& ftextParams,
-		boost::function1<void, vector<string> >& ffileParams,
-		string& textParamsStr,
-		string& fileParamsStr,
+		boost::function1<void, string>& ftextParams,
+		boost::function1<void, string>& ffileParams,
+		vector<string>& textParamsVector,
+		vector<string>& fileParamsVector,
 		string& loadCriterionStr,
 		string& walltime,
 		string& dietConfig){
@@ -148,7 +148,7 @@ makeSubJobOp(string pgName,
 			"PARAM2...PARAM9.\n\n"
 			"SEE ALSO --listParams.",
 			CONFIG,
-			ftextParams);
+			textParamsVector);
 	opt->add("textParams,I",
 			"Sets a list of space-separated parameters.\n"
 			"E.g. --listParams=\"PARAM1=value1 PARAM2=value\" will set the environment variables "
@@ -157,7 +157,7 @@ makeSubJobOp(string pgName,
 			"case-insensitive, can be PARAM1, PARAM2...PARAM9.\n\n"
 			"SEE ALSO --params.",
 			CONFIG,
-			textParamsStr);
+			ftextParams);
 	opt->add("fileParam,f",
 			"Sets a local file like a parameter of the script. This file will be uploaded onto the server "
 			"before computing the script.\n"
@@ -168,7 +168,7 @@ makeSubJobOp(string pgName,
 			"The file parameter name (PFILE1 in the example), which is case-insensitive, can be PFILE1, PFILE2...PFILE9.\n\n"
 			"SEE ALSO --listFiles.",
 			CONFIG,
-			ffileParams);
+			fileParamsVector);
 	opt->add("fileParams,F",
 			"Sets a list of local files like parameters in a script. These files will be  uploaded onto the server "
 			"before computing the script.\n"
@@ -179,7 +179,7 @@ makeSubJobOp(string pgName,
 			"The names, case-insensitive, of file parameters (PFILE1 and PFILE2 in the example) can be PFILE1, PFILE2...PFILE9.\n\n"
 			"SEE ALSO --file.",
 			CONFIG,
-			fileParamsStr);
+			ffileParams);
 
 	return opt;
 }
@@ -211,10 +211,10 @@ int main (int argc, char* argv[]){
 	boost::function1<void,string> fgroup(boost::bind(&TMS_Data::SubmitOptions::setGroup,boost::ref(subOp),_1));
 	boost::function1<void,string> fworkingDir(boost::bind(&TMS_Data::SubmitOptions::setWorkingDir,boost::ref(subOp),_1));
 	boost::function1<void,string> fcpuTime(boost::bind(&TMS_Data::SubmitOptions::setCpuTime,boost::ref(subOp),_1));
-	boost::function1<void,vector<string> > ftextParams(boost::bind(&TMS_Data::SubmitOptions::setTextParams,boost::ref(subOp),_1));
-	boost::function1<void,vector<string> > ffileParams(boost::bind(&TMS_Data::SubmitOptions::setFileParams,boost::ref(subOp),_1));
-	std::string textParamsStr ;
-	std::string fileParamsStr ;
+	boost::function1<void,string> ftextParams(boost::bind(&TMS_Data::SubmitOptions::setTextParams,boost::ref(subOp),_1));
+	boost::function1<void,string> ffileParams(boost::bind(&TMS_Data::SubmitOptions::setFileParams,boost::ref(subOp),_1));
+	vector<string> textParamsVector ;
+	vector<string> fileParamsVector ;
 	std::string loadCriterionStr;
 	/*********** Out parameters *********************/
 	Job job;
@@ -223,7 +223,7 @@ int main (int argc, char* argv[]){
 	boost::shared_ptr<Options> opt=makeSubJobOp(argv[0],fname,fqueue,
 			fmemory, fnbCpu, fnbNodeAndCpu,
 			foutput, ferr, fmailNotif, fmailUser, fgroup, fworkingDir, fcpuTime,
-			ftextParams, ffileParams, textParamsStr, fileParamsStr,
+			ftextParams, ffileParams, textParamsVector, fileParamsVector,
 			loadCriterionStr, walltime, dietConfig);
 
 	opt->add("selectQueueAutom,Q",
@@ -304,22 +304,24 @@ int main (int argc, char* argv[]){
 		}
 
 		//Validate textual parameters syntax, if any
-		string paramOptName = "textParam" ;
+		string paramOptName = "textParams" ;
 
-		if(opt->count(paramOptName) || textParamsStr.size() != 0) {
-			vector<string> paramSet ;
-			int ret = vishnu::validateParameters(opt, paramSet, paramOptName, textParamsStr, false);
+		if(opt->count(paramOptName) || textParamsVector.size() != 0) {
+			string paramStr ;
+			//int ret = vishnu::validateParameters(opt, paramSet, paramOptName, textParamsStr, false);
+			int ret = vishnu::validateParameters(opt, paramStr, paramOptName, textParamsVector, false);
 			if( ret != 0 ) return ret ;
-			subOp.setTextParams(paramSet) ;
+			subOp.setTextParams(paramStr) ;
 		}
 
 		//Validate file parameters syntax, if any
-		paramOptName = "fileParam" ;
-		if(opt->count(paramOptName) || fileParamsStr.size() != 0 ) {
-			vector<string> paramSet ;
-			int ret = vishnu::validateParameters(opt, paramSet, paramOptName, fileParamsStr, true) ;
+		paramOptName = "fileParams" ;
+		if(opt->count(paramOptName) || fileParamsVector.size() != 0 ) {
+			string paramStr ;
+			//int ret = vishnu::validateParameters(opt, paramSet, paramOptName, fileParamsStr, true) ;
+			int ret = vishnu::validateParameters(opt, paramStr, paramOptName, fileParamsVector, true) ;
 			if( ret != 0 ) return ret ;
-			subOp.setFileParams(paramSet) ;
+			subOp.setFileParams(paramStr) ;
 		}
 
 		// initializing DIET

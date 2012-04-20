@@ -151,29 +151,20 @@ void SubmitOptions::_initialize()
         return _any;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILEPARAMS:
     {
-        std::vector < ::ecorecpp::mapping::any > _anys(m_fileParams.size());
-        for (size_t _i = 0; _i < m_fileParams.size(); _i++)
-            ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(
-                    _anys[_i], m_fileParams[_i]);
-        _any = _anys;
-    }
-        return _any;
-    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILECONTENTS:
-    {
-        std::vector < ::ecorecpp::mapping::any > _anys(m_fileContents.size());
-        for (size_t _i = 0; _i < m_fileContents.size(); _i++)
-            ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(
-                    _anys[_i], m_fileContents[_i]);
-        _any = _anys;
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_fileParams);
     }
         return _any;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__TEXTPARAMS:
     {
-        std::vector < ::ecorecpp::mapping::any > _anys(m_textParams.size());
-        for (size_t _i = 0; _i < m_textParams.size(); _i++)
-            ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(
-                    _anys[_i], m_textParams[_i]);
-        _any = _anys;
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_textParams);
+    }
+        return _any;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILECONTENTS:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_fileContents);
     }
         return _any;
 
@@ -281,26 +272,20 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
         return;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILEPARAMS:
     {
-        ::ecore::EString _t0;
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                _t0);
-        ::TMS_Data::SubmitOptions::addFileParams(_t0);
-    }
-        return;
-    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILECONTENTS:
-    {
-        ::ecore::EString _t0;
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                _t0);
-        ::TMS_Data::SubmitOptions::addFileContents(_t0);
+                m_fileParams);
     }
         return;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__TEXTPARAMS:
     {
-        ::ecore::EString _t0;
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                _t0);
-        ::TMS_Data::SubmitOptions::addTextParams(_t0);
+                m_textParams);
+    }
+        return;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILECONTENTS:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_fileContents);
     }
         return;
 
@@ -353,11 +338,14 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CRITERION:
         return m_criterion;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILEPARAMS:
-        return m_fileParams.size();
-    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILECONTENTS:
-        return m_fileContents.size();
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_fileParams);
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__TEXTPARAMS:
-        return m_textParams.size();
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_textParams);
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILECONTENTS:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_fileContents);
 
     }
     throw "Error";
