@@ -709,7 +709,7 @@ vishnu::checkEmptyString(const std::string& str,
  * \param IN isOfFileType tell whether the parameters are files or textual
  * \return true if all parameters are syntaxicaly valid
  */
-int
+/*int
 vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 		std::vector<std::string> & paramSet,
 		const std::string & paramOptName,
@@ -753,6 +753,66 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 	}
 
 	return 0 ;
-	//subOp.setListParams(strBuf.str()) ; subOp.setParam(paramSet) ;
+}*/
+
+
+/**
+ * \brief Function to parse textual or file parameters
+ * \param IN opt A structure containing the set of submitted options
+ * \param OUT paramsStr a string containing all of parameters
+ * \param IN paramOptName the name of the option for a single parameter
+ * \param IN paramsVector a vector of parameters
+ * \param IN isOfFileType tell whether the parameters are files or textual
+ * \return true if all parameters are syntaxicaly valid
+ */
+int
+vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
+		std::string & paramsStr,
+		const std::string & paramOptName,
+		const std::vector<std::string> & paramsVector,
+		const bool & isOfFileType){
+
+	if( opt->count(paramOptName) ){
+		paramsStr = opt->get< std::string >(paramOptName) ;
+	}
+
+	// Append other parameters in paramStr
+	for(std::vector<std::string>::const_iterator it = paramsVector.begin(); it != paramsVector.end() ; it++) {
+		paramsStr += " " + *it ;
+	}
+
+	//Now check the syntax of parameters and set them suitable for VISHNU
+	std::vector<std::string> paramsVecBuffer ;
+	boost::trim(paramsStr) ; boost::split(paramsVecBuffer, paramsStr, boost::is_any_of(" "), boost::token_compress_on);
+
+	paramsStr = "" ; //Reinitialization for outpout
+	for(std::vector<std::string>::iterator it = paramsVecBuffer.begin(); it != paramsVecBuffer.end() ; it++) {
+
+		std::vector<std::string> paramAttrs ;
+		boost::split(paramAttrs, *it , boost::is_any_of("="));
+		if(paramAttrs.size() != 2) {
+			std::cerr << "Wrong definition of the parameter : '" << *it << "'"<< std::endl ;
+			return CLI_ERROR_INVALID_PARAMETER;
+		}
+
+		boost::regex expr ;
+		if( isOfFileType ){
+			expr.set_expression("file[1-9]|FILE[1-9]");
+		}else {  //Textual param
+			expr.set_expression("param[1-9]|PARAM[1-9]");
+		}
+
+		boost::cmatch what;
+		if( ! boost::regex_match(paramAttrs[0].c_str(), what, expr)) {
+			std::cerr << "Unauthorized parameter name : '" << paramAttrs[0] << "'"<< std::endl ;
+			return CLI_ERROR_INVALID_PARAMETER ;
+		}
+		if( paramsStr.size() != 0) paramsStr += " " ;
+		paramsStr += "VISHNU_" + boost::to_upper_copy(paramAttrs[0]) + "=" + paramAttrs[1] ;
+	}
+	std::cout << paramsStr  << std::endl;
+
+	return 0 ;
+	//subOp.setListParams(strBuf.str()) ; subOp.setParam(paramStr) ;
 }
 

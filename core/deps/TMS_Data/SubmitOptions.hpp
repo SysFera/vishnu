@@ -225,58 +225,37 @@ namespace TMS_Data
         void setSelectQueueAutom(::ecore::EBoolean _selectQueueAutom);
 
         /**
-         * \brief To get the file
-         * \return The file attribute value
+         * \brief To get the fileParams
+         * \return The fileParams attribute value
          **/
-        std::vector< ::ecore::EString > const& getFile() const;
+        ::ecore::EString const& getFileParams() const;
         /**
-         * \brief To set the file
-         * \param _file The file value
+         * \brief To set the fileParams
+         * \param _fileParams The fileParams value
          **/
-        void setFile(std::vector< ::ecore::EString > const& _file);
-
-        void addFile(::ecore::EString const& _new_element_in_file);
-        void setFileAt(size_t _position,
-                ::ecore::EString const& _new_element_in_file);
-        void deleteFileAt(size_t _position);
+        void setFileParams(::ecore::EString const& _fileParams);
 
         /**
-         * \brief To get the listFiles
-         * \return The listFiles attribute value
+         * \brief To get the textParams
+         * \return The textParams attribute value
          **/
-        ::ecore::EString const& getListFiles() const;
+        ::ecore::EString const& getTextParams() const;
         /**
-         * \brief To set the listFiles
-         * \param _listFiles The listFiles value
+         * \brief To set the textParams
+         * \param _textParams The textParams value
          **/
-        void setListFiles(::ecore::EString const& _listFiles);
+        void setTextParams(::ecore::EString const& _textParams);
 
         /**
-         * \brief To get the param
-         * \return The param attribute value
+         * \brief To get the fileContents
+         * \return The fileContents attribute value
          **/
-        std::vector< ::ecore::EString > const& getParam() const;
+        ::ecore::EString const& getFileContents() const;
         /**
-         * \brief To set the param
-         * \param _param The param value
+         * \brief To set the fileContents
+         * \param _fileContents The fileContents value
          **/
-        void setParam(std::vector< ::ecore::EString > const& _param);
-
-        void addParam(::ecore::EString const& _new_element_in_param);
-        void setParamAt(size_t _position,
-                ::ecore::EString const& _new_element_in_param);
-        void deleteParamAt(size_t _position);
-
-        /**
-         * \brief To get the listParams
-         * \return The listParams attribute value
-         **/
-        ::ecore::EString const& getListParams() const;
-        /**
-         * \brief To set the listParams
-         * \param _listParams The listParams value
-         **/
-        void setListParams(::ecore::EString const& _listParams);
+        void setFileContents(::ecore::EString const& _fileContents);
 
         // References
         /**
@@ -340,13 +319,11 @@ namespace TMS_Data
 
         ::ecore::EBoolean m_selectQueueAutom;
 
-        std::vector< ::ecore::EString > m_file;
+        ::ecore::EString m_fileParams;
 
-        ::ecore::EString m_listFiles;
+        ::ecore::EString m_textParams;
 
-        std::vector< ::ecore::EString > m_param;
-
-        ::ecore::EString m_listParams;
+        ::ecore::EString m_fileContents;
 
         // References
 

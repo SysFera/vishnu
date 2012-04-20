@@ -60,12 +60,13 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   JobProxy jobProxy(sessionProxy,
                     machineId,
                     jobInfo);
-  std::vector<std::string> fileParams = options.getFileParams() ;
-  std::vector<std::string> fileContents ;
+  std::vector<std::string> fileParams;
+  boost::split(fileParams, options.getFileParams(), boost::is_any_of(" ")) ;
+  std::string fileContents ;
   for(std::vector<std::string>::iterator it = fileParams.begin() ; it != fileParams.end(); it++){
-	  std::vector<std::string> params ;
-	  boost::split(params, *it, boost::is_any_of("=")) ;  //Normally each entry of the vector (*it) is in form of VISHNU_FILE_PARAM<N>=/path/of/file
-	  fileContents.push_back( vishnu::get_file_content( params[1] ) ) ;
+	  std::vector<std::string> paramAttrs ;
+	  boost::split(paramAttrs, *it, boost::is_any_of("=")) ;  //Normally each entry of the vector (*it) is in form of VISHNU_FILE_PARAM<N>=/path/of/file
+	  fileContents.append("$^^^$").append(vishnu::get_file_content( paramAttrs[1]) ) ;
   }
   SubmitOptions optionsBuf = options ;
   optionsBuf.setFileContents(fileContents) ;

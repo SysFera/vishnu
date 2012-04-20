@@ -39,6 +39,7 @@
 #include "TMS_Data/JobResult.hpp"
 #include "TMS_Data/ListJobResults.hpp"
 #include "TMS_Data/LoadCriterion.hpp"
+#include "TMS_Data/ListStrings.hpp"
 
 // Package & Factory
 #include "TMS_Data/TMS_DataPackage.hpp"

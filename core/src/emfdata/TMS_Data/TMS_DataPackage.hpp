@@ -94,44 +94,49 @@ namespace TMS_Data
         static const int LISTQUEUES = 8;
 
         /**
+         * \brief Constant for ListStrings class
+         */
+        static const int LISTSTRINGS = 9;
+
+        /**
          * \brief Constant for LoadCriterion class
          */
-        static const int LOADCRITERION = 9;
+        static const int LOADCRITERION = 10;
 
         /**
          * \brief Constant for LoadType class
          */
-        static const int LOADTYPE = 10;
+        static const int LOADTYPE = 11;
 
         /**
          * \brief Constant for Progression class
          */
-        static const int PROGRESSION = 11;
+        static const int PROGRESSION = 12;
 
         /**
          * \brief Constant for ProgressOptions class
          */
-        static const int PROGRESSOPTIONS = 12;
+        static const int PROGRESSOPTIONS = 13;
 
         /**
          * \brief Constant for Queue class
          */
-        static const int QUEUE = 13;
+        static const int QUEUE = 14;
 
         /**
          * \brief Constant for QueuePriority class
          */
-        static const int QUEUEPRIORITY = 14;
+        static const int QUEUEPRIORITY = 15;
 
         /**
          * \brief Constant for QueueStatus class
          */
-        static const int QUEUESTATUS = 15;
+        static const int QUEUESTATUS = 16;
 
         /**
          * \brief Constant for SubmitOptions class
          */
-        static const int SUBMITOPTIONS = 16;
+        static const int SUBMITOPTIONS = 17;
 
         /**
          * \brief Constant for JOB__SESSIONID feature
@@ -349,14 +354,14 @@ namespace TMS_Data
         static const int SUBMITOPTIONS__FILEPARAMS = 42;
 
         /**
-         * \brief Constant for SUBMITOPTIONS__FILECONTENTS feature
-         */
-        static const int SUBMITOPTIONS__FILECONTENTS = 43;
-
-        /**
          * \brief Constant for SUBMITOPTIONS__TEXTPARAMS feature
          */
-        static const int SUBMITOPTIONS__TEXTPARAMS = 44;
+        static const int SUBMITOPTIONS__TEXTPARAMS = 43;
+
+        /**
+         * \brief Constant for SUBMITOPTIONS__FILECONTENTS feature
+         */
+        static const int SUBMITOPTIONS__FILECONTENTS = 44;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__JOBID feature
@@ -558,6 +563,11 @@ namespace TMS_Data
          */
         static const int LOADCRITERION__LOADTYPE = 84;
 
+        /**
+         * \brief Constant for LISTSTRINGS__STRING feature
+         */
+        static const int LISTSTRINGS__STRING = 85;
+
         // EClassifiers methods
 
         /**
@@ -661,6 +671,12 @@ namespace TMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EEnum_ptr getLoadType();
+
+        /**
+         * \brief Returns the reflective object for class ListStrings
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EClass_ptr getListStrings();
 
         // EStructuralFeatures methods
 
@@ -924,16 +940,16 @@ namespace TMS_Data
         virtual ::ecore::EAttribute_ptr getSubmitOptions__fileParams();
 
         /**
-         * \brief Returns the reflective object for feature fileContents of class SubmitOptions
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EAttribute_ptr getSubmitOptions__fileContents();
-
-        /**
          * \brief Returns the reflective object for feature textParams of class SubmitOptions
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EAttribute_ptr getSubmitOptions__textParams();
+
+        /**
+         * \brief Returns the reflective object for feature fileContents of class SubmitOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getSubmitOptions__fileContents();
 
         /**
          * \brief Returns the reflective object for feature jobId of class ListJobsOptions
@@ -1175,6 +1191,12 @@ namespace TMS_Data
          */
         virtual ::ecore::EAttribute_ptr getLoadCriterion__loadType();
 
+        /**
+         * \brief Returns the reflective object for feature string of class ListStrings
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getListStrings__string();
+
     protected:
 
         /**
@@ -1245,6 +1267,11 @@ namespace TMS_Data
          * \brief The instance for the class LoadCriterion
          */
         ::ecore::EClass_ptr m_LoadCriterionEClass;
+
+        /**
+         * \brief The instance for the class ListStrings
+         */
+        ::ecore::EClass_ptr m_ListStringsEClass;
 
         // EEnuminstances 
 
@@ -1494,14 +1521,14 @@ namespace TMS_Data
         ::ecore::EAttribute_ptr m_SubmitOptions__fileParams;
 
         /**
-         * \brief The instance for the feature fileContents of class SubmitOptions
-         */
-        ::ecore::EAttribute_ptr m_SubmitOptions__fileContents;
-
-        /**
          * \brief The instance for the feature textParams of class SubmitOptions
          */
         ::ecore::EAttribute_ptr m_SubmitOptions__textParams;
+
+        /**
+         * \brief The instance for the feature fileContents of class SubmitOptions
+         */
+        ::ecore::EAttribute_ptr m_SubmitOptions__fileContents;
 
         /**
          * \brief The instance for the feature jobId of class ListJobsOptions
@@ -1702,6 +1729,11 @@ namespace TMS_Data
          * \brief The instance for the feature loadType of class LoadCriterion
          */
         ::ecore::EAttribute_ptr m_LoadCriterion__loadType;
+
+        /**
+         * \brief The instance for the feature string of class ListStrings
+         */
+        ::ecore::EAttribute_ptr m_ListStrings__string;
 
     };
 

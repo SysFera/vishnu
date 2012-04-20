@@ -228,51 +228,34 @@ namespace TMS_Data
          * \brief To get the fileParams
          * \return The fileParams attribute value
          **/
-        std::vector< ::ecore::EString > const& getFileParams() const;
+        ::ecore::EString const& getFileParams() const;
         /**
          * \brief To set the fileParams
          * \param _fileParams The fileParams value
          **/
-        void setFileParams(std::vector< ::ecore::EString > const& _fileParams);
-
-        void addFileParams(::ecore::EString const& _new_element_in_fileParams);
-        void setFileParamsAt(size_t _position,
-                ::ecore::EString const& _new_element_in_fileParams);
-        void deleteFileParamsAt(size_t _position);
-
-        /**
-         * \brief To get the fileContents
-         * \return The fileContents attribute value
-         **/
-        std::vector< ::ecore::EString > const& getFileContents() const;
-        /**
-         * \brief To set the fileContents
-         * \param _fileContents The fileContents value
-         **/
-        void setFileContents(
-                std::vector< ::ecore::EString > const& _fileContents);
-
-        void addFileContents(
-                ::ecore::EString const& _new_element_in_fileContents);
-        void setFileContentsAt(size_t _position,
-                ::ecore::EString const& _new_element_in_fileContents);
-        void deleteFileContentsAt(size_t _position);
+        void setFileParams(::ecore::EString const& _fileParams);
 
         /**
          * \brief To get the textParams
          * \return The textParams attribute value
          **/
-        std::vector< ::ecore::EString > const& getTextParams() const;
+        ::ecore::EString const& getTextParams() const;
         /**
          * \brief To set the textParams
          * \param _textParams The textParams value
          **/
-        void setTextParams(std::vector< ::ecore::EString > const& _textParams);
+        void setTextParams(::ecore::EString const& _textParams);
 
-        void addTextParams(::ecore::EString const& _new_element_in_textParams);
-        void setTextParamsAt(size_t _position,
-                ::ecore::EString const& _new_element_in_textParams);
-        void deleteTextParamsAt(size_t _position);
+        /**
+         * \brief To get the fileContents
+         * \return The fileContents attribute value
+         **/
+        ::ecore::EString const& getFileContents() const;
+        /**
+         * \brief To set the fileContents
+         * \param _fileContents The fileContents value
+         **/
+        void setFileContents(::ecore::EString const& _fileContents);
 
         // References
         /**
@@ -336,11 +319,11 @@ namespace TMS_Data
 
         ::ecore::EBoolean m_selectQueueAutom;
 
-        std::vector< ::ecore::EString > m_fileParams;
+        ::ecore::EString m_fileParams;
 
-        std::vector< ::ecore::EString > m_fileContents;
+        ::ecore::EString m_textParams;
 
-        std::vector< ::ecore::EString > m_textParams;
+        ::ecore::EString m_fileContents;
 
         // References
 
