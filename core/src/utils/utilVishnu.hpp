@@ -146,13 +146,6 @@ namespace vishnu {
   std::time_t
   string_to_time_t(const std::string& ts);
 
-static const std::string ROOTUSERNAME = "root";
-static const std::string UMSMAPPERNAME = "UMS";
-static const std::string TMSMAPPERNAME = "TMS";
-static const std::string IMSMAPPERNAME = "IMS";
-static const std::string FMSMAPPERNAME = "FMS";
-static const int PASSWORD_MAX_SIZE = 8;
-
 static boost::shared_mutex mutex;
 /**
  * \brief Generic function to convert an object to string
