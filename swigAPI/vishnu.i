@@ -163,7 +163,6 @@
   // Check it is a list
   if (PySequence_Check($input)) {
     int size = PySequence_Size($input);
-    printf("Getting a py list of size: %d\n", size);
 
     // Instanciating a list object
     cont::facto * ecoreFactory = cont::facto::_instance();
