@@ -141,7 +141,7 @@
 #ifdef SWIGPYTHON
 
 // Python ne gere absolument pas les overloads
-%rename (myconnect) connect(UMS_Data::ListUsers& users,
+%rename (connect_m) connect(UMS_Data::ListUsers& users,
                             UMS_Data::Session& session,
                             const UMS_Data::ConnectOptions& connectOpt);
 
@@ -172,15 +172,14 @@
     for (int i = 0; i < size ; ++i) {
       // Extract the python object
       PyObject *o = PySequence_GetItem($input,i);
-      PyObject *instance = SWIG_NewPointerObj(SWIG_as_voidptr(ecoreFactory->create()), $descriptor(cont::type*), SWIG_POINTER_NEW);
-      *instance = *o;
       // Instanciating an object to copy each item of the C++ list (because emf destroys its objects at the end)
       cont::type* test = ecoreFactory->create();
+      cont::type* copy = ecoreFactory->create();
       
       //      cont::type * test;
-      SWIG_ConvertPtr(instance, (void **)&test, $descriptor(cont::type*),1);
-      std::cout << "Connection avec u=" << test->getUserId() << std::endl;
-      temp.getter().push_back(test);
+      SWIG_ConvertPtr(o, (void **)&test, $descriptor(cont::type*),1);
+      *copy = *test;
+      temp.getter().push_back(copy);
       // Handle reference on object
       Py_DECREF(o);
     }
