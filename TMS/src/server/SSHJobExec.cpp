@@ -130,11 +130,10 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
   cmd << " 2> " << stderrFilePath;
   int ret;
   if((ret=system((cmd.str()).c_str()))) {
-    std::cout << "System ret = " << ret <<  std::endl;
     vishnu::deleteFile(jobSerializedPath.c_str());
     vishnu::deleteFile(submitOptionsSerializedPath.c_str());
     vishnu::deleteFile(jobUpdateSerializedPath.c_str());
-    
+
     //begin
     boost::filesystem::path errorFile(errorPath.c_str());
     if(!boost::filesystem::is_empty(errorFile)) {
@@ -143,7 +142,7 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
       return;
     }
     //end
-  
+
     vishnu::deleteFile(errorPath.c_str());
     vishnu::deleteFile(script_path.c_str());
     boost::filesystem::path stderrFile(stderrFilePath.c_str());
