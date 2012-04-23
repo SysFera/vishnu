@@ -112,10 +112,6 @@ namespace TMS_Data
     class LoadCriterion;
     typedef LoadCriterion* LoadCriterion_ptr;
 
-    // ListStrings
-    class ListStrings;
-    typedef ListStrings* ListStrings_ptr;
-
     // Package & Factory
     class TMS_DataFactory;
     typedef TMS_DataFactory * TMS_DataFactory_ptr;

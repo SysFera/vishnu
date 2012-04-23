@@ -31,7 +31,6 @@
 #include <TMS_Data/JobResult.hpp>
 #include <TMS_Data/ListJobResults.hpp>
 #include <TMS_Data/LoadCriterion.hpp>
-#include <TMS_Data/ListStrings.hpp>
 
 #include <ecore.hpp>
 #include <ecorecpp/mapping.hpp>
@@ -71,8 +70,6 @@ TMS_DataFactory::TMS_DataFactory()
         return createListJobResults();
     case TMS_DataPackage::LOADCRITERION:
         return createLoadCriterion();
-    case TMS_DataPackage::LISTSTRINGS:
-        return createListStrings();
     default:
         throw "IllegalArgumentException";
     }
@@ -223,9 +220,5 @@ ListJobResults_ptr TMS_DataFactory::createListJobResults()
 LoadCriterion_ptr TMS_DataFactory::createLoadCriterion()
 {
     return new LoadCriterion();
-}
-ListStrings_ptr TMS_DataFactory::createListStrings()
-{
-    return new ListStrings();
 }
 

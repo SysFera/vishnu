@@ -563,12 +563,4 @@
     <eLiterals name="USE_NB_JOBS" value="1" literal="USE_NB_JOBS"/>
     <eLiterals name="USE_NB_RUNNING_JOBS" value="2" literal="USE_NB_RUNNING_JOBS"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ListStrings" instanceTypeName="ListStrings">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="string" upperBound="-1"
-        eType="ecore:EDataType Ecore.ecore#//EString" defaultValueLiteral="0">
-      <eAnnotations source="Description">
-        <details key="content" value="Represents the strings in the list"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-  </eClassifiers>
 </ecore:EPackage>
