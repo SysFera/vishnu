@@ -28,6 +28,16 @@
 #include "JobOutputProxy.hpp"
 
 /**
+<<<<<<< .merge_file_K1BItD
+  * \brief The submitJob function submits job on a machine through a script pointed by scriptFilePath.
+  * \param sessionKey : The session key
+  * \param machineId : Is the id of the machine on which the job must be submitted
+  * \param scriptFilePath : The path to the file containing the characteristics (job command, and batch scheduler directive required or optional) of the job to submit.
+  * \param jobInfo : The  Job object containing the output information (ex: jobId and jobPath) of the job to submit
+  * \param options : Is an instance of the class SubmitOptions. Each option is associated to a set operation (e.g: setNbCpu(...)) in the class.  If no set operation is not called on the instance object  options, the job is submitted with the options defined in the scriptFilePath. Otherewise the job is submitted with the optionnal values set by the options object and optionnal values defined in the scriptFilePath, but optionnal values set by SubmitOptions object take precedence over those in scriptFilePath. With in the object options or within the scriptFilePath, the last occurance of an optionnal value takes precedence over earlier occurance.
+  * \return int : an error code
+  */
+=======
  * \brief The submitJob function submits job on a machine through a script pointed by scriptFilePath.
  * \param sessionKey : The session key
  * \param machineId : Is the id of the machine on which the job must be submitted
@@ -36,6 +46,7 @@
  * \param options : Is an instance of the class SubmitOptions. Each option is associated to a set operation (e.g: setNbCpu(...)) in the class.  If no set operation is not called on the instance object  options, the job is submitted with the options defined in the scriptFilePath. Otherewise the job is submitted with the optionnal values set by the options object and optionnal values defined in the scriptFilePath, but optionnal values set by SubmitOptions object take precedence over those in scriptFilePath. With in the object options or within the scriptFilePath, the last occurance of an optionnal value takes precedence over earlier occurance.
  * \return int : an error code
  */
+>>>>>>> .merge_file_lXgPqD
 int
 vishnu::submitJob(const std::string& sessionKey,
 		const std::string& machineId,
@@ -64,6 +75,24 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 	std::string fileContents ; fileContents.clear() ;
 	size_t pos = 0 ;
 
+<<<<<<< .merge_file_K1BItD
+  JobProxy jobProxy(sessionProxy,
+                    machineId,
+                    jobInfo);
+  std::vector<std::string> fileParams;
+  boost::split(fileParams, options.getFileParams(), boost::is_any_of(" ")) ;
+  std::string fileContents ;
+  for(std::vector<std::string>::iterator it = fileParams.begin() ; it != fileParams.end(); it++){
+	  std::vector<std::string> paramAttrs ;
+	  boost::split(paramAttrs, *it, boost::is_any_of("=")) ;  //Normally each entry of the vector (*it) is in form of VISHNU_FILE_PARAM<N>=/path/of/file
+	  fileContents.append("$^^^$").append(vishnu::get_file_content( paramAttrs[1]) ) ;
+  }
+  SubmitOptions optionsBuf = options ;
+  optionsBuf.setFileContents(fileContents) ;
+  int ret = jobProxy.submitJob(scriptContent, optionsBuf);
+  jobInfo = jobProxy.getData();
+  return ret;
+=======
 	for(ListStrings::iterator it = fileParams.begin() ; it != fileParams.end(); it++){
 		ListStrings paramAttrs ;
 		boost::split(paramAttrs, *it, boost::is_any_of("=")) ;  //each entry is in form of VISHNU_FILE_PARAM<N>=/path/of/file
@@ -83,6 +112,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 	int ret = jobProxy.submitJob(scriptContent, optionsRef);
 	jobInfo = jobProxy.getData();
 	return ret;
+>>>>>>> .merge_file_lXgPqD
 }
 
 /**
