@@ -94,49 +94,44 @@ namespace TMS_Data
         static const int LISTQUEUES = 8;
 
         /**
-         * \brief Constant for ListStrings class
-         */
-        static const int LISTSTRINGS = 9;
-
-        /**
          * \brief Constant for LoadCriterion class
          */
-        static const int LOADCRITERION = 10;
+        static const int LOADCRITERION = 9;
 
         /**
          * \brief Constant for LoadType class
          */
-        static const int LOADTYPE = 11;
+        static const int LOADTYPE = 10;
 
         /**
          * \brief Constant for Progression class
          */
-        static const int PROGRESSION = 12;
+        static const int PROGRESSION = 11;
 
         /**
          * \brief Constant for ProgressOptions class
          */
-        static const int PROGRESSOPTIONS = 13;
+        static const int PROGRESSOPTIONS = 12;
 
         /**
          * \brief Constant for Queue class
          */
-        static const int QUEUE = 14;
+        static const int QUEUE = 13;
 
         /**
          * \brief Constant for QueuePriority class
          */
-        static const int QUEUEPRIORITY = 15;
+        static const int QUEUEPRIORITY = 14;
 
         /**
          * \brief Constant for QueueStatus class
          */
-        static const int QUEUESTATUS = 16;
+        static const int QUEUESTATUS = 15;
 
         /**
          * \brief Constant for SubmitOptions class
          */
-        static const int SUBMITOPTIONS = 17;
+        static const int SUBMITOPTIONS = 16;
 
         /**
          * \brief Constant for JOB__SESSIONID feature
@@ -562,14 +557,6 @@ namespace TMS_Data
          * \brief Constant for LOADCRITERION__LOADTYPE feature
          */
         static const int LOADCRITERION__LOADTYPE = 84;
-<<<<<<< .merge_file_hBTvF8
-
-        /**
-         * \brief Constant for LISTSTRINGS__STRING feature
-         */
-        static const int LISTSTRINGS__STRING = 85;
-=======
->>>>>>> .merge_file_cf73U5
 
         // EClassifiers methods
 
@@ -674,12 +661,6 @@ namespace TMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EEnum_ptr getLoadType();
-
-        /**
-         * \brief Returns the reflective object for class ListStrings
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EClass_ptr getListStrings();
 
         // EStructuralFeatures methods
 
@@ -1194,12 +1175,6 @@ namespace TMS_Data
          */
         virtual ::ecore::EAttribute_ptr getLoadCriterion__loadType();
 
-        /**
-         * \brief Returns the reflective object for feature string of class ListStrings
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EAttribute_ptr getListStrings__string();
-
     protected:
 
         /**
@@ -1270,11 +1245,6 @@ namespace TMS_Data
          * \brief The instance for the class LoadCriterion
          */
         ::ecore::EClass_ptr m_LoadCriterionEClass;
-
-        /**
-         * \brief The instance for the class ListStrings
-         */
-        ::ecore::EClass_ptr m_ListStringsEClass;
 
         // EEnuminstances 
 
@@ -1732,11 +1702,6 @@ namespace TMS_Data
          * \brief The instance for the feature loadType of class LoadCriterion
          */
         ::ecore::EAttribute_ptr m_LoadCriterion__loadType;
-
-        /**
-         * \brief The instance for the feature string of class ListStrings
-         */
-        ::ecore::EAttribute_ptr m_ListStrings__string;
 
     };
 

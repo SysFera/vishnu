@@ -140,24 +140,16 @@ makeSubJobOp(string pgName,
 			"2 or R: To select a machine that has minimum number of running jobs",
 			CONFIG,
 			loadCriterionStr);
-<<<<<<< .merge_file_YSTM6F
-	opt->add("textParam,i",
-=======
 	opt->add("textParam,v",
->>>>>>> .merge_file_Kb1vGF
 			"Sets a parameter with a value passing in argument.\n"
-			"E.g. --param PARAM1=value1 or -v PARAM1=value1 will set the parameter VISHNU_PARAM1 (a environment variable)"
+			"E.g. --param PARAM1=value1 will set the parameter VISHNU_PARAM1 (a environment variable)"
 			"with the value 'value1'.\n"
 			"The parameter name (PARAM1 in the example), which is case-insensitive, can be PARAM1, "
 			"PARAM2...PARAM9.\n\n"
 			"SEE ALSO --listParams.",
 			CONFIG,
 			textParamsVector);
-<<<<<<< .merge_file_YSTM6F
-	opt->add("textParams,I",
-=======
 	opt->add("textParams,V",
->>>>>>> .merge_file_Kb1vGF
 			"Sets a list of space-separated parameters.\n"
 			"E.g. --listParams=\"PARAM1=value1 PARAM2=value\" will set the environment variables "
 			"VISHNU_PARAM1 and VISHNU_PARAM2 with the 'value1' and 'value2', respectively.\n"
