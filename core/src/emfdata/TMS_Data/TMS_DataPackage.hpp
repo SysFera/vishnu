@@ -562,11 +562,14 @@ namespace TMS_Data
          * \brief Constant for LOADCRITERION__LOADTYPE feature
          */
         static const int LOADCRITERION__LOADTYPE = 84;
+<<<<<<< .merge_file_hBTvF8
 
         /**
          * \brief Constant for LISTSTRINGS__STRING feature
          */
         static const int LISTSTRINGS__STRING = 85;
+=======
+>>>>>>> .merge_file_cf73U5
 
         // EClassifiers methods
 

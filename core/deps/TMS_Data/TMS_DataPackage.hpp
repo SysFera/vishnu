@@ -101,42 +101,74 @@ namespace TMS_Data
         /**
          * \brief Constant for LoadCriterion class
          */
+<<<<<<< .merge_file_7TLpZG
         static const int LOADCRITERION = 10;
+=======
+        static const int LOADCRITERION = 9;
+>>>>>>> .merge_file_8gfMNI
 
         /**
          * \brief Constant for LoadType class
          */
+<<<<<<< .merge_file_7TLpZG
         static const int LOADTYPE = 11;
+=======
+        static const int LOADTYPE = 10;
+>>>>>>> .merge_file_8gfMNI
 
         /**
          * \brief Constant for Progression class
          */
+<<<<<<< .merge_file_7TLpZG
         static const int PROGRESSION = 12;
+=======
+        static const int PROGRESSION = 11;
+>>>>>>> .merge_file_8gfMNI
 
         /**
          * \brief Constant for ProgressOptions class
          */
+<<<<<<< .merge_file_7TLpZG
         static const int PROGRESSOPTIONS = 13;
+=======
+        static const int PROGRESSOPTIONS = 12;
+>>>>>>> .merge_file_8gfMNI
 
         /**
          * \brief Constant for Queue class
          */
+<<<<<<< .merge_file_7TLpZG
         static const int QUEUE = 14;
+=======
+        static const int QUEUE = 13;
+>>>>>>> .merge_file_8gfMNI
 
         /**
          * \brief Constant for QueuePriority class
          */
+<<<<<<< .merge_file_7TLpZG
         static const int QUEUEPRIORITY = 15;
+=======
+        static const int QUEUEPRIORITY = 14;
+>>>>>>> .merge_file_8gfMNI
 
         /**
          * \brief Constant for QueueStatus class
          */
+<<<<<<< .merge_file_7TLpZG
         static const int QUEUESTATUS = 16;
+=======
+        static const int QUEUESTATUS = 15;
+>>>>>>> .merge_file_8gfMNI
 
         /**
          * \brief Constant for SubmitOptions class
          */
+<<<<<<< .merge_file_7TLpZG
         static const int SUBMITOPTIONS = 17;
+=======
+        static const int SUBMITOPTIONS = 16;
+>>>>>>> .merge_file_8gfMNI
 
         /**
          * \brief Constant for JOB__SESSIONID feature
