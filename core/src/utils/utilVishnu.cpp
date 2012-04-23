@@ -851,12 +851,35 @@ vishnu::createParamFiles(const std::string & contents, const std::string& params
 
 	ListStrings paramsVec ;
 	boost::split(paramsVec, paramsStr, boost::is_any_of(" ")) ;
-
+	FILE * file ;
+	std::string fPath ;
+	size_t pos = 0 ;
+	char* c = (char*) malloc (sizeof(char));
 	for(ListStrings::const_iterator it = paramsVec.begin(); it != paramsVec.end(); it++){
 		ListStrings attrs ;
-		boost::split(attrs, *it, boost::is_any_of("=")) ;
 
-		FILE * oFile = fopen (("/tmp/" + attrs[0]).c_str() , "wb");
+		boost::split(attrs, *it, boost::is_any_of("=")) ;
+		fPath = "/tmp/" + attrs[0] ;
+
+		file = fopen (fPath.c_str() , "wb");
+
+		while( 1 ){
+			if( paramsStr[pos] == '^' &&
+					paramsStr[pos+1] == '='&&
+					paramsStr[pos+2] == '='&&
+					paramsStr[pos+3] == '='&&
+					paramsStr[pos+4] == '^' ) {
+				pos+=5 ;
+				break ;
+			} else {
+				*c = paramsStr[pos] ;
+				size_t nbWrite = fwrite(c, 1, 1, file) ;
+				if(nbWrite != 1) { throw UserException(ERRCODE_INVALID_PARAM, "Error writing in a file : ");}
+			}
+			pos++ ;
+		}
+
+		fclose (file);
 
 	}
 }

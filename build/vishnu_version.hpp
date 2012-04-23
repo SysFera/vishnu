@@ -1,7 +1,0 @@
-#ifndef VISHNU_VERSION_HPP
-#define VISHNU_VERSION_HPP
-
-
-#define VISHNU_VERSION "1.4.0"
-
-#endif
