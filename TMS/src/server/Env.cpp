@@ -4,7 +4,8 @@
  * \author Daouda Traore (daouda.traore@sysfera.com)
  * \date December 2011
  */
-
+#include <boost/algorithm/string.hpp>
+#include <stdlib.h>
 #include "Env.hpp"
 
 /**
@@ -141,4 +142,21 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
       break;
 
   }
+}
+
+/**
+ * \brief Function to set textual parameter appearing in a string
+ * \param envParamsList a list of parameter in the form of PARAM1="value1" PARAM2="value2" ...
+ */
+void Env::setParameters(std::string& scriptContent, const std::string& envParamsList){
+
+	ListStrings paramsVec ;
+	boost::split(paramsVec, envParamsList, boost::is_any_of(" ")) ;
+
+	for(ListStrings::const_iterator it = paramsVec.begin(); it != paramsVec.end(); it++){
+		ListStrings attrs ;
+		boost::split(attrs, *it, boost::is_any_of("=")) ;
+		replaceAllOccurences(scriptContent, "$" + attrs[0], attrs[1]) ;
+		replaceAllOccurences(scriptContent, "${" + attrs[0] + "}", attrs[1]) ;
+	}
 }

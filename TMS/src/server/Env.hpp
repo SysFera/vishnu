@@ -42,6 +42,12 @@ class Env
      */
     void replaceEnvVariables(std::string& scriptContent);
 
+    /**
+     * \brief Function to set textual parameter appearing in a string
+     * \param envParamsList a list of parameter in the form of PARAM1="value1" PARAM2="value2" ...
+     */
+    void setParameters(std::string& scriptContent, const std::string& envParamsList);
+
   private:
 
     /**
