@@ -142,7 +142,7 @@ makeSubJobOp(string pgName,
 			loadCriterionStr);
 	opt->add("textParam,v",
 			"Sets a parameter with a value passing in argument.\n"
-			"E.g. --param PARAM1=value1 will set the parameter VISHNU_PARAM1 (a environment variable)"
+			"E.g. --param PARAM1=value1 or -v PARAM1=value1 will set the parameter VISHNU_PARAM1 (a environment variable)"
 			"with the value 'value1'.\n"
 			"The parameter name (PARAM1 in the example), which is case-insensitive, can be PARAM1, "
 			"PARAM2...PARAM9.\n\n"
@@ -308,7 +308,6 @@ int main (int argc, char* argv[]){
 
 		if(opt->count(paramOptName) || textParamsVector.size() != 0) {
 			string paramStr ;
-			//int ret = vishnu::validateParameters(opt, paramSet, paramOptName, textParamsStr, false);
 			int ret = vishnu::validateParameters(opt, paramStr, paramOptName, textParamsVector, false);
 			if( ret != 0 ) return ret ;
 			subOp.setTextParams(paramStr) ;
@@ -318,7 +317,6 @@ int main (int argc, char* argv[]){
 		paramOptName = "fileParams" ;
 		if(opt->count(paramOptName) || fileParamsVector.size() != 0 ) {
 			string paramStr ;
-			//int ret = vishnu::validateParameters(opt, paramSet, paramOptName, fileParamsStr, true) ;
 			int ret = vishnu::validateParameters(opt, paramStr, paramOptName, fileParamsVector, true) ;
 			if( ret != 0 ) return ret ;
 			subOp.setFileParams(paramStr) ;
