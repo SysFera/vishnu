@@ -51,6 +51,8 @@ set(TMS_Data_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListJobResultsImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/LoadCriterion.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/LoadCriterionImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListStrings.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListStringsImpl.cpp
    )
    
 set(TMS_Data_HEADERS
@@ -70,6 +72,7 @@ set(TMS_Data_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/JobResult.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListJobResults.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/LoadCriterion.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListStrings.hpp
    )
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data.hpp DESTINATION include/emf4cpp/)
@@ -88,6 +91,7 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/Queue.hpp DESTINATION include
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/JobResult.hpp DESTINATION include/emf4cpp/TMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListJobResults.hpp DESTINATION include/emf4cpp/TMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/LoadCriterion.hpp DESTINATION include/emf4cpp/TMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListStrings.hpp DESTINATION include/emf4cpp/TMS_Data)
    
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${EMF4CPP_INCLUDE_DIR})
 

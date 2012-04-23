@@ -60,13 +60,91 @@ char* crypt(const char* clef, const char* salt);
  * \brief This naspace contains utils functions of the vishnu system
  */
 namespace vishnu {
+  
+  static const std::string ROOTUSERNAME = "root";
+  static const std::string UMSMAPPERNAME = "UMS";
+  static const std::string TMSMAPPERNAME = "TMS";
+  static const std::string IMSMAPPERNAME = "IMS";
+  static const std::string FMSMAPPERNAME = "FMS";
+  static const int PASSWORD_MAX_SIZE = 8;
 
-static const std::string ROOTUSERNAME = "root";
-static const std::string UMSMAPPERNAME = "UMS";
-static const std::string TMSMAPPERNAME = "TMS";
-static const std::string IMSMAPPERNAME = "IMS";
-static const std::string FMSMAPPERNAME = "FMS";
-static const int PASSWORD_MAX_SIZE = 8;
+  static boost::shared_mutex mutex;
+  /**
+  * \brief Generic function to convert an object to string
+  * \param val is a generic data to be transformed to string
+  * \return the string version of val
+  */
+  template <class T>
+  std::string convertToString(T val) {
+    std::ostringstream out;
+    out << val;
+    return out.str();
+  }
+
+  /**
+   * \brief Function to convert a given date into correspondant long value
+   * \fn long long convertToTimeType(std::string date)
+   * \param date The date to convert
+   * \return The converted value
+   */
+  long long convertToTimeType(std::string date);
+
+  /**
+   * \brief generic Function to convert a string to int
+   * \param  val a value to convert to int
+   * \return int value of the corresponding string
+   */
+  template<typename Target>
+    Target
+    lexical_convertor (const std::string& source){
+      Target intValue;
+      std::istringstream str(source);
+      str >> intValue;
+      return intValue;
+    }
+  /**
+   * \brief Function to convert a string to int
+   * \param  val a value to convert to int
+   * \return int value of the corresponding string
+   */
+  int
+    convertToInt(std::string val);
+
+  /**
+   * \brief To crypt a password
+   * \param salt The salt to use to crypt
+   * \param password The password to crypt
+   * \param encrypted The flag that password encryption
+   * \return The crypted password
+   */
+  std::string
+  cryptPassword(const std::string& salt, const std::string& password, bool encrypted = true) ;
+
+  /**
+  * \brief Function to get a random number
+  * \fn    int generateNumbers()
+  * \return the number generated
+  */
+  int
+  generateNumbers();
+
+  /**
+   * \brief To retrieve the password
+   * \param prompt: The message inviting the user to enter his/her password
+   * \return The password entered.
+   */
+  std::string
+  takePassword(const std::string& prompt);
+
+  /**
+   * \brief Simple function to convert time
+   * from string format (YYYY-MM-DD H:mm:ss) to
+   * long integer format in seconds
+   * \param ts: the time in string format
+   * \return the time in long integer format in seconds
+   */
+  std::time_t
+  string_to_time_t(const std::string& ts);
 
 static boost::shared_mutex mutex;
 /**
@@ -242,6 +320,38 @@ time_t convertUTCtimeINLocaltime(const time_t& localtime);
  */
 time_t convertLocaltimeINUTCtime(const time_t& localtime);
 
+   /**
+    * \brief Function to parse textual or file parameters
+    * \param IN opt A structure containing the set of submitted options
+    * \param OUT paramSet a vector containing all of parameters
+    * \param IN paramOptName the name of the option for a single parameter
+    * \param IN listParamsStr a string-like list of parameters
+    * \param IN isOfFileType tell whether the parameters are files or textual
+    * \return true if all parameters are syntaxicaly valid
+    */
+/*   int
+   validateParameters(const boost::shared_ptr<Options> & opt,
+			 std::vector<std::string> & paramsSet,
+    		 const std::string & paramOptName,
+    		 const std::string & listParamsStr,
+    		 const bool & isOfFileType = false);*/
+
+
+   /**
+    * \brief Function to parse textual or file parameters
+    * \param IN opt A structure containing the set of submitted options
+    * \param OUT paramStr a string containing all of parameters
+    * \param IN paramOptName the name of the option for a single parameter
+    * \param IN paramsVector a vector of parameters
+    * \param IN isOfFileType tell whether the parameters are files or textual
+    * \return true if all parameters are syntaxicaly valid
+    */
+   int
+   validateParameters(const boost::shared_ptr<Options> & opt,
+			 std::string & paramsStr,
+    		 const std::string & paramOptName,
+    		 const std::vector<std::string> & paramsVector,
+    		 const bool & isOfFileType = false);
 /**
  * \brief Function to return the difference between localtime and UTC time (seconds)
  * \return the difference time (seconds)

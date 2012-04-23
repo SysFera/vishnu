@@ -876,7 +876,11 @@ vishnu::createParamFiles(const std::string & contents, const std::string& params
 				size_t nbWrite = fwrite(c, 1, 1, file) ;
 				if(nbWrite != 1) { throw UserException(ERRCODE_INVALID_PARAM, "Error writing in a file : ");}
 			}
+<<<<<<< HEAD
 			pos++ ;
+=======
+			i++ ;
+>>>>>>> e97c159d7b81920d23c3dbf3961496a24c446062
 		}
 
 		fclose (file);

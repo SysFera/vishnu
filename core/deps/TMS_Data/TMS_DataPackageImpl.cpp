@@ -488,6 +488,17 @@ TMS_DataPackage::TMS_DataPackage()
     m_LoadCriterionEClass->getEStructuralFeatures().push_back(
             m_LoadCriterion__loadType);
 
+    // ListStrings
+    m_ListStringsEClass = new ::ecore::EClass();
+    m_ListStringsEClass->setClassifierID(LISTSTRINGS);
+    m_ListStringsEClass->setEPackage(this);
+    getEClassifiers().push_back(m_ListStringsEClass);
+    m_ListStrings__string = new ::ecore::EAttribute();
+    m_ListStrings__string->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::LISTSTRINGS__STRING);
+    m_ListStringsEClass->getEStructuralFeatures().push_back(
+            m_ListStrings__string);
+
     // Create enums
 
     m_JobPriorityEEnum = new ::ecore::EEnum();
@@ -1754,6 +1765,24 @@ TMS_DataPackage::TMS_DataPackage()
     m_LoadCriterion__loadType->setUnique(true);
     m_LoadCriterion__loadType->setDerived(false);
     m_LoadCriterion__loadType->setOrdered(true);
+    // ListStrings
+    m_ListStringsEClass->setName("ListStrings");
+    m_ListStringsEClass->setAbstract(false);
+    m_ListStringsEClass->setInterface(false);
+    m_ListStrings__string->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_ListStrings__string->setName("string");
+    m_ListStrings__string->setDefaultValueLiteral("0");
+    m_ListStrings__string->setLowerBound(0);
+    m_ListStrings__string->setUpperBound(-1);
+    m_ListStrings__string->setTransient(false);
+    m_ListStrings__string->setVolatile(false);
+    m_ListStrings__string->setChangeable(true);
+    m_ListStrings__string->setUnsettable(false);
+    m_ListStrings__string->setID(false);
+    m_ListStrings__string->setUnique(true);
+    m_ListStrings__string->setDerived(false);
+    m_ListStrings__string->setOrdered(true);
 
     // TODO: Initialize data types
 
@@ -2109,6 +2138,10 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_LoadTypeEEnum;
 }
+::ecore::EClass_ptr TMS_DataPackage::getListStrings()
+{
+    return m_ListStringsEClass;
+}
 
 ::ecore::EAttribute_ptr TMS_DataPackage::getJob__sessionId()
 {
@@ -2449,5 +2482,9 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getLoadCriterion__loadType()
 {
     return m_LoadCriterion__loadType;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getListStrings__string()
+{
+    return m_ListStrings__string;
 }
 
