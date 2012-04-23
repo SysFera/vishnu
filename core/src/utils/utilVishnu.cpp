@@ -12,9 +12,11 @@
 #include <boost/filesystem/fstream.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string/find.hpp>
 #include <boost/regex.hpp>
 #include <boost/regex_fwd.hpp>
 #include <sstream>
+
 #include <sys/stat.h>
 // Headers for getaddrinfo function
 #include <netdb.h>
@@ -22,6 +24,8 @@
 #include<iostream>
 #include<string>
 #include<cstring>
+#include <stdio.h>
+#include <stdlib.h>
 
 
 #include "UserException.hpp"
@@ -699,63 +703,6 @@ vishnu::checkEmptyString(const std::string& str,
 
 }
 
-
-/**
- * \brief Function to parse textual or file parameters
- * \param IN opt A structure containing the set of submitted options
- * \param OUT paramSet a vector containing ostringstream containing all of parameters
- * \param IN paramOptName the name of the option for a single parameter
- * \param IN listParamsStr a string-like list of parameters
- * \param IN isOfFileType tell whether the parameters are files or textual
- * \return true if all parameters are syntaxicaly valid
- */
-/*int
-vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
-		std::vector<std::string> & paramSet,
-		const std::string & paramOptName,
-		const std::string & listParamsStr,
-		const bool & isOfFileType){
-
-	if( opt->count(paramOptName) ){
-		paramSet = opt->get< std::vector<std::string> >(paramOptName) ;
-	}
-	if( listParamsStr.size() != 0 ) {
-		std::vector<std::string> vectorBuf ;
-		std::string str = listParamsStr ; // a constant
-		boost::trim(str) ; boost::split(vectorBuf, str, boost::is_any_of(" "), boost::token_compress_on);
-
-		// Append other parameters in paramSet
-		for(std::vector<std::string>::iterator it = vectorBuf.begin(); it != vectorBuf.end() ; it++) {
-			paramSet.push_back(*it) ;
-		}
-	}
-	//Now check the syntax of parameters and set them suitable for VISHNU
-	std::vector<std::string> vectorBuf ;
-	for(std::vector<std::string>::iterator it = paramSet.begin(); it != paramSet.end() ; it++) {
-		boost::trim( *it ) ; boost::split(vectorBuf, *it , boost::is_any_of("="));
-		if(vectorBuf.size() != 2) {
-			std::cerr << "Wrong definition of the parameter : '" << *it << "'"<< std::endl ;
-			return CLI_ERROR_INVALID_PARAMETER;
-		}
-
-		boost::regex expr ;
-		if( isOfFileType ){
-			expr.set_expression("file[1-9]|FILE[1-9]");
-		}else {  //Textual param
-			expr.set_expression("param[1-9]|PARAM[1-9]");
-		}
-		boost::cmatch what;
-		if( ! boost::regex_match(vectorBuf[0].c_str(), what, expr)) {
-			std::cerr << "Unauthorized parameter name : '" << vectorBuf[0] << "'"<< std::endl ;
-			return CLI_ERROR_INVALID_PARAMETER ;
-		}
-		*it = "VISHNU_" + boost::to_upper_copy(vectorBuf[0]) + "=" + vectorBuf[1] ;
-	}
-
-	return 0 ;
-}*/
-
-
 /**
  * \brief Function to parse textual or file parameters
  * \param IN opt A structure containing the set of submitted options
@@ -769,7 +716,7 @@ int
 vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 		std::string & paramsStr,
 		const std::string & paramOptName,
-		const std::vector<std::string> & paramsVector,
+		const ListStrings & paramsVector,
 		const bool & isOfFileType){
 
 	if( opt->count(paramOptName) ){
@@ -777,29 +724,30 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 	}
 
 	// Append other parameters in paramStr
-	for(std::vector<std::string>::const_iterator it = paramsVector.begin(); it != paramsVector.end() ; it++) {
+	for(ListStrings::const_iterator it = paramsVector.begin(); it != paramsVector.end() ; it++) {
 		paramsStr += " " + *it ;
 	}
 
 	//Now check the syntax of parameters and set them suitable for VISHNU
-	std::vector<std::string> paramsVecBuffer ;
+	ListStrings paramsVecBuffer ;
 	boost::trim(paramsStr) ; boost::split(paramsVecBuffer, paramsStr, boost::is_any_of(" "), boost::token_compress_on);
 
-	paramsStr = "" ; //Reinitialization for outpout
-	for(std::vector<std::string>::iterator it = paramsVecBuffer.begin(); it != paramsVecBuffer.end() ; it++) {
+	paramsStr = "" ; // Reinitialization for outpout
+	for(ListStrings::iterator it = paramsVecBuffer.begin(); it != paramsVecBuffer.end() ; it++) {
 
-		std::vector<std::string> paramAttrs ;
+		ListStrings paramAttrs ;
 		boost::split(paramAttrs, *it , boost::is_any_of("="));
 		if(paramAttrs.size() != 2) {
 			std::cerr << "Wrong definition of the parameter : '" << *it << "'"<< std::endl ;
 			return CLI_ERROR_INVALID_PARAMETER;
 		}
 
+		boost::to_upper(paramAttrs[0]) ;  //Cast the parameter name to upper case
 		boost::regex expr ;
 		if( isOfFileType ){
-			expr.set_expression("file[1-9]|FILE[1-9]");
+			expr.set_expression("FILE[1-9]");
 		}else {  //Textual param
-			expr.set_expression("param[1-9]|PARAM[1-9]");
+			expr.set_expression("PARAM[1-9]");
 		}
 
 		boost::cmatch what;
@@ -807,12 +755,131 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 			std::cerr << "Unauthorized parameter name : '" << paramAttrs[0] << "'"<< std::endl ;
 			return CLI_ERROR_INVALID_PARAMETER ;
 		}
-		if( paramsStr.size() != 0) paramsStr += " " ;
-		paramsStr += "VISHNU_" + boost::to_upper_copy(paramAttrs[0]) + "=" + paramAttrs[1] ;
+
+		// Check whether the parameter is duplicate
+		if( paramsStr.size() != 0) {
+			if( paramsStr.find(paramAttrs[0] ) != std::string::npos){
+				std::cerr << "Duplicate parameter : '" << paramAttrs[0] << "'"<< std::endl ;
+				return CLI_ERROR_INVALID_PARAMETER ;
+			}
+			paramsStr += " " ;
+		}
+		// Append the parameter in the string
+		paramsStr += "VISHNU_" + paramAttrs[0] + "=" + paramAttrs[1] ;
 	}
-	std::cout << paramsStr  << std::endl;
 
 	return 0 ;
 	//subOp.setListParams(strBuf.str()) ; subOp.setParam(paramStr) ;
 }
 
+
+
+/**
+ * \brief Simple function to read the content of a binary file
+ * \param strContent: content of the file filePath in string
+ * \param filePath: the path to the file
+ * \return The number of characters appended in the string, exception is thrown on error
+ */
+size_t
+vishnu::binaryFile2String(std::string & strContent, const std::string& filePath){
+
+	FILE* file = fopen (filePath.c_str() , "rb" );
+
+	if (file==NULL) { throw UserException(ERRCODE_FILENOTFOUND, "can not read the file : " + filePath); }
+
+	fseek (file , 0 , SEEK_END);
+	size_t fSize = ftell (file);
+	rewind (file);
+
+	char * buffer = (char*) malloc (sizeof(char)*fSize);
+	if (buffer == NULL) {throw UserException(ERRCODE_INVALID_PARAM, "file is two big to fit in memory : " + filePath);}
+
+	int nbRead = fread (buffer , 1, fSize , file);
+	if ( nbRead != fSize) {throw UserException(ERRCODE_INVALID_PARAM, "Error while reading the file : " + filePath);}
+
+	strContent.clear() ;
+	for(size_t i = 0; i < fSize ; i++){  strContent[i] = buffer[i] ;}
+
+	free(buffer) ;
+
+	fclose(file) ;
+
+	return fSize ;
+}
+
+/**
+ * \brief Simple function to read the content of a binary file
+ * \param strContent: content of the file filePath in string
+ * \param filePath: the path to the file
+ * \param pos : position from which the file will be appended
+ * \return The number of characters appended in the string, exception is thrown on error
+ */
+size_t
+vishnu::appendBinaryFile2String(std::string & strContent, const std::string& filePath, const size_t & pos){
+
+	FILE* file = fopen (filePath.c_str() , "rb" );
+
+	if (file==NULL) { throw UserException(ERRCODE_FILENOTFOUND, "can not read the file : " + filePath); }
+
+	fseek (file , 0 , SEEK_END);
+	size_t fSize = ftell (file);
+	rewind (file);
+
+	char * buffer = (char*) malloc (sizeof(char)*fSize);
+	if (buffer == NULL) {throw UserException(ERRCODE_INVALID_PARAM, "file is two big to fit in memory : " + filePath);}
+
+	int nbRead = fread (buffer , 1, fSize , file);
+	if ( nbRead != fSize) {throw UserException(ERRCODE_INVALID_PARAM, "Error while reading the file : " + filePath);}
+
+	for(size_t i = 0; i < fSize ; i++){  strContent[pos + i] = buffer[i] ;}
+
+	free(buffer) ;
+
+	fclose(file) ;
+
+	return fSize ;
+}
+
+/**
+ * \brief Function
+ * \param contents: a string representing the contents of file separed by the sequence "^===^"
+ * \param paramsStr : a string containing the list of supplied file parameters
+ * \return Throw exception on error
+ */
+void
+vishnu::createParamFiles(const std::string & contents, const std::string& paramsStr){
+
+	ListStrings paramsVec ;
+	boost::split(paramsVec, paramsStr, boost::is_any_of(" ")) ;
+	FILE * file ;
+	std::string fPath ;
+	size_t pos = 0 ;
+	char* c = (char*) malloc (sizeof(char));
+	for(ListStrings::const_iterator it = paramsVec.begin(); it != paramsVec.end(); it++){
+		ListStrings attrs ;
+
+		boost::split(attrs, *it, boost::is_any_of("=")) ;
+		fPath = "/tmp/" + attrs[0] ;
+
+		file = fopen (fPath.c_str() , "wb");
+
+		while( 1 ){
+			if( paramsStr[pos] == '^' &&
+					paramsStr[pos+1] == '='&&
+					paramsStr[pos+2] == '='&&
+					paramsStr[pos+3] == '='&&
+					paramsStr[pos+4] == '^' ) {
+				pos+=5 ;
+				break ;
+			} else {
+				*c = paramsStr[pos] ;
+				size_t nbWrite = fwrite(c, 1, 1, file) ;
+				if(nbWrite != 1) { throw UserException(ERRCODE_INVALID_PARAM, "Error writing in a file : ");}
+			}
+			i++ ;
+		}
+
+		fclose (file);
+
+	}
+}
