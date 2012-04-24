@@ -18,42 +18,43 @@
 class Env
 {
 
-  public:
-    /**
-     * \param batchType The batch scheduler type
-     * \brief Constructor
-     */
-    Env(const BatchType& batchType);
+public:
+	/**
+	 * \param batchType The batch scheduler type
+	 * \brief Constructor
+	 */
+	Env(const BatchType& batchType);
 
-    /**
-     * \brief Function to replace all occurences in a string
-     * \param scriptContent The string to modify
-     * \param oldValue The value to replace
-     * \param newValue The new value
-     */
-    void replaceAllOccurences(std::string& scriptContent,
-        const std::string& oldValue,
-        const std::string& newValue);
+	/**
+	 * \brief Function to replace all occurences in a string
+	 * \param scriptContent The string to modify
+	 * \param oldValue The value to replace
+	 * \param newValue The new value
+	 */
+	void replaceAllOccurences(std::string& scriptContent,
+			const std::string& oldValue,
+			const std::string& newValue);
 
-        
-    /**
-     * \brief Function to replace some environment variables in a string
-     * \param scriptContent The string content to modify
-     */
-    void replaceEnvVariables(std::string& scriptContent);
+	/**
+	 * \brief Function to replace some environment variables in a string
+	 * \param scriptContent The string content to modify
+	 */
+	void replaceEnvVariables(std::string& scriptContent);
 
-    /**
-     * \brief Function to set textual parameter appearing in a string
-     * \param envParamsList a list of parameter in the form of PARAM1="value1" PARAM2="value2" ...
-     */
-    void setParameters(std::string& scriptContent, const std::string& envParamsList);
+	/**
+	 * \brief Function to set textual parameter appearing in a string
+	 * \param scriptContent The string to modify
+	 * \param textParams list of textual parameters in the form of PARAM1="value1" PARAM2="value2" ...
+	 * \param fileParams list of file parameters in the form of FILE1="/path/to/file1"  FILE2="/path/to/file2" ...
+	 */
+	void setParameters(std::string& scriptContent, const std::string& textParams, const std::string& fileParams);
 
-  private:
+private:
 
-    /**
-     * \brief The type of the batch scheduler 
-     */
-    BatchType mbatchType;
+	/**
+	 * \brief The type of the batch scheduler
+	 */
+	BatchType mbatchType;
 
 };
 
