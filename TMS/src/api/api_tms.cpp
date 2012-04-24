@@ -58,27 +58,33 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 	std::string scriptContent = vishnu::get_file_content(scriptFilePath);
 
 	JobProxy jobProxy(sessionProxy , machineId , jobInfo);
+	/*
+	ListStrings fileParamsVec;
+	std::string fileParamsStr = options.getFileParams() ;
+	boost::trim(fileParamsStr) ; //TODO BUG when empty list
+	boost::split(fileParamsVec, fileParamsStr, boost::is_any_of(" "), boost::token_compress_on) ;
 
-	ListStrings fileParams;
-	boost::split(fileParams, options.getFileParams(), boost::is_any_of(" ")) ;
-	std::string fileContents ; fileContents.clear() ;
+	std::string fileContents ;
 	size_t pos = 0 ;
 
-	for(ListStrings::iterator it = fileParams.begin() ; it != fileParams.end(); it++){
+	for(ListStrings::iterator it = fileParamsVec.begin() ; it != fileParamsVec.end(); it++){
 		ListStrings paramAttrs ;
 		boost::split(paramAttrs, *it, boost::is_any_of("=")) ;  //each entry is in form of VISHNU_FILE_PARAM<N>=/path/of/file
+		size_t fSize;
+
 		pos += appendBinaryFile2String(fileContents, paramAttrs[1], pos) ;
 
 		//Add a separator through a sequence of characters
-		fileContents[pos] = '^' ;
-		fileContents[pos + 1] = '=' ;
-		fileContents[pos + 2] = '=' ;
-		fileContents[pos + 3] = '=' ;
-		fileContents[pos + 4] = '^' ;
+		fileContents+= '^' ;
+		fileContents+= '=' ;
+		fileContents+= '=' ;
+		fileContents+= '=' ;
+		fileContents+= '^' ;
 	}
+	std::cout << fileContents << std::endl;
+*/
 	SubmitOptions& optionsRef = const_cast<SubmitOptions&>(options) ;
-	optionsRef.setFileContents(fileContents) ;
-
+	//optionsRef.setFileContents(fileContents) ;
 
 	int ret = jobProxy.submitJob(scriptContent, optionsRef);
 	jobInfo = jobProxy.getData();

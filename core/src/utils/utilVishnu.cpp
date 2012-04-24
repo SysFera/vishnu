@@ -13,8 +13,6 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/find.hpp>
-#include <boost/regex.hpp>
-#include <boost/regex_fwd.hpp>
 #include <sstream>
 
 #include <sys/stat.h>
@@ -741,20 +739,7 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 			std::cerr << "Wrong definition of the parameter : '" << *it << "'"<< std::endl ;
 			return CLI_ERROR_INVALID_PARAMETER;
 		}
-
 		boost::to_upper(paramAttrs[0]) ;  //Cast the parameter name to upper case
-		boost::regex expr ;
-		if( isOfFileType ){
-			expr.set_expression("FILE[1-9]");
-		}else {  //Textual param
-			expr.set_expression("PARAM[1-9]");
-		}
-
-		boost::cmatch what;
-		if( ! boost::regex_match(paramAttrs[0].c_str(), what, expr)) {
-			std::cerr << "Unauthorized parameter name : '" << paramAttrs[0] << "'"<< std::endl ;
-			return CLI_ERROR_INVALID_PARAMETER ;
-		}
 
 		// Check whether the parameter is duplicate
 		if( paramsStr.size() != 0) {
@@ -765,11 +750,9 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 			paramsStr += " " ;
 		}
 		// Append the parameter in the string
-		paramsStr += "VISHNU_" + paramAttrs[0] + "=" + paramAttrs[1] ;
+		paramsStr += paramAttrs[0] + "=" + paramAttrs[1] ;
 	}
-
 	return 0 ;
-	//subOp.setListParams(strBuf.str()) ; subOp.setParam(paramStr) ;
 }
 
 
@@ -831,7 +814,9 @@ vishnu::appendBinaryFile2String(std::string & strContent, const std::string& fil
 	int nbRead = fread (buffer , 1, fSize , file);
 	if ( nbRead != fSize) {throw UserException(ERRCODE_INVALID_PARAM, "Error while reading the file : " + filePath);}
 
-	for(size_t i = 0; i < fSize ; i++){  strContent[pos + i] = buffer[i] ;}
+	for(size_t i = 0; i < fSize ; i++){
+		strContent += buffer[i] ;
+	}
 
 	free(buffer) ;
 
@@ -878,7 +863,6 @@ vishnu::createParamFiles(const std::string & contents, const std::string& params
 			}
 			pos++ ;
 		}
-
 		fclose (file);
 
 	}
