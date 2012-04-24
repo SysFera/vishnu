@@ -141,39 +141,36 @@ makeSubJobOp(string pgName,
 			CONFIG,
 			loadCriterionStr);
 	opt->add("textParam,v",
-			"Sets a parameter with a value passing in argument.\n"
-			"E.g. --param PARAM1=value1 will set the parameter VISHNU_PARAM1 (a environment variable)"
-			"with the value 'value1'.\n"
-			"The parameter name (PARAM1 in the example), which is case-insensitive, can be PARAM1, "
-			"PARAM2...PARAM9.\n\n"
-			"SEE ALSO --listParams.",
+			"Sets a textual parameter with a value passing in argument.\n"
+			"E.g. --param PARAM1=value1. So at the execution, any environment variable named"
+			"PARAM1 in the script will be set with 'value1'.\n"
+			"The name of the parameter can be any word and is case-insensitive, but the corresponding "
+			"environment variable must be in upper case in the script.\n\n"
+			"SEE ALSO --textParams.",
 			CONFIG,
 			textParamsVector);
 	opt->add("textParams,V",
-			"Sets a list of space-separated parameters.\n"
-			"E.g. --listParams=\"PARAM1=value1 PARAM2=value\" will set the environment variables "
-			"VISHNU_PARAM1 and VISHNU_PARAM2 with the 'value1' and 'value2', respectively.\n"
-			"Possible values of the parameter names (PARAM1 and PARAM2 in the example), which are "
-			"case-insensitive, can be PARAM1, PARAM2...PARAM9.\n\n"
+			"Sets a list of space-separated textual parameters.\n"
+			"E.g. --listParams=\"PARAM1=value1 PARAM2=value.\n\n"
 			"SEE ALSO --params.",
 			CONFIG,
 			ftextParams);
 	opt->add("fileParam,f",
-			"Sets a local file like a parameter of the script. This file will be uploaded onto the server "
+			"Sets a local file as a file parameter for the script. This file will be uploaded onto the server "
 			"before computing the script.\n"
 			"E.g. --file PFILE1=/path/to/file will allow to upload the file located at '/path/to/file' "
 			"onto the server.\n"
-			"Then within the script, the path of the destination files can be accessed through the environment "
-			"variables VISHNU_PFILE1.\n"
-			"The file parameter name (PFILE1 in the example), which is case-insensitive, can be PFILE1, PFILE2...PFILE9.\n\n"
-			"SEE ALSO --listFiles.",
+			"Then within the script, the path of the destination files can be accessed through an "
+			"environment named PFILE1.\n"
+			"The name of the parameter can be any word and is case-insensitive, but the corresponding "
+			"environment variable must be in upper case in the script.\n\n"
+			"SEE ALSO --fileParams.",
 			CONFIG,
 			fileParamsVector);
 	opt->add("fileParams,F",
-			"Sets a list of local files like parameters in a script. These files will be  uploaded onto the server "
+			"Sets a list of local files as parameters for the script. These files will be  uploaded onto the server "
 			"before computing the script.\n"
-			"E.g. --listFile=\"PFILE1=/path/to/file1 PFILE2=/path/to/file2\" will allow to upload the file located"
-			"at '/path/to/file1' and  '/path/to/file2' onto the server.\n"
+			"E.g. --listFile=\"PFILE1=/path/to/file1 PFILE2=/path/to/file2\".\n"
 			"Then within the script, the paths of the destination files can be accessed through the environment"
 			"variables VISHNU_PFILE1 and VISHNU_PFILE2, respectively.\n"
 			"The names, case-insensitive, of file parameters (PFILE1 and PFILE2 in the example) can be PFILE1, PFILE2...PFILE9.\n\n"

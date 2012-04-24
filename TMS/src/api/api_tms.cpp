@@ -58,7 +58,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 	std::string scriptContent = vishnu::get_file_content(scriptFilePath);
 
 	JobProxy jobProxy(sessionProxy , machineId , jobInfo);
-	/*
+
 	ListStrings fileParamsVec;
 	std::string fileParamsStr = options.getFileParams() ;
 	boost::trim(fileParamsStr) ; //TODO BUG when empty list
@@ -81,10 +81,9 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 		fileContents+= '=' ;
 		fileContents+= '^' ;
 	}
-	std::cout << fileContents << std::endl;
-*/
+
 	SubmitOptions& optionsRef = const_cast<SubmitOptions&>(options) ;
-	//optionsRef.setFileContents(fileContents) ;
+	optionsRef.setFileContents(fileContents) ;
 
 	int ret = jobProxy.submitJob(scriptContent, optionsRef);
 	jobInfo = jobProxy.getData();
