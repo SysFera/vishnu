@@ -83,11 +83,10 @@ int JobServer::submitJob(const std::string& scriptContent,
 
 	vishnu::createTmpFile(scriptPath, convertedScript);
 
-	//Create parameters files
-	string fileContents = options.getFileContents() ;
-	if( options.getFileParams().size()){
+	//TODO Create parameters files
+/*	if( options.getFileParams().size()){
 		vishnu::createParamFiles(fileContents, options.getFileParams());
-	}
+	}*/
 	submitOptionsSerialized = optSer.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
 	jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 

@@ -150,14 +150,16 @@ ServerTMS::init(int vishnuId,
   // initialization of the service table
   diet_service_table_init(NB_SRV);
   /* submitJob */
-  mprofile = diet_profile_desc_alloc((SERVICES[0]+std::string(machineId)).c_str(), 4, 4, 6);
+//  mprofile = diet_profile_desc_alloc((SERVICES[0]+std::string(machineId)).c_str(), 4, 4, 6);
+  mprofile = diet_profile_desc_alloc((SERVICES[0]+std::string(machineId)).c_str(), 5, 5, 7);
   diet_generic_desc_set(diet_param_desc(mprofile,0), DIET_PARAMSTRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_PARAMSTRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,4), DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(mprofile,5), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,5), DIET_CONTAINER, DIET_CHAR);  //for receving input files
   diet_generic_desc_set(diet_param_desc(mprofile,6), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,7), DIET_STRING, DIET_CHAR);
   if (diet_service_table_add(mprofile, NULL, solveSubmitJob)) {
     return 1;
   }
@@ -274,7 +276,7 @@ ServerTMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_PARAMSTRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,4), DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(mprofile,5), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,5), DIET_FILE, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,6), DIET_STRING, DIET_CHAR);
   if (diet_service_table_add(mprofile, NULL, solveSubmitJob)) {
     return 1;
