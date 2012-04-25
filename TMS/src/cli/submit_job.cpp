@@ -151,7 +151,7 @@ makeSubJobOp(string pgName,
 			textParamsVector);
 	opt->add("textParams,V",
 			"Sets a list of space-separated textual parameters.\n"
-			"E.g. --listParams=\"PARAM1=value1 PARAM2=value.\n\n"
+			"E.g. --listParams=\"PARAM1=value1 PARAM2=value2.\n\n"
 			"SEE ALSO --params.",
 			CONFIG,
 			ftextParams);
@@ -172,8 +172,7 @@ makeSubJobOp(string pgName,
 			"before computing the script.\n"
 			"E.g. --listFile=\"PFILE1=/path/to/file1 PFILE2=/path/to/file2\".\n"
 			"Then within the script, the paths of the destination files can be accessed through the environment"
-			"variables VISHNU_PFILE1 and VISHNU_PFILE2, respectively.\n"
-			"The names, case-insensitive, of file parameters (PFILE1 and PFILE2 in the example) can be PFILE1, PFILE2...PFILE9.\n\n"
+			"variables VISHNU_PFILE1 and VISHNU_PFILE2, respectively.\n\n"
 			"SEE ALSO --file.",
 			CONFIG,
 			ffileParams);
