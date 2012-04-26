@@ -63,7 +63,6 @@ int JobServer::submitJob(const std::string& scriptContent,
 	env.replaceAllOccurences(const_cast<std::string&>(scriptContent), "${VISHNU_SUBMIT_MACHINE_NAME}", machineName);
 	env.setParameters(const_cast<std::string&>(scriptContent), options.getTextParams(), options.getFileParams()) ;
 
-
 	std::string jobSerialized ;
 	std::string submitOptionsSerialized;
 	char* scriptPath = NULL;
