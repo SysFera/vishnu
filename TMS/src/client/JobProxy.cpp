@@ -1,5 +1,4 @@
 
-#include <iostream>
 #include <string>
 #include "JobProxy.hpp"
 #include "UMSVishnuException.hpp"
@@ -101,7 +100,6 @@ JobProxy::submitJob(const std::string& scriptContent,
 	for(ListStrings::const_iterator it = paramsVec.begin(); it != paramsVec.end(); it++){
 		size_t pos = (*it).find("=") ;  //it will find normally après initial parsing
 		if(pos == std::string::npos) continue ;
-		std::cout << "H it : " << *it << std::endl;
 		char* path = strdup( (*it).substr(pos+1, std::string::npos).c_str() ) ;
 		dagda_put_file(path, DIET_PERSISTENT, &DAGDA_ID[id]);
 		dagda_add_container_element((*diet_parameter(submitJobProfile,5)).desc.id, DAGDA_ID[id], id);
