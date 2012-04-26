@@ -733,24 +733,25 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 	paramsStr = "" ; // Reinitialization for outpout
 	for(ListStrings::iterator it = paramsVecBuffer.begin(); it != paramsVecBuffer.end() ; it++) {
 
-		ListStrings paramAttrs ;
-		boost::split(paramAttrs, *it , boost::is_any_of("="));
-		if(paramAttrs.size() != 2) {
-			std::cerr << "Wrong definition of the parameter : '" << *it << "'"<< std::endl ;
+		size_t pos = (*it).find("=") ;
+		if( pos == 0 || pos == std::string::npos || pos == (*it).size() - 1 ){
+			std::cerr << "Uncompleted definition for the parameter : '" << *it << "'"<< std::endl ;
 			return CLI_ERROR_INVALID_PARAMETER;
 		}
-		boost::to_upper(paramAttrs[0]) ;  //Cast the parameter name to upper case
+
+		std::string paramName = boost::to_upper_copy((*it).substr(0, pos)) ; // Keep the parameter name in upper case
+		std::string paramValue = (*it).substr(pos+1, std::string::npos) ;
 
 		// Check whether the parameter is duplicate
 		if( paramsStr.size() != 0) {
-			if( paramsStr.find(paramAttrs[0] ) != std::string::npos){
-				std::cerr << "Duplicate parameter : '" << paramAttrs[0] << "'"<< std::endl ;
+			if( paramsStr.find(paramName ) != std::string::npos){
+				std::cerr << "Duplicate parameter : '" << paramName << "'"<< std::endl ;
 				return CLI_ERROR_INVALID_PARAMETER ;
 			}
 			paramsStr += " " ;
 		}
-		// Append the parameter in the string
-		paramsStr += paramAttrs[0] + "=" + paramAttrs[1] ;
+		// Append the parameter
+		paramsStr += paramName + "=" + paramValue ;
 	}
 	return 0 ;
 }
