@@ -114,18 +114,15 @@ solveSubmitJob(diet_profile_t* pb) {
 		dagda_get_container(IDContainer);
 		dagda_get_container_elements(IDContainer, &fileContainer);
 
-		std::cout << "ID Container 0" << IDContainer <<std::endl ;
+		std::cout << "ID Container 0" << IDContainer << " size : "  << fileContainer.size <<std::endl ;
 
 		std::string fParamsStr = submitOptions->getFileParams() ;
 		ListStrings fParamsVec ;
 		boost::split(fParamsVec, fParamsStr, boost::is_any_of(" ")) ;
 
-		for(int i =0 ; i < fileContainer.size; i++) {
-			size_t pos  ;
-			string filePath ;
-			char* defaultPath  = NULL ;
-
-			pos = fParamsVec[i].find("=") ;
+		for(int i = 0 ; i < fileContainer.size; i++) {
+			size_t pos  ;  string filePath ; char* defaultPath  = NULL ;
+			pos = fParamsVec[i].find("=") ;  if(pos == std::string::npos) continue ;
 			filePath =  fParamsVec[i].substr(0, pos) ;
 			dagda_get_file(fileContainer.elt_ids[i], &defaultPath);
 			vishnu::boostMoveFile(std::string(defaultPath), "/tmp", filePath.c_str());
