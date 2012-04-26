@@ -342,36 +342,6 @@ validateParameters(const boost::shared_ptr<Options> & opt,
 		const std::vector<std::string> & paramsVector,
 		const bool & isOfFileType = false);
 
-
-/**
- * \brief Function to set a string with the content of a binary file
- * \param strContent: content of the file filePath in string
- * \param filePath: the path to the file
- * \return The number of characters appended in the string, exception is thrown on error
- */
-size_t
-binaryFile2String(std::string & strContent, const std::string& filePath);
-
-/**
- * \brief Function to append the content of a binary file in a string
- * \param strContent: content of the file filePath in string
- * \param filePath: the path to the file
- * \param pos : position from which the file will be appended
- * \return The number of characters appended in the string, exception is thrown on error
- */
-size_t
-appendBinaryFile2String(std::string & strContent, const std::string& filePath, const size_t & pos);
-
-
-/**
- * \brief Function
- * \param contents: a string representing the contents of file separed by the sequence "^===^"
- * \param paramsStr : a string containing the list of supplied file parameters
- * \return Throw exception on error
- */
-void
-createParamFiles(const std::string & contents, const std::string& paramsStr);
-
 } //END NAMESPACE
 
 
