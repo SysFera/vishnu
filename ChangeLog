@@ -1,3 +1,6 @@
+* Change IMS API to set optional parameters as const ref
+* Change Python API to use real python list
+
 +--------------+
 | VISHNU 1.4.0 |
 +--------------+

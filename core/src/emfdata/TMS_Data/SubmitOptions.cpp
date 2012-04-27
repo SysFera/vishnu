@@ -475,32 +475,6 @@ void SubmitOptions::setTextParams(::ecore::EString const& _textParams)
 #endif
 }
 
-::ecore::EString const& SubmitOptions::getFileContents() const
-{
-    return m_fileContents;
-}
-
-void SubmitOptions::setFileContents(::ecore::EString const& _fileContents)
-{
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_fileContents = m_fileContents;
-#endif
-    m_fileContents = _fileContents;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__fileContents(),
-                _old_fileContents,
-                m_fileContents
-        );
-        eNotify(&notification);
-    }
-#endif
-}
-
 // References
 ::TMS_Data::LoadCriterion_ptr SubmitOptions::getCriterion()
 {

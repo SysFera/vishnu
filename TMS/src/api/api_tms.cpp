@@ -64,6 +64,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 	boost::trim(fileParamsStr) ; //TODO BUG when empty list
 	boost::split(fileParamsVec, fileParamsStr, boost::is_any_of(" "), boost::token_compress_on) ;
 
+/* TODO remove?
 	std::string fileContents ;
 	size_t pos = 0 ;
 
@@ -81,11 +82,10 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 		fileContents+= '=' ;
 		fileContents+= '^' ;
 	}
+*/
 
-	SubmitOptions& optionsRef = const_cast<SubmitOptions&>(options) ;
-	optionsRef.setFileContents(fileContents) ;
 
-	int ret = jobProxy.submitJob(scriptContent, optionsRef);
+	int ret = jobProxy.submitJob(scriptContent, options);
 	jobInfo = jobProxy.getData();
 	return ret;
 }
