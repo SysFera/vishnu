@@ -37,7 +37,7 @@ namespace vishnu {
   exportCommands(const string sessionKey,
 		 const string oldSessionId,
 		 string filename,
-		 const IMS_Data::ExportOp& op = IMS_Data::ExportOp())
+		 IMS_Data::ExportOp op)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
   /**
@@ -52,7 +52,7 @@ namespace vishnu {
   getMetricCurrentValue(const string sessionKey,
 			string machineId,
 			IMS_Data::ListMetric& val,
-			const IMS_Data::CurMetricOp& op = IMS_Data::CurMetricOp())
+			IMS_Data::CurMetricOp op)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
   /**
@@ -67,7 +67,7 @@ namespace vishnu {
   getMetricHistory(const string sessionKey,
 		   string machineId,
 		   IMS_Data::ListMetric& list,
-		   const IMS_Data::MetricHistOp& op = IMS_Data::MetricHistOp())
+		   IMS_Data::MetricHistOp op)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
   /**
@@ -80,7 +80,7 @@ namespace vishnu {
   int
   getProcesses(const string sessionKey,
 	       IMS_Data::ListProcesses& list,
-	       const IMS_Data::ProcessOp& op = IMS_Data::ProcessOp())
+	       IMS_Data::ProcessOp op)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
   /**
@@ -115,7 +115,7 @@ namespace vishnu {
   int
   getSystemThreshold(const string sessionKey,
 		     IMS_Data::ListThreshold& list,
-		     const IMS_Data::ThresholdOp& op = IMS_Data::ThresholdOp())
+		     IMS_Data::ThresholdOp op)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
   /**
@@ -228,7 +228,7 @@ namespace vishnu {
   int
   getSystemInfo(const string sessionKey,
 		IMS_Data::ListSysInfo& list,
-		const IMS_Data::SysInfoOp& op = IMS_Data::SysInfoOp())
+		IMS_Data::SysInfoOp op)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
   /**
@@ -241,7 +241,7 @@ namespace vishnu {
   int
   restart(const string sessionKey,
 	  string machineId,
-	  const IMS_Data::RestartOp& op = IMS_Data::RestartOp())
+	  IMS_Data::RestartOp op)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
 }//END namespace vishnu
