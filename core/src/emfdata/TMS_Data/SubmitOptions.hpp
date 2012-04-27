@@ -224,39 +224,6 @@ namespace TMS_Data
          **/
         void setSelectQueueAutom(::ecore::EBoolean _selectQueueAutom);
 
-        /**
-         * \brief To get the fileParams
-         * \return The fileParams attribute value
-         **/
-        ::ecore::EString const& getFileParams() const;
-        /**
-         * \brief To set the fileParams
-         * \param _fileParams The fileParams value
-         **/
-        void setFileParams(::ecore::EString const& _fileParams);
-
-        /**
-         * \brief To get the textParams
-         * \return The textParams attribute value
-         **/
-        ::ecore::EString const& getTextParams() const;
-        /**
-         * \brief To set the textParams
-         * \param _textParams The textParams value
-         **/
-        void setTextParams(::ecore::EString const& _textParams);
-
-        /**
-         * \brief To get the fileContents
-         * \return The fileContents attribute value
-         **/
-        ::ecore::EString const& getFileContents() const;
-        /**
-         * \brief To set the fileContents
-         * \param _fileContents The fileContents value
-         **/
-        void setFileContents(::ecore::EString const& _fileContents);
-
         // References
         /**
          * \brief To get the criterion
@@ -318,12 +285,6 @@ namespace TMS_Data
         ::ecore::EString m_cpuTime;
 
         ::ecore::EBoolean m_selectQueueAutom;
-
-        ::ecore::EString m_fileParams;
-
-        ::ecore::EString m_textParams;
-
-        ::ecore::EString m_fileContents;
 
         // References
 

@@ -149,24 +149,6 @@ void SubmitOptions::_initialize()
         _any = static_cast< ::ecore::EObject* > (m_criterion);
     }
         return _any;
-    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILEPARAMS:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_fileParams);
-    }
-        return _any;
-    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__TEXTPARAMS:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_textParams);
-    }
-        return _any;
-    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILECONTENTS:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_fileContents);
-    }
-        return _any;
 
     }
     throw "Error";
@@ -270,24 +252,6 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
         ::TMS_Data::SubmitOptions::setCriterion(_t1);
     }
         return;
-    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILEPARAMS:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_fileParams);
-    }
-        return;
-    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__TEXTPARAMS:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_textParams);
-    }
-        return;
-    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILECONTENTS:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_fileContents);
-    }
-        return;
 
     }
     throw "Error";
@@ -337,15 +301,6 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
         return m_selectQueueAutom != false;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CRITERION:
         return m_criterion;
-    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILEPARAMS:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_fileParams);
-    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__TEXTPARAMS:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_textParams);
-    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILECONTENTS:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_fileContents);
 
     }
     throw "Error";
