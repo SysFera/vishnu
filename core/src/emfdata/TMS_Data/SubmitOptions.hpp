@@ -246,17 +246,6 @@ namespace TMS_Data
          **/
         void setTextParams(::ecore::EString const& _textParams);
 
-        /**
-         * \brief To get the fileContents
-         * \return The fileContents attribute value
-         **/
-        ::ecore::EString const& getFileContents() const;
-        /**
-         * \brief To set the fileContents
-         * \param _fileContents The fileContents value
-         **/
-        void setFileContents(::ecore::EString const& _fileContents);
-
         // References
         /**
          * \brief To get the criterion
@@ -322,8 +311,6 @@ namespace TMS_Data
         ::ecore::EString m_fileParams;
 
         ::ecore::EString m_textParams;
-
-        ::ecore::EString m_fileContents;
 
         // References
 

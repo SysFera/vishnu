@@ -733,133 +733,26 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 	paramsStr = "" ; // Reinitialization for outpout
 	for(ListStrings::iterator it = paramsVecBuffer.begin(); it != paramsVecBuffer.end() ; it++) {
 
-		ListStrings paramAttrs ;
-		boost::split(paramAttrs, *it , boost::is_any_of("="));
-		if(paramAttrs.size() != 2) {
-			std::cerr << "Wrong definition of the parameter : '" << *it << "'"<< std::endl ;
+		size_t pos = (*it).find("=") ;
+		if( pos == 0 || pos == std::string::npos || pos == (*it).size() - 1 ){
+			std::cerr << "Uncompleted definition for the parameter : '" << *it << "'"<< std::endl ;
 			return CLI_ERROR_INVALID_PARAMETER;
 		}
-		boost::to_upper(paramAttrs[0]) ;  //Cast the parameter name to upper case
+
+		std::string paramName = boost::to_upper_copy((*it).substr(0, pos)) ; // Keep the parameter name in upper case
+		std::string paramValue = (*it).substr(pos+1, std::string::npos) ;
 
 		// Check whether the parameter is duplicate
 		if( paramsStr.size() != 0) {
-			if( paramsStr.find(paramAttrs[0] ) != std::string::npos){
-				std::cerr << "Duplicate parameter : '" << paramAttrs[0] << "'"<< std::endl ;
+			if( paramsStr.find(paramName ) != std::string::npos){
+				std::cerr << "Duplicate parameter : '" << paramName << "'"<< std::endl ;
 				return CLI_ERROR_INVALID_PARAMETER ;
 			}
 			paramsStr += " " ;
 		}
-		// Append the parameter in the string
-		paramsStr += paramAttrs[0] + "=" + paramAttrs[1] ;
+		// Append the parameter
+		paramsStr += paramName + "=" + paramValue ;
 	}
 	return 0 ;
 }
 
-
-
-/**
- * \brief Simple function to read the content of a binary file
- * \param strContent: content of the file filePath in string
- * \param filePath: the path to the file
- * \return The number of characters appended in the string, exception is thrown on error
- */
-size_t
-vishnu::binaryFile2String(std::string & strContent, const std::string& filePath){
-
-	FILE* file = fopen (filePath.c_str() , "rb" );
-
-	if (file==NULL) { throw UserException(ERRCODE_FILENOTFOUND, "can not read the file : " + filePath); }
-
-	fseek (file , 0 , SEEK_END);
-	size_t fSize = ftell (file);
-	rewind (file);
-
-	char * buffer = (char*) malloc (sizeof(char)*fSize);
-	if (buffer == NULL) {throw UserException(ERRCODE_INVALID_PARAM, "file is two big to fit in memory : " + filePath);}
-
-	int nbRead = fread (buffer , 1, fSize , file);
-	if ( nbRead != fSize) {throw UserException(ERRCODE_INVALID_PARAM, "Error while reading the file : " + filePath);}
-
-	strContent.clear() ;
-	for(size_t i = 0; i < fSize ; i++){  strContent[i] = buffer[i] ;}
-
-	free(buffer) ;
-
-	fclose(file) ;
-
-	return fSize ;
-}
-
-/**
- * \brief Simple function to read the content of a binary file
- * \param strContent: content of the file filePath in string
- * \param filePath: the path to the file
- * \param pos : position from which the file will be appended
- * \return The number of characters appended in the string, exception is thrown on error
- */
-size_t
-vishnu::appendBinaryFile2String(std::string & strContent, const std::string& filePath, const size_t & pos){
-
-	FILE* file = fopen (filePath.c_str() , "rb" );
-
-	if (file==NULL) { throw UserException(ERRCODE_FILENOTFOUND, "can not read the file : " + filePath); }
-
-	fseek (file , 0 , SEEK_END);
-	size_t fSize = ftell (file);
-	rewind (file);
-
-	char * buffer = (char*) malloc (sizeof(char)*fSize);
-	if (buffer == NULL) {throw UserException(ERRCODE_INVALID_PARAM, "file is two big to fit in memory : " + filePath);}
-
-	int nbRead = fread (buffer , 1, fSize , file);
-	if ( nbRead != fSize) {throw UserException(ERRCODE_INVALID_PARAM, "Error while reading the file : " + filePath);}
-
-	for(size_t i = 0; i < fSize ; i++){
-		strContent += buffer[i] ;
-	}
-
-	free(buffer) ;
-
-	fclose(file) ;
-
-	return fSize ;
-}
-
-/**
- * \brief Function
- * \param contents: a string representing the contents of file separed by the sequence "^===^"
- * \param paramsStr : a string containing the list of supplied file parameters
- * \return Throw exception on error
- */
-void
-vishnu::createParamFiles(const std::string & contents, const std::string& paramsStr){
-
-	ListStrings paramsVec ;
-	boost::split(paramsVec, paramsStr, boost::is_any_of(" ")) ;
-
-	const size_t LIMIT =  contents.size() - 4 ;
-	size_t pos = 0 ;
-	for(ListStrings::const_iterator it = paramsVec.begin(); it != paramsVec.end(); it++){
-
-		ListStrings attrs ;
-		boost::split(attrs, *it, boost::is_any_of("=")) ;
-		FILE * file  = fopen (("/tmp/" + attrs[0]).c_str() , "wb");
-
-		while( pos <= LIMIT ){
-			if( contents[pos] == '^' &&
-					contents[pos+1] == '='&&
-					contents[pos+2] == '='&&
-					contents[pos+3] == '='&&
-					contents[pos+4] == '^' ) {
-				pos+=5 ;
-				break ;
-			} else {
-				size_t nbWrite = fwrite(&contents[pos], 1, 1, file) ;
-				if(nbWrite != 1) { throw UserException(ERRCODE_INVALID_PARAM, "Error writing in a file : ");}
-			}
-
-			pos++ ;
-		}
-		fclose (file);
-	}
-}

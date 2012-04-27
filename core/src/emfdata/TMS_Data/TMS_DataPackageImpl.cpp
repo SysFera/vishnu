@@ -240,11 +240,6 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__TEXTPARAMS);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
             m_SubmitOptions__textParams);
-    m_SubmitOptions__fileContents = new ::ecore::EAttribute();
-    m_SubmitOptions__fileContents->setFeatureID(
-            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILECONTENTS);
-    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
-            m_SubmitOptions__fileContents);
     m_SubmitOptions__criterion = new ::ecore::EReference();
     m_SubmitOptions__criterion->setFeatureID(
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CRITERION);
@@ -1140,20 +1135,6 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__textParams->setUnique(true);
     m_SubmitOptions__textParams->setDerived(false);
     m_SubmitOptions__textParams->setOrdered(true);
-    m_SubmitOptions__fileContents->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_SubmitOptions__fileContents->setName("fileContents");
-    m_SubmitOptions__fileContents->setDefaultValueLiteral("");
-    m_SubmitOptions__fileContents->setLowerBound(0);
-    m_SubmitOptions__fileContents->setUpperBound(1);
-    m_SubmitOptions__fileContents->setTransient(false);
-    m_SubmitOptions__fileContents->setVolatile(false);
-    m_SubmitOptions__fileContents->setChangeable(true);
-    m_SubmitOptions__fileContents->setUnsettable(false);
-    m_SubmitOptions__fileContents->setID(false);
-    m_SubmitOptions__fileContents->setUnique(true);
-    m_SubmitOptions__fileContents->setDerived(false);
-    m_SubmitOptions__fileContents->setOrdered(true);
     m_SubmitOptions__criterion->setEType(m_LoadCriterionEClass);
     m_SubmitOptions__criterion->setName("criterion");
     m_SubmitOptions__criterion->setDefaultValueLiteral("");
@@ -2285,10 +2266,6 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__textParams()
 {
     return m_SubmitOptions__textParams;
-}
-::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__fileContents()
-{
-    return m_SubmitOptions__fileContents;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__jobId()
 {
