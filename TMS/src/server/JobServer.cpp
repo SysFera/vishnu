@@ -125,7 +125,7 @@ int JobServer::submitJob(const std::string& scriptContent,
     scriptContentStr.replace(pos, 1, " ");
     pos = scriptContentStr.find("'");
   }
-
+  
   if(mbatchType==SGE){
     mjob.setOwner(acLogin);
   }
@@ -170,7 +170,9 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
   int status;
   std::vector<std::string> results;
   std::vector<std::string>::iterator  iter;
+  cout << "MachineId =" << mmachineId << endl;
   acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
+  cout << "aclogin =" << acLogin << endl;
   UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
   machine->setMachineId(mmachineId);
   MachineServer machineServer(machine);
@@ -199,7 +201,7 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
     }
   }
 
-
+ 
   boost::scoped_ptr<DatabaseResult> sqlCancelResult(mdatabaseVishnu->getResult(sqlCancelRequest.c_str()));
   if (sqlCancelResult->getNbTuples() != 0){
     for (size_t i = 0; i < sqlCancelResult->getNbTuples(); ++i) {
@@ -228,6 +230,8 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
 
       ++iter;
       batchJobId = *iter;
+       cout << "JobID =" << jobId << endl;
+       cout << "batchJobId =" << jobId << endl;
       mjob.setJobId(batchJobId); //To reset the jobId
 
       ::ecorecpp::serializer::serializer jobSer;
@@ -310,8 +314,8 @@ TMS_Data::Job JobServer::getJobInfo() {
       mjob.setJobDescription(*(++iter));
       mjob.setMemLimit(convertToInt(*(++iter)));
       mjob.setNbNodes(convertToInt(*(++iter)));
-      mjob.setNbNodesAndCpuPerNode(*(++iter));
-      mjob.setBatchJobId(*(++iter));
+      mjob.setNbNodesAndCpuPerNode(*(++iter)); 
+      mjob.setBatchJobId(*(++iter)); 
 
   } else {
     throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);

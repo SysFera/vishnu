@@ -16,7 +16,7 @@ int
 vishnu::exportCommands(const string sessionKey,
 	       const string oldSessionId,
 	       string filename,
-	       const IMS_Data::ExportOp& op)
+	       IMS_Data::ExportOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
 
   boost::filesystem::path file (filename);
@@ -37,7 +37,7 @@ int
 vishnu::getMetricCurrentValue(const string sessionKey,
 			      string machineId,
 			      IMS_Data::ListMetric& list,
-			      const IMS_Data::CurMetricOp& op)
+			      IMS_Data::CurMetricOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
 
   SessionProxy sessionProxy(sessionKey);
@@ -62,9 +62,9 @@ vishnu::getMetricCurrentValue(const string sessionKey,
 
 int
 vishnu::getMetricHistory(const string sessionKey,
-                         string machineId,
-                         IMS_Data::ListMetric& list,
-                         const IMS_Data::MetricHistOp& op)
+		 string machineId,
+		 IMS_Data::ListMetric& list,
+		 IMS_Data::MetricHistOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
 
   SessionProxy sessionProxy(sessionKey);
@@ -93,8 +93,8 @@ vishnu::getMetricHistory(const string sessionKey,
 
 int
 vishnu::getProcesses(const string sessionKey,
-                     IMS_Data::ListProcesses& list,
-                     const IMS_Data::ProcessOp& op)
+	     IMS_Data::ListProcesses& list,
+	     IMS_Data::ProcessOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
 
   SessionProxy sessionProxy(sessionKey);
@@ -150,8 +150,8 @@ vishnu::setSystemThreshold(const string sessionKey,
 
 int
 vishnu::getSystemThreshold(const string sessionKey,
-                           IMS_Data::ListThreshold& list,
-                           const IMS_Data::ThresholdOp& op)
+		   IMS_Data::ListThreshold& list,
+		   IMS_Data::ThresholdOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
 
   //To check the metric value
@@ -277,8 +277,8 @@ vishnu::stop(const string sessionKey,
 
 int
 vishnu::getSystemInfo(const string sessionKey,
-                      IMS_Data::ListSysInfo& list,
-                      const IMS_Data::SysInfoOp& op)
+	      IMS_Data::ListSysInfo& list,
+	      IMS_Data::SysInfoOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
 
   SessionProxy sessionProxy(sessionKey);
@@ -291,8 +291,8 @@ vishnu::getSystemInfo(const string sessionKey,
 
 int
 vishnu::restart(const string sessionKey,
-                string machineId,
-                const IMS_Data::RestartOp& op)
+	string machineId,
+	IMS_Data::RestartOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
 
   SessionProxy sessionProxy(sessionKey);
