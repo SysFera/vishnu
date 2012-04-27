@@ -235,7 +235,7 @@ EMFTYPE(AuthAccount,UMS_Data,getAuthAccounts,ListAuthAccounts, listAuthAccounts,
 // Mapping lists for tms module
 EMFTYPE(Job,TMS_Data,getJobs,ListJobs, listOfJobs, "TMS_Data::Job", TMS_DataFactory, createJob)
 EMFTYPE(Progression,TMS_Data,getProgress,ListProgression, listOfProgress, "TMS_Data::Progression", TMS_DataFactory, createProgression)
-EMFTYPE(Queue,TMS_Data,getQueues,ListQueues, listOfQueues, "TMS_Data::Queue", TMS_DataFactory, createQueue)
+EMFTYPE(Queue,TMS_Data,getQueues,ListQueues, listofQueues, "TMS_Data::Queue", TMS_DataFactory, createQueue)
 EMFTYPE(JobResult,TMS_Data,getResults,ListJobResults, listOfResults, "TMS_Data::JobResult", TMS_DataFactory, createJobResult)
 
 
