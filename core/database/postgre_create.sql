@@ -13,7 +13,7 @@
 -- Revision author      : Benjamin Isnard <benjamin.isnard@sysfera.com>
 -- Revision comment     : release of FMS and IMS modules
 
--- Revision nb          : 1.2.8
+-- Revision nb          : 1.3
 -- Revision date        : 02/02/12
 -- Revision author      : Kevin Coulomb <kevin.coulomb@sysfera.com>
 -- Revision comment     : Add auth System
