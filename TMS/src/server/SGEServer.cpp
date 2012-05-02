@@ -62,11 +62,10 @@ SGEServer::submit(const char* scriptPath,
 
   
   drmaa_job_template_t *jt = NULL;
-  int ret;
-  int retries = 0;
-  int VISHNU_MAX_RETRIES = 5;
   char diagnosis[DRMAA_ERROR_STRING_BUFFER];
   int drmaa_errno;
+  int retries = 0;
+  int VISHNU_MAX_RETRIES = 5;
   char jobid[100];
   char jobOutputPath[256] ;
   char jobErrorPath[256];
@@ -203,9 +202,13 @@ SGEServer::submit(const char* scriptPath,
   //To submit the job
   while ((drmaa_errno=drmaa_run_job(jobid, sizeof(jobid)-1, jt, diagnosis,
                sizeof(diagnosis)-1)) == DRMAA_ERRNO_DRM_COMMUNICATION_FAILURE) {
-    
-         cout<<"[drmaa_run_job DRM Comunication Failure] " << diagnosis << endl;
-         sleep(1);
+    cout<<"[drmaa_run_job DRM Comunication Failure] " << diagnosis << endl;
+    retries++;
+    if(retries == VISHNU_MAX_RETRIES){
+      drmaa_exit(NULL, 0);
+      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: Submit retries over");
+    }
+    sleep(1);
   
   }
       
@@ -218,11 +221,7 @@ SGEServer::submit(const char* scriptPath,
   }   
   
   int size=256;
-  char jobid_out[DRMAA_JOBNAME_BUFFER];
-  int status = 0;
-  drmaa_attr_values_t *rusage = NULL;
-  int errnum = 0;
-  char usage[DRMAA_ERROR_STRING_BUFFER];
+  
   
   drmaa_errno = drmaa_get_attribute(jt,DRMAA_ERROR_PATH,jobErrorPath, size,diagnosis, sizeof(diagnosis)-1);
 
@@ -342,13 +341,9 @@ SGEServer::getJobStartTime(const std::string& jobId) {
 
 
   time_t startTime = 0;
-  int status = 0;
   int state=-1;
   size_t pos;   
-  drmaa_attr_values_t *rusage = NULL;
-  char jobid_out[DRMAA_JOBNAME_BUFFER];
   char diagnosis[DRMAA_ERROR_STRING_BUFFER];
-  char usage[DRMAA_ERROR_STRING_BUFFER];
   int drmaa_errno;
 
   drmaa_errno = drmaa_init(NULL, diagnosis, sizeof(diagnosis)-1);
@@ -431,7 +426,7 @@ SGEServer::listQueues(const std::string& optqueueName) {
   vector<std::string>::iterator it;
   
   
-  for ( it=queueNames.begin() ; it < queueNames.end(); it++ ){
+  for ( it=queueNames.begin() ; it < queueNames.end(); ++it ){
 
     args.push_back((*it).c_str());
     boost::process::child c1 = boost::process::create_child(exe, args, ctx);
