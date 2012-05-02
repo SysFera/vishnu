@@ -744,9 +744,13 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 
 		// Check whether the parameter is duplicate
 		if( paramsStr.size() != 0) {
-			if( paramsStr.find(paramName ) != std::string::npos){
-				std::cerr << "Duplicate parameter : '" << paramName << "'"<< std::endl ;
-				return CLI_ERROR_INVALID_PARAMETER ;
+			size_t start = 0 ;
+			while( pos = paramsStr.find(paramName+"=", start), pos != std::string::npos ){
+				if( pos == 0 || paramsStr[pos-1] == char(' ') ) {
+					std::cerr << "Duplicate parameter : '" << paramName << "'"<< std::endl ;
+					return CLI_ERROR_INVALID_PARAMETER ;
+				}
+				start = pos + paramName.size() ;
 			}
 			paramsStr += " " ;
 		}

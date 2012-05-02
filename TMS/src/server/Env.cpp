@@ -145,33 +145,67 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
 }
 
 /**
- * \brief Function to set textual parameter appearing in a string
+ * \brief function to set parameters appearing in a script
  * \param scriptContent The string to modify
- * \param textParams list of textual parameters in the form of PARAM1="value1" PARAM2="value2" ...
- * \param fileParams list of file parameters in the form of FILE1="/path/to/file1"  FILE2="/path/to/file2" ...
+ * \param \param params a list of parameters in the form of PARAM1=value1  PARAM2=value2 ...
  */
-void Env::setParameters(std::string& scriptContent, const std::string& textParams, const std::string& fileParams){
+void Env::setParams(std::string& scriptContent, const std::string & params) {
 
-	ListStrings paramsVec ;
-	if( textParams.size() != 0 ) {
-		/* Set textual parameters if there exist */
-		boost::split(paramsVec, textParams, boost::is_any_of(" ")) ;
-		for(ListStrings::const_iterator it = paramsVec.begin(); it != paramsVec.end(); it++){
-			ListStrings attrs ;
-			boost::split(attrs, *it, boost::is_any_of("=")) ;
-			replaceAllOccurences(scriptContent, "$" + attrs[0], attrs[1]) ;
-			replaceAllOccurences(scriptContent, "${" + attrs[0] + "}", attrs[1]) ;
+	std::string param ;
+	std::string paramName ;
+	std::string paramValue ;
+	size_t pos, pos1, pos2 ;
+
+	pos1 = 0;
+	pos2 = params.find(" ") ;
+	while(pos2 != std::string::npos) {
+		param = params.substr(pos1, pos2) ;
+		pos = param.find("=");
+		if(pos != std::string::npos ) {
+			paramName = param.substr(0, pos) ;
+			paramValue = param.substr(pos+1, std::string::npos) ;
+			replaceAllOccurences(scriptContent, "$" + paramName, paramValue) ;
+			replaceAllOccurences(scriptContent, "${" + paramName + "}", paramValue) ;
 		}
+		pos1 = pos2 ;
+		pos2 = params.find(" ", pos1) ;
 	}
-
-	/* Set file parameters if there exist*/
-	if( fileParams.size() != 0) {
-		boost::split(paramsVec, fileParams, boost::is_any_of(" ")) ;
-		for(ListStrings::const_iterator it = paramsVec.begin(); it != paramsVec.end(); it++){
-			ListStrings attrs ;
-			boost::split(attrs, *it, boost::is_any_of("=")) ;
-			replaceAllOccurences(scriptContent, "$" + attrs[0], "/tmp/" + attrs[0]) ;
-			replaceAllOccurences(scriptContent, "${" + attrs[0] + "}", "/tmp/" + attrs[0]) ;
-		}
+	param = params.substr(pos1, std::string::npos) ; //last token
+	pos = param.find("=");
+	if(pos != std::string::npos ) {
+		paramName = param.substr(0, pos) ;
+		paramValue = param.substr(pos+1, std::string::npos) ;
+		replaceAllOccurences(scriptContent, "$" + paramName, paramValue) ;
+		replaceAllOccurences(scriptContent, "${" + paramName + "}", paramValue) ;
 	}
 }
+
+/**
+ * \brief Function to set environment variables accordinf to parameters
+ * \param params a list of parameters in the form of PARAM1=value1  PARAM2=value2 ...
+ */
+void Env::setParamsEnvVars(const std::string& params) {
+
+	std::string param ;
+	size_t pos, pos1, pos2 ;
+
+	pos1 = 0;
+	pos2 = params.find(" ") ;
+	while(pos2 != std::string::npos) {
+		param = params.substr(pos1, pos2) ;
+		pos = param.find("=");
+		if(pos != std::string::npos ) {
+			setenv(param.substr(0, pos).c_str(), param.substr(pos+1, std::string::npos).c_str(), 1) ;
+		}
+		pos1 = pos2 ;
+		pos2 = params.find(" ", pos1) ;
+	}
+	param = params.substr(pos1, std::string::npos) ; //last token
+	pos = param.find("=");
+	if(pos != std::string::npos ) {
+		setenv(param.substr(0, pos).c_str(), param.substr(pos+1, std::string::npos).c_str(), 1) ;
+	}
+}
+
+
+
