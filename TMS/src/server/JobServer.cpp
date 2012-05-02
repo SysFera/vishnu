@@ -58,10 +58,13 @@ int JobServer::submitJob(const std::string& scriptContent,
 	delete machine;
 
 	Env env(mbatchType);
-	env.replaceEnvVariables(const_cast<std::string&>(scriptContent));
-	env.replaceAllOccurences(const_cast<std::string&>(scriptContent), "$VISHNU_SUBMIT_MACHINE_NAME", machineName);
-	env.replaceAllOccurences(const_cast<std::string&>(scriptContent), "${VISHNU_SUBMIT_MACHINE_NAME}", machineName);
-	env.setParameters(const_cast<std::string&>(scriptContent), options.getTextParams(), options.getFileParams()) ;
+	std::string& scriptContentRef = const_cast<std::string&>(scriptContent) ;
+	env.replaceEnvVariables(scriptContentRef);
+	env.replaceAllOccurences(scriptContentRef, "$VISHNU_SUBMIT_MACHINE_NAME", machineName);
+	env.replaceAllOccurences(scriptContentRef, "${VISHNU_SUBMIT_MACHINE_NAME}", machineName);
+
+	if(options.getTextParams().size()) env.setParams(scriptContentRef, options.getTextParams()) ;
+	if(options.getFileParams().size()) env.setParams(scriptContentRef, options.getFileParams()) ;
 
 	std::string jobSerialized ;
 	std::string submitOptionsSerialized;
@@ -72,20 +75,15 @@ int JobServer::submitJob(const std::string& scriptContent,
 	scriptPath = strdup("/tmp/job_scriptXXXXXX");
 
 	std::string convertedScript;
-	boost::shared_ptr<ScriptGenConvertor> scriptConvertor(vishnuScriptGenConvertor(mbatchType, scriptContent));
+	boost::shared_ptr<ScriptGenConvertor> scriptConvertor(vishnuScriptGenConvertor(mbatchType, scriptContentRef));
 	if(scriptConvertor->scriptIsGeneric()) {
 		std::string genScript = scriptConvertor->getConvertedScript();
 		convertedScript = genScript;
 	} else {
-		convertedScript = scriptContent;
+		convertedScript = scriptContentRef;
 	}
-
 	vishnu::createTmpFile(scriptPath, convertedScript);
 
-	//TODO Create parameters files
-/*	if( options.getFileParams().size()){
-		vishnu::createParamFiles(fileContents, options.getFileParams());
-	}*/
 	submitOptionsSerialized = optSer.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
 	jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 

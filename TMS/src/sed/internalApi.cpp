@@ -118,19 +118,25 @@ solveSubmitJob(diet_profile_t* pb) {
 		ListStrings fParamsVec ;
 		boost::split(fParamsVec, fParamsStr, boost::is_any_of(" ")) ;
 		std::ostringstream fParamsBuf("") ;
-		for(int i = 0 ; i < fileContainer.size; i++) {
+		// Get all file from the container
+		for(unsigned int i = 0 ; i < fileContainer.size; i++) {
 			size_t pos  ;  string filePath ; char* defaultPath  = NULL ;
 
 			pos = fParamsVec[i].find("=") ;  if(pos == std::string::npos) continue ;
-			filePath =  mktemp( strdup("PFILE-XXXXXX")) ;
+			filePath =  mktemp(strdup("PFILE-XXXXXX")) ;
 
 			dagda_get_file(fileContainer.elt_ids[i], &defaultPath);
 			vishnu::boostMoveFile(std::string(defaultPath), "/tmp/", filePath);
 
 			if(fParamsBuf.str().size() != 0) fParamsBuf << " " ;
 			fParamsBuf << fParamsVec[i].substr(0, pos) << "=" << filePath ;
+			std::cout <<fParamsBuf.str() << std::endl;
+			if(defaultPath) free(defaultPath) ;
 		}
-		submitOptions->setFileParams(fParamsBuf.str()) ; //Update file parameter with suitable file path
+		// Clean the container
+        for(unsigned int i = 0; i < fileContainer.size; i++) dagda_delete_data(fileContainer.elt_ids[i]);
+
+		submitOptions->setFileParams(fParamsBuf.str()) ; //Update file parameters with the corresponding paths on the server
 
 		JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
 		int vishnuId = ServerTMS::getInstance()->getVishnuId();

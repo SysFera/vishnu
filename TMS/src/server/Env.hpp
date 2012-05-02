@@ -42,12 +42,17 @@ public:
 	void replaceEnvVariables(std::string& scriptContent);
 
 	/**
-	 * \brief Function to set textual parameter appearing in a string
+	 * \brief function to set parameters appearing in a script
 	 * \param scriptContent The string to modify
-	 * \param textParams list of textual parameters in the form of PARAM1="value1" PARAM2="value2" ...
-	 * \param fileParams list of file parameters in the form of FILE1="/path/to/file1"  FILE2="/path/to/file2" ...
+	 * \param \param params a list of parameters in the form of PARAM1=value1  PARAM2=value2 ...
 	 */
-	void setParameters(std::string& scriptContent, const std::string& textParams, const std::string& fileParams);
+	void setParams(std::string& scriptContent, const std::string& params) ;
+
+	/**
+	 * \brief Function to set environment variables accordinf to parameters
+	 * \param params a list of parameters in the form of PARAM1=value1  PARAM2=value2 ...
+	 */
+	static void setParamsEnvVars(const std::string& params) ;
 
 private:
 
