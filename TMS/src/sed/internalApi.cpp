@@ -130,7 +130,6 @@ solveSubmitJob(diet_profile_t* pb) {
 
 			if(fParamsBuf.str().size() != 0) fParamsBuf << " " ;
 			fParamsBuf << fParamsVec[i].substr(0, pos) << "=" << filePath ;
-			std::cout <<fParamsBuf.str() << std::endl;
 			if(defaultPath) free(defaultPath) ;
 		}
 		// Clean the container
@@ -141,6 +140,7 @@ solveSubmitJob(diet_profile_t* pb) {
 		JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
 		int vishnuId = ServerTMS::getInstance()->getVishnuId();
 		std::string slaveDirectory = ServerTMS::getInstance()->getSlaveDirectory();
+
 		jobServer.submitJob(script_content, *submitOptions, vishnuId, slaveDirectory);
 		*job = jobServer.getData();
 
