@@ -6,11 +6,11 @@ import sys
 
 
 def displayQueue (q):
-  for i in range(q.getNbQueues()):
+  for i in range(len(q[1])):
     print "Queue number ", i,":"
-    print "Queue name ", q.getQueues().get(i).getName()
-    print "Queue memory ", q.getQueues().get(i).getMemory()
-    print "Queue desc ", q.getQueues().get(i).getDescription()
+    print "Queue name ", q[1][i].getName()
+    print "Queue memory ", q[1][i].getMemory()
+    print "Queue desc ", q[1][i].getDescription()
 
 def displayJob(j, pos):
     print "jobinfo", pos,":"
@@ -21,11 +21,11 @@ def displayJob(j, pos):
     print "machine id", j.getSubmitMachineId()
 
 def displayProg(li):
-  for i in range(li.getNbJobs()):
+  for i in range(len(li[1])):
     print "progress number ", i, ":"
-    print "progress jib", li.getProgress().get(i).getJobId()
-    print "progress jname", li.getProgress().get(i).getJobName()
-    print "progress jpercent", li.getProgress().get(i).getPercent()
+    print "progress jib", li[1][i].getJobId()
+    print "progress jname", li[1][i].getJobName()
+    print "progress jpercent", li[1][i].getPercent()
 
 def displayOut(jr):
   print "JobId: ", jr.getJobId()
@@ -33,13 +33,13 @@ def displayOut(jr):
   print "error: ", jr.getErrorPath()
 
 def displayComp(lijr):
-  for i in range(lijr.getNbJobs()):
-    displayOut(lijr.getResults().get(i))
+  for i in range(len(lijr[1])):
+    displayOut(lijr[1][i])
     print " "
 
 def displayListJ(lij):
-  for i in range(lij.getNbJobs()):
-    displayJob(lij.getJobs().get(i), i)
+  for i in range(len(lij[1])):
+    displayJob(lij[1][i], i)
     print " "
 
 VISHNU.vishnuInitialize(os.getenv("VISHNU_CONFIG_FILE"))
@@ -70,22 +70,23 @@ if len(sys.argv) > 3:
 sess = VISHNU.Session()
 r = VISHNU.connect("root", "vishnu_user", sess)
 k = sess.getSessionKey()
-q = VISHNU.ListQueues()
+#q = VISHNU.ListQueues()
+q = []
 opp = VISHNU.ProgressOptions()
-li = VISHNU.ListProgression()
+#li = VISHNU.ListProgression()
 jr = VISHNU.JobResult()
-lijr = VISHNU.ListJobResults()
+#lijr = VISHNU.ListJobResults()
 out = "/tmp"
-lij = VISHNU.ListJobs()
+#lij = VISHNU.ListJobs()
 opj = VISHNU.ListJobsOptions()
 
 try :
   VISHNU.submitJob(k, mid, path, j, op)
-  VISHNU.listJobs(k, mid, lij, opj)
-  VISHNU.listQueues(k, mid, q)
+  lij = VISHNU.listJobs(k, mid, opj)
+  q = VISHNU.listQueues(k, mid)
   VISHNU.getJobInfo(k, mid, j.getJobId(), j)
   time.sleep(5)
-  VISHNU.getJobProgress(k, mid, li, opp)
+  li = VISHNU.getJobProgress(k, mid, opp)
   #status = 5 => TERMINATED
   print "waiting for job completion..."
   while j.getStatus() < 5:
@@ -94,35 +95,36 @@ try :
   print "*****status=", j.getStatus()
 
   VISHNU.getJobOutput(k, mid, j.getJobId(), jr, out)
-  #VISHNU.getCompletedJobsOutput(k, mid, lijr, out)
+  lijr = VISHNU.getCompletedJobsOutput(k, mid, out)
   VISHNU.submitJob(k, mid, path, j, op)
-  VISHNU.cancelJob(k, mid, j.getJobId())
+  VISHNU.cancelJob(k, mid, j.getJobId()) 
 
   print "@@@@@@@ List of queues @@@@@@@"
   displayQueue(q)
   print "@@@@@@@ job information @@@@@@"
   displayJob(j,0)
   print "@@@@@@@ List of jobs progression @@@@@@"
-  if li.getNbJobs() > 0:
+  if len(li[1]) > 0:
     displayProg(li)
   print "@@@@@@@ Result of job @@@@@@@@@@@@@"
   displayOut(jr)
   print "@@@@@@@ List of completed jobs @@@@@@@@@"
-  if lijr.getNbJobs() > 0:
+  if len(lijr[1]) > 0:
     displayComp(lijr)
   print "@@@@@@@@@ List of jobs @@@@@@@@@@"
-  if lij.getNbJobs() > 0:
+  if len(lij[1]) > 0:
     displayListJ(lij)
 
   VISHNU.submitJob(k, mid, path, j, op)
+  print "submit job on machine named : ", mid2
   VISHNU.submitJob(k, mid2, path, j, op)
   ALL="all"
-  allJobs=VISHNU.ListJobs()
-  VISHNU.listJobs(k, ALL, allJobs, opj)
+  #allJobs=VISHNU.ListJobs()
+  allJobs = VISHNU.listJobs(k, ALL, opj)
   print "@@@@@@@@@ List of jobs on all machines @@@@@@@@@@"
-  if allJobs.getNbJobs() > 0:
+  if len(allJobs[1]) > 0:
     displayListJ(allJobs)
- 
+  
   AUTOM="autom"
   VISHNU.submitJob(k, mid, waitingScriptPath, j1, op)
   VISHNU.submitJob(k, mid, waitingScriptPath, j2, op)
