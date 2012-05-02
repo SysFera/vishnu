@@ -3,7 +3,7 @@
 -- Script owner         : SysFera SA
 
 -- REVISIONS
--- Revision nb          : 1.2.8
+-- Revision nb          : 1.3.0
 -- Revision date        : 02/02/12
 -- Revision author      : Kevin Coulomb <kevin.coulomb@sysfera.com>
 -- Revision comment     : initial version for upgrade from release 1.2.7 to 1.2.8
