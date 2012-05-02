@@ -6,6 +6,9 @@
 //
 
 #include "DIET_client.h"
+#include <stdio.h>
+#include <string.h>
+#include <iostream>
 
 diet_profile_t*
 diet_profile_alloc(char* name, int IN, int INOUT, int OUT) {
@@ -31,7 +34,7 @@ diet_string_set(diet_arg_t* arg, char* value, int pers){
 int 
 diet_call(diet_profile_t* prof){
   mdcli session ("tcp://localhost:5555", 0);
-  zmsg * request = new zmsg(my_serialize(prof));
+  zmsg * request = new zmsg(my_serialize(prof).c_str());
   zmsg * reply   = session.send(prof->name,request);
   if (reply) {
     delete reply;
@@ -65,10 +68,13 @@ diet_parameter(diet_profile_t* prof, int pos){
 std::string
 my_serialize(diet_profile_t* prof){
   std::string res = "";
-  for (int i = 0; i<(prof->OUT); ++i) {
+  res += std::string(prof->name);
+  res +=  "#";
+  for (int i = 0; i<(prof->OUT)-1; ++i) {
     res += std::string(prof->param[i]);
     res += "#";
   }
+  res += std::string(prof->param[(prof->OUT)-1]);
   return res;
 }
 
@@ -77,13 +83,13 @@ my_deserialize(std::string prof){
   diet_profile_t* res = (diet_profile_t *) malloc(sizeof(diet_profile_t)*1);
   std::vector<int> vec;
 
-  int size;
+  int size, prec, next;
 
   // Getting all the separators
   size_t cpt = 0;
   do{
-    cpt=s.find_first_of("#", cpt);
-    if (cpt ==string::npos){
+    cpt=prof.find_first_of("#", cpt);
+    if (cpt ==std::string::npos){
       break;
     }
     vec.push_back(cpt);
@@ -92,27 +98,28 @@ my_deserialize(std::string prof){
   while ((true));
 
   // All param
-  res->param = (char **)malloc(sizeof(char *)*vec.size);
+  res->param = (char **)malloc(sizeof(char *)*vec.size());
   prec = 0;
   
   // Setting first
-  res->param[0] = (char *)malloc(sizeof(char)*(vec.at(0)));
-  memcpy(res->param[0], prof.substr(prec, vec.at(0)));
-  (res->param[0])[vec.at(0)]='\0';
+  res->name = (char *)malloc(sizeof(char)*(vec.at(0)));
+  memcpy(res->name, prof.substr(prec, vec.at(0)).c_str(), strlen(prof.substr(prec, vec.at(0)).c_str()));
+  (res->name)[vec.at(0)]='\0';
   prec = vec.at(0);
 
   // For each word
-  for (int i = 0;i<vec.size();++i){
+  for (unsigned int i = 0;i<vec.size();++i){
     if (i==vec.size()-1){
       next = prof.size();
     } else {
       next = vec.at(i+1);
     }
     size = (next-vec.at(i)); 
-    res->param[i+1] = (char *)malloc(sizeof(char)*(size));
-    memcpy(res->param[i+1], prof.substr(prec+1, size-1));
-    (res->param[i+1])[size]='\0';
-    prec = vec.at(i+1);
+    res->param[i] = (char *)malloc(sizeof(char)*(size));
+    memcpy(res->param[i], prof.substr(prec+1, size-1).c_str(), strlen(prof.substr(prec+1, size-1).c_str()));
+    (res->param[i])[size]='\0';
+    if(i < vec.size()-1)
+      prec = vec.at(i+1);
   }
   
   return res;
