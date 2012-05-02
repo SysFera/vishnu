@@ -15,7 +15,7 @@ typedef struct diet_profile_t {
   int IN;
   int INOUT;
   int OUT;
-  int name;
+  char* name;
 }diet_profile_t;
 
 typedef struct diet_arg_t {
@@ -43,5 +43,11 @@ diet_profile_free(diet_profile_t* prof);
 diet_arg_t*
 diet_parameter(diet_profile_t* prof, int pos);
 
+
+diet_profile_t*
+my_deserialize(std::string prof);
+
+std::string
+my_serialize(diet_profile_t* prof);
 
 #endif // __DIETMOCK__
