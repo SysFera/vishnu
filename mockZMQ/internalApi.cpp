@@ -8,7 +8,7 @@
 
 #include "internalApi.hpp"
 
-using namespace vishnu;
+//using namespace vishnu;
 
 /**
 * \brief Function to solve the service sessionConnect
