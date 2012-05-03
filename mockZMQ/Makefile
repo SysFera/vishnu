@@ -13,6 +13,6 @@ diet.o	:	DIET_client.c
 
 
 testCallback	: ServerUMSTests.cpp internalApi.cpp ServerUMS.cpp
-		g++ -Wall -g  ServerUMSTests.cpp internalApi.cpp ServerUMS.cpp -o testCallback  -I${ZMQ_INC} -L${ZMQ_LIB}/mdclient.opp -lzmq
+		g++ -Wall -g  ServerUMSTests.cpp internalApi.cpp ServerUMS.cpp -o testCallback  -I${ZMQ_INC} -L${ZMQ_LIB}/mdclient.opp -lzmq 
 
 
