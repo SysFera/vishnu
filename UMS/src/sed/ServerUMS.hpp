@@ -9,21 +9,18 @@
 #define _SERVERUMS_H_
 
 #include <string>
+#include <map>
+#include "DIET_client.h"
+
+using namespace std;
 /**
  * \brief Number of service in UMS
  */
 #define NB_SRV 33
-#include "DIET_server.h"
-#include "UMSMapper.hpp"
-#include "TMSMapper.hpp"
-#include "FMSMapper.hpp"
-#include "IMSMapper.hpp"
-#include "MapperRegistry.hpp"
-#include "DbConfiguration.hpp"
-#include "AuthenticatorConfiguration.hpp"
+#define UNKNOWN_SERVICE 1
 
-class Database;
-class Authenticator;
+typedef int (*functionPtr_t)(diet_profile_t*);
+
 
 static const char* SRV[NB_SRV] = {
   "sessionConnect",//0
@@ -96,10 +93,18 @@ public :
    * \return an error code (0 if success and 1 if an error occurs)
    */
   int
-  init(int vishnuId,
+  init(/*int vishnuId,
        DbConfiguration dbConfig,
        std::string sendmailScriptPath,
-       AuthenticatorConfiguration authenticatorConfig);
+       AuthenticatorConfiguration authenticatorConfig*/);
+
+/**
+ * \brief To call a function upon receiving a request
+ * \param profile The profile of the service
+ * \return the error code of the function
+ */
+int
+call(diet_profile_t* profile);
 
   /**
    * \brief Destructor, raises an exception on error
@@ -108,6 +113,11 @@ public :
   ~ServerUMS();
 
 private :
+/**
+ * \brief Init the ptr function map
+ */
+  void
+  initMap();
 
   /**
    * \brief Constructor, private because class is singleton
@@ -137,30 +147,35 @@ private :
   /**
   * \brief Structure representing a profile description
   */
-  diet_profile_desc_t* mprofile;
+//  diet_profile_desc_t* mprofile;
   /**
   * \brief Instance of Database
   */
-  static Database *mdatabaseVishnu;
+//  static Database *mdatabaseVishnu;
+//  /**
+//  * \brief Instance of UMSMapper
+//  */
+//  static UMSMapper *mmapper;
+//  /**
+//  * \brief Instance of UMSMapper
+//  */
+//  static TMSMapper *mmapperTMS;
+//  /**
+//  * \brief Instance of UMSMapper
+//  */
+//  static FMSMapper *mmapperFMS;
+//  /**
+//  * \brief Instance of UMSMapper
+//  */
+//  static IMSMapper *mmapperIMS;
+//  /**
+//  * \brief Instance of Authenticator
+//  */
+//  static Authenticator *mauthenticator;
   /**
-  * \brief Instance of UMSMapper
-  */
-  static UMSMapper *mmapper;
-  /**
-  * \brief Instance of UMSMapper
-  */
-  static TMSMapper *mmapperTMS;
-  /**
-  * \brief Instance of UMSMapper
-  */
-  static FMSMapper *mmapperFMS;
-  /**
-  * \brief Instance of UMSMapper
-  */
-  static IMSMapper *mmapperIMS;
-  /**
-  * \brief Instance of Authenticator
-  */
-  static Authenticator *mauthenticator;
+   * \brief map with function ptr for callback
+   */
+  std::map<string, functionPtr_t> mcb;
 };
+
 #endif // SERVERUMS

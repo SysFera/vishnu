@@ -5,25 +5,6 @@
 
 using namespace std;
 
-class TestObject
-{
-public: 
-  void testMethod()
-  {
-  }
-}
-
-void testUMSMapFunction()
-{
-  TestObject testobject;
-  
-  map<string,void*> functions;
-  map<string,void*>::iterator it;
-  pair<map<string,void*>::iterator,bool> ret;
-
-  functions.insert("",n
-}
-
 void testDeserializeMethodConnect()
 {
    diet_profile_t* profileDeserialied  = my_deserialize("connect#user1#password1#option1");
@@ -78,10 +59,22 @@ void testSerizalizeMethodConnect()
  
 }
 
+void testFull(){
+  std::string orig = "connect#user1#password1#option1";
+  diet_profile_t* profileDeserialied  = my_deserialize(orig);
+  std::string result = my_serialize(profileDeserialied);
+  if (orig.compare(result)==0) {
+    printf("PASS full deser-ser \n");
+  }else {
+    printf("FAIL deser-ser \n");
+  }
+}
+
 int 
 main(int argc, char** argv)
 {
   testSerizalizeMethodConnect();
   testDeserializeMethodConnect();
+  testFull();
   return EXIT_SUCCESS;
 }
