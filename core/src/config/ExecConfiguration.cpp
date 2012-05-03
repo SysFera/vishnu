@@ -8,6 +8,7 @@
 
 #include "ExecConfiguration.hpp"
 #include "constants.hpp"
+#include <unistd.h>
 
 #define MAXPATHLEN 200   // make this larger if you need to.
 
