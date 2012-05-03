@@ -13,7 +13,7 @@
 #include <sstream>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/classification.hpp>
-
+#include <boost/lexical_cast.hpp>
 
 diet_profile_t*
 diet_profile_alloc(const char* name, int IN, int INOUT, int OUT) {
@@ -86,7 +86,10 @@ diet_parameter(diet_profile_t* prof, int pos){
 std::string
 my_serialize(diet_profile_t* prof){
   std::stringstream res;
-  res << prof->name <<  "#";
+  res << prof->name <<  "#"
+      << prof->IN << "#"
+      << prof->INOUT << "#"
+      << prof->OUT << "#";
   for (int i = 0; i<(prof->OUT)-1; ++i) {
     res << prof->param[i] << "#";
   }
@@ -105,9 +108,11 @@ my_deserialize(std::string prof){
   if (!vecString.empty()) {
     res = new diet_profile_t;
     std::vector<std::string>::iterator it = vecString.begin();
-    res->name = strdup(it->c_str());
-    it++;
-    res->param = (char**)malloc(sizeof(char*) * vecString.size() - 1);
+    res->name = strdup((it++)->c_str());
+    res->IN = boost::lexical_cast<int>(*(it++));
+    res->INOUT = boost::lexical_cast<int>(*(it++));
+    res->OUT = boost::lexical_cast<int>(*(it++));
+    res->param = (char**)malloc(sizeof(char*) * vecString.size() - 4);
     for (int i = 0; it != vecString.end(); it++, i++) {
       res->param[i] = strdup(it->c_str());
     }

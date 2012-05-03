@@ -68,20 +68,20 @@ int ZMQServerStart(boost::scoped_ptr<ServerUMS>* umsserver)
       std::cout << "E: " << error.what() << std::endl;
       return false;
     }
-    std::cerr << "recv: \"" << (unsigned char*) message.data() << "\", size " << message.size() << std::endl;
 
-    std::string data = string((const char *)message.data());
+    std::string data = static_cast<const char *>(message.data());
+    std::cerr << "recv: \"" << data << "\", size " << data.length() << "\n";
 
 
     // Deserialize and call UMS Method
     diet_profile_t* profile  = my_deserialize(data);
     umsserver->get()->call(profile);
-   
+
     // Send reply back to client
     std::string resultSerialized = my_serialize(profile);
-   
-    zmq::message_t reply (resultSerialized.size());
-    memcpy ((void *) reply.data (), resultSerialized.c_str(), resultSerialized.size());
+
+    zmq::message_t reply (resultSerialized.length()+1);
+    memcpy ((void *) reply.data (), resultSerialized.c_str(), resultSerialized.length()+1);
     socket.send (reply);
   }
   return 0;
