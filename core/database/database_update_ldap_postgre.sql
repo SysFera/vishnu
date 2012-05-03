@@ -6,7 +6,7 @@
 -- Revision nb          : 1.3.0
 -- Revision date        : 02/02/12
 -- Revision author      : Kevin Coulomb <kevin.coulomb@sysfera.com>
--- Revision comment     : initial version for upgrade from release 1.2.7 to 1.2.8
+-- Revision comment     : initial version for upgrade from release 1.2.7 to 1.3.0
 
 
 CREATE TABLE authsystem (
@@ -61,5 +61,5 @@ ALTER TABLE vishnu DROP COLUMN usercpt;
 ALTER TABLE vishnu DROP COLUMN machinecpt;
 ALTER TABLE vishnu DROP COLUMN jobcpt;
 ALTER TABLE vishnu DROP COLUMN fileSubcpt;
-ALTER TABLE filetransfer ALTER COLUMN fileSize TYPE NUMERIC(20)
-update vishnu set formatidauth = 'auth_$CPT'
+ALTER TABLE filetransfer ALTER COLUMN fileSize TYPE NUMERIC(20);
+update vishnu set formatidauth = 'auth_$CPT';

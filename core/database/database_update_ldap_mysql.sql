@@ -62,5 +62,4 @@ ALTER TABLE vishnu DROP COLUMN machinecpt;
 ALTER TABLE vishnu DROP COLUMN jobcpt;
 ALTER TABLE vishnu DROP COLUMN fileSubcpt;
 ALTER TABLE filetransfer MODIFY COLUMN fileSize BIGINT UNSIGNED;
-
-update vishnu set formatidauth = "auth_$CPT"
+update vishnu set formatidauth = "auth_$CPT";
