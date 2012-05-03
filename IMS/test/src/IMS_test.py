@@ -3,10 +3,10 @@ import os
 from datetime import date
 
 def displayProc(lip):
-  for i in range(lip.getProcess().size()):
-    print "Name: ", lip.getProcess().get(i).getProcessName()
-    print "machine: ", lip.getProcess().get(i).getMachineId()
-    print "Diet Id: ", lip.getProcess().get(i).getDietId()
+  for i in range(len(lip[1])):
+    print "Name: ", lip[1][i].getProcessName()
+    print "machine: ", lip[1][i].getMachineId()
+    print "Diet Id: ", lip[1][i].getDietId()
 
 
 def getMetricType(mtype):
@@ -19,12 +19,12 @@ def getMetricType(mtype):
   
 def displayMetric(lic, machineId):
   try :
-    for i in range(lic.getMetric().size()):
-      print "Type: ", getMetricType(lic.getMetric().get(i).getType())
-      mtype = getMetricType(lic.getMetric().get(i).getType())
-      print "Value: ", lic.getMetric().get(i).getValue()
-      mvalue = lic.getMetric().get(i).getValue()
-      mtime = (date.fromtimestamp(lic.getMetric().get(i).getTime())).strftime('%d-%b-%Y')
+    for i in range(len(lic[1])):
+      print "Type: ", getMetricType(lic[1][i].getType())
+      mtype = getMetricType(lic[1][i].getType())
+      print "Value: ", lic[1][i].getValue()
+      mvalue = lic[1][i].getValue()
+      mtime = (date.fromtimestamp(lic[1][i].getTime())).strftime('%d-%b-%Y')
       print "time : ", mtime
        
   except VISHNU.VishnuException, e:
@@ -34,10 +34,10 @@ VISHNU.vishnuInitialize(os.getenv("VISHNU_CONFIG_FILE"))
 
 mid = "machine_1"
 pop = VISHNU.ProcessOp()
-lip = VISHNU.ListProcesses()
-lic = VISHNU.ListMetric()
+lip = []
+lic = []
 opc = VISHNU.CurMetricOp()
-lih = VISHNU.ListMetric()
+lih = []
 oph = VISHNU.MetricHistOp()
 sess = VISHNU.Session()
 
@@ -45,14 +45,14 @@ try :
   VISHNU.connect("root", "vishnu_user", sess)
   k = sess.getSessionKey()
   print "Session key: ",k 
-  VISHNU.getProcesses(k, lip, pop)
+  lip = VISHNU.getProcesses(k, pop)
   print "###################Processes#######################"
   displayProc(lip);
   
   print "###################Metrics#######################"
-  for i in range(lip.getProcess().size()):
-    VISHNU.getMetricCurrentValue(k, lip.getProcess().get(i).getMachineId(), lic, opc)
-    displayMetric(lic, lip.getProcess().get(i).getMachineId())    
+  for i in range(len(lip[1])):
+    lic = VISHNU.getMetricCurrentValue(k, lip[1][i].getMachineId(), opc)
+    displayMetric(lic, lip[1][i].getMachineId())    
 	
   VISHNU.close(k)
 except VISHNU.VishnuException, e:
