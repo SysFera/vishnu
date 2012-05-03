@@ -58,11 +58,70 @@ void testSerizalizeMethodConnect()
   //TODO free
  
 }
+
+void diet_profile_allocTest()
+{
+  diet_profile_t profileExpected;
+ 
+  profileExpected.name = (char*)(malloc(sizeof(char) * strlen("connect")));
+  memcpy(profileExpected.name, "connect", strlen("connect"));
+
+  diet_profile_t* profile = diet_profile_alloc("connect",1,1,1);
+
+  if(strcmp(profile->name,profileExpected.name) == 0) printf("Test diet_profile_allocTest OK\n");
+  else printf ("diet_profile_allocTest ERREUR\n");
+  
+
+}
+
+void diet_parameter_Test()
+{
+  int pos = 1;
+  diet_profile_t prof;
+ 
+  prof.name = (char*)(malloc(sizeof(char) * strlen("connect")));
+  memcpy(prof.name, "connect", strlen("connect"));
+
+  diet_arg_t* res = diet_parameter(&prof, pos);
+  if(res->prof == &prof && res->pos == 1 )
+    {
+      printf("Test diet_parameter_Test OK\n");
+    }
+      else printf ("diet_parameter_Test ERREUR\n");
+
+}
+
+void diet_string_set_Test()
+{
+  int pos = 0;
+  diet_profile_t prof;
+
+  prof.name = (char*)(malloc(sizeof(char) * strlen("connect")));
+  memcpy(prof.name, "connect", strlen("connect"));
+  prof.IN = 1;
+  prof.INOUT = 1;
+  prof.OUT = 1;
+  prof.param = (char **) malloc (sizeof(char*)*1);
+
+  diet_arg_t* res = diet_parameter(&prof, pos);
+  
+  diet_string_set(res,"test",1);
+  if(strcmp(prof.param[0],"test")==0)
+    {
+      printf("Test diet_string_set_Test OK\n");
+    }
+  else printf ("diet_string_set_Test ERREUR. Value : ->%s<- Expected : test\n",prof.param[0]);
+
+  
+}
+
 int 
 main(int argc, char** argv)
 {
   testSerizalizeMethodConnect();
   testDeserializeMethodConnect();
-  
+  diet_profile_allocTest();
+  diet_parameter_Test();
+  diet_string_set_Test();
   return EXIT_SUCCESS;
 }

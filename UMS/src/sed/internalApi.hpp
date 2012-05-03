@@ -11,7 +11,7 @@
 #include <exception>
 #include "VishnuException.hpp"
 #include "SystemException.hpp"
-#include "DIET_server.h"
+#include "DIET_client.h"
 #include "UserServer.hpp"
 #include "SessionServer.hpp"
 #include "MachineServer.hpp"

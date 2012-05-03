@@ -7,17 +7,17 @@
 
 #include "ServerUMS.hpp"
 #include "internalApi.hpp"
-// // // #include "Authenticator.hpp"
-// #include "AuthenticatorFactory.hpp"
+#include "Authenticator.hpp"
+#include "AuthenticatorFactory.hpp"
 
 //{{RELAX<MISRA_0_1_3> Because these variables are used in this class
-//Database *ServerUMS::mdatabaseVishnu = NULL;
+Database *ServerUMS::mdatabaseVishnu = NULL;
 ServerUMS *ServerUMS::minstance = NULL;
-//UMSMapper *ServerUMS::mmapper = NULL;
-//TMSMapper *ServerUMS::mmapperTMS = NULL;
-//FMSMapper *ServerUMS::mmapperFMS = NULL;
-//IMSMapper *ServerUMS::mmapperIMS = NULL;
-//Authenticator *ServerUMS::mauthenticator = NULL;
+UMSMapper *ServerUMS::mmapper = NULL;
+TMSMapper *ServerUMS::mmapperTMS = NULL;
+FMSMapper *ServerUMS::mmapperFMS = NULL;
+IMSMapper *ServerUMS::mmapperIMS = NULL;
+Authenticator *ServerUMS::mauthenticator = NULL;
 
 //}}RELAX<MISRA_0_1_3>
 
@@ -68,47 +68,47 @@ ServerUMS::ServerUMS() {
 * \return an error code (0 if success and 1 if an error occurs)
 */
 int
-ServerUMS::init(/*int vishnuId,
+ServerUMS::init(int vishnuId,
                 DbConfiguration dbConfig,
                 std::string sendmailScriptPath,
-                AuthenticatorConfiguration authenticatorConfig*/) {
+                AuthenticatorConfiguration authenticatorConfig) {
 
-  //  msendmailScriptPath = sendmailScriptPath;
+  msendmailScriptPath = sendmailScriptPath;
 
-//  DbFactory factory;
-//  AuthenticatorFactory authfactory;
-//
-//  try {
-//    mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
-//    mauthenticator = authfactory.createAuthenticatorInstance(authenticatorConfig);
-//
-//    mvishnuId = vishnuId;
-//
-//    std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(mvishnuId));
-//
-//    /*connection to the database*/
-//    mdatabaseVishnu->connect();
-//    mmapperTMS = new TMSMapper(MapperRegistry::getInstance(), TMSMAPPERNAME);
-//    mmapperTMS->registerMapper();
-//    mmapperIMS = new IMSMapper(MapperRegistry::getInstance(), IMSMAPPERNAME);
-//    mmapperIMS->registerMapper();
-//    mmapperFMS = new FMSMapper(MapperRegistry::getInstance(), FMSMAPPERNAME);
-//    mmapperFMS->registerMapper();
-//    mmapper = new UMSMapper(MapperRegistry::getInstance(), UMSMAPPERNAME);
-//    mmapper->registerMapper();
-//
-//    /* Checking of vishnuid on the database */
-//    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
-//    if (result->getResults().size() == 0) {
-//      SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
-//      throw e;
-//    }
-//
-//  } catch (VishnuException& e) {
-//      std::cout << e.what() << std::endl;
-//      exit(0);
-//  }
-//
+  DbFactory factory;
+  AuthenticatorFactory authfactory;
+
+  try {
+    mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
+    mauthenticator = authfactory.createAuthenticatorInstance(authenticatorConfig);
+
+    mvishnuId = vishnuId;
+
+    std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(mvishnuId));
+
+    /*connection to the database*/
+    mdatabaseVishnu->connect();
+    mmapperTMS = new TMSMapper(MapperRegistry::getInstance(), TMSMAPPERNAME);
+    mmapperTMS->registerMapper();
+    mmapperIMS = new IMSMapper(MapperRegistry::getInstance(), IMSMAPPERNAME);
+    mmapperIMS->registerMapper();
+    mmapperFMS = new FMSMapper(MapperRegistry::getInstance(), FMSMAPPERNAME);
+    mmapperFMS->registerMapper();
+    mmapper = new UMSMapper(MapperRegistry::getInstance(), UMSMAPPERNAME);
+    mmapper->registerMapper();
+
+    /* Checking of vishnuid on the database */
+    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
+    if (result->getResults().size() == 0) {
+      SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
+      throw e;
+    }
+
+  } catch (VishnuException& e) {
+      std::cout << e.what() << std::endl;
+      exit(0);
+  }
+
   // initialization of the service table
 //  diet_service_table_init(NB_SRV);
 
@@ -527,15 +527,15 @@ ServerUMS::init(/*int vishnuId,
 * \brief Destructor, raises an exception on error
 */
 ServerUMS::~ServerUMS() {
-//  if (mmapper != NULL) {
-//    delete mmapper;
-//  }
-//  if (mdatabaseVishnu != NULL) {
-//    delete mdatabaseVishnu;
-//  }
-//  if (mauthenticator != NULL) {
-//    delete mauthenticator;
-//  }
+  if (mmapper != NULL) {
+    delete mmapper;
+  }
+  if (mdatabaseVishnu != NULL) {
+    delete mdatabaseVishnu;
+  }
+  if (mauthenticator != NULL) {
+    delete mauthenticator;
+  }
 }
 
 void

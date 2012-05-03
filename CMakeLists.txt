@@ -59,33 +59,36 @@ endif (COMPILE_UMS AND COMPILE_TMS AND COMPILE_FMS AND COMPILE_IMS)
 include(CMakeDependentOption)
 cmake_dependent_option(BUILD_TESTING "Enable unit testing" OFF "NOT CLIENT_ONLY" OFF)
 option(DEBUG_TESTS "Provide debug info during tests execution" OFF)
+#
+#find_package(DIET)
+#if (DIET_FOUND)
+#else (DIET_FOUND)
+#  message("DIET installation was not found. Define the DIET_DIR variable to continue.")
+#  message(" - You can define a DIET_DIR environment variable")
+#  message(" - You can pass it as argument to cmake:")
+#  message("   $ cmake <source root directory> -DDIET_DIR:PATH=/path/to/DIET")
+#  message(" - You can use the ccmake GUI")
+#  set(DIET_DIR "" cache path "DIET installation path")
+#endif(DIET_FOUND)
+#
+#find_package(OmniORB)
+#if (OMNIORB4_FOUND)
+#else (OMNIORB4_FOUND)
+#  message("OMNIORB4 installation was not found. Define the OMNIORB4_DIR variable to continue.")
+#  message(" - You can define a OMNIORB4_DIR environment variable")
+#  message(" - You can pass it as argument to cmake:")
+#  message("   $ cmake <source root directory> -DOMNIORB4_DIR:PATH=/path/to/OMNIORB4")
+#  message(" - You can use the ccmake GUI")
+#  set(OMNIORB4_DIR "" cache path "OMNIORB4 installation path")
+#endif(OMNIORB4_FOUND)
+#
+#set(DIET_CLIENT_LIBRARIES ${DIET_CLIENT_LIBRARIES} ${OMNIORB4_LIBRARIES})
+#set(DIET_SERVER_LIBRARIES ${DIET_SERVER_LIBRARIES}
+#  ${DIET_ADMIN_LIBRARIES}
+#  ${OMNIORB4_LIBRARIES})
+#
 
-find_package(DIET)
-if (DIET_FOUND)
-else (DIET_FOUND)
-  message("DIET installation was not found. Define the DIET_DIR variable to continue.")
-  message(" - You can define a DIET_DIR environment variable")
-  message(" - You can pass it as argument to cmake:")
-  message("   $ cmake <source root directory> -DDIET_DIR:PATH=/path/to/DIET")
-  message(" - You can use the ccmake GUI")
-  set(DIET_DIR "" cache path "DIET installation path")
-endif(DIET_FOUND)
-
-find_package(OmniORB)
-if (OMNIORB4_FOUND)
-else (OMNIORB4_FOUND)
-  message("OMNIORB4 installation was not found. Define the OMNIORB4_DIR variable to continue.")
-  message(" - You can define a OMNIORB4_DIR environment variable")
-  message(" - You can pass it as argument to cmake:")
-  message("   $ cmake <source root directory> -DOMNIORB4_DIR:PATH=/path/to/OMNIORB4")
-  message(" - You can use the ccmake GUI")
-  set(OMNIORB4_DIR "" cache path "OMNIORB4 installation path")
-endif(OMNIORB4_FOUND)
-
-set(DIET_CLIENT_LIBRARIES ${DIET_CLIENT_LIBRARIES} ${OMNIORB4_LIBRARIES})
-set(DIET_SERVER_LIBRARIES ${DIET_SERVER_LIBRARIES}
-  ${DIET_ADMIN_LIBRARIES}
-  ${OMNIORB4_LIBRARIES})
+find_package(ZMQ)
 
 find_package(LIBCRYPT)
 if (LIBCRYPT_FOUND)
@@ -306,7 +309,8 @@ if (VISHNU_USE_LDAP AND NOT CLIENT_ONLY)
 endif(VISHNU_USE_LDAP AND NOT CLIENT_ONLY)
 
 
-find_package(LOGSERVICE REQUIRED)
+#find_package(LOGSERVICE REQUIRED)
+set(LOG_LIBRARY "")
 
 find_package(Boost 1.45
   REQUIRED program_options date_time thread filesystem system unit_test_framework serialization random)
@@ -319,6 +323,12 @@ endif()
 set(Boost_LIBRARIES ${Boost_LIBRARIES} ${THREADS_LIB})
 
 add_definitions("-DBOOST_FILESYSTEM_VERSION=3")
+
+# mock
+set(MOCK_INCLUDE_DIR 
+${VISHNU_SOURCE_DIR}/mockZMQ
+${VISHNU_SOURCE_DIR}/mockZMQ/ZMQHelper
+)
 
 #Core
 set(EMF4CPP_INCLUDE_DIR ${VISHNU_SOURCE_DIR}/core/deps/emf4cpp)
@@ -494,6 +504,9 @@ if (ENABLE_PYTHON OR ENABLE_JAVA)
   set (COMPILE_IMS 1 )
   add_subdirectory(swigAPI)
 endif(ENABLE_PYTHON OR ENABLE_JAVA)
+
+add_subdirectory(mockZMQ)
+
 
 if(COMPILE_UMS)
   add_subdirectory(UMS/src)

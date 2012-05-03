@@ -48,7 +48,7 @@ controlSignal (int signum) {
   }
 }
 
-int ZMQServerStart()
+int ZMQServerStart(boost::scoped_ptr<ServerUMS>* umsserver)
 {
   // Prepare our context and socket
   zmq::context_t context (1);
@@ -68,18 +68,20 @@ int ZMQServerStart()
       std::cout << "E: " << error.what() << std::endl;
       return false;
     }
-    std::string data = (unsigned char*) message.data();
+    std::cerr << "recv: \"" << (unsigned char*) message.data() << "\", size " << message.size() << std::endl;
+
+    std::string data = string((const char *)message.data());
 
 
     // Deserialize and call UMS Method
     diet_profile_t* profile  = my_deserialize(data);
-    umsserver->call(profile);
+    umsserver->get()->call(profile);
    
     // Send reply back to client
-    std::string resultSerialized = my_serialize(&profileToSerialize);
+    std::string resultSerialized = my_serialize(profile);
    
     zmq::message_t reply (resultSerialized.size());
-    memcpy ((void *) reply.data (), resultSerialized, resultSerialized.size());
+    memcpy ((void *) reply.data (), resultSerialized.c_str(), resultSerialized.size());
     socket.send (reply);
   }
   return 0;
@@ -164,8 +166,9 @@ int main(int argc, char* argv[], char* envp[]) {
 
     // Initialize the DIET SeD
     if (!res) {
-      diet_print_service_table();
-      res = diet_SeD(cfg.c_str(), argc, argv);
+      //      diet_print_service_table();
+      ZMQServerStart(&server);
+      //      res = diet_SeD(cfg.c_str(), argc, argv);
       unregisterSeD(UMSTYPE, mid);
     } else {
       std::cerr << "There was a problem during services initialization" << std::endl;

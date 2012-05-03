@@ -23,10 +23,10 @@ typedef struct diet_arg_t {
   diet_profile_t* prof;
 }diet_arg_t;
 
-#define SUCCESS 0
+#define DIET_VOLATILE 1
 
 diet_profile_t*
-diet_profile_alloc(char* name, int IN, int INOUT, int OUT);
+diet_profile_alloc(const char* name, int IN, int INOUT, int OUT);
 
 int
 diet_string_set(diet_arg_t* arg, char* value, int pers);
@@ -49,5 +49,11 @@ my_deserialize(std::string prof);
 
 std::string
 my_serialize(diet_profile_t* prof);
+
+int
+diet_initialize(const char* cfg, int argc, char** argv);
+
+int
+diet_finalize();
 
 #endif // __DIETMOCK__
