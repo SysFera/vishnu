@@ -10,6 +10,10 @@
 #include <boost/scoped_ptr.hpp>
 #include "AuthenticatorConfiguration.hpp"
 
+//For ZMQ
+#include "zmq.hpp"
+#include "DIET_client.h"
+
 using namespace vishnu;
 
 /**
@@ -42,6 +46,43 @@ controlSignal (int signum) {
     default:
      break;
   }
+}
+
+int ZMQServerStart()
+{
+  // Prepare our context and socket
+  zmq::context_t context (1);
+  zmq::socket_t socket (context, ZMQ_REP);
+  socket.bind ("tcp://*:5555");
+
+  while (true) {
+    std::cout << "Received a message" << std::endl;
+
+    //Receive message from ZMQ
+    zmq::message_t message(0);
+    try {
+      if (!socket.recv(&message, 0)) {
+	return false;
+      }
+    } catch (zmq::error_t error) {
+      std::cout << "E: " << error.what() << std::endl;
+      return false;
+    }
+    std::string data = (unsigned char*) message.data();
+
+
+    // Deserialize and call UMS Method
+    diet_profile_t* profile  = my_deserialize(data);
+    umsserver->call(profile);
+   
+    // Send reply back to client
+    std::string resultSerialized = my_serialize(&profileToSerialize);
+   
+    zmq::message_t reply (resultSerialized.size());
+    memcpy ((void *) reply.data (), resultSerialized, resultSerialized.size());
+    socket.send (reply);
+  }
+  return 0;
 }
 
 /**
