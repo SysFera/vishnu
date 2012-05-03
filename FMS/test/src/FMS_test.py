@@ -76,8 +76,9 @@ def displayDirEntryInfo(fileInfo):
   print "**************************************************"
 
 def displayDirContent(dirContent):
-  for i in range(dirContent.getDirEntries().size()):
-    displayDirEntryInfo( dirContent.getDirEntries().get(i))
+  print "len(dirContent[1])", len(dirContent[1])
+  for i in range(len(dirContent[1])):
+    displayDirEntryInfo(dirContent[1][i])
 
 def dispalyContentOfFile(contentOfFile):
    print "---File content:"
@@ -95,8 +96,8 @@ def displayFileTransfer(filetransfer):
   print "Destination path:", filetransfer.getDestinationFilePath()
 
 def displayFiletransferList(fileTransferList):
-  for i in range(fileTransferList.getFileTransfers().size()):
-    displayFileTransfer(fileTransferList.getFileTransfers().get(i))
+  for i in range(len(fileTransferList[1])):
+    displayFileTransfer(fileTransferList[1][i])
 
 
 # constants definition
@@ -133,14 +134,14 @@ dirFullPath2 = baseDirFullPath2 + slash + newDirName;
 #Objects initialization
 headOpt = VISHNU.HeadOfFileOptions()
 tailOpt = VISHNU.TailOfFileOptions()
-dirContent = VISHNU.DirEntryList()
-dirContent2 = VISHNU.DirEntryList()
+dirContent = []
+dirContent2 = []
 lsOpt = VISHNU.LsDirOptions()
 fileInfo = VISHNU.FileStat()
 dirEntryInfo = VISHNU.DirEntry()
 transferOpt = VISHNU.CpFileOptions()
 fileTransferInfo = VISHNU.FileTransfer()
-fileTransferList = VISHNU.FileTransferList()
+fileTransferList = []
 stopTransferOptions = VISHNU.StopTransferOptions()
 lsTransferOptions = VISHNU.LsTransferOptions()
 session=VISHNU.Session()
@@ -179,21 +180,21 @@ try :
   print "removeDir: ", dirFullPath1
   VISHNU.removeDir(k, dirFullPath1)
   print "===================listDir====================:"
-  VISHNU.listDir(k,workingDirFullPath1, dirContent)
+  dirContent = VISHNU.listDir(k,workingDirFullPath1)
   displayDirContent(dirContent)
   #To clean the list
-  dirContent.getDirEntries().clear()
+  dirContent = []
   print "createFile : ",fileFullPath1
   VISHNU.createFile(k, fileFullPath1)
   print "copyFile: ",fileFullPath1, "to ", fileFullPath2
   VISHNU.copyFile(k, fileFullPath1, baseDirFullPath2)
   print "===================listDir - LongFormat====================:"
   lsOpt.setLongFormat(True)
-  VISHNU.listDir(k, baseDirFullPath2, dirContent, lsOpt)
+  dirContent = VISHNU.listDir(k, baseDirFullPath2, lsOpt)
   displayDirContent(dirContent)
   VISHNU.removeFile(k,fileFullPath2)
   #To clean the list
-  dirContent.getDirEntries().clear()
+  dirContent = []
   print "=================== chGrp ====================:"
   VISHNU.createFile(k,fileFullPath2)
   VISHNU.getFileInfo(k,fileFullPath2,fileInfo)
@@ -233,17 +234,17 @@ try :
   VISHNU.copyAsyncFile(k, workingDirFullPath1,baseDirFullPath2, fileTransferInfo,transferOpt)
   displayFileTransfer(fileTransferInfo)
   print "===========listFileTransfers:============="
-  VISHNU.listFileTransfers(k, fileTransferList)
+  fileTransferList = VISHNU.listFileTransfers(k)
   displayFiletransferList(fileTransferList)
   #To clean the list
-  fileTransferList.getFileTransfers().clear()
+  fileTransferList = []
   print "===========stopFileTransfer===============:"
   print fileTransferInfo.getTransferId()
   stopTransferOptions.setTransferId(fileTransferInfo.getTransferId())
   VISHNU.stopFileTransfer(k, stopTransferOptions)
   print "===========listFileTransfers:============="
 
-  VISHNU.listFileTransfers(k, fileTransferList)
+  fileTransferList = VISHNU.listFileTransfers(k)
   displayFiletransferList(fileTransferList)
 
   print "=========================MvAsyncFile:"
@@ -251,7 +252,7 @@ try :
   VISHNU.moveAsyncFile(k, fileFullPath1,baseDirFullPath2, fileTransferInfo)
   displayFileTransfer(fileTransferInfo)
   print "===========listFileTransfers:============="
-  VISHNU.listFileTransfers(k, fileTransferList)
+  fileTransferList = VISHNU.listFileTransfers(k)
   displayFiletransferList(fileTransferList)
 
 except VISHNU.FMSVishnuException, e:
