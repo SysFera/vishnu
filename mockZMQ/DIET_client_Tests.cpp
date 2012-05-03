@@ -58,23 +58,11 @@ void testSerizalizeMethodConnect()
   //TODO free
  
 }
-
-void testFull(){
-  std::string orig = "connect#user1#password1#option1";
-  diet_profile_t* profileDeserialied  = my_deserialize(orig);
-  std::string result = my_serialize(profileDeserialied);
-  if (orig.compare(result)==0) {
-    printf("PASS full deser-ser \n");
-  }else {
-    printf("FAIL deser-ser \n");
-  }
-}
-
 int 
 main(int argc, char** argv)
 {
   testSerizalizeMethodConnect();
   testDeserializeMethodConnect();
-  testFull();
+  
   return EXIT_SUCCESS;
 }
