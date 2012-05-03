@@ -111,4 +111,3 @@ ExecConfiguration::getCurrentBinaryDir()
 
   return execDir;
 }
-
