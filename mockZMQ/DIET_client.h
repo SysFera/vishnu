@@ -9,7 +9,7 @@
 #define __DIETMOCK__
 
 #include "mdcliapi.hpp"
-
+#include <string>
 typedef struct diet_profile_t {
   char ** param;
   int IN;
