@@ -125,10 +125,10 @@ try:
   
   print "Test listAuthSystems"
   #li = VISHNU.ListAuthSystems()
-  #liopt = VISHNU.ListAuthSysOptions()
-  #liopt.setListAllAuthSystems(1)
-  #li = VISHNU.listAuthSystems(k,liopt)
-  li = VISHNU.listAuthSystems(k)
+  liopt = VISHNU.ListAuthSysOptions()
+  liopt.setListAllAuthSystems(1)
+  li = VISHNU.listAuthSystems(k,liopt)
+  #li = VISHNU.listAuthSystems(k)
   displayAuthSystems(li)
   
   #displayAuthSys(newAuthSys)
