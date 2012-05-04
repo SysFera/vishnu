@@ -79,6 +79,7 @@ int ZMQServerStart(boost::scoped_ptr<ServerUMS>* umsserver)
 
     // Send reply back to client
     std::string resultSerialized = my_serialize(profile);
+//    std::cout << " Serialized to send : " << resultSerialized << std::endl;
 
     zmq::message_t reply (resultSerialized.length()+1);
     memcpy ((void *) reply.data (), resultSerialized.c_str(), resultSerialized.length()+1);
