@@ -11,7 +11,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/regex.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/lexical_cast.hpp>
 
@@ -100,12 +100,12 @@ diet_parameter(diet_profile_t* prof, int pos){
 std::string
 my_serialize(diet_profile_t* prof){
   std::stringstream res;
-  res << prof->name <<  "$"
-      << prof->IN << "$"
-      << prof->INOUT << "$"
-      << prof->OUT << "$";
+  res << prof->name <<  "$$$"
+      << prof->IN << "$$$"
+      << prof->INOUT << "$$$"
+      << prof->OUT << "$$$";
   for (int i = 0; i<(prof->OUT); ++i) {
-    res << prof->param[i] << "$";
+    res << prof->param[i] << "$$$";
   }
   res << prof->param[(prof->OUT)];
   return res.str();
@@ -117,7 +117,7 @@ my_deserialize(std::string prof){
   std::vector<int> vec;
 
   std::vector<std::string> vecString;
-  boost::algorithm::split(vecString, prof, boost::algorithm::is_any_of("$"));
+  boost::algorithm::split_regex(vecString, prof, boost::regex("\\\${3}"));
 
   if (!vecString.empty()) {
     res = new diet_profile_t;
