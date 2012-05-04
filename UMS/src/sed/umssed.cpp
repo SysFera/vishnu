@@ -56,7 +56,7 @@ int ZMQServerStart(boost::scoped_ptr<ServerUMS>* umsserver)
   socket.bind ("tcp://*:5555");
 
   while (true) {
-    std::cout << "Received a message" << std::endl;
+//    std::cout << "Received a message" << std::endl;
 
     //Receive message from ZMQ
     zmq::message_t message(0);

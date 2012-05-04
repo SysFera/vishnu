@@ -48,7 +48,7 @@ diet_call(diet_profile_t* prof){
   zmq::context_t ctx(1);
   zmq::socket_t sock(ctx, ZMQ_REQ);
   sock.connect("tcp://localhost:5555");
-  std::cerr << "send: \"" << my_serialize(prof).c_str() << std::endl;
+//  std::cerr << "send: \"" << my_serialize(prof).c_str() << std::endl;
   std::string s1 = my_serialize(prof);
   zmq::message_t request(s1.length()+1);
   memcpy((void*)request.data(), s1.c_str(), s1.length()+1);
@@ -56,16 +56,27 @@ diet_call(diet_profile_t* prof){
 
   zmq::message_t reply;
   sock.recv(&reply);
-  std::cout << "Client receive : " << (char*)reply.data() << std::endl;
+//  std::cout << "Client receive : " << (char*)reply.data() << std::endl;
+
+  diet_profile_t* tmp =my_deserialize(std::string((char *)reply.data()));
+//  *prof =
+  prof->IN = tmp->IN;
+  prof->OUT = tmp->OUT;
+  prof->INOUT = tmp->INOUT;
+  for(int i=0;i<prof->OUT;++i){
+    prof->param[i] = strdup(tmp->param[i]);
+  }
 
   return 0;
 }
 
 int
 diet_string_get(diet_arg_t* arg, char** value, void* ptr){
+//  std::cout << "Getting arg in pos :" << arg->pos << " of value: " << arg->prof->param[arg->pos] << std::endl;
   *value = (char *)malloc((strlen(arg->prof->param[arg->pos])+1)*sizeof (char));
   memcpy(*value, arg->prof->param[arg->pos], strlen(arg->prof->param[arg->pos]));
   (*value)[strlen(arg->prof->param[arg->pos])]='\0';
+//  std::cout << "Value set :" << *value << std::endl;
   return 0;
 }
 
