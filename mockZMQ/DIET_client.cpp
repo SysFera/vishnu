@@ -117,7 +117,7 @@ my_deserialize(std::string prof){
   std::vector<int> vec;
 
   std::vector<std::string> vecString;
-  boost::algorithm::split_regex(vecString, prof, boost::regex("\\\${3}"));
+  boost::algorithm::split_regex(vecString, prof, boost::regex("\\${3}"));
 
   if (!vecString.empty()) {
     res = new diet_profile_t;
