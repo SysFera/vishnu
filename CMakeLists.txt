@@ -312,7 +312,7 @@ endif(VISHNU_USE_LDAP AND NOT CLIENT_ONLY)
 set(LOG_LIBRARY "")
 
 find_package(Boost 1.45
-  REQUIRED program_options date_time thread filesystem system unit_test_framework serialization random)
+  REQUIRED program_options date_time thread filesystem system unit_test_framework serialization random regex)
 
 find_package(Threads)
 if(THREADS_FOUND)
