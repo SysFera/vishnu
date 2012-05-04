@@ -7,7 +7,7 @@ using namespace std;
 
 void testDeserializeMethodConnect()
 {
-   diet_profile_t* profileDeserialied  = my_deserialize("connect#1#1#1#user1#password1#option1");
+   diet_profile_t* profileDeserialied  = my_deserialize("connect$$$1$$$1$$$1$$$user1$$$password1$$$option1");
    
    if( strcmp(profileDeserialied->param[0],"user1") != 0)
      {
@@ -34,12 +34,12 @@ void testDeserializeMethodConnect()
 
 void testSerizalizeMethodConnect()
 {
-  std::string resultExpected = "connect#3#3#3#user1#password1#option1";
+  std::string resultExpected = "connect$$$2$$$2$$$2$$$user1$$$password1$$$option1";
 
   diet_profile_t profileToSerialize;
-  profileToSerialize.IN = 3;
-  profileToSerialize.INOUT = 3;
-  profileToSerialize.OUT = 3;
+  profileToSerialize.IN = 2;
+  profileToSerialize.INOUT = 2;
+  profileToSerialize.OUT = 2;
   profileToSerialize.param = (char**)(malloc(sizeof(char *)*3));
 
   profileToSerialize.name = (char*)(malloc(sizeof(char) * strlen("connect")));
@@ -52,8 +52,11 @@ void testSerizalizeMethodConnect()
   memcpy(profileToSerialize.param[2], "option1", strlen("option1"));
 
   std::string result = my_serialize(&profileToSerialize);
-  if(result.compare(resultExpected) != 0) printf("Erreur\n");
-  else printf("PASS\n");
+  if(result.compare(resultExpected) != 0)
+    {
+     cerr << "Test testSerizalizeMethodConnect ERROR. Expected : >" << resultExpected<<"< Receive >"<< result<<"<" <<endl;
+    }
+   else printf("Test testSerizalizeMethodConnect Pass\n");
 
   //TODO free
  
