@@ -35,6 +35,8 @@ diet_string_set(diet_arg_t* arg, char* value, int pers){
     arg->prof->param[arg->pos] = (char *)malloc(sizeof(char)*(strlen(value)+1));
     memcpy(arg->prof->param[arg->pos], value, strlen(value));
     (arg->prof->param[arg->pos])[strlen(value)] = '\0';
+//    std::cout << " Setting val to : " << arg->prof->param[arg->pos] << " for pos " << arg->pos << std::endl;
+//    std::cout << " Setting val orig to : " << value << " for pos " << arg->pos << std::endl;
   } else {
     arg->prof->param[arg->pos] = (char *)malloc(sizeof(char)*(strlen("")+1));
     memcpy(arg->prof->param[arg->pos], "", strlen(""));
@@ -63,7 +65,7 @@ diet_call(diet_profile_t* prof){
   prof->IN = tmp->IN;
   prof->OUT = tmp->OUT;
   prof->INOUT = tmp->INOUT;
-  for(int i=0;i<prof->OUT;++i){
+  for(int i=0;i<=prof->OUT;++i){
     prof->param[i] = strdup(tmp->param[i]);
   }
 
@@ -77,6 +79,7 @@ diet_string_get(diet_arg_t* arg, char** value, void* ptr){
   memcpy(*value, arg->prof->param[arg->pos], strlen(arg->prof->param[arg->pos]));
   (*value)[strlen(arg->prof->param[arg->pos])]='\0';
 //  std::cout << "Value set :" << *value << std::endl;
+//  std::cout << " Getting val to : " << arg->prof->param[arg->pos] << "for pos " << arg->pos << std::endl;
   return 0;
 }
 
@@ -97,14 +100,14 @@ diet_parameter(diet_profile_t* prof, int pos){
 std::string
 my_serialize(diet_profile_t* prof){
   std::stringstream res;
-  res << prof->name <<  "#"
-      << prof->IN << "#"
-      << prof->INOUT << "#"
-      << prof->OUT << "#";
-  for (int i = 0; i<(prof->OUT)-1; ++i) {
-    res << prof->param[i] << "#";
+  res << prof->name <<  "$"
+      << prof->IN << "$"
+      << prof->INOUT << "$"
+      << prof->OUT << "$";
+  for (int i = 0; i<(prof->OUT); ++i) {
+    res << prof->param[i] << "$";
   }
-  res << prof->param[(prof->OUT)-1];
+  res << prof->param[(prof->OUT)];
   return res.str();
 }
 
@@ -114,7 +117,7 @@ my_deserialize(std::string prof){
   std::vector<int> vec;
 
   std::vector<std::string> vecString;
-  boost::algorithm::split(vecString, prof, boost::algorithm::is_any_of("#"));
+  boost::algorithm::split(vecString, prof, boost::algorithm::is_any_of("$"));
 
   if (!vecString.empty()) {
     res = new diet_profile_t;
