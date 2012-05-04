@@ -7,7 +7,7 @@ using namespace std;
 
 void testDeserializeMethodConnect()
 {
-   diet_profile_t* profileDeserialied  = my_deserialize("connect#user1#password1#option1");
+   diet_profile_t* profileDeserialied  = my_deserialize("connect#1#1#1#user1#password1#option1");
    
    if( strcmp(profileDeserialied->param[0],"user1") != 0)
      {
@@ -34,7 +34,7 @@ void testDeserializeMethodConnect()
 
 void testSerizalizeMethodConnect()
 {
-  std::string resultExpected = "connect#user1#password1#option1";
+  std::string resultExpected = "connect#3#3#3#user1#password1#option1";
 
   diet_profile_t profileToSerialize;
   profileToSerialize.IN = 3;
