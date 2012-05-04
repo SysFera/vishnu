@@ -4,6 +4,7 @@
 
 #include <regex.h>
 #include <stdexcept>
+#include <unistd.h>
 
 #include "ExecConfiguration.hpp"
 #include "constants.hpp"
