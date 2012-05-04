@@ -41,7 +41,6 @@
 %include "ecorecpp/mapping/out_ptr.hpp"
 %include "ecore_forward.hpp"
 
-
 // All EMF includes (same as in UMS_Data.hpp)
 %include "UMS_Data_forward.hpp"
 %include "UMS_Data/ConnectOptions.hpp"
@@ -101,6 +100,50 @@
 %include "FMS_Data/RmFileOptions.hpp"
 %include "FMS_Data/CreateDirOptions.hpp"
 %include "FMS_Data/DirEntry.hpp"
+
+#ifdef SWIGJAVA
+%include "ecorecpp/mapping/EList.hpp"
+%include "UMS_Data/ListSessions.hpp"
+%include "UMS_Data/ListUsers.hpp"
+%include "UMS_Data/ListCommands.hpp"
+%include "UMS_Data/ListLocalAccounts.hpp"
+%include "UMS_Data/ListMachines.hpp"
+%include "UMS_Data/ListOptionsValues.hpp"
+%include "TMS_Data/ListJobResults.hpp"
+%include "TMS_Data/ListJobs.hpp"
+%include "TMS_Data/ListProgression.hpp"
+%include "TMS_Data/ListQueues.hpp"
+%include "IMS_Data/ListMetric.hpp"
+%include "IMS_Data/ListProcesses.hpp"
+%include "IMS_Data/ListSysInfo.hpp"
+%include "IMS_Data/ListThreshold.hpp"
+%include "FMS_Data/FileTransferList.hpp"
+%include "FMS_Data/DirEntryList.hpp"
+%include "UMS_Data/ListAuthSystems.hpp"
+%include "UMS_Data/ListAuthAccounts.hpp"
+
+%template(EListPtr) ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList< ::ecore::EObject > >; 
+%template(ESessionList) ::ecorecpp::mapping::EList<::UMS_Data::Session>;
+%template(EUserList) ::ecorecpp::mapping::EList<::UMS_Data::User>;
+%template(EMachineList) ::ecorecpp::mapping::EList<::UMS_Data::Machine>;
+%template(ELocalAccList) ::ecorecpp::mapping::EList<::UMS_Data::LocalAccount>;
+%template(ECommandList) ::ecorecpp::mapping::EList<::UMS_Data::Command>;
+%template(EOptionList) ::ecorecpp::mapping::EList<::UMS_Data::OptionValue>;
+%template(EAuthSystemList) ::ecorecpp::mapping::EList<::UMS_Data::AuthSystem>;
+%template(EAuthAccountList) ::ecorecpp::mapping::EList<::UMS_Data::AuthAccount>;
+%template(EJobList) ::ecorecpp::mapping::EList<::TMS_Data::Job>;
+%template(EProgressionList) ::ecorecpp::mapping::EList<::TMS_Data::Progression>;
+%template(EQueueList) ::ecorecpp::mapping::EList<::TMS_Data::Queue>;
+%template(EJobResultList) ::ecorecpp::mapping::EList<::TMS_Data::JobResult>;
+%template(EMetricList) ::ecorecpp::mapping::EList<::IMS_Data::Metric>;
+%template(EProcessesList) ::ecorecpp::mapping::EList<::IMS_Data::Process>;
+%template(ESysInfoList) ::ecorecpp::mapping::EList<::IMS_Data::SystemInfo>;
+%template(EThresholdList) ::ecorecpp::mapping::EList<::IMS_Data::Threshold>;
+%template(EFileTransferList) ::ecorecpp::mapping::EList<::FMS_Data::FileTransfer>;
+%template(EFileStatList) ::ecorecpp::mapping::EList<::FMS_Data::FileStat>;
+%template(EDirEntryList) ::ecorecpp::mapping::EList<::FMS_Data::DirEntry>;
+#endif
+
 
 %{
 #define SWIG_FILE_WITH_INIT
