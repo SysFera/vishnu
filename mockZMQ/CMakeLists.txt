@@ -16,7 +16,7 @@ add_library(zmq_helper
 )
 
 target_link_libraries (zmq_helper
-  ${ZMQ_LIB}
+  ${ZMQ_LIB} ${Boost_LIBRARIES}
 )
 
 
