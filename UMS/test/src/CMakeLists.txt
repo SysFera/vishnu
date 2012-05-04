@@ -13,6 +13,8 @@ include_directories(
   ${PROJECT_BINARY_DIR}/include
   ${TESTVISHNU_SOURCE_DIR}
   ${TESTVISHNU_SOURCE_DIR}/../third-party
+  ${ZMQ_INCLUDE_DIR}
+  ${MOCK_INCLUDE_DIR}
   )
 
 # Standard VISHNU TESTS variables
