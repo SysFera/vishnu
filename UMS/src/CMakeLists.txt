@@ -46,8 +46,8 @@ target_link_libraries(vishnu-ums-client
   emf4cpp-vishnu
   vishnu-core
   ${CMAKE_DL_LIBS}
-  ${ZMQ_LIB}
-    zmq_helper
+  ${ZMQ_LIBRARIES}
+  zmq_helper
 )
 
 install(TARGETS vishnu-ums-client DESTINATION ${LIB_INSTALL_DIR})
@@ -97,7 +97,7 @@ if(NOT CLIENT_ONLY)
     ${LIBCRYPT_LIB}
     ${LDAP_LIBRARIES}
     ${CMAKE_DL_LIBS}
-    ${ZMQ_LIB}
+    ${ZMQ_LIBRARIES}
     zmq_helper
 )
 
