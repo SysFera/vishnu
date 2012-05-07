@@ -2,7 +2,7 @@
 // DIET_client.h
 // Mock de la couche DIET par ZMQ dans VISHNU pour UMS
 // Le 02/05/2012
-// Auteur K. COULOMB 
+// Auteur K. COULOMB
 //
 
 #ifndef __DIETMOCK__
@@ -10,6 +10,8 @@
 
 #include "mdcliapi.hpp"
 #include <string>
+#include <boost/shared_ptr.hpp>
+
 typedef struct diet_profile_t {
   char ** param;
   int IN;
@@ -31,21 +33,21 @@ diet_profile_alloc(const char* name, int IN, int INOUT, int OUT);
 int
 diet_string_set(diet_arg_t* arg, char* value, int pers);
 
-int 
+int
 diet_call(diet_profile_t* prof);
 
 int
 diet_string_get(diet_arg_t* arg, char** value, void* ptr);
 
-int 
+int
 diet_profile_free(diet_profile_t* prof);
 
 diet_arg_t*
 diet_parameter(diet_profile_t* prof, int pos);
 
 
-diet_profile_t*
-my_deserialize(std::string prof);
+boost::shared_ptr<diet_profile_t>
+my_deserialize(const std::string& prof);
 
 std::string
 my_serialize(diet_profile_t* prof);
