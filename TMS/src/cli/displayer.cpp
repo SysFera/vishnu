@@ -27,10 +27,10 @@ displayAllJobOutput(TMS_Data::ListJobResults& j){
  */
 void 
 displayJobOutput(TMS_Data::JobResult_ptr j){
-  cout << " ------------------------ " << endl;
-  cout << " Job Id     : " << j->getJobId() << endl;
-  cout << " Output path: " << j->getOutputPath() << endl;
-  cout << " Error  path: " << j->getErrorPath() << endl;
+  cout << " ----------------------------------------------------------------" << endl;
+  cout << setw(10) << left << " Job ID" << " |  Location of Downloaded Files" << endl;
+  cout << " ----------------------------------------------------------------" << endl;
+  cout << setw(10) << left << (" " + j->getJobId()) << " | " << j->getOutputDir() << endl;
   cout << endl;
 }
 

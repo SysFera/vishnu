@@ -10,6 +10,8 @@
 #include <stdexcept>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/system/error_code.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/find.hpp>
@@ -32,7 +34,7 @@
 #include "cliError.hpp"
 
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespace
-
+namespace bs=boost::system;
 
 /**
  * \brief Function to convert a given date into correspondant long value
@@ -760,3 +762,37 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 	return 0 ;
 }
 
+/**
+ * \brief Function to create a directory
+ * \param dirPath The path of the directory
+ * Throw exception on error
+ * */
+void
+vishnu::createOutputDir(const std::string& dirPath) {
+	bs::error_code ec ;
+	if( bfs::exists(dirPath) && bfs::is_directory(dirPath) ) return ;
+	if( ! bfs::create_directory(bfs::path(dirPath)) ) {
+		throw SystemException(ERRCODE_SYSTEM, "vishnu::createDir: Cannot create output directory : " + std::string(dirPath)) ;
+	}
+}
+
+/**
+ * \brief Function to list file containing in a directory. Recursivity is not taken into account
+ * \param lFiles a vector containing the set of files
+ * \param fileNames the names of files containing in the directory
+ * \param dirPath The path of the directory
+ * Throw exception on error
+ * */
+void
+vishnu::appendFilesFromDir(ListStrings& lFiles, std::string & fileNames, const std::string & dirPath) {
+
+	if( ! bfs::exists( dirPath ) ) return ;
+	for( bfs::directory_iterator it(dirPath) ; it != bfs::directory_iterator() ; ++it ) {
+		if ( ! bfs::is_directory( *it ) ) {
+			lFiles.push_back( it->path().string() ) ;
+			if( fileNames.size() != 0 ) fileNames = " " + fileNames;
+			fileNames = it->path().string() + fileNames ;   //TODO Check if it's a absolute or a relative path
+		}
+	}
+
+}

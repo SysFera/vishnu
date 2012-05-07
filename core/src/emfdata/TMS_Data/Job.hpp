@@ -323,6 +323,17 @@ namespace TMS_Data
          **/
         void setBatchJobId(::ecore::EString const& _batchJobId);
 
+        /**
+         * \brief To get the outputDir
+         * \return The outputDir attribute value
+         **/
+        ::ecore::EString const& getOutputDir() const;
+        /**
+         * \brief To set the outputDir
+         * \param _outputDir The outputDir value
+         **/
+        void setOutputDir(::ecore::EString const& _outputDir);
+
         // References
 
 
@@ -393,6 +404,8 @@ namespace TMS_Data
         ::ecore::EString m_nbNodesAndCpuPerNode;
 
         ::ecore::EString m_batchJobId;
+
+        ::ecore::EString m_outputDir;
 
         // References
 

@@ -342,6 +342,25 @@ validateParameters(const boost::shared_ptr<Options> & opt,
 		const std::vector<std::string> & paramsVector,
 		const bool & isOfFileType = false);
 
+/**
+ * \brief Function to create a directory
+ * \param dirPath The path of the directory
+ * Throw exception on error
+ * */
+void
+createOutputDir(const std::string& dirPath);
+
+/**
+ * \brief Function to list file containing in a directory
+ * \param lFiles a vector containing the set of files
+ * \param fileNames the names of files containing in the directory
+ * \param dirPath The path of the directory
+ * Throw exception on error
+ * */
+void
+appendFilesFromDir(ListStrings& lFiles, std::string & fileNames, const std::string & dirPath);
+
+
 } //END NAMESPACE
 
 

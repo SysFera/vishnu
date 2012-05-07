@@ -128,5 +128,31 @@ void JobResult::setErrorPath(::ecore::EString const& _errorPath)
 #endif
 }
 
+::ecore::EString const& JobResult::getOutputDir() const
+{
+    return m_outputDir;
+}
+
+void JobResult::setOutputDir(::ecore::EString const& _outputDir)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_outputDir = m_outputDir;
+#endif
+    m_outputDir = _outputDir;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJobResult__outputDir(),
+                _old_outputDir,
+                m_outputDir
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
 // References
 
