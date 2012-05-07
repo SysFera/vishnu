@@ -124,7 +124,6 @@ solveSubmitJob(diet_profile_t* pb) {
 
 			pos = fParamsVec[i].find("=") ;  if(pos == std::string::npos) continue ;
 			filePath =  mktemp(strdup("PFILE-XXXXXX")) ;
-
 			dagda_get_file(fileContainer.elt_ids[i], &defaultPath);
 			vishnu::boostMoveFile(std::string(defaultPath), "/tmp/", filePath);
 
@@ -133,7 +132,7 @@ solveSubmitJob(diet_profile_t* pb) {
 			if(defaultPath) free(defaultPath) ;
 		}
 		// Clean the container
-        for(unsigned int i = 0; i < fileContainer.size; i++) dagda_delete_data(fileContainer.elt_ids[i]);
+		for(unsigned int i = 0; i < fileContainer.size; i++) dagda_delete_data(fileContainer.elt_ids[i]);
 
 		submitOptions->setFileParams(fParamsBuf.str()) ; //Update file parameters with the corresponding paths on the server
 
@@ -401,11 +400,29 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
 
 		dagda_init_container(diet_parameter(pb,5));
 
-		dagda_put_file(strdup(outputPath.c_str()), DIET_PERSISTENT_RETURN, &ID2);
-		dagda_put_file(strdup(errorPath.c_str()), DIET_PERSISTENT_RETURN, &ID3);
+		std::string stdErr = "errorsOfJob_" + result.getJobId() ;
+		std::string stdOut = "outputOfJob_" + result.getJobId() ;
 
-		dagda_add_container_element((*diet_parameter(pb,5)).desc.id, ID2, 0);
-		dagda_add_container_element((*diet_parameter(pb,5)).desc.id, ID3, 1);
+		std::string fileNames = "" ; ListStrings filePaths ;
+		if(result.getOutputDir() != "") {
+			vishnu::appendFilesFromDir(filePaths, fileNames, result.getOutputDir()) ;
+			fileNames = " " + fileNames;
+		}
+
+		filePaths.push_back(outputPath) ; filePaths.push_back(errorPath) ;
+		fileNames =  stdErr + " " + stdOut + fileNames ;
+
+		char* fileNamesDescr = strdup("/tmp/odescXXXXXX");
+		vishnu::createTmpFile(fileNamesDescr, fileNames) ;
+		filePaths.push_back(fileNamesDescr) ;
+
+		size_t maxIdx = filePaths.size() - 1 ;
+		char *fileIds[maxIdx + 1] ;
+
+		for(int i = maxIdx ; i >= 0; i--) {  //Send the description file first
+			dagda_put_file(strdup(filePaths[i].c_str()), DIET_PERSISTENT_RETURN, &fileIds[i]);
+			dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fileIds[i], maxIdx - i);
+		}
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
 
 	} catch (VishnuException& e) {

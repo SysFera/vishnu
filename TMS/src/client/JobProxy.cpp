@@ -1,7 +1,9 @@
 
 #include <string>
+#include <boost/filesystem.hpp>
 #include "JobProxy.hpp"
 #include "UMSVishnuException.hpp"
+#include "TMSVishnuException.hpp"
 #include "utilClient.hpp"
 #include "utilVishnu.hpp"
 #include <boost/algorithm/string.hpp>
@@ -43,7 +45,6 @@ JobProxy::submitJob(const std::string& scriptContent,
 	std::string serviceName = "jobSubmit_";
 	serviceName.append(mmachineId);
 
-	//submitJobProfile = diet_profile_alloc(serviceName.c_str(), 4, 4, 6);
 	submitJobProfile = diet_profile_alloc(serviceName.c_str(), 5, 5, 7);
 	sessionKey = msessionProxy.getSessionKey();
 
@@ -101,6 +102,9 @@ JobProxy::submitJob(const std::string& scriptContent,
 		size_t pos = (*it).find("=") ;  //it will find normally après initial parsing
 		if(pos == std::string::npos) continue ;
 		char* path = strdup( (*it).substr(pos+1, std::string::npos).c_str() ) ;
+		if( ! bfs::exists(path) ) {
+			throw UserException(ERRCODE_INVDATA, "the " + std::string(path) + " does not exist");
+		}
 		dagda_put_file(path, DIET_PERSISTENT, &DAGDA_ID[id]);
 		dagda_add_container_element((*diet_parameter(submitJobProfile,5)).desc.id, DAGDA_ID[id], id);
 		id++ ;

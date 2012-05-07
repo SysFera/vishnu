@@ -50,7 +50,6 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 	checkJobNbNodesAndNbCpuPerNode(options.getNbNodesAndCpuPerNode());
 
 	SessionProxy sessionProxy(sessionKey);
-
 	boost::filesystem::path completePath(scriptFilePath);
 	std::string scriptFileCompletePath = (boost::filesystem::path(boost::filesystem::system_complete(completePath))).string();
 	jobInfo.setJobPath(scriptFileCompletePath);
@@ -64,9 +63,9 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 	boost::trim(fileParamsStr) ; //TODO BUG when empty list
 	boost::split(fileParamsVec, fileParamsStr, boost::is_any_of(" "), boost::token_compress_on) ;
 
-
 	int ret = jobProxy.submitJob(scriptContent, options);
 	jobInfo = jobProxy.getData();
+
 	return ret;
 }
 
