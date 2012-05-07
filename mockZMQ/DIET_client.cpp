@@ -15,6 +15,7 @@
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/lexical_cast.hpp>
 
+
 diet_profile_t*
 diet_profile_alloc(const char* name, int IN, int INOUT, int OUT) {
   diet_profile_t* res = (diet_profile_t*) malloc(sizeof(diet_profile_t)*1);
@@ -60,7 +61,8 @@ diet_call(diet_profile_t* prof){
   sock.recv(&reply);
 //  std::cout << "Client receive : " << (char*)reply.data() << std::endl;
 
-  diet_profile_t* tmp =my_deserialize(std::string((char *)reply.data()));
+  boost::shared_ptr<diet_profile_t>
+    tmp(my_deserialize(static_cast<char *>(reply.data())));
 //  *prof =
   prof->IN = tmp->IN;
   prof->OUT = tmp->OUT;
@@ -111,16 +113,16 @@ my_serialize(diet_profile_t* prof){
   return res.str();
 }
 
-diet_profile_t*
-my_deserialize(std::string prof){
-  diet_profile_t* res = NULL;
+boost::shared_ptr<diet_profile_t>
+my_deserialize(const std::string& prof){
+  boost::shared_ptr<diet_profile_t> res;
   std::vector<int> vec;
 
   std::vector<std::string> vecString;
   boost::algorithm::split_regex(vecString, prof, boost::regex("\\${3}"));
 
   if (!vecString.empty()) {
-    res = new diet_profile_t;
+    res.reset(new diet_profile_t);
     std::vector<std::string>::iterator it = vecString.begin();
     res->name = strdup((it++)->c_str());
     res->IN = boost::lexical_cast<int>(*(it++));
