@@ -30,7 +30,7 @@ find_path(SGE_ROOT
 )
 
 find_path(SGE_BIN_DIR
-  qstat
+  qconf
   paths
       $ENV{SGE_ROOT}/bin/linux-x86
       $ENV{SGE_ROOT}/bin/linux-x64
