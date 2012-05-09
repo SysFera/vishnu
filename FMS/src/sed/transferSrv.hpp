@@ -14,7 +14,7 @@
 
 #include "FileFactory.hpp"
 
-#include "DIET_server.h"
+#include "DIET_client.h"
 #include "UserServer.hpp"
 #include "MachineServer.hpp"
 #include <boost/scoped_ptr.hpp>
@@ -50,41 +50,41 @@ solveFileTransferStop(diet_profile_t* pb);
  * \return the service profile
  */
 
-diet_profile_desc_t* getTransferFileProfile(const std::string& serviceName);
-
-/**
- * \brief Function to build the asynchronous File transfer (local to remote) service profile
- * \param serviceName the name of the service
- * \return the service profile
- */
-diet_profile_desc_t* getTransferFileAsyncProfile(const std::string& serviceName);
-
-/**
- * \brief Function to build the File transfer (remote to local) service profile
- * \param serviceName the name of the service
- * \return the service profile
- */
-diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName);
-
-/**
- * \brief Function to build the File transfer (remote to local) service profile
- * \param serviceName the name of the service
- * \return the service profile
- */
-diet_profile_desc_t* getTransferRemoteFileAsyncProfile(const std::string& serviceName);
-
-/**
- * \brief Function to build the File transfer list service profile
- * \return the service profile
- */
-
-diet_profile_desc_t* getFileTransfersListProfile();
-
-/**
- * \brief Function to build the File transfer stop service profile
- * \return the service profile description
- */
-diet_profile_desc_t* getFileTransferStopProfile();
+//diet_profile_desc_t* getTransferFileProfile(const std::string& serviceName);
+//
+///**
+// * \brief Function to build the asynchronous File transfer (local to remote) service profile
+// * \param serviceName the name of the service
+// * \return the service profile
+// */
+//diet_profile_desc_t* getTransferFileAsyncProfile(const std::string& serviceName);
+//
+///**
+// * \brief Function to build the File transfer (remote to local) service profile
+// * \param serviceName the name of the service
+// * \return the service profile
+// */
+//diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName);
+//
+///**
+// * \brief Function to build the File transfer (remote to local) service profile
+// * \param serviceName the name of the service
+// * \return the service profile
+// */
+//diet_profile_desc_t* getTransferRemoteFileAsyncProfile(const std::string& serviceName);
+//
+///**
+// * \brief Function to build the File transfer list service profile
+// * \return the service profile
+// */
+//
+//diet_profile_desc_t* getFileTransfersListProfile();
+//
+///**
+// * \brief Function to build the File transfer stop service profile
+// * \return the service profile description
+// */
+//diet_profile_desc_t* getFileTransferStopProfile();
 
 
 /**
@@ -104,7 +104,7 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
   diet_string_get(diet_parameter(profile, 1), &srcPath, NULL);
   diet_string_get(diet_parameter(profile, 2), &srcUser, NULL);
-  diet_paramstring_get(diet_parameter(profile, 3), &srcHost, NULL);
+  diet_string_get(diet_parameter(profile, 3), &srcHost, NULL);
   diet_string_get(diet_parameter(profile, 4), &dest, NULL);
   diet_string_get(diet_parameter(profile, 5), &optionsSerialized, NULL);
 
@@ -174,7 +174,7 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
       throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
     }
 
-    int vishnuId=ServerFMS::getInstance()->getVishnuId();
+    int vishnuId=ServerFMS::getInstance()->getVishnuId(); 
 
     boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer, srcHost, destHost, srcPath, destPath,vishnuId));
 
@@ -266,7 +266,7 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
 
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
   diet_string_get(diet_parameter(profile, 1), &destUser, NULL);
-  diet_paramstring_get(diet_parameter(profile, 2), &srcHost, NULL);
+  diet_string_get(diet_parameter(profile, 2), &srcHost, NULL);
   diet_string_get(diet_parameter(profile, 3), &srcPath, NULL);
   diet_paramstring_get(diet_parameter(profile, 4), &destHost, NULL);
   diet_string_get(diet_parameter(profile, 5), &destPath, NULL);

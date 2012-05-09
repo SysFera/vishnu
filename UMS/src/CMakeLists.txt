@@ -1,5 +1,5 @@
 include_directories(client api
-  ${DIET_INCLUDE_DIR}
+#  ${DIET_INCLUDE_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${EMF_DATA_DIR}
   ${UMS_EMF_DATA_DIR}
@@ -41,7 +41,7 @@ set(api_HEADERS api/api_ums.hpp)
 add_library(vishnu-ums-client ${client_SRCS} ${cli_SRCS} ${api_SRCS})
 set_target_properties(vishnu-ums-client PROPERTIES VERSION ${VISHNU_VERSION})
 target_link_libraries(vishnu-ums-client
-  ${DIET_CLIENT_LIBRARIES}
+#  ${DIET_CLIENT_LIBRARIES}
   ${Boost_LIBRARIES}
   emf4cpp-vishnu
   vishnu-core
@@ -90,7 +90,8 @@ if(NOT CLIENT_ONLY)
   target_link_libraries(vishnu-ums-server vishnu-core vishnu-core-server ${CMAKE_DL_LIBS})
 
   add_executable(umssed ${sed_SRCS})
-  target_link_libraries(umssed ${DIET_SERVER_LIBRARIES}
+  target_link_libraries(umssed 
+#${DIET_SERVER_LIBRARIES}
     ${LOG_LIBRARY}
     vishnu-ums-server
     emf4cpp-vishnu

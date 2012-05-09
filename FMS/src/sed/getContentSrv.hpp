@@ -8,13 +8,13 @@
 #ifndef GETCONTENTSRV_HPP
 #define GETCONTENTSRV_HPP
 
-#include "DIET_server.h"
+#include "DIET_client.h"
 
 /**
  * \brief The get file content service profile description
  * \return the get file content service profile
  */
-diet_profile_desc_t* getContentProfile();
+//diet_profile_desc_t* getContentProfile();
 /**
  * \brief the get file content solve function
  * \param profile the service profile

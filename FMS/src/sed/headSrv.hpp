@@ -6,13 +6,13 @@
 #ifndef HEADSRV_HPP
 #define HEADSRV_HPP
 
-#include "DIET_server.h"
+#include "DIET_client.h"
 
 /**
  * \brief The head of file service profile description
  * \return the head of file service profile
  */
-diet_profile_desc_t* getHeadProfile();
+//diet_profile_desc_t* getHeadProfile();
 
 /**
  * \brief the head of file solve function

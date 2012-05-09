@@ -14,7 +14,7 @@
 #include <boost/algorithm/string/regex.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/lexical_cast.hpp>
-
+#include "utilVishnu.hpp"
 
 diet_profile_t*
 diet_profile_alloc(const char* name, int IN, int INOUT, int OUT) {
@@ -50,6 +50,10 @@ int
 diet_call(diet_profile_t* prof){
   zmq::context_t ctx(1);
   zmq::socket_t sock(ctx, ZMQ_REQ);
+//  std::string address;
+//  address = std::string(prof->address);
+//  address += ":";
+//  address += vishnu::convertToString<int>(prof->port);
   sock.connect("tcp://localhost:5555");
 //  std::cerr << "send: \"" << my_serialize(prof).c_str() << std::endl;
   std::string s1 = my_serialize(prof);

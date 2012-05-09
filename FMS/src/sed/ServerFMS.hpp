@@ -13,12 +13,16 @@
  * \brief Number of services in FMS
  */
 #define NB_SRV 22
-#include "DIET_server.h"
+#define UNKNOWN_SERVICE 1
+
+#include "DIET_client.h"
 #include "FMSMapper.hpp"
 #include "MapperRegistry.hpp"
 #include "DbConfiguration.hpp"
 #include "TMSMapper.hpp"
 #include "MapperRegistry.hpp"
+
+typedef int (*functionPtr_t)(diet_profile_t*);
 
 class Database;
 
@@ -56,7 +60,20 @@ public :
    */
   ~ServerFMS();
 
+/**
+ * \brief To call a function upon receiving a request
+ * \param profile The profile of the service
+ * \return the error code of the function
+ */
+int
+call(diet_profile_t* profile);
+
 private :
+/**
+ * \brief Init the ptr function map
+ */
+  void
+  initMap();
 
   /**
    * \brief Constructor, private because class is singleton
@@ -75,7 +92,7 @@ private :
    * \brief The singleton reference
    */
   static ServerFMS *minstance;
-  
+
   /**
   * \brief The vishnu id
   */
@@ -83,7 +100,7 @@ private :
   /**
   * \brief Structure representing a profile description
   */
-  diet_profile_desc_t* mprofile;
+//  diet_profile_desc_t* mprofile;
   /**
   * \brief Instance of Database
   */
@@ -92,5 +109,9 @@ private :
   * \brief Instance of FMSMapper
   */
   static FMSMapper *mmapper;
+  /**
+   * \brief map with function ptr for callback
+   */
+  std::map<string, functionPtr_t> mcb;
 };
 #endif // SERVERFMS

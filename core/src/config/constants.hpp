@@ -37,7 +37,9 @@ namespace vishnu {
     INTERVALMONITOR,
     DBPOOLSIZE,
     AUTHENTYPE,
-    DEFAULTBATCHCONFIGFILE
+    DEFAULTBATCHCONFIGFILE,
+    ADDR,
+    PORT
   } param_type_t;
 
   /**

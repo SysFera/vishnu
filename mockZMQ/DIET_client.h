@@ -18,6 +18,9 @@ typedef struct diet_profile_t {
   int INOUT;
   int OUT;
   char* name;
+  // Temporary there
+  char* address;
+  int port;
 }diet_profile_t;
 
 typedef struct diet_arg_t {

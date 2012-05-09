@@ -22,7 +22,9 @@ namespace vishnu {
     /* [13] */ {DBPOOLSIZE, "databaseConnectionsNb", INT_PARAMETER},
     /* [14] */ {AUTHENTYPE, "authenticationType",STRING_PARAMETER},
     /* [15] */ {DEFAULTBATCHCONFIGFILE, "defaultBatchConfigFile",STRING_PARAMETER},
-  };
+    /* [16] */ {ADDR, "address",STRING_PARAMETER},
+    /* [17] */ {PORT, "port",INT_PARAMETER} 
+ };
 //}}RELAX<MISRA_0_1_3>
 }
 
