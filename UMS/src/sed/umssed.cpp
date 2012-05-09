@@ -48,12 +48,16 @@ controlSignal (int signum) {
   }
 }
 
-int ZMQServerStart(boost::scoped_ptr<ServerUMS>* umsserver)
+int ZMQServerStart(boost::scoped_ptr<ServerUMS>* umsserver, string addr, int port)
 {
   // Prepare our context and socket
   zmq::context_t context (1);
   zmq::socket_t socket (context, ZMQ_REP);
-  socket.bind ("tcp://*:5555");
+  string add = addr + ":" + convertToString<int>(port);
+  cout << "Binded to address: " << add << endl;
+  socket.bind(add.c_str());
+
+//  socket.bind ("tcp://*:5555");
 
   while (true) {
 //    std::cout << "Received a message" << std::endl;
@@ -110,6 +114,8 @@ int main(int argc, char* argv[], char* envp[]) {
   string UMSTYPE = "UMS";
   string mid;
   string cfg;
+  string address;
+  int port;
 
   if (argc != 2) {
     return usage(argv[0]);
@@ -123,6 +129,8 @@ int main(int argc, char* argv[], char* envp[]) {
     dbConfig.check();
     config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT, sendmailScriptPath);
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
+    config.getRequiredConfigValue<std::string>(vishnu::ADDR, address);
+    config.getRequiredConfigValue<int>(vishnu::PORT, port);
     if(!boost::filesystem::is_regular_file(sendmailScriptPath)) {
       std::cerr << "Error: cannot open the script file for sending email" << std::endl;
       exit(1);
@@ -168,7 +176,7 @@ int main(int argc, char* argv[], char* envp[]) {
     // Initialize the DIET SeD
     if (!res) {
       //      diet_print_service_table();
-      ZMQServerStart(&server);
+      ZMQServerStart(&server, address, port);
       //      res = diet_SeD(cfg.c_str(), argc, argv);
       unregisterSeD(UMSTYPE, mid);
     } else {

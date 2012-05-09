@@ -19,7 +19,7 @@
 #include <dirent.h>
 
 #include "DIET_client.h"
-#include "DIET_Dagda.h"
+//#include "DIET_Dagda.h"
 
 #include "SessionProxy.hpp"
 
@@ -38,7 +38,7 @@ namespace bfs=boost::filesystem;
 namespace ba=boost::algorithm;
 
 /**
- * \brief Default constructor. 
+ * \brief Default constructor.
  */
 LocalFileProxy::LocalFileProxy() : FileProxy() {
   setHost("localhost");
@@ -48,7 +48,7 @@ LocalFileProxy::LocalFileProxy() : FileProxy() {
 /* Standard constructor.
  * Use the file path as argument. */
 LocalFileProxy::LocalFileProxy(const SessionProxy& sessionProxy, const string& path) : FileProxy(sessionProxy,path) {
-  //setHost("localhost");
+  setHost("localhost");
   upToDate = false;
 }
 
@@ -75,13 +75,13 @@ bool LocalFileProxy::isUpToDate() const {
  * destination is a local path. Otherwise it calls the DIET service.
  */
 template <class TypeOfOption>
-int LocalFileProxy::transferFile(const string& dest, 
-                                 const TypeOfOption& options, 
+int LocalFileProxy::transferFile(const string& dest,
+                                 const TypeOfOption& options,
                                  const std::string& serviceName,
                                  FileTransfer& fileTransfer) {
 
   string host = FileProxy::extHost(dest);
-  
+
   bfs::path localFullPath(bfs::system_complete(bfs::path(getPath())));
   std::string srcHost;
   // get the source full qualified host name 
@@ -94,22 +94,22 @@ int LocalFileProxy::transferFile(const string& dest,
   uid_t uid = getuid();
   struct passwd*  pw = getpwuid(uid);
   char* localUser = pw->pw_name;
-  
 
-  char *optionsToString = NULL; 
+
+  char *optionsToString = NULL;
   char *fileTransferInString = NULL;
 
   if (host=="localhost") {
     throw FMSVishnuException(ERRCODE_INVALID_PATH, "The local to local transfer is not available");
-  } 
+  }
 
   diet_profile_t* profile;
   char* errMsg;
-  
+
   std::string sessionKey=this->getSession().getSessionKey();
 
   bool isAsyncTransfer = (serviceName.compare("FileCopyAsync")==0 || serviceName.compare("FileMoveAsync")==0);
-  if(!isAsyncTransfer) { 
+  if(!isAsyncTransfer) {
     profile = diet_profile_alloc(const_cast<char*>(serviceName.c_str()), 5, 5, 6);
   } else {
     profile = diet_profile_alloc(const_cast<char*>(serviceName.c_str()), 5, 5, 7);
@@ -117,19 +117,20 @@ int LocalFileProxy::transferFile(const string& dest,
   
 
 
-  //IN Parameters  
-  
+
+  //IN Parameters
+
   diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
         DIET_VOLATILE);
   diet_string_set(diet_parameter(profile, 1), const_cast<char*>(localFullPath.string().c_str()),
       DIET_VOLATILE); // local source file
   diet_string_set(diet_parameter(profile, 2), localUser, DIET_VOLATILE);
- 
-  diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(srcHost.c_str()),
+
+  diet_string_set(diet_parameter(profile, 3), const_cast<char*>(srcHost.c_str()),
       DIET_VOLATILE);
 
 
-  diet_string_set(diet_parameter(profile, 4), const_cast<char*>(dest.c_str()), DIET_VOLATILE); 
+  diet_string_set(diet_parameter(profile, 4), const_cast<char*>(dest.c_str()), DIET_VOLATILE);
 
   ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object in to optionsInString
@@ -141,7 +142,7 @@ int LocalFileProxy::transferFile(const string& dest,
     diet_string_set(diet_parameter(profile, 6), NULL, DIET_VOLATILE);
   } else {
     diet_string_set(diet_parameter(profile, 6), NULL, DIET_VOLATILE);
-    diet_string_set(diet_parameter(profile, 7), NULL, DIET_VOLATILE); 
+    diet_string_set(diet_parameter(profile, 7), NULL, DIET_VOLATILE);
   }
 
   if (diet_call(profile)) {
@@ -150,7 +151,7 @@ int LocalFileProxy::transferFile(const string& dest,
 
   if(!isAsyncTransfer) {
   diet_string_get(diet_parameter(profile, 6), &errMsg, NULL);
-  
+
   /*To raise a vishnu exception if the received message is not empty*/
   raiseExceptionIfNotEmptyMsg(errMsg);
   } else {
