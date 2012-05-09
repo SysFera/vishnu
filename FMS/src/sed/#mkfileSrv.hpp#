@@ -11,8 +11,8 @@
 /**
  * \brief The mkfile service profile description
  * \return the mkfile service profile
- */
 //diet_profile_desc_t* getCreateFileProfile();
+ */
 /**
  * \brief the mkfile solve function
  * \param profile the service profile

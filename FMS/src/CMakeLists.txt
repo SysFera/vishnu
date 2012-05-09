@@ -1,5 +1,5 @@
 include_directories(client api
-  ${DIET_INCLUDE_DIR}
+#  ${DIET_INCLUDE_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${EMF_DATA_DIR} 
   ${UMS_EMF_DATA_DIR}
@@ -8,6 +8,8 @@ include_directories(client api
   ${UTILVISHNU_SOURCE_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
   ${Boost_INCLUDE_DIRS}
+  ${ZMQ_INCLUDE_DIR}
+  ${MOCK_INCLUDE_DIR}
 )
 
 set(client_SRCS client/FileProxy
@@ -22,13 +24,16 @@ set(api_HEADERS api/api_fms.hpp)
 add_library(vishnu-fms-client ${client_SRCS} ${api_SRCS})
 SET_TARGET_PROPERTIES(vishnu-fms-client PROPERTIES VERSION ${VISHNU_VERSION})
 target_link_libraries(vishnu-fms-client
-  ${DIET_CLIENT_LIBRARIES}
+#  ${DIET_CLIENT_LIBRARIES}
   ${LOG_LIBRARY}
   ${Boost_LIBRARIES}
   emf4cpp-vishnu
   vishnu-core
   vishnu-ums-client
-  ${LIBCRYPT_LIB})
+  ${LIBCRYPT_LIB}
+  ${ZMQ_LIBRARIES}
+  zmq_helper
+)
 
 ## client CLI
 add_subdirectory(cli)
@@ -71,7 +76,8 @@ if(NOT CLIENT_ONLY)
 
   add_executable(fmssed ${sed_SRCS} ${server_SRCS})
   install(TARGETS fmssed DESTINATION ${SBIN_INSTALL_DIR})
-  target_link_libraries(fmssed ${DIET_SERVER_LIBRARIES}
+  target_link_libraries(fmssed 
+#    ${DIET_SERVER_LIBRARIES}
     ${LOG_LIBRARY}
     ${DATABASE_LIBS}
     ${Boost_LIBRARIES}
@@ -80,6 +86,9 @@ if(NOT CLIENT_ONLY)
     vishnu-ums-server
     ${LDAP_LIBRARIES}
     emf4cpp-vishnu
-    ${LIBCRYPT_LIB})
+    ${LIBCRYPT_LIB}
+    ${ZMQ_LIBRARIES}
+    zmq_helper
+    )
 
 endif()

@@ -7,13 +7,13 @@
 #ifndef CHMODSRV_HPP
 #define CHMODSRV_HPP
 
-#include "DIET_server.h"
+#include "DIET_client.h"
 
 /**
  * \brief The Change mode service profile description
  * \return the change mode service profile
  */
-diet_profile_desc_t* getChangeModeProfile();
+//diet_profile_desc_t* getChangeModeProfile();
 
 /**
  * \brief the change mode solve function

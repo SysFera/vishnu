@@ -10,6 +10,10 @@
 #include <boost/filesystem/fstream.hpp>
 #include <boost/scoped_ptr.hpp>
 
+//For ZMQ
+#include "zmq.hpp"
+#include "DIET_client.h"
+
 using namespace vishnu;
 
 /**
@@ -22,6 +26,49 @@ int
 usage(char* cmd) {
   std::cout << "Usage: " << std::string(cmd) << " vishnu_config.cfg\n";
   return 1;
+}
+
+int ZMQServerStart(boost::scoped_ptr<ServerFMS>* fmsserver, string addr, int port)
+{
+  // Prepare our context and socket
+  zmq::context_t context (1);
+  zmq::socket_t socket (context, ZMQ_REP);
+  string add = addr + ":" + convertToString<int>(port);
+  cout << "Binded to address: " << add << endl;
+  socket.bind(add.c_str());
+//  socket.bind ("tcp://*:5556");
+
+  while (true) {
+//    std::cout << "Received a message" << std::endl;
+
+    //Receive message from ZMQ
+    zmq::message_t message(0);
+    try {
+      if (!socket.recv(&message, 0)) {
+	return false;
+      }
+    } catch (zmq::error_t error) {
+      std::cout << "E: " << error.what() << std::endl;
+      return false;
+    }
+
+    std::string data = static_cast<const char *>(message.data());
+    std::cerr << "recv: \"" << data << "\", size " << data.length() << "\n";
+
+
+    // Deserialize and call UMS Method
+    boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
+    fmsserver->get()->call(profile.get());
+
+    // Send reply back to client
+    std::string resultSerialized = my_serialize(profile.get());
+//    std::cout << " Serialized to send : " << resultSerialized << std::endl;
+
+    zmq::message_t reply(resultSerialized.length()+1);
+    memcpy(reply.data(), resultSerialized.c_str(), resultSerialized.length()+1);
+    socket.send(reply);
+  }
+  return 0;
 }
 
 /**
@@ -43,6 +90,8 @@ int main(int argc, char* argv[], char* envp[]) {
   string FMSTYPE = "FMS";
   string mid;
   string cfg;
+  string address;
+  int port;
 
   if (argc != 2) {
     return usage(argv[0]);
@@ -55,9 +104,11 @@ int main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     config.getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
+    config.getRequiredConfigValue<std::string>(vishnu::ADDR, address);
+    config.getRequiredConfigValue<int>(vishnu::PORT, port);
     if (interval < 0) {
       throw UserException(ERRCODE_INVALID_PARAM, "The Monitor interval value is incorrect");
-    } 
+    }
     dbConfig.check();
   } catch (UserException& e) {
     std::cerr << e.what() << std::endl;
@@ -84,8 +135,9 @@ int main(int argc, char* argv[], char* envp[]) {
       registerSeD(FMSTYPE, config, cfg);
       // Initialize the DIET SeD
       if (!res) {
-        diet_print_service_table();
-        res = diet_SeD(cfg.c_str(), argc, argv);
+//        diet_print_service_table();
+//        res = diet_SeD(cfg.c_str(), argc, argv);
+        ZMQServerStart(&server, address, port);
         unregisterSeD(FMSTYPE, mid);
       } else {
         std::cerr << "There was a problem during services initialization" << std::endl;

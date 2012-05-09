@@ -7,13 +7,13 @@
 #ifndef TAILSRV_HPP
 #define TAILSRV_HPP
 
-#include "DIET_server.h"
+#include "DIET_client.h"
 
 /**
  * \brief The tail of file service profile description
  * \return the tail of file service profile
  */
-diet_profile_desc_t* getTailProfile();
+//diet_profile_desc_t* getTailProfile();
 /**
  * \brief the tail of file solve function
  * \param profile the service profile

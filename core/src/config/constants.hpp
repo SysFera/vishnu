@@ -36,7 +36,9 @@ namespace vishnu {
     REMOTEBINDIR,
     INTERVALMONITOR,
     DBPOOLSIZE,
-    AUTHENTYPE
+    AUTHENTYPE,
+    ADDR,
+    PORT
   } param_type_t;
 
   /**
