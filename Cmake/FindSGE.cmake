@@ -24,7 +24,7 @@ find_library(SGE_LIB
 )
 
 find_path(SGE_ROOT
-  inst_sge
+  sge_execd
   paths
       $ENV{SGE_ROOT}
 )
