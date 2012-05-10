@@ -122,9 +122,15 @@
         <details key="content" value="Is the number of nodes and processors per node used by the job (in the format nbNodes:nbCpuPerNode)."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="batchJobId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="batchJobId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
         <details key="content" value="Represents the batch job id (given by the underlying batch scheduler )."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="outputDir" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="Indicates the directory where the job has been launched."/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -524,6 +530,11 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="errorPath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="Is the path to the file containing errors occured during job's execution. "/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="outputDir" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="Is the path to the file containing errors occured during job's execution. "/>
       </eAnnotations>
