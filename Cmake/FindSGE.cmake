@@ -24,13 +24,13 @@ find_library(SGE_LIB
 )
 
 find_path(SGE_ROOT
-  sge_execd
+  inst_sge
   paths
       $ENV{SGE_ROOT}
 )
 
 find_path(SGE_BIN_DIR
-  qconf
+  sge_execd
   paths
       $ENV{SGE_ROOT}/bin/linux-x86
       $ENV{SGE_ROOT}/bin/linux-x64
