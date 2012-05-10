@@ -342,13 +342,6 @@ validateParameters(const boost::shared_ptr<Options> & opt,
 		const std::vector<std::string> & paramsVector,
 		const bool & isOfFileType = false);
 
-/**
- * \brief Function to create a directory
- * \param dirPath The path of the directory
- * Throw exception on error
- * */
-void
-createOutputDir(const std::string& dirPath);
 
 /**
  * \brief Function to list file containing in a directory
@@ -360,6 +353,20 @@ createOutputDir(const std::string& dirPath);
 void
 appendFilesFromDir(ListStrings& lFiles, std::string & fileNames, const std::string & dirPath);
 
+
+/**
+ * \brief Function to create a directory
+ * \param dirPath The path of the directory
+ * Throw exception on error
+ * */
+void
+createOutputDir(std::string& dirPath);
+
+/**
+ * \brief Function to create a unique file suffix with the current time
+ * \return tha suffix created
+ * */
+std::string createUniqueFileSuffix() ;
 
 } //END NAMESPACE
 

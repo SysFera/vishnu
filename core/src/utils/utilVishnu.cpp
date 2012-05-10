@@ -16,6 +16,7 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/find.hpp>
 #include <sstream>
+#include <time.h>
 
 #include <sys/stat.h>
 // Headers for getaddrinfo function
@@ -762,19 +763,6 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 	return 0 ;
 }
 
-/**
- * \brief Function to create a directory
- * \param dirPath The path of the directory
- * Throw exception on error
- * */
-void
-vishnu::createOutputDir(const std::string& dirPath) {
-	bs::error_code ec ;
-	if( bfs::exists(dirPath) && bfs::is_directory(dirPath) ) return ;
-	if( ! bfs::create_directory(bfs::path(dirPath)) ) {
-		throw SystemException(ERRCODE_SYSTEM, "vishnu::createDir: Cannot create output directory : " + std::string(dirPath)) ;
-	}
-}
 
 /**
  * \brief Function to list file containing in a directory. Recursivity is not taken into account
@@ -788,11 +776,51 @@ vishnu::appendFilesFromDir(ListStrings& lFiles, std::string & fileNames, const s
 
 	if( ! bfs::exists( dirPath ) ) return ;
 	for( bfs::directory_iterator it(dirPath) ; it != bfs::directory_iterator() ; ++it ) {
-		if ( ! bfs::is_directory( *it ) ) {
-			lFiles.push_back( it->path().string() ) ;
-			if( fileNames.size() != 0 ) fileNames = " " + fileNames;
-			fileNames = it->path().string() + fileNames ;   //TODO Check if it's a absolute or a relative path
-		}
-	}
 
+		if ( bfs::is_directory( *it ) ) continue ;
+
+		lFiles.push_back( it->path().string() ) ;
+		if( fileNames.size() != 0 ) fileNames = " " + fileNames;
+		fileNames = it->path().string() + fileNames ;   //TODO Check if it's a absolute or a relative path
+	}
+}
+
+
+/**
+ * \brief Function to create a directory
+ * \param dirPath The path of the directory
+ * Throw exception on error
+ * */
+void
+vishnu::createOutputDir(std::string& dirPath) {
+
+	dirPath += createUniqueFileSuffix() ;
+
+	if( bfs::exists(dirPath) && bfs::is_directory(dirPath) ) return ;
+
+	if( ! bfs::create_directory(bfs::path(dirPath)) ) {
+		throw SystemException(ERRCODE_SYSTEM, "vishnu::createDir: Cannot create output directory : " + std::string(dirPath)) ;
+	}
+}
+
+/**
+ * \brief Function to create a unique file suffix with the current time
+ * \return the suffix created
+ * */
+std::string vishnu::createUniqueFileSuffix() {
+
+	std::ostringstream ossBuf ;
+	time_t rawtime;
+	time ( &rawtime );
+	struct tm * tinfo;
+	tinfo = localtime ( &rawtime );
+
+	ossBuf << "_" << (1900 + tinfo->tm_year)
+				<< ( tinfo->tm_mon < 9? "0": "")<< tinfo->tm_mon + 1
+				<< ( tinfo->tm_mday < 10? "0": "" )<< tinfo->tm_mday
+				<< ( tinfo->tm_hour < 10? "0": "" )<< tinfo->tm_hour
+				<< ( tinfo->tm_min < 10? "0": "" )<< tinfo->tm_min
+				<< ( tinfo->tm_sec < 10? "0": "" )<< tinfo->tm_sec ;
+
+	return ossBuf.str() ;
 }

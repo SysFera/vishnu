@@ -132,7 +132,9 @@ solveSubmitJob(diet_profile_t* pb) {
 			if(defaultPath) free(defaultPath) ;
 		}
 		// Clean the container
-		for(unsigned int i = 0; i < fileContainer.size; i++) dagda_delete_data(fileContainer.elt_ids[i]);
+		for(unsigned int i = 0; i < fileContainer.size; i++) {
+			dagda_delete_data(fileContainer.elt_ids[i]);
+		}
 
 		submitOptions->setFileParams(fParamsBuf.str()) ; //Update file parameters with the corresponding paths on the server
 
@@ -344,112 +346,6 @@ solveListOfQueues(diet_profile_t* pb) {
 	return 0;
 }
 
-/**
- * \brief Function to solve the jobOutPutGetResult service
- * \param pb is a structure which corresponds to the descriptor of a profile
- * \return raises an exception on error
- */
-int
-solveJobOutPutGetResult(diet_profile_t* pb) {
-
-	char* sessionKey = NULL;
-	char* machineId = NULL;
-	char* ID2 = NULL;
-	char* ID3 = NULL;
-	char* jobResultSerialized = NULL;
-	char* moutDir = NULL;
-	std::string empty = "";
-	std::string errorInfo;
-	std::string finishError ="";
-	int mapperkey;
-	std::string cmd = "";
-
-	//IN Parameters
-	diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-	diet_string_get(diet_parameter(pb,1), &machineId, NULL);
-	diet_string_get(diet_parameter(pb,2), &jobResultSerialized, NULL);
-	diet_string_get(diet_parameter(pb,3), &moutDir, NULL);
-
-	SessionServer sessionServer = SessionServer(std::string(sessionKey));
-
-	try {
-		//MAPPER CREATION
-		Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
-		mapperkey = mapper->code("vishnu_get_job_output");
-		mapper->code(std::string(machineId), mapperkey);
-		mapper->code(std::string(jobResultSerialized), mapperkey);
-		mapper->code(std::string(moutDir), mapperkey);
-		cmd = mapper->finalize(mapperkey);
-
-
-		TMS_Data::JobResult_ptr jobResult = NULL;
-		if(!parseEmfObject(std::string(jobResultSerialized), jobResult)) {
-			throw SystemException(ERRCODE_INVDATA, "solveJobOutPutGetResult: jobResult object is not well built");
-		}
-
-		JobOutputServer jobOutputServer(sessionServer, machineId, *jobResult);
-		TMS_Data::JobResult result = jobOutputServer.getJobOutput();
-		//OUT Parameter
-		diet_string_set(diet_parameter(pb,4), strdup(empty.c_str()), DIET_VOLATILE);
-
-		char* ID2 = NULL;
-		char* ID3 = NULL;
-
-		std::string outputPath = result.getOutputPath();
-		std::string errorPath = result.getErrorPath();
-
-		dagda_init_container(diet_parameter(pb,5));
-
-		std::string stdErr = "errorsOfJob_" + result.getJobId() ;
-		std::string stdOut = "outputOfJob_" + result.getJobId() ;
-
-		std::string fileNames = "" ; ListStrings filePaths ;
-		if(result.getOutputDir() != "") {
-			vishnu::appendFilesFromDir(filePaths, fileNames, result.getOutputDir()) ;
-			fileNames = " " + fileNames;
-		}
-
-		filePaths.push_back(outputPath) ; filePaths.push_back(errorPath) ;
-		fileNames =  stdErr + " " + stdOut + fileNames ;
-
-		char* fileNamesDescr = strdup("/tmp/odescXXXXXX");
-		vishnu::createTmpFile(fileNamesDescr, fileNames) ;
-		filePaths.push_back(fileNamesDescr) ;
-
-		size_t maxIdx = filePaths.size() - 1 ;
-		char *fileIds[maxIdx + 1] ;
-
-		for(int i = maxIdx ; i >= 0; i--) {  //Send the description file first
-			dagda_put_file(strdup(filePaths[i].c_str()), DIET_PERSISTENT_RETURN, &fileIds[i]);
-			dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fileIds[i], maxIdx - i);
-		}
-		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
-
-	} catch (VishnuException& e) {
-		try {
-			sessionServer.finish(cmd, TMS, vishnu::CMDFAILED);
-		} catch (VishnuException& fe) {
-			finishError =  fe.what();
-			finishError +="\n";
-		}
-		e.appendMsgComp(finishError);
-		errorInfo =  e.buildExceptionString();
-		diet_string_set(diet_parameter(pb,4), strdup(errorInfo.c_str()), DIET_VOLATILE);
-
-		std::string outputPath = "error.txt";
-		std::string errorPath = "error.txt";
-
-		dagda_init_container(diet_parameter(pb,5));
-
-		dagda_put_file(strdup(outputPath.c_str()), DIET_PERSISTENT_RETURN, &ID2);
-		dagda_put_file(strdup(errorPath.c_str()), DIET_PERSISTENT_RETURN, &ID3);
-
-		dagda_add_container_element((*diet_parameter(pb,5)).desc.id, ID2, 0);
-		dagda_add_container_element((*diet_parameter(pb,5)).desc.id, ID3, 1);
-
-	}
-	return 0;
-}
 
 /**
  * \brief Function to solve the generic query service
@@ -543,6 +439,117 @@ solveGetListOfJobsProgression(diet_profile_t* pb) {
 }
 
 /**
+ * \brief Function to solve the jobOutPutGetResult service
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
+int
+solveJobOutPutGetResult(diet_profile_t* pb) {
+
+	char* sessionKey = NULL;
+	char* machineId = NULL;
+	char* ID2 = NULL;
+	char* ID3 = NULL;
+	char* jobResultSerialized = NULL;
+	char* moutDir = NULL;
+	std::string empty = "";
+	std::string errorInfo;
+	std::string finishError ="";
+	int mapperkey;
+	std::string cmd = "";
+
+	//IN Parameters
+	diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+	diet_string_get(diet_parameter(pb,1), &machineId, NULL);
+	diet_string_get(diet_parameter(pb,2), &jobResultSerialized, NULL);
+	diet_string_get(diet_parameter(pb,3), &moutDir, NULL);
+
+	SessionServer sessionServer = SessionServer(std::string(sessionKey));
+
+	try {
+		//MAPPER CREATION
+		Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
+		mapperkey = mapper->code("vishnu_get_job_output");
+		mapper->code(std::string(machineId), mapperkey);
+		mapper->code(std::string(jobResultSerialized), mapperkey);
+		mapper->code(std::string(moutDir), mapperkey);
+		cmd = mapper->finalize(mapperkey);
+
+
+		TMS_Data::JobResult_ptr jobResult = NULL;
+		if(!parseEmfObject(std::string(jobResultSerialized), jobResult)) {
+			throw SystemException(ERRCODE_INVDATA, "solveJobOutPutGetResult: jobResult object is not well built");
+		}
+
+		JobOutputServer jobOutputServer(sessionServer, machineId, *jobResult);
+		TMS_Data::JobResult result = jobOutputServer.getJobOutput();
+		//OUT Parameter
+		diet_string_set(diet_parameter(pb,4), strdup(empty.c_str()), DIET_VOLATILE);
+
+		dagda_init_container(diet_parameter(pb,5));
+
+		std::string fileNames = "" ; 
+		ListStrings filePaths ;
+		if(result.getOutputDir().size() != 0) {
+			vishnu::appendFilesFromDir(filePaths, fileNames, result.getOutputDir()) ;
+			fileNames = " " + fileNames;
+		}
+
+		std::ostringstream ossFileName("") ;
+		ossFileName << result.getJobId(); /* each line starts with the associated job id */
+
+		if( bfs::exists(result.getOutputPath()) ) {
+			filePaths.push_back( result.getOutputPath() ) ;
+			ossFileName << " " << result.getJobId() << ".stdout" ;
+		}
+		if( bfs::exists(result.getErrorPath()) ) {
+			filePaths.push_back( result.getErrorPath() ) ;
+			ossFileName << " " << result.getJobId() << ".stderr" ;
+		}
+
+		ossFileName << fileNames << std::endl ;  /* Ending the line with files from output dir */
+
+		char* fileNamesDescr = strdup("/tmp/vishnu-fdescXXXXXX");
+		vishnu::createTmpFile(fileNamesDescr, ossFileName.str()) ;
+		filePaths.push_back(fileNamesDescr) ;
+
+		size_t maxIdx = filePaths.size() - 1 ;
+		char *fileIds[maxIdx + 1] ;
+
+		for(int i = maxIdx ; i >= 0; i--) {  //Send the description file first
+			dagda_put_file(strdup(filePaths[i].c_str()), DIET_PERSISTENT_RETURN, &fileIds[i]);
+			dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fileIds[i], maxIdx - i);
+		}
+		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
+
+	} catch (VishnuException& e) {
+		try {
+			sessionServer.finish(cmd, TMS, vishnu::CMDFAILED);
+		} catch (VishnuException& fe) {
+			finishError =  fe.what();
+			finishError +="\n";
+		}
+		e.appendMsgComp(finishError);
+		errorInfo =  e.buildExceptionString();
+		diet_string_set(diet_parameter(pb,4), strdup(errorInfo.c_str()), DIET_VOLATILE);
+
+		std::string outputPath = "error.txt";
+		std::string errorPath = "error.txt";
+
+		dagda_init_container(diet_parameter(pb,5));
+
+		dagda_put_file(strdup(outputPath.c_str()), DIET_PERSISTENT_RETURN, &ID2);
+		dagda_put_file(strdup(errorPath.c_str()), DIET_PERSISTENT_RETURN, &ID3);
+
+		dagda_add_container_element((*diet_parameter(pb,5)).desc.id, ID2, 0);
+		dagda_add_container_element((*diet_parameter(pb,5)).desc.id, ID3, 1);
+
+	}
+	return 0;
+}
+
+
+/**
  * \brief Function to solve the jobOutputGetCompletedJobs service
  * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
@@ -585,21 +592,46 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 		diet_string_set(diet_parameter(pb,4), strdup(errorInfo.c_str()), DIET_VOLATILE);
 
 		dagda_init_container(diet_parameter(pb,5));
+		ListStrings filePaths ;
+		std::ostringstream ossFileName("") ;
 
-		std::string outputPath;
-		std::string errorPath;
-		TMS_Data::JobResult_ptr jobResult = NULL;
 		for(size_t i = 0; i < completedJobsOutput->getResults().size(); i++) {
-			jobResult = completedJobsOutput->getResults().get(i);
-			outputPath = jobResult->getOutputPath();
-			errorPath = jobResult->getErrorPath();
-			char* ID1 = NULL;
-			char* ID2 = NULL;
-			dagda_put_file(strdup(outputPath.c_str()), DIET_PERSISTENT_RETURN, &ID1);
-			dagda_put_file(strdup(errorPath.c_str()), DIET_PERSISTENT_RETURN, &ID2);
-			dagda_add_container_element((*diet_parameter(pb,5)).desc.id, ID1, 2*i);
-			dagda_add_container_element((*diet_parameter(pb,5)).desc.id, ID2, 2*i+1);
+
+			TMS_Data::JobResult_ptr result = completedJobsOutput->getResults().get(i) ;
+
+			std::string fileNames = "" ;
+			if( result->getOutputDir().size() != 0 ) {
+				vishnu::appendFilesFromDir(filePaths, fileNames, result->getOutputDir()) ;
+				fileNames = " " + fileNames;
+			}
+
+			ossFileName << result->getJobId(); /* each line starts with the associated job id */
+
+			if( bfs::exists(result->getOutputPath()) ) {
+				filePaths.push_back( result->getOutputPath() ) ;
+				ossFileName << " " << result->getJobId() << ".stdout" ;
+			}
+			if( bfs::exists(result->getErrorPath()) ) {
+				filePaths.push_back( result->getErrorPath() ) ;
+				ossFileName << " " << result->getJobId() << ".stderr" ;
+			}
+			ossFileName << fileNames << std::endl ;  /* Ending the line with files from output dir */
 		}
+
+		char* fileNamesDescr = strdup("/tmp/vishnu-fdescXXXXXX");
+		vishnu::createTmpFile(fileNamesDescr, ossFileName.str()) ;
+		filePaths.push_back(fileNamesDescr) ;
+
+		size_t maxIdx = filePaths.size() - 1 ;
+		char *fileIds[maxIdx+1] ;
+		int idx ;
+		for(int i = maxIdx ; i >= 0; i--) {  /* according to the composition of filePaths,
+											    the description file is sent first */
+			idx = maxIdx - i ;
+			dagda_put_file(strdup(filePaths[i].c_str()), DIET_PERSISTENT_RETURN, &fileIds[idx]);
+			dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fileIds[idx], idx);
+		}
+
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
 	} catch (VishnuException& e) {
 		try {

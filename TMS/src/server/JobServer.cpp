@@ -9,6 +9,7 @@
 #include "LocalAccountServer.hpp"
 #include "UserServer.hpp"
 #include "SSHJobExec.hpp"
+#include "utilVishnu.hpp"
 #include "utilServer.hpp"
 #include "DbFactory.hpp"
 #include "ScriptGenConvertor.hpp"
