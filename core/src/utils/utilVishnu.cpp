@@ -773,16 +773,14 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
  * Throw exception on error
  * */
 void
-vishnu::appendFilesFromDir(ListStrings& lFiles, std::string & fileNames, const std::string & dirPath) {
+vishnu::appendFilesFromDir(ListStrings& lFiles, std::ostringstream & fileNames, const std::string & dirPath) {
 
 	if( ! bfs::exists( dirPath ) ) return ;
 	for( bfs::directory_iterator it(dirPath) ; it != bfs::directory_iterator() ; ++it ) {
 
 		if ( bfs::is_directory( *it ) ) continue ;
-
 		lFiles.push_back( it->path().string() ) ;
-		if( fileNames.size() != 0 ) fileNames += " ";
-		fileNames += it->path().string() ;   //TODO Check if it's a absolute or a relative path
+		fileNames << ((fileNames.str().size() != 0)? " " : "") + it->path().string() ;   //TODO Check if it's a absolute or a relative path
 	}
 }
 

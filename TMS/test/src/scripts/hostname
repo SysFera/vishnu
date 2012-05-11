@@ -2,7 +2,7 @@
 
 /bin/hostname 
 
-echo $toto
+echo "$TOTO" > $VISHNU_OUTPUT_DIR/ouput1.dat
 
-cat $FILE
+cat $FILE >> $VISHNU_OUTPUT_DIR/output2.dat
 

@@ -116,26 +116,22 @@ solveSubmitJob(diet_profile_t* pb) {
 
 		std::string fParamsStr = submitOptions->getFileParams() ;
 		ListStrings fParamsVec ;
-		boost::split(fParamsVec, fParamsStr, boost::is_any_of(" ")) ;
 		std::ostringstream fParamsBuf("") ;
-		// Get all file from the container
-		for(unsigned int i = 0 ; i < fileContainer.size; i++) {
-			size_t pos  ;  string filePath ; char* defaultPath  = NULL ;
+		size_t pos  ;
+		string filePath ;
+		char* defaultPath  = NULL ;
 
-			pos = fParamsVec[i].find("=") ;  if(pos == std::string::npos) continue ;
-			filePath =  mktemp(strdup("PFILE-XXXXXX")) ;
+		boost::split(fParamsVec, fParamsStr, boost::is_any_of(" ")) ;
+		for(unsigned int i = 0 ; i < fileContainer.size; i++) {// Get all file from the container
+			pos = fParamsVec[i].find("=") ;
+			if(pos == std::string::npos) continue ;
+			filePath =  mktemp(strdup("/tmp/PFILE-XXXXXX")) ;
 			dagda_get_file(fileContainer.elt_ids[i], &defaultPath);
 			vishnu::boostMoveFile(std::string(defaultPath), "/tmp/", filePath);
-
-			if(fParamsBuf.str().size() != 0) fParamsBuf << " " ;
-			fParamsBuf << fParamsVec[i].substr(0, pos) << "=" << filePath ;
-			if(defaultPath) free(defaultPath) ;
-		}
-		// Clean the container
-		for(unsigned int i = 0; i < fileContainer.size; i++) {
+			fParamsBuf << ((fParamsBuf.str().size() != 0)? " " : "") + fParamsVec[i].substr(0, pos) << "=" << filePath ;
 			dagda_delete_data(fileContainer.elt_ids[i]);
+			free(defaultPath) ;
 		}
-
 		submitOptions->setFileParams(fParamsBuf.str()) ; //Update file parameters with the corresponding paths on the server
 
 		JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
@@ -488,16 +484,9 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
 
 		dagda_init_container(diet_parameter(pb,5));
 
-		std::string fileNames = "" ; 
 		ListStrings filePaths ;
-		if(result.getOutputDir().size() != 0) {
-			vishnu::appendFilesFromDir(filePaths, fileNames, result.getOutputDir()) ;
-			fileNames = " " + fileNames;
-		}
-
 		std::ostringstream ossFileName("") ;
 		ossFileName << result.getJobId(); /* each line starts with the associated job id */
-
 		if( bfs::exists(result.getOutputPath()) ) {
 			filePaths.push_back( result.getOutputPath() ) ;
 			ossFileName << " " << result.getJobId() << ".stdout" ;
@@ -506,8 +495,8 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
 			filePaths.push_back( result.getErrorPath() ) ;
 			ossFileName << " " << result.getJobId() << ".stderr" ;
 		}
-
-		ossFileName << fileNames << std::endl ;  /* Ending the line with files from output dir */
+		vishnu::appendFilesFromDir(filePaths, ossFileName, result.getOutputDir()) ;
+		ossFileName << std::endl ;
 
 		char* fileNamesDescr = strdup("/tmp/vishnu-fdescXXXXXX");
 		char* fid = NULL ;
@@ -603,27 +592,23 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 		for(size_t i = 0; i < completedJobsOutput->getResults().size(); i++) {
 
 			TMS_Data::JobResult_ptr result = completedJobsOutput->getResults().get(i) ;
-
-			std::string fileNames = "" ;
-			if( result->getOutputDir().size() != 0 ) {
-				vishnu::appendFilesFromDir(filePaths, fileNames, result->getOutputDir()) ;
-				fileNames = " " + fileNames;
-			}
-
 			ossFileName << result->getJobId(); /* each line starts with the associated job id */
-			if( bfs::exists(result->getOutputPath()) ) {
-				filePaths.push_back(result->getOutputPath()) ;
+			if( bfs::exists( result->getOutputPath() ) ) {
+				std::cout << "STDOUT " <<  result->getOutputPath() << std::endl;
+				filePaths.push_back( result->getOutputPath() ) ;
 				ossFileName << " " << result->getJobId() << ".stdout" ;
 			}
-			if( bfs::exists(result->getErrorPath()) ) {
+			if( bfs::exists( result->getErrorPath() ) ) {
 				filePaths.push_back( result->getErrorPath() ) ;
+				std::cout << "STDERR " <<  result->getErrorPath() << std::endl;
 				ossFileName << " " << result->getJobId() << ".stderr" ;
 			}
-			ossFileName << fileNames << std::endl ;  /* Ending the line with files from output dir */
+			vishnu::appendFilesFromDir(filePaths, ossFileName, result->getOutputDir()) ;
+			ossFileName << std::endl ;
 		}
 
-		char* fileNamesDescr = strdup("/tmp/vishnu-fdescXXXXXX");
 		char* fid = NULL ;
+		char* fileNamesDescr = strdup("/tmp/vishnu-fdescXXXXXX");
 		vishnu::createTmpFile(fileNamesDescr, ossFileName.str()) ;
 		dagda_put_file(fileNamesDescr, DIET_PERSISTENT_RETURN, &fid); /* Send the description file first */
 		dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fid, 0);
@@ -631,11 +616,9 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 
 		size_t nbFiles = filePaths.size() ;
 		char *fileIds[nbFiles] ;
-		std::cout << "SIZEEEEEEEEEEEEEEEEEEE   "<< nbFiles << std::endl ;
 		for(int i = 0; i < nbFiles;  i++) {
 			char* path = strdup(filePaths[i].c_str()) ;
 			dagda_put_file(path, DIET_PERSISTENT_RETURN, &fileIds[i]);
-			std::cout << "PATHHHHHHHHHHHHHHHHHH   "<< path << std::endl ;
 			dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fileIds[i], i+1);
 			free(path) ;
 		}
