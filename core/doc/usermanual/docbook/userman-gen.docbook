@@ -729,6 +729,14 @@
 	      as follows : export LANG=C.
 	    </para>
           </listitem>
+          <listitem>
+            <para>
+	      If the message <emphasis role="italic">&quot;The batch scheduler indicates an error [SGE ERROR: warning: username your job is not allowed to run in any queue]&quot;</emphasis> is returned after
+	      job submission on the batch scheduler SGE, you have to check the existence of a queue by using the command: <emphasis
+                  role="bold"> qconf -sql</emphasis>. If there is no queue, you must add one by using the command <emphasis
+                  role="bold">qconf -aq </emphasis>.
+	    </para>
+          </listitem>
         </itemizedlist>
       </section>
     </section>
