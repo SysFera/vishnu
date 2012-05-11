@@ -11,7 +11,7 @@ add_library(zmq_helper
   Annuary.cpp
   Server.cpp
   Handler.cpp
-  TreatmentData.hpp
+  TreatmentData.cpp
   BasicHandler.cpp
   HandlerFactory.cpp
   ZMQHelper/mdclient.cpp)
@@ -19,6 +19,16 @@ add_library(zmq_helper
 target_link_libraries (zmq_helper
   ${ZMQ_LIBRARIES} ${Boost_LIBRARIES})
 
+add_executable(namer
+  namer.cpp
+  )
+
+target_link_libraries(namer
+  ${ZMQ_LIBRARIES} 
+  ${Boost_LIBRARIES}
+  zmq_helper
+  vishnu-core
+)
 
 # --------------------------------------------------------------------------
 #add_subdirectory(ZMQHelper)

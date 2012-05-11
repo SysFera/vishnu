@@ -6,9 +6,8 @@ BasicHandler::BasicHandler(boost::shared_ptr<Message> msg) : Handler(msg) {
 BasicHandler::~BasicHandler(){
 }
 
-template <class T>
 boost::shared_ptr<Message>
-BasicHandler::treat(TreatmentData<T>* data){
+BasicHandler::treat(TreatmentData* data){
   boost::shared_ptr<Message> answer;
   switch (mmsg.get()->getAction()) {
   case GEAD:
@@ -57,7 +56,7 @@ template <class T>
 boost::shared_ptr<Message>
 BasicHandler::doService(T* server){
   boost::shared_ptr<Message> answer;
-  server->call(mmsg.get()->getProfile());
+  server->call(mmsg.get()->getProfile().get());
   answer = mmsg;
 }
 

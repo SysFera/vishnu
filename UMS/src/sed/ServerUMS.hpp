@@ -18,6 +18,7 @@
 #include "MapperRegistry.hpp"
 #include "DbConfiguration.hpp"
 #include "AuthenticatorConfiguration.hpp"
+#include "SeD.hpp"
 
 
 using namespace std;
@@ -69,7 +70,7 @@ static const char* SRV[NB_SRV] = {
  * \class ServerUMS
  * \brief This class describes the UMS server
  */
-class ServerUMS {
+class ServerUMS : public SeD {
 public :
 
   /**
