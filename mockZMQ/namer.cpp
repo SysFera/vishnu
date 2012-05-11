@@ -1,5 +1,10 @@
 #include "Server.hpp"
 #include "Annuary.hpp"
+#include "Message.hpp"
+#include "Handler.hpp"
+#include "HandlerFactory.hpp"
+#include "TreatmentData.hpp"
+#include "utilVishnu.hpp"
 
 void
 usage(){
@@ -8,13 +13,9 @@ usage(){
 
 bool
 isGoodAction(boost::shared_ptr<Message> msg) {
-  return (msg.get().getAction() == GEAD ||
-          msg.get().getAction() == ADSE ||
-          msg.get().getAction() == RESE);
-
-  if (!res) {
-  }
-  return res;
+  return (msg.get()->getAction() == GEAD ||
+          msg.get()->getAction() == ADSE ||
+          msg.get()->getAction() == RESE);
 }
 
 
@@ -33,8 +34,8 @@ int main(int argc, char** argv){
   std::string address = std::string(argv[1]);
   int port = atoi(argv[2]);
 
-  std::string add = address + ":" + convertToString<int>(port);
-  cout << "Binded to address: " << add << endl;
+  std::string add = address + ":" + vishnu::convertToString<int>(port);
+  std::cout << "Binded to address: " << add << std::endl;
   socket.bind(add.c_str());
 
   while (true) {
@@ -63,14 +64,14 @@ int main(int argc, char** argv){
 
 // The mapper can only receive known actions, otherwise send an error
     if (isGoodAction(msg)) {
-      Handler* handl = hf->getHandler(msg.get().getHandler(), msg);
-      t.setAnnuary(ann.get())
+      Handler* handl = hf.getHandler(msg.get()->getHandler(), msg);
+      t.setAnnuary(ann.get());
       answer = handl->treat(&t);
     } else {
-      answer = boost::shared_ptr<Message>(Message(msg.get().getHandler(), HAER, msg.get().getServer(), msg.get().getProfile(), "Unknown message type received by the annuary"));
+      answer = boost::shared_ptr<Message>(new Message(msg.get()->getHandler(), HAER, msg.get()->getServer(), msg.get()->getProfile(), std::string("Unknown message type received by the annuary")));
     }
 
-    std::string resultSerialized = answer.get().toString();
+    std::string resultSerialized = answer.get()->toString();
 
 
     // Send reply back to client

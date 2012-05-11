@@ -21,6 +21,7 @@
 #include "DbConfiguration.hpp"
 #include "TMSMapper.hpp"
 #include "MapperRegistry.hpp"
+#include "SeD.hpp"
 
 typedef int (*functionPtr_t)(diet_profile_t*);
 
@@ -30,7 +31,7 @@ class Database;
  * \class ServerFMS
  * \brief This class describes the FMS server
  */
-class ServerFMS {
+class ServerFMS  : public SeD {
 public :
 
   /**

@@ -12,9 +12,8 @@ public :
   virtual ~BasicHandler();
 
 
-  template <class T>
-  boost::shared_ptr<Message>
-  treat(TreatmentData<T>* data);
+  virtual boost::shared_ptr<Message>
+  treat(TreatmentData* data);
 
   virtual boost::shared_ptr<Message>
   getAddress(Annuary* ann);

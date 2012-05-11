@@ -6,41 +6,30 @@
 // just attributes, getters and setters, nothing more than a struct
 
 #include "Annuary.hpp"
+#include "SeD.hpp"
 
-template <class T>
 class TreatmentData {
 
 public:
-  TreatmentData() {}
+  TreatmentData();
 
-
-  ~TreatmentData(){}
-
-  void
-  setAnnuary(Annuary *ann){
-    mann = ann;
-  }
+  ~TreatmentData();
 
   void
-  setServer(T* ser){
-    mser = ser;
-  }
+  setAnnuary(Annuary *ann);
+
+  void
+  setServer(SeD* ser);
 
   Annuary*
-  getAnnuary(){
-    return mann;
-  }
+  getAnnuary();
 
-
-  T*
-  getServer(){
-    return mser;
-  }
-
+  SeD*
+  getServer();
 
 private:
   Annuary* mann;
-  T* mser;
+  SeD* mser;
 
 
 };
