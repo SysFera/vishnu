@@ -15,6 +15,7 @@ class Annuary;
 
 #include <string>
 #include <boost/shared_ptr.hpp>
+#include "TreatmentData.hpp"
 
 class Handler {
 
@@ -23,6 +24,9 @@ public:
   Handler(boost::shared_ptr<Message> msg);
 
   virtual ~Handler();
+
+  virtual boost::shared_ptr<Message>
+  treat(TreatmentData* data) = 0;
 
   virtual boost::shared_ptr<Message>
   getAddress(Annuary* ann)=0;
