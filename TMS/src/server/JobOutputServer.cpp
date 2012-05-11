@@ -63,9 +63,11 @@ JobOutputServer::getJobOutput() {
 	std::vector<std::string> results;
 	std::vector<std::string>::iterator  iter;
 	//To get the output and error path of the job
-	std::string sqlRequest = "SELECT outputPath, errorPath, owner, status, submitDate, outputDir from vsession, job where"
-			" vsession.numsessionid=job.vsession_numsessionid and jobId='"+mjobResult.getJobId()+"'"
-			" and submitMachineId='"+mmachineId+"'" ;
+	std::string sqlRequest = "SELECT outputPath, errorPath, owner, status, submitDate, outputDir "
+			"FROM vsession, job "
+			"WHERE vsession.numsessionid=job.vsession_numsessionid"
+			"  AND job.jobId='"+mjobResult.getJobId()+"' "
+			"  AND job.submitMachineId='"+mmachineId+"'" ;
 
 	boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
 
@@ -115,7 +117,6 @@ JobOutputServer::getJobOutput() {
 		throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
 	}
 
-	bool needDatabaseUpdate = false ;
 	mjobResult.setOutputDir( outputDir ) ; //TODO copy on the local account??
 	SSHJobExec sshJobExec(acLogin, machineName);
 	try {
@@ -123,24 +124,19 @@ JobOutputServer::getJobOutput() {
 		mjobResult.setOutputPath( outputPath ) ;
 	} catch(VishnuException & err) {
 		std::cerr << err.what() << std::endl;
-		needDatabaseUpdate = true ;
 	}
 
 	try {
 		sshJobExec.enableReadRight2Vishnu( errorPath ) ;
-		mjobResult.setOutputPath( errorPath ) ;
+		mjobResult.setErrorPath( errorPath ) ;
 	} catch(VishnuException & err) {
 		std::cerr << err.what() << std::endl;
-		needDatabaseUpdate = true ;
 	}
-
-	if( needDatabaseUpdate ) {
-		time_t submitDate = convertLocaltimeINUTCtime(convertToTimeType(subDateStr));
-		if( vishnu::getCurrentTimeInUTC()-submitDate > 2592000 ) {
-			std::string sqlUpdatedRequest = "UPDATE job SET status=7 where jobId='" + mjobResult.getJobId() + "'";
-			mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
-		}
-	}
+	//		time_t submitDate = convertLocaltimeINUTCtime(convertToTimeType(subDateStr));
+	//		if( vishnu::getCurrentTimeInUTC() - submitDate > 2592000 ) {
+	std::string sqlUpdatedRequest = "UPDATE job SET status=7 where jobId='" + mjobResult.getJobId() + "'";
+	mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
+	//		}
 
 	return mjobResult;
 }
@@ -176,9 +172,12 @@ JobOutputServer::getCompletedJobsOutput() {
 	mlistJobsResult = ecoreFactory->createListJobResults();
 
 	//To get the output and error path of all jobs
-	std::string sqlRequest = "SELECT jobId, outputPath, errorPath, status, submitDate, outputDir from vsession, job where"
-			" vsession.numsessionid=job.vsession_numsessionid and owner='"+acLogin+"'"
-			" and submitMachineId='"+mmachineId+"'" ;
+	std::string sqlRequest = "SELECT jobId, outputPath, errorPath, status, submitDate, outputDir "
+			"FROM vsession, job "
+			"WHERE vsession.numsessionid=job.vsession_numsessionid"
+			"  AND job.owner='"+acLogin+"'"
+			"  AND job.submitMachineId='"+mmachineId+"'"
+			"  AND job.status=5" ;
 	boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
 
 	if (sqlResult->getNbTuples() == 0) {
@@ -211,40 +210,31 @@ JobOutputServer::getCompletedJobsOutput() {
 			errorPath = errorPath.substr(pos2+1);
 		}
 
-		if( outputPath.size() != 0 && errorPath.size() != 0 && status == 5) {
-			TMS_Data::JobResult_ptr curResult = ecoreFactory->createJobResult();
-			curResult->setJobId(jobId);
-			curResult->setOutputDir( outputDir ) ; //TODO copy on the local account??
-			bool needDatabaseUpdate = false ;
+		TMS_Data::JobResult_ptr curResult = ecoreFactory->createJobResult();
+		curResult->setJobId(jobId);
+		curResult->setOutputDir( outputDir ) ; //TODO copy on the local account??
 
-			SSHJobExec sshJobExec(acLogin, machineName);
-			try {
-				sshJobExec.enableReadRight2Vishnu( outputPath ) ;
-				curResult->setOutputPath( outputPath ) ;
-			} catch(VishnuException & err) {
-				std::cerr << err.what() << std::endl;
-				needDatabaseUpdate = true ;
-			}
-
-			try {
-				sshJobExec.enableReadRight2Vishnu( errorPath ) ;
-				curResult->setOutputPath( errorPath ) ;
-			} catch(VishnuException & err) {
-				std::cerr << err.what() << std::endl;
-				needDatabaseUpdate = true ;
-			}
-
-			if( needDatabaseUpdate ) {
-				time_t submitDate = convertLocaltimeINUTCtime(convertToTimeType(subDateStr));
-				if( vishnu::getCurrentTimeInUTC()-submitDate > 2592000 ) {
-					std::string sqlUpdatedRequest = "UPDATE job SET status=7 where jobId='"+jobId+"'";
-					mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
-				}
-			}
-			mlistJobsResult->getResults().push_back(curResult);
+		SSHJobExec sshJobExec(acLogin, machineName);
+		try {
+			sshJobExec.enableReadRight2Vishnu( outputPath ) ;
+			curResult->setOutputPath( outputPath ) ;
+		} catch(VishnuException & err) {
+			std::cerr << err.what() << std::endl;
 		}
-	}
 
+		try {
+			sshJobExec.enableReadRight2Vishnu( errorPath ) ;
+			curResult->setOutputPath( errorPath ) ;
+		} catch(VishnuException & err) {
+			std::cerr << err.what() << std::endl;
+		}
+		//			time_t submitDate = convertLocaltimeINUTCtime(convertToTimeType(subDateStr));
+		//			if( vishnu::getCurrentTimeInUTC()-submitDate > 2592000 ) {
+		std::string sqlUpdatedRequest = "UPDATE job SET status=7 where jobId='"+jobId+"'";
+		mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
+		mlistJobsResult->getResults().push_back(curResult);
+		//			}
+	}
 	mlistJobsResult->setNbJobs(mlistJobsResult->getResults().size());
 
 	return mlistJobsResult;

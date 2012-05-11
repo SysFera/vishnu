@@ -162,10 +162,11 @@ std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& ut
 /**
  * \brief Simple function to read the content of a regular file
  * \param filePath: the path to the file
+ * \param rejectEmptyFile: tell whether empty file will be rejected
  * \return The content of the file
  */
 std::string
-get_file_content(const std::string& filePath);
+get_file_content(const std::string& filePath, const bool& rejectEmptyFile=true);
 
 /**
  * \brief Function to move file

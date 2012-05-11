@@ -221,13 +221,14 @@ vishnu::string_lc_to_utc_time_t(const std::string& ts,const std::string& utcOffs
  * \return The content of the file
  */
 std::string
-vishnu::get_file_content(const std::string& filePath){
+vishnu::get_file_content(const std::string& filePath, const bool& rejectEmptyFile){
 
 	bfs::path file (filePath);
 
 	// Check the existence of file
-	if (((false==bfs::exists(file)) || (true==bfs::is_empty(file)))
-			|| (false==bfs::is_regular_file(file))) {
+	if ( ! bfs::exists(file) ||
+			! bfs::is_regular_file(file) ||
+			( bfs::is_empty(file) && rejectEmptyFile) ) {
 		throw UserException(ERRCODE_INVALID_PARAM, "can not read the file: " + filePath);
 	}
 
@@ -780,8 +781,8 @@ vishnu::appendFilesFromDir(ListStrings& lFiles, std::string & fileNames, const s
 		if ( bfs::is_directory( *it ) ) continue ;
 
 		lFiles.push_back( it->path().string() ) ;
-		if( fileNames.size() != 0 ) fileNames = " " + fileNames;
-		fileNames = it->path().string() + fileNames ;   //TODO Check if it's a absolute or a relative path
+		if( fileNames.size() != 0 ) fileNames += " ";
+		fileNames += it->path().string() ;   //TODO Check if it's a absolute or a relative path
 	}
 }
 
