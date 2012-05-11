@@ -352,7 +352,7 @@ validateParameters(const boost::shared_ptr<Options> & opt,
  * Throw exception on error
  * */
 void
-appendFilesFromDir(ListStrings& lFiles, std::string & fileNames, const std::string & dirPath);
+appendFilesFromDir(ListStrings& lFiles, std::ostringstream & fileNames, const std::string & dirPath);
 
 
 /**

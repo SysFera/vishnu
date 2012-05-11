@@ -224,16 +224,16 @@ JobOutputServer::getCompletedJobsOutput() {
 
 		try {
 			sshJobExec.enableReadRight2Vishnu( errorPath ) ;
-			curResult->setOutputPath( errorPath ) ;
+			curResult->setErrorPath( errorPath ) ;
 		} catch(VishnuException & err) {
 			std::cerr << err.what() << std::endl;
 		}
-		//			time_t submitDate = convertLocaltimeINUTCtime(convertToTimeType(subDateStr));
-		//			if( vishnu::getCurrentTimeInUTC()-submitDate > 2592000 ) {
+//					time_t submitDate = convertLocaltimeINUTCtime(convertToTimeType(subDateStr));
+//					if( vishnu::getCurrentTimeInUTC()-submitDate > 2592000 ) {
 		std::string sqlUpdatedRequest = "UPDATE job SET status=7 where jobId='"+jobId+"'";
 		mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
 		mlistJobsResult->getResults().push_back(curResult);
-		//			}
+//					}
 	}
 	mlistJobsResult->setNbJobs(mlistJobsResult->getResults().size());
 

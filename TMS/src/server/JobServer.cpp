@@ -68,11 +68,11 @@ int JobServer::submitJob(const std::string& scriptContent,
 	if(options.getFileParams().size()) env.setParams(scriptContentRef, options.getFileParams()) ;
 
 	if(scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos ) {
-		std::string outputPath = options.getWorkingDir() + "/OUTPUT_" + vishnuJobId ;
-		createOutputDir(outputPath) ;
-		env.replaceAllOccurences(scriptContentRef, "$VISHNU_OUTPUT_DIR", outputPath);
-		env.replaceAllOccurences(scriptContentRef, "${VISHNU_OUTPUT_DIR}", outputPath);
-		mjob.setOutputDir(outputPath) ;
+		std::string dir = (!options.getWorkingDir().size()? std::string(getenv("HOME")) : options.getWorkingDir()) + "/OUTPUT_" + vishnuJobId ;
+		createOutputDir(dir) ;
+		env.replaceAllOccurences(scriptContentRef, "$VISHNU_OUTPUT_DIR", dir);
+		env.replaceAllOccurences(scriptContentRef, "${VISHNU_OUTPUT_DIR}", dir);
+		mjob.setOutputDir(dir) ;
 	}
 
 	std::string jobSerialized ;
