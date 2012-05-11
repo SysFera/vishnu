@@ -235,7 +235,11 @@ SGEServer::submit(const char* scriptPath,
       throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use another envirnment variable than $JOB_ID.\n");
       
     }
-    job.setErrorPath(jobErrorPathStr);
+    if(boost::starts_with(jobErrorPathStr, ":")) {
+    	job.setErrorPath(jobErrorPathStr.substr(1, std::string::npos));
+    } else {
+        job.setErrorPath(jobErrorPathStr);
+    }
     
   }
   drmaa_errno = drmaa_get_attribute(jt,DRMAA_OUTPUT_PATH,jobOutputPath, size,diagnosis, sizeof(diagnosis)-1);
@@ -247,7 +251,11 @@ SGEServer::submit(const char* scriptPath,
       throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use another envirnment variable than $JOB_ID.\n"); 
       
     }
-    job.setOutputPath(jobOutputPathStr);
+    if(boost::starts_with(jobOutputPathStr, ":")) {
+    	job.setOutputPath(jobOutputPathStr.substr(1, std::string::npos));
+    } else {
+        job.setOutputPath(jobOutputPathStr);
+    }
     
   }
   drmaa_errno = drmaa_get_attribute(jt,DRMAA_JOB_NAME,jobName,size,diagnosis, sizeof(diagnosis)-1);

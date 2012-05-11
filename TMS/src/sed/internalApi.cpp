@@ -510,16 +510,21 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
 		ossFileName << fileNames << std::endl ;  /* Ending the line with files from output dir */
 
 		char* fileNamesDescr = strdup("/tmp/vishnu-fdescXXXXXX");
+		char* fid = NULL ;
 		vishnu::createTmpFile(fileNamesDescr, ossFileName.str()) ;
-		filePaths.push_back(fileNamesDescr) ;
+		dagda_put_file(fileNamesDescr, DIET_PERSISTENT_RETURN, &fid); /* Send the description file first */
+		dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fid, 0);
+		free(fileNamesDescr) ;
 
-		size_t maxIdx = filePaths.size() - 1 ;
-		char *fileIds[maxIdx + 1] ;
-
-		for(int i = maxIdx ; i >= 0; i--) {  //Send the description file first
-			dagda_put_file(strdup(filePaths[i].c_str()), DIET_PERSISTENT_RETURN, &fileIds[i]);
-			dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fileIds[i], maxIdx - i);
+		size_t nbFiles = filePaths.size() ;
+		char *fileIds[nbFiles] ;
+		for(int i = 0; i < nbFiles;  i++) {
+			char* path = strdup(filePaths[i].c_str()) ;
+			dagda_put_file(path, DIET_PERSISTENT_RETURN, &fileIds[i]);
+			dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fileIds[i], i+1);
+			free(path) ;
 		}
+
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
 
 	} catch (VishnuException& e) {
@@ -606,9 +611,8 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 			}
 
 			ossFileName << result->getJobId(); /* each line starts with the associated job id */
-
 			if( bfs::exists(result->getOutputPath()) ) {
-				filePaths.push_back( result->getOutputPath() ) ;
+				filePaths.push_back(result->getOutputPath()) ;
 				ossFileName << " " << result->getJobId() << ".stdout" ;
 			}
 			if( bfs::exists(result->getErrorPath()) ) {
@@ -619,17 +623,21 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 		}
 
 		char* fileNamesDescr = strdup("/tmp/vishnu-fdescXXXXXX");
+		char* fid = NULL ;
 		vishnu::createTmpFile(fileNamesDescr, ossFileName.str()) ;
-		filePaths.push_back(fileNamesDescr) ;
+		dagda_put_file(fileNamesDescr, DIET_PERSISTENT_RETURN, &fid); /* Send the description file first */
+		dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fid, 0);
+		free(fileNamesDescr) ;
 
-		size_t maxIdx = filePaths.size() - 1 ;
-		char *fileIds[maxIdx+1] ;
-		int idx ;
-		for(int i = maxIdx ; i >= 0; i--) {  /* according to the composition of filePaths,
-											    the description file is sent first */
-			idx = maxIdx - i ;
-			dagda_put_file(strdup(filePaths[i].c_str()), DIET_PERSISTENT_RETURN, &fileIds[idx]);
-			dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fileIds[idx], idx);
+		size_t nbFiles = filePaths.size() ;
+		char *fileIds[nbFiles] ;
+		std::cout << "SIZEEEEEEEEEEEEEEEEEEE   "<< nbFiles << std::endl ;
+		for(int i = 0; i < nbFiles;  i++) {
+			char* path = strdup(filePaths[i].c_str()) ;
+			dagda_put_file(path, DIET_PERSISTENT_RETURN, &fileIds[i]);
+			std::cout << "PATHHHHHHHHHHHHHHHHHH   "<< path << std::endl ;
+			dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fileIds[i], i+1);
+			free(path) ;
 		}
 
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);

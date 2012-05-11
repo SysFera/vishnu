@@ -279,26 +279,6 @@ SSHJobExec::copyFiles(const std::string& outputPath,
 }
 
 /**
- * \brief Function to copy files from remote machine
- * \param src the path of the source file
- * \param dest the path of the destination file
- * Throw exception on error
- */
-void
-SSHJobExec::copyFiles(const std::string& src, const std::string& dest) {
-
-	std::ostringstream cmd1;
-	cmd1 << "scp -o NoHostAuthenticationForLocalhost=yes  -o PasswordAuthentication=no ";
-	cmd1 << muser << "@" << mhostname << ":" << src << " " << dest;
-
-	if( system( cmd1.str().c_str() ) != 0 ) {
-		if( ! bfs::exists(src) )  throw UserException(ERRCODE_FILENOTFOUND, "SSHJobExec::copyFiles : "
-				"the file "+ src + " doesnot exist.");
-		throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::copyFiles: "
-				"unknown problem when copying the file on the user's local account");
-	}
-}
-/**
  * \brief Function to enable read right on a given file to vishnu
  * \param file the path of the file
  * Throw exception on error

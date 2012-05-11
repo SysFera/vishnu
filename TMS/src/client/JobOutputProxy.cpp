@@ -107,7 +107,9 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 				//To first the description file
 				dagda_get_file(content.elt_ids[0], &fName);
 				std::string fDescStr = vishnu::get_file_content(fName) ;
+				free(fName) ;
 
+				std::cout << fDescStr << std::endl;
 				ListStrings fDescVec ; boost::trim(fDescStr) ;
 				boost::split(fDescVec, fDescStr, boost::is_any_of(" ")) ;
 
@@ -121,14 +123,14 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 					free(fName) ;
 				}
 				//Clean the container
-				for(int i = 0; i < content.size; i++) dagda_delete_data(content.elt_ids[i]);
-			}
-		} catch (CORBA::Exception & e) {//To catch CORBA exception sent by DAGDA
-			if (content.size == 2) {
-				for(unsigned int i = 0; i < content.size; i++) {
+				for(int i = 0; i < content.size; i++) {
 					dagda_delete_data(content.elt_ids[i]);
 				}
 			}
+		} catch (CORBA::Exception & e) {//To catch CORBA exception sent by DAGDA
+				for(unsigned int i = 0; i < content.size; i++) {
+					dagda_delete_data(content.elt_ids[i]);
+				}
 			dagda_delete_data(IDContainer);
 			diet_profile_free(getJobOutPutProfile);
 			throw UserException(ERRCODE_INVALID_PARAM,"CORBA Exception: "+ std::string(e._name())+
@@ -224,8 +226,7 @@ JobOutputProxy::getCompletedJobsOutput() {
 				/* Get first the description file */
 				char* fName = NULL;
 				dagda_get_file(content.elt_ids[0], &fName);
-				std::istringstream fdescStream (vishnu::get_file_content(fName)) ;
-
+				std::istringstream fdescStream (vishnu::get_file_content(fName, false)) ;
 				size_t jnum = 0 ;
 				size_t baseIndex = 0 ;;
 				std::string line ;

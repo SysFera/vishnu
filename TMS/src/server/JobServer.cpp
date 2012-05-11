@@ -276,14 +276,15 @@ TMS_Data::Job JobServer::getJobInfo() {
 
 	std::vector<std::string> results;
 	std::vector<std::string>::iterator  iter;
-	time_t submitDate;
-	time_t endDate;
-	std::string sqlRequest = "SELECT vsessionid, submitMachineId, submitMachineName, jobId, jobName, jobPath,"
-			"outputPath, errorPath, jobPrio, nbCpus, jobWorkingDir, status, submitDate, endDate, owner,"
-			"jobQueue,wallClockLimit, groupName, jobDescription, memLimit, nbNodes, "
-			"nbNodesAndCpuPerNode, batchJobId from job, vsession "
-			"where vsession.numsessionid=job.vsession_numsessionid "
-			" and status > 0 and job.submitMachineId='"+mmachineId+"' and jobId='"+mjob.getJobId()+"'";
+	std::string sqlRequest =
+			"SELECT vsessionid, submitMachineId, submitMachineName, jobId, jobName, jobPath,"
+			"  outputPath, errorPath, outputDir, jobPrio, nbCpus, jobWorkingDir, status, "
+			"  submitDate, endDate, owner, jobQueue,wallClockLimit, groupName, jobDescription, "
+			"  memLimit, nbNodes, nbNodesAndCpuPerNode, batchJobId"
+			" FROM job, vsession "
+			" WHERE vsession.numsessionid=job.vsession_numsessionid "
+			"  AND job.status > 0 and job.submitMachineId='"+mmachineId+"'"
+			"  AND job.jobId='"+mjob.getJobId()+"'";
 
 	boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
 
@@ -300,16 +301,13 @@ TMS_Data::Job JobServer::getJobInfo() {
 		mjob.setJobPath(*(++iter));
 		mjob.setOutputPath(*(++iter));
 		mjob.setErrorPath(*(++iter));
+		mjob.setOutputDir(*(++iter));
 		mjob.setJobPrio(convertToInt(*(++iter)));
 		mjob.setNbCpus(convertToInt(*(++iter)));
 		mjob.setJobWorkingDir(*(++iter));
 		mjob.setStatus(convertToInt(*(++iter)));
-		//convert the submitDate into UTC date
-		submitDate = convertLocaltimeINUTCtime(convertToTimeType(*(++iter)));
-		mjob.setSubmitDate(submitDate);
-		//convert the endDate into UTC date
-		endDate = convertLocaltimeINUTCtime(convertToTimeType(*(++iter)));
-		mjob.setEndDate(endDate);
+		mjob.setSubmitDate( convertLocaltimeINUTCtime(convertToTimeType(*(++iter))) ); //convert the submitDate into UTC date
+		mjob.setEndDate(convertLocaltimeINUTCtime(convertToTimeType(*(++iter)))); //convert the endDate into UTC date
 		mjob.setOwner(*(++iter));
 		mjob.setJobQueue(*(++iter));
 		mjob.setWallClockLimit(convertToInt(*(++iter)));
