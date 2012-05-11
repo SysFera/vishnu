@@ -2,6 +2,9 @@
 #define __ANNUARY__H__
 
 #include "Server.hpp"
+#include <string>
+#include <vector>
+#include <boost/shared_ptr.hpp>
 
 class Annuary {
 
@@ -15,14 +18,11 @@ public :
   int
   remove(std::string name, int port, std::string address);
 
-  Server*
-  get(std::string name);
-
-  Server*
+  boost::shared_ptr<Server>
   get(std::string service);
 
 private :
-  std::vector<Server*> mservers;
+  std::vector<boost::shared_ptr<Server> > mservers;
   int pos;
 
 };
