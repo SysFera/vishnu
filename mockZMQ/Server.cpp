@@ -1,8 +1,13 @@
-#include "Server.cpp"
+#include "Server.hpp"
 #include <vector>
 #include <string>
+#include <sstream>
+#include <boost/shared_ptr.hpp>
+#include <boost/algorithm/string/regex.hpp>
+#include <boost/algorithm/string/classification.hpp>
+#include <boost/lexical_cast.hpp>
 
-Server::Server(int name, std::vector<std::string> &serv, std::string addr, int port) :
+Server::Server(std::string name, std::vector<std::string> &serv, std::string addr, int port) :
     mname(name), mservices(serv), maddress(addr), mport(port) {
 }
 
@@ -13,22 +18,22 @@ int
 Server::add(std::string service){
   bool found = false;
   int i;
-  for (i=0;i<services.size();++i){
-    if (service.compare(services.at(i)==0)){
+  for (i=0;i<mservices.size();++i){
+    if (service.compare(mservices.at(i))==0){
       found = true;
     }
   }
   if (!found){
-    services.push_pach(service);
+    mservices.push_back(service);
   }
 }
 
 int
 Server::remove(std::string service){
   int i;
-  for (i=0;i<services.size();++i){
-    if (service.compare(services.at(i)==0)){
-      services.erase(services.begin()+i);
+  for (i=0;i<mservices.size();++i){
+    if (service.compare(mservices.at(i))==0){
+      mservices.erase(mservices.begin()+i);
     }
   }
 }
@@ -36,8 +41,8 @@ Server::remove(std::string service){
 bool
 Server::hasService(std::string service){
   int i;
-  for (i=0;i<services.size();++i){
-    if (service.compare(services.at(i)==0)){
+  for (i=0;i<mservices.size();++i){
+    if (service.compare(mservices.at(i))==0){
       return true;
     }
   }
@@ -59,27 +64,34 @@ Server::getAddress(){
   return maddress;
 }
 
+std::vector<std::string>&
+Server::getServices(){
+  return mservices;
+}
+
+
+
 std::string
-Server::ToString(){
+Server::toString(){
   std::stringstream res;
   int i;
   res << mname << "$$$"
-      << madress << "$$$"
+      << maddress << "$$$"
       << mport << "$$$";
   for (i=0 ; i<mservices.size()-1 ; ++i){
     res << mservices.at(i) << "$$$";
   }
-  res << mservices.at(mservices.size()-1)
-  retrun res.str();
+  res << mservices.at(mservices.size()-1);
+  return res.str();
 }
 
-static boost::shared_ptr<Server>
-Server::fromString(std::string){
+boost::shared_ptr<Server>
+Server::fromString(std::string prof){
   boost::shared_ptr<Server> res;
   std::vector<std::string> vecString;
   boost::algorithm::split_regex(vecString, prof, boost::regex("\\${3}"));
   std::string name;
-  std::string port;
+  int port;
   std::string address;
   std::vector<std::string> services;
   int i;

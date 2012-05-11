@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <boost/shared_ptr.hpp>
 
 class Server {
 private:
@@ -16,7 +17,7 @@ public:
   static boost::shared_ptr<Server>
   fromString(std::string);
 
-  Server(int name, std::vector<std::string> &serv, std::string addr, int port);
+  Server(std::string name, std::vector<std::string> &serv, std::string addr, int port);
 
   ~Server();
 
@@ -34,6 +35,9 @@ public:
 
   int
   getPort();
+
+  std::vector<std::string>&
+  getServices();
 
   std::string
   getAddress();
