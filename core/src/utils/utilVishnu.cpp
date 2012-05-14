@@ -793,7 +793,7 @@ vishnu::appendFilesFromDir(ListStrings& lFiles, std::ostringstream & fileNames, 
 void
 vishnu::createOutputDir(std::string& dirPath) {
 
-	dirPath += createUniqueFileSuffix() ;
+	dirPath += createSuffixFromCurTime() ;
 
 	if( bfs::exists(dirPath) && bfs::is_directory(dirPath) ) return ;
 
@@ -807,7 +807,7 @@ vishnu::createOutputDir(std::string& dirPath) {
  * \return the suffix created
  * */
 std::string
-vishnu::createUniqueFileSuffix() {
+vishnu::createSuffixFromCurTime() {
 
 	std::ostringstream ossBuf ;
 	time_t rawtime;
