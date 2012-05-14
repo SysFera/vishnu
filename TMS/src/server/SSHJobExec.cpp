@@ -278,28 +278,6 @@ SSHJobExec::copyFiles(const std::string& outputPath,
 	return 0;
 }
 
-/**
- * \brief Function to enable read right on a given file to vishnu
- * \param file the path of the file
- * Throw exception on error
- */
-void
-SSHJobExec::enableReadRight2Vishnu(const std::string& file) {
-
-	if( ! bfs::exists(file) )  {
-		throw UserException(ERRCODE_FILENOTFOUND, "SSHJobExec::copyFiles : "
-				"the file "+ file + " doesnot exist.");
-	}
-	std::ostringstream cmd1;
-	cmd1 << "ssh -o NoHostAuthenticationForLocalhost=yes  -o PasswordAuthentication=no "
-			<< " " << muser << "@" << mhostname
-			<< " chmod o+r " << file ;
-	if( system( cmd1.str().c_str() ) != 0 ) {
-		throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::copyFiles: "
-				"error while enabling the read right on the file " + file);
-	}
-}
-
 
 
 /**

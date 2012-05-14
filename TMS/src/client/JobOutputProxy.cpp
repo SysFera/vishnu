@@ -81,7 +81,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 
 	//OUT Parameters
 	diet_string_set(diet_parameter(getJobOutPutProfile,4), NULL, DIET_VOLATILE);
-	diet_container_set(diet_parameter(getJobOutPutProfile,5), DIET_PERSISTENT_RETURN);
+	diet_container_set(diet_parameter(getJobOutPutProfile,5), DIET_PERSISTENT);
 
 	if( diet_call(getJobOutPutProfile) ) {
 		raiseDietMsgException("DIET call failure");
@@ -112,7 +112,6 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 			std::string fDescStr = vishnu::get_file_content(fName) ;
 			free(fName) ;
 
-			std::cout << fDescStr << std::endl;
 			ListStrings fDescVec ; boost::trim(fDescStr) ;
 			boost::split(fDescVec, fDescStr, boost::is_any_of(" ")) ;
 
@@ -123,11 +122,8 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 			for(int i = 1; i < content.size; i++) {
 				dagda_get_file(content.elt_ids[i], &fName);
 				vishnu::boostMoveFile(std::string(fName), moutDir, boost::trim_copy(fDescVec[i]));
-				free(fName) ;
-			}
-			//Clean the container
-			for(int i = 0; i < content.size; i++) {
 				dagda_delete_data(content.elt_ids[i]);
+				free(fName) ;
 			}
 		}
 	} catch (CORBA::Exception & e) {//To catch CORBA exception sent by DAGDA
@@ -230,7 +226,6 @@ JobOutputProxy::getCompletedJobsOutput() {
 				vishnu::createOutputDir(moutDir);
 				listJobResults_ptr->getResults().get(jnum++)->setOutputDir(moutDir);
 
-				std::cout << "LINE " << line << std::endl;
 				int nbFiles = lineVec.size() ;
 				for(int i = 1; i < nbFiles; i++) {
 					if( index >= content.size ) {

@@ -369,6 +369,15 @@ createOutputDir(std::string& dirPath);
  * */
 std::string createUniqueFileSuffix() ;
 
+/**
+ * \brief Function to make a link from a given
+ * \param src : the source file
+ * \return the path of the link
+ * Throw exception on error
+ */
+std::string
+mklink(const std::string& src) ;
+
 } //END NAMESPACE
 
 

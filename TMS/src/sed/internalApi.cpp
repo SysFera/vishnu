@@ -107,7 +107,6 @@ solveSubmitJob(diet_profile_t* pb) {
 			}
 		}
 
-		//diet_string_get(diet_parameter(pb,5), &fileContents , NULL);
 		char* IDContainer = NULL ;
 		diet_container_t fileContainer;
 		IDContainer = (pb->parameters[5]).desc.id ;
@@ -479,9 +478,9 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
 
 		JobOutputServer jobOutputServer(sessionServer, machineId, *jobResult);
 		TMS_Data::JobResult result = jobOutputServer.getJobOutput();
+
 		//OUT Parameter
 		diet_string_set(diet_parameter(pb,4), strdup(empty.c_str()), DIET_VOLATILE);
-
 		dagda_init_container(diet_parameter(pb,5));
 
 		ListStrings filePaths ;
@@ -508,10 +507,8 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
 		size_t nbFiles = filePaths.size() ;
 		char *fileIds[nbFiles] ;
 		for(int i = 0; i < nbFiles;  i++) {
-			char* path = strdup(filePaths[i].c_str()) ;
-			dagda_put_file(path, DIET_PERSISTENT_RETURN, &fileIds[i]);
+			dagda_put_file(const_cast<char*>(vishnu::mklink(filePaths[i]).c_str()), DIET_PERSISTENT_RETURN, &fileIds[i]);
 			dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fileIds[i], i+1);
-			free(path) ;
 		}
 
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
@@ -594,13 +591,11 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 			TMS_Data::JobResult_ptr result = completedJobsOutput->getResults().get(i) ;
 			ossFileName << result->getJobId(); /* each line starts with the associated job id */
 			if( bfs::exists( result->getOutputPath() ) ) {
-				std::cout << "STDOUT " <<  result->getOutputPath() << std::endl;
 				filePaths.push_back( result->getOutputPath() ) ;
 				ossFileName << " " << result->getJobId() << ".stdout" ;
 			}
 			if( bfs::exists( result->getErrorPath() ) ) {
 				filePaths.push_back( result->getErrorPath() ) ;
-				std::cout << "STDERR " <<  result->getErrorPath() << std::endl;
 				ossFileName << " " << result->getJobId() << ".stderr" ;
 			}
 			vishnu::appendFilesFromDir(filePaths, ossFileName, result->getOutputDir()) ;
@@ -616,11 +611,13 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 
 		size_t nbFiles = filePaths.size() ;
 		char *fileIds[nbFiles] ;
+		std::cout << "H0   "<< nbFiles << std::endl ;
 		for(int i = 0; i < nbFiles;  i++) {
-			char* path = strdup(filePaths[i].c_str()) ;
-			dagda_put_file(path, DIET_PERSISTENT_RETURN, &fileIds[i]);
+			//char* path = strdup(filePaths[i].c_str()) ;
+			std::cout << "FILE   "<< filePaths[i] << std::endl ;
+			dagda_put_file(const_cast<char*>(vishnu::mklink(filePaths[i]).c_str()), DIET_PERSISTENT_RETURN, &fileIds[i]);
 			dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fileIds[i], i+1);
-			free(path) ;
+			//free(path) ;
 		}
 
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);

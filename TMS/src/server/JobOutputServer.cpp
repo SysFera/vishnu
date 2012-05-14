@@ -117,26 +117,9 @@ JobOutputServer::getJobOutput() {
 		throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
 	}
 
-	mjobResult.setOutputDir( outputDir ) ; //TODO copy on the local account??
-	SSHJobExec sshJobExec(acLogin, machineName);
-	try {
-		sshJobExec.enableReadRight2Vishnu( outputPath ) ;
-		mjobResult.setOutputPath( outputPath ) ;
-	} catch(VishnuException & err) {
-		std::cerr << err.what() << std::endl;
-	}
-
-	try {
-		sshJobExec.enableReadRight2Vishnu( errorPath ) ;
-		mjobResult.setErrorPath( errorPath ) ;
-	} catch(VishnuException & err) {
-		std::cerr << err.what() << std::endl;
-	}
-	//		time_t submitDate = convertLocaltimeINUTCtime(convertToTimeType(subDateStr));
-	//		if( vishnu::getCurrentTimeInUTC() - submitDate > 2592000 ) {
-	std::string sqlUpdatedRequest = "UPDATE job SET status=7 where jobId='" + mjobResult.getJobId() + "'";
-	mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
-	//		}
+	mjobResult.setOutputDir( outputDir ) ;
+	mjobResult.setOutputPath( outputPath) ;
+	mjobResult.setErrorPath( errorPath) ;
 
 	return mjobResult;
 }
@@ -212,28 +195,17 @@ JobOutputServer::getCompletedJobsOutput() {
 
 		TMS_Data::JobResult_ptr curResult = ecoreFactory->createJobResult();
 		curResult->setJobId(jobId);
-		curResult->setOutputDir( outputDir ) ; //TODO copy on the local account??
-
-		SSHJobExec sshJobExec(acLogin, machineName);
-		try {
-			sshJobExec.enableReadRight2Vishnu( outputPath ) ;
-			curResult->setOutputPath( outputPath ) ;
-		} catch(VishnuException & err) {
-			std::cerr << err.what() << std::endl;
-		}
-
-		try {
-			sshJobExec.enableReadRight2Vishnu( errorPath ) ;
-			curResult->setErrorPath( errorPath ) ;
-		} catch(VishnuException & err) {
-			std::cerr << err.what() << std::endl;
-		}
-//					time_t submitDate = convertLocaltimeINUTCtime(convertToTimeType(subDateStr));
-//					if( vishnu::getCurrentTimeInUTC()-submitDate > 2592000 ) {
-		std::string sqlUpdatedRequest = "UPDATE job SET status=7 where jobId='"+jobId+"'";
-		mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
+		curResult->setOutputDir( outputDir ) ;
+		curResult->setOutputPath(outputPath) ;
+		curResult->setErrorPath( errorPath) ;
 		mlistJobsResult->getResults().push_back(curResult);
-//					}
+
+		time_t submitDate = convertLocaltimeINUTCtime(convertToTimeType(subDateStr));
+		if( vishnu::getCurrentTimeInUTC()-submitDate > 2592000 ) {  // Retention of 1 month
+			std::string sqlUpdatedRequest = "UPDATE job SET status=7 where jobId='"+jobId+"'";
+			mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
+		}
+
 	}
 	mlistJobsResult->setNbJobs(mlistJobsResult->getResults().size());
 

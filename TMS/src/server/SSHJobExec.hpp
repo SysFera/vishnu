@@ -60,14 +60,6 @@ class SSHJobExec {
               const char* copyOfErrorPath);
 
     /**
-     * \brief Function to enable read right on a given file to vishnu
-     * \param file the path of the file
-     * Throw exception on error
-     */
-    void
-    enableReadRight2Vishnu(const std::string& file) ;
-
-    /**
      * \brief Function to return the job serialized content
      * \return  job serialized content
      */
