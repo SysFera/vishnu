@@ -613,11 +613,9 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 		char *fileIds[nbFiles] ;
 		std::cout << "H0   "<< nbFiles << std::endl ;
 		for(int i = 0; i < nbFiles;  i++) {
-			//char* path = strdup(filePaths[i].c_str()) ;
 			std::cout << "FILE   "<< filePaths[i] << std::endl ;
 			dagda_put_file(const_cast<char*>(vishnu::mklink(filePaths[i]).c_str()), DIET_PERSISTENT_RETURN, &fileIds[i]);
 			dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fileIds[i], i+1);
-			//free(path) ;
 		}
 
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);

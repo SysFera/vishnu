@@ -367,7 +367,7 @@ createOutputDir(std::string& dirPath);
  * \brief Function to create a unique file suffix with the current time
  * \return tha suffix created
  * */
-std::string createUniqueFileSuffix() ;
+std::string createSuffixFromCurTime() ;
 
 /**
  * \brief Function to make a link from a given
