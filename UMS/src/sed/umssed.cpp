@@ -13,6 +13,10 @@
 //For ZMQ
 #include "zmq.hpp"
 #include "DIET_client.h"
+#include "Handler.hpp"
+#include "BasicHandler.hpp"
+#include "Server.hpp"
+#include "Message.hpp"
 
 using namespace vishnu;
 
@@ -48,14 +52,73 @@ controlSignal (int signum) {
   }
 }
 
-int ZMQServerStart(boost::scoped_ptr<ServerUMS>* umsserver, string addr, int port)
+std::vector<std::string> &
+getUMSService() {
+  std::vector<std::string>* s = new std::vector<std::string>();
+  s->push_back("sessionConnect");
+  s->push_back("sessionReconnect");
+  s->push_back("sessionClose");
+  s->push_back("userCreate");
+  s->push_back("userUpdate");
+  s->push_back("userDelete");
+  s->push_back("userPasswordChange");
+  s->push_back("userPasswordReset");
+  s->push_back("machineCreate");
+  s->push_back("machineUpdate");
+  s->push_back("machineDelete");
+  s->push_back("localAccountCreate");
+  s->push_back("localAccountUpdate");
+  s->push_back("localAccountDelete");
+  s->push_back("configurationSave");
+  s->push_back("configurationRestore");
+  s->push_back("optionValueSet");
+  s->push_back("optionValueSetDefault");
+  s->push_back("sessionList");
+  s->push_back("localAccountList");
+  s->push_back("machineList");
+  s->push_back("commandList");
+  s->push_back("optionValueList");
+  s->push_back("userList");
+  s->push_back("restore");
+  s->push_back("authSystemCreate");
+  s->push_back("authSystemUpdate");
+  s->push_back("authSystemDelete");
+  s->push_back("authSystemList");
+  s->push_back("authAccountCreate");
+  s->push_back("authAccountUpdate");
+  s->push_back("authAccountDelete");
+  s->push_back("authAccountList");
+  return *s;
+}
+
+
+int ZMQServerStart(boost::scoped_ptr<ServerUMS>* umsserver, string addr, int port, string braddr, int brport)
 {
-  // Prepare our context and socket
+  // Prepare our context and socket for server
   zmq::context_t context (1);
   zmq::socket_t socket (context, ZMQ_REP);
+
+// Connexion with broker
+  zmq::context_t brcontext (1);
+  zmq::socket_t brsocket (brcontext, ZMQ_REP);
+
   string add = addr + ":" + convertToString<int>(port);
   cout << "Binded to address: " << add << endl;
   socket.bind(add.c_str());
+
+  string bradd = braddr + ":" + convertToString<int>(brport);
+  brsocket.connect(bradd.c_str());
+  boost::shared_ptr<diet_profile_t> prof;
+  boost::shared_ptr<Server> s = boost::shared_ptr<Server>(new Server ("UMS", getUMSService(), addr, port));
+  boost::shared_ptr<Message> m = boost::shared_ptr<Message>(new Message("", ADSE, s, prof));
+// Handler for messages
+  BasicHandler hd (m);
+  boost::shared_ptr<Message> brrep = hd.send(brsocket);
+  TreatmentData brdata;
+  BasicHandler rep(brrep);
+  rep.treat();
+
+
 
 //  socket.bind ("tcp://*:5555");
 
@@ -116,6 +179,8 @@ int main(int argc, char* argv[], char* envp[]) {
   string cfg;
   string address;
   int port;
+  string brokerAddress;
+  int brokerPort;
 
   if (argc != 2) {
     return usage(argv[0]);
@@ -131,6 +196,8 @@ int main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
     config.getRequiredConfigValue<std::string>(vishnu::ADDR, address);
     config.getRequiredConfigValue<int>(vishnu::PORT, port);
+    config.getRequiredConfigValue<std::string>(vishnu::BRAD, brokerAddress);
+    config.getRequiredConfigValue<int>(vishnu::BRPO, brokerPort);
     if(!boost::filesystem::is_regular_file(sendmailScriptPath)) {
       std::cerr << "Error: cannot open the script file for sending email" << std::endl;
       exit(1);
@@ -176,7 +243,7 @@ int main(int argc, char* argv[], char* envp[]) {
     // Initialize the DIET SeD
     if (!res) {
       //      diet_print_service_table();
-      ZMQServerStart(&server, address, port);
+      ZMQServerStart(&server, address, port, brokerAddress, brokerPort);
       //      res = diet_SeD(cfg.c_str(), argc, argv);
       unregisterSeD(UMSTYPE, mid);
     } else {

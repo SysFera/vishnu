@@ -13,7 +13,7 @@ public :
 
 
   virtual boost::shared_ptr<Message>
-  treat(TreatmentData* data);
+  treat(TreatmentData* data = NULL);
 
   virtual boost::shared_ptr<Message>
   getAddress(Annuary* ann);
@@ -26,6 +26,10 @@ public :
   addServer(Annuary* ann);
   virtual boost::shared_ptr<Message>
   removeServer(Annuary* ann);
+
+// Send a message and get the answer
+  virtual boost::shared_ptr<Message>
+  send(zmq::socket_t& socket);
 
 private:
 
