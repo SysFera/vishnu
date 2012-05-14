@@ -70,7 +70,13 @@ SGEServer::submit(const char* scriptPath,
   char jobOutputPath[256] ;
   char jobErrorPath[256];
   char jobName[256];
-
+  char Directory[256];
+  bool isjobname = false;
+  std::string jobDIRECTORY;
+  boost::filesystem3::path myPath(scriptPath);
+  /*std::cout << "********************************************************************************" << std::endl;
+  std::cout << myPath.filename(). << std::endl;
+  std::cout << "********************************************************************************" << std::endl;*/
   string Walltime;
 
   drmaa_errno = drmaa_init(NULL, diagnosis, sizeof(diagnosis)-1);
@@ -219,14 +225,27 @@ SGEServer::submit(const char* scriptPath,
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
     
   }   
-  
+  std::string jobidstring(jobid);
   int size=256;
-  
-  
-  drmaa_errno = drmaa_get_attribute(jt,DRMAA_ERROR_PATH,jobErrorPath, size,diagnosis, sizeof(diagnosis)-1);
-
+  drmaa_errno = drmaa_get_attribute(jt,DRMAA_JOB_NAME,jobName,size,diagnosis, sizeof(diagnosis)-1);
   if (drmaa_errno==DRMAA_ERRNO_SUCCESS){
     
+    job.setJobName(jobName);
+    isjobname = true;
+    
+  }
+  
+  drmaa_errno = drmaa_get_attribute(jt,DRMAA_WD,Directory, size,diagnosis, sizeof(diagnosis)-1);
+  
+  if (drmaa_errno==DRMAA_ERRNO_SUCCESS){
+    jobDIRECTORY = Directory;
+  } else{
+    jobDIRECTORY = getenv("HOME");
+  }
+
+  drmaa_errno = drmaa_get_attribute(jt,DRMAA_ERROR_PATH,jobErrorPath, size,diagnosis, sizeof(diagnosis)-1);
+  
+  if (drmaa_errno==DRMAA_ERRNO_SUCCESS){
     std::string jobErrorPathStr = jobErrorPath;
     Env(SGE).replaceAllOccurences(jobErrorPathStr,"$JOB_ID",jobid);
     if(boost::algorithm::contains(jobErrorPathStr, "$")){
@@ -234,7 +253,28 @@ SGEServer::submit(const char* scriptPath,
       throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use another envirnment variable than $JOB_ID.\n");
       
     }
+    if(boost::algorithm::starts_with(jobErrorPathStr, ":")){
+      jobErrorPathStr = jobErrorPathStr.substr(1);
+    } else{
+      size_t pos = jobErrorPathStr.find(':');
+      if(pos!=string::npos) {
+        std::string part1 = jobErrorPathStr.substr(0,pos);
+        std::string part2 = jobErrorPathStr.substr(pos+1);
+        jobErrorPathStr = part1+jobDIRECTORY+"/"+part2;
+      }
+      
+    }
     job.setErrorPath(jobErrorPathStr);
+    
+  } else{
+    if(isjobname){
+      std::string jobErrorFile(jobDIRECTORY+"/"+job.getJobName()+".e"+jobidstring);
+      job.setErrorPath(jobErrorFile);
+    }else{
+      
+      std::string jobErrorFile(jobDIRECTORY+"/"+myPath.filename().c_str()+".e"+jobidstring);
+      job.setErrorPath(jobErrorFile);
+    }
     
   }
   drmaa_errno = drmaa_get_attribute(jt,DRMAA_OUTPUT_PATH,jobOutputPath, size,diagnosis, sizeof(diagnosis)-1);
@@ -243,19 +283,34 @@ SGEServer::submit(const char* scriptPath,
     Env(SGE).replaceAllOccurences(jobOutputPathStr,"$JOB_ID",jobid);
     if(boost::algorithm::contains(jobOutputPathStr, "$")){
       drmaa_exit(NULL, 0);
-      throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use another envirnment variable than $JOB_ID.\n"); 
+      throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use another envirnment variable than $JOB_ID.\n");
+      
+    }
+    if(boost::algorithm::starts_with(jobOutputPathStr, ":")){
+      jobOutputPathStr = jobOutputPathStr.substr(1);
+    } else{
+      size_t pos = jobOutputPathStr.find(':');
+      if(pos!=string::npos) {
+        std::string part1 = jobOutputPathStr.substr(0,pos);
+        std::string part2 = jobOutputPathStr.substr(pos+1);
+        jobOutputPathStr = part1+jobDIRECTORY+"/"+part2;
+      }
       
     }
     job.setOutputPath(jobOutputPathStr);
     
-  }
-  drmaa_errno = drmaa_get_attribute(jt,DRMAA_JOB_NAME,jobName,size,diagnosis, sizeof(diagnosis)-1);
-  if (drmaa_errno==DRMAA_ERRNO_SUCCESS){
+  }else{
+    if(isjobname){
+      std::string jobOutputFile(jobDIRECTORY+"/"+job.getJobName()+".o"+jobidstring);
+      job.setOutputPath(jobOutputFile);
+    }else{
+      
+      std::string jobOutputFile(jobDIRECTORY+"/"+myPath.filename().c_str()+".o"+jobidstring);
+      job.setOutputPath(jobOutputFile);
+    }
     
-    job.setJobName(jobName);
-    
-  }
-     
+  }  
+      
   job.setStatus(getJobState(jobid));
   job.setJobId(jobid);
   
@@ -704,8 +759,13 @@ SGEServer::processOptions(const char* scriptPath,
   }*/
 
   if(options.getWorkingDir()!="") {
-    cmdsOptions.push_back(" -wd ");
-    cmdsOptions.push_back(options.getWorkingDir());
+    drmaa_errno = drmaa_set_attribute(jobt,DRMAA_WD,options.getWorkingDir().c_str(),diagnosis,sizeof(diagnosis)-1);
+    if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
+      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SGE ERROR: "+std::string(diagnosis));
+      
+    }
+    /*cmdsOptions.push_back(" -wd ");
+    cmdsOptions.push_back(options.getWorkingDir());*/
   }
 
   if(options.getCpuTime()!="") {
