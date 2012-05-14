@@ -1,4 +1,5 @@
 #include "BasicHandler.hpp"
+#include "SystemException.hpp"
 
 BasicHandler::BasicHandler(boost::shared_ptr<Message> msg) : Handler(msg) {
 }
@@ -24,6 +25,9 @@ BasicHandler::treat(TreatmentData* data){
     break;
   case RESE:
     answer = removeServer(data->getAnnuary());
+    break;
+  case HAER:
+    throw SystemException(ERRCODE_SYSTEM);
     break;
   default:
     answer.get()->setAction(HAER);
@@ -85,5 +89,17 @@ BasicHandler::removeServer(Annuary* ann){
               mmsg.get()->getServer().get()->getAddress());
   answer.get()->setAction(ACDO);
   return answer;
+}
+
+boost::shared_ptr<Message>
+BasicHandler::send(zmq::socket_t& socket){
+  std::string msgSer  = mmsg.get()->toString();
+  std::string resSer;
+  zmq::message_t req(msgSer.length()+1);
+  memcpy((void*)req.data(), msgSer.c_str(), msgSer.length()+1);
+  socket.send(req);
+  zmq::message_t reply;
+  resSer = socket.recv(&reply);
+  return Message::fromString(resSer);
 }
 

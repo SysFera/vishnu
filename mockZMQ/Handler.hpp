@@ -26,7 +26,7 @@ public:
   virtual ~Handler();
 
   virtual boost::shared_ptr<Message>
-  treat(TreatmentData* data) = 0;
+  treat(TreatmentData* data  = NULL) = 0;
 
   virtual boost::shared_ptr<Message>
   getAddress(Annuary* ann)=0;
@@ -39,6 +39,9 @@ public:
 
   virtual boost::shared_ptr<Message>
   removeServer(Annuary* ann)=0;
+
+  virtual boost::shared_ptr<Message>
+  send(zmq::socket_t& socket) =0;
 
 private:
 protected :

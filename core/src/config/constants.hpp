@@ -38,7 +38,9 @@ namespace vishnu {
     DBPOOLSIZE,
     AUTHENTYPE,
     ADDR,
-    PORT
+    PORT,
+    BRAD, // Broker Address
+    BRPO  // Broker Port
   } param_type_t;
 
   /**
