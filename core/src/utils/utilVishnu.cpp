@@ -806,7 +806,8 @@ vishnu::createOutputDir(std::string& dirPath) {
  * \brief Function to create a unique file suffix with the current time
  * \return the suffix created
  * */
-std::string vishnu::createUniqueFileSuffix() {
+std::string
+vishnu::createUniqueFileSuffix() {
 
 	std::ostringstream ossBuf ;
 	time_t rawtime;
@@ -822,4 +823,29 @@ std::string vishnu::createUniqueFileSuffix() {
 				<< ( tinfo->tm_sec < 10? "0": "" )<< tinfo->tm_sec ;
 
 	return ossBuf.str() ;
+}
+
+/**
+ * \brief Function to make a link from a given
+ * \param src : the source file
+ * \return the path of the link
+ * Throw exception on error
+ */
+std::string
+vishnu::mklink(const std::string& src) {
+
+	if( ! bfs::exists(src) )  {
+		throw UserException(ERRCODE_FILENOTFOUND, "SSHJobExec::mklink : "
+				"the file "+ src + " doesnot exist.");
+	}
+	bfs::path dest ;
+
+	try {
+		dest = bfs::unique_path("/tmp/vishnulink%%%%%%") ;
+		bfs::create_symlink(src, dest) ;
+	}catch (...) {
+		throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::mklink : "
+						"error while making a link on the file " + src + " from " + dest.string());
+	}
+	return dest.string() ;
 }
