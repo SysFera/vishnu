@@ -2,6 +2,7 @@ include_directories(
   ${ZMQ_INCLUDE_DIR}
   ZMQHelper
   ${UTILVISHNU_SOURCE_DIR}
+  ${VISHNU_EXCEPTION_INCLUDE_DIR}
 )
 
 
