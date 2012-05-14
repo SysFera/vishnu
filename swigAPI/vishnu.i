@@ -47,6 +47,7 @@
 %include "UMS_Data/Session.hpp"
 %include "UMS_Data/ListUsersOptions.hpp"
 %include "UMS_Data/ListSessionOptions.hpp"
+%include "UMS_Data/ListUsersOptions.hpp"
 %include "UMS_Data/User.hpp"
 %include "UMS_Data/Command.hpp"
 %include "UMS_Data/ListCmdOptions.hpp"
