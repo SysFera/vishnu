@@ -1,6 +1,6 @@
 /**
  * \file submit_job.cpp
- * This file defines the VISHNU submit job command
+ * This file defines the VISHNU submit job command 
  * \author Coulomb Kevin (kevin.coulomb@sysfera.com) and Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -27,7 +27,7 @@ using namespace vishnu;
  * \param fqueue : The queue to set the job
  * \param fwallTime : The wall time for the job
  * \param fmemory : The memory needed by the job
- * \param fnbCpu : The number of cpu per node needed
+ * \param fnbCpu : The number of cpu per node needed 
  * \param fnbNodeAndCpu : The number of node and processor per node
  * \param foutput : The output path
  * \param ferr : The error path
@@ -36,14 +36,17 @@ using namespace vishnu;
  * \param fgroup : The job group name
  * \param fworkingDir : The job working directory
  * \param fcpuTime : The cpu time limit of the job
- * \param loadCriterionStr : The load value to use (for now three criterions are be used:
+ * \param param : Defines a textual parameter to set as environment variable before computing the command
+ * \param listParams : Defines a list of textual parameters to set as environment variables before computing the command
+ * \param file : Sets a file to be uploaded onto the server before computing the command
+ * \param listFiles : Sets a list of files to be uploaded onto the server before computing the command
+ * \param loadCriterionStr : The load value to use (for now three criterions are be used: 
  *  minimum number of waiting jobs, minimum number of running jobs and the total number of job )
- * \param dietConfig: Represents the VISHNU config file
+ * \param dietConfig: Represents the VISHNU config file 
  * \param dietConfig: Represents the VISHNU config file
  * \return The description of all options allowed by the command
  */
 boost::shared_ptr<Options>
-
 makeSubJobOp(string pgName, 
 		boost::function1<void, string>& fname,
 		boost::function1<void, string>& fqueue,
@@ -177,8 +180,64 @@ makeSubJobOp(string pgName,
 	return opt;
 }
 
-
 int main (int argc, char* argv[]){
+
+	int ret; // Return value
+
+	/******* Parsed value containers ****************/
+	string dietConfig;
+	string sessionKey;
+	string machineId;
+	string scriptPath;
+	string walltime;
+
+	/********** EMF data ************/
+	TMS_Data::SubmitOptions subOp;
+
+	/******** Callback functions ******************/
+	boost::function1<void,string> fname(boost::bind(&TMS_Data::SubmitOptions::setName,boost::ref(subOp),_1));
+	boost::function1<void,string> fqueue(boost::bind(&TMS_Data::SubmitOptions::setQueue,boost::ref(subOp),_1));
+	boost::function1<void,int> fmemory(boost::bind(&TMS_Data::SubmitOptions::setMemory,boost::ref(subOp),_1));
+	boost::function1<void,int> fnbCpu(boost::bind(&TMS_Data::SubmitOptions::setNbCpu,boost::ref(subOp),_1));
+	boost::function1<void,string> fnbNodeAndCpu(boost::bind(&TMS_Data::SubmitOptions::setNbNodesAndCpuPerNode,boost::ref(subOp),_1));
+	boost::function1<void,string> foutput(boost::bind(&TMS_Data::SubmitOptions::setOutputPath,boost::ref(subOp),_1));
+	boost::function1<void,string> ferr(boost::bind(&TMS_Data::SubmitOptions::setErrorPath,boost::ref(subOp),_1));
+	boost::function1<void,string> fmailNotif(boost::bind(&TMS_Data::SubmitOptions::setMailNotification,boost::ref(subOp),_1));
+	boost::function1<void,string> fmailUser(boost::bind(&TMS_Data::SubmitOptions::setMailNotifyUser,boost::ref(subOp),_1));
+	boost::function1<void,string> fgroup(boost::bind(&TMS_Data::SubmitOptions::setGroup,boost::ref(subOp),_1));
+	boost::function1<void,string> fworkingDir(boost::bind(&TMS_Data::SubmitOptions::setWorkingDir,boost::ref(subOp),_1));
+	boost::function1<void,string> fcpuTime(boost::bind(&TMS_Data::SubmitOptions::setCpuTime,boost::ref(subOp),_1));
+	boost::function1<void,string> ftextParams(boost::bind(&TMS_Data::SubmitOptions::setTextParams,boost::ref(subOp),_1));
+	boost::function1<void,string> ffileParams(boost::bind(&TMS_Data::SubmitOptions::setFileParams,boost::ref(subOp),_1));
+	vector<string> textParamsVector ;
+	vector<string> fileParamsVector ;
+	std::string loadCriterionStr;
+	/*********** Out parameters *********************/
+	Job job;
+
+	/**************** Describe options *************/
+	boost::shared_ptr<Options> opt=makeSubJobOp(argv[0],fname,fqueue,
+			fmemory, fnbCpu, fnbNodeAndCpu,
+			foutput, ferr, fmailNotif, fmailUser, fgroup, fworkingDir, fcpuTime,
+			ftextParams, ffileParams, textParamsVector, fileParamsVector,
+			loadCriterionStr, walltime, dietConfig);
+
+	opt->add("selectQueueAutom,Q",
+			"allows to select automatically a queue which has the number of nodes requested by the user.",
+			CONFIG);
+
+	opt->add("machineId,i",
+			"represents the id of the machine",
+			HIDDEN,
+			machineId,1);
+	opt->setPosition("machineId",1);
+
+	opt->add("scriptPath,p",
+			"represents the script of submission",
+			HIDDEN,
+			scriptPath,1);
+	opt->setPosition("scriptPath",1);
+
 	CLICmd cmd = CLICmd (argc, argv, opt);
 
 	// Process command
@@ -289,145 +348,5 @@ int main (int argc, char* argv[]){
 		return CLI_ERROR_RUNTIME;
 	}
 
-  int ret; // Return value
-
-  /******* Parsed value containers ****************/
-  string dietConfig;
-  string sessionKey;
-  string machineId;
-  string scriptPath;
-  string walltime;
-
-  /********** EMF data ************/
-  TMS_Data::SubmitOptions subOp;
-
-  /******** Callback functions ******************/
-  boost::function1<void,string> fname(boost::bind(&TMS_Data::SubmitOptions::setName,boost::ref(subOp),_1));
-  boost::function1<void,string> fqueue(boost::bind(&TMS_Data::SubmitOptions::setQueue,boost::ref(subOp),_1));
-  boost::function1<void,int> fmemory(boost::bind(&TMS_Data::SubmitOptions::setMemory,boost::ref(subOp),_1));
-  boost::function1<void,int> fnbCpu(boost::bind(&TMS_Data::SubmitOptions::setNbCpu,boost::ref(subOp),_1));
-  boost::function1<void,string> fnbNodeAndCpu(boost::bind(&TMS_Data::SubmitOptions::setNbNodesAndCpuPerNode,boost::ref(subOp),_1));
-  boost::function1<void,string> foutput(boost::bind(&TMS_Data::SubmitOptions::setOutputPath,boost::ref(subOp),_1));
-  boost::function1<void,string> ferr(boost::bind(&TMS_Data::SubmitOptions::setErrorPath,boost::ref(subOp),_1));
-  boost::function1<void,string> fmailNotif(boost::bind(&TMS_Data::SubmitOptions::setMailNotification,boost::ref(subOp),_1));
-  boost::function1<void,string> fmailUser(boost::bind(&TMS_Data::SubmitOptions::setMailNotifyUser,boost::ref(subOp),_1));
-  boost::function1<void,string> fgroup(boost::bind(&TMS_Data::SubmitOptions::setGroup,boost::ref(subOp),_1));
-  boost::function1<void,string> fworkingDir(boost::bind(&TMS_Data::SubmitOptions::setWorkingDir,boost::ref(subOp),_1));
-  boost::function1<void,string> fcpuTime(boost::bind(&TMS_Data::SubmitOptions::setCpuTime,boost::ref(subOp),_1));
-  std::string loadCriterionStr;
-  /*********** Out parameters *********************/
-  Job job;
-
-  /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeSubJobOp(argv[0],fname,fqueue,
-                fmemory, fnbCpu, fnbNodeAndCpu,
-                foutput, ferr, fmailNotif, fmailUser, fgroup, fworkingDir, fcpuTime, loadCriterionStr, walltime, dietConfig);
-
-  opt->add("selectQueueAutom,Q",
-      "allows to select automatically a queue which has the number of nodes requested by the user.",
-      CONFIG);
-
-  opt->add("machineId,i",
-	   "represents the id of the machine",
-	   HIDDEN,
-	   machineId,1);
-  opt->setPosition("machineId",1);
-
-  opt->add("scriptPath,p",
-	   "represents the script of submission",
-	   HIDDEN,
-	   scriptPath,1);
-  opt->setPosition("scriptPath",1);
-
-  CLICmd cmd = CLICmd (argc, argv, opt);
-
-  // Process command
-  try {
-
-    // Parse the cli and setting the options found
-    ret = cmd.parse(env_name_mapper());
-
-    if (ret != CLI_SUCCESS){
-      helpUsage(*opt,"[options] machineId script");
-      return ret;
-    }
-
-    // PreProcess (adapt some parameters if necessary)
-    checkVishnuConfig(*opt);
-    if ( opt->count("help")){
-      helpUsage(*opt,"[options] machineId script");
-      return 0;
-    }
-
-    if(walltime.size()!=0) {
-      subOp.setWallTime(convertStringToWallTime(walltime));
-    }
-
-    //To set the load criterion
-    int loadCriterionType;
-    TMS_Data::LoadCriterion_ptr loadCriterion_ptr = new TMS_Data::LoadCriterion();
-    if(loadCriterionStr.size()!=0) {
-      size_t pos = loadCriterionStr.find_first_not_of("0123456789");
-      if(pos!=std::string::npos) {
-        if(loadCriterionStr.size()==1) {
-          switch(loadCriterionStr[0]) {
-            case 'W' :
-              loadCriterionType = 0;
-              break;
-            case 'T' :
-              loadCriterionType = 1;
-              break;
-            case 'R' :
-              loadCriterionType = 2;
-              break;
-            default:
-              loadCriterionType = 0;
-              break;
-          }
-        }
-        if ((loadCriterionStr.size() > 1)) {
-          std::cerr << "Unknown load criterion " << loadCriterionStr << std::endl;
-          return 0;
-        }
-      } else {
-        loadCriterionType = convertToInt(loadCriterionStr);
-      }
-      loadCriterion_ptr->setLoadType(loadCriterionType);
-      subOp.setCriterion(loadCriterion_ptr);
-    }
-
-    if(opt->count("selectQueueAutom")) {
-      subOp.setSelectQueueAutom(true);
-    }
-
-    // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
-      errorUsage(argv[0],dietErrorMsg,EXECERROR);
-      return  CLI_ERROR_DIET ;
-    }
-
-    // get the sessionKey
-    sessionKey=getLastSessionKey(getppid());
-
-    // DIET call : submit
-    if(false==sessionKey.empty()){
-      printSessionKeyMessage();
-      submitJob(sessionKey, machineId, scriptPath, job, subOp);
-    }
-    displaySubmit(job);
-    printSuccessMessage();
-  } catch(VishnuException& except){// catch all Vishnu runtime error
-    std::string  submitErrmsg = except.getMsg()+" ["+except.getMsgComp()+"]";
-    errorUsage(argv[0], submitErrmsg,EXECERROR);
-    //check the bad session key
-    if (checkBadSessionKeyError(except)){
-      removeBadSessionKeyFromFile(getppid());
-    }
-    return except.getMsgI() ;
-  } catch(std::exception& except){// catch all std runtime error
-    errorUsage(argv[0],except.what());
-    return CLI_ERROR_RUNTIME;
-  }
-
-  return 0;
+	return 0;
 }
