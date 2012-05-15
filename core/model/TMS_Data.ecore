@@ -122,9 +122,15 @@
         <details key="content" value="Is the number of nodes and processors per node used by the job (in the format nbNodes:nbCpuPerNode)."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="batchJobId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="batchJobId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
         <details key="content" value="Represents the batch job id (given by the underlying batch scheduler )."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="outputDir" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="Indicates the directory where the job has been launched."/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -248,6 +254,18 @@
       <eAnnotations source="Description">
         <details key="content" value="Represents the scheduling criterion to automatically submit a job"/>
         <details key="shortOption" value="L"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileParams" eType="ecore:EDataType Ecore.ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="Sets a list of local files as parameters for the script.  &#xA;These files will be  uploaded onto the server before computing the script. So at the execution time,  each path can be accessed through an environment variable.&#xA;E.g. --listFile &quot;PFILE1=/path/to/file1 PFILE2=/path/to/file2&quot; or -V &quot;PFILE1=/path/to/file1 PFILE2=/path/to/file2&quot;.&#xA;At the execution, the environment variable $PFILE1 will point to a copy of the local file (/path/to/file1) on the server. &#xA;&#xA;The name of the parameter can be any word and is case-insensitive, but the corresponding environment variable must be in upper case in the script.&#xA;&#xA;The options --file or -f allow to set individual file.&#xA;"/>
+        <details key="shortOption" value="-f"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="textParams" eType="ecore:EDataType Ecore.ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="shortOption" value="-i"/>
+        <details key="content" value="Sets a list of parameters for the script so at the execution, each of parameter can be used as an environment variable.&#xA;E.g. --listParams &quot;PARAM1=value1 PARAM2=value2&quot; or -F &quot;PARAM1=value1 PARAM2=value2&quot;, will set the environment variables named PARAM1 and PARAM2 with value1 and value2, respectively. &#xA;&#xA;The options --param or -v allow to set each parameter individually."/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -512,6 +530,11 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="errorPath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="Is the path to the file containing errors occured during job's execution. "/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="outputDir" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="Is the path to the file containing errors occured during job's execution. "/>
       </eAnnotations>

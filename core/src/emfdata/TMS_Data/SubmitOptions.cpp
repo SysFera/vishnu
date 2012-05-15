@@ -423,6 +423,58 @@ void SubmitOptions::setSelectQueueAutom(::ecore::EBoolean _selectQueueAutom)
 #endif
 }
 
+::ecore::EString const& SubmitOptions::getFileParams() const
+{
+    return m_fileParams;
+}
+
+void SubmitOptions::setFileParams(::ecore::EString const& _fileParams)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_fileParams = m_fileParams;
+#endif
+    m_fileParams = _fileParams;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__fileParams(),
+                _old_fileParams,
+                m_fileParams
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EString const& SubmitOptions::getTextParams() const
+{
+    return m_textParams;
+}
+
+void SubmitOptions::setTextParams(::ecore::EString const& _textParams)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_textParams = m_textParams;
+#endif
+    m_textParams = _textParams;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__textParams(),
+                _old_textParams,
+                m_textParams
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
 // References
 ::TMS_Data::LoadCriterion_ptr SubmitOptions::getCriterion()
 {

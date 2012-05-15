@@ -73,6 +73,12 @@ void JobResult::_initialize()
                 m_errorPath);
     }
         return _any;
+    case ::TMS_Data::TMS_DataPackage::JOBRESULT__OUTPUTDIR:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_outputDir);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -101,6 +107,12 @@ void JobResult::eSet(::ecore::EInt _featureID,
                 m_errorPath);
     }
         return;
+    case ::TMS_Data::TMS_DataPackage::JOBRESULT__OUTPUTDIR:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_outputDir);
+    }
+        return;
 
     }
     throw "Error";
@@ -119,6 +131,9 @@ void JobResult::eSet(::ecore::EInt _featureID,
     case ::TMS_Data::TMS_DataPackage::JOBRESULT__ERRORPATH:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_errorPath);
+    case ::TMS_Data::TMS_DataPackage::JOBRESULT__OUTPUTDIR:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_outputDir);
 
     }
     throw "Error";

@@ -265,6 +265,7 @@ SGEServer::submit(const char* scriptPath,
       
     }
     job.setErrorPath(jobErrorPathStr);
+
     
   } else{
     if(isjobname){
@@ -297,7 +298,11 @@ SGEServer::submit(const char* scriptPath,
       }
       
     }
-    job.setOutputPath(jobOutputPathStr);
+    if(boost::starts_with(jobOutputPathStr, ":")) {
+    	job.setOutputPath(jobOutputPathStr.substr(1, std::string::npos));
+    } else {
+        job.setOutputPath(jobOutputPathStr);
+    }
     
   }else{
     if(isjobname){

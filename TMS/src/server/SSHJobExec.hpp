@@ -59,7 +59,6 @@ class SSHJobExec {
               const char* copyOfOutputPath,
               const char* copyOfErrorPath);
 
-
     /**
      * \brief Function to return the job serialized content
      * \return  job serialized content

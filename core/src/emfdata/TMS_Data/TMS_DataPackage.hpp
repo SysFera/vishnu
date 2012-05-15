@@ -249,101 +249,119 @@ namespace TMS_Data
         static const int JOB__BATCHJOBID = 22;
 
         /**
+         * \brief Constant for JOB__OUTPUTDIR feature
+         */
+        static const int JOB__OUTPUTDIR = 23;
+
+        /**
          * \brief Constant for LISTJOBS__NBJOBS feature
          */
-        static const int LISTJOBS__NBJOBS = 23;
+        static const int LISTJOBS__NBJOBS = 24;
 
         /**
          * \brief Constant for LISTJOBS__NBRUNNINGJOBS feature
          */
-        static const int LISTJOBS__NBRUNNINGJOBS = 24;
+        static const int LISTJOBS__NBRUNNINGJOBS = 25;
 
         /**
          * \brief Constant for LISTJOBS__NBWAITINGJOBS feature
          */
-        static const int LISTJOBS__NBWAITINGJOBS = 25;
+        static const int LISTJOBS__NBWAITINGJOBS = 26;
 
         /**
          * \brief Constant for LISTJOBS__JOBS feature
          */
-        static const int LISTJOBS__JOBS = 26;
+        static const int LISTJOBS__JOBS = 27;
 
         /**
          * \brief Constant for SUBMITOPTIONS__NAME feature
          */
-        static const int SUBMITOPTIONS__NAME = 27;
+        static const int SUBMITOPTIONS__NAME = 28;
 
         /**
          * \brief Constant for SUBMITOPTIONS__QUEUE feature
          */
-        static const int SUBMITOPTIONS__QUEUE = 28;
+        static const int SUBMITOPTIONS__QUEUE = 29;
 
         /**
          * \brief Constant for SUBMITOPTIONS__WALLTIME feature
          */
-        static const int SUBMITOPTIONS__WALLTIME = 29;
+        static const int SUBMITOPTIONS__WALLTIME = 30;
 
         /**
          * \brief Constant for SUBMITOPTIONS__MEMORY feature
          */
-        static const int SUBMITOPTIONS__MEMORY = 30;
+        static const int SUBMITOPTIONS__MEMORY = 31;
 
         /**
          * \brief Constant for SUBMITOPTIONS__NBCPU feature
          */
-        static const int SUBMITOPTIONS__NBCPU = 31;
+        static const int SUBMITOPTIONS__NBCPU = 32;
 
         /**
          * \brief Constant for SUBMITOPTIONS__NBNODESANDCPUPERNODE feature
          */
-        static const int SUBMITOPTIONS__NBNODESANDCPUPERNODE = 32;
+        static const int SUBMITOPTIONS__NBNODESANDCPUPERNODE = 33;
 
         /**
          * \brief Constant for SUBMITOPTIONS__OUTPUTPATH feature
          */
-        static const int SUBMITOPTIONS__OUTPUTPATH = 33;
+        static const int SUBMITOPTIONS__OUTPUTPATH = 34;
 
         /**
          * \brief Constant for SUBMITOPTIONS__ERRORPATH feature
          */
-        static const int SUBMITOPTIONS__ERRORPATH = 34;
+        static const int SUBMITOPTIONS__ERRORPATH = 35;
 
         /**
          * \brief Constant for SUBMITOPTIONS__MAILNOTIFICATION feature
          */
-        static const int SUBMITOPTIONS__MAILNOTIFICATION = 35;
+        static const int SUBMITOPTIONS__MAILNOTIFICATION = 36;
 
         /**
          * \brief Constant for SUBMITOPTIONS__MAILNOTIFYUSER feature
          */
-        static const int SUBMITOPTIONS__MAILNOTIFYUSER = 36;
+        static const int SUBMITOPTIONS__MAILNOTIFYUSER = 37;
 
         /**
          * \brief Constant for SUBMITOPTIONS__GROUP feature
          */
-        static const int SUBMITOPTIONS__GROUP = 37;
+        static const int SUBMITOPTIONS__GROUP = 38;
 
         /**
          * \brief Constant for SUBMITOPTIONS__WORKINGDIR feature
          */
-        static const int SUBMITOPTIONS__WORKINGDIR = 38;
+        static const int SUBMITOPTIONS__WORKINGDIR = 39;
 
         /**
          * \brief Constant for SUBMITOPTIONS__CPUTIME feature
          */
-        static const int SUBMITOPTIONS__CPUTIME = 39;
+        static const int SUBMITOPTIONS__CPUTIME = 40;
 
         /**
          * \brief Constant for SUBMITOPTIONS__SELECTQUEUEAUTOM feature
          */
-        static const int SUBMITOPTIONS__SELECTQUEUEAUTOM = 40;
+        static const int SUBMITOPTIONS__SELECTQUEUEAUTOM = 41;
 
         /**
          * \brief Constant for SUBMITOPTIONS__CRITERION feature
          */
-        static const int SUBMITOPTIONS__CRITERION = 41;
+        static const int SUBMITOPTIONS__CRITERION = 42;
 
         /**
+<<<<<<< .merge_file_I2yhNu
+=======
+         * \brief Constant for SUBMITOPTIONS__FILEPARAMS feature
+         */
+        static const int SUBMITOPTIONS__FILEPARAMS = 43;
+
+        /**
+         * \brief Constant for SUBMITOPTIONS__TEXTPARAMS feature
+         */
+        static const int SUBMITOPTIONS__TEXTPARAMS = 44;
+
+        /**
+>>>>>>> .merge_file_N8stkw
          * \brief Constant for LISTJOBSOPTIONS__JOBID feature
          */
         static const int LISTJOBSOPTIONS__JOBID = 42;
@@ -529,19 +547,36 @@ namespace TMS_Data
         static const int JOBRESULT__ERRORPATH = 78;
 
         /**
+         * \brief Constant for JOBRESULT__OUTPUTDIR feature
+         */
+        static const int JOBRESULT__OUTPUTDIR = 82;
+
+        /**
          * \brief Constant for LISTJOBRESULTS__NBJOBS feature
          */
+<<<<<<< .merge_file_I2yhNu
         static const int LISTJOBRESULTS__NBJOBS = 79;
+=======
+        static const int LISTJOBRESULTS__NBJOBS = 83;
+>>>>>>> .merge_file_N8stkw
 
         /**
          * \brief Constant for LISTJOBRESULTS__RESULTS feature
          */
+<<<<<<< .merge_file_I2yhNu
         static const int LISTJOBRESULTS__RESULTS = 80;
+=======
+        static const int LISTJOBRESULTS__RESULTS = 84;
+>>>>>>> .merge_file_N8stkw
 
         /**
          * \brief Constant for LOADCRITERION__LOADTYPE feature
          */
+<<<<<<< .merge_file_I2yhNu
         static const int LOADCRITERION__LOADTYPE = 81;
+=======
+        static const int LOADCRITERION__LOADTYPE = 85;
+>>>>>>> .merge_file_N8stkw
 
         // EClassifiers methods
 
@@ -788,6 +823,12 @@ namespace TMS_Data
         virtual ::ecore::EAttribute_ptr getJob__batchJobId();
 
         /**
+         * \brief Returns the reflective object for feature outputDir of class Job
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getJob__outputDir();
+
+        /**
          * \brief Returns the reflective object for feature nbJobs of class ListJobs
          * \return A pointer to the reflective object
          */
@@ -903,6 +944,21 @@ namespace TMS_Data
         virtual ::ecore::EReference_ptr getSubmitOptions__criterion();
 
         /**
+<<<<<<< .merge_file_I2yhNu
+=======
+         * \brief Returns the reflective object for feature fileParams of class SubmitOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getSubmitOptions__fileParams();
+
+        /**
+         * \brief Returns the reflective object for feature textParams of class SubmitOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getSubmitOptions__textParams();
+
+        /**
+>>>>>>> .merge_file_N8stkw
          * \brief Returns the reflective object for feature jobId of class ListJobsOptions
          * \return A pointer to the reflective object
          */
@@ -1123,6 +1179,12 @@ namespace TMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EAttribute_ptr getJobResult__errorPath();
+
+        /**
+         * \brief Returns the reflective object for feature outputDir of class JobResult
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getJobResult__outputDir();
 
         /**
          * \brief Returns the reflective object for feature nbJobs of class ListJobResults
@@ -1361,6 +1423,11 @@ namespace TMS_Data
         ::ecore::EAttribute_ptr m_Job__batchJobId;
 
         /**
+         * \brief The instance for the feature outputDir of class Job
+         */
+        ::ecore::EAttribute_ptr m_Job__outputDir;
+
+        /**
          * \brief The instance for the feature nbJobs of class ListJobs
          */
         ::ecore::EAttribute_ptr m_ListJobs__nbJobs;
@@ -1456,6 +1523,19 @@ namespace TMS_Data
         ::ecore::EReference_ptr m_SubmitOptions__criterion;
 
         /**
+<<<<<<< .merge_file_I2yhNu
+=======
+         * \brief The instance for the feature fileParams of class SubmitOptions
+         */
+        ::ecore::EAttribute_ptr m_SubmitOptions__fileParams;
+
+        /**
+         * \brief The instance for the feature textParams of class SubmitOptions
+         */
+        ::ecore::EAttribute_ptr m_SubmitOptions__textParams;
+
+        /**
+>>>>>>> .merge_file_N8stkw
          * \brief The instance for the feature jobId of class ListJobsOptions
          */
         ::ecore::EAttribute_ptr m_ListJobsOptions__jobId;
@@ -1639,6 +1719,11 @@ namespace TMS_Data
          * \brief The instance for the feature errorPath of class JobResult
          */
         ::ecore::EAttribute_ptr m_JobResult__errorPath;
+
+        /**
+         * \brief The instance for the feature outputDir of class JobResult
+         */
+        ::ecore::EAttribute_ptr m_JobResult__outputDir;
 
         /**
          * \brief The instance for the feature nbJobs of class ListJobResults

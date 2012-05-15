@@ -102,6 +102,17 @@ namespace TMS_Data
          **/
         void setErrorPath(::ecore::EString const& _errorPath);
 
+        /**
+         * \brief To get the outputDir
+         * \return The outputDir attribute value
+         **/
+        ::ecore::EString const& getOutputDir() const;
+        /**
+         * \brief To set the outputDir
+         * \param _outputDir The outputDir value
+         **/
+        void setOutputDir(::ecore::EString const& _outputDir);
+
         // References
 
 
@@ -132,6 +143,8 @@ namespace TMS_Data
         ::ecore::EString m_outputPath;
 
         ::ecore::EString m_errorPath;
+
+        ::ecore::EString m_outputDir;
 
         // References
 
