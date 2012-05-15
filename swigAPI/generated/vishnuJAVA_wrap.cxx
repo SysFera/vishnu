@@ -21139,6 +21139,1272 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_vi
 }
 
 
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_submitJob_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jlong jarg4, jobject jarg4_, jlong jarg5, jobject jarg5_) {
+  jint jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  TMS_Data::Job *arg4 = 0 ;
+  TMS_Data::SubmitOptions *arg5 = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg4_;
+  (void)jarg5_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  arg4 = *(TMS_Data::Job **)&jarg4;
+  if (!arg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "TMS_Data::Job & reference is null");
+    return 0;
+  } 
+  arg5 = *(TMS_Data::SubmitOptions **)&jarg5;
+  if (!arg5) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "TMS_Data::SubmitOptions const & reference is null");
+    return 0;
+  } 
+  {
+    try {
+      result = (int)vishnu::submitJob((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,*arg4,(TMS_Data::SubmitOptions const &)*arg5);
+    }
+    catch(UMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(TMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(UserException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(SystemException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+  }
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_submitJob_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jlong jarg4, jobject jarg4_) {
+  jint jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  TMS_Data::Job *arg4 = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg4_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  arg4 = *(TMS_Data::Job **)&jarg4;
+  if (!arg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "TMS_Data::Job & reference is null");
+    return 0;
+  } 
+  {
+    try {
+      result = (int)vishnu::submitJob((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,*arg4);
+    }
+    catch(UMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(TMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(UserException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(SystemException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+  }
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_cancelJob(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3) {
+  jint jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  {
+    try {
+      result = (int)vishnu::cancelJob((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+    }
+    catch(UMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(TMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(UserException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(SystemException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+  }
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_getJobInfo(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jlong jarg4, jobject jarg4_) {
+  jint jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  TMS_Data::Job *arg4 = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg4_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  arg4 = *(TMS_Data::Job **)&jarg4;
+  if (!arg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "TMS_Data::Job & reference is null");
+    return 0;
+  } 
+  {
+    try {
+      result = (int)vishnu::getJobInfo((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,*arg4);
+    }
+    catch(UMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(TMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(UserException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(SystemException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+  }
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_listJobs_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jlong jarg4, jobject jarg4_) {
+  jint jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  TMS_Data::ListJobs *arg3 = 0 ;
+  TMS_Data::ListJobsOptions *arg4 = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  (void)jarg4_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(TMS_Data::ListJobs **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "TMS_Data::ListJobs & reference is null");
+    return 0;
+  } 
+  arg4 = *(TMS_Data::ListJobsOptions **)&jarg4;
+  if (!arg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "TMS_Data::ListJobsOptions const & reference is null");
+    return 0;
+  } 
+  {
+    try {
+      result = (int)vishnu::listJobs((std::string const &)*arg1,(std::string const &)*arg2,*arg3,(TMS_Data::ListJobsOptions const &)*arg4);
+    }
+    catch(UMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(TMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(UserException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(SystemException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+  }
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_listJobs_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_) {
+  jint jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  TMS_Data::ListJobs *arg3 = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(TMS_Data::ListJobs **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "TMS_Data::ListJobs & reference is null");
+    return 0;
+  } 
+  {
+    try {
+      result = (int)vishnu::listJobs((std::string const &)*arg1,(std::string const &)*arg2,*arg3);
+    }
+    catch(UMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(TMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(UserException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(SystemException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+  }
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_getJobProgress_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jlong jarg4, jobject jarg4_) {
+  jint jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  TMS_Data::ListProgression *arg3 = 0 ;
+  TMS_Data::ProgressOptions *arg4 = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  (void)jarg4_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(TMS_Data::ListProgression **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "TMS_Data::ListProgression & reference is null");
+    return 0;
+  } 
+  arg4 = *(TMS_Data::ProgressOptions **)&jarg4;
+  if (!arg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "TMS_Data::ProgressOptions const & reference is null");
+    return 0;
+  } 
+  {
+    try {
+      result = (int)vishnu::getJobProgress((std::string const &)*arg1,(std::string const &)*arg2,*arg3,(TMS_Data::ProgressOptions const &)*arg4);
+    }
+    catch(UMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(TMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(UserException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(SystemException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+  }
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_getJobProgress_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_) {
+  jint jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  TMS_Data::ListProgression *arg3 = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(TMS_Data::ListProgression **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "TMS_Data::ListProgression & reference is null");
+    return 0;
+  } 
+  {
+    try {
+      result = (int)vishnu::getJobProgress((std::string const &)*arg1,(std::string const &)*arg2,*arg3);
+    }
+    catch(UMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(TMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(UserException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(SystemException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+  }
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_listQueues_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jstring jarg4) {
+  jint jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  TMS_Data::ListQueues *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(TMS_Data::ListQueues **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "TMS_Data::ListQueues & reference is null");
+    return 0;
+  } 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  {
+    try {
+      result = (int)vishnu::listQueues((std::string const &)*arg1,(std::string const &)*arg2,*arg3,(std::string const &)*arg4);
+    }
+    catch(UMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(TMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(UserException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(SystemException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+  }
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_listQueues_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_) {
+  jint jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  TMS_Data::ListQueues *arg3 = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(TMS_Data::ListQueues **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "TMS_Data::ListQueues & reference is null");
+    return 0;
+  } 
+  {
+    try {
+      result = (int)vishnu::listQueues((std::string const &)*arg1,(std::string const &)*arg2,*arg3);
+    }
+    catch(UMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(TMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(UserException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(SystemException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+  }
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_getJobOutput_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jlong jarg4, jobject jarg4_, jstring jarg5) {
+  jint jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  TMS_Data::JobResult *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg4_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  arg4 = *(TMS_Data::JobResult **)&jarg4;
+  if (!arg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "TMS_Data::JobResult & reference is null");
+    return 0;
+  } 
+  if(!jarg5) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg5_pstr = (const char *)jenv->GetStringUTFChars(jarg5, 0); 
+  if (!arg5_pstr) return 0;
+  std::string arg5_str(arg5_pstr);
+  arg5 = &arg5_str;
+  jenv->ReleaseStringUTFChars(jarg5, arg5_pstr); 
+  {
+    try {
+      result = (int)vishnu::getJobOutput((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,*arg4,(std::string const &)*arg5);
+    }
+    catch(UMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(TMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(UserException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(SystemException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+  }
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_getJobOutput_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jlong jarg4, jobject jarg4_) {
+  jint jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  TMS_Data::JobResult *arg4 = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg4_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  arg4 = *(TMS_Data::JobResult **)&jarg4;
+  if (!arg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "TMS_Data::JobResult & reference is null");
+    return 0;
+  } 
+  {
+    try {
+      result = (int)vishnu::getJobOutput((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,*arg4);
+    }
+    catch(UMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(TMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(UserException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(SystemException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+  }
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_getCompletedJobsOutput_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jstring jarg4) {
+  jint jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  TMS_Data::ListJobResults *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(TMS_Data::ListJobResults **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "TMS_Data::ListJobResults & reference is null");
+    return 0;
+  } 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  {
+    try {
+      result = (int)vishnu::getCompletedJobsOutput((std::string const &)*arg1,(std::string const &)*arg2,*arg3,(std::string const &)*arg4);
+    }
+    catch(UMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(TMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(UserException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(SystemException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+  }
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_getCompletedJobsOutput_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_) {
+  jint jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  TMS_Data::ListJobResults *arg3 = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(TMS_Data::ListJobResults **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "TMS_Data::ListJobResults & reference is null");
+    return 0;
+  } 
+  {
+    try {
+      result = (int)vishnu::getCompletedJobsOutput((std::string const &)*arg1,(std::string const &)*arg2,*arg3);
+    }
+    catch(UMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(TMSVishnuException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(UserException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+    catch(SystemException &_e) {
+      {
+        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalTMSException");
+        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
+        if (clazz) {
+          jenv->ThrowNew(clazz, ret.c_str());
+        }
+        return 0;
+      }
+    }
+  }
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_exportCommands(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jlong jarg4, jobject jarg4_) {
   jint jresult = 0 ;
   std::string arg1 ;

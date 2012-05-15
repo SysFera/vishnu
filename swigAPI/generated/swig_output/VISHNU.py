@@ -2845,6 +2845,14 @@ ERRCODE_RUNTIME_ERROR = cvar.ERRCODE_RUNTIME_ERROR
 ERRCODE_UNKNOWN_FILETRANSFERID = cvar.ERRCODE_UNKNOWN_FILETRANSFERID
 
 
+def cancelJob(*args):
+  return _VISHNU.cancelJob(*args)
+cancelJob = _VISHNU.cancelJob
+
+def getJobInfo(*args):
+  return _VISHNU.getJobInfo(*args)
+getJobInfo = _VISHNU.getJobInfo
+
 def exportCommands(*args):
   return _VISHNU.exportCommands(*args)
 exportCommands = _VISHNU.exportCommands
@@ -2941,6 +2949,30 @@ def getFileInfo(*args):
   return _VISHNU.getFileInfo(*args)
 getFileInfo = _VISHNU.getFileInfo
 
+
+def submitJob(*args):
+  return _VISHNU.submitJob(*args)
+submitJob = _VISHNU.submitJob
+
+def listJobs(*args):
+  return _VISHNU.listJobs(*args)
+listJobs = _VISHNU.listJobs
+
+def getJobProgress(*args):
+  return _VISHNU.getJobProgress(*args)
+getJobProgress = _VISHNU.getJobProgress
+
+def listQueues(*args):
+  return _VISHNU.listQueues(*args)
+listQueues = _VISHNU.listQueues
+
+def getJobOutput(*args):
+  return _VISHNU.getJobOutput(*args)
+getJobOutput = _VISHNU.getJobOutput
+
+def getCompletedJobsOutput(*args):
+  return _VISHNU.getCompletedJobsOutput(*args)
+getCompletedJobsOutput = _VISHNU.getCompletedJobsOutput
 
 def copyFile(*args):
   return _VISHNU.copyFile(*args)

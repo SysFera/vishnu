@@ -197,6 +197,62 @@ public class VISHNU {
     VISHNUJNI.vishnuFinalize();
   }
 
+  public static int submitJob(String sessionKey, String machineId, String scriptFilePath, Job jobInfo, SubmitOptions options) throws InternalTMSException {
+    return VISHNUJNI.submitJob__SWIG_0(sessionKey, machineId, scriptFilePath, Job.getCPtr(jobInfo), jobInfo, SubmitOptions.getCPtr(options), options);
+  }
+
+  public static int submitJob(String sessionKey, String machineId, String scriptFilePath, Job jobInfo) throws InternalTMSException {
+    return VISHNUJNI.submitJob__SWIG_1(sessionKey, machineId, scriptFilePath, Job.getCPtr(jobInfo), jobInfo);
+  }
+
+  public static int cancelJob(String sessionKey, String machineId, String jobId) throws InternalTMSException {
+    return VISHNUJNI.cancelJob(sessionKey, machineId, jobId);
+  }
+
+  public static int getJobInfo(String sessionKey, String machineId, String jobId, Job jobInfos) throws InternalTMSException {
+    return VISHNUJNI.getJobInfo(sessionKey, machineId, jobId, Job.getCPtr(jobInfos), jobInfos);
+  }
+
+  public static int listJobs(String sessionKey, String machineId, ListJobs listOfJobs, ListJobsOptions options) throws InternalTMSException {
+    return VISHNUJNI.listJobs__SWIG_0(sessionKey, machineId, ListJobs.getCPtr(listOfJobs), listOfJobs, ListJobsOptions.getCPtr(options), options);
+  }
+
+  public static int listJobs(String sessionKey, String machineId, ListJobs listOfJobs) throws InternalTMSException {
+    return VISHNUJNI.listJobs__SWIG_1(sessionKey, machineId, ListJobs.getCPtr(listOfJobs), listOfJobs);
+  }
+
+  public static int getJobProgress(String sessionKey, String machineId, ListProgression listOfProgress, ProgressOptions options) throws InternalTMSException {
+    return VISHNUJNI.getJobProgress__SWIG_0(sessionKey, machineId, ListProgression.getCPtr(listOfProgress), listOfProgress, ProgressOptions.getCPtr(options), options);
+  }
+
+  public static int getJobProgress(String sessionKey, String machineId, ListProgression listOfProgress) throws InternalTMSException {
+    return VISHNUJNI.getJobProgress__SWIG_1(sessionKey, machineId, ListProgression.getCPtr(listOfProgress), listOfProgress);
+  }
+
+  public static int listQueues(String sessionKey, String machineId, ListQueues listofQueues, String queueName) throws InternalTMSException {
+    return VISHNUJNI.listQueues__SWIG_0(sessionKey, machineId, ListQueues.getCPtr(listofQueues), listofQueues, queueName);
+  }
+
+  public static int listQueues(String sessionKey, String machineId, ListQueues listofQueues) throws InternalTMSException {
+    return VISHNUJNI.listQueues__SWIG_1(sessionKey, machineId, ListQueues.getCPtr(listofQueues), listofQueues);
+  }
+
+  public static int getJobOutput(String sessionKey, String machineId, String jobId, JobResult outputInfo, String outDir) throws InternalTMSException {
+    return VISHNUJNI.getJobOutput__SWIG_0(sessionKey, machineId, jobId, JobResult.getCPtr(outputInfo), outputInfo, outDir);
+  }
+
+  public static int getJobOutput(String sessionKey, String machineId, String jobId, JobResult outputInfo) throws InternalTMSException {
+    return VISHNUJNI.getJobOutput__SWIG_1(sessionKey, machineId, jobId, JobResult.getCPtr(outputInfo), outputInfo);
+  }
+
+  public static int getCompletedJobsOutput(String sessionKey, String machineId, ListJobResults listOfResults, String outDir) throws InternalTMSException {
+    return VISHNUJNI.getCompletedJobsOutput__SWIG_0(sessionKey, machineId, ListJobResults.getCPtr(listOfResults), listOfResults, outDir);
+  }
+
+  public static int getCompletedJobsOutput(String sessionKey, String machineId, ListJobResults listOfResults) throws InternalTMSException {
+    return VISHNUJNI.getCompletedJobsOutput__SWIG_1(sessionKey, machineId, ListJobResults.getCPtr(listOfResults), listOfResults);
+  }
+
   public static int exportCommands(String sessionKey, String oldSessionId, String filename, ExportOp op) throws InternalIMSException {
     return VISHNUJNI.exportCommands(sessionKey, oldSessionId, filename, ExportOp.getCPtr(op), op);
   }

@@ -44274,6 +44274,1574 @@ SWIGINTERN PyObject *FMSVishnuException_swigregister(PyObject *SWIGUNUSEDPARM(se
   return SWIG_Py_Void();
 }
 
+SWIGINTERN PyObject *_wrap_submitJob__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  TMS_Data::Job *arg4 = 0 ;
+  TMS_Data::SubmitOptions *arg5 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  void *argp5 = 0 ;
+  int res5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:submitJob",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "submitJob" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "submitJob" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "submitJob" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "submitJob" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "submitJob" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "submitJob" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_TMS_Data__Job,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "submitJob" "', argument " "4"" of type '" "TMS_Data::Job &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "submitJob" "', argument " "4"" of type '" "TMS_Data::Job &""'"); 
+  }
+  arg4 = reinterpret_cast< TMS_Data::Job * >(argp4);
+  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_TMS_Data__SubmitOptions,  0  | 0);
+  if (!SWIG_IsOK(res5)) {
+    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "submitJob" "', argument " "5"" of type '" "TMS_Data::SubmitOptions const &""'"); 
+  }
+  if (!argp5) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "submitJob" "', argument " "5"" of type '" "TMS_Data::SubmitOptions const &""'"); 
+  }
+  arg5 = reinterpret_cast< TMS_Data::SubmitOptions * >(argp5);
+  try {
+    result = (int)vishnu::submitJob((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,*arg4,(TMS_Data::SubmitOptions const &)*arg5);
+  }
+  catch(UMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
+  }
+  catch(TMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new TMSVishnuException(static_cast< const TMSVishnuException& >(_e))),SWIGTYPE_p_TMSVishnuException,SWIG_POINTER_OWN), "TMSVishnuException", SWIGTYPE_p_TMSVishnuException); SWIG_fail;
+  }
+  catch(UserException &_e) {
+    {
+      SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UserException,SWIG_POINTER_OWN), "UserException", SWIGTYPE_p_UserException); SWIG_fail;
+    }
+  }
+  catch(SystemException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new SystemException(static_cast< const SystemException& >(_e))),SWIGTYPE_p_SystemException,SWIG_POINTER_OWN), "SystemException", SWIGTYPE_p_SystemException); SWIG_fail;
+  }
+  
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_submitJob__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  TMS_Data::Job *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:submitJob",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "submitJob" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "submitJob" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "submitJob" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "submitJob" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "submitJob" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "submitJob" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_TMS_Data__Job,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "submitJob" "', argument " "4"" of type '" "TMS_Data::Job &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "submitJob" "', argument " "4"" of type '" "TMS_Data::Job &""'"); 
+  }
+  arg4 = reinterpret_cast< TMS_Data::Job * >(argp4);
+  try {
+    result = (int)vishnu::submitJob((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,*arg4);
+  }
+  catch(UMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
+  }
+  catch(TMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new TMSVishnuException(static_cast< const TMSVishnuException& >(_e))),SWIGTYPE_p_TMSVishnuException,SWIG_POINTER_OWN), "TMSVishnuException", SWIGTYPE_p_TMSVishnuException); SWIG_fail;
+  }
+  catch(UserException &_e) {
+    {
+      SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UserException,SWIG_POINTER_OWN), "UserException", SWIGTYPE_p_UserException); SWIG_fail;
+    }
+  }
+  catch(SystemException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new SystemException(static_cast< const SystemException& >(_e))),SWIGTYPE_p_SystemException,SWIG_POINTER_OWN), "SystemException", SWIGTYPE_p_SystemException); SWIG_fail;
+  }
+  
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_submitJob(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[6];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 5); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          void *vptr = 0;
+          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_TMS_Data__Job, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_submitJob__SWIG_1(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          void *vptr = 0;
+          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_TMS_Data__Job, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            int res = SWIG_ConvertPtr(argv[4], 0, SWIGTYPE_p_TMS_Data__SubmitOptions, 0);
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              return _wrap_submitJob__SWIG_0(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'submitJob'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    vishnu::submitJob(std::string const &,std::string const &,std::string const &,TMS_Data::Job &,TMS_Data::SubmitOptions const &)\n"
+    "    vishnu::submitJob(std::string const &,std::string const &,std::string const &,TMS_Data::Job &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_cancelJob(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:cancelJob",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "cancelJob" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "cancelJob" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "cancelJob" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "cancelJob" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "cancelJob" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "cancelJob" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  try {
+    result = (int)vishnu::cancelJob((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+  }
+  catch(UMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
+  }
+  catch(TMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new TMSVishnuException(static_cast< const TMSVishnuException& >(_e))),SWIGTYPE_p_TMSVishnuException,SWIG_POINTER_OWN), "TMSVishnuException", SWIGTYPE_p_TMSVishnuException); SWIG_fail;
+  }
+  catch(UserException &_e) {
+    {
+      SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UserException,SWIG_POINTER_OWN), "UserException", SWIGTYPE_p_UserException); SWIG_fail;
+    }
+  }
+  catch(SystemException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new SystemException(static_cast< const SystemException& >(_e))),SWIGTYPE_p_SystemException,SWIG_POINTER_OWN), "SystemException", SWIGTYPE_p_SystemException); SWIG_fail;
+  }
+  
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_getJobInfo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  TMS_Data::Job *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:getJobInfo",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "getJobInfo" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobInfo" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "getJobInfo" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobInfo" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "getJobInfo" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobInfo" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_TMS_Data__Job,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "getJobInfo" "', argument " "4"" of type '" "TMS_Data::Job &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobInfo" "', argument " "4"" of type '" "TMS_Data::Job &""'"); 
+  }
+  arg4 = reinterpret_cast< TMS_Data::Job * >(argp4);
+  try {
+    result = (int)vishnu::getJobInfo((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,*arg4);
+  }
+  catch(UMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
+  }
+  catch(TMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new TMSVishnuException(static_cast< const TMSVishnuException& >(_e))),SWIGTYPE_p_TMSVishnuException,SWIG_POINTER_OWN), "TMSVishnuException", SWIGTYPE_p_TMSVishnuException); SWIG_fail;
+  }
+  catch(UserException &_e) {
+    {
+      SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UserException,SWIG_POINTER_OWN), "UserException", SWIGTYPE_p_UserException); SWIG_fail;
+    }
+  }
+  catch(SystemException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new SystemException(static_cast< const SystemException& >(_e))),SWIGTYPE_p_SystemException,SWIG_POINTER_OWN), "SystemException", SWIGTYPE_p_SystemException); SWIG_fail;
+  }
+  
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_listJobs__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  TMS_Data::ListJobs *arg3 = 0 ;
+  TMS_Data::ListJobsOptions *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:listJobs",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "listJobs" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "listJobs" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "listJobs" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "listJobs" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_TMS_Data__ListJobs,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "listJobs" "', argument " "3"" of type '" "TMS_Data::ListJobs &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "listJobs" "', argument " "3"" of type '" "TMS_Data::ListJobs &""'"); 
+  }
+  arg3 = reinterpret_cast< TMS_Data::ListJobs * >(argp3);
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_TMS_Data__ListJobsOptions,  0  | 0);
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "listJobs" "', argument " "4"" of type '" "TMS_Data::ListJobsOptions const &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "listJobs" "', argument " "4"" of type '" "TMS_Data::ListJobsOptions const &""'"); 
+  }
+  arg4 = reinterpret_cast< TMS_Data::ListJobsOptions * >(argp4);
+  try {
+    result = (int)vishnu::listJobs((std::string const &)*arg1,(std::string const &)*arg2,*arg3,(TMS_Data::ListJobsOptions const &)*arg4);
+  }
+  catch(UMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
+  }
+  catch(TMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new TMSVishnuException(static_cast< const TMSVishnuException& >(_e))),SWIGTYPE_p_TMSVishnuException,SWIG_POINTER_OWN), "TMSVishnuException", SWIGTYPE_p_TMSVishnuException); SWIG_fail;
+  }
+  catch(UserException &_e) {
+    {
+      SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UserException,SWIG_POINTER_OWN), "UserException", SWIGTYPE_p_UserException); SWIG_fail;
+    }
+  }
+  catch(SystemException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new SystemException(static_cast< const SystemException& >(_e))),SWIGTYPE_p_SystemException,SWIG_POINTER_OWN), "SystemException", SWIGTYPE_p_SystemException); SWIG_fail;
+  }
+  
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_listJobs__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  TMS_Data::ListJobs *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:listJobs",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "listJobs" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "listJobs" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "listJobs" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "listJobs" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_TMS_Data__ListJobs,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "listJobs" "', argument " "3"" of type '" "TMS_Data::ListJobs &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "listJobs" "', argument " "3"" of type '" "TMS_Data::ListJobs &""'"); 
+  }
+  arg3 = reinterpret_cast< TMS_Data::ListJobs * >(argp3);
+  try {
+    result = (int)vishnu::listJobs((std::string const &)*arg1,(std::string const &)*arg2,*arg3);
+  }
+  catch(UMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
+  }
+  catch(TMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new TMSVishnuException(static_cast< const TMSVishnuException& >(_e))),SWIGTYPE_p_TMSVishnuException,SWIG_POINTER_OWN), "TMSVishnuException", SWIGTYPE_p_TMSVishnuException); SWIG_fail;
+  }
+  catch(UserException &_e) {
+    {
+      SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UserException,SWIG_POINTER_OWN), "UserException", SWIGTYPE_p_UserException); SWIG_fail;
+    }
+  }
+  catch(SystemException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new SystemException(static_cast< const SystemException& >(_e))),SWIGTYPE_p_SystemException,SWIG_POINTER_OWN), "SystemException", SWIGTYPE_p_SystemException); SWIG_fail;
+  }
+  
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_listJobs(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[5];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 4); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_TMS_Data__ListJobs, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_listJobs__SWIG_1(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_TMS_Data__ListJobs, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_ConvertPtr(argv[3], 0, SWIGTYPE_p_TMS_Data__ListJobsOptions, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_listJobs__SWIG_0(self, args);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'listJobs'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    vishnu::listJobs(std::string const &,std::string const &,TMS_Data::ListJobs &,TMS_Data::ListJobsOptions const &)\n"
+    "    vishnu::listJobs(std::string const &,std::string const &,TMS_Data::ListJobs &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_getJobProgress__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  TMS_Data::ListProgression *arg3 = 0 ;
+  TMS_Data::ProgressOptions *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:getJobProgress",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "getJobProgress" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobProgress" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "getJobProgress" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobProgress" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_TMS_Data__ListProgression,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "getJobProgress" "', argument " "3"" of type '" "TMS_Data::ListProgression &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobProgress" "', argument " "3"" of type '" "TMS_Data::ListProgression &""'"); 
+  }
+  arg3 = reinterpret_cast< TMS_Data::ListProgression * >(argp3);
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_TMS_Data__ProgressOptions,  0  | 0);
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "getJobProgress" "', argument " "4"" of type '" "TMS_Data::ProgressOptions const &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobProgress" "', argument " "4"" of type '" "TMS_Data::ProgressOptions const &""'"); 
+  }
+  arg4 = reinterpret_cast< TMS_Data::ProgressOptions * >(argp4);
+  try {
+    result = (int)vishnu::getJobProgress((std::string const &)*arg1,(std::string const &)*arg2,*arg3,(TMS_Data::ProgressOptions const &)*arg4);
+  }
+  catch(UMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
+  }
+  catch(TMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new TMSVishnuException(static_cast< const TMSVishnuException& >(_e))),SWIGTYPE_p_TMSVishnuException,SWIG_POINTER_OWN), "TMSVishnuException", SWIGTYPE_p_TMSVishnuException); SWIG_fail;
+  }
+  catch(UserException &_e) {
+    {
+      SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UserException,SWIG_POINTER_OWN), "UserException", SWIGTYPE_p_UserException); SWIG_fail;
+    }
+  }
+  catch(SystemException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new SystemException(static_cast< const SystemException& >(_e))),SWIGTYPE_p_SystemException,SWIG_POINTER_OWN), "SystemException", SWIGTYPE_p_SystemException); SWIG_fail;
+  }
+  
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_getJobProgress__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  TMS_Data::ListProgression *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:getJobProgress",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "getJobProgress" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobProgress" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "getJobProgress" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobProgress" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_TMS_Data__ListProgression,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "getJobProgress" "', argument " "3"" of type '" "TMS_Data::ListProgression &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobProgress" "', argument " "3"" of type '" "TMS_Data::ListProgression &""'"); 
+  }
+  arg3 = reinterpret_cast< TMS_Data::ListProgression * >(argp3);
+  try {
+    result = (int)vishnu::getJobProgress((std::string const &)*arg1,(std::string const &)*arg2,*arg3);
+  }
+  catch(UMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
+  }
+  catch(TMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new TMSVishnuException(static_cast< const TMSVishnuException& >(_e))),SWIGTYPE_p_TMSVishnuException,SWIG_POINTER_OWN), "TMSVishnuException", SWIGTYPE_p_TMSVishnuException); SWIG_fail;
+  }
+  catch(UserException &_e) {
+    {
+      SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UserException,SWIG_POINTER_OWN), "UserException", SWIGTYPE_p_UserException); SWIG_fail;
+    }
+  }
+  catch(SystemException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new SystemException(static_cast< const SystemException& >(_e))),SWIGTYPE_p_SystemException,SWIG_POINTER_OWN), "SystemException", SWIGTYPE_p_SystemException); SWIG_fail;
+  }
+  
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_getJobProgress(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[5];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 4); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_TMS_Data__ListProgression, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_getJobProgress__SWIG_1(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_TMS_Data__ListProgression, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_ConvertPtr(argv[3], 0, SWIGTYPE_p_TMS_Data__ProgressOptions, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_getJobProgress__SWIG_0(self, args);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'getJobProgress'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    vishnu::getJobProgress(std::string const &,std::string const &,TMS_Data::ListProgression &,TMS_Data::ProgressOptions const &)\n"
+    "    vishnu::getJobProgress(std::string const &,std::string const &,TMS_Data::ListProgression &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_listQueues__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  TMS_Data::ListQueues *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int res4 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:listQueues",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "listQueues" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "listQueues" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "listQueues" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "listQueues" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_TMS_Data__ListQueues,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "listQueues" "', argument " "3"" of type '" "TMS_Data::ListQueues &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "listQueues" "', argument " "3"" of type '" "TMS_Data::ListQueues &""'"); 
+  }
+  arg3 = reinterpret_cast< TMS_Data::ListQueues * >(argp3);
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(obj3, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "listQueues" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "listQueues" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  try {
+    result = (int)vishnu::listQueues((std::string const &)*arg1,(std::string const &)*arg2,*arg3,(std::string const &)*arg4);
+  }
+  catch(UMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
+  }
+  catch(TMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new TMSVishnuException(static_cast< const TMSVishnuException& >(_e))),SWIGTYPE_p_TMSVishnuException,SWIG_POINTER_OWN), "TMSVishnuException", SWIGTYPE_p_TMSVishnuException); SWIG_fail;
+  }
+  catch(UserException &_e) {
+    {
+      SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UserException,SWIG_POINTER_OWN), "UserException", SWIGTYPE_p_UserException); SWIG_fail;
+    }
+  }
+  catch(SystemException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new SystemException(static_cast< const SystemException& >(_e))),SWIGTYPE_p_SystemException,SWIG_POINTER_OWN), "SystemException", SWIGTYPE_p_SystemException); SWIG_fail;
+  }
+  
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_listQueues__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  TMS_Data::ListQueues *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:listQueues",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "listQueues" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "listQueues" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "listQueues" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "listQueues" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_TMS_Data__ListQueues,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "listQueues" "', argument " "3"" of type '" "TMS_Data::ListQueues &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "listQueues" "', argument " "3"" of type '" "TMS_Data::ListQueues &""'"); 
+  }
+  arg3 = reinterpret_cast< TMS_Data::ListQueues * >(argp3);
+  try {
+    result = (int)vishnu::listQueues((std::string const &)*arg1,(std::string const &)*arg2,*arg3);
+  }
+  catch(UMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
+  }
+  catch(TMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new TMSVishnuException(static_cast< const TMSVishnuException& >(_e))),SWIGTYPE_p_TMSVishnuException,SWIG_POINTER_OWN), "TMSVishnuException", SWIGTYPE_p_TMSVishnuException); SWIG_fail;
+  }
+  catch(UserException &_e) {
+    {
+      SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UserException,SWIG_POINTER_OWN), "UserException", SWIGTYPE_p_UserException); SWIG_fail;
+    }
+  }
+  catch(SystemException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new SystemException(static_cast< const SystemException& >(_e))),SWIGTYPE_p_SystemException,SWIG_POINTER_OWN), "SystemException", SWIGTYPE_p_SystemException); SWIG_fail;
+  }
+  
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_listQueues(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[5];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 4); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_TMS_Data__ListQueues, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_listQueues__SWIG_1(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_TMS_Data__ListQueues, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_listQueues__SWIG_0(self, args);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'listQueues'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    vishnu::listQueues(std::string const &,std::string const &,TMS_Data::ListQueues &,std::string const &)\n"
+    "    vishnu::listQueues(std::string const &,std::string const &,TMS_Data::ListQueues &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_getJobOutput__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  TMS_Data::JobResult *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  int res5 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:getJobOutput",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "getJobOutput" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobOutput" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "getJobOutput" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobOutput" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "getJobOutput" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobOutput" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_TMS_Data__JobResult,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "getJobOutput" "', argument " "4"" of type '" "TMS_Data::JobResult &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobOutput" "', argument " "4"" of type '" "TMS_Data::JobResult &""'"); 
+  }
+  arg4 = reinterpret_cast< TMS_Data::JobResult * >(argp4);
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(obj4, &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "getJobOutput" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobOutput" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  try {
+    result = (int)vishnu::getJobOutput((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,*arg4,(std::string const &)*arg5);
+  }
+  catch(UMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
+  }
+  catch(TMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new TMSVishnuException(static_cast< const TMSVishnuException& >(_e))),SWIGTYPE_p_TMSVishnuException,SWIG_POINTER_OWN), "TMSVishnuException", SWIGTYPE_p_TMSVishnuException); SWIG_fail;
+  }
+  catch(UserException &_e) {
+    {
+      SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UserException,SWIG_POINTER_OWN), "UserException", SWIGTYPE_p_UserException); SWIG_fail;
+    }
+  }
+  catch(SystemException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new SystemException(static_cast< const SystemException& >(_e))),SWIGTYPE_p_SystemException,SWIG_POINTER_OWN), "SystemException", SWIGTYPE_p_SystemException); SWIG_fail;
+  }
+  
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_getJobOutput__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  TMS_Data::JobResult *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:getJobOutput",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "getJobOutput" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobOutput" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "getJobOutput" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobOutput" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "getJobOutput" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobOutput" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_TMS_Data__JobResult,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "getJobOutput" "', argument " "4"" of type '" "TMS_Data::JobResult &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobOutput" "', argument " "4"" of type '" "TMS_Data::JobResult &""'"); 
+  }
+  arg4 = reinterpret_cast< TMS_Data::JobResult * >(argp4);
+  try {
+    result = (int)vishnu::getJobOutput((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,*arg4);
+  }
+  catch(UMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
+  }
+  catch(TMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new TMSVishnuException(static_cast< const TMSVishnuException& >(_e))),SWIGTYPE_p_TMSVishnuException,SWIG_POINTER_OWN), "TMSVishnuException", SWIGTYPE_p_TMSVishnuException); SWIG_fail;
+  }
+  catch(UserException &_e) {
+    {
+      SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UserException,SWIG_POINTER_OWN), "UserException", SWIGTYPE_p_UserException); SWIG_fail;
+    }
+  }
+  catch(SystemException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new SystemException(static_cast< const SystemException& >(_e))),SWIGTYPE_p_SystemException,SWIG_POINTER_OWN), "SystemException", SWIGTYPE_p_SystemException); SWIG_fail;
+  }
+  
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_getJobOutput(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[6];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 5); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          void *vptr = 0;
+          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_TMS_Data__JobResult, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_getJobOutput__SWIG_1(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          void *vptr = 0;
+          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_TMS_Data__JobResult, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            int res = SWIG_AsPtr_std_string(argv[4], (std::string**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              return _wrap_getJobOutput__SWIG_0(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'getJobOutput'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    vishnu::getJobOutput(std::string const &,std::string const &,std::string const &,TMS_Data::JobResult &,std::string const &)\n"
+    "    vishnu::getJobOutput(std::string const &,std::string const &,std::string const &,TMS_Data::JobResult &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_getCompletedJobsOutput__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  TMS_Data::ListJobResults *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int res4 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:getCompletedJobsOutput",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "getCompletedJobsOutput" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getCompletedJobsOutput" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "getCompletedJobsOutput" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getCompletedJobsOutput" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_TMS_Data__ListJobResults,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "getCompletedJobsOutput" "', argument " "3"" of type '" "TMS_Data::ListJobResults &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getCompletedJobsOutput" "', argument " "3"" of type '" "TMS_Data::ListJobResults &""'"); 
+  }
+  arg3 = reinterpret_cast< TMS_Data::ListJobResults * >(argp3);
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(obj3, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "getCompletedJobsOutput" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getCompletedJobsOutput" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  try {
+    result = (int)vishnu::getCompletedJobsOutput((std::string const &)*arg1,(std::string const &)*arg2,*arg3,(std::string const &)*arg4);
+  }
+  catch(UMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
+  }
+  catch(TMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new TMSVishnuException(static_cast< const TMSVishnuException& >(_e))),SWIGTYPE_p_TMSVishnuException,SWIG_POINTER_OWN), "TMSVishnuException", SWIGTYPE_p_TMSVishnuException); SWIG_fail;
+  }
+  catch(UserException &_e) {
+    {
+      SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UserException,SWIG_POINTER_OWN), "UserException", SWIGTYPE_p_UserException); SWIG_fail;
+    }
+  }
+  catch(SystemException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new SystemException(static_cast< const SystemException& >(_e))),SWIGTYPE_p_SystemException,SWIG_POINTER_OWN), "SystemException", SWIGTYPE_p_SystemException); SWIG_fail;
+  }
+  
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_getCompletedJobsOutput__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  TMS_Data::ListJobResults *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:getCompletedJobsOutput",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "getCompletedJobsOutput" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getCompletedJobsOutput" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "getCompletedJobsOutput" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getCompletedJobsOutput" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_TMS_Data__ListJobResults,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "getCompletedJobsOutput" "', argument " "3"" of type '" "TMS_Data::ListJobResults &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getCompletedJobsOutput" "', argument " "3"" of type '" "TMS_Data::ListJobResults &""'"); 
+  }
+  arg3 = reinterpret_cast< TMS_Data::ListJobResults * >(argp3);
+  try {
+    result = (int)vishnu::getCompletedJobsOutput((std::string const &)*arg1,(std::string const &)*arg2,*arg3);
+  }
+  catch(UMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
+  }
+  catch(TMSVishnuException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new TMSVishnuException(static_cast< const TMSVishnuException& >(_e))),SWIGTYPE_p_TMSVishnuException,SWIG_POINTER_OWN), "TMSVishnuException", SWIGTYPE_p_TMSVishnuException); SWIG_fail;
+  }
+  catch(UserException &_e) {
+    {
+      SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UserException,SWIG_POINTER_OWN), "UserException", SWIGTYPE_p_UserException); SWIG_fail;
+    }
+  }
+  catch(SystemException &_e) {
+    SWIG_Python_Raise(SWIG_NewPointerObj((new SystemException(static_cast< const SystemException& >(_e))),SWIGTYPE_p_SystemException,SWIG_POINTER_OWN), "SystemException", SWIGTYPE_p_SystemException); SWIG_fail;
+  }
+  
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_getCompletedJobsOutput(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[5];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 4); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_TMS_Data__ListJobResults, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_getCompletedJobsOutput__SWIG_1(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_TMS_Data__ListJobResults, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_getCompletedJobsOutput__SWIG_0(self, args);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'getCompletedJobsOutput'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    vishnu::getCompletedJobsOutput(std::string const &,std::string const &,TMS_Data::ListJobResults &,std::string const &)\n"
+    "    vishnu::getCompletedJobsOutput(std::string const &,std::string const &,TMS_Data::ListJobResults &)\n");
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_exportCommands(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string arg1 ;
@@ -49457,6 +51025,14 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"delete_FMSVishnuException", _wrap_delete_FMSVishnuException, METH_VARARGS, NULL},
 	 { (char *)"FMSVishnuException_initMsg", _wrap_FMSVishnuException_initMsg, METH_VARARGS, NULL},
 	 { (char *)"FMSVishnuException_swigregister", FMSVishnuException_swigregister, METH_VARARGS, NULL},
+	 { (char *)"submitJob", _wrap_submitJob, METH_VARARGS, NULL},
+	 { (char *)"cancelJob", _wrap_cancelJob, METH_VARARGS, NULL},
+	 { (char *)"getJobInfo", _wrap_getJobInfo, METH_VARARGS, NULL},
+	 { (char *)"listJobs", _wrap_listJobs, METH_VARARGS, NULL},
+	 { (char *)"getJobProgress", _wrap_getJobProgress, METH_VARARGS, NULL},
+	 { (char *)"listQueues", _wrap_listQueues, METH_VARARGS, NULL},
+	 { (char *)"getJobOutput", _wrap_getJobOutput, METH_VARARGS, NULL},
+	 { (char *)"getCompletedJobsOutput", _wrap_getCompletedJobsOutput, METH_VARARGS, NULL},
 	 { (char *)"exportCommands", _wrap_exportCommands, METH_VARARGS, NULL},
 	 { (char *)"getMetricCurrentValue", _wrap_getMetricCurrentValue, METH_VARARGS, NULL},
 	 { (char *)"getMetricHistory", _wrap_getMetricHistory, METH_VARARGS, NULL},
