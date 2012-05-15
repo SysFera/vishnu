@@ -1,0 +1,8 @@
+#!/bin/bash
+
+/bin/hostname 
+
+echo "$TOTO" > $VISHNU_OUTPUT_DIR/ouput1.dat
+
+cat $FILE >> $VISHNU_OUTPUT_DIR/output2.dat
+

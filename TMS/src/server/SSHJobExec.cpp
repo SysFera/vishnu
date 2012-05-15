@@ -3,7 +3,7 @@
  * \brief This file presents the implementation of the SSHJobExec.
  * \author Daouda Traore (daouda.traore@sysfera.com)
  * \date April
-*/
+ */
 
 #include <iostream>
 #include <sstream>
@@ -36,12 +36,12 @@ const std::string TMS_SERVER_FILES_DIR="/tmp";
  * \param submitOptionsSerialized the job options serialized
  */
 SSHJobExec::SSHJobExec(const std::string& user,
-                       const std::string& hostname,
-                       const BatchType& batchType,
-                       const std::string& jobSerialized,
-                       const std::string& submitOptionsSerialized):
- muser(user), mhostname(hostname), mbatchType(batchType), mjobSerialized(jobSerialized),
- msubmitOptionsSerialized(submitOptionsSerialized)
+		const std::string& hostname,
+		const BatchType& batchType,
+		const std::string& jobSerialized,
+		const std::string& submitOptionsSerialized):
+		muser(user), mhostname(hostname), mbatchType(batchType), mjobSerialized(jobSerialized),
+		msubmitOptionsSerialized(submitOptionsSerialized)
 {
 }
 
@@ -51,7 +51,7 @@ SSHJobExec::SSHJobExec(const std::string& user,
  */
 std::string
 SSHJobExec::getJobSerialized() {
- return mjobSerialized;
+	return mjobSerialized;
 }
 
 /**
@@ -60,7 +60,7 @@ SSHJobExec::getJobSerialized() {
  */
 std::string
 SSHJobExec::getErrorInfo() {
- return merrorInfo;
+	return merrorInfo;
 }
 
 /**
@@ -69,12 +69,12 @@ SSHJobExec::getErrorInfo() {
  */
 void
 SSHJobExec::checkSshParams() {
-  if (muser.empty()) {
-    throw SystemException(ERRCODE_SSH, "User login is empty");
-  }
-  if (mhostname.empty()) {
-    throw SystemException(ERRCODE_SSH, "Server hostname is empty");
-  }
+	if (muser.empty()) {
+		throw SystemException(ERRCODE_SSH, "User login is empty");
+	}
+	if (mhostname.empty()) {
+		throw SystemException(ERRCODE_SSH, "Server hostname is empty");
+	}
 }
 
 
@@ -87,128 +87,134 @@ SSHJobExec::checkSshParams() {
  */
 void
 SSHJobExec::sshexec(const std::string& slaveDirectory,
-                        const std::string& serviceName,
-                        const std::string& script_path) {
+		const std::string& serviceName,
+		const std::string& script_path) {
 
-  checkSshParams();
+	checkSshParams();
 
-  std::string jobSerializedPath;
-  std::string submitOptionsSerializedPath;
-  std::string jobUpdateSerializedPath;
-  std::string errorPath;
-  std::string stderrFilePath;
-  bool wellSubmitted = false;
-  bool errorMsgIsSet = false;
+	std::string jobSerializedPath;
+	std::string submitOptionsSerializedPath;
+	std::string jobUpdateSerializedPath;
+	std::string errorPath;
+	std::string stderrFilePath;
+	std::string cmdDetails;
+	bool wellSubmitted = false;
+	bool errorMsgIsSet = false;
 
-  jobSerializedPath = TMS_SERVER_FILES_DIR+"/jobSerializedXXXXXX";
-  vishnu::createTmpFile(const_cast<char*>(jobSerializedPath.c_str()), mjobSerialized);
+	jobSerializedPath = TMS_SERVER_FILES_DIR+"/jobSerializedXXXXXX";
+	vishnu::createTmpFile(const_cast<char*>(jobSerializedPath.c_str()), mjobSerialized);
 
-  submitOptionsSerializedPath = TMS_SERVER_FILES_DIR+"/submitOptionsSerializedXXXXXX";
-  vishnu::createTmpFile(const_cast<char*>(submitOptionsSerializedPath.c_str()), msubmitOptionsSerialized);
+	submitOptionsSerializedPath = TMS_SERVER_FILES_DIR+"/submitOptionsSerializedXXXXXX";
+	vishnu::createTmpFile(const_cast<char*>(submitOptionsSerializedPath.c_str()), msubmitOptionsSerialized);
 
-  jobUpdateSerializedPath = TMS_SERVER_FILES_DIR+"/jobUpdateSerializedXXXXXX";
-  vishnu::createTmpFile(const_cast<char*>(jobUpdateSerializedPath.c_str()));
+	jobUpdateSerializedPath = TMS_SERVER_FILES_DIR+"/jobUpdateSerializedXXXXXX";
+	vishnu::createTmpFile(const_cast<char*>(jobUpdateSerializedPath.c_str()));
 
-  errorPath = TMS_SERVER_FILES_DIR+"/errorPathXXXXXX";
-  vishnu::createTmpFile(const_cast<char*>(errorPath.c_str()));
+	errorPath = TMS_SERVER_FILES_DIR+"/errorPathXXXXXX";
+	vishnu::createTmpFile(const_cast<char*>(errorPath.c_str()));
 
-  std::ostringstream cmd;
-  cmd << "ssh -l " << muser << " " << mhostname << " ";
-  cmd << " -o NoHostAuthenticationForLocalhost=yes ";
-  cmd << " -o PasswordAuthentication=no ";
-  cmd << slaveDirectory << "/tmsSlave ";
-  cmd << serviceName << " ";
-  cmd << convertBatchTypeToString(mbatchType) << " ";
-  cmd << jobSerializedPath << " " <<  errorPath << " ";
-  if(serviceName.compare("SUBMIT")==0) {
-    cmd <<  jobUpdateSerializedPath << " " <<  submitOptionsSerializedPath;
-    cmd << " " << script_path;
-  }
+	cmdDetails = "" ;
+	if(serviceName.compare("SUBMIT")==0) {
+		cmdDetails+= jobUpdateSerializedPath
+				+ " " +  submitOptionsSerializedPath
+				+ " " + script_path;
+	}
 
-  stderrFilePath = TMS_SERVER_FILES_DIR+"/stderrFilePathXXXXXX";
-  vishnu::createTmpFile(const_cast<char*>(stderrFilePath.c_str()));
-  cmd << " 2> " << stderrFilePath;
-  int ret;
-  if((ret=system((cmd.str()).c_str()))) {
-    vishnu::deleteFile(jobSerializedPath.c_str());
-    vishnu::deleteFile(submitOptionsSerializedPath.c_str());
-    vishnu::deleteFile(jobUpdateSerializedPath.c_str());
+	stderrFilePath = TMS_SERVER_FILES_DIR+"/stderrFilePathXXXXXX";
+	vishnu::createTmpFile(const_cast<char*>(stderrFilePath.c_str()));
 
-    //begin
-    boost::filesystem::path errorFile(errorPath.c_str());
-    if(!boost::filesystem::is_empty(errorFile)) {
-      merrorInfo = vishnu::get_file_content(errorPath);
-      merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
-      return;
-    }
-    //end
+	std::ostringstream cmd;
+	cmd << "ssh -l " << muser << " " << mhostname << " "
+			<< " -o NoHostAuthenticationForLocalhost=yes "
+			<< " -o PasswordAuthentication=no "
+			<< slaveDirectory << "/tmsSlave "
+			<< serviceName << " "
+			<< convertBatchTypeToString(mbatchType) << " "
+			<< jobSerializedPath << " " <<  errorPath << " "
+			<< cmdDetails
+			<< " 2> " << stderrFilePath;
 
-    vishnu::deleteFile(errorPath.c_str());
-    vishnu::deleteFile(script_path.c_str());
-    boost::filesystem::path stderrFile(stderrFilePath.c_str());
-    if(!boost::filesystem::is_empty(stderrFile)) {
-      merrorInfo = vishnu::get_file_content(stderrFilePath);
-      if(merrorInfo.find("password")!=std::string::npos) {
-        merrorInfo.append("  You must copy the VISHNU publickey in your authorized_keys file.");
-      }
-    }
-    if((WEXITSTATUS(ret)==1)&&(mbatchType==SLURM)) {//ATTENTION: 1 corresponds of the error_exit value in ../slurm_parser/opt.c
-      merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
-      vishnu::deleteFile(stderrFilePath.c_str());
-      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: "+merrorInfo);
-    }
-    vishnu::deleteFile(stderrFilePath.c_str());
-    throw SystemException(ERRCODE_SSH, merrorInfo);
-  }
+	int ret;
+	if((ret=system((cmd.str()).c_str()))) {
+		vishnu::deleteFile(jobSerializedPath.c_str());
+		vishnu::deleteFile(submitOptionsSerializedPath.c_str());
+		vishnu::deleteFile(jobUpdateSerializedPath.c_str());
 
-  boost::filesystem::path jobUpdateSerializedFile(jobUpdateSerializedPath);
-  if(!boost::filesystem::is_empty(jobUpdateSerializedFile)) {
-    std::string jobSerialized = vishnu::get_file_content(jobUpdateSerializedPath);
-    TMS_Data::Job_ptr job = NULL;
-    if(!vishnu::parseEmfObject(std::string(jobSerialized), job)) {
-      vishnu::deleteFile(jobSerializedPath.c_str());
-      vishnu::deleteFile(submitOptionsSerializedPath.c_str());
-      vishnu::deleteFile(jobUpdateSerializedPath.c_str());
-      vishnu::deleteFile(errorPath.c_str());
-      vishnu::deleteFile(stderrFilePath.c_str());
-      throw SystemException(ERRCODE_INVDATA, "SSHJobExec::sshexec: job object is not well built");
-    }
-    ::ecorecpp::serializer::serializer _ser;//("job");
-    mjobSerialized = strdup(_ser.serialize_str(job).c_str());
-    wellSubmitted = true;
-    delete job;
-  }
+		//begin
+		boost::filesystem::path errorFile(errorPath.c_str());
+		if(!boost::filesystem::is_empty(errorFile)) {
+			merrorInfo = vishnu::get_file_content(errorPath);
+			merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
+			return;
+		}
+		//end
 
-  boost::filesystem::path errorFile(errorPath.c_str());
-  if(!boost::filesystem::is_empty(errorFile)) {
-    merrorInfo = vishnu::get_file_content(errorPath);
-    merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
-    errorMsgIsSet=true;
-  }
+		vishnu::deleteFile(errorPath.c_str());
+		vishnu::deleteFile(script_path.c_str());
+		boost::filesystem::path stderrFile(stderrFilePath.c_str());
+		if(!boost::filesystem::is_empty(stderrFile)) {
+			merrorInfo = vishnu::get_file_content(stderrFilePath);
+			if(merrorInfo.find("password")!=std::string::npos) {
+				merrorInfo.append("  You must copy the VISHNU publickey in your authorized_keys file.");
+			}
+		}
+		if((WEXITSTATUS(ret)==1)&&(mbatchType==SLURM)) {//ATTENTION: 1 corresponds of the error_exit value in ../slurm_parser/opt.c
+			merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
+			vishnu::deleteFile(stderrFilePath.c_str());
+			throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: "+merrorInfo);
+		}
+		vishnu::deleteFile(stderrFilePath.c_str());
+		throw SystemException(ERRCODE_SSH, merrorInfo);
+	}
 
-  if((mbatchType==LOADLEVELER || mbatchType==LSF) && (wellSubmitted==false) && (errorMsgIsSet==false)) {
-    boost::filesystem::path stderrFile(stderrFilePath.c_str());
-    if(!boost::filesystem::is_empty(stderrFile)) {
-      merrorInfo = vishnu::get_file_content(stderrFilePath);
+	boost::filesystem::path jobUpdateSerializedFile(jobUpdateSerializedPath);
+	if(!boost::filesystem::is_empty(jobUpdateSerializedFile)) {
+		std::string jobSerialized = vishnu::get_file_content(jobUpdateSerializedPath);
+		TMS_Data::Job_ptr job = NULL;
+		if(!vishnu::parseEmfObject(std::string(jobSerialized), job)) {
+			vishnu::deleteFile(jobSerializedPath.c_str());
+			vishnu::deleteFile(submitOptionsSerializedPath.c_str());
+			vishnu::deleteFile(jobUpdateSerializedPath.c_str());
+			vishnu::deleteFile(errorPath.c_str());
+			vishnu::deleteFile(stderrFilePath.c_str());
+			throw SystemException(ERRCODE_INVDATA, "SSHJobExec::sshexec: job object is not well built");
+		}
+		::ecorecpp::serializer::serializer _ser;//("job");
+		mjobSerialized = strdup(_ser.serialize_str(job).c_str());
+		wellSubmitted = true;
+		delete job;
+	}
 
-      std::ostringstream errorMsgSerialized;
-      if(mbatchType==LOADLEVELER){
-        errorMsgSerialized << ERRCODE_BATCH_SCHEDULER_ERROR << "#" << "LOADLEVELER ERROR: ";
-      }
-      if(mbatchType==LSF){
-        errorMsgSerialized << ERRCODE_BATCH_SCHEDULER_ERROR << "#" << "LSF ERROR: ";
-      }
-      errorMsgSerialized << merrorInfo;
-      merrorInfo = errorMsgSerialized.str();
-      merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
-    }
-  }
+	boost::filesystem::path errorFile(errorPath.c_str());
+	if(!boost::filesystem::is_empty(errorFile)) {
+		merrorInfo = vishnu::get_file_content(errorPath);
+		merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
+		errorMsgIsSet=true;
+	}
 
-  vishnu::deleteFile(jobSerializedPath.c_str());
-  vishnu::deleteFile(submitOptionsSerializedPath.c_str());
-  vishnu::deleteFile(jobUpdateSerializedPath.c_str());
-  vishnu::deleteFile(errorPath.c_str());
-  vishnu::deleteFile(stderrFilePath.c_str());
+	if((mbatchType==LOADLEVELER || mbatchType==LSF) && (wellSubmitted==false) && (errorMsgIsSet==false)) {
+		boost::filesystem::path stderrFile(stderrFilePath.c_str());
+		if(!boost::filesystem::is_empty(stderrFile)) {
+			merrorInfo = vishnu::get_file_content(stderrFilePath);
+
+			std::ostringstream errorMsgSerialized;
+			if(mbatchType==LOADLEVELER){
+				errorMsgSerialized << ERRCODE_BATCH_SCHEDULER_ERROR << "#" << "LOADLEVELER ERROR: ";
+			}
+			if(mbatchType==LSF){
+				errorMsgSerialized << ERRCODE_BATCH_SCHEDULER_ERROR << "#" << "LSF ERROR: ";
+			}
+			errorMsgSerialized << merrorInfo;
+			merrorInfo = errorMsgSerialized.str();
+			merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
+		}
+	}
+
+	vishnu::deleteFile(jobSerializedPath.c_str());
+	vishnu::deleteFile(submitOptionsSerializedPath.c_str());
+	vishnu::deleteFile(jobUpdateSerializedPath.c_str());
+	vishnu::deleteFile(errorPath.c_str());
+	vishnu::deleteFile(stderrFilePath.c_str());
 }
 
 /**
@@ -217,28 +223,28 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
  * \return the converted batch type
  */
 std::string SSHJobExec::convertBatchTypeToString(BatchType batchType) {
-  std::string value;
-  switch(batchType) {
-    case TORQUE:
-      value = "TORQUE";
-      break;
-    case LOADLEVELER:
-      value = "LOADLEVELER";
-      break;
-    case SLURM:
-      value = "SLURM";
-      break;
-    case LSF:
-      value = "LSF";
-      break;
-    case SGE:
-      value = "SGE";
-      break;
-    default:
-      value = "UNKNOWN_BATCH_TYPE";
-      break;
-  }
-  return value;
+	std::string value;
+	switch(batchType) {
+	case TORQUE:
+		value = "TORQUE";
+		break;
+	case LOADLEVELER:
+		value = "LOADLEVELER";
+		break;
+	case SLURM:
+		value = "SLURM";
+		break;
+	case LSF:
+		value = "LSF";
+		break;
+	case SGE:
+		value = "SGE";
+		break;
+	default:
+		value = "UNKNOWN_BATCH_TYPE";
+		break;
+	}
+	return value;
 }
 
 /**
@@ -251,25 +257,28 @@ std::string SSHJobExec::convertBatchTypeToString(BatchType batchType) {
  */
 int
 SSHJobExec::copyFiles(const std::string& outputPath,
-                      const std::string& errorPath,
-                      const char* copyOfOutputPath,
-                      const char* copyOfErrorPath) {
+		const std::string& errorPath,
+		const char* copyOfOutputPath,
+		const char* copyOfErrorPath) {
 
-  std::ostringstream cmd1;
-  cmd1 << "scp -o NoHostAuthenticationForLocalhost=yes  -o PasswordAuthentication=no ";
-  cmd1 << muser << "@" << mhostname << ":" << outputPath << " " << copyOfOutputPath;
-  if(system((cmd1.str()).c_str())) {
-    return -1;
-  }
+	std::ostringstream cmd1;
+	cmd1 << "scp -o NoHostAuthenticationForLocalhost=yes  -o PasswordAuthentication=no ";
+	cmd1 << muser << "@" << mhostname << ":" << outputPath << " " << copyOfOutputPath;
+	if(system((cmd1.str()).c_str())) {
+		return -1;
+	}
 
-  std::ostringstream cmd2;
-  cmd2 << "scp -o NoHostAuthenticationForLocalhost=yes  -o PasswordAuthentication=no ";
-  cmd2 << muser << "@" << mhostname << ":" << errorPath << " " << copyOfErrorPath;
-  if(system((cmd2.str()).c_str())) {
-    return -1;
-  }
- return 0;
+	std::ostringstream cmd2;
+	cmd2 << "scp -o NoHostAuthenticationForLocalhost=yes  -o PasswordAuthentication=no ";
+	cmd2 << muser << "@" << mhostname << ":" << errorPath << " " << copyOfErrorPath;
+	if(system((cmd2.str()).c_str())) {
+		return -1;
+	}
+
+	return 0;
 }
+
+
 
 /**
  * \brief Destructor

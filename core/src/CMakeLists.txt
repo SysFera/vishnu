@@ -185,7 +185,7 @@ set(TMS_Data_HEADERS
   emfdata/TMS_Data/Queue.hpp
   emfdata/TMS_Data/JobResult.hpp
   emfdata/TMS_Data/ListJobResults.hpp
-   emfdata/TMS_Data/LoadCriterion.hpp)
+  emfdata/TMS_Data/LoadCriterion.hpp)
 
 set(IMS_Data_SRCS
   emfdata/IMS_Data.cpp

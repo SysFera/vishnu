@@ -131,6 +131,9 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__batchJobId->setFeatureID(
             ::TMS_Data::TMS_DataPackage::JOB__BATCHJOBID);
     m_JobEClass->getEStructuralFeatures().push_back(m_Job__batchJobId);
+    m_Job__outputDir = new ::ecore::EAttribute();
+    m_Job__outputDir->setFeatureID(::TMS_Data::TMS_DataPackage::JOB__OUTPUTDIR);
+    m_JobEClass->getEStructuralFeatures().push_back(m_Job__outputDir);
 
     // ListJobs
     m_ListJobsEClass = new ::ecore::EClass();
@@ -230,6 +233,19 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__SELECTQUEUEAUTOM);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
             m_SubmitOptions__selectQueueAutom);
+<<<<<<< .merge_file_cCVRKy
+=======
+    m_SubmitOptions__fileParams = new ::ecore::EAttribute();
+    m_SubmitOptions__fileParams->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILEPARAMS);
+    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
+            m_SubmitOptions__fileParams);
+    m_SubmitOptions__textParams = new ::ecore::EAttribute();
+    m_SubmitOptions__textParams->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__TEXTPARAMS);
+    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
+            m_SubmitOptions__textParams);
+>>>>>>> .merge_file_rAhZqy
     m_SubmitOptions__criterion = new ::ecore::EReference();
     m_SubmitOptions__criterion->setFeatureID(
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CRITERION);
@@ -445,6 +461,11 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::JOBRESULT__ERRORPATH);
     m_JobResultEClass->getEStructuralFeatures().push_back(
             m_JobResult__errorPath);
+    m_JobResult__outputDir = new ::ecore::EAttribute();
+    m_JobResult__outputDir->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::JOBRESULT__OUTPUTDIR);
+    m_JobResultEClass->getEStructuralFeatures().push_back(
+            m_JobResult__outputDir);
 
     // ListJobResults
     m_ListJobResultsEClass = new ::ecore::EClass();
@@ -827,7 +848,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__batchJobId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_Job__batchJobId->setName("batchJobId");
-    m_Job__batchJobId->setDefaultValueLiteral("");
+    m_Job__batchJobId->setDefaultValueLiteral("" "");
     m_Job__batchJobId->setLowerBound(0);
     m_Job__batchJobId->setUpperBound(1);
     m_Job__batchJobId->setTransient(false);
@@ -838,6 +859,20 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__batchJobId->setUnique(true);
     m_Job__batchJobId->setDerived(false);
     m_Job__batchJobId->setOrdered(true);
+    m_Job__outputDir->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Job__outputDir->setName("outputDir");
+    m_Job__outputDir->setDefaultValueLiteral("");
+    m_Job__outputDir->setLowerBound(0);
+    m_Job__outputDir->setUpperBound(1);
+    m_Job__outputDir->setTransient(false);
+    m_Job__outputDir->setVolatile(false);
+    m_Job__outputDir->setChangeable(true);
+    m_Job__outputDir->setUnsettable(false);
+    m_Job__outputDir->setID(false);
+    m_Job__outputDir->setUnique(true);
+    m_Job__outputDir->setDerived(false);
+    m_Job__outputDir->setOrdered(true);
     // ListJobs
     m_ListJobsEClass->setName("ListJobs");
     m_ListJobsEClass->setAbstract(false);
@@ -1097,6 +1132,37 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__selectQueueAutom->setUnique(true);
     m_SubmitOptions__selectQueueAutom->setDerived(false);
     m_SubmitOptions__selectQueueAutom->setOrdered(true);
+<<<<<<< .merge_file_cCVRKy
+=======
+    m_SubmitOptions__fileParams->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_SubmitOptions__fileParams->setName("fileParams");
+    m_SubmitOptions__fileParams->setDefaultValueLiteral("");
+    m_SubmitOptions__fileParams->setLowerBound(0);
+    m_SubmitOptions__fileParams->setUpperBound(1);
+    m_SubmitOptions__fileParams->setTransient(false);
+    m_SubmitOptions__fileParams->setVolatile(false);
+    m_SubmitOptions__fileParams->setChangeable(true);
+    m_SubmitOptions__fileParams->setUnsettable(false);
+    m_SubmitOptions__fileParams->setID(false);
+    m_SubmitOptions__fileParams->setUnique(true);
+    m_SubmitOptions__fileParams->setDerived(false);
+    m_SubmitOptions__fileParams->setOrdered(true);
+    m_SubmitOptions__textParams->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_SubmitOptions__textParams->setName("textParams");
+    m_SubmitOptions__textParams->setDefaultValueLiteral("");
+    m_SubmitOptions__textParams->setLowerBound(0);
+    m_SubmitOptions__textParams->setUpperBound(1);
+    m_SubmitOptions__textParams->setTransient(false);
+    m_SubmitOptions__textParams->setVolatile(false);
+    m_SubmitOptions__textParams->setChangeable(true);
+    m_SubmitOptions__textParams->setUnsettable(false);
+    m_SubmitOptions__textParams->setID(false);
+    m_SubmitOptions__textParams->setUnique(true);
+    m_SubmitOptions__textParams->setDerived(false);
+    m_SubmitOptions__textParams->setOrdered(true);
+>>>>>>> .merge_file_rAhZqy
     m_SubmitOptions__criterion->setEType(m_LoadCriterionEClass);
     m_SubmitOptions__criterion->setName("criterion");
     m_SubmitOptions__criterion->setDefaultValueLiteral("");
@@ -1649,6 +1715,20 @@ TMS_DataPackage::TMS_DataPackage()
     m_JobResult__errorPath->setUnique(true);
     m_JobResult__errorPath->setDerived(false);
     m_JobResult__errorPath->setOrdered(true);
+    m_JobResult__outputDir->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_JobResult__outputDir->setName("outputDir");
+    m_JobResult__outputDir->setDefaultValueLiteral("");
+    m_JobResult__outputDir->setLowerBound(0);
+    m_JobResult__outputDir->setUpperBound(1);
+    m_JobResult__outputDir->setTransient(false);
+    m_JobResult__outputDir->setVolatile(false);
+    m_JobResult__outputDir->setChangeable(true);
+    m_JobResult__outputDir->setUnsettable(false);
+    m_JobResult__outputDir->setID(false);
+    m_JobResult__outputDir->setUnique(true);
+    m_JobResult__outputDir->setDerived(false);
+    m_JobResult__outputDir->setOrdered(true);
     // ListJobResults
     m_ListJobResultsEClass->setName("ListJobResults");
     m_ListJobResultsEClass->setAbstract(false);
@@ -2145,6 +2225,10 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_Job__batchJobId;
 }
+::ecore::EAttribute_ptr TMS_DataPackage::getJob__outputDir()
+{
+    return m_Job__outputDir;
+}
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobs__nbJobs()
 {
     return m_ListJobs__nbJobs;
@@ -2221,6 +2305,17 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_SubmitOptions__criterion;
 }
+<<<<<<< .merge_file_cCVRKy
+=======
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__fileParams()
+{
+    return m_SubmitOptions__fileParams;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__textParams()
+{
+    return m_SubmitOptions__textParams;
+}
+>>>>>>> .merge_file_rAhZqy
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__jobId()
 {
     return m_ListJobsOptions__jobId;
@@ -2368,6 +2463,10 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getJobResult__errorPath()
 {
     return m_JobResult__errorPath;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getJobResult__outputDir()
+{
+    return m_JobResult__outputDir;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobResults__nbJobs()
 {

@@ -41,10 +41,15 @@ vishnu::submitJob(const std::string& sessionKey,
           const SubmitOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
-  checkEmptyString(sessionKey, "The session key");
-  checkEmptyString(machineId, "The machine id");
-  //To check options value nbNodesAndCpuPerNode
-  checkJobNbNodesAndNbCpuPerNode(options.getNbNodesAndCpuPerNode());
+	checkEmptyString(sessionKey, "The session key");
+	checkEmptyString(machineId, "The machine id");
+	//To check options value nbNodesAndCpuPerNode
+	checkJobNbNodesAndNbCpuPerNode(options.getNbNodesAndCpuPerNode());
+
+	SessionProxy sessionProxy(sessionKey);
+	boost::filesystem::path completePath(scriptFilePath);
+	std::string scriptFileCompletePath = (boost::filesystem::path(boost::filesystem::system_complete(completePath))).string();
+	jobInfo.setJobPath(scriptFileCompletePath);
 
   SessionProxy sessionProxy(sessionKey);
 
@@ -52,16 +57,16 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   std::string scriptFileCompletePath = (boost::filesystem::path(boost::filesystem::system_complete(completePath))).string();
   jobInfo.setJobPath(scriptFileCompletePath);
 
-  std::string scriptContent = vishnu::get_file_content(scriptFilePath);
 
-  JobProxy jobProxy(sessionProxy,
-                    machineId,
-                    jobInfo);
+	ListStrings fileParamsVec;
+	std::string fileParamsStr = options.getFileParams() ;
+	boost::trim(fileParamsStr) ; //TODO BUG when empty list
+	boost::split(fileParamsVec, fileParamsStr, boost::is_any_of(" "), boost::token_compress_on) ;
 
-  int ret = jobProxy.submitJob(scriptContent, options);
-  jobInfo = jobProxy.getData();
+	int ret = jobProxy.submitJob(scriptContent, options);
+	jobInfo = jobProxy.getData();
 
-  return ret;
+	return ret;
 }
 
 /**
