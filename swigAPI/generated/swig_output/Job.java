@@ -219,6 +219,14 @@ public class Job extends EObject {
     VISHNUJNI.Job_setNbNodesAndCpuPerNode(swigCPtr, this, _nbNodesAndCpuPerNode);
   }
 
+  public String getBatchJobId() {
+    return VISHNUJNI.Job_getBatchJobId(swigCPtr, this);
+  }
+
+  public void setBatchJobId(String _batchJobId) {
+    VISHNUJNI.Job_setBatchJobId(swigCPtr, this, _batchJobId);
+  }
+
   public SWIGTYPE_p_ecorecpp__mapping__any eGet(int _featureID, boolean _resolve) {
     return new SWIGTYPE_p_ecorecpp__mapping__any(VISHNUJNI.Job_eGet(swigCPtr, this, _featureID, _resolve), true);
   }

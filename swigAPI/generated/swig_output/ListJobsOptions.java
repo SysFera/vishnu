@@ -107,6 +107,22 @@ public class ListJobsOptions extends EObject {
     VISHNUJNI.ListJobsOptions_setQueue(swigCPtr, this, _queue);
   }
 
+  public String getMultipleStatus() {
+    return VISHNUJNI.ListJobsOptions_getMultipleStatus(swigCPtr, this);
+  }
+
+  public void setMultipleStatus(String _multipleStatus) {
+    VISHNUJNI.ListJobsOptions_setMultipleStatus(swigCPtr, this, _multipleStatus);
+  }
+
+  public boolean isBatchJob() {
+    return VISHNUJNI.ListJobsOptions_isBatchJob(swigCPtr, this);
+  }
+
+  public void setBatchJob(boolean _batchJob) {
+    VISHNUJNI.ListJobsOptions_setBatchJob(swigCPtr, this, _batchJob);
+  }
+
   public SWIGTYPE_p_ecorecpp__mapping__any eGet(int _featureID, boolean _resolve) {
     return new SWIGTYPE_p_ecorecpp__mapping__any(VISHNUJNI.ListJobsOptions_eGet(swigCPtr, this, _featureID, _resolve), true);
   }

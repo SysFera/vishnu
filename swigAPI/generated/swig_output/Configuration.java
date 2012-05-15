@@ -63,6 +63,14 @@ public class Configuration extends EObject {
     return new ELocalAccList(VISHNUJNI.Configuration_getListConfLocalAccounts(swigCPtr, this), false);
   }
 
+  public EAuthSystemList getListConfAuthSystems() {
+    return new EAuthSystemList(VISHNUJNI.Configuration_getListConfAuthSystems(swigCPtr, this), false);
+  }
+
+  public EAuthAccountList getListConfAuthAccounts() {
+    return new EAuthAccountList(VISHNUJNI.Configuration_getListConfAuthAccounts(swigCPtr, this), false);
+  }
+
   public SWIGTYPE_p_ecorecpp__mapping__any eGet(int _featureID, boolean _resolve) {
     return new SWIGTYPE_p_ecorecpp__mapping__any(VISHNUJNI.Configuration_eGet(swigCPtr, this, _featureID, _resolve), true);
   }

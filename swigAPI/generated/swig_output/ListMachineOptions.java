@@ -51,12 +51,12 @@ public class ListMachineOptions extends EObject {
     VISHNUJNI.ListMachineOptions_setUserId(swigCPtr, this, _userId);
   }
 
-  public boolean isListAllmachine() {
-    return VISHNUJNI.ListMachineOptions_isListAllmachine(swigCPtr, this);
+  public boolean isListAllMachine() {
+    return VISHNUJNI.ListMachineOptions_isListAllMachine(swigCPtr, this);
   }
 
-  public void setListAllmachine(boolean _listAllmachine) {
-    VISHNUJNI.ListMachineOptions_setListAllmachine(swigCPtr, this, _listAllmachine);
+  public void setListAllMachine(boolean _listAllMachine) {
+    VISHNUJNI.ListMachineOptions_setListAllMachine(swigCPtr, this, _listAllMachine);
   }
 
   public String getMachineId() {

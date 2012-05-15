@@ -189,6 +189,8 @@ class Session(EObject):
     def setClosePolicy(self, *args): return _VISHNU.Session_setClosePolicy(self, *args)
     def getTimeout(self): return _VISHNU.Session_getTimeout(self)
     def setTimeout(self, *args): return _VISHNU.Session_setTimeout(self, *args)
+    def getAuthenId(self): return _VISHNU.Session_getAuthenId(self)
+    def setAuthenId(self, *args): return _VISHNU.Session_setAuthenId(self, *args)
     def eGet(self, *args): return _VISHNU.Session_eGet(self, *args)
     def eSet(self, *args): return _VISHNU.Session_eSet(self, *args)
     def eIsSet(self, *args): return _VISHNU.Session_eIsSet(self, *args)
@@ -581,8 +583,8 @@ class ListMachineOptions(EObject):
     def _initialize(self): return _VISHNU.ListMachineOptions__initialize(self)
     def getUserId(self): return _VISHNU.ListMachineOptions_getUserId(self)
     def setUserId(self, *args): return _VISHNU.ListMachineOptions_setUserId(self, *args)
-    def isListAllmachine(self): return _VISHNU.ListMachineOptions_isListAllmachine(self)
-    def setListAllmachine(self, *args): return _VISHNU.ListMachineOptions_setListAllmachine(self, *args)
+    def isListAllMachine(self): return _VISHNU.ListMachineOptions_isListAllMachine(self)
+    def setListAllMachine(self, *args): return _VISHNU.ListMachineOptions_setListAllMachine(self, *args)
     def getMachineId(self): return _VISHNU.ListMachineOptions_getMachineId(self)
     def setMachineId(self, *args): return _VISHNU.ListMachineOptions_setMachineId(self, *args)
     def eGet(self, *args): return _VISHNU.ListMachineOptions_eGet(self, *args)
@@ -613,6 +615,8 @@ class Configuration(EObject):
     def getListConfUsers(self): return _VISHNU.Configuration_getListConfUsers(self)
     def getListConfMachines(self): return _VISHNU.Configuration_getListConfMachines(self)
     def getListConfLocalAccounts(self): return _VISHNU.Configuration_getListConfLocalAccounts(self)
+    def getListConfAuthSystems(self): return _VISHNU.Configuration_getListConfAuthSystems(self)
+    def getListConfAuthAccounts(self): return _VISHNU.Configuration_getListConfAuthAccounts(self)
     def eGet(self, *args): return _VISHNU.Configuration_eGet(self, *args)
     def eSet(self, *args): return _VISHNU.Configuration_eSet(self, *args)
     def eIsSet(self, *args): return _VISHNU.Configuration_eIsSet(self, *args)
@@ -701,6 +705,184 @@ class ListOptOptions(EObject):
 ListOptOptions_swigregister = _VISHNU.ListOptOptions_swigregister
 ListOptOptions_swigregister(ListOptOptions)
 
+class AuthAccount(EObject):
+    __swig_setmethods__ = {}
+    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, AuthAccount, name, value)
+    __swig_getmethods__ = {}
+    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, AuthAccount, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _VISHNU.new_AuthAccount()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _VISHNU.delete_AuthAccount
+    __del__ = lambda self : None;
+    def _initialize(self): return _VISHNU.AuthAccount__initialize(self)
+    def getAuthSystemId(self): return _VISHNU.AuthAccount_getAuthSystemId(self)
+    def setAuthSystemId(self, *args): return _VISHNU.AuthAccount_setAuthSystemId(self, *args)
+    def getUserId(self): return _VISHNU.AuthAccount_getUserId(self)
+    def setUserId(self, *args): return _VISHNU.AuthAccount_setUserId(self, *args)
+    def getAcLogin(self): return _VISHNU.AuthAccount_getAcLogin(self)
+    def setAcLogin(self, *args): return _VISHNU.AuthAccount_setAcLogin(self, *args)
+    def eGet(self, *args): return _VISHNU.AuthAccount_eGet(self, *args)
+    def eSet(self, *args): return _VISHNU.AuthAccount_eSet(self, *args)
+    def eIsSet(self, *args): return _VISHNU.AuthAccount_eIsSet(self, *args)
+    def eUnset(self, *args): return _VISHNU.AuthAccount_eUnset(self, *args)
+    def _eClass(self): return _VISHNU.AuthAccount__eClass(self)
+AuthAccount_swigregister = _VISHNU.AuthAccount_swigregister
+AuthAccount_swigregister(AuthAccount)
+
+class AuthSystem(EObject):
+    __swig_setmethods__ = {}
+    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, AuthSystem, name, value)
+    __swig_getmethods__ = {}
+    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, AuthSystem, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _VISHNU.new_AuthSystem()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _VISHNU.delete_AuthSystem
+    __del__ = lambda self : None;
+    def _initialize(self): return _VISHNU.AuthSystem__initialize(self)
+    def getAuthSystemId(self): return _VISHNU.AuthSystem_getAuthSystemId(self)
+    def setAuthSystemId(self, *args): return _VISHNU.AuthSystem_setAuthSystemId(self, *args)
+    def getName(self): return _VISHNU.AuthSystem_getName(self)
+    def setName(self, *args): return _VISHNU.AuthSystem_setName(self, *args)
+    def getURI(self): return _VISHNU.AuthSystem_getURI(self)
+    def setURI(self, *args): return _VISHNU.AuthSystem_setURI(self, *args)
+    def getAuthLogin(self): return _VISHNU.AuthSystem_getAuthLogin(self)
+    def setAuthLogin(self, *args): return _VISHNU.AuthSystem_setAuthLogin(self, *args)
+    def getAuthPassword(self): return _VISHNU.AuthSystem_getAuthPassword(self)
+    def setAuthPassword(self, *args): return _VISHNU.AuthSystem_setAuthPassword(self, *args)
+    def getUserPasswordEncryption(self): return _VISHNU.AuthSystem_getUserPasswordEncryption(self)
+    def setUserPasswordEncryption(self, *args): return _VISHNU.AuthSystem_setUserPasswordEncryption(self, *args)
+    def getType(self): return _VISHNU.AuthSystem_getType(self)
+    def setType(self, *args): return _VISHNU.AuthSystem_setType(self, *args)
+    def getStatus(self): return _VISHNU.AuthSystem_getStatus(self)
+    def setStatus(self, *args): return _VISHNU.AuthSystem_setStatus(self, *args)
+    def getLdapBase(self): return _VISHNU.AuthSystem_getLdapBase(self)
+    def setLdapBase(self, *args): return _VISHNU.AuthSystem_setLdapBase(self, *args)
+    def eGet(self, *args): return _VISHNU.AuthSystem_eGet(self, *args)
+    def eSet(self, *args): return _VISHNU.AuthSystem_eSet(self, *args)
+    def eIsSet(self, *args): return _VISHNU.AuthSystem_eIsSet(self, *args)
+    def eUnset(self, *args): return _VISHNU.AuthSystem_eUnset(self, *args)
+    def _eClass(self): return _VISHNU.AuthSystem__eClass(self)
+AuthSystem_swigregister = _VISHNU.AuthSystem_swigregister
+AuthSystem_swigregister(AuthSystem)
+
+class ListAuthSysOptions(EObject):
+    __swig_setmethods__ = {}
+    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, ListAuthSysOptions, name, value)
+    __swig_getmethods__ = {}
+    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, ListAuthSysOptions, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _VISHNU.new_ListAuthSysOptions()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _VISHNU.delete_ListAuthSysOptions
+    __del__ = lambda self : None;
+    def _initialize(self): return _VISHNU.ListAuthSysOptions__initialize(self)
+    def isListAllAuthSystems(self): return _VISHNU.ListAuthSysOptions_isListAllAuthSystems(self)
+    def setListAllAuthSystems(self, *args): return _VISHNU.ListAuthSysOptions_setListAllAuthSystems(self, *args)
+    def isListFullInfo(self): return _VISHNU.ListAuthSysOptions_isListFullInfo(self)
+    def setListFullInfo(self, *args): return _VISHNU.ListAuthSysOptions_setListFullInfo(self, *args)
+    def getUserId(self): return _VISHNU.ListAuthSysOptions_getUserId(self)
+    def setUserId(self, *args): return _VISHNU.ListAuthSysOptions_setUserId(self, *args)
+    def getAuthSystemId(self): return _VISHNU.ListAuthSysOptions_getAuthSystemId(self)
+    def setAuthSystemId(self, *args): return _VISHNU.ListAuthSysOptions_setAuthSystemId(self, *args)
+    def eGet(self, *args): return _VISHNU.ListAuthSysOptions_eGet(self, *args)
+    def eSet(self, *args): return _VISHNU.ListAuthSysOptions_eSet(self, *args)
+    def eIsSet(self, *args): return _VISHNU.ListAuthSysOptions_eIsSet(self, *args)
+    def eUnset(self, *args): return _VISHNU.ListAuthSysOptions_eUnset(self, *args)
+    def _eClass(self): return _VISHNU.ListAuthSysOptions__eClass(self)
+ListAuthSysOptions_swigregister = _VISHNU.ListAuthSysOptions_swigregister
+ListAuthSysOptions_swigregister(ListAuthSysOptions)
+
+class ListAuthSystems(EObject):
+    __swig_setmethods__ = {}
+    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, ListAuthSystems, name, value)
+    __swig_getmethods__ = {}
+    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, ListAuthSystems, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _VISHNU.new_ListAuthSystems()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _VISHNU.delete_ListAuthSystems
+    __del__ = lambda self : None;
+    def _initialize(self): return _VISHNU.ListAuthSystems__initialize(self)
+    def getAuthSystems(self): return _VISHNU.ListAuthSystems_getAuthSystems(self)
+    def eGet(self, *args): return _VISHNU.ListAuthSystems_eGet(self, *args)
+    def eSet(self, *args): return _VISHNU.ListAuthSystems_eSet(self, *args)
+    def eIsSet(self, *args): return _VISHNU.ListAuthSystems_eIsSet(self, *args)
+    def eUnset(self, *args): return _VISHNU.ListAuthSystems_eUnset(self, *args)
+    def _eClass(self): return _VISHNU.ListAuthSystems__eClass(self)
+ListAuthSystems_swigregister = _VISHNU.ListAuthSystems_swigregister
+ListAuthSystems_swigregister(ListAuthSystems)
+
+class ListAuthAccOptions(EObject):
+    __swig_setmethods__ = {}
+    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, ListAuthAccOptions, name, value)
+    __swig_getmethods__ = {}
+    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, ListAuthAccOptions, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _VISHNU.new_ListAuthAccOptions()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _VISHNU.delete_ListAuthAccOptions
+    __del__ = lambda self : None;
+    def _initialize(self): return _VISHNU.ListAuthAccOptions__initialize(self)
+    def isListAll(self): return _VISHNU.ListAuthAccOptions_isListAll(self)
+    def setListAll(self, *args): return _VISHNU.ListAuthAccOptions_setListAll(self, *args)
+    def getUserId(self): return _VISHNU.ListAuthAccOptions_getUserId(self)
+    def setUserId(self, *args): return _VISHNU.ListAuthAccOptions_setUserId(self, *args)
+    def getAuthSystemId(self): return _VISHNU.ListAuthAccOptions_getAuthSystemId(self)
+    def setAuthSystemId(self, *args): return _VISHNU.ListAuthAccOptions_setAuthSystemId(self, *args)
+    def eGet(self, *args): return _VISHNU.ListAuthAccOptions_eGet(self, *args)
+    def eSet(self, *args): return _VISHNU.ListAuthAccOptions_eSet(self, *args)
+    def eIsSet(self, *args): return _VISHNU.ListAuthAccOptions_eIsSet(self, *args)
+    def eUnset(self, *args): return _VISHNU.ListAuthAccOptions_eUnset(self, *args)
+    def _eClass(self): return _VISHNU.ListAuthAccOptions__eClass(self)
+ListAuthAccOptions_swigregister = _VISHNU.ListAuthAccOptions_swigregister
+ListAuthAccOptions_swigregister(ListAuthAccOptions)
+
+class ListAuthAccounts(EObject):
+    __swig_setmethods__ = {}
+    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, ListAuthAccounts, name, value)
+    __swig_getmethods__ = {}
+    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, ListAuthAccounts, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _VISHNU.new_ListAuthAccounts()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _VISHNU.delete_ListAuthAccounts
+    __del__ = lambda self : None;
+    def _initialize(self): return _VISHNU.ListAuthAccounts__initialize(self)
+    def getAuthAccounts(self): return _VISHNU.ListAuthAccounts_getAuthAccounts(self)
+    def eGet(self, *args): return _VISHNU.ListAuthAccounts_eGet(self, *args)
+    def eSet(self, *args): return _VISHNU.ListAuthAccounts_eSet(self, *args)
+    def eIsSet(self, *args): return _VISHNU.ListAuthAccounts_eIsSet(self, *args)
+    def eUnset(self, *args): return _VISHNU.ListAuthAccounts_eUnset(self, *args)
+    def _eClass(self): return _VISHNU.ListAuthAccounts__eClass(self)
+ListAuthAccounts_swigregister = _VISHNU.ListAuthAccounts_swigregister
+ListAuthAccounts_swigregister(ListAuthAccounts)
+
 class Job(EObject):
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -760,6 +942,8 @@ class Job(EObject):
     def setNbNodes(self, *args): return _VISHNU.Job_setNbNodes(self, *args)
     def getNbNodesAndCpuPerNode(self): return _VISHNU.Job_getNbNodesAndCpuPerNode(self)
     def setNbNodesAndCpuPerNode(self, *args): return _VISHNU.Job_setNbNodesAndCpuPerNode(self, *args)
+    def getBatchJobId(self): return _VISHNU.Job_getBatchJobId(self)
+    def setBatchJobId(self, *args): return _VISHNU.Job_setBatchJobId(self, *args)
     def eGet(self, *args): return _VISHNU.Job_eGet(self, *args)
     def eSet(self, *args): return _VISHNU.Job_eSet(self, *args)
     def eIsSet(self, *args): return _VISHNU.Job_eIsSet(self, *args)
@@ -884,6 +1068,10 @@ class ListJobsOptions(EObject):
     def setPriority(self, *args): return _VISHNU.ListJobsOptions_setPriority(self, *args)
     def getQueue(self): return _VISHNU.ListJobsOptions_getQueue(self)
     def setQueue(self, *args): return _VISHNU.ListJobsOptions_setQueue(self, *args)
+    def getMultipleStatus(self): return _VISHNU.ListJobsOptions_getMultipleStatus(self)
+    def setMultipleStatus(self, *args): return _VISHNU.ListJobsOptions_setMultipleStatus(self, *args)
+    def isBatchJob(self): return _VISHNU.ListJobsOptions_isBatchJob(self)
+    def setBatchJob(self, *args): return _VISHNU.ListJobsOptions_setBatchJob(self, *args)
     def eGet(self, *args): return _VISHNU.ListJobsOptions_eGet(self, *args)
     def eSet(self, *args): return _VISHNU.ListJobsOptions_eSet(self, *args)
     def eIsSet(self, *args): return _VISHNU.ListJobsOptions_eIsSet(self, *args)
@@ -1084,6 +1272,20 @@ class SubmitOptions(EObject):
     def setOutputPath(self, *args): return _VISHNU.SubmitOptions_setOutputPath(self, *args)
     def getErrorPath(self): return _VISHNU.SubmitOptions_getErrorPath(self)
     def setErrorPath(self, *args): return _VISHNU.SubmitOptions_setErrorPath(self, *args)
+    def getMailNotification(self): return _VISHNU.SubmitOptions_getMailNotification(self)
+    def setMailNotification(self, *args): return _VISHNU.SubmitOptions_setMailNotification(self, *args)
+    def getMailNotifyUser(self): return _VISHNU.SubmitOptions_getMailNotifyUser(self)
+    def setMailNotifyUser(self, *args): return _VISHNU.SubmitOptions_setMailNotifyUser(self, *args)
+    def getGroup(self): return _VISHNU.SubmitOptions_getGroup(self)
+    def setGroup(self, *args): return _VISHNU.SubmitOptions_setGroup(self, *args)
+    def getWorkingDir(self): return _VISHNU.SubmitOptions_getWorkingDir(self)
+    def setWorkingDir(self, *args): return _VISHNU.SubmitOptions_setWorkingDir(self, *args)
+    def getCpuTime(self): return _VISHNU.SubmitOptions_getCpuTime(self)
+    def setCpuTime(self, *args): return _VISHNU.SubmitOptions_setCpuTime(self, *args)
+    def isSelectQueueAutom(self): return _VISHNU.SubmitOptions_isSelectQueueAutom(self)
+    def setSelectQueueAutom(self, *args): return _VISHNU.SubmitOptions_setSelectQueueAutom(self, *args)
+    def getCriterion(self): return _VISHNU.SubmitOptions_getCriterion(self)
+    def setCriterion(self, *args): return _VISHNU.SubmitOptions_setCriterion(self, *args)
     def eGet(self, *args): return _VISHNU.SubmitOptions_eGet(self, *args)
     def eSet(self, *args): return _VISHNU.SubmitOptions_eSet(self, *args)
     def eIsSet(self, *args): return _VISHNU.SubmitOptions_eIsSet(self, *args)
@@ -1091,6 +1293,31 @@ class SubmitOptions(EObject):
     def _eClass(self): return _VISHNU.SubmitOptions__eClass(self)
 SubmitOptions_swigregister = _VISHNU.SubmitOptions_swigregister
 SubmitOptions_swigregister(SubmitOptions)
+
+class LoadCriterion(EObject):
+    __swig_setmethods__ = {}
+    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, LoadCriterion, name, value)
+    __swig_getmethods__ = {}
+    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, LoadCriterion, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _VISHNU.new_LoadCriterion()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _VISHNU.delete_LoadCriterion
+    __del__ = lambda self : None;
+    def _initialize(self): return _VISHNU.LoadCriterion__initialize(self)
+    def getLoadType(self): return _VISHNU.LoadCriterion_getLoadType(self)
+    def setLoadType(self, *args): return _VISHNU.LoadCriterion_setLoadType(self, *args)
+    def eGet(self, *args): return _VISHNU.LoadCriterion_eGet(self, *args)
+    def eSet(self, *args): return _VISHNU.LoadCriterion_eSet(self, *args)
+    def eIsSet(self, *args): return _VISHNU.LoadCriterion_eIsSet(self, *args)
+    def eUnset(self, *args): return _VISHNU.LoadCriterion_eUnset(self, *args)
+    def _eClass(self): return _VISHNU.LoadCriterion__eClass(self)
+LoadCriterion_swigregister = _VISHNU.LoadCriterion_swigregister
+LoadCriterion_swigregister(LoadCriterion)
 
 class ExportOp(EObject):
     __swig_setmethods__ = {}
@@ -1567,30 +1794,6 @@ class FileStat(EObject):
 FileStat_swigregister = _VISHNU.FileStat_swigregister
 FileStat_swigregister(FileStat)
 
-class FileStatList(EObject):
-    __swig_setmethods__ = {}
-    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, FileStatList, name, value)
-    __swig_getmethods__ = {}
-    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, FileStatList, name)
-    __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_FileStatList()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _VISHNU.delete_FileStatList
-    __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.FileStatList__initialize(self)
-    def getFileStats(self): return _VISHNU.FileStatList_getFileStats(self)
-    def eGet(self, *args): return _VISHNU.FileStatList_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.FileStatList_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.FileStatList_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.FileStatList_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.FileStatList__eClass(self)
-FileStatList_swigregister = _VISHNU.FileStatList_swigregister
-FileStatList_swigregister(FileStatList)
-
 class FileTransfer(EObject):
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -1824,6 +2027,31 @@ class RmFileOptions(EObject):
 RmFileOptions_swigregister = _VISHNU.RmFileOptions_swigregister
 RmFileOptions_swigregister(RmFileOptions)
 
+class CreateDirOptions(EObject):
+    __swig_setmethods__ = {}
+    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, CreateDirOptions, name, value)
+    __swig_getmethods__ = {}
+    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, CreateDirOptions, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _VISHNU.new_CreateDirOptions()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _VISHNU.delete_CreateDirOptions
+    __del__ = lambda self : None;
+    def _initialize(self): return _VISHNU.CreateDirOptions__initialize(self)
+    def isIsRecursive(self): return _VISHNU.CreateDirOptions_isIsRecursive(self)
+    def setIsRecursive(self, *args): return _VISHNU.CreateDirOptions_setIsRecursive(self, *args)
+    def eGet(self, *args): return _VISHNU.CreateDirOptions_eGet(self, *args)
+    def eSet(self, *args): return _VISHNU.CreateDirOptions_eSet(self, *args)
+    def eIsSet(self, *args): return _VISHNU.CreateDirOptions_eIsSet(self, *args)
+    def eUnset(self, *args): return _VISHNU.CreateDirOptions_eUnset(self, *args)
+    def _eClass(self): return _VISHNU.CreateDirOptions__eClass(self)
+CreateDirOptions_swigregister = _VISHNU.CreateDirOptions_swigregister
+CreateDirOptions_swigregister(CreateDirOptions)
+
 class DirEntry(EObject):
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -2023,6 +2251,44 @@ class EOptionList(_object):
     __del__ = lambda self : None;
 EOptionList_swigregister = _VISHNU.EOptionList_swigregister
 EOptionList_swigregister(EOptionList)
+
+class EAuthSystemList(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, EAuthSystemList, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, EAuthSystemList, name)
+    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
+    __repr__ = _swig_repr
+    def insert_all(self, *args): return _VISHNU.EAuthSystemList_insert_all(self, *args)
+    def insert_at(self, *args): return _VISHNU.EAuthSystemList_insert_at(self, *args)
+    def at(self, *args): return _VISHNU.EAuthSystemList_at(self, *args)
+    def get(self, *args): return _VISHNU.EAuthSystemList_get(self, *args)
+    def push_back(self, *args): return _VISHNU.EAuthSystemList_push_back(self, *args)
+    def size(self): return _VISHNU.EAuthSystemList_size(self)
+    def clear(self): return _VISHNU.EAuthSystemList_clear(self)
+    __swig_destroy__ = _VISHNU.delete_EAuthSystemList
+    __del__ = lambda self : None;
+EAuthSystemList_swigregister = _VISHNU.EAuthSystemList_swigregister
+EAuthSystemList_swigregister(EAuthSystemList)
+
+class EAuthAccountList(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, EAuthAccountList, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, EAuthAccountList, name)
+    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
+    __repr__ = _swig_repr
+    def insert_all(self, *args): return _VISHNU.EAuthAccountList_insert_all(self, *args)
+    def insert_at(self, *args): return _VISHNU.EAuthAccountList_insert_at(self, *args)
+    def at(self, *args): return _VISHNU.EAuthAccountList_at(self, *args)
+    def get(self, *args): return _VISHNU.EAuthAccountList_get(self, *args)
+    def push_back(self, *args): return _VISHNU.EAuthAccountList_push_back(self, *args)
+    def size(self): return _VISHNU.EAuthAccountList_size(self)
+    def clear(self): return _VISHNU.EAuthAccountList_clear(self)
+    __swig_destroy__ = _VISHNU.delete_EAuthAccountList
+    __del__ = lambda self : None;
+EAuthAccountList_swigregister = _VISHNU.EAuthAccountList_swigregister
+EAuthAccountList_swigregister(EAuthAccountList)
 
 class EJobList(_object):
     __swig_setmethods__ = {}
@@ -2234,10 +2500,6 @@ EDirEntryList_swigregister = _VISHNU.EDirEntryList_swigregister
 EDirEntryList_swigregister(EDirEntryList)
 
 
-def reconnect(*args):
-  return _VISHNU.reconnect(*args)
-reconnect = _VISHNU.reconnect
-
 def close(*args):
   return _VISHNU.close(*args)
 close = _VISHNU.close
@@ -2302,6 +2564,26 @@ def configureDefaultOption(*args):
   return _VISHNU.configureDefaultOption(*args)
 configureDefaultOption = _VISHNU.configureDefaultOption
 
+def addAuthSystem(*args):
+  return _VISHNU.addAuthSystem(*args)
+addAuthSystem = _VISHNU.addAuthSystem
+
+def updateAuthSystem(*args):
+  return _VISHNU.updateAuthSystem(*args)
+updateAuthSystem = _VISHNU.updateAuthSystem
+
+def deleteAuthSystem(*args):
+  return _VISHNU.deleteAuthSystem(*args)
+deleteAuthSystem = _VISHNU.deleteAuthSystem
+
+def addAuthAccount(*args):
+  return _VISHNU.addAuthAccount(*args)
+addAuthAccount = _VISHNU.addAuthAccount
+
+def updateAuthAccount(*args):
+  return _VISHNU.updateAuthAccount(*args)
+updateAuthAccount = _VISHNU.updateAuthAccount
+
 def vishnuInitialize(*args):
   return _VISHNU.vishnuInitialize(*args)
 vishnuInitialize = _VISHNU.vishnuInitialize
@@ -2343,6 +2625,10 @@ def connect(*args):
   return _VISHNU.connect(*args)
 connect = _VISHNU.connect
 
+def reconnect(*args):
+  return _VISHNU.reconnect(*args)
+reconnect = _VISHNU.reconnect
+
 def listSessions(*args):
   return _VISHNU.listSessions(*args)
 listSessions = _VISHNU.listSessions
@@ -2367,6 +2653,20 @@ def listUsers(*args):
   return _VISHNU.listUsers(*args)
 listUsers = _VISHNU.listUsers
 
+def listAuthSystems(*args):
+  return _VISHNU.listAuthSystems(*args)
+listAuthSystems = _VISHNU.listAuthSystems
+
+def deleteAuthAccount(*args):
+  return _VISHNU.deleteAuthAccount(*args)
+deleteAuthAccount = _VISHNU.deleteAuthAccount
+
+def listAuthAccounts(*args):
+  return _VISHNU.listAuthAccounts(*args)
+listAuthAccounts = _VISHNU.listAuthAccounts
+cvar = _VISHNU.cvar
+VISHNU_OK = cvar.VISHNU_OK
+
 class UserException(VishnuException):
     __swig_setmethods__ = {}
     for _s in [VishnuException]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -2385,10 +2685,13 @@ class UserException(VishnuException):
     def getMsg(self): return _VISHNU.UserException_getMsg(self)
 UserException_swigregister = _VISHNU.UserException_swigregister
 UserException_swigregister(UserException)
-cvar = _VISHNU.cvar
 ERRCODE_INVALID_PARAM = cvar.ERRCODE_INVALID_PARAM
 ERRCODE_FILENOTFOUND = cvar.ERRCODE_FILENOTFOUND
 ERRCODE_CONFIGNOTFOUND = cvar.ERRCODE_CONFIGNOTFOUND
+ERRCODE_CLI_ERROR_NO_SESSION = cvar.ERRCODE_CLI_ERROR_NO_SESSION
+ERRCODE_CLI_ERROR_MISSING_PARAMETER = cvar.ERRCODE_CLI_ERROR_MISSING_PARAMETER
+ERRCODE_CLI_ERROR_DIET = cvar.ERRCODE_CLI_ERROR_DIET
+ERRCODE_CLI_ERROR_RUNTIME = cvar.ERRCODE_CLI_ERROR_RUNTIME
 
 class SystemException(VishnuException):
     __swig_setmethods__ = {}
@@ -2409,6 +2712,7 @@ class SystemException(VishnuException):
     def initMsg(self): return _VISHNU.SystemException_initMsg(self)
 SystemException_swigregister = _VISHNU.SystemException_swigregister
 SystemException_swigregister(SystemException)
+ERRCODE_AUTHENTERR = cvar.ERRCODE_AUTHENTERR
 ERRCODE_DIET = cvar.ERRCODE_DIET
 ERRCODE_DBERR = cvar.ERRCODE_DBERR
 ERRCODE_DBCONN = cvar.ERRCODE_DBCONN
@@ -2463,6 +2767,14 @@ ERRCODE_INCORRECT_TIMEOUT = cvar.ERRCODE_INCORRECT_TIMEOUT
 ERRCODE_INCORRECT_TRANSFER_CMD = cvar.ERRCODE_INCORRECT_TRANSFER_CMD
 ERRCODE_ROOT_USER_ONLY = cvar.ERRCODE_ROOT_USER_ONLY
 ERRCODE_LOGIN_ALREADY_USED = cvar.ERRCODE_LOGIN_ALREADY_USED
+ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE = cvar.ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE
+ERRCODE_UNKNOWN_AUTH_SYSTEM = cvar.ERRCODE_UNKNOWN_AUTH_SYSTEM
+ERRCODE_AUTH_SYSTEM_ALREADY_LOCKED = cvar.ERRCODE_AUTH_SYSTEM_ALREADY_LOCKED
+ERRCODE_AUTH_SYSTEM_ALREADY_EXIST = cvar.ERRCODE_AUTH_SYSTEM_ALREADY_EXIST
+ERRCODE_AUTH_ACCOUNT_EXIST = cvar.ERRCODE_AUTH_ACCOUNT_EXIST
+ERRCODE_UNKNOWN_AUTH_ACCOUNT = cvar.ERRCODE_UNKNOWN_AUTH_ACCOUNT
+ERRCODE_UNKNOWN_ENCRYPTION_METHOD = cvar.ERRCODE_UNKNOWN_ENCRYPTION_METHOD
+ERRCODE_READONLY_ACCOUNT = cvar.ERRCODE_READONLY_ACCOUNT
 
 class TMSVishnuException(UserException):
     __swig_setmethods__ = {}
@@ -2533,14 +2845,6 @@ ERRCODE_RUNTIME_ERROR = cvar.ERRCODE_RUNTIME_ERROR
 ERRCODE_UNKNOWN_FILETRANSFERID = cvar.ERRCODE_UNKNOWN_FILETRANSFERID
 
 
-def cancelJob(*args):
-  return _VISHNU.cancelJob(*args)
-cancelJob = _VISHNU.cancelJob
-
-def getJobInfo(*args):
-  return _VISHNU.getJobInfo(*args)
-getJobInfo = _VISHNU.getJobInfo
-
 def exportCommands(*args):
   return _VISHNU.exportCommands(*args)
 exportCommands = _VISHNU.exportCommands
@@ -2584,6 +2888,10 @@ defineJobIdentifier = _VISHNU.defineJobIdentifier
 def defineTransferIdentifier(*args):
   return _VISHNU.defineTransferIdentifier(*args)
 defineTransferIdentifier = _VISHNU.defineTransferIdentifier
+
+def defineAuthIdentifier(*args):
+  return _VISHNU.defineAuthIdentifier(*args)
+defineAuthIdentifier = _VISHNU.defineAuthIdentifier
 
 def loadShed(*args):
   return _VISHNU.loadShed(*args)
@@ -2633,30 +2941,6 @@ def getFileInfo(*args):
   return _VISHNU.getFileInfo(*args)
 getFileInfo = _VISHNU.getFileInfo
 
-
-def submitJob(*args):
-  return _VISHNU.submitJob(*args)
-submitJob = _VISHNU.submitJob
-
-def listJobs(*args):
-  return _VISHNU.listJobs(*args)
-listJobs = _VISHNU.listJobs
-
-def getJobProgress(*args):
-  return _VISHNU.getJobProgress(*args)
-getJobProgress = _VISHNU.getJobProgress
-
-def listQueues(*args):
-  return _VISHNU.listQueues(*args)
-listQueues = _VISHNU.listQueues
-
-def getJobOutput(*args):
-  return _VISHNU.getJobOutput(*args)
-getJobOutput = _VISHNU.getJobOutput
-
-def getCompletedJobsOutput(*args):
-  return _VISHNU.getCompletedJobsOutput(*args)
-getCompletedJobsOutput = _VISHNU.getCompletedJobsOutput
 
 def copyFile(*args):
   return _VISHNU.copyFile(*args)

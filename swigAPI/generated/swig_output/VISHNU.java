@@ -17,8 +17,20 @@ public class VISHNU {
     return VISHNUJNI.connect__SWIG_1(userId, password, Session.getCPtr(session), session);
   }
 
+  public static int connect(ListUsers users, Session session, ConnectOptions connectOpt) throws InternalUMSException {
+    return VISHNUJNI.connect__SWIG_2(ListUsers.getCPtr(users), users, Session.getCPtr(session), session, ConnectOptions.getCPtr(connectOpt), connectOpt);
+  }
+
+  public static int connect(ListUsers users, Session session) throws InternalUMSException {
+    return VISHNUJNI.connect__SWIG_3(ListUsers.getCPtr(users), users, Session.getCPtr(session), session);
+  }
+
   public static int reconnect(String userId, String password, String sessionId, Session session) throws InternalUMSException {
-    return VISHNUJNI.reconnect(userId, password, sessionId, Session.getCPtr(session), session);
+    return VISHNUJNI.reconnect__SWIG_0(userId, password, sessionId, Session.getCPtr(session), session);
+  }
+
+  public static int reconnect(ListUsers users, String sessionId, Session session) throws InternalUMSException {
+    return VISHNUJNI.reconnect__SWIG_1(ListUsers.getCPtr(users), users, sessionId, Session.getCPtr(session), session);
   }
 
   public static int close(String sessionKey) throws InternalUMSException {
@@ -125,12 +137,56 @@ public class VISHNU {
     return VISHNUJNI.listOptions__SWIG_1(sessionKey, ListOptionsValues.getCPtr(listOptValues), listOptValues);
   }
 
-  public static int listUsers(String sessionKey, ListUsers listUsers, String userIdOption) throws InternalUMSException {
-    return VISHNUJNI.listUsers__SWIG_0(sessionKey, ListUsers.getCPtr(listUsers), listUsers, userIdOption);
+  public static int listUsers(String sessionKey, ListUsers listUsers, SWIGTYPE_p_UMS_Data__ListUsersOptions listOptions) throws InternalUMSException {
+    return VISHNUJNI.listUsers__SWIG_0(sessionKey, ListUsers.getCPtr(listUsers), listUsers, SWIGTYPE_p_UMS_Data__ListUsersOptions.getCPtr(listOptions));
   }
 
   public static int listUsers(String sessionKey, ListUsers listUsers) throws InternalUMSException {
     return VISHNUJNI.listUsers__SWIG_1(sessionKey, ListUsers.getCPtr(listUsers), listUsers);
+  }
+
+  public static int addAuthSystem(String sessionKey, AuthSystem newAuthSys) throws InternalUMSException {
+    return VISHNUJNI.addAuthSystem(sessionKey, AuthSystem.getCPtr(newAuthSys), newAuthSys);
+  }
+
+  public static int updateAuthSystem(String sessionKey, AuthSystem AuthSys) throws InternalUMSException {
+    return VISHNUJNI.updateAuthSystem(sessionKey, AuthSystem.getCPtr(AuthSys), AuthSys);
+  }
+
+  public static int deleteAuthSystem(String sessionKey, String authSystemId) throws InternalUMSException {
+    return VISHNUJNI.deleteAuthSystem(sessionKey, authSystemId);
+  }
+
+  public static int listAuthSystems(String sessionKey, ListAuthSystems listAuthSys, ListAuthSysOptions options) throws InternalUMSException {
+    return VISHNUJNI.listAuthSystems__SWIG_0(sessionKey, ListAuthSystems.getCPtr(listAuthSys), listAuthSys, ListAuthSysOptions.getCPtr(options), options);
+  }
+
+  public static int listAuthSystems(String sessionKey, ListAuthSystems listAuthSys) throws InternalUMSException {
+    return VISHNUJNI.listAuthSystems__SWIG_1(sessionKey, ListAuthSystems.getCPtr(listAuthSys), listAuthSys);
+  }
+
+  public static int addAuthAccount(String sessionKey, AuthAccount authAccount) throws InternalUMSException {
+    return VISHNUJNI.addAuthAccount(sessionKey, AuthAccount.getCPtr(authAccount), authAccount);
+  }
+
+  public static int updateAuthAccount(String sessionKey, AuthAccount authenAccount) throws InternalUMSException {
+    return VISHNUJNI.updateAuthAccount(sessionKey, AuthAccount.getCPtr(authenAccount), authenAccount);
+  }
+
+  public static int deleteAuthAccount(String sessionKey, String authSystemId, String userIdOption) throws InternalUMSException {
+    return VISHNUJNI.deleteAuthAccount__SWIG_0(sessionKey, authSystemId, userIdOption);
+  }
+
+  public static int deleteAuthAccount(String sessionKey, String authSystemId) throws InternalUMSException {
+    return VISHNUJNI.deleteAuthAccount__SWIG_1(sessionKey, authSystemId);
+  }
+
+  public static int listAuthAccounts(String sessionKey, ListAuthAccounts listAuthAccounts, ListAuthAccOptions options) throws InternalUMSException {
+    return VISHNUJNI.listAuthAccounts__SWIG_0(sessionKey, ListAuthAccounts.getCPtr(listAuthAccounts), listAuthAccounts, ListAuthAccOptions.getCPtr(options), options);
+  }
+
+  public static int listAuthAccounts(String sessionKey, ListAuthAccounts listAuthAccounts) throws InternalUMSException {
+    return VISHNUJNI.listAuthAccounts__SWIG_1(sessionKey, ListAuthAccounts.getCPtr(listAuthAccounts), listAuthAccounts);
   }
 
   public static int vishnuInitialize(String cfg) throws InternalUMSException {
@@ -139,62 +195,6 @@ public class VISHNU {
 
   public static void vishnuFinalize() throws InternalUMSException {
     VISHNUJNI.vishnuFinalize();
-  }
-
-  public static int submitJob(String sessionKey, String machineId, String scriptFilePath, Job jobInfo, SubmitOptions options) throws InternalTMSException {
-    return VISHNUJNI.submitJob__SWIG_0(sessionKey, machineId, scriptFilePath, Job.getCPtr(jobInfo), jobInfo, SubmitOptions.getCPtr(options), options);
-  }
-
-  public static int submitJob(String sessionKey, String machineId, String scriptFilePath, Job jobInfo) throws InternalTMSException {
-    return VISHNUJNI.submitJob__SWIG_1(sessionKey, machineId, scriptFilePath, Job.getCPtr(jobInfo), jobInfo);
-  }
-
-  public static int cancelJob(String sessionKey, String machineId, String jobId) throws InternalTMSException {
-    return VISHNUJNI.cancelJob(sessionKey, machineId, jobId);
-  }
-
-  public static int getJobInfo(String sessionKey, String machineId, String jobId, Job jobInfos) throws InternalTMSException {
-    return VISHNUJNI.getJobInfo(sessionKey, machineId, jobId, Job.getCPtr(jobInfos), jobInfos);
-  }
-
-  public static int listJobs(String sessionKey, String machineId, ListJobs listOfJobs, ListJobsOptions options) throws InternalTMSException {
-    return VISHNUJNI.listJobs__SWIG_0(sessionKey, machineId, ListJobs.getCPtr(listOfJobs), listOfJobs, ListJobsOptions.getCPtr(options), options);
-  }
-
-  public static int listJobs(String sessionKey, String machineId, ListJobs listOfJobs) throws InternalTMSException {
-    return VISHNUJNI.listJobs__SWIG_1(sessionKey, machineId, ListJobs.getCPtr(listOfJobs), listOfJobs);
-  }
-
-  public static int getJobProgress(String sessionKey, String machineId, ListProgression listOfProgress, ProgressOptions options) throws InternalTMSException {
-    return VISHNUJNI.getJobProgress__SWIG_0(sessionKey, machineId, ListProgression.getCPtr(listOfProgress), listOfProgress, ProgressOptions.getCPtr(options), options);
-  }
-
-  public static int getJobProgress(String sessionKey, String machineId, ListProgression listOfProgress) throws InternalTMSException {
-    return VISHNUJNI.getJobProgress__SWIG_1(sessionKey, machineId, ListProgression.getCPtr(listOfProgress), listOfProgress);
-  }
-
-  public static int listQueues(String sessionKey, String machineId, ListQueues listofQueues, String queueName) throws InternalTMSException {
-    return VISHNUJNI.listQueues__SWIG_0(sessionKey, machineId, ListQueues.getCPtr(listofQueues), listofQueues, queueName);
-  }
-
-  public static int listQueues(String sessionKey, String machineId, ListQueues listofQueues) throws InternalTMSException {
-    return VISHNUJNI.listQueues__SWIG_1(sessionKey, machineId, ListQueues.getCPtr(listofQueues), listofQueues);
-  }
-
-  public static int getJobOutput(String sessionKey, String machineId, String jobId, JobResult outputInfo, String outDir) throws InternalTMSException {
-    return VISHNUJNI.getJobOutput__SWIG_0(sessionKey, machineId, jobId, JobResult.getCPtr(outputInfo), outputInfo, outDir);
-  }
-
-  public static int getJobOutput(String sessionKey, String machineId, String jobId, JobResult outputInfo) throws InternalTMSException {
-    return VISHNUJNI.getJobOutput__SWIG_1(sessionKey, machineId, jobId, JobResult.getCPtr(outputInfo), outputInfo);
-  }
-
-  public static int getCompletedJobsOutput(String sessionKey, String machineId, ListJobResults listOfResults, String outDir) throws InternalTMSException {
-    return VISHNUJNI.getCompletedJobsOutput__SWIG_0(sessionKey, machineId, ListJobResults.getCPtr(listOfResults), listOfResults, outDir);
-  }
-
-  public static int getCompletedJobsOutput(String sessionKey, String machineId, ListJobResults listOfResults) throws InternalTMSException {
-    return VISHNUJNI.getCompletedJobsOutput__SWIG_1(sessionKey, machineId, ListJobResults.getCPtr(listOfResults), listOfResults);
   }
 
   public static int exportCommands(String sessionKey, String oldSessionId, String filename, ExportOp op) throws InternalIMSException {
@@ -239,6 +239,10 @@ public class VISHNU {
 
   public static int defineTransferIdentifier(String sessionKey, String fmt) throws InternalIMSException {
     return VISHNUJNI.defineTransferIdentifier(sessionKey, fmt);
+  }
+
+  public static int defineAuthIdentifier(String sessionKey, String fmt) throws InternalIMSException {
+    return VISHNUJNI.defineAuthIdentifier(sessionKey, fmt);
   }
 
   public static int loadShed(String sessionKey, String machineId, int loadShedType) throws InternalIMSException {
@@ -313,8 +317,8 @@ public class VISHNU {
     return VISHNUJNI.listDir__SWIG_1(sessionKey, path, DirEntryList.getCPtr(dirContent), dirContent);
   }
 
-  public static int createDir(String sessionKey, String path, SWIGTYPE_p_FMS_Data__CreateDirOptions options) throws InternalFMSException {
-    return VISHNUJNI.createDir__SWIG_0(sessionKey, path, SWIGTYPE_p_FMS_Data__CreateDirOptions.getCPtr(options));
+  public static int createDir(String sessionKey, String path, CreateDirOptions options) throws InternalFMSException {
+    return VISHNUJNI.createDir__SWIG_0(sessionKey, path, CreateDirOptions.getCPtr(options), options);
   }
 
   public static int createDir(String sessionKey, String path) throws InternalFMSException {
