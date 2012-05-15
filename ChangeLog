@@ -8,6 +8,7 @@
 * Added support for SGE batch scheduler
 * Fix mac compilation problem for the client. Now use libcrypto instead of libcrypt
 * Fix compilation problem where libldap was not linked to the sed
+* Fix bug 368
 
 +--------------+
 | VISHNU 1.3.0 |
