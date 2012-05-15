@@ -233,8 +233,6 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__SELECTQUEUEAUTOM);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
             m_SubmitOptions__selectQueueAutom);
-<<<<<<< .merge_file_cCVRKy
-=======
     m_SubmitOptions__fileParams = new ::ecore::EAttribute();
     m_SubmitOptions__fileParams->setFeatureID(
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILEPARAMS);
@@ -245,7 +243,6 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__TEXTPARAMS);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
             m_SubmitOptions__textParams);
->>>>>>> .merge_file_rAhZqy
     m_SubmitOptions__criterion = new ::ecore::EReference();
     m_SubmitOptions__criterion->setFeatureID(
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CRITERION);
@@ -1132,8 +1129,6 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__selectQueueAutom->setUnique(true);
     m_SubmitOptions__selectQueueAutom->setDerived(false);
     m_SubmitOptions__selectQueueAutom->setOrdered(true);
-<<<<<<< .merge_file_cCVRKy
-=======
     m_SubmitOptions__fileParams->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_SubmitOptions__fileParams->setName("fileParams");
@@ -1162,7 +1157,6 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__textParams->setUnique(true);
     m_SubmitOptions__textParams->setDerived(false);
     m_SubmitOptions__textParams->setOrdered(true);
->>>>>>> .merge_file_rAhZqy
     m_SubmitOptions__criterion->setEType(m_LoadCriterionEClass);
     m_SubmitOptions__criterion->setName("criterion");
     m_SubmitOptions__criterion->setDefaultValueLiteral("");
@@ -2305,8 +2299,6 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_SubmitOptions__criterion;
 }
-<<<<<<< .merge_file_cCVRKy
-=======
 ::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__fileParams()
 {
     return m_SubmitOptions__fileParams;
@@ -2315,7 +2307,6 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_SubmitOptions__textParams;
 }
->>>>>>> .merge_file_rAhZqy
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__jobId()
 {
     return m_ListJobsOptions__jobId;
