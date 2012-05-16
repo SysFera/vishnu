@@ -86,8 +86,11 @@ int JobServer::submitJob(const std::string& scriptContent,
 
   SSHJobExec sshJobExec(acLogin, machineName, mbatchType, jobSerialized, submitOptionsSerialized);
   sshJobExec.sshexec(slaveDirectory, "SUBMIT", std::string(scriptPath));
-
-  //vishnu::deleteFile(scriptPath);
+  
+  if(mbatchType==SGE){
+    /* SGE needs to have the script at the execution host*/
+    vishnu::deleteFile(scriptPath);
+  }
 
   std::string errorInfo = sshJobExec.getErrorInfo();
 
