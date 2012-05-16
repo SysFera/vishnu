@@ -1,5 +1,5 @@
-#ifndef STRINGTODIRENTRY_HH 
-#define STRINGTODIRENTRY_HH 
+#ifndef STRINGTODIRENTRY_HH
+#define STRINGTODIRENTRY_HH
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/date_time/local_time/local_time.hpp>
@@ -24,7 +24,7 @@ struct DateHandler {
       return mrawDate;
     }
 
-    std::string mrawDate; 
+    std::string mrawDate;
 };
 
 
@@ -33,9 +33,9 @@ class  PermsHandler {
   public:
     PermsHandler (const std::string& rawPerms):mrawPerms(rawPerms){ }
     mode_t getPermissions () const {
-      
+
       if (mrawPerms.size()!=9){
-      throw FMSVishnuException (ERRCODE_RUNTIME_ERROR, "Can not get file permissions "); 
+      throw FMSVishnuException (ERRCODE_RUNTIME_ERROR, "Can not get file permissions ");
       }
       std::istringstream iss (convertPerms(mrawPerms.substr(0,3))+convertPerms(mrawPerms.substr(3,3))+convertPerms(mrawPerms.substr(6,3)));
       mode_t res;
@@ -46,9 +46,9 @@ class  PermsHandler {
   private:
     std::string mrawPerms;
     static std::string convertPerms(const std::string& perms) {
-      
+
       if (perms.size()!=3){
-      throw FMSVishnuException (ERRCODE_RUNTIME_ERROR, "Can not get file permissions "); 
+      throw FMSVishnuException (ERRCODE_RUNTIME_ERROR, "Can not get file permissions ");
       }
       int res=0;
       BOOST_FOREACH (char right, perms){
@@ -76,14 +76,14 @@ class  PermsHandler {
       return res;
 
 
-    }   
+    }
 };
 
 /**********************************************************************/
 
 class StringToDirEntry {
   public:
-    
+
     StringToDirEntry (const std::string& rawDirEntry ):mrawDirEntry(rawDirEntry),
                                                        mperms(""),
                                                        mowner(""),
@@ -101,7 +101,7 @@ class StringToDirEntry {
       std::string  utcOffset;
       std::size_t nbLink;
 
-      iss >> mperms >> nbLink >> mowner >> mgroup >> msize >> date >> time >> utcOffset >> mpath ;
+      std::getline ((iss >> mperms >> nbLink >> mowner >> mgroup >> msize >> date >> time >> utcOffset), mpath) ;
       mdate_time=date+ " "+ time + " " + utcOffset;
     }
     mode_t getPermissions(){
@@ -129,7 +129,7 @@ class StringToDirEntry {
       return mpath;
     }
 
-  private: 
+  private:
     std::string mrawDirEntry;
     std::string mperms;
     std::string mowner;
