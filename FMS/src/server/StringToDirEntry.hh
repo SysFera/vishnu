@@ -102,6 +102,7 @@ class StringToDirEntry {
       std::size_t nbLink;
 
       std::getline ((iss >> mperms >> nbLink >> mowner >> mgroup >> msize >> date >> time >> utcOffset), mpath) ;
+      mpath = mpath.substr(1);
       mdate_time=date+ " "+ time + " " + utcOffset;
     }
     mode_t getPermissions(){
