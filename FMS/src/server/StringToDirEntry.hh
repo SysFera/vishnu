@@ -102,6 +102,7 @@ class StringToDirEntry {
       std::size_t nbLink;
 
       std::getline ((iss >> mperms >> nbLink >> mowner >> mgroup >> msize >> date >> time >> utcOffset), mpath) ;
+      mpath = mpath.substr(1); // Remove original white space left by the getline
       mdate_time=date+ " "+ time + " " + utcOffset;
     }
     mode_t getPermissions(){
